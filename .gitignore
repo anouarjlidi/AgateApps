@@ -2,7 +2,9 @@
 app/bootstrap*
 
 # Symfony directories
+!vendor/
 vendor/*
+!vendor/corahnrin/
 */logs/*
 */cache/*
 web/uploads/*
