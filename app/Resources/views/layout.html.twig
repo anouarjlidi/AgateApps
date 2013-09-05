@@ -1,0 +1,24 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+
+    <div class="container" id="corps">
+
+        {% render(controller("CorahnRinPagesBundle:Menus:menu")) %}
+
+        {% for key, message in app.session.flashbag.all() %}
+            <div class="alert alert-{{ key }}">
+               {{ message|trans({}, 'FOSUserBundle') }}
+            </div>
+        {% endfor %}
+
+        {% block fos_user_content %}{% endblock fos_user_content %}
+
+        <div id="content">
+        {% block content_for_layout %}{% endblock %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}

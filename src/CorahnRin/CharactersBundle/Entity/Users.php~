@@ -1,0 +1,106 @@
+<?php
+
+namespace CorahnRin\CharactersBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Users
+ *
+ * @ORM\Table(name="users")
+ * @ORM\Entity
+ */
+class Users
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=100, nullable=false)
+     */
+    private $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="password", type="string", length=50, nullable=false)
+     */
+    private $password;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email", type="string", length=255, nullable=false)
+     */
+    private $email;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="status", type="integer", nullable=false)
+     */
+    private $status;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="confirm_register", type="string", length=50, nullable=false)
+     */
+    private $confirmRegister;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="date_created", type="integer", nullable=false)
+     */
+    private $dateCreated;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="date_updated", type="integer", nullable=false)
+     */
+    private $dateUpdated;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Games", inversedBy="Users")
+     * @ORM\JoinTable(name="game_players",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="id_users", referencedColumnName="id")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="id_games", referencedColumnName="id")
+     *   }
+     * )
+     */
+    private $Games;
+
+    /**
+     * @var \Groups
+     *
+     * @ORM\ManyToOne(targetEntity="Groups")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_groups", referencedColumnName="id")
+     * })
+     */
+    private $Groups;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->Games = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+}
