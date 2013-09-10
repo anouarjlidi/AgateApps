@@ -17,7 +17,7 @@ class CharSocialClass
      *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
@@ -43,7 +43,7 @@ class CharSocialClass
      *   @ORM\JoinColumn(name="id_domains1", referencedColumnName="id")
      * })
      */
-    private $Domains1;
+    private $domain1;
 
     /**
      * @var \Domains
@@ -53,7 +53,7 @@ class CharSocialClass
      *   @ORM\JoinColumn(name="id_domains2", referencedColumnName="id")
      * })
      */
-    private $Domains2;
+    private $domain2;
 
     /**
      * @var \SocialClass
@@ -63,8 +63,7 @@ class CharSocialClass
      *   @ORM\JoinColumn(name="id_social_class", referencedColumnName="id")
      * })
      */
-    private $SocialClass;
-
+    private $socialClass;
 
 
     /**
@@ -124,71 +123,71 @@ class CharSocialClass
     }
 
     /**
-     * Set Domains1
+     * Set domain1
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Domains $domains1
+     * @param \CorahnRin\CharactersBundle\Entity\Domains $domain1
      * @return CharSocialClass
      */
-    public function setDomains1(\CorahnRin\CharactersBundle\Entity\Domains $domains1 = null)
+    public function setDomain1(\CorahnRin\CharactersBundle\Entity\Domains $domain1 = null)
     {
-        $this->Domains1 = $domains1;
+        $this->domain1 = $domain1;
     
         return $this;
     }
 
     /**
-     * Get Domains1
+     * Get domain1
      *
      * @return \CorahnRin\CharactersBundle\Entity\Domains 
      */
-    public function getDomains1()
+    public function getDomain1()
     {
-        return $this->Domains1;
+        return $this->domain1;
     }
 
     /**
-     * Set Domains2
+     * Set domain2
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Domains $domains2
+     * @param \CorahnRin\CharactersBundle\Entity\Domains $domain2
      * @return CharSocialClass
      */
-    public function setDomains2(\CorahnRin\CharactersBundle\Entity\Domains $domains2 = null)
+    public function setDomain2(\CorahnRin\CharactersBundle\Entity\Domains $domain2 = null)
     {
-        $this->Domains2 = $domains2;
+        $this->domain2 = $domain2;
     
         return $this;
     }
 
     /**
-     * Get Domains2
+     * Get domain2
      *
      * @return \CorahnRin\CharactersBundle\Entity\Domains 
      */
-    public function getDomains2()
+    public function getDomain2()
     {
-        return $this->Domains2;
+        return $this->domain2;
     }
 
     /**
-     * Set SocialClass
+     * Set socialClass
      *
      * @param \CorahnRin\CharactersBundle\Entity\SocialClass $socialClass
      * @return CharSocialClass
      */
     public function setSocialClass(\CorahnRin\CharactersBundle\Entity\SocialClass $socialClass = null)
     {
-        $this->SocialClass = $socialClass;
+        $this->socialClass = $socialClass;
     
         return $this;
     }
 
     /**
-     * Get SocialClass
+     * Get socialClass
      *
      * @return \CorahnRin\CharactersBundle\Entity\SocialClass 
      */
     public function getSocialClass()
     {
-        return $this->SocialClass;
+        return $this->socialClass;
     }
 }

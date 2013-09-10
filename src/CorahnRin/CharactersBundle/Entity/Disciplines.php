@@ -17,7 +17,7 @@ class Disciplines
      *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
@@ -55,21 +55,6 @@ class Disciplines
      * @ORM\Column(name="date_updated", type="integer", nullable=false)
      */
     private $dateUpdated;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Characters", inversedBy="Disciplines")
-     * @ORM\JoinTable(name="char_disciplines",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="id_disciplines", referencedColumnName="id")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="id_characters", referencedColumnName="id")
-     *   }
-     * )
-     */
-    private $Characters;
 
     /**
      * @var \Doctrine\Common\Collections\Collection

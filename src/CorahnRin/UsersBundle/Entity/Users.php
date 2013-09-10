@@ -65,4 +65,14 @@ class Users extends BaseUser {
         return $this->Games;
     }
 
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 }

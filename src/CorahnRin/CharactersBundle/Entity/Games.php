@@ -17,7 +17,7 @@ class Games
      *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
@@ -57,21 +57,30 @@ class Games
     private $dateUpdated;
 
     /**
+     * @var \Jobs
+     *
+     * @ORM\ManyToOne(targetEntity="CorahnRin\UsersBundle\Entity\Users")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="is_users_gm", referencedColumnName="id")
+     * })
+     */
+    private $gameMaster;
+	
+    /**
      * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\ManyToMany(targetEntity="CorahnRin\UsersBundle\Entity\Users", mappedBy="Games")
      */
-    private $Users;
+    private $users;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->Users = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->users = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
-
     /**
      * Get id
      *
@@ -198,35 +207,58 @@ class Games
     }
 
     /**
-     * Add Users
+     * Set gameMaster
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Users $users
+     * @param \CorahnRin\UsersBundle\Entity\Users $gameMaster
      * @return Games
      */
-    public function addUser(\CorahnRin\CharactersBundle\Entity\Users $users)
+    public function setGameMaster(\CorahnRin\UsersBundle\Entity\Users $gameMaster = null)
     {
-        $this->Users[] = $users;
+        $this->gameMaster = $gameMaster;
     
         return $this;
     }
 
     /**
-     * Remove Users
+     * Get gameMaster
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Users $users
+     * @return \CorahnRin\UsersBundle\Entity\Users 
      */
-    public function removeUser(\CorahnRin\CharactersBundle\Entity\Users $users)
+    public function getGameMaster()
     {
-        $this->Users->removeElement($users);
+        return $this->gameMaster;
     }
 
     /**
-     * Get Users
+     * Add users
+     *
+     * @param \CorahnRin\UsersBundle\Entity\Users $users
+     * @return Games
+     */
+    public function addUser(\CorahnRin\UsersBundle\Entity\Users $users)
+    {
+        $this->users[] = $users;
+    
+        return $this;
+    }
+
+    /**
+     * Remove users
+     *
+     * @param \CorahnRin\UsersBundle\Entity\Users $users
+     */
+    public function removeUser(\CorahnRin\UsersBundle\Entity\Users $users)
+    {
+        $this->users->removeElement($users);
+    }
+
+    /**
+     * Get users
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
     public function getUsers()
     {
-        return $this->Users;
+        return $this->users;
     }
 }

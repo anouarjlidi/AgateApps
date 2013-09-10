@@ -4,7 +4,9 @@
 
 class CorahnRinTools {
 	function __construct() {
-		require __DIR__.DIRECTORY_SEPARATOR.'config.php';
+		if (PHP_SAPI !== 'cli') {
+			require __DIR__.DIRECTORY_SEPARATOR.'config.php';
+		}
 //		
 //		//Chargement des fonctions de base
 //		$dir = __DIR__.DS.'functions'.DS;

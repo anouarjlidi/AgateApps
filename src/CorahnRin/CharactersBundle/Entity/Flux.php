@@ -17,7 +17,7 @@ class Flux
      *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
@@ -41,22 +41,6 @@ class Flux
      * @ORM\Column(name="date_updated", type="integer", nullable=false)
      */
     private $dateUpdated;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Characters", mappedBy="Flux")
-     */
-    private $Characters;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->Characters = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    
 
     /**
      * Get id
@@ -135,38 +119,5 @@ class Flux
     public function getDateUpdated()
     {
         return $this->dateUpdated;
-    }
-
-    /**
-     * Add Characters
-     *
-     * @param \CorahnRin\CharactersBundle\Entity\Characters $characters
-     * @return Flux
-     */
-    public function addCharacter(\CorahnRin\CharactersBundle\Entity\Characters $characters)
-    {
-        $this->Characters[] = $characters;
-    
-        return $this;
-    }
-
-    /**
-     * Remove Characters
-     *
-     * @param \CorahnRin\CharactersBundle\Entity\Characters $characters
-     */
-    public function removeCharacter(\CorahnRin\CharactersBundle\Entity\Characters $characters)
-    {
-        $this->Characters->removeElement($characters);
-    }
-
-    /**
-     * Get Characters
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getCharacters()
-    {
-        return $this->Characters;
     }
 }

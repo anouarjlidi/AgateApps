@@ -17,7 +17,7 @@ class Ways
      *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
@@ -63,29 +63,6 @@ class Ways
      */
     private $dateUpdated;
 
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Characters", mappedBy="Ways")
-     */
-    private $Characters;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Desordres", mappedBy="Ways")
-     */
-    private $Desordres;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->Characters = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->Desordres = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    
 
     /**
      * Get id
@@ -233,71 +210,5 @@ class Ways
     public function getDateUpdated()
     {
         return $this->dateUpdated;
-    }
-
-    /**
-     * Add Characters
-     *
-     * @param \CorahnRin\CharactersBundle\Entity\Characters $characters
-     * @return Ways
-     */
-    public function addCharacter(\CorahnRin\CharactersBundle\Entity\Characters $characters)
-    {
-        $this->Characters[] = $characters;
-    
-        return $this;
-    }
-
-    /**
-     * Remove Characters
-     *
-     * @param \CorahnRin\CharactersBundle\Entity\Characters $characters
-     */
-    public function removeCharacter(\CorahnRin\CharactersBundle\Entity\Characters $characters)
-    {
-        $this->Characters->removeElement($characters);
-    }
-
-    /**
-     * Get Characters
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getCharacters()
-    {
-        return $this->Characters;
-    }
-
-    /**
-     * Add Desordres
-     *
-     * @param \CorahnRin\CharactersBundle\Entity\Desordres $desordres
-     * @return Ways
-     */
-    public function addDesordre(\CorahnRin\CharactersBundle\Entity\Desordres $desordres)
-    {
-        $this->Desordres[] = $desordres;
-    
-        return $this;
-    }
-
-    /**
-     * Remove Desordres
-     *
-     * @param \CorahnRin\CharactersBundle\Entity\Desordres $desordres
-     */
-    public function removeDesordre(\CorahnRin\CharactersBundle\Entity\Desordres $desordres)
-    {
-        $this->Desordres->removeElement($desordres);
-    }
-
-    /**
-     * Get Desordres
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getDesordres()
-    {
-        return $this->Desordres;
     }
 }

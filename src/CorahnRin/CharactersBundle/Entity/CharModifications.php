@@ -17,7 +17,7 @@ class CharModifications
      *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
@@ -57,7 +57,7 @@ class CharModifications
      *   @ORM\JoinColumn(name="id_characters", referencedColumnName="id")
      * })
      */
-    private $Characters;
+    private $character;
 
     /**
      * @var \Users
@@ -67,8 +67,7 @@ class CharModifications
      *   @ORM\JoinColumn(name="id_users", referencedColumnName="id")
      * })
      */
-    private $Users;
-
+    private $user;
 
 
     /**
@@ -174,48 +173,48 @@ class CharModifications
     }
 
     /**
-     * Set Characters
+     * Set character
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Characters $characters
+     * @param \CorahnRin\CharactersBundle\Entity\Characters $character
      * @return CharModifications
      */
-    public function setCharacters(\CorahnRin\CharactersBundle\Entity\Characters $characters = null)
+    public function setCharacter(\CorahnRin\CharactersBundle\Entity\Characters $character = null)
     {
-        $this->Characters = $characters;
+        $this->character = $character;
     
         return $this;
     }
 
     /**
-     * Get Characters
+     * Get character
      *
      * @return \CorahnRin\CharactersBundle\Entity\Characters 
      */
-    public function getCharacters()
+    public function getCharacter()
     {
-        return $this->Characters;
+        return $this->character;
     }
 
     /**
-     * Set Users
+     * Set user
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Users $users
+     * @param \CorahnRin\UsersBundle\Entity\Users $user
      * @return CharModifications
      */
-    public function setUsers(\CorahnRin\CharactersBundle\Entity\Users $users = null)
+    public function setUser(\CorahnRin\UsersBundle\Entity\Users $user = null)
     {
-        $this->Users = $users;
+        $this->user = $user;
     
         return $this;
     }
 
     /**
-     * Get Users
+     * Get user
      *
-     * @return \CorahnRin\CharactersBundle\Entity\Users 
+     * @return \CorahnRin\UsersBundle\Entity\Users 
      */
-    public function getUsers()
+    public function getUser()
     {
-        return $this->Users;
+        return $this->user;
     }
 }

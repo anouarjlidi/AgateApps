@@ -5,35 +5,28 @@ namespace CorahnRin\CharactersBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Groups
+ * Disorders
  *
- * @ORM\Table(name="groups")
+ * @ORM\Table(name="disorders")
  * @ORM\Entity
  */
-class Groups
+class Disorders
 {
     /**
      * @var integer
      *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=70, nullable=false)
+     * @ORM\Column(name="name", type="string", length=100, nullable=false)
      */
     private $name;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="acl", type="integer", nullable=false)
-     */
-    private $acl;
 
     /**
      * @var integer
@@ -49,8 +42,6 @@ class Groups
      */
     private $dateUpdated;
 
-
-
     /**
      * Get id
      *
@@ -65,7 +56,7 @@ class Groups
      * Set name
      *
      * @param string $name
-     * @return Groups
+     * @return Disorders
      */
     public function setName($name)
     {
@@ -85,33 +76,10 @@ class Groups
     }
 
     /**
-     * Set acl
-     *
-     * @param integer $acl
-     * @return Groups
-     */
-    public function setAcl($acl)
-    {
-        $this->acl = $acl;
-    
-        return $this;
-    }
-
-    /**
-     * Get acl
-     *
-     * @return integer 
-     */
-    public function getAcl()
-    {
-        return $this->acl;
-    }
-
-    /**
      * Set dateCreated
      *
      * @param integer $dateCreated
-     * @return Groups
+     * @return Disorders
      */
     public function setDateCreated($dateCreated)
     {
@@ -134,7 +102,7 @@ class Groups
      * Set dateUpdated
      *
      * @param integer $dateUpdated
-     * @return Groups
+     * @return Disorders
      */
     public function setDateUpdated($dateUpdated)
     {

@@ -5,19 +5,19 @@ namespace CorahnRin\CharactersBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Revers
+ * Setbacks
  *
- * @ORM\Table(name="revers")
+ * @ORM\Table(name="setbacks")
  * @ORM\Entity
  */
-class Revers
+class Setbacks
 {
     /**
      * @var integer
      *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
@@ -50,30 +50,6 @@ class Revers
     private $dateUpdated;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Characters", inversedBy="Revers")
-     * @ORM\JoinTable(name="character_revers",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="id_revers", referencedColumnName="id")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="id_characters", referencedColumnName="id")
-     *   }
-     * )
-     */
-    private $Characters;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->Characters = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    
-
-    /**
      * Get id
      *
      * @return integer 
@@ -87,7 +63,7 @@ class Revers
      * Set name
      *
      * @param string $name
-     * @return Revers
+     * @return Setbacks
      */
     public function setName($name)
     {
@@ -110,7 +86,7 @@ class Revers
      * Set description
      *
      * @param string $description
-     * @return Revers
+     * @return Setbacks
      */
     public function setDescription($description)
     {
@@ -133,7 +109,7 @@ class Revers
      * Set dateCreated
      *
      * @param integer $dateCreated
-     * @return Revers
+     * @return Setbacks
      */
     public function setDateCreated($dateCreated)
     {
@@ -156,7 +132,7 @@ class Revers
      * Set dateUpdated
      *
      * @param integer $dateUpdated
-     * @return Revers
+     * @return Setbacks
      */
     public function setDateUpdated($dateUpdated)
     {
@@ -173,38 +149,5 @@ class Revers
     public function getDateUpdated()
     {
         return $this->dateUpdated;
-    }
-
-    /**
-     * Add Characters
-     *
-     * @param \CorahnRin\CharactersBundle\Entity\Characters $characters
-     * @return Revers
-     */
-    public function addCharacter(\CorahnRin\CharactersBundle\Entity\Characters $characters)
-    {
-        $this->Characters[] = $characters;
-    
-        return $this;
-    }
-
-    /**
-     * Remove Characters
-     *
-     * @param \CorahnRin\CharactersBundle\Entity\Characters $characters
-     */
-    public function removeCharacter(\CorahnRin\CharactersBundle\Entity\Characters $characters)
-    {
-        $this->Characters->removeElement($characters);
-    }
-
-    /**
-     * Get Characters
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getCharacters()
-    {
-        return $this->Characters;
     }
 }

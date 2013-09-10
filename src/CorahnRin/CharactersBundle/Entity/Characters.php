@@ -17,7 +17,7 @@ class Characters
      *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
@@ -66,9 +66,9 @@ class Characters
     /**
      * @var string
      *
-     * @ORM\Column(name="char_content", type="text", nullable=false)
+     * @ORM\Column(name="content", type="text", nullable=false)
      */
-    private $charContent;
+    private $content;
 
     /**
      * @var string
@@ -208,43 +208,6 @@ class Characters
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Disciplines", mappedBy="Characters")
-     */
-    private $Disciplines;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Domains", inversedBy="Characters")
-     * @ORM\JoinTable(name="char_domains",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="id_characters", referencedColumnName="id")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="id_domains", referencedColumnName="id")
-     *   }
-     * )
-     */
-    private $Domains;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Flux", inversedBy="Characters")
-     * @ORM\JoinTable(name="char_flux",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="id_characters", referencedColumnName="id")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="id_flux", referencedColumnName="id")
-     *   }
-     * )
-     */
-    private $Flux;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
      * @ORM\ManyToMany(targetEntity="Miracles", mappedBy="Characters")
      */
     private $Miracles;
@@ -267,21 +230,6 @@ class Characters
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Ways", inversedBy="Characters")
-     * @ORM\JoinTable(name="char_ways",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="id_characters", referencedColumnName="id")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="id_ways", referencedColumnName="id")
-     *   }
-     * )
-     */
-    private $Ways;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
      * @ORM\ManyToMany(targetEntity="Weapons", inversedBy="Characters")
      * @ORM\JoinTable(name="char_weapons",
      *   joinColumns={
@@ -295,13 +243,6 @@ class Characters
     private $Weapons;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Revers", mappedBy="Characters")
-     */
-    private $Revers;
-
-    /**
      * @var \CharSocialClass
      *
      * @ORM\ManyToOne(targetEntity="CharSocialClass")
@@ -312,14 +253,14 @@ class Characters
     private $CharSocialClass;
 
     /**
-     * @var \Desordres
+     * @var \Disorders
      *
-     * @ORM\ManyToOne(targetEntity="Desordres")
+     * @ORM\ManyToOne(targetEntity="Disorders")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_desordres", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="id_disorders", referencedColumnName="id")
      * })
      */
-    private $Desordres;
+    private $disorder;
 
     /**
      * @var \Jobs
@@ -329,7 +270,7 @@ class Characters
      *   @ORM\JoinColumn(name="id_jobs", referencedColumnName="id")
      * })
      */
-    private $Jobs;
+    private $job;
 
     /**
      * @var \Regions
@@ -339,7 +280,7 @@ class Characters
      *   @ORM\JoinColumn(name="id_regions", referencedColumnName="id")
      * })
      */
-    private $Regions;
+    private $region;
 
     /**
      * @var \Traits
@@ -349,7 +290,7 @@ class Characters
      *   @ORM\JoinColumn(name="id_traits_flaw", referencedColumnName="id")
      * })
      */
-    private $TraitsFlaw;
+    private $traitFlaw;
 
     /**
      * @var \Traits
@@ -359,7 +300,7 @@ class Characters
      *   @ORM\JoinColumn(name="id_traits_quality", referencedColumnName="id")
      * })
      */
-    private $TraitsQuality;
+    private $traitQuality;
 
     /**
      * @var \Users
@@ -369,7 +310,7 @@ class Characters
      *   @ORM\JoinColumn(name="id_users", referencedColumnName="id")
      * })
      */
-    private $Users;
+    private $user;
 
     /**
      * Constructor
@@ -379,17 +320,11 @@ class Characters
         $this->Armors = new \Doctrine\Common\Collections\ArrayCollection();
         $this->Artifacts = new \Doctrine\Common\Collections\ArrayCollection();
         $this->Avdesv = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->Disciplines = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->Domains = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->Flux = new \Doctrine\Common\Collections\ArrayCollection();
         $this->Miracles = new \Doctrine\Common\Collections\ArrayCollection();
         $this->Ogham = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->Ways = new \Doctrine\Common\Collections\ArrayCollection();
         $this->Weapons = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->Revers = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
-
     /**
      * Get id
      *
@@ -539,26 +474,26 @@ class Characters
     }
 
     /**
-     * Set charContent
+     * Set content
      *
-     * @param string $charContent
+     * @param string $content
      * @return Characters
      */
-    public function setCharContent($charContent)
+    public function setContent($content)
     {
-        $this->charContent = $charContent;
+        $this->content = $content;
     
         return $this;
     }
 
     /**
-     * Get charContent
+     * Get content
      *
      * @return string 
      */
-    public function getCharContent()
+    public function getContent()
     {
-        return $this->charContent;
+        return $this->content;
     }
 
     /**
@@ -983,105 +918,6 @@ class Characters
     }
 
     /**
-     * Add Disciplines
-     *
-     * @param \CorahnRin\CharactersBundle\Entity\Disciplines $disciplines
-     * @return Characters
-     */
-    public function addDiscipline(\CorahnRin\CharactersBundle\Entity\Disciplines $disciplines)
-    {
-        $this->Disciplines[] = $disciplines;
-    
-        return $this;
-    }
-
-    /**
-     * Remove Disciplines
-     *
-     * @param \CorahnRin\CharactersBundle\Entity\Disciplines $disciplines
-     */
-    public function removeDiscipline(\CorahnRin\CharactersBundle\Entity\Disciplines $disciplines)
-    {
-        $this->Disciplines->removeElement($disciplines);
-    }
-
-    /**
-     * Get Disciplines
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getDisciplines()
-    {
-        return $this->Disciplines;
-    }
-
-    /**
-     * Add Domains
-     *
-     * @param \CorahnRin\CharactersBundle\Entity\Domains $domains
-     * @return Characters
-     */
-    public function addDomain(\CorahnRin\CharactersBundle\Entity\Domains $domains)
-    {
-        $this->Domains[] = $domains;
-    
-        return $this;
-    }
-
-    /**
-     * Remove Domains
-     *
-     * @param \CorahnRin\CharactersBundle\Entity\Domains $domains
-     */
-    public function removeDomain(\CorahnRin\CharactersBundle\Entity\Domains $domains)
-    {
-        $this->Domains->removeElement($domains);
-    }
-
-    /**
-     * Get Domains
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getDomains()
-    {
-        return $this->Domains;
-    }
-
-    /**
-     * Add Flux
-     *
-     * @param \CorahnRin\CharactersBundle\Entity\Flux $flux
-     * @return Characters
-     */
-    public function addFlux(\CorahnRin\CharactersBundle\Entity\Flux $flux)
-    {
-        $this->Flux[] = $flux;
-    
-        return $this;
-    }
-
-    /**
-     * Remove Flux
-     *
-     * @param \CorahnRin\CharactersBundle\Entity\Flux $flux
-     */
-    public function removeFlux(\CorahnRin\CharactersBundle\Entity\Flux $flux)
-    {
-        $this->Flux->removeElement($flux);
-    }
-
-    /**
-     * Get Flux
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getFlux()
-    {
-        return $this->Flux;
-    }
-
-    /**
      * Add Miracles
      *
      * @param \CorahnRin\CharactersBundle\Entity\Miracles $miracles
@@ -1148,39 +984,6 @@ class Characters
     }
 
     /**
-     * Add Ways
-     *
-     * @param \CorahnRin\CharactersBundle\Entity\Ways $ways
-     * @return Characters
-     */
-    public function addWay(\CorahnRin\CharactersBundle\Entity\Ways $ways)
-    {
-        $this->Ways[] = $ways;
-    
-        return $this;
-    }
-
-    /**
-     * Remove Ways
-     *
-     * @param \CorahnRin\CharactersBundle\Entity\Ways $ways
-     */
-    public function removeWay(\CorahnRin\CharactersBundle\Entity\Ways $ways)
-    {
-        $this->Ways->removeElement($ways);
-    }
-
-    /**
-     * Get Ways
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getWays()
-    {
-        return $this->Ways;
-    }
-
-    /**
      * Add Weapons
      *
      * @param \CorahnRin\CharactersBundle\Entity\Weapons $weapons
@@ -1214,39 +1017,6 @@ class Characters
     }
 
     /**
-     * Add Revers
-     *
-     * @param \CorahnRin\CharactersBundle\Entity\Revers $revers
-     * @return Characters
-     */
-    public function addRever(\CorahnRin\CharactersBundle\Entity\Revers $revers)
-    {
-        $this->Revers[] = $revers;
-    
-        return $this;
-    }
-
-    /**
-     * Remove Revers
-     *
-     * @param \CorahnRin\CharactersBundle\Entity\Revers $revers
-     */
-    public function removeRever(\CorahnRin\CharactersBundle\Entity\Revers $revers)
-    {
-        $this->Revers->removeElement($revers);
-    }
-
-    /**
-     * Get Revers
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getRevers()
-    {
-        return $this->Revers;
-    }
-
-    /**
      * Set CharSocialClass
      *
      * @param \CorahnRin\CharactersBundle\Entity\CharSocialClass $charSocialClass
@@ -1270,140 +1040,140 @@ class Characters
     }
 
     /**
-     * Set Desordres
+     * Set disorder
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Desordres $desordres
+     * @param \CorahnRin\CharactersBundle\Entity\Disorders $disorder
      * @return Characters
      */
-    public function setDesordres(\CorahnRin\CharactersBundle\Entity\Desordres $desordres = null)
+    public function setDisorder(\CorahnRin\CharactersBundle\Entity\Disorders $disorder = null)
     {
-        $this->Desordres = $desordres;
+        $this->disorder = $disorder;
     
         return $this;
     }
 
     /**
-     * Get Desordres
+     * Get disorder
      *
-     * @return \CorahnRin\CharactersBundle\Entity\Desordres 
+     * @return \CorahnRin\CharactersBundle\Entity\Disorders 
      */
-    public function getDesordres()
+    public function getDisorder()
     {
-        return $this->Desordres;
+        return $this->disorder;
     }
 
     /**
-     * Set Jobs
+     * Set job
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Jobs $jobs
+     * @param \CorahnRin\CharactersBundle\Entity\Jobs $job
      * @return Characters
      */
-    public function setJobs(\CorahnRin\CharactersBundle\Entity\Jobs $jobs = null)
+    public function setJob(\CorahnRin\CharactersBundle\Entity\Jobs $job = null)
     {
-        $this->Jobs = $jobs;
+        $this->job = $job;
     
         return $this;
     }
 
     /**
-     * Get Jobs
+     * Get job
      *
      * @return \CorahnRin\CharactersBundle\Entity\Jobs 
      */
-    public function getJobs()
+    public function getJob()
     {
-        return $this->Jobs;
+        return $this->job;
     }
 
     /**
-     * Set Regions
+     * Set region
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Regions $regions
+     * @param \CorahnRin\CharactersBundle\Entity\Regions $region
      * @return Characters
      */
-    public function setRegions(\CorahnRin\CharactersBundle\Entity\Regions $regions = null)
+    public function setRegion(\CorahnRin\CharactersBundle\Entity\Regions $region = null)
     {
-        $this->Regions = $regions;
+        $this->region = $region;
     
         return $this;
     }
 
     /**
-     * Get Regions
+     * Get region
      *
      * @return \CorahnRin\CharactersBundle\Entity\Regions 
      */
-    public function getRegions()
+    public function getRegion()
     {
-        return $this->Regions;
+        return $this->region;
     }
 
     /**
-     * Set TraitsFlaw
+     * Set traitFlaw
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Traits $traitsFlaw
+     * @param \CorahnRin\CharactersBundle\Entity\Traits $traitFlaw
      * @return Characters
      */
-    public function setTraitsFlaw(\CorahnRin\CharactersBundle\Entity\Traits $traitsFlaw = null)
+    public function setTraitFlaw(\CorahnRin\CharactersBundle\Entity\Traits $traitFlaw = null)
     {
-        $this->TraitsFlaw = $traitsFlaw;
+        $this->traitFlaw = $traitFlaw;
     
         return $this;
     }
 
     /**
-     * Get TraitsFlaw
+     * Get traitFlaw
      *
      * @return \CorahnRin\CharactersBundle\Entity\Traits 
      */
-    public function getTraitsFlaw()
+    public function getTraitFlaw()
     {
-        return $this->TraitsFlaw;
+        return $this->traitFlaw;
     }
 
     /**
-     * Set TraitsQuality
+     * Set traitQuality
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Traits $traitsQuality
+     * @param \CorahnRin\CharactersBundle\Entity\Traits $traitQuality
      * @return Characters
      */
-    public function setTraitsQuality(\CorahnRin\CharactersBundle\Entity\Traits $traitsQuality = null)
+    public function setTraitQuality(\CorahnRin\CharactersBundle\Entity\Traits $traitQuality = null)
     {
-        $this->TraitsQuality = $traitsQuality;
+        $this->traitQuality = $traitQuality;
     
         return $this;
     }
 
     /**
-     * Get TraitsQuality
+     * Get traitQuality
      *
      * @return \CorahnRin\CharactersBundle\Entity\Traits 
      */
-    public function getTraitsQuality()
+    public function getTraitQuality()
     {
-        return $this->TraitsQuality;
+        return $this->traitQuality;
     }
 
     /**
-     * Set Users
+     * Set user
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Users $users
+     * @param \CorahnRin\UsersBundle\Entity\Users $user
      * @return Characters
      */
-    public function setUsers(\CorahnRin\CharactersBundle\Entity\Users $users = null)
+    public function setUser(\CorahnRin\UsersBundle\Entity\Users $user = null)
     {
-        $this->Users = $users;
+        $this->user = $user;
     
         return $this;
     }
 
     /**
-     * Get Users
+     * Get user
      *
-     * @return \CorahnRin\CharactersBundle\Entity\Users 
+     * @return \CorahnRin\UsersBundle\Entity\Users 
      */
-    public function getUsers()
+    public function getUser()
     {
-        return $this->Users;
+        return $this->user;
     }
 }
