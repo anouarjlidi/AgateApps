@@ -1,7 +1,7 @@
-corahn_rin_users:
-    resource: "@CorahnRinUsersBundle/Controller/"
+corahn_rin_maps:
+    resource: "@CorahnRinMapsBundle/Controller/"
     type:     annotation
-    prefix:   /
+    prefix:   /maps/
 
 corahn_rin_admin:
     resource: "@CorahnRinAdminBundle/Controller/"
