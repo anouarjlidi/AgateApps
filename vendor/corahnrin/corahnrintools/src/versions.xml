@@ -1,5 +1,67 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <versions>
+	<version date="20139999" code="2.000">
+		<task type="css">
+			<element name="">Design général</element>
+			<comment>Intégré Bootstrap3.</comment>
+		</task>
+		<task type="function">
+			<element name="all">Tout le système</element>
+			<comment>Corahn-Rin est désormais converti en une application MVC conforme aux normes.</comment>
+			<comment>Le coeur du système a été modifié de façon à intégrer un contrôleur frontal qui va charger tous les autres modules fonction de la requête.</comment>
+			<comment>Les librairies sont désormais dissociées des fichiers applicatifs de l'application elle-même</comment>
+		</task>
+		<task type="function">
+			<element name="all">Ajout de fonctionnalités au coeur de l'application</element>
+			<comment>Contrôleur frontal</comment>
+			<comment>Modèle générique</comment>
+			<comment>Contrôleur générique</comment>
+			<comment>Vue générique</comment>
+			<comment>Gestionnaire de requêtes en objet</comment>
+			<comment>Gestionnaire d'exceptions (pour remplacer l'ancien gestionnaire d'erreurs)</comment>
+			<comment>Refonte du gestionnaire "__autoload()" pour gagner en temps d'exécution</comment>
+		</task>
+		<task type="modules">
+			<element name="all">Liste des modules générés lors de la refonte</element>
+			<comment>Module "Pages" pour gérer les simples données d'affichage</comment>
+			<comment>Module "Admin" pour gérer la connexion, l'inscription et la gestion du panneau d'administration de chaque utilisateur</comment>
+		</task>
+	</version>
+	<version date="20130717" code="1.232">
+		<task type="css">
+			<element name="">Design général</element>
+			<comment>Ajouté un "Favicon".</comment>
+		</task>
+	</version>
+	<version date="20130713" code="1.231">
+		<task type="db">
+			<element name="est_steps">Performances de la table des étapes</element>
+			<comment>Ajouté un index aux étapes du générateur pour améliorer les performances.</comment>
+		</task>
+	</version>
+	<version date="20130707" code="1.230">
+		<task type="function">
+			<element name="functions/class_esterenchar.php">Classe objet gérant le personnage</element>
+			<comment>Désormais, un joueur peut supprimer son personnage.
+			</comment>
+			<comment>La suppression est désormais indiquée dans la table des modifications des personnages.</comment>
+		</task>
+		<task type="page">
+			<element page="pages/mod_spend_exp.php" id="63" module="modules_spend_exp/mod__post.php"></element>
+			<comment>Corrigé un bug mineur provocant un mauvais calcul d'XP lors de la dépense d'XP.</comment>
+		</task>
+	</version>
+	<version date="20130706" code="1.221">
+		<task type="function">
+			<element name="git.php">Git</element>
+			<comment>Prise en charge de Git pour les mises à jour.</comment>
+		</task>
+		<task type="function">
+			<element name="functions/class_esterenchar.php">Classe objet gérant le personnage</element>
+			<comment>Corrigé un bug dans les feuilles de personnage en JPG qui n'affichait pas correctement les avantages et désavantages.
+			</comment>
+		</task>
+	</version>
 	<version date="20130628" code="1.22">
 		<tasks>
 			<task type="db">
