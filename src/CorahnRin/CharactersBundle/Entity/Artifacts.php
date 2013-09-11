@@ -85,16 +85,16 @@ class Artifacts
     private $damage;
 
     /**
-     * @var integer
+     * @var \Datetime
      *
-     * @ORM\Column(name="date_created", type="integer", nullable=false)
+     * @ORM\Column(name="date_created", type="datetime", nullable=false)
      */
     private $dateCreated;
 
     /**
-     * @var integer
+     * @var \Datetime
      *
-     * @ORM\Column(name="date_updated", type="integer", nullable=false)
+     * @ORM\Column(name="date_updated", type="datetime", nullable=false)
      */
     private $dateUpdated;
 

@@ -10,6 +10,12 @@ vendor/*
 web/uploads/*
 web/bundles/*
 
+# Eclipse
+.settings/
+.settings/*
+.buildpath
+.project
+
 # Configuration files
 app/config/parameters.ini
 app/config/parameters.yml
