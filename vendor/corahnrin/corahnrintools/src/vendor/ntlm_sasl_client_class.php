@@ -1,4 +1,6 @@
 <?php
+namespace CorahnRinTools;
+
 /*
  * ntlm_sasl_client.php
 *

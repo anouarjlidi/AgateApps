@@ -1,24 +1,28 @@
 {% extends "::base.html.twig" %}
-
 {% block body %}
 
-    <div class="container" id="corps">
+    <div id="wrapper">
+        <div id="layout" class="container">
 
-        {% render(controller("CorahnRinPagesBundle:Menus:menu")) %}
+            {# MENUS #}
+            {% render(controller("CorahnRinPagesBundle:Menus:menu")) %}
 
-        {% for key, message in app.session.flashbag.all() %}
-            <div class="alert alert-{{ key }}">
-               {{ message|trans({}, 'FOSUserBundle') }}
+            {# FLASH MESSAGES #}
+            {% for key, message in app.session.flashbag.all() %}
+                <div class="alert alert-{{ key }}">{{ message|trans({}, 'FOSUserBundle') }}</div>
+            {% endfor %}
+
+            {% block fos_user_content %}{% endblock fos_user_content %}
+
+            {# DYNAMIC CONTENT FOR LAYOUT #}
+            <div id="content">
+                {% block content_for_layout %}{% endblock %}
             </div>
-        {% endfor %}
 
-        {% block fos_user_content %}{% endblock fos_user_content %}
+        </div><!--/#layout-->
 
-        <div id="content">
-        {% block content_for_layout %}{% endblock %}
-        </div>
-    </div>
-{% endblock %}
+        {# FOOTER #}
+        {% include "CorahnRinPagesBundle:Pages:footer.html.twig" %}
+    </div><!--/#wrapper-->
 
-{% block javascripts %}
 {% endblock %}

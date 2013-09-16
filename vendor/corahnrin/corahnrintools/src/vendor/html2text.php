@@ -1,4 +1,6 @@
 <?php
+namespace CorahnRinTools;
+
 /*************************************************************************
  *                                                                       *
 * Converts HTML to formatted plain text                                 *

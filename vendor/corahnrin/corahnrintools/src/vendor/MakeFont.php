@@ -1,4 +1,6 @@
 <?php
+namespace CorahnRinTools;
+
 /*******************************************************************************
  * Utility to generate font definition files                                    *
 *                                                                              *

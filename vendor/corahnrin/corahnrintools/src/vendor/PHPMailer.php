@@ -1,4 +1,6 @@
 <?php
+namespace CorahnRinTools;
+
 /*~ class.phpmailer.php
  .---------------------------------------------------------------------------.
 |  Software: PHPMailer - PHP email class                                    |
@@ -40,13 +42,13 @@
 // }
 ##Constantes liées à PHP Mailer
 if (!defined('P_MAIL_SMTP_HOST')) {
-define('P_MAIL_SMTP_HOST', 'auth.smtp.1and1.fr');
-define('P_MAIL_SMTP_USER', 'no-reply@pierstoval.com');
-define('P_MAIL_SMTP_PASSWORD', '');
-define('P_MAIL_SMTP_SECURE', 'TLS');
-define('P_MAIL_SMTP_PORT', 587);
-define('P_MAIL_DEFAULT_FROM_MAIL', P_MAIL_SMTP_USER);
-define('P_MAIL_DEFAULT_FROM_NAME', 'Corahn Rin');
+	define('P_MAIL_SMTP_HOST', 'auth.smtp.1and1.fr');
+	define('P_MAIL_SMTP_USER', 'no-reply@pierstoval.com');
+	define('P_MAIL_SMTP_PASSWORD', '');
+	define('P_MAIL_SMTP_SECURE', 'TLS');
+	define('P_MAIL_SMTP_PORT', 587);
+	define('P_MAIL_DEFAULT_FROM_MAIL', P_MAIL_SMTP_USER);
+	define('P_MAIL_DEFAULT_FROM_NAME', 'Corahn Rin');
 }
 
 /**
@@ -2952,7 +2954,7 @@ class PHPMailer {
  * Exception handler for PHPMailer
  * @package PHPMailer
  */
-class phpmailerException extends Exception {
+class phpmailerException extends \Exception {
 	/**
 	 * Prettify error message output
 	 * @return string

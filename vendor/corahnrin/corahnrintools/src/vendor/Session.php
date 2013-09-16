@@ -1,4 +1,6 @@
 <?php
+namespace CorahnRinTools;
+
 /**
  * Classe statique permettant la gestion des variables de session
  *

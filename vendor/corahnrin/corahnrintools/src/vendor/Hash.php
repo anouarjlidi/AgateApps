@@ -1,4 +1,5 @@
 <?php
+namespace CorahnRinTools;
 
 /**
  * Library of array functions for manipulating and extracting data

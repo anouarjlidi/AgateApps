@@ -1,4 +1,6 @@
 <?php
+namespace CorahnRinTools;
+
 /**
  * Classe de gestion de fichiers locaux et distants.
  */

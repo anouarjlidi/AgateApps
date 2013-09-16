@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Events
  *
- * @ORM\Table(name="events")
+ * @ORM\Table()
  * @ORM\Entity
  */
 class Events
@@ -15,7 +15,7 @@ class Events
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -24,109 +24,88 @@ class Events
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255, nullable=false)
+     * @ORM\Column(type="string", length=255, nullable=false)
      */
     private $name;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date_created", type="datetime", nullable=false)
+	 * @Gedmo\Mapping\Annotation\Timestampable(on="create")
+     * @ORM\Column(type="datetime", nullable=false)
      */
-    private $dateCreated;
+    private $created;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date_modified", type="datetime", nullable=false)
+	 * @Gedmo\Mapping\Annotation\Timestampable(on="update")
+     * @ORM\Column(type="datetime", nullable=false)
      */
-    private $dateModified;
+    private $updated;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Foes", mappedBy="idEvents")
+     * @ORM\ManyToMany(targetEntity="Foes", mappedBy="events")
      */
-    private $idFoes;
+    private $foes;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="MarkersType", mappedBy="idEvents")
+     * @ORM\ManyToMany(targetEntity="MarkersType", mappedBy="events")
      */
-    private $idMarkersType;
+    private $markersType;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Markers", mappedBy="idEvents")
+     * @ORM\ManyToMany(targetEntity="Markers", mappedBy="events")
      */
-    private $idMarkers;
+    private $markers;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Npcs", mappedBy="idEvents")
+     * @ORM\ManyToMany(targetEntity="Npcs", mappedBy="events")
      */
-    private $idNpcs;
+    private $npcs;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Resources", mappedBy="idEvents")
+     * @ORM\ManyToMany(targetEntity="Resources", mappedBy="events")
      */
-    private $idResources;
+    private $resources;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Routes", mappedBy="idEvents")
+     * @ORM\ManyToMany(targetEntity="Routes", mappedBy="events")
      */
-    private $idRoutes;
+    private $routes;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="TypesRoutes", mappedBy="idEvents")
+     * @ORM\ManyToMany(targetEntity="RoutesTypes", mappedBy="events")
      */
-    private $idTypesRoutes;
+    private $routesTypes;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Weather", inversedBy="idEvents")
-     * @ORM\JoinTable(name="event_weather",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="id_events", referencedColumnName="id")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="id_weather", referencedColumnName="id")
-     *   }
-     * )
+     * @ORM\ManyToMany(targetEntity="Weather", inversedBy="events")
      */
-    private $idWeather;
+    private $weather;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Zones", mappedBy="idEvents")
+     * @ORM\ManyToMany(targetEntity="Zones", mappedBy="events")
      */
-    private $idZones;
+    private $zones;
 
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->idFoes = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->idMarkersType = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->idMarkers = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->idNpcs = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->idResources = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->idRoutes = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->idTypesRoutes = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->idWeather = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->idZones = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    
+
 }

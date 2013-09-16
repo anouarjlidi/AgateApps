@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Markers
  *
- * @ORM\Table(name="markers")
+ * @ORM\Table()
  * @ORM\Entity
  */
 class Markers
@@ -15,7 +15,7 @@ class Markers
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -24,90 +24,66 @@ class Markers
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255, nullable=false)
+     * @ORM\Column(type="string", length=255, nullable=false)
      */
     private $name;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="coordinates", type="text", nullable=false)
+     * @ORM\Column(type="text", nullable=false)
      */
     private $coordinates;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date_created", type="datetime", nullable=false)
+	 * @Gedmo\Mapping\Annotation\Timestampable(on="create")
+     * @ORM\Column(type="datetime", nullable=false)
      */
-    private $dateCreated;
+    private $created;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date_modified", type="datetime", nullable=false)
+	 * @Gedmo\Mapping\Annotation\Timestampable(on="update")
+     * @ORM\Column(type="datetime", nullable=false)
      */
-    private $dateModified;
+    private $updated;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Events", inversedBy="idMarkers")
-     * @ORM\JoinTable(name="event_markers",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="id_markers", referencedColumnName="id")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="id_events", referencedColumnName="id")
-     *   }
-     * )
+     * @ORM\ManyToMany(targetEntity="Routes", mappedBy="markers")
      */
-    private $idEvents;
-
+    private $routes;
+	
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Routes", mappedBy="idMarkers")
+     * @ORM\ManyToMany(targetEntity="Events", inversedBy="markers")
      */
-    private $idRoutes;
+    private $events;
 
     /**
-     * @var \Factions
+     * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\ManyToOne(targetEntity="Factions")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_factions", referencedColumnName="id")
-     * })
      */
-    private $idFactions;
+    private $factions;
 
     /**
-     * @var \Maps
+     * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\ManyToOne(targetEntity="Maps")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_maps", referencedColumnName="id")
-     * })
      */
-    private $idMaps;
+    private $maps;
 
     /**
-     * @var \MarkersType
+     * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\ManyToOne(targetEntity="MarkersType")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_markers_type", referencedColumnName="id")
-     * })
      */
-    private $idMarkersType;
+    private $markerType;
 
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->idEvents = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->idRoutes = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    
 }

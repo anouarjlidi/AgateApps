@@ -42,7 +42,12 @@ class MarkersType
      */
     private $dateModified;
 
-	
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Events", mappedBy="markersType")
+     */
+    private $events;
 	
 
     /**

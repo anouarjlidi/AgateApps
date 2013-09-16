@@ -1,4 +1,6 @@
 <?php
+namespace CorahnRinTools;
+
 /*******************************************************************************
  * Utility to parse TTF font files                                              *
 *                                                                              *

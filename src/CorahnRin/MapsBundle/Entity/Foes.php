@@ -42,7 +42,12 @@ class Foes
      */
     private $dateModified;
 
-	
+	/**
+     * @var \Doctrine\Common\Collections\Collection
+	 * 
+	 * @ORM\ManyToMany(targetEntity="Events", mappedBy="foes")
+	 */
+	private $events;
 
     /**
      * Get id

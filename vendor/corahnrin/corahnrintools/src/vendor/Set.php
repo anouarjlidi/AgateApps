@@ -1,4 +1,6 @@
 <?php
+namespace CorahnRinTools;
+
 /**
  * Library of array functions for Cake.
  *

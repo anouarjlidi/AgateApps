@@ -1,4 +1,6 @@
 <?php
+namespace CorahnRinTools;
+
 /*~ class.smtp.php
  .---------------------------------------------------------------------------.
 |  Software: PHPMailer - PHP email class                                    |

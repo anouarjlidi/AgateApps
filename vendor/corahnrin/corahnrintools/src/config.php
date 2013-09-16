@@ -11,6 +11,8 @@
 //date_default_timezone_set('Europe/Paris');
 //setlocale(LC_ALL, array('fr_FR', 'fr_FR.UTF-8', 'French_France', 'french'));
 
+define('CORAHNRIN_TOOLS', dirname(__FILE__));
+
 $root = preg_replace('~(\\\\|/)vendor.*$~isUu', '', dirname(__FILE__));
 define('ROOT', $root); //Chemin vers le dossier racine
 unset($root);
@@ -35,22 +37,22 @@ define('P_FPDF_SYSTEM_TTF_FONTS',	ROOT.DS.'vendor'.DS.'pierstools'.DS.'fpdf'.DS.
 
 ## On récupère le Host original pour conserver le port s'il est mentionné. Il sera ajouté à BASE_URL
 ## Utilisé surtout pour des serveurs locaux en 127.0.0.1:8888 ou 127.0.0.1:8080
-define('P_BASE_HOST', isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '127.0.0.1');
+//define('P_BASE_HOST', isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '127.0.0.1');
 
 ## Définition de la constante BASE_URL pour les liens internes. Source : http://www.koezion-cms.com/
-$baseUrl = '';
-$scriptPath = preg_split("#[\\\\/]#",dirname(__FILE__), -1, PREG_SPLIT_NO_EMPTY);
-$urlPath = preg_split("#[\\\\/]#", $_SERVER['REQUEST_URI'], -1, PREG_SPLIT_NO_EMPTY);
-foreach($urlPath as $k => $v) {
-	$key = array_search($v, $scriptPath);
-	if($key !== false) {
-		$baseUrl .= "/".$v;
-	} else {
-		break;
-	}
-}
-define('BASE_URL', 'http://'.P_BASE_HOST.$baseUrl);//url absolue du site
-unset($baseUrl, $scriptPath, $urlPath, $k, $v, $key);
+//$baseUrl = '';
+//$scriptPath = preg_split("#[\\\\/]#",dirname(__FILE__), -1, PREG_SPLIT_NO_EMPTY);
+//$urlPath = preg_split("#[\\\\/]#", $_SERVER['REQUEST_URI'], -1, PREG_SPLIT_NO_EMPTY);
+//foreach($urlPath as $k => $v) {
+//	$key = array_search($v, $scriptPath);
+//	if($key !== false) {
+//		$baseUrl .= "/".$v;
+//	} else {
+//		break;
+//	}
+//}
+//define('BASE_URL', 'http://'.P_BASE_HOST.$baseUrl);//url absolue du site
+//unset($baseUrl, $scriptPath, $urlPath, $k, $v, $key);
 
 ## Réécriture d'url active ou non, permet de créer des liens cohérents);
 //define('P_REWRITE_URLS', true);

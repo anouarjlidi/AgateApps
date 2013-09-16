@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * MarkersType
  *
- * @ORM\Table(name="markers_type")
+ * @ORM\Table()
  * @ORM\Entity
  */
 class MarkersType
@@ -15,7 +15,7 @@ class MarkersType
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -24,45 +24,31 @@ class MarkersType
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255, nullable=false)
+     * @ORM\Column(type="string", length=255, nullable=false)
      */
     private $name;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date_created", type="datetime", nullable=false)
+	 * @Gedmo\Mapping\Annotation\Timestampable(on="create")
+     * @ORM\Column(type="datetime", nullable=false)
      */
-    private $dateCreated;
+    private $created;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date_modified", type="datetime", nullable=false)
+	 * @Gedmo\Mapping\Annotation\Timestampable(on="update")
+     * @ORM\Column(type="datetime", nullable=false)
      */
-    private $dateModified;
+    private $updated;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Events", inversedBy="idMarkersType")
-     * @ORM\JoinTable(name="event_marker_types",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="id_markers_type", referencedColumnName="id")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="id_events", referencedColumnName="id")
-     *   }
-     * )
+     * @ORM\ManyToMany(targetEntity="Events", inversedBy="markersType")
      */
-    private $idEvents;
+    private $events;
 
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->idEvents = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    
 }

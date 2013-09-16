@@ -1,4 +1,6 @@
 <?php
+namespace CorahnRinTools;
+
 /**
  * String handling methods.
  *

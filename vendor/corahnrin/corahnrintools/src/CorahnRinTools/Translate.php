@@ -10,8 +10,8 @@ class Translate {
 	private $insert_count = 0;
 
 	function __construct() {
-		$this->file = ROOT.DS.'translation'.DS.'words_'.P_LANG.'.php';
-		$this->file_log = ROOT.DS.'translation'.DS.'words_'.P_LANG.'.log';
+		$this->file = CORAHNRIN_TOOLS.DS.'translation'.DS.'words_'.P_LANG.'.php';
+		$this->file_log = CORAHNRIN_TOOLS.DS.'translation'.DS.'words_'.P_LANG.'.log';
 		if (file_exists($this->file)) {
 			$cnt = file_get_contents($this->file);
 			$cnt = json_decode($cnt, true);

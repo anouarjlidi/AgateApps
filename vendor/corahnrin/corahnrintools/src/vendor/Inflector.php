@@ -1,4 +1,6 @@
 <?php
+namespace CorahnRinTools;
+
 /**
  * Pluralize and singularize English words.
  *

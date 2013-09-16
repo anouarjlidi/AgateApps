@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Maps
  *
- * @ORM\Table(name="maps")
+ * @ORM\Table()
  * @ORM\Entity
  */
 class Maps
@@ -15,7 +15,7 @@ class Maps
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -24,51 +24,58 @@ class Maps
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255, nullable=false)
+     * @ORM\Column(type="string", length=255, nullable=false)
      */
     private $name;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="image", type="string", length=255, nullable=false)
+     * @ORM\Column(type="string", length=255, nullable=false)
      */
     private $image;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="text", nullable=false)
+     * @ORM\Column(type="text", nullable=false)
      */
     private $description;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="min_zoom", type="boolean", nullable=false)
+     * @ORM\Column(type="boolean", nullable=false)
      */
     private $minZoom;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="max_zoom", type="boolean", nullable=false)
+     * @ORM\Column(type="boolean", nullable=false)
      */
     private $maxZoom;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date_created", type="datetime", nullable=false)
+	 * @Gedmo\Mapping\Annotation\Timestampable(on="create")
+     * @ORM\Column(type="datetime", nullable=false)
      */
-    private $dateCreated;
+    private $created;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date_modified", type="datetime", nullable=false)
+	 * @Gedmo\Mapping\Annotation\Timestampable(on="update")
+     * @ORM\Column(type="datetime", nullable=false)
      */
-    private $dateModified;
+    private $updated;
 
-
+	/**
+     * @var \Doctrine\Common\Collections\Collection
+	 * 
+	 * @ORM\OneToMany(targetEntity="Routes", mappedBy="map")
+	 */
+	private $routes;
 }

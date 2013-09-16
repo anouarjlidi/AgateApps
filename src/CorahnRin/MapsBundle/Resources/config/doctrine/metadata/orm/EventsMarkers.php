@@ -7,21 +7,22 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * EventsMarkers
  *
- * @ORM\Table(name="event_markers")
+ * @ORM\Table()
  * @ORM\Entity
  */
 class EventsMarkers {
+
     /**
      * @var \Events
      *
-     * @ORM\Column(name="id_events", type="integer", length=255, nullable=false)
+     * @ORM\Column(type="integer", length=255, nullable=false)
      */
     private $event;
 	
     /**
      * @var \Markers
      *
-     * @ORM\Column(name="id_markers", type="integer", nullable=false)
+     * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id
      */
     private $marker;
@@ -29,21 +30,24 @@ class EventsMarkers {
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date_created", type="datetime", nullable=false)
+	 * @Gedmo\Mapping\Annotation\Timestampable(on="create")
+     * @ORM\Column(type="datetime", nullable=false)
      */
-    private $dateCreated;
+    private $created;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date_modified", type="datetime", nullable=false)
+	 * @Gedmo\Mapping\Annotation\Timestampable(on="update")
+     * @ORM\Column(type="datetime", nullable=false)
      */
-    private $dateModified;
+    private $updated;
 
 	/**
 	 * @var smallint
 	 * 
-	 * @ORM\Column(name="percentage", type="smallint", nullable=false)
+	 * @ORM\Column(type="smallint", nullable=false)
 	 */
 	private $percentage;
+
 }

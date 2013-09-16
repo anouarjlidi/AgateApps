@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Foes
  *
- * @ORM\Table(name="foes")
+ * @ORM\Table()
  * @ORM\Entity
  */
 class Foes
@@ -15,7 +15,7 @@ class Foes
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -24,45 +24,31 @@ class Foes
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255, nullable=false)
+     * @ORM\Column(type="string", length=255, nullable=false)
      */
     private $name;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date_created", type="datetime", nullable=false)
+	 * @Gedmo\Mapping\Annotation\Timestampable(on="create")
+     * @ORM\Column(type="datetime", nullable=false)
      */
-    private $dateCreated;
+    private $created;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date_modified", type="datetime", nullable=false)
+	 * @Gedmo\Mapping\Annotation\Timestampable(on="update")
+     * @ORM\Column(type="datetime", nullable=false)
      */
-    private $dateModified;
+    private $updated;
 
-    /**
+	/**
      * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Events", inversedBy="idFoes")
-     * @ORM\JoinTable(name="event_foes",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="id_foes", referencedColumnName="id")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="id_events", referencedColumnName="id")
-     *   }
-     * )
-     */
-    private $idEvents;
+	 * 
+	 * @ORM\ManyToMany(targetEntity="Events", mappedBy="foes")
+	 */
+	private $events;
 
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->idEvents = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    
 }

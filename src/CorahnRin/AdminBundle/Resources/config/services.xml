@@ -6,7 +6,7 @@
 
     <!--
     <parameters>
-        <parameter key="corahn_rin_admin.example.class">CorahnRin\AdminBundle\Example</parameter>
+        <parameter key="corahn_rin_admin.example.class">CorahnRin\CharactersBundle\Example</parameter>
     </parameters>
 
     <services>
