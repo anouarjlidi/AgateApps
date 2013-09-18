@@ -3,6 +3,7 @@
 namespace CorahnRin\MapsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use DoctrineCommonCollectionsCollection as DoctrineCollection;
 
 /**
  * Maps
@@ -73,7 +74,7 @@ class Maps
     private $updated;
 
 	/**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var DoctrineCollection
 	 * 
 	 * @ORM\OneToMany(targetEntity="Routes", mappedBy="map")
 	 */

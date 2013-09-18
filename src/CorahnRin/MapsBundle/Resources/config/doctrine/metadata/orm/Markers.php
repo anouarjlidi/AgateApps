@@ -3,6 +3,7 @@
 namespace CorahnRin\MapsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use DoctrineCommonCollectionsCollection as DoctrineCollection;
 
 /**
  * Markers
@@ -52,35 +53,35 @@ class Markers
     private $updated;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var DoctrineCollection
      *
      * @ORM\ManyToMany(targetEntity="Routes", mappedBy="markers")
      */
     private $routes;
 	
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var DoctrineCollection
      *
      * @ORM\ManyToMany(targetEntity="Events", inversedBy="markers")
      */
     private $events;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var DoctrineCollection
      *
      * @ORM\ManyToOne(targetEntity="Factions")
      */
     private $factions;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var DoctrineCollection
      *
      * @ORM\ManyToOne(targetEntity="Maps")
      */
     private $maps;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var DoctrineCollection
      *
      * @ORM\ManyToOne(targetEntity="MarkersType")
      */

@@ -3,6 +3,7 @@
 namespace CorahnRin\MapsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use DoctrineCommonCollectionsCollection as DoctrineCollection;
 
 /**
  * Resources
@@ -45,21 +46,21 @@ class Resources
     private $updated;
 	
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var DoctrineCollection
      *
      * @ORM\ManyToMany(targetEntity="Routes", inversedBy="resources")
      */
     private $routes;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var DoctrineCollection
      *
      * @ORM\ManyToMany(targetEntity="RoutesTypes", inversedBy="resources")
      */
     private $routesTypes;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var DoctrineCollection
      *
      * @ORM\ManyToMany(targetEntity="Events", inversedBy="resources")
      */

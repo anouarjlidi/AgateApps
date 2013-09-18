@@ -3,6 +3,7 @@
 namespace CorahnRin\MapsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use DoctrineCommonCollectionsCollection as DoctrineCollection;
 
 /**
  * Zones
@@ -66,7 +67,7 @@ class Zones
     private $map;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var DoctrineCollection
      *
      * @ORM\ManyToMany(targetEntity="Events", inversedBy="zones")
      */

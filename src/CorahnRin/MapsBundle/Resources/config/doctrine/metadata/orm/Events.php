@@ -3,6 +3,7 @@
 namespace CorahnRin\MapsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use DoctrineCommonCollectionsCollection as DoctrineCollection;
 
 /**
  * Events
@@ -45,67 +46,73 @@ class Events
     private $updated;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var DoctrineCollection
      *
      * @ORM\ManyToMany(targetEntity="Foes", mappedBy="events")
      */
     private $foes;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var DoctrineCollection
      *
      * @ORM\ManyToMany(targetEntity="MarkersType", mappedBy="events")
      */
     private $markersType;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var DoctrineCollection
      *
      * @ORM\ManyToMany(targetEntity="Markers", mappedBy="events")
      */
     private $markers;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var DoctrineCollection
      *
      * @ORM\ManyToMany(targetEntity="Npcs", mappedBy="events")
      */
     private $npcs;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var DoctrineCollection
      *
      * @ORM\ManyToMany(targetEntity="Resources", mappedBy="events")
      */
     private $resources;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var DoctrineCollection
      *
      * @ORM\ManyToMany(targetEntity="Routes", mappedBy="events")
      */
     private $routes;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var DoctrineCollection
      *
      * @ORM\ManyToMany(targetEntity="RoutesTypes", mappedBy="events")
      */
     private $routesTypes;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var DoctrineCollection
      *
-     * @ORM\ManyToMany(targetEntity="Weather", inversedBy="events")
+     * @ORM\ManyToMany(targetEntity="Weather", mappedBy="events")
      */
     private $weather;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var DoctrineCollection
      *
      * @ORM\ManyToMany(targetEntity="Zones", mappedBy="events")
      */
     private $zones;
 
+	/**
+	 * @var DoctrineCollection
+	 * 
+	 * @ORM\ManyToMany(targetEntity="Factions", mappedBy="events")
+	 */
+	private $factions;
 
 }

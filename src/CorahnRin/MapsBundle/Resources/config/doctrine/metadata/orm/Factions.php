@@ -3,6 +3,7 @@
 namespace CorahnRin\MapsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use DoctrineCommonCollectionsCollection as DoctrineCollection;
 
 /**
  * Factions
@@ -45,9 +46,17 @@ class Factions
     private $updated;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var DoctrineCollection
      *
      * @ORM\ManyToOne(targetEntity="Events", inversedBy="factions")
      */
 	private $zone;
+
+    /**
+     * @var DoctrineCollection
+     *
+     * @ORM\ManyToMany(targetEntity="Events", inversedBy="factions")
+     */
+	private $events;
+
 }

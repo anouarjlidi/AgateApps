@@ -3,6 +3,7 @@
 namespace CorahnRin\MapsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use DoctrineCommonCollectionsCollection as DoctrineCollection;
 
 /**
  * Foes
@@ -45,7 +46,7 @@ class Foes
     private $updated;
 
 	/**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var DoctrineCollection
 	 * 
 	 * @ORM\ManyToMany(targetEntity="Events", mappedBy="foes")
 	 */

@@ -22,3 +22,6 @@ app/config/parameters.yml
 
 # Backups
 *.php~
+
+# Fichiers dev
+_dev_files/

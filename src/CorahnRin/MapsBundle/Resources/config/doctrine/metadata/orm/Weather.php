@@ -3,6 +3,7 @@
 namespace CorahnRin\MapsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use DoctrineCommonCollectionsCollection as DoctrineCollection;
 
 /**
  * Weather
@@ -45,9 +46,9 @@ class Weather
     private $updated;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var DoctrineCollection
      *
-     * @ORM\ManyToOne(targetEntity="Events")
+     * @ORM\ManyToOne(targetEntity="Events", inversedBy="weather")
      */
 	private $events;
 }
