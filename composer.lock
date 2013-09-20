@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "2fad7017e9ed712f369f5bbb52305430",
+    "hash": "88758acc179f338d6ee266d8ad480091",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -61,7 +61,7 @@
                     "email": "kontakt@beberlei.de"
                 },
                 {
-                    "name": "Johannes Schmitt",
+                    "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com",
                     "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
@@ -197,7 +197,7 @@
                     "email": "kontakt@beberlei.de"
                 },
                 {
-                    "name": "Johannes Schmitt",
+                    "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com",
                     "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
@@ -269,7 +269,7 @@
                     "email": "kontakt@beberlei.de"
                 },
                 {
-                    "name": "Johannes Schmitt",
+                    "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com",
                     "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
@@ -520,7 +520,7 @@
                     "email": "roman@code-factory.org"
                 },
                 {
-                    "name": "Johannes Schmitt",
+                    "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com",
                     "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
@@ -611,12 +611,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSUserBundle.git",
-                "reference": "a6c12cc2b60176d2afad924f23031accfad9a384"
+                "reference": "85ef11b6d68e640d306574b87302c9f335b80ef2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/a6c12cc2b60176d2afad924f23031accfad9a384",
-                "reference": "a6c12cc2b60176d2afad924f23031accfad9a384",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/85ef11b6d68e640d306574b87302c9f335b80ef2",
+                "reference": "85ef11b6d68e640d306574b87302c9f335b80ef2",
                 "shasum": ""
             },
             "require": {
@@ -671,7 +671,7 @@
             "keywords": [
                 "User management"
             ],
-            "time": "2013-09-13 03:06:49"
+            "time": "2013-09-19 10:03:47"
         },
         {
             "name": "gedmo/doctrine-extensions",
@@ -1172,16 +1172,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/stof/StofDoctrineExtensionsBundle.git",
-                "reference": "fe3f6551a41d0bce874159fd4c46296fdd697d2b"
+                "reference": "6e8dc798687963ffc4e4e0dfa687b361699855a9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stof/StofDoctrineExtensionsBundle/zipball/fe3f6551a41d0bce874159fd4c46296fdd697d2b",
-                "reference": "fe3f6551a41d0bce874159fd4c46296fdd697d2b",
+                "url": "https://api.github.com/repos/stof/StofDoctrineExtensionsBundle/zipball/6e8dc798687963ffc4e4e0dfa687b361699855a9",
+                "reference": "6e8dc798687963ffc4e4e0dfa687b361699855a9",
                 "shasum": ""
             },
             "require": {
-                "gedmo/doctrine-extensions": "2.3.*",
+                "gedmo/doctrine-extensions": "~2.3.1",
                 "php": ">=5.3.2",
                 "symfony/framework-bundle": "~2.1"
             },
@@ -1225,7 +1225,7 @@
                 "translatable",
                 "tree"
             ],
-            "time": "2013-08-27 13:42:00"
+            "time": "2013-09-16 09:35:16"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -1709,12 +1709,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/twbs/bootstrap.git",
-                "reference": "6b97970d31221edcad8016dbccf5246fa7a97dd2"
+                "reference": "e148923f2764d0af6f7d6fb1b601840d241759b5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/6b97970d31221edcad8016dbccf5246fa7a97dd2",
-                "reference": "6b97970d31221edcad8016dbccf5246fa7a97dd2",
+                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/e148923f2764d0af6f7d6fb1b601840d241759b5",
+                "reference": "e148923f2764d0af6f7d6fb1b601840d241759b5",
                 "shasum": ""
             },
             "type": "library",
@@ -1738,7 +1738,7 @@
                 "bootstrap",
                 "css"
             ],
-            "time": "2013-09-13 18:49:11"
+            "time": "2013-09-20 03:57:11"
         }
     ],
     "packages-dev": [
