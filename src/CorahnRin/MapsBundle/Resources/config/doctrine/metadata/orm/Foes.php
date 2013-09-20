@@ -8,7 +8,6 @@ use DoctrineCommonCollectionsCollection as DoctrineCollection;
 /**
  * Foes
  *
- * @ORM\Table()
  * @ORM\Entity
  */
 class Foes
@@ -16,7 +15,6 @@ class Foes
     /**
      * @var integer
      *
-     * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -47,8 +45,8 @@ class Foes
 
 	/**
      * @var DoctrineCollection
-	 * 
-	 * @ORM\ManyToMany(targetEntity="Events", mappedBy="foes")
+	 *
+	 * @ORM\ManyToMany(targetEntity="Events", inversedBy="foes")
 	 */
 	private $events;
 

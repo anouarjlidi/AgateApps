@@ -8,7 +8,6 @@ use DoctrineCommonCollectionsCollection as DoctrineCollection;
 /**
  * Markers
  *
- * @ORM\Table()
  * @ORM\Entity
  */
 class Markers
@@ -16,7 +15,6 @@ class Markers
     /**
      * @var integer
      *
-     * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -58,20 +56,13 @@ class Markers
      * @ORM\ManyToMany(targetEntity="Routes", mappedBy="markers")
      */
     private $routes;
-	
-    /**
-     * @var DoctrineCollection
-     *
-     * @ORM\ManyToMany(targetEntity="Events", inversedBy="markers")
-     */
-    private $events;
 
     /**
      * @var DoctrineCollection
      *
-     * @ORM\ManyToOne(targetEntity="Factions")
+     * @ORM\ManyToOne(targetEntity="Factions", inversedBy="markers")
      */
-    private $factions;
+    private $faction;
 
     /**
      * @var DoctrineCollection
@@ -87,4 +78,11 @@ class Markers
      */
     private $markerType;
 
+
+    /**
+     * @var DoctrineCollection
+     *
+     * @ORM\ManyToMany(targetEntity="EventsMarkers", inversedBy="marker")
+     */
+    private $events;
 }

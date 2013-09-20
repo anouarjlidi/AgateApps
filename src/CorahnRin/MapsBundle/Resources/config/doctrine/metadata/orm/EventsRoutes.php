@@ -8,22 +8,23 @@ use DoctrineCommonCollectionsCollection as DoctrineCollection;
 /**
  * EventsRoutes
  *
- * @ORM\Table()
  * @ORM\Entity
  */
 class EventsRoutes {
+
     /**
      * @var \Events
      *
-     * @ORM\Column(type="integer", length=255, nullable=false)
+     * @ORM\Id
+     * @ORM\ManyToOne(targetEntity="Events", inversedBy="routes")
      */
     private $event;
-	
+
     /**
      * @var \Routes
      *
-     * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id
+     * @ORM\ManyToOne(targetEntity="Routes", inversedBy="events")
      */
     private $route;
 
@@ -45,7 +46,7 @@ class EventsRoutes {
 
 	/**
 	 * @var smallint
-	 * 
+	 *
 	 * @ORM\Column(type="smallint", nullable=false)
 	 */
 	private $percentage;

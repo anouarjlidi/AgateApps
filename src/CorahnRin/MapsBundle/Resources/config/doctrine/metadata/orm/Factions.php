@@ -8,7 +8,6 @@ use DoctrineCommonCollectionsCollection as DoctrineCollection;
 /**
  * Factions
  *
- * @ORM\Table()
  * @ORM\Entity
  */
 class Factions
@@ -16,7 +15,6 @@ class Factions
     /**
      * @var integer
      *
-     * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -50,7 +48,7 @@ class Factions
      *
      * @ORM\ManyToOne(targetEntity="Events", inversedBy="factions")
      */
-	private $zone;
+	private $zones;
 
     /**
      * @var DoctrineCollection
@@ -59,4 +57,17 @@ class Factions
      */
 	private $events;
 
+	/**
+	 * @var DoctrineCollection
+	 *
+	 * @ORM\OneToMany(targetEntity="Routes", mappedBy="faction")
+	 */
+	private $routes;
+
+	/**
+	 * @var DoctrineCollection
+	 *
+	 * @ORM\OneToMany(targetEntity="Markers", mappedBy="faction")
+	 */
+	private $markers;
 }

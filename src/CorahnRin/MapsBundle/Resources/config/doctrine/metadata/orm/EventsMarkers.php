@@ -8,7 +8,6 @@ use DoctrineCommonCollectionsCollection as DoctrineCollection;
 /**
  * EventsMarkers
  *
- * @ORM\Table()
  * @ORM\Entity
  */
 class EventsMarkers {
@@ -16,17 +15,25 @@ class EventsMarkers {
     /**
      * @var \Events
      *
-     * @ORM\Column(type="integer", length=255, nullable=false)
+     * @ORM\Id
+     * @ORM\ManyToOne(targetEntity="Events", inversedBy="markers")
      */
     private $event;
-	
+
     /**
      * @var \Markers
      *
-     * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id
+     * @ORM\ManyToOne(targetEntity="Markers", inversedBy="events")
      */
     private $marker;
+
+	/**
+	 * @var smallint
+	 *
+	 * @ORM\Column(type="smallint", nullable=false)
+	 */
+	private $percentage;
 
     /**
      * @var \DateTime
@@ -43,12 +50,5 @@ class EventsMarkers {
      * @ORM\Column(type="datetime", nullable=false)
      */
     private $updated;
-
-	/**
-	 * @var smallint
-	 * 
-	 * @ORM\Column(type="smallint", nullable=false)
-	 */
-	private $percentage;
 
 }
