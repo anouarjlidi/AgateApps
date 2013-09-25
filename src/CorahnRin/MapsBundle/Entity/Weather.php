@@ -11,12 +11,11 @@ use DoctrineCommonCollectionsCollection as DoctrineCollection;
  * @ORM\Table()
  * @ORM\Entity
  */
-class Weather
-{
+class Weather {
+
     /**
      * @var integer
      *
-     * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -48,7 +47,7 @@ class Weather
     /**
      * @var DoctrineCollection
      *
-     * @ORM\ManyToOne(targetEntity="Events")
+     * @ORM\ManyToMany(targetEntity="Events", inversedBy="weather")
      */
 	private $events;
 }

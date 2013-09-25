@@ -4,6 +4,7 @@
 
 class CorahnRinTools {
 	function __construct() {
+		if (defined('CORAHNRIN_TOOLS')) { return; }
 //		if (PHP_SAPI !== 'cli') {
 		require __DIR__.DIRECTORY_SEPARATOR.'config.php';
 		$this->load_functions();

@@ -8,23 +8,23 @@ use DoctrineCommonCollectionsCollection as DoctrineCollection;
 /**
  * EventsResources
  *
- * @ORM\Table()
  * @ORM\Entity
  */
-class EventsResources
-{
+class EventsResources {
+
     /**
      * @var \Events
      *
-     * @ORM\Column(type="integer", length=255, nullable=false)
+     * @ORM\Id
+     * @ORM\ManyToOne(targetEntity="Events", inversedBy="resources")
      */
     private $event;
-	
+
     /**
      * @var \Resources
      *
-     * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id
+     * @ORM\ManyToOne(targetEntity="Resources", inversedBy="events")
      */
     private $resource;
 
@@ -46,7 +46,7 @@ class EventsResources
 
 	/**
 	 * @var smallint
-	 * 
+	 *
 	 * @ORM\Column(type="smallint", nullable=false)
 	 */
 	private $percentage;

@@ -75,7 +75,7 @@ class Maps
 
 	/**
      * @var DoctrineCollection
-	 * 
+	 *
 	 * @ORM\OneToMany(targetEntity="Routes", mappedBy="map")
 	 */
 	private $routes;

@@ -16,7 +16,6 @@ class Zones
     /**
      * @var integer
      *
-     * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -53,23 +52,23 @@ class Zones
     private $updated;
 
     /**
-     * @var \Factions
-     *
-     * @ORM\ManyToOne(targetEntity="Factions", mappedBy="zone")
-     */
-    private $faction;
-
-    /**
      * @var \Maps
      *
-     * @ORM\ManyToOne(targetEntity="Maps")
+     * @ORM\ManyToOne(targetEntity="Maps", inversedBy="zones")
      */
     private $map;
 
     /**
+     * @var \Factions
+     *
+     * @ORM\ManyToOne(targetEntity="Factions", inversedBy="zone")
+     */
+    private $faction;
+
+    /**
      * @var DoctrineCollection
      *
-     * @ORM\ManyToMany(targetEntity="Events", inversedBy="zones")
+     * @ORM\OneToMany(targetEntity="EventsZones", mappedBy="zone")
      */
 	private $events;
 
