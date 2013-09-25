@@ -3,7 +3,7 @@
 namespace CorahnRin\MapsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use DoctrineCommonCollectionsCollection as DoctrineCollection;
+use Doctrine\Common\Collections\ArrayCollection as DoctrineCollection;
 
 /**
  * Routes
@@ -59,6 +59,8 @@ class Routes
      */
     private $resources;
 
+	
+	
     /**
      * @var DoctrineCollection
      *
@@ -74,16 +76,23 @@ class Routes
     private $map;
 
     /**
+     * @var \Factions
+     *
+     * @ORM\ManyToOne(targetEntity="Factions", inversedBy="routes")
+     */
+    private $faction;
+
+    /**
      * @var \RoutesTypes
      *
-     * @ORM\ManyToOne(targetEntity="RoutesTypes")
+     * @ORM\ManyToOne(targetEntity="RoutesTypes", inversedBy="routes")
      */
     private $routeType;
 
     /**
      * @var DoctrineCollection
      *
-     * @ORM\ManyToMany(targetEntity="Events", inversedBy="routes")
+     * @ORM\OneToMany(targetEntity="EventsRoutes", mappedBy="route")
      */
 	private $events;
 

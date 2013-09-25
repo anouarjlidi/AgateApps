@@ -3,7 +3,7 @@
 namespace CorahnRin\MapsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use DoctrineCommonCollectionsCollection as DoctrineCollection;
+use Doctrine\Common\Collections\ArrayCollection as DoctrineCollection;
 
 /**
  * Events
@@ -14,7 +14,9 @@ class Events
 {
     /**
      * @var integer
+	 * 
      * @ORM\Id
+     * @ORM\Column(type="integer", nullable=false)
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
@@ -75,7 +77,7 @@ class Events
 
     /**
      * @var DoctrineCollection
-     * @ORM\OneToMany(targetEntity="EventsMarkersType", mappedBy="event")
+     * @ORM\OneToMany(targetEntity="EventsMarkersTypes", mappedBy="event")
      */
     private $markersType;
 

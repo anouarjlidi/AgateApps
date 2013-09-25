@@ -3,7 +3,7 @@
 namespace CorahnRin\MapsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use DoctrineCommonCollectionsCollection as DoctrineCollection;
+use Doctrine\Common\Collections\ArrayCollection as DoctrineCollection;
 
 /**
  * Markers
@@ -16,6 +16,7 @@ class Markers
      * @var integer
      *
      * @ORM\Id
+     * @ORM\Column(type="integer", nullable=false)
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
@@ -67,22 +68,21 @@ class Markers
     /**
      * @var DoctrineCollection
      *
-     * @ORM\ManyToOne(targetEntity="Maps")
+     * @ORM\ManyToOne(targetEntity="Maps", inversedBy="markers")
      */
-    private $maps;
+    private $map;
 
     /**
      * @var DoctrineCollection
      *
-     * @ORM\ManyToOne(targetEntity="MarkersType")
+     * @ORM\ManyToOne(targetEntity="MarkersTypes", inversedBy="markers")
      */
     private $markerType;
 
-
     /**
      * @var DoctrineCollection
      *
-     * @ORM\ManyToMany(targetEntity="EventsMarkers", inversedBy="marker")
+     * @ORM\OneToMany(targetEntity="EventsMarkers", mappedBy="marker")
      */
     private $events;
 }

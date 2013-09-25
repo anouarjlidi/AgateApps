@@ -3,7 +3,7 @@
 namespace CorahnRin\MapsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use DoctrineCommonCollectionsCollection as DoctrineCollection;
+use Doctrine\Common\Collections\ArrayCollection as DoctrineCollection;
 
 /**
  * Zones
@@ -17,6 +17,7 @@ class Zones
      * @var integer
      *
      * @ORM\Id
+     * @ORM\Column(type="integer", nullable=false)
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;

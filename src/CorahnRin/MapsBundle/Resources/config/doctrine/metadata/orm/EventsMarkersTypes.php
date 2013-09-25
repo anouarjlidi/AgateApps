@@ -3,7 +3,7 @@
 namespace CorahnRin\MapsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use DoctrineCommonCollectionsCollection as DoctrineCollection;
+use Doctrine\Common\Collections\ArrayCollection as DoctrineCollection;
 
 /**
  * EventsMarkersTypes
@@ -16,6 +16,7 @@ class EventsMarkersTypes {
      * @var \Events
      *
      * @ORM\Id
+     * @ORM\Column(type="integer", nullable=false)
      * @ORM\ManyToOne(targetEntity="Events", inversedBy="markersTypes")
      */
     private $event;
@@ -26,7 +27,7 @@ class EventsMarkersTypes {
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="MarkersTypes", inversedBy="events")
      */
-    private $marker_type;
+    private $markerType;
 
     /**
      * @var \DateTime

@@ -3,7 +3,7 @@
 namespace CorahnRin\MapsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use DoctrineCommonCollectionsCollection as DoctrineCollection;
+use Doctrine\Common\Collections\ArrayCollection as DoctrineCollection;
 
 /**
  * Resources
@@ -62,7 +62,7 @@ class Resources
     /**
      * @var DoctrineCollection
      *
-     * @ORM\ManyToMany(targetEntity="Events", inversedBy="resources")
+     * @ORM\OneToMany(targetEntity="EventsResources", mappedBy="resource")
      */
 	private $events;
 }

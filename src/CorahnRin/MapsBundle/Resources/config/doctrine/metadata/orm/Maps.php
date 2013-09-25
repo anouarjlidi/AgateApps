@@ -3,7 +3,7 @@
 namespace CorahnRin\MapsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use DoctrineCommonCollectionsCollection as DoctrineCollection;
+use Doctrine\Common\Collections\ArrayCollection as DoctrineCollection;
 
 /**
  * Maps
@@ -79,4 +79,18 @@ class Maps
 	 * @ORM\OneToMany(targetEntity="Routes", mappedBy="map")
 	 */
 	private $routes;
+
+	/**
+     * @var DoctrineCollection
+	 *
+	 * @ORM\OneToMany(targetEntity="Markers", mappedBy="map")
+	 */
+	private $markers;
+
+	/**
+     * @var DoctrineCollection
+	 *
+	 * @ORM\OneToMany(targetEntity="Zones", mappedBy="map")
+	 */
+	private $zones;
 }

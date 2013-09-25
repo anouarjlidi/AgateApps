@@ -3,7 +3,7 @@
 namespace CorahnRin\MapsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use DoctrineCommonCollectionsCollection as DoctrineCollection;
+use Doctrine\Common\Collections\ArrayCollection as DoctrineCollection;
 
 /**
  * Factions
@@ -16,6 +16,7 @@ class Factions
      * @var integer
      *
      * @ORM\Id
+     * @ORM\Column(type="integer", nullable=false)
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
@@ -46,16 +47,9 @@ class Factions
     /**
      * @var DoctrineCollection
      *
-     * @ORM\ManyToOne(targetEntity="Events", inversedBy="factions")
+     * @ORM\OneToMany(targetEntity="Events", mappedBy="faction")
      */
 	private $zones;
-
-    /**
-     * @var DoctrineCollection
-     *
-     * @ORM\ManyToMany(targetEntity="Events", inversedBy="factions")
-     */
-	private $events;
 
 	/**
 	 * @var DoctrineCollection
@@ -70,4 +64,12 @@ class Factions
 	 * @ORM\OneToMany(targetEntity="Markers", mappedBy="faction")
 	 */
 	private $markers;
+
+    /**
+     * @var DoctrineCollection
+     *
+     * @ORM\ManyToMany(targetEntity="Events", inversedBy="factions")
+     */
+	private $events;
+
 }
