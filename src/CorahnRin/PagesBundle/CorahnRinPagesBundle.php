@@ -8,7 +8,7 @@ use CorahnRinTools;
 class CorahnRinPagesBundle extends Bundle
 {
 	function __construct(){
-		new CorahnRinTools();
+//		new CorahnRinTools();
 	}
 	function __destruct() {
 		//var_dump($this);
