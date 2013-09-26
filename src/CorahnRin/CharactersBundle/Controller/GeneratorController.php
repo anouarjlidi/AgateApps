@@ -16,7 +16,7 @@ class GeneratorController extends Controller
     {
     	$repo = $this->getDoctrine()->getManager()->getRepository('CorahnRinCharactersBundle:Steps');
     	$datas = $repo->findAll();
-    	return array();
+    	return array('datas'=>$datas);
     }
 
     /**

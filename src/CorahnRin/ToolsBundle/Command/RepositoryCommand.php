@@ -182,7 +182,7 @@ BASE_FILE
 			}
 			$content = $this->base_file;
 			$content = str_replace('{name}', $name, $content);
-			$content = str_replace('{namespace}', $namespace, $content);
+			$content = str_replace('{namespace}', str_replace('\\Entity', '\\Repository', $namespace), $content);
 			if ($overwrite) {
 				$files_count++;
 				if ($exists) {
