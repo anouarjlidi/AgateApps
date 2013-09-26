@@ -14,6 +14,9 @@ class GeneratorController extends Controller
      */
     public function indexAction()
     {
+    	$repo = $this->getDoctrine()->getManager()->getRepository('CorahnRinCharactersBundle:Steps');
+    	$datas = $repo->findAll();
+    	return array();
     }
 
     /**

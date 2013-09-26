@@ -1,7 +1,8 @@
-{% extends "::base.html.twig" %}
+{% extends "::layout.html.twig" %}
 
-{% block title %}CorahnRinCharactersBundle:Generator:index{% endblock %}
+{% block title %}{% trans %}Générateur{% endtrans %} {{ parent() }}{% endblock %}
 
-{% block body %}
-<h1>Welcome to the Generator:index page</h1>
+{% block content_for_layout %}
+<h1>{{ 'Générateur' | trans }}</h1>
+{{ parent() }}
 {% endblock %}
