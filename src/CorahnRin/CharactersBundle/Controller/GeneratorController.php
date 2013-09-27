@@ -20,11 +20,11 @@ class GeneratorController extends Controller
     }
 
     /**
-     * @Route("/generate/{id}_{slug}")
+     * @Route("/generate/{id}_{slug}", name="corahnrin_generate_step")
      * @Template()
      */
-    public function stepAction($id, $slug)
-    {
+    public function stepAction($id, $slug) {
+    	return array();
     }
 
 }
