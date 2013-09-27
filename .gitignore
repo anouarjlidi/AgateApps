@@ -24,4 +24,4 @@ app/config/parameters.yml
 *.php~
 
 # Fichiers dev
-_dev_files/
+#_dev_files/
