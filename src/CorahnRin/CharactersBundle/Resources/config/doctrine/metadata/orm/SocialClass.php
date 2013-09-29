@@ -23,23 +23,24 @@ class SocialClass
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=25, nullable=false)
+     * @ORM\Column(type="string", length=25, nullable=false, unique=true)
      */
     private $name;
 
     /**
      * @var \Datetime
-     *
+     * @Gedmo\Mapping\Annotation\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
      */
-    private $dateCreated;
+    private $created;
 
     /**
      * @var \Datetime
-     *
+
+     * @Gedmo\Mapping\Annotation\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
-    private $dateUpdated;
+    private $updated;
 
     /**
      * @var \Doctrine\Common\Collections\Collection

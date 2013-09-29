@@ -5,11 +5,11 @@ namespace CorahnRin\CharactersBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Avdesv
+ * Avantages
  *
  * @ORM\Entity
  */
-class Avdesv
+class Avantages
 {
     /**
      * @var integer
@@ -23,7 +23,7 @@ class Avdesv
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=50, nullable=false)
+     * @ORM\Column(type="string", length=50, nullable=false, unique=true)
      */
     private $name;
 
@@ -78,17 +78,18 @@ class Avdesv
 
     /**
      * @var \Datetime
-     *
+     * @Gedmo\Mapping\Annotation\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
      */
-    private $dateCreated;
+    private $created;
 
     /**
      * @var \Datetime
-     *
+
+     * @Gedmo\Mapping\Annotation\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
-    private $dateUpdated;
+    private $updated;
 
 
 }

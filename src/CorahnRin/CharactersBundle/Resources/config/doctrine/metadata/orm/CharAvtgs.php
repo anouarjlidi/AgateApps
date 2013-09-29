@@ -14,20 +14,18 @@ class CharAvtgs
     /**
      * @var \Characters
      *
-     * @ORM\Column(type="integer")
      * @ORM\Id
 	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Characters")
      */
     private $character;
 
     /**
-     * @var \Avdesv
+     * @var \Avantage
      *
-     * @ORM\Column(type="integer")
      * @ORM\Id
-	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Avdesv")
+	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Avantage")
      */
-    private $avdesv;
+    private $avantage;
 
     /**
      * @var boolean

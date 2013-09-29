@@ -42,14 +42,14 @@ class Characters
     private $sex;
 
     /**
-     * @var string
+     * @var array
      *
      * @ORM\Column(type="array", nullable=false)
      */
     private $inventory;
 
     /**
-     * @var string
+     * @var array
      *
      * @ORM\Column(type="array", nullable=false)
      */
@@ -155,17 +155,18 @@ class Characters
 
     /**
      * @var \Datetime
-     *
+     * @Gedmo\Mapping\Annotation\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
      */
-    private $dateCreated;
+    private $created;
 
     /**
      * @var \Datetime
-     *
+
+     * @Gedmo\Mapping\Annotation\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
-    private $dateUpdated;
+    private $updated;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -200,9 +201,9 @@ class Characters
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Avdesv", mappedBy="Characters")
+     * @ORM\ManyToMany(targetEntity="Avantages", mappedBy="Characters")
      */
-    private $Avdesv;
+    private $Avantages;
 
     /**
      * @var \Doctrine\Common\Collections\Collection

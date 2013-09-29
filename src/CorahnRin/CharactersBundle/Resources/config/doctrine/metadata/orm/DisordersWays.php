@@ -32,7 +32,7 @@ class DisordersWays
     /**
      * @var boolean
      *
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=false)
      */
     private $isMajor;
 

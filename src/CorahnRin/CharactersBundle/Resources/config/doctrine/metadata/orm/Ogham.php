@@ -23,23 +23,24 @@ class Ogham
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=70, nullable=false)
+     * @ORM\Column(type="string", length=70, nullable=false, unique=true)
      */
     private $name;
 
     /**
      * @var \Datetime
-     *
+     * @Gedmo\Mapping\Annotation\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
      */
-    private $dateCreated;
+    private $created;
 
     /**
      * @var \Datetime
-     *
+
+     * @Gedmo\Mapping\Annotation\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
-    private $dateUpdated;
+    private $updated;
 
     /**
      * @var \Doctrine\Common\Collections\Collection

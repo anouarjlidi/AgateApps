@@ -36,25 +36,23 @@ class CharModifications
 
     /**
      * @var \Datetime
-     *
+     * @Gedmo\Mapping\Annotation\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
      */
-    private $dateCreated;
+    private $created;
 
     /**
      * @var \Datetime
-     *
+
+     * @Gedmo\Mapping\Annotation\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
-    private $dateUpdated;
+    private $updated;
 
     /**
      * @var \Characters
      *
      * @ORM\ManyToOne(targetEntity="Characters")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(referencedColumnName="id")
-     * })
      */
     private $character;
 
@@ -62,9 +60,6 @@ class CharModifications
      * @var \Users
      *
      * @ORM\ManyToOne(targetEntity="CorahnRin\UsersBundle\Entity\Users")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(referencedColumnName="id")
-     * })
      */
     private $user;
 

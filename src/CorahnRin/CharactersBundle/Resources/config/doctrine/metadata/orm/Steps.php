@@ -23,14 +23,14 @@ class Steps
     /**
      * @var integer
      *
-     * @ORM\Column(type="integer", nullable=false)
+     * @ORM\Column(type="integer", nullable=false, unique=true)
      */
     private $step;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=50, nullable=false)
+     * @ORM\Column(type="string", length=50, nullable=false, unique=true)
      */
     private $slug;
 
@@ -43,17 +43,18 @@ class Steps
 
     /**
      * @var \Datetime
-     *
+     * @Gedmo\Mapping\Annotation\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
      */
-    private $dateCreated;
+    private $created;
 
     /**
      * @var \Datetime
-     *
+
+     * @Gedmo\Mapping\Annotation\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
-    private $dateUpdated;
+    private $updated;
 
 
 
