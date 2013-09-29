@@ -1,13 +1,12 @@
 <?php
 
-
+namespace CorahnRin\CharactersBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Miracles
  *
- * @ORM\Table(name="miracles")
  * @ORM\Entity
  */
 class Miracles
@@ -15,61 +14,53 @@ class Miracles
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=70, nullable=false)
+     * @ORM\Column(type="string", length=70, nullable=false)
      */
     private $name;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="is_major", type="boolean", nullable=false)
+     * @ORM\Column(type="boolean", nullable=false)
      */
     private $isMajor;
 
     /**
      * @var \Datetime
      *
-     * @ORM\Column(name="date_created", type="datetime", nullable=false)
+     * @ORM\Column(type="datetime", nullable=false)
      */
     private $dateCreated;
 
     /**
      * @var \Datetime
      *
-     * @ORM\Column(name="date_updated", type="datetime", nullable=false)
+     * @ORM\Column(type="datetime", nullable=false)
      */
     private $dateUpdated;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Characters", inversedBy="idMiracles")
+     * @ORM\ManyToMany(targetEntity="Characters", inversedBy="Miracles")
      * @ORM\JoinTable(name="char_miracles",
      *   joinColumns={
-     *     @ORM\JoinColumn(name="id_miracles", referencedColumnName="id")
+     *     @ORM\JoinColumn(referencedColumnName="id")
      *   },
      *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="id_characters", referencedColumnName="id")
+     *     @ORM\JoinColumn(referencedColumnName="id")
      *   }
      * )
      */
-    private $idCharacters;
+    private $Characters;
 
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->idCharacters = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    
 }

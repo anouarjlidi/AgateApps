@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection as DoctrineCollection;
  * Zones
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="CorahnRin\MapsBundle\Repository\ZonesRepository")
  */
 class Zones
 {
@@ -25,7 +25,7 @@ class Zones
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=255, nullable=false)
+     * @ORM\Column(type="string", length=255, nullable=false, unique=true)
      */
     private $name;
 
@@ -73,4 +73,192 @@ class Zones
      */
 	private $events;
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->events = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return Zones
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set coordinates
+     *
+     * @param string $coordinates
+     * @return Zones
+     */
+    public function setCoordinates($coordinates)
+    {
+        $this->coordinates = $coordinates;
+    
+        return $this;
+    }
+
+    /**
+     * Get coordinates
+     *
+     * @return string 
+     */
+    public function getCoordinates()
+    {
+        return $this->coordinates;
+    }
+
+    /**
+     * Set created
+     *
+     * @param \DateTime $created
+     * @return Zones
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+    
+        return $this;
+    }
+
+    /**
+     * Get created
+     *
+     * @return \DateTime 
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * Set updated
+     *
+     * @param \DateTime $updated
+     * @return Zones
+     */
+    public function setUpdated($updated)
+    {
+        $this->updated = $updated;
+    
+        return $this;
+    }
+
+    /**
+     * Get updated
+     *
+     * @return \DateTime 
+     */
+    public function getUpdated()
+    {
+        return $this->updated;
+    }
+
+    /**
+     * Set map
+     *
+     * @param \CorahnRin\MapsBundle\Entity\Maps $map
+     * @return Zones
+     */
+    public function setMap(\CorahnRin\MapsBundle\Entity\Maps $map = null)
+    {
+        $this->map = $map;
+    
+        return $this;
+    }
+
+    /**
+     * Get map
+     *
+     * @return \CorahnRin\MapsBundle\Entity\Maps 
+     */
+    public function getMap()
+    {
+        return $this->map;
+    }
+
+    /**
+     * Set faction
+     *
+     * @param \CorahnRin\MapsBundle\Entity\Factions $faction
+     * @return Zones
+     */
+    public function setFaction(\CorahnRin\MapsBundle\Entity\Factions $faction = null)
+    {
+        $this->faction = $faction;
+    
+        return $this;
+    }
+
+    /**
+     * Get faction
+     *
+     * @return \CorahnRin\MapsBundle\Entity\Factions 
+     */
+    public function getFaction()
+    {
+        return $this->faction;
+    }
+
+    /**
+     * Add events
+     *
+     * @param \CorahnRin\MapsBundle\Entity\EventsZones $events
+     * @return Zones
+     */
+    public function addEvent(\CorahnRin\MapsBundle\Entity\EventsZones $events)
+    {
+        $this->events[] = $events;
+    
+        return $this;
+    }
+
+    /**
+     * Remove events
+     *
+     * @param \CorahnRin\MapsBundle\Entity\EventsZones $events
+     */
+    public function removeEvent(\CorahnRin\MapsBundle\Entity\EventsZones $events)
+    {
+        $this->events->removeElement($events);
+    }
+
+    /**
+     * Get events
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEvents()
+    {
+        return $this->events;
+    }
 }

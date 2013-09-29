@@ -1,13 +1,12 @@
 <?php
 
-
+namespace CorahnRin\CharactersBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Armors
  *
- * @ORM\Table(name="armors")
  * @ORM\Entity
  */
 class Armors
@@ -15,74 +14,66 @@ class Armors
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=50, nullable=false)
+     * @ORM\Column(type="string", length=50, nullable=false)
      */
     private $name;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="text", nullable=false)
+     * @ORM\Column(type="text", nullable=false)
      */
     private $description;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="protection", type="integer", nullable=false)
+     * @ORM\Column(type="integer", nullable=false)
      */
     private $protection;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="price", type="integer", nullable=false)
+     * @ORM\Column(type="integer", nullable=false)
      */
     private $price;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="availability", type="string", length=3, nullable=false)
+     * @ORM\Column(type="string", length=3, nullable=false)
      */
     private $availability;
 
     /**
      * @var \Datetime
      *
-     * @ORM\Column(name="date_created", type="datetime", nullable=false)
+     * @ORM\Column(type="datetime", nullable=false)
      */
     private $dateCreated;
 
     /**
      * @var \Datetime
      *
-     * @ORM\Column(name="date_updated", type="datetime", nullable=false)
+     * @ORM\Column(type="datetime", nullable=false)
      */
     private $dateUpdated;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Characters", mappedBy="idArmors")
+     * @ORM\ManyToMany(targetEntity="Characters", mappedBy="Armors")
      */
-    private $idCharacters;
+    private $Characters;
 
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->idCharacters = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    
 }

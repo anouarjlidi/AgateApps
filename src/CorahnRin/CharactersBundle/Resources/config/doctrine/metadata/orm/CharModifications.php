@@ -1,13 +1,12 @@
 <?php
 
-
+namespace CorahnRin\CharactersBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * CharModifications
  *
- * @ORM\Table(name="char_modifications")
  * @ORM\Entity
  */
 class CharModifications
@@ -15,37 +14,37 @@ class CharModifications
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="content_before", type="text", nullable=false)
+     * @ORM\Column(type="text", nullable=false)
      */
     private $contentBefore;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="content_after", type="text", nullable=false)
+     * @ORM\Column(type="text", nullable=false)
      */
     private $contentAfter;
 
     /**
      * @var \Datetime
      *
-     * @ORM\Column(name="date_created", type="datetime", nullable=false)
+     * @ORM\Column(type="datetime", nullable=false)
      */
     private $dateCreated;
 
     /**
      * @var \Datetime
      *
-     * @ORM\Column(name="date_updated", type="datetime", nullable=false)
+     * @ORM\Column(type="datetime", nullable=false)
      */
     private $dateUpdated;
 
@@ -54,20 +53,20 @@ class CharModifications
      *
      * @ORM\ManyToOne(targetEntity="Characters")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_characters", referencedColumnName="id")
+     *   @ORM\JoinColumn(referencedColumnName="id")
      * })
      */
-    private $idCharacters;
+    private $character;
 
     /**
      * @var \Users
      *
      * @ORM\ManyToOne(targetEntity="CorahnRin\UsersBundle\Entity\Users")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_users", referencedColumnName="id")
+     *   @ORM\JoinColumn(referencedColumnName="id")
      * })
      */
-    private $idUsers;
+    private $user;
 
 
 }

@@ -1,13 +1,12 @@
 <?php
 
-
+namespace CorahnRin\CharactersBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Domains
  *
- * @ORM\Table(name="domains")
  * @ORM\Entity
  */
 class Domains
@@ -15,79 +14,69 @@ class Domains
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=70, nullable=false)
+     * @ORM\Column(type="string", length=70, nullable=false)
      */
     private $name;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="text", nullable=false)
+     * @ORM\Column(type="text", nullable=false)
      */
     private $description;
 
     /**
      * @var \Datetime
      *
-     * @ORM\Column(name="date_created", type="datetime", nullable=false)
+     * @ORM\Column(type="datetime", nullable=false)
      */
     private $dateCreated;
 
     /**
      * @var \Datetime
      *
-     * @ORM\Column(name="date_updated", type="datetime", nullable=false)
+     * @ORM\Column(type="datetime", nullable=false)
      */
     private $dateUpdated;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Characters", mappedBy="idDomains")
+     * @ORM\ManyToMany(targetEntity="Characters", mappedBy="Domains")
      */
-    private $idCharacters;
+    private $Characters;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Disciplines", mappedBy="idDomains")
+     * @ORM\ManyToMany(targetEntity="Disciplines", mappedBy="Domains")
      */
-    private $idDisciplines;
+    private $Disciplines;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="SocialClass", mappedBy="idDomains")
+     * @ORM\ManyToMany(targetEntity="SocialClass", mappedBy="Domains")
      */
-    private $idSocialClass;
+    private $SocialClass;
 
     /**
      * @var \Ways
      *
      * @ORM\ManyToOne(targetEntity="Ways")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_ways", referencedColumnName="id")
+     *   @ORM\JoinColumn(referencedColumnName="id")
      * })
      */
-    private $idWays;
+    private $Ways;
 
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->idCharacters = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->idDisciplines = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->idSocialClass = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    
 }

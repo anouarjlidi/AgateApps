@@ -1,13 +1,12 @@
 <?php
 
-
+namespace CorahnRin\CharactersBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * CharSocialClass
  *
- * @ORM\Table(name="char_social_class")
  * @ORM\Entity
  */
 class CharSocialClass
@@ -15,23 +14,23 @@ class CharSocialClass
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
      * @var \Datetime
      *
-     * @ORM\Column(name="date_created", type="datetime", nullable=false)
+     * @ORM\Column(type="datetime", nullable=false)
      */
     private $dateCreated;
 
     /**
      * @var \Datetime
      *
-     * @ORM\Column(name="date_updated", type="datetime", nullable=false)
+     * @ORM\Column(type="datetime", nullable=false)
      */
     private $dateUpdated;
 
@@ -43,7 +42,7 @@ class CharSocialClass
      *   @ORM\JoinColumn(name="id_domains1", referencedColumnName="id")
      * })
      */
-    private $idDomains1;
+    private $domain1;
 
     /**
      * @var \Domains
@@ -53,17 +52,17 @@ class CharSocialClass
      *   @ORM\JoinColumn(name="id_domains2", referencedColumnName="id")
      * })
      */
-    private $idDomains2;
+    private $domain2;
 
     /**
      * @var \SocialClass
      *
      * @ORM\ManyToOne(targetEntity="SocialClass")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_social_class", referencedColumnName="id")
+     *   @ORM\JoinColumn(referencedColumnName="id")
      * })
      */
-    private $idSocialClass;
+    private $socialClass;
 
 
 }

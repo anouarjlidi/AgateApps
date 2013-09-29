@@ -1,13 +1,12 @@
 <?php
 
-
+namespace CorahnRin\CharactersBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Games
  *
- * @ORM\Table(name="games")
  * @ORM\Entity
  */
 class Games
@@ -15,60 +14,62 @@ class Games
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=140, nullable=false)
+     * @ORM\Column(type="string", length=140, nullable=false)
      */
     private $name;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="summary", type="text", nullable=false)
+     * @ORM\Column(type="text", nullable=false)
      */
     private $summary;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="gm_notes", type="text", nullable=false)
+     * @ORM\Column(type="text", nullable=false)
      */
     private $gmNotes;
 
     /**
      * @var \Datetime
      *
-     * @ORM\Column(name="date_created", type="datetime", nullable=false)
+     * @ORM\Column(type="datetime", nullable=false)
      */
     private $dateCreated;
 
     /**
      * @var \Datetime
      *
-     * @ORM\Column(name="date_updated", type="datetime", nullable=false)
+     * @ORM\Column(type="datetime", nullable=false)
      */
     private $dateUpdated;
 
     /**
+     * @var \Jobs
+     *
+     * @ORM\ManyToOne(targetEntity="CorahnRin\UsersBundle\Entity\Users")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(referencedColumnName="id")
+     * })
+     */
+    private $gameMaster;
+	
+    /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="CorahnRin\UsersBundle\Entity\Users", mappedBy="idGames")
+     * @ORM\ManyToMany(targetEntity="CorahnRin\UsersBundle\Entity\Users", mappedBy="Games")
      */
-    private $idUsers;
+    private $users;
 
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->idUsers = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    
 }
