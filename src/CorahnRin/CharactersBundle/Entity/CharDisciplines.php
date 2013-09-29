@@ -7,7 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * CharAvtgs
  *
- * @ORM\Table(name="char_disciplines")
  * @ORM\Entity
  */
 class CharDisciplines
@@ -15,7 +14,7 @@ class CharDisciplines
     /**
      * @var \Characters
      *
-     * @ORM\Column(name="id_characters", type="integer")
+     * @ORM\Column(type="integer")
      * @ORM\Id
 	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Characters")
      */
@@ -24,7 +23,7 @@ class CharDisciplines
     /**
      * @var \Disciplines
      *
-     * @ORM\Column(name="id_disciplines", type="integer")
+     * @ORM\Column(type="integer")
      * @ORM\Id
 	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Disciplines")
      */
@@ -33,7 +32,7 @@ class CharDisciplines
     /**
      * @var integer
      *
-     * @ORM\Column(name="score", type="integer")
+     * @ORM\Column(type="integer")
      */
     private $score;
 

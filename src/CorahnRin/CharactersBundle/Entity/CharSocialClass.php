@@ -7,7 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * CharSocialClass
  *
- * @ORM\Table(name="char_social_class")
  * @ORM\Entity
  */
 class CharSocialClass
@@ -15,7 +14,7 @@ class CharSocialClass
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -24,14 +23,14 @@ class CharSocialClass
     /**
      * @var \Datetime
      *
-     * @ORM\Column(name="date_created", type="datetime", nullable=false)
+     * @ORM\Column(type="datetime", nullable=false)
      */
     private $dateCreated;
 
     /**
      * @var \Datetime
      *
-     * @ORM\Column(name="date_updated", type="datetime", nullable=false)
+     * @ORM\Column(type="datetime", nullable=false)
      */
     private $dateUpdated;
 
@@ -60,7 +59,7 @@ class CharSocialClass
      *
      * @ORM\ManyToOne(targetEntity="SocialClass")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_social_class", referencedColumnName="id")
+     *   @ORM\JoinColumn(referencedColumnName="id")
      * })
      */
     private $socialClass;

@@ -7,7 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * CharAvtgs
  *
- * @ORM\Table(name="char_setbacks")
  * @ORM\Entity
  */
 class CharSetbacks
@@ -15,7 +14,7 @@ class CharSetbacks
     /**
      * @var \Characters
      *
-     * @ORM\Column(name="id_characters", type="integer")
+     * @ORM\Column(type="integer")
      * @ORM\Id
 	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Characters")
      */
@@ -24,7 +23,7 @@ class CharSetbacks
     /**
      * @var \Setbacks
      *
-     * @ORM\Column(name="id_setbacks", type="integer")
+     * @ORM\Column(type="integer")
      * @ORM\Id
 	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Setbacks")
      */
@@ -33,7 +32,7 @@ class CharSetbacks
     /**
      * @var boolean
      *
-     * @ORM\Column(name="is_doubled", type="boolean")
+     * @ORM\Column(type="boolean")
      */
     private $isAvoided;
 

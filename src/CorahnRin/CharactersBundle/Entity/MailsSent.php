@@ -7,7 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * MailsSent
  *
- * @ORM\Table(name="mails_sent")
  * @ORM\Entity
  */
 class MailsSent
@@ -15,7 +14,7 @@ class MailsSent
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -24,49 +23,49 @@ class MailsSent
     /**
      * @var string
      *
-     * @ORM\Column(name="to_name", type="string", length=255, nullable=false)
+     * @ORM\Column(type="string", length=255, nullable=false)
      */
     private $toName;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="to_email", type="string", length=255, nullable=false)
+     * @ORM\Column(type="string", length=255, nullable=false)
      */
     private $toEmail;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="subject", type="text", nullable=false)
+     * @ORM\Column(type="text", nullable=false)
      */
     private $subject;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="content", type="text", nullable=false)
+     * @ORM\Column(type="text", nullable=false)
      */
     private $content;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="date", type="string", length=50, nullable=false)
+     * @ORM\Column(type="string", length=50, nullable=false)
      */
     private $date;
 
     /**
      * @var \Datetime
      *
-     * @ORM\Column(name="date_created", type="datetime", nullable=false)
+     * @ORM\Column(type="datetime", nullable=false)
      */
     private $dateCreated;
 
     /**
      * @var \Datetime
      *
-     * @ORM\Column(name="date_updated", type="datetime", nullable=false)
+     * @ORM\Column(type="datetime", nullable=false)
      */
     private $dateUpdated;
 
@@ -75,7 +74,7 @@ class MailsSent
      *
      * @ORM\ManyToOne(targetEntity="Mails")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_mails", referencedColumnName="id")
+     *   @ORM\JoinColumn(referencedColumnName="id")
      * })
      */
     private $Mails;

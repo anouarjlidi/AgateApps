@@ -7,7 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * CharAvtgs
  *
- * @ORM\Table(name="char_avtgs")
  * @ORM\Entity
  */
 class CharAvtgs
@@ -15,7 +14,7 @@ class CharAvtgs
     /**
      * @var \Characters
      *
-     * @ORM\Column(name="id_characters", type="integer")
+     * @ORM\Column(type="integer")
      * @ORM\Id
 	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Characters")
      */
@@ -24,7 +23,7 @@ class CharAvtgs
     /**
      * @var \Avdesv
      *
-     * @ORM\Column(name="id_avdesv", type="integer")
+     * @ORM\Column(type="integer")
      * @ORM\Id
 	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Avdesv")
      */
@@ -33,7 +32,7 @@ class CharAvtgs
     /**
      * @var boolean
      *
-     * @ORM\Column(name="is_doubled", type="boolean")
+     * @ORM\Column(type="boolean")
      */
     private $isDoubled;
 

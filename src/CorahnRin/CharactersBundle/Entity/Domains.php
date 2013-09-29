@@ -7,7 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Domains
  *
- * @ORM\Table(name="domains")
  * @ORM\Entity
  */
 class Domains
@@ -15,7 +14,7 @@ class Domains
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -24,28 +23,28 @@ class Domains
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=70, nullable=false)
+     * @ORM\Column(type="string", length=70, nullable=false)
      */
     private $name;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="text", nullable=false)
+     * @ORM\Column(type="text", nullable=false)
      */
     private $description;
 
     /**
      * @var \Datetime
      *
-     * @ORM\Column(name="date_created", type="datetime", nullable=false)
+     * @ORM\Column(type="datetime", nullable=false)
      */
     private $dateCreated;
 
     /**
      * @var \Datetime
      *
-     * @ORM\Column(name="date_updated", type="datetime", nullable=false)
+     * @ORM\Column(type="datetime", nullable=false)
      */
     private $dateUpdated;
 
@@ -75,7 +74,7 @@ class Domains
      *
      * @ORM\ManyToOne(targetEntity="Ways")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_ways", referencedColumnName="id")
+     *   @ORM\JoinColumn(referencedColumnName="id")
      * })
      */
     private $Ways;

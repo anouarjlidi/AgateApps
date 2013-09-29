@@ -7,7 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Ways
  *
- * @ORM\Table(name="ways")
  * @ORM\Entity
  */
 class Ways
@@ -15,7 +14,7 @@ class Ways
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -24,42 +23,42 @@ class Ways
     /**
      * @var string
      *
-     * @ORM\Column(name="short_name", type="string", length=3, nullable=false)
+     * @ORM\Column(type="string", length=3, nullable=false)
      */
     private $shortName;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=40, nullable=false)
+     * @ORM\Column(type="string", length=40, nullable=false)
      */
     private $name;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="fault", type="string", length=40, nullable=false)
+     * @ORM\Column(type="string", length=40, nullable=false)
      */
     private $fault;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="text", nullable=false)
+     * @ORM\Column(type="text", nullable=false)
      */
     private $description;
 
     /**
      * @var \Datetime
      *
-     * @ORM\Column(name="date_created", type="datetime", nullable=false)
+     * @ORM\Column(type="datetime", nullable=false)
      */
     private $dateCreated;
 
     /**
      * @var \Datetime
      *
-     * @ORM\Column(name="date_updated", type="datetime", nullable=false)
+     * @ORM\Column(type="datetime", nullable=false)
      */
     private $dateUpdated;
 

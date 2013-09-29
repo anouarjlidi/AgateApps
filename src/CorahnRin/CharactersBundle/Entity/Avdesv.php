@@ -7,7 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Avdesv
  *
- * @ORM\Table(name="avdesv")
  * @ORM\Entity
  */
 class Avdesv
@@ -15,7 +14,7 @@ class Avdesv
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -24,70 +23,70 @@ class Avdesv
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=50, nullable=false)
+     * @ORM\Column(type="string", length=50, nullable=false)
      */
     private $name;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="name_female", type="string", length=50, nullable=false)
+     * @ORM\Column(type="string", length=50, nullable=false)
      */
     private $nameFemale;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="xp", type="integer", nullable=false)
+     * @ORM\Column(type="integer", nullable=false)
      */
     private $xp;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="text", nullable=false)
+     * @ORM\Column(type="text", nullable=false)
      */
     private $description;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="can_be_doubled", type="boolean", nullable=false)
+     * @ORM\Column(type="boolean", nullable=false)
      */
     private $canBeDoubled;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="bonusdisc", type="string", length=10, nullable=false)
+     * @ORM\Column(type="string", length=10, nullable=false)
      */
     private $bonusdisc;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="is_desv", type="boolean", nullable=false)
+     * @ORM\Column(type="boolean", nullable=false)
      */
     private $isDesv;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="is_combat_art", type="boolean", nullable=false)
+     * @ORM\Column(type="boolean", nullable=false)
      */
     private $isCombatArt;
 
     /**
      * @var \Datetime
      *
-     * @ORM\Column(name="date_created", type="datetime", nullable=false)
+     * @ORM\Column(type="datetime", nullable=false)
      */
     private $dateCreated;
 
     /**
      * @var \Datetime
      *
-     * @ORM\Column(name="date_updated", type="datetime", nullable=false)
+     * @ORM\Column(type="datetime", nullable=false)
      */
     private $dateUpdated;
 

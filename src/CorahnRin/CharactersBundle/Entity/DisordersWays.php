@@ -7,7 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * CharAvtgs
  *
- * @ORM\Table(name="disorders_ways")
  * @ORM\Entity
  */
 class DisordersWays
@@ -15,7 +14,7 @@ class DisordersWays
     /**
      * @var \Disorders
      *
-     * @ORM\Column(name="id_disorders", type="integer")
+     * @ORM\Column(type="integer")
      * @ORM\Id
 	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Disorders")
      */
@@ -24,7 +23,7 @@ class DisordersWays
     /**
      * @var \Ways
      *
-     * @ORM\Column(name="id_ways", type="integer")
+     * @ORM\Column(type="integer")
      * @ORM\Id
 	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Ways")
      */
@@ -33,7 +32,7 @@ class DisordersWays
     /**
      * @var boolean
      *
-     * @ORM\Column(name="is_major", type="boolean")
+     * @ORM\Column(type="boolean")
      */
     private $isMajor;
 

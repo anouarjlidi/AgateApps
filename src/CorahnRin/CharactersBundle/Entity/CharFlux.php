@@ -7,7 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * CharAvtgs
  *
- * @ORM\Table(name="char_flux")
  * @ORM\Entity
  */
 class CharFlux
@@ -15,7 +14,7 @@ class CharFlux
     /**
      * @var \Characters
      *
-     * @ORM\Column(name="id_characters", type="integer")
+     * @ORM\Column(type="integer")
      * @ORM\Id
 	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Characters")
      */
@@ -24,7 +23,7 @@ class CharFlux
     /**
      * @var \Flux
      *
-     * @ORM\Column(name="id_avdesv", type="integer")
+     * @ORM\Column(type="integer")
      * @ORM\Id
 	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Flux")
      */
@@ -33,7 +32,7 @@ class CharFlux
     /**
      * @var integer
      *
-     * @ORM\Column(name="quantity", type="integer")
+     * @ORM\Column(type="integer")
      */
     private $quantity;
 

@@ -7,7 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Ogham
  *
- * @ORM\Table(name="ogham")
  * @ORM\Entity
  */
 class Ogham
@@ -15,7 +14,7 @@ class Ogham
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -24,21 +23,21 @@ class Ogham
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=70, nullable=false)
+     * @ORM\Column(type="string", length=70, nullable=false)
      */
     private $name;
 
     /**
      * @var \Datetime
      *
-     * @ORM\Column(name="date_created", type="datetime", nullable=false)
+     * @ORM\Column(type="datetime", nullable=false)
      */
     private $dateCreated;
 
     /**
      * @var \Datetime
      *
-     * @ORM\Column(name="date_updated", type="datetime", nullable=false)
+     * @ORM\Column(type="datetime", nullable=false)
      */
     private $dateUpdated;
 
