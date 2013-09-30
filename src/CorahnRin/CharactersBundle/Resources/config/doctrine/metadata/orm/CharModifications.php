@@ -21,18 +21,25 @@ class CharModifications
     private $id;
 
     /**
-     * @var string
+     * @var \Characters
      *
-     * @ORM\Column(type="text", nullable=false)
+     * @ORM\Column(type="object", nullable=false)
      */
-    private $contentBefore;
+    private $before;
 
     /**
-     * @var string
+     * @var \Characters
      *
-     * @ORM\Column(type="text", nullable=false)
+     * @ORM\ManyToOne(targetEntity="Characters", inversedBy="modifications")
      */
-    private $contentAfter;
+    private $character;
+
+    /**
+     * @var \Users
+     *
+     * @ORM\ManyToOne(targetEntity="CorahnRin\UsersBundle\Entity\Users")
+     */
+    private $user;
 
     /**
      * @var \Datetime
@@ -48,20 +55,6 @@ class CharModifications
      * @ORM\Column(type="datetime", nullable=false)
      */
     private $updated;
-
-    /**
-     * @var \Characters
-     *
-     * @ORM\ManyToOne(targetEntity="Characters")
-     */
-    private $character;
-
-    /**
-     * @var \Users
-     *
-     * @ORM\ManyToOne(targetEntity="CorahnRin\UsersBundle\Entity\Users")
-     */
-    private $user;
 
 
 }

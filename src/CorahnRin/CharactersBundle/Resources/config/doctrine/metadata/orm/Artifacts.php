@@ -36,14 +36,12 @@ class Artifacts
 
     /**
      * @var integer
-     *
      * @ORM\Column(type="integer", nullable=false)
      */
-    private $consumptionValue;
+    private $consumption;
 
     /**
      * @var integer
-     *
      * @ORM\Column(type="integer", nullable=false)
      */
     private $consumptionInterval;
@@ -97,13 +95,6 @@ class Artifacts
      * @ORM\Column(type="datetime", nullable=false)
      */
     private $updated;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Characters", mappedBy="Artifacts")
-     */
-    private $Characters;
 
     /**
      * @var \Flux

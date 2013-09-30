@@ -14,7 +14,6 @@ class CharFlux
     /**
      * @var \Characters
      *
-     * @ORM\Column(type="integer")
      * @ORM\Id
 	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Characters")
      */

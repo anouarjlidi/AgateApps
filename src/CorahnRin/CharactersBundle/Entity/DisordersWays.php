@@ -32,9 +32,78 @@ class DisordersWays
     /**
      * @var boolean
      *
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=false)
      */
     private $isMajor;
 
 
+
+    /**
+     * Set disorder
+     *
+     * @param integer $disorder
+     * @return DisordersWays
+     */
+    public function setDisorder($disorder)
+    {
+        $this->disorder = $disorder;
+    
+        return $this;
+    }
+
+    /**
+     * Get disorder
+     *
+     * @return integer 
+     */
+    public function getDisorder()
+    {
+        return $this->disorder;
+    }
+
+    /**
+     * Set way
+     *
+     * @param integer $way
+     * @return DisordersWays
+     */
+    public function setWay($way)
+    {
+        $this->way = $way;
+    
+        return $this;
+    }
+
+    /**
+     * Get way
+     *
+     * @return integer 
+     */
+    public function getWay()
+    {
+        return $this->way;
+    }
+
+    /**
+     * Set isMajor
+     *
+     * @param boolean $isMajor
+     * @return DisordersWays
+     */
+    public function setIsMajor($isMajor)
+    {
+        $this->isMajor = $isMajor;
+    
+        return $this;
+    }
+
+    /**
+     * Get isMajor
+     *
+     * @return boolean 
+     */
+    public function getIsMajor()
+    {
+        return $this->isMajor;
+    }
 }

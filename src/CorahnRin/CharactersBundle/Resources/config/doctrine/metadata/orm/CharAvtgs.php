@@ -15,24 +15,24 @@ class CharAvtgs
      * @var \Characters
      *
      * @ORM\Id
-	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Characters")
+	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Characters", inversedBy="avantages")
      */
     private $character;
 
     /**
-     * @var \Avantage
+     * @var \Avantages
      *
      * @ORM\Id
-	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Avantage")
+	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Avantages")
      */
     private $avantage;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="integer")
      */
-    private $isDoubled;
+    private $doubleValue;
 
 
 }

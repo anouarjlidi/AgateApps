@@ -57,7 +57,6 @@ class Regions
 
     /**
      * @var \Datetime
-
      * @Gedmo\Mapping\Annotation\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */

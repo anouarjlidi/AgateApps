@@ -91,5 +91,11 @@ class Avantages
      */
     private $updated;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Characters", inversedBy="avantages")
+     */
+    private $characters;
 
 }

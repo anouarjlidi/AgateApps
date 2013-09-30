@@ -23,7 +23,7 @@ class Jobs
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=140, nullable=false)
+     * @ORM\Column(type="string", length=140, nullable=false, unique=true)
      */
     private $name;
 
@@ -36,17 +36,18 @@ class Jobs
 
     /**
      * @var \Datetime
-     *
+     * @Gedmo\Mapping\Annotation\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
      */
-    private $dateCreated;
+    private $created;
 
     /**
      * @var \Datetime
-     *
+
+     * @Gedmo\Mapping\Annotation\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
-    private $dateUpdated;
+    private $updated;
 
     /**
      * @var \Books
@@ -60,4 +61,129 @@ class Jobs
 
 
 
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return Jobs
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Jobs
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set created
+     *
+     * @param \DateTime $created
+     * @return Jobs
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+    
+        return $this;
+    }
+
+    /**
+     * Get created
+     *
+     * @return \DateTime 
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * Set updated
+     *
+     * @param \DateTime $updated
+     * @return Jobs
+     */
+    public function setUpdated($updated)
+    {
+        $this->updated = $updated;
+    
+        return $this;
+    }
+
+    /**
+     * Get updated
+     *
+     * @return \DateTime 
+     */
+    public function getUpdated()
+    {
+        return $this->updated;
+    }
+
+    /**
+     * Set Books
+     *
+     * @param \CorahnRin\CharactersBundle\Entity\Books $books
+     * @return Jobs
+     */
+    public function setBooks(\CorahnRin\CharactersBundle\Entity\Books $books = null)
+    {
+        $this->Books = $books;
+    
+        return $this;
+    }
+
+    /**
+     * Get Books
+     *
+     * @return \CorahnRin\CharactersBundle\Entity\Books 
+     */
+    public function getBooks()
+    {
+        return $this->Books;
+    }
 }

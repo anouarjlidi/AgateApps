@@ -12,13 +12,13 @@ use Doctrine\ORM\Mapping as ORM;
 class CharSocialClass
 {
     /**
-     * @var integer
+     * @var \Characters
      *
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\OneToOne(targetEntity="Characters", inversedBy="markers")
      */
-    private $id;
+    private $character;
 
     /**
      * @var \Datetime

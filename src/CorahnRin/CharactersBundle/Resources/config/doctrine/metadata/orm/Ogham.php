@@ -45,8 +45,8 @@ class Ogham
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Characters", mappedBy="Ogham")
+     * @ORM\ManyToMany(targetEntity="Characters", mappedBy="ogham")
      */
-    private $Characters;
+    private $characters;
 
 }

@@ -52,16 +52,8 @@ class Miracles
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Characters", inversedBy="Miracles")
-     * @ORM\JoinTable(name="char_miracles",
-     *   joinColumns={
-     *     @ORM\JoinColumn(referencedColumnName="id")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(referencedColumnName="id")
-     *   }
-     * )
+     * @ORM\ManyToMany(targetEntity="Characters", inversedBy="miracles")
      */
-    private $Characters;
+    private $characters;
 
 }

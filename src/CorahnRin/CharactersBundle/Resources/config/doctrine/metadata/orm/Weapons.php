@@ -80,8 +80,8 @@ class Weapons
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Characters", mappedBy="Weapons")
+     * @ORM\ManyToMany(targetEntity="Characters", mappedBy="weapons")
      */
-    private $Characters;
+    private $characters;
 
 }

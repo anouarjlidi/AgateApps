@@ -14,16 +14,14 @@ class CharDisciplines
     /**
      * @var \Characters
      *
-     * @ORM\Column(type="integer")
      * @ORM\Id
-	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Characters")
+	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Characters", inversedBy="disciplines")
      */
     private $character;
 
     /**
      * @var \Disciplines
      *
-     * @ORM\Column(type="integer")
      * @ORM\Id
 	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Disciplines")
      */
@@ -37,4 +35,73 @@ class CharDisciplines
     private $score;
 
 
+
+    /**
+     * Set score
+     *
+     * @param integer $score
+     * @return CharDisciplines
+     */
+    public function setScore($score)
+    {
+        $this->score = $score;
+    
+        return $this;
+    }
+
+    /**
+     * Get score
+     *
+     * @return integer 
+     */
+    public function getScore()
+    {
+        return $this->score;
+    }
+
+    /**
+     * Set character
+     *
+     * @param \CorahnRin\CharactersBundle\Entity\Characters $character
+     * @return CharDisciplines
+     */
+    public function setCharacter(\CorahnRin\CharactersBundle\Entity\Characters $character)
+    {
+        $this->character = $character;
+    
+        return $this;
+    }
+
+    /**
+     * Get character
+     *
+     * @return \CorahnRin\CharactersBundle\Entity\Characters 
+     */
+    public function getCharacter()
+    {
+        return $this->character;
+    }
+
+    /**
+     * Set discipline
+     *
+     * @param \CorahnRin\CharactersBundle\Entity\Disciplines $discipline
+     * @return CharDisciplines
+     */
+    public function setDiscipline(\CorahnRin\CharactersBundle\Entity\Disciplines $discipline)
+    {
+        $this->discipline = $discipline;
+    
+        return $this;
+    }
+
+    /**
+     * Get discipline
+     *
+     * @return \CorahnRin\CharactersBundle\Entity\Disciplines 
+     */
+    public function getDiscipline()
+    {
+        return $this->discipline;
+    }
 }

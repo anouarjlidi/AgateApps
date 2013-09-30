@@ -5,11 +5,11 @@ namespace CorahnRin\CharactersBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Weapons
+ * Avantages
  *
  * @ORM\Entity
  */
-class Weapons
+class Avantages
 {
     /**
      * @var integer
@@ -28,39 +28,53 @@ class Weapons
     private $name;
 
     /**
-     * @var boolean
+     * @var string
      *
-     * @ORM\Column(type="boolean", nullable=false)
+     * @ORM\Column(type="string", length=50, nullable=false)
      */
-    private $dmg;
+    private $nameFemale;
 
     /**
      * @var integer
      *
      * @ORM\Column(type="integer", nullable=false)
      */
-    private $price;
+    private $xp;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=3, nullable=false)
+     * @ORM\Column(type="text", nullable=false)
      */
-    private $availability;
+    private $description;
 
     /**
      * @var boolean
      *
      * @ORM\Column(type="boolean", nullable=false)
      */
-    private $contact;
+    private $canBeDoubled;
 
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(type="integer", nullable=false)
+     * @ORM\Column(type="string", length=10, nullable=false)
      */
-    private $range;
+    private $bonusdisc;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    private $isDesv;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    private $isCombatArt;
 
     /**
      * @var \Datetime
@@ -80,7 +94,7 @@ class Weapons
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Characters", mappedBy="weapons")
+     * @ORM\ManyToMany(targetEntity="Characters", inversedBy="avantages")
      */
     private $characters;
 
@@ -106,7 +120,7 @@ class Weapons
      * Set name
      *
      * @param string $name
-     * @return Weapons
+     * @return Avantages
      */
     public function setName($name)
     {
@@ -126,125 +140,171 @@ class Weapons
     }
 
     /**
-     * Set dmg
+     * Set nameFemale
      *
-     * @param boolean $dmg
-     * @return Weapons
+     * @param string $nameFemale
+     * @return Avantages
      */
-    public function setDmg($dmg)
+    public function setNameFemale($nameFemale)
     {
-        $this->dmg = $dmg;
+        $this->nameFemale = $nameFemale;
     
         return $this;
     }
 
     /**
-     * Get dmg
-     *
-     * @return boolean 
-     */
-    public function getDmg()
-    {
-        return $this->dmg;
-    }
-
-    /**
-     * Set price
-     *
-     * @param integer $price
-     * @return Weapons
-     */
-    public function setPrice($price)
-    {
-        $this->price = $price;
-    
-        return $this;
-    }
-
-    /**
-     * Get price
-     *
-     * @return integer 
-     */
-    public function getPrice()
-    {
-        return $this->price;
-    }
-
-    /**
-     * Set availability
-     *
-     * @param string $availability
-     * @return Weapons
-     */
-    public function setAvailability($availability)
-    {
-        $this->availability = $availability;
-    
-        return $this;
-    }
-
-    /**
-     * Get availability
+     * Get nameFemale
      *
      * @return string 
      */
-    public function getAvailability()
+    public function getNameFemale()
     {
-        return $this->availability;
+        return $this->nameFemale;
     }
 
     /**
-     * Set contact
+     * Set xp
      *
-     * @param boolean $contact
-     * @return Weapons
+     * @param integer $xp
+     * @return Avantages
      */
-    public function setContact($contact)
+    public function setXp($xp)
     {
-        $this->contact = $contact;
+        $this->xp = $xp;
     
         return $this;
     }
 
     /**
-     * Get contact
-     *
-     * @return boolean 
-     */
-    public function getContact()
-    {
-        return $this->contact;
-    }
-
-    /**
-     * Set range
-     *
-     * @param integer $range
-     * @return Weapons
-     */
-    public function setRange($range)
-    {
-        $this->range = $range;
-    
-        return $this;
-    }
-
-    /**
-     * Get range
+     * Get xp
      *
      * @return integer 
      */
-    public function getRange()
+    public function getXp()
     {
-        return $this->range;
+        return $this->xp;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Avantages
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set canBeDoubled
+     *
+     * @param boolean $canBeDoubled
+     * @return Avantages
+     */
+    public function setCanBeDoubled($canBeDoubled)
+    {
+        $this->canBeDoubled = $canBeDoubled;
+    
+        return $this;
+    }
+
+    /**
+     * Get canBeDoubled
+     *
+     * @return boolean 
+     */
+    public function getCanBeDoubled()
+    {
+        return $this->canBeDoubled;
+    }
+
+    /**
+     * Set bonusdisc
+     *
+     * @param string $bonusdisc
+     * @return Avantages
+     */
+    public function setBonusdisc($bonusdisc)
+    {
+        $this->bonusdisc = $bonusdisc;
+    
+        return $this;
+    }
+
+    /**
+     * Get bonusdisc
+     *
+     * @return string 
+     */
+    public function getBonusdisc()
+    {
+        return $this->bonusdisc;
+    }
+
+    /**
+     * Set isDesv
+     *
+     * @param boolean $isDesv
+     * @return Avantages
+     */
+    public function setIsDesv($isDesv)
+    {
+        $this->isDesv = $isDesv;
+    
+        return $this;
+    }
+
+    /**
+     * Get isDesv
+     *
+     * @return boolean 
+     */
+    public function getIsDesv()
+    {
+        return $this->isDesv;
+    }
+
+    /**
+     * Set isCombatArt
+     *
+     * @param boolean $isCombatArt
+     * @return Avantages
+     */
+    public function setIsCombatArt($isCombatArt)
+    {
+        $this->isCombatArt = $isCombatArt;
+    
+        return $this;
+    }
+
+    /**
+     * Get isCombatArt
+     *
+     * @return boolean 
+     */
+    public function getIsCombatArt()
+    {
+        return $this->isCombatArt;
     }
 
     /**
      * Set created
      *
      * @param \DateTime $created
-     * @return Weapons
+     * @return Avantages
      */
     public function setCreated($created)
     {
@@ -267,7 +327,7 @@ class Weapons
      * Set updated
      *
      * @param \DateTime $updated
-     * @return Weapons
+     * @return Avantages
      */
     public function setUpdated($updated)
     {
@@ -290,7 +350,7 @@ class Weapons
      * Add characters
      *
      * @param \CorahnRin\CharactersBundle\Entity\Characters $characters
-     * @return Weapons
+     * @return Avantages
      */
     public function addCharacter(\CorahnRin\CharactersBundle\Entity\Characters $characters)
     {

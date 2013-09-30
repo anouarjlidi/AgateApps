@@ -49,9 +49,9 @@ class Characters
     private $inventory;
 
     /**
-     * @var array
+     * @var \CorahnRin\CharactersBundle\Classes\Money
      *
-     * @ORM\Column(type="array", nullable=false)
+     * @ORM\Column(type="object", nullable=false)
      */
     private $money;
 
@@ -61,13 +61,6 @@ class Characters
      * @ORM\Column(type="string", length=30, nullable=false)
      */
     private $orientation;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="text", nullable=false)
-     */
-    private $content;
 
     /**
      * @var string
@@ -91,9 +84,9 @@ class Characters
     private $mentalResist;
 
     /**
-     * @var integer
+     * @var array
      *
-     * @ORM\Column(type="integer", nullable=false)
+     * @ORM\Column(type="array", nullable=false)
      */
     private $health;
 
@@ -171,94 +164,49 @@ class Characters
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Armors", inversedBy="Characters")
-     * @ORM\JoinTable(name="char_armors",
-     *   joinColumns={
-     *     @ORM\JoinColumn(referencedColumnName="id")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(referencedColumnName="id")
-     *   }
-     * )
+     * @ORM\ManyToMany(targetEntity="Armors")
      */
-    private $Armors;
+    private $armors;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Artifacts", inversedBy="Characters")
-     * @ORM\JoinTable(name="char_artifacts",
-     *   joinColumns={
-     *     @ORM\JoinColumn(referencedColumnName="id")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(referencedColumnName="id")
-     *   }
-     * )
+     * @ORM\ManyToMany(targetEntity="Artifacts")
      */
-    private $Artifacts;
+    private $artifacts;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Avantages", mappedBy="Characters")
+     * @ORM\ManyToMany(targetEntity="Miracles", mappedBy="characters")
      */
-    private $Avantages;
+    private $miracles;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Miracles", mappedBy="Characters")
+     * @ORM\ManyToMany(targetEntity="Ogham", inversedBy="characters")
      */
-    private $Miracles;
+    private $ogham;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Ogham", inversedBy="Characters")
-     * @ORM\JoinTable(name="char_ogham",
-     *   joinColumns={
-     *     @ORM\JoinColumn(referencedColumnName="id")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(referencedColumnName="id")
-     *   }
-     * )
+     * @ORM\ManyToMany(targetEntity="Weapons", inversedBy="characters")
      */
-    private $Ogham;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Weapons", inversedBy="Characters")
-     * @ORM\JoinTable(name="char_weapons",
-     *   joinColumns={
-     *     @ORM\JoinColumn(referencedColumnName="id")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(referencedColumnName="id")
-     *   }
-     * )
-     */
-    private $Weapons;
+    private $weapons;
 
     /**
      * @var \CharSocialClass
      *
-     * @ORM\ManyToOne(targetEntity="CharSocialClass")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(referencedColumnName="id")
-     * })
+     * @ORM\OneToOne(targetEntity="CharSocialClass", mappedBy="character")
      */
-    private $CharSocialClass;
+    private $socialClass;
 
     /**
      * @var \Disorders
      *
      * @ORM\ManyToOne(targetEntity="Disorders")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(referencedColumnName="id")
-     * })
      */
     private $disorder;
 
@@ -266,9 +214,6 @@ class Characters
      * @var \Jobs
      *
      * @ORM\ManyToOne(targetEntity="Jobs")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(referencedColumnName="id")
-     * })
      */
     private $job;
 
@@ -276,40 +221,61 @@ class Characters
      * @var \Regions
      *
      * @ORM\ManyToOne(targetEntity="Regions")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(referencedColumnName="id")
-     * })
      */
     private $region;
 
     /**
      * @var \Traits
-     *
      * @ORM\ManyToOne(targetEntity="Traits")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(referencedColumnName="id")
-     * })
      */
     private $traitFlaw;
 
     /**
      * @var \Traits
-     *
      * @ORM\ManyToOne(targetEntity="Traits")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(referencedColumnName="id")
-     * })
      */
     private $traitQuality;
 
     /**
-     * @var \Users
+     * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToOne(targetEntity="CorahnRin\UsersBundle\Entity\Users")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(referencedColumnName="id")
-     * })
+     * @ORM\OneToMany(targetEntity="CharAvtgs", mappedBy="character")
+     */
+    private $avantages;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="CharDomains", mappedBy="character")
+     */
+    private $domains;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="CharDisciplines", mappedBy="character")
+     */
+    private $disciplines;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="CharFlux", mappedBy="character")
+     */
+    private $flux;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="CharModifications", mappedBy="character")
+     */
+    private $modifications;
+
+    /**
+     * @var \Users
+     * @ORM\ManyToOne(targetEntity="CorahnRin\UsersBundle\Entity\Users", inversedBy="characters")
      */
     private $user;
-
+	
+	private $baseChar;
 }

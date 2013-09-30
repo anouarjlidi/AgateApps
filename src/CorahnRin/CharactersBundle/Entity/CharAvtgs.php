@@ -14,27 +14,94 @@ class CharAvtgs
     /**
      * @var \Characters
      *
-     * @ORM\Column(type="integer")
      * @ORM\Id
-	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Characters")
+	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Characters", inversedBy="avantages")
      */
     private $character;
 
     /**
-     * @var \Avdesv
+     * @var \Avantages
      *
-     * @ORM\Column(type="integer")
      * @ORM\Id
-	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Avdesv")
+	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Avantages")
      */
-    private $avdesv;
+    private $avantage;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="integer")
      */
-    private $isDoubled;
+    private $doubleValue;
 
 
+
+    /**
+     * Set doubleValue
+     *
+     * @param integer $doubleValue
+     * @return CharAvtgs
+     */
+    public function setDoubleValue($doubleValue)
+    {
+        $this->doubleValue = $doubleValue;
+    
+        return $this;
+    }
+
+    /**
+     * Get doubleValue
+     *
+     * @return integer 
+     */
+    public function getDoubleValue()
+    {
+        return $this->doubleValue;
+    }
+
+    /**
+     * Set character
+     *
+     * @param \CorahnRin\CharactersBundle\Entity\Characters $character
+     * @return CharAvtgs
+     */
+    public function setCharacter(\CorahnRin\CharactersBundle\Entity\Characters $character)
+    {
+        $this->character = $character;
+    
+        return $this;
+    }
+
+    /**
+     * Get character
+     *
+     * @return \CorahnRin\CharactersBundle\Entity\Characters 
+     */
+    public function getCharacter()
+    {
+        return $this->character;
+    }
+
+    /**
+     * Set avantage
+     *
+     * @param \CorahnRin\CharactersBundle\Entity\Avantages $avantage
+     * @return CharAvtgs
+     */
+    public function setAvantage(\CorahnRin\CharactersBundle\Entity\Avantages $avantage)
+    {
+        $this->avantage = $avantage;
+    
+        return $this;
+    }
+
+    /**
+     * Get avantage
+     *
+     * @return \CorahnRin\CharactersBundle\Entity\Avantages 
+     */
+    public function getAvantage()
+    {
+        return $this->avantage;
+    }
 }

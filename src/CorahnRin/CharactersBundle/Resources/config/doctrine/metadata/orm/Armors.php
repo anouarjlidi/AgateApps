@@ -70,11 +70,4 @@ class Armors
      */
     private $updated;
 
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Characters", mappedBy="Armors")
-     */
-    private $Characters;
-
 }

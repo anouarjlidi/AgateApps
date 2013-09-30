@@ -12,67 +12,24 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  */
 class Users extends BaseUser {
+	
     /**
      * @var integer
-     *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     protected $id;
 
-    private $Games;
+	/**
+     * @var \Doctrine\Common\Collections\Collection
+     * @ORM\OneToMany(targetEntity="CorahnRin\CharactersBundle\Entity\Games", mappedBy="user")
+	 */
+	protected $games;
+	
+	/**
+     * @var \Doctrine\Common\Collections\Collection
+     * @ORM\OneToMany(targetEntity="CorahnRin\CharactersBundle\Entity\Characters", mappedBy="user")
+	 */
+	protected $characters;
 
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {   
-        parent::__construct();
-        $this->Games = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    
-    /**
-     * Add Games
-     *
-     * @param \CorahnRin\CharactersBundle\Entity\Games $games
-     * @return Users
-     */
-    public function addGame(\CorahnRin\CharactersBundle\Entity\Games $games)
-    {
-        $this->Games[] = $games;
-    
-        return $this;
-    }
-
-    /**
-     * Remove Games
-     *
-     * @param \CorahnRin\CharactersBundle\Entity\Games $games
-     */
-    public function removeGame(\CorahnRin\CharactersBundle\Entity\Games $games)
-    {
-        $this->Games->removeElement($games);
-    }
-
-    /**
-     * Get Games
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getGames()
-    {
-        return $this->Games;
-    }
-
-
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
 }

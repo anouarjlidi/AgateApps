@@ -23,7 +23,7 @@ class Games
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=140, nullable=false)
+     * @ORM\Column(type="string", length=140, nullable=false, unique=true)
      */
     private $name;
 
@@ -43,17 +43,18 @@ class Games
 
     /**
      * @var \Datetime
-     *
+     * @Gedmo\Mapping\Annotation\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
      */
-    private $dateCreated;
+    private $created;
 
     /**
      * @var \Datetime
-     *
+
+     * @Gedmo\Mapping\Annotation\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
-    private $dateUpdated;
+    private $updated;
 
     /**
      * @var \Jobs
@@ -72,4 +73,192 @@ class Games
      */
     private $users;
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->users = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return Games
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set summary
+     *
+     * @param string $summary
+     * @return Games
+     */
+    public function setSummary($summary)
+    {
+        $this->summary = $summary;
+    
+        return $this;
+    }
+
+    /**
+     * Get summary
+     *
+     * @return string 
+     */
+    public function getSummary()
+    {
+        return $this->summary;
+    }
+
+    /**
+     * Set gmNotes
+     *
+     * @param string $gmNotes
+     * @return Games
+     */
+    public function setGmNotes($gmNotes)
+    {
+        $this->gmNotes = $gmNotes;
+    
+        return $this;
+    }
+
+    /**
+     * Get gmNotes
+     *
+     * @return string 
+     */
+    public function getGmNotes()
+    {
+        return $this->gmNotes;
+    }
+
+    /**
+     * Set created
+     *
+     * @param \DateTime $created
+     * @return Games
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+    
+        return $this;
+    }
+
+    /**
+     * Get created
+     *
+     * @return \DateTime 
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * Set updated
+     *
+     * @param \DateTime $updated
+     * @return Games
+     */
+    public function setUpdated($updated)
+    {
+        $this->updated = $updated;
+    
+        return $this;
+    }
+
+    /**
+     * Get updated
+     *
+     * @return \DateTime 
+     */
+    public function getUpdated()
+    {
+        return $this->updated;
+    }
+
+    /**
+     * Set gameMaster
+     *
+     * @param \CorahnRin\UsersBundle\Entity\Users $gameMaster
+     * @return Games
+     */
+    public function setGameMaster(\CorahnRin\UsersBundle\Entity\Users $gameMaster = null)
+    {
+        $this->gameMaster = $gameMaster;
+    
+        return $this;
+    }
+
+    /**
+     * Get gameMaster
+     *
+     * @return \CorahnRin\UsersBundle\Entity\Users 
+     */
+    public function getGameMaster()
+    {
+        return $this->gameMaster;
+    }
+
+    /**
+     * Add users
+     *
+     * @param \CorahnRin\UsersBundle\Entity\Users $users
+     * @return Games
+     */
+    public function addUser(\CorahnRin\UsersBundle\Entity\Users $users)
+    {
+        $this->users[] = $users;
+    
+        return $this;
+    }
+
+    /**
+     * Remove users
+     *
+     * @param \CorahnRin\UsersBundle\Entity\Users $users
+     */
+    public function removeUser(\CorahnRin\UsersBundle\Entity\Users $users)
+    {
+        $this->users->removeElement($users);
+    }
+
+    /**
+     * Get users
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUsers()
+    {
+        return $this->users;
+    }
 }

@@ -41,5 +41,4 @@ class Disorders
      * @ORM\Column(type="datetime", nullable=false)
      */
     private $updated;
-
 }
