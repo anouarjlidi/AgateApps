@@ -50,34 +50,10 @@ class Domains
     private $updated;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Characters", mappedBy="Domains")
-     */
-    private $Characters;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Disciplines", mappedBy="Domains")
-     */
-    private $Disciplines;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="SocialClass", mappedBy="Domains")
-     */
-    private $SocialClass;
-
-    /**
      * @var \Ways
      *
      * @ORM\ManyToOne(targetEntity="Ways")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(referencedColumnName="id")
-     * })
      */
-    private $Ways;
+    private $way;
 
 }

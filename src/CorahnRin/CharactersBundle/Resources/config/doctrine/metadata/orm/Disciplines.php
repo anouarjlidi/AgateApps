@@ -59,16 +59,14 @@ class Disciplines
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Domains", inversedBy="Disciplines")
-     * @ORM\JoinTable(name="discipline_domains",
-     *   joinColumns={
-     *     @ORM\JoinColumn(referencedColumnName="id")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(referencedColumnName="id")
-     *   }
-     * )
+     * @ORM\ManyToMany(targetEntity="Domains")
      */
-    private $Domains;
+    private $domains;
+	
+    /**
+     * @var \Books
+     * @ORM\ManyToOne(targetEntity="Books")
+     */
+    private $book;
 
 }

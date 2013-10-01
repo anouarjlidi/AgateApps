@@ -16,7 +16,7 @@ class CharWays
      *
      * @ORM\Column(type="integer")
      * @ORM\Id
-	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Characters")
+	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Characters", inversedBy="ways")
      */
     private $character;
 

@@ -260,6 +260,13 @@ class Characters
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
+     * @ORM\OneToMany(targetEntity="CharWays", mappedBy="character")
+     */
+    private $ways;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
      * @ORM\OneToMany(targetEntity="CharFlux", mappedBy="character")
      */
     private $flux;
@@ -270,6 +277,13 @@ class Characters
      * @ORM\OneToMany(targetEntity="CharModifications", mappedBy="character")
      */
     private $modifications;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="CharSetbacks", mappedBy="character")
+     */
+    private $setbacks;
 
     /**
      * @var \Users

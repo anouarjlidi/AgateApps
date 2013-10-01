@@ -14,11 +14,18 @@ class CharSocialClass
     /**
      * @var \Characters
      *
-     * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id
      * @ORM\OneToOne(targetEntity="Characters", inversedBy="markers")
      */
     private $character;
+
+    /**
+     * @var \SocialClass
+     *
+     * @ORM\Id
+     * @ORM\ManyToOne(targetEntity="SocialClass")
+     */
+    private $socialClass;
 
     /**
      * @var \Datetime
@@ -39,9 +46,6 @@ class CharSocialClass
      * @var \Domains
      *
      * @ORM\ManyToOne(targetEntity="Domains")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_domains1", referencedColumnName="id")
-     * })
      */
     private $domain1;
 
@@ -49,21 +53,8 @@ class CharSocialClass
      * @var \Domains
      *
      * @ORM\ManyToOne(targetEntity="Domains")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_domains2", referencedColumnName="id")
-     * })
      */
     private $domain2;
-
-    /**
-     * @var \SocialClass
-     *
-     * @ORM\ManyToOne(targetEntity="SocialClass")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(referencedColumnName="id")
-     * })
-     */
-    private $socialClass;
 
 
 }

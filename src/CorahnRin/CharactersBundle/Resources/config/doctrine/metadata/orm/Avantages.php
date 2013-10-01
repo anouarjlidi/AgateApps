@@ -90,12 +90,11 @@ class Avantages
      * @ORM\Column(type="datetime", nullable=false)
      */
     private $updated;
-
+	
     /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Characters", inversedBy="avantages")
+     * @var \Books
+     * @ORM\ManyToOne(targetEntity="Books")
      */
-    private $characters;
+    private $book;
 
 }
