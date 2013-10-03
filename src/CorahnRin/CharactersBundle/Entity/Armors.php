@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Armors
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\ArmorsRepository")
  */
 class Armors
 {

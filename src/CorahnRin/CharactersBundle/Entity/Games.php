@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Games
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\GamesRepository")
  */
 class Games
 {
@@ -57,28 +57,25 @@ class Games
     private $updated;
 
     /**
-     * @var \Jobs
+     * @var \Users
      *
      * @ORM\ManyToOne(targetEntity="CorahnRin\UsersBundle\Entity\Users")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(referencedColumnName="id")
-     * })
      */
     private $gameMaster;
 	
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="CorahnRin\UsersBundle\Entity\Users", mappedBy="Games")
+     * @ORM\OneToMany(targetEntity="Characters", mappedBy="games")
      */
-    private $users;
+    private $characters;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->users = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->characters = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**
@@ -230,35 +227,35 @@ class Games
     }
 
     /**
-     * Add users
+     * Add characters
      *
-     * @param \CorahnRin\UsersBundle\Entity\Users $users
+     * @param \CorahnRin\CharactersBundle\Entity\Characters $characters
      * @return Games
      */
-    public function addUser(\CorahnRin\UsersBundle\Entity\Users $users)
+    public function addCharacter(\CorahnRin\CharactersBundle\Entity\Characters $characters)
     {
-        $this->users[] = $users;
+        $this->characters[] = $characters;
     
         return $this;
     }
 
     /**
-     * Remove users
+     * Remove characters
      *
-     * @param \CorahnRin\UsersBundle\Entity\Users $users
+     * @param \CorahnRin\CharactersBundle\Entity\Characters $characters
      */
-    public function removeUser(\CorahnRin\UsersBundle\Entity\Users $users)
+    public function removeCharacter(\CorahnRin\CharactersBundle\Entity\Characters $characters)
     {
-        $this->users->removeElement($users);
+        $this->characters->removeElement($characters);
     }
 
     /**
-     * Get users
+     * Get characters
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getUsers()
+    public function getCharacters()
     {
-        return $this->users;
+        return $this->characters;
     }
 }

@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Artifacts
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\ArtifactsRepository")
  */
 class Artifacts
 {
@@ -100,11 +100,8 @@ class Artifacts
      * @var \Flux
      *
      * @ORM\ManyToOne(targetEntity="Flux")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(referencedColumnName="id")
-     * })
      */
-    private $Flux;
+    private $flux;
 
 
     /**
@@ -371,25 +368,25 @@ class Artifacts
     }
 
     /**
-     * Set Flux
+     * Set flux
      *
      * @param \CorahnRin\CharactersBundle\Entity\Flux $flux
      * @return Artifacts
      */
     public function setFlux(\CorahnRin\CharactersBundle\Entity\Flux $flux = null)
     {
-        $this->Flux = $flux;
+        $this->flux = $flux;
     
         return $this;
     }
 
     /**
-     * Get Flux
+     * Get flux
      *
      * @return \CorahnRin\CharactersBundle\Entity\Flux 
      */
     public function getFlux()
     {
-        return $this->Flux;
+        return $this->flux;
     }
 }

@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Traits
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\TraitsRepository")
  */
 class Traits
 {
@@ -67,11 +67,8 @@ class Traits
      * @var \Ways
      *
      * @ORM\ManyToOne(targetEntity="Ways")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(referencedColumnName="id")
-     * })
      */
-    private $Ways;
+    private $way;
 
 
 
@@ -225,25 +222,25 @@ class Traits
     }
 
     /**
-     * Set Ways
+     * Set way
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Ways $ways
+     * @param \CorahnRin\CharactersBundle\Entity\Ways $way
      * @return Traits
      */
-    public function setWays(\CorahnRin\CharactersBundle\Entity\Ways $ways = null)
+    public function setWay(\CorahnRin\CharactersBundle\Entity\Ways $way = null)
     {
-        $this->Ways = $ways;
+        $this->way = $way;
     
         return $this;
     }
 
     /**
-     * Get Ways
+     * Get way
      *
      * @return \CorahnRin\CharactersBundle\Entity\Ways 
      */
-    public function getWays()
+    public function getWay()
     {
-        return $this->Ways;
+        return $this->way;
     }
 }

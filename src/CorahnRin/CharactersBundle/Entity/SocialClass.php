@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * SocialClass
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\SocialClassRepository")
  */
 class SocialClass
 {
@@ -45,24 +45,16 @@ class SocialClass
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Domains", inversedBy="SocialClass")
-     * @ORM\JoinTable(name="social_class_domains",
-     *   joinColumns={
-     *     @ORM\JoinColumn(referencedColumnName="id")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(referencedColumnName="id")
-     *   }
-     * )
+     * @ORM\ManyToMany(targetEntity="Domains", inversedBy="socialClasses")
      */
-    private $Domains;
+    private $domains;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->Domains = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->domains = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**
@@ -145,35 +137,35 @@ class SocialClass
     }
 
     /**
-     * Add Domains
+     * Add domains
      *
      * @param \CorahnRin\CharactersBundle\Entity\Domains $domains
      * @return SocialClass
      */
     public function addDomain(\CorahnRin\CharactersBundle\Entity\Domains $domains)
     {
-        $this->Domains[] = $domains;
+        $this->domains[] = $domains;
     
         return $this;
     }
 
     /**
-     * Remove Domains
+     * Remove domains
      *
      * @param \CorahnRin\CharactersBundle\Entity\Domains $domains
      */
     public function removeDomain(\CorahnRin\CharactersBundle\Entity\Domains $domains)
     {
-        $this->Domains->removeElement($domains);
+        $this->domains->removeElement($domains);
     }
 
     /**
-     * Get Domains
+     * Get domains
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
     public function getDomains()
     {
-        return $this->Domains;
+        return $this->domains;
     }
 }

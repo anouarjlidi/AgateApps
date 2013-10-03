@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * MailsSent
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\MailsSentRepository")
  */
 class MailsSent
 {
@@ -49,13 +49,6 @@ class MailsSent
     private $content;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=50, nullable=false)
-     */
-    private $date;
-
-    /**
      * @var \Datetime
      * @Gedmo\Mapping\Annotation\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
@@ -74,11 +67,8 @@ class MailsSent
      * @var \Mails
      *
      * @ORM\ManyToOne(targetEntity="Mails")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(referencedColumnName="id")
-     * })
      */
-    private $Mails;
+    private $mail;
 
 
 
@@ -186,29 +176,6 @@ class MailsSent
     }
 
     /**
-     * Set date
-     *
-     * @param string $date
-     * @return MailsSent
-     */
-    public function setDate($date)
-    {
-        $this->date = $date;
-    
-        return $this;
-    }
-
-    /**
-     * Get date
-     *
-     * @return string 
-     */
-    public function getDate()
-    {
-        return $this->date;
-    }
-
-    /**
      * Set created
      *
      * @param \DateTime $created
@@ -255,25 +222,25 @@ class MailsSent
     }
 
     /**
-     * Set Mails
+     * Set mail
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Mails $mails
+     * @param \CorahnRin\CharactersBundle\Entity\Mails $mail
      * @return MailsSent
      */
-    public function setMails(\CorahnRin\CharactersBundle\Entity\Mails $mails = null)
+    public function setMail(\CorahnRin\CharactersBundle\Entity\Mails $mail = null)
     {
-        $this->Mails = $mails;
+        $this->mail = $mail;
     
         return $this;
     }
 
     /**
-     * Get Mails
+     * Get mail
      *
      * @return \CorahnRin\CharactersBundle\Entity\Mails 
      */
-    public function getMails()
+    public function getMail()
     {
-        return $this->Mails;
+        return $this->mail;
     }
 }

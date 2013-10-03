@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Characters
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\CharactersRepository")
  */
 class Characters
 {
@@ -178,21 +178,21 @@ class Characters
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Miracles", mappedBy="characters")
+     * @ORM\ManyToMany(targetEntity="Miracles")
      */
     private $miracles;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Ogham", inversedBy="characters")
+     * @ORM\ManyToMany(targetEntity="Ogham")
      */
     private $ogham;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Weapons", inversedBy="characters")
+     * @ORM\ManyToMany(targetEntity="Weapons")
      */
     private $weapons;
 
@@ -260,6 +260,13 @@ class Characters
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
+     * @ORM\OneToMany(targetEntity="CharWays", mappedBy="character")
+     */
+    private $ways;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
      * @ORM\OneToMany(targetEntity="CharFlux", mappedBy="character")
      */
     private $flux;
@@ -272,10 +279,23 @@ class Characters
     private $modifications;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="CharSetbacks", mappedBy="character")
+     */
+    private $setbacks;
+
+    /**
      * @var \Users
      * @ORM\ManyToOne(targetEntity="CorahnRin\UsersBundle\Entity\Users", inversedBy="characters")
      */
     private $user;
+	
+	/**
+	 * @var \Games
+	 * @ORM\ManyToOne(targetEntity="Games", inversedBy="characters")
+	 */
+	private $game;
 	
 	private $baseChar;
     /**
@@ -291,8 +311,10 @@ class Characters
         $this->avantages = new \Doctrine\Common\Collections\ArrayCollection();
         $this->domains = new \Doctrine\Common\Collections\ArrayCollection();
         $this->disciplines = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->ways = new \Doctrine\Common\Collections\ArrayCollection();
         $this->flux = new \Doctrine\Common\Collections\ArrayCollection();
         $this->modifications = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->setbacks = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**
@@ -1168,6 +1190,39 @@ class Characters
     }
 
     /**
+     * Add ways
+     *
+     * @param \CorahnRin\CharactersBundle\Entity\CharWays $ways
+     * @return Characters
+     */
+    public function addWay(\CorahnRin\CharactersBundle\Entity\CharWays $ways)
+    {
+        $this->ways[] = $ways;
+    
+        return $this;
+    }
+
+    /**
+     * Remove ways
+     *
+     * @param \CorahnRin\CharactersBundle\Entity\CharWays $ways
+     */
+    public function removeWay(\CorahnRin\CharactersBundle\Entity\CharWays $ways)
+    {
+        $this->ways->removeElement($ways);
+    }
+
+    /**
+     * Get ways
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getWays()
+    {
+        return $this->ways;
+    }
+
+    /**
      * Add flux
      *
      * @param \CorahnRin\CharactersBundle\Entity\CharFlux $flux
@@ -1234,6 +1289,39 @@ class Characters
     }
 
     /**
+     * Add setbacks
+     *
+     * @param \CorahnRin\CharactersBundle\Entity\CharSetbacks $setbacks
+     * @return Characters
+     */
+    public function addSetback(\CorahnRin\CharactersBundle\Entity\CharSetbacks $setbacks)
+    {
+        $this->setbacks[] = $setbacks;
+    
+        return $this;
+    }
+
+    /**
+     * Remove setbacks
+     *
+     * @param \CorahnRin\CharactersBundle\Entity\CharSetbacks $setbacks
+     */
+    public function removeSetback(\CorahnRin\CharactersBundle\Entity\CharSetbacks $setbacks)
+    {
+        $this->setbacks->removeElement($setbacks);
+    }
+
+    /**
+     * Get setbacks
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSetbacks()
+    {
+        return $this->setbacks;
+    }
+
+    /**
      * Set user
      *
      * @param \CorahnRin\UsersBundle\Entity\Users $user
@@ -1254,5 +1342,28 @@ class Characters
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set game
+     *
+     * @param \CorahnRin\CharactersBundle\Entity\Games $game
+     * @return Characters
+     */
+    public function setGame(\CorahnRin\CharactersBundle\Entity\Games $game = null)
+    {
+        $this->game = $game;
+    
+        return $this;
+    }
+
+    /**
+     * Get game
+     *
+     * @return \CorahnRin\CharactersBundle\Entity\Games 
+     */
+    public function getGame()
+    {
+        return $this->game;
     }
 }

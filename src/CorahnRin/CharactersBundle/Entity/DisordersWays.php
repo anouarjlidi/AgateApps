@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * CharAvtgs
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\DisordersWaysRepository")
  */
 class DisordersWays
 {
@@ -16,7 +16,7 @@ class DisordersWays
      *
      * @ORM\Column(type="integer")
      * @ORM\Id
-	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Disorders")
+	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Disorders", inversedBy="ways")
      */
     private $disorder;
 

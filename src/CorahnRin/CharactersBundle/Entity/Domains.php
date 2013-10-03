@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Domains
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\DomainsRepository")
  */
 class Domains
 {
@@ -50,44 +50,25 @@ class Domains
     private $updated;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Characters", mappedBy="Domains")
-     */
-    private $Characters;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Disciplines", mappedBy="Domains")
-     */
-    private $Disciplines;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="SocialClass", mappedBy="Domains")
-     */
-    private $SocialClass;
-
-    /**
      * @var \Ways
      *
      * @ORM\ManyToOne(targetEntity="Ways")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(referencedColumnName="id")
-     * })
      */
-    private $Ways;
+    private $way;
+
+    /**
+     * @var \SocialClass
+     *
+     * @ORM\ManyToMany(targetEntity="SocialClass", mappedBy="domains")
+     */
+    private $socialClasses;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->Characters = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->Disciplines = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->SocialClass = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->socialClasses = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**
@@ -193,124 +174,58 @@ class Domains
     }
 
     /**
-     * Add Characters
+     * Set way
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Characters $characters
+     * @param \CorahnRin\CharactersBundle\Entity\Ways $way
      * @return Domains
      */
-    public function addCharacter(\CorahnRin\CharactersBundle\Entity\Characters $characters)
+    public function setWay(\CorahnRin\CharactersBundle\Entity\Ways $way = null)
     {
-        $this->Characters[] = $characters;
+        $this->way = $way;
     
         return $this;
     }
 
     /**
-     * Remove Characters
-     *
-     * @param \CorahnRin\CharactersBundle\Entity\Characters $characters
-     */
-    public function removeCharacter(\CorahnRin\CharactersBundle\Entity\Characters $characters)
-    {
-        $this->Characters->removeElement($characters);
-    }
-
-    /**
-     * Get Characters
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getCharacters()
-    {
-        return $this->Characters;
-    }
-
-    /**
-     * Add Disciplines
-     *
-     * @param \CorahnRin\CharactersBundle\Entity\Disciplines $disciplines
-     * @return Domains
-     */
-    public function addDiscipline(\CorahnRin\CharactersBundle\Entity\Disciplines $disciplines)
-    {
-        $this->Disciplines[] = $disciplines;
-    
-        return $this;
-    }
-
-    /**
-     * Remove Disciplines
-     *
-     * @param \CorahnRin\CharactersBundle\Entity\Disciplines $disciplines
-     */
-    public function removeDiscipline(\CorahnRin\CharactersBundle\Entity\Disciplines $disciplines)
-    {
-        $this->Disciplines->removeElement($disciplines);
-    }
-
-    /**
-     * Get Disciplines
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getDisciplines()
-    {
-        return $this->Disciplines;
-    }
-
-    /**
-     * Add SocialClass
-     *
-     * @param \CorahnRin\CharactersBundle\Entity\SocialClass $socialClass
-     * @return Domains
-     */
-    public function addSocialClas(\CorahnRin\CharactersBundle\Entity\SocialClass $socialClass)
-    {
-        $this->SocialClass[] = $socialClass;
-    
-        return $this;
-    }
-
-    /**
-     * Remove SocialClass
-     *
-     * @param \CorahnRin\CharactersBundle\Entity\SocialClass $socialClass
-     */
-    public function removeSocialClas(\CorahnRin\CharactersBundle\Entity\SocialClass $socialClass)
-    {
-        $this->SocialClass->removeElement($socialClass);
-    }
-
-    /**
-     * Get SocialClass
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getSocialClass()
-    {
-        return $this->SocialClass;
-    }
-
-    /**
-     * Set Ways
-     *
-     * @param \CorahnRin\CharactersBundle\Entity\Ways $ways
-     * @return Domains
-     */
-    public function setWays(\CorahnRin\CharactersBundle\Entity\Ways $ways = null)
-    {
-        $this->Ways = $ways;
-    
-        return $this;
-    }
-
-    /**
-     * Get Ways
+     * Get way
      *
      * @return \CorahnRin\CharactersBundle\Entity\Ways 
      */
-    public function getWays()
+    public function getWay()
     {
-        return $this->Ways;
+        return $this->way;
+    }
+
+    /**
+     * Add socialClasses
+     *
+     * @param \CorahnRin\CharactersBundle\Entity\SocialClass $socialClasses
+     * @return Domains
+     */
+    public function addSocialClasse(\CorahnRin\CharactersBundle\Entity\SocialClass $socialClasses)
+    {
+        $this->socialClasses[] = $socialClasses;
+    
+        return $this;
+    }
+
+    /**
+     * Remove socialClasses
+     *
+     * @param \CorahnRin\CharactersBundle\Entity\SocialClass $socialClasses
+     */
+    public function removeSocialClasse(\CorahnRin\CharactersBundle\Entity\SocialClass $socialClasses)
+    {
+        $this->socialClasses->removeElement($socialClasses);
+    }
+
+    /**
+     * Get socialClasses
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSocialClasses()
+    {
+        return $this->socialClasses;
     }
 }

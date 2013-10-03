@@ -57,8 +57,6 @@ class Steps
     private $updated;
 
 
-
-
     /**
      * Get id
      *

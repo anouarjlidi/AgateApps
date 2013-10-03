@@ -7,18 +7,25 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * CharSocialClass
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\CharSocialClassRepository")
  */
 class CharSocialClass
 {
     /**
      * @var \Characters
      *
-     * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id
      * @ORM\OneToOne(targetEntity="Characters", inversedBy="markers")
      */
     private $character;
+
+    /**
+     * @var \SocialClass
+     *
+     * @ORM\Id
+     * @ORM\ManyToOne(targetEntity="SocialClass")
+     */
+    private $socialClass;
 
     /**
      * @var \Datetime
@@ -39,9 +46,6 @@ class CharSocialClass
      * @var \Domains
      *
      * @ORM\ManyToOne(targetEntity="Domains")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_domains1", referencedColumnName="id")
-     * })
      */
     private $domain1;
 
@@ -49,46 +53,10 @@ class CharSocialClass
      * @var \Domains
      *
      * @ORM\ManyToOne(targetEntity="Domains")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_domains2", referencedColumnName="id")
-     * })
      */
     private $domain2;
 
-    /**
-     * @var \SocialClass
-     *
-     * @ORM\ManyToOne(targetEntity="SocialClass")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(referencedColumnName="id")
-     * })
-     */
-    private $socialClass;
 
-
-
-    /**
-     * Set character
-     *
-     * @param integer $character
-     * @return CharSocialClass
-     */
-    public function setCharacter($character)
-    {
-        $this->character = $character;
-    
-        return $this;
-    }
-
-    /**
-     * Get character
-     *
-     * @return integer 
-     */
-    public function getCharacter()
-    {
-        return $this->character;
-    }
 
     /**
      * Set created
@@ -137,6 +105,52 @@ class CharSocialClass
     }
 
     /**
+     * Set character
+     *
+     * @param \CorahnRin\CharactersBundle\Entity\Characters $character
+     * @return CharSocialClass
+     */
+    public function setCharacter(\CorahnRin\CharactersBundle\Entity\Characters $character)
+    {
+        $this->character = $character;
+    
+        return $this;
+    }
+
+    /**
+     * Get character
+     *
+     * @return \CorahnRin\CharactersBundle\Entity\Characters 
+     */
+    public function getCharacter()
+    {
+        return $this->character;
+    }
+
+    /**
+     * Set socialClass
+     *
+     * @param \CorahnRin\CharactersBundle\Entity\SocialClass $socialClass
+     * @return CharSocialClass
+     */
+    public function setSocialClass(\CorahnRin\CharactersBundle\Entity\SocialClass $socialClass)
+    {
+        $this->socialClass = $socialClass;
+    
+        return $this;
+    }
+
+    /**
+     * Get socialClass
+     *
+     * @return \CorahnRin\CharactersBundle\Entity\SocialClass 
+     */
+    public function getSocialClass()
+    {
+        return $this->socialClass;
+    }
+
+    /**
      * Set domain1
      *
      * @param \CorahnRin\CharactersBundle\Entity\Domains $domain1
@@ -180,28 +194,5 @@ class CharSocialClass
     public function getDomain2()
     {
         return $this->domain2;
-    }
-
-    /**
-     * Set socialClass
-     *
-     * @param \CorahnRin\CharactersBundle\Entity\SocialClass $socialClass
-     * @return CharSocialClass
-     */
-    public function setSocialClass(\CorahnRin\CharactersBundle\Entity\SocialClass $socialClass = null)
-    {
-        $this->socialClass = $socialClass;
-    
-        return $this;
-    }
-
-    /**
-     * Get socialClass
-     *
-     * @return \CorahnRin\CharactersBundle\Entity\SocialClass 
-     */
-    public function getSocialClass()
-    {
-        return $this->socialClass;
     }
 }

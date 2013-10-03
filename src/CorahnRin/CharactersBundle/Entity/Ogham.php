@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Ogham
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\OghamRepository")
  */
 class Ogham
 {
@@ -42,21 +42,7 @@ class Ogham
      */
     private $updated;
 
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Characters", mappedBy="ogham")
-     */
-    private $characters;
 
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->characters = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    
     /**
      * Get id
      *
@@ -134,38 +120,5 @@ class Ogham
     public function getUpdated()
     {
         return $this->updated;
-    }
-
-    /**
-     * Add characters
-     *
-     * @param \CorahnRin\CharactersBundle\Entity\Characters $characters
-     * @return Ogham
-     */
-    public function addCharacter(\CorahnRin\CharactersBundle\Entity\Characters $characters)
-    {
-        $this->characters[] = $characters;
-    
-        return $this;
-    }
-
-    /**
-     * Remove characters
-     *
-     * @param \CorahnRin\CharactersBundle\Entity\Characters $characters
-     */
-    public function removeCharacter(\CorahnRin\CharactersBundle\Entity\Characters $characters)
-    {
-        $this->characters->removeElement($characters);
-    }
-
-    /**
-     * Get characters
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getCharacters()
-    {
-        return $this->characters;
     }
 }

@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Weapons
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\WeaponsRepository")
  */
 class Weapons
 {
@@ -32,7 +32,7 @@ class Weapons
      *
      * @ORM\Column(type="boolean", nullable=false)
      */
-    private $dmg;
+    private $damage;
 
     /**
      * @var integer
@@ -53,7 +53,7 @@ class Weapons
      *
      * @ORM\Column(type="boolean", nullable=false)
      */
-    private $contact;
+    private $melee;
 
     /**
      * @var integer
@@ -77,21 +77,7 @@ class Weapons
      */
     private $updated;
 
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Characters", mappedBy="weapons")
-     */
-    private $characters;
 
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->characters = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    
     /**
      * Get id
      *
@@ -126,26 +112,26 @@ class Weapons
     }
 
     /**
-     * Set dmg
+     * Set damage
      *
-     * @param boolean $dmg
+     * @param boolean $damage
      * @return Weapons
      */
-    public function setDmg($dmg)
+    public function setDamage($damage)
     {
-        $this->dmg = $dmg;
+        $this->damage = $damage;
     
         return $this;
     }
 
     /**
-     * Get dmg
+     * Get damage
      *
      * @return boolean 
      */
-    public function getDmg()
+    public function getDamage()
     {
-        return $this->dmg;
+        return $this->damage;
     }
 
     /**
@@ -195,26 +181,26 @@ class Weapons
     }
 
     /**
-     * Set contact
+     * Set melee
      *
-     * @param boolean $contact
+     * @param boolean $melee
      * @return Weapons
      */
-    public function setContact($contact)
+    public function setMelee($melee)
     {
-        $this->contact = $contact;
+        $this->melee = $melee;
     
         return $this;
     }
 
     /**
-     * Get contact
+     * Get melee
      *
      * @return boolean 
      */
-    public function getContact()
+    public function getMelee()
     {
-        return $this->contact;
+        return $this->melee;
     }
 
     /**
@@ -284,38 +270,5 @@ class Weapons
     public function getUpdated()
     {
         return $this->updated;
-    }
-
-    /**
-     * Add characters
-     *
-     * @param \CorahnRin\CharactersBundle\Entity\Characters $characters
-     * @return Weapons
-     */
-    public function addCharacter(\CorahnRin\CharactersBundle\Entity\Characters $characters)
-    {
-        $this->characters[] = $characters;
-    
-        return $this;
-    }
-
-    /**
-     * Remove characters
-     *
-     * @param \CorahnRin\CharactersBundle\Entity\Characters $characters
-     */
-    public function removeCharacter(\CorahnRin\CharactersBundle\Entity\Characters $characters)
-    {
-        $this->characters->removeElement($characters);
-    }
-
-    /**
-     * Get characters
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getCharacters()
-    {
-        return $this->characters;
     }
 }

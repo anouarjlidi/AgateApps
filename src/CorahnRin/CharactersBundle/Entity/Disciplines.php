@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Disciplines
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\DisciplinesRepository")
  */
 class Disciplines
 {
@@ -59,24 +59,22 @@ class Disciplines
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Domains", inversedBy="Disciplines")
-     * @ORM\JoinTable(name="discipline_domains",
-     *   joinColumns={
-     *     @ORM\JoinColumn(referencedColumnName="id")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(referencedColumnName="id")
-     *   }
-     * )
+     * @ORM\ManyToMany(targetEntity="Domains")
      */
-    private $Domains;
+    private $domains;
+	
+    /**
+     * @var \Books
+     * @ORM\ManyToOne(targetEntity="Books")
+     */
+    private $book;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->Domains = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->domains = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**
@@ -205,35 +203,58 @@ class Disciplines
     }
 
     /**
-     * Add Domains
+     * Add domains
      *
      * @param \CorahnRin\CharactersBundle\Entity\Domains $domains
      * @return Disciplines
      */
     public function addDomain(\CorahnRin\CharactersBundle\Entity\Domains $domains)
     {
-        $this->Domains[] = $domains;
+        $this->domains[] = $domains;
     
         return $this;
     }
 
     /**
-     * Remove Domains
+     * Remove domains
      *
      * @param \CorahnRin\CharactersBundle\Entity\Domains $domains
      */
     public function removeDomain(\CorahnRin\CharactersBundle\Entity\Domains $domains)
     {
-        $this->Domains->removeElement($domains);
+        $this->domains->removeElement($domains);
     }
 
     /**
-     * Get Domains
+     * Get domains
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
     public function getDomains()
     {
-        return $this->Domains;
+        return $this->domains;
+    }
+
+    /**
+     * Set book
+     *
+     * @param \CorahnRin\CharactersBundle\Entity\Books $book
+     * @return Disciplines
+     */
+    public function setBook(\CorahnRin\CharactersBundle\Entity\Books $book = null)
+    {
+        $this->book = $book;
+    
+        return $this;
+    }
+
+    /**
+     * Get book
+     *
+     * @return \CorahnRin\CharactersBundle\Entity\Books 
+     */
+    public function getBook()
+    {
+        return $this->book;
     }
 }

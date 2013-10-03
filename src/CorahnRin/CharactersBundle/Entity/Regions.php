@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Regions
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\RegionsRepository")
  */
 class Regions
 {
@@ -46,7 +46,7 @@ class Regions
      *
      * @ORM\Column(type="text", nullable=false)
      */
-    private $coords;
+    private $coordinates;
 
     /**
      * @var \Datetime
@@ -145,26 +145,26 @@ class Regions
     }
 
     /**
-     * Set coords
+     * Set coordinates
      *
-     * @param string $coords
+     * @param string $coordinates
      * @return Regions
      */
-    public function setCoords($coords)
+    public function setCoordinates($coordinates)
     {
-        $this->coords = $coords;
+        $this->coordinates = $coordinates;
     
         return $this;
     }
 
     /**
-     * Get coords
+     * Get coordinates
      *
      * @return string 
      */
-    public function getCoords()
+    public function getCoordinates()
     {
-        return $this->coords;
+        return $this->coordinates;
     }
 
     /**

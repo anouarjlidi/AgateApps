@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Disorders
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\DisordersRepository")
  */
 class Disorders
 {
@@ -42,6 +42,20 @@ class Disorders
      */
     private $updated;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="CharWays", mappedBy="characters", mappedBy="disorders")
+     */
+    private $ways;
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->ways = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
     /**
      * Get id
      *
@@ -119,5 +133,38 @@ class Disorders
     public function getUpdated()
     {
         return $this->updated;
+    }
+
+    /**
+     * Add ways
+     *
+     * @param \CorahnRin\CharactersBundle\Entity\CharWays $ways
+     * @return Disorders
+     */
+    public function addWay(\CorahnRin\CharactersBundle\Entity\CharWays $ways)
+    {
+        $this->ways[] = $ways;
+    
+        return $this;
+    }
+
+    /**
+     * Remove ways
+     *
+     * @param \CorahnRin\CharactersBundle\Entity\CharWays $ways
+     */
+    public function removeWay(\CorahnRin\CharactersBundle\Entity\CharWays $ways)
+    {
+        $this->ways->removeElement($ways);
+    }
+
+    /**
+     * Get ways
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getWays()
+    {
+        return $this->ways;
     }
 }

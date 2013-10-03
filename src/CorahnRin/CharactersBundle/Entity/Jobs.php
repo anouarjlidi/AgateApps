@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Jobs
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\JobsRepository")
  */
 class Jobs
 {
@@ -53,13 +53,8 @@ class Jobs
      * @var \Books
      *
      * @ORM\ManyToOne(targetEntity="Books")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(referencedColumnName="id")
-     * })
      */
-    private $Books;
-
-
+    private $book;
 
 
     /**
@@ -165,25 +160,25 @@ class Jobs
     }
 
     /**
-     * Set Books
+     * Set book
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Books $books
+     * @param \CorahnRin\CharactersBundle\Entity\Books $book
      * @return Jobs
      */
-    public function setBooks(\CorahnRin\CharactersBundle\Entity\Books $books = null)
+    public function setBook(\CorahnRin\CharactersBundle\Entity\Books $book = null)
     {
-        $this->Books = $books;
+        $this->book = $book;
     
         return $this;
     }
 
     /**
-     * Get Books
+     * Get book
      *
      * @return \CorahnRin\CharactersBundle\Entity\Books 
      */
-    public function getBooks()
+    public function getBook()
     {
-        return $this->Books;
+        return $this->book;
     }
 }

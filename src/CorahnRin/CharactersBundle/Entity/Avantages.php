@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Avantages
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\AvantagesRepository")
  */
 class Avantages
 {
@@ -51,9 +51,9 @@ class Avantages
     /**
      * @var boolean
      *
-     * @ORM\Column(type="boolean", nullable=false)
+     * @ORM\Column(type="integer", nullable=false)
      */
-    private $canBeDoubled;
+    private $double;
 
     /**
      * @var string
@@ -90,22 +90,14 @@ class Avantages
      * @ORM\Column(type="datetime", nullable=false)
      */
     private $updated;
-
+	
     /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Characters", inversedBy="avantages")
+     * @var \Books
+     * @ORM\ManyToOne(targetEntity="Books")
      */
-    private $characters;
+    private $book;
 
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->characters = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    
+
     /**
      * Get id
      *
@@ -209,26 +201,26 @@ class Avantages
     }
 
     /**
-     * Set canBeDoubled
+     * Set double
      *
-     * @param boolean $canBeDoubled
+     * @param integer $double
      * @return Avantages
      */
-    public function setCanBeDoubled($canBeDoubled)
+    public function setDouble($double)
     {
-        $this->canBeDoubled = $canBeDoubled;
+        $this->double = $double;
     
         return $this;
     }
 
     /**
-     * Get canBeDoubled
+     * Get double
      *
-     * @return boolean 
+     * @return integer 
      */
-    public function getCanBeDoubled()
+    public function getDouble()
     {
-        return $this->canBeDoubled;
+        return $this->double;
     }
 
     /**
@@ -347,35 +339,25 @@ class Avantages
     }
 
     /**
-     * Add characters
+     * Set book
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Characters $characters
+     * @param \CorahnRin\CharactersBundle\Entity\Books $book
      * @return Avantages
      */
-    public function addCharacter(\CorahnRin\CharactersBundle\Entity\Characters $characters)
+    public function setBook(\CorahnRin\CharactersBundle\Entity\Books $book = null)
     {
-        $this->characters[] = $characters;
+        $this->book = $book;
     
         return $this;
     }
 
     /**
-     * Remove characters
+     * Get book
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Characters $characters
+     * @return \CorahnRin\CharactersBundle\Entity\Books 
      */
-    public function removeCharacter(\CorahnRin\CharactersBundle\Entity\Characters $characters)
+    public function getBook()
     {
-        $this->characters->removeElement($characters);
-    }
-
-    /**
-     * Get characters
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getCharacters()
-    {
-        return $this->characters;
+        return $this->book;
     }
 }
