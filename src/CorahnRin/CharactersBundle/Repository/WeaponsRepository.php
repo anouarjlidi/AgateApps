@@ -4,9 +4,9 @@ use Doctrine\ORM\EntityRepository;
 use CorahnRin\ToolsBundle\Repository\CorahnRinRepository as CorahnRinRepository;
 
 /**
- * StepsRepository
+ * WeaponsRepository
  *
  */
-class StepsRepository extends CorahnRinRepository {
+class WeaponsRepository extends CorahnRinRepository {
 
 }
