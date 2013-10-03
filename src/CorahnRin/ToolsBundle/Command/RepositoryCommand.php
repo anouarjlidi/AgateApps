@@ -102,7 +102,7 @@ BASE_FILE
 			}
 		}
 		$files = $valid_files;
-		$files[''] = '> Skip this test';
+		$files[''] = '> Type "enter" to skip this test';
 
 		if (!count($files) || count($files) === 1) {
 			throw new \RunTimeException('The folder is empty of any php file...');
@@ -151,9 +151,9 @@ BASE_FILE
 					$choices = array('yes','all','no','no-all','y','n','nall');
 					$answer = $dialog->select(
 						$output,
-						'Following file already exists : '.PHP_EOL.'> '. str_replace($global_dir.$DS, '', $dest_file). PHP_EOL. 'Overwrite ?',
+						'Following file already exists : '.PHP_EOL.'> '. str_replace($global_dir.$DS, '', $dest_file). PHP_EOL. 'Overwrite ? [yes]',
 						$choices,
-						'yes',
+						0,
 						false,
 						'Answer "%s" is not correct'
 					);
@@ -194,16 +194,16 @@ BASE_FILE
 					}
 				}
 				if (!is_dir($repo_dir)) { mkdir($repo_dir, 0777, true); }
-				$output->writeln(($exists ? 'Overwriting' : 'Writing into'). ' file "'. $dest_file. '". '. file_put_contents($dest_file, $content). ' octets written.'. PHP_EOL);
+				$output->writeln(($exists ? 'Overwriting' : 'Writing into'). ' file "'. $dest_file. '". '. file_put_contents($dest_file, $content). ' octets written.');
 			} else {
-				$output->writeln('Skipping file "'. $dest_file. '"...'. PHP_EOL);
+				$output->writeln('Skipping file "'. $dest_file. '"...');
 			}
 		}//end foreach
 
 		if ($dialog->askConfirmation(
 			$output,
-			'Add the parameter "ORM\\Entity(repositoryClass)" ? [y]es, [n]o : ',
-			false)) {
+			'Add the parameter "ORM\\Entity(repositoryClass)" ? [y]es, [n]o (default [yes]) : ',
+			true)) {
 			foreach ($files as $file) {
 				$repositoryClass = str_replace('\\Entity', '', $namespace).'\\Repository\\'.str_replace('.php', '', $file).'Repository';
 				$file = $dir.$DS.$file;
@@ -218,8 +218,12 @@ BASE_FILE
 					file_put_contents($file.'~', file_get_contents($file));
 				}
 				file_put_contents($file, $cnt);
-				echo 'Added parameter "repositoryClass" to file "', $file, '"', PHP_EOL;
+				$output->writeln('Added parameter "repositoryClass" to file "'.$file.'"');
 			}
 		}
+		
+		$output->writeln('End of function !');
+		$output->writeln('Thanks for using CorahnRinTools, and see you soon !');
+		
 	}
 }
