@@ -45,16 +45,8 @@ class SocialClass
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Domains", inversedBy="SocialClass")
-     * @ORM\JoinTable(name="social_class_domains",
-     *   joinColumns={
-     *     @ORM\JoinColumn(referencedColumnName="id")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(referencedColumnName="id")
-     *   }
-     * )
+     * @ORM\ManyToMany(targetEntity="Domains", inversedBy="socialClasses")
      */
-    private $Domains;
+    private $domains;
 
 }

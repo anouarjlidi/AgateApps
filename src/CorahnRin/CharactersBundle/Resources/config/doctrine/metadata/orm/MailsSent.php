@@ -49,13 +49,6 @@ class MailsSent
     private $content;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=50, nullable=false)
-     */
-    private $date;
-
-    /**
      * @var \Datetime
      * @Gedmo\Mapping\Annotation\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
@@ -74,11 +67,8 @@ class MailsSent
      * @var \Mails
      *
      * @ORM\ManyToOne(targetEntity="Mails")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(referencedColumnName="id")
-     * })
      */
-    private $Mails;
+    private $mail;
 
 
 

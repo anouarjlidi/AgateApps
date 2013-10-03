@@ -57,20 +57,17 @@ class Games
     private $updated;
 
     /**
-     * @var \Jobs
+     * @var \Users
      *
      * @ORM\ManyToOne(targetEntity="CorahnRin\UsersBundle\Entity\Users")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(referencedColumnName="id")
-     * })
      */
     private $gameMaster;
 	
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="CorahnRin\UsersBundle\Entity\Users", mappedBy="Games")
+     * @ORM\OneToMany(targetEntity="Characters", mappedBy="games")
      */
-    private $users;
+    private $characters;
 
 }

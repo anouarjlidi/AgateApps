@@ -67,11 +67,8 @@ class Traits
      * @var \Ways
      *
      * @ORM\ManyToOne(targetEntity="Ways")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(referencedColumnName="id")
-     * })
      */
-    private $Ways;
+    private $way;
 
 
 

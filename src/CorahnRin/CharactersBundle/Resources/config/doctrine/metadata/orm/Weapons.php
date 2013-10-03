@@ -32,7 +32,7 @@ class Weapons
      *
      * @ORM\Column(type="boolean", nullable=false)
      */
-    private $dmg;
+    private $damage;
 
     /**
      * @var integer
@@ -53,7 +53,7 @@ class Weapons
      *
      * @ORM\Column(type="boolean", nullable=false)
      */
-    private $contact;
+    private $melee;
 
     /**
      * @var integer
@@ -76,12 +76,5 @@ class Weapons
      * @ORM\Column(type="datetime", nullable=false)
      */
     private $updated;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Characters", mappedBy="weapons")
-     */
-    private $characters;
 
 }

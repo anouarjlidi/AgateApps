@@ -56,4 +56,11 @@ class Domains
      */
     private $way;
 
+    /**
+     * @var \SocialClass
+     *
+     * @ORM\ManyToMany(targetEntity="SocialClass", mappedBy="domains")
+     */
+    private $socialClasses;
+
 }

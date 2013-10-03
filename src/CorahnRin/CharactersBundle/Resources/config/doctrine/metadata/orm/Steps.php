@@ -56,6 +56,4 @@ class Steps
      */
     private $updated;
 
-
-
 }

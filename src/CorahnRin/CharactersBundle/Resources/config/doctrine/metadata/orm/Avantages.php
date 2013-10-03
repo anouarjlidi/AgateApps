@@ -51,9 +51,9 @@ class Avantages
     /**
      * @var boolean
      *
-     * @ORM\Column(type="boolean", nullable=false)
+     * @ORM\Column(type="integer", nullable=false)
      */
-    private $canBeDoubled;
+    private $double;
 
     /**
      * @var string

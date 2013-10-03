@@ -41,4 +41,11 @@ class Disorders
      * @ORM\Column(type="datetime", nullable=false)
      */
     private $updated;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="CharWays", mappedBy="characters", mappedBy="disorders")
+     */
+    private $ways;
 }

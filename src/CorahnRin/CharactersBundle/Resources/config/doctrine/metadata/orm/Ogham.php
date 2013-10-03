@@ -42,11 +42,4 @@ class Ogham
      */
     private $updated;
 
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Characters", mappedBy="ogham")
-     */
-    private $characters;
-
 }

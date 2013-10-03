@@ -53,12 +53,7 @@ class Jobs
      * @var \Books
      *
      * @ORM\ManyToOne(targetEntity="Books")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(referencedColumnName="id")
-     * })
      */
-    private $Books;
-
-
+    private $book;
 
 }

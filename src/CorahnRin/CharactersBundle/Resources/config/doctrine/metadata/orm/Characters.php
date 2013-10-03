@@ -178,21 +178,21 @@ class Characters
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Miracles", mappedBy="characters")
+     * @ORM\ManyToMany(targetEntity="Miracles")
      */
     private $miracles;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Ogham", inversedBy="characters")
+     * @ORM\ManyToMany(targetEntity="Ogham")
      */
     private $ogham;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Weapons", inversedBy="characters")
+     * @ORM\ManyToMany(targetEntity="Weapons")
      */
     private $weapons;
 
@@ -290,6 +290,12 @@ class Characters
      * @ORM\ManyToOne(targetEntity="CorahnRin\UsersBundle\Entity\Users", inversedBy="characters")
      */
     private $user;
+	
+	/**
+	 * @var \Games
+	 * @ORM\ManyToOne(targetEntity="Games", inversedBy="characters")
+	 */
+	private $game;
 	
 	private $baseChar;
 }

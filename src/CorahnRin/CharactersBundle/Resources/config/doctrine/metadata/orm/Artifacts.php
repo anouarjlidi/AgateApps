@@ -100,10 +100,7 @@ class Artifacts
      * @var \Flux
      *
      * @ORM\ManyToOne(targetEntity="Flux")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(referencedColumnName="id")
-     * })
      */
-    private $Flux;
+    private $flux;
 
 }

@@ -46,7 +46,7 @@ class Regions
      *
      * @ORM\Column(type="text", nullable=false)
      */
-    private $coords;
+    private $coordinates;
 
     /**
      * @var \Datetime

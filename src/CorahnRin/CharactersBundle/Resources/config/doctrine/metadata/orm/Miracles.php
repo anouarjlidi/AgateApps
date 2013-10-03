@@ -49,11 +49,4 @@ class Miracles
      */
     private $updated;
 
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Characters", inversedBy="miracles")
-     */
-    private $characters;
-
 }
