@@ -13,12 +13,13 @@ class RepositoryCommand extends ContainerAwareCommand {
 <?php
 namespace {namespace};
 use Doctrine\ORM\EntityRepository;
+use CorahnRin\ToolsBundle\Repository\CorahnRinRepository as CorahnRinRepository;
 
 /**
  * {name}Repository
  *
  */
-class {name}Repository extends EntityRepository {
+class {name}Repository extends CorahnRinRepository {
 
 }
 BASE_FILE
