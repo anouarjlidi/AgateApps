@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class GeneratorController extends Controller
 {
     /**
-     * @Route("/generate")
+     * @Route("/generate", name="corahnrin_generate_index")
      * @Template()
      */
     public function indexAction()
