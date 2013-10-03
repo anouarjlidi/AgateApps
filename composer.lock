@@ -611,12 +611,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSUserBundle.git",
-                "reference": "b4840d8b3293386dba685d91169559eb20f2d767"
+                "reference": "5e236332c3934fbc16b79eff3cf6ee9ee21b7519"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/b4840d8b3293386dba685d91169559eb20f2d767",
-                "reference": "b4840d8b3293386dba685d91169559eb20f2d767",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/5e236332c3934fbc16b79eff3cf6ee9ee21b7519",
+                "reference": "5e236332c3934fbc16b79eff3cf6ee9ee21b7519",
                 "shasum": ""
             },
             "require": {
@@ -671,7 +671,7 @@
             "keywords": [
                 "User management"
             ],
-            "time": "2013-09-23 12:09:51"
+            "time": "2013-10-02 23:38:05"
         },
         {
             "name": "gedmo/doctrine-extensions",
@@ -1656,16 +1656,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v1.13.2",
+            "version": "v1.14.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/fabpot/Twig.git",
-                "reference": "6d6a1009427d1f398c9d40904147bf9f723d5755"
+                "reference": "224fc55635d544a2ec8edb3592be18db5a093f59"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fabpot/Twig/zipball/6d6a1009427d1f398c9d40904147bf9f723d5755",
-                "reference": "6d6a1009427d1f398c9d40904147bf9f723d5755",
+                "url": "https://api.github.com/repos/fabpot/Twig/zipball/224fc55635d544a2ec8edb3592be18db5a093f59",
+                "reference": "224fc55635d544a2ec8edb3592be18db5a093f59",
                 "shasum": ""
             },
             "require": {
@@ -1674,7 +1674,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.13-dev"
+                    "dev-master": "1.14-dev"
                 }
             },
             "autoload": {
@@ -1701,7 +1701,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2013-08-03 15:35:31"
+            "time": "2013-10-03 06:41:20"
         },
         {
             "name": "twitter/bootstrap",
@@ -1709,12 +1709,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/twbs/bootstrap.git",
-                "reference": "df5aa7c0f1f00b394ec9d322191e28acd581b754"
+                "reference": "79c3f23ac4c3f2eb6ce0693231b5785cda65dc24"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/df5aa7c0f1f00b394ec9d322191e28acd581b754",
-                "reference": "df5aa7c0f1f00b394ec9d322191e28acd581b754",
+                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/79c3f23ac4c3f2eb6ce0693231b5785cda65dc24",
+                "reference": "79c3f23ac4c3f2eb6ce0693231b5785cda65dc24",
                 "shasum": ""
             },
             "type": "library",
@@ -1738,7 +1738,7 @@
                 "bootstrap",
                 "css"
             ],
-            "time": "2013-09-30 08:09:30"
+            "time": "2013-10-02 17:59:03"
         }
     ],
     "packages-dev": [
