@@ -2,16 +2,18 @@
 DROP DATABASE IF EXISTS `corahn_rin`;
 CREATE DATABASE `corahn_rin` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 USE `corahn_rin`;
+
+
 -- phpMyAdmin SQL Dump
--- version 3.5.8.1
+-- version 4.0.0
 -- http://www.phpmyadmin.net
 --
 -- Client: 127.0.0.1
--- Généré le: Lun 30 Septembre 2013 à 09:48
+-- Généré le: Ven 04 Octobre 2013 à 08:24
 -- Version du serveur: 5.6.11-log
 -- Version de PHP: 5.4.14
 
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
 
@@ -37,9 +39,10 @@ CREATE TABLE IF NOT EXISTS `armors` (
   `protection` int(11) NOT NULL,
   `price` int(11) NOT NULL,
   `availability` varchar(3) COLLATE utf8_unicode_ci NOT NULL,
-  `dateCreated` datetime NOT NULL,
-  `dateUpdated` datetime NOT NULL,
-  PRIMARY KEY (`id`)
+  `created` datetime NOT NULL,
+  `updated` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQ_A81653F45E237E06` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -50,41 +53,45 @@ CREATE TABLE IF NOT EXISTS `armors` (
 
 CREATE TABLE IF NOT EXISTS `artifacts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `flux_id` int(11) DEFAULT NULL,
   `name` varchar(70) COLLATE utf8_unicode_ci NOT NULL,
   `price` int(11) NOT NULL,
-  `consumptionValue` int(11) NOT NULL,
+  `consumption` int(11) NOT NULL,
   `consumptionInterval` int(11) NOT NULL,
   `tank` int(11) NOT NULL,
   `resistance` int(11) NOT NULL,
   `vulnerability` varchar(70) COLLATE utf8_unicode_ci NOT NULL,
   `handling` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `damage` int(11) NOT NULL,
-  `dateCreated` datetime NOT NULL,
-  `dateUpdated` datetime NOT NULL,
-  `Flux_id` int(11) DEFAULT NULL,
+  `created` datetime NOT NULL,
+  `updated` datetime NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `IDX_AB6FC42BC338ABF2` (`Flux_id`)
+  UNIQUE KEY `UNIQ_AB6FC42B5E237E06` (`name`),
+  KEY `IDX_AB6FC42BC85926E` (`flux_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `avdesv`
+-- Structure de la table `avantages`
 --
 
-CREATE TABLE IF NOT EXISTS `avdesv` (
+CREATE TABLE IF NOT EXISTS `avantages` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `book_id` int(11) DEFAULT NULL,
   `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `nameFemale` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `xp` int(11) NOT NULL,
   `description` longtext COLLATE utf8_unicode_ci NOT NULL,
-  `canBeDoubled` tinyint(1) NOT NULL,
+  `double` int(11) NOT NULL,
   `bonusdisc` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
   `isDesv` tinyint(1) NOT NULL,
   `isCombatArt` tinyint(1) NOT NULL,
-  `dateCreated` datetime NOT NULL,
-  `dateUpdated` datetime NOT NULL,
-  PRIMARY KEY (`id`)
+  `created` datetime NOT NULL,
+  `updated` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQ_4936062E5E237E06` (`name`),
+  KEY `IDX_4936062E16A2B381` (`book_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -97,9 +104,10 @@ CREATE TABLE IF NOT EXISTS `books` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(80) COLLATE utf8_unicode_ci NOT NULL,
   `description` longtext COLLATE utf8_unicode_ci NOT NULL,
-  `dateCreated` datetime NOT NULL,
-  `dateUpdated` datetime NOT NULL,
-  PRIMARY KEY (`id`)
+  `created` datetime NOT NULL,
+  `updated` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQ_8BDA05965E237E06` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -114,17 +122,17 @@ CREATE TABLE IF NOT EXISTS `characters` (
   `job_id` int(11) DEFAULT NULL,
   `region_id` int(11) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
+  `game_id` int(11) DEFAULT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `status` tinyint(1) NOT NULL,
   `sex` varchar(1) COLLATE utf8_unicode_ci NOT NULL,
   `inventory` longtext COLLATE utf8_unicode_ci NOT NULL COMMENT '(DC2Type:array)',
-  `money` longtext COLLATE utf8_unicode_ci NOT NULL COMMENT '(DC2Type:array)',
+  `money` longtext COLLATE utf8_unicode_ci NOT NULL COMMENT '(DC2Type:object)',
   `orientation` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
-  `content` longtext COLLATE utf8_unicode_ci NOT NULL,
   `geoLiving` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
   `age` int(11) NOT NULL,
   `mentalResist` int(11) NOT NULL,
-  `health` int(11) NOT NULL,
+  `health` longtext COLLATE utf8_unicode_ci NOT NULL COMMENT '(DC2Type:array)',
   `stamina` int(11) NOT NULL,
   `survival` tinyint(1) NOT NULL,
   `speed` int(11) NOT NULL,
@@ -133,21 +141,90 @@ CREATE TABLE IF NOT EXISTS `characters` (
   `exaltation` int(11) NOT NULL,
   `experienceActual` int(11) NOT NULL,
   `experienceSpent` int(11) NOT NULL,
-  `dateCreated` datetime NOT NULL,
-  `dateUpdated` datetime NOT NULL,
-  `CharSocialClass_id` int(11) DEFAULT NULL,
+  `created` datetime NOT NULL,
+  `updated` datetime NOT NULL,
   `traitFlaw_id` int(11) DEFAULT NULL,
   `traitQuality_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIQ_757442DE5E237E06` (`name`),
-  KEY `IDX_757442DE6F8C514D` (`CharSocialClass_id`),
   KEY `IDX_757442DE87EB36AD` (`disorder_id`),
   KEY `IDX_757442DEBE04EA9` (`job_id`),
   KEY `IDX_757442DE98260155` (`region_id`),
   KEY `IDX_757442DE8F7F0595` (`traitFlaw_id`),
   KEY `IDX_757442DE68BCB902` (`traitQuality_id`),
-  KEY `IDX_757442DEA76ED395` (`user_id`)
+  KEY `IDX_757442DEA76ED395` (`user_id`),
+  KEY `IDX_757442DEE48FD905` (`game_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `characters_armors`
+--
+
+CREATE TABLE IF NOT EXISTS `characters_armors` (
+  `characters_id` int(11) NOT NULL,
+  `armors_id` int(11) NOT NULL,
+  PRIMARY KEY (`characters_id`,`armors_id`),
+  KEY `IDX_91F54665C70F0E28` (`characters_id`),
+  KEY `IDX_91F54665333F27F1` (`armors_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `characters_artifacts`
+--
+
+CREATE TABLE IF NOT EXISTS `characters_artifacts` (
+  `characters_id` int(11) NOT NULL,
+  `artifacts_id` int(11) NOT NULL,
+  PRIMARY KEY (`characters_id`,`artifacts_id`),
+  KEY `IDX_59084303C70F0E28` (`characters_id`),
+  KEY `IDX_5908430338F3D9E1` (`artifacts_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `characters_miracles`
+--
+
+CREATE TABLE IF NOT EXISTS `characters_miracles` (
+  `characters_id` int(11) NOT NULL,
+  `miracles_id` int(11) NOT NULL,
+  PRIMARY KEY (`characters_id`,`miracles_id`),
+  KEY `IDX_977340CAC70F0E28` (`characters_id`),
+  KEY `IDX_977340CA6B117C2B` (`miracles_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `characters_ogham`
+--
+
+CREATE TABLE IF NOT EXISTS `characters_ogham` (
+  `characters_id` int(11) NOT NULL,
+  `ogham_id` int(11) NOT NULL,
+  PRIMARY KEY (`characters_id`,`ogham_id`),
+  KEY `IDX_53F77947C70F0E28` (`characters_id`),
+  KEY `IDX_53F779473241FF23` (`ogham_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `characters_weapons`
+--
+
+CREATE TABLE IF NOT EXISTS `characters_weapons` (
+  `characters_id` int(11) NOT NULL,
+  `weapons_id` int(11) NOT NULL,
+  PRIMARY KEY (`characters_id`,`weapons_id`),
+  KEY `IDX_1A82C2BAC70F0E28` (`characters_id`),
+  KEY `IDX_1A82C2BA2EE82581` (`weapons_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -156,10 +233,12 @@ CREATE TABLE IF NOT EXISTS `characters` (
 --
 
 CREATE TABLE IF NOT EXISTS `charavtgs` (
-  `character` int(11) NOT NULL,
-  `avdesv` int(11) NOT NULL,
-  `isDoubled` tinyint(1) NOT NULL,
-  PRIMARY KEY (`character`,`avdesv`)
+  `character_id` int(11) NOT NULL,
+  `avantage_id` int(11) NOT NULL,
+  `doubleValue` int(11) NOT NULL,
+  PRIMARY KEY (`character_id`,`avantage_id`),
+  KEY `IDX_F2BCE82A1136BE75` (`character_id`),
+  KEY `IDX_F2BCE82AEA96B22C` (`avantage_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -169,10 +248,12 @@ CREATE TABLE IF NOT EXISTS `charavtgs` (
 --
 
 CREATE TABLE IF NOT EXISTS `chardisciplines` (
-  `character` int(11) NOT NULL,
-  `discipline` int(11) NOT NULL,
+  `character_id` int(11) NOT NULL,
+  `discipline_id` int(11) NOT NULL,
   `score` int(11) NOT NULL,
-  PRIMARY KEY (`character`,`discipline`)
+  PRIMARY KEY (`character_id`,`discipline_id`),
+  KEY `IDX_E8C3FDAF1136BE75` (`character_id`),
+  KEY `IDX_E8C3FDAFA5522701` (`discipline_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -182,10 +263,12 @@ CREATE TABLE IF NOT EXISTS `chardisciplines` (
 --
 
 CREATE TABLE IF NOT EXISTS `chardomains` (
-  `character` int(11) NOT NULL,
-  `domain` int(11) NOT NULL,
+  `character_id` int(11) NOT NULL,
+  `domain_id` int(11) NOT NULL,
   `score` int(11) NOT NULL,
-  PRIMARY KEY (`character`,`domain`)
+  PRIMARY KEY (`character_id`,`domain_id`),
+  KEY `IDX_9DDAD0F31136BE75` (`character_id`),
+  KEY `IDX_9DDAD0F3115F0EE5` (`domain_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -195,10 +278,11 @@ CREATE TABLE IF NOT EXISTS `chardomains` (
 --
 
 CREATE TABLE IF NOT EXISTS `charflux` (
-  `character` int(11) NOT NULL,
+  `character_id` int(11) NOT NULL,
   `flux` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
-  PRIMARY KEY (`character`,`flux`)
+  PRIMARY KEY (`character_id`,`flux`),
+  KEY `IDX_C9F736AD1136BE75` (`character_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -211,10 +295,9 @@ CREATE TABLE IF NOT EXISTS `charmodifications` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `character_id` int(11) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
-  `contentBefore` longtext COLLATE utf8_unicode_ci NOT NULL,
-  `contentAfter` longtext COLLATE utf8_unicode_ci NOT NULL,
-  `dateCreated` datetime NOT NULL,
-  `dateUpdated` datetime NOT NULL,
+  `before` longtext COLLATE utf8_unicode_ci NOT NULL COMMENT '(DC2Type:object)',
+  `created` datetime NOT NULL,
+  `updated` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `IDX_B29321471136BE75` (`character_id`),
   KEY `IDX_B2932147A76ED395` (`user_id`)
@@ -240,17 +323,18 @@ CREATE TABLE IF NOT EXISTS `charsetbacks` (
 --
 
 CREATE TABLE IF NOT EXISTS `charsocialclass` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_domains1` int(11) DEFAULT NULL,
-  `id_domains2` int(11) DEFAULT NULL,
-  `dateCreated` datetime NOT NULL,
-  `dateUpdated` datetime NOT NULL,
-  `socialClass_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `IDX_7B6034935D359764` (`id_domains1`),
-  KEY `IDX_7B603493C43CC6DE` (`id_domains2`),
-  KEY `IDX_7B603493E8455DA6` (`socialClass_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+  `character_id` int(11) NOT NULL,
+  `domain1_id` int(11) DEFAULT NULL,
+  `domain2_id` int(11) DEFAULT NULL,
+  `created` datetime NOT NULL,
+  `updated` datetime NOT NULL,
+  `socialClass_id` int(11) NOT NULL,
+  PRIMARY KEY (`character_id`,`socialClass_id`),
+  KEY `IDX_7B6034931136BE75` (`character_id`),
+  KEY `IDX_7B603493E8455DA6` (`socialClass_id`),
+  KEY `IDX_7B60349361D646A` (`domain1_id`),
+  KEY `IDX_7B60349314A8CB84` (`domain2_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -268,101 +352,34 @@ CREATE TABLE IF NOT EXISTS `charways` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `char_armors`
---
-
-CREATE TABLE IF NOT EXISTS `char_armors` (
-  `characters_id` int(11) NOT NULL,
-  `armors_id` int(11) NOT NULL,
-  PRIMARY KEY (`characters_id`,`armors_id`),
-  KEY `IDX_E096864C70F0E28` (`characters_id`),
-  KEY `IDX_E096864333F27F1` (`armors_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `char_artifacts`
---
-
-CREATE TABLE IF NOT EXISTS `char_artifacts` (
-  `characters_id` int(11) NOT NULL,
-  `artifacts_id` int(11) NOT NULL,
-  PRIMARY KEY (`characters_id`,`artifacts_id`),
-  KEY `IDX_E7C69EB0C70F0E28` (`characters_id`),
-  KEY `IDX_E7C69EB038F3D9E1` (`artifacts_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `char_miracles`
---
-
-CREATE TABLE IF NOT EXISTS `char_miracles` (
-  `miracles_id` int(11) NOT NULL,
-  `characters_id` int(11) NOT NULL,
-  PRIMARY KEY (`miracles_id`,`characters_id`),
-  KEY `IDX_52BEE3B86B117C2B` (`miracles_id`),
-  KEY `IDX_52BEE3B8C70F0E28` (`characters_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `char_ogham`
---
-
-CREATE TABLE IF NOT EXISTS `char_ogham` (
-  `characters_id` int(11) NOT NULL,
-  `ogham_id` int(11) NOT NULL,
-  PRIMARY KEY (`characters_id`,`ogham_id`),
-  KEY `IDX_103DDD01C70F0E28` (`characters_id`),
-  KEY `IDX_103DDD013241FF23` (`ogham_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `char_weapons`
---
-
-CREATE TABLE IF NOT EXISTS `char_weapons` (
-  `characters_id` int(11) NOT NULL,
-  `weapons_id` int(11) NOT NULL,
-  PRIMARY KEY (`characters_id`,`weapons_id`),
-  KEY `IDX_6D1A0E02C70F0E28` (`characters_id`),
-  KEY `IDX_6D1A0E022EE82581` (`weapons_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
 -- Structure de la table `disciplines`
 --
 
 CREATE TABLE IF NOT EXISTS `disciplines` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `book_id` int(11) DEFAULT NULL,
   `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `description` longtext COLLATE utf8_unicode_ci NOT NULL,
   `rank` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
-  `dateCreated` datetime NOT NULL,
-  `dateUpdated` datetime NOT NULL,
-  PRIMARY KEY (`id`)
+  `created` datetime NOT NULL,
+  `updated` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQ_2B81D30F5E237E06` (`name`),
+  KEY `IDX_2B81D30F16A2B381` (`book_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `discipline_domains`
+-- Structure de la table `disciplines_domains`
 --
 
-CREATE TABLE IF NOT EXISTS `discipline_domains` (
+CREATE TABLE IF NOT EXISTS `disciplines_domains` (
   `disciplines_id` int(11) NOT NULL,
   `domains_id` int(11) NOT NULL,
   PRIMARY KEY (`disciplines_id`,`domains_id`),
-  KEY `IDX_E6B3DFC190D3DF94` (`disciplines_id`),
-  KEY `IDX_E6B3DFC13700F4DC` (`domains_id`)
+  KEY `IDX_FE41FAE890D3DF94` (`disciplines_id`),
+  KEY `IDX_FE41FAE83700F4DC` (`domains_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -374,9 +391,10 @@ CREATE TABLE IF NOT EXISTS `discipline_domains` (
 CREATE TABLE IF NOT EXISTS `disorders` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `dateCreated` datetime NOT NULL,
-  `dateUpdated` datetime NOT NULL,
-  PRIMARY KEY (`id`)
+  `created` datetime NOT NULL,
+  `updated` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQ_23BE6BCE5E237E06` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -400,13 +418,14 @@ CREATE TABLE IF NOT EXISTS `disordersways` (
 
 CREATE TABLE IF NOT EXISTS `domains` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `way_id` int(11) DEFAULT NULL,
   `name` varchar(70) COLLATE utf8_unicode_ci NOT NULL,
   `description` longtext COLLATE utf8_unicode_ci NOT NULL,
-  `dateCreated` datetime NOT NULL,
-  `dateUpdated` datetime NOT NULL,
-  `Ways_id` int(11) DEFAULT NULL,
+  `created` datetime NOT NULL,
+  `updated` datetime NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `IDX_43C68601ACFE4556` (`Ways_id`)
+  UNIQUE KEY `UNIQ_43C686015E237E06` (`name`),
+  KEY `IDX_43C686018C803113` (`way_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -558,9 +577,10 @@ CREATE TABLE IF NOT EXISTS `factions_events` (
 CREATE TABLE IF NOT EXISTS `flux` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(70) COLLATE utf8_unicode_ci NOT NULL,
-  `dateCreated` datetime NOT NULL,
-  `dateUpdated` datetime NOT NULL,
-  PRIMARY KEY (`id`)
+  `created` datetime NOT NULL,
+  `updated` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQ_D2609E045E237E06` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -603,10 +623,11 @@ CREATE TABLE IF NOT EXISTS `games` (
   `name` varchar(140) COLLATE utf8_unicode_ci NOT NULL,
   `summary` longtext COLLATE utf8_unicode_ci NOT NULL,
   `gmNotes` longtext COLLATE utf8_unicode_ci NOT NULL,
-  `dateCreated` datetime NOT NULL,
-  `dateUpdated` datetime NOT NULL,
+  `created` datetime NOT NULL,
+  `updated` datetime NOT NULL,
   `gameMaster_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQ_3EE204355E237E06` (`name`),
   KEY `IDX_3EE2043514C6E3F4` (`gameMaster_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
@@ -618,13 +639,14 @@ CREATE TABLE IF NOT EXISTS `games` (
 
 CREATE TABLE IF NOT EXISTS `jobs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `book_id` int(11) DEFAULT NULL,
   `name` varchar(140) COLLATE utf8_unicode_ci NOT NULL,
   `description` longtext COLLATE utf8_unicode_ci NOT NULL,
-  `dateCreated` datetime NOT NULL,
-  `dateUpdated` datetime NOT NULL,
-  `Books_id` int(11) DEFAULT NULL,
+  `created` datetime NOT NULL,
+  `updated` datetime NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `IDX_8A1C2FB84AECE76` (`Books_id`)
+  UNIQUE KEY `UNIQ_8A1C2FB5E237E06` (`name`),
+  KEY `IDX_8A1C2FB16A2B381` (`book_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -638,9 +660,10 @@ CREATE TABLE IF NOT EXISTS `mails` (
   `code` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `content` longtext COLLATE utf8_unicode_ci NOT NULL,
   `subject` longtext COLLATE utf8_unicode_ci NOT NULL,
-  `dateCreated` datetime NOT NULL,
-  `dateUpdated` datetime NOT NULL,
-  PRIMARY KEY (`id`)
+  `created` datetime NOT NULL,
+  `updated` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQ_A2990F0177153098` (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -651,16 +674,16 @@ CREATE TABLE IF NOT EXISTS `mails` (
 
 CREATE TABLE IF NOT EXISTS `mailssent` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `mail_id` int(11) DEFAULT NULL,
   `toName` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `toEmail` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `subject` longtext COLLATE utf8_unicode_ci NOT NULL,
   `content` longtext COLLATE utf8_unicode_ci NOT NULL,
-  `date` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `dateCreated` datetime NOT NULL,
-  `dateUpdated` datetime NOT NULL,
-  `Mails_id` int(11) DEFAULT NULL,
+  `created` datetime NOT NULL,
+  `updated` datetime NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `IDX_314D565869C8988A` (`Mails_id`)
+  UNIQUE KEY `UNIQ_314D5658E54600CC` (`toName`),
+  KEY `IDX_314D5658C8776F01` (`mail_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -729,9 +752,10 @@ CREATE TABLE IF NOT EXISTS `miracles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(70) COLLATE utf8_unicode_ci NOT NULL,
   `isMajor` tinyint(1) NOT NULL,
-  `dateCreated` datetime NOT NULL,
-  `dateUpdated` datetime NOT NULL,
-  PRIMARY KEY (`id`)
+  `created` datetime NOT NULL,
+  `updated` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQ_92F426995E237E06` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -772,9 +796,10 @@ CREATE TABLE IF NOT EXISTS `npcs_events` (
 CREATE TABLE IF NOT EXISTS `ogham` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(70) COLLATE utf8_unicode_ci NOT NULL,
-  `dateCreated` datetime NOT NULL,
-  `dateUpdated` datetime NOT NULL,
-  PRIMARY KEY (`id`)
+  `created` datetime NOT NULL,
+  `updated` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQ_B3512AA45E237E06` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -788,10 +813,11 @@ CREATE TABLE IF NOT EXISTS `regions` (
   `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `description` longtext COLLATE utf8_unicode_ci NOT NULL,
   `kingdom` varchar(70) COLLATE utf8_unicode_ci NOT NULL,
-  `coords` longtext COLLATE utf8_unicode_ci NOT NULL,
-  `dateCreated` datetime NOT NULL,
-  `dateUpdated` datetime NOT NULL,
-  PRIMARY KEY (`id`)
+  `coordinates` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `created` datetime NOT NULL,
+  `updated` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQ_6DDA406F5E237E06` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -912,9 +938,10 @@ CREATE TABLE IF NOT EXISTS `setbacks` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `description` longtext COLLATE utf8_unicode_ci NOT NULL,
-  `dateCreated` datetime NOT NULL,
-  `dateUpdated` datetime NOT NULL,
-  PRIMARY KEY (`id`)
+  `created` datetime NOT NULL,
+  `updated` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQ_924A54015E237E06` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -926,23 +953,24 @@ CREATE TABLE IF NOT EXISTS `setbacks` (
 CREATE TABLE IF NOT EXISTS `socialclass` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
-  `dateCreated` datetime NOT NULL,
-  `dateUpdated` datetime NOT NULL,
-  PRIMARY KEY (`id`)
+  `created` datetime NOT NULL,
+  `updated` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQ_B8221A335E237E06` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `social_class_domains`
+-- Structure de la table `socialclass_domains`
 --
 
-CREATE TABLE IF NOT EXISTS `social_class_domains` (
+CREATE TABLE IF NOT EXISTS `socialclass_domains` (
   `socialclass_id` int(11) NOT NULL,
   `domains_id` int(11) NOT NULL,
   PRIMARY KEY (`socialclass_id`,`domains_id`),
-  KEY `IDX_FFB456F511333FF0` (`socialclass_id`),
-  KEY `IDX_FFB456F53700F4DC` (`domains_id`)
+  KEY `IDX_CFF613F711333FF0` (`socialclass_id`),
+  KEY `IDX_CFF613F73700F4DC` (`domains_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -956,9 +984,11 @@ CREATE TABLE IF NOT EXISTS `steps` (
   `step` int(11) NOT NULL,
   `slug` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `title` varchar(75) COLLATE utf8_unicode_ci NOT NULL,
-  `dateCreated` datetime NOT NULL,
-  `dateUpdated` datetime NOT NULL,
-  PRIMARY KEY (`id`)
+  `created` datetime NOT NULL,
+  `updated` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQ_F5E3257643B9FE3C` (`step`),
+  UNIQUE KEY `UNIQ_F5E32576989D9B62` (`slug`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -969,15 +999,16 @@ CREATE TABLE IF NOT EXISTS `steps` (
 
 CREATE TABLE IF NOT EXISTS `traits` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `way_id` int(11) DEFAULT NULL,
   `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `nameFemale` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `isQuality` tinyint(1) NOT NULL,
   `isMajor` tinyint(1) NOT NULL,
-  `dateCreated` datetime NOT NULL,
-  `dateUpdated` datetime NOT NULL,
-  `Ways_id` int(11) DEFAULT NULL,
+  `created` datetime NOT NULL,
+  `updated` datetime NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `IDX_E30CA450ACFE4556` (`Ways_id`)
+  UNIQUE KEY `UNIQ_E30CA4505E237E06` (`name`),
+  KEY `IDX_E30CA4508C803113` (`way_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -987,7 +1018,7 @@ CREATE TABLE IF NOT EXISTS `traits` (
 --
 
 CREATE TABLE IF NOT EXISTS `users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
   `username` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `username_canonical` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -1007,7 +1038,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIQ_1483A5E992FC23A8` (`username_canonical`),
   UNIQUE KEY `UNIQ_1483A5E9A0D96FBF` (`email_canonical`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1021,9 +1052,12 @@ CREATE TABLE IF NOT EXISTS `ways` (
   `name` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
   `fault` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
   `description` longtext COLLATE utf8_unicode_ci NOT NULL,
-  `dateCreated` datetime NOT NULL,
-  `dateUpdated` datetime NOT NULL,
-  PRIMARY KEY (`id`)
+  `created` datetime NOT NULL,
+  `updated` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQ_97AAB29C43A885D` (`shortName`),
+  UNIQUE KEY `UNIQ_97AAB295E237E06` (`name`),
+  UNIQUE KEY `UNIQ_97AAB299FD0DEA3` (`fault`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -1035,14 +1069,15 @@ CREATE TABLE IF NOT EXISTS `ways` (
 CREATE TABLE IF NOT EXISTS `weapons` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `dmg` tinyint(1) NOT NULL,
+  `damage` tinyint(1) NOT NULL,
   `price` int(11) NOT NULL,
   `availability` varchar(3) COLLATE utf8_unicode_ci NOT NULL,
-  `contact` tinyint(1) NOT NULL,
+  `melee` tinyint(1) NOT NULL,
   `range` int(11) NOT NULL,
-  `dateCreated` datetime NOT NULL,
-  `dateUpdated` datetime NOT NULL,
-  PRIMARY KEY (`id`)
+  `created` datetime NOT NULL,
+  `updated` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQ_9DB3827D5E237E06` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -1102,19 +1137,87 @@ CREATE TABLE IF NOT EXISTS `zones` (
 -- Contraintes pour la table `artifacts`
 --
 ALTER TABLE `artifacts`
-  ADD CONSTRAINT `FK_AB6FC42BC338ABF2` FOREIGN KEY (`Flux_id`) REFERENCES `flux` (`id`);
+  ADD CONSTRAINT `FK_AB6FC42BC85926E` FOREIGN KEY (`flux_id`) REFERENCES `flux` (`id`);
+
+--
+-- Contraintes pour la table `avantages`
+--
+ALTER TABLE `avantages`
+  ADD CONSTRAINT `FK_4936062E16A2B381` FOREIGN KEY (`book_id`) REFERENCES `books` (`id`);
 
 --
 -- Contraintes pour la table `characters`
 --
 ALTER TABLE `characters`
-  ADD CONSTRAINT `FK_757442DEA76ED395` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `FK_757442DEE48FD905` FOREIGN KEY (`game_id`) REFERENCES `games` (`id`),
   ADD CONSTRAINT `FK_757442DE68BCB902` FOREIGN KEY (`traitQuality_id`) REFERENCES `traits` (`id`),
-  ADD CONSTRAINT `FK_757442DE6F8C514D` FOREIGN KEY (`CharSocialClass_id`) REFERENCES `charsocialclass` (`id`),
   ADD CONSTRAINT `FK_757442DE87EB36AD` FOREIGN KEY (`disorder_id`) REFERENCES `disorders` (`id`),
   ADD CONSTRAINT `FK_757442DE8F7F0595` FOREIGN KEY (`traitFlaw_id`) REFERENCES `traits` (`id`),
   ADD CONSTRAINT `FK_757442DE98260155` FOREIGN KEY (`region_id`) REFERENCES `regions` (`id`),
+  ADD CONSTRAINT `FK_757442DEA76ED395` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   ADD CONSTRAINT `FK_757442DEBE04EA9` FOREIGN KEY (`job_id`) REFERENCES `jobs` (`id`);
+
+--
+-- Contraintes pour la table `characters_armors`
+--
+ALTER TABLE `characters_armors`
+  ADD CONSTRAINT `FK_91F54665333F27F1` FOREIGN KEY (`armors_id`) REFERENCES `armors` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `FK_91F54665C70F0E28` FOREIGN KEY (`characters_id`) REFERENCES `characters` (`id`) ON DELETE CASCADE;
+
+--
+-- Contraintes pour la table `characters_artifacts`
+--
+ALTER TABLE `characters_artifacts`
+  ADD CONSTRAINT `FK_5908430338F3D9E1` FOREIGN KEY (`artifacts_id`) REFERENCES `artifacts` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `FK_59084303C70F0E28` FOREIGN KEY (`characters_id`) REFERENCES `characters` (`id`) ON DELETE CASCADE;
+
+--
+-- Contraintes pour la table `characters_miracles`
+--
+ALTER TABLE `characters_miracles`
+  ADD CONSTRAINT `FK_977340CA6B117C2B` FOREIGN KEY (`miracles_id`) REFERENCES `miracles` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `FK_977340CAC70F0E28` FOREIGN KEY (`characters_id`) REFERENCES `characters` (`id`) ON DELETE CASCADE;
+
+--
+-- Contraintes pour la table `characters_ogham`
+--
+ALTER TABLE `characters_ogham`
+  ADD CONSTRAINT `FK_53F779473241FF23` FOREIGN KEY (`ogham_id`) REFERENCES `ogham` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `FK_53F77947C70F0E28` FOREIGN KEY (`characters_id`) REFERENCES `characters` (`id`) ON DELETE CASCADE;
+
+--
+-- Contraintes pour la table `characters_weapons`
+--
+ALTER TABLE `characters_weapons`
+  ADD CONSTRAINT `FK_1A82C2BA2EE82581` FOREIGN KEY (`weapons_id`) REFERENCES `weapons` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `FK_1A82C2BAC70F0E28` FOREIGN KEY (`characters_id`) REFERENCES `characters` (`id`) ON DELETE CASCADE;
+
+--
+-- Contraintes pour la table `charavtgs`
+--
+ALTER TABLE `charavtgs`
+  ADD CONSTRAINT `FK_F2BCE82AEA96B22C` FOREIGN KEY (`avantage_id`) REFERENCES `avantages` (`id`),
+  ADD CONSTRAINT `FK_F2BCE82A1136BE75` FOREIGN KEY (`character_id`) REFERENCES `characters` (`id`);
+
+--
+-- Contraintes pour la table `chardisciplines`
+--
+ALTER TABLE `chardisciplines`
+  ADD CONSTRAINT `FK_E8C3FDAFA5522701` FOREIGN KEY (`discipline_id`) REFERENCES `disciplines` (`id`),
+  ADD CONSTRAINT `FK_E8C3FDAF1136BE75` FOREIGN KEY (`character_id`) REFERENCES `characters` (`id`);
+
+--
+-- Contraintes pour la table `chardomains`
+--
+ALTER TABLE `chardomains`
+  ADD CONSTRAINT `FK_9DDAD0F3115F0EE5` FOREIGN KEY (`domain_id`) REFERENCES `domains` (`id`),
+  ADD CONSTRAINT `FK_9DDAD0F31136BE75` FOREIGN KEY (`character_id`) REFERENCES `characters` (`id`);
+
+--
+-- Contraintes pour la table `charflux`
+--
+ALTER TABLE `charflux`
+  ADD CONSTRAINT `FK_C9F736AD1136BE75` FOREIGN KEY (`character_id`) REFERENCES `characters` (`id`);
 
 --
 -- Contraintes pour la table `charmodifications`
@@ -1127,57 +1230,29 @@ ALTER TABLE `charmodifications`
 -- Contraintes pour la table `charsocialclass`
 --
 ALTER TABLE `charsocialclass`
-  ADD CONSTRAINT `FK_7B603493E8455DA6` FOREIGN KEY (`socialClass_id`) REFERENCES `socialclass` (`id`),
-  ADD CONSTRAINT `FK_7B6034935D359764` FOREIGN KEY (`id_domains1`) REFERENCES `domains` (`id`),
-  ADD CONSTRAINT `FK_7B603493C43CC6DE` FOREIGN KEY (`id_domains2`) REFERENCES `domains` (`id`);
+  ADD CONSTRAINT `FK_7B60349314A8CB84` FOREIGN KEY (`domain2_id`) REFERENCES `domains` (`id`),
+  ADD CONSTRAINT `FK_7B6034931136BE75` FOREIGN KEY (`character_id`) REFERENCES `characters` (`id`),
+  ADD CONSTRAINT `FK_7B60349361D646A` FOREIGN KEY (`domain1_id`) REFERENCES `domains` (`id`),
+  ADD CONSTRAINT `FK_7B603493E8455DA6` FOREIGN KEY (`socialClass_id`) REFERENCES `socialclass` (`id`);
 
 --
--- Contraintes pour la table `char_armors`
+-- Contraintes pour la table `disciplines`
 --
-ALTER TABLE `char_armors`
-  ADD CONSTRAINT `FK_E096864333F27F1` FOREIGN KEY (`armors_id`) REFERENCES `armors` (`id`),
-  ADD CONSTRAINT `FK_E096864C70F0E28` FOREIGN KEY (`characters_id`) REFERENCES `characters` (`id`);
+ALTER TABLE `disciplines`
+  ADD CONSTRAINT `FK_2B81D30F16A2B381` FOREIGN KEY (`book_id`) REFERENCES `books` (`id`);
 
 --
--- Contraintes pour la table `char_artifacts`
+-- Contraintes pour la table `disciplines_domains`
 --
-ALTER TABLE `char_artifacts`
-  ADD CONSTRAINT `FK_E7C69EB038F3D9E1` FOREIGN KEY (`artifacts_id`) REFERENCES `artifacts` (`id`),
-  ADD CONSTRAINT `FK_E7C69EB0C70F0E28` FOREIGN KEY (`characters_id`) REFERENCES `characters` (`id`);
-
---
--- Contraintes pour la table `char_miracles`
---
-ALTER TABLE `char_miracles`
-  ADD CONSTRAINT `FK_52BEE3B8C70F0E28` FOREIGN KEY (`characters_id`) REFERENCES `characters` (`id`),
-  ADD CONSTRAINT `FK_52BEE3B86B117C2B` FOREIGN KEY (`miracles_id`) REFERENCES `miracles` (`id`);
-
---
--- Contraintes pour la table `char_ogham`
---
-ALTER TABLE `char_ogham`
-  ADD CONSTRAINT `FK_103DDD013241FF23` FOREIGN KEY (`ogham_id`) REFERENCES `ogham` (`id`),
-  ADD CONSTRAINT `FK_103DDD01C70F0E28` FOREIGN KEY (`characters_id`) REFERENCES `characters` (`id`);
-
---
--- Contraintes pour la table `char_weapons`
---
-ALTER TABLE `char_weapons`
-  ADD CONSTRAINT `FK_6D1A0E022EE82581` FOREIGN KEY (`weapons_id`) REFERENCES `weapons` (`id`),
-  ADD CONSTRAINT `FK_6D1A0E02C70F0E28` FOREIGN KEY (`characters_id`) REFERENCES `characters` (`id`);
-
---
--- Contraintes pour la table `discipline_domains`
---
-ALTER TABLE `discipline_domains`
-  ADD CONSTRAINT `FK_E6B3DFC13700F4DC` FOREIGN KEY (`domains_id`) REFERENCES `domains` (`id`),
-  ADD CONSTRAINT `FK_E6B3DFC190D3DF94` FOREIGN KEY (`disciplines_id`) REFERENCES `disciplines` (`id`);
+ALTER TABLE `disciplines_domains`
+  ADD CONSTRAINT `FK_FE41FAE83700F4DC` FOREIGN KEY (`domains_id`) REFERENCES `domains` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `FK_FE41FAE890D3DF94` FOREIGN KEY (`disciplines_id`) REFERENCES `disciplines` (`id`) ON DELETE CASCADE;
 
 --
 -- Contraintes pour la table `domains`
 --
 ALTER TABLE `domains`
-  ADD CONSTRAINT `FK_43C68601ACFE4556` FOREIGN KEY (`Ways_id`) REFERENCES `ways` (`id`);
+  ADD CONSTRAINT `FK_43C686018C803113` FOREIGN KEY (`way_id`) REFERENCES `ways` (`id`);
 
 --
 -- Contraintes pour la table `eventsmarkers`
@@ -1239,13 +1314,13 @@ ALTER TABLE `games`
 -- Contraintes pour la table `jobs`
 --
 ALTER TABLE `jobs`
-  ADD CONSTRAINT `FK_8A1C2FB84AECE76` FOREIGN KEY (`Books_id`) REFERENCES `books` (`id`);
+  ADD CONSTRAINT `FK_8A1C2FB16A2B381` FOREIGN KEY (`book_id`) REFERENCES `books` (`id`);
 
 --
 -- Contraintes pour la table `mailssent`
 --
 ALTER TABLE `mailssent`
-  ADD CONSTRAINT `FK_314D565869C8988A` FOREIGN KEY (`Mails_id`) REFERENCES `mails` (`id`);
+  ADD CONSTRAINT `FK_314D5658C8776F01` FOREIGN KEY (`mail_id`) REFERENCES `mails` (`id`);
 
 --
 -- Contraintes pour la table `markers`
@@ -1299,17 +1374,17 @@ ALTER TABLE `routes_markers`
   ADD CONSTRAINT `FK_AF2807D1AE2C16DC` FOREIGN KEY (`routes_id`) REFERENCES `routes` (`id`) ON DELETE CASCADE;
 
 --
--- Contraintes pour la table `social_class_domains`
+-- Contraintes pour la table `socialclass_domains`
 --
-ALTER TABLE `social_class_domains`
-  ADD CONSTRAINT `FK_FFB456F53700F4DC` FOREIGN KEY (`domains_id`) REFERENCES `domains` (`id`),
-  ADD CONSTRAINT `FK_FFB456F511333FF0` FOREIGN KEY (`socialclass_id`) REFERENCES `socialclass` (`id`);
+ALTER TABLE `socialclass_domains`
+  ADD CONSTRAINT `FK_CFF613F73700F4DC` FOREIGN KEY (`domains_id`) REFERENCES `domains` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `FK_CFF613F711333FF0` FOREIGN KEY (`socialclass_id`) REFERENCES `socialclass` (`id`) ON DELETE CASCADE;
 
 --
 -- Contraintes pour la table `traits`
 --
 ALTER TABLE `traits`
-  ADD CONSTRAINT `FK_E30CA450ACFE4556` FOREIGN KEY (`Ways_id`) REFERENCES `ways` (`id`);
+  ADD CONSTRAINT `FK_E30CA4508C803113` FOREIGN KEY (`way_id`) REFERENCES `ways` (`id`);
 
 --
 -- Contraintes pour la table `weather_events`
