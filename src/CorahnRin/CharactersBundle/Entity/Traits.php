@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Traits
  *
  * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\TraitsRepository")
+ * @ORM\Table(uniqueConstraints={@ORM\UniqueConstraint(name="idxUnique", columns={"name", "way_id"})})
  */
 class Traits
 {
@@ -23,7 +24,7 @@ class Traits
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=50, nullable=false, unique=true)
+     * @ORM\Column(type="string", length=50, nullable=false)
      */
     private $name;
 
@@ -76,7 +77,7 @@ class Traits
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -92,14 +93,14 @@ class Traits
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -115,14 +116,14 @@ class Traits
     public function setNameFemale($nameFemale)
     {
         $this->nameFemale = $nameFemale;
-    
+
         return $this;
     }
 
     /**
      * Get nameFemale
      *
-     * @return string 
+     * @return string
      */
     public function getNameFemale()
     {
@@ -138,14 +139,14 @@ class Traits
     public function setIsQuality($isQuality)
     {
         $this->isQuality = $isQuality;
-    
+
         return $this;
     }
 
     /**
      * Get isQuality
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsQuality()
     {
@@ -161,14 +162,14 @@ class Traits
     public function setIsMajor($isMajor)
     {
         $this->isMajor = $isMajor;
-    
+
         return $this;
     }
 
     /**
      * Get isMajor
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsMajor()
     {
@@ -184,14 +185,14 @@ class Traits
     public function setCreated($created)
     {
         $this->created = $created;
-    
+
         return $this;
     }
 
     /**
      * Get created
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreated()
     {
@@ -207,14 +208,14 @@ class Traits
     public function setUpdated($updated)
     {
         $this->updated = $updated;
-    
+
         return $this;
     }
 
     /**
      * Get updated
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdated()
     {
@@ -230,14 +231,14 @@ class Traits
     public function setWay(\CorahnRin\CharactersBundle\Entity\Ways $way = null)
     {
         $this->way = $way;
-    
+
         return $this;
     }
 
     /**
      * Get way
      *
-     * @return \CorahnRin\CharactersBundle\Entity\Ways 
+     * @return \CorahnRin\CharactersBundle\Entity\Ways
      */
     public function getWay()
     {
