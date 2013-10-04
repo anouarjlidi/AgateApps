@@ -14,18 +14,16 @@ class CharWays
     /**
      * @var \Characters
      *
-     * @ORM\Column(type="integer")
      * @ORM\Id
-	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Characters", inversedBy="ways")
+	 * @ORM\ManyToOne(targetEntity="Characters", inversedBy="ways")
      */
     private $character;
 
     /**
      * @var \Ways
      *
-     * @ORM\Column(type="integer")
      * @ORM\Id
-	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Ways")
+	 * @ORM\ManyToOne(targetEntity="Ways")
      */
     private $way;
 
@@ -47,14 +45,14 @@ class CharWays
     public function setCharacter($character)
     {
         $this->character = $character;
-    
+
         return $this;
     }
 
     /**
      * Get character
      *
-     * @return integer 
+     * @return integer
      */
     public function getCharacter()
     {
@@ -70,14 +68,14 @@ class CharWays
     public function setWay($way)
     {
         $this->way = $way;
-    
+
         return $this;
     }
 
     /**
      * Get way
      *
-     * @return integer 
+     * @return integer
      */
     public function getWay()
     {
@@ -93,14 +91,14 @@ class CharWays
     public function setScore($score)
     {
         $this->score = $score;
-    
+
         return $this;
     }
 
     /**
      * Get score
      *
-     * @return integer 
+     * @return integer
      */
     public function getScore()
     {

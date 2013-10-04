@@ -15,7 +15,7 @@ class CharFlux
      * @var \Characters
      *
      * @ORM\Id
-	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Characters")
+	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Characters", inversedBy="flux")
      */
     private $character;
 
@@ -46,14 +46,14 @@ class CharFlux
     public function setFlux($flux)
     {
         $this->flux = $flux;
-    
+
         return $this;
     }
 
     /**
      * Get flux
      *
-     * @return integer 
+     * @return integer
      */
     public function getFlux()
     {
@@ -69,14 +69,14 @@ class CharFlux
     public function setQuantity($quantity)
     {
         $this->quantity = $quantity;
-    
+
         return $this;
     }
 
     /**
      * Get quantity
      *
-     * @return integer 
+     * @return integer
      */
     public function getQuantity()
     {
@@ -92,14 +92,14 @@ class CharFlux
     public function setCharacter(\CorahnRin\CharactersBundle\Entity\Characters $character)
     {
         $this->character = $character;
-    
+
         return $this;
     }
 
     /**
      * Get character
      *
-     * @return \CorahnRin\CharactersBundle\Entity\Characters 
+     * @return \CorahnRin\CharactersBundle\Entity\Characters
      */
     public function getCharacter()
     {

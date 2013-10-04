@@ -62,11 +62,11 @@ class Games
      * @ORM\ManyToOne(targetEntity="CorahnRin\UsersBundle\Entity\Users")
      */
     private $gameMaster;
-	
+
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\OneToMany(targetEntity="Characters", mappedBy="games")
+     * @ORM\OneToMany(targetEntity="Characters", mappedBy="game")
      */
     private $characters;
 
@@ -77,11 +77,11 @@ class Games
     {
         $this->characters = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -97,14 +97,14 @@ class Games
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -120,14 +120,14 @@ class Games
     public function setSummary($summary)
     {
         $this->summary = $summary;
-    
+
         return $this;
     }
 
     /**
      * Get summary
      *
-     * @return string 
+     * @return string
      */
     public function getSummary()
     {
@@ -143,14 +143,14 @@ class Games
     public function setGmNotes($gmNotes)
     {
         $this->gmNotes = $gmNotes;
-    
+
         return $this;
     }
 
     /**
      * Get gmNotes
      *
-     * @return string 
+     * @return string
      */
     public function getGmNotes()
     {
@@ -166,14 +166,14 @@ class Games
     public function setCreated($created)
     {
         $this->created = $created;
-    
+
         return $this;
     }
 
     /**
      * Get created
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreated()
     {
@@ -189,14 +189,14 @@ class Games
     public function setUpdated($updated)
     {
         $this->updated = $updated;
-    
+
         return $this;
     }
 
     /**
      * Get updated
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdated()
     {
@@ -212,14 +212,14 @@ class Games
     public function setGameMaster(\CorahnRin\UsersBundle\Entity\Users $gameMaster = null)
     {
         $this->gameMaster = $gameMaster;
-    
+
         return $this;
     }
 
     /**
      * Get gameMaster
      *
-     * @return \CorahnRin\UsersBundle\Entity\Users 
+     * @return \CorahnRin\UsersBundle\Entity\Users
      */
     public function getGameMaster()
     {
@@ -235,7 +235,7 @@ class Games
     public function addCharacter(\CorahnRin\CharactersBundle\Entity\Characters $characters)
     {
         $this->characters[] = $characters;
-    
+
         return $this;
     }
 
@@ -252,7 +252,7 @@ class Games
     /**
      * Get characters
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getCharacters()
     {

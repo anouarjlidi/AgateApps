@@ -14,7 +14,6 @@ class CharSetbacks
     /**
      * @var \Characters
      *
-     * @ORM\Column(type="integer")
      * @ORM\Id
 	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Characters", inversedBy="setbacks")
      */
@@ -47,14 +46,14 @@ class CharSetbacks
     public function setCharacter($character)
     {
         $this->character = $character;
-    
+
         return $this;
     }
 
     /**
      * Get character
      *
-     * @return integer 
+     * @return integer
      */
     public function getCharacter()
     {
@@ -70,14 +69,14 @@ class CharSetbacks
     public function setSetback($setback)
     {
         $this->setback = $setback;
-    
+
         return $this;
     }
 
     /**
      * Get setback
      *
-     * @return integer 
+     * @return integer
      */
     public function getSetback()
     {
@@ -93,14 +92,14 @@ class CharSetbacks
     public function setIsAvoided($isAvoided)
     {
         $this->isAvoided = $isAvoided;
-    
+
         return $this;
     }
 
     /**
      * Get isAvoided
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsAvoided()
     {

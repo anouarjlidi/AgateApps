@@ -12,10 +12,10 @@ use Doctrine\ORM\Mapping as ORM;
 class CharSocialClass
 {
     /**
-     * @var \Characters
+     * @var \Character
      *
      * @ORM\Id
-     * @ORM\OneToOne(targetEntity="Characters", inversedBy="markers")
+     * @ORM\OneToOne(targetEntity="Characters", inversedBy="socialClass")
      */
     private $character;
 
@@ -56,8 +56,6 @@ class CharSocialClass
      */
     private $domain2;
 
-
-
     /**
      * Set created
      *
@@ -67,14 +65,14 @@ class CharSocialClass
     public function setCreated($created)
     {
         $this->created = $created;
-    
+
         return $this;
     }
 
     /**
      * Get created
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreated()
     {
@@ -90,14 +88,14 @@ class CharSocialClass
     public function setUpdated($updated)
     {
         $this->updated = $updated;
-    
+
         return $this;
     }
 
     /**
      * Get updated
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdated()
     {
@@ -113,14 +111,14 @@ class CharSocialClass
     public function setCharacter(\CorahnRin\CharactersBundle\Entity\Characters $character)
     {
         $this->character = $character;
-    
+
         return $this;
     }
 
     /**
      * Get character
      *
-     * @return \CorahnRin\CharactersBundle\Entity\Characters 
+     * @return \CorahnRin\CharactersBundle\Entity\Characters
      */
     public function getCharacter()
     {
@@ -136,14 +134,14 @@ class CharSocialClass
     public function setSocialClass(\CorahnRin\CharactersBundle\Entity\SocialClass $socialClass)
     {
         $this->socialClass = $socialClass;
-    
+
         return $this;
     }
 
     /**
      * Get socialClass
      *
-     * @return \CorahnRin\CharactersBundle\Entity\SocialClass 
+     * @return \CorahnRin\CharactersBundle\Entity\SocialClass
      */
     public function getSocialClass()
     {
@@ -159,14 +157,14 @@ class CharSocialClass
     public function setDomain1(\CorahnRin\CharactersBundle\Entity\Domains $domain1 = null)
     {
         $this->domain1 = $domain1;
-    
+
         return $this;
     }
 
     /**
      * Get domain1
      *
-     * @return \CorahnRin\CharactersBundle\Entity\Domains 
+     * @return \CorahnRin\CharactersBundle\Entity\Domains
      */
     public function getDomain1()
     {
@@ -182,14 +180,14 @@ class CharSocialClass
     public function setDomain2(\CorahnRin\CharactersBundle\Entity\Domains $domain2 = null)
     {
         $this->domain2 = $domain2;
-    
+
         return $this;
     }
 
     /**
      * Get domain2
      *
-     * @return \CorahnRin\CharactersBundle\Entity\Domains 
+     * @return \CorahnRin\CharactersBundle\Entity\Domains
      */
     public function getDomain2()
     {
