@@ -9,7 +9,7 @@ showtime($temp_time, 'Conversion des tables de l\'ancienne vers la nouvelle vers
 $total_times = array();
 $total_msgs = array();
 
-class Database extends PDO{public static $prefix;public $table='';private $c;private $d;private $f;private $g;private $h;private $i;private $j;private $l;private $m=false;private $n;private $o;function __construct($p='127.0.0.1',$q='root',$r='',$s='mydb',$u='',$w='mysql'){if(isset($this->table)){$this->table=$this->table;}$y[PDO::ATTR_ERRMODE]=PDO::ERRMODE_EXCEPTION;self::$prefix=$u;$z=$w.':host='.$p.';dbname='.$s.'';$this->initErr(true);try{parent::__construct($z,$q,$r,$y);$this->dbname=$s;}catch(Exception $d){return $this->showErr($d,null,null,true);}$this->noRes('SET NAMES "utf8"');}protected function initErr($aa=false,$bb='fatal'){$this->show_err=$aa==true?true:false;if($bb==='warning'){$this->err_type=E_USER_WARNING;}elseif($bb==='fatal'){$this->err_type=E_USER_ERROR;}elseif($bb==='notice'){$this->err_type=E_USER_NOTICE;}else{$this->err_type=E_USER_WARNING;}}protected function showErr($d=null,$cc=null,$dd=null,$ee=false){$ff=is_object($d)?$d->getTrace():'';echo 'Une erreur MySQL est survenue...<br />'.PHP_EOL;pr(array('pdo_ex'=>(is_object($d)?$d->getMessage():''),'qry'=>$cc,'trace'=>$ff));exit('ERREUR');}public static function sbuildReq($cc,$gg=array(),$table='my_table'){$gg=(array) $gg;if(strpos($cc,'%%%fields')!==false){$hh=array();foreach($gg as $ii=>$jj){$ii=str_replace(':','',$ii);$hh[]='%'.$ii.' = :'.$ii;}$cc=str_replace('%%%fields',implode(', ',$hh),$cc);}if(strpos($cc,'%%%in')!==false){if(empty($gg)){$cc=str_replace('%%%in','0',$cc);}else{$kk=implode(', ',array_fill(0,count($gg),'?'));$cc=str_replace('%%%in',$kk,$cc);}}$cc=preg_replace('#%%([a-zA-Z0-9_]+)#',' `'.self::$prefix.'$1` ',$cc);$cc=preg_replace('#%([a-zA-Z0-9_]+)#',' `$1` ',$cc);$ll=array();foreach($gg as $mm=>$nn){if(!preg_match('#^:#isUu',$mm)&&!is_numeric($mm)){unset($gg[$mm]);$gg[':'.$mm]=$nn;}}$cc=str_replace(PHP_EOL,' ',$cc);$cc=str_replace("\r",'',$cc);$cc=str_replace("\t",'',$cc);$cc=preg_replace('#\s\s+#Uu',' ',$cc);return $cc;}protected function last_id(){$oo=0;try{$oo=$this->lastInsertId();$oo=(int) $oo;}catch(Exception $d){$oo=$this->showErr($d,'',$oo,true);}return $oo;}public function req($cc,$gg=array()){$gg=(array) $gg;$cc=$this->buildReq($cc,$gg);$pp=$this->runReq($cc,$gg);if(is_object($pp)&&$pp->rowCount()>0){$qq=$pp->fetchAll(PDO::FETCH_ASSOC);foreach($qq as $rr=>$ss){foreach($ss as $tt=>$uu){if(is_numeric($uu)){$qq[$rr][$tt]=(int) $uu;}if(is_int($tt)){unset($qq[$rr][$tt]);}}}}elseif(is_array($pp)){$qq=$pp;}else{$qq=false;}$this->last_results=$qq;if(is_object($pp)){$pp->closeCursor();}return $qq;}public function row($cc,$gg=array()){$gg=(array) $gg;$cc=$this->buildReq($cc,$gg);if(!preg_match('#LIMIT +[0-9]+( *, *[0-9]+)?#isU',$cc)){$cc.=' LIMIT 0,1';}$pp=$this->runReq($cc,$gg);if(is_object($pp)&&$pp->rowCount()>0){$qq=$pp->fetch();foreach($qq as $rr=>$ss){if(is_numeric($ss)){$qq[$rr]=(int) $ss;}if(is_int($rr)){unset($qq[$rr]);}}}elseif(is_array($pp)){$qq=$pp;}else{$qq=false;}$this->last_results=$qq;if(is_object($pp)){$pp->closeCursor();}return $qq;}public function noRes($cc,$gg=array()){$gg=(array) $gg;$cc=$this->buildReq($cc,$gg);$pp=$this->runReq($cc,$gg);if(is_object($pp)&&$pp->rowCount()>0){$vv=$pp->rowCount();}elseif(is_array($pp)){$vv=$pp;}else{$vv=false;}$this->last_results=$vv;if($vv){$pp->closeCursor();}return $vv?true:false;}private function buildReq($cc,$gg=array()){if(strpos($cc,'[TABLE]')!==false){$cc=str_replace('%[TABLE]','[TABLE]',$cc);$cc=str_replace('[TABLE]','%'.$this->table,$cc);}$cc=$this->sbuildReq($cc,$gg,$this->table);$this->last_query=$cc;$this->last_values=$gg;return $cc;}private function runReq($cc,$gg=array()){$gg=(array) $gg;try{$pp=$this->prepare($cc);$pp->execute($gg);}catch(Exception $d){$pp=$this->showErr($d,$cc,$pp,true);}return $pp;}}
+class Database extends PDO{public static $prefix;public $table='';private $c;private $d;private $f;private $g;private $h;private $i;private $j;private $l;private $m=false;private $n;private $o;function __construct($p='127.0.0.1',$q='root',$r='',$s='mydb',$u='',$w='mysql'){if(isset($this->table)){$this->table=$this->table;}$y[PDO::ATTR_ERRMODE]=PDO::ERRMODE_EXCEPTION;self::$prefix=$u;$z=$w.':host='.$p.';dbname='.$s.'';$this->initErr(true);try{parent::__construct($z,$q,$r,$y);$this->dbname=$s;}catch(Exception $d){return $this->showErr($d,null,null,true);}$this->noRes('SET NAMES "utf8"');}protected function initErr($aa=false,$bb='fatal'){$this->show_err=$aa==true?true:false;if($bb==='warning'){$this->err_type=E_USER_WARNING;}elseif($bb==='fatal'){$this->err_type=E_USER_ERROR;}elseif($bb==='notice'){$this->err_type=E_USER_NOTICE;}else{$this->err_type=E_USER_WARNING;}}protected function showErr($d=null,$cc=null,$dd=null,$ee=false){$ff=is_object($d)?$d->getTrace():'';echo 'Une erreur MySQL est survenue...<br />'.PHP_EOL;pr(array('pdo_ex'=>(is_object($d)?$d->getMessage():''),'qry'=>$cc/*,'trace'=>$ff*/));exit('ERREUR');}public static function sbuildReq($cc,$gg=array(),$table='my_table'){$gg=(array) $gg;if(strpos($cc,'%%%fields')!==false){$hh=array();foreach($gg as $ii=>$jj){$ii=str_replace(':','',$ii);$hh[]='%'.$ii.' = :'.$ii;}$cc=str_replace('%%%fields',implode(', ',$hh),$cc);}if(strpos($cc,'%%%in')!==false){if(empty($gg)){$cc=str_replace('%%%in','0',$cc);}else{$kk=implode(', ',array_fill(0,count($gg),'?'));$cc=str_replace('%%%in',$kk,$cc);}}$cc=preg_replace('#%%([a-zA-Z0-9_]+)#',' `'.self::$prefix.'$1` ',$cc);$cc=preg_replace('#%([a-zA-Z0-9_]+)#',' `$1` ',$cc);$ll=array();foreach($gg as $mm=>$nn){if(!preg_match('#^:#isUu',$mm)&&!is_numeric($mm)){unset($gg[$mm]);$gg[':'.$mm]=$nn;}}$cc=str_replace(PHP_EOL,' ',$cc);$cc=str_replace("\r",'',$cc);$cc=str_replace("\t",'',$cc);$cc=preg_replace('#\s\s+#Uu',' ',$cc);return $cc;}protected function last_id(){$oo=0;try{$oo=$this->lastInsertId();$oo=(int) $oo;}catch(Exception $d){$oo=$this->showErr($d,'',$oo,true);}return $oo;}public function req($cc,$gg=array()){$gg=(array) $gg;$cc=$this->buildReq($cc,$gg);$pp=$this->runReq($cc,$gg);if(is_object($pp)&&$pp->rowCount()>0){$qq=$pp->fetchAll(PDO::FETCH_ASSOC);foreach($qq as $rr=>$ss){foreach($ss as $tt=>$uu){if(is_numeric($uu)){$qq[$rr][$tt]=(int) $uu;}if(is_int($tt)){unset($qq[$rr][$tt]);}}}}elseif(is_array($pp)){$qq=$pp;}else{$qq=false;}$this->last_results=$qq;if(is_object($pp)){$pp->closeCursor();}return $qq;}public function row($cc,$gg=array()){$gg=(array) $gg;$cc=$this->buildReq($cc,$gg);if(!preg_match('#LIMIT +[0-9]+( *, *[0-9]+)?#isU',$cc)){$cc.=' LIMIT 0,1';}$pp=$this->runReq($cc,$gg);if(is_object($pp)&&$pp->rowCount()>0){$qq=$pp->fetch();foreach($qq as $rr=>$ss){if(is_numeric($ss)){$qq[$rr]=(int) $ss;}if(is_int($rr)){unset($qq[$rr]);}}}elseif(is_array($pp)){$qq=$pp;}else{$qq=false;}$this->last_results=$qq;if(is_object($pp)){$pp->closeCursor();}return $qq;}public function noRes($cc,$gg=array()){$gg=(array) $gg;$cc=$this->buildReq($cc,$gg);$pp=$this->runReq($cc,$gg);if(is_object($pp)&&$pp->rowCount()>0){$vv=$pp->rowCount();}elseif(is_array($pp)){$vv=$pp;}else{$vv=false;}$this->last_results=$vv;if($vv){$pp->closeCursor();}return $vv?true:false;}private function buildReq($cc,$gg=array()){if(strpos($cc,'[TABLE]')!==false){$cc=str_replace('%[TABLE]','[TABLE]',$cc);$cc=str_replace('[TABLE]','%'.$this->table,$cc);}$cc=$this->sbuildReq($cc,$gg,$this->table);$this->last_query=$cc;$this->last_values=$gg;return $cc;}private function runReq($cc,$gg=array()){$gg=(array) $gg;try{$pp=$this->prepare($cc);$pp->execute($gg);}catch(Exception $d){$pp=$this->showErr($d,$cc,$pp,true);}return $pp;}}
 function showtime(&$temp_time,$b){
 	global $total_times;
 	global $colors;
@@ -34,7 +34,7 @@ function get_query_from_file($a){$b=@fread(@fopen($a,'r'),@filesize($a))or die('
 function table_dates($a){global $new;global $temp_time;if(!$new->req('SHOW COLUMNS FROM %'.$a.' LIKE "created"')){$new->noRes('ALTER TABLE %'.$a.' ADD `created` INT UNSIGNED NOT NULL');showtime($temp_time,'Added `'.$a.'` created column');}if(!$new->req('SHOW COLUMNS FROM %'.$a.' LIKE "updated"')){$new->noRes('ALTER TABLE %'.$a.' ADD `updated` INT UNSIGNED NOT NULL');showtime($temp_time,'Added `'.$a.'` updated column');}}
 
 class Colors{private $a=array();private $b=array();public function __construct(){$this->a['black']='0;30';$this->a['dark_gray']='1;30';$this->a['blue']='0;34';$this->a['light_blue']='1;34';$this->a['green']='0;32';$this->a['light_green']='1;32';$this->a['cyan']='0;36';$this->a['light_cyan']='1;36';$this->a['red']='0;31';$this->a['light_red']='1;31';$this->a['purple']='0;35';$this->a['light_purple']='1;35';$this->a['brown']='0;33';$this->a['yellow']='1;33';$this->a['light_gray']='0;37';$this->a['white']='1;37';$this->b['black']='40';$this->b['red']='41';$this->b['green']='42';$this->b['yellow']='43';$this->b['blue']='44';$this->b['magenta']='45';$this->b['cyan']='46';$this->b['light_gray']='47';}public function getColoredString($d,$e=null,$f=null){return $d;$g="";if(isset($this->a[$e])){$g.="\033[".$this->a[$e]."m";}if(isset($this->b[$f])){$g.="\033[".$this->b[$f]."m";}$g.=$d."\033[0m";return $g;}public function getForegroundColors(){return array_keys($this->a);}public function getBackgroundColors(){return array_keys($this->b);}}
- 
+
 showtime($temp_time, 'Fin chargement des classes et fonctions');
 
 $new = new Database('127.0.0.1', 'root', '', 'corahn_rin');
@@ -66,7 +66,7 @@ $nbreq = 0;
 
 
 // $new->noRes(file_get_contents('new.sql'));
-showtime($temp_time, 'Suppression et réinsertion de la nouvelle base de données : '.$nbreq.' requêtes effectuées (approximation !)');
+// showtime($temp_time, 'Suppression et réinsertion de la nouvelle base de données : '.$nbreq.' requêtes effectuées (approximation !)');
 // foreach ($oldreq as $v) { $old->noRes($v); }
 // $oldreq = get_query_from_file('old.sql');
 // showtime($temp_time, 'Suppression et réinsertion de l\'ancienne base de données');
@@ -112,11 +112,11 @@ foreach ( $armes as $v) {
 	$datas = array(
 		'id' => $v['arme_id'],
 		'name' => $v['arme_name'],
-		'dmg' => $v['arme_dmg'],
+		'damage' => $v['arme_dmg'],
 		'price' => $v['arme_prix'],
 		'availability' => $v['arme_dispo'],
 		'range' => $v['arme_range'],
-		'contact' => (strpos($v['arme_domain'], '2') !== false ? 1 : 0),
+		'melee' => (strpos($v['arme_domain'], '2') !== false ? 1 : 0),
 		'created' => $datetime->date,
 		'updated' => $datetime->date,
 	);$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
@@ -154,7 +154,7 @@ foreach ( $voies as $v) {
 	$datas = array(
 		'id' => $v['voie_id'],
 		'name' => $v['voie_name'],
-		'short_name' => $v['voie_shortname'],
+		'shortName' => $v['voie_shortname'],
 		'description' => $v['voie_desc'],
 		'fault' => $v['voie_travers'],
 		'created' => $datetime->date,
@@ -167,7 +167,7 @@ foreach ( $voies as $v) {
 
 
 
-TODO : RENAME TABLE `desordes` TO `disorders`
+//TODO : RENAME TABLE `desordes` TO `disorders`
 $table = 'disorders';
 $nbreq++;
 foreach ( $desordres as $v) {
@@ -190,11 +190,11 @@ foreach ( $traitscaractere as $v) {
 	$nbreq++;
 	$datas = array(
 		'id' => $v['trait_id'],
-		'id_ways' => $voies_short[$v['trait_voie']]['voie_id'],
+		'way_id' => $voies_short[$v['trait_voie']]['voie_id'],
 		'name' => $v['trait_name'],
-		'name_female' => $v['trait_name_female'],
-		'is_quality' => ($v['trait_qd'] === 'q' ? 1 : 0),
-		'is_major' => ($v['trait_mm'] === 'maj' ? 1 : 0),
+		'nameFemale' => $v['trait_name_female'],
+		'isQuality' => ($v['trait_qd'] === 'q' ? 1 : 0),
+		'isMajor' => ($v['trait_mm'] === 'maj' ? 1 : 0),
 		'created' => $datetime->date,
 		'updated' => $datetime->date,
 	);$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
@@ -203,7 +203,7 @@ foreach ( $traitscaractere as $v) {
 
 
 
-$table = 'avdesv';
+$table = 'avantages';
 $nbreq++;
 foreach ( $avdesv as $v) {
 	$nbreq++;
@@ -212,11 +212,11 @@ foreach ( $avdesv as $v) {
 		'name' => $v['avdesv_name'],
 		'xp' => $v['avdesv_xp'],
 		'description' => $v['avdesv_desc'],
-		'name_female' => $v['avdesv_name_female'],
+		'nameFemale' => $v['avdesv_name_female'],
 		'bonusdisc' => $v['avdesv_bonusdisc'],
-		'is_desv' => (strpos($v['avdesv_type'], 'desv') !== false ? 1 : 0),
-		'is_combat_art' => (strpos($v['avdesv_name'], 'de combat') !== false ? 1 : 0),
-		'can_be_doubled' => ($v['avdesv_double'] ? 1 : 0),
+		'isDesv' => (strpos($v['avdesv_type'], 'desv') !== false ? 1 : 0),
+		'isCombatArt' => (strpos($v['avdesv_name'], 'de combat') !== false ? 1 : 0),
+		'double' => $v['avdesv_double'],
 		'created' => $datetime->date,
 		'updated' => $datetime->date,
 	);$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
@@ -256,7 +256,7 @@ foreach ( $domains as $v) {
 			'id' => $v['domain_id'],
 			'name' => $v['domain_name'],
 			'description' => $v['domain_desc'],
-			'id_ways' => $v['voie_id'],
+			'way_id' => $v['voie_id'],
 			'created' => $datetime->date,
 			'updated' => $datetime->date,
 	);$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
@@ -277,6 +277,7 @@ foreach ( $disciplines as $v) {
 			'name' => $v['disc_name'],
 			'description' => '',
 			'rank' => $v['disc_rang'],
+			'book_id' => 1,
 			'created' => $datetime->date,
 			'updated' => $datetime->date,
 	);$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
@@ -284,13 +285,13 @@ foreach ( $disciplines as $v) {
 
 
 
-$table = 'discipline_domains';
+$table = 'disciplines_domains';
 $nbreq++;
 foreach ( $discdoms as $v) {
 	$nbreq++;
 	$datas = array(
-		'id_disciplines' => $v['disc_id'],
-		'id_domains' => $v['domain_id'],
+		'disciplines_id' => $v['disc_id'],
+		'domains_id' => $v['domain_id'],
 	);$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
 }$tables_done[]=$table;showtime($temp_time, count($discdoms).' requêtes pour la table "'.$table.'"');
 
@@ -314,6 +315,10 @@ $tables_done[]=$table;showtime($temp_time, '5 requêtes pour la table "'.$table.
 
 
 
+
+
+
+
 $table = 'games';
 $nbreq++;
 foreach ( $games as $v) {
@@ -322,7 +327,8 @@ foreach ( $games as $v) {
 			'id' => $v['game_id'],
 			'name' => $v['game_name'],
 			'summary' => $v['game_summary'],
-			'gm_notes' => $v['game_notes'],
+			'gmNotes' => $v['game_notes'],
+			#'gameMaster_id' => $v['game_mj'],
 			'created' => $datetime->date,
 			'updated' => $datetime->date,
 	);$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
@@ -373,7 +379,7 @@ foreach ( $jobs as $v) {
 	$nbreq++;
 	$datas = array(
 			'id' => $v['job_id'],
-			'id_books' => ($v['job_book'] ? 1 : 8),
+			'book_id' => ($v['job_book'] ? 1 : 8),
 			'name' => $v['job_name'],
 			'description' => $v['job_desc'],
 			'created' => $datetime->date,
@@ -406,19 +412,18 @@ foreach ( $mails as $v) {
 }$tables_done[]=$table;showtime($temp_time, count($mails).' requêtes pour la table "'.$table.'"');
 
 
-$table = 'mails_sent';
+$table = 'mailssent';
 $nbreq++;
 foreach ( $mails_sent as $v) {
 	$nbreq++;
 	$dest = json_decode($v['mail_dest'], true);
 	$datas = array(
 			'id' => $v['mail_sent_id'],
-			'to_name' => (isset($dest['name']) ? $dest['name'] : ''),
-			'to_email' => (isset($dest['mail']) ? $dest['mail'] : ''),
-			'id_mails' => $v['mail_id'],
+			'toName' => (isset($dest['name']) ? $dest['name'] : ''),
+			'toEmail' => (isset($dest['mail']) ? $dest['mail'] : ''),
+			'mail_id' => $v['mail_id'],
 			'content' => $v['mail_content'],
 			'subject' => $v['mail_subj'],
-			'date' => $v['mail_date'],
 			'created' => $v['mail_date'],
 			'updated' => $v['mail_date'],
 	);$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
@@ -445,7 +450,7 @@ foreach ( $regions as $v) {
 			'name' => $v['region_name'],
 			'description' => $v['region_desc'],
 			'kingdom' => $v['region_kingdom'],
-			'coords' => $v['region_htmlmap'],
+			'coordinates' => $v['region_htmlmap'],
 			'created' => $datetime->date,
 			'updated' => $datetime->date,
 	);$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
