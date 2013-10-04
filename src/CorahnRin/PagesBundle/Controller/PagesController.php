@@ -23,6 +23,7 @@ class PagesController extends Controller {
      */
     public function viewAction($id, $slug)
     {
+		return array();
     }
 
     /**
@@ -31,6 +32,7 @@ class PagesController extends Controller {
      */
     public function modifyAction($id)
     {
+		return array();
     }
 
     /**
@@ -39,6 +41,7 @@ class PagesController extends Controller {
      */
     public function deleteAction()
     {
+		return array();
     }
 
     /**
@@ -47,6 +50,7 @@ class PagesController extends Controller {
      */
     public function createAction()
     {
+		return array();
     }
 
 }
