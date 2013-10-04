@@ -23,7 +23,7 @@ class MailsSent
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=255, nullable=false, unique=true)
+     * @ORM\Column(type="string", length=255, nullable=false)
      */
     private $toName;
 
@@ -76,7 +76,7 @@ class MailsSent
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -92,14 +92,14 @@ class MailsSent
     public function setToName($toName)
     {
         $this->toName = $toName;
-    
+
         return $this;
     }
 
     /**
      * Get toName
      *
-     * @return string 
+     * @return string
      */
     public function getToName()
     {
@@ -115,14 +115,14 @@ class MailsSent
     public function setToEmail($toEmail)
     {
         $this->toEmail = $toEmail;
-    
+
         return $this;
     }
 
     /**
      * Get toEmail
      *
-     * @return string 
+     * @return string
      */
     public function getToEmail()
     {
@@ -138,14 +138,14 @@ class MailsSent
     public function setSubject($subject)
     {
         $this->subject = $subject;
-    
+
         return $this;
     }
 
     /**
      * Get subject
      *
-     * @return string 
+     * @return string
      */
     public function getSubject()
     {
@@ -161,14 +161,14 @@ class MailsSent
     public function setContent($content)
     {
         $this->content = $content;
-    
+
         return $this;
     }
 
     /**
      * Get content
      *
-     * @return string 
+     * @return string
      */
     public function getContent()
     {
@@ -184,14 +184,14 @@ class MailsSent
     public function setCreated($created)
     {
         $this->created = $created;
-    
+
         return $this;
     }
 
     /**
      * Get created
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreated()
     {
@@ -207,14 +207,14 @@ class MailsSent
     public function setUpdated($updated)
     {
         $this->updated = $updated;
-    
+
         return $this;
     }
 
     /**
      * Get updated
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdated()
     {
@@ -230,14 +230,14 @@ class MailsSent
     public function setMail(\CorahnRin\CharactersBundle\Entity\Mails $mail = null)
     {
         $this->mail = $mail;
-    
+
         return $this;
     }
 
     /**
      * Get mail
      *
-     * @return \CorahnRin\CharactersBundle\Entity\Mails 
+     * @return \CorahnRin\CharactersBundle\Entity\Mails
      */
     public function getMail()
     {
