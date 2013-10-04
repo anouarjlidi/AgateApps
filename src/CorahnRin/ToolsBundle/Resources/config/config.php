@@ -76,7 +76,8 @@ define('P_LANG', isset($_SESSION['lang']) ? $_SESSION['lang'] : 'fr');
 define('P_JSON_ENCODE', JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT | JSON_NUMERIC_CHECK);
 
 ## Variable de la version issue du fichier XML
-$versions_xml = file_get_contents(__DIR__.DS.'versions.xml');
+define('CORAHNRIN_VERSIONS', __DIR__.DS.'versions.xml');
+$versions_xml = file_get_contents(CORAHNRIN_VERSIONS);
 $versions = new SimpleXMLElement($versions_xml);
 if (!$versions) { tr('Une erreur est survenue dans la récupération du fichier de versions');exit; }
 unset($versions_xml);
