@@ -9,9 +9,10 @@
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
-					<li><a href="{{ path('corahnrin_generate_index') }}">{{ 'Générateur de personnage' | trans }}</a></li>
-					<li><a href="{{ path('corahnrin_generate_index') }}">{{ 'Dernières mises à jour' | trans }}</a></li>
-					<!--<li class="dropdown">
+					{% for path,link in links %}
+						<li><a href="{{ path(path) }}">{{ link | trans }}</a></li>
+					{% endfor %}
+					{#<li class="dropdown">
 					<a data-toggle="dropdown" class="dropdown-toggle" href="#">Menu déroulant <b class="caret"></b></a>
 					<ul class="dropdown-menu">
 						<li><a href="#">Action</a></li>
@@ -22,7 +23,7 @@
 						<li><a href="#">Separated lien</a></li>
 						<li><a href="#">One more separated lien</a></li>
 					</ul>
-					</li>-->
+					</li>#}
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					{% if app.user.username is not defined %}

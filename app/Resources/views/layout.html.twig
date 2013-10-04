@@ -5,7 +5,8 @@
         <div id="layout" class="container">
 
             {# MENUS #}
-            {% render(controller("CorahnRinPagesBundle:Menus:menu")) %}
+
+            {% render(controller("CorahnRinPagesBundle:Menus:menu", {'route':app.request.attributes.get('_route')})) %}
 
             {# FLASH MESSAGES #}
             {% for key, message in app.session.flashbag.all() %}

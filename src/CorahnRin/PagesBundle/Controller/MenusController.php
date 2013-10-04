@@ -10,12 +10,13 @@ class MenusController extends Controller {
 	/**
 	 * @Template()
 	 */
-	public function menuAction() {
-		$datas = array(
-			'link1' => 'link',
+	public function menuAction($route = '') {
+		$links = array(
+			'corahnrin_generate_index' => 'Générateur de personnage',
+			'corahnrin_versions' => 'Mises à jour',
 		);
 		$username = $this->get('fos_user.user_provider.username');
-		return array('datas' => $datas);
+		return array('links' => $links, 'route_name' => $route);
 	}
 
 	/**
