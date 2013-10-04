@@ -31,7 +31,7 @@ function remove_comments(&$a){$b=explode(PHP_EOL,$a);$a="";$c=count($b);$d=false
 function remove_remarks($f){$b=explode(PHP_EOL,$f);$f="";$c=count($b);$a="";for($e=0;$e<$c;$e++){if(($e!=($c-1))||(strlen($b[$e])>0)){if(isset($b[$e][0])&&$b[$e][0]!="#"){$a.=$b[$e].PHP_EOL;}else{$a.=PHP_EOL;}$b[$e]="";}}return $a;}
 function split_sql_file($f,$g){$h=explode($g,$f);$f="";$a=array();$k=array();$l=count($h);for($e=0;$e<$l;$e++){if(($e!=($l-1))||(strlen($h[$e]>0))){$m=preg_match_all("/'/",$h[$e],$k);$n=preg_match_all("/(?<!\\\\)(\\\\\\\\)*\\\\'/",$h[$e],$k);$o=$m-$n;if(($o%2)==0){$a[]=$h[$e];$h[$e]="";}else{$p=$h[$e].$g;$h[$e]="";$q=false;for($r=$e+1;(!$q&&($r<$l));$r++){$m=preg_match_all("/'/",$h[$r],$k);$n=preg_match_all("/(?<!\\\\)(\\\\\\\\)*\\\\'/",$h[$r],$k);$o=$m-$n;if(($o%2)==1){$a[]=$p.$h[$r];$h[$r]="";$p="";$q=true;$e=$r;}else{$p.=$h[$r].$g;$h[$r]="";}}}}}return $a;}
 function get_query_from_file($a){$b=@fread(@fopen($a,'r'),@filesize($a))or die('problem ');$b=remove_remarks($b);$b=split_sql_file($b,';');$b=array_map('trim',$b);return $b;}
-function table_dates($a){global $new;global $temp_time;if(!$new->req('SHOW COLUMNS FROM %'.$a.' LIKE "date_created"')){$new->noRes('ALTER TABLE %'.$a.' ADD `date_created` INT UNSIGNED NOT NULL');showtime($temp_time,'Added `'.$a.'` date_created column');}if(!$new->req('SHOW COLUMNS FROM %'.$a.' LIKE "date_updated"')){$new->noRes('ALTER TABLE %'.$a.' ADD `date_updated` INT UNSIGNED NOT NULL');showtime($temp_time,'Added `'.$a.'` date_updated column');}}
+function table_dates($a){global $new;global $temp_time;if(!$new->req('SHOW COLUMNS FROM %'.$a.' LIKE "created"')){$new->noRes('ALTER TABLE %'.$a.' ADD `created` INT UNSIGNED NOT NULL');showtime($temp_time,'Added `'.$a.'` created column');}if(!$new->req('SHOW COLUMNS FROM %'.$a.' LIKE "updated"')){$new->noRes('ALTER TABLE %'.$a.' ADD `updated` INT UNSIGNED NOT NULL');showtime($temp_time,'Added `'.$a.'` updated column');}}
 
 class Colors{private $a=array();private $b=array();public function __construct(){$this->a['black']='0;30';$this->a['dark_gray']='1;30';$this->a['blue']='0;34';$this->a['light_blue']='1;34';$this->a['green']='0;32';$this->a['light_green']='1;32';$this->a['cyan']='0;36';$this->a['light_cyan']='1;36';$this->a['red']='0;31';$this->a['light_red']='1;31';$this->a['purple']='0;35';$this->a['light_purple']='1;35';$this->a['brown']='0;33';$this->a['yellow']='1;33';$this->a['light_gray']='0;37';$this->a['white']='1;37';$this->b['black']='40';$this->b['red']='41';$this->b['green']='42';$this->b['yellow']='43';$this->b['blue']='44';$this->b['magenta']='45';$this->b['cyan']='46';$this->b['light_gray']='47';}public function getColoredString($d,$e=null,$f=null){return $d;$g="";if(isset($this->a[$e])){$g.="\033[".$this->a[$e]."m";}if(isset($this->b[$f])){$g.="\033[".$this->b[$f]."m";}$g.=$d."\033[0m";return $g;}public function getForegroundColors(){return array_keys($this->a);}public function getBackgroundColors(){return array_keys($this->b);}}
  
@@ -49,8 +49,22 @@ $date = $p->getValue($dt);
 $datetime = (object) array('date'=>$date);
 
 $nbreq = 0;
-$newreq = get_query_from_file('new.sql');
-foreach ($newreq as $v) { $new->noRes($v); $nbreq++; }
+
+
+/****************************/
+/****************************/
+/** RESAUVEGARDE DE LA BDD **/
+/****************************/
+/****************************/
+// $newreq = get_query_from_file('new.sql');
+// foreach ($newreq as $v) { $new->noRes($v); $nbreq++; }
+/****************************/
+/****************************/
+/****************************/
+/****************************/
+
+
+
 // $new->noRes(file_get_contents('new.sql'));
 showtime($temp_time, 'Suppression et réinsertion de la nouvelle base de données : '.$nbreq.' requêtes effectuées (approximation !)');
 // foreach ($oldreq as $v) { $old->noRes($v); }
@@ -103,8 +117,8 @@ foreach ( $armes as $v) {
 		'availability' => $v['arme_dispo'],
 		'range' => $v['arme_range'],
 		'contact' => (strpos($v['arme_domain'], '2') !== false ? 1 : 0),
-		'date_created' => $datetime->date,
-		'date_updated' => $datetime->date,
+		'created' => $datetime->date,
+		'updated' => $datetime->date,
 	);$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
 }$tables_done[]=$table;showtime($temp_time, count($armes).' requêtes pour la table "'.$table.'"');
 
@@ -122,8 +136,8 @@ foreach ( $armures as $v) {
 		'protection' => $v['armure_prot'],
 		'price' => $v['armure_prix'],
 		'availability' => $v['armure_dispo'],
-		'date_created' => $datetime->date,
-		'date_updated' => $datetime->date,
+		'created' => $datetime->date,
+		'updated' => $datetime->date,
 	);$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
 }$tables_done[]=$table;showtime($temp_time, count($armures).' requêtes pour la table "'.$table.'"');
 
@@ -143,8 +157,8 @@ foreach ( $voies as $v) {
 		'short_name' => $v['voie_shortname'],
 		'description' => $v['voie_desc'],
 		'fault' => $v['voie_travers'],
-		'date_created' => $datetime->date,
-		'date_updated' => $datetime->date,
+		'created' => $datetime->date,
+		'updated' => $datetime->date,
 	);$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
 	$voies_id[$v['voie_id']] = $v;
 	$voies_short[$v['voie_shortname']] = $v;
@@ -153,7 +167,7 @@ foreach ( $voies as $v) {
 
 
 
-// //TODO : RENAME TABLE `desordes` TO `disorders`
+TODO : RENAME TABLE `desordes` TO `disorders`
 $table = 'disorders';
 $nbreq++;
 foreach ( $desordres as $v) {
@@ -161,8 +175,8 @@ foreach ( $desordres as $v) {
 	$datas = array(
 		'id' => $v['desordre_id'],
 		'name' => $v['desordre_name'],
-		'date_created' => $datetime->date,
-		'date_updated' => $datetime->date,
+		'created' => $datetime->date,
+		'updated' => $datetime->date,
 	);$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
 }$tables_done[]=$table;showtime($temp_time, count($desordres).' requêtes pour la table "'.$table.'"');
 
@@ -181,8 +195,8 @@ foreach ( $traitscaractere as $v) {
 		'name_female' => $v['trait_name_female'],
 		'is_quality' => ($v['trait_qd'] === 'q' ? 1 : 0),
 		'is_major' => ($v['trait_mm'] === 'maj' ? 1 : 0),
-		'date_created' => $datetime->date,
-		'date_updated' => $datetime->date,
+		'created' => $datetime->date,
+		'updated' => $datetime->date,
 	);$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
 }$tables_done[]=$table;showtime($temp_time, count($traitscaractere).' requêtes pour la table "'.$table.'"');
 
@@ -203,8 +217,8 @@ foreach ( $avdesv as $v) {
 		'is_desv' => (strpos($v['avdesv_type'], 'desv') !== false ? 1 : 0),
 		'is_combat_art' => (strpos($v['avdesv_name'], 'de combat') !== false ? 1 : 0),
 		'can_be_doubled' => ($v['avdesv_double'] ? 1 : 0),
-		'date_created' => $datetime->date,
-		'date_updated' => $datetime->date,
+		'created' => $datetime->date,
+		'updated' => $datetime->date,
 	);$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
 }$tables_done[]=$table;showtime($temp_time, count($avdesv).' requêtes pour la table "'.$table.'"');
 
@@ -216,17 +230,17 @@ foreach ( $avdesv as $v) {
 
 $table = 'books';
 $nbreq++;
-$sql = 'INSERT INTO `books` SET `id` = :id, `name` = :name, `description` = :description, `date_created` = :date_created, `date_updated` = :date_updated';
+$sql = 'INSERT INTO `books` SET `id` = :id, `name` = :name, `description` = :description, `created` = :created, `updated` = :updated';
 $q = $new->prepare($sql);
 $nbreq+=8;
-$q->execute(array('id' => 1,'name' => 'Livre 0 - Prologue',				'description' => '','date_created' => $datetime->date,'date_updated' => $datetime->date,));
-$q->execute(array('id' => 2,'name' => 'Livre 1 - Univers',				'description' => '','date_created' => $datetime->date,'date_updated' => $datetime->date,));
-$q->execute(array('id' => 3,'name' => 'Livre 2 - Voyages',				'description' => '','date_created' => $datetime->date,'date_updated' => $datetime->date,));
-$q->execute(array('id' => 4,'name' => 'Livre 2 - Voyages (Réédition)',	'description' => '','date_created' => $datetime->date,'date_updated' => $datetime->date,));
-$q->execute(array('id' => 5,'name' => 'Livre 3 - Dearg',				'description' => '','date_created' => $datetime->date,'date_updated' => $datetime->date,));
-$q->execute(array('id' => 6,'name' => 'Livre 4 - Secrets',				'description' => '','date_created' => $datetime->date,'date_updated' => $datetime->date,));
-$q->execute(array('id' => 7,'name' => 'Le Monastère de Tuath',			'description' => '','date_created' => $datetime->date,'date_updated' => $datetime->date,));
-$q->execute(array('id' => 8,'name' => 'Contenu de la communauté',		'description' => 'Ce contenu est par définition non-officiel.','date_created' => $datetime->date,'date_updated' => $datetime->date,));
+$q->execute(array('id' => 1,'name' => 'Livre 0 - Prologue',				'description' => '','created' => $datetime->date,'updated' => $datetime->date,));
+$q->execute(array('id' => 2,'name' => 'Livre 1 - Univers',				'description' => '','created' => $datetime->date,'updated' => $datetime->date,));
+$q->execute(array('id' => 3,'name' => 'Livre 2 - Voyages',				'description' => '','created' => $datetime->date,'updated' => $datetime->date,));
+$q->execute(array('id' => 4,'name' => 'Livre 2 - Voyages (Réédition)',	'description' => '','created' => $datetime->date,'updated' => $datetime->date,));
+$q->execute(array('id' => 5,'name' => 'Livre 3 - Dearg',				'description' => '','created' => $datetime->date,'updated' => $datetime->date,));
+$q->execute(array('id' => 6,'name' => 'Livre 4 - Secrets',				'description' => '','created' => $datetime->date,'updated' => $datetime->date,));
+$q->execute(array('id' => 7,'name' => 'Le Monastère de Tuath',			'description' => '','created' => $datetime->date,'updated' => $datetime->date,));
+$q->execute(array('id' => 8,'name' => 'Contenu de la communauté',		'description' => 'Ce contenu est par définition non-officiel.','created' => $datetime->date,'updated' => $datetime->date,));
 $tables_done[]=$table;showtime($temp_time, '8 requêtes pour la table "'.$table.'"');
 
 
@@ -243,8 +257,8 @@ foreach ( $domains as $v) {
 			'name' => $v['domain_name'],
 			'description' => $v['domain_desc'],
 			'id_ways' => $v['voie_id'],
-			'date_created' => $datetime->date,
-			'date_updated' => $datetime->date,
+			'created' => $datetime->date,
+			'updated' => $datetime->date,
 	);$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
 }$tables_done[]=$table;showtime($temp_time, count($domains).' requêtes pour la table "'.$table.'"');
 
@@ -263,8 +277,8 @@ foreach ( $disciplines as $v) {
 			'name' => $v['disc_name'],
 			'description' => '',
 			'rank' => $v['disc_rang'],
-			'date_created' => $datetime->date,
-			'date_updated' => $datetime->date,
+			'created' => $datetime->date,
+			'updated' => $datetime->date,
 	);$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
 }$tables_done[]=$table;showtime($temp_time, count($disciplines).' requêtes pour la table "'.$table.'"');
 
@@ -287,14 +301,14 @@ foreach ( $discdoms as $v) {
 
 $table = 'flux';
 $nbreq++;
-$sql = 'INSERT INTO `flux` SET `id` = :id, `name` = :name, `date_created` = :date_created, `date_updated` = :date_updated';
+$sql = 'INSERT INTO `flux` SET `id` = :id, `name` = :name, `created` = :created, `updated` = :updated';
 $q = $new->prepare($sql);
 $nbreq+=5;
-$q->execute(array('id' => 1,'name' => 'Végétal',	'date_created' => $datetime->date, 'date_updated' => $datetime->date,));
-$q->execute(array('id' => 2,'name' => 'Minéral',	'date_created' => $datetime->date, 'date_updated' => $datetime->date,));
-$q->execute(array('id' => 3,'name' => 'Organique',	'date_created' => $datetime->date, 'date_updated' => $datetime->date,));
-$q->execute(array('id' => 4,'name' => 'Fossile',	'date_created' => $datetime->date, 'date_updated' => $datetime->date,));
-$q->execute(array('id' => 5,'name' => 'M',			'date_created' => $datetime->date, 'date_updated' => $datetime->date,));
+$q->execute(array('id' => 1,'name' => 'Végétal',	'created' => $datetime->date, 'updated' => $datetime->date,));
+$q->execute(array('id' => 2,'name' => 'Minéral',	'created' => $datetime->date, 'updated' => $datetime->date,));
+$q->execute(array('id' => 3,'name' => 'Organique',	'created' => $datetime->date, 'updated' => $datetime->date,));
+$q->execute(array('id' => 4,'name' => 'Fossile',	'created' => $datetime->date, 'updated' => $datetime->date,));
+$q->execute(array('id' => 5,'name' => 'M',			'created' => $datetime->date, 'updated' => $datetime->date,));
 $tables_done[]=$table;showtime($temp_time, '5 requêtes pour la table "'.$table.'"');
 
 
@@ -309,8 +323,8 @@ foreach ( $games as $v) {
 			'name' => $v['game_name'],
 			'summary' => $v['game_summary'],
 			'gm_notes' => $v['game_notes'],
-			'date_created' => $datetime->date,
-			'date_updated' => $datetime->date,
+			'created' => $datetime->date,
+			'updated' => $datetime->date,
 	);$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
 }$tables_done[]=$table;showtime($temp_time, count($games).' requêtes pour la table "'.$table.'"');
 
@@ -331,8 +345,8 @@ foreach ( $steps as $v) {
 			'step' => $v['gen_step'],
 			'slug' => str_replace('_','-', $v['gen_mod']),
 			'title' => $v['gen_anchor'],
-			'date_created' => $datetime->date,
-			'date_updated' => $datetime->date,
+			'created' => $datetime->date,
+			'updated' => $datetime->date,
 	);$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
 }$tables_done[]=$table;showtime($temp_time, count($steps).' requêtes pour la table "'.$table.'"');
 
@@ -362,8 +376,8 @@ foreach ( $jobs as $v) {
 			'id_books' => ($v['job_book'] ? 1 : 8),
 			'name' => $v['job_name'],
 			'description' => $v['job_desc'],
-			'date_created' => $datetime->date,
-			'date_updated' => $datetime->date,
+			'created' => $datetime->date,
+			'updated' => $datetime->date,
 	);$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
 }$tables_done[]=$table;showtime($temp_time, count($jobs).' requêtes pour la table "'.$table.'"');
 
@@ -386,8 +400,8 @@ foreach ( $mails as $v) {
 			'code' => $v['mail_code'],
 			'content' => $v['mail_contents'],
 			'subject' => $v['mail_subject'],
-			'date_created' => $datetime->date,
-			'date_updated' => $datetime->date,
+			'created' => $datetime->date,
+			'updated' => $datetime->date,
 	);$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
 }$tables_done[]=$table;showtime($temp_time, count($mails).' requêtes pour la table "'.$table.'"');
 
@@ -405,8 +419,8 @@ foreach ( $mails_sent as $v) {
 			'content' => $v['mail_content'],
 			'subject' => $v['mail_subj'],
 			'date' => $v['mail_date'],
-			'date_created' => $v['mail_date'],
-			'date_updated' => $v['mail_date'],
+			'created' => $v['mail_date'],
+			'updated' => $v['mail_date'],
 	);$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
 }$tables_done[]=$table;showtime($temp_time, count($mails_sent).' requêtes pour la table "'.$table.'"');
 
@@ -432,8 +446,8 @@ foreach ( $regions as $v) {
 			'description' => $v['region_desc'],
 			'kingdom' => $v['region_kingdom'],
 			'coords' => $v['region_htmlmap'],
-			'date_created' => $datetime->date,
-			'date_updated' => $datetime->date,
+			'created' => $datetime->date,
+			'updated' => $datetime->date,
 	);$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
 }$tables_done[]=$table;showtime($temp_time, count($regions).' requêtes pour la table "'.$table.'"');
 
@@ -455,8 +469,8 @@ foreach ( $revers as $v) {
 			'name' => $v['rev_name'],
 			'description' => $v['rev_desc'],
 			// 'malus' => $v['rev_malus'],//TODO => RAJOUTER MALUS DANS L'ENTITE !!!!
-			'date_created' => $datetime->date,
-			'date_updated' => $datetime->date,
+			'created' => $datetime->date,
+			'updated' => $datetime->date,
 	);$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
 }$tables_done[]=$table;showtime($temp_time, count($revers).' requêtes pour la table "'.$table.'"');
 
