@@ -1709,12 +1709,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/twbs/bootstrap.git",
-                "reference": "bb50e33a3068cd0e25f3411b59d66d3bd6751e66"
+                "reference": "d32380657b8ae003fc30e704c63bf2cc450b878e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/bb50e33a3068cd0e25f3411b59d66d3bd6751e66",
-                "reference": "bb50e33a3068cd0e25f3411b59d66d3bd6751e66",
+                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/d32380657b8ae003fc30e704c63bf2cc450b878e",
+                "reference": "d32380657b8ae003fc30e704c63bf2cc450b878e",
                 "shasum": ""
             },
             "type": "library",
@@ -1738,7 +1738,7 @@
                 "bootstrap",
                 "css"
             ],
-            "time": "2013-10-06 23:17:32"
+            "time": "2013-10-07 07:55:21"
         }
     ],
     "packages-dev": [
