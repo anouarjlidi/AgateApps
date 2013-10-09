@@ -9,8 +9,8 @@
 <div class="well">
     <p>Name : {{ map.getName() }}</p>
     <p>Desc : {{ map.getDescription() }}</p>
-    <p>Zoom : {{ map.getMinZoom() }} - {{ map.getMaxZoom() }}</p>
-    <p>Image : {{ map.getImage() }}</p>
+    <p>Zoom : {{ map.getMaxZoom() }}</p>
+    <p>Image : <img src="{{ asset(map.getImage()) }}" /></p>
 </div>
 {% endif %}
 

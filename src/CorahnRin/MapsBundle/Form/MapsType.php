@@ -5,6 +5,7 @@ namespace CorahnRin\MapsBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Form\Extension\Core\DataTransformer\IntegerToLocalizedStringTransformer as Transformer;
 
 class MapsType extends AbstractType
 {
@@ -15,14 +16,13 @@ class MapsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-			->add('image',			array('required'=>false))
-            ->add('description',	array('required'=>false))
-            ->add('minZoom')
-            ->add('maxZoom')
+        ->add('name')
+	->add('image',      'file',	array('required'=>false))
+        ->add('description','textarea',	array('required'=>false))
+        ->add('maxZoom',    'integer',  array('rounding_mode'=>Transformer::ROUND_DOWN))
         ;
     }
-    
+
     /**
      * @param OptionsResolverInterface $resolver
      */
