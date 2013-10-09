@@ -1,0 +1,34 @@
+<div class="well">
+    <form method="post" {{ form_enctype(form) }} >
+        {#{ form_widget(form) }#}
+        {{ form_errors(form) }}
+        
+        <div class="form-group">
+            {{ form_label(form.name, 'Nom') }}
+            {{ form_errors(form.name) }}
+            {{ form_widget(form.name) }}
+        </div>
+        
+        <div class="form-group">
+            {{ form_label(form.description, 'Description') }}
+            {{ form_errors(form.description) }}
+            {{ form_widget(form.description) }}
+        </div>
+        
+        <div class="form-group">
+            {{ form_label(form.image, 'Image de fond') }}
+            {{ form_errors(form.image) }}
+            {{ form_widget(form.image) }}
+        </div>
+        
+        <div class="form-group">
+            {{ form_label(form.maxZoom, 'Zoom maximum') }}
+            {{ form_errors(form.maxZoom) }}
+            {{ form_widget(form.maxZoom) }}
+        </div>
+            
+        <input type="submit" clsas="btn btn-default" />
+        
+        {{ form_rest(form) }}
+    </form>
+</div>
