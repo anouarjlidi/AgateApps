@@ -48,13 +48,6 @@ class Maps
      *
      * @ORM\Column(type="boolean", nullable=false)
      */
-    private $minZoom;
-
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(type="boolean", nullable=false)
-     */
     private $maxZoom;
 
     /**
@@ -180,29 +173,6 @@ class Maps
     public function getDescription()
     {
         return $this->description;
-    }
-
-    /**
-     * Set minZoom
-     *
-     * @param boolean $minZoom
-     * @return Maps
-     */
-    public function setMinZoom($minZoom)
-    {
-        $this->minZoom = $minZoom;
-    
-        return $this;
-    }
-
-    /**
-     * Get minZoom
-     *
-     * @return boolean 
-     */
-    public function getMinZoom()
-    {
-        return $this->minZoom;
     }
 
     /**
