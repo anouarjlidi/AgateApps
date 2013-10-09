@@ -25,3 +25,4 @@ app/config/parameters.yml
 
 # Fichiers dev
 #_dev_files/
+/nbproject
