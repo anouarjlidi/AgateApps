@@ -1,7 +1,54 @@
-{% extends "::base.html.twig" %}
+{% extends "::layout.html.twig" %}
 
-{% block title %}CorahnRinMapsBundle:Maps:create{% endblock %}
+{% block title %}{{ 'Créer une nouvelle carte' | trans }} {{ parent() }}{% endblock %}
 
-{% block body %}
-<h1>Welcome to the Maps:create page</h1>
+{% block content_for_layout %}
+<h2>{{ 'Créer une nouvelle carte' | trans }}</h2>
+
+{% if valid %} 
+<div class="well">
+    <p>Name : {{ map.getName() }}</p>
+    <p>Desc : {{ map.getDescription() }}</p>
+    <p>Zoom : {{ map.getMinZoom() }} - {{ map.getMaxZoom() }}</p>
+    <p>Image : {{ map.getImage() }}</p>
+</div>
+{% endif %}
+
+<div class="well">
+    <form method="post" {{ form_enctype(form) }} >
+        {#{ form_widget(form) }#}
+        {{ form_errors(form) }}
+        
+        <div class="form-group">
+            {{ form_label(form.name, 'Nom') }}
+            {{ form_errors(form.name) }}
+            {{ form_widget(form.name) }}
+        </div>
+        
+        <div class="form-group">
+            {{ form_label(form.description, 'Description') }}
+            {{ form_errors(form.description) }}
+            {{ form_widget(form.description) }}
+        </div>
+        
+        <div class="form-group">
+            {{ form_label(form.image, 'Image de fond') }}
+            {{ form_errors(form.image) }}
+            {{ form_widget(form.image) }}
+        </div>
+        
+        <div class="form-group">
+            {{ form_label(form.minZoom, 'Zoom minimum') }}
+            {{ form_errors(form.minZoom) }}
+            {{ form_widget(form.minZoom) }}
+            {{ form_label(form.maxZoom, 'Zoom maximum') }}
+            {{ form_errors(form.maxZoom) }}
+            {{ form_widget(form.maxZoom) }}
+        </div>
+            
+        <input type="submit" clsas="btn btn-default" />
+        
+        {{ form_rest(form) }}
+    </form>
+</div>
 {% endblock %}
