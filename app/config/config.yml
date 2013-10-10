@@ -25,6 +25,10 @@ framework:
 twig:
     debug:            %kernel.debug%
     strict_variables: %kernel.debug%
+    form:
+        resources:
+            - 'CorahnRinToolsBundle:Form:form_div_layout.html.twig'
+            - 'CorahnRinToolsBundle:Form:fields.html.twig'
 
 # Assetic Configuration
 assetic:
