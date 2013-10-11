@@ -1,16 +1,12 @@
 <div class="well">
     <form method="post" {{ form_enctype(form) }} class="form-horizontal">
-        {#
-        {{ form_widget(form) }}
-        {{ form_errors(form) }}
-        #}
         
-        {{ form_row(form.name) }}
+        {{ form_row(form.name, {'label':'Nom'}) }}
         {{ form_row(form.description) }}
             
         <div class="row">
             <div class="col-sm-5 col-sm-offset-2">{{ form_row(form.image) }}</div>
-            <div class="col-sm-5">{{ form_row(form.maxZoom) }}</div>
+            <div class="col-sm-5">{{ form_row(form.maxZoom,{'label':'Zoom'}) }}</div>
         </div>
 
         <div class="form-group">

@@ -45,16 +45,18 @@ class MapsController extends Controller
                 
                 $final_path = $basename.'_'.rand(1, 99999999).'.'.$ext;
                 
-                $db_name = str_replace(ROOT.DS.'web'.DS, '', $dir.DS.$final_name);
-                
-                $map->setImage($db_name);
+                $db_name = str_replace(ROOT.DS.'web'.DS, '', $dir.DS.$final_path);
+              
+				$entity_image_name = str_replace('\\', '/', $db_name);
+				
+                $map->setImage($entity_image_name);
 
                 if ($form->isValid()) {
                     $valid = true;
                     $file->move($dir, $final_path);
-                    //$em = $this->getDoctrine()->getManager();
-                    //$em->persist($map);
-                    //$em->flush();
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($map);
+                    $em->flush();
                 }
         }
 

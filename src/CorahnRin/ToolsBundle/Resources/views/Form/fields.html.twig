@@ -3,7 +3,11 @@
         <div class="row form-group">
             {{ form_label(form, null, {'label_attr':{'class':'col-sm-2 control-label'}}) }}
             <div class="col-sm-10">
-                {{ form_widget(form, {'attr':{'class':'form-control col-lg-6'}} ) }}
+                {% if form.vars.block_prefixes.1 not in ['checkbox','radio','collection','repeated','hidden','button','reset','submit','form'] %}
+                    {{ form_widget(form, {'attr':{'class':'form-control col-lg-6'}}) }}
+                {% else %}
+                    {{ form_widget(form) }}
+                {% endif %}
                 {{ form_errors(form) }}
             </div>
         </div>
