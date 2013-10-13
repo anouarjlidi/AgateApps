@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Games
  *
  * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\GamesRepository")
- * @ORM\Table(uniqueConstraints={@ORM\UniqueConstraint(name="idgUnique", columns={"name", "gaemeMaster_id"})})
+ * @ORM\Table(uniqueConstraints={@ORM\UniqueConstraint(name="idgUnique", columns={"name", "gameMaster_id"})})
  */
 class Games
 {
