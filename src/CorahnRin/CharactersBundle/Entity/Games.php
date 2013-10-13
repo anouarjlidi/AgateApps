@@ -24,7 +24,7 @@ class Games
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=140, nullable=false, unique=true)
+     * @ORM\Column(type="string", length=140, nullable=false)
      */
     private $name;
 
