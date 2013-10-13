@@ -28,6 +28,13 @@ class SocialClass
     private $name;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="text", nullable=false)
+     */
+    private $description;
+
+    /**
      * @var \Datetime
      * @Gedmo\Mapping\Annotation\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
