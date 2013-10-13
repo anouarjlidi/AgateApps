@@ -27,7 +27,7 @@ CREATE TABLE `armors` (
   `updated` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIQ_A81653F45E237E06` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `artifacts`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -72,7 +72,7 @@ CREATE TABLE `avantages` (
   UNIQUE KEY `UNIQ_4936062E5E237E06` (`name`),
   KEY `IDX_4936062E16A2B381` (`book_id`),
   CONSTRAINT `FK_4936062E16A2B381` FOREIGN KEY (`book_id`) REFERENCES `books` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `books`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -85,7 +85,7 @@ CREATE TABLE `books` (
   `updated` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIQ_8BDA05965E237E06` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `characters`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -98,12 +98,19 @@ CREATE TABLE `characters` (
   `user_id` int(11) DEFAULT NULL,
   `game_id` int(11) DEFAULT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `playerName` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `status` tinyint(1) NOT NULL,
   `sex` varchar(1) COLLATE utf8_unicode_ci NOT NULL,
+  `description` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `story` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `facts` longtext COLLATE utf8_unicode_ci NOT NULL,
   `inventory` longtext COLLATE utf8_unicode_ci NOT NULL COMMENT '(DC2Type:array)',
   `money` longtext COLLATE utf8_unicode_ci NOT NULL COMMENT '(DC2Type:object)',
   `orientation` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
+  `people` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
   `geoLiving` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
+  `trauma` int(11) NOT NULL,
+  `traumaPermanent` int(11) NOT NULL,
   `age` int(11) NOT NULL,
   `mentalResist` int(11) NOT NULL,
   `health` longtext COLLATE utf8_unicode_ci NOT NULL COMMENT '(DC2Type:array)',
@@ -335,7 +342,7 @@ CREATE TABLE `disciplines` (
   UNIQUE KEY `UNIQ_2B81D30F5E237E06` (`name`),
   KEY `IDX_2B81D30F16A2B381` (`book_id`),
   CONSTRAINT `FK_2B81D30F16A2B381` FOREIGN KEY (`book_id`) REFERENCES `books` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=110 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `disciplines_domains`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -360,7 +367,7 @@ CREATE TABLE `disorders` (
   `updated` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIQ_23BE6BCE5E237E06` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `disordersways`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -386,7 +393,7 @@ CREATE TABLE `domains` (
   UNIQUE KEY `UNIQ_43C686015E237E06` (`name`),
   KEY `IDX_43C686018C803113` (`way_id`),
   CONSTRAINT `FK_43C686018C803113` FOREIGN KEY (`way_id`) REFERENCES `ways` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `events`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -519,7 +526,7 @@ CREATE TABLE `flux` (
   `updated` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIQ_D2609E045E237E06` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `foes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -561,7 +568,7 @@ CREATE TABLE `games` (
   UNIQUE KEY `idgUnique` (`name`,`gameMaster_id`),
   KEY `IDX_3EE2043514C6E3F4` (`gameMaster_id`),
   CONSTRAINT `FK_3EE2043514C6E3F4` FOREIGN KEY (`gameMaster_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `jobs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -577,7 +584,7 @@ CREATE TABLE `jobs` (
   UNIQUE KEY `UNIQ_8A1C2FB5E237E06` (`name`),
   KEY `IDX_8A1C2FB16A2B381` (`book_id`),
   CONSTRAINT `FK_8A1C2FB16A2B381` FOREIGN KEY (`book_id`) REFERENCES `books` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `mails`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -591,7 +598,7 @@ CREATE TABLE `mails` (
   `updated` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIQ_A2990F0177153098` (`code`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `mailssent`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -608,7 +615,7 @@ CREATE TABLE `mailssent` (
   PRIMARY KEY (`id`),
   KEY `IDX_314D5658C8776F01` (`mail_id`),
   CONSTRAINT `FK_314D5658C8776F01` FOREIGN KEY (`mail_id`) REFERENCES `mails` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=210 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `maps`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -722,7 +729,7 @@ CREATE TABLE `regions` (
   `updated` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIQ_6DDA406F5E237E06` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `resources`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -833,7 +840,7 @@ CREATE TABLE `setbacks` (
   `updated` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIQ_924A54015E237E06` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `socialclass`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -841,9 +848,9 @@ DROP TABLE IF EXISTS `socialclass`;
 CREATE TABLE `socialclass` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
+  `description` longtext COLLATE utf8_unicode_ci NOT NULL,
   `created` datetime NOT NULL,
   `updated` datetime NOT NULL,
-  `description` longtext COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIQ_B8221A335E237E06` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -874,7 +881,7 @@ CREATE TABLE `steps` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIQ_F5E3257643B9FE3C` (`step`),
   UNIQUE KEY `UNIQ_F5E32576989D9B62` (`slug`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `traits`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -892,13 +899,13 @@ CREATE TABLE `traits` (
   UNIQUE KEY `idxUnique` (`name`,`way_id`),
   KEY `IDX_E30CA4508C803113` (`way_id`),
   CONSTRAINT `FK_E30CA4508C803113` FOREIGN KEY (`way_id`) REFERENCES `ways` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=95 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `username_canonical` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -935,7 +942,7 @@ CREATE TABLE `ways` (
   UNIQUE KEY `UNIQ_97AAB29C43A885D` (`shortName`),
   UNIQUE KEY `UNIQ_97AAB295E237E06` (`name`),
   UNIQUE KEY `UNIQ_97AAB299FD0DEA3` (`fault`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `weapons`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -952,7 +959,7 @@ CREATE TABLE `weapons` (
   `updated` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIQ_9DB3827D5E237E06` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `weather`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
