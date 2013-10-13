@@ -17,6 +17,7 @@ class Users extends BaseUser {
      * @var integer
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
@@ -31,6 +32,7 @@ class Users extends BaseUser {
      */
     public function __construct()
     {
+		parent::__construct();
         $this->characters = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
