@@ -28,6 +28,13 @@ class Characters
     private $name;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=255, nullable=false)
+     */
+    private $playerName;
+
+    /**
      * @var integer
      *
      * @ORM\Column(type="boolean", nullable=false)
@@ -40,6 +47,27 @@ class Characters
      * @ORM\Column(type="string", length=1, nullable=false)
      */
     private $sex;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="text", nullable=false)
+     */
+    private $description;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="text", nullable=false)
+     */
+    private $story;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="text", nullable=false)
+     */
+    private $facts;
 
     /**
      * @var array
@@ -65,9 +93,30 @@ class Characters
     /**
      * @var string
      *
+     * @ORM\Column(type="string", length=30, nullable=false)
+     */
+    private $people;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=25, nullable=false)
      */
     private $geoLiving;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(type="integer", nullable=false)
+     */
+    private $trauma;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(type="integer", nullable=false)
+     */
+    private $traumaPermanent;
 
     /**
      * @var integer
