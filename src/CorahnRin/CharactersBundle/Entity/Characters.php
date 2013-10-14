@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Characters
  *
  * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\CharactersRepository")
+ * @ORM\Table(uniqueConstraints={@ORM\UniqueConstraint(name="idcUnique", columns={"name", "user_id"})})
  */
 class Characters
 {
@@ -23,7 +24,7 @@ class Characters
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=255, nullable=false, unique=true)
+     * @ORM\Column(type="string", length=255, nullable=false)
      */
     private $name;
 
@@ -89,6 +90,13 @@ class Characters
      * @ORM\Column(type="string", length=30, nullable=false)
      */
     private $orientation;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=80, nullable=true)
+     */
+    private $jobCustom;
 
     /**
      * @var string

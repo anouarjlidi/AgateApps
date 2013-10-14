@@ -925,7 +925,7 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIQ_1483A5E992FC23A8` (`username_canonical`),
   UNIQUE KEY `UNIQ_1483A5E9A0D96FBF` (`email_canonical`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `ways`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
