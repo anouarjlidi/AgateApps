@@ -205,6 +205,60 @@ showtime($temp_time, 'Récupération de la structure des tables');
 ---------------------------------------------------------------------------------------*/
 showtime($temp_time, 'Début de l\'import');
 
+
+
+
+$users = $old->prepare('SELECT * FROM `est_users` ORDER BY `user_name` ASC');
+$users->execute();
+$users = $users->fetchAll(PDO::FETCH_ASSOC);
+
+
+
+showtime($temp_time, 'Création des utilisateurs via Symfony...');
+$usernb = 0;
+foreach ($users as $v) {
+	$pwd = utf8_encode($v['user_email']);
+	$r = shell_exec('php ../app/console fos:user:create "'.$v['user_name'].'" "'.$v['user_email'].'" '.$pwd.'');
+	$usernb++;
+	if ($r) {
+		$r = str_replace(array("\r","\n"),array('',''),$r);
+		$r = trim($r);
+		showtime($temp_time, 'Terminé : "'.$v['user_name'].'" "'.$v['user_email'].'" '.$pwd.' / Message : '.$r.'');
+	} else {
+		showtime($temp_time, 'Terminé "'.$v['user_name'].'" "'.$v['user_email'].'" '.$pwd.'');
+	}
+
+	$enter_users = $new->noRes('UPDATE `users` SET `id` = :id WHERE `email` = :email ',array('id'=>$v['user_id'], 'email'=>$v['user_email']));//Exécution de la requête sql
+	if ($enter_users) {
+		showtime($temp_time, 'Rétablissement de l\'id pour l\'utilisateur "'.$v['user_name'].'"');
+	}
+	if ($new->noRes('ALTER TABLE `users` AUTO_INCREMENT = 0')) {
+		showtime($temp_time, 'Réinitialisation de l\'auto-increment');
+	}
+}$tables_done[]='users';showtime($temp_time, $usernb.' requêtes pour la table "users"');
+$nbreq += $usernb;
+
+
+foreach ($users as $v) {
+//	pr($v);exit;
+	if ($v['user_id'] > 1) {
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //*
 $table = 'weapons';
 //$nbreq++;
@@ -671,47 +725,6 @@ foreach ( $revers as $v) {
 
 
 
-
-$new = new PDO('mysql:host=127.0.0.1;dbname=corahn_rin;charset=UTF8', 'root', '');
-$new->query('SET NAMES "UTF8"');
-$old = new PDO('mysql:host=127.0.0.1;dbname=esteren;charset=UTF8', 'root', '');
-$old->query('SET NAMES "UTF8"');
-
-
-
-$users = $old->prepare('SELECT * FROM est_users');
-$users->execute();
-$users = $users->fetchAll(PDO::FETCH_ASSOC);
-
-
-
-showtime($temp_time, 'Création des utilisateurs via Symfony...');
-$usernb = 0;
-foreach ($users as $v) {
-	if ($v['user_id'] > 1) {
-		$pwd = utf8_encode($v['user_email']);
-		$r = shell_exec('php ../app/console fos:user:create "'.$v['user_name'].'" "'.$v['user_email'].'" '.$pwd.'');
-		$usernb++;
-		if ($r) {
-			$r = str_replace(array("\r","\n"),array('',''),$r);
-			$r = trim($r);
-			showtime($temp_time, 'Terminé : "'.utf8_encode($v['user_name']).'" "'.$v['user_email'].'" '.$pwd.' / Message : '.$r.'');
-		} else {
-			showtime($temp_time, 'Terminé "'.utf8_encode($v['user_name']).'" "'.$v['user_email'].'" '.$pwd.'');
-		}
-	}
-}$tables_done[]='users';showtime($temp_time, $usernb.' requêtes pour la table "users"');
-$nbreq += $usernb;
-
-
-$sql = 'UPDATE users SET id = :id WHERE username = :name ';	
-$enter_users = $new->prepare($sql);
-foreach ($users as $v) {
-//	pr($v);exit;
-	if ($v['user_id'] > 1) {
-		$enter_users->execute(array('id'=>$v['user_id'], 'name'=>$v['user_name']));
-	}
-}
 
 
 
