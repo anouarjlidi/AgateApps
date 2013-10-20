@@ -33,6 +33,13 @@ class Setbacks
      * @ORM\Column(type="text", nullable=false)
      */
     private $description;
+	
+    /**
+     * @var integer
+     *
+     * @ORM\Column(type="string", length=50, nullable=false)
+     */
+    private $malus;
 
     /**
      * @var \Datetime
