@@ -1656,16 +1656,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v1.14.0",
+            "version": "v1.14.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/fabpot/Twig.git",
-                "reference": "224fc55635d544a2ec8edb3592be18db5a093f59"
+                "reference": "8873d7593ad7c120004f177c0fd01459b383c9cb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fabpot/Twig/zipball/224fc55635d544a2ec8edb3592be18db5a093f59",
-                "reference": "224fc55635d544a2ec8edb3592be18db5a093f59",
+                "url": "https://api.github.com/repos/fabpot/Twig/zipball/8873d7593ad7c120004f177c0fd01459b383c9cb",
+                "reference": "8873d7593ad7c120004f177c0fd01459b383c9cb",
                 "shasum": ""
             },
             "require": {
@@ -1701,7 +1701,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2013-10-03 06:41:20"
+            "time": "2013-10-15 19:17:38"
         },
         {
             "name": "twitter/bootstrap",
@@ -1709,12 +1709,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/twbs/bootstrap.git",
-                "reference": "c75f8a5bf64acc5ffb45c8bb6221e412b0b08bcd"
+                "reference": "32468b087b615d1ed710f9118ff4f669cc5ad5e8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/c75f8a5bf64acc5ffb45c8bb6221e412b0b08bcd",
-                "reference": "c75f8a5bf64acc5ffb45c8bb6221e412b0b08bcd",
+                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/32468b087b615d1ed710f9118ff4f669cc5ad5e8",
+                "reference": "32468b087b615d1ed710f9118ff4f669cc5ad5e8",
                 "shasum": ""
             },
             "type": "library",
@@ -1738,7 +1738,7 @@
                 "bootstrap",
                 "css"
             ],
-            "time": "2013-10-13 12:31:47"
+            "time": "2013-10-18 20:14:03"
         }
     ],
     "packages-dev": [
