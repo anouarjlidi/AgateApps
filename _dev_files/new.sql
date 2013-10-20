@@ -107,6 +107,7 @@ CREATE TABLE `characters` (
   `inventory` longtext COLLATE utf8_unicode_ci NOT NULL COMMENT '(DC2Type:array)',
   `money` longtext COLLATE utf8_unicode_ci NOT NULL COMMENT '(DC2Type:object)',
   `orientation` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
+  `jobCustom` varchar(80) COLLATE utf8_unicode_ci DEFAULT NULL,
   `people` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
   `geoLiving` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
   `trauma` int(11) NOT NULL,
@@ -127,7 +128,7 @@ CREATE TABLE `characters` (
   `traitFlaw_id` int(11) DEFAULT NULL,
   `traitQuality_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `UNIQ_757442DE5E237E06` (`name`),
+  UNIQUE KEY `idcUnique` (`name`,`user_id`),
   KEY `IDX_757442DE87EB36AD` (`disorder_id`),
   KEY `IDX_757442DEBE04EA9` (`job_id`),
   KEY `IDX_757442DE98260155` (`region_id`),
@@ -836,6 +837,7 @@ CREATE TABLE `setbacks` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `description` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `malus` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `created` datetime NOT NULL,
   `updated` datetime NOT NULL,
   PRIMARY KEY (`id`),
@@ -925,7 +927,7 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIQ_1483A5E992FC23A8` (`username_canonical`),
   UNIQUE KEY `UNIQ_1483A5E9A0D96FBF` (`email_canonical`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `ways`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
