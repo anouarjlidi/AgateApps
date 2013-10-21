@@ -15,9 +15,19 @@ class CharDisciplines
      * @var \DisciplinesDomains
      *
      * @ORM\Id
-	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\DisciplinesDomains")
+     * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\DisciplinesDomains")
+     * @ORM\Column(nullable=false,name="discipline_id")
      */
     private $discipline;
+
+    /**
+     * @var \Characters
+     *
+     * @ORM\Id
+     * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Characters", inversedBy="disciplines")
+     * @ORM\Column(nullable=false,name="character_id")
+     */
+    private $character;
 
     /**
      * @var integer
