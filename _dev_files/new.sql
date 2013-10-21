@@ -228,14 +228,10 @@ DROP TABLE IF EXISTS `chardisciplines`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `chardisciplines` (
-  `character_id` int(11) NOT NULL,
   `discipline_id` int(11) NOT NULL,
   `score` int(11) NOT NULL,
-  PRIMARY KEY (`character_id`,`discipline_id`),
-  KEY `IDX_E8C3FDAF1136BE75` (`character_id`),
-  KEY `IDX_E8C3FDAFA5522701` (`discipline_id`),
-  CONSTRAINT `FK_E8C3FDAFA5522701` FOREIGN KEY (`discipline_id`) REFERENCES `disciplines` (`id`),
-  CONSTRAINT `FK_E8C3FDAF1136BE75` FOREIGN KEY (`character_id`) REFERENCES `characters` (`id`)
+  PRIMARY KEY (`discipline_id`),
+  CONSTRAINT `FK_E8C3FDAFA5522701` FOREIGN KEY (`discipline_id`) REFERENCES `disciplinesdomains` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `chardomains`;
@@ -345,17 +341,15 @@ CREATE TABLE `disciplines` (
   CONSTRAINT `FK_2B81D30F16A2B381` FOREIGN KEY (`book_id`) REFERENCES `books` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `disciplines_domains`;
+DROP TABLE IF EXISTS `disciplinesdomains`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `disciplines_domains` (
+CREATE TABLE `disciplinesdomains` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `disciplines_id` int(11) NOT NULL,
   `domains_id` int(11) NOT NULL,
-  PRIMARY KEY (`disciplines_id`,`domains_id`),
-  KEY `IDX_FE41FAE890D3DF94` (`disciplines_id`),
-  KEY `IDX_FE41FAE83700F4DC` (`domains_id`),
-  CONSTRAINT `FK_FE41FAE83700F4DC` FOREIGN KEY (`domains_id`) REFERENCES `domains` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `FK_FE41FAE890D3DF94` FOREIGN KEY (`disciplines_id`) REFERENCES `disciplines` (`id`) ON DELETE CASCADE
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `idcdUnique` (`disciplines_id`,`domains_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `disorders`;
