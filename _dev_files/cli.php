@@ -623,10 +623,10 @@ foreach ( $disciplines as $v) {
 
 
 
-$table = 'disciplines_domains';
+$table = 'disciplinesdomains';
 //$nbreq++;
 foreach ( $discdoms as $v) {
-	if (!$new->row('SELECT * FROM %'.$table.' WHERE %disciplines_id = :disciplines_id', array('disciplines_id'=>$v['disc_id']))) {
+	if (!$new->row('SELECT * FROM %'.$table.' WHERE %disciplines_id = :disciplines_id AND %domains_id = :domains_id ', array('disciplines_id'=>$v['disc_id'], 'domains_id'=>$v['domain_id']))) {
 		$nbreq++;
 		$datas = array(
 			'disciplines_id' => $v['disc_id'],
@@ -748,7 +748,7 @@ foreach ( $jobs as $v) {
 
 $table = 'mails';
 //$nbreq++;
-foreach ( $mails as $v) {
+foreach ($mails as $v) {
 	if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>$v['mail_id']))) {
 		$nbreq++;
 		$datas = array(
@@ -934,9 +934,9 @@ foreach ( $characters as $v) {
 			}
 		}
 		if ($countvoies === 5) { showtime($temp_time, ' Ajout des voies pour le personnage "'.$v['char_id'].'-'.$v['char_name'].'"'); }
-		
-		
-		
+
+
+
 		$domaines = $cnt->domaines;
 		$countdoms = 0;
 		foreach ($domaines as $domain) {
@@ -947,8 +947,12 @@ foreach ( $characters as $v) {
 			$discs = (array) $domain->disciplines;
 			if (!empty($discs)) {
 				foreach ($discs as $disc) {
-					$datasDisc = array( 'character_id' => $v['char_id'], 'discipline_id' => $disc->id, 'score' => $disc->val );
+					$datasDisc = array( 'character_id' => $v['char_id'], 'score' => $disc->val );
 					if (!$new->row('SELECT * FROM %chardisciplines WHERE %character_id = :character_id AND %discipline_id = :discipline_id AND %score = :score', $datasDisc)) {
+						$assoDiscId = $new->row('SELECT %id FROM %'.$table.' WHERE %disciplines_id = :disciplines_id AND %domains_id = :domains_id ', array('disciplines_id'=>$disc->id));
+						$id = isset($assoDiscId['id']) ? $assoDiscId['id'] : exit('Erreur...'.print_r($v, true));
+						if (!$id) { exit('Erreur...'.print_r($v, true)); }
+						$datasDisc['disciplines_id'] = $id;
 						$new->noRes('INSERT INTO %chardisciplines SET %%%fields', $datasDisc); $countdoms++;
 					}
 				}
