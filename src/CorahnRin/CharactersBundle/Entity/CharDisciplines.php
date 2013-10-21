@@ -12,18 +12,10 @@ use Doctrine\ORM\Mapping as ORM;
 class CharDisciplines
 {
     /**
-     * @var \Characters
+     * @var \DisciplinesDomains
      *
      * @ORM\Id
-	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Characters", inversedBy="disciplines")
-     */
-    private $character;
-
-    /**
-     * @var \Disciplines
-     *
-     * @ORM\Id
-	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Disciplines")
+	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\DisciplinesDomains")
      */
     private $discipline;
 
@@ -33,8 +25,6 @@ class CharDisciplines
      * @ORM\Column(type="integer")
      */
     private $score;
-
-
 
     /**
      * Set score

@@ -1423,4 +1423,188 @@ class Characters
     {
         return $this->game;
     }
+
+    /**
+     * Set playerName
+     *
+     * @param string $playerName
+     * @return Characters
+     */
+    public function setPlayerName($playerName)
+    {
+        $this->playerName = $playerName;
+    
+        return $this;
+    }
+
+    /**
+     * Get playerName
+     *
+     * @return string 
+     */
+    public function getPlayerName()
+    {
+        return $this->playerName;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Characters
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set story
+     *
+     * @param string $story
+     * @return Characters
+     */
+    public function setStory($story)
+    {
+        $this->story = $story;
+    
+        return $this;
+    }
+
+    /**
+     * Get story
+     *
+     * @return string 
+     */
+    public function getStory()
+    {
+        return $this->story;
+    }
+
+    /**
+     * Set facts
+     *
+     * @param string $facts
+     * @return Characters
+     */
+    public function setFacts($facts)
+    {
+        $this->facts = $facts;
+    
+        return $this;
+    }
+
+    /**
+     * Get facts
+     *
+     * @return string 
+     */
+    public function getFacts()
+    {
+        return $this->facts;
+    }
+
+    /**
+     * Set jobCustom
+     *
+     * @param string $jobCustom
+     * @return Characters
+     */
+    public function setJobCustom($jobCustom)
+    {
+        $this->jobCustom = $jobCustom;
+    
+        return $this;
+    }
+
+    /**
+     * Get jobCustom
+     *
+     * @return string 
+     */
+    public function getJobCustom()
+    {
+        return $this->jobCustom;
+    }
+
+    /**
+     * Set people
+     *
+     * @param string $people
+     * @return Characters
+     */
+    public function setPeople($people)
+    {
+        $this->people = $people;
+    
+        return $this;
+    }
+
+    /**
+     * Get people
+     *
+     * @return string 
+     */
+    public function getPeople()
+    {
+        return $this->people;
+    }
+
+    /**
+     * Set trauma
+     *
+     * @param integer $trauma
+     * @return Characters
+     */
+    public function setTrauma($trauma)
+    {
+        $this->trauma = $trauma;
+    
+        return $this;
+    }
+
+    /**
+     * Get trauma
+     *
+     * @return integer 
+     */
+    public function getTrauma()
+    {
+        return $this->trauma;
+    }
+
+    /**
+     * Set traumaPermanent
+     *
+     * @param integer $traumaPermanent
+     * @return Characters
+     */
+    public function setTraumaPermanent($traumaPermanent)
+    {
+        $this->traumaPermanent = $traumaPermanent;
+    
+        return $this;
+    }
+
+    /**
+     * Get traumaPermanent
+     *
+     * @return integer 
+     */
+    public function getTraumaPermanent()
+    {
+        return $this->traumaPermanent;
+    }
 }

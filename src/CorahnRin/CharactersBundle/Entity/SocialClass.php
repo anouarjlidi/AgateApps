@@ -175,4 +175,27 @@ class SocialClass
     {
         return $this->domains;
     }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return SocialClass
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
 }

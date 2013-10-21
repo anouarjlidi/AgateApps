@@ -55,13 +55,6 @@ class Disciplines
      * @ORM\Column(type="datetime", nullable=false)
      */
     private $updated;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Domains")
-     */
-    private $domains;
 	
     /**
      * @var \Books
@@ -74,7 +67,6 @@ class Disciplines
      */
     public function __construct()
     {
-        $this->domains = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**
@@ -200,39 +192,6 @@ class Disciplines
     public function getUpdated()
     {
         return $this->updated;
-    }
-
-    /**
-     * Add domains
-     *
-     * @param \CorahnRin\CharactersBundle\Entity\Domains $domains
-     * @return Disciplines
-     */
-    public function addDomain(\CorahnRin\CharactersBundle\Entity\Domains $domains)
-    {
-        $this->domains[] = $domains;
-    
-        return $this;
-    }
-
-    /**
-     * Remove domains
-     *
-     * @param \CorahnRin\CharactersBundle\Entity\Domains $domains
-     */
-    public function removeDomain(\CorahnRin\CharactersBundle\Entity\Domains $domains)
-    {
-        $this->domains->removeElement($domains);
-    }
-
-    /**
-     * Get domains
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getDomains()
-    {
-        return $this->domains;
     }
 
     /**

@@ -158,4 +158,27 @@ class Setbacks
     {
         return $this->updated;
     }
+
+    /**
+     * Set malus
+     *
+     * @param string $malus
+     * @return Setbacks
+     */
+    public function setMalus($malus)
+    {
+        $this->malus = $malus;
+    
+        return $this;
+    }
+
+    /**
+     * Get malus
+     *
+     * @return string 
+     */
+    public function getMalus()
+    {
+        return $this->malus;
+    }
 }
