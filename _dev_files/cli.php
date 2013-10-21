@@ -544,7 +544,7 @@ foreach ( $domains as $v) {
 
 
 $table = 'socialclass';
-	if (!$new->row('SELECT * FROM %'.$table.' WHERE %name = :id', array('id'=>1))) {
+if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>1))) {
 		$sql = 'INSERT INTO `'.$table.'` SET `id` = :id, `name` = :name, `description` = :description, `created` = :created, `updated` = :updated';
 		$q = $new->prepare($sql);
 		$nbreq+=5;
@@ -562,10 +562,10 @@ $tables_done[]=$table;showtime($temp_time, '5 requêtes pour la table "'.$table.
 
 $socialclasses = $new->req('SELECT * FROM `socialclass`');
 $table = 'socialclass_domains';
+$sreq = 0;
 $sql = 'INSERT INTO `'.$table.'` SET `socialclass_id` = :socialclass_id, `domains_id` = :domains_id';
 if (!$new->row('SELECT * FROM %'.$table)) {
 	$q = $new->prepare($sql);
-	$sreq = 0;
 	foreach ($socialclasses as $v) {
 		if ($v['name'] === 'Paysan') {
 			$q->execute(array('socialclass_id' => $v['id'], 'domains_id' => 5));$sreq++;
@@ -665,7 +665,7 @@ $tables_done[]=$table;showtime($temp_time, '5 requêtes pour la table "'.$table.
 $table = 'games';
 //$nbreq++;
 foreach ( $games as $v) {
-	if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>$v['game_id']))) {
+	if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>$v['game_id'])) && $v['game_mj']) {
 		$nbreq++;
 		$datas = array(
 				'id' => $v['game_id'],
@@ -864,12 +864,16 @@ require 'D:\\Fichiers mixtes\\Sites web\\hebergement\\JdR\\corahn_rin\\src\\Cora
 use CorahnRin\CharactersBundle\Classes\Money as Money;
 $table = 'characters';
 $t = $new->req('describe %'.$table);
+$new->noRes('delete from %charways');
+$new->noRes('delete from %chardomains');
+$new->noRes('delete from %chardisciplines');
 $new->noRes('delete from %'.$table);
 $struct = array();foreach($t as $v) { $struct[$v['Field']] = $v; } unset($t);
 //pr($struct);
 $charreq = 0;
+$characters = $old->req('SELECT * FROM %est_characters');
 foreach ( $characters as $v) {
-	if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>$v['char_id']))) {
+	if (!$new->row('SELECT * FROM %'.$table.' WHERE %name = :name', array('name'=>$v['char_name']))) {
 		echo '----------------------------',"\n";
 		echo '----------------------------',"\n";
 		$cnt = json_decode($v['char_content']);
@@ -917,8 +921,40 @@ foreach ( $characters as $v) {
 	//	print_r($datas);
 	//	print_r($cnt);
 		$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
+		
 		$charreq++;
 		showtime($temp_time, $charreq.' Ajout du personnage "'.$v['char_id'].'-'.$v['char_name'].'"');
+		
+		$voies = $cnt->voies;
+		$countvoies = 0;
+		foreach ($voies as $voie) {
+			$datasVoies = array( 'character_id' => $v['char_id'], 'way_id' => $voie->id, 'score' => $voie->val, );
+			if (!$new->row('SELECT * FROM %charways WHERE %character_id = :character_id AND %way_id = :way_id AND %score = :score', $datasVoies)) {
+				$new->noRes('INSERT INTO %charways SET %%%fields', $datasVoies); $countvoies++;
+			}
+		}
+		if ($countvoies === 5) { showtime($temp_time, ' Ajout des voies pour le personnage "'.$v['char_id'].'-'.$v['char_name'].'"'); }
+		
+		
+		
+		$domaines = $cnt->domaines;
+		$countdoms = 0;
+		foreach ($domaines as $domain) {
+			$datasDoms = array( 'character_id' => $v['char_id'], 'domain_id' => $domain->id, 'score' => $domain->val, );
+			if (!$new->row('SELECT * FROM %chardomains WHERE %character_id = :character_id AND %domain_id = :domain_id AND %score = :score', $datasDoms)) {
+				$new->noRes('INSERT INTO %chardomains SET %%%fields', $datasDoms); $countdoms++;
+			}
+			$discs = (array) $domain->disciplines;
+			if (!empty($discs)) {
+				foreach ($discs as $disc) {
+					$datasDisc = array( 'character_id' => $v['char_id'], 'discipline_id' => $disc->id, 'score' => $disc->val );
+					if (!$new->row('SELECT * FROM %chardisciplines WHERE %character_id = :character_id AND %discipline_id = :discipline_id AND %score = :score', $datasDisc)) {
+						$new->noRes('INSERT INTO %chardisciplines SET %%%fields', $datasDisc); $countdoms++;
+					}
+				}
+			}
+		}
+		if ($countvoies === 5) { showtime($temp_time, ' Ajout des voies pour le personnage "'.$v['char_id'].'-'.$v['char_name'].'"'); }
 	//	showtime($temp_time, 'Structure manquante pour la table "'.$table.'"');
 		foreach ($struct as $k => $v) {
 			if (!array_key_exists($v['Field'], $datas)) { echo $v['Field']."\n"; }
