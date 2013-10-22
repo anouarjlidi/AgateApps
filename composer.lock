@@ -611,12 +611,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSUserBundle.git",
-                "reference": "f9ea1de0698e3055c9916e88c19f42e28844ef61"
+                "reference": "4025c4113bc000cef331ea833a52123080d2faa4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/f9ea1de0698e3055c9916e88c19f42e28844ef61",
-                "reference": "f9ea1de0698e3055c9916e88c19f42e28844ef61",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/4025c4113bc000cef331ea833a52123080d2faa4",
+                "reference": "4025c4113bc000cef331ea833a52123080d2faa4",
                 "shasum": ""
             },
             "require": {
@@ -671,7 +671,7 @@
             "keywords": [
                 "User management"
             ],
-            "time": "2013-10-09 22:58:46"
+            "time": "2013-10-21 09:54:07"
         },
         {
             "name": "gedmo/doctrine-extensions",
@@ -1709,12 +1709,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/twbs/bootstrap.git",
-                "reference": "32468b087b615d1ed710f9118ff4f669cc5ad5e8"
+                "reference": "9673c25e2cf8701e4fe0d255d38f1a9f6b193e9f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/32468b087b615d1ed710f9118ff4f669cc5ad5e8",
-                "reference": "32468b087b615d1ed710f9118ff4f669cc5ad5e8",
+                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/9673c25e2cf8701e4fe0d255d38f1a9f6b193e9f",
+                "reference": "9673c25e2cf8701e4fe0d255d38f1a9f6b193e9f",
                 "shasum": ""
             },
             "type": "library",
@@ -1738,7 +1738,7 @@
                 "bootstrap",
                 "css"
             ],
-            "time": "2013-10-18 20:14:03"
+            "time": "2013-10-21 15:58:38"
         }
     ],
     "packages-dev": [
