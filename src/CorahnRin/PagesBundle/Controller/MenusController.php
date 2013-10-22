@@ -12,8 +12,8 @@ class MenusController extends Controller {
 	 */
 	public function menuAction($route = '') {
 		$links = array(
-			'corahnrin_generate_index' => 'Générateur de personnage',
-			'corahnrin_versions' => 'Mises à jour',
+			'corahnrin_characters_generator_index' => 'Générateur de personnage',
+			'corahnrin_pages_versions_index' => 'Mises à jour',
 		);
 		$username = $this->get('fos_user.user_provider.username');
 		return array('links' => $links, 'route_name' => $route);

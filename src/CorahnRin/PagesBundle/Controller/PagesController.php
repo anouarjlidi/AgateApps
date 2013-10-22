@@ -18,7 +18,7 @@ class PagesController extends Controller {
     }
 
     /**
-     * @Route("/{id}_-_{slug}")
+     * @Route("/{id}-{slug}", requirements={"id" = "\d+"})
      * @Template()
      */
     public function viewAction($id, $slug)

@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class GeneratorController extends Controller
 {
     /**
-     * @Route("/generate", name="corahnrin_generate_index")
+     * @Route("/generate")
      * @Template()
      */
     public function indexAction()
@@ -20,7 +20,7 @@ class GeneratorController extends Controller
     }
 
     /**
-     * @Route("/generate/{id}_{slug}", name="corahnrin_generate_step")
+     * @Route("/generate/{id}-{slug}", requirements={"id" = "\d+"},)
      * @Template()
      */
     public function stepAction($id, $slug) {

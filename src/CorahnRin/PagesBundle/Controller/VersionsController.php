@@ -10,7 +10,7 @@ use \Symfony\Component\HttpFoundation\Response as Response;
 class VersionsController extends Controller
 {
     /**
-     * @Route("/versions", name="corahnrin_versions")
+     * @Route("/versions")
      * @Template()
      */
 	public function indexAction() {
@@ -24,7 +24,7 @@ class VersionsController extends Controller
 	}
 	
     /**
-     * @Route("/get_version/{filter}", requirements={"filter" = "code|date"}, name="corahnrin_version_get")
+     * @Route("/get_version/{filter}", requirements={"filter" = "code|date"})
      */
     public function getAction($filter = '')
     {

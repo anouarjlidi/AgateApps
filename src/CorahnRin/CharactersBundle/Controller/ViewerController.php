@@ -9,11 +9,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class ViewerController extends Controller
 {
     /**
-     * @Route("/{id}-{name}")
+     * @Route("/{id}-{name}", requirements={"id" = "\d+"})
      * @Template()
      */
-    public function viewAction($id, $name)
+    public function viewAction(Characters $character)
     {
+		return array('character'=>$character);
     }
 
     /**
