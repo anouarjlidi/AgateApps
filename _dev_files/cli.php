@@ -1,7 +1,7 @@
 <?php $time = microtime(true);$temp_time = $time;
 
 echo 'Conversion Corahn-Rin'."\n";
-exec('chcp 65001');
+//exec('chcp 65001');
 ini_set('cli_server.color', true);
 ini_set('cli_server.color', 1);
 $colors = new Colors();
@@ -947,12 +947,11 @@ foreach ( $characters as $v) {
 			$discs = (array) $domain->disciplines;
 			if (!empty($discs)) {
 				foreach ($discs as $disc) {
-					$datasDisc = array( 'character_id' => $v['char_id'], 'score' => $disc->val );
+					$assoDiscId = $new->row('SELECT %id FROM %disciplinesdomains WHERE %disciplines_id = :disciplines_id AND %domains_id = :domains_id ', array('disciplines_id'=>$disc->id,'domains_id'=>$domain->id));
+					$id = isset($assoDiscId['id']) ? $assoDiscId['id'] : null;
+					if (!$id) { exit('Erreur...'.print_r($v, true)); }
+					$datasDisc = array( 'character_id' => $v['char_id'], 'score' => $disc->val, 'discipline_id' => $id);
 					if (!$new->row('SELECT * FROM %chardisciplines WHERE %character_id = :character_id AND %discipline_id = :discipline_id AND %score = :score', $datasDisc)) {
-						$assoDiscId = $new->row('SELECT %id FROM %'.$table.' WHERE %disciplines_id = :disciplines_id AND %domains_id = :domains_id ', array('disciplines_id'=>$disc->id));
-						$id = isset($assoDiscId['id']) ? $assoDiscId['id'] : exit('Erreur...'.print_r($v, true));
-						if (!$id) { exit('Erreur...'.print_r($v, true)); }
-						$datasDisc['disciplines_id'] = $id;
 						$new->noRes('INSERT INTO %chardisciplines SET %%%fields', $datasDisc); $countdoms++;
 					}
 				}
