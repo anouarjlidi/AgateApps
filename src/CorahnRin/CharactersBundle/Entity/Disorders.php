@@ -45,7 +45,7 @@ class Disorders
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\OneToMany(targetEntity="CharWays", mappedBy="characters", mappedBy="disorders")
+     * @ORM\OneToMany(targetEntity="DisordersWays", mappedBy="disorders")
      */
     private $ways;
     /**
