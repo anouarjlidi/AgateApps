@@ -1,0 +1,9 @@
+{{ '{% extends "::layout.html.twig" %}' }}
+
+{{ '{% block title %}' -}}
+{{ action.basename }} - {{ controller }} - {{ bundle }} 
+{{- '{% endblock %}' }}
+
+{{ '{% block body %}' }}
+<h1>Contrôleur {{ controller }}, vue {{ action.basename }}</h1>
+{{ '{% endblock %}' }}
