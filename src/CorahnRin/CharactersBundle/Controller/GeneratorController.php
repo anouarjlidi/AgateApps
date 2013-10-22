@@ -20,7 +20,7 @@ class GeneratorController extends Controller
     }
 
     /**
-     * @Route("/generate/{id}-{slug}", requirements={"id" = "\d+"},)
+     * @Route("/generate/{id}-{slug}", requirements={"id" = "\d+"})
      * @Template()
      */
     public function stepAction($id, $slug) {
