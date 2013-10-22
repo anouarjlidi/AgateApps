@@ -32,6 +32,14 @@ class Characters
      * @var string
      *
      * @ORM\Column(type="string", length=255, nullable=false)
+     * @Gedmo\Mapping\Annotation\Slug(fields={"name"},unique=false)
+     */
+    private $nameSlug;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=255, nullable=false)
      */
     private $playerName;
 
@@ -143,7 +151,7 @@ class Characters
     /**
      * @var array
      *
-     * @ORM\Column(type="array", nullable=false)
+     * @ORM\Column(type="integer", nullable=false)
      */
     private $health;
 
@@ -1606,5 +1614,28 @@ class Characters
     public function getTraumaPermanent()
     {
         return $this->traumaPermanent;
+    }
+
+    /**
+     * Set nameSlug
+     *
+     * @param string $nameSlug
+     * @return Characters
+     */
+    public function setNameSlug($nameSlug)
+    {
+        $this->nameSlug = $nameSlug;
+    
+        return $this;
+    }
+
+    /**
+     * Get nameSlug
+     *
+     * @return string 
+     */
+    public function getNameSlug()
+    {
+        return $this->nameSlug;
     }
 }
