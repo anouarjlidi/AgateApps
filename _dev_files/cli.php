@@ -333,8 +333,9 @@ foreach ($users as $v) {
 			showtime($temp_time, 'Rétablissement de l\'id pour l\'utilisateur "'.$v['user_name'].'"');
 		}
 	}
-	
-}$tables_done[]='users';showtime($temp_time, $usernb.' requêtes pour la table "users"');
+}$tables_done[]='users';
+if (!$usernb) { showtime($temp_time, 'Aucun utilisateur à ajouter'); }
+showtime($temp_time, $usernb.' requêtes pour la table "users"');
 if ($new->noRes('ALTER TABLE `users` AUTO_INCREMENT = 128')) {
 	showtime($temp_time, 'Réinitialisation de l\'auto-increment après les insertions et rétablissements d\'id pour les utilisateurs');
 }
@@ -344,10 +345,11 @@ $nbreq += $usernb;
 
 
 $table = 'weapons';
-//$nbreq++;
+$nbreqtemp = 0;
 foreach ( $armes as $v) {
 	if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>$v['arme_id']))) {
 		$nbreq++;
+		$nbreqtemp++;
 		$datas = array(
 			'id' => $v['arme_id'],
 			'name' => $v['arme_name'],
@@ -360,17 +362,17 @@ foreach ( $armes as $v) {
 			'updated' => $datetime->date,
 		);$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
 	}
-}$tables_done[]=$table;showtime($temp_time, count($armes).' requêtes pour la table "'.$table.'"');
-flush();
+}$tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
 
 
 
 
 $table = 'armors';
-//$nbreq++;
+$nbreqtemp = 0;
 foreach ( $armures as $v) {
 	if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>$v['armure_id']))) {
 		$nbreq++;
+		$nbreqtemp++;
 		$datas = array(
 			'id' => $v['armure_id'],
 			'name' => $v['armure_name'],
@@ -382,20 +384,22 @@ foreach ( $armures as $v) {
 			'updated' => $datetime->date,
 		);$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
 	}
-}$tables_done[]=$table;showtime($temp_time, count($armures).' requêtes pour la table "'.$table.'"');
-flush();
+}$tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
 
 
 
 
 
 $table = 'ways';
-//$nbreq++;
+$nbreqtemp = 0;
 $voies_id = array();
 $voies_short = array();
 foreach ( $voies as $v) {
+	$voies_id[$v['voie_id']] = $v;
+	$voies_short[$v['voie_shortname']] = $v;
 	if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>$v['voie_id']))) {
 		$nbreq++;
+		$nbreqtemp++;
 		$datas = array(
 			'id' => $v['voie_id'],
 			'name' => $v['voie_name'],
@@ -405,19 +409,18 @@ foreach ( $voies as $v) {
 			'created' => $datetime->date,
 			'updated' => $datetime->date,
 		);$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
-		$voies_id[$v['voie_id']] = $v;
-		$voies_short[$v['voie_shortname']] = $v;
 	}
-}$tables_done[]=$table;showtime($temp_time, count($voies).' requêtes pour la table "'.$table.'"');
+}$tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
 
 
 
 
 $table = 'disorders';
-//$nbreq++;
+$nbreqtemp = 0;
 foreach ( $desordres as $v) {
 	if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>$v['desordre_id']))) {
 		$nbreq++;
+		$nbreqtemp++;
 		$datas = array(
 			'id' => $v['desordre_id'],
 			'name' => $v['desordre_name'],
@@ -426,7 +429,7 @@ foreach ( $desordres as $v) {
 		);$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
 		$dis_maj = explode(',', $v['desordre_voies_maj']);
 		$dis_min = explode(',', $v['desordre_voies_min']);
-		$sql = 'INSERT INTO `'.$table.'ways` SET `disorder` = :disorder, `way` = :way, `isMajor` = :isMajor';
+		$sql = 'INSERT INTO `'.$table.'ways` SET `disorder_id` = :disorder, `way_id` = :way, `isMajor` = :isMajor';
 		$q = $new->prepare($sql);
 		$nbreq+=8;
 		foreach ($dis_maj as $d) {
@@ -440,17 +443,18 @@ foreach ( $desordres as $v) {
 			}
 		}
 	}
-}$tables_done[]=$table.'ways';$tables_done[]=$table;showtime($temp_time, count($desordres).' requêtes pour la table "'.$table.'"');
+}$tables_done[]=$table.'ways';$tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
 
 
 
 
 
 $table = 'traits';
-//$nbreq++;
+$nbreqtemp = 0;
 foreach ( $traitscaractere as $v) {
 	if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>$v['trait_id']))) {
 		$nbreq++;
+		$nbreqtemp++;
 		$datas = array(
 			'id' => $v['trait_id'],
 			'way_id' => $voies_short[$v['trait_voie']]['voie_id'],
@@ -462,16 +466,17 @@ foreach ( $traitscaractere as $v) {
 			'updated' => $datetime->date,
 		);$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
 	}
-}$tables_done[]=$table;showtime($temp_time, count($traitscaractere).' requêtes pour la table "'.$table.'"');
+}$tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
 
 
 
 
 $table = 'avantages';
-//$nbreq++;
+$nbreqtemp = 0;
 foreach ( $avdesv as $v) {
 	if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>$v['avdesv_id']))) {
 		$nbreq++;
+		$nbreqtemp++;
 		$datas = array(
 			'id' => $v['avdesv_id'],
 			'name' => $v['avdesv_name'],
@@ -486,7 +491,7 @@ foreach ( $avdesv as $v) {
 			'updated' => $datetime->date,
 		);$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
 	}
-}$tables_done[]=$table;showtime($temp_time, count($avdesv).' requêtes pour la table "'.$table.'"');
+}$tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
 
 
 
@@ -495,11 +500,12 @@ foreach ( $avdesv as $v) {
 
 
 $table = 'books';
-//$nbreq++;
+$nbreqtemp = 0;
 if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>1))) {
 	$sql = 'INSERT INTO `'.$table.'` SET `id` = :id, `name` = :name, `description` = :description, `created` = :created, `updated` = :updated';
 	$q = $new->prepare($sql);
 	$nbreq+=8;
+	$nbreqtemp+=8;
 	$q->execute(array('id' => 1,'name' => 'Livre 0 - Prologue',				'description' => '','created' => $datetime->date,'updated' => $datetime->date,));
 	$q->execute(array('id' => 2,'name' => 'Livre 1 - Univers',				'description' => '','created' => $datetime->date,'updated' => $datetime->date,));
 	$q->execute(array('id' => 3,'name' => 'Livre 2 - Voyages',				'description' => '','created' => $datetime->date,'updated' => $datetime->date,));
@@ -509,7 +515,7 @@ if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>1))) {
 	$q->execute(array('id' => 7,'name' => 'Le Monastère de Tuath',			'description' => '','created' => $datetime->date,'updated' => $datetime->date,));
 	$q->execute(array('id' => 8,'name' => 'Contenu de la communauté',		'description' => 'Ce contenu est par définition non-officiel.','created' => $datetime->date,'updated' => $datetime->date,));
 }
-$tables_done[]=$table;showtime($temp_time, '8 requêtes pour la table "'.$table.'"');
+$tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
 
 
 
@@ -522,10 +528,11 @@ $tables_done[]=$table;showtime($temp_time, '8 requêtes pour la table "'.$table.
 
 
 $table = 'domains';
-//$nbreq++;
+$nbreqtemp = 0;
 foreach ( $domains as $v) {
 	if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>$v['domain_id']))) {
 		$nbreq++;
+		$nbreqtemp++;
 		$datas = array(
 				'id' => $v['domain_id'],
 				'name' => $v['domain_name'],
@@ -535,7 +542,7 @@ foreach ( $domains as $v) {
 				'updated' => $datetime->date,
 		);$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
 	}
-}$tables_done[]=$table;showtime($temp_time, count($domains).' requêtes pour la table "'.$table.'"');
+}$tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
 
 
 
@@ -544,10 +551,12 @@ foreach ( $domains as $v) {
 
 
 $table = 'socialclass';
+$nbreqtemp = 0;
 if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>1))) {
 		$sql = 'INSERT INTO `'.$table.'` SET `id` = :id, `name` = :name, `description` = :description, `created` = :created, `updated` = :updated';
 		$q = $new->prepare($sql);
 		$nbreq+=5;
+		$nbreqtemp+=5;
 		$q->execute(array('id'=>1,'name' => 'Paysan','description' => 'Les roturiers font partie de la majorité de la population. Vous avez vécu dans une famille paysanne, à l\'écart des villes et cités, sans pour autant les ignorer. Vous êtes plus proche de la nature.
 		les Demorthèn font également partie de cette classe sociale.', 'created' => $datetime->date,'updated' => $datetime->date,));
 		$q->execute(array('id'=>2,'name' => 'Artisan','description' => 'Les roturiers font partie de la majorité de la population. Votre famille était composée d\'un ou plusieurs artisans ou ouvriers, participant à la vie communale et familiale usant de ses talents manuels.', 'created' => $datetime->date,'updated' => $datetime->date,));
@@ -556,7 +565,7 @@ if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>1))) {
 		Vous avez probablement la foi, vous aussi.', 'created' => $datetime->date,'updated' => $datetime->date,));
 		$q->execute(array('id'=>5,'name' => 'Noblesse','description' => 'Vous portez peut-être un grand nom des affaires des grandes cités, ou avez grandi en ville. Néanmoins, votre famille est placée assez haut dans la noblesse pour vous permettre d\'avoir eu des enseignements particuliers.', 'created' => $datetime->date,'updated' => $datetime->date,));
 	}
-$tables_done[]=$table;showtime($temp_time, '5 requêtes pour la table "'.$table.'"');
+$tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
 
 
 
@@ -605,10 +614,11 @@ $tables_done[]=$table;showtime($temp_time, $sreq.' requêtes pour la table "'.$t
 
 
 $table = 'disciplines';
-//$nbreq++;
+$nbreqtemp = 0;
 foreach ( $disciplines as $v) {
 	if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>$v['disc_id']))) {
 		$nbreq++;
+		$nbreqtemp++;
 		$datas = array(
 				'id' => $v['disc_id'],
 				'name' => $v['disc_name'],
@@ -619,21 +629,22 @@ foreach ( $disciplines as $v) {
 				'updated' => $datetime->date,
 		);$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
 	}
-}$tables_done[]=$table;showtime($temp_time, count($disciplines).' requêtes pour la table "'.$table.'"');
+}$tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
 
 
 
 $table = 'disciplinesdomains';
-//$nbreq++;
+$nbreqtemp = 0;
 foreach ( $discdoms as $v) {
 	if (!$new->row('SELECT * FROM %'.$table.' WHERE %disciplines_id = :disciplines_id AND %domains_id = :domains_id ', array('disciplines_id'=>$v['disc_id'], 'domains_id'=>$v['domain_id']))) {
 		$nbreq++;
+		$nbreqtemp++;
 		$datas = array(
 			'disciplines_id' => $v['disc_id'],
 			'domains_id' => $v['domain_id'],
 		);$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
 	}
-}$tables_done[]=$table;showtime($temp_time, count($discdoms).' requêtes pour la table "'.$table.'"');
+}$tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
 
 
 
@@ -642,18 +653,19 @@ foreach ( $discdoms as $v) {
 
 
 $table = 'flux';
-//$nbreq++;
+$nbreqtemp = 0;
 if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>1))) {
 	$sql = 'INSERT INTO `flux` SET `id` = :id, `name` = :name, `created` = :created, `updated` = :updated';
 	$q = $new->prepare($sql);
 	$nbreq+=5;
+	$nbreqtemp+=5;
 	$q->execute(array('id' => 1,'name' => 'Végétal',	'created' => $datetime->date, 'updated' => $datetime->date,));
 	$q->execute(array('id' => 2,'name' => 'Minéral',	'created' => $datetime->date, 'updated' => $datetime->date,));
 	$q->execute(array('id' => 3,'name' => 'Organique',	'created' => $datetime->date, 'updated' => $datetime->date,));
 	$q->execute(array('id' => 4,'name' => 'Fossile',	'created' => $datetime->date, 'updated' => $datetime->date,));
 	$q->execute(array('id' => 5,'name' => 'M',			'created' => $datetime->date, 'updated' => $datetime->date,));
 }
-$tables_done[]=$table;showtime($temp_time, '5 requêtes pour la table "'.$table.'"');
+$tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
 
 
 
@@ -664,9 +676,11 @@ $tables_done[]=$table;showtime($temp_time, '5 requêtes pour la table "'.$table.
 
 $table = 'games';
 //$nbreq++;
+$nbreqtemp = 0;
 foreach ( $games as $v) {
 	if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>$v['game_id'])) && $v['game_mj']) {
 		$nbreq++;
+		$nbreqtemp++;
 		$datas = array(
 				'id' => $v['game_id'],
 				'name' => $v['game_name'],
@@ -677,7 +691,7 @@ foreach ( $games as $v) {
 				'updated' => $datetime->date,
 		);$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
 	}
-}$tables_done[]=$table;showtime($temp_time, count($games).' requêtes pour la table "'.$table.'"');
+}$tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
 
 
 
@@ -688,10 +702,11 @@ foreach ( $games as $v) {
 
 
 $table = 'steps';
-
+$nbreqtemp = 0;
 foreach ( $steps as $v) {
 	if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>$v['gen_id']))) {
 		$nbreq++;
+		$nbreqtemp++;
 		$datas = array(
 				'id' => $v['gen_id'],
 				'step' => $v['gen_step'],
@@ -701,7 +716,7 @@ foreach ( $steps as $v) {
 				'updated' => $datetime->date,
 		);$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
 	}
-}$tables_done[]=$table;showtime($temp_time, count($steps).' requêtes pour la table "'.$table.'"');
+}$tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
 
 
 
@@ -722,9 +737,11 @@ foreach ( $steps as $v) {
 
 $table = 'jobs';
 //$nbreq++;
+$nbreqtemp = 0;
 foreach ( $jobs as $v) {
 	if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>$v['job_id']))) {
 		$nbreq++;
+		$nbreqtemp++;
 		$datas = array(
 				'id' => $v['job_id'],
 				'book_id' => ($v['job_book'] ? 1 : 8),
@@ -734,7 +751,7 @@ foreach ( $jobs as $v) {
 				'updated' => $datetime->date,
 		);$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
 	}
-}$tables_done[]=$table;showtime($temp_time, count($jobs).' requêtes pour la table "'.$table.'"');
+}$tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
 
 
 
@@ -748,9 +765,11 @@ foreach ( $jobs as $v) {
 
 $table = 'mails';
 //$nbreq++;
+$nbreqtemp = 0;
 foreach ($mails as $v) {
 	if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>$v['mail_id']))) {
 		$nbreq++;
+		$nbreqtemp++;
 		$datas = array(
 				'id' => $v['mail_id'],
 				'code' => $v['mail_code'],
@@ -760,14 +779,16 @@ foreach ($mails as $v) {
 				'updated' => $datetime->date,
 		);$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
 	}
-}$tables_done[]=$table;showtime($temp_time, count($mails).' requêtes pour la table "'.$table.'"');
+}$tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
 
 
 $table = 'mailssent';
 //$nbreq++;
+$nbreqtemp = 0;
 foreach ( $mails_sent as $v) {
 	if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>$v['mail_sent_id']))) {
 		$nbreq++;
+		$nbreqtemp++;
 		$dest = json_decode($v['mail_dest'], true);
 		$datas = array(
 				'id' => $v['mail_sent_id'],
@@ -780,7 +801,7 @@ foreach ( $mails_sent as $v) {
 				'updated' => $v['mail_date'],
 		);$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
 	}
-}$tables_done[]=$table;showtime($temp_time, count($mails_sent).' requêtes pour la table "'.$table.'"');
+}$tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
 
 
 
@@ -796,9 +817,11 @@ foreach ( $mails_sent as $v) {
 
 $table = 'regions';
 //$nbreq++;
+$nbreqtemp = 0;
 foreach ( $regions as $v) {
 	if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>$v['region_id']))) {
 		$nbreq++;
+		$nbreqtemp++;
 		$datas = array(
 				'id' => $v['region_id'],
 				'name' => $v['region_name'],
@@ -809,7 +832,7 @@ foreach ( $regions as $v) {
 				'updated' => $datetime->date,
 		);$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
 	}
-}$tables_done[]=$table;showtime($temp_time, count($regions).' requêtes pour la table "'.$table.'"');
+}$tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
 
 
 
@@ -822,9 +845,11 @@ foreach ( $regions as $v) {
 
 
 $table = 'setbacks';
+$nbreqtemp = 0;
 foreach ( $revers as $v) {
 	if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>$v['rev_id']))) {
 		$nbreq++;
+		$nbreqtemp++;
 		$datas = array(
 				'id' => $v['rev_id'],
 				'name' => $v['rev_name'],
@@ -834,7 +859,7 @@ foreach ( $revers as $v) {
 				'updated' => $datetime->date,
 		);$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
 	}
-}$tables_done[]=$table;showtime($temp_time, count($revers).' requêtes pour la table "'.$table.'"');
+}$tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
 
 
 
@@ -866,7 +891,15 @@ $table = 'characters';
 $t = $new->req('describe %'.$table);
 $new->noRes('delete from %charways');
 $new->noRes('delete from %chardomains');
+$new->noRes('delete from %charsocialclass');
+$new->noRes('delete from %charavtgs');
+$new->noRes('delete from %characters_armors');
+$new->noRes('delete from %characters_weapons');
+$new->noRes('delete from %charsetbacks');
 $new->noRes('delete from %chardisciplines');
+$new->noRes('delete from %charflux');
+
+$to_add = array();
 $new->noRes('delete from %'.$table);
 $struct = array();foreach($t as $v) { $struct[$v['Field']] = $v; } unset($t);
 //pr($struct);
@@ -911,7 +944,7 @@ foreach ( $characters as $v) {
 			'rindath' => 0,
 			'money' => serialize($money),
 			'game_id' => $new->row('select * from games where id = ?', array($v['game_id'])) ? $v['game_id'] : null,
-			'user_id' => $v['user_id'] ?: null,
+			'user_id' => $new->row('select * from users where id = ?', array($v['user_id'])) ? $v['user_id'] : null,
 			'disorder_id' => $cnt->desordre_mental->id,
 			'exaltation' => 0,
 			'orientation' => $cnt->orientation->name === 'Instinctive' ? 'Instinctive' : 'Rational',
@@ -920,16 +953,14 @@ foreach ( $characters as $v) {
 			'experienceActual' => (int) $cnt->experience->reste,
 			'experienceSpent' => $cnt->experience->total - $cnt->experience->reste,
 			'status' => $v['char_status'],
-			'inventory' => serialize($cnt->inventaire->possessions),
+			'inventory' => serialize(array_merge($cnt->inventaire->possessions)),
 			'created' => date('Y-m-d H:i:s', (int) $v['char_date_creation']),
 			'updated' => date('Y-m-d H:i:s', ((int) $v['char_date_update'] ? (int) $v['char_date_update'] : (int) $v['char_date_creation'])),
 		);
-	//	print_r($datas);
-	//	print_r($cnt);
 		$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
 		
 		$charreq++;
-		showtime($temp_time, $charreq.' Ajout du personnage "'.$v['char_id'].'-'.$v['char_name'].'"');
+		showtime($temp_time, $charreq.' Ajout du personnage '.$v['char_id'].' : '.$v['char_name']);
 		
 		$voies = $cnt->voies;
 		$countvoies = 0;
@@ -939,13 +970,15 @@ foreach ( $characters as $v) {
 				$new->noRes('INSERT INTO %charways SET %%%fields', $datasVoies); $countvoies++;
 			}
 		}
-		if ($countvoies === 5) { showtime($temp_time, ' Ajout des voies pour le personnage "'.$v['char_id'].'-'.$v['char_name'].'"'); }
+		if ($countvoies === 5) { showtime($temp_time, ' Ajout des voies OK'); }
 
 
 
 		$domaines = $cnt->domaines;
+		$socialclassdomains = array();
 		$countdoms = 0;
 		foreach ($domaines as $domain) {
+			if ($domain->val > 0 && count($socialclassdomains) < 2) { $socialclassdomains[] = $domain->id; $domain->val --;}
 			$datasDoms = array( 'character_id' => $v['char_id'], 'domain_id' => $domain->id, 'score' => $domain->val, );
 			if (!$new->row('SELECT * FROM %chardomains WHERE %character_id = :character_id AND %domain_id = :domain_id AND %score = :score', $datasDoms)) {
 				$new->noRes('INSERT INTO %chardomains SET %%%fields', $datasDoms); $countdoms++;
@@ -959,18 +992,107 @@ foreach ( $characters as $v) {
 					$datasDisc = array( 'character_id' => $v['char_id'], 'score' => $disc->val, 'discipline_id' => $id);
 					if (!$new->row('SELECT * FROM %chardisciplines WHERE %character_id = :character_id AND %discipline_id = :discipline_id AND %score = :score', $datasDisc)) {
 						$new->noRes('INSERT INTO %chardisciplines SET %%%fields', $datasDisc); $countdoms++;
+						showtime($temp_time, ' Ajout d\'une discipline');
 					}
 				}
 			}
 		}
-		if ($countvoies === 5) { showtime($temp_time, ' Ajout des voies pour le personnage "'.$v['char_id'].'-'.$v['char_name'].'"'); }
+		showtime($temp_time, ' Ajout des domaines OK');
+		
+		$revers = $cnt->revers;
+		$revdatas = array('character_id' => $v['char_id']);
+		$all_rev = array();
+		$avoid = false;
+		$avoided = 0;
+		foreach ($revers as $rev) {
+			$all_rev[$rev->id] = array('character_id' => $v['char_id'], 'setback' => $rev->id, 'isAvoided' => 0);
+		}
+		if (isset($all_rev[10])) {
+			$avoid = false;
+			foreach ($all_rev as $k => $val) { if ($k !== 10 && $avoid === false) { $all_rev[$k]['isAvoided'] = 1; $avoid = true; } }
+		}
+		foreach ($all_rev as $val) {
+			$new->noRes('INSERT INTO %charsetbacks SET %%%fields ', $val);
+		}
+		showtime($temp_time, ' Ajout de '.count($all_rev).' revers '.($avoid ? ' dont un évité ' : ''));
+		
+		
+		$avtg = $cnt->avantages;
+		$desv = $cnt->desavantages;
+		$combat = $cnt->arts_combat;
+		
+		$avtgnb = 0; $desvnb = 0; $combatnb = 0;
+		foreach ($avtg as $val) { $new->noRes('INSERT INTO %charavtgs SET %%%fields', array('character_id'=>$v['char_id'], 'avantage_id' => $val->id, 'doubleValue' => $val->val)); $avtgnb++; }
+		foreach ($desv as $val) { $new->noRes('INSERT INTO %charavtgs SET %%%fields', array('character_id'=>$v['char_id'], 'avantage_id' => $val->id, 'doubleValue' => $val->val)); $desvnb++; }
+		foreach ($combat as $val) { $new->noRes('INSERT INTO %charavtgs SET %character_id = :character_id, %avantage_id = (SELECT %id FROM `avantages` WHERE `name` LIKE :type), %doubleValue = :doubleValue', array('character_id'=>$v['char_id'], 'doubleValue' => 0, 'type' => '%'.$val->name.'%')); $combatnb++; }
+		if ($desvnb) { showtime($temp_time, ' Ajout de '.$desvnb.' désavantage(s) '); }
+		if ($combatnb) { showtime($temp_time, ' Ajout de '.$combatnb.' art(s) de combat '); }
+		
+		$flux = $cnt->flux;
+		$sql = 'INSERT INTO %charflux SET %character_id = :character_id, %flux = (SELECT %id FROM `flux` WHERE `name` LIKE :type), %quantity = :qty';
+		$addflux = 0;
+		if ($flux->mineral > 0) { $new->noRes($sql, array('character_id' => $v['char_id'], 'qty' => $flux->mineral, 'type' => 'mineral')); $addflux++; }
+		if ($flux->vegetal > 0) { $new->noRes($sql, array('character_id' => $v['char_id'], 'qty' => $flux->vegetal, 'type' => 'vegetal')); $addflux++; }
+		if ($flux->fossile > 0) { $new->noRes($sql, array('character_id' => $v['char_id'], 'qty' => $flux->vegetal, 'type' => 'fossile')); $addflux++; }
+		if ($flux->organique > 0) { $new->noRes($sql, array('character_id' => $v['char_id'], 'qty' => $flux->organique, 'type' => 'organique')); $addflux++; }
+		if ($addflux) { showtime($temp_time, ' Ajout de '.$addflux.' types de flux '); }
+		
+		if (!empty($cnt->artefacts)) {
+			foreach ($cnt->artefacts as $m) {
+				$to_add['artefacts'][] = $m;
+			}
+		}
+		if (!empty($cnt->ogham)) {
+			foreach ($cnt->ogham as $m) {
+				$to_add['ogham'][] = $m;
+			}
+		}
+		if (!empty($cnt->miracles->majeurs)) {
+			foreach ($cnt->miracles->majeurs as $val) {
+				$to_add['miracles_maj'][] = $val;
+			}
+		}
+		if (!empty($cnt->miracles->mineurs)) {
+			foreach ($cnt->miracles->mineurs as $val) {
+				$to_add['miracles_min'][] = $val;
+			}
+		}
+		
+		$sql = 'INSERT INTO %charsocialclass SET %character_id = :character_id, %domain1_id = :dom1, %domain2_id = :dom2, %created = :created, %updated = :updated, %socialClass_id = (SELECT Id FROM `socialclass` WHERE `name` LIKE :socialClass)';
+		$charsocialclass = array(
+			'character_id' => $v['char_id'],
+			'dom1' => $socialclassdomains[0],
+			'dom2' => $socialclassdomains[1],
+			'created' => date('Y-m-d H:i:s', (int) $v['char_date_creation']),
+			'updated' => date('Y-m-d H:i:s', (int) $v['char_date_creation']),
+			'socialClass' => $cnt->classe_sociale,
+		);
+		if ($new->noRes($sql, $charsocialclass)) { showtime($temp_time, ' Ajout des domaines de la classe sociale du personnage'); }
+		
+		
+		foreach ($cnt->inventaire->armes as $arme) { $new->noRes('INSERT INTO %characters_weapons SET %%%fields ', array('characters_id' => $v['char_id'], 'weapons_id' => $arme->id)); }
+		if (!empty($cnt->inventaire->armes)) { showtime($temp_time, ' Ajout des armes du personnage'); }
+		
+		foreach ($cnt->inventaire->armures as $armure) { $new->noRes('INSERT INTO %characters_armors SET %%%fields ', array('characters_id' => $v['char_id'], 'armors_id' => $armure->id)); }
+		if (!empty($cnt->inventaire->armures)) { showtime($temp_time, ' Ajout des armures du personnage'); }
+		
 	//	showtime($temp_time, 'Structure manquante pour la table "'.$table.'"');
-		foreach ($struct as $k => $v) {
-			if (!array_key_exists($v['Field'], $datas)) { echo $v['Field']."\n"; }
+		foreach ($struct as $k => $s) {
+			if (!array_key_exists($s['Field'], $datas)) { echo $s['Field']."\n"; }
 		}
 	}
+	usleep(250000);
 }$tables_done[]=$table;showtime($temp_time, $charreq.' requêtes pour la table "'.$table.'"');
 $nbreq += $charreq;
+$tables_done[] = 'chardisciplines';
+$tables_done[] = 'chardomains';
+$tables_done[] = 'characters_armors';
+$tables_done[] = 'characters_weapons';
+$tables_done[] = 'charsetbacks';
+$tables_done[] = 'charavtgs';
+$tables_done[] = 'charflux';
+$tables_done[] = 'charsocialclass';
+$tables_done[] = 'charways';
 
 
 
