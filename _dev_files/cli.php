@@ -695,7 +695,7 @@ foreach ( $steps as $v) {
 		$datas = array(
 				'id' => $v['gen_id'],
 				'step' => $v['gen_step'],
-				'slug' => str_replace('_','-', $v['gen_mod']),
+				'slug' => preg_replace('#^[0-9]+_#isUu','', $v['gen_mod']),
 				'title' => $v['gen_anchor'],
 				'created' => $datetime->date,
 				'updated' => $datetime->date,
