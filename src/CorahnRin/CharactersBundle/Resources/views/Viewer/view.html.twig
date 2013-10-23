@@ -6,15 +6,4 @@
 
 <h2>{{'Visualiser un personnage'}} : {{ character.name }}</h2>
 
-<pre>
-{% if character.disciplines %}
-    discs
-{% endif %}
-{#% for v in character.disciplines %}
-    {{ loop.index }}
-{% else %}
-    Aucun contenu
-{% endfor %#}
-</pre>
-
 {% endblock %}

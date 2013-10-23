@@ -16,8 +16,7 @@ class ViewerController extends Controller
      */
     public function viewAction(Characters $character)
     {
-		$str = \Doctrine\Common\Util\Debug::dump($character);
-		return array('character'=>$character, 'dump'=>$str);
+		return array('character'=>$character);
     }
 
     /**
