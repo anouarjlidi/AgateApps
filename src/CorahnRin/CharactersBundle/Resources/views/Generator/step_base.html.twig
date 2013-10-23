@@ -1,0 +1,12 @@
+{% extends "::layout.html.twig" %}
+
+{% block title %}CorahnRinCharactersBundle:Generator:step{% endblock %}
+
+{% block menus %}
+	{{ parent() }}
+	{% render(controller("CorahnRinCharactersBundle:Generator:menu")) %}
+{% endblock %}
+
+{% block content_for_layout %}
+	{{ include('CorahnRinCharactersBundle:Generator:_step_'~loaded_step.id~'.html.twig') }}
+{% endblock %}
