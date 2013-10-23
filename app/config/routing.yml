@@ -16,7 +16,7 @@ corahn_rin_pages:
 corahn_rin_characters:
     resource: "@CorahnRinCharactersBundle/Controller/"
     type:     annotation
-    prefix:   /char/
+    prefix:   /characters/
 
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
