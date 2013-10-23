@@ -8,5 +8,5 @@
 {% endblock %}
 
 {% block content_for_layout %}
-	{{ include('CorahnRinCharactersBundle:Generator:_step_'~loaded_step.id~'.html.twig') }}
+	{{ include('CorahnRinCharactersBundle:Generator:_step_'~loaded_step.id~'_'~loaded_step.slug~'.html.twig') }}
 {% endblock %}
