@@ -16,8 +16,6 @@ class CharDisciplines
      *
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Characters", inversedBy="disciplines")
-     * @ORM\Column(nullable=false,name="character_id")
-     * @ORM\JoinColumn(name="character_id", referencedColumnName="id")
      */
     private $character;
 

@@ -14,7 +14,6 @@ class DisordersWays
     /**
      * @var \Disorders
      *
-     * @ORM\Column(type="integer")
      * @ORM\Id
 	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Disorders", inversedBy="ways")
      */
@@ -23,7 +22,6 @@ class DisordersWays
     /**
      * @var \Ways
      *
-     * @ORM\Column(type="integer")
      * @ORM\Id
 	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Ways")
      */
