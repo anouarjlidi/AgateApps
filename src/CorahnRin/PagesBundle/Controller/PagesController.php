@@ -2,6 +2,8 @@
 
 namespace CorahnRin\PagesBundle\Controller;
 
+use CorahnRin\PagesBundle\Pages as Pages;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -21,9 +23,9 @@ class PagesController extends Controller {
      * @Route("/{id}-{slug}", requirements={"id" = "\d+"})
      * @Template()
      */
-    public function viewAction($id, $slug)
+    public function viewAction(Pages $page)
     {
-		return array();
+		return array('page' => $page);
     }
 
     /**
