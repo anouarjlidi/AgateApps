@@ -2,7 +2,7 @@
 <nav class="nav">
 	{% for step in steps %}
 		{% if session_step >= step.step %}
-			<a class="btn btn-link btn-xs{% if loaded_step.step == step.step %} active{% endif %}" href="{{ path('corahnrin_characters_generator_step', {'step':step.step,'slug':step.slug}) }}">{{ step.step }}. {{ step.title | trans }}</a>
+			<a class="btn btn-link btn-xs{% if loaded_step and loaded_step.step == step.step %} active{% endif %}" href="{{ path('corahnrin_characters_generator_step', {'step':step.step,'slug':step.slug}) }}">{{ step.step }}. {{ step.title | trans }}</a>
 		{% else %}
 			<a class="btn btn-link btn-xs disabled">{{ step.step }}. {{ step.title | trans }}</a>
 		{% endif %}

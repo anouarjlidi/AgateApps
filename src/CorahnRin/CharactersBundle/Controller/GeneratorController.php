@@ -30,7 +30,7 @@ class GeneratorController extends Controller
 	/**
 	 * @Template()
 	 */
-	public function menuAction(\CorahnRin\CharactersBundle\Entity\Steps $step) {
+	public function menuAction(\CorahnRin\CharactersBundle\Entity\Steps $step = null) {
 		$actual_step = (int) $this->get('session')->get('step') ?: 1;
     	$steps = $this->getDoctrine()->getManager()->getRepository('CorahnRinCharactersBundle:Steps')->findAll();
 		$barWidth = $actual_step / count($steps) * 100;
