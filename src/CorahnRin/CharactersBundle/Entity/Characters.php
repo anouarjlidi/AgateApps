@@ -1229,6 +1229,7 @@ class Characters
      */
     public function addDiscipline(\CorahnRin\CharactersBundle\Entity\CharDisciplines $disciplines)
     {
+        $disciplines->setCharacter($this);
         $this->disciplines[] = $disciplines;
 
         return $this;
