@@ -2,19 +2,24 @@
 
 namespace CorahnRin\CharactersBundle\Controller;
 
+use CorahnRin\CharactersBundle\Entity\Characters;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class ViewerController extends Controller
 {
     /**
-     * @Route("/{id}-{name}", requirements={"id" = "\d+"})
+     * @Route("/{id}-{nameSlug}", requirements={"id" = "\d+"})
+	 * @ParamConverter("character", options={"mapping":{"id":"id","nameSlug":"nameSlug"}})
      * @Template()
      */
     public function viewAction(Characters $character)
     {
-		return array('character'=>$character);
+		$str = \Doctrine\Common\Util\Debug::dump($character);
+		return array('character'=>$character, 'dump'=>$str);
     }
 
     /**
