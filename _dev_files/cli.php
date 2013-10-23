@@ -859,7 +859,7 @@ foreach ( $revers as $v) {
 
 
 
-require 'D:\\Fichiers mixtes\\Sites web\\hebergement\\JdR\\corahn_rin\\src\\CorahnRin\\CharactersBundle\\Classes\\Money.php';
+require __DIR__.'\\..\\src\\CorahnRin\\CharactersBundle\\Classes\\Money.php';
 
 use CorahnRin\CharactersBundle\Classes\Money as Money;
 $table = 'characters';
