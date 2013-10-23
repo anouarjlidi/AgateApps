@@ -6,7 +6,9 @@
 
             {# MENUS #}
 
-            {% render(controller("CorahnRinPagesBundle:Menus:menu", {'route':app.request.attributes.get('_route')})) %}
+			{% block menus %}
+				{% render(controller("CorahnRinPagesBundle:Menus:menu", {'route':app.request.attributes.get('_route')})) %}
+			{% endblock %}
 
             {# FLASH MESSAGES #}
             {% for key, message in app.session.flashbag.all() %}
