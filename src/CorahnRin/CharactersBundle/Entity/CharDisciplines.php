@@ -12,15 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
 class CharDisciplines
 {
     /**
-     * @var \DisciplinesDomains
-     *
-     * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="DisciplinesDomains")
-     * @ORM\Column(nullable=false,name="discipline_id")
-     */
-    private $discipline;
-
-    /**
      * @var integer
      *
      * @ORM\Id
@@ -29,6 +20,15 @@ class CharDisciplines
      * @ORM\JoinColumn(name="character_id", referencedColumnName="id")
      */
     private $character;
+
+    /**
+     * @var \DisciplinesDomains
+     *
+     * @ORM\Id
+     * @ORM\ManyToOne(targetEntity="DisciplinesDomains")
+     * @ORM\Column(nullable=false,name="discipline_id")
+     */
+    private $discipline;
 
     /**
      * @var integer
