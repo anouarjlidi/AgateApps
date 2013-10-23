@@ -13,6 +13,7 @@ class MenusController extends Controller {
 	public function menuAction($route = '') {
 		$links = array(
 			'corahnrin_characters_generator_index' => 'Générateur de personnage',
+			'corahnrin_characters_viewer_list' => 'Liste des personnages',
 			'corahnrin_pages_versions_index' => 'Mises à jour',
 		);
 		$username = $this->get('fos_user.user_provider.username');
