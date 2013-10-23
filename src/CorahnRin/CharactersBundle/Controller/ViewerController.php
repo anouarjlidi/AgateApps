@@ -7,13 +7,11 @@ use CorahnRin\CharactersBundle\Entity\Characters;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class ViewerController extends Controller
 {
     /**
      * @Route("/{id}-{nameSlug}", requirements={"id" = "\d+"})
-	 * @ParamConverter("character", options={"mapping":{"id":"id","nameSlug":"nameSlug"}})
      * @Template()
      */
     public function viewAction(Characters $character)
@@ -27,7 +25,14 @@ class ViewerController extends Controller
      * @Template()
      */
     public function listAction()
-    {
+    {	
+		$request = $this->getRequest();
+		$orderget = $request->query->get('field') ?: 'name';
+		$ordertype = $request->query->get('type') ?: 'asc';
+		$ordertype = strtolower($ordertype) === 'desc' ? 'desc' : 'asc';
+		$repo = $this->getDoctrine()->getManager()->getRepository('CorahnRinCharactersBundle:Characters');
+    	$datas = $repo->findBy(array(), array($orderget=>$ordertype));
+		return array('list'=>$datas,'ordertype' => $ordertype, 'orderget' => $orderget);
     }
 
     /**

@@ -1,7 +1,28 @@
-{% extends "::base.html.twig" %}
+{% extends "::layout.html.twig" %}
 
-{% block title %}CorahnRinCharactersBundle:Viewer:list{% endblock %}
+{% block title %}Liste des personnages - {{ parent() }}{% endblock %}
 
-{% block body %}
-<h1>Welcome to the Viewer:list page</h1>
+{% block content_for_layout %}
+
+<h2>{{'Visualiser un personnage'}}</h2>
+
+<table class="table table-condensed table-striped">
+	<tr>
+		<th><a href="{{ path('corahnrin_characters_viewer_list',{'field':'id'}) }}" class="btn btn-link">#</a></th>
+		<th><a href="{{ path('corahnrin_characters_viewer_list',{'field':'name'}) }}" class="btn btn-link">{{ 'Nom' | trans }}</a></th>
+		<th><a href="{{ path('corahnrin_characters_viewer_list',{'field':'job'}) }}" class="btn btn-link">{{ 'Métier' | trans }}</a></th>
+		<th><a href="{{ path('corahnrin_characters_viewer_list',{'field':'people'}) }}" class="btn btn-link">{{ 'Peuple' | trans }}</a></th>
+		<th><a href="{{ path('corahnrin_characters_viewer_list',{'field':'region_id'}) }}" class="btn btn-link">{{ 'Région de naissance' | trans }}</a></th>
+	</tr>
+	{% for character in list %}
+		<tr>
+			<td>{{ character.id }}</td>
+			<td><a href="{{ path('corahnrin_characters_viewer_view', {'id':character.id,'nameSlug':character.nameSlug}) }}" class="btn btn-link" title="{{ 'Voir le personnage %character_name%' | trans({'%character_name%':character.name}) }}">{{ character.name }}</a></td>
+			<td>{{ character.job ? character.job.name : '(Personnalisé) '~character.jobCustom | trans}}</td>
+			<td>{{ character.people | trans }}</td>
+			<td>{{ character.region.name | trans }}</td>
+		</tr>
+	{% endfor %}
+</table>
+
 {% endblock %}
