@@ -14,17 +14,27 @@ class GeneratorController extends Controller
      */
     public function indexAction()
     {
-    	$repo = $this->getDoctrine()->getManager()->getRepository('CorahnRinCharactersBundle:Steps');
-    	$datas = $repo->findAll();
-    	return array('datas'=>$datas);
+		return array();
     }
 
     /**
-     * @Route("/generate/{id}-{slug}", requirements={"id" = "\d+"})
-     * @Template()
+     * @Route("/generate/{step}-{slug}", requirements={"step" = "\d+"})
+     * @Template("CorahnRinCharactersBundle:Generator:step_base.html.twig")
      */
-    public function stepAction($id, $slug) {
-    	return array();
-    }
+    public function stepAction(\CorahnRin\CharactersBundle\Entity\Steps $step) {
+		$datas = array('loaded_step'=>$step);
+		
+		return $datas;
+	}
+	
+	/**
+	 * @Template()
+	 */
+	public function menuAction() {
+		$actual_step = (int) $this->get('session')->get('step');
+		if (!$actual_step) { $actual_step = 1; }
+    	$steps = $this->getDoctrine()->getManager()->getRepository('CorahnRinCharactersBundle:Steps')->findAll();
+    	return array('steps'=>$steps, 'session_step' => $actual_step);
+	}
 
 }
