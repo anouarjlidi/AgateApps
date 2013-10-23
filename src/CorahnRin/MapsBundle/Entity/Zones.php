@@ -62,7 +62,7 @@ class Zones
     /**
      * @var \Factions
      *
-     * @ORM\ManyToOne(targetEntity="Factions", inversedBy="zone")
+     * @ORM\ManyToOne(targetEntity="Factions", inversedBy="zones")
      */
     private $faction;
 
@@ -80,7 +80,7 @@ class Zones
     {
         $this->events = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Get id
      *
@@ -100,7 +100,7 @@ class Zones
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
@@ -123,7 +123,7 @@ class Zones
     public function setCoordinates($coordinates)
     {
         $this->coordinates = $coordinates;
-    
+
         return $this;
     }
 
@@ -146,7 +146,7 @@ class Zones
     public function setCreated($created)
     {
         $this->created = $created;
-    
+
         return $this;
     }
 
@@ -169,7 +169,7 @@ class Zones
     public function setUpdated($updated)
     {
         $this->updated = $updated;
-    
+
         return $this;
     }
 
@@ -192,7 +192,7 @@ class Zones
     public function setMap(\CorahnRin\MapsBundle\Entity\Maps $map = null)
     {
         $this->map = $map;
-    
+
         return $this;
     }
 
@@ -215,7 +215,7 @@ class Zones
     public function setFaction(\CorahnRin\MapsBundle\Entity\Factions $faction = null)
     {
         $this->faction = $faction;
-    
+
         return $this;
     }
 
@@ -238,7 +238,7 @@ class Zones
     public function addEvent(\CorahnRin\MapsBundle\Entity\EventsZones $events)
     {
         $this->events[] = $events;
-    
+
         return $this;
     }
 

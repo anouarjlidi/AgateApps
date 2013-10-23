@@ -228,4 +228,27 @@ class Domains
     {
         return $this->socialClasses;
     }
+
+    /**
+     * Add socialClasses
+     *
+     * @param \CorahnRin\CharactersBundle\Entity\SocialClass $socialClasses
+     * @return Domains
+     */
+    public function addSocialClass(\CorahnRin\CharactersBundle\Entity\SocialClass $socialClasses)
+    {
+        $this->socialClasses[] = $socialClasses;
+
+        return $this;
+    }
+
+    /**
+     * Remove socialClasses
+     *
+     * @param \CorahnRin\CharactersBundle\Entity\SocialClass $socialClasses
+     */
+    public function removeSocialClass(\CorahnRin\CharactersBundle\Entity\SocialClass $socialClasses)
+    {
+        $this->socialClasses->removeElement($socialClasses);
+    }
 }

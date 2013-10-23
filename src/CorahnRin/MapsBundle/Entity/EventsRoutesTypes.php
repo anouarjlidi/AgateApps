@@ -16,7 +16,6 @@ class EventsRoutesTypes {
      * @var \Events
      *
      * @ORM\Id
-     * @ORM\Column(type="integer", nullable=false)
      * @ORM\ManyToOne(targetEntity="Events", inversedBy="routesTypes")
      */
     private $event;
@@ -27,7 +26,7 @@ class EventsRoutesTypes {
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="RoutesTypes", inversedBy="events")
      */
-    private $route_type;
+    private $routeType;
 
     /**
      * @var \DateTime
@@ -54,29 +53,6 @@ class EventsRoutesTypes {
 
 
     /**
-     * Set event
-     *
-     * @param integer $event
-     * @return EventsRoutesTypes
-     */
-    public function setEvent($event)
-    {
-        $this->event = $event;
-    
-        return $this;
-    }
-
-    /**
-     * Get event
-     *
-     * @return integer 
-     */
-    public function getEvent()
-    {
-        return $this->event;
-    }
-
-    /**
      * Set created
      *
      * @param \DateTime $created
@@ -85,7 +61,7 @@ class EventsRoutesTypes {
     public function setCreated($created)
     {
         $this->created = $created;
-    
+
         return $this;
     }
 
@@ -108,7 +84,7 @@ class EventsRoutesTypes {
     public function setUpdated($updated)
     {
         $this->updated = $updated;
-    
+
         return $this;
     }
 
@@ -131,7 +107,7 @@ class EventsRoutesTypes {
     public function setPercentage($percentage)
     {
         $this->percentage = $percentage;
-    
+
         return $this;
     }
 
@@ -146,25 +122,48 @@ class EventsRoutesTypes {
     }
 
     /**
-     * Set route_type
+     * Set event
+     *
+     * @param \CorahnRin\MapsBundle\Entity\Events $event
+     * @return EventsRoutesTypes
+     */
+    public function setEvent(\CorahnRin\MapsBundle\Entity\Events $event)
+    {
+        $this->event = $event;
+
+        return $this;
+    }
+
+    /**
+     * Get event
+     *
+     * @return \CorahnRin\MapsBundle\Entity\Events 
+     */
+    public function getEvent()
+    {
+        return $this->event;
+    }
+
+    /**
+     * Set routeType
      *
      * @param \CorahnRin\MapsBundle\Entity\RoutesTypes $routeType
      * @return EventsRoutesTypes
      */
     public function setRouteType(\CorahnRin\MapsBundle\Entity\RoutesTypes $routeType)
     {
-        $this->route_type = $routeType;
-    
+        $this->routeType = $routeType;
+
         return $this;
     }
 
     /**
-     * Get route_type
+     * Get routeType
      *
      * @return \CorahnRin\MapsBundle\Entity\RoutesTypes 
      */
     public function getRouteType()
     {
-        return $this->route_type;
+        return $this->routeType;
     }
 }

@@ -16,7 +16,6 @@ class EventsZones {
      * @var \Events
      *
      * @ORM\Id
-     * @ORM\Column(type="integer", nullable=false)
      * @ORM\ManyToOne(targetEntity="Events", inversedBy="zones")
      */
     private $event;

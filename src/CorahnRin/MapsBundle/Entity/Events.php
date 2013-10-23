@@ -40,15 +40,7 @@ class Events
      * @ORM\Column(type="datetime", nullable=false)
      */
     private $updated;
-
-
-
-	/**
-	 * @var DoctrineCollection
-	 * @ORM\ManyToMany(targetEntity="Factions", mappedBy="events")
-	 */
-	private $factions;
-
+	
     /**
      * @var DoctrineCollection
      * @ORM\ManyToMany(targetEntity="Foes", mappedBy="events")
@@ -79,7 +71,7 @@ class Events
      * @var DoctrineCollection
      * @ORM\OneToMany(targetEntity="EventsMarkersTypes", mappedBy="event")
      */
-    private $markersType;
+    private $markersTypes;
 
     /**
      * @var DoctrineCollection
@@ -110,18 +102,17 @@ class Events
      */
     public function __construct()
     {
-        $this->factions = new \Doctrine\Common\Collections\ArrayCollection();
         $this->foes = new \Doctrine\Common\Collections\ArrayCollection();
         $this->npcs = new \Doctrine\Common\Collections\ArrayCollection();
         $this->weather = new \Doctrine\Common\Collections\ArrayCollection();
         $this->markers = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->markersType = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->markersTypes = new \Doctrine\Common\Collections\ArrayCollection();
         $this->resources = new \Doctrine\Common\Collections\ArrayCollection();
         $this->routes = new \Doctrine\Common\Collections\ArrayCollection();
         $this->routesTypes = new \Doctrine\Common\Collections\ArrayCollection();
         $this->zones = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Get id
      *
@@ -141,7 +132,7 @@ class Events
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
@@ -164,7 +155,7 @@ class Events
     public function setCreated($created)
     {
         $this->created = $created;
-    
+
         return $this;
     }
 
@@ -187,7 +178,7 @@ class Events
     public function setUpdated($updated)
     {
         $this->updated = $updated;
-    
+
         return $this;
     }
 
@@ -202,48 +193,15 @@ class Events
     }
 
     /**
-     * Add factions
-     *
-     * @param \CorahnRin\MapsBundle\Entity\Factions $factions
-     * @return Events
-     */
-    public function addFaction(\CorahnRin\MapsBundle\Entity\Factions $factions)
-    {
-        $this->factions[] = $factions;
-    
-        return $this;
-    }
-
-    /**
-     * Remove factions
-     *
-     * @param \CorahnRin\MapsBundle\Entity\Factions $factions
-     */
-    public function removeFaction(\CorahnRin\MapsBundle\Entity\Factions $factions)
-    {
-        $this->factions->removeElement($factions);
-    }
-
-    /**
-     * Get factions
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getFactions()
-    {
-        return $this->factions;
-    }
-
-    /**
      * Add foes
      *
      * @param \CorahnRin\MapsBundle\Entity\Foes $foes
      * @return Events
      */
-    public function addFoe(\CorahnRin\MapsBundle\Entity\Foes $foes)
+    public function addFo(\CorahnRin\MapsBundle\Entity\Foes $foes)
     {
         $this->foes[] = $foes;
-    
+
         return $this;
     }
 
@@ -252,7 +210,7 @@ class Events
      *
      * @param \CorahnRin\MapsBundle\Entity\Foes $foes
      */
-    public function removeFoe(\CorahnRin\MapsBundle\Entity\Foes $foes)
+    public function removeFo(\CorahnRin\MapsBundle\Entity\Foes $foes)
     {
         $this->foes->removeElement($foes);
     }
@@ -276,7 +234,7 @@ class Events
     public function addNpc(\CorahnRin\MapsBundle\Entity\Npcs $npcs)
     {
         $this->npcs[] = $npcs;
-    
+
         return $this;
     }
 
@@ -309,7 +267,7 @@ class Events
     public function addWeather(\CorahnRin\MapsBundle\Entity\Weather $weather)
     {
         $this->weather[] = $weather;
-    
+
         return $this;
     }
 
@@ -342,7 +300,7 @@ class Events
     public function addMarker(\CorahnRin\MapsBundle\Entity\EventsMarkers $markers)
     {
         $this->markers[] = $markers;
-    
+
         return $this;
     }
 
@@ -367,36 +325,36 @@ class Events
     }
 
     /**
-     * Add markersType
+     * Add markersTypes
      *
-     * @param \CorahnRin\MapsBundle\Entity\EventsMarkersTypes $markersType
+     * @param \CorahnRin\MapsBundle\Entity\EventsMarkersTypes $markersTypes
      * @return Events
      */
-    public function addMarkersType(\CorahnRin\MapsBundle\Entity\EventsMarkersTypes $markersType)
+    public function addMarkersType(\CorahnRin\MapsBundle\Entity\EventsMarkersTypes $markersTypes)
     {
-        $this->markersType[] = $markersType;
-    
+        $this->markersTypes[] = $markersTypes;
+
         return $this;
     }
 
     /**
-     * Remove markersType
+     * Remove markersTypes
      *
-     * @param \CorahnRin\MapsBundle\Entity\EventsMarkersTypes $markersType
+     * @param \CorahnRin\MapsBundle\Entity\EventsMarkersTypes $markersTypes
      */
-    public function removeMarkersType(\CorahnRin\MapsBundle\Entity\EventsMarkersTypes $markersType)
+    public function removeMarkersType(\CorahnRin\MapsBundle\Entity\EventsMarkersTypes $markersTypes)
     {
-        $this->markersType->removeElement($markersType);
+        $this->markersTypes->removeElement($markersTypes);
     }
 
     /**
-     * Get markersType
+     * Get markersTypes
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getMarkersType()
+    public function getMarkersTypes()
     {
-        return $this->markersType;
+        return $this->markersTypes;
     }
 
     /**
@@ -408,7 +366,7 @@ class Events
     public function addResource(\CorahnRin\MapsBundle\Entity\EventsResources $resources)
     {
         $this->resources[] = $resources;
-    
+
         return $this;
     }
 
@@ -441,7 +399,7 @@ class Events
     public function addRoute(\CorahnRin\MapsBundle\Entity\EventsRoutes $routes)
     {
         $this->routes[] = $routes;
-    
+
         return $this;
     }
 
@@ -474,7 +432,7 @@ class Events
     public function addRoutesType(\CorahnRin\MapsBundle\Entity\EventsRoutesTypes $routesTypes)
     {
         $this->routesTypes[] = $routesTypes;
-    
+
         return $this;
     }
 
@@ -507,7 +465,7 @@ class Events
     public function addZone(\CorahnRin\MapsBundle\Entity\EventsZones $zones)
     {
         $this->zones[] = $zones;
-    
+
         return $this;
     }
 

@@ -16,7 +16,6 @@ class EventsMarkersTypes {
      * @var \Events
      *
      * @ORM\Id
-     * @ORM\Column(type="integer", nullable=false)
      * @ORM\ManyToOne(targetEntity="Events", inversedBy="markersTypes")
      */
     private $event;
@@ -52,29 +51,7 @@ class EventsMarkersTypes {
 	 */
 	private $percentage;
 
-
-    /**
-     * Set event
-     *
-     * @param integer $event
-     * @return EventsMarkersTypes
-     */
-    public function setEvent($event)
-    {
-        $this->event = $event;
-    
-        return $this;
-    }
-
-    /**
-     * Get event
-     *
-     * @return integer 
-     */
-    public function getEvent()
-    {
-        return $this->event;
-    }
+	
 
     /**
      * Set created
@@ -85,7 +62,7 @@ class EventsMarkersTypes {
     public function setCreated($created)
     {
         $this->created = $created;
-    
+
         return $this;
     }
 
@@ -108,7 +85,7 @@ class EventsMarkersTypes {
     public function setUpdated($updated)
     {
         $this->updated = $updated;
-    
+
         return $this;
     }
 
@@ -131,7 +108,7 @@ class EventsMarkersTypes {
     public function setPercentage($percentage)
     {
         $this->percentage = $percentage;
-    
+
         return $this;
     }
 
@@ -146,6 +123,29 @@ class EventsMarkersTypes {
     }
 
     /**
+     * Set event
+     *
+     * @param \CorahnRin\MapsBundle\Entity\Events $event
+     * @return EventsMarkersTypes
+     */
+    public function setEvent(\CorahnRin\MapsBundle\Entity\Events $event)
+    {
+        $this->event = $event;
+
+        return $this;
+    }
+
+    /**
+     * Get event
+     *
+     * @return \CorahnRin\MapsBundle\Entity\Events 
+     */
+    public function getEvent()
+    {
+        return $this->event;
+    }
+
+    /**
      * Set markerType
      *
      * @param \CorahnRin\MapsBundle\Entity\MarkersTypes $markerType
@@ -154,7 +154,7 @@ class EventsMarkersTypes {
     public function setMarkerType(\CorahnRin\MapsBundle\Entity\MarkersTypes $markerType)
     {
         $this->markerType = $markerType;
-    
+
         return $this;
     }
 

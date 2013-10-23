@@ -16,7 +16,6 @@ class EventsResources {
      * @var \Events
      *
      * @ORM\Id
-     * @ORM\Column(type="integer", nullable=false)
      * @ORM\ManyToOne(targetEntity="Events", inversedBy="resources")
      */
     private $event;
@@ -54,29 +53,6 @@ class EventsResources {
 
 
     /**
-     * Set event
-     *
-     * @param integer $event
-     * @return EventsResources
-     */
-    public function setEvent($event)
-    {
-        $this->event = $event;
-    
-        return $this;
-    }
-
-    /**
-     * Get event
-     *
-     * @return integer 
-     */
-    public function getEvent()
-    {
-        return $this->event;
-    }
-
-    /**
      * Set created
      *
      * @param \DateTime $created
@@ -85,7 +61,7 @@ class EventsResources {
     public function setCreated($created)
     {
         $this->created = $created;
-    
+
         return $this;
     }
 
@@ -108,7 +84,7 @@ class EventsResources {
     public function setUpdated($updated)
     {
         $this->updated = $updated;
-    
+
         return $this;
     }
 
@@ -131,7 +107,7 @@ class EventsResources {
     public function setPercentage($percentage)
     {
         $this->percentage = $percentage;
-    
+
         return $this;
     }
 
@@ -146,6 +122,29 @@ class EventsResources {
     }
 
     /**
+     * Set event
+     *
+     * @param \CorahnRin\MapsBundle\Entity\Events $event
+     * @return EventsResources
+     */
+    public function setEvent(\CorahnRin\MapsBundle\Entity\Events $event)
+    {
+        $this->event = $event;
+
+        return $this;
+    }
+
+    /**
+     * Get event
+     *
+     * @return \CorahnRin\MapsBundle\Entity\Events 
+     */
+    public function getEvent()
+    {
+        return $this->event;
+    }
+
+    /**
      * Set resource
      *
      * @param \CorahnRin\MapsBundle\Entity\Resources $resource
@@ -154,7 +153,7 @@ class EventsResources {
     public function setResource(\CorahnRin\MapsBundle\Entity\Resources $resource)
     {
         $this->resource = $resource;
-    
+
         return $this;
     }
 

@@ -16,7 +16,6 @@ class EventsRoutes {
      * @var \Events
      *
      * @ORM\Id
-     * @ORM\Column(type="integer", nullable=false)
      * @ORM\ManyToOne(targetEntity="Events", inversedBy="routes")
      */
     private $event;
@@ -52,29 +51,7 @@ class EventsRoutes {
 	 */
 	private $percentage;
 
-
-    /**
-     * Set event
-     *
-     * @param integer $event
-     * @return EventsRoutes
-     */
-    public function setEvent($event)
-    {
-        $this->event = $event;
-    
-        return $this;
-    }
-
-    /**
-     * Get event
-     *
-     * @return integer 
-     */
-    public function getEvent()
-    {
-        return $this->event;
-    }
+	
 
     /**
      * Set created
@@ -85,7 +62,7 @@ class EventsRoutes {
     public function setCreated($created)
     {
         $this->created = $created;
-    
+
         return $this;
     }
 
@@ -108,7 +85,7 @@ class EventsRoutes {
     public function setUpdated($updated)
     {
         $this->updated = $updated;
-    
+
         return $this;
     }
 
@@ -131,7 +108,7 @@ class EventsRoutes {
     public function setPercentage($percentage)
     {
         $this->percentage = $percentage;
-    
+
         return $this;
     }
 
@@ -146,6 +123,29 @@ class EventsRoutes {
     }
 
     /**
+     * Set event
+     *
+     * @param \CorahnRin\MapsBundle\Entity\Events $event
+     * @return EventsRoutes
+     */
+    public function setEvent(\CorahnRin\MapsBundle\Entity\Events $event)
+    {
+        $this->event = $event;
+
+        return $this;
+    }
+
+    /**
+     * Get event
+     *
+     * @return \CorahnRin\MapsBundle\Entity\Events 
+     */
+    public function getEvent()
+    {
+        return $this->event;
+    }
+
+    /**
      * Set route
      *
      * @param \CorahnRin\MapsBundle\Entity\Routes $route
@@ -154,7 +154,7 @@ class EventsRoutes {
     public function setRoute(\CorahnRin\MapsBundle\Entity\Routes $route)
     {
         $this->route = $route;
-    
+
         return $this;
     }
 

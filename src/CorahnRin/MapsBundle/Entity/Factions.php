@@ -47,7 +47,7 @@ class Factions
     /**
      * @var DoctrineCollection
      *
-     * @ORM\OneToMany(targetEntity="Events", mappedBy="faction")
+     * @ORM\OneToMany(targetEntity="Zones", mappedBy="faction")
      */
 	private $zones;
 
@@ -66,13 +66,6 @@ class Factions
 	private $markers;
 
     /**
-     * @var DoctrineCollection
-     *
-     * @ORM\ManyToMany(targetEntity="Events", inversedBy="factions")
-     */
-	private $events;
-
-    /**
      * Constructor
      */
     public function __construct()
@@ -80,9 +73,8 @@ class Factions
         $this->zones = new \Doctrine\Common\Collections\ArrayCollection();
         $this->routes = new \Doctrine\Common\Collections\ArrayCollection();
         $this->markers = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->events = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Get id
      *
@@ -102,7 +94,7 @@ class Factions
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
@@ -125,7 +117,7 @@ class Factions
     public function setCreated($created)
     {
         $this->created = $created;
-    
+
         return $this;
     }
 
@@ -148,7 +140,7 @@ class Factions
     public function setUpdated($updated)
     {
         $this->updated = $updated;
-    
+
         return $this;
     }
 
@@ -165,22 +157,22 @@ class Factions
     /**
      * Add zones
      *
-     * @param \CorahnRin\MapsBundle\Entity\Events $zones
+     * @param \CorahnRin\MapsBundle\Entity\Zones $zones
      * @return Factions
      */
-    public function addZone(\CorahnRin\MapsBundle\Entity\Events $zones)
+    public function addZone(\CorahnRin\MapsBundle\Entity\Zones $zones)
     {
         $this->zones[] = $zones;
-    
+
         return $this;
     }
 
     /**
      * Remove zones
      *
-     * @param \CorahnRin\MapsBundle\Entity\Events $zones
+     * @param \CorahnRin\MapsBundle\Entity\Zones $zones
      */
-    public function removeZone(\CorahnRin\MapsBundle\Entity\Events $zones)
+    public function removeZone(\CorahnRin\MapsBundle\Entity\Zones $zones)
     {
         $this->zones->removeElement($zones);
     }
@@ -204,7 +196,7 @@ class Factions
     public function addRoute(\CorahnRin\MapsBundle\Entity\Routes $routes)
     {
         $this->routes[] = $routes;
-    
+
         return $this;
     }
 
@@ -237,7 +229,7 @@ class Factions
     public function addMarker(\CorahnRin\MapsBundle\Entity\Markers $markers)
     {
         $this->markers[] = $markers;
-    
+
         return $this;
     }
 
@@ -259,38 +251,5 @@ class Factions
     public function getMarkers()
     {
         return $this->markers;
-    }
-
-    /**
-     * Add events
-     *
-     * @param \CorahnRin\MapsBundle\Entity\Events $events
-     * @return Factions
-     */
-    public function addEvent(\CorahnRin\MapsBundle\Entity\Events $events)
-    {
-        $this->events[] = $events;
-    
-        return $this;
-    }
-
-    /**
-     * Remove events
-     *
-     * @param \CorahnRin\MapsBundle\Entity\Events $events
-     */
-    public function removeEvent(\CorahnRin\MapsBundle\Entity\Events $events)
-    {
-        $this->events->removeElement($events);
-    }
-
-    /**
-     * Get events
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getEvents()
-    {
-        return $this->events;
     }
 }

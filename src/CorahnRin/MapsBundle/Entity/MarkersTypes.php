@@ -48,7 +48,7 @@ class MarkersTypes
     /**
      * @var DoctrineCollection
      *
-     * @ORM\OneToMany(targetEntity="EventsMarkers", mappedBy="markerType")
+     * @ORM\OneToMany(targetEntity="EventsMarkersTypes", mappedBy="markerType")
      */
     private $events;
 
@@ -67,7 +67,7 @@ class MarkersTypes
         $this->events = new \Doctrine\Common\Collections\ArrayCollection();
         $this->markers = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Get id
      *
@@ -87,7 +87,7 @@ class MarkersTypes
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
@@ -110,7 +110,7 @@ class MarkersTypes
     public function setCreated($created)
     {
         $this->created = $created;
-    
+
         return $this;
     }
 
@@ -133,7 +133,7 @@ class MarkersTypes
     public function setUpdated($updated)
     {
         $this->updated = $updated;
-    
+
         return $this;
     }
 
@@ -150,22 +150,22 @@ class MarkersTypes
     /**
      * Add events
      *
-     * @param \CorahnRin\MapsBundle\Entity\EventsMarkers $events
+     * @param \CorahnRin\MapsBundle\Entity\EventsMarkersTypes $events
      * @return MarkersTypes
      */
-    public function addEvent(\CorahnRin\MapsBundle\Entity\EventsMarkers $events)
+    public function addEvent(\CorahnRin\MapsBundle\Entity\EventsMarkersTypes $events)
     {
         $this->events[] = $events;
-    
+
         return $this;
     }
 
     /**
      * Remove events
      *
-     * @param \CorahnRin\MapsBundle\Entity\EventsMarkers $events
+     * @param \CorahnRin\MapsBundle\Entity\EventsMarkersTypes $events
      */
-    public function removeEvent(\CorahnRin\MapsBundle\Entity\EventsMarkers $events)
+    public function removeEvent(\CorahnRin\MapsBundle\Entity\EventsMarkersTypes $events)
     {
         $this->events->removeElement($events);
     }
@@ -189,7 +189,7 @@ class MarkersTypes
     public function addMarker(\CorahnRin\MapsBundle\Entity\Markers $markers)
     {
         $this->markers[] = $markers;
-    
+
         return $this;
     }
 

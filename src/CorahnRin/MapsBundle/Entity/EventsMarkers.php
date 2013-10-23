@@ -16,7 +16,6 @@ class EventsMarkers {
      * @var \Events
      *
      * @ORM\Id
-     * @ORM\Column(type="integer", nullable=false)
      * @ORM\ManyToOne(targetEntity="Events", inversedBy="markers")
      */
     private $event;
@@ -54,29 +53,6 @@ class EventsMarkers {
 
 
     /**
-     * Set event
-     *
-     * @param integer $event
-     * @return EventsMarkers
-     */
-    public function setEvent($event)
-    {
-        $this->event = $event;
-    
-        return $this;
-    }
-
-    /**
-     * Get event
-     *
-     * @return integer 
-     */
-    public function getEvent()
-    {
-        return $this->event;
-    }
-
-    /**
      * Set percentage
      *
      * @param integer $percentage
@@ -85,7 +61,7 @@ class EventsMarkers {
     public function setPercentage($percentage)
     {
         $this->percentage = $percentage;
-    
+
         return $this;
     }
 
@@ -108,7 +84,7 @@ class EventsMarkers {
     public function setCreated($created)
     {
         $this->created = $created;
-    
+
         return $this;
     }
 
@@ -131,7 +107,7 @@ class EventsMarkers {
     public function setUpdated($updated)
     {
         $this->updated = $updated;
-    
+
         return $this;
     }
 
@@ -146,6 +122,29 @@ class EventsMarkers {
     }
 
     /**
+     * Set event
+     *
+     * @param \CorahnRin\MapsBundle\Entity\Events $event
+     * @return EventsMarkers
+     */
+    public function setEvent(\CorahnRin\MapsBundle\Entity\Events $event)
+    {
+        $this->event = $event;
+
+        return $this;
+    }
+
+    /**
+     * Get event
+     *
+     * @return \CorahnRin\MapsBundle\Entity\Events 
+     */
+    public function getEvent()
+    {
+        return $this->event;
+    }
+
+    /**
      * Set marker
      *
      * @param \CorahnRin\MapsBundle\Entity\Markers $marker
@@ -154,7 +153,7 @@ class EventsMarkers {
     public function setMarker(\CorahnRin\MapsBundle\Entity\Markers $marker)
     {
         $this->marker = $marker;
-    
+
         return $this;
     }
 
