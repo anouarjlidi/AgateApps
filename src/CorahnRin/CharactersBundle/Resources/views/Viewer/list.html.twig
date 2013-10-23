@@ -17,7 +17,7 @@
 	{% for character in list %}
 		<tr>
 			<td>{{ character.id }}</td>
-			<td><a href="{{ path('corahnrin_characters_viewer_view', {'id':character.id,'nameSlug':character.nameSlug}) }}" class="btn btn-link" title="{{ 'Voir le personnage %character_name%' | trans({'%character_name%':character.name}) }}">{{ character.name }}</a></td>
+			<td><a href="{{ path('corahnrin_characters_viewer_view', {'id':character.id,'nameSlug':character.nameSlug}) }}" class="btn btn-link btn-sm" title="{{ 'Voir le personnage %character_name%' | trans({'%character_name%':character.name}) }}">{{ character.name }}</a></td>
 			<td>{{ character.job ? character.job.name : '(Personnalisé) '~character.jobCustom | trans}}</td>
 			<td>{{ character.people | trans }}</td>
 			<td>{{ character.region.name | trans }}</td>
