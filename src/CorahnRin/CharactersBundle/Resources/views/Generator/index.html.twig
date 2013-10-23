@@ -2,9 +2,11 @@
 
 {% block title %}{% trans %}Générateur{% endtrans %} {{ parent() }}{% endblock %}
 
+{% block menus %}
+	{{ parent() }}
+	{% render(controller("CorahnRinCharactersBundle:Generator:menu")) %}
+{% endblock %}
+
 {% block content_for_layout %}
 	<h1>{{ 'Générateur' | trans }}</h1>
-	{% for data in datas %}
-		<a href="{{path('corahnrin_characters_generator_step', {'id':data.getId(), 'slug':data.getSlug()})}}" class="btn btn-link btn-xs">{{ data.getTitle() }}</a>{% if loop.last == false %}|{% endif %}
-	{% endfor %}
 {% endblock %}

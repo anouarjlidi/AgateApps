@@ -30,11 +30,11 @@ class GeneratorController extends Controller
 	/**
 	 * @Template()
 	 */
-	public function menuAction() {
-		$actual_step = (int) $this->get('session')->get('step');
-		if (!$actual_step) { $actual_step = 1; }
+	public function menuAction(\CorahnRin\CharactersBundle\Entity\Steps $step) {
+		$actual_step = (int) $this->get('session')->get('step') ?: 1;
     	$steps = $this->getDoctrine()->getManager()->getRepository('CorahnRinCharactersBundle:Steps')->findAll();
-    	return array('steps'=>$steps, 'session_step' => $actual_step);
+		$barWidth = $actual_step / count($steps) * 100;
+    	return array('steps'=>$steps, 'session_step' => $actual_step, 'bar_width' => $barWidth, 'loaded_step' => $step);
 	}
 
 }

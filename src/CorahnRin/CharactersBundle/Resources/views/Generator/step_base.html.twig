@@ -4,9 +4,10 @@
 
 {% block menus %}
 	{{ parent() }}
-	{% render(controller("CorahnRinCharactersBundle:Generator:menu")) %}
+	{% render(controller("CorahnRinCharactersBundle:Generator:menu", {"step":loaded_step})) %}
 {% endblock %}
 
 {% block content_for_layout %}
+	<h1>{{ 'Étape' | trans }} {{ loaded_step.step }} : {{ loaded_step.title | trans }}</h1>
 	{{ include('CorahnRinCharactersBundle:Generator:_step_'~loaded_step.id~'_'~loaded_step.slug~'.html.twig') }}
 {% endblock %}
