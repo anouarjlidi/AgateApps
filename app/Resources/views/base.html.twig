@@ -2,11 +2,8 @@
 <html lang="fr">
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}{% endblock %}</title>
-
-        {# <meta name="generator" value="Corahn Rin {% render(controller("CorahnRinPagesBundle:Versions:get", { "filter" : "code" })) %} - Automatic character creation by Pierstoval" /> #}
-        {# <meta name="generator" value="Corahn Rin {{ constant('P_VERSION_CODE') }} - {{ constant('P_VERSION_DATE') }} - Automatic character creation by Pierstoval" /> #}
-
+        <title>{% block title %}Corahn-Rin{% endblock %}</title>
+        <meta name="generator" value="Corahn Rin {{ constant('P_VERSION_CODE') }} - {{ constant('P_VERSION_DATE') }} - Automatic character creation by Pierstoval" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         {% block more_headers %}{% endblock %}
@@ -16,8 +13,9 @@
         {% stylesheets
             '../vendor/twitter/bootstrap/dist/css/bootstrap.min.css'
             '../vendor/twitter/bootstrap/dist/css/bootstrap-theme.min.css'
-            '../src/CorahnRin/ToolsBundle/Resources/public/css/jquery-ui.css'
-            '../src/CorahnRin/ToolsBundle/Resources/public/css/corahn_rin.css'
+            '../src/CorahnRin/PagesBundle/Resources/public/css/jquery-ui.css'
+            '../src/CorahnRin/PagesBundle/Resources/public/css/initializer.css'
+            '../src/CorahnRin/PagesBundle/Resources/public/css/corahn_rin.css'
             output="css/theme.css"
             filter="yui_css"
         %}<link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
