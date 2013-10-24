@@ -23,6 +23,7 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "friendsofsymfony/user-bundle": "dev-master",
 		"twitter/bootstrap": "dev-master",
+		"jms/translation-bundle": "1.*",
 		"stof/doctrine-extensions-bundle": "dev-master"
     },
     "scripts": {
