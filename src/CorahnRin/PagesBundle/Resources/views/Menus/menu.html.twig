@@ -1,16 +1,16 @@
-<div class="navbar navbar-default" id="navigation">
+
+		<div class="navbar navbar-default" id="navigation">
 			<div class="navbar-header">
 				<button data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
 				</button>
 				<a href="" class="navbar-brand">Corahn-Rin</a>
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
-					{% for path,link in links %}
-						<li><a href="{{ path(path) }}">{{ link | trans }}</a></li>
+					{% for path,link in links %}<li><a href="{{ path(path) }}">{{ link | trans }}</a></li>
 					{% endfor %}
 					{#<li class="dropdown">
 					<a data-toggle="dropdown" class="dropdown-toggle" href="#">Menu déroulant <b class="caret"></b></a>
@@ -24,10 +24,10 @@
 						<li><a href="#">One more separated lien</a></li>
 					</ul>
 					</li>#}
+						
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					{% if app.user.username is not defined %}
-                        <li><a href="{{ path('fos_user_security_login') }}">{{ 'Connexion' | trans }}</a></li>
+					{% if app.user.username is not defined %}<li><a href="{{ path('fos_user_security_login') }}">{{ 'Connexion' | trans }}</a></li>
 					{% else %}
 						<li><a href="{{ path('fos_user_security_logout') }}">{{ 'Déconnexion' | trans}} [ {{ app.user.username is defined ? app.user.username : '' }} ]</a></li>
 						<!--<li class="dropdown">
@@ -40,6 +40,7 @@
 						</ul>
 						</li>-->
 					{% endif %}
+
 				</ul>
 			</div>
 			<!--/.nav-collapse -->

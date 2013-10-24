@@ -18,14 +18,18 @@
             {% block fos_user_content %}{% endblock fos_user_content %}
 
             {# DYNAMIC CONTENT FOR LAYOUT #}
+
             <div id="content">
                 {% block content_for_layout %}{% endblock %}
-            </div>
+
+            </div><!--/#content-->
 
         </div><!--/#layout-->
 
         {# FOOTER #}
         {% include "CorahnRinPagesBundle:Pages:footer.html.twig" %}
+
+
     </div><!--/#wrapper-->
 
 {% endblock %}
