@@ -981,7 +981,6 @@ class Set {
 	 * Converts an object into an array.
 	 * @param object $object Object to reverse
 	 * @return array Array representation of given object
-	 * @public
 	 * @static
 	 */
 	static function reverse($object) {
