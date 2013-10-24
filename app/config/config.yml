@@ -15,7 +15,7 @@ framework:
     templating:
         engines: ['twig','php']
         #assets_version: SomeVersionScheme
-    default_locale:  "fr"
+    default_locale:  %locale%
     trusted_proxies: ~
     session:         ~
     fragments:       ~
