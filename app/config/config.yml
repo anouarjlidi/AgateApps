@@ -76,8 +76,16 @@ fos_user:
     firewall_name: main
     user_class:    CorahnRin\UsersBundle\Entity\Users
 
+# Doctrine extensions
 stof_doctrine_extensions:
     orm:
         default:
             sluggable: true
             timestampable: true
+
+# JMS Translation bundle specifications
+#services:
+#    twig.text_extension:
+#        class: Twig_Extensions_Text
+#        tags:
+#            - name: twig.extension
