@@ -90,7 +90,7 @@ jms_translation:
     configs:
         app:
             dirs: [ "%kernel.root_dir%/../src/CorahnRin/" ]
-            output_dir: "%kernel.root_dir%/src/CorahnRin/ToolsBundle/Resources/translations"
+            output_dir: "%kernel.root_dir%/../src/CorahnRin/ToolsBundle/Resources/translations"
             excluded_names: ["*TestCase.php", "*Test.php"]
             excluded_dirs: [ "cache", "logs", "vendor", "app", "Tests" ]
             extractors: ~
