@@ -89,11 +89,10 @@ stof_doctrine_extensions:
 jms_translation:
     configs:
         app:
-            dirs: [%kernel.root_dir%, %kernel.root_dir%/../src]
-            output_dir: %kernel.root_dir%/Resources/translations
-            ignored_domains: ~
-            excluded_names: ~
-            excluded_dirs: [ "cache", "logs", "vendor", "app" ]
+            dirs: [ "%kernel.root_dir%/../src/CorahnRin/" ]
+            output_dir: "%kernel.root_dir%/src/CorahnRin/ToolsBundle/Resources/translations"
+            excluded_names: ["*TestCase.php", "*Test.php"]
+            excluded_dirs: [ "cache", "logs", "vendor", "app", "Tests" ]
             extractors: ~
 
 services:
