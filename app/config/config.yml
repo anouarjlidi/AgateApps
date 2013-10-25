@@ -86,8 +86,18 @@ stof_doctrine_extensions:
             timestampable: true
 
 # JMS Translation bundle specifications
-#services:
-#    twig.text_extension:
-#        class: Twig_Extensions_Text
-#        tags:
-#            - name: twig.extension
+jms_translation:
+    configs:
+        app:
+            dirs: [%kernel.root_dir%, %kernel.root_dir%/../src]
+            output_dir: %kernel.root_dir%/Resources/translations
+            ignored_domains: ~
+            excluded_names: ~
+            excluded_dirs: [ "cache", "logs", "vendor", "app" ]
+            extractors: ~
+
+services:
+    twig.text_extension:
+        class: Twig_Extensions_Extension_Text
+        tags:
+            - name: twig.extension 
