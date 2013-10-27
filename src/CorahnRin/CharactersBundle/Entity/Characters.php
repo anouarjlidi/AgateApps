@@ -149,7 +149,7 @@ class Characters
     private $mentalResist;
 
     /**
-     * @var array
+     * @var integer
      *
      * @ORM\Column(type="integer", nullable=false)
      */
