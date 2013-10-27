@@ -122,7 +122,10 @@ function showtime(&$temp_time,$b){
 	$str = str_split($str);
 	$b = str_replace($str, array_fill(0,5,''), $b);
 //	 print($colors->getColoredString(number_format($temp_time, 4, ',', ' ')."\t\t".$b, "blue"));
-//	$b = "\t[".number_format($temp_time, 4, ',', ' ')."]\t\t".$b;
+	$numb = number_format($temp_time, 2, ',', ' ');
+	$numb = substr($numb, 0, 8);
+	$numb = str_pad($numb, 10, ' ', STR_PAD_LEFT);
+	$b = "[".$numb."]\t".$b;
 	$b = trim($b);
 	$b = trim($b, " \t\n\r\0\x0B");
 	$b = str_replace(array("\r","\n"), array('',''), $b);
