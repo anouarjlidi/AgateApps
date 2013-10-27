@@ -600,29 +600,6 @@ class Characters
     }
 
     /**
-     * Set health
-     *
-     * @param array $health
-     * @return Characters
-     */
-    public function setHealth($health)
-    {
-        $this->health = $health;
-
-        return $this;
-    }
-
-    /**
-     * Get health
-     *
-     * @return array
-     */
-    public function getHealth()
-    {
-        return $this->health;
-    }
-
-    /**
      * Set stamina
      *
      * @param integer $stamina
@@ -1638,5 +1615,28 @@ class Characters
     public function getNameSlug()
     {
         return $this->nameSlug;
+    }
+
+    /**
+     * Set health
+     *
+     * @param integer $health
+     * @return Characters
+     */
+    public function setHealth($health)
+    {
+        $this->health = $health;
+
+        return $this;
+    }
+
+    /**
+     * Get health
+     *
+     * @return integer 
+     */
+    public function getHealth()
+    {
+        return $this->health;
     }
 }
