@@ -7,7 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Pages
  *
- * @ORM\Table(name="pages")
  * @ORM\Entity
  */
 class Pages
