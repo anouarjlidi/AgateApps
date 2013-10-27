@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 class CharSocialClass
 {
     /**
-     * @var \Character
+     * @var \Characters
      *
      * @ORM\Id
      * @ORM\OneToOne(targetEntity="Characters", inversedBy="socialClass")
