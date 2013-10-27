@@ -78,16 +78,16 @@
         },
         {
             "name": "doctrine/cache",
-            "version": "v1.2.0",
+            "version": "v1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/cache.git",
-                "reference": "d0e4447707a064a5814b18cb0dcc2f24185f6179"
+                "reference": "e16d7adf45664a50fa86f515b6d5e7f670130449"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/cache/zipball/d0e4447707a064a5814b18cb0dcc2f24185f6179",
-                "reference": "d0e4447707a064a5814b18cb0dcc2f24185f6179",
+                "url": "https://api.github.com/repos/doctrine/cache/zipball/e16d7adf45664a50fa86f515b6d5e7f670130449",
+                "reference": "e16d7adf45664a50fa86f515b6d5e7f670130449",
                 "shasum": ""
             },
             "require": {
@@ -95,6 +95,10 @@
             },
             "conflict": {
                 "doctrine/common": ">2.2,<2.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": ">=3.7",
+                "satooshi/php-coveralls": "~0.6"
             },
             "type": "library",
             "extra": {
@@ -143,7 +147,7 @@
                 "cache",
                 "caching"
             ],
-            "time": "2013-09-26 19:23:25"
+            "time": "2013-10-25 19:04:14"
         },
         {
             "name": "doctrine/collections",
@@ -542,12 +546,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/doctrine2.git",
-                "reference": "b11f01643cb9709671b63314004532560e9a9d5e"
+                "reference": "0f3679f034e474575ae9c2182ebd1abe8e492469"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/b11f01643cb9709671b63314004532560e9a9d5e",
-                "reference": "b11f01643cb9709671b63314004532560e9a9d5e",
+                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/0f3679f034e474575ae9c2182ebd1abe8e492469",
+                "reference": "0f3679f034e474575ae9c2182ebd1abe8e492469",
                 "shasum": ""
             },
             "require": {
@@ -609,7 +613,7 @@
                 "database",
                 "orm"
             ],
-            "time": "2013-09-26 21:24:14"
+            "time": "2013-10-26 09:17:34"
         },
         {
             "name": "friendsofsymfony/user-bundle",
@@ -2033,12 +2037,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/twbs/bootstrap.git",
-                "reference": "54cd0f8c2f1aaadefd8447f9ff4cd9bb04fe4e72"
+                "reference": "e9ca4fab1365559e7059f7b46b182a498872f136"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/54cd0f8c2f1aaadefd8447f9ff4cd9bb04fe4e72",
-                "reference": "54cd0f8c2f1aaadefd8447f9ff4cd9bb04fe4e72",
+                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/e9ca4fab1365559e7059f7b46b182a498872f136",
+                "reference": "e9ca4fab1365559e7059f7b46b182a498872f136",
                 "shasum": ""
             },
             "type": "library",
@@ -2062,7 +2066,7 @@
                 "bootstrap",
                 "css"
             ],
-            "time": "2013-10-24 06:41:17"
+            "time": "2013-10-27 07:45:37"
         }
     ],
     "packages-dev": [
