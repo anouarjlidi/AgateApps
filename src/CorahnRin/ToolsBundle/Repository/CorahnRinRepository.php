@@ -7,6 +7,6 @@ use Doctrine\ORM\EntityRepository;
  * CorahnRinRepository
  * Gestionnaire de repositories de Corahn-Rin
  */
-class CorahnRinRepository extends EntityRepository {
+abstract class CorahnRinRepository extends EntityRepository {
 
 }
