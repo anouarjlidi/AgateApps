@@ -363,6 +363,9 @@ class Characters
 	private $game;
 
 	private $baseChar;
+	
+	
+	
     /**
      * Constructor
      */
@@ -385,7 +388,7 @@ class Characters
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
@@ -408,11 +411,57 @@ class Characters
     /**
      * Get name
      *
-     * @return string
+     * @return string 
      */
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set nameSlug
+     *
+     * @param string $nameSlug
+     * @return Characters
+     */
+    public function setNameSlug($nameSlug)
+    {
+        $this->nameSlug = $nameSlug;
+
+        return $this;
+    }
+
+    /**
+     * Get nameSlug
+     *
+     * @return string 
+     */
+    public function getNameSlug()
+    {
+        return $this->nameSlug;
+    }
+
+    /**
+     * Set playerName
+     *
+     * @param string $playerName
+     * @return Characters
+     */
+    public function setPlayerName($playerName)
+    {
+        $this->playerName = $playerName;
+
+        return $this;
+    }
+
+    /**
+     * Get playerName
+     *
+     * @return string 
+     */
+    public function getPlayerName()
+    {
+        return $this->playerName;
     }
 
     /**
@@ -431,7 +480,7 @@ class Characters
     /**
      * Get status
      *
-     * @return boolean
+     * @return boolean 
      */
     public function getStatus()
     {
@@ -454,11 +503,80 @@ class Characters
     /**
      * Get sex
      *
-     * @return string
+     * @return string 
      */
     public function getSex()
     {
         return $this->sex;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Characters
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set story
+     *
+     * @param string $story
+     * @return Characters
+     */
+    public function setStory($story)
+    {
+        $this->story = $story;
+
+        return $this;
+    }
+
+    /**
+     * Get story
+     *
+     * @return string 
+     */
+    public function getStory()
+    {
+        return $this->story;
+    }
+
+    /**
+     * Set facts
+     *
+     * @param string $facts
+     * @return Characters
+     */
+    public function setFacts($facts)
+    {
+        $this->facts = $facts;
+
+        return $this;
+    }
+
+    /**
+     * Get facts
+     *
+     * @return string 
+     */
+    public function getFacts()
+    {
+        return $this->facts;
     }
 
     /**
@@ -477,7 +595,7 @@ class Characters
     /**
      * Get inventory
      *
-     * @return array
+     * @return array 
      */
     public function getInventory()
     {
@@ -500,7 +618,7 @@ class Characters
     /**
      * Get money
      *
-     * @return \stdClass
+     * @return \stdClass 
      */
     public function getMoney()
     {
@@ -523,11 +641,57 @@ class Characters
     /**
      * Get orientation
      *
-     * @return string
+     * @return string 
      */
     public function getOrientation()
     {
         return $this->orientation;
+    }
+
+    /**
+     * Set jobCustom
+     *
+     * @param string $jobCustom
+     * @return Characters
+     */
+    public function setJobCustom($jobCustom)
+    {
+        $this->jobCustom = $jobCustom;
+
+        return $this;
+    }
+
+    /**
+     * Get jobCustom
+     *
+     * @return string 
+     */
+    public function getJobCustom()
+    {
+        return $this->jobCustom;
+    }
+
+    /**
+     * Set people
+     *
+     * @param string $people
+     * @return Characters
+     */
+    public function setPeople($people)
+    {
+        $this->people = $people;
+
+        return $this;
+    }
+
+    /**
+     * Get people
+     *
+     * @return string 
+     */
+    public function getPeople()
+    {
+        return $this->people;
     }
 
     /**
@@ -546,11 +710,57 @@ class Characters
     /**
      * Get geoLiving
      *
-     * @return string
+     * @return string 
      */
     public function getGeoLiving()
     {
         return $this->geoLiving;
+    }
+
+    /**
+     * Set trauma
+     *
+     * @param integer $trauma
+     * @return Characters
+     */
+    public function setTrauma($trauma)
+    {
+        $this->trauma = $trauma;
+
+        return $this;
+    }
+
+    /**
+     * Get trauma
+     *
+     * @return integer 
+     */
+    public function getTrauma()
+    {
+        return $this->trauma;
+    }
+
+    /**
+     * Set traumaPermanent
+     *
+     * @param integer $traumaPermanent
+     * @return Characters
+     */
+    public function setTraumaPermanent($traumaPermanent)
+    {
+        $this->traumaPermanent = $traumaPermanent;
+
+        return $this;
+    }
+
+    /**
+     * Get traumaPermanent
+     *
+     * @return integer 
+     */
+    public function getTraumaPermanent()
+    {
+        return $this->traumaPermanent;
     }
 
     /**
@@ -569,7 +779,7 @@ class Characters
     /**
      * Get age
      *
-     * @return integer
+     * @return integer 
      */
     public function getAge()
     {
@@ -592,11 +802,34 @@ class Characters
     /**
      * Get mentalResist
      *
-     * @return integer
+     * @return integer 
      */
     public function getMentalResist()
     {
         return $this->mentalResist;
+    }
+
+    /**
+     * Set health
+     *
+     * @param integer $health
+     * @return Characters
+     */
+    public function setHealth($health)
+    {
+        $this->health = $health;
+
+        return $this;
+    }
+
+    /**
+     * Get health
+     *
+     * @return integer 
+     */
+    public function getHealth()
+    {
+        return $this->health;
     }
 
     /**
@@ -615,7 +848,7 @@ class Characters
     /**
      * Get stamina
      *
-     * @return integer
+     * @return integer 
      */
     public function getStamina()
     {
@@ -638,7 +871,7 @@ class Characters
     /**
      * Get survival
      *
-     * @return boolean
+     * @return boolean 
      */
     public function getSurvival()
     {
@@ -661,7 +894,7 @@ class Characters
     /**
      * Get speed
      *
-     * @return integer
+     * @return integer 
      */
     public function getSpeed()
     {
@@ -684,7 +917,7 @@ class Characters
     /**
      * Get defense
      *
-     * @return integer
+     * @return integer 
      */
     public function getDefense()
     {
@@ -707,7 +940,7 @@ class Characters
     /**
      * Get rindath
      *
-     * @return integer
+     * @return integer 
      */
     public function getRindath()
     {
@@ -730,7 +963,7 @@ class Characters
     /**
      * Get exaltation
      *
-     * @return integer
+     * @return integer 
      */
     public function getExaltation()
     {
@@ -753,7 +986,7 @@ class Characters
     /**
      * Get experienceActual
      *
-     * @return integer
+     * @return integer 
      */
     public function getExperienceActual()
     {
@@ -776,7 +1009,7 @@ class Characters
     /**
      * Get experienceSpent
      *
-     * @return integer
+     * @return integer 
      */
     public function getExperienceSpent()
     {
@@ -799,7 +1032,7 @@ class Characters
     /**
      * Get created
      *
-     * @return \DateTime
+     * @return \DateTime 
      */
     public function getCreated()
     {
@@ -822,7 +1055,7 @@ class Characters
     /**
      * Get updated
      *
-     * @return \DateTime
+     * @return \DateTime 
      */
     public function getUpdated()
     {
@@ -855,7 +1088,7 @@ class Characters
     /**
      * Get armors
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getArmors()
     {
@@ -888,7 +1121,7 @@ class Characters
     /**
      * Get artifacts
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getArtifacts()
     {
@@ -921,7 +1154,7 @@ class Characters
     /**
      * Get miracles
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getMiracles()
     {
@@ -954,7 +1187,7 @@ class Characters
     /**
      * Get ogham
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getOgham()
     {
@@ -987,7 +1220,7 @@ class Characters
     /**
      * Get weapons
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getWeapons()
     {
@@ -1010,7 +1243,7 @@ class Characters
     /**
      * Get socialClass
      *
-     * @return \CorahnRin\CharactersBundle\Entity\CharSocialClass
+     * @return \CorahnRin\CharactersBundle\Entity\CharSocialClass 
      */
     public function getSocialClass()
     {
@@ -1033,7 +1266,7 @@ class Characters
     /**
      * Get disorder
      *
-     * @return \CorahnRin\CharactersBundle\Entity\Disorders
+     * @return \CorahnRin\CharactersBundle\Entity\Disorders 
      */
     public function getDisorder()
     {
@@ -1056,7 +1289,7 @@ class Characters
     /**
      * Get job
      *
-     * @return \CorahnRin\CharactersBundle\Entity\Jobs
+     * @return \CorahnRin\CharactersBundle\Entity\Jobs 
      */
     public function getJob()
     {
@@ -1079,7 +1312,7 @@ class Characters
     /**
      * Get region
      *
-     * @return \CorahnRin\CharactersBundle\Entity\Regions
+     * @return \CorahnRin\CharactersBundle\Entity\Regions 
      */
     public function getRegion()
     {
@@ -1102,7 +1335,7 @@ class Characters
     /**
      * Get traitFlaw
      *
-     * @return \CorahnRin\CharactersBundle\Entity\Traits
+     * @return \CorahnRin\CharactersBundle\Entity\Traits 
      */
     public function getTraitFlaw()
     {
@@ -1125,7 +1358,7 @@ class Characters
     /**
      * Get traitQuality
      *
-     * @return \CorahnRin\CharactersBundle\Entity\Traits
+     * @return \CorahnRin\CharactersBundle\Entity\Traits 
      */
     public function getTraitQuality()
     {
@@ -1158,7 +1391,7 @@ class Characters
     /**
      * Get avantages
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getAvantages()
     {
@@ -1191,7 +1424,7 @@ class Characters
     /**
      * Get domains
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getDomains()
     {
@@ -1206,7 +1439,7 @@ class Characters
      */
     public function addDiscipline(\CorahnRin\CharactersBundle\Entity\CharDisciplines $disciplines)
     {
-        $disciplines->setCharacter($this);
+		$disciplines->setCharacter($this);
         $this->disciplines[] = $disciplines;
 
         return $this;
@@ -1225,7 +1458,7 @@ class Characters
     /**
      * Get disciplines
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getDisciplines()
     {
@@ -1258,7 +1491,7 @@ class Characters
     /**
      * Get ways
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getWays()
     {
@@ -1291,7 +1524,7 @@ class Characters
     /**
      * Get flux
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getFlux()
     {
@@ -1324,7 +1557,7 @@ class Characters
     /**
      * Get modifications
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getModifications()
     {
@@ -1357,7 +1590,7 @@ class Characters
     /**
      * Get setbacks
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getSetbacks()
     {
@@ -1380,7 +1613,7 @@ class Characters
     /**
      * Get user
      *
-     * @return \CorahnRin\UsersBundle\Entity\Users
+     * @return \CorahnRin\UsersBundle\Entity\Users 
      */
     public function getUser()
     {
@@ -1403,240 +1636,10 @@ class Characters
     /**
      * Get game
      *
-     * @return \CorahnRin\CharactersBundle\Entity\Games
+     * @return \CorahnRin\CharactersBundle\Entity\Games 
      */
     public function getGame()
     {
         return $this->game;
-    }
-
-    /**
-     * Set playerName
-     *
-     * @param string $playerName
-     * @return Characters
-     */
-    public function setPlayerName($playerName)
-    {
-        $this->playerName = $playerName;
-    
-        return $this;
-    }
-
-    /**
-     * Get playerName
-     *
-     * @return string 
-     */
-    public function getPlayerName()
-    {
-        return $this->playerName;
-    }
-
-    /**
-     * Set description
-     *
-     * @param string $description
-     * @return Characters
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-    
-        return $this;
-    }
-
-    /**
-     * Get description
-     *
-     * @return string 
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
-     * Set story
-     *
-     * @param string $story
-     * @return Characters
-     */
-    public function setStory($story)
-    {
-        $this->story = $story;
-    
-        return $this;
-    }
-
-    /**
-     * Get story
-     *
-     * @return string 
-     */
-    public function getStory()
-    {
-        return $this->story;
-    }
-
-    /**
-     * Set facts
-     *
-     * @param string $facts
-     * @return Characters
-     */
-    public function setFacts($facts)
-    {
-        $this->facts = $facts;
-    
-        return $this;
-    }
-
-    /**
-     * Get facts
-     *
-     * @return string 
-     */
-    public function getFacts()
-    {
-        return $this->facts;
-    }
-
-    /**
-     * Set jobCustom
-     *
-     * @param string $jobCustom
-     * @return Characters
-     */
-    public function setJobCustom($jobCustom)
-    {
-        $this->jobCustom = $jobCustom;
-    
-        return $this;
-    }
-
-    /**
-     * Get jobCustom
-     *
-     * @return string 
-     */
-    public function getJobCustom()
-    {
-        return $this->jobCustom;
-    }
-
-    /**
-     * Set people
-     *
-     * @param string $people
-     * @return Characters
-     */
-    public function setPeople($people)
-    {
-        $this->people = $people;
-    
-        return $this;
-    }
-
-    /**
-     * Get people
-     *
-     * @return string 
-     */
-    public function getPeople()
-    {
-        return $this->people;
-    }
-
-    /**
-     * Set trauma
-     *
-     * @param integer $trauma
-     * @return Characters
-     */
-    public function setTrauma($trauma)
-    {
-        $this->trauma = $trauma;
-    
-        return $this;
-    }
-
-    /**
-     * Get trauma
-     *
-     * @return integer 
-     */
-    public function getTrauma()
-    {
-        return $this->trauma;
-    }
-
-    /**
-     * Set traumaPermanent
-     *
-     * @param integer $traumaPermanent
-     * @return Characters
-     */
-    public function setTraumaPermanent($traumaPermanent)
-    {
-        $this->traumaPermanent = $traumaPermanent;
-    
-        return $this;
-    }
-
-    /**
-     * Get traumaPermanent
-     *
-     * @return integer 
-     */
-    public function getTraumaPermanent()
-    {
-        return $this->traumaPermanent;
-    }
-
-    /**
-     * Set nameSlug
-     *
-     * @param string $nameSlug
-     * @return Characters
-     */
-    public function setNameSlug($nameSlug)
-    {
-        $this->nameSlug = $nameSlug;
-    
-        return $this;
-    }
-
-    /**
-     * Get nameSlug
-     *
-     * @return string 
-     */
-    public function getNameSlug()
-    {
-        return $this->nameSlug;
-    }
-
-    /**
-     * Set health
-     *
-     * @param integer $health
-     * @return Characters
-     */
-    public function setHealth($health)
-    {
-        $this->health = $health;
-
-        return $this;
-    }
-
-    /**
-     * Get health
-     *
-     * @return integer 
-     */
-    public function getHealth()
-    {
-        return $this->health;
     }
 }
