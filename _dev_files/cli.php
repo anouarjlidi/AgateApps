@@ -136,7 +136,6 @@ function remove_comments(&$a){$b=explode("\n",$a);$a="";$c=count($b);$d=false;fo
 function remove_remarks($f){$b=explode("\n",$f);$f="";$c=count($b);$a="";for($e=0;$e<$c;$e++){if(($e!=($c-1))||(strlen($b[$e])>0)){if(isset($b[$e][0])&&$b[$e][0]!="#"){$a.=$b[$e]."\n";}else{$a.="\n";}$b[$e]="";}}return $a;}
 function split_sql_file($f,$g){$h=explode($g,$f);$f="";$a=array();$k=array();$l=count($h);for($e=0;$e<$l;$e++){if(($e!=($l-1))||(strlen($h[$e]>0))){$m=preg_match_all("/'/",$h[$e],$k);$n=preg_match_all("/(?<!\\\\)(\\\\\\\\)*\\\\'/",$h[$e],$k);$o=$m-$n;if(($o%2)==0){$a[]=$h[$e];$h[$e]="";}else{$p=$h[$e].$g;$h[$e]="";$q=false;for($r=$e+1;(!$q&&($r<$l));$r++){$m=preg_match_all("/'/",$h[$r],$k);$n=preg_match_all("/(?<!\\\\)(\\\\\\\\)*\\\\'/",$h[$r],$k);$o=$m-$n;if(($o%2)==1){$a[]=$p.$h[$r];$h[$r]="";$p="";$q=true;$e=$r;}else{$p.=$h[$r].$g;$h[$r]="";}}}}}return $a;}
 function get_query_from_file($a){$b=@fread(@fopen($a,'r'),@filesize($a))or die('problem ');$b=remove_remarks($b);$b=split_sql_file($b,';');$b=array_map('trim',$b);return $b;}
-function table_dates($a){global $new;global $temp_time;if(!$new->req('SHOW COLUMNS FROM %'.$a.' LIKE "created"')){$new->noRes('ALTER TABLE %'.$a.' ADD `created` INT UNSIGNED NOT NULL');showtime($temp_time,'Added `'.$a.'` created column');}if(!$new->req('SHOW COLUMNS FROM %'.$a.' LIKE "updated"')){$new->noRes('ALTER TABLE %'.$a.' ADD `updated` INT UNSIGNED NOT NULL');showtime($temp_time,'Added `'.$a.'` updated column');}}
 
 class Colors{private $a=array();private $b=array();public function __construct(){$this->a['black']='0;30';$this->a['dark_gray']='1;30';$this->a['blue']='0;34';$this->a['light_blue']='1;34';$this->a['green']='0;32';$this->a['light_green']='1;32';$this->a['cyan']='0;36';$this->a['light_cyan']='1;36';$this->a['red']='0;31';$this->a['light_red']='1;31';$this->a['purple']='0;35';$this->a['light_purple']='1;35';$this->a['brown']='0;33';$this->a['yellow']='1;33';$this->a['light_gray']='0;37';$this->a['white']='1;37';$this->b['black']='40';$this->b['red']='41';$this->b['green']='42';$this->b['yellow']='43';$this->b['blue']='44';$this->b['magenta']='45';$this->b['cyan']='46';$this->b['light_gray']='47';}public function getColoredString($d,$e=null,$f=null){return $d;$g="";if(isset($this->a[$e])){$g.="\033[".$this->a[$e]."m";}if(isset($this->b[$f])){$g.="\033[".$this->b[$f]."m";}$g.=$d."\033[0m";return $g;}public function getForegroundColors(){return array_keys($this->a);}public function getBackgroundColors(){return array_keys($this->b);}}
 
@@ -305,7 +304,7 @@ showtime($temp_time, 'Début de l\'import');
 //*
 
 
-$users = $old->prepare('SELECT * FROM `est_users` ORDER BY `user_name` ASC');
+$users = $old->prepare('SELECT * FROM `est_users` WHERE `user_id` >= 1 ORDER BY `user_name` ASC ');
 $users->execute();
 $users = $users->fetchAll(PDO::FETCH_ASSOC);
 
@@ -334,6 +333,7 @@ foreach ($users as $v) {
 		}
 	}
 }$tables_done[]='users';
+exec('php ../app/console fos:user:promote pierstoval --super');
 if (!$usernb) { showtime($temp_time, 'Aucun utilisateur à ajouter'); }
 showtime($temp_time, $usernb.' requêtes pour la table "users"');
 if ($new->noRes('ALTER TABLE `users` AUTO_INCREMENT = 128')) {
