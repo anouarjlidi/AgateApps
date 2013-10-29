@@ -262,11 +262,25 @@ class Characters
     private $weapons;
 
     /**
-     * @var \CharSocialClass
+     * @var \SocialClass
      *
-     * @ORM\OneToOne(targetEntity="CharSocialClass", mappedBy="character")
+     * @ORM\ManyToOne(targetEntity="SocialClass")
      */
     private $socialClass;
+
+    /**
+     * @var \Domains
+     *
+     * @ORM\ManyToOne(targetEntity="Domains")
+     */
+    private $SocialClassdomain1;
+
+    /**
+     * @var \Domains
+     *
+     * @ORM\ManyToOne(targetEntity="Domains")
+     */
+    private $SocialClassdomain2;
 
     /**
      * @var \Disorders
@@ -1228,29 +1242,6 @@ class Characters
     }
 
     /**
-     * Set socialClass
-     *
-     * @param \CorahnRin\CharactersBundle\Entity\CharSocialClass $socialClass
-     * @return Characters
-     */
-    public function setSocialClass(\CorahnRin\CharactersBundle\Entity\CharSocialClass $socialClass = null)
-    {
-        $this->socialClass = $socialClass;
-
-        return $this;
-    }
-
-    /**
-     * Get socialClass
-     *
-     * @return \CorahnRin\CharactersBundle\Entity\CharSocialClass 
-     */
-    public function getSocialClass()
-    {
-        return $this->socialClass;
-    }
-
-    /**
      * Set disorder
      *
      * @param \CorahnRin\CharactersBundle\Entity\Disorders $disorder
@@ -1641,5 +1632,74 @@ class Characters
     public function getGame()
     {
         return $this->game;
+    }
+
+    /**
+     * Set socialClass
+     *
+     * @param \CorahnRin\CharactersBundle\Entity\SocialClass $socialClass
+     * @return Characters
+     */
+    public function setSocialClass(\CorahnRin\CharactersBundle\Entity\SocialClass $socialClass = null)
+    {
+        $this->socialClass = $socialClass;
+
+        return $this;
+    }
+
+    /**
+     * Get socialClass
+     *
+     * @return \CorahnRin\CharactersBundle\Entity\SocialClass 
+     */
+    public function getSocialClass()
+    {
+        return $this->socialClass;
+    }
+
+    /**
+     * Set SocialClassdomain1
+     *
+     * @param \CorahnRin\CharactersBundle\Entity\Domains $socialClassdomain1
+     * @return Characters
+     */
+    public function setSocialClassdomain1(\CorahnRin\CharactersBundle\Entity\Domains $socialClassdomain1 = null)
+    {
+        $this->SocialClassdomain1 = $socialClassdomain1;
+
+        return $this;
+    }
+
+    /**
+     * Get SocialClassdomain1
+     *
+     * @return \CorahnRin\CharactersBundle\Entity\Domains 
+     */
+    public function getSocialClassdomain1()
+    {
+        return $this->SocialClassdomain1;
+    }
+
+    /**
+     * Set SocialClassdomain2
+     *
+     * @param \CorahnRin\CharactersBundle\Entity\Domains $socialClassdomain2
+     * @return Characters
+     */
+    public function setSocialClassdomain2(\CorahnRin\CharactersBundle\Entity\Domains $socialClassdomain2 = null)
+    {
+        $this->SocialClassdomain2 = $socialClassdomain2;
+
+        return $this;
+    }
+
+    /**
+     * Get SocialClassdomain2
+     *
+     * @return \CorahnRin\CharactersBundle\Entity\Domains 
+     */
+    public function getSocialClassdomain2()
+    {
+        return $this->SocialClassdomain2;
     }
 }
