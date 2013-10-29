@@ -546,12 +546,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/doctrine2.git",
-                "reference": "0f3679f034e474575ae9c2182ebd1abe8e492469"
+                "reference": "e82e7147fa5b7bbb5c9315885e5905521c00bc29"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/0f3679f034e474575ae9c2182ebd1abe8e492469",
-                "reference": "0f3679f034e474575ae9c2182ebd1abe8e492469",
+                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/e82e7147fa5b7bbb5c9315885e5905521c00bc29",
+                "reference": "e82e7147fa5b7bbb5c9315885e5905521c00bc29",
                 "shasum": ""
             },
             "require": {
@@ -613,7 +613,7 @@
                 "database",
                 "orm"
             ],
-            "time": "2013-10-26 09:17:34"
+            "time": "2013-10-29 08:25:13"
         },
         {
             "name": "friendsofsymfony/user-bundle",
@@ -622,12 +622,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSUserBundle.git",
-                "reference": "4025c4113bc000cef331ea833a52123080d2faa4"
+                "reference": "0cb03029c7c1c833a11c7bebf30125276f0aa5b9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/4025c4113bc000cef331ea833a52123080d2faa4",
-                "reference": "4025c4113bc000cef331ea833a52123080d2faa4",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/0cb03029c7c1c833a11c7bebf30125276f0aa5b9",
+                "reference": "0cb03029c7c1c833a11c7bebf30125276f0aa5b9",
                 "shasum": ""
             },
             "require": {
@@ -682,7 +682,7 @@
             "keywords": [
                 "User management"
             ],
-            "time": "2013-10-21 09:54:07"
+            "time": "2013-10-28 10:50:07"
         },
         {
             "name": "gedmo/doctrine-extensions",
@@ -2037,12 +2037,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/twbs/bootstrap.git",
-                "reference": "e9ca4fab1365559e7059f7b46b182a498872f136"
+                "reference": "a23740ec03a9c0f37224985c81be00f942ca6d28"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/e9ca4fab1365559e7059f7b46b182a498872f136",
-                "reference": "e9ca4fab1365559e7059f7b46b182a498872f136",
+                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/a23740ec03a9c0f37224985c81be00f942ca6d28",
+                "reference": "a23740ec03a9c0f37224985c81be00f942ca6d28",
                 "shasum": ""
             },
             "type": "library",
@@ -2066,7 +2066,7 @@
                 "bootstrap",
                 "css"
             ],
-            "time": "2013-10-27 07:45:37"
+            "time": "2013-10-29 04:55:08"
         }
     ],
     "packages-dev": [
