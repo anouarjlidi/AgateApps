@@ -85,16 +85,6 @@ stof_doctrine_extensions:
             sluggable: true
             timestampable: true
 
-# JMS Translation bundle specifications
-jms_translation:
-    configs:
-        app:
-            dirs: [ "%kernel.root_dir%/../src/CorahnRin/" ]
-            output_dir: "%kernel.root_dir%/../src/CorahnRin/ToolsBundle/Resources/translations"
-            excluded_names: ["*TestCase.php", "*Test.php"]
-            excluded_dirs: [ "cache", "logs", "vendor", "app", "Tests" ]
-            extractors: ~
-
 services:
     twig.text_extension:
         class: Twig_Extensions_Extension_Text
