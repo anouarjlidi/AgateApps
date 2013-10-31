@@ -921,6 +921,11 @@ foreach ( $characters as $v) {
 		$nameSlug = \CorahnRinTools\remove_accents($v['char_name']);
 		$nameSlug = preg_replace('~[^a-zA-Z0-9_-]+~isUu', '-', $nameSlug);
 		$nameSlug = preg_replace('~--+~isUu', '-', $nameSlug);
+		
+		$socialclassdomains = array();
+		foreach ($domaines as $d => $domain) {
+			if ($domain->val > 0 && count($socialclassdomains) < 2) { $socialclassdomains[] = $domain->id; $domaines[$d]->val --;}
+		}
 		$datas = array(
 			'id' => $v['char_id'],
 			'name' => $v['char_name'],
@@ -956,6 +961,9 @@ foreach ( $characters as $v) {
 			'experienceActual' => (int) $cnt->experience->reste,
 			'experienceSpent' => $cnt->experience->total - $cnt->experience->reste,
 			'status' => $v['char_status'],
+			'SocialClassdomain1_id' => $socialclassdomains[0],
+			'SocialClassdomain2_id' => $socialclassdomains[1],
+			'socialClass_id' => $cnt->classe_sociale,
 			'inventory' => serialize(array_merge($cnt->inventaire->possessions)),
 			'created' => date('Y-m-d H:i:s', (int) $v['char_date_creation']),
 			'updated' => date('Y-m-d H:i:s', ((int) $v['char_date_update'] ? (int) $v['char_date_update'] : (int) $v['char_date_creation'])),
@@ -978,10 +986,8 @@ foreach ( $characters as $v) {
 
 
 		$domaines = $cnt->domaines;
-		$socialclassdomains = array();
 		$countdoms = 0;
 		foreach ($domaines as $domain) {
-			if ($domain->val > 0 && count($socialclassdomains) < 2) { $socialclassdomains[] = $domain->id; $domain->val --;}
 			$datasDoms = array( 'character_id' => $v['char_id'], 'domain_id' => $domain->id, 'score' => $domain->val, );
 			if (!$new->row('SELECT * FROM %chardomains WHERE %character_id = :character_id AND %domain_id = :domain_id AND %score = :score', $datasDoms)) {
 				$new->noRes('INSERT INTO %chardomains SET %%%fields', $datasDoms); $countdoms++;
@@ -1061,16 +1067,16 @@ foreach ( $characters as $v) {
 			}
 		}
 		
-		$sql = 'INSERT INTO %charsocialclass SET %character_id = :character_id, %domain1_id = :dom1, %domain2_id = :dom2, %created = :created, %updated = :updated, %socialClass_id = (SELECT Id FROM `socialclass` WHERE `name` LIKE :socialClass)';
-		$charsocialclass = array(
-			'character_id' => $v['char_id'],
-			'dom1' => $socialclassdomains[0],
-			'dom2' => $socialclassdomains[1],
-			'created' => date('Y-m-d H:i:s', (int) $v['char_date_creation']),
-			'updated' => date('Y-m-d H:i:s', (int) $v['char_date_creation']),
-			'socialClass' => $cnt->classe_sociale,
-		);
-		if ($new->noRes($sql, $charsocialclass)) { showtime($temp_time, ' Ajout des domaines de la classe sociale du personnage'); }
+//		$sql = 'INSERT INTO %charsocialclass SET %character_id = :character_id, %domain1_id = :dom1, %domain2_id = :dom2, %created = :created, %updated = :updated, %socialClass_id = (SELECT Id FROM `socialclass` WHERE `name` LIKE :socialClass)';
+//		$charsocialclass = array(
+//			'character_id' => $v['char_id'],
+//			'dom1' => $socialclassdomains[0],
+//			'dom2' => $socialclassdomains[1],
+//			'socialClass' => $cnt->classe_sociale,
+//			'created' => date('Y-m-d H:i:s', (int) $v['char_date_creation']),
+//			'updated' => date('Y-m-d H:i:s', (int) $v['char_date_creation']),
+//		);
+//		if ($new->noRes($sql, $charsocialclass)) { showtime($temp_time, ' Ajout des domaines de la classe sociale du personnage'); }
 		
 		
 		foreach ($cnt->inventaire->armes as $arme) { $new->noRes('INSERT INTO %characters_weapons SET %%%fields ', array('characters_id' => $v['char_id'], 'weapons_id' => $arme->id)); }
