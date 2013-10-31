@@ -6,11 +6,11 @@
 
     <!--
     <parameters>
-        <parameter key="corahn_rin_pages.example.class">CorahnRin\PagesBundle\Example</parameter>
+        <parameter key="corahn_rin_translate.example.class">CorahnRin\TranslateBundle\Example</parameter>
     </parameters>
 
     <services>
-        <service id="corahn_rin_pages.example" class="%corahn_rin_pages.example.class%">
+        <service id="corahn_rin_translate.example" class="%corahn_rin_translate.example.class%">
             <argument type="service" id="service_id" />
             <argument>plain_value</argument>
             <argument>%parameter_name%</argument>
@@ -18,7 +18,7 @@
     </services>
     -->
     <services>
-        <service id="corahnrin.twig.pr_extension" class="CorahnRin\PagesBundle\Twig\PrExtension">
+        <service id="corahnrin.twig.tr_extension" class="CorahnRin\PagesBundle\Twig\TrExtension">
             <tag name="twig.extension" />
         </service>
     </services>
