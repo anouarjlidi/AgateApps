@@ -18,9 +18,11 @@ define('CORAHNRIN', true);
 unset($dirtools, $corahn_rin_dir);
 
 $root = preg_replace('~(\\\\|/)src.*$~isUu', '', dirname(__FILE__));
+$root = str_replace('\\','/', $root);
 define('ROOT', $root); //Chemin vers le dossier racine
 unset($root);
-define('DS', DIRECTORY_SEPARATOR); //Définition du séparateur dans le cas ou l'on est sur windows ou linux
+//define('DS', DIRECTORY_SEPARATOR); //Définition du séparateur dans le cas ou l'on est sur windows ou linux
+define('DS', '/'); //Définition du séparateur dans le cas ou l'on est sur windows ou linux
 //define('P_CLASS',		ROOT.DS.'class');
 //define('P_CORE',		ROOT.DS.'core');
 //define('P_LIBS',		ROOT.DS.'core'.DS.'libs');
