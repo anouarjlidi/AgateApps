@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class RoutesController extends Controller
 {
     /**
-     * @Route("/")
+     * @Route("/admin/maps/routes")
      * @Template()
      */
     public function indexAction()
@@ -17,7 +17,7 @@ class RoutesController extends Controller
     }
 
     /**
-     * @Route("/routes/add")
+     * @Route("/admin/maps/routes/add")
      * @Template()
      */
     public function addAction()
@@ -25,7 +25,7 @@ class RoutesController extends Controller
     }
 
     /**
-     * @Route("/routes/edit")
+     * @Route("/admin/maps/routes/edit")
      * @Template()
      */
     public function editAction()
@@ -33,7 +33,7 @@ class RoutesController extends Controller
     }
 
     /**
-     * @Route("/routes/delete/{id}")
+     * @Route("/admin/maps/routes/delete/{id}")
      * @Template()
      */
     public function deleteAction($id)
