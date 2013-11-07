@@ -4,7 +4,7 @@ imports:
 
 framework:
     #esi:             ~
-    translator:      { fallback: %locale% }
+    translator:      { fallback: fr }
     secret:          %secret%
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -17,7 +17,7 @@ framework:
     templating:
         engines: ['twig','php']
         #assets_version: SomeVersionScheme
-    default_locale:  %locale%
+    default_locale:  fr
     trusted_proxies: ~
     session:         ~
     fragments:       ~
@@ -90,3 +90,6 @@ services:
         class: Twig_Extensions_Extension_Text
         tags:
             - name: twig.extension 
+            
+corahn_rin_translate:
+    translation_output: "%kernel.root_dir%/Resources/Translations/"
