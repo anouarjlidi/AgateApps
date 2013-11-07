@@ -12,15 +12,17 @@ use CorahnRin\MapsBundle\Form\MapsType;
 class MapsController extends Controller
 {
     /**
-     * @Route("/marker")
+     * @Route("/admin/maps/")
      * @Template()
      */
-    public function viewAction()
+    public function indexAction()
     {
+        $list = $this->getDoctrine()->getManager()->getRepository('CorahnRinMapsBundle:Maps')->findAll();
+        return array('list' => $list);
     }
 
     /**
-     * @Route("/create")
+     * @Route("/admin/maps/create")
      * @Template()
      */
     public function createAction()
@@ -47,7 +49,7 @@ class MapsController extends Controller
                 
                 $db_name = str_replace(ROOT.DS.'web'.DS, '', $dir.DS.$final_path);
               
-				$entity_image_name = str_replace('\\', '/', $db_name);
+                $entity_image_name = str_replace('\\', '/', $db_name);
 				
                 $map->setImage($entity_image_name);
 
@@ -64,7 +66,7 @@ class MapsController extends Controller
     }
 
     /**
-     * @Route("/edit/{id}")
+     * @Route("/admin/maps/edit/{id}")
      * @Template()
      */
     public function editAction($id)
@@ -72,7 +74,7 @@ class MapsController extends Controller
     }
 
     /**
-     * @Route("/delete/{id}")
+     * @Route("/admin/maps/delete/{id}")
      * @Template()
      */
     public function deleteAction($id)
