@@ -11,12 +11,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Pierstoval/CorahnRinTranslate.git",
-                "reference": "dc07c510e0eee7c00b439001b2e30e0897b52faf"
+                "reference": "97bd3b971f0838c2e74ac57b65bd5758989731f3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Pierstoval/CorahnRinTranslate/zipball/dc07c510e0eee7c00b439001b2e30e0897b52faf",
-                "reference": "dc07c510e0eee7c00b439001b2e30e0897b52faf",
+                "url": "https://api.github.com/repos/Pierstoval/CorahnRinTranslate/zipball/97bd3b971f0838c2e74ac57b65bd5758989731f3",
+                "reference": "97bd3b971f0838c2e74ac57b65bd5758989731f3",
                 "shasum": ""
             },
             "type": "library",
@@ -25,7 +25,7 @@
                     "CorahnRin": "src/"
                 }
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "authors": [
                 {
                     "name": "Alex Pierstoval",
@@ -42,7 +42,7 @@
                 "trans",
                 "translate"
             ],
-            "time": "2013-11-06 22:52:32"
+            "time": "2013-11-07 07:36:41"
         },
         {
             "name": "doctrine/annotations",
@@ -697,7 +697,7 @@
                     "FOS\\UserBundle": ""
                 }
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1759,12 +1759,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/twbs/bootstrap.git",
-                "reference": "c84d96ac1fa6af162fdb069eec9cf5a426692677"
+                "reference": "463343af63344dbbc3db04f40b0b804baa919b7e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/c84d96ac1fa6af162fdb069eec9cf5a426692677",
-                "reference": "c84d96ac1fa6af162fdb069eec9cf5a426692677",
+                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/463343af63344dbbc3db04f40b0b804baa919b7e",
+                "reference": "463343af63344dbbc3db04f40b0b804baa919b7e",
                 "shasum": ""
             },
             "type": "library",
@@ -1773,7 +1773,7 @@
                     "dev-master": "3.0.x-dev"
                 }
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache-2.0"
             ],
@@ -1793,7 +1793,7 @@
                 "bootstrap",
                 "css"
             ],
-            "time": "2013-11-06 18:30:39"
+            "time": "2013-11-07 02:38:27"
         }
     ],
     "packages-dev": [
