@@ -6,12 +6,12 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a href="" class="navbar-brand">Corahn-Rin</a>
+				<a href="{{ app.request.baseUrl }}" class="navbar-brand">Corahn-Rin</a>
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
-					{% for path,link in links %}<li><a href="{{ path(path) }}">{{ link | trans }}</a></li>
-					{% endfor %}
+					{% for path,link in links %}<li><a href="{{ path(path) }}">{{ link | tr }}</a></li>
+					{% else %}{{ 'Aucun élément' | tr }}{% endfor %}
 					{#<li class="dropdown">
 					<a data-toggle="dropdown" class="dropdown-toggle" href="#">Menu déroulant <b class="caret"></b></a>
 					<ul class="dropdown-menu">
@@ -27,9 +27,17 @@
 						
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					{% if app.user.username is not defined %}<li><a href="{{ path('fos_user_security_login') }}">{{ 'Connexion' | trans }}</a></li>
+					<li class="dropdown">
+					<a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ 'Changer la langue %lang%' | tr({'%lang%' : '['~locale~']'}) }} <b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a href="{{ path('corahnrin_translate_translate_changelang', {'lang':'fr'}) }}">{{ 'Français' | tr }}</a></li>
+						<li><a href="{{ path('corahnrin_translate_translate_changelang', {'lang':'en'}) }}">{{ 'Anglais' | tr }}</a></li>
+						<li><a href="{{ path('corahnrin_translate_translate_changelang', {'lang':'de'}) }}">{{ 'Allemand' | tr }}</a></li>
+					</ul>
+					</li>
+					{% if app.user.username is not defined %}<li><a href="{{ path('fos_user_security_login') }}">{{ 'layout.login' | trans({},'FOSUserBundle') }}</a></li>
 					{% else %}
-						<li><a href="{{ path('fos_user_security_logout') }}">{{ 'Déconnexion' | trans}} [ {{ app.user.username is defined ? app.user.username : '' }} ]</a></li>
+						<li><a href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout' | trans({},'FOSUserBundle') }} [ {{ app.user.username is defined ? app.user.username : '' }} ]</a></li>
 						<!--<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
 						<ul class="dropdown-menu">

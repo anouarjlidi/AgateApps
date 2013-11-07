@@ -1,6 +1,6 @@
 {% extends "::layout.html.twig" %}
 
-{% block title %}{% trans %}Générateur{% endtrans %} {{ parent() }}{% endblock %}
+{% block title %}{{ 'Générateur' | tr }} - {{ parent() }}{% endblock %}
 
 {% block menus %}
 	{{ parent() }}
@@ -8,5 +8,5 @@
 {% endblock %}
 
 {% block content_for_layout %}
-	<h1>{{ 'Générateur' | trans }}</h1>
+	<h1>{{ 'Générateur' | tr }}</h1>
 {% endblock %}
