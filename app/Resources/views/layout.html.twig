@@ -12,8 +12,12 @@
 
             {# FLASH MESSAGES #}
             {{ translateRoute('fos_user_error') }}
-                {% for key, message in app.session.flashbag.all() %}
-                    <div class="alert alert-{{ key }}">{{ message | trans }}</div>
+                {% for key, messageList in app.session.flashbag.all() %}
+                    <div class="alert alert-{{ key }}">
+                        {% for message in messageList %}
+                            {{ message | tr }}
+                        {% endfor %}
+                    </div>
                 {% endfor %}
             {{ translateRoute() }}
 
