@@ -6,7 +6,7 @@ corahn_rin_translate:
 corahn_rin_maps:
     resource: "@CorahnRinMapsBundle/Controller/"
     type:     annotation
-    prefix:   /maps/
+    prefix:   /
 
 corahn_rin_admin:
     resource: "@CorahnRinAdminBundle/Controller/"
@@ -21,7 +21,7 @@ corahn_rin_pages:
 corahn_rin_characters:
     resource: "@CorahnRinCharactersBundle/Controller/"
     type:     annotation
-    prefix:   /characters/
+    prefix:   /
 
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"

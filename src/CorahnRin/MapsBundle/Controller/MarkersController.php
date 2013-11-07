@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class MarkersController extends Controller
 {
     /**
-     * @Route("/markers")
+     * @Route("/admin/maps/markers")
      * @Template()
      */
     public function indexAction()
@@ -17,7 +17,7 @@ class MarkersController extends Controller
     }
 
     /**
-     * @Route("/markers/add")
+     * @Route("/admin/maps/markers/add")
      * @Template()
      */
     public function addAction()
@@ -25,7 +25,7 @@ class MarkersController extends Controller
     }
 
     /**
-     * @Route("/markers/edit/{id}")
+     * @Route("/admin/maps/markers/edit/{id}")
      * @Template()
      */
     public function editAction($id)
@@ -33,7 +33,7 @@ class MarkersController extends Controller
     }
 
     /**
-     * @Route("/markers/delete/{id}")
+     * @Route("/admin/maps/markers/delete/{id}")
      * @Template()
      */
     public function deleteAction($id)

@@ -11,7 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class ViewerController extends Controller
 {
     /**
-     * @Route("/{id}-{nameSlug}", requirements={"id" = "\d+"})
+     * @Route("/characters/{id}-{nameSlug}", requirements={"id" = "\d+"})
      * @Template()
      */
     public function viewAction(Characters $character)
@@ -20,7 +20,7 @@ class ViewerController extends Controller
     }
 
     /**
-     * @Route("/")
+     * @Route("/characters")
      * @Template()
      */
     public function listAction()
@@ -35,7 +35,7 @@ class ViewerController extends Controller
     }
 
     /**
-     * @Route("/pdf/{id}-{name}.pdf")
+     * @Route("/characters/pdf/{id}-{name}.pdf")
      * @Template()
      */
     public function pdfAction($id, $name)
@@ -43,7 +43,7 @@ class ViewerController extends Controller
     }
 
     /**
-     * @Route("/zip/{id}-{name}.zip")
+     * @Route("/characters/zip/{id}-{name}.zip")
      * @Template()
      */
     public function zipAction($id, $name)
@@ -51,7 +51,7 @@ class ViewerController extends Controller
     }
 
     /**
-     * @Route("/jpg/{id}-{name}.zip")
+     * @Route("/characters/jpg/{id}-{name}.zip")
      * @Template()
      */
     public function jpgAction($id, $name)
