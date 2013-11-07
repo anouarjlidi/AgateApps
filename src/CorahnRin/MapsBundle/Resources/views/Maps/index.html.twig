@@ -1,7 +1,15 @@
-{% extends "::base.html.twig" %}
+{% extends "::layout.html.twig" %}
 
-{% block title %}CorahnRinMapsBundle:Maps:view{% endblock %}
+{% block title %}{{ 'Liste des cartes' | tr }} - {{ parent() }}{% endblock %}
 
-{% block body %}
-<h1>Welcome to the Maps:view page</h1>
+{% block content_for_layout %}
+<h1>{{ 'Liste des cartes' | tr }}</h1>
+
+<ul>
+    {% for map in list %}
+    <li>{{ map.name }} <small><a href="{{ asset(map.image) }}">{{ 'Voir l\'image' | tr }}</a></li>
+    {% else %}
+    <li>{{ 'Aucun élément' | tr }}</li>
+    {% endfor %}
+</ul>
 {% endblock %}
