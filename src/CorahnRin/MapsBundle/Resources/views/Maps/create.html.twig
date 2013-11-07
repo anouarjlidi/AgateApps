@@ -7,10 +7,10 @@
 
 {% if valid %} 
 <div class="well">
-    <p>Name : {{ map.getName() }}</p>
-    <p>Desc : {{ map.getDescription() }}</p>
-    <p>Zoom : {{ map.getMaxZoom() }}</p>
-    <p>Image : <img src="{{ asset(map.getImage()) }}" /></p>
+    <p>Name : {{ map.name }}</p>
+    <p>Desc : {{ map.description }}</p>
+    <p>Zoom : {{ map.maxZoom }}</p>
+    <p>Image : <img src="{{ asset(map.image) }}" /></p>
 </div>
 {% endif %}
 
