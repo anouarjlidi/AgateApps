@@ -4,7 +4,7 @@ namespace CorahnRin\MapsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection as DoctrineCollection;
-
+use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * Maps
  *
@@ -32,6 +32,14 @@ class Maps
     /**
      * @var string
      *
+     * @Gedmo\Slug(fields={"name"})
+     * @ORM\Column(type="string", length=255, nullable=false, unique=true)
+     */
+    private $nameSlug;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=255, nullable=false)
      */
     private $image;
@@ -39,7 +47,7 @@ class Maps
     /**
      * @var string
      *
-     * @ORM\Column(type="text", nullable=false)
+     * @ORM\Column(type="text", nullable=true)
      */
     private $description;
 
@@ -53,7 +61,7 @@ class Maps
     /**
      * @var \DateTime
      *
-	 * @Gedmo\Mapping\Annotation\Timestampable(on="create")
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
      */
     private $created;
@@ -61,7 +69,7 @@ class Maps
     /**
      * @var \DateTime
      *
-	 * @Gedmo\Mapping\Annotation\Timestampable(on="update")
+     * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
     private $updated;
@@ -91,6 +99,7 @@ class Maps
      */
     public function __construct()
     {
+        $this->setMaxZoom(10);
         $this->routes = new \Doctrine\Common\Collections\ArrayCollection();
         $this->markers = new \Doctrine\Common\Collections\ArrayCollection();
         $this->zones = new \Doctrine\Common\Collections\ArrayCollection();
