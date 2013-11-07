@@ -17,7 +17,7 @@ class MenusController extends Controller {
 			'corahnrin_pages_versions_index' => 'Mises à jour',
 		);
 		$username = $this->get('fos_user.user_provider.username');
-		return array('links' => $links, 'route_name' => $route);
+		return array('links' => $links, 'route_name' => $route,'locale'=>strtoupper($this->get('session')->get('_locale')));
 	}
 
 	/**
