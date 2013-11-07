@@ -351,4 +351,27 @@ class Maps
     {
         return $this->zones;
     }
+
+    /**
+     * Set nameSlug
+     *
+     * @param string $nameSlug
+     * @return Maps
+     */
+    public function setNameSlug($nameSlug)
+    {
+        $this->nameSlug = $nameSlug;
+
+        return $this;
+    }
+
+    /**
+     * Get nameSlug
+     *
+     * @return string 
+     */
+    public function getNameSlug()
+    {
+        return $this->nameSlug;
+    }
 }
