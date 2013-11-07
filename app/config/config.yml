@@ -90,6 +90,12 @@ services:
         class: Twig_Extensions_Extension_Text
         tags:
             - name: twig.extension 
+    corahn_rin_translate:
+        class: CorahnRin\TranslateBundle\Classes\Translator
+        arguments:
+            locale: %kernel.default_locale%
+            translation_output: "%kernel.root_dir%/Resources/Translations/"
+            langs: fr,en,de
             
 corahn_rin_translate:
     translation_output: "%kernel.root_dir%/Resources/Translations/"
