@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "297c1ee94797cd4d8d515f9cf8f3811f",
+    "hash": "166d44bacae640b0e5ffc3279cd2bc68",
     "packages": [
         {
             "name": "corahnrin/translate",
@@ -11,12 +11,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Pierstoval/CorahnRinTranslate.git",
-                "reference": "d59ddbea33ee7160ad002739f2b3fac5a71f5ead"
+                "reference": "dc07c510e0eee7c00b439001b2e30e0897b52faf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Pierstoval/CorahnRinTranslate/zipball/d59ddbea33ee7160ad002739f2b3fac5a71f5ead",
-                "reference": "d59ddbea33ee7160ad002739f2b3fac5a71f5ead",
+                "url": "https://api.github.com/repos/Pierstoval/CorahnRinTranslate/zipball/dc07c510e0eee7c00b439001b2e30e0897b52faf",
+                "reference": "dc07c510e0eee7c00b439001b2e30e0897b52faf",
                 "shasum": ""
             },
             "type": "library",
@@ -25,7 +25,7 @@
                     "CorahnRin": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "notification-url": "http://packagist.org/downloads/",
             "authors": [
                 {
                     "name": "Alex Pierstoval",
@@ -42,7 +42,7 @@
                 "trans",
                 "translate"
             ],
-            "time": "2013-11-01 20:30:06"
+            "time": "2013-11-06 22:52:32"
         },
         {
             "name": "doctrine/annotations",
@@ -661,12 +661,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSUserBundle.git",
-                "reference": "0cb03029c7c1c833a11c7bebf30125276f0aa5b9"
+                "reference": "e543600e49216765315610b6281349ee86dfe87e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/0cb03029c7c1c833a11c7bebf30125276f0aa5b9",
-                "reference": "0cb03029c7c1c833a11c7bebf30125276f0aa5b9",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/e543600e49216765315610b6281349ee86dfe87e",
+                "reference": "e543600e49216765315610b6281349ee86dfe87e",
                 "shasum": ""
             },
             "require": {
@@ -697,7 +697,7 @@
                     "FOS\\UserBundle": ""
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "notification-url": "http://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -721,7 +721,7 @@
             "keywords": [
                 "User management"
             ],
-            "time": "2013-10-28 10:50:07"
+            "time": "2013-11-07 03:54:10"
         },
         {
             "name": "gedmo/doctrine-extensions",
@@ -1759,16 +1759,21 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/twbs/bootstrap.git",
-                "reference": "19fdd707efecbb7fa26be242b6785a3bf9bf0211"
+                "reference": "c84d96ac1fa6af162fdb069eec9cf5a426692677"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/19fdd707efecbb7fa26be242b6785a3bf9bf0211",
-                "reference": "19fdd707efecbb7fa26be242b6785a3bf9bf0211",
+                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/c84d96ac1fa6af162fdb069eec9cf5a426692677",
+                "reference": "c84d96ac1fa6af162fdb069eec9cf5a426692677",
                 "shasum": ""
             },
             "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.0.x-dev"
+                }
+            },
+            "notification-url": "http://packagist.org/downloads/",
             "license": [
                 "Apache-2.0"
             ],
@@ -1788,7 +1793,7 @@
                 "bootstrap",
                 "css"
             ],
-            "time": "2013-10-31 20:36:52"
+            "time": "2013-11-06 18:30:39"
         }
     ],
     "packages-dev": [

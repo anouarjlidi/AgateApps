@@ -13,7 +13,7 @@
         "symfony/symfony": "2.3.*",
         "doctrine/orm": "2.4.*-dev",
         "doctrine/doctrine-bundle": "1.2.*",
-		"twig/extensions": "1.0.*@dev",
+        "twig/extensions": "1.0.*@dev",
         "symfony/assetic-bundle": "2.3.*",
         "symfony/swiftmailer-bundle": "2.3.*",
         "symfony/monolog-bundle": "2.3.*",
@@ -22,9 +22,9 @@
         "sensio/generator-bundle": "2.3.*",
         "incenteev/composer-parameter-handler": "~2.0",
         "friendsofsymfony/user-bundle": "dev-master",
-		"twitter/bootstrap": "dev-master",
-		"stof/doctrine-extensions-bundle": "dev-master",
-		"corahnrin/translate": "dev-master"
+        "twitter/bootstrap": "dev-master",
+        "stof/doctrine-extensions-bundle": "dev-master",
+        "corahnrin/translate": "dev-master"
     },
     "scripts": {
         "post-install-cmd": [
