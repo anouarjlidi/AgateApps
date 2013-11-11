@@ -22,6 +22,12 @@ class CorahnRinMapsExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+        $config['tile_size'] = (int) $config['tile_size'];
+
+        foreach ($config as $name => $value) {
+            $container->setParameter('corahn_rin_maps.'.$name, $value);
+        }
+
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
     }
