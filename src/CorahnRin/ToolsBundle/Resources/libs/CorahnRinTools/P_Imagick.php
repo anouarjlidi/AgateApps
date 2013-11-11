@@ -35,9 +35,7 @@ class P_Imagick {
 		$dest = str_replace(DS, '/', $dest);
 		$this->source_file = $source;
 		$this->destination_file = $dest;
-		if (!preg_match('#convert$#', $convert_path)) {
-			$convert_path .= 'convert';
-		}
+
 		$this->convert_path = $convert_path;
 		$this->cmd[0] = '"'.$convert_path.'" "'.$source.'" ';
 	}
@@ -128,7 +126,11 @@ class P_Imagick {
 		$font = (string) $font;
 		$font = str_replace(DS, '/', $font);
 
-		$contents = Translate::clean_word($contents);
+		$contents = preg_replace('#\s\s+#sUu', ' ', $contents);
+		$contents = str_replace('’', "'", $contents);
+		$contents = str_replace('\\\'', "'", $contents);
+		$contents = str_replace('★', '&#9733;', $contents);
+		$contents = trim($contents);
 // 		$contents = str_replace('"', '\"', $contents);
 		$contents = Encoding::toISO8859($contents);
 
