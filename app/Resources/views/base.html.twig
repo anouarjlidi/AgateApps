@@ -8,34 +8,33 @@
 
         {% block more_headers %}{% endblock %}
 
-        {% block stylesheets %}{% endblock %}
-
-        {% stylesheets
-            '../vendor/twitter/bootstrap/dist/css/bootstrap.min.css'
-            '../vendor/twitter/bootstrap/dist/css/bootstrap-theme.min.css'
-            '../src/CorahnRin/PagesBundle/Resources/public/css/jquery-ui.css'
-            '../src/CorahnRin/PagesBundle/Resources/public/css/initializer.css'
-            '../src/CorahnRin/PagesBundle/Resources/public/css/corahn_rin.css'
-            output="css/theme.css"
-            filter="yui_css"
-        %}<link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
-        {% endstylesheets %}
+        {% block stylesheets %}
+            {% stylesheets
+                '../vendor/twitter/bootstrap/dist/css/bootstrap.min.css'
+                '../vendor/twitter/bootstrap/dist/css/bootstrap-theme.min.css'
+                '../src/CorahnRin/PagesBundle/Resources/public/css/jquery-ui.css'
+                '../src/CorahnRin/PagesBundle/Resources/public/css/initializer.css'
+                '../src/CorahnRin/PagesBundle/Resources/public/css/corahn_rin.css'
+                output="css/theme.css"
+                filter="yui_css"
+            %}<link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+            {% endstylesheets %}
+        {% endblock %}
 
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
         {% block body %}{% endblock %}
 
-        {% block javascripts %}{% endblock %}
-
-        {% javascripts
-            '../vendor/twitter/bootstrap/js/tests/vendor/jquery.js'
-            '../vendor/twitter/bootstrap/dist/js/bootstrap.js'
-            '../vendor/corahnrin/translate/src/CorahnRin/TranslateBundle/Resources/public/main.js'
-            output="js/main.js"
-            filter="yui_js"
-        %}<script type="text/javascript" src="{{ asset_url }}"></script>
-        {% endjavascripts %}
+        {% block javascripts %}
+            {% javascripts
+                '../vendor/twitter/bootstrap/js/tests/vendor/jquery.js'
+                '../vendor/twitter/bootstrap/dist/js/bootstrap.js'
+                '@TranslateBundle/Resources/public/js/main.js'
+                output="js/main.js"
+                filter="yui_js"
+            %}<script type="text/javascript" src="{{ asset_url }}"></script>{% endjavascripts %}
+        {% endblock %}
 
     </body>
 </html>
