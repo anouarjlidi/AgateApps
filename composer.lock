@@ -11,12 +11,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Pierstoval/CorahnRinTranslate.git",
-                "reference": "97bd3b971f0838c2e74ac57b65bd5758989731f3"
+                "reference": "576556dfa387bd8b49d99ab54ae8fc39ce79d98a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Pierstoval/CorahnRinTranslate/zipball/97bd3b971f0838c2e74ac57b65bd5758989731f3",
-                "reference": "97bd3b971f0838c2e74ac57b65bd5758989731f3",
+                "url": "https://api.github.com/repos/Pierstoval/CorahnRinTranslate/zipball/576556dfa387bd8b49d99ab54ae8fc39ce79d98a",
+                "reference": "576556dfa387bd8b49d99ab54ae8fc39ce79d98a",
                 "shasum": ""
             },
             "type": "library",
@@ -38,11 +38,11 @@
             "keywords": [
                 "Symfony2",
                 "internationalization",
-                "traduction",
                 "trans",
-                "translate"
+                "translate",
+                "translation"
             ],
-            "time": "2013-11-07 07:36:41"
+            "time": "2013-11-10 13:31:09"
         },
         {
             "name": "doctrine/annotations",
@@ -697,7 +697,7 @@
                     "FOS\\UserBundle": ""
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "notification-url": "http://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -725,16 +725,16 @@
         },
         {
             "name": "gedmo/doctrine-extensions",
-            "version": "v2.3.7",
+            "version": "v2.3.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/l3pp4rd/DoctrineExtensions.git",
-                "reference": "0aa660ffea298b630b8ded7bd2a7eae0d8619fdb"
+                "reference": "d2bef940268e4dc5f0f050e80458169a7267813a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/l3pp4rd/DoctrineExtensions/zipball/0aa660ffea298b630b8ded7bd2a7eae0d8619fdb",
-                "reference": "0aa660ffea298b630b8ded7bd2a7eae0d8619fdb",
+                "url": "https://api.github.com/repos/l3pp4rd/DoctrineExtensions/zipball/d2bef940268e4dc5f0f050e80458169a7267813a",
+                "reference": "d2bef940268e4dc5f0f050e80458169a7267813a",
                 "shasum": ""
             },
             "require": {
@@ -801,7 +801,7 @@
                 "tree",
                 "uploadable"
             ],
-            "time": "2013-08-18 07:18:44"
+            "time": "2013-11-09 21:23:13"
         },
         {
             "name": "incenteev/composer-parameter-handler",
@@ -1759,12 +1759,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/twbs/bootstrap.git",
-                "reference": "463343af63344dbbc3db04f40b0b804baa919b7e"
+                "reference": "e7d6af003e6af02c26cc8864da72dc807f8f97a1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/463343af63344dbbc3db04f40b0b804baa919b7e",
-                "reference": "463343af63344dbbc3db04f40b0b804baa919b7e",
+                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/e7d6af003e6af02c26cc8864da72dc807f8f97a1",
+                "reference": "e7d6af003e6af02c26cc8864da72dc807f8f97a1",
                 "shasum": ""
             },
             "type": "library",
@@ -1793,7 +1793,7 @@
                 "bootstrap",
                 "css"
             ],
-            "time": "2013-11-07 02:38:27"
+            "time": "2013-11-11 01:33:12"
         }
     ],
     "packages-dev": [
