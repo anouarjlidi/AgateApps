@@ -2,6 +2,7 @@
 
 namespace CorahnRin\MapsBundle\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection as DoctrineCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -52,9 +53,13 @@ class Maps
     private $description;
 
     /**
-     * @var boolean
+     * @var integer
      *
-     * @ORM\Column(type="boolean", nullable=false)
+     * @ORM\Column(type="smallint", nullable=false)
+     * @Assert\Range(
+     *      min = 1,
+     *      max = 10
+     * )
      */
     private $maxZoom;
 
