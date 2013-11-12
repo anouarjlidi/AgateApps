@@ -11,12 +11,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Pierstoval/CorahnRinTranslate.git",
-                "reference": "576556dfa387bd8b49d99ab54ae8fc39ce79d98a"
+                "reference": "0fde1a1da6b8b109ac37540e74d10c5277c83750"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Pierstoval/CorahnRinTranslate/zipball/576556dfa387bd8b49d99ab54ae8fc39ce79d98a",
-                "reference": "576556dfa387bd8b49d99ab54ae8fc39ce79d98a",
+                "url": "https://api.github.com/repos/Pierstoval/CorahnRinTranslate/zipball/0fde1a1da6b8b109ac37540e74d10c5277c83750",
+                "reference": "0fde1a1da6b8b109ac37540e74d10c5277c83750",
                 "shasum": ""
             },
             "type": "library",
@@ -33,7 +33,7 @@
                     "homepage": "http://www.pierstoval.com/"
                 }
             ],
-            "description": "Replaces Symfony2 native translator to a more simple one, registering all translations whenever they are called",
+            "description": "Replaces Symfony2 native translator to a more simple one, registering all translations whenever they are called. Send me a message on Github if you need explanations ! I'm available all day.",
             "homepage": "https://github.com/Pierstoval/CorahnRinTranslate/",
             "keywords": [
                 "Symfony2",
@@ -42,7 +42,7 @@
                 "translate",
                 "translation"
             ],
-            "time": "2013-11-10 13:31:09"
+            "time": "2013-11-12 20:58:15"
         },
         {
             "name": "doctrine/annotations",
@@ -331,16 +331,16 @@
         },
         {
             "name": "doctrine/dbal",
-            "version": "v2.4.0",
+            "version": "v2.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "3eb557f144ec41e6e84997e43acb1946c92fbc88"
+                "reference": "328357bd9eea9d671fe5fff0737f01953bfe66a0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/3eb557f144ec41e6e84997e43acb1946c92fbc88",
-                "reference": "3eb557f144ec41e6e84997e43acb1946c92fbc88",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/328357bd9eea9d671fe5fff0737f01953bfe66a0",
+                "reference": "328357bd9eea9d671fe5fff0737f01953bfe66a0",
                 "shasum": ""
             },
             "require": {
@@ -368,7 +368,8 @@
                 {
                     "name": "Jonathan Wage",
                     "email": "jonwage@gmail.com",
-                    "homepage": "http://www.jwage.com/"
+                    "homepage": "http://www.jwage.com/",
+                    "role": "Creator"
                 },
                 {
                     "name": "Guilherme Blanco",
@@ -392,7 +393,7 @@
                 "persistence",
                 "queryobject"
             ],
-            "time": "2013-09-07 10:49:18"
+            "time": "2013-11-12 12:38:28"
         },
         {
             "name": "doctrine/doctrine-bundle",
@@ -585,12 +586,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/doctrine2.git",
-                "reference": "e82e7147fa5b7bbb5c9315885e5905521c00bc29"
+                "reference": "c4b7d3fbea7970ec1fd9ef0c258654be54763195"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/e82e7147fa5b7bbb5c9315885e5905521c00bc29",
-                "reference": "e82e7147fa5b7bbb5c9315885e5905521c00bc29",
+                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/c4b7d3fbea7970ec1fd9ef0c258654be54763195",
+                "reference": "c4b7d3fbea7970ec1fd9ef0c258654be54763195",
                 "shasum": ""
             },
             "require": {
@@ -630,7 +631,8 @@
                 {
                     "name": "Jonathan Wage",
                     "email": "jonwage@gmail.com",
-                    "homepage": "http://www.jwage.com/"
+                    "homepage": "http://www.jwage.com/",
+                    "role": "Creator"
                 },
                 {
                     "name": "Guilherme Blanco",
@@ -652,7 +654,7 @@
                 "database",
                 "orm"
             ],
-            "time": "2013-10-29 08:25:13"
+            "time": "2013-11-12 12:40:15"
         },
         {
             "name": "friendsofsymfony/user-bundle",
@@ -1663,12 +1665,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fabpot/Twig-extensions.git",
-                "reference": "f91a82ec225e5bb108e01a0f93c9be04f84dcfa0"
+                "reference": "d4dc27cc824b2b4faf7edbfbe652e3fdaec696b6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fabpot/Twig-extensions/zipball/f91a82ec225e5bb108e01a0f93c9be04f84dcfa0",
-                "reference": "f91a82ec225e5bb108e01a0f93c9be04f84dcfa0",
+                "url": "https://api.github.com/repos/fabpot/Twig-extensions/zipball/d4dc27cc824b2b4faf7edbfbe652e3fdaec696b6",
+                "reference": "d4dc27cc824b2b4faf7edbfbe652e3fdaec696b6",
                 "shasum": ""
             },
             "require": {
@@ -1702,7 +1704,7 @@
                 "i18n",
                 "text"
             ],
-            "time": "2013-10-18 19:37:15"
+            "time": "2013-11-11 19:09:41"
         },
         {
             "name": "twig/twig",
@@ -1759,12 +1761,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/twbs/bootstrap.git",
-                "reference": "e7d6af003e6af02c26cc8864da72dc807f8f97a1"
+                "reference": "c1c2a8e18867bfa1644928428c693b367a5617a1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/e7d6af003e6af02c26cc8864da72dc807f8f97a1",
-                "reference": "e7d6af003e6af02c26cc8864da72dc807f8f97a1",
+                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/c1c2a8e18867bfa1644928428c693b367a5617a1",
+                "reference": "c1c2a8e18867bfa1644928428c693b367a5617a1",
                 "shasum": ""
             },
             "type": "library",
@@ -1793,7 +1795,7 @@
                 "bootstrap",
                 "css"
             ],
-            "time": "2013-11-11 01:33:12"
+            "time": "2013-11-11 22:44:40"
         }
     ],
     "packages-dev": [
