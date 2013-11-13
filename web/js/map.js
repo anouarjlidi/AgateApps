@@ -1,0 +1,1 @@
+function Map(b,a){this.id=b;this.zoom={actual:a,max:0};this.name="";this.nameSlug="";this.apiUrl="../";this.init=function(c){}};
