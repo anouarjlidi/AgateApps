@@ -11,12 +11,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Pierstoval/CorahnRinTranslate.git",
-                "reference": "3c9907e1877ff8e505108736d6e6b180766d63ce"
+                "reference": "84a1fd28b7ca02fd6618f68f3e9a63e1850d5143"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Pierstoval/CorahnRinTranslate/zipball/3c9907e1877ff8e505108736d6e6b180766d63ce",
-                "reference": "3c9907e1877ff8e505108736d6e6b180766d63ce",
+                "url": "https://api.github.com/repos/Pierstoval/CorahnRinTranslate/zipball/84a1fd28b7ca02fd6618f68f3e9a63e1850d5143",
+                "reference": "84a1fd28b7ca02fd6618f68f3e9a63e1850d5143",
                 "shasum": ""
             },
             "require": {
@@ -45,7 +45,7 @@
                 "translate",
                 "translation"
             ],
-            "time": "2013-11-14 07:20:57"
+            "time": "2013-11-14 23:14:26"
         },
         {
             "name": "doctrine/annotations",
