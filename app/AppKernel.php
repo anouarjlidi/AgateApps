@@ -26,7 +26,6 @@ class AppKernel extends Kernel
             new CorahnRin\MapsBundle\CorahnRinMapsBundle(),
             new CorahnRin\ToolsBundle\CorahnRinToolsBundle(),
             new CorahnRin\TranslateBundle\CorahnRinTranslateBundle(),
-            new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
