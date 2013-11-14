@@ -3,24 +3,24 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "7ea59bffb27f2fb9a44010651efc213e",
+    "hash": "166d44bacae640b0e5ffc3279cd2bc68",
     "packages": [
         {
             "name": "corahnrin/translate",
-            "version": "0.9.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Pierstoval/CorahnRinTranslate.git",
-                "reference": "bcafbcc2fcdf40469d4ef35ac59171ee4ee7ffe4"
+                "reference": "3c9907e1877ff8e505108736d6e6b180766d63ce"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Pierstoval/CorahnRinTranslate/zipball/bcafbcc2fcdf40469d4ef35ac59171ee4ee7ffe4",
-                "reference": "bcafbcc2fcdf40469d4ef35ac59171ee4ee7ffe4",
+                "url": "https://api.github.com/repos/Pierstoval/CorahnRinTranslate/zipball/3c9907e1877ff8e505108736d6e6b180766d63ce",
+                "reference": "3c9907e1877ff8e505108736d6e6b180766d63ce",
                 "shasum": ""
             },
             "require": {
-                "friendsofsymfony/jsrouting-bundle": "1.*"
+                "twitter/bootstrap": "dev-master"
             },
             "type": "library",
             "autoload": {
@@ -45,7 +45,7 @@
                 "translate",
                 "translation"
             ],
-            "time": "2013-11-13 19:43:20"
+            "time": "2013-11-14 07:20:57"
         },
         {
             "name": "doctrine/annotations",
@@ -1913,7 +1913,8 @@
         "twig/extensions": 20,
         "friendsofsymfony/user-bundle": 20,
         "twitter/bootstrap": 20,
-        "stof/doctrine-extensions-bundle": 20
+        "stof/doctrine-extensions-bundle": 20,
+        "corahnrin/translate": 20
     },
     "platform": {
         "php": ">=5.3.3"
