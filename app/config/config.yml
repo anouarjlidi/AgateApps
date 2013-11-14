@@ -36,7 +36,7 @@ twig:
 assetic:
     debug:          %kernel.debug%
     use_controller: false
-    bundles:        ['CorahnRinMapsBundle','CorahnRinCharactersBundle']
+    bundles:        ['CorahnRinMapsBundle','CorahnRinCharactersBundle','CorahnRinTranslateBundle']
     #java: /usr/bin/java
     filters:
         cssrewrite: ~
