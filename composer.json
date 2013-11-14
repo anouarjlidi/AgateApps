@@ -24,7 +24,7 @@
         "friendsofsymfony/user-bundle": "dev-master",
         "twitter/bootstrap": "dev-master",
         "stof/doctrine-extensions-bundle": "dev-master",
-        "corahnrin/translate": "dev-master"
+        "corahnrin/translate": "0.9.*"
     },
     "scripts": {
         "post-install-cmd": [
@@ -45,7 +45,7 @@
     "config": {
         "bin-dir": "bin"
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "extra": {
         "symfony-app-dir": "app",
         "symfony-web-dir": "web",
