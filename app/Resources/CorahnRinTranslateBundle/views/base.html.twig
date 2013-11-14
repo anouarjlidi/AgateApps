@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Corahn-Rin{% endblock %}</title>
+        <meta name="generator" value="Corahn Rin {{ constant('P_VERSION_CODE') }} - {{ constant('P_VERSION_DATE') }} - Automatic character creation by Pierstoval" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        {% block more_headers %}{% endblock %}
+
+        {% block stylesheets %}
+            {% stylesheets
+                '../vendor/twitter/bootstrap/dist/css/bootstrap.min.css'
+                '../vendor/twitter/bootstrap/dist/css/bootstrap-theme.min.css'
+                '../src/CorahnRin/PagesBundle/Resources/public/css/jquery-ui.css'
+                '../src/CorahnRin/PagesBundle/Resources/public/css/initializer.css'
+                '../src/CorahnRin/PagesBundle/Resources/public/css/corahn_rin.css'
+                output="css/theme.css"
+                filter="yui_css"
+            %}<link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+            {% endstylesheets %}
+        {% endblock %}
+
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body>
+        {% block body %}{% endblock %}
+
+        {% block javascripts %}
+            {% javascripts
+                '../vendor/twitter/bootstrap/js/tests/vendor/jquery.js'
+                '../vendor/twitter/bootstrap/dist/js/bootstrap.js'
+                '@CorahnRinTranslateBundle/Resources/public/js/main.js'
+                output="js/main.js"
+                filter="yui_js"
+            %}<script type="text/javascript" src="{{ asset_url }}"></script>{% endjavascripts %}
+        {% endblock %}
+
+    </body>
+</html>
