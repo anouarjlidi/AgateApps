@@ -97,8 +97,5 @@ services:
             translation_output: "%kernel.root_dir%/Resources/Translations/"
             langs: fr,en,de
 
-corahn_rin_translate:
-    translation_output: "%kernel.root_dir%/Resources/Translations/"
-
 corahn_rin_maps:
     tile_size: 168
