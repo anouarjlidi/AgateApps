@@ -3,24 +3,24 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "e720e4fb7827e9dc7bda566079f8d03a",
+    "hash": "58ab3d549b1757b9ac1b7dd4ec73cdd6",
     "packages": [
         {
             "name": "corahnrin/translate",
-            "version": "1.0.2",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Pierstoval/CorahnRinTranslate.git",
-                "reference": "ca56d1185728e2c88dbdc28aaf7882f36fa96b7e"
+                "reference": "d2ff44f9727d4571c6424882fddb7efc9b47f408"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Pierstoval/CorahnRinTranslate/zipball/ca56d1185728e2c88dbdc28aaf7882f36fa96b7e",
-                "reference": "ca56d1185728e2c88dbdc28aaf7882f36fa96b7e",
+                "url": "https://api.github.com/repos/Pierstoval/CorahnRinTranslate/zipball/d2ff44f9727d4571c6424882fddb7efc9b47f408",
+                "reference": "d2ff44f9727d4571c6424882fddb7efc9b47f408",
                 "shasum": ""
             },
             "require": {
-                "twitter/bootstrap": "dev-master"
+                "twitter/bootstrap": "3.*"
             },
             "type": "library",
             "autoload": {
@@ -45,7 +45,7 @@
                 "translate",
                 "translation"
             ],
-            "time": "2013-11-16 10:33:42"
+            "time": "2013-11-16 10:57:14"
         },
         {
             "name": "doctrine/annotations",
@@ -1765,16 +1765,16 @@
         },
         {
             "name": "twitter/bootstrap",
-            "version": "dev-master",
+            "version": "v3.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twbs/bootstrap.git",
-                "reference": "7545da2e3c5488b1bcc9c70fecac759232466756"
+                "reference": "3887f540b978d593f433bfef15888bc2d103de72"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/7545da2e3c5488b1bcc9c70fecac759232466756",
-                "reference": "7545da2e3c5488b1bcc9c70fecac759232466756",
+                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/3887f540b978d593f433bfef15888bc2d103de72",
+                "reference": "3887f540b978d593f433bfef15888bc2d103de72",
                 "shasum": ""
             },
             "type": "library",
@@ -1803,7 +1803,7 @@
                 "bootstrap",
                 "css"
             ],
-            "time": "2013-11-15 07:58:29"
+            "time": "2013-11-06 21:19:18"
         }
     ],
     "packages-dev": [
@@ -1817,7 +1817,6 @@
         "doctrine/orm": 20,
         "twig/extensions": 20,
         "friendsofsymfony/user-bundle": 20,
-        "twitter/bootstrap": 20,
         "stof/doctrine-extensions-bundle": 20
     },
     "platform": {
