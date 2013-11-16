@@ -22,9 +22,9 @@
         "sensio/generator-bundle": "2.3.*",
         "incenteev/composer-parameter-handler": "~2.0",
         "friendsofsymfony/user-bundle": "dev-master",
-        "twitter/bootstrap": "dev-master",
+        "twitter/bootstrap": "3.*",
         "stof/doctrine-extensions-bundle": "dev-master",
-        "corahnrin/translate": "dev-master"
+        "corahnrin/translate": "1.*"
     },
     "scripts": {
         "post-install-cmd": [
