@@ -23,9 +23,6 @@ class MapsTileManager {
 
     public function mapDestinationName($zoom, $x, $y) {
         $imgname = ROOT.'/app/cache/maps_img/'.$this->map->getNameSlug().'/'.$this->map->getNameSlug().'_'.$zoom.'_'.$x.'_'.$y.'.jpg';
-        if (!is_dir(dirname($imgname))) {
-            mkdir(dirname($imgname), 0777, true);
-        }
         return $imgname;
     }
 
@@ -79,6 +76,10 @@ class MapsTileManager {
 
         if ($x < 0 || $x > $identification['xmax']) { throw new \RunTimeException('"x" value must be between 0 and '.$identification['xmax'].'.'); }
         if ($y < 0 || $y > $identification['ymax']) { throw new \RunTimeException('"y" value must be between 0 and '.$identification['ymax'].'.'); }
+
+        if (!is_dir(dirname($imgname))) {
+            mkdir(dirname($imgname), 0777, true);
+        }
 
         $_x = $x*$this->img_size;
         $_y = $y*$this->img_size;
