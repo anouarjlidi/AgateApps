@@ -16,7 +16,7 @@ class ApiController extends Controller {
     private $json_params = 0;
 
     /**
-     * @Route("/api/maps/tile/{id}/{zoom}/{x}/{y}", requirements={"id":"\d+")
+     * @Route("/api/maps/tile/{id}/{zoom}/{x}/{y}", requirements={"id":"\d+"})
      */
     public function tileAction(Maps $map, $zoom, $x, $y) {
         $zoom = (int) $zoom;
