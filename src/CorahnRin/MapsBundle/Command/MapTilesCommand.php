@@ -201,6 +201,7 @@ class MapTilesCommand extends ContainerAwareCommand {
             }
         }
 
+        $output->writeln("\n");
 		$output->writeln('End of function !');
         $output->writeln($files_written.' files have been written !');
         $output->writeln('Execution time : '.gmdate('H:i:s', microtime(true) - $global_time));
