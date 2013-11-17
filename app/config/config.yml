@@ -89,13 +89,17 @@ services:
     twig.text_extension:
         class: Twig_Extensions_Extension_Text
         tags:
-            - name: twig.extension 
+            - name: twig.extension
     corahn_rin_translate:
         class: CorahnRin\TranslateBundle\Classes\Translator
         arguments:
             locale: %kernel.default_locale%
             translation_output: "%kernel.root_dir%/Resources/Translations/"
             langs: fr,en,de
+    MapTileCommandService:
+        class: CorahnRin\MapsBundle\Command\MapTileCommand
+        calls:
+            - [setContainer, ["@service_container"] ]
 
 corahn_rin_maps:
     tile_size: 168
