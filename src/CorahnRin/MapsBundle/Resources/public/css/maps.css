@@ -1,0 +1,27 @@
+#map_wrapper {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    min-height: 450px;
+    border: none;
+    margin: 0 auto;
+    padding: 0;
+    background-color: black;
+}
+#map_container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 0;
+    border: 0 none transparent;
+    outline: 0 none transparent;
+    padding: 0;
+}
+#map_container img {
+    border: none;
+    outline: none;
+    display: block;
+    position: absolute;
+    margin: 0;
+    padding: 0;
+}

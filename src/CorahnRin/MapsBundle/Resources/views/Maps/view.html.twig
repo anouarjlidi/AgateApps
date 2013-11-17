@@ -1,20 +1,24 @@
 {% extends "::layout.html.twig" %}
 
-{% block title %}{{ 'Carte' | tr }} {{ map.name | tr}} - {{ parent() }}{% endblock %}
+{% block javascripts %}
+    {{ parent() }}{% javascripts
+        '@CorahnRinMapsBundle/Resources/public/js/map.js'
+        output="js/map.js"
+    %}<script type="text/javascript" src="{{ asset_url }}"></script>{% endjavascripts %}
+{# filter="yui_js" #}
+    <script type="text/javascript">
+        document.map = new Map();
+    </script>
+{% endblock %}
+
+{% block title %}{{ 'Carte' | tr }} {{ map.name | tr }} - {{ parent() }}{% endblock %}
 
 {% block content_for_layout %}
 
 <h2>{{ map.name }}</h2>
 
-<div id="maps_generator" data-zoom="1" data-map-id="{{ map.id }}"></div>
-
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}{% javascripts
-        '../src/CorahnRin/MapsBundle/Resources/public/js/map.js'
-        output="js/map.js"
-        filter="yui_js"
-    %}<script type="text/javascript" src="{{ asset_url }}"></script>{% endjavascripts %}
+<div id="map_wrapper">
+    <div id="map_container" data-zoom="1" data-map-id="{{ map.id }}" data-init-url="{{ route_init }}"></div>
+</div>
 
 {% endblock %}
