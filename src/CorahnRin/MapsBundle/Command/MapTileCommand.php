@@ -6,6 +6,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+
 use CorahnRin\MapsBundle\Classes\MapsTileManager;
 
 class MapTileCommand extends ContainerAwareCommand {
@@ -30,12 +31,11 @@ class MapTileCommand extends ContainerAwareCommand {
 
 	protected function configure() {
 
-		//public function addArgument($name, $mode = null, $description = '', $default = null)
 		$this
 		->setName('corahnrin:generate:map-tile')
 		->setDescription('Generate one tile for a specific map.')
         ->setHelp('This command is used to generate a tile image for one of your maps.'."\n"
-            .'You can specify the id of the map by adding it as an argument, or as an option with "-i x" or "--i=x" where "x" is the map id'."\n"
+            .'You can specify the id of the map by adding it as an argument, or as an option with "-i x" where "x" is the map id'."\n"
             ."\n".'The command will generate a tile with three mandatory options:'
             ."\n".'x => the "x" value of the tile, from left to right, starting at 0'
             ."\n".'y => the "y" value of the tile, from top to bottom, starting at 0'
@@ -47,6 +47,7 @@ class MapTileCommand extends ContainerAwareCommand {
         ->addOption('y', 'y', InputOption::VALUE_OPTIONAL, 'Determines the "y" value of the tile', null)
         ->addOption('zoom', 'z', InputOption::VALUE_OPTIONAL, 'Determines the "zoom" value of the tile', null)
         ->addOption('replace', 'r', InputOption::VALUE_NONE, 'Replaces the tile if it already exists')
+        ->addOption('no-interaction', 'n', InputOption::VALUE_NONE, 'No interaction (used by controllers)')
         ;
 	}
 
@@ -57,8 +58,11 @@ class MapTileCommand extends ContainerAwareCommand {
         $y = $input->getOption('y');
         $zoom = $input->getOption('zoom');
 
+        $interaction = $input->getOption('no-interaction');
+
 		//Récupération du service "dialog" pour les demandes à l'utilisateur
-		$dialog = $this->getHelperSet()->get('dialog');
+        $interaction = !!$this->getHelperSet();
+        if ($interaction) { $dialog = $this->getHelperSet()->get('dialog');}
 
         $repo = $this->getContainer()->get('doctrine')->getManager()->getRepository('CorahnRinMapsBundle:Maps');
 
@@ -78,6 +82,7 @@ class MapTileCommand extends ContainerAwareCommand {
 		$output->writeln('');
 
         $map = null;
+
         // Recherche de la carte
         do {
             $map = $repo->findOneBy(array('id'=>$id));
