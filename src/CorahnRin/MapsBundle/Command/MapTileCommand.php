@@ -6,49 +6,95 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use CorahnRin\MapsBundle\Classes\MapsTileManager;
 
-class MapCommand extends ContainerAwareCommand {
+class MapTileCommand extends ContainerAwareCommand {
+
+    /**
+     * Static var to use in validators
+     * @var type int
+     */
+    public static $xmax;
+
+    /**
+     * Static var to use in validators
+     * @var type int
+     */
+    public static $ymax;
+
+    /**
+     * Static var to use in validators
+     * @var type int
+     */
+    public static $zoom;
 
 	protected function configure() {
 
 		//public function addArgument($name, $mode = null, $description = '', $default = null)
 		$this
-		->setName('corahnrin:generate:map')
-		->setDescription('Generate all files for a specific map.')
-		->addArgument('id', InputArgument::OPTIONAL, 'Enter the id of the map you want to generate');
+		->setName('corahnrin:generate:map-tile')
+		->setDescription('Generate one tile for a specific map.')
+        ->setHelp('This command is used to generate a tile image for one of your maps.'."\n"
+            .'You can specify the id of the map by adding it as an argument, or as an option with "-i x" or "--i=x" where "x" is the map id'."\n"
+            ."\n".'The command will generate a tile with three mandatory options:'
+            ."\n".'x => the "x" value of the tile, from left to right, starting at 0'
+            ."\n".'y => the "y" value of the tile, from top to bottom, starting at 0'
+            ."\n".'zoom (or -z) => the zoom value used to generate the tile, starting at 1'
+            ."\n\n".'You can also use the --replace command to overwrite any existing tile.')
+		->addArgument('id', InputArgument::OPTIONAL, 'Enter the id of the map you want to generate')
+        ->addOption('id', 'i', InputOption::VALUE_OPTIONAL, 'Enter the id of the map you want to generate', null)
+        ->addOption('x', 'x', InputOption::VALUE_OPTIONAL, 'Determines the "x" value of the tile', null)
+        ->addOption('y', 'y', InputOption::VALUE_OPTIONAL, 'Determines the "y" value of the tile', null)
+        ->addOption('zoom', 'z', InputOption::VALUE_OPTIONAL, 'Determines the "zoom" value of the tile', null)
+        ->addOption('replace', 'r', InputOption::VALUE_NONE, 'Replaces the tile if it already exists')
+        ;
 	}
 
 	protected function execute(InputInterface $input, OutputInterface $output) {
-        $global_time = microtime(true);
+
+        $id = $input->getArgument('id') ?: ($input->getOption('id') ?: null);
+        $x = $input->getOption('x');
+        $y = $input->getOption('y');
+        $zoom = $input->getOption('zoom');
+
 		//Récupération du service "dialog" pour les demandes à l'utilisateur
 		$dialog = $this->getHelperSet()->get('dialog');
-        
+
         $repo = $this->getContainer()->get('doctrine')->getManager()->getRepository('CorahnRinMapsBundle:Maps');
 
-        $list = $repo->findAll();
-        
-        $maps_list = array();
-        foreach ($list as $v) {
-            $maps_list[$v->getId()] = $v->getName();
-        }
-        unset($list);
-        
+        $list = null;
+
         $sleep = 50000;
-        
-		$output->writeln('Welcome to Corahn-Rin map generator !'); usleep($sleep);
-		$output->writeln('Be careful : as maps may be huge, this application can use a lot of memory and take very long to execute.');
-		$output->writeln('Be sure not to stop the process, as it starts by zero on each execution.');usleep($sleep);
+
+        $output->writeln('   ______                     __                   ____   _      ');
+        $output->writeln('  / ____/____   _____ ____ _ / /_   ____          / __ \\ (_)____ ');
+        $output->writeln(' / /    / __ \\ / ___// __ `// __ \\ / __ \\ ______ / /_/ // // __ \\');
+        $output->writeln('/ /___ / /_/ // /   / /_/ // / / // / / //_____// _, _// // / / /');
+        $output->writeln('\\____/ \\____//_/    \\__,_//_/ /_//_/ /_/       /_/ |_|/_//_/ /_/ ');
+        $output->writeln('');
+
+		$output->writeln('Welcome to Corahn-Rin map tile generator !');
+		$output->writeln('With this command, you will be able to generate tiles one by one for a specific map.');
 		$output->writeln('');
-        
+
         $map = null;
-		$id = (int) $input->getArgument('id');
+        // Recherche de la carte
         do {
             $map = $repo->findOneBy(array('id'=>$id));
             if (!$map) {
+                if ($list === null) {//Création de la liste si jamais un mauvais id est entré
+                    $list = $repo->findAll();
+
+                    $maps_list = array();
+                    foreach ($list as $v) {
+                        $maps_list[$v->getId()] = $v->getName();
+                    }
+                    unset($list);
+                }
                 $output->writeln('No map with this id.');
                 $id = $dialog->select(
                     $output,
-                    'Select a map to generate :',
+                    'Select a map to generate:',
                     $maps_list,
                     false,
                     false,
@@ -56,161 +102,110 @@ class MapCommand extends ContainerAwareCommand {
                 );
             }
         } while (!$map);
-        
-		$output->writeln('Generating map "'.$map->getName().'"');
 
-        $cmd = 'identify -format "%wx%h" "'.ROOT.'/web/'.$map->getImage().'"';
-        $size = shell_exec($cmd);
-        if (!$size || !preg_match('#^[0-9]+x[0-9]+$#', $size)) {
-            throw new \RunTimeException('Error while retrieving map dimensions.');
+		$output->writeln('Generating map tile for "'.$map->getName().'"');
+
+        // Récupération du paramètre "tile_size" du bundle
+        $img_size = (int) $this->getContainer()->getParameter('corahn_rin_maps.tile_size');
+
+        // Création du tilesManager
+        $tilesManager = new MapsTileManager($map, $img_size);
+
+        // Récupération d'une valeur correcte du zoom
+        self::$zoom = $map->getMaxZoom();
+        if (!$zoom || $zoom < 1 || $zoom > $map->getMaxZoom()) {
+            $zoom = $dialog->askAndValidate($output,
+                'Enter a correct zoom value between 1 and '.$map->getMaxZoom().":\n>",
+                function ($z) {
+                    $z = (int) $z;
+                    if ($z >= 1 && $z <= MapTileCommand::$zoom) { return $z;}
+                    else { throw new \RunTimeException('Value must be between 1 and '.MapTileCommand::$zoom); }
+                });
         }
-        list($w, $h) = explode('x',$size);
+        if (3 <= $output->getVerbosity()) { $output->writeln('Zoom value of '.$zoom);  }
 
-        $img_size = (int) $this->getContainer()->getParameter('corahn_rin_maps.tile_size');;
+        $identification = $tilesManager->identifyImage($zoom);
 
-        $files_written = 0;
-		$overwrite_all = 0;
-       
-        $total_files = 0;
-        $current_file = 0;
-        
-        for ($zoom = 1; $zoom <= $map->getMaxZoom(); $zoom++) {
-            $ratio = $zoom / $map->getMaxZoom();
-            $_w = (int) $w * $ratio;
-            $_h = (int) $h * $ratio;
-            $xmax = $_w / $img_size;
-            $ymax = $_h / $img_size;
-            if ((int)$xmax < $xmax) { $xmax = ((int) $xmax) + 1; }
-            if ((int)$ymax < $ymax) { $ymax = ((int) $ymax) + 1; }
-            $total_files += ($xmax)*($ymax);
+        if (2 <= $output->getVerbosity()) { $output->writeln('Maximum size of '.$identification['xmax'].'x'.$identification['ymax'].' tiles');  }
+        if (2 <= $output->getVerbosity()) { $output->writeln('Ratio of '.($zoom / $map->getMaxZoom()));  }
+        if (3 <= $output->getVerbosity()) { $output->writeln('Maximum size of '.$identification['wmax'].'x'.$identification['hmax'].' pixels');  }
+
+        //Récupération de la valeur correcte de X et Y
+        self::$xmax = $identification['xmax'];
+        self::$ymax = $identification['ymax'];
+        if (2 <= $output->getVerbosity()) { $output->writeln('Retrieving correct X and Y values');  }
+        if (!is_numeric($x) || $x < 0 || $x > $identification['xmax']) {
+            $x = $dialog->askAndValidate($output,
+                'Enter a correct "x" value between 0 and '.$identification['xmax'].":\n>",
+                function ($z) {
+                    $z = (int) $z;
+                    if ($z >= 0 && $z <= MapTileCommand::$xmax) { return $z; }
+                    else { throw new \RunTimeException('Value must be between 0 and '.MapTileCommand::$xmax); }
+                });
         }
+        if (!is_numeric($y) || $y < 0 || $y > $identification['ymax']) {
+            $y = $dialog->askAndValidate($output,
+                'Enter a correct "y" value between 0 and '.$identification['ymax'].":\n>",
+                function ($z) {
+                    $z = (int) $z;
+                    if ($z >= 0 && $z <= MapTileCommand::$ymax) { return $z; }
+                    else { throw new \RunTimeException('Value must be between 0 and '.MapTileCommand::$ymax); }
+                });
+        }
+        if (2 <= $output->getVerbosity()) { $output->writeln('Coordinates of the tile : ('.$x.', '.$y.')');  }
+        if (2 <= $output->getVerbosity()) { $output->writeln('Filename: '.$tilesManager->mapDestinationName($zoom, $x, $y));  }
 
-        $times = array();
-
-        for ($zoom = 1; $zoom <= $map->getMaxZoom(); $zoom++) {
-            $ratio = $zoom / $map->getMaxZoom();
-            $_w = (int) $w * $ratio;
-            $_h = (int) $h * $ratio;
-
-            //Calcul du nombre maximum de vignettes
-            $xmax = $_w / $img_size;
-            $ymax = $_h / $img_size;
-
-            if ((int)$xmax < $xmax) { $xmax = ((int) $xmax) + 1; }
-            if ((int)$ymax < $ymax) { $ymax = ((int) $ymax) + 1; }
-
-            $wmax = $xmax * $img_size;
-            $hmax = $ymax * $img_size;
-
-//            $total_files = ($xmax+1)*($ymax+1);
-            for ($x = 0; $x < $xmax; $x++) {
-                for ($y = 0; $y < $ymax; $y++) {
-                    $time = microtime(true);
-                    $current_file++;
-                    //Génération du nom de la tuile finale (dans le cache)
-                    $imgname = ROOT.'/app/cache/maps_img/'.$map->getNameSlug().'_'.$zoom.'_'.$x.'_'.$y.'.jpg';
-                    if (!is_dir(dirname($imgname))) { mkdir(dirname($imgname), 0777, true); }
-        			$overwrite = false;
-//                    $overwrite_all;
-        			$exists = file_exists($imgname);
-        			if ($exists) {
-        				if ($overwrite_all === 0) {
-        					$choices = array('yes','all','no','no-all','y','n','nall');
-        					$answer = $dialog->select(
-        						$output,
-        						'Following file already exists : '."\n".'> '. str_replace(ROOT, '', $imgname). "\n". 'Overwrite ? [yes]',
-        						$choices,
-        						0,
-        						false,
-        						'Answer "%s" is not correct'
-        					);
-        
-        					$answer = $choices[$answer];
-        					$selected =	$answer === 'y' ? 'yes' :
-        								($answer === 'n' ? 'no' :
-        								($answer === 'nall' ? 'no-all' : $answer));
-        					if ($selected === 'yes') {
-        						$overwrite = true;
-        					} elseif ($selected === 'all') {
-        						$overwrite = true;
-        						$overwrite_all = 1;
-        					} elseif ($selected === 'no') {
-        						$overwrite = false;
-        					} elseif ($selected === 'no-all') {
-        						$overwrite = false;
-        						$overwrite_all = 2;
-        					}
-        				} elseif ($overwrite_all === 1) {
-        					$overwrite = true;
-        				} elseif ($overwrite_all === 2) {
-        					$overwrite = false;
-        				}
-        			} else {
-        				$overwrite = true;
-        			}
-                    
-                    $_x = $x*$img_size;
-                    $_y = $y*$img_size;
-                    if ($overwrite) {
-                        $files_written++;
-                        //Génération de l'offset à partir des X et Y demandés
-
-                        //Commande ImageMagick
-                        $cmd = 'convert'.
-                                "\t".' "'.ROOT.'/web/'.$map->getImage().'"'.
-                                "\t".($ratio < 1 ? ' -resize '.($ratio*100) .'%' : '').
-                                "\t".' -background black'.//Le "surplus" sera noirs
-                                "\t".' -extent '.$wmax.'x'.$hmax.'^'.//Redimensionne aux valeurs "width" et "height" maximales dépendant du zoom
-                                "\t".' -crop '.$img_size.'x'.$img_size.'+'.$_x.'+'.$_y.//Découpe l'image selon la taille demandée dans les paramètres
-                                "\t".' -extent '.$img_size.'x'.$img_size.'^'.//Et étend les éventuels pixels en trop ou en moins
-                                "\t".' "'.$imgname.'"';
-
-//                        $output->writeln('Executing command with values :');
-//                        $output->writeln(' zoom='.$zoom);
-//                        $output->writeln(' x='.$x);
-//                        $output->writeln(' y='.$y);
-//                        $output->writeln(' ratio='.$ratio);
-//                        $output->writeln(" ".str_replace(ROOT.DS,'',$cmd));
-            //            \CorahnRinTools\pr($cmd);exit;
-//                        if (substr(php_uname(), 0, 7) == "Windows"){ 
-//                            pclose(popen("start /B ". $cmd, "r"));  
-//                        } 
-//                        else { 
-//                            shell_exec($cmd . " > /dev/null &");   
-//                        }
-                        shell_exec($cmd);
-                    }
-
-                    $p = ($current_file * 100 / $total_files);
-                    $p = number_format($p, 2, '.', '');
-                    $str = 0;
-                    $str = '[';
-                    $p2 = (int)($p/2);
-                    for ($i = 0; $i <= 50; $i++) {
-                        $str .= $p2 < $i ? ' ' : ($p2 === $i ? '>' : '=');
-                    }
-                    $str .= ']';
-                    $time = microtime(true) - $time;
-                    if ($overwrite) {
-                        $times[] = $time;
-                    }
-                    if (count($times)) {
-                        $median = array_sum($times) / count($times);
-                    } else {
-                        $median = 60*60*24*365;
-                    }
-                    $time_remaining = gmdate("H:i:s", $median * ($total_files - $current_file));
-//                    print_r(array('sum'=>array_sum($times),'count'=>count($times),'median'=>$median));
-                    $output->write(' '.$str." ".$p.'%  File '.$current_file.'/'.$total_files.'  x='.$x.' y='.$y.' z='.$zoom.'  Remaining : '.$time_remaining.' (estimation)'." \r");
-                    
-                }
+        $overwrite = $input->getOption('replace');
+        $exists = file_exists($tilesManager->mapDestinationName($zoom, $x, $y));
+        if ($exists && !$overwrite) {
+            $choices = array('yes','no');
+            $answer = $dialog->select(
+                $output,
+                'Following file already exists: '."\n".'> '.
+                str_replace(ROOT.DS, '', $tilesManager->mapDestinationName($zoom, $x, $y)).
+                "\n". 'Overwrite ? [yes]',
+                $choices,
+                0,
+                false,
+                'Answer "%s" is not correct'
+            );
+            $selected = $choices[$answer];
+            if ($selected === 'yes') {
+                $output->writeln('Overwriting');
+                $overwrite = true;
+            } elseif ($selected === 'no') {
+                $output->writeln('File exists and you do not want to overwrite it');
+                $overwrite = false;
             }
+        } else {
+            if ($overwrite) {
+                $output->writeln('Parameter "--replace" specified, overwriting');
+            }
+            $overwrite = true;
         }
-		
-		$output->writeln('End of function !');
-        $output->writeln($files_written.' files have been written !');
-        $output->writeln('Execution time : '.gmdate('H:i:s', microtime(true) - $global_time));
-		$output->writeln('Thanks for using CorahnRinMaps, and see you soon !');
-		
-	}
+
+        if ($overwrite) {
+            if (2 <= $output->getVerbosity()) {
+                $time = microtime(true);
+                $output->writeln('Executing tiles manager command');
+            }
+            $cmd_output = $tilesManager->createTile($x, $y, $zoom);
+            if (2 <= $output->getVerbosity()) {
+                $time = microtime(true) - $time;
+                $time = number_format($time*1000, 2, '.', ',');
+                $output->writeln('Execution time of '.$time.' milliseconds');
+            }
+            if ($cmd_output) {
+                $output->writeln('Error in the ImageMagick command:');
+                $output->writeln($cmd_output);
+            } else {
+                $output->writeln('File written correctly');
+            }
+
+        }
+
+        $output->writeln('End of function');
+        $output->writeln('Thanks for using CorahnRin, and see you soon !');
+
+    }
 }
