@@ -16,9 +16,13 @@ class ApiController extends Controller {
     private $json_params = 0;
 
     /**
-     * @Route("/api/maps/tile/{id}/{zoom}/{x}/{y}", requirements={"id":"\d+", "zoom":"\d+", "x":"\d+", "y":"\d+"})
+     * @Route("/api/maps/tile/{id}/{zoom}/{x}/{y}", requirements={"id":"\d+")
      */
     public function tileAction(Maps $map, $zoom, $x, $y) {
+        $zoom = (int) $zoom;
+        $x = (int) $x;
+        $y = (int) $y;
+
         $response = new Response();
 
         $this->init();
@@ -197,13 +201,13 @@ class ApiController extends Controller {
         $response->headers->set('Content-type','application/json');
 
         $id = $this->getRequest()->request->get('id');
+        if (!$id) {
+            $this->quit('Un identifiant doit être indiqué');
+        }
         $map = $this->getDoctrine()->getManager()->getRepository('CorahnRinMapsBundle:Maps')->findOneBy(array('id'=>$id));
 
         if (!$map) {
-            $msg = $this->get('corahnrin_translate')->translate('Aucune carte trouvée.');
-            $response->setContent(json_encode(array('error' => $msg), $this->json_params));
-            $response->setStatusCode(404);
-            return $response;
+            $this->quit('Aucune carte trouvée', 404);
         }
 
         $route_tiles = urldecode($this->generateUrl('corahnrin_maps_api_tile', array('zoom'=>'{zoom}','id'=>$map->getId(), 'x'=>'{x}','y'=>'{y}')));
@@ -251,7 +255,7 @@ class ApiController extends Controller {
 
     private function exception($msg) {
         $translator = $this->get('corahn_rin_translate');
-        $translator->routeTemplate('corahnrin_error');
+        $translator->routeTemplate('corahnrin_maps_api_error');
         $msg = $translator->translate($msg);
         $translator->routeTemplate();
         throw new \Symfony\Component\Config\Definition\Exception\Exception($msg);
