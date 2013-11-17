@@ -77,8 +77,8 @@ class MapsTileManager {
         if ($x < 0 || $x > $identification['xmax']) { throw new \RunTimeException('"x" value must be between 0 and '.$identification['xmax'].'.'); }
         if ($y < 0 || $y > $identification['ymax']) { throw new \RunTimeException('"y" value must be between 0 and '.$identification['ymax'].'.'); }
 
-        if (!is_dir(dirname($imgname))) {
-            mkdir(dirname($imgname), 0777, true);
+        if (!is_dir(dirname($this->mapDestinationName($zoom, $x, $y)))) {
+            mkdir(dirname($this->mapDestinationName($zoom, $x, $y)), 0777, true);
         }
 
         $_x = $x*$this->img_size;
