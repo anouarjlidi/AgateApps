@@ -41,6 +41,7 @@ function Map() {
                 tilesUrl = data.tilesUrl;
                 console.info(data);
                 console.info('Map generated');
+                generateTiles();
             }
         }
     });
@@ -77,9 +78,9 @@ function Map() {
             z = zoom.current,
             node;
         if (!vis[z]) { vis[z] = []; }
-        for (var y = ystart; y <= ymax; y++) {
+        for (var y = ystart; y < ymax; y++) {
             if (!vis[z][y]) { vis[z][y] = []; }
-            for (var x = xstart; x <= xmax; x++) {
+            for (var x = xstart; x < xmax; x++) {
                 if (!vis[z][y][x]) {
                     // Création de la balise <img>
                     node = document.createElement('img');
@@ -109,10 +110,7 @@ function Map() {
 //        position.top = container.style
     }
 
-    $(container)
-        .mousedown(function(){this.classList.add('map_mousedown_active');})
-        .mouseup(function(){this.classList.remove('map_mousedown_active')})
-        .mouseover(function(e){console.info(e);});
+    $(container).draggable();
 
     //parseInt($('#navigation').css('margin-bottom').replace('px',''))//Marge top
 }
