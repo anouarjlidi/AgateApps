@@ -19,7 +19,8 @@ class MapsController extends Controller
      * @Template()
      */
     public function viewAction(Maps $map) {
-        return array('map'=>$map);
+        $route_init = $this->generateUrl('corahnrin_maps_api_init');
+        return array('map'=>$map,'route_init' => $route_init);
     }
     
     /**
