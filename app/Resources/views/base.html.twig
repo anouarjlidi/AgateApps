@@ -12,9 +12,9 @@
             {% stylesheets
                 '../vendor/twitter/bootstrap/dist/css/bootstrap.min.css'
                 '../vendor/twitter/bootstrap/dist/css/bootstrap-theme.min.css'
-                '@CorahnRinPagesBundle/Resources/public/css/jquery-ui.css'
                 '@CorahnRinPagesBundle/Resources/public/css/initializer.css'
                 '@CorahnRinPagesBundle/Resources/public/css/corahn_rin.css'
+                '@CorahnRinPagesBundle/Resources/public/css/jquery-ui-1.10.3.custom.min.css'
                 '@CorahnRinMapsBundle/Resources/public/css/maps.css'
                 output="css/theme.css"
                 filter="yui_css"
@@ -31,6 +31,7 @@
             {% javascripts
                 '../vendor/twitter/bootstrap/js/tests/vendor/jquery.js'
                 '../vendor/twitter/bootstrap/dist/js/bootstrap.js'
+                '@CorahnRinPagesBundle/Resources/public/js/jquery-ui-1.10.3.custom.min.js'
                 output="js/main.js"
                 filter="yui_js"
             %}<script type="text/javascript" src="{{ asset_url }}"></script>{% endjavascripts %}

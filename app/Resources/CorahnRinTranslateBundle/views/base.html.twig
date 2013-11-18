@@ -1,4 +1,14 @@
-<!DOCTYPE html>
+{% extends "::base.html.twig" %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts
+        '@CorahnRinTranslateBundle/Resources/public/js/translation.js'
+        output="js/main_translate.js"
+        filter="yui_js"
+    %}<script type="text/javascript" src="{{ asset_url }}"></script>{% endjavascripts %}
+{% endblock %}
+{#<!DOCTYPE html>
 <html lang="fr">
     <head>
         <meta charset="UTF-8" />
@@ -12,9 +22,9 @@
             {% stylesheets
                 '../vendor/twitter/bootstrap/dist/css/bootstrap.min.css'
                 '../vendor/twitter/bootstrap/dist/css/bootstrap-theme.min.css'
-                '@CorahnRinPagesBundle/Resources/public/css/jquery-ui.css'
                 '@CorahnRinPagesBundle/Resources/public/css/initializer.css'
                 '@CorahnRinPagesBundle/Resources/public/css/corahn_rin.css'
+                '@CorahnRinPagesBundle/Resources/public/css/jquery-ui-1.10.3.custom.min.css'
                 '@CorahnRinMapsBundle/Resources/public/css/maps.css'
                 output="css/theme.css"
                 filter="yui_css"
@@ -38,4 +48,4 @@
         {% endblock %}
 
     </body>
-</html>
+</html>#}
