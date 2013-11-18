@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 use CorahnRin\MapsBundle\Entity\Maps;
+use CorahnRin\MapsBundle\Classes\MapsTileManager;
 
 class ApiController extends Controller {
 
@@ -31,7 +32,7 @@ class ApiController extends Controller {
 
         $img_size = (int) $this->container->getParameter('corahn_rin_maps.tile_size');
 
-        $tilesManager = new \CorahnRin\MapsBundle\Classes\MapsTileManager($map, $img_size);
+        $tilesManager = new MapsTileManager($map, $img_size);
 
         $console_dir = $this->get('kernel')->getRootDir().'/console';
         $cmd = 'php "'.$console_dir.'" corahnrin:generate:map-tile --replace '.$id.' -x '.$x.' -y '.$y.' -z '.$zoom;
@@ -95,11 +96,21 @@ class ApiController extends Controller {
 
         $route_tiles = urldecode($this->generateUrl('corahnrin_maps_api_tile', array('zoom'=>'{zoom}','id'=>$map->getId(), 'x'=>'{x}','y'=>'{y}')));
 
+        $img_size = $this->container->getParameter('corahn_rin_maps.tile_size');
+        $tilesManager = new MapsTileManager($map, $img_size);
+
+        $identifications = array();
+        for ($i = 1; $i <= $map->getMaxZoom(); $i++) {
+            $identifications[$i] = $tilesManager->identifyImage($i);
+        }
+
         $datas = array(
             'id' => $map->getId(),
             'name' => $map->getName(),
             'nameSlug' => $map->getNameSlug(),
+            'identifications' => $identifications,
             'maxZoom' => $map->getMaxZoom(),
+            'imgSize' => $img_size,
             'tilesUrl' => str_replace('{id}', $map->getId(), $route_tiles),
         );
 
