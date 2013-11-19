@@ -11,7 +11,8 @@ function Map() {
     var tilesUrl = '';
     var identifications = {};
     var wrapper = null;
-    var timeouts = {};
+    var timeouts = { 
+		"zoom": null, "generate": null };
     var wrapperSize = { "width": 0, "height": 0 };
     var container = null;
     var visible_tiles = [];
@@ -65,58 +66,88 @@ function Map() {
         else if (type === 'top') { return position.top; }
         else { return position; }
     };
+	
+	var zoomContainer = function(containerId, scale) {
+		if (document.getElementById('zoomContainer'+containerId)) {
+			document
+				.getElementById('zoomContainer'+containerId)
+				.setAttribute('style',
+				'z-index:'+containerId+';'+
+				'-webkit-transform:scale(' + scale + ');' +
+				'-moz-transform:scale(' + scale + ');' +
+				'-ms-transform:scale(' + scale + ');' +
+				'-o-transform:scale(' + scale + ');' +
+				'transform:scale(' + scale + ');');
+		}
+	};
+	this.zoomContainer = function(id, scale) { zoomContainer(id, scale); };
 
     var generateTiles = function (z) {
-        var xstart = ystart = 0,
-            ident = identify(z),
-            xmax = ident.xmax,
-            ymax = ident.ymax,
-            wmax = ident.wmax,
-            hmax = ident.hmax,
-            vis = visible_tiles,
-            nodeContainer = document.createElement('div'),
-            list,
-            list_nb = 0,
-            node;
-        if (!ident) {
-            console.error('Identification failed');
-            return false;
-        }
-        z = z ? z : zoom.current;
-        zoom.current = z;
-        if (!vis[z]) { vis[z] = []; }
-        nodeContainer.setAttribute('data-zoom-level', z);
-        nodeContainer.classList.add('zoom-container');
-        nodeContainer.id = 'zoomContainer'+z;
-        list = document.getElementsByClassName('zoom-container');
-        list_nb = list.length;
-        for (var i = 0; i < list_nb; i++) {
-            list[i].classList.add('hide');
-        }
+		if (timeouts['generate']) {
+			clearTimeout(timeouts['generate']);
+		} else {
+			timeouts['generate'] = null;
+		}
+		var f = function(z){
+			var xstart = ystart = 0,
+				ident = identify(z),
+				xmax = ident.xmax,
+				ymax = ident.ymax,
+				wmax = ident.wmax,
+				hmax = ident.hmax,
+				vis = visible_tiles,
+				nodeContainer = document.createElement('div'),
+				node;
+			if (!ident) {
+				console.error('Identification failed for zoom '+z);
+				return false;
+			}
+			z = z ? z : zoom.current;
+			zoom.current = z;
+			if (!vis[z]) { vis[z] = []; }
+			nodeContainer.setAttribute('data-zoom-level', z);
+			nodeContainer.classList.add('zoom-container');
+			nodeContainer.id = 'zoomContainer'+z;
+			nodeContainer.style.zIndex = z*100;
+			
+			for (i = 1; i <= zoom.max; i++) {
+				node = zoom.max - z - i - 1;
+				if (node < 1) { node = 1 / (zoom.max - z - i - 1); }
+				zoomContainer(id, node);
+				//TODO Revoir ce code
+//				function z(sc) {
+//				for (i = 1; i <= 10; i++) {
+//				 res = 10 - sc - i - 1;
+//				 if (res < 1) {
+//				  res = 1 / (10 - sc - i );
+//				 } 
+//				  console.info(res);
+//				}
+//				}
+			}
+			node = null;
 
-        if (document.getElementById('zoomContainer'+z)) {
-            document.getElementById('zoomContainer'+z).classList.remove('hide');
-        } else {
-            for (var y = ystart; y < ymax; y++) {
-    //            if (!vis[z][y]) { vis[z][y] = []; }
-                for (var x = xstart; x < xmax; x++) {
-    //                if (!vis[z][y][x]) {
-                        // Création de la balise <img>
-                        node = document.createElement('img');
-                        node.src = tilesUrl.replace('{zoom}',z).replace('{y}',y).replace('{x}',x);
-                        node.classList.add('map-image');
-                        node.style.top = (y * imgSize) + 'px';
-                        node.style.left = (x * imgSize) + 'px';
-                        node.id = 'tile_'+z+'_'+y+'_'+x;
-                        nodeContainer.appendChild(node);
-                        console.info(node);
-    //                    vis[z][y][x] = true;
-    //                }
-                }
-            }
-            container.appendChild(nodeContainer);
-        }
-        resetHeight();
+			if (document.getElementById('zoomContainer'+z)) {
+				document.getElementById('zoomContainer'+z).classList.remove('hide');
+			} else {
+				for (var y = ystart; y < ymax; y++) {
+					for (var x = xstart; x < xmax; x++) {
+							// Création de la balise <img>
+							node = document.createElement('img');
+							node.src = tilesUrl.replace('{zoom}',z).replace('{y}',y).replace('{x}',x);
+							node.classList.add('map-image');
+							node.style.top = (y * imgSize) + 'px';
+							node.style.left = (x * imgSize) + 'px';
+							node.id = 'tile_'+z+'_'+y+'_'+x;
+							nodeContainer.appendChild(node);
+		//                }
+					}
+				}
+				container.appendChild(nodeContainer);
+			}
+			resetHeight();
+		};
+		timeouts['generate'] = setTimeout(function(){f(z);}, 200);
     };
     this.generateTiles = function(z) { return generateTiles(z); };
 
@@ -146,15 +177,15 @@ function Map() {
         if (zoom.current > zoom.max) { zoom.current = zoom.max; }
         clearTimeout(timeouts.zoom);
         timeouts.zoom = setTimeout(function(){generateTiles(zoom.current);}, 200);
-    }
+    };
 
     var zoomOut = function() {
         zoom.current--;
         if (zoom.current < 1) { zoom.current = 1; }
-        console.info('Zoom : '.zoom.current);
+        console.info('Zoom : '+zoom.current);
         clearTimeout(timeouts.zoom);
         timeouts.zoom = setTimeout(function(){generateTiles(zoom.current);}, 200);
-    }
+    };
 
     var setPosition = function() {
 //        position.top = container.style
