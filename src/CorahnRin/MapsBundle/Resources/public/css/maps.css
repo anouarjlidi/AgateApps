@@ -2,11 +2,11 @@
     position: relative;
     width: 100%;
     overflow: hidden;
-    min-height: 450px;
     border: none;
     margin: 0 auto;
     padding: 0;
-    background-color: black;
+    border: solid 1px #bbb;
+    background: black;
 }
 #map_container {
     position: absolute;
