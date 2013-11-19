@@ -1,27 +1,32 @@
-#map_wrapper {
-    position: relative;
-    width: 100%;
-    overflow: hidden;
-    border: none;
-    margin: 0 auto;
-    padding: 0;
-    border: solid 1px #bbb;
-    background: black;
-}
-#map_container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    margin: 0;
-    border: 0 none transparent;
-    outline: 0 none transparent;
-    padding: 0;
-}
-#map_container img {
+#map_wrapper,
+#map_container,
+#map_container img,
+#map_container .zoom-container {
     border: none;
     outline: none;
     display: block;
-    position: absolute;
     margin: 0;
     padding: 0;
 }
+
+#map_wrapper {
+    position: relative;
+    margin: 0 auto;
+    background: black;
+    width: 100%;
+}
+
+#map_container,
+#map_container img,
+#map_container .zoom-container {
+    position: absolute;
+}
+
+#map_container .zoom-container {
+	-webkit-transition:	0.5s -webkit-transform ease-in-out;
+	  -moz-transition:	0.5s	-moz-transform ease-in-out;
+	   -ms-transition:	0.5s	 -ms-transform ease-in-out;
+		-o-transition:	0.5s	  -o-transform ease-in-out;
+		   transition:	0.5s		 transform ease-in-out;
+}
+
