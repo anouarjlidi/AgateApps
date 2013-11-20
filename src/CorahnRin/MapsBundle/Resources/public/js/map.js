@@ -2,20 +2,19 @@ function Map() {
 
     var _this = this;
     var id = document.getElementById('map_container').getAttribute('data-map-id');
-    id = !isNaN(parseInt(id)) ? parseInt(id) : null;
-    var zoom = { "current": 1, "max": 0 };
+    if (isNaN(id)) { console.error('Cannot generate map : wrong id'); }
+    var zoom = { "current": 1, "max": 0 };// Le zoom actuel et le zoom maximum récupéré par ajax
     var name = '';
     var nameSlug = '';
-    var position = { "top" : 0, "left" : 0 };
-    var initUrl = document.getElementById('map_container').getAttribute('data-init-url');
-    var tilesUrl = '';
-    var identifications = {};
+    var position = { "top" : 0, "left" : 0 };// Position actuelle du container par rapport au wrapper (position absolue
+    var initUrl = document.getElementById('map_container').getAttribute('data-init-url');// Url à envoyer avec ajax pour initialiser la carte
+    var tilesUrl = '';// Url de chargement des tuiles. Elle est récupérée par ajax
+    var identifications = {};// La liste des identifications organisées par zoom et récupérées par ajax (nombre de tuiles, dimensions en pixels, etc.)
+    var timeouts = { "zoom": null };// Définition de quelques timeouts, ils seront utilisés pour les actions nécessitant une sécurité temporelle
+    var wrapperSize = { "width": 0, "height": 0 };// La taille du wrapper, sera modifiée au redimensionnement
     var wrapper = null;
-    var timeouts = { 
-        "zoom": null, "generate": null };
-    var wrapperSize = { "width": 0, "height": 0 };
     var container = null;
-    var visible_tiles = [];
+    var imgSize;
 
     // Initialisation
     $.ajax({
@@ -25,6 +24,7 @@ function Map() {
         "data" : { "id" : id },
         "success": function(data) {
             if (data.id) {
+                // Récupération des données ajax dans l'objet Map
                 name = data.name;
                 nameSlug = data.name;
                 identifications = data.identifications;
@@ -36,13 +36,17 @@ function Map() {
         }
     });
 
-    if (document.getElementById('map_wrapper')) {
-        wrapper = document.getElementById('map_wrapper');
+    // Initialisation du wrapper et du container
+    if (document.getElementById('map_wrapper'))   { wrapper = document.getElementById('map_wrapper'); }
+    if (document.getElementById('map_container')) { container = document.getElementById('map_container'); }
+    if (!wrapper || !container) {
+        console.error('Cannot generate map : failed identification of wrapper and container');
+        return;
     }
-    if (document.getElementById('map_container')) {
-        container = document.getElementById('map_container');
-    }
-
+    
+    
+    
+    // Getters
     this.id              = function() { return id; };
     this.name            = function() { return name; };
     this.nameSlug        = function() { return nameSlug; };
@@ -64,8 +68,16 @@ function Map() {
         else { return position; }
     };
     
+    
+    
+    // Cette fonction redéfinit le zoom d'un container grâce à son id et à l'échelle mentionnée
     var zoomContainer = function(containerId, scale) {
+        if (isNaN(containerId)) {
+            console.error('Cannot zoom on map : wrong zoom level injected to zoom function');
+            return;
+        }
         if (document.getElementById('zoomContainer'+containerId)) {
+            // Le style est systématiquement redéfini pour palier aux éventuels mauvais ajouts de css
             document
                 .getElementById('zoomContainer'+containerId)
                 .setAttribute('style',
@@ -77,80 +89,104 @@ function Map() {
                 'transform:scale(' + scale + ');');
         }
     };
-    this.zoomContainer = function(id, scale) { zoomContainer(id, scale); };
+//    this.zoomContainer = function(id, scale) { zoomContainer(id, scale); };//Fonction publique pour zoomer un container
 
+
+
+    // Cette fonction va générer toutes les balises <img>, sans pour autant charger toutes les images
+    // Elle se base sur le zoom actuel ou sur un zoom prédéfini (pour les options cliquables)
     var generateTiles = function (z) {
-        if (timeouts['generate']) {
-            clearTimeout(timeouts['generate']);
-        } else {
-            timeouts['generate'] = null;
+        // Setter du zoom
+        zoom.current = (z ? z : zoom.current);
+        var ident = identify(z),// Identification du zoom demandé
+            xmax = ident.xmax,
+            ymax = ident.ymax,
+            wmax = ident.wmax,
+            hmax = ident.hmax,
+            nodeContainer,// Cette variable sera utilisée pour créer un conteneur pour les images
+            node;
+        if (!ident) {
+            console.error('Cannot generate tiles : identification failed for zoom value "'+z+'"');
+            return false;
         }
-        var f = function(z){
-            var xstart = ystart = 0,
-                ident = identify(z),
-                xmax = ident.xmax,
-                ymax = ident.ymax,
-                wmax = ident.wmax,
-                hmax = ident.hmax,
-//                vis = visible_tiles,
-                nodeContainer = document.createElement('div'),
-                node;
-            if (!ident) {
-                console.error('Identification failed for zoom '+z);
-                return false;
+        
+        for (i = 1; i <= zoom.max; i++) {
+            nodeContainer = document.getElementById('zoomContainer'+i);
+            if (nodeContainer) {
+                if (i > z) {
+                    nodeContainer.classList.add('hide');
+                } else {
+                    nodeContainer.classList.remove('hide');
+                }
             }
-            z = z ? z : zoom.current;
-            zoom.current = z;
-//            if (!vis[z]) { vis[z] = []; }
+            zoomContainer(i, z / i);
+        }
+        
+        nodeContainer = document.getElementById('zoomContainer'+z);
+
+        if (nodeContainer) {
+            nodeContainer.classList.remove('hide');
+        } else {
+            nodeContainer = document.createElement('div');// Création du nodeContainer
+            nodeContainer.id = 'zoomContainer'+z;
             nodeContainer.setAttribute('data-zoom-level', z);
             nodeContainer.classList.add('zoom-container');
             nodeContainer.id = 'zoomContainer'+z;
             nodeContainer.style.zIndex = z*100;
-            
-            for (i = 1; i <= zoom.max; i++) {
-                if (i > z) {
-                    document.getElementById('zoomContainer'+z).classList.add('hide');
-                } else {
-                    document.getElementById('zoomContainer'+z).classList.remove('hide');
-                }
-                zoomContainer(i, z / i);
-            }
 
-            if (document.getElementById('zoomContainer'+z)) {
-                document.getElementById('zoomContainer'+z).classList.remove('hide');
-            } else {
-                for (var y = ystart; y < ymax; y++) {
-                    for (var x = xstart; x < xmax; x++) {
-                        node = document.createElement('img');
-                        node.src = "";
-                        node.setAttribute('data-image-src', tilesUrl.replace('{zoom}',z).replace('{y}',y).replace('{x}',x));
-                        node.classList.add('map-image');
-                        node.style.top = (y * imgSize) + 'px';
-                        node.style.left = (x * imgSize) + 'px';
-                        node.id = 'tile_'+z+'_'+y+'_'+x;
-                        nodeContainer.appendChild(node);
-                    }
+            // Bouclage sur toutes les tuiles identifiées par le zoom
+            for (var y = 0; y < ymax; y++) {
+                for (var x = 0; x < xmax; x++) {
+                    // Création de la balise <img>
+                    node = document.createElement('img');
+                    node.src = "";
+                    node.setAttribute('data-image-src', tilesUrl.replace('{zoom}',z).replace('{y}',y).replace('{x}',x));
+                    node.classList.add('map-image');
+                    node.style.top = (y * imgSize) + 'px';
+                    node.width = imgSize;
+                    node.height = imgSize;
+                    node.style.left = (x * imgSize) + 'px';
+                    node.id = 'tile_'+z+'_'+y+'_'+x;
+                    nodeContainer.appendChild(node);// Ajout de cette image au nodeContainer
                 }
-                container.appendChild(nodeContainer);
             }
-            resetHeight();
-        };
-        timeouts['generate'] = setTimeout(function(){f(z);}, 200);
+            container.appendChild(nodeContainer);// Ajout du nodeContainer au container général de la map
+        }
+        resetHeight();//Redéfinition de la hauteur (au cas où)
+        showImages();
     };
     this.generateTiles = function(z) { return generateTiles(z); };
+    
+    // Cette fonction effectue une boucle sur toutes les images qui n'ont pas d'attribut "src"
+    // Elle leur attribue un attribut "src" pour pouvoir les afficher
+    var showImages = function() {
+        $('img.map-image[src=""]')
+            .filter(function(){
+                return ($(this).offset().top < ($('#map_wrapper').height() + imgSize))
+                        && ($(this).offset().top > 0)
+                        && ($(this).offset().left < ($('#map_wrapper').width() + imgSize))
+                        && ($(this).offset().left > 0);
+            })
+            .attr('src', function(){
+                return this.getAttribute('data-image-src')
+            });
+    };
+    this.showImages = showImages;
 
+    // Cette fonction retourne l'identification d'un zoom
     var identify = function(z) {
         return identifications[(z ? z : zoom.current)];
     };
     this.identify = identify;
 
-    var setWrapperSize = function() {
-        wrapperSize.width = $(wrapper).width();
-        wrapperSize.height = $(wrapper).height();
-        return _this;
-    };
-    this.setWrapperSize = setWrapperSize;
+//    var setWrapperSize = function() {
+//        wrapperSize.width = $(wrapper).width();
+//        wrapperSize.height = $(wrapper).height();
+//        return _this;
+//    };
+//    this.setWrapperSize = setWrapperSize;
 
+    // Remet la valeur de la hauteur de façon correcte par rapport au navigateur.
     var resetHeight = function() {
         var id = identify();
         $(wrapper).height(
@@ -160,6 +196,7 @@ function Map() {
         $(container).width(id.wmax).height(id.hmax);
     };
 
+    // Effectue un zoom avant
     var zoomIn = function() {
         zoom.current++;
         if (zoom.current > zoom.max) { zoom.current = zoom.max; }
@@ -168,6 +205,7 @@ function Map() {
     };
     this.zoomIn = zoomIn;
 
+    // Effectue un zoom arrière
     var zoomOut = function() {
         zoom.current--;
         if (zoom.current < 1) { zoom.current = 1; }
@@ -176,25 +214,24 @@ function Map() {
     };
     this.zoomOut = zoomOut;
 
-    var setPosition = function() {
+//    var setPosition = function() {
 //        position.top = container.style
-    };
-    this.setPosition = setPosition;
+//    };
+//    this.setPosition = setPosition;
 
+    // Permet à la carte de se déplacer
     $(container).draggable({
-        addClasses: false
+        addClasses: false,// Gagne un peu de mémoire
+        drag: showImages// Teste l'affichage des images à chaque déplacement, pour afficher les images invisibles
     });
+    
 
+    // Utilise le plugin mousewheel pour effectuer un zoom dynamique
     $(wrapper).mousewheel(function(event, delta, deltaX, deltaY) {
-            if (delta > 0) {
-                //Up
-                zoomIn();
-            } else if (delta < 0) {
-                //Down
-                zoomOut();
-            }
-            return false; // prevent default
-        });
+        if (delta > 0) { zoomIn(); }
+        else if (delta < 0) { zoomOut(); }
+        return false; // prevent default
+    });
 
 
     //parseInt($('#navigation').css('margin-bottom').replace('px',''))//Marge top
