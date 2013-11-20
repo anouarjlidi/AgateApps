@@ -14,6 +14,7 @@
     margin: 0 auto;
     background: black;
     width: 100%;
+    overflow: hidden;
 }
 
 #map_container,
@@ -23,10 +24,10 @@
 }
 
 #map_container .zoom-container {
-	-webkit-transition:	0.5s -webkit-transform ease-in-out;
-	  -moz-transition:	0.5s	-moz-transform ease-in-out;
-	   -ms-transition:	0.5s	 -ms-transform ease-in-out;
-		-o-transition:	0.5s	  -o-transform ease-in-out;
-		   transition:	0.5s		 transform ease-in-out;
+    -webkit-transition: 0.5s -webkit-transform ease-in-out;
+      -moz-transition:  0.5s    -moz-transform ease-in-out;
+       -ms-transition:  0.5s     -ms-transform ease-in-out;
+        -o-transition:  0.5s      -o-transform ease-in-out;
+           transition:  0.5s         transform ease-in-out;
 }
 
