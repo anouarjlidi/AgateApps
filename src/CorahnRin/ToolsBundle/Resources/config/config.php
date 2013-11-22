@@ -75,7 +75,12 @@ define('P_LANG', isset($_SESSION['lang']) ? $_SESSION['lang'] : 'fr');
 
 ## Définit des paramètres de base pour la fonction json_encode() afin de ne pas les resaisir
 ## PHP 5.4 ou plus récent exigé
-define('P_JSON_ENCODE', JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT | JSON_NUMERIC_CHECK);
+
+if (version_compare(PHP_VERSION, '5.4.0', '<')) {
+	define('P_JSON_ENCODE', JSON_NUMERIC_CHECK);
+} else {
+	define('P_JSON_ENCODE', JSON_NUMERIC_CHECK | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+}
 
 ## Variable de la version issue du fichier XML
 define('CORAHNRIN_VERSIONS', __DIR__.DS.'versions.xml');
