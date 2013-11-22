@@ -1,5 +1,16 @@
 {% extends "::layout.html.twig" %}
 
+{% block title %}{{ 'Carte' | tr }} {{ map.name | tr }} - {{ parent() }}{% endblock %}
+
+{% block content_for_layout %}
+
+<div id="map_wrapper">
+    <div id="map_container" data-zoom="1" data-map-id="{{ map.id }}" data-init-url="{{ route_init }}"></div>
+</div>
+
+{% endblock %}
+
+
 {% block javascripts %}
     {{ parent() }}{% javascripts
         '@CorahnRinMapsBundle/Resources/public/js/map.js'
@@ -11,14 +22,4 @@
     <script type="text/javascript">
         document.corahn_rin_map = new Map();
     </script>
-{% endblock %}
-
-{% block title %}{{ 'Carte' | tr }} {{ map.name | tr }} - {{ parent() }}{% endblock %}
-
-{% block content_for_layout %}
-
-<div id="map_wrapper">
-    <div id="map_container" data-zoom="1" data-map-id="{{ map.id }}" data-init-url="{{ route_init }}"></div>
-</div>
-
 {% endblock %}
