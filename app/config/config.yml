@@ -93,7 +93,8 @@ services:
     corahn_rin_translate:
         class: CorahnRin\TranslateBundle\Classes\Translator
         arguments:
-            locale: %kernel.default_locale%
+            session: "@session"
+            locale: %locale%
             translation_output: "%kernel.root_dir%/Resources/Translations/"
             langs: fr,en,de
     MapTileCommandService:
