@@ -10,7 +10,7 @@
         var initUrl = document.getElementById('map_container').getAttribute('data-init-url');// Url à envoyer avec ajax pour initialiser la carte
         var tilesUrl = '';// Url de chargement des tuiles. Elle est récupérée par ajax
         var identifications = {};// La liste des identifications organisées par zoom et récupérées par ajax (nombre de tuiles, dimensions en pixels, etc.)
-        var timeouts = { "zoom": null };// Définition de quelques timeouts, ils seront utilisés pour les actions nécessitant une sécurité temporelle
+        var timeouts = { "zoom": null,"showImages":null };// Définition de quelques timeouts, ils seront utilisés pour les actions nécessitant une sécurité temporelle
         var wrapperSize = { "width": 0, "height": 0 };// La taille du wrapper, sera modifiée au redimensionnement
         var wrapper = null;
         var container = null;
@@ -97,7 +97,6 @@
             // Setter du zoom
             zoom.current = (z ? z : zoom.current);
             var ident = identify(z),// Identification du zoom demandé
-                move = move ? true : false,
                 xmax = ident.xmax,
                 ymax = ident.ymax,
                 wmax = parseInt(ident.wmax),
@@ -109,7 +108,7 @@
                 return false;
             }
 
-            if (move) {
+            if (move === 1 || move === -1) {
                 moveContainer(z, move);
             }
 
@@ -122,7 +121,7 @@
                         nodeContainer.classList.remove('hide');
                     }
                 }
-                zoomContainer(i, z / i, move);
+                zoomContainer(i, z / i);
             }
 
             nodeContainer = document.getElementById('zoomContainer'+z);
@@ -156,42 +155,24 @@
                 container.appendChild(nodeContainer);// Ajout du nodeContainer au container général de la map
             }
             resetHeight();//Redéfinition de la hauteur (au cas où)
-            showImages();
+            clearTimeout(timeouts.showImages);
+            timeouts.showImages = setTimeout(showImages, 1000);
         };
         this.generateTiles = function(z, move) { return generateTiles(z, move); };
 
         var moveContainer = function(z, move) {
-            var ident = identify(z),
-                relatedIdent = identify(z - move)
-//                offsetX = move * ( ident.wmax * ( ( ( $(container).offset().left - imgSize ) / ( relatedIdent.wmax / 2 ) ) / 2 ) ) + imgSize,
-//                offsetY = move * ( ident.hmax * ( ( ( $(container).offset().top  - imgSize ) / ( relatedIdent.hmax / 2 ) ) / 2 ) ) + imgSize
-                offsetX = $(container).position().left - ( ( parseInt(ident.wmax) - parseInt(relatedIdent.wmax) ) / 2 ),
-                offsetY = $(container).position().top - ( ( parseInt(ident.hmax) - parseInt(relatedIdent.hmax) ) / 2 )
-            ;
-            console.info("$(container).animate({transform:'translate("+offsetX+"px,"+offsetY+"px)'}, {duration:200,queue:false});");
+            var ident = identify(z);
+            var relatedIdent = identify(z - move);
+            var offsetX = $(container).position().left - ( ( parseInt(ident.wmax) - parseInt(relatedIdent.wmax) ) / 2 );
+            var offsetY = $(container).position().top  - ( ( parseInt(ident.hmax) - parseInt(relatedIdent.hmax) ) / 2 );
+
             $(container).animate({
                 'left': offsetX+'px',
                 'top': offsetY+'px'
-//                transform:'translate('+offsetX+'px,'+offsetY+'px)'
             }, {
                 duration:200,
                 queue:false
             });
-//            $(container).animate({
-//                'top': (move == 1 ? '-='+( (ident.hmax - relatedIdent.hmax) / 2 ) : '+='+( (relatedIdent.hmax - ident.hmax) / 2 )),
-//                'left': (move == 1 ? '-='+( (ident.wmax - relatedIdent.wmax) / 2 ) : '+='+( (relatedIdent.wmax - ident.wmax) / 2 ))
-//            }, 250);
-//            relatedIdent = {
-//                'top' : (move == 1 ? '-='+( (ident.hmax - relatedIdent.hmax) / 2 ) : '+='+( (relatedIdent.hmax - ident.hmax) / 2 )) + 'px',
-//                'left' : + (move == 1 ? '-='+( (ident.wmax - relatedIdent.wmax) / 2 ) : '+='+( (relatedIdent.wmax - ident.wmax) / 2 )) + 'px'
-//            };
-//            container.setAttribute('style',
-//                '-webkit-transform:translate(' + relatedIdent + ');' +
-//                '-moz-transform:translate(' + relatedIdent + ');' +
-//                '-ms-transform:translate(' + relatedIdent + ');' +
-//                '-o-transform:translate(' + relatedIdent + ');' +
-//                'transform:translate(' + relatedIdent + ');'
-//            );
         };
 
         // Cette fonction effectue une boucle sur toutes les images qui n'ont pas d'attribut "src"
@@ -216,13 +197,6 @@
         };
         this.identify = identify;
 
-    //    var setWrapperSize = function() {
-    //        wrapperSize.width = $(wrapper).width();
-    //        wrapperSize.height = $(wrapper).height();
-    //        return _this;
-    //    };
-    //    this.setWrapperSize = setWrapperSize;
-
         // Remet la valeur de la hauteur de façon correcte par rapport au navigateur.
         var resetHeight = function() {
             var id = identify();
@@ -236,7 +210,7 @@
         // Effectue un zoom avant
         var zoomIn = function() {
             zoom.current++;
-            if (zoom.current > zoom.max) { zoom.current = zoom.max; }
+            if (zoom.current > zoom.max) { zoom.current = zoom.max; return false; }
             clearTimeout(timeouts.zoom);
             timeouts.zoom = setTimeout(function(){generateTiles(zoom.current, 1);}, 200);
         };
@@ -245,7 +219,7 @@
         // Effectue un zoom arrière
         var zoomOut = function() {
             zoom.current--;
-            if (zoom.current < 1) { zoom.current = 1; }
+            if (zoom.current < 1) { zoom.current = 1; return false; }
             clearTimeout(timeouts.zoom);
             timeouts.zoom = setTimeout(function(){generateTiles(zoom.current, -1);}, 200);
         };
@@ -265,6 +239,7 @@
             return false; // prevent default
         });
 
+        $(window).resize(resetHeight);
 
         //parseInt($('#navigation').css('margin-bottom').replace('px',''))//Marge top
     }
