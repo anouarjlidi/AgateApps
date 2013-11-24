@@ -22,7 +22,7 @@ class MapsController extends Controller
         $route_init = $this->generateUrl('corahnrin_maps_api_init');
         return array('map'=>$map,'route_init' => $route_init);
     }
-    
+
     /**
      * @Route("/admin/maps/")
      * @Template()
@@ -39,7 +39,7 @@ class MapsController extends Controller
      */
     public function createAction()
     {
-    
+
         $valid = false;
         $map = new Maps();
 
@@ -53,19 +53,19 @@ class MapsController extends Controller
                 $basename = preg_replace('~\.[a-zA-Z0-9]+~isUu', '', $file->getClientOriginalName());
                 $basename = preg_replace('~[^a-zA-Z0-9]~isUu', '_', $basename);
                 $basename = preg_replace('~__+~', '_', $basename);
-                $dir = ROOT.DS.'web'.DS.'img'.DS.'maps';
+                $dir = ROOT.DS.'web'.DS.'uploads'.DS.'maps';
                 if (!is_dir($dir)) {
                     mkdir($dir, 0777, true);
                 }
                 $ext = $file->guessExtension();
                 $ext = $ext ? : 'bin';
-                
+
                 $final_path = $basename.'_'.rand(1, 99999999).'.'.$ext;
-                
+
                 $db_name = str_replace(ROOT.DS.'web'.DS, '', $dir.DS.$final_path);
-              
+
                 $entity_image_name = str_replace('\\', '/', $db_name);
-				
+
                 $map->setImage($entity_image_name);
 
                 if ($form->isValid()) {
