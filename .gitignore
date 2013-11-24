@@ -24,3 +24,9 @@ app/config/parameters.yml
 # Fichiers dev
 #_dev_files/
 /nbproject
+
+# Ignore temporaire
+/web/img/*
+/web/js/*
+/web/css/*
+/app/Resources/Translations/*
