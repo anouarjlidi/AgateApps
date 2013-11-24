@@ -151,7 +151,7 @@ function ReadStdin($prompt, $valid_inputs, $default = '') {
         }
     }
     return $input;
-} 
+}
 
 showtime($temp_time, 'Fin chargement des classes et fonctions');
 
@@ -676,6 +676,26 @@ $tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table 
 
 
 
+$table = 'people';
+$nbreqtemp = 0;
+if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>1))) {
+	$sql = 'INSERT INTO `'.$table.'` SET `id` = :id, `name` = :name, `description` = :description, `created` = :created, `updated` = :updated';
+	$q = $new->prepare($sql);
+	$nbreq+=4;
+	$nbreqtemp+=4;
+	$q->execute(array('id' => 1,'name' => 'Tri-Kazel', 'description' => 'Les Tri-Kazeliens constituent la très grande majorité de la population de la péninsule. La plupart d\'entre eux conservent une stature assez robuste héritée des Osags mais peuvent aussi avoir des traits d\'autres peuples. Les Tri-Kazeliens sont issus de siècles de mélanges entre toutes les cultures ayant un jour ou l\'autre foulé le sol de la péninsule.<br /><br />De par cette origine, le PJ connaît un dialecte local ; il faut donc préciser de quel pays et région il est originaire.',	'created' => $datetime->date, 'updated' => $datetime->date,));
+	$q->execute(array('id' => 2,'name' => 'Tarish', 'description' => 'D\'origine inconnue, le peuple Tarish forme une minorité nomade qui parcourt depuis des décennies les terres de la péninsule. Il est aussi appelé "peuple de l\'ouest" car la légende veut qu\'il soit arrivé par l\'Océan Furieux. Les Tarishs se distinguent des Tri-Kazeliens par des pommettes hautes, le nez plutôt aquilin et les yeux souvent clairs. Beaucoup d\'entre eux deviennent des saltimbanques, des mystiques ou des artisans.<br />La culture Tarish, même si elle est diluée aujourd\'hui, conserve encore une base importante : c\'est un peuple nomade habitué aux longs périples et leur langue n\'a pas disparu, bien qu\'aucun étranger ne l\'ait jamais apprise.',	'created' => $datetime->date, 'updated' => $datetime->date,));
+	$q->execute(array('id' => 3,'name' => 'Osag', 'description' => "Habitués à ne compter que sur eux-mêmes, les Osags forment un peuple rude. Généralement dotés d'une carrure imposante, ils sont les descendants directs des clans traditionnels de la péninsule. La civilisation péninsulaire a beaucoup évolué depuis l'avènement des Trois Royaumes, mais certains clans sont restés fidèles aux traditions ancestrales et n'ont pas pris part à ces changements. Repliés sur leur mode de vie clanique, les Osags ne se sont pas métissés avec les autres peuples et ont gardé de nombreuses caractéristiques de leurs ancêtres. Les Osags font de grands guerriers et comptent parmi eux les plus célèbres Demorthèn.<br /><br />Leur langue a elle aussi survécu au passage des siècles. Les mots \"feondas\", \"C'maogh\", \"Dàmàthair\" - pour ne citer qu'eux - viennent tous de ce que les Tri-Kazeliens nomment la langue ancienne, mais qui est toujours utilisée par les Osags.",	'created' => $datetime->date, 'updated' => $datetime->date,));
+	$q->execute(array('id' => 4,'name' => 'Continent', 'description' => "Les hommes et les femmes du Continent sont souvent plus minces et plus élancés que les natifs de Tri-Kazel. Leur visage aura tendance à être plus fin mais avec des traits parfois taillés à la serpe. Un PJ choisissant ce peuple ne sera pas natif du Continent, mais plutôt le descendant direct d'au moins un parent Continental. Si les origines Continentales du PJ sont davantage diluées, on estime qu'il fait partie du peuple de Tri-Kazel.<br /><br />En fonction du passé de la famille du PJ et de son niveau d'intégration dans la société tri-kazelienne, il pourrait avoir appris leur langue d'origine Continentale ou bien un patois de la péninsule, au choix du PJ.",	'created' => $datetime->date, 'updated' => $datetime->date,));
+}
+$tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
+
+
+
+
+
+
+
 
 $table = 'games';
 //$nbreq++;
@@ -921,10 +941,15 @@ foreach ( $characters as $v) {
 		$nameSlug = \CorahnRinTools\remove_accents($v['char_name']);
 		$nameSlug = preg_replace('~[^a-zA-Z0-9_-]+~isUu', '-', $nameSlug);
 		$nameSlug = preg_replace('~--+~isUu', '-', $nameSlug);
-		
+
+		$domaines = $cnt->domaines;
 		$socialclassdomains = array();
 		foreach ($domaines as $d => $domain) {
-			if ($domain->val > 0 && count($socialclassdomains) < 2) { $socialclassdomains[] = $domain->id; $domaines[$d]->val --;}
+			if ($domain->val > 0 && count($socialclassdomains) < 2) {
+//                print_r(array($d=>$domain));print_r(array('domaines'=>$domaines));exit;
+                $socialclassdomains[] = $domain->id;
+                $domaines->$d->val --;
+            }
 		}
 		$datas = array(
 			'id' => $v['char_id'],
@@ -969,10 +994,10 @@ foreach ( $characters as $v) {
 			'updated' => date('Y-m-d H:i:s', ((int) $v['char_date_update'] ? (int) $v['char_date_update'] : (int) $v['char_date_creation'])),
 		);
 		$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
-		
+
 		$charreq++;
 		showtime($temp_time, $charreq.' Ajout du personnage '.$v['char_id'].' : '.$v['char_name']);
-		
+
 		$voies = $cnt->voies;
 		$countvoies = 0;
 		foreach ($voies as $voie) {
@@ -985,7 +1010,6 @@ foreach ( $characters as $v) {
 
 
 
-		$domaines = $cnt->domaines;
 		$countdoms = 0;
 		foreach ($domaines as $domain) {
 			$datasDoms = array( 'character_id' => $v['char_id'], 'domain_id' => $domain->id, 'score' => $domain->val, );
@@ -1007,7 +1031,7 @@ foreach ( $characters as $v) {
 			}
 		}
 		showtime($temp_time, ' Ajout des domaines OK');
-		
+
 		$revers = $cnt->revers;
 		$revdatas = array('character_id' => $v['char_id']);
 		$all_rev = array();
@@ -1024,19 +1048,19 @@ foreach ( $characters as $v) {
 			$new->noRes('INSERT INTO %charsetbacks SET %%%fields ', $val);
 		}
 		showtime($temp_time, ' Ajout de '.count($all_rev).' revers '.($avoid ? ' dont un évité ' : ''));
-		
-		
+
+
 		$avtg = $cnt->avantages;
 		$desv = $cnt->desavantages;
 		$combat = $cnt->arts_combat;
-		
+
 		$avtgnb = 0; $desvnb = 0; $combatnb = 0;
 		foreach ($avtg as $val) { $new->noRes('INSERT INTO %charavtgs SET %%%fields', array('character_id'=>$v['char_id'], 'avantage_id' => $val->id, 'doubleValue' => $val->val)); $avtgnb++; }
 		foreach ($desv as $val) { $new->noRes('INSERT INTO %charavtgs SET %%%fields', array('character_id'=>$v['char_id'], 'avantage_id' => $val->id, 'doubleValue' => $val->val)); $desvnb++; }
 		foreach ($combat as $val) { $new->noRes('INSERT INTO %charavtgs SET %character_id = :character_id, %avantage_id = (SELECT %id FROM `avantages` WHERE `name` LIKE :type), %doubleValue = :doubleValue', array('character_id'=>$v['char_id'], 'doubleValue' => 0, 'type' => '%'.$val->name.'%')); $combatnb++; }
 		if ($desvnb) { showtime($temp_time, ' Ajout de '.$desvnb.' désavantage(s) '); }
 		if ($combatnb) { showtime($temp_time, ' Ajout de '.$combatnb.' art(s) de combat '); }
-		
+
 		$flux = $cnt->flux;
 		$sql = 'INSERT INTO %charflux SET %character_id = :character_id, %flux = (SELECT %id FROM `flux` WHERE `name` LIKE :type), %quantity = :qty';
 		$addflux = 0;
@@ -1045,7 +1069,7 @@ foreach ( $characters as $v) {
 		if ($flux->fossile > 0) { $new->noRes($sql, array('character_id' => $v['char_id'], 'qty' => $flux->vegetal, 'type' => 'fossile')); $addflux++; }
 		if ($flux->organique > 0) { $new->noRes($sql, array('character_id' => $v['char_id'], 'qty' => $flux->organique, 'type' => 'organique')); $addflux++; }
 		if ($addflux) { showtime($temp_time, ' Ajout de '.$addflux.' types de flux '); }
-		
+
 		if (!empty($cnt->artefacts)) {
 			foreach ($cnt->artefacts as $m) {
 				$to_add['artefacts'][] = $m;
@@ -1066,7 +1090,7 @@ foreach ( $characters as $v) {
 				$to_add['miracles_min'][] = $val;
 			}
 		}
-		
+
 //		$sql = 'INSERT INTO %charsocialclass SET %character_id = :character_id, %domain1_id = :dom1, %domain2_id = :dom2, %created = :created, %updated = :updated, %socialClass_id = (SELECT Id FROM `socialclass` WHERE `name` LIKE :socialClass)';
 //		$charsocialclass = array(
 //			'character_id' => $v['char_id'],
@@ -1077,14 +1101,14 @@ foreach ( $characters as $v) {
 //			'updated' => date('Y-m-d H:i:s', (int) $v['char_date_creation']),
 //		);
 //		if ($new->noRes($sql, $charsocialclass)) { showtime($temp_time, ' Ajout des domaines de la classe sociale du personnage'); }
-		
-		
+
+
 		foreach ($cnt->inventaire->armes as $arme) { $new->noRes('INSERT INTO %characters_weapons SET %%%fields ', array('characters_id' => $v['char_id'], 'weapons_id' => $arme->id)); }
 		if (!empty($cnt->inventaire->armes)) { showtime($temp_time, ' Ajout des armes du personnage'); }
-		
+
 		foreach ($cnt->inventaire->armures as $armure) { $new->noRes('INSERT INTO %characters_armors SET %%%fields ', array('characters_id' => $v['char_id'], 'armors_id' => $armure->id)); }
 		if (!empty($cnt->inventaire->armures)) { showtime($temp_time, ' Ajout des armures du personnage'); }
-		
+
 	//	showtime($temp_time, 'Structure manquante pour la table "'.$table.'"');
 		foreach ($struct as $k => $s) {
 			if (!array_key_exists($s['Field'], $datas)) { echo $s['Field']."\n"; }
