@@ -24,15 +24,23 @@
 						<li><a href="#">One more separated lien</a></li>
 					</ul>
 					</li>#}
-						
+
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li class="dropdown">
-					<a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ 'Changer la langue %lang%' | tr({'%lang%' : '['~locale~']'}) }} <b class="caret"></b></a>
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ 'Changer la langue %lang%' | tr({'%lang%' : '['~locale|upper~']'}) }} <b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<li><a href="{{ path('corahnrin_translate_translate_changelang', {'lang':'fr'}) }}">{{ 'Français' | tr }}</a></li>
-						<li><a href="{{ path('corahnrin_translate_translate_changelang', {'lang':'en'}) }}">{{ 'Anglais' | tr }}</a></li>
-						<li><a href="{{ path('corahnrin_translate_translate_changelang', {'lang':'de'}) }}">{{ 'Allemand' | tr }}</a></li>
+                        {% for lang in langs %}
+                            {% if lang.locale == locale %}
+                                <li class="active">
+                                    <a>{{ lang.literal | tr }}</a>
+                                </li>
+                            {% else %}
+                                <li>
+                                    <a href="{{ path('corahnrin_translate_translate_changelang', {'lang':lang.locale}) }}">{{ lang.literal | tr }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
 					</ul>
 					</li>
 					{% if app.user.username is not defined %}<li><a href="{{ path('fos_user_security_login') }}">{{ 'layout.login' | trans({},'FOSUserBundle') }}</a></li>
