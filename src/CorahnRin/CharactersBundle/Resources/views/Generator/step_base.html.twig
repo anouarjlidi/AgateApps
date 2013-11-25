@@ -1,6 +1,16 @@
 {% extends "::layout.html.twig" %}
 
-{% block title %}CorahnRinCharactersBundle:Generator:step{% endblock %}
+{% block title %}{{ 'Générateur' | tr }} - {{ loaded_step.title | tr }} - {{ parent() }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets
+        '@CorahnRinCharactersBundle/Resources/public/css/*'
+        output="css/generator.css"
+    %}<link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+    {% endstylesheets %}
+{#        filter="yui_css"#}
+{% endblock %}
 
 {% block menus %}
 	{{ parent() }}
@@ -9,5 +19,19 @@
 
 {% block content_for_layout %}
 	<h1>{{ 'Étape' | tr }} {{ loaded_step.step }} : {{ loaded_step.title | tr }}</h1>
-	{{ include('CorahnRinCharactersBundle:Generator:_step_'~loaded_step.id~'_'~loaded_step.slug~'.html.twig') }}
+    <form name="generator_form" id="generator_form" method="post" action="{{ path('corahnrin_characters_generator_step', {'step':loaded_step.step,'slug':loaded_step.slug}) }}">
+        <fieldset id="generator_{{ loaded_step.slug }}}">
+            <button type="submit" id="submit_btn" class="btn btn-default">{{ 'Étape suivante' | tr }}</button>
+            {{ include(loaded_step_filename) }}
+            <button type="submit" id="submit_btn" class="btn btn-default">{{ 'Étape suivante' | tr }}</button>
+        </fieldset>
+    </form>
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}{% javascripts
+        '@CorahnRinCharactersBundle/Resources/public/js/*'
+        output="js/generator.js"
+    %}<script type="text/javascript" src="{{ asset_url }}"></script>{% endjavascripts %}
+{% endblock %}
+{#        filter="yui_js"#}
