@@ -2,11 +2,16 @@
 <nav class="nav">
 	{% for step in steps %}
 		{% if session_step >= step.step %}
-			<a class="btn btn-link btn-xs{% if loaded_step and loaded_step.step == step.step %} active{% endif %}" href="{{ path('corahnrin_characters_generator_step', {'step':step.step,'slug':step.slug}) }}">{{ step.step }}. {{ step.title | tr }}</a>
+			<a class="btn btn-link btn-xs{% if loaded_step and loaded_step.step == step.step %} active{% endif %}" href="{{ path('corahnrin_characters_generator_step', {'step':step.step,'slug':step.slug}) }}">
+                {{ step.step }}. {{ step.title | tr }}
+            </a>
 		{% else %}
 			<a class="btn btn-link btn-xs disabled">{{ step.step }}. {{ step.title | tr }}</a>
 		{% endif %}
 	{% endfor %}
+    {% if app.session.get('generator_character') %}
+        <a class="btn btn-link btn-xs" href="{{ path('corahnrin_characters_generator_reset') }}">{{ 'Réinitialiser le personnage' | tr }}</a>
+    {% endif %}
 	<div class="progress">
 		<div class="progress-bar" role="progressbar" aria-valuenow="{{ bar_width }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ bar_width }}%;">
 			<span class="sr-only">{{ bar_width }}%</span>
