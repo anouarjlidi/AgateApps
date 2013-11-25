@@ -17,10 +17,10 @@
                 '@CorahnRinPagesBundle/Resources/public/css/jquery-ui-1.10.3.custom.min.css'
                 '@CorahnRinMapsBundle/Resources/public/css/maps.css'
                 output="css/theme.css"
-                filter="yui_css"
             %}<link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
             {% endstylesheets %}
         {% endblock %}
+{#        filter="yui_css"#}
 
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
@@ -33,9 +33,9 @@
                 '../vendor/twitter/bootstrap/dist/js/bootstrap.js'
                 '@CorahnRinPagesBundle/Resources/public/js/jquery-ui-1.10.3.custom.min.js'
                 output="js/main.js"
-                filter="yui_js"
             %}<script type="text/javascript" src="{{ asset_url }}"></script>{% endjavascripts %}
         {% endblock %}
+{#        filter="yui_js"#}
 
     </body>
 </html>
