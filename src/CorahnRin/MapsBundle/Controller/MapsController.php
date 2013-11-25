@@ -34,7 +34,7 @@ class MapsController extends Controller
     }
 
     /**
-     * @Route("/admin/maps/create")
+     * @Route("/admin/maps/create/")
      * @Template()
      */
     public function createAction()

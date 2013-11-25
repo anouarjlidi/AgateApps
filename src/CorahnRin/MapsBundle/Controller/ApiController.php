@@ -74,7 +74,7 @@ class ApiController extends Controller {
     }
 
     /**
-     * @Route("/api/maps/init", defaults={"_format":"json"})
+     * @Route("/api/maps/init/", defaults={"_format":"json"})
      * @Method({"POST"})
      */
     public function initAction() {

@@ -20,11 +20,11 @@ class ViewerController extends Controller
     }
 
     /**
-     * @Route("/characters")
+     * @Route("/characters/")
      * @Template()
      */
     public function listAction()
-    {	
+    {
 		$request = $this->getRequest();
 		$orderget = $request->query->get('field') ?: 'name';
 		$ordertype = $request->query->get('type') ?: 'asc';
