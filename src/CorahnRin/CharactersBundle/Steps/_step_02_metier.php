@@ -3,11 +3,17 @@
  * Métier
  */
 
-$t = $controller->getDoctrine()->getManager()->getRepository('CorahnRinCharactersBundle:Jobs')->findAll();
-$jobs = array();
-foreach ($t as $v) { $jobs[$v->getId()] = $v; }
-unset($t);
-$datas['jobs'] = $jobs;
+$books = $controller->getDoctrine()->getManager()->getRepository('CorahnRinCharactersBundle:Books')->findAll(true);
+//$jobs = array();foreach ($t as $v) { $jobs[$v->getId()] = $v; }unset($t);
+
+$jobs = $controller->getDoctrine()->getManager()->getRepository('CorahnRinCharactersBundle:Jobs')->findAll(true);
+$jobs_ordered = array();
+foreach ($jobs as $job) {
+//    $jobs_ordered[$job->getBook()->getId()]['book_name'] = $job->getBook()->getName();
+    $jobs_ordered[$job->getBook()->getId()][] = $job;
+}
+
+$datas['jobs_list'] = $jobs_ordered;
 $datas['jobs_value'] = '';
 
 $character = $session->get('generator_character');

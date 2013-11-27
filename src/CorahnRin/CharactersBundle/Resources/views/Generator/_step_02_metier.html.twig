@@ -1,0 +1,32 @@
+{% for jobs in jobs_list %}
+    <div class="row">
+        <h3>{{ jobs.0.book.name | tr }}</h3>
+        {% for job in jobs %}
+        <div class="col-sm-3">
+            <div class="btn-group">
+                <button type="button" data-toggle="modal" data-target="#modal_job_{{ job.id }}" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+                <button type="button" class="btn btn-default">{{ job.name | tr }}</button>
+            </div>
+            <div class="modal fade" id="modal_job_{{ job.id }}" aria-hidden="true" role="dialog" aria-labelledby="modal_job_label_{{ job.id }}">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="modal_job_label_{{ job.id }}">{{ job.name | tr }} <small>{{ job.book.name | tr }}</small></h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>{{ job.description | tr | raw }}</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'Fermer' | tr }}</button>
+                            <button type="button" class="btn btn-primary">{{ 'Sélectionner' | tr }}</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+
+        </div>
+        
+        {% endfor %}
+    </div>
+{% endfor %}
