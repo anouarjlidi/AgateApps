@@ -180,10 +180,11 @@
         var showImages = function() {
             $('img.map-image[src=""]')
                 .filter(function(){
-                    return ($(this).offset().top < ($('#map_wrapper').height() + imgSize))
-                            && ($(this).offset().top > 0)
-                            && ($(this).offset().left < ($('#map_wrapper').width() + imgSize))
-                            && ($(this).offset().left > 0);
+                    var t = $(this).offset().top,
+                        l = $(this).offset().left,
+                        w = $(wrapper).width(),
+                        h = $(wrapper).height();
+                    return ( t < h || t + imgSize > 0 ) && ( l < w || l + imgSize > 0 );
                 })
                 .attr('src', function(){
                     return this.getAttribute('data-image-src');
