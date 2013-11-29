@@ -1,8 +1,8 @@
 @CHARSET "UTF-8";
 
 /* Affichage */
-.hid { display: none !important; }
-.vsbl{ visibility: visible !important; }
+.hide { display: none !important; }
+.visible { visibility: visible !important; }
 
 /* Inline-block */
 .ib			{ display: inline-block; vertical-align: top; }
@@ -25,7 +25,7 @@
 	/* Couleurs */
 	.text-white { color: white !important; }
 	.text-red { color: red !important; }
-	
+
 	/* Format */
 	.text-underline { text-decoration: underline; }
 
