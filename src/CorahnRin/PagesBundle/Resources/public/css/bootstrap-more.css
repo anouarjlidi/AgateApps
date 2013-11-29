@@ -11,7 +11,7 @@
 }
 
 .btn-inverse {
-  color: #eeeeee;
+  color: #eeeeee !important;
   text-shadow: 0 1px 0 #000;
   background-image: -webkit-gradient(linear, left 0%, left 100%, from(#444444), to(#222222));
   background-image: -webkit-linear-gradient(top, #444444 0%, #222222 100%);
