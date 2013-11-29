@@ -553,6 +553,36 @@ foreach ( $domains as $v) {
 
 
 
+
+
+$table = 'jobs_domains';
+$nbreqtemp = 0;
+$new->noRes('delete from %'.$table);
+$new->noRes('ALTER TABLE %'.$table.' AUTO_INCREMENT = 1');
+foreach ( $jobdomains as $v) {
+    if (!$v['jobdomain_primsec']) {
+        $nbreq++;
+        $nbreqtemp++;
+        $datas = array(
+                'domains_id' => $v['domain_id'],
+                'jobs_id' => $v['job_id'],
+        );$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
+    } else {
+        $nbreq++;
+        $nbreqtemp++;
+        $datas = array(
+            'domainPrimary_id' => $v['domain_id'],
+            'id' => $v['job_id'],
+        );$new->noRes('UPDATE %jobs SET %domainPrimary_id = :domainPrimary_id WHERE %id = :id', $datas);
+    }
+}$tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
+
+
+
+
+
+
+
 $table = 'socialclass';
 $nbreqtemp = 0;
 if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>1))) {
