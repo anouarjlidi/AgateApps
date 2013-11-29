@@ -56,11 +56,25 @@ class Jobs
      */
     private $book;
 
+    /**
+     * @var \Domains
+     *
+     * @ORM\ManyToOne(targetEntity="Domains")
+     */
+    private $domainPrimary;
+
+    /**
+     * @var \Domains
+     *
+     * @ORM\ManyToMany(targetEntity="Domains")
+     */
+    private $domainsSecondary;
+
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -76,14 +90,14 @@ class Jobs
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -99,14 +113,14 @@ class Jobs
     public function setDescription($description)
     {
         $this->description = $description;
-    
+
         return $this;
     }
 
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
@@ -122,14 +136,14 @@ class Jobs
     public function setCreated($created)
     {
         $this->created = $created;
-    
+
         return $this;
     }
 
     /**
      * Get created
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreated()
     {
@@ -145,14 +159,14 @@ class Jobs
     public function setUpdated($updated)
     {
         $this->updated = $updated;
-    
+
         return $this;
     }
 
     /**
      * Get updated
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdated()
     {
@@ -168,17 +182,80 @@ class Jobs
     public function setBook(\CorahnRin\CharactersBundle\Entity\Books $book = null)
     {
         $this->book = $book;
-    
+
         return $this;
     }
 
     /**
      * Get book
      *
-     * @return \CorahnRin\CharactersBundle\Entity\Books 
+     * @return \CorahnRin\CharactersBundle\Entity\Books
      */
     public function getBook()
     {
         return $this->book;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->domainsSecondary = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Set domainPrimary
+     *
+     * @param \CorahnRin\CharactersBundle\Entity\Domains $domainPrimary
+     * @return Jobs
+     */
+    public function setDomainPrimary(\CorahnRin\CharactersBundle\Entity\Domains $domainPrimary = null)
+    {
+        $this->domainPrimary = $domainPrimary;
+
+        return $this;
+    }
+
+    /**
+     * Get domainPrimary
+     *
+     * @return \CorahnRin\CharactersBundle\Entity\Domains 
+     */
+    public function getDomainPrimary()
+    {
+        return $this->domainPrimary;
+    }
+
+    /**
+     * Add domainsSecondary
+     *
+     * @param \CorahnRin\CharactersBundle\Entity\Domains $domainsSecondary
+     * @return Jobs
+     */
+    public function addDomainsSecondary(\CorahnRin\CharactersBundle\Entity\Domains $domainsSecondary)
+    {
+        $this->domainsSecondary[] = $domainsSecondary;
+
+        return $this;
+    }
+
+    /**
+     * Remove domainsSecondary
+     *
+     * @param \CorahnRin\CharactersBundle\Entity\Domains $domainsSecondary
+     */
+    public function removeDomainsSecondary(\CorahnRin\CharactersBundle\Entity\Domains $domainsSecondary)
+    {
+        $this->domainsSecondary->removeElement($domainsSecondary);
+    }
+
+    /**
+     * Get domainsSecondary
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getDomainsSecondary()
+    {
+        return $this->domainsSecondary;
     }
 }
