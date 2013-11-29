@@ -14,7 +14,7 @@ foreach ($jobs as $job) {
 }
 
 $datas['jobs_list'] = $jobs_ordered;
-$datas['jobs_value'] = '';
+$datas['job_value'] = '';
 
 $character = $session->get('generator_character');
 

@@ -1,11 +1,16 @@
+<input type="hidden" name="job_value" id="job_value" value="{{ job_value }}" />
 {% for jobs in jobs_list %}
     <div class="row">
         <h3>{{ jobs.0.book.name | tr }}</h3>
+        
         {% for job in jobs %}
+        
         <div class="col-sm-3">
             <div class="btn-group">
-                <button type="button" data-toggle="modal" data-target="#modal_job_{{ job.id }}" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
-                <button type="button" class="btn btn-default">{{ job.name | tr }}</button>
+                <button type="button" data-toggle="modal" data-target="#modal_job_{{ job.id }}" class="btn {{ job_value == job.id ? 'btn-inverse' : 'btn-default' }}">
+                    <span class="glyphicon glyphicon-search"></span>
+                </button>
+                <button type="button" data-toggle="button-gen-choice" data-input-value="{{ job.id }}" data-target-node="#job_value" class="btn {{ job_value == job.id ? 'btn-inverse' : 'btn-default' }}">{{ job.name | tr }}</button>
             </div>
             <div class="modal fade" id="modal_job_{{ job.id }}" aria-hidden="true" role="dialog" aria-labelledby="modal_job_label_{{ job.id }}">
                 <div class="modal-dialog">
@@ -28,8 +33,9 @@
                             </p>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'Fermer' | tr }}</button>
-                            <button type="button" class="btn btn-primary">{{ 'Sélectionner' | tr }}</button>
+                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">{{ 'Fermer' | tr }}</button>
+                            <button type="button" class="btn btn-primary" data-toggle="button-gen-choice" data-input-value="{{ job.id }}" data-target-node="#job_value" data-base-class="btn-primary">{{ 'Sélectionner' | tr }}</button>
+                            <div class="clearfix"></div>
                         </div>
                     </div><!-- /.modal-content -->
                 </div><!-- /.modal-dialog -->
@@ -38,5 +44,6 @@
         </div>
 
         {% endfor %}
+        
     </div>
 {% endfor %}
