@@ -4,7 +4,7 @@
      * Fonction permettant d'utiliser des div pour changer la valeur d'un input
      */
     $('.gen-div-choice').click(function(){
-        var node = document.getElementsByClass('gen-div-choice'), count = node.length;
+        var node = document.getElementsByClassName('gen-div-choice'), count = node.length;
         if (this.classList.contains('selected')) {
             return false;
         }
@@ -36,7 +36,15 @@
                 node[i].previousElementSibling.classList.add( baseClass ? baseClass : 'btn-default');
             }
         }
-        this.classList.add('btn-inverse');
+        node = document.querySelectorAll('[data-toggle="button-gen-choice"][data-input-value="'+this.getAttribute('data-input-value')+'"]');
+        count = node.length;
+        for (var i = 0; i < count; i++) {
+            baseClass = node[i].getAttribute('data-base-class');
+            node[i].classList.add('btn-inverse');
+            if (node[i].previousElementSibling.classList.contains('btn') && node[i].previousElementSibling.parentNode.classList.contains('btn-group')) {
+                node[i].previousElementSibling.classList.add('btn-inverse');
+            }
+        }
         if (this.previousElementSibling.classList.contains('btn') && this.previousElementSibling.parentNode.classList.contains('btn-group')) {
             this.previousElementSibling.classList.add('btn-inverse');
         }
