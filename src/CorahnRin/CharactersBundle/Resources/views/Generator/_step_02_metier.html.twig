@@ -16,6 +16,16 @@
                         </div>
                         <div class="modal-body">
                             <p>{{ job.description | tr | raw }}</p>
+                            <p><span class="text-underline">{{ 'Domaine primaire' | tr }} :</span> {{ job.domainPrimary.name | tr }}</p>
+                            <p>
+                                <span class="text-underline">{{ 'Domaines secondaires' | tr }} :</span>
+                                {% for domain in job.domainsSecondary %}
+                                    {% if loop.index0 > 0 %} &ndash; {% endif %}
+                                    {{ domain.name | tr }}
+                                {% else %}
+                                    {{ 'Au choix' | tr }}
+                                {% endfor %}
+                            </p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'Fermer' | tr }}</button>
@@ -26,7 +36,7 @@
             </div><!-- /.modal -->
 
         </div>
-        
+
         {% endfor %}
     </div>
 {% endfor %}
