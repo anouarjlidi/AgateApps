@@ -26,6 +26,7 @@ class ApiController extends Controller {
 
         $tilesManager = new MapsTileManager($map, $this->img_size);
 
+
         $get_vars = $this->getRequest()->query;
         $dimensionsType = $get_vars->get('dimensions-type');
         $positionType = $get_vars->get('position-type');
@@ -44,8 +45,12 @@ class ApiController extends Controller {
         $w = (int) $get_vars->get('width') * ($dimensionsType === 'tile' ? $this->img_size : 1);
         $h = (int) $get_vars->get('height') * ($dimensionsType === 'tile' ? $this->img_size : 1);
 
+        $identification = $tilesManager->identifyImage($z);
+
         if (!$w) { $w = $this->img_size; }
+        if ($w > $identification['wmax']) { $w = $identification['wmax']; }
         if (!$h) { $h = $this->img_size; }
+        if ($h > $identification['hmax']) { $h = $identification['hmax']; }
 
         $imgname = $tilesManager->mapDestinationName($z, $x, $y, $w, $h);
 
