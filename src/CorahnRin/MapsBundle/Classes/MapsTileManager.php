@@ -39,7 +39,7 @@ class MapsTileManager {
         if ($width === null || $height === null) {
             $imgname = ROOT.'/app/cache/maps_img/'.$this->map->getNameSlug().'/'.$this->map->getNameSlug().'_'.$zoom.'_'.$x.'_'.$y.'.jpg';
         } else {
-            $imgname = ROOT.'/app/cache/maps_img/'.$this->map->getNameSlug().'/custom/'.$this->map->getNameSlug().'/_'.$zoom.'_'.$x.'_'.$y.'_'.$width.'_'.$height.'.jpg';
+            $imgname = ROOT.'/app/cache/maps_img/'.$this->map->getNameSlug().'/custom/'.$this->map->getNameSlug().'_'.$zoom.'_'.$x.'_'.$y.'_'.$width.'_'.$height.'.jpg';
         }
         return $imgname;
     }
@@ -139,7 +139,7 @@ class MapsTileManager {
         }
         return $cmd;
     }
-    
+
     /**
      * Crée une image à partir de l'image principale et renvoie le nom du fichier temporaire
      * TOUTES LES DIMENSIONS DOIVENT ÊTRE EN PIXELS !
