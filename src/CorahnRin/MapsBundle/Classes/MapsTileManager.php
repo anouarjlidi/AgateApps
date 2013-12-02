@@ -32,8 +32,12 @@ class MapsTileManager {
      * @param integer $y
      * @return string
      */
-    public function mapDestinationName($zoom, $x, $y) {
-        $imgname = ROOT.'/app/cache/maps_img/'.$this->map->getNameSlug().'/'.$this->map->getNameSlug().'_'.$zoom.'_'.$x.'_'.$y.'.jpg';
+    public function mapDestinationName($zoom, $x, $y, $width = null, $height = null) {
+        if ($width === null || $height === null) {
+            $imgname = ROOT.'/app/cache/maps_img/'.$this->map->getNameSlug().'/'.$this->map->getNameSlug().'_'.$zoom.'_'.$x.'_'.$y.'.jpg';
+        } else {
+            $imgname = ROOT.'/app/cache/maps_img/'.$this->map->getNameSlug().'/custom/'.$this->map->getNameSlug().'/_'.$zoom.'_'.$x.'_'.$y.'_'.$width.'_'.$height.'.jpg';
+        }
         return $imgname;
     }
 
@@ -107,8 +111,9 @@ class MapsTileManager {
         if ($x < 0 || $x > $identification['xmax']) { throw new \RunTimeException('"x" value must be between 0 and '.$identification['xmax'].'.'); }
         if ($y < 0 || $y > $identification['ymax']) { throw new \RunTimeException('"y" value must be between 0 and '.$identification['ymax'].'.'); }
 
-        if (!is_dir(dirname($this->mapDestinationName($zoom, $x, $y)))) {
-            mkdir(dirname($this->mapDestinationName($zoom, $x, $y)), 0777, true);
+        $imgname = $this->mapDestinationName($zoom, $x, $y);
+        if (!is_dir(dirname($imgname))) {
+            mkdir(dirname($imgname), 0777, true);
         }
 
         $_x = $x*$this->img_size;
@@ -116,13 +121,47 @@ class MapsTileManager {
         $cmd = 'convert'.
             ' "'.$this->mapSourceName().'"'.
             ($ratio < 100 ? ' -resize '.$ratio.'%' : '').
-            ' -background black'.//Le "surplus" sera noirs
+            ' -background black'.//Le "surplus" sera noir
             ' -extent '.$identification['wmax'].'x'.$identification['hmax'].'^'.//Redimensionne aux valeurs "width" et "height" maximales dépendant du zoom
             ' -crop '.$this->img_size.'x'.$this->img_size.'+'.$_x.'+'.$_y.//Découpe l'image selon la taille demandée dans les paramètres
             ' -extent '.$this->img_size.'x'.$this->img_size.'^'.//Et étend les éventuels pixels en trop ou en moins
             ' -quality 95'.//Une faible qualité réduira le poids des images
             ' -thumbnail '.$this->img_size.'x'.$this->img_size.
             ' "'.$this->mapDestinationName($zoom, $x, $y).'"'
+        ;
+
+        if ($dry_run === false) {
+            return shell_exec($cmd);
+        }
+        return $cmd;
+    }
+    
+    /**
+     * Crée une image à partir de l'image principale et renvoie le nom du fichier temporaire
+     * TOUTES LES DIMENSIONS DOIVENT ÊTRE EN PIXELS !
+     * @param integer $zoom
+     * @param integer $x
+     * @param integer $y
+     * @param integer $width
+     * @param integer $height
+     */
+    public function createImage($zoom, $x, $y, $width, $height, $dry_run = false) {
+        $identification = $this->identifyImage($zoom);
+        $ratio = ( $zoom / $this->map->getMaxZoom() ) * 100;
+        $imgname = $this->mapDestinationName($zoom, $x, $y, $width, $height);
+        if (!is_dir(dirname($imgname))) {
+            mkdir(dirname($imgname), 0777, true);
+        }
+        $cmd = 'convert'.
+            ' "'.$this->mapSourceName().'"'.
+            ($ratio < 100 ? ' -resize '.$ratio.'%' : '').
+            ' -background black'.//Le "surplus" sera noir
+            ' -extent '.$identification['wmax'].'x'.$identification['hmax'].'^'.//Redimensionne aux valeurs "width" et "height" maximales dépendant du zoom
+            ' -crop '.$width.'x'.$height.'+'.$x.'+'.$y.//Découpe l'image selon la taille demandée dans les paramètres
+            ' -extent '.$width.'x'.$height.'^'.//Et étend les éventuels pixels en trop ou en moins
+            ' -quality 95'.//Une faible qualité réduira le poids des images
+            ' -thumbnail '.$width.'x'.$height.
+            ' "'.$imgname.'"'
         ;
 
         if ($dry_run === false) {
