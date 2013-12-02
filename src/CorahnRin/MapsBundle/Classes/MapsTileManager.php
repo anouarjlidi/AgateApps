@@ -17,15 +17,34 @@ class MapsTileManager {
         $this->img_size = $img_size;
     }
 
+    /**
+     * Renvoie le fichier source de la map demandée
+     * @return string
+     */
     public function mapSourceName() {
         return ROOT.'/web/'.$this->map->getImage();
     }
 
+    /**
+     * Renvoie le nom du fichier de la tuile demandée par son zoom et sa position en X et Y
+     * @param integer $zoom
+     * @param integer $x
+     * @param integer $y
+     * @return string
+     */
     public function mapDestinationName($zoom, $x, $y) {
         $imgname = ROOT.'/app/cache/maps_img/'.$this->map->getNameSlug().'/'.$this->map->getNameSlug().'_'.$zoom.'_'.$x.'_'.$y.'.jpg';
         return $imgname;
     }
 
+    /**
+     * Identifie les caractéristiques de la carte si ce n'est pas déjà fait
+     * Renvoie l'identification demandée en fonction du zoom
+     * Renvoie une exception si l'identification par ImageMagick ne fonctionne pas
+     * @param integer $zoom
+     * @return array
+     * @throws \RunTimeException
+     */
     public function identifyImage($zoom) {
 
         if (!isset($this->identifications[$zoom])) {
@@ -66,6 +85,17 @@ class MapsTileManager {
         return $this->identifications[$zoom];
     }
 
+    /**
+     * Crée une commande de découpage de l'image de la carte en utilisant ImageMagick
+     * Si "dry_run" est passé à "true", renvoie uniquement la commande
+     * Sinon, exécute la commande via shell_exec() et retourne le résultat
+     * @param integer $x
+     * @param integer $y
+     * @param integer $zoom
+     * @param integer $dry_run
+     * @return string
+     * @throws \RunTimeException
+     */
     public function createTile($x, $y, $zoom, $dry_run = false) {
 
         if ($zoom > $this->map->getMaxZoom()) { throw new \RunTimeException('"zoom" value must be between 1 and '.$this->map->getMaxZoom().'.'); }
