@@ -11,11 +11,14 @@ class MapsTileManager {
     private $img_width;
     private $img_height;
     private $identifications = array();
+    private $imgname = '';
 
     function __construct (Maps $map, $img_size) {
         $this->map = $map;
         $this->img_size = $img_size;
     }
+
+    public function getImgName() { return $this->imgname; }
 
     /**
      * Renvoie le fichier source de la map demandée
@@ -112,6 +115,7 @@ class MapsTileManager {
         if ($y < 0 || $y > $identification['ymax']) { throw new \RunTimeException('"y" value must be between 0 and '.$identification['ymax'].'.'); }
 
         $imgname = $this->mapDestinationName($zoom, $x, $y);
+        $this->imgname = $imgname;
         if (!is_dir(dirname($imgname))) {
             mkdir(dirname($imgname), 0777, true);
         }
@@ -149,6 +153,7 @@ class MapsTileManager {
         $identification = $this->identifyImage($zoom);
         $ratio = ( $zoom / $this->map->getMaxZoom() ) * 100;
         $imgname = $this->mapDestinationName($zoom, $x, $y, $width, $height);
+        $this->imgname = $imgname;
         if (!is_dir(dirname($imgname))) {
             mkdir(dirname($imgname), 0777, true);
         }
