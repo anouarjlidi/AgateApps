@@ -21,14 +21,14 @@ class Maps
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=255, nullable=false, unique=true)
      */
-    private $name;
+    protected $name;
 
     /**
      * @var string
@@ -36,21 +36,21 @@ class Maps
      * @Gedmo\Slug(fields={"name"})
      * @ORM\Column(type="string", length=255, nullable=false, unique=true)
      */
-    private $nameSlug;
+    protected $nameSlug;
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=255, nullable=false)
      */
-    private $image;
+    protected $image;
 
     /**
      * @var string
      *
      * @ORM\Column(type="text", nullable=true)
      */
-    private $description;
+    protected $description;
 
     /**
      * @var integer
@@ -61,7 +61,7 @@ class Maps
      *      max = 10
      * )
      */
-    private $maxZoom;
+    protected $maxZoom;
 
     /**
      * @var \DateTime
@@ -69,7 +69,7 @@ class Maps
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
      */
-    private $created;
+    protected $created;
 
     /**
      * @var \DateTime
@@ -77,28 +77,28 @@ class Maps
      * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
-    private $updated;
+    protected $updated;
 
 	/**
      * @var DoctrineCollection
 	 *
 	 * @ORM\OneToMany(targetEntity="Routes", mappedBy="map")
 	 */
-	private $routes;
+	protected $routes;
 
 	/**
      * @var DoctrineCollection
 	 *
 	 * @ORM\OneToMany(targetEntity="Markers", mappedBy="map")
 	 */
-	private $markers;
+	protected $markers;
 
 	/**
      * @var DoctrineCollection
 	 *
 	 * @ORM\OneToMany(targetEntity="Zones", mappedBy="map")
 	 */
-	private $zones;
+	protected $zones;
     /**
      * Constructor
      */

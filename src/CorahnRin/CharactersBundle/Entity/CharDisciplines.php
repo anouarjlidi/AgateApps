@@ -17,7 +17,7 @@ class CharDisciplines
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Characters", inversedBy="disciplines")
      */
-    private $character;
+    protected $character;
 
     /**
      * @var \DisciplinesDomains
@@ -26,14 +26,14 @@ class CharDisciplines
      * @ORM\ManyToOne(targetEntity="DisciplinesDomains")
      * @ORM\Column(nullable=false,name="discipline_id")
      */
-    private $discipline;
+    protected $discipline;
 
     /**
      * @var integer
      *
      * @ORM\Column(type="integer")
      */
-    private $score;
+    protected $score;
 
     /**
      * Set score

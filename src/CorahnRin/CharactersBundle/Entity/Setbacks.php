@@ -18,35 +18,35 @@ class Setbacks
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=50, nullable=false, unique=true)
      */
-    private $name;
+    protected $name;
 
     /**
      * @var string
      *
      * @ORM\Column(type="text", nullable=false)
      */
-    private $description;
+    protected $description;
 	
     /**
      * @var integer
      *
      * @ORM\Column(type="string", length=50, nullable=false)
      */
-    private $malus;
+    protected $malus;
 
     /**
      * @var \Datetime
      * @Gedmo\Mapping\Annotation\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
      */
-    private $created;
+    protected $created;
 
     /**
      * @var \Datetime
@@ -54,7 +54,7 @@ class Setbacks
      * @Gedmo\Mapping\Annotation\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
-    private $updated;
+    protected $updated;
 
 
     /**

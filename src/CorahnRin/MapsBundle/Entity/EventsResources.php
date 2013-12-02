@@ -18,7 +18,7 @@ class EventsResources {
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Events", inversedBy="resources")
      */
-    private $event;
+    protected $event;
 
     /**
      * @var \Resources
@@ -26,7 +26,7 @@ class EventsResources {
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Resources", inversedBy="events")
      */
-    private $resource;
+    protected $resource;
 
     /**
      * @var \DateTime
@@ -34,7 +34,7 @@ class EventsResources {
 	 * @Gedmo\Mapping\Annotation\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
      */
-    private $created;
+    protected $created;
 
     /**
      * @var \DateTime
@@ -42,14 +42,14 @@ class EventsResources {
 	 * @Gedmo\Mapping\Annotation\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
-    private $updated;
+    protected $updated;
 
 	/**
 	 * @var smallint
 	 *
 	 * @ORM\Column(type="smallint", nullable=false)
 	 */
-	private $percentage;
+	protected $percentage;
 
 
     /**

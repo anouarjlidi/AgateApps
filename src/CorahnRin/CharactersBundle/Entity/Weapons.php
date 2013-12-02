@@ -18,56 +18,56 @@ class Weapons
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=50, nullable=false, unique=true)
      */
-    private $name;
+    protected $name;
 
     /**
      * @var boolean
      *
      * @ORM\Column(type="boolean", nullable=false)
      */
-    private $damage;
+    protected $damage;
 
     /**
      * @var integer
      *
      * @ORM\Column(type="integer", nullable=false)
      */
-    private $price;
+    protected $price;
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=3, nullable=false)
      */
-    private $availability;
+    protected $availability;
 
     /**
      * @var boolean
      *
      * @ORM\Column(type="boolean", nullable=false)
      */
-    private $melee;
+    protected $melee;
 
     /**
      * @var integer
      *
      * @ORM\Column(type="integer", nullable=false)
      */
-    private $range;
+    protected $range;
 
     /**
      * @var \Datetime
      * @Gedmo\Mapping\Annotation\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
      */
-    private $created;
+    protected $created;
 
     /**
      * @var \Datetime
@@ -75,7 +75,7 @@ class Weapons
      * @Gedmo\Mapping\Annotation\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
-    private $updated;
+    protected $updated;
 
 
     /**

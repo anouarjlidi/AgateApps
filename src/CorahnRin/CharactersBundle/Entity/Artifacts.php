@@ -18,75 +18,75 @@ class Artifacts
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=70, nullable=false, unique=true)
      */
-    private $name;
+    protected $name;
 
     /**
      * @var integer
      *
      * @ORM\Column(type="integer", nullable=false)
      */
-    private $price;
+    protected $price;
 
     /**
      * @var integer
      * @ORM\Column(type="integer", nullable=false)
      */
-    private $consumption;
+    protected $consumption;
 
     /**
      * @var integer
      * @ORM\Column(type="integer", nullable=false)
      */
-    private $consumptionInterval;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(type="integer", nullable=false)
-     */
-    private $tank;
+    protected $consumptionInterval;
 
     /**
      * @var integer
      *
      * @ORM\Column(type="integer", nullable=false)
      */
-    private $resistance;
+    protected $tank;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(type="integer", nullable=false)
+     */
+    protected $resistance;
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=70, nullable=false)
      */
-    private $vulnerability;
+    protected $vulnerability;
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=20, nullable=false)
      */
-    private $handling;
+    protected $handling;
 
     /**
      * @var integer
      *
      * @ORM\Column(type="integer", nullable=false)
      */
-    private $damage;
+    protected $damage;
 
     /**
      * @var \Datetime
      * @Gedmo\Mapping\Annotation\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
      */
-    private $created;
+    protected $created;
 
     /**
      * @var \Datetime
@@ -94,14 +94,14 @@ class Artifacts
      * @Gedmo\Mapping\Annotation\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
-    private $updated;
+    protected $updated;
 
     /**
      * @var \Flux
      *
      * @ORM\ManyToOne(targetEntity="Flux")
      */
-    private $flux;
+    protected $flux;
 
 
     /**

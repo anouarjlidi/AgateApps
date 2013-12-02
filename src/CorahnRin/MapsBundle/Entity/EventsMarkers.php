@@ -18,7 +18,7 @@ class EventsMarkers {
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Events", inversedBy="markers")
      */
-    private $event;
+    protected $event;
 
     /**
      * @var \Markers
@@ -26,14 +26,14 @@ class EventsMarkers {
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Markers", inversedBy="events")
      */
-    private $marker;
+    protected $marker;
 
 	/**
 	 * @var smallint
 	 *
 	 * @ORM\Column(type="smallint", nullable=false)
 	 */
-	private $percentage;
+	protected $percentage;
 
     /**
      * @var \DateTime
@@ -41,7 +41,7 @@ class EventsMarkers {
 	 * @Gedmo\Mapping\Annotation\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
      */
-    private $created;
+    protected $created;
 
     /**
      * @var \DateTime
@@ -49,7 +49,7 @@ class EventsMarkers {
 	 * @Gedmo\Mapping\Annotation\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
-    private $updated;
+    protected $updated;
 
 
     /**

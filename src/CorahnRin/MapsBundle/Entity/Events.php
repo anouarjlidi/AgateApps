@@ -19,45 +19,45 @@ class Events
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=255, nullable=false, unique=true)
      */
-    private $name;
+    protected $name;
 
     /**
      * @var \DateTime
 	 * @Gedmo\Mapping\Annotation\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
      */
-    private $created;
+    protected $created;
 
     /**
      * @var \DateTime
 	 * @Gedmo\Mapping\Annotation\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
-    private $updated;
+    protected $updated;
 	
     /**
      * @var DoctrineCollection
      * @ORM\ManyToMany(targetEntity="Foes", mappedBy="events")
      */
-    private $foes;
+    protected $foes;
 
     /**
      * @var DoctrineCollection
      * @ORM\ManyToMany(targetEntity="Npcs", mappedBy="events")
      */
-    private $npcs;
+    protected $npcs;
 
     /**
      * @var DoctrineCollection
      * @ORM\ManyToMany(targetEntity="Weather", mappedBy="events")
      */
-    private $weather;
+    protected $weather;
 
 
 
@@ -65,37 +65,37 @@ class Events
      * @var DoctrineCollection
      * @ORM\OneToMany(targetEntity="EventsMarkers", mappedBy="event")
      */
-    private $markers;
+    protected $markers;
 
     /**
      * @var DoctrineCollection
      * @ORM\OneToMany(targetEntity="EventsMarkersTypes", mappedBy="event")
      */
-    private $markersTypes;
+    protected $markersTypes;
 
     /**
      * @var DoctrineCollection
      * @ORM\OneToMany(targetEntity="EventsResources", mappedBy="event")
      */
-    private $resources;
+    protected $resources;
 
     /**
      * @var DoctrineCollection
      * @ORM\OneToMany(targetEntity="EventsRoutes", mappedBy="event")
      */
-    private $routes;
+    protected $routes;
 
     /**
      * @var DoctrineCollection
      * @ORM\OneToMany(targetEntity="EventsRoutesTypes", mappedBy="event")
      */
-    private $routesTypes;
+    protected $routesTypes;
 
     /**
      * @var DoctrineCollection
      * @ORM\OneToMany(targetEntity="EventsZones", mappedBy="event")
      */
-    private $zones;
+    protected $zones;
 
     /**
      * Constructor

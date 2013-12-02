@@ -18,42 +18,42 @@ class Ways
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=3, nullable=false, unique=true)
      */
-    private $shortName;
+    protected $shortName;
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=40, nullable=false, unique=true)
      */
-    private $name;
+    protected $name;
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=40, nullable=false, unique=true)
      */
-    private $fault;
+    protected $fault;
 
     /**
      * @var string
      *
      * @ORM\Column(type="text", nullable=false)
      */
-    private $description;
+    protected $description;
 
     /**
      * @var \Datetime
      * @Gedmo\Mapping\Annotation\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
      */
-    private $created;
+    protected $created;
 
     /**
      * @var \Datetime
@@ -61,7 +61,7 @@ class Ways
      * @Gedmo\Mapping\Annotation\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
-    private $updated;
+    protected $updated;
 
 
 

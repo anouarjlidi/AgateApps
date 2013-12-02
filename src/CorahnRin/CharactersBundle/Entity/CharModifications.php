@@ -18,35 +18,35 @@ class CharModifications
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var \Characters
      *
      * @ORM\Column(type="object", nullable=false)
      */
-    private $before;
+    protected $before;
 
     /**
      * @var \Characters
      *
      * @ORM\ManyToOne(targetEntity="Characters", inversedBy="modifications")
      */
-    private $character;
+    protected $character;
 
     /**
      * @var \Users
      *
      * @ORM\ManyToOne(targetEntity="CorahnRin\UsersBundle\Entity\Users")
      */
-    private $user;
+    protected $user;
 
     /**
      * @var \Datetime
      * @Gedmo\Mapping\Annotation\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
      */
-    private $created;
+    protected $created;
 
     /**
      * @var \Datetime
@@ -54,7 +54,7 @@ class CharModifications
      * @Gedmo\Mapping\Annotation\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
-    private $updated;
+    protected $updated;
 
 
 

@@ -17,7 +17,7 @@ class CharAvtgs
      * @ORM\Id
 	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Characters", inversedBy="avantages")
      */
-    private $character;
+    protected $character;
 
     /**
      * @var \Avantages
@@ -25,14 +25,14 @@ class CharAvtgs
      * @ORM\Id
 	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Avantages")
      */
-    private $avantage;
+    protected $avantage;
 
     /**
      * @var boolean
      *
      * @ORM\Column(type="integer")
      */
-    private $doubleValue;
+    protected $doubleValue;
 
 
 

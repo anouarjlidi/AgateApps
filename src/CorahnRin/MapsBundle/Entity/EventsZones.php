@@ -18,7 +18,7 @@ class EventsZones {
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Events", inversedBy="zones")
      */
-    private $event;
+    protected $event;
 
     /**
      * @var \Zones
@@ -26,7 +26,7 @@ class EventsZones {
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Zones", inversedBy="events")
      */
-    private $zone;
+    protected $zone;
 
     /**
      * @var \DateTime
@@ -34,7 +34,7 @@ class EventsZones {
 	 * @Gedmo\Mapping\Annotation\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
      */
-    private $created;
+    protected $created;
 
     /**
      * @var \DateTime
@@ -42,14 +42,14 @@ class EventsZones {
 	 * @Gedmo\Mapping\Annotation\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
-    private $updated;
+    protected $updated;
 
 	/**
 	 * @var smallint
 	 *
 	 * @ORM\Column(type="smallint", nullable=false)
 	 */
-	private $percentage;
+	protected $percentage;
 
 
     /**

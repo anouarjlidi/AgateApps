@@ -19,35 +19,35 @@ class Games
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=140, nullable=false)
      */
-    private $name;
+    protected $name;
 
     /**
      * @var string
      *
      * @ORM\Column(type="text", nullable=false)
      */
-    private $summary;
+    protected $summary;
 
     /**
      * @var string
      *
      * @ORM\Column(type="text", nullable=false)
      */
-    private $gmNotes;
+    protected $gmNotes;
 
     /**
      * @var \Datetime
      * @Gedmo\Mapping\Annotation\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
      */
-    private $created;
+    protected $created;
 
     /**
      * @var \Datetime
@@ -55,21 +55,21 @@ class Games
      * @Gedmo\Mapping\Annotation\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
-    private $updated;
+    protected $updated;
 
     /**
      * @var \Users
      *
      * @ORM\ManyToOne(targetEntity="CorahnRin\UsersBundle\Entity\Users")
      */
-    private $gameMaster;
+    protected $gameMaster;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\OneToMany(targetEntity="Characters", mappedBy="game")
      */
-    private $characters;
+    protected $characters;
 
     /**
      * Constructor

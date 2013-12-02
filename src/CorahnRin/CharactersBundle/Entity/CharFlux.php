@@ -17,7 +17,7 @@ class CharFlux
      * @ORM\Id
 	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Characters", inversedBy="flux")
      */
-    private $character;
+    protected $character;
 
     /**
      * @var \Flux
@@ -26,14 +26,14 @@ class CharFlux
      * @ORM\Id
 	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Flux")
      */
-    private $flux;
+    protected $flux;
 
     /**
      * @var integer
      *
      * @ORM\Column(type="integer")
      */
-    private $quantity;
+    protected $quantity;
 
 
 

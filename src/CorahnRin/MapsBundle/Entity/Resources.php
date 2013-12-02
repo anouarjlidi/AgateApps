@@ -20,14 +20,14 @@ class Resources
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=255, nullable=false, unique=true)
      */
-    private $name;
+    protected $name;
 
     /**
      * @var \DateTime
@@ -35,7 +35,7 @@ class Resources
 	 * @Gedmo\Mapping\Annotation\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
      */
-    private $created;
+    protected $created;
 
     /**
      * @var \DateTime
@@ -43,28 +43,28 @@ class Resources
 	 * @Gedmo\Mapping\Annotation\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
-    private $updated;
+    protected $updated;
 	
     /**
      * @var DoctrineCollection
      *
      * @ORM\ManyToMany(targetEntity="Routes", inversedBy="resources")
      */
-    private $routes;
+    protected $routes;
 
     /**
      * @var DoctrineCollection
      *
      * @ORM\ManyToMany(targetEntity="RoutesTypes", inversedBy="resources")
      */
-    private $routesTypes;
+    protected $routesTypes;
 
     /**
      * @var DoctrineCollection
      *
      * @ORM\OneToMany(targetEntity="EventsResources", mappedBy="resource")
      */
-	private $events;
+	protected $events;
     /**
      * Constructor
      */

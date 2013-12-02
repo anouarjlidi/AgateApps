@@ -17,7 +17,7 @@ class CharWays
      * @ORM\Id
 	 * @ORM\ManyToOne(targetEntity="Characters", inversedBy="ways")
      */
-    private $character;
+    protected $character;
 
     /**
      * @var \Ways
@@ -25,14 +25,14 @@ class CharWays
      * @ORM\Id
 	 * @ORM\ManyToOne(targetEntity="Ways")
      */
-    private $way;
+    protected $way;
 
     /**
      * @var integer
      *
      * @ORM\Column(type="integer")
      */
-    private $score;
+    protected $score;
 
 
 

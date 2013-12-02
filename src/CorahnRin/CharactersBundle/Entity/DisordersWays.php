@@ -17,7 +17,7 @@ class DisordersWays
      * @ORM\Id
 	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Disorders", inversedBy="ways")
      */
-    private $disorder;
+    protected $disorder;
 
     /**
      * @var \Ways
@@ -25,14 +25,14 @@ class DisordersWays
      * @ORM\Id
 	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Ways")
      */
-    private $way;
+    protected $way;
 
     /**
      * @var boolean
      *
      * @ORM\Column(type="boolean", nullable=false)
      */
-    private $isMajor;
+    protected $isMajor;
 
 
 

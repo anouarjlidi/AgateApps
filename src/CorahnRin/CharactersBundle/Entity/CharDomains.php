@@ -17,7 +17,7 @@ class CharDomains
      * @ORM\Id
 	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Characters", inversedBy="domains")
      */
-    private $character;
+    protected $character;
 
     /**
      * @var \Domains
@@ -25,14 +25,14 @@ class CharDomains
      * @ORM\Id
 	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Domains")
      */
-    private $domain;
+    protected $domain;
 
     /**
      * @var integer
      *
      * @ORM\Column(type="integer")
      */
-    private $score;
+    protected $score;
 
 
 

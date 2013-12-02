@@ -18,70 +18,70 @@ class Avantages
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=50, nullable=false, unique=true)
      */
-    private $name;
+    protected $name;
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=50, nullable=false)
      */
-    private $nameFemale;
+    protected $nameFemale;
 
     /**
      * @var integer
      *
      * @ORM\Column(type="integer", nullable=false)
      */
-    private $xp;
+    protected $xp;
 
     /**
      * @var string
      *
      * @ORM\Column(type="text", nullable=false)
      */
-    private $description;
+    protected $description;
 
     /**
      * @var boolean
      *
      * @ORM\Column(type="integer", nullable=false)
      */
-    private $double;
+    protected $double;
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=10, nullable=false)
      */
-    private $bonusdisc;
+    protected $bonusdisc;
 
     /**
      * @var boolean
      *
      * @ORM\Column(type="boolean", nullable=false)
      */
-    private $isDesv;
+    protected $isDesv;
 
     /**
      * @var boolean
      *
      * @ORM\Column(type="boolean", nullable=false)
      */
-    private $isCombatArt;
+    protected $isCombatArt;
 
     /**
      * @var \Datetime
      * @Gedmo\Mapping\Annotation\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
      */
-    private $created;
+    protected $created;
 
     /**
      * @var \Datetime
@@ -89,13 +89,13 @@ class Avantages
      * @Gedmo\Mapping\Annotation\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
-    private $updated;
+    protected $updated;
 	
     /**
      * @var \Books
      * @ORM\ManyToOne(targetEntity="Books")
      */
-    private $book;
+    protected $book;
 
 
     /**

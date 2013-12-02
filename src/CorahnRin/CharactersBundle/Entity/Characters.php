@@ -19,14 +19,14 @@ class Characters
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=255, nullable=false)
      */
-    private $name;
+    protected $name;
 
     /**
      * @var string
@@ -34,189 +34,189 @@ class Characters
      * @ORM\Column(type="string", length=255, nullable=false)
      * @Gedmo\Mapping\Annotation\Slug(fields={"name"},unique=false)
      */
-    private $nameSlug;
+    protected $nameSlug;
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=255, nullable=false)
      */
-    private $playerName;
+    protected $playerName;
 
     /**
      * @var integer
      *
      * @ORM\Column(type="boolean", nullable=false)
      */
-    private $status;
+    protected $status;
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=1, nullable=false)
      */
-    private $sex;
+    protected $sex;
 
     /**
      * @var string
      *
      * @ORM\Column(type="text", nullable=false)
      */
-    private $description;
+    protected $description;
 
     /**
      * @var string
      *
      * @ORM\Column(type="text", nullable=false)
      */
-    private $story;
+    protected $story;
 
     /**
      * @var string
      *
      * @ORM\Column(type="text", nullable=false)
      */
-    private $facts;
+    protected $facts;
 
     /**
      * @var array
      *
      * @ORM\Column(type="array", nullable=false)
      */
-    private $inventory;
+    protected $inventory;
 
     /**
      * @var \CorahnRin\CharactersBundle\Classes\Money
      *
      * @ORM\Column(type="object", nullable=false)
      */
-    private $money;
+    protected $money;
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=30, nullable=false)
      */
-    private $orientation;
+    protected $orientation;
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=80, nullable=true)
      */
-    private $jobCustom;
+    protected $jobCustom;
 
     /**
      * @var People
      *
      * @ORM\ManyToOne(targetEntity="People")
      */
-    private $people;
+    protected $people;
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=25, nullable=false)
      */
-    private $geoLiving;
+    protected $geoLiving;
 
     /**
      * @var integer
      *
      * @ORM\Column(type="integer", nullable=false)
      */
-    private $trauma;
+    protected $trauma;
 
     /**
      * @var integer
      *
      * @ORM\Column(type="integer", nullable=false)
      */
-    private $traumaPermanent;
+    protected $traumaPermanent;
 
     /**
      * @var integer
      *
      * @ORM\Column(type="integer", nullable=false)
      */
-    private $age;
+    protected $age;
 
     /**
      * @var integer
      *
      * @ORM\Column(type="integer", nullable=false)
      */
-    private $mentalResist;
+    protected $mentalResist;
 
     /**
      * @var integer
      *
      * @ORM\Column(type="integer", nullable=false)
      */
-    private $health;
+    protected $health;
 
     /**
      * @var integer
      *
      * @ORM\Column(type="integer", nullable=false)
      */
-    private $stamina;
+    protected $stamina;
 
     /**
      * @var boolean
      *
      * @ORM\Column(type="boolean", nullable=false)
      */
-    private $survival;
+    protected $survival;
 
     /**
      * @var integer
      *
      * @ORM\Column(type="integer", nullable=false)
      */
-    private $speed;
+    protected $speed;
 
     /**
      * @var integer
      *
      * @ORM\Column(type="integer", nullable=false)
      */
-    private $defense;
+    protected $defense;
 
     /**
      * @var integer
      *
      * @ORM\Column(type="integer", nullable=false)
      */
-    private $rindath;
+    protected $rindath;
 
     /**
      * @var integer
      *
      * @ORM\Column(type="integer", nullable=false)
      */
-    private $exaltation;
+    protected $exaltation;
 
     /**
      * @var integer
      *
      * @ORM\Column(type="integer", nullable=false)
      */
-    private $experienceActual;
+    protected $experienceActual;
 
     /**
      * @var integer
      *
      * @ORM\Column(type="integer", nullable=false)
      */
-    private $experienceSpent;
+    protected $experienceSpent;
 
     /**
      * @var \Datetime
      * @Gedmo\Mapping\Annotation\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
      */
-    private $created;
+    protected $created;
 
     /**
      * @var \Datetime
@@ -224,159 +224,159 @@ class Characters
      * @Gedmo\Mapping\Annotation\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
-    private $updated;
+    protected $updated;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\ManyToMany(targetEntity="Armors")
      */
-    private $armors;
+    protected $armors;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\ManyToMany(targetEntity="Artifacts")
      */
-    private $artifacts;
+    protected $artifacts;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\ManyToMany(targetEntity="Miracles")
      */
-    private $miracles;
+    protected $miracles;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\ManyToMany(targetEntity="Ogham")
      */
-    private $ogham;
+    protected $ogham;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\ManyToMany(targetEntity="Weapons")
      */
-    private $weapons;
+    protected $weapons;
 
     /**
      * @var \SocialClass
      *
      * @ORM\ManyToOne(targetEntity="SocialClass")
      */
-    private $socialClass;
+    protected $socialClass;
 
     /**
      * @var \Domains
      *
      * @ORM\ManyToOne(targetEntity="Domains")
      */
-    private $SocialClassdomain1;
+    protected $SocialClassdomain1;
 
     /**
      * @var \Domains
      *
      * @ORM\ManyToOne(targetEntity="Domains")
      */
-    private $SocialClassdomain2;
+    protected $SocialClassdomain2;
 
     /**
      * @var \Disorders
      *
      * @ORM\ManyToOne(targetEntity="Disorders")
      */
-    private $disorder;
+    protected $disorder;
 
     /**
      * @var \Jobs
      *
      * @ORM\ManyToOne(targetEntity="Jobs")
      */
-    private $job;
+    protected $job;
 
     /**
      * @var \Regions
      *
      * @ORM\ManyToOne(targetEntity="Regions")
      */
-    private $region;
+    protected $region;
 
     /**
      * @var \Traits
      * @ORM\ManyToOne(targetEntity="Traits")
      */
-    private $traitFlaw;
+    protected $traitFlaw;
 
     /**
      * @var \Traits
      * @ORM\ManyToOne(targetEntity="Traits")
      */
-    private $traitQuality;
+    protected $traitQuality;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\OneToMany(targetEntity="CharAvtgs", mappedBy="character")
      */
-    private $avantages;
+    protected $avantages;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\OneToMany(targetEntity="CharDomains", mappedBy="character")
      */
-    private $domains;
+    protected $domains;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\OneToMany(targetEntity="CharDisciplines", mappedBy="character")
      */
-    private $disciplines;
+    protected $disciplines;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\OneToMany(targetEntity="CharWays", mappedBy="character")
      */
-    private $ways;
+    protected $ways;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\OneToMany(targetEntity="CharFlux", mappedBy="character")
      */
-    private $flux;
+    protected $flux;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\OneToMany(targetEntity="CharModifications", mappedBy="character")
      */
-    private $modifications;
+    protected $modifications;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\OneToMany(targetEntity="CharSetbacks", mappedBy="character")
      */
-    private $setbacks;
+    protected $setbacks;
 
     /**
      * @var \Users
      * @ORM\ManyToOne(targetEntity="CorahnRin\UsersBundle\Entity\Users", inversedBy="characters")
      */
-    private $user;
+    protected $user;
 
 	/**
 	 * @var \Games
 	 * @ORM\ManyToOne(targetEntity="Games", inversedBy="characters")
 	 */
-	private $game;
+	protected $game;
 
-	private $baseChar;
+	protected $baseChar;
 
 
 

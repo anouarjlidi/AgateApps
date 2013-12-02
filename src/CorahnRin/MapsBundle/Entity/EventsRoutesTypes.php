@@ -18,7 +18,7 @@ class EventsRoutesTypes {
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Events", inversedBy="routesTypes")
      */
-    private $event;
+    protected $event;
 
     /**
      * @var \RoutesTypes
@@ -26,7 +26,7 @@ class EventsRoutesTypes {
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="RoutesTypes", inversedBy="events")
      */
-    private $routeType;
+    protected $routeType;
 
     /**
      * @var \DateTime
@@ -34,7 +34,7 @@ class EventsRoutesTypes {
 	 * @Gedmo\Mapping\Annotation\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
      */
-    private $created;
+    protected $created;
 
     /**
      * @var \DateTime
@@ -42,14 +42,14 @@ class EventsRoutesTypes {
 	 * @Gedmo\Mapping\Annotation\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
-    private $updated;
+    protected $updated;
 
 	/**
 	 * @var smallint
 	 *
 	 * @ORM\Column(type="smallint", nullable=false)
 	 */
-	private $percentage;
+	protected $percentage;
 
 
     /**

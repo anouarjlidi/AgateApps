@@ -20,21 +20,21 @@ class Routes
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=255, nullable=false, unique=true)
      */
-    private $name;
+    protected $name;
 
     /**
      * @var string
      *
      * @ORM\Column(type="text", nullable=false)
      */
-    private $coordinates;
+    protected $coordinates;
 
     /**
      * @var \DateTime
@@ -42,7 +42,7 @@ class Routes
 	 * @Gedmo\Mapping\Annotation\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
      */
-    private $created;
+    protected $created;
 
     /**
      * @var \DateTime
@@ -50,14 +50,14 @@ class Routes
 	 * @Gedmo\Mapping\Annotation\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
-    private $updated;
+    protected $updated;
 
     /**
      * @var DoctrineCollection
      *
      * @ORM\ManyToMany(targetEntity="Resources", mappedBy="routes")
      */
-    private $resources;
+    protected $resources;
 
 	
 	
@@ -66,35 +66,35 @@ class Routes
      *
      * @ORM\ManyToMany(targetEntity="Markers", inversedBy="routes")
      */
-    private $markers;
+    protected $markers;
 
     /**
      * @var \Maps
      *
      * @ORM\ManyToOne(targetEntity="Maps", inversedBy="routes")
      */
-    private $map;
+    protected $map;
 
     /**
      * @var \Factions
      *
      * @ORM\ManyToOne(targetEntity="Factions", inversedBy="routes")
      */
-    private $faction;
+    protected $faction;
 
     /**
      * @var \RoutesTypes
      *
      * @ORM\ManyToOne(targetEntity="RoutesTypes", inversedBy="routes")
      */
-    private $routeType;
+    protected $routeType;
 
     /**
      * @var DoctrineCollection
      *
      * @ORM\OneToMany(targetEntity="EventsRoutes", mappedBy="route")
      */
-	private $events;
+	protected $events;
 
     /**
      * Constructor

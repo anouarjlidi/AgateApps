@@ -20,7 +20,7 @@ class DisciplinesDomains
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 	
     /**
      * @var \Disciplines
@@ -29,7 +29,7 @@ class DisciplinesDomains
      *
      * @ORM\Column(name="disciplines_id", type="integer")
      */
-    private $discipline;
+    protected $discipline;
 	
     /**
      * @var \Domains
@@ -37,7 +37,7 @@ class DisciplinesDomains
 	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Domains")
      * @ORM\Column(name="domains_id", type="integer")
      */
-    private $domain;
+    protected $domain;
 
 
     /**
