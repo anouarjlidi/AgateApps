@@ -3,7 +3,7 @@
  * Métier
  */
 
-$books = $controller->getDoctrine()->getManager()->getRepository('CorahnRinCharactersBundle:Books')->findAll(true);
+//$books = $controller->getDoctrine()->getManager()->getRepository('CorahnRinCharactersBundle:Books')->findAll(true);
 //$jobs = array();foreach ($t as $v) { $jobs[$v->getId()] = $v; }unset($t);
 
 $jobs = $controller->getDoctrine()->getManager()->getRepository('CorahnRinCharactersBundle:Jobs')->findAll(true);
@@ -16,26 +16,28 @@ foreach ($jobs as $job) {
 $datas['jobs_list'] = $jobs_ordered;
 $datas['job_value'] = '';
 
-$character = $session->get('generator_character');
+$character_job = $session->get('character.job');
+$character_jobCustom = $session->get('character.jobCustom');
 
-if ($character->getJob()) {
-    $datas['job_value'] = $character->getJob()->getId();
-} elseif ($character->getJobCustom()) {
-    $datas['job_value'] = $character->getJobCustom();
+if ($character_job) {
+    $datas['job_value'] = $character_job;
+} elseif ($character_jobCustom) {
+    $datas['job_value'] = $character_jobCustom;
 }
 
 if ($request->isMethod('POST')) {
     $job_value = $request->request->get('job_value');
-    if (isset($peoples[$job_value])) {
-        $character->setJob($jobs[$job_value]);
-        $session->set('generator_character', $character);
+    if (isset($jobs[$job_value])) {
+        $session->set('character.job', $job_value);
         return $controller->_nextStep($session, $request);
     } elseif ($job_value && !is_numeric($job_value)) {
-        $character->setJobCustom($job_value);
-        $session->set('generator_character', $character);
+        $session->set('character.jobCustom', $job_value);
         return $controller->_nextStep($session, $request);
     } else {
-        $msg = $controller->get('corahn_rin_translate')->translate('Une erreur est survenue : mauvais contenu envoyé au personnage');
+        $translator = $controller->get('corahn_rin_translate');
+        $translator->routeTemplate('corahnrin_characters_generator_step');
+        $msg = $translator->translate('Une erreur est survenue : mauvais contenu envoyé au personnage');
+        $translator->routeTemplate();
         $session->getFlashBag()->add('error', $msg);
     }
 

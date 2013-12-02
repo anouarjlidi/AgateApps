@@ -28,8 +28,9 @@ class GeneratorController extends Controller
     public function resetAction()
     {
         $session = $this->get('session');
-        $session->set('generator_character', null);
-        $session->set('step', 1);
+        $session->remove('character');
+        $session->remove('step');
+        $session->getFlashBag()->add('success', '');
         return $this->redirect($this->generateUrl('corahnrin_characters_generator_index'));
     }
 
@@ -41,9 +42,9 @@ class GeneratorController extends Controller
         $datas = array();
         $session = $this->get('session');
         $request = $this->getRequest();
-        if (!$session->get('generator_character')) {
+        if (!$session->get('character')) {
             //Si le personnage n'existe pas dans la session, on le crée
-            $session->set('generator_character', new Characters());
+            $session->set('character', array());
         }
         if (!$session->get('step')){
             //On définit l'étape dans la session si elle n'existe pas
