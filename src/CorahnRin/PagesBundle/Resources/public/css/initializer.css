@@ -25,6 +25,7 @@
 	/* Couleurs */
 	.text-white { color: white !important; }
 	.text-red { color: red !important; }
+	.text-green { color: green !important; }
 
 	/* Format */
 	.text-underline { text-decoration: underline; }
