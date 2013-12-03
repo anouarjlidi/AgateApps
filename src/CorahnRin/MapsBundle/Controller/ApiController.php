@@ -52,6 +52,10 @@ class ApiController extends Controller {
         if (!$h) { $h = $this->img_size; }
         if ($h > $identification['hmax']) { $h = $identification['hmax']; }
 
+
+        if ($w > 1000) { $w = 1000; }
+        if ($h > 1000) { $h = 1000; }
+
         $imgname = $tilesManager->mapDestinationName($z, $x, $y, $w, $h);
 
         // Création de l'image personnalisée
