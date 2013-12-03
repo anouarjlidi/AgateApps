@@ -1,7 +1,32 @@
-{% extends "::base.html.twig" %}
+{% extends "::layout.html.twig" %}
 
-{% block title %}CorahnRinMapsBundle:Maps:edit{% endblock %}
+{% block title %}{{ 'Modifier une carte' | tr }} {{ map.name | tr }} - {{ parent() }}{% endblock %}
 
-{% block body %}
-<h1>Welcome to the Maps:edit page</h1>
+{% block content_for_layout %}
+
+<div id="map_wrapper">
+    <div id="map_container" data-zoom="1" data-map-id="{{ map.id }}" data-init-url="{{ route_init }}"></div>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}{% javascripts
+        '@CorahnRinMapsBundle/Resources/public/js/map.js'
+        '@CorahnRinMapsBundle/Resources/public/js/jquery.mousewheel.min.js'
+        '@CorahnRinMapsBundle/Resources/public/js/jquery.transform2d.js'
+        output="js/map.js"
+        filter="?yui_js"
+    %}<script type="text/javascript" src="{{ asset_url }}"></script>{% endjavascripts %}
+    {% javascripts
+        '@CorahnRinMapsBundle/Resources/public/js/map_edit.js'
+        output="js/map_edit.js"
+        filter="?yui_js"
+    %}<script type="text/javascript" src="{{ asset_url }}"></script>{% endjavascripts %}
+    <script type="text/javascript">
+        document.corahn_rin_map = new Map({
+            allowZoom:false,
+            zoom: 10
+        });
+    </script>
 {% endblock %}
