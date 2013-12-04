@@ -24,15 +24,14 @@
         var container = null;
         var allowMove = true;
         var allowZoom = true;
-        
+
         // Paramètres par défaut -----------------------------------------------
-        if (typeof params !== 'object') { params = {}; }
+        if (typeof params !== 'object')              { params = {}; }
         if (typeof params.allowMove !== 'undefined') { f_allowMove(params.allowMove); }
         if (typeof params.allowZoom !== 'undefined') { f_allowZoom(params.allowZoom); }
-        if (params.id) { id = params.id; }
-            else { id = document.getElementById('map_container').getAttribute('data-map-id'); }
-        if (params.initUrl) { id = params.initUrl; }
-            else { initUrl = document.getElementById('map_container').getAttribute('data-init-url'); }
+        if (typeof params.zoom !== 'undefined')      { zoom.current = params.zoom; console.info('specific zoom : '+params.zoom); }
+        id      = params.id      ? params.id      : document.getElementById('map_container').getAttribute('data-map-id');
+        initUrl = params.initUrl ? params.initUrl : document.getElementById('map_container').getAttribute('data-init-url');
 
         // Initialisation ------------------------------------------------------
         $.ajax({
@@ -49,7 +48,7 @@
                     zoom.max = data.maxZoom;
                     imgSize = data.imgSize;
                     tilesUrl = data.tilesUrl;
-                    f_generateTiles(1);
+                    f_generateTiles(zoom.current);
                 }
             }
         });
@@ -72,20 +71,25 @@
         this.tilesUrl        = function() { return tilesUrl; };
         this.imgSize         = function() { return imgSize; };
         this.identifications = function() { return identifications; };
-        
-        // Fonctions -----------------------------------------------------------
+
+        // Fonctions publiques -------------------------------------------------
         this.zoom            = function(type) { return f_zoom(type); };
         this.position        = function(type) { return f_position(type); };
         this.allowMove       = function(allow) { return f_allowMove(allow); };
         this.allowZoom       = function(allow) { return f_allowZoom(allow); };
-        this.f_generateTiles   = function(z, move) { return f_generateTiles(z, move); };
+        this.generateTiles   = function(z, move) { return f_generateTiles(z, move); };
         this.identify        = identify;
         this.showImages      = showImages;
         this.identify        = identify;
         this.zoomIn          = zoomIn;
         this.zoomOut         = zoomOut;
 
-        
+        // Méthodes d'initialisation -------------------------------------------
+        $(window).resize(resetHeight); // Modification de la hauteur au redimensionnement
+        this.allowZoom(allowZoom);
+        this.allowMove(allowMove);
+
+        // Liste des fonctions -------------------------------------------------
         function f_allowMove(allow) {
             if (typeof allow === 'undefined') {
                 return allowMove;
@@ -125,20 +129,20 @@
             }
         }
 
-        var f_zoom = function (type){
+        function f_zoom(type){
             if (type === 'current') { return zoom.current; }
             else if (type === 'max') { return zoom.max; }
             else { return zoom; }
         }
-        
-        var f_position = function(type) {
+
+        function f_position(type) {
             if (type === 'left') { return $(container).offset().left; }
             else if (type === 'top') { return $(container).offset().top; }
             else { return $(container).offset(); }
         }
 
         // Cette fonction redéfinit le zoom d'un container grâce à son id et à l'échelle mentionnée
-        var f_zoomContainer = function(containerId, scale) {
+        function f_zoomContainer(containerId, scale) {
             if (isNaN(containerId)) {
                 console.error('Cannot zoom on map : wrong zoom level injected to zoom function');
                 return;
@@ -154,13 +158,15 @@
             }
         };
 
-
-
         // Cette fonction va générer toutes les balises <img>, sans pour autant charger toutes les images
         // Elle se base sur le zoom actuel ou sur un zoom prédéfini (pour les options cliquables)
-        var f_generateTiles = function (z, move) {
+        function f_generateTiles(z, move) {
             // Setter du zoom
             zoom.current = (z ? z : zoom.current);
+            if (!z) {
+                console.error('Cannot generate tiles : zoom is undefined');
+                return false;
+            }
             var ident = identify(z),// Identification du zoom demandé
                 xmax = ident.xmax,
                 ymax = ident.ymax,
@@ -223,12 +229,12 @@
             clearTimeout(timeouts.showImages);
             timeouts.showImages = setTimeout(showImages, 1000);
         };
-        
-        var moveContainer = function(x, y) {
-            
+
+        function moveContainer(x, y) {
+
         };
 
-        var moveContainerAfterZoom = function(z, move) {
+        function moveContainerAfterZoom(z, move) {
             var ident = identify(z);
             var relatedIdent = identify(z - move);
             var offsetX = $(container).position().left - ( ( parseInt(ident.wmax) - parseInt(relatedIdent.wmax) ) / 2 );
@@ -245,7 +251,7 @@
 
         // Cette fonction effectue une boucle sur toutes les images qui n'ont pas d'attribut "src"
         // Elle leur attribue un attribut "src" pour pouvoir les afficher
-        var showImages = function() {
+        function showImages() {
             $('img.map-image[src=""]')
                 .filter(function(){
                     var t = $(this).offset().top,
@@ -260,12 +266,12 @@
         };
 
         // Cette fonction retourne l'identification d'un zoom
-        var identify = function(z) {
+        function identify(z) {
             return identifications[(z ? z : zoom.current)];
         };
 
         // Remet la valeur de la hauteur de façon correcte par rapport au navigateur.
-        var resetHeight = function() {
+        function resetHeight() {
             var id = identify();
             $(wrapper).height(
                 $(window).height()
@@ -275,7 +281,7 @@
         };
 
         // Effectue un zoom avant
-        var zoomIn = function() {
+        function zoomIn() {
             zoom.current++;
             if (zoom.current > zoom.max) { zoom.current = zoom.max; return false; }
             clearTimeout(timeouts.zoom);
@@ -283,14 +289,12 @@
         };
 
         // Effectue un zoom arrière
-        var zoomOut = function() {
+        function zoomOut() {
             zoom.current--;
             if (zoom.current < 1) { zoom.current = 1; return false; }
             clearTimeout(timeouts.zoom);
             timeouts.zoom = setTimeout(function(){f_generateTiles(zoom.current, -1);}, 200);
         };
-
-        $(window).resize(resetHeight);
 
         //parseInt($('#navigation').css('margin-bottom').replace('px',''))//Marge top
     }
