@@ -18,9 +18,26 @@
 }
 
 #map_container,
-#map_container img,
-#map_container .zoom-container {
+#map_container *{
     position: absolute;
+}
+
+#map_zones {
+    width: 100%;
+}
+#map_zones,
+#map_zones * {
+    z-index: 2000;
+}
+#map_zones polygon {
+    fill: white;
+    opacity: 0.2;
+    stroke: #ccc;
+    stroke-width: 1.
+}
+#map_labels,
+#map_labels * {
+    z-index: 3000;
 }
 
 #map_container .zoom-container {
