@@ -284,6 +284,9 @@
         // Remet la valeur de la hauteur de façon correcte par rapport au navigateur.
         function resetHeight() {
             var id = identify(zoom.current);
+            if (!id) {
+                return false;
+            }
             $(wrapper).height(
                 $(window).height()
                 - $('#footer').outerHeight(true)
