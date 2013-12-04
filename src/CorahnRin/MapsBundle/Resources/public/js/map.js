@@ -101,7 +101,6 @@
                     } else {
                         $(container).draggable({
                             addClasses: false,// Gagne un peu de mémoire
-                            handle: '.map-image,.container',
                             stop: showImages// Teste l'affichage des images à chaque déplacement, pour afficher les images invisibles
                         });
                     }
@@ -252,17 +251,29 @@
         // Cette fonction effectue une boucle sur toutes les images qui n'ont pas d'attribut "src"
         // Elle leur attribue un attribut "src" pour pouvoir les afficher
         function showImages() {
-            $('img.map-image[src=""]')
-                .filter(function(){
-                    var t = $(this).offset().top,
-                        l = $(this).offset().left,
-                        w = $(wrapper).width(),
-                        h = $(wrapper).height();
-                    return ( t < h || t + imgSize > 0 ) && ( l < w || l + imgSize > 0 );
-                })
-                .attr('src', function(){
-                    return this.getAttribute('data-image-src');
-                });
+            $('img.map-image[src=""]').filter(function(){
+                var	x = $(this).offset().left - $(wrapper).offset().left,
+                    y = $(this).offset().top - $(wrapper).offset().top,
+                    w = $(wrapper).width(),
+                    h = $(wrapper).height();
+
+                var top_left_x	= x > 0 && x < w,
+                    top_left_y	= y > 0 && y < h,
+                    top_right_x	= x + imgSize > 0 && x + imgSize < w,
+                    top_right_y	= top_left_y,
+                    bot_left_x	= top_left_x,
+                    bot_left_y	= y + imgSize > 0 && y + imgSize < h,
+                    bot_right_x	= top_right_x,
+                    bot_right_y	= bot_left_y,
+
+                    top_left = top_left_x && top_left_y,
+                    top_right = top_right_x && top_right_y,
+                    bot_left = bot_left_x && bot_left_y,
+                    bot_right = bot_right_x && bot_right_y
+                ;
+
+                return top_left || top_right || bot_left || bot_right;
+            }).attr('src',function(){return this.getAttribute('data-image-src');});
         };
 
         // Cette fonction retourne l'identification d'un zoom
@@ -272,7 +283,7 @@
 
         // Remet la valeur de la hauteur de façon correcte par rapport au navigateur.
         function resetHeight() {
-            var id = identify();
+            var id = identify(zoom.current);
             $(wrapper).height(
                 $(window).height()
                 - $('#footer').outerHeight(true)
