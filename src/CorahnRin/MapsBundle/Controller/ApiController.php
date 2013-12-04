@@ -82,7 +82,7 @@ class ApiController extends Controller {
 
         $this->init();
 
-        $create_tile = $this->generateTile($zoom, $x, $y);
+        $create_tile = $this->generateTile($map->getId(), $zoom, $x, $y);
         if (!is_bool($create_tile)) {
             //Si le retour de la création de tuile n'est pas un boolén c'est qu'il s'agit d'un objet Response
             //Dans ce cas, on le redirige au cas où une erreur est survenue.
@@ -178,7 +178,7 @@ class ApiController extends Controller {
      * @param integer $x
      * @param integer $y
      */
-    protected function generateTile($zoom, $x, $y) {
+    protected function generateTile($id, $zoom, $x, $y) {
 
         $command = $this->get('MapTileCommandService');
         $command->setContainer($this->container);
