@@ -81,22 +81,17 @@ class ApiController extends Controller {
         $response = new Response();
 
         $this->init();
+        
+        $tilesManager = new MapsTileManager($map, $this->img_size);
 
-        $create_tile = $this->generateTile($map->getId(), $zoom, $x, $y);
-        if (!is_bool($create_tile)) {
-            //Si le retour de la création de tuile n'est pas un boolén c'est qu'il s'agit d'un objet Response
-            //Dans ce cas, on le redirige au cas où une erreur est survenue.
-            return $create_tile;
+        if (!file_exists($tilesManager->mapDestinationName($zoom, $x, $y))) {
+            $tilesManager->createTile($x, $y, $zoom);
         }
 
-        $id = $map->getId();
-
-        $img_size = (int) $this->container->getParameter('corahn_rin_maps.tile_size');
-
-        $tilesManager = new MapsTileManager($map, $img_size);
-
-        $console_dir = $this->get('kernel')->getRootDir().'/console';
-        $cmd = 'php "'.$console_dir.'" corahnrin:generate:map-tile --replace '.$id.' -x '.$x.' -y '.$y.' -z '.$zoom;
+        // Si l'image n'existe pas à ce stade c'est que la création a échoué
+        if (!file_exists($imgname)) {
+            return $this->quit('Erreur dans la création de l\'image.');
+        }
 
         $response->headers->set('Content-type', 'image/jpeg');
         $response->setContent(file_get_contents($tilesManager->mapDestinationName($zoom, $x, $y)));
@@ -170,44 +165,6 @@ class ApiController extends Controller {
         if (!$this->img_size) {
             $this->exception('Aucune taille d\'image trouvée. Vous devez la configurer dans "corahn_rin_maps.tile_size".');
         }
-    }
-
-    /**
-     * Crée une tuile si elle n'existe pas déjà
-     * @param integer $zoom
-     * @param integer $x
-     * @param integer $y
-     */
-    protected function generateTile($id, $zoom, $x, $y) {
-
-        $command = $this->get('MapTileCommandService');
-        $command->setContainer($this->container);
-
-        $input = new \Symfony\Component\Console\Input\ArrayInput(array(
-            'id'=>$id,
-            '--x'=>$x,
-            '--y'=>$y,
-            '--zoom'=>$zoom,
-            '--replace'=>true,
-            '--no-interaction'=>true,
-        ), $command->getDefinition());
-
-        $output = new \Symfony\Component\Console\Output\ConsoleOutput($command->getName());
-
-        $o = $command->run($input, $output);
-        if ($o) {
-            $translator = $this->get('corahn_rin_translate');
-            $translator->routeTemplate('corahnrin_maps_api_errors');
-            $response = new Response();
-            $response->headers->set('Content-type', 'application/json');
-            $response->setContent(json_encode(array(
-                'error' => $o,
-                'message' => $translator->translate('L\'image n\'a pas pu être créée correctement'),
-            ), $this->json_params));
-            $translator->routeTemplate();
-            return $response;
-        }
-        return true;
     }
 
     /**
