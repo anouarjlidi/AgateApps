@@ -84,8 +84,10 @@ class MapsController extends Controller
      * @Route("/admin/maps/edit/{id}")
      * @Template()
      */
-    public function editAction($id)
+    public function editAction(Maps $map)
     {
+        $route_init = $this->generateUrl('corahnrin_maps_api_init');
+        return array('map'=>$map,'route_init' => $route_init);
     }
 
     /**
