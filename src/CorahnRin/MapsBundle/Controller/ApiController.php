@@ -83,8 +83,10 @@ class ApiController extends Controller {
         $this->init();
         
         $tilesManager = new MapsTileManager($map, $this->img_size);
+        
+        $imgname = $tilesManager->mapDestinationName($zoom, $x, $y);
 
-        if (!file_exists($tilesManager->mapDestinationName($zoom, $x, $y))) {
+        if (!file_exists($imgname)) {
             $tilesManager->createTile($x, $y, $zoom);
         }
 
@@ -94,7 +96,7 @@ class ApiController extends Controller {
         }
 
         $response->headers->set('Content-type', 'image/jpeg');
-        $response->setContent(file_get_contents($tilesManager->mapDestinationName($zoom, $x, $y)));
+        $response->setContent(file_get_contents($imgname));
         return $response;
 
     }
