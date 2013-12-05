@@ -14,7 +14,7 @@ document.getElementById('map_dont_move').onclick = function(){
 };
 document.getElementById('map_add_zone').onclick = function(){
     var _this = this,
-        nodeTxt,
+        polygon,
         attr = this.getAttribute('data-active'),
         container = document.getElementById(this.getAttribute('data-map-container') ? this.getAttribute('data-map-container') : 'map_container'),
         zonesContainer = document.getElementById(this.getAttribute('data-zones-container') ? this.getAttribute('data-zones-container') : 'map_zones');
@@ -27,6 +27,7 @@ document.getElementById('map_add_zone').onclick = function(){
     }
     this.setAttribute('data-active', attr);
 
+    document.addZoneContainer = container;
 
     if (attr === 'true') {
         document.addZoneCoordinates = [];
@@ -35,30 +36,35 @@ document.getElementById('map_add_zone').onclick = function(){
             document.addZoneId ++;
         }
         document.addZoneNodeId = "map_add_zone_polygon_"+document.addZoneId;
-        nodeTxt = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
-        nodeTxt.id = document.addZoneNodeId;
-        zonesContainer.appendChild(nodeTxt);
+        polygon = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+        polygon.id = document.addZoneNodeId;
+        zonesContainer.appendChild(polygon);
         $(zonesContainer).height($(container).height());
+    } else {
+        document.addZoneContext.stroke();
+        document.addZoneContext.closePath();
     }
 
     if (!container.getAttribute('data-add-zone')){
-        container.onmousedown = function(e){
-            if (this.getAttribute('data-add-zone') === 'true') {
-                this.base_coords = e.clientX + ',' + e.clientY;
+        document.addZoneContainer.onmousedown = function(e){
+            if (document.addZoneContainer.getAttribute('data-add-zone') === 'true') {
+                document.addZoneContainer.base_coords = e.clientX + ',' + e.clientY;
             }
         };
-        container.onmouseup = function(e){
-            if (this.getAttribute('data-add-zone') === 'true') {
+        document.addZoneContainer.onmouseup = function(e){
+            if (document.addZoneContainer.getAttribute('data-add-zone') === 'true') {
                 var x = typeof e.offsetX !== 'undefined'
                     ? e.offsetX
-                    : (typeof e.layerX !== 'undefined' ? e.layerX : e.clientX - $(container).offset().left + window.pageXOffset );
+                    : (typeof e.layerX !== 'undefined' ? e.layerX : e.clientX - $(document.addZoneContainer).offset().left + window.pageXOffset );
                 var y = typeof e.offsetY !== 'undefined'
                     ? e.offsetY
-                    : (typeof e.layerY !== 'undefined' ? e.layerY : e.clientY - $(container).offset().top + window.pageYOffset );
+                    : (typeof e.layerY !== 'undefined' ? e.layerY : e.clientY - $(document.addZoneContainer).offset().top + window.pageYOffset );
                 x = parseInt(x);
                 y = parseInt(y);
+                console.info(e);
+                console.info(x,y);
                 var base_coords = e.clientX+','+e.clientY;
-                if (base_coords === this.base_coords) {
+                if (base_coords === document.addZoneContainer.base_coords) {
                     document.addZoneCoordinates.push(x+','+y);
                     document.getElementById(document.addZoneNodeId).setAttribute('points', document.addZoneCoordinates.join(' '));
                 }
@@ -66,7 +72,7 @@ document.getElementById('map_add_zone').onclick = function(){
         };
     }
 
-    container.setAttribute('data-add-zone', attr);
+    document.addZoneContainer.setAttribute('data-add-zone', attr);
 
     return false;
 };
