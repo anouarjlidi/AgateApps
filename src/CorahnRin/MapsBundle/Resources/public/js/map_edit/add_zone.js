@@ -1,3 +1,17 @@
+document.getElementById('map_dont_move').onclick = function(){
+    var active = this.getAttribute('data-active');
+    if (active === 'true') {
+        active = 'false';
+        document.corahn_rin_map.allowMove(true);
+        this.parentNode.classList.remove('active');
+    } else {
+        active = 'true';
+        document.corahn_rin_map.allowMove(false);
+        this.parentNode.classList.add('active');
+    }
+    this.setAttribute('data-active', active);
+    return false;
+};
 document.getElementById('map_add_zone').onclick = function(){
     var _this = this,
         nodeTxt,
