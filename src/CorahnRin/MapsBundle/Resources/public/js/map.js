@@ -105,7 +105,7 @@
                         });
                     }
                 } else if (!allowMove && $(container).is(':ui-draggable')) {
-                    $(container).draggable('disable');
+                    $(container).draggable('disable').removeClass('ui-state-disabled');
                 }
             }
         }
