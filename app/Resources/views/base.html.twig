@@ -22,9 +22,13 @@
             %}<link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
             {% endstylesheets %}
         {% endblock %}
-{#        filter="yui_css"#}
 
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ asset('@CorahnRinPagesBundle/Resources/public/img/favicon-144.png') }}">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ asset('@CorahnRinPagesBundle/Resources/public/img/favicon-114.png') }}">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ asset('@CorahnRinPagesBundle/Resources/public/img/favicon-72.png') }}">
+        <link rel="apple-touch-icon-precomposed" sizes="57x57" href="{{ asset('@CorahnRinPagesBundle/Resources/public/img/favicon-57.png') }}">
+        <link rel="icon" type="image/x-icon" href="{{ asset('@CorahnRinPagesBundle/Resources/public/img/favicon-57.png') }}" />
+        <link rel="shortcut icon" href="{{ asset('@CorahnRinPagesBundle/Resources/public/img/favicon-57.png') }}">
     </head>
     <body>
         {% block body %}{% endblock %}
@@ -35,9 +39,9 @@
                 '../vendor/twitter/bootstrap/dist/js/bootstrap.js'
                 '@CorahnRinPagesBundle/Resources/public/js/jquery-ui-1.10.3.custom.min.js'
                 output="js/main.js"
+                filter="?yui_js"
             %}<script type="text/javascript" src="{{ asset_url }}"></script>{% endjavascripts %}
         {% endblock %}
-{#        filter="yui_js"#}
 
     </body>
 </html>
