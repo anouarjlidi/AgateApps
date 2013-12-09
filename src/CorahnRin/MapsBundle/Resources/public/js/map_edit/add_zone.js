@@ -35,7 +35,7 @@
                 polygonId = document.addZonePolygonId ? document.addZonePolygonId : 0,
                 polygonIdFull = document.addZonePolygonIdFull ? document.addZonePolygonIdFull : '',
                 attr = this.getAttribute('data-active');
-        
+
             if (!document.addZonePinIcon) {
                 i = document.createElement('span');
                 i.classList.add('glyphicon');
@@ -45,6 +45,8 @@
                 document.addZonePinIcon = i;
                 document.addZonePinDraggableObject = {
                     start: function(e,ui){
+                        document.addZoneMapContainerOffset = $('#'+(_this.getAttribute('data-map-container') ? _this.getAttribute('data-map-container') : 'map_container')).offset();
+                        ui.helper.css('position','absolute');
                         var x = parseInt(e.clientX - document.addZoneMapContainerOffset.left + window.pageXOffset);
                         var y = parseInt(e.clientY - document.addZoneMapContainerOffset.top + window.pageYOffset);
                         var offsets = {};
@@ -56,17 +58,18 @@
                         document.addZoneMovingPinOffset = offsets;
                     },
                     drag: function(e, ui){
+                        document.addZoneMapContainerOffset = $('#'+(_this.getAttribute('data-map-container') ? _this.getAttribute('data-map-container') : 'map_container')).offset();
+                        ui.helper.css('position','absolute');
                         var coord = document.addZoneCoordinates.concat([]);
                         var index = document.addZoneMovingPinIndex;
                         var x = parseInt(e.clientX - document.addZoneMapContainerOffset.left + window.pageXOffset - document.addZoneMovingPinOffset.left);
                         var y = parseInt(e.clientY - document.addZoneMapContainerOffset.top + window.pageYOffset - document.addZoneMovingPinOffset.top);
-                        console.info(coord);
-                        console.info('before change' , coord[index]);
                         coord[index] = x+','+y;
-                        console.info('after change', coord[index]);
                         document.addZonePolygon.setAttribute('points', coord.join(' '));
                     },
                     stop: function(e, ui){
+                        document.addZoneMapContainerOffset = $('#'+(_this.getAttribute('data-map-container') ? _this.getAttribute('data-map-container') : 'map_container')).offset();
+                        ui.helper.css('position','absolute');
                         $(document.getElementById("input_"+document.addZonePolygon.id)).val(document.addZonePolygon.getAttribute('points'));
                         document.addZoneMovingPinIndex = null;
                         document.addZonePolygon = null;
@@ -82,8 +85,8 @@
                 attr = 'false';
                 this.parentNode.classList.remove('active');//Le bouton du menu devient inactif
 
-                if (document.addZoneCoordinates.length > 3 && document.addZonePolygon) {
-                    // Si des coordonnées existent, et qu'il y en a plus de 3 (= triangle au moins), alors le polygone est défini
+                if (document.addZoneCoordinates.length > 2 && document.addZonePolygon) {
+                    // Si des coordonnées existent, et qu'il y en a au moins 3 (= triangle au moins), alors le polygone est défini
                     document.addZonePolygon.setAttribute('points', document.addZoneCoordinates.join(' '));
                     // Et un <input> est rajouté au conteneur
                     var i = document.createElement('input');
@@ -96,7 +99,7 @@
                 } else {
                     // Sinon, s'il y a moins de 3 points dans le polygone, il est supprimé
                     document.addZonePolygon.parentNode.removeChild(document.addZonePolygon);
-                } 
+                }
 
                 // Resets
                 document.addZoneCoordinates = [];
@@ -115,7 +118,7 @@
                 while (document.getElementById("map_add_zone_polygon["+polygonId+"]")) { polygonId ++; }
                 polygonIdFull = "map_add_zone_polygon["+polygonId+"]";// Définition de l'ID final du polygone
 
-                // Création du polygone à partir du namespace SVG 
+                // Création du polygone à partir du namespace SVG
                 polygon = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
                 polygon.id = polygonIdFull;// Application de l'id formaté
                 SVGcontainer.appendChild(polygon);// Le polygone est inséré dans le SVG
@@ -136,7 +139,9 @@
                 // Dans un premier temps, récupère les coordonnées de la souris au mouseDown
                 // Elles sont ensuite placées dans base_coords, dans le conteneur de la map
                 // Cela sera réutilisé lors du mouseUp afin de vérifier que l'utilisateur n'a pas fait un drag de la map
+                mapContainer = document.corahn_rin_map.container();
                 if (mapContainer.getAttribute('data-add-zone') === 'true') {
+                    document.addZoneMapContainerOffset = $(mapContainer).offset();// Redéfinition de l'offset du conteneurs
                     mapContainer.base_coords = e.clientX + ',' + e.clientY;
                 }
             };
@@ -146,8 +151,10 @@
                 // Le tableau est récupéré dans le DOM, et on y ajoute les coordonnées de la souris au mouseMove
                 // Pour éviter que le tableau dans le DOM ne soit modifié, on n'en fait pas un clone dans la variable coordinatesTemp,
                 //  il est directement concaténé afin de permettre la conservation de toutes les coordonnées du polygone en construction
-                if (mapContainer.getAttribute('data-add-zone') === 'true') {
-                    if (mapContainer.getAttribute('data-add-zone') === 'true' && document.addZoneCoordinates.length) {
+                mapContainer = document.corahn_rin_map.container();
+                if (this.getAttribute('data-add-zone') === 'true') {
+                    if (this.getAttribute('data-add-zone') === 'true' && document.addZoneCoordinates.length) {
+                        document.addZoneMapContainerOffset = $(this).offset();// Redéfinition de l'offset du conteneurs
                         var x = parseInt(e.clientX - document.addZoneMapContainerOffset.left + window.pageXOffset);
                         var y = parseInt(e.clientY - document.addZoneMapContainerOffset.top + window.pageYOffset);
                         var coordinatesTemp = document.addZoneCoordinates.concat([x+','+y]);
@@ -160,12 +167,14 @@
                 // Les coordonnées sont calculées exactement de la même façon qu'au mouseMove
                 // Si la variable base_coords du conteneur de map ne contient pas les mêmes coordonnées,
                 //  alors c'est que l'utilisateur a fait un drag ou a déplacé sa souris
+                mapContainer = document.corahn_rin_map.container();
                 if (mapContainer.getAttribute('data-add-zone') === 'true') {
                     var base_coords = e.clientX+','+e.clientY;
                     if (base_coords === mapContainer.base_coords) {
+                        document.addZoneMapContainerOffset = $(mapContainer).offset();// Redéfinition de l'offset du conteneurs
                         var x = parseInt(e.clientX - document.addZoneMapContainerOffset.left + window.pageXOffset);
                         var y = parseInt(e.clientY - document.addZoneMapContainerOffset.top + window.pageYOffset);
-                        
+
                         var pin = $(document.addZonePinIcon).clone()[0];
                         pin.setAttribute('data-target-polygon', document.addZonePolygonIdFull);
                         pin.style.left = x+'px';
