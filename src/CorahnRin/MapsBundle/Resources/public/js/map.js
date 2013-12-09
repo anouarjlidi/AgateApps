@@ -29,7 +29,7 @@
         if (typeof params !== 'object')              { params = {}; }
         if (typeof params.allowMove !== 'undefined') { f_allowMove(params.allowMove); }
         if (typeof params.allowZoom !== 'undefined') { f_allowZoom(params.allowZoom); }
-        if (typeof params.zoom !== 'undefined')      { zoom.current = params.zoom; console.info('specific zoom : '+params.zoom); }
+        if (typeof params.zoom !== 'undefined')      { zoom.current = params.zoom; }
         id      = params.id      ? params.id      : document.getElementById('map_container').getAttribute('data-map-id');
         initUrl = params.initUrl ? params.initUrl : document.getElementById('map_container').getAttribute('data-init-url');
 
@@ -47,7 +47,7 @@
                     identifications = data.identifications;
                     zoom.max = data.maxZoom;
                     imgSize = data.imgSize;
-                    tilesUrl = data.tilesUrl;
+                    tilesUrl = data.tilesUrl.replace('app_dev.php/', '');
                     f_generateTiles(zoom.current);
                 }
             }
