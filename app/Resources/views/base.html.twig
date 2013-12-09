@@ -10,25 +10,26 @@
 
         {% block stylesheets %}
             {% stylesheets
-                '../vendor/twitter/bootstrap/dist/css/bootstrap.min.css'
+                'bundles/corahnrinpages/css/bootstrap.css'
                 '../vendor/twitter/bootstrap/dist/css/bootstrap-theme.min.css'
-                '@CorahnRinPagesBundle/Resources/public/css/initializer.css'
-                '@CorahnRinPagesBundle/Resources/public/css/corahn_rin.css'
-                '@CorahnRinPagesBundle/Resources/public/css/bootstrap-more.css'
-                '@CorahnRinPagesBundle/Resources/public/css/jquery-ui-1.10.3.custom.min.css'
-                '@CorahnRinMapsBundle/Resources/public/css/maps.css'
-                filter="cssrewrite,?yui_css"
-                output="css/theme.css"
+                'bundles/corahnrinpages/css/jquery-ui-1.10.3.custom.min.css'
+                'bundles/corahnrinpages/css/initializer.css'
+                'bundles/corahnrinpages/css/glyphicons.css'
+                'bundles/corahnrinpages/css/corahn_rin.css'
+                'bundles/corahnrinpages/css/bootstrap-more.css'
+                'bundles/corahnrinmaps/css/maps.css'
+                filter="cssrewrite,yui_css"
+                output="css/main.css"
             %}<link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
             {% endstylesheets %}
         {% endblock %}
 
-        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ asset('@CorahnRinPagesBundle/Resources/public/img/favicon-144.png') }}">
-        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ asset('@CorahnRinPagesBundle/Resources/public/img/favicon-114.png') }}">
-        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ asset('@CorahnRinPagesBundle/Resources/public/img/favicon-72.png') }}">
-        <link rel="apple-touch-icon-precomposed" sizes="57x57" href="{{ asset('@CorahnRinPagesBundle/Resources/public/img/favicon-57.png') }}">
-        <link rel="icon" type="image/x-icon" href="{{ asset('@CorahnRinPagesBundle/Resources/public/img/favicon-57.png') }}" />
-        <link rel="shortcut icon" href="{{ asset('@CorahnRinPagesBundle/Resources/public/img/favicon-57.png') }}">
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ asset('bundles/corahnrinpages/images/favicon-144.png') }}">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ asset('bundles/corahnrinpages/images/favicon-114.png') }}">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ asset('bundles/corahnrinpages/images/favicon-72.png') }}">
+        <link rel="apple-touch-icon-precomposed" sizes="57x57" href="{{ asset('bundles/corahnrinpages/images/favicon-57.png') }}">
+        <link rel="icon" type="image/x-icon" href="{{ asset('bundles/corahnrinpages/images/favicon-57.png') }}" />
+        <link rel="shortcut icon" href="{{ asset('bundles/corahnrinpages/images/favicon-57.png') }}">
     </head>
     <body>
         {% block body %}{% endblock %}
@@ -36,10 +37,18 @@
         {% block javascripts %}
             {% javascripts
                 '../vendor/twitter/bootstrap/js/tests/vendor/jquery.js'
-                '../vendor/twitter/bootstrap/dist/js/bootstrap.js'
-                '@CorahnRinPagesBundle/Resources/public/js/jquery-ui-1.10.3.custom.min.js'
+                '../vendor/twitter/bootstrap/js/button.js'
+                '../vendor/twitter/bootstrap/js/collapse.js'
+                '../vendor/twitter/bootstrap/js/dropdown.js'
+                '../vendor/twitter/bootstrap/js/modal.js'
+                '../vendor/twitter/bootstrap/js/popover.js'
+                '../vendor/twitter/bootstrap/js/tooltip.js'
+                '../vendor/twitter/bootstrap/js/transition.js'
+                '../vendor/twitter/bootstrap/js/tab.js'
+                'bundles/corahnrinpages/js/jquery-ui-1.10.3.custom.min.js'
+                'bundles/corahnrinpages/js/corahn_rin.js'
                 output="js/main.js"
-                filter="?yui_js"
+                filter="yui_js"
             %}<script type="text/javascript" src="{{ asset_url }}"></script>{% endjavascripts %}
         {% endblock %}
 
