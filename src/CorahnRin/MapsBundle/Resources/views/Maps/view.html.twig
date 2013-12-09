@@ -13,10 +13,11 @@
 
 {% block javascripts %}
     {{ parent() }}{% javascripts
-        '@CorahnRinMapsBundle/Resources/public/js/map.js'
         '@CorahnRinMapsBundle/Resources/public/js/jquery.mousewheel.min.js'
         '@CorahnRinMapsBundle/Resources/public/js/jquery.transform2d.js'
-        output="js/map.js"
+        '@CorahnRinMapsBundle/Resources/public/js/map.js'
+        '@CorahnRinMapsBundle/Resources/public/js/map_edit/*.js'
+        output="js/maps.js"
         filter="yui_js"
     %}<script type="text/javascript" src="{{ asset_url }}"></script>{% endjavascripts %}
     <script type="text/javascript">
