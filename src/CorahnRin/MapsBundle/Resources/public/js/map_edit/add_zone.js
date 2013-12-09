@@ -35,6 +35,13 @@
                 polygonId = document.addZonePolygonId ? document.addZonePolygonId : 0,
                 polygonIdFull = document.addZonePolygonIdFull ? document.addZonePolygonIdFull : '',
                 attr = this.getAttribute('data-active');
+        
+            if (!document.addZonePinIcon) {
+                document.addZonePinIcon = document.createElement('span');
+                document.addZonePinIcon.classList.add('glyphicon');
+                document.addZonePinIcon.classList.add('icon-screenshot');
+                document.addZonePinIcon.classList.add('map-icon-target');
+            }
 
             if (attr === 'true') {
                 // Désactivation de l'ajout d'un polygone
@@ -82,6 +89,7 @@
                 // Reset des données en vue de la création du polygone
                 document.addZoneCoordinates = [];
                 document.addZonePolygon = polygon;
+                document.addZonePolygonIdFull = polygonIdFull;
                 document.addZoneMapContainerOffset = $(mapContainer).offset();
             }
             // Définition de l'attribut "active" pour le bouton et le container : ce dernier sera utilisé par les callbacks d'events
@@ -106,14 +114,8 @@
                 //  il est directement concaténé afin de permettre la conservation de toutes les coordonnées du polygone en construction
                 if (mapContainer.getAttribute('data-add-zone') === 'true') {
                     if (mapContainer.getAttribute('data-add-zone') === 'true' && document.addZoneCoordinates.length) {
-                        var x = typeof e.offsetX !== 'undefined'
-                            ? e.offsetX
-                            : e.clientX - document.addZoneMapContainerOffset.left + window.pageXOffset ;
-                        var y = typeof e.offsetY !== 'undefined'
-                            ? e.offsetY
-                            : e.clientY - document.addZoneMapContainerOffset.top + window.pageYOffset;
-                        x = parseInt(x);
-                        y = parseInt(y);
+                        var x = parseInt(e.clientX - document.addZoneMapContainerOffset.left + window.pageXOffset);
+                        var y = parseInt(e.clientY - document.addZoneMapContainerOffset.top + window.pageYOffset);
                         var coordinatesTemp = document.addZoneCoordinates.concat([x+','+y]);
                         document.addZonePolygon.setAttribute('points', coordinatesTemp.join(' '));
                     }
@@ -127,14 +129,14 @@
                 if (mapContainer.getAttribute('data-add-zone') === 'true') {
                     var base_coords = e.clientX+','+e.clientY;
                     if (base_coords === mapContainer.base_coords) {
-                        var x = typeof e.offsetX !== 'undefined'
-                            ? e.offsetX
-                            : e.clientX - document.addZoneMapContainerOffset.left + window.pageXOffset ;
-                        var y = typeof e.offsetY !== 'undefined'
-                            ? e.offsetY
-                            : e.clientY - document.addZoneMapContainerOffset.top + window.pageYOffset;
-                        x = parseInt(x);
-                        y = parseInt(y);
+                        var x = parseInt(e.clientX - document.addZoneMapContainerOffset.left + window.pageXOffset);
+                        var y = parseInt(e.clientY - document.addZoneMapContainerOffset.top + window.pageYOffset);
+                        
+                        var pin = $(document.addZonePinIcon).clone()[0];
+                        pin.setAttribute('data-target-polygon', document.addZonePolygonIdFull);
+                        pin.style.left = x+'px';
+                        pin.style.top = y+'px';
+                        mapContainer.appendChild(pin);
                         if (isNaN(x) || isNaN(y)) {
                             // Si l'une des coordonnées n'est pas un nombre, c'est qu'il y a eu une erreur
                             // Dans ce cas, le sommet ne sera pas ajouté
