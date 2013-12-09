@@ -7,223 +7,219 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class RepositoryCommand extends ContainerAwareCommand {
-
-	private $base_file = <<<'BASE_FILE'
-<?php
-namespace {namespace};
-use Doctrine\ORM\EntityRepository;
-use CorahnRin\ToolsBundle\Repository\CorahnRinRepository as CorahnRinRepository;
-
-/**
- * {name}Repository
- *
- */
-class {name}Repository extends CorahnRinRepository {
-
-}
-BASE_FILE
-;
+class FilesCombineCommand extends ContainerAwareCommand {
 
 	protected function configure() {
 
-		//public function addArgument($name, $mode = null, $description = '', $default = null)
 		$this
-		->setName('corahnrin:generate:repositories')
-		->setDescription('Generate entities repositories of a specific namespace.')
-		->addArgument(
-				'namespace',
-				InputArgument::OPTIONAL,
-				'Enter the namespace you want to scan (use "/" for compatibility).'
-			)
-		->addOption('no-backup', null, InputOption::VALUE_NONE, 'If defined, will not generate ".php~" backup files of existing entities and repositories.')
-		;
+		->setName('corahnrin:combine:files')
+		->setDescription('Combine multiple files.')
+        ->setHelp('This command is used to generate a single file from multiple files, like LESS files..'."\n"
+            .'Name the [output] file within its folder if you need'."\n"
+            ."\n".'The command will generate a file combining all required files if they exist,'
+            ."\n".'in the order you mention.'
+            ."\n".''
+            ."\n".'This is really useful when you want to combine LESS files into one file, for LessPHP to work better with Symfony2'
+            ."\n".''
+            ."\n".'You can specify the --replace option to overwrite any existing output file.'
+            ."\n".'If you use the --append option, all mixed contents are appended to the file instead of replacing it.'
+            )
+        ->addArgument('output', InputArgument::OPTIONAL, 'Enter the output file name')
+		->addArgument('files', InputArgument::IS_ARRAY, 'Enter the files you want to combine')
+        ->addOption('replace', 'r', InputOption::VALUE_NONE, 'Replaces the output file if it already exists')
+        ->addOption('append', 'a', InputOption::VALUE_NONE, 'Appends the contents to the file instead of replaceing it')
+        ->addOption('no-prompt', null, InputOption::VALUE_NONE, 'Do not interact with user')
+        ;
 	}
 
 	protected function execute(InputInterface $input, OutputInterface $output) {
 		//Récupération du service "dialog" pour les demandes à l'utilisateur
 		$dialog = $this->getHelperSet()->get('dialog');
 
+        $output->writeln('   ______                     __                   ____   _      ');
+        $output->writeln('  / ____/____   _____ ____ _ / /_   ____          / __ \\ (_)____ ');
+        $output->writeln(' / /    / __ \\ / ___// __ `// __ \\ / __ \\ ______ / /_/ // // __ \\');
+        $output->writeln('/ /___ / /_/ // /   / /_/ // / / // / / //_____// _, _// // / / /');
+        $output->writeln('\\____/ \\____//_/    \\__,_//_/ /_//_/ /_/       /_/ |_|/_//_/ /_/ ');
+        $output->writeln('');
+
+		$output->writeln('Welcome to Corahn-Rin Files Combinator !');
+		$output->writeln('With this command, you will be able to compile all files you want into one file !');
+		$output->writeln('This is really useful when you want to combine LESS files into one file, for LessPHP to work better with Symfony2');
+		$output->writeln('');
+
 		//Dossiers de base et directory separator simplifié
 		$DS = DIRECTORY_SEPARATOR;
-		$global_dir = preg_replace('#(\\\|/)src(\\\|/)(.*)$#isUu', $DS, __DIR__);
+		$root = preg_replace('#(\\\|/)(src|vendor)(\\\|/)(.*)$#isUu', $DS, __DIR__);
 
-		//Demande à l'utilisateur de récupérer le namespace
-		$dir = $input->getArgument('namespace');
-		if (!$dir) {
-			$dir = $dialog->askAndValidate(
-				$output,
-				'Enter the namespace you want to scan (use "/" for compatibility) : '."\n > ",
-				function ($answer) {
-					$DS = DIRECTORY_SEPARATOR;
-					$global_dir = preg_replace('#(\\\|/)src(\\\|/)(.*)$#isUu', $DS, __DIR__);
-					$dir = trim($answer);
-					$dir = trim($dir, '/\\');
-					$dir = str_replace(array('/', '\\'), array('/', '/'), $dir);
-					$dir = preg_replace('~/?Entity/?$~isUu', '', $dir);
-					$dir = str_replace(array('/', '\\'), array($DS, $DS), $dir);
-					$namespace = $dir;
-					$dir = trim($dir, $DS);
-					$scanned_dir = $global_dir.'src'.$DS.$dir.$DS.'Entity';
-					if (!$dir) {
-						throw new \RunTimeException('Please enter a correct namespace.');
-					} elseif (!is_dir($scanned_dir)) {
-						throw new \RunTimeException(
-							'This namespace does not exist or is not located into the "'.'src'.$DS.'" folder.'.
-							PHP_EOL.'Folder calculated : '.$scanned_dir
-						);
-					}
-					return array('dir'=>$dir, 'namespace'=>$namespace);
-				},
-				false //nombre de tentatives
-			);
-		}
+        // Récupération des arguments
+        $files = $input->getArgument('files');
+        $outputFile = $input->getArgument('output');
+        $replace = $input->getOption('replace');
+        $append = $input->getOption('append');
+        $interact = $input->getOption('no-prompt');
 
-		//Retraitement des variables
-		$namespace = $dir['namespace'];
-		$dir = $dir['dir'];
-		$namespace = trim($namespace);
-		$namespace = trim($namespace, '/\\');
-		$namespace = str_replace('/', '\\', $namespace);
-		$namespace .= '\\Entity';
-		$repo_dir = $global_dir.'src'.$DS.$dir.$DS.'Repository';
-		$dir = $global_dir.'src'.$DS.$dir.$DS.'Entity';
+        // Au départ, le script n'est pas exécuté
+        $proceed = false;
+        $addedFiles = false;// Indique si on a ajouté des fichiers ou non
 
-		//Affichage des données récupérées
-		$output->writeln(PHP_EOL.'Namespace : '.$namespace);
-		$output->writeln('Scanning directory : '.$dir);
+        if ($files) {
+            $output->writeln('Files list :');
+            foreach ($files as $k => $file) {
+                if (file_exists(ROOT.DS.$file)) {
+                    $output->writeln(' > '.$file);
+                } else {
+                    $output->writeln('File does not exist, removed > '.$file);
+                    unset($files[$k]);
+                }
+            }
+            $output->writeln('');
+            if (!$interact) {
+                if (!$dialog->askConfirmation($output, 'Add more files to the list ? (y/n) [yes] ', true)) {
+                    $proceed = true;
+                } else {
+                    do {
+                        $additionalFile = $dialog->askAndValidate(
+                            $output,
+                            'Enter an additional file (press Enter to finish) > ',
+                            function ($f) {
+                                $f = trim($f);
+                                if ((file_exists(ROOT.DS.$f) && is_file(ROOT.DS.$f)) || !$f) { return $f; }
+                                else {
+                                    if (is_dir(ROOT.DS.$f)) {
+                                        throw new \RunTimeException('You must enter a file name, not a directory.');
+                                    } else {
+                                        throw new \RunTimeException('This file does not exist.');
+                                    }
+                                }
+                            });
+                        if ($additionalFile) {
+                            $addedFiles = true;
+                            $files[] = $additionalFile;
+                        }
+                    } while (!!$additionalFile);
+                }
+            } else {
+                $proceed = true;
+            }
+        } elseif (!$file && !$interact) {
+            do {
+                $additionalFile = $dialog->askAndValidate(
+                    $output,
+                    'Enter a file (press Enter to finish) > ',
+                    function ($f) {
+                        $f = trim($f);
+                        if ((file_exists(ROOT.DS.$f) && is_file(ROOT.DS.$f)) || !$f) { return $f; }
+                        else {
+                            if (is_dir(ROOT.DS.$f)) {
+                                throw new \RunTimeException('You must enter a file name, not a directory.');
+                            } else {
+                                throw new \RunTimeException('This file does not exist.');
+                            }
+                        }
+                    });
+                if ($additionalFile) {
+                    $addedFiles = true;
+                    $files[] = $additionalFile;
+                }
+            } while (!!$additionalFile);
+        } else {
+            throw new \RunTimeException('You must specify at least one existing file to combine.');
+            exit;
+        }
+        if ($addedFiles) {
+            $output->writeln("\n".'Files list :');
+            foreach ($files as $file) {
+                $output->writeln(' > '.$file);
+            }
+            $output->writeln('');
+            if (!$interact) {
+                if ($dialog->askConfirmation($output, 'Proceed ? (y/n) [yes] ', true)) {
+                    $proceed = true;
+                }
+            } else {
+                $proceed = true;
+            }
+        }
 
-		//Scan des fichiers
-		$files = scandir($dir);
-		foreach ($files as $k => $v) {
-			unset($files[$k]);
-			if ($v !== '.' && $v !== '..' && preg_match('#\.php$#isUu', $v) && strpos($v, 'Repository') === false) {
-				$valid_files[] = $v;
-			}
-		}
-		$files = $valid_files;
-		$files[''] = '> Type "enter" to skip this test';
+        if ($proceed) {
+            if ($files) {
+                $content = '';
+                foreach ($files as $file) {
+                    $output->writeln('Reading file : '.$file);
+                    $cnt = file_get_contents(ROOT.DS.$file);
+                    $content .= $cnt;
+                    if (!$cnt) {
+                        $output->writeln(' >> Empty file, or error occured. Check your file.');
+                    }
+                }
 
-		if (!count($files) || count($files) === 1) {
-			throw new \RunTimeException('The folder is empty of any php file...');
-		}
+                if (!$content) {
+                    if (!$interact) {
+                        $proceed = $dialog->askConfirmation($output, 'No content has been retrieved from files combination, still create output file ? (y/n) [yes] ', true);
+                    } else {
+                        $proceed = true;
+                    }
+                }
 
-		//Affichage du contenu valide du dossier
-		$selected = $dialog->select(
-			$output,
-			PHP_EOL.'If you want to ignore files you can specify them here. Separate the indexes with ",".'.PHP_EOL.'Folder contents :',
-			$files,
-			'0',
-			false,
-			'Entry "%s" does not exist',
-			true // active l'option multiselect
-		);
+                if ($proceed) {
+                    if (!$outputFile) {
+                        if (!$interact) {
+                            $outputFile = $dialog->askAndValidate(
+                                $output,
+                                'Enter a name for the output file (press Enter to finish) > ',
+                                function ($f) { return trim($f); }
+                            );
+                        } else {
+                            throw new \RunTimeException('You must specify an output file name.');
+                            exit;
+                        }
+                    }
+                    if (!$replace) {
+                        if (file_exists(ROOT.DS.$outputFile)) {
+                            if (!$interact) {
+                                $replace = $dialog->askConfirmation($output, "\n".'Following file already exists :'."\n".$outputFile."\n".'Overwrite ? (y/n) [yes] ', true);
+                            } else {
+                                $replace = true;
+                            }
+                        } else {
+                            $replace = true;
+                        }
+                    }
+                    if ($replace) {
+                        if (!is_dir(dirname(ROOT.DS.$outputFile))) {
+                            mkdir(dirname(ROOT.DS.$outputFile), 0777, true);
+                        }
+                        $add = "/*\n * Generated with Corahn-Rin Files Combinator".
+                            "\n * Files list :";
+                        foreach ($files as $file) {
+                            $add .= "\n".' * '.$file;
+                        }
+                        $add .= "\n */\n";
+                        $content = $add.$content;
 
-		$selected[] = '';
+                        if ($content === file_get_contents(ROOT.DS.$outputFile)) {
+                            $output->writeln("\n".'No modification has been made, files are identical.');
+                        } else {
+                            $written = file_put_contents(ROOT.DS.$outputFile, $content, $append ? FILE_APPEND : 0);
+                            if ($written) {
+                                $output->writeln("\n".'Files combined !');
+                                $output->writeln("\n".$written.' octets written in '.$outputFile);
+                            } else {
+                                throw new \RunTimeException('An error occured while writing combined files into the output file.'."\n".'This errors can sometime occurs because of file permissions or if nothing has been written in the file.');
+                            }
+                        }
+                    }
+                }
+            } else {
+                $output->writeln("\n".'No file to combine !');
+            }
+        } elseif (!$files) {
+            $output->writeln("\n".'No file to combine !');
+        }
 
-		foreach ($selected as $v) { unset($files[$v]); }
-
-		//Affichage du contenu valide du dossier
-		$output->writeln('Files scanned :');
-		foreach ($files as $v) { $output->writeln(' > '.str_replace('.php', '', $v)); }
-
-		//Confirmation d'exécution
-		if (!$dialog->askConfirmation($output, 'Proceed ? [yes] ', 'yes')) {
-			$output->writeln('Aborted...');
-			return;
-		}
-
-		$output->writeln('The application will create a repository for each file in the following directory :');
-		$output->writeln(' > '.$repo_dir);
-
-
-
-		$files_count = 0;
-		$files_overwritten = 0;
-		$overwrite_all = 0;
-		foreach ($files as $v) {
-			$name = str_replace('.php', '', $v);
-			$dest_file = $repo_dir.$DS.$name.'Repository.php';
-			$overwrite = false;
-			$exists = file_exists($dest_file);
-			if ($exists) {
-				if ($overwrite_all === 0) {
-					$choices = array('yes','all','no','no-all','y','n','nall');
-					$answer = $dialog->select(
-						$output,
-						'Following file already exists : '.PHP_EOL.'> '. str_replace($global_dir.$DS, '', $dest_file). PHP_EOL. 'Overwrite ? [yes]',
-						$choices,
-						0,
-						false,
-						'Answer "%s" is not correct'
-					);
-
-					$answer = $choices[$answer];
-					$selected =	$answer === 'y' ? 'yes' :
-								($answer === 'n' ? 'no' :
-								($answer === 'nall' ? 'no-all' : $answer));
-					if ($selected === 'yes') {
-						$overwrite = true;
-					} elseif ($selected === 'all') {
-						$overwrite = true;
-						$overwrite_all = 1;
-					} elseif ($selected === 'no') {
-						$overwrite = false;
-					} elseif ($selected === 'no-all') {
-						$overwrite = false;
-						$overwrite_all = 2;
-					}
-				} elseif ($overwrite_all === 1) {
-					$overwrite = true;
-				} elseif ($overwrite_all === 2) {
-					$overwrite = false;
-				}
-			} else {
-				$overwrite = true;
-			}
-			$content = $this->base_file;
-			$content = str_replace('{name}', $name, $content);
-			$content = str_replace('{namespace}', str_replace('\\Entity', '\\Repository', $namespace), $content);
-			if ($overwrite) {
-				$files_count++;
-				if ($exists) {
-					$files_overwritten ++;
-					$bu = $input->getOption('no-backup');
-					if (!$bu) {
-						file_put_contents($dest_file.'~', file_get_contents($dest_file));
-					}
-				}
-				if (!is_dir($repo_dir)) { mkdir($repo_dir, 0777, true); }
-				$output->writeln(($exists ? 'Overwriting' : 'Writing into'). ' file "'. $dest_file. '". '. file_put_contents($dest_file, $content). ' octets written.');
-			} else {
-				$output->writeln('Skipping file "'. $dest_file. '"...');
-			}
-		}//end foreach
-
-		if ($dialog->askConfirmation(
-			$output,
-			'Add the parameter "ORM\\Entity(repositoryClass)" ? [y]es, [n]o (default [yes]) : ',
-			true)) {
-			foreach ($files as $file) {
-				$repositoryClass = str_replace('\\Entity', '', $namespace).'\\Repository\\'.str_replace('.php', '', $file).'Repository';
-				$file = $dir.$DS.$file;
-				$cnt = file_get_contents($file);
-				$cnt = preg_replace('~@ORM.Entity(\([^\)]*\))?(\r)?\n~Uu', '@ORM\\Entity(repositoryClass="'.$repositoryClass.'")'."\n", $cnt);
-				// echo substr($cnt, 0, 450), PHP_EOL, PHP_EOL, PHP_EOL;
-				// $handle = fopen ("php://stdin","r");
-				// $proceed = fgets($handle);
-				// fclose($handle);
-				$bu = $input->getOption('no-backup');
-				if (!$bu) {
-					file_put_contents($file.'~', file_get_contents($file));
-				}
-				file_put_contents($file, $cnt);
-				$output->writeln('Added parameter "repositoryClass" to file "'.$file.'"');
-			}
-		}
-		
-		$output->writeln('End of function !');
+		$output->writeln("\n".'End of function !');
 		$output->writeln('Thanks for using CorahnRinTools, and see you soon !');
-		
+
 	}
 }
