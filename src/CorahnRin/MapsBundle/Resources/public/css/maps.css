@@ -30,8 +30,8 @@
     z-index: 2000;
 }
 #map_zones polygon {
-    fill: rgba(128, 128, 128, 0.2);
-    stroke: #000000;
+    fill: rgba(128, 128, 128, 0.25);
+    stroke: #fff;
     stroke-width: 1;
 }
 #map_labels,

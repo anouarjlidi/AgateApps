@@ -7,8 +7,8 @@
     <div id="map_edit_menu" class="navbar navbar-inverse" style="z-index: 250000;">
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li><a href="#" id="map_dont_move" data-map-container="map_container">{{ 'Désactiver le mouvement' | tr }}</a></li>
-                <li><a href="#" id="map_add_zone" data-map-container="map_container" data-zones-container="map_zones">{{ 'Ajouter une zone' | tr }}</a></li>
+                <li><a href="#" id="map_dont_move" data-map-container="map_container" data-toggle="tooltip" title="{{ 'Désactiver le mouvement' | tr }}"><span class="glyphicon icon-move text-success"></span></a></li>
+                <li><a href="#" id="map_add_zone" data-map-container="map_container" data-zones-container="map_zones" data-toggle="tooltip" title="{{ 'Ajouter une zone' | tr }}"><span class="glyphicon icon-vector_path_polygon"></span></a></li>
             </ul>
         </div>
     </div>
@@ -22,16 +22,16 @@
 
 {% block javascripts %}
     {{ parent() }}{% javascripts
-        '@CorahnRinMapsBundle/Resources/public/js/map.js'
-        '@CorahnRinMapsBundle/Resources/public/js/jquery.mousewheel.min.js'
-        '@CorahnRinMapsBundle/Resources/public/js/jquery.transform2d.js'
+        'bundles/corahnrinmaps/js/map.js'
+        'bundles/corahnrinmaps/js/jquery.mousewheel.min.js'
+        'bundles/corahnrinmaps/js/jquery.transform2d.js'
         output="js/map.js"
-        filter="?yui_js"
+        filter="yui_js"
     %}<script type="text/javascript" src="{{ asset_url }}"></script>{% endjavascripts %}
     {% javascripts
-        '@CorahnRinMapsBundle/Resources/public/js/map_edit/*.js'
+        'bundes/corahnrinmaps/js/map_edit/*.js'
         output="js/map_edit.js"
-        filter="?yui_js"
+        filter="yui_js"
     %}<script type="text/javascript" src="{{ asset_url }}"></script>{% endjavascripts %}
     <script type="text/javascript">
         document.corahn_rin_map = new Map({
