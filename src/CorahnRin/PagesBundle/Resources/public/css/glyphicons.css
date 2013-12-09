@@ -3,7 +3,7 @@
  *  Author:   Jan Kovarik - www.glyphicons.com
  *  Twitter:  @jankovarik
  */
-@font-face{font-family:'Glyphicons Regular';src:url('fonts/glyphicons-regular.eot');src:url('fonts/glyphicons-regular.eot?#iefix') format('embedded-opentype'),url('fonts/glyphicons-regular.woff') format('woff'),url('fonts/glyphicons-regular.ttf') format('truetype'),url('fonts/glyphicons-regular.svg#glyphiconsregular') format('svg');font-weight:normal;font-style:normal}
+@font-face{font-family:'Glyphicons Regular';src:url('../fonts/glyphicons-regular.eot');src:url('../fonts/glyphicons-regular.eot?#iefix') format('embedded-opentype'),url('../fonts/glyphicons-regular.woff') format('woff'),url('../fonts/glyphicons-regular.ttf') format('truetype'),url('../fonts/glyphicons-regular.svg#glyphiconsregular') format('svg');font-weight:normal;font-style:normal}
 .icon-white{color:#fff}
 
 .glyphicon,
@@ -500,7 +500,7 @@
 
 
 
-@font-face{font-family:'Glyphicons Halflings Regular';src:url('fonts/glyphicons-halflings-regular.eot');src:url('fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'),url('fonts/glyphicons-halflings-regular.woff') format('woff'),url('fonts/glyphicons-halflings-regular.ttf') format('truetype'),url('fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');font-weight:normal;font-style:normal}
+@font-face{font-family:'Glyphicons Halflings Regular';src:url('../fonts/glyphicons-halflings-regular.eot');src:url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'),url('../fonts/glyphicons-halflings-regular.woff') format('woff'),url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'),url('../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');font-weight:normal;font-style:normal}
 .glyphicon-half{font-family:'Glyphicons Halflings Regular';}
 .glyphicon-half.icon-glass:before{content:"\E001"}
 .glyphicon-half.icon-music:before{content:"\E002"}
@@ -705,7 +705,7 @@
 
 
 
-@font-face{font-family:'Glyphicons Social Regular';src:url('fonts/glyphicons-social-regular.eot');src:url('fonts/glyphicons-social-regular.eot?#iefix') format('embedded-opentype'),url('fonts/glyphicons-social-regular.woff') format('woff'),url('fonts/glyphicons-social-regular.ttf') format('truetype'),url('fonts/glyphicons-social-regular.svg#glyphicons_socialregular') format('svg');font-weight:normal;font-style:normal}
+@font-face{font-family:'Glyphicons Social Regular';src:url('../fonts/glyphicons-social-regular.eot');src:url('../fonts/glyphicons-social-regular.eot?#iefix') format('embedded-opentype'),url('../fonts/glyphicons-social-regular.woff') format('woff'),url('../fonts/glyphicons-social-regular.ttf') format('truetype'),url('../fonts/glyphicons-social-regular.svg#glyphicons_socialregular') format('svg');font-weight:normal;font-style:normal}
 .glyphicon-social{font-family:'Glyphicons Social Regular';}
 .glyphicon-social.icon-pinterest:before{content:"\E001"}
 .glyphicon-social.icon-dropbox:before{content:"\E002"}
@@ -760,7 +760,7 @@
 
 
 
-@font-face{font-family:'Glyphicons Filetypes Regular';src:url('fonts/glyphicons-filetypes-regular.eot');src:url('fonts/glyphicons-filetypes-regular.eot?#iefix') format('embedded-opentype'),url('fonts/glyphicons-filetypes-regular.woff') format('woff'),url('fonts/glyphicons-filetypes-regular.ttf') format('truetype'),url('fonts/glyphicons-filetypes-regular.svg#glyphicons_filetypesregular') format('svg');font-weight:normal;font-style:normal}
+@font-face{font-family:'Glyphicons Filetypes Regular';src:url('../fonts/glyphicons-filetypes-regular.eot');src:url('../fonts/glyphicons-filetypes-regular.eot?#iefix') format('embedded-opentype'),url('../fonts/glyphicons-filetypes-regular.woff') format('woff'),url('../fonts/glyphicons-filetypes-regular.ttf') format('truetype'),url('../fonts/glyphicons-filetypes-regular.svg#glyphicons_filetypesregular') format('svg');font-weight:normal;font-style:normal}
 .glyphicon-file{font-family:'Glyphicons Filetypes Regular';}
 .glyphicon-file.icon-txt:before{content:"\E001"}
 .glyphicon-file.icon-doc:before{content:"\E002"}
