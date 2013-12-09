@@ -24,7 +24,7 @@ class MapsController extends Controller
     }
 
     /**
-     * @Route("/admin/maps/")
+     * @Route("/maps/")
      * @Template()
      */
     public function indexAction()
