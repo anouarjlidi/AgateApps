@@ -1,1 +1,0 @@
-fos.Router.setData({"base_url":"","routes":{"corahnrin_translate_translate_addtranslation":{"tokens":[["text","\/admin\/translate\/ajax\/add_translation"]],"defaults":[],"requirements":[],"hosttokens":[]}},"prefix":"","host":"localhost","scheme":"http"});

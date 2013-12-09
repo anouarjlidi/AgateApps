@@ -26,7 +26,4 @@ app/config/parameters.yml
 /nbproject
 
 # Ignore temporaire
-/web/img/*
-/web/js/*
-/web/css/*
 /app/Resources/Translations/*
