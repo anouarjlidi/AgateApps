@@ -10,14 +10,14 @@
 
         {% block stylesheets %}
             {% stylesheets
-                'bundles/corahnrinpages/css/bootstrap.css'
+                '@CorahnRinPagesBundle/Resources/public/css/bootstrap.css'
                 '../vendor/twitter/bootstrap/dist/css/bootstrap-theme.min.css'
                 'bundles/corahnrinpages/css/jquery-ui-1.10.3.custom.min.css'
-                'bundles/corahnrinpages/css/initializer.css'
+                '@CorahnRinPagesBundle/Resources/public/css/initializer.css'
                 'bundles/corahnrinpages/css/glyphicons.css'
-                'bundles/corahnrinpages/css/corahn_rin.css'
-                'bundles/corahnrinpages/css/bootstrap-more.css'
-                'bundles/corahnrinmaps/css/maps.css'
+                '@CorahnRinPagesBundle/Resources/public/css/corahn_rin.css'
+                '@CorahnRinPagesBundle/Resources/public/css/bootstrap-more.css'
+                '@CorahnRinMapsBundle/Resources/public/css/maps.css'
                 filter="cssrewrite,yui_css"
                 output="css/main.css"
             %}<link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
