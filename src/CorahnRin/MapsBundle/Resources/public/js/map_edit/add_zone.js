@@ -37,10 +37,44 @@
                 attr = this.getAttribute('data-active');
         
             if (!document.addZonePinIcon) {
-                document.addZonePinIcon = document.createElement('span');
-                document.addZonePinIcon.classList.add('glyphicon');
-                document.addZonePinIcon.classList.add('icon-screenshot');
-                document.addZonePinIcon.classList.add('map-icon-target');
+                i = document.createElement('span');
+                i.classList.add('glyphicon');
+                i.classList.add('icon-screenshot');
+                i.classList.add('map-icon-target');
+                i.style.position = 'absolute';
+                document.addZonePinIcon = i;
+                document.addZonePinDraggableObject = {
+                    start: function(e,ui){
+                        var x = parseInt(e.clientX - document.addZoneMapContainerOffset.left + window.pageXOffset);
+                        var y = parseInt(e.clientY - document.addZoneMapContainerOffset.top + window.pageYOffset);
+                        var offsets = {};
+                        document.addZoneMovingPinIndex = $('[data-target-polygon="'+ui.helper.attr('data-target-polygon')+'"]').index(this);
+                        document.addZonePolygon = document.getElementById(ui.helper.attr('data-target-polygon'));
+                        document.addZoneCoordinates = document.addZonePolygon.getAttribute('points').split(' ');
+                        offsets.left = x - document.addZoneCoordinates[document.addZoneMovingPinIndex].split(',')[0];
+                        offsets.top = y - document.addZoneCoordinates[document.addZoneMovingPinIndex].split(',')[1];
+                        document.addZoneMovingPinOffset = offsets;
+                    },
+                    drag: function(e, ui){
+                        var coord = document.addZoneCoordinates.concat([]);
+                        var index = document.addZoneMovingPinIndex;
+                        var x = parseInt(e.clientX - document.addZoneMapContainerOffset.left + window.pageXOffset - document.addZoneMovingPinOffset.left);
+                        var y = parseInt(e.clientY - document.addZoneMapContainerOffset.top + window.pageYOffset - document.addZoneMovingPinOffset.top);
+                        console.info(coord);
+                        console.info('before change' , coord[index]);
+                        coord[index] = x+','+y;
+                        console.info('after change', coord[index]);
+                        document.addZonePolygon.setAttribute('points', coord.join(' '));
+                    },
+                    stop: function(e, ui){
+                        $(document.getElementById("input_"+document.addZonePolygon.id)).val(document.addZonePolygon.getAttribute('points'));
+                        document.addZoneMovingPinIndex = null;
+                        document.addZonePolygon = null;
+                        document.addZoneCoordinates = null;
+                        document.addZoneMovingPinOffset = null;
+                    }
+                };
+                i = null;
             }
 
             if (attr === 'true') {
@@ -53,8 +87,9 @@
                     document.addZonePolygon.setAttribute('points', document.addZoneCoordinates.join(' '));
                     // Et un <input> est rajouté au conteneur
                     var i = document.createElement('input');
-                    i.id = document.addZonePolygon.id;
-                    i.name = document.addZonePolygon.id;
+                    i.id = "input_"+document.addZonePolygonIdFull;
+                    i.type = 'hidden';
+                    i.name = document.addZonePolygonIdFull;
                     i.value = document.addZoneCoordinates.join(' ');
                     mapContainer.appendChild(i);
                     i = null;
@@ -66,7 +101,6 @@
                 // Resets
                 document.addZoneCoordinates = [];
                 document.addZonePolygon = null;
-                document.addZoneMapContainerOffset = null;
 
                 // Et enfin, suppression des éventuels polygones sans points
                 l = document.querySelectorAll('polygon:not([points])');// Liste des éléments
@@ -78,7 +112,7 @@
                 this.parentNode.classList.add('active');//Le bouton du menu devient actif
 
                 // Récupération de l'id maximum à générer. Cela permet de n'avoir que des polygones avec des ID à partir de zéro, et consécutifs.
-                while (document.getElementById("map_add_zone_polygon_"+polygonId)) { polygonId ++; }
+                while (document.getElementById("map_add_zone_polygon["+polygonId+"]")) { polygonId ++; }
                 polygonIdFull = "map_add_zone_polygon["+polygonId+"]";// Définition de l'ID final du polygone
 
                 // Création du polygone à partir du namespace SVG 
@@ -137,6 +171,7 @@
                         pin.style.left = x+'px';
                         pin.style.top = y+'px';
                         mapContainer.appendChild(pin);
+                        $(pin).draggable(document.addZonePinDraggableObject);
                         if (isNaN(x) || isNaN(y)) {
                             // Si l'une des coordonnées n'est pas un nombre, c'est qu'il y a eu une erreur
                             // Dans ce cas, le sommet ne sera pas ajouté
