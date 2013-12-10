@@ -87,7 +87,8 @@ class MapsController extends Controller
     public function editAction(Maps $map)
     {
         $route_init = $this->generateUrl('corahnrin_maps_api_init');
-        return array('map'=>$map,'route_init' => $route_init);
+        $max = $this->getDoctrine()->getManager()->getRepository('CorahnRinMapsBundle:Zones')->getMax();
+        return array('map'=>$map,'route_init' => $route_init, 'max' => $max);
     }
 
     /**
