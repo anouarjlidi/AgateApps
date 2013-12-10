@@ -94,7 +94,7 @@
                     i.type = 'hidden';
                     i.name = document.addZonePolygonIdFull;
                     i.value = document.addZoneCoordinates.join(' ');
-                    mapContainer.appendChild(i);
+                    $(mapContainer).parents('form').append(i);
                     i = null;
                 } else {
                     // Sinon, s'il y a moins de 3 points dans le polygone, il est supprimé
