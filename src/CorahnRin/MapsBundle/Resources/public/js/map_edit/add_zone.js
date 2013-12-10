@@ -1,4 +1,41 @@
 (function($){
+    var mapAddZone = document.getElementById('map_add_zone');
+    var mapContainerId = mapAddZone.getAttribute('data-map-container') ? mapAddZone.getAttribute('data-map-container') : 'map_container';
+    document.addZonePinDraggableObject = {
+        start: function(e,ui){
+            document.addZoneMapContainerOffset = $('#'+mapContainerId).offset();
+            ui.helper.css('position','absolute');
+            var x = parseInt(e.clientX - document.addZoneMapContainerOffset.left + window.pageXOffset);
+            var y = parseInt(e.clientY - document.addZoneMapContainerOffset.top + window.pageYOffset);
+            var offsets = {};
+            document.addZoneMovingPinIndex = $('[data-target-polygon="'+ui.helper.attr('data-target-polygon')+'"]').index(this);
+            document.addZonePolygon = document.getElementById(ui.helper.attr('data-target-polygon'));
+            document.addZoneCoordinates = document.addZonePolygon.getAttribute('points').split(' ');
+            offsets.left = x - document.addZoneCoordinates[document.addZoneMovingPinIndex].split(',')[0];
+            offsets.top = y - document.addZoneCoordinates[document.addZoneMovingPinIndex].split(',')[1];
+            document.addZoneMovingPinOffset = offsets;
+        },
+        drag: function(e, ui){
+            document.addZoneMapContainerOffset = $('#'+mapContainerId).offset();
+            ui.helper.css('position','absolute');
+            var coord = document.addZoneCoordinates.concat([]);
+            var index = document.addZoneMovingPinIndex;
+            var x = parseInt(e.clientX - document.addZoneMapContainerOffset.left + window.pageXOffset - document.addZoneMovingPinOffset.left);
+            var y = parseInt(e.clientY - document.addZoneMapContainerOffset.top + window.pageYOffset - document.addZoneMovingPinOffset.top);
+            coord[index] = x+','+y;
+            document.addZonePolygon.setAttribute('points', coord.join(' '));
+        },
+        stop: function(e, ui){
+            document.addZoneMapContainerOffset = $('#'+mapContainerId).offset();
+            ui.helper.css('position','absolute');
+            $(document.getElementById("input_"+document.addZonePolygon.id)).val(document.addZonePolygon.getAttribute('points'));
+            document.addZoneMovingPinIndex = null;
+            document.addZonePolygon = null;
+            document.addZoneCoordinates = null;
+            document.addZoneMovingPinOffset = null;
+        }
+    };
+    $('.map-icon-target').draggable(document.addZonePinDraggableObject);
     // Désactivation du mouvement
     if (document.getElementById('map_dont_move')) {
         document.getElementById('map_dont_move').onclick = function(){
@@ -43,40 +80,6 @@
                 i.classList.add('map-icon-target');
                 i.style.position = 'absolute';
                 document.addZonePinIcon = i;
-                document.addZonePinDraggableObject = {
-                    start: function(e,ui){
-                        document.addZoneMapContainerOffset = $('#'+(_this.getAttribute('data-map-container') ? _this.getAttribute('data-map-container') : 'map_container')).offset();
-                        ui.helper.css('position','absolute');
-                        var x = parseInt(e.clientX - document.addZoneMapContainerOffset.left + window.pageXOffset);
-                        var y = parseInt(e.clientY - document.addZoneMapContainerOffset.top + window.pageYOffset);
-                        var offsets = {};
-                        document.addZoneMovingPinIndex = $('[data-target-polygon="'+ui.helper.attr('data-target-polygon')+'"]').index(this);
-                        document.addZonePolygon = document.getElementById(ui.helper.attr('data-target-polygon'));
-                        document.addZoneCoordinates = document.addZonePolygon.getAttribute('points').split(' ');
-                        offsets.left = x - document.addZoneCoordinates[document.addZoneMovingPinIndex].split(',')[0];
-                        offsets.top = y - document.addZoneCoordinates[document.addZoneMovingPinIndex].split(',')[1];
-                        document.addZoneMovingPinOffset = offsets;
-                    },
-                    drag: function(e, ui){
-                        document.addZoneMapContainerOffset = $('#'+(_this.getAttribute('data-map-container') ? _this.getAttribute('data-map-container') : 'map_container')).offset();
-                        ui.helper.css('position','absolute');
-                        var coord = document.addZoneCoordinates.concat([]);
-                        var index = document.addZoneMovingPinIndex;
-                        var x = parseInt(e.clientX - document.addZoneMapContainerOffset.left + window.pageXOffset - document.addZoneMovingPinOffset.left);
-                        var y = parseInt(e.clientY - document.addZoneMapContainerOffset.top + window.pageYOffset - document.addZoneMovingPinOffset.top);
-                        coord[index] = x+','+y;
-                        document.addZonePolygon.setAttribute('points', coord.join(' '));
-                    },
-                    stop: function(e, ui){
-                        document.addZoneMapContainerOffset = $('#'+(_this.getAttribute('data-map-container') ? _this.getAttribute('data-map-container') : 'map_container')).offset();
-                        ui.helper.css('position','absolute');
-                        $(document.getElementById("input_"+document.addZonePolygon.id)).val(document.addZonePolygon.getAttribute('points'));
-                        document.addZoneMovingPinIndex = null;
-                        document.addZonePolygon = null;
-                        document.addZoneCoordinates = null;
-                        document.addZoneMovingPinOffset = null;
-                    }
-                };
                 i = null;
             }
 
@@ -135,14 +138,15 @@
 
             $(SVGcontainer).height($(mapContainer).height());// Redéfinition de la hauteur du SVG pour éviter les problèmes d'overflow hidden
 
-            SVGcontainer.onmousedown = attr === 'false' ? null : function(e){
+            mapContainer.onmousedown = attr === 'false' ? null : function(e){
                 // Dans un premier temps, récupère les coordonnées de la souris au mouseDown
                 // Elles sont ensuite placées dans base_coords, dans le conteneur de la map
                 // Cela sera réutilisé lors du mouseUp afin de vérifier que l'utilisateur n'a pas fait un drag de la map
-                mapContainer = document.corahn_rin_map.container();
+                mapContainer = this;
                 if (mapContainer.getAttribute('data-add-zone') === 'true') {
                     document.addZoneMapContainerOffset = $(mapContainer).offset();// Redéfinition de l'offset du conteneurs
                     mapContainer.base_coords = e.clientX + ',' + e.clientY;
+                    document.addZoneBaseTarget = e.target;
                 }
             };
             mapContainer.onmousemove = attr === 'false' ? null : function(e){
@@ -155,25 +159,32 @@
                 if (this.getAttribute('data-add-zone') === 'true') {
                     if (this.getAttribute('data-add-zone') === 'true' && document.addZoneCoordinates.length) {
                         document.addZoneMapContainerOffset = $(this).offset();// Redéfinition de l'offset du conteneurs
-                        var x = parseInt(e.clientX - document.addZoneMapContainerOffset.left + window.pageXOffset);
-                        var y = parseInt(e.clientY - document.addZoneMapContainerOffset.top + window.pageYOffset);
+                        var x = parseInt(e.clientX - document.addZoneMapContainerOffset.left + window.pageXOffset) - 1;
+                        var y = parseInt(e.clientY - document.addZoneMapContainerOffset.top + window.pageYOffset) - 1;
                         var coordinatesTemp = document.addZoneCoordinates.concat([x+','+y]);
                         document.addZonePolygon.setAttribute('points', coordinatesTemp.join(' '));
                     }
                 }
             };
-            SVGcontainer.onmouseup = attr === 'false' ? null : function(e){
+            mapContainer.onmouseup = attr === 'false' ? null : function(e){
                 // Lors du mouseUp, le polygone se voit affecter un nouveau point, et donc un nouveau sommet
                 // Les coordonnées sont calculées exactement de la même façon qu'au mouseMove
                 // Si la variable base_coords du conteneur de map ne contient pas les mêmes coordonnées,
                 //  alors c'est que l'utilisateur a fait un drag ou a déplacé sa souris
-                mapContainer = document.corahn_rin_map.container();
+                mapContainer = this;
                 if (mapContainer.getAttribute('data-add-zone') === 'true') {
                     var base_coords = e.clientX+','+e.clientY;
                     if (base_coords === mapContainer.base_coords) {
                         document.addZoneMapContainerOffset = $(mapContainer).offset();// Redéfinition de l'offset du conteneurs
-                        var x = parseInt(e.clientX - document.addZoneMapContainerOffset.left + window.pageXOffset);
-                        var y = parseInt(e.clientY - document.addZoneMapContainerOffset.top + window.pageYOffset);
+                        console.info(document.addZoneBaseTarget);
+                        if (document.addZoneBaseTarget.classList.contains('map-icon-target')) {
+                            var x = $(document.addZoneBaseTarget).position().left;
+                            var y = $(document.addZoneBaseTarget).position().top;
+                            console.info(x,y);
+                        } else {
+                            var x = parseInt(e.clientX - document.addZoneMapContainerOffset.left + window.pageXOffset);
+                            var y = parseInt(e.clientY - document.addZoneMapContainerOffset.top + window.pageYOffset);
+                        }
 
                         var pin = $(document.addZonePinIcon).clone()[0];
                         pin.setAttribute('data-target-polygon', document.addZonePolygonIdFull);
