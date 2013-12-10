@@ -21,6 +21,12 @@
                         <polygon data-toggle="tooltip" title="{{ zone.name | tr}}" points="{{ zone.coordinates }}" id="map_add_zone_polygon[{{ zone.id }}]" />
                     {% endfor %}
                 </svg>
+                {% for zone in map.zones %}
+                    {% for coords in zone.coordinates | split(' ') %}
+                        {% set coord = coords | split(',') %}
+                        <span class="glyphicon icon-screenshot map-icon-target" data-target-polygon="map_add_zone_polygon[{{ zone.id }}]" style="position: absolute;left: {{ coord.0 }}px;top: {{ coord.1 }}px;"></span>
+                    {% endfor %}
+                {% endfor %}
             </div>
         </div>
     </fieldset>
@@ -48,6 +54,6 @@
             allowZoom:false,
             zoom: 10
         });
-        
+        document.addZonePolygonId = {{ max }};
     </script>
 {% endblock %}
