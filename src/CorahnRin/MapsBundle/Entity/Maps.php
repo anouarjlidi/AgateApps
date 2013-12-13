@@ -96,7 +96,7 @@ class Maps
 	/**
      * @var DoctrineCollection
 	 *
-	 * @ORM\OneToMany(targetEntity="Zones", mappedBy="map")
+	 * @ORM\OneToMany(targetEntity="Zones", mappedBy="map", cascade="persist")
 	 */
 	protected $zones;
     /**
@@ -109,11 +109,11 @@ class Maps
         $this->markers = new \Doctrine\Common\Collections\ArrayCollection();
         $this->zones = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -129,14 +129,14 @@ class Maps
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -152,14 +152,14 @@ class Maps
     public function setImage($image)
     {
         $this->image = $image;
-    
+
         return $this;
     }
 
     /**
      * Get image
      *
-     * @return string 
+     * @return string
      */
     public function getImage()
     {
@@ -175,14 +175,14 @@ class Maps
     public function setDescription($description)
     {
         $this->description = $description;
-    
+
         return $this;
     }
 
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
@@ -198,14 +198,14 @@ class Maps
     public function setMaxZoom($maxZoom)
     {
         $this->maxZoom = $maxZoom;
-    
+
         return $this;
     }
 
     /**
      * Get maxZoom
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getMaxZoom()
     {
@@ -221,14 +221,14 @@ class Maps
     public function setCreated($created)
     {
         $this->created = $created;
-    
+
         return $this;
     }
 
     /**
      * Get created
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreated()
     {
@@ -244,14 +244,14 @@ class Maps
     public function setUpdated($updated)
     {
         $this->updated = $updated;
-    
+
         return $this;
     }
 
     /**
      * Get updated
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdated()
     {
@@ -267,7 +267,7 @@ class Maps
     public function addRoute(\CorahnRin\MapsBundle\Entity\Routes $routes)
     {
         $this->routes[] = $routes;
-    
+
         return $this;
     }
 
@@ -284,7 +284,7 @@ class Maps
     /**
      * Get routes
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getRoutes()
     {
@@ -300,7 +300,7 @@ class Maps
     public function addMarker(\CorahnRin\MapsBundle\Entity\Markers $markers)
     {
         $this->markers[] = $markers;
-    
+
         return $this;
     }
 
@@ -317,7 +317,7 @@ class Maps
     /**
      * Get markers
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getMarkers()
     {
@@ -333,7 +333,7 @@ class Maps
     public function addZone(\CorahnRin\MapsBundle\Entity\Zones $zones)
     {
         $this->zones[] = $zones;
-    
+
         return $this;
     }
 
@@ -348,9 +348,39 @@ class Maps
     }
 
     /**
+     * Get zone
+     *
+     * @return Zones
+     */
+    public function getZone(\CorahnRin\MapsBundle\Entity\Zones $zone)
+    {
+        $isset = false;
+        foreach ($this->zones as $mapZone) {
+            if ($mapZone->getId() === $zone->getId() ||
+                $mapZone->getName() === $zone->getName()) {
+                return $mapZone;
+            }
+        }
+        return null;
+    }
+
+    /**
+     *
+     */
+    public function setZone(\CorahnRin\MapsBundle\Entity\Zones $zone) {
+        $exists = $this->getZone($zone);
+        if (!$exists) {
+            $this->addZone($zone);
+        } else {
+            $this->zones->removeElement($exists);
+            $this->addZone($zone);
+        }
+    }
+
+    /**
      * Get zones
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getZones()
     {
@@ -373,7 +403,7 @@ class Maps
     /**
      * Get nameSlug
      *
-     * @return string 
+     * @return string
      */
     public function getNameSlug()
     {
