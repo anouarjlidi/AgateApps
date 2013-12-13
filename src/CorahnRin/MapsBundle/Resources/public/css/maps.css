@@ -24,19 +24,35 @@
 
 #map_zones {
     width: 100%;
+    overflow: visible;
 }
 #map_zones,
 #map_zones * {
     z-index: 2000;
 }
 #map_zones polygon {
-    fill: rgba(128, 128, 128, 0.25);
-    stroke: #fff;
+    fill: rgba(192, 192, 192, 0.1);
+    stroke: rgba(255, 255, 255, 0.7);
     stroke-width: 1;
+}
+#map_zones polygon:hover {
+    cursor: pointer;
+    fill: rgba(192, 192, 192, 0.25);
+    stroke: rgba(255, 255, 255, 0.8);
+    stroke-width: 1;
+}
+#map_zones polygon.active {
+    stroke: #444;
+    fill: rgba(64, 64, 64, 0.25);
+    stroke-width: 2;
 }
 #map_labels,
 #map_labels * {
     z-index: 3000;
+}
+
+#map_edit_menu {
+    z-index:  25000;
 }
 
 #map_container .zoom-container {
