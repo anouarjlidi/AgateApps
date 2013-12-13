@@ -4,3 +4,5 @@
 	margin-left: auto;
 	margin-right: auto;
 }
+
+li.active .btn { border-color: #000; }
