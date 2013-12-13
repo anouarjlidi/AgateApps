@@ -35,6 +35,11 @@
             document.addZoneMovingPinOffset = null;
         }
     };
+    var listPolygons = document.getElementsByTagNameNS('http://www.w3.org/2000/svg', 'polygon'),
+        len = listPolygons.length;
+    for (var i = 0; i < len; i++) {
+        listPolygons[i].onclick = document.addZonePolygonOnClick;
+    }
     $('.map-icon-target').draggable(document.addZonePinDraggableObject);
     // Désactivation du mouvement
     if (document.getElementById('map_dont_move')) {
@@ -44,6 +49,7 @@
                 // Réactivation du mouvement de la map
                 active = 'false';
                 document.corahn_rin_map.allowMove(true);
+                this.classList.remove('active');
                 this.parentNode.classList.remove('active');
                 this.children[0].classList.remove('text-danger');
                 this.children[0].classList.add('text-success');
@@ -51,10 +57,12 @@
                 // Désactivation du mouvement de la map
                 active = 'true';
                 document.corahn_rin_map.allowMove(false);
+                this.classList.add('active');
                 this.parentNode.classList.add('active');
                 this.children[0].classList.add('text-danger');
                 this.children[0].classList.remove('text-success');
             }
+            this.onblur();
             this.setAttribute('data-active', active);
             return false;
         };
@@ -91,14 +99,25 @@
                 if (document.addZoneCoordinates.length > 2 && document.addZonePolygon) {
                     // Si des coordonnées existent, et qu'il y en a au moins 3 (= triangle au moins), alors le polygone est défini
                     document.addZonePolygon.setAttribute('points', document.addZoneCoordinates.join(' '));
-                    // Et un <input> est rajouté au conteneur
+
+                    // Un <input> est rajouté au conteneur pour contenir les coordonnées
                     var i = document.createElement('input');
                     i.id = "input_"+document.addZonePolygonIdFull;
                     i.type = 'hidden';
                     i.name = document.addZonePolygonIdFull;
                     i.value = document.addZoneCoordinates.join(' ');
                     $(mapContainer).parents('form').append(i);
+
+                    // Un autre input est ajouté pour contenir le titre
+                    i = document.createElement('input');
+                    i.id = "input_"+document.addZonePolygonIdFull.replace('_polygon', '_name');
+                    i.type = 'hidden';
+                    i.name = document.addZonePolygonIdFull.replace('_polygon', '_name');
+                    i.value = "";
+                    $(mapContainer).parents('form').append(i);
                     i = null;
+
+                    document.addZonePolygon.onclick = document.addZonePolygonOnClick;
                 } else {
                     // Sinon, s'il y a moins de 3 points dans le polygone, il est supprimé
                     document.addZonePolygon.parentNode.removeChild(document.addZonePolygon);
@@ -176,11 +195,9 @@
                     var base_coords = e.clientX+','+e.clientY;
                     if (base_coords === mapContainer.base_coords) {
                         document.addZoneMapContainerOffset = $(mapContainer).offset();// Redéfinition de l'offset du conteneurs
-                        console.info(document.addZoneBaseTarget);
                         if (document.addZoneBaseTarget.classList.contains('map-icon-target')) {
                             var x = $(document.addZoneBaseTarget).position().left;
                             var y = $(document.addZoneBaseTarget).position().top;
-                            console.info(x,y);
                         } else {
                             var x = parseInt(e.clientX - document.addZoneMapContainerOffset.left + window.pageXOffset);
                             var y = parseInt(e.clientY - document.addZoneMapContainerOffset.top + window.pageYOffset);
@@ -207,4 +224,5 @@
             return false;// Permet d'éviter la présence du hash dans l'url
         };
     }
+
 })(jQuery);
