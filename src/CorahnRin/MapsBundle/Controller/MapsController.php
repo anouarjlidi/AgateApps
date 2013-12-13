@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use CorahnRin\MapsBundle\Entity\Maps;
+use CorahnRin\MapsBundle\Entity\Zones;
 use CorahnRin\MapsBundle\Form\MapsType;
 
 class MapsController extends Controller
@@ -86,6 +87,50 @@ class MapsController extends Controller
      */
     public function editAction(Maps $map)
     {
+
+        $request = $this->get('request');
+
+        if ($request->getMethod() == 'POST') {
+            $post = $request->request;
+
+            $polygons_list = $post->get('map_add_zone_polygon');
+            $names = $post->get('map_add_zone_name');
+
+            $zones = array();
+            $em = $this->getDoctrine()->getManager();
+
+//            foreach ($map->getZones() as $v) {
+//                echo $v->getId().'-'.$v->getName()  .'<br />';
+//            }exit;
+
+            foreach ($polygons_list as $id => $coordinates) {
+                $zone = new Zones();
+                // Définition de la zone
+                $zone->setId($id)
+                    ->setName($names[$id])
+                    ->setMap($map)
+                    ->setCoordinates($coordinates);
+
+                $getZone = $map->getZone($zone);
+                if (!$getZone){
+                    // Injection dans la map si elle n'existe pas encore
+                    $map->addZone($zone);
+                    $em->persist($zone);
+                } else {
+                    if ($getZone->getCoordinates() !== $zone->getCoordinates() ||
+                        $getZone->getName() !== $zone->getName()) {
+                        $getZone->setCoordinates($zone->getCoordinates());
+                        $getZone->setName($zone->getName());
+                        $map->setZone($getZone);
+                        $em->persist($getZone);
+                    }
+                }
+            }
+            // Persistance de la map et par conséquent de ses zones
+            $em->persist($map);
+            $em->flush();
+
+        }
         $route_init = $this->generateUrl('corahnrin_maps_api_init');
         $max = $this->getDoctrine()->getManager()->getRepository('CorahnRinMapsBundle:Zones')->getMax();
         return array('map'=>$map,'route_init' => $route_init, 'max' => $max);
