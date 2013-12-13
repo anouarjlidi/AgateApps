@@ -5,15 +5,19 @@
 {% block content_for_layout %}
 <form id="map_edit_form" action="{{ path('corahnrin_maps_maps_edit', {'id':map.id}) }}" method="post">
     <fieldset>
-        <div id="map_wrapper">
-            <div id="map_edit_menu" class="navbar navbar-inverse" style="z-index: 250000;">
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li><a href="#" id="map_dont_move" data-map-container="map_container" data-toggle="tooltip" title="{{ 'Désactiver le mouvement' | tr }}"><span class="glyphicon icon-move text-success"></span></a></li>
-                        <li><a href="#" id="map_add_zone" data-map-container="map_container" data-zones-container="map_zones" data-toggle="tooltip" title="{{ 'Ajouter une zone' | tr }}"><span class="glyphicon icon-vector_path_polygon"></span></a></li>
-                    </ul>
-                </div>
+        <div id="map_edit_menu" class="row">
+            <div class="col-sm-2">
+                <ul class="list-inline">
+                    <li><button class="btn btn-default" type="submit"><span class="glyphicon icon-floppy_disk"></span></button></li>
+                    <li><button class="btn btn-default" type="button" id="map_dont_move" data-map-container="map_container" data-toggle="tooltip" title="{{ 'Désactiver le mouvement' | tr }}"><span class="glyphicon icon-move text-success"></span></button></li>
+                    <li><button class="btn btn-default" type="button" id="map_add_zone" data-map-container="map_container" data-zones-container="map_zones" data-toggle="tooltip" title="{{ 'Ajouter une zone' | tr }}"><span class="glyphicon icon-vector_path_polygon"></span></button></li>
+                </ul>
             </div>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" value="" id="map_add_zone_input_change" data-input-id="" />
+            </div>
+        </div>
+        <div id="map_wrapper">
             <div id="map_container" data-zoom="1" data-map-id="{{ map.id }}" data-init-url="{{ route_init }}">
                 <div id="map_labels"></div>
                 <svg id="map_zones" version="1.1" xmlns="http://www.w3.org/2000/svg">
@@ -31,6 +35,7 @@
         </div>
     </fieldset>
     {% for zone in map.zones %}
+        <input type="hidden" value="{{ zone.name }}" name="map_add_zone_name[{{ zone.id }}]" id="input_map_add_zone_name[{{ zone.id }}]" />
         <input type="hidden" value="{{ zone.coordinates }}" name="input_map_add_zone_polygon[{{ zone.id }}]" id="input_map_add_zone_polygon[{{ zone.id }}]" />
     {% endfor %}
 </form>
@@ -46,7 +51,7 @@
         '@CorahnRinMapsBundle/Resources/public/js/map.js'
         '@CorahnRinMapsBundle/Resources/public/js/map_edit/*.js'
         output="js/maps.js"
-        filter="yui_js"
+        filter="?yui_js"
     %}<script type="text/javascript" src="{{ asset_url }}"></script>{% endjavascripts %}
 
     <script type="text/javascript">
