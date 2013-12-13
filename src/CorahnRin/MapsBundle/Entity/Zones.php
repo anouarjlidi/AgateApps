@@ -84,11 +84,24 @@ class Zones
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set id
+     *
+     * @param integer $name
+     * @return Zones
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     /**
@@ -107,7 +120,7 @@ class Zones
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -130,7 +143,7 @@ class Zones
     /**
      * Get coordinates
      *
-     * @return string 
+     * @return string
      */
     public function getCoordinates()
     {
@@ -153,7 +166,7 @@ class Zones
     /**
      * Get created
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreated()
     {
@@ -176,7 +189,7 @@ class Zones
     /**
      * Get updated
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdated()
     {
@@ -199,7 +212,7 @@ class Zones
     /**
      * Get map
      *
-     * @return \CorahnRin\MapsBundle\Entity\Maps 
+     * @return \CorahnRin\MapsBundle\Entity\Maps
      */
     public function getMap()
     {
@@ -222,7 +235,7 @@ class Zones
     /**
      * Get faction
      *
-     * @return \CorahnRin\MapsBundle\Entity\Factions 
+     * @return \CorahnRin\MapsBundle\Entity\Factions
      */
     public function getFaction()
     {
@@ -255,7 +268,7 @@ class Zones
     /**
      * Get events
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getEvents()
     {
