@@ -41,8 +41,10 @@
     stroke: rgba(255, 255, 255, 0.8);
     stroke-width: 1;
 }
-#map_zones polygon.active {
-    stroke: #444;
+#map_zones polygon.active,
+#map_zones polygon:active,
+#map_zones polygon:focus {
+    stroke: #fff;
     fill: rgba(64, 64, 64, 0.25);
     stroke-width: 2;
 }
