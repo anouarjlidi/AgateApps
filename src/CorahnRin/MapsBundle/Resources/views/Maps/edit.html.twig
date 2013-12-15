@@ -6,15 +6,16 @@
 <form id="map_edit_form" action="{{ path('corahnrin_maps_maps_edit', {'id':map.id}) }}" method="post">
     <fieldset>
         <div id="map_edit_menu" class="row">
-            <div class="col-sm-2">
+            <div class="col-sm-3">
                 <ul class="list-inline">
-                    <li><button class="btn btn-default" type="submit"><span class="glyphicon icon-floppy_disk"></span></button></li>
-                    <li><button class="btn btn-default" type="button" id="map_dont_move" data-map-container="map_container" data-toggle="tooltip" title="{{ 'Désactiver le mouvement' | tr }}"><span class="glyphicon icon-move text-success"></span></button></li>
-                    <li><button class="btn btn-default" type="button" id="map_add_zone" data-map-container="map_container" data-zones-container="map_zones" data-toggle="tooltip" title="{{ 'Ajouter une zone' | tr }}"><span class="glyphicon icon-vector_path_polygon"></span></button></li>
+                    <li data-toggle="tooltip" title="{{ 'Terminer l\'édition' | tr }}"><button class="btn btn-success" type="submit"><span class="glyphicon icon-ok_2"></span></button></li>
+                    <li data-toggle="tooltip" title="{{ 'Désactiver le mouvement' | tr }}"><button class="btn btn-default" type="button" id="map_dont_move" data-map-container="map_container"><span class="glyphicon icon-move text-success"></span></button></li>
+                    <li data-toggle="tooltip" title="{{ 'Ajouter une zone' | tr }}"><button class="btn btn-default" type="button" id="map_add_zone" data-map-container="map_container" data-zones-container="map_zones"><span class="glyphicon icon-vector_path_polygon"></span></button></li>
+                    <li data-toggle="tooltip" title="{{ 'Supprimer' | tr }}"><button class="btn btn-danger" disabled="disabled" type="button" id="map_delete_element" data-target-to-delete=""><span class="glyphicon icon-bin"></span></button></li>
                 </ul>
             </div>
             <div class="col-sm-3">
-                <input type="text" class="form-control" value="" id="map_add_zone_input_change" data-input-id="" />
+                <input type="text" class="form-control" disabled="disabled" value="" id="map_add_zone_input_change" data-input-id="" />
             </div>
         </div>
         <div id="map_wrapper">
@@ -22,15 +23,17 @@
                 <div id="map_labels"></div>
                 <svg id="map_zones" version="1.1" xmlns="http://www.w3.org/2000/svg">
                     {% for zone in map.zones %}
-                        <polygon data-toggle="tooltip" title="{{ zone.name | tr}}" points="{{ zone.coordinates }}" id="map_add_zone_polygon[{{ zone.id }}]" />
+                        <polygon points="{{ zone.coordinates }}" id="map_add_zone_polygon[{{ zone.id }}]" />
                     {% endfor %}
                 </svg>
-                {% for zone in map.zones %}
-                    {% for coords in zone.coordinates | split(' ') %}
-                        {% set coord = coords | split(',') %}
-                        <span class="glyphicon icon-screenshot map-icon-target" data-target-polygon="map_add_zone_polygon[{{ zone.id }}]" style="position: absolute;left: {{ coord.0 }}px;top: {{ coord.1 }}px;"></span>
+                <div id="map_pins_polygons">
+                    {% for zone in map.zones %}
+                        {% for coords in zone.coordinates | split(' ') %}
+                            {% set coord = coords | split(',') %}
+                            <span class="glyphicon icon-screenshot map-icon-target" data-target-polygon="map_add_zone_polygon[{{ zone.id }}]" style="position: absolute;left: {{ coord.0 }}px;top: {{ coord.1 }}px;"></span>
+                        {% endfor %}
                     {% endfor %}
-                {% endfor %}
+                </div>
             </div>
         </div>
     </fieldset>
@@ -49,15 +52,22 @@
         '@CorahnRinMapsBundle/Resources/public/js/jquery.mousewheel.min.js'
         '@CorahnRinMapsBundle/Resources/public/js/jquery.transform2d.js'
         '@CorahnRinMapsBundle/Resources/public/js/map.js'
-        '@CorahnRinMapsBundle/Resources/public/js/map_edit/*.js'
         output="js/maps.js"
         filter="?yui_js"
-    %}<script type="text/javascript" src="{{ asset_url }}"></script>{% endjavascripts %}
+    %}<script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}
+
+    {% javascripts
+        '@CorahnRinMapsBundle/Resources/public/js/map_edit/*.js'
+        output="js/maps_edit.js"
+        filter="?yui_js"
+    %}<script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}
 
     <script type="text/javascript">
         document.corahn_rin_map = new Map({
-            allowZoom:false,
-            zoom: 10
+            allowZoom: false,
+            zoom: {{ map.maxZoom }}
         });
         document.addZonePolygonId = {{ max }};
     </script>
