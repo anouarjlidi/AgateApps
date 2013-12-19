@@ -96,7 +96,7 @@ class Maps
 	/**
      * @var DoctrineCollection
 	 *
-	 * @ORM\OneToMany(targetEntity="Zones", mappedBy="map", cascade="persist")
+	 * @ORM\OneToMany(targetEntity="Zones", mappedBy="map", cascade={"persist"})
 	 */
 	protected $zones;
     /**
