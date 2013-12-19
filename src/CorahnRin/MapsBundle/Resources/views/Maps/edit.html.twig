@@ -39,7 +39,7 @@
     </fieldset>
     {% for zone in map.zones %}
         <input type="hidden" value="{{ zone.name }}" name="map_add_zone_name[{{ zone.id }}]" id="input_map_add_zone_name[{{ zone.id }}]" />
-        <input type="hidden" value="{{ zone.coordinates }}" name="input_map_add_zone_polygon[{{ zone.id }}]" id="input_map_add_zone_polygon[{{ zone.id }}]" />
+        <input type="hidden" value="{{ zone.coordinates }}" name="map_add_zone_polygon[{{ zone.id }}]" id="input_map_add_zone_polygon[{{ zone.id }}]" />
     {% endfor %}
 </form>
 
