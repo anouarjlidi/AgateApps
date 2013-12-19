@@ -99,9 +99,11 @@ class MapsController extends Controller
             $zones = array();
             $em = $this->getDoctrine()->getManager();
 
-//            foreach ($map->getZones() as $v) {
-//                echo $v->getId().'-'.$v->getName()  .'<br />';
-//            }exit;
+            $ids = array();
+            foreach ($map->getZones() as $zone) {
+                $ids[$zone->getId()] = $zone;
+                $em->persist($zone);
+            }
 
             foreach ($polygons_list as $id => $coordinates) {
                 $zone = new Zones();
@@ -110,6 +112,7 @@ class MapsController extends Controller
                     ->setName($names[$id])
                     ->setMap($map)
                     ->setCoordinates($coordinates);
+                unset($ids[$id]);
 
                 $getZone = $map->getZone($zone);
                 if (!$getZone){
@@ -126,8 +129,16 @@ class MapsController extends Controller
                     }
                 }
             }
-            // Persistance de la map et par conséquent de ses zones
+
+            if (!empty($ids)) {
+                foreach ($ids as $zone) {
+                    $em->persist($zone);
+                    $map->removeZone($zone);
+                    $em->remove($zone);
+                }
+            }
             $em->persist($map);
+
             $em->flush();
 
         }
