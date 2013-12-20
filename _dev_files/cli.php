@@ -513,10 +513,15 @@ if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>1))) {
 	$q->execute(array('id' => 2,'name' => 'Livre 1 - Univers',				'description' => '','created' => $datetime->date,'updated' => $datetime->date,));
 	$q->execute(array('id' => 3,'name' => 'Livre 2 - Voyages',				'description' => '','created' => $datetime->date,'updated' => $datetime->date,));
 	$q->execute(array('id' => 4,'name' => 'Livre 2 - Voyages (Réédition)',	'description' => '','created' => $datetime->date,'updated' => $datetime->date,));
-	$q->execute(array('id' => 5,'name' => 'Livre 3 - Dearg',				'description' => '','created' => $datetime->date,'updated' => $datetime->date,));
-	$q->execute(array('id' => 6,'name' => 'Livre 4 - Secrets',				'description' => '','created' => $datetime->date,'updated' => $datetime->date,));
-	$q->execute(array('id' => 7,'name' => 'Le Monastère de Tuath',			'description' => '','created' => $datetime->date,'updated' => $datetime->date,));
-	$q->execute(array('id' => 8,'name' => 'Contenu de la communauté',		'description' => 'Ce contenu est par définition non-officiel.','created' => $datetime->date,'updated' => $datetime->date,));
+	$q->execute(array('id' => 5,'name' => 'Livre 3 - Dearg Intégrale',		'description' => '','created' => $datetime->date,'updated' => $datetime->date,));
+	$q->execute(array('id' => 6,'name' => 'Livre 3 - Dearg Tome 1',			'description' => '','created' => $datetime->date,'updated' => $datetime->date,));
+	$q->execute(array('id' => 7,'name' => 'Livre 3 - Dearg Tome 2',			'description' => '','created' => $datetime->date,'updated' => $datetime->date,));
+	$q->execute(array('id' => 8,'name' => 'Livre 3 - Dearg Tome 3',			'description' => '','created' => $datetime->date,'updated' => $datetime->date,));
+	$q->execute(array('id' => 9,'name' => 'Livre 3 - Dearg Tome 4',			'description' => '','created' => $datetime->date,'updated' => $datetime->date,));
+	$q->execute(array('id' => 10,'name' => 'Livre 4 - Secrets',				'description' => '','created' => $datetime->date,'updated' => $datetime->date,));
+	$q->execute(array('id' => 11,'name' => 'Livre 5 - Peuples',				'description' => '','created' => $datetime->date,'updated' => $datetime->date,));
+	$q->execute(array('id' => 12,'name' => 'Le Monastère de Tuath',			'description' => '','created' => $datetime->date,'updated' => $datetime->date,));
+	$q->execute(array('id' => 13,'name' => 'Contenu de la communauté',		'description' => 'Ce contenu est par définition non-officiel.','created' => $datetime->date,'updated' => $datetime->date,));
 }
 $tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
 
