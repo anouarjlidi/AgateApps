@@ -25,7 +25,7 @@
                         {% else %}
                             <li><a href="{{ path(path) }}">{{ link | tr }}</a></li>
                         {% endif %}
-                        
+
 					{% else %}{{ 'Aucun élément' | tr }}{% endfor %}
 					{#<li class="dropdown">
 					<a data-toggle="dropdown" class="dropdown-toggle" href="#">Menu déroulant <b class="caret"></b></a>
@@ -45,14 +45,14 @@
 					<li class="dropdown">
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ 'Changer la langue %lang%' | tr({'%lang%' : '['~locale|upper~']'}) }} <b class="caret"></b></a>
 					<ul class="dropdown-menu">
-                        {% for lang in langs %}
-                            {% if lang.locale == locale %}
+                        {% for lang,literal in langs %}
+                            {% if lang == locale %}
                                 <li class="active">
-                                    <a>{{ lang.literal | tr }}</a>
+                                    <a>{{ literal | tr }}</a>
                                 </li>
                             {% else %}
                                 <li>
-                                    <a href="{{ path('corahnrin_translate_translate_changelang', {'lang':lang.locale}) }}">{{ lang.literal | tr }}</a>
+                                    <a href="{{ path('corahnrin_translate_translate_changelang', {'lang':lang}) }}">{{ literal | tr }}</a>
                                 </li>
                             {% endif %}
                         {% endfor %}

@@ -21,14 +21,7 @@ class MenusController extends Controller {
             $brandRoute = 'corahnrin_pages_pages_index';
         }
         $links = $this->{'menu'.$links_func}();
-        $langs = $this->get('corahnrin_translate')->getLangs('array');
-        foreach($langs as $k => $lang) {
-            $lang = strtolower($lang);
-            $langs[$k] = array('locale' => $lang, 'literal' => $lang);
-                if ($lang === 'fr') { $langs[$k]['literal'] = 'Français'; }
-            elseif ($lang === 'en') { $langs[$k]['literal'] = 'Anglais'; }
-            elseif ($lang === 'de') { $langs[$k]['literal'] = 'Allemand'; }
-        }
+        $langs = $this->get('corahnrin_translate')->getLangs(null);
 		$username = $this->get('fos_user.user_provider.username');
 		return array(
             'links' => $links,
@@ -54,7 +47,7 @@ class MenusController extends Controller {
 			'corahnrin_maps_maps_index' => 'Esteren Maps',
 		);
     }
-    
+
     protected function menuEsterenMaps(){
         $maps = $this->getDoctrine()->getManager()->getRepository('CorahnRinMapsBundle:Maps')->findAll(true);
         $maps_list = array();
