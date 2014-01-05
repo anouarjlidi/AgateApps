@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * SocialClass
  *
+ * @ORM\Table(name="social_class")
  * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\SocialClassRepository")
  */
 class SocialClass
@@ -63,11 +64,11 @@ class SocialClass
     {
         $this->domains = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -83,14 +84,14 @@ class SocialClass
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -106,14 +107,14 @@ class SocialClass
     public function setCreated($created)
     {
         $this->created = $created;
-    
+
         return $this;
     }
 
     /**
      * Get created
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreated()
     {
@@ -129,14 +130,14 @@ class SocialClass
     public function setUpdated($updated)
     {
         $this->updated = $updated;
-    
+
         return $this;
     }
 
     /**
      * Get updated
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdated()
     {
@@ -152,7 +153,7 @@ class SocialClass
     public function addDomain(\CorahnRin\CharactersBundle\Entity\Domains $domains)
     {
         $this->domains[] = $domains;
-    
+
         return $this;
     }
 
@@ -169,7 +170,7 @@ class SocialClass
     /**
      * Get domains
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getDomains()
     {
@@ -185,14 +186,14 @@ class SocialClass
     public function setDescription($description)
     {
         $this->description = $description;
-    
+
         return $this;
     }
 
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {

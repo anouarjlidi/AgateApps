@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection as DoctrineCollection;
 /**
  * Foes
  *
+ * @ORM\Table(name="foes")
  * @ORM\Entity(repositoryClass="CorahnRin\MapsBundle\Repository\FoesRepository")
  */
 class Foes
@@ -58,11 +59,11 @@ class Foes
     {
         $this->events = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -78,14 +79,14 @@ class Foes
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -101,14 +102,14 @@ class Foes
     public function setCreated($created)
     {
         $this->created = $created;
-    
+
         return $this;
     }
 
     /**
      * Get created
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreated()
     {
@@ -124,14 +125,14 @@ class Foes
     public function setUpdated($updated)
     {
         $this->updated = $updated;
-    
+
         return $this;
     }
 
     /**
      * Get updated
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdated()
     {
@@ -147,7 +148,7 @@ class Foes
     public function addEvent(\CorahnRin\MapsBundle\Entity\Events $events)
     {
         $this->events[] = $events;
-    
+
         return $this;
     }
 
@@ -164,7 +165,7 @@ class Foes
     /**
      * Get events
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getEvents()
     {

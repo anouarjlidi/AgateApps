@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection as DoctrineCollection;
 /**
  * EventsMarkersTypes
  *
+ * @ORM\Table(name="events_markers_types")
  * @ORM\Entity(repositoryClass="CorahnRin\MapsBundle\Repository\EventsMarkersTypesRepository")
  */
 class EventsMarkersTypes {
@@ -51,7 +52,7 @@ class EventsMarkersTypes {
 	 */
 	protected $percentage;
 
-	
+
 
     /**
      * Set created
@@ -69,7 +70,7 @@ class EventsMarkersTypes {
     /**
      * Get created
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreated()
     {
@@ -92,7 +93,7 @@ class EventsMarkersTypes {
     /**
      * Get updated
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdated()
     {
@@ -115,7 +116,7 @@ class EventsMarkersTypes {
     /**
      * Get percentage
      *
-     * @return integer 
+     * @return integer
      */
     public function getPercentage()
     {
@@ -138,7 +139,7 @@ class EventsMarkersTypes {
     /**
      * Get event
      *
-     * @return \CorahnRin\MapsBundle\Entity\Events 
+     * @return \CorahnRin\MapsBundle\Entity\Events
      */
     public function getEvent()
     {
@@ -161,7 +162,7 @@ class EventsMarkersTypes {
     /**
      * Get markerType
      *
-     * @return \CorahnRin\MapsBundle\Entity\MarkersTypes 
+     * @return \CorahnRin\MapsBundle\Entity\MarkersTypes
      */
     public function getMarkerType()
     {

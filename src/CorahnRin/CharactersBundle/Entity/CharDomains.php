@@ -5,8 +5,9 @@ namespace CorahnRin\CharactersBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * CharAvtgs
+ * CharDomains
  *
+ * @ORM\Table(name="characters_domains")
  * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\CharDomainsRepository")
  */
 class CharDomains
@@ -45,14 +46,14 @@ class CharDomains
     public function setScore($score)
     {
         $this->score = $score;
-    
+
         return $this;
     }
 
     /**
      * Get score
      *
-     * @return integer 
+     * @return integer
      */
     public function getScore()
     {
@@ -68,14 +69,14 @@ class CharDomains
     public function setCharacter(\CorahnRin\CharactersBundle\Entity\Characters $character)
     {
         $this->character = $character;
-    
+
         return $this;
     }
 
     /**
      * Get character
      *
-     * @return \CorahnRin\CharactersBundle\Entity\Characters 
+     * @return \CorahnRin\CharactersBundle\Entity\Characters
      */
     public function getCharacter()
     {
@@ -91,14 +92,14 @@ class CharDomains
     public function setDomain(\CorahnRin\CharactersBundle\Entity\Domains $domain)
     {
         $this->domain = $domain;
-    
+
         return $this;
     }
 
     /**
      * Get domain
      *
-     * @return \CorahnRin\CharactersBundle\Entity\Domains 
+     * @return \CorahnRin\CharactersBundle\Entity\Domains
      */
     public function getDomain()
     {

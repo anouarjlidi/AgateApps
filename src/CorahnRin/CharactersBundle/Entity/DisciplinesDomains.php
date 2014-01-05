@@ -7,9 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * DisciplinesDomains
  *
- * @ORM\Table()
  * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\DisciplinesDomainsRepository")
- * @ORM\Table(uniqueConstraints={@ORM\UniqueConstraint(name="idcdUnique", columns={"disciplines_id", "domains_id"})})
+ * @ORM\Table(name="disciplines_domains",uniqueConstraints={@ORM\UniqueConstraint(name="idcdUnique", columns={"disciplines_id", "domains_id"})})
  */
 class DisciplinesDomains
 {
@@ -21,7 +20,7 @@ class DisciplinesDomains
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-	
+
     /**
      * @var \Disciplines
      *
@@ -30,7 +29,7 @@ class DisciplinesDomains
      * @ORM\Column(name="disciplines_id", type="integer")
      */
     protected $discipline;
-	
+
     /**
      * @var \Domains
      *
@@ -43,7 +42,7 @@ class DisciplinesDomains
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -59,14 +58,14 @@ class DisciplinesDomains
     public function setDiscipline($discipline)
     {
         $this->discipline = $discipline;
-    
+
         return $this;
     }
 
     /**
      * Get discipline
      *
-     * @return integer 
+     * @return integer
      */
     public function getDiscipline()
     {
@@ -82,14 +81,14 @@ class DisciplinesDomains
     public function setDomain($domain)
     {
         $this->domain = $domain;
-    
+
         return $this;
     }
 
     /**
      * Get domain
      *
-     * @return integer 
+     * @return integer
      */
     public function getDomain()
     {

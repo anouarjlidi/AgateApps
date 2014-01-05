@@ -5,8 +5,9 @@ namespace CorahnRin\CharactersBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * CharAvtgs
+ * DisordersWays
  *
+ * @ORM\Table(name="disorders_ways")
  * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\DisordersWaysRepository")
  */
 class DisordersWays
@@ -45,14 +46,14 @@ class DisordersWays
     public function setDisorder($disorder)
     {
         $this->disorder = $disorder;
-    
+
         return $this;
     }
 
     /**
      * Get disorder
      *
-     * @return integer 
+     * @return integer
      */
     public function getDisorder()
     {
@@ -68,14 +69,14 @@ class DisordersWays
     public function setWay($way)
     {
         $this->way = $way;
-    
+
         return $this;
     }
 
     /**
      * Get way
      *
-     * @return integer 
+     * @return integer
      */
     public function getWay()
     {
@@ -91,14 +92,14 @@ class DisordersWays
     public function setIsMajor($isMajor)
     {
         $this->isMajor = $isMajor;
-    
+
         return $this;
     }
 
     /**
      * Get isMajor
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsMajor()
     {

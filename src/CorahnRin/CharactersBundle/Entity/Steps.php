@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Steps
  *
+ * @ORM\Table(name="steps")
  * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\StepsRepository")
  */
 class Steps
@@ -60,7 +61,7 @@ class Steps
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -76,14 +77,14 @@ class Steps
     public function setStep($step)
     {
         $this->step = $step;
-    
+
         return $this;
     }
 
     /**
      * Get step
      *
-     * @return integer 
+     * @return integer
      */
     public function getStep()
     {
@@ -99,14 +100,14 @@ class Steps
     public function setSlug($slug)
     {
         $this->slug = $slug;
-    
+
         return $this;
     }
 
     /**
      * Get slug
      *
-     * @return string 
+     * @return string
      */
     public function getSlug()
     {
@@ -122,14 +123,14 @@ class Steps
     public function setTitle($title)
     {
         $this->title = $title;
-    
+
         return $this;
     }
 
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -145,14 +146,14 @@ class Steps
     public function setCreated($created)
     {
         $this->created = $created;
-    
+
         return $this;
     }
 
     /**
      * Get created
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreated()
     {
@@ -168,14 +169,14 @@ class Steps
     public function setUpdated($updated)
     {
         $this->updated = $updated;
-    
+
         return $this;
     }
 
     /**
      * Get updated
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdated()
     {

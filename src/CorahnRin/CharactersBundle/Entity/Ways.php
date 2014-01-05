@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Ways
  *
+ * @ORM\Table(name="ways")
  * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\WaysRepository")
  */
 class Ways
@@ -68,7 +69,7 @@ class Ways
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -84,14 +85,14 @@ class Ways
     public function setShortName($shortName)
     {
         $this->shortName = $shortName;
-    
+
         return $this;
     }
 
     /**
      * Get shortName
      *
-     * @return string 
+     * @return string
      */
     public function getShortName()
     {
@@ -107,14 +108,14 @@ class Ways
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -130,14 +131,14 @@ class Ways
     public function setFault($fault)
     {
         $this->fault = $fault;
-    
+
         return $this;
     }
 
     /**
      * Get fault
      *
-     * @return string 
+     * @return string
      */
     public function getFault()
     {
@@ -153,14 +154,14 @@ class Ways
     public function setDescription($description)
     {
         $this->description = $description;
-    
+
         return $this;
     }
 
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
@@ -176,14 +177,14 @@ class Ways
     public function setCreated($created)
     {
         $this->created = $created;
-    
+
         return $this;
     }
 
     /**
      * Get created
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreated()
     {
@@ -199,14 +200,14 @@ class Ways
     public function setUpdated($updated)
     {
         $this->updated = $updated;
-    
+
         return $this;
     }
 
     /**
      * Get updated
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdated()
     {

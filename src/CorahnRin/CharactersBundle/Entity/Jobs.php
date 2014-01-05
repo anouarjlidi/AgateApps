@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Jobs
  *
+ * @ORM\Table(name="jobs")
  * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\JobsRepository")
  */
 class Jobs
@@ -219,7 +220,7 @@ class Jobs
     /**
      * Get domainPrimary
      *
-     * @return \CorahnRin\CharactersBundle\Entity\Domains 
+     * @return \CorahnRin\CharactersBundle\Entity\Domains
      */
     public function getDomainPrimary()
     {
@@ -252,7 +253,7 @@ class Jobs
     /**
      * Get domainsSecondary
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getDomainsSecondary()
     {

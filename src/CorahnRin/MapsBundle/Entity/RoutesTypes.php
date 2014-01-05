@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection as DoctrineCollection;
 /**
  * RoutesTypes
  *
- * @ORM\Table()
+ * @ORM\Table(name="routes_types")
  * @ORM\Entity(repositoryClass="CorahnRin\MapsBundle\Repository\RoutesTypesRepository")
  */
 class RoutesTypes
@@ -51,7 +51,7 @@ class RoutesTypes
      * @ORM\ManyToMany(targetEntity="Resources", mappedBy="routesTypes")
      */
     protected $resources;
-	
+
     /**
      * @var DoctrineCollection
      *
@@ -79,7 +79,7 @@ class RoutesTypes
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -102,7 +102,7 @@ class RoutesTypes
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -125,7 +125,7 @@ class RoutesTypes
     /**
      * Get created
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreated()
     {
@@ -148,7 +148,7 @@ class RoutesTypes
     /**
      * Get updated
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdated()
     {
@@ -181,7 +181,7 @@ class RoutesTypes
     /**
      * Get resources
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getResources()
     {
@@ -214,7 +214,7 @@ class RoutesTypes
     /**
      * Get routes
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getRoutes()
     {
@@ -247,7 +247,7 @@ class RoutesTypes
     /**
      * Get events
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getEvents()
     {

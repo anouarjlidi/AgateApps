@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Regions
  *
+ * @ORM\Table(name="regions")
  * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\RegionsRepository")
  */
 class Regions
@@ -68,7 +69,7 @@ class Regions
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -84,14 +85,14 @@ class Regions
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -107,14 +108,14 @@ class Regions
     public function setDescription($description)
     {
         $this->description = $description;
-    
+
         return $this;
     }
 
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
@@ -130,14 +131,14 @@ class Regions
     public function setKingdom($kingdom)
     {
         $this->kingdom = $kingdom;
-    
+
         return $this;
     }
 
     /**
      * Get kingdom
      *
-     * @return string 
+     * @return string
      */
     public function getKingdom()
     {
@@ -153,14 +154,14 @@ class Regions
     public function setCoordinates($coordinates)
     {
         $this->coordinates = $coordinates;
-    
+
         return $this;
     }
 
     /**
      * Get coordinates
      *
-     * @return string 
+     * @return string
      */
     public function getCoordinates()
     {
@@ -176,14 +177,14 @@ class Regions
     public function setCreated($created)
     {
         $this->created = $created;
-    
+
         return $this;
     }
 
     /**
      * Get created
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreated()
     {
@@ -199,14 +200,14 @@ class Regions
     public function setUpdated($updated)
     {
         $this->updated = $updated;
-    
+
         return $this;
     }
 
     /**
      * Get updated
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdated()
     {

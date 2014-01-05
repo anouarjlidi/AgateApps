@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * MailsSent
  *
+ * @ORM\Table(name="mails_sent")
  * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\MailsSentRepository")
  */
 class MailsSent

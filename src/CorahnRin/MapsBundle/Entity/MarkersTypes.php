@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection as DoctrineCollection;
 /**
  * MarkersType
  *
- * @ORM\Table()
+ * @ORM\Table(name="markers_types")
  * @ORM\Entity(repositoryClass="CorahnRin\MapsBundle\Repository\MarkersTypesRepository")
  */
 class MarkersTypes
@@ -71,7 +71,7 @@ class MarkersTypes
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -94,7 +94,7 @@ class MarkersTypes
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -117,7 +117,7 @@ class MarkersTypes
     /**
      * Get created
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreated()
     {
@@ -140,7 +140,7 @@ class MarkersTypes
     /**
      * Get updated
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdated()
     {
@@ -173,7 +173,7 @@ class MarkersTypes
     /**
      * Get events
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getEvents()
     {
@@ -206,7 +206,7 @@ class MarkersTypes
     /**
      * Get markers
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getMarkers()
     {

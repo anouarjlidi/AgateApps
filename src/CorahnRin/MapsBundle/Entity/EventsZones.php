@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection as DoctrineCollection;
 /**
  * EventsZones
  *
+ * @ORM\Table(name="events_zones")
  * @ORM\Entity(repositoryClass="CorahnRin\MapsBundle\Repository\EventsZonesRepository")
  */
 class EventsZones {
@@ -61,14 +62,14 @@ class EventsZones {
     public function setEvent($event)
     {
         $this->event = $event;
-    
+
         return $this;
     }
 
     /**
      * Get event
      *
-     * @return integer 
+     * @return integer
      */
     public function getEvent()
     {
@@ -84,14 +85,14 @@ class EventsZones {
     public function setCreated($created)
     {
         $this->created = $created;
-    
+
         return $this;
     }
 
     /**
      * Get created
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreated()
     {
@@ -107,14 +108,14 @@ class EventsZones {
     public function setUpdated($updated)
     {
         $this->updated = $updated;
-    
+
         return $this;
     }
 
     /**
      * Get updated
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdated()
     {
@@ -130,14 +131,14 @@ class EventsZones {
     public function setPercentage($percentage)
     {
         $this->percentage = $percentage;
-    
+
         return $this;
     }
 
     /**
      * Get percentage
      *
-     * @return integer 
+     * @return integer
      */
     public function getPercentage()
     {
@@ -153,14 +154,14 @@ class EventsZones {
     public function setZone(\CorahnRin\MapsBundle\Entity\Zones $zone)
     {
         $this->zone = $zone;
-    
+
         return $this;
     }
 
     /**
      * Get zone
      *
-     * @return \CorahnRin\MapsBundle\Entity\Zones 
+     * @return \CorahnRin\MapsBundle\Entity\Zones
      */
     public function getZone()
     {

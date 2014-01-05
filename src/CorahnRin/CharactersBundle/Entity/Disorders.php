@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Disorders
  *
+ * @ORM\Table(name="disorders")
  * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\DisordersRepository")
  */
 class Disorders
@@ -55,11 +56,11 @@ class Disorders
     {
         $this->ways = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -75,14 +76,14 @@ class Disorders
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -98,14 +99,14 @@ class Disorders
     public function setCreated($created)
     {
         $this->created = $created;
-    
+
         return $this;
     }
 
     /**
      * Get created
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreated()
     {
@@ -121,14 +122,14 @@ class Disorders
     public function setUpdated($updated)
     {
         $this->updated = $updated;
-    
+
         return $this;
     }
 
     /**
      * Get updated
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdated()
     {
@@ -144,7 +145,7 @@ class Disorders
     public function addWay(\CorahnRin\CharactersBundle\Entity\CharWays $ways)
     {
         $this->ways[] = $ways;
-    
+
         return $this;
     }
 
@@ -161,7 +162,7 @@ class Disorders
     /**
      * Get ways
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getWays()
     {

@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection as DoctrineCollection;
 /**
  * Npcs
  *
- * @ORM\Table()
+ * @ORM\Table(name="npcs")
  * @ORM\Entity(repositoryClass="CorahnRin\MapsBundle\Repository\NpcsRepository")
  */
 class Npcs
@@ -58,11 +58,11 @@ class Npcs
     {
         $this->events = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -78,14 +78,14 @@ class Npcs
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -101,14 +101,14 @@ class Npcs
     public function setCreated($created)
     {
         $this->created = $created;
-    
+
         return $this;
     }
 
     /**
      * Get created
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreated()
     {
@@ -124,14 +124,14 @@ class Npcs
     public function setUpdated($updated)
     {
         $this->updated = $updated;
-    
+
         return $this;
     }
 
     /**
      * Get updated
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdated()
     {
@@ -147,7 +147,7 @@ class Npcs
     public function addEvent(\CorahnRin\MapsBundle\Entity\Events $events)
     {
         $this->events[] = $events;
-    
+
         return $this;
     }
 
@@ -164,7 +164,7 @@ class Npcs
     /**
      * Get events
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getEvents()
     {

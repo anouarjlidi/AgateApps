@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Armors
  *
+ * @ORM\Table(name="armors")
  * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\ArmorsRepository")
  */
 class Armors
@@ -74,7 +75,7 @@ class Armors
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -90,14 +91,14 @@ class Armors
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -113,14 +114,14 @@ class Armors
     public function setDescription($description)
     {
         $this->description = $description;
-    
+
         return $this;
     }
 
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
@@ -136,14 +137,14 @@ class Armors
     public function setProtection($protection)
     {
         $this->protection = $protection;
-    
+
         return $this;
     }
 
     /**
      * Get protection
      *
-     * @return integer 
+     * @return integer
      */
     public function getProtection()
     {
@@ -159,14 +160,14 @@ class Armors
     public function setPrice($price)
     {
         $this->price = $price;
-    
+
         return $this;
     }
 
     /**
      * Get price
      *
-     * @return integer 
+     * @return integer
      */
     public function getPrice()
     {
@@ -182,14 +183,14 @@ class Armors
     public function setAvailability($availability)
     {
         $this->availability = $availability;
-    
+
         return $this;
     }
 
     /**
      * Get availability
      *
-     * @return string 
+     * @return string
      */
     public function getAvailability()
     {
@@ -205,14 +206,14 @@ class Armors
     public function setCreated($created)
     {
         $this->created = $created;
-    
+
         return $this;
     }
 
     /**
      * Get created
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreated()
     {
@@ -228,14 +229,14 @@ class Armors
     public function setUpdated($updated)
     {
         $this->updated = $updated;
-    
+
         return $this;
     }
 
     /**
      * Get updated
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdated()
     {

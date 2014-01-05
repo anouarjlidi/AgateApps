@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection as DoctrineCollection;
 /**
  * EventsResources
  *
+ * @ORM\Table(name="events_resources")
  * @ORM\Entity(repositoryClass="CorahnRin\MapsBundle\Repository\EventsResourcesRepository")
  */
 class EventsResources {
@@ -68,7 +69,7 @@ class EventsResources {
     /**
      * Get created
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreated()
     {
@@ -91,7 +92,7 @@ class EventsResources {
     /**
      * Get updated
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdated()
     {
@@ -114,7 +115,7 @@ class EventsResources {
     /**
      * Get percentage
      *
-     * @return integer 
+     * @return integer
      */
     public function getPercentage()
     {
@@ -137,7 +138,7 @@ class EventsResources {
     /**
      * Get event
      *
-     * @return \CorahnRin\MapsBundle\Entity\Events 
+     * @return \CorahnRin\MapsBundle\Entity\Events
      */
     public function getEvent()
     {
@@ -160,7 +161,7 @@ class EventsResources {
     /**
      * Get resource
      *
-     * @return \CorahnRin\MapsBundle\Entity\Resources 
+     * @return \CorahnRin\MapsBundle\Entity\Resources
      */
     public function getResource()
     {

@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection as DoctrineCollection;
 /**
  * Factions
  *
+ * @ORM\Table(name="factions")
  * @ORM\Entity(repositoryClass="CorahnRin\MapsBundle\Repository\FactionsRepository")
  */
 class Factions
@@ -78,7 +79,7 @@ class Factions
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -101,7 +102,7 @@ class Factions
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -124,7 +125,7 @@ class Factions
     /**
      * Get created
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreated()
     {
@@ -147,7 +148,7 @@ class Factions
     /**
      * Get updated
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdated()
     {
@@ -180,7 +181,7 @@ class Factions
     /**
      * Get zones
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getZones()
     {
@@ -213,7 +214,7 @@ class Factions
     /**
      * Get routes
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getRoutes()
     {
@@ -246,7 +247,7 @@ class Factions
     /**
      * Get markers
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getMarkers()
     {

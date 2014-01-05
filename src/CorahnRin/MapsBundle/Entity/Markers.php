@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection as DoctrineCollection;
 /**
  * Markers
  *
+ * @ORM\Table(name="markers")
  * @ORM\Entity(repositoryClass="CorahnRin\MapsBundle\Repository\MarkersRepository")
  */
 class Markers
@@ -93,11 +94,11 @@ class Markers
         $this->routes = new \Doctrine\Common\Collections\ArrayCollection();
         $this->events = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -113,14 +114,14 @@ class Markers
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -136,14 +137,14 @@ class Markers
     public function setCoordinates($coordinates)
     {
         $this->coordinates = $coordinates;
-    
+
         return $this;
     }
 
     /**
      * Get coordinates
      *
-     * @return string 
+     * @return string
      */
     public function getCoordinates()
     {
@@ -159,14 +160,14 @@ class Markers
     public function setCreated($created)
     {
         $this->created = $created;
-    
+
         return $this;
     }
 
     /**
      * Get created
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreated()
     {
@@ -182,14 +183,14 @@ class Markers
     public function setUpdated($updated)
     {
         $this->updated = $updated;
-    
+
         return $this;
     }
 
     /**
      * Get updated
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdated()
     {
@@ -205,7 +206,7 @@ class Markers
     public function addRoute(\CorahnRin\MapsBundle\Entity\Routes $routes)
     {
         $this->routes[] = $routes;
-    
+
         return $this;
     }
 
@@ -222,7 +223,7 @@ class Markers
     /**
      * Get routes
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getRoutes()
     {
@@ -238,14 +239,14 @@ class Markers
     public function setFaction(\CorahnRin\MapsBundle\Entity\Factions $faction = null)
     {
         $this->faction = $faction;
-    
+
         return $this;
     }
 
     /**
      * Get faction
      *
-     * @return \CorahnRin\MapsBundle\Entity\Factions 
+     * @return \CorahnRin\MapsBundle\Entity\Factions
      */
     public function getFaction()
     {
@@ -261,14 +262,14 @@ class Markers
     public function setMap(\CorahnRin\MapsBundle\Entity\Maps $map = null)
     {
         $this->map = $map;
-    
+
         return $this;
     }
 
     /**
      * Get map
      *
-     * @return \CorahnRin\MapsBundle\Entity\Maps 
+     * @return \CorahnRin\MapsBundle\Entity\Maps
      */
     public function getMap()
     {
@@ -284,14 +285,14 @@ class Markers
     public function setMarkerType(\CorahnRin\MapsBundle\Entity\MarkersTypes $markerType = null)
     {
         $this->markerType = $markerType;
-    
+
         return $this;
     }
 
     /**
      * Get markerType
      *
-     * @return \CorahnRin\MapsBundle\Entity\MarkersTypes 
+     * @return \CorahnRin\MapsBundle\Entity\MarkersTypes
      */
     public function getMarkerType()
     {
@@ -307,7 +308,7 @@ class Markers
     public function addEvent(\CorahnRin\MapsBundle\Entity\EventsMarkers $events)
     {
         $this->events[] = $events;
-    
+
         return $this;
     }
 
@@ -324,7 +325,7 @@ class Markers
     /**
      * Get events
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getEvents()
     {

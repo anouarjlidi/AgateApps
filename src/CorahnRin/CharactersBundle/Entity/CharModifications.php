@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * CharModifications
  *
+ * @ORM\Table(name="characters_modifications")
  * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\CharModificationsRepository")
  */
 class CharModifications
@@ -61,7 +62,7 @@ class CharModifications
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -77,14 +78,14 @@ class CharModifications
     public function setBefore($before)
     {
         $this->before = $before;
-    
+
         return $this;
     }
 
     /**
      * Get before
      *
-     * @return \stdClass 
+     * @return \stdClass
      */
     public function getBefore()
     {
@@ -100,14 +101,14 @@ class CharModifications
     public function setCreated($created)
     {
         $this->created = $created;
-    
+
         return $this;
     }
 
     /**
      * Get created
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreated()
     {
@@ -123,14 +124,14 @@ class CharModifications
     public function setUpdated($updated)
     {
         $this->updated = $updated;
-    
+
         return $this;
     }
 
     /**
      * Get updated
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdated()
     {
@@ -146,14 +147,14 @@ class CharModifications
     public function setCharacter(\CorahnRin\CharactersBundle\Entity\Characters $character = null)
     {
         $this->character = $character;
-    
+
         return $this;
     }
 
     /**
      * Get character
      *
-     * @return \CorahnRin\CharactersBundle\Entity\Characters 
+     * @return \CorahnRin\CharactersBundle\Entity\Characters
      */
     public function getCharacter()
     {
@@ -169,14 +170,14 @@ class CharModifications
     public function setUser(\CorahnRin\UsersBundle\Entity\Users $user = null)
     {
         $this->user = $user;
-    
+
         return $this;
     }
 
     /**
      * Get user
      *
-     * @return \CorahnRin\UsersBundle\Entity\Users 
+     * @return \CorahnRin\UsersBundle\Entity\Users
      */
     public function getUser()
     {

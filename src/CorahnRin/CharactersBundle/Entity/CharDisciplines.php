@@ -5,8 +5,9 @@ namespace CorahnRin\CharactersBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * CharAvtgs
+ * CharDisciplines
  *
+ * @ORM\Table(name="characters_disciplines")
  * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\CharDisciplinesRepository")
  */
 class CharDisciplines
@@ -44,14 +45,14 @@ class CharDisciplines
     public function setScore($score)
     {
         $this->score = $score;
-    
+
         return $this;
     }
 
     /**
      * Get score
      *
-     * @return integer 
+     * @return integer
      */
     public function getScore()
     {
@@ -67,14 +68,14 @@ class CharDisciplines
     public function setCharacter(\CorahnRin\CharactersBundle\Entity\Characters $character)
     {
         $this->character = $character;
-    
+
         return $this;
     }
 
     /**
      * Get character
      *
-     * @return \CorahnRin\CharactersBundle\Entity\Characters 
+     * @return \CorahnRin\CharactersBundle\Entity\Characters
      */
     public function getCharacter()
     {
@@ -90,14 +91,14 @@ class CharDisciplines
     public function setDiscipline(\CorahnRin\CharactersBundle\Entity\Disciplines $discipline)
     {
         $this->discipline = $discipline;
-    
+
         return $this;
     }
 
     /**
      * Get discipline
      *
-     * @return \CorahnRin\CharactersBundle\Entity\Disciplines 
+     * @return \CorahnRin\CharactersBundle\Entity\Disciplines
      */
     public function getDiscipline()
     {

@@ -6,10 +6,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection as DoctrineCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
+
 /**
  * Maps
  *
- * @ORM\Table()
+ * @ORM\Table(name="maps")
  * @ORM\Entity(repositoryClass="CorahnRin\MapsBundle\Repository\MapsRepository")
  */
 class Maps

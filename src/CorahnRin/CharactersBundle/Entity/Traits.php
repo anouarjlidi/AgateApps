@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Traits
  *
  * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\TraitsRepository")
- * @ORM\Table(uniqueConstraints={@ORM\UniqueConstraint(name="idxUnique", columns={"name", "way_id"})})
+ * @ORM\Table(name="traits",uniqueConstraints={@ORM\UniqueConstraint(name="idxUnique", columns={"name", "way_id"})})
  */
 class Traits
 {

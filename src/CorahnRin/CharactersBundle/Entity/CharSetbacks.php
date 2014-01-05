@@ -5,8 +5,9 @@ namespace CorahnRin\CharactersBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * CharAvtgs
+ * CharSetbacks
  *
+ * @ORM\Table(name="characters_setbacks")
  * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\CharSetbacksRepository")
  */
 class CharSetbacks

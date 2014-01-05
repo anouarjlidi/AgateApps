@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Domains
  *
+ * @ORM\Table(name="domains")
  * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\DomainsRepository")
  */
 class Domains
@@ -70,11 +71,11 @@ class Domains
     {
         $this->socialClasses = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -90,14 +91,14 @@ class Domains
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -113,14 +114,14 @@ class Domains
     public function setDescription($description)
     {
         $this->description = $description;
-    
+
         return $this;
     }
 
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
@@ -136,14 +137,14 @@ class Domains
     public function setCreated($created)
     {
         $this->created = $created;
-    
+
         return $this;
     }
 
     /**
      * Get created
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreated()
     {
@@ -159,14 +160,14 @@ class Domains
     public function setUpdated($updated)
     {
         $this->updated = $updated;
-    
+
         return $this;
     }
 
     /**
      * Get updated
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdated()
     {
@@ -182,14 +183,14 @@ class Domains
     public function setWay(\CorahnRin\CharactersBundle\Entity\Ways $way = null)
     {
         $this->way = $way;
-    
+
         return $this;
     }
 
     /**
      * Get way
      *
-     * @return \CorahnRin\CharactersBundle\Entity\Ways 
+     * @return \CorahnRin\CharactersBundle\Entity\Ways
      */
     public function getWay()
     {
@@ -205,7 +206,7 @@ class Domains
     public function addSocialClasse(\CorahnRin\CharactersBundle\Entity\SocialClass $socialClasses)
     {
         $this->socialClasses[] = $socialClasses;
-    
+
         return $this;
     }
 
@@ -222,7 +223,7 @@ class Domains
     /**
      * Get socialClasses
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getSocialClasses()
     {

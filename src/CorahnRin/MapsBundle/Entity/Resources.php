@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection as DoctrineCollection;
 /**
  * Resources
  *
- * @ORM\Table()
+ * @ORM\Table(name="resources")
  * @ORM\Entity(repositoryClass="CorahnRin\MapsBundle\Repository\ResourcesRepository")
  */
 class Resources
@@ -44,7 +44,7 @@ class Resources
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $updated;
-	
+
     /**
      * @var DoctrineCollection
      *
@@ -74,11 +74,11 @@ class Resources
         $this->routesTypes = new \Doctrine\Common\Collections\ArrayCollection();
         $this->events = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -94,14 +94,14 @@ class Resources
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -117,14 +117,14 @@ class Resources
     public function setCreated($created)
     {
         $this->created = $created;
-    
+
         return $this;
     }
 
     /**
      * Get created
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreated()
     {
@@ -140,14 +140,14 @@ class Resources
     public function setUpdated($updated)
     {
         $this->updated = $updated;
-    
+
         return $this;
     }
 
     /**
      * Get updated
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdated()
     {
@@ -163,7 +163,7 @@ class Resources
     public function addRoute(\CorahnRin\MapsBundle\Entity\Routes $routes)
     {
         $this->routes[] = $routes;
-    
+
         return $this;
     }
 
@@ -180,7 +180,7 @@ class Resources
     /**
      * Get routes
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getRoutes()
     {
@@ -196,7 +196,7 @@ class Resources
     public function addRoutesType(\CorahnRin\MapsBundle\Entity\RoutesTypes $routesTypes)
     {
         $this->routesTypes[] = $routesTypes;
-    
+
         return $this;
     }
 
@@ -213,7 +213,7 @@ class Resources
     /**
      * Get routesTypes
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getRoutesTypes()
     {
@@ -229,7 +229,7 @@ class Resources
     public function addEvent(\CorahnRin\MapsBundle\Entity\EventsResources $events)
     {
         $this->events[] = $events;
-    
+
         return $this;
     }
 
@@ -246,7 +246,7 @@ class Resources
     /**
      * Get events
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getEvents()
     {

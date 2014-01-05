@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection as DoctrineCollection;
 /**
  * Zones
  *
- * @ORM\Table()
+ * @ORM\Table(name="zones")
  * @ORM\Entity(repositoryClass="CorahnRin\MapsBundle\Repository\ZonesRepository")
  */
 class Zones

@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * CharAvtgs
  *
+ * @ORM\Table(name="characters_avantages")
  * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\CharAvtgsRepository")
  */
 class CharAvtgs
@@ -45,14 +46,14 @@ class CharAvtgs
     public function setDoubleValue($doubleValue)
     {
         $this->doubleValue = $doubleValue;
-    
+
         return $this;
     }
 
     /**
      * Get doubleValue
      *
-     * @return integer 
+     * @return integer
      */
     public function getDoubleValue()
     {
@@ -68,14 +69,14 @@ class CharAvtgs
     public function setCharacter(\CorahnRin\CharactersBundle\Entity\Characters $character)
     {
         $this->character = $character;
-    
+
         return $this;
     }
 
     /**
      * Get character
      *
-     * @return \CorahnRin\CharactersBundle\Entity\Characters 
+     * @return \CorahnRin\CharactersBundle\Entity\Characters
      */
     public function getCharacter()
     {
@@ -91,14 +92,14 @@ class CharAvtgs
     public function setAvantage(\CorahnRin\CharactersBundle\Entity\Avantages $avantage)
     {
         $this->avantage = $avantage;
-    
+
         return $this;
     }
 
     /**
      * Get avantage
      *
-     * @return \CorahnRin\CharactersBundle\Entity\Avantages 
+     * @return \CorahnRin\CharactersBundle\Entity\Avantages
      */
     public function getAvantage()
     {

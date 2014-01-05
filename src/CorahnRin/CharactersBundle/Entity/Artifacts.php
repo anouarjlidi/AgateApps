@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Artifacts
  *
+ * @ORM\Table(name="artifacts")
  * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\ArtifactsRepository")
  */
 class Artifacts
@@ -107,7 +108,7 @@ class Artifacts
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -123,14 +124,14 @@ class Artifacts
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -146,14 +147,14 @@ class Artifacts
     public function setPrice($price)
     {
         $this->price = $price;
-    
+
         return $this;
     }
 
     /**
      * Get price
      *
-     * @return integer 
+     * @return integer
      */
     public function getPrice()
     {
@@ -169,14 +170,14 @@ class Artifacts
     public function setConsumption($consumption)
     {
         $this->consumption = $consumption;
-    
+
         return $this;
     }
 
     /**
      * Get consumption
      *
-     * @return integer 
+     * @return integer
      */
     public function getConsumption()
     {
@@ -192,14 +193,14 @@ class Artifacts
     public function setConsumptionInterval($consumptionInterval)
     {
         $this->consumptionInterval = $consumptionInterval;
-    
+
         return $this;
     }
 
     /**
      * Get consumptionInterval
      *
-     * @return integer 
+     * @return integer
      */
     public function getConsumptionInterval()
     {
@@ -215,14 +216,14 @@ class Artifacts
     public function setTank($tank)
     {
         $this->tank = $tank;
-    
+
         return $this;
     }
 
     /**
      * Get tank
      *
-     * @return integer 
+     * @return integer
      */
     public function getTank()
     {
@@ -238,14 +239,14 @@ class Artifacts
     public function setResistance($resistance)
     {
         $this->resistance = $resistance;
-    
+
         return $this;
     }
 
     /**
      * Get resistance
      *
-     * @return integer 
+     * @return integer
      */
     public function getResistance()
     {
@@ -261,14 +262,14 @@ class Artifacts
     public function setVulnerability($vulnerability)
     {
         $this->vulnerability = $vulnerability;
-    
+
         return $this;
     }
 
     /**
      * Get vulnerability
      *
-     * @return string 
+     * @return string
      */
     public function getVulnerability()
     {
@@ -284,14 +285,14 @@ class Artifacts
     public function setHandling($handling)
     {
         $this->handling = $handling;
-    
+
         return $this;
     }
 
     /**
      * Get handling
      *
-     * @return string 
+     * @return string
      */
     public function getHandling()
     {
@@ -307,14 +308,14 @@ class Artifacts
     public function setDamage($damage)
     {
         $this->damage = $damage;
-    
+
         return $this;
     }
 
     /**
      * Get damage
      *
-     * @return integer 
+     * @return integer
      */
     public function getDamage()
     {
@@ -330,14 +331,14 @@ class Artifacts
     public function setCreated($created)
     {
         $this->created = $created;
-    
+
         return $this;
     }
 
     /**
      * Get created
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreated()
     {
@@ -353,14 +354,14 @@ class Artifacts
     public function setUpdated($updated)
     {
         $this->updated = $updated;
-    
+
         return $this;
     }
 
     /**
      * Get updated
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdated()
     {
@@ -376,14 +377,14 @@ class Artifacts
     public function setFlux(\CorahnRin\CharactersBundle\Entity\Flux $flux = null)
     {
         $this->flux = $flux;
-    
+
         return $this;
     }
 
     /**
      * Get flux
      *
-     * @return \CorahnRin\CharactersBundle\Entity\Flux 
+     * @return \CorahnRin\CharactersBundle\Entity\Flux
      */
     public function getFlux()
     {

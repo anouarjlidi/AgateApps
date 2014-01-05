@@ -8,13 +8,14 @@ use Doctrine\Common\Collections\ArrayCollection as DoctrineCollection;
 /**
  * Events
  *
+ * @ORM\Table(name="events")
  * @ORM\Entity(repositoryClass="CorahnRin\MapsBundle\Repository\EventsRepository")
  */
 class Events
 {
     /**
      * @var integer
-	 * 
+	 *
      * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -40,7 +41,7 @@ class Events
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $updated;
-	
+
     /**
      * @var DoctrineCollection
      * @ORM\ManyToMany(targetEntity="Foes", mappedBy="events")
@@ -116,7 +117,7 @@ class Events
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -139,7 +140,7 @@ class Events
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -162,7 +163,7 @@ class Events
     /**
      * Get created
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreated()
     {
@@ -185,7 +186,7 @@ class Events
     /**
      * Get updated
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdated()
     {
@@ -218,7 +219,7 @@ class Events
     /**
      * Get foes
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getFoes()
     {
@@ -251,7 +252,7 @@ class Events
     /**
      * Get npcs
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getNpcs()
     {
@@ -284,7 +285,7 @@ class Events
     /**
      * Get weather
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getWeather()
     {
@@ -317,7 +318,7 @@ class Events
     /**
      * Get markers
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getMarkers()
     {
@@ -350,7 +351,7 @@ class Events
     /**
      * Get markersTypes
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getMarkersTypes()
     {
@@ -383,7 +384,7 @@ class Events
     /**
      * Get resources
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getResources()
     {
@@ -416,7 +417,7 @@ class Events
     /**
      * Get routes
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getRoutes()
     {
@@ -449,7 +450,7 @@ class Events
     /**
      * Get routesTypes
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getRoutesTypes()
     {
@@ -482,7 +483,7 @@ class Events
     /**
      * Get zones
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getZones()
     {

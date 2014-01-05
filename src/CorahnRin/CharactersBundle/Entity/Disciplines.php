@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Disciplines
  *
+ * @ORM\Table(name="disciplines")
  * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\DisciplinesRepository")
  */
 class Disciplines
@@ -55,7 +56,7 @@ class Disciplines
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $updated;
-	
+
     /**
      * @var \Books
      * @ORM\ManyToOne(targetEntity="Books")
@@ -68,11 +69,11 @@ class Disciplines
     public function __construct()
     {
     }
-    
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -88,14 +89,14 @@ class Disciplines
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -111,14 +112,14 @@ class Disciplines
     public function setDescription($description)
     {
         $this->description = $description;
-    
+
         return $this;
     }
 
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
@@ -134,14 +135,14 @@ class Disciplines
     public function setRank($rank)
     {
         $this->rank = $rank;
-    
+
         return $this;
     }
 
     /**
      * Get rank
      *
-     * @return string 
+     * @return string
      */
     public function getRank()
     {
@@ -157,14 +158,14 @@ class Disciplines
     public function setCreated($created)
     {
         $this->created = $created;
-    
+
         return $this;
     }
 
     /**
      * Get created
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreated()
     {
@@ -180,14 +181,14 @@ class Disciplines
     public function setUpdated($updated)
     {
         $this->updated = $updated;
-    
+
         return $this;
     }
 
     /**
      * Get updated
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdated()
     {
@@ -203,14 +204,14 @@ class Disciplines
     public function setBook(\CorahnRin\CharactersBundle\Entity\Books $book = null)
     {
         $this->book = $book;
-    
+
         return $this;
     }
 
     /**
      * Get book
      *
-     * @return \CorahnRin\CharactersBundle\Entity\Books 
+     * @return \CorahnRin\CharactersBundle\Entity\Books
      */
     public function getBook()
     {

@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Miracles
  *
+ * @ORM\Table(name="miracles")
  * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\MiraclesRepository")
  */
 class Miracles
@@ -53,7 +54,7 @@ class Miracles
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -69,14 +70,14 @@ class Miracles
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -92,14 +93,14 @@ class Miracles
     public function setIsMajor($isMajor)
     {
         $this->isMajor = $isMajor;
-    
+
         return $this;
     }
 
     /**
      * Get isMajor
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsMajor()
     {
@@ -115,14 +116,14 @@ class Miracles
     public function setCreated($created)
     {
         $this->created = $created;
-    
+
         return $this;
     }
 
     /**
      * Get created
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreated()
     {
@@ -138,14 +139,14 @@ class Miracles
     public function setUpdated($updated)
     {
         $this->updated = $updated;
-    
+
         return $this;
     }
 
     /**
      * Get updated
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdated()
     {

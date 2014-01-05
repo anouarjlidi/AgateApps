@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Characters
  *
  * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\CharactersRepository")
- * @ORM\Table(uniqueConstraints={@ORM\UniqueConstraint(name="idcUnique", columns={"name", "user_id"})})
+ * @ORM\Table(name="characters",uniqueConstraints={@ORM\UniqueConstraint(name="idcUnique", columns={"name", "user_id"})})
  */
 class Characters
 {

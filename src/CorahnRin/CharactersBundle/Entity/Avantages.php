@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Avantages
  *
+ * @ORM\Table(name="avantages")
  * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\AvantagesRepository")
  */
 class Avantages
@@ -90,7 +91,7 @@ class Avantages
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $updated;
-	
+
     /**
      * @var \Books
      * @ORM\ManyToOne(targetEntity="Books")
@@ -101,7 +102,7 @@ class Avantages
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -117,14 +118,14 @@ class Avantages
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -140,14 +141,14 @@ class Avantages
     public function setNameFemale($nameFemale)
     {
         $this->nameFemale = $nameFemale;
-    
+
         return $this;
     }
 
     /**
      * Get nameFemale
      *
-     * @return string 
+     * @return string
      */
     public function getNameFemale()
     {
@@ -163,14 +164,14 @@ class Avantages
     public function setXp($xp)
     {
         $this->xp = $xp;
-    
+
         return $this;
     }
 
     /**
      * Get xp
      *
-     * @return integer 
+     * @return integer
      */
     public function getXp()
     {
@@ -186,14 +187,14 @@ class Avantages
     public function setDescription($description)
     {
         $this->description = $description;
-    
+
         return $this;
     }
 
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
@@ -209,14 +210,14 @@ class Avantages
     public function setDouble($double)
     {
         $this->double = $double;
-    
+
         return $this;
     }
 
     /**
      * Get double
      *
-     * @return integer 
+     * @return integer
      */
     public function getDouble()
     {
@@ -232,14 +233,14 @@ class Avantages
     public function setBonusdisc($bonusdisc)
     {
         $this->bonusdisc = $bonusdisc;
-    
+
         return $this;
     }
 
     /**
      * Get bonusdisc
      *
-     * @return string 
+     * @return string
      */
     public function getBonusdisc()
     {
@@ -255,14 +256,14 @@ class Avantages
     public function setIsDesv($isDesv)
     {
         $this->isDesv = $isDesv;
-    
+
         return $this;
     }
 
     /**
      * Get isDesv
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsDesv()
     {
@@ -278,14 +279,14 @@ class Avantages
     public function setIsCombatArt($isCombatArt)
     {
         $this->isCombatArt = $isCombatArt;
-    
+
         return $this;
     }
 
     /**
      * Get isCombatArt
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsCombatArt()
     {
@@ -301,14 +302,14 @@ class Avantages
     public function setCreated($created)
     {
         $this->created = $created;
-    
+
         return $this;
     }
 
     /**
      * Get created
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreated()
     {
@@ -324,14 +325,14 @@ class Avantages
     public function setUpdated($updated)
     {
         $this->updated = $updated;
-    
+
         return $this;
     }
 
     /**
      * Get updated
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdated()
     {
@@ -347,14 +348,14 @@ class Avantages
     public function setBook(\CorahnRin\CharactersBundle\Entity\Books $book = null)
     {
         $this->book = $book;
-    
+
         return $this;
     }
 
     /**
      * Get book
      *
-     * @return \CorahnRin\CharactersBundle\Entity\Books 
+     * @return \CorahnRin\CharactersBundle\Entity\Books
      */
     public function getBook()
     {

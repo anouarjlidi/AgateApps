@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Mails
  *
+ * @ORM\Table(name="mails")
  * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\MailsRepository")
  */
 class Mails
@@ -62,7 +63,7 @@ class Mails
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -78,14 +79,14 @@ class Mails
     public function setCode($code)
     {
         $this->code = $code;
-    
+
         return $this;
     }
 
     /**
      * Get code
      *
-     * @return string 
+     * @return string
      */
     public function getCode()
     {
@@ -101,14 +102,14 @@ class Mails
     public function setContent($content)
     {
         $this->content = $content;
-    
+
         return $this;
     }
 
     /**
      * Get content
      *
-     * @return string 
+     * @return string
      */
     public function getContent()
     {
@@ -124,14 +125,14 @@ class Mails
     public function setSubject($subject)
     {
         $this->subject = $subject;
-    
+
         return $this;
     }
 
     /**
      * Get subject
      *
-     * @return string 
+     * @return string
      */
     public function getSubject()
     {
@@ -147,14 +148,14 @@ class Mails
     public function setCreated($created)
     {
         $this->created = $created;
-    
+
         return $this;
     }
 
     /**
      * Get created
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreated()
     {
@@ -170,14 +171,14 @@ class Mails
     public function setUpdated($updated)
     {
         $this->updated = $updated;
-    
+
         return $this;
     }
 
     /**
      * Get updated
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdated()
     {

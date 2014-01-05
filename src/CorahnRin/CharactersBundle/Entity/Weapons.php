@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Weapons
  *
+ * @ORM\Table(name="weapons")
  * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\WeaponsRepository")
  */
 class Weapons
@@ -81,7 +82,7 @@ class Weapons
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -97,14 +98,14 @@ class Weapons
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -120,14 +121,14 @@ class Weapons
     public function setDamage($damage)
     {
         $this->damage = $damage;
-    
+
         return $this;
     }
 
     /**
      * Get damage
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getDamage()
     {
@@ -143,14 +144,14 @@ class Weapons
     public function setPrice($price)
     {
         $this->price = $price;
-    
+
         return $this;
     }
 
     /**
      * Get price
      *
-     * @return integer 
+     * @return integer
      */
     public function getPrice()
     {
@@ -166,14 +167,14 @@ class Weapons
     public function setAvailability($availability)
     {
         $this->availability = $availability;
-    
+
         return $this;
     }
 
     /**
      * Get availability
      *
-     * @return string 
+     * @return string
      */
     public function getAvailability()
     {
@@ -189,14 +190,14 @@ class Weapons
     public function setMelee($melee)
     {
         $this->melee = $melee;
-    
+
         return $this;
     }
 
     /**
      * Get melee
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getMelee()
     {
@@ -212,14 +213,14 @@ class Weapons
     public function setRange($range)
     {
         $this->range = $range;
-    
+
         return $this;
     }
 
     /**
      * Get range
      *
-     * @return integer 
+     * @return integer
      */
     public function getRange()
     {
@@ -235,14 +236,14 @@ class Weapons
     public function setCreated($created)
     {
         $this->created = $created;
-    
+
         return $this;
     }
 
     /**
      * Get created
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreated()
     {
@@ -258,14 +259,14 @@ class Weapons
     public function setUpdated($updated)
     {
         $this->updated = $updated;
-    
+
         return $this;
     }
 
     /**
      * Get updated
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdated()
     {

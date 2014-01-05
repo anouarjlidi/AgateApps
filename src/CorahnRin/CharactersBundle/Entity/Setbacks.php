@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Setbacks
  *
+ * @ORM\Table(name="setbacks")
  * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\SetbacksRepository")
  */
 class Setbacks
@@ -33,7 +34,7 @@ class Setbacks
      * @ORM\Column(type="text", nullable=false)
      */
     protected $description;
-	
+
     /**
      * @var integer
      *
@@ -60,7 +61,7 @@ class Setbacks
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -76,14 +77,14 @@ class Setbacks
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -99,14 +100,14 @@ class Setbacks
     public function setDescription($description)
     {
         $this->description = $description;
-    
+
         return $this;
     }
 
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
@@ -122,14 +123,14 @@ class Setbacks
     public function setCreated($created)
     {
         $this->created = $created;
-    
+
         return $this;
     }
 
     /**
      * Get created
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreated()
     {
@@ -145,14 +146,14 @@ class Setbacks
     public function setUpdated($updated)
     {
         $this->updated = $updated;
-    
+
         return $this;
     }
 
     /**
      * Get updated
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdated()
     {
@@ -168,14 +169,14 @@ class Setbacks
     public function setMalus($malus)
     {
         $this->malus = $malus;
-    
+
         return $this;
     }
 
     /**
      * Get malus
      *
-     * @return string 
+     * @return string
      */
     public function getMalus()
     {

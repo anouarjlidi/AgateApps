@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection as DoctrineCollection;
 /**
  * EventsRoutes
  *
+ * @ORM\Table(name="events_routes")
  * @ORM\Entity(repositoryClass="CorahnRin\MapsBundle\Repository\EventsRoutesRepository")
  */
 class EventsRoutes {
@@ -51,7 +52,7 @@ class EventsRoutes {
 	 */
 	protected $percentage;
 
-	
+
 
     /**
      * Set created
@@ -69,7 +70,7 @@ class EventsRoutes {
     /**
      * Get created
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreated()
     {
@@ -92,7 +93,7 @@ class EventsRoutes {
     /**
      * Get updated
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdated()
     {
@@ -115,7 +116,7 @@ class EventsRoutes {
     /**
      * Get percentage
      *
-     * @return integer 
+     * @return integer
      */
     public function getPercentage()
     {
@@ -138,7 +139,7 @@ class EventsRoutes {
     /**
      * Get event
      *
-     * @return \CorahnRin\MapsBundle\Entity\Events 
+     * @return \CorahnRin\MapsBundle\Entity\Events
      */
     public function getEvent()
     {
@@ -161,7 +162,7 @@ class EventsRoutes {
     /**
      * Get route
      *
-     * @return \CorahnRin\MapsBundle\Entity\Routes 
+     * @return \CorahnRin\MapsBundle\Entity\Routes
      */
     public function getRoute()
     {
