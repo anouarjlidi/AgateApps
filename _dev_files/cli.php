@@ -1,7 +1,8 @@
 <?php $time = microtime(true);$temp_time = $time;
 
 echo 'Conversion Corahn-Rin'."\n";
-//exec('chcp 65001');
+$arglocal = isset($argv[1]) ? $argv[1] : 'local';
+if ($arglocal === 'local') { exec('chcp 65001'); }
 ini_set('cli_server.color', true);
 ini_set('cli_server.color', 1);
 $colors = new Colors();
@@ -40,8 +41,8 @@ if($bb==='warning'){$this->err_type=E_USER_WARNING;
 }else{$this->err_type=E_USER_WARNING;
 }}protected function showErr($d=null,$cc=null,$dd=null,$ee=false){$ff=is_object($d)?$d->getTrace():'';
 echo 'Une erreur MySQL est survenue...<br />'."\n";
-pr(array('pdo_ex'=>(is_object($d)?$d->getMessage():''),'qry'=>$cc/*,'trace'=>$ff*/));
-exit('ERREUR');
+pr(array('pdo_ex'=>(is_object($d)?$d->getMessage():''),'qry'=>$cc,'datas'=>$this->last_values/*,'trace'=>$ff*/));
+exit("\n".'ERREUR'."\n");
 }public static function sbuildReq($cc,$gg=array(),$table='my_table'){$gg=(array) $gg;
 if(strpos($cc,'%%%fields')!==false){$hh=array();
 foreach($gg as $ii=>$jj){$ii=str_replace(':','',$ii);
@@ -155,8 +156,16 @@ function ReadStdin($prompt, $valid_inputs, $default = '') {
 
 showtime($temp_time, 'Fin chargement des classes et fonctions');
 
-$new = new Database('127.0.0.1', 'root', '', 'corahn_rin');
-$old = new Database('127.0.0.1', 'root', '', 'esteren', 'est_');
+
+
+showtime($temp_time, 'Base de données utilisée : '.$arglocal);
+if ($arglocal === 'dist') {
+    $new = new Database('localhost', 'corahn_rin', 'uDVi6w!,tUp,1wIVfRq@', 'corahn_rin', '');
+    $old = new Database('localhost', 'esteren', 'xXHAPU@mfmvU7cEM3N57', 'esteren', 'est_');
+} else {
+    $new = new Database('127.0.0.1', 'root', '', 'corahn_rin', '');
+    $old = new Database('127.0.0.1', 'root', '', 'esteren', 'est_');
+}
 
 showtime($temp_time, 'Initialisation de l\'ancienne et de la nouvelle base de données');
 
@@ -215,57 +224,64 @@ if ((int)$line) {
 	unset($r);
 }
 // $new->noRes(file_get_contents('new.sql'));
-showtime($temp_time, 'Suppression de la nouvelle base de données via Symfony2');
-$r = shell_exec('php ../app/console doctrine:database:drop --force');
-if ($r) {
-	$r = str_replace(array("\r","\n"),array('',''),$r);
-	$r = trim($r);
-	showtime($temp_time, 'Terminé : '.$r.'');
-} else {
-	showtime($temp_time, 'Terminé ');
-}
-flush();
 
 
-showtime($temp_time, 'Création de la nouvelle base de données via Symfony2');
-$r = shell_exec('php ../app/console doctrine:database:create');
-if ($r) {
-	$r = str_replace(array("\r","\n"),array('',''),$r);
-	$r = trim($r);
-	showtime($temp_time, 'Terminé : '.$r.'');
-} else {
-	showtime($temp_time, 'Terminé ');
-}
+*/
+$del = ReadStdin('Supprimer la bdd ? [o/N]', array('o','n'), 'n');
+if (preg_match('#^o#isUu', $del)) {$del = 'o';} else { $del = 'n'; }
+if ($del === 'o') {
+    showtime($temp_time, 'Suppression de la nouvelle base de données via Symfony2');
 
-$line = ReadStdin('Utiliser Symfony2 pour créer le schéma ? [oui] ', array('','o','oui','n','non'), '1');
-$line = ($line === 'oui'
-		? 'o'
-		: ($line === 'non'
-			? 'n'
-			: $line));
-$line = (int) ($line === 'o');
-showtime($temp_time, '');
-if ((int) $line) {
-	showtime($temp_time, 'Exécution de la commande Symfony2 pour refaire le schéma à partir des entités...');
-	$r = shell_exec('php ../app/console doctrine:schema:update --force');
-	if ($r) {
-		$r = str_replace(array("\r","\n"),array('',''),$r);
-		$r = trim($r);
-		showtime($temp_time, 'Terminé : '.$r.'');
-	} else {
-		showtime($temp_time, 'Terminé ');
-	}
-} else {
-	showtime($temp_time, 'Insertion du fichier dump dans la base de données...');
-	$r = shell_exec('mysql -u root --database corahn_rin --execute="source new.sql"');
-	if ($r) {
-		$r = trim($r);
-		showtime($temp_time, 'Terminé : '.$r.'');
-	} else {
-		showtime($temp_time, 'Terminé ');
-	}
+    $r = shell_exec('php ../app/console doctrine:database:drop --force');
+    if ($r) {
+        $r = str_replace(array("\r","\n"),array('',''),$r);
+        $r = trim($r);
+        showtime($temp_time, 'Terminé : '.$r.'');
+    } else {
+        showtime($temp_time, 'Terminé ');
+    }
+    flush();
+
+    showtime($temp_time, 'Création de la nouvelle base de données via Symfony2');
+    $r = shell_exec('php ../app/console doctrine:database:create');
+    if ($r) {
+        $r = str_replace(array("\r","\n"),array('',''),$r);
+        $r = trim($r);
+        showtime($temp_time, 'Terminé : '.$r.'');
+    } else {
+        showtime($temp_time, 'Terminé ');
+    }
+
+//    $line = ReadStdin('Utiliser Symfony2 pour créer le schéma ? [oui] ', array('','o','oui','n','non'), '1');
+//    $line = ($line === 'oui'
+//            ? 'o'
+//            : ($line === 'non'
+//                ? 'n'
+//                : $line));
+//    $line = (int) ($line === 'o');
+//    showtime($temp_time, '');
+//    if ((int) $line) {
+        showtime($temp_time, 'Exécution de la commande Symfony2 pour refaire le schéma à partir des entités...');
+        $r = shell_exec('php ../app/console doctrine:schema:update --force');
+        if ($r) {
+            $r = str_replace(array("\r","\n"),array('',''),$r);
+            $r = trim($r);
+            showtime($temp_time, 'Terminé : '.$r.'');
+        } else {
+            showtime($temp_time, 'Terminé ');
+        }
+//    } else {
+//        showtime($temp_time, 'Insertion du fichier dump dans la base de données...');
+//        $r = shell_exec('mysql -u root --database corahn_rin --execute="source new.sql"');
+//        if ($r) {
+//            $r = trim($r);
+//            showtime($temp_time, 'Terminé : '.$r.'');
+//        } else {
+//            showtime($temp_time, 'Terminé ');
+//        }
+//    }
+    unset($r);
 }
-unset($r);
 // foreach ($oldreq as $v) { $old->noRes($v); }
 // $oldreq = get_query_from_file('old.sql');
 // showtime($temp_time, 'Suppression et réinsertion de l\'ancienne base de données');
@@ -312,37 +328,43 @@ $users->execute();
 $users = $users->fetchAll(PDO::FETCH_ASSOC);
 
 
+$del = ReadStdin('Créer les utilisateurs ? [O/n]', array('o','n'), 'n');
+if (preg_match('#^o#isUu', $del)) {$del = 'o';} else { $del = 'n'; }
 
-showtime($temp_time, 'Création des utilisateurs via Symfony...');
-$usernb = 0;
-$table = "users";
-foreach ($users as $v) {
-	if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>$v['user_id']))) {
-		$pwd = utf8_encode($v['user_email']);
-		if ($new->noRes('ALTER TABLE `users` AUTO_INCREMENT = 300')) { showtime($temp_time, 'Réinitialisation de l\'auto-increment pour l\'insertion'); }
-		$r = shell_exec('php ../app/console fos:user:create "'.$v['user_name'].'" "'.$v['user_email'].'" '.$pwd.'');
-		$usernb++;
-		if ($r) {
-			$r = str_replace(array("\r","\n"),array('',''),$r);
-			$r = trim($r);
-			showtime($temp_time, 'Terminé : "'.$v['user_name'].'" "'.$v['user_email'].'" '.$pwd.' / Message : '.$r.'');
-		} else {
-			showtime($temp_time, 'Terminé "'.$v['user_name'].'" "'.$v['user_email'].'" '.$pwd.'');
-		}
+if ($del === 'o') {
+    showtime($temp_time, 'Création des utilisateurs via Symfony...');
+    $usernb = 0;
+    $maxid = 0;
+    $table = "users";
+    foreach ($users as $v) {
+        if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>$v['user_id']))) {
+            $pwd = utf8_encode($v['user_email']);
+            if ($new->noRes('ALTER TABLE `users` AUTO_INCREMENT = 300')) { showtime($temp_time, 'Réinitialisation de l\'auto-increment pour l\'insertion'); }
+            $r = shell_exec('php ../app/console fos:user:create "'.$v['user_name'].'" "'.$v['user_email'].'" '.$pwd.'');
+            $usernb++;
+            if ($r) {
+                $r = str_replace(array("\r","\n"),array('',''),$r);
+                $r = trim($r);
+                showtime($temp_time, 'Terminé : "'.$v['user_name'].'" "'.$v['user_email'].'" '.$pwd.' / Message : '.$r.'');
+            } else {
+                showtime($temp_time, 'Terminé "'.$v['user_name'].'" "'.$v['user_email'].'" '.$pwd.'');
+            }
 
-		$enter_users = $new->noRes('UPDATE `users` SET `id` = :id WHERE `email` = :email ',array('id'=>$v['user_id'], 'email'=>$v['user_email']));//Exécution de la requête sql
-		if ($enter_users) {
-			showtime($temp_time, 'Rétablissement de l\'id pour l\'utilisateur "'.$v['user_name'].'"');
-		}
-	}
-}$tables_done[]='users';
-exec('php ../app/console fos:user:promote pierstoval --super');
-if (!$usernb) { showtime($temp_time, 'Aucun utilisateur à ajouter'); }
-showtime($temp_time, $usernb.' requêtes pour la table "users"');
-if ($new->noRes('ALTER TABLE `users` AUTO_INCREMENT = 128')) {
-	showtime($temp_time, 'Réinitialisation de l\'auto-increment après les insertions et rétablissements d\'id pour les utilisateurs');
+            $enter_users = $new->noRes('UPDATE `users` SET `id` = :id WHERE `email` = :email ',array('id'=>$v['user_id'], 'email'=>$v['user_email']));//Exécution de la requête sql
+            if ($enter_users) {
+                showtime($temp_time, 'Rétablissement de l\'id pour l\'utilisateur "'.$v['user_name'].'"');
+            }
+        }
+        if ($v['user_id'] > $maxid) { $maxid = (int) $v['user_id']; }
+    }$tables_done[]='users';
+    exec('php ../app/console fos:user:promote pierstoval --super');
+    if (!$usernb) { showtime($temp_time, 'Aucun utilisateur à ajouter'); }
+    showtime($temp_time, $usernb.' requêtes pour la table "users"');
+    if ($new->noRes('ALTER TABLE `users` AUTO_INCREMENT = ?', array($maxid))) {
+        showtime($temp_time, 'Réinitialisation de l\'auto-increment après les insertions et rétablissements d\'id pour les utilisateurs');
+    }
+    $nbreq += $usernb;
 }
-$nbreq += $usernb;
 
 
 
@@ -432,7 +454,7 @@ foreach ( $desordres as $v) {
 		);$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
 		$dis_maj = explode(',', $v['desordre_voies_maj']);
 		$dis_min = explode(',', $v['desordre_voies_min']);
-		$sql = 'INSERT INTO `'.$table.'ways` SET `disorder_id` = :disorder, `way_id` = :way, `isMajor` = :isMajor';
+		$sql = 'INSERT INTO `'.$table.'_ways` SET `disorder_id` = :disorder, `way_id` = :way, `isMajor` = :isMajor';
 		$q = $new->prepare($sql);
 		$nbreq+=8;
 		foreach ($dis_maj as $d) {
@@ -446,7 +468,7 @@ foreach ( $desordres as $v) {
 			}
 		}
 	}
-}$tables_done[]=$table.'ways';$tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
+}$tables_done[]=$table.'_ways';$tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
 
 
 
@@ -535,6 +557,31 @@ $tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table 
 
 
 
+$table = 'jobs';
+//$nbreq++;
+$nbreqtemp = 0;
+foreach ( $jobs as $v) {
+	if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>$v['job_id']))) {
+		$nbreq++;
+		$nbreqtemp++;
+		$datas = array(
+				'id' => $v['job_id'],
+				'book_id' => ($v['job_book'] ? 1 : 8),
+				'name' => $v['job_name'],
+				'description' => $v['job_desc'],
+				'created' => $datetime->date,
+				'updated' => $datetime->date,
+		);$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
+	}
+}$tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
+
+
+
+
+
+
+
+
 $table = 'domains';
 $nbreqtemp = 0;
 foreach ( $domains as $v) {
@@ -562,8 +609,10 @@ foreach ( $domains as $v) {
 
 $table = 'jobs_domains';
 $nbreqtemp = 0;
-$new->noRes('delete from %'.$table);
-$new->noRes('ALTER TABLE %'.$table.' AUTO_INCREMENT = 1');
+if ($new->row('SELECT COUNT(*) FROM %'.$table)) {
+    $new->noRes('delete from %'.$table);
+    $new->noRes('ALTER TABLE %'.$table.' AUTO_INCREMENT = 1');
+}
 foreach ( $jobdomains as $v) {
     if (!$v['jobdomain_primsec']) {
         $nbreq++;
@@ -588,7 +637,7 @@ foreach ( $jobdomains as $v) {
 
 
 
-$table = 'socialclass';
+$table = 'social_class';
 $nbreqtemp = 0;
 if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>1))) {
 		$sql = 'INSERT INTO `'.$table.'` SET `id` = :id, `name` = :name, `description` = :description, `created` = :created, `updated` = :updated';
@@ -607,7 +656,7 @@ $tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table 
 
 
 
-$socialclasses = $new->req('SELECT * FROM `socialclass`');
+$socialclasses = $new->req('SELECT * FROM `social_class`');
 $table = 'socialclass_domains';
 $sreq = 0;
 $sql = 'INSERT INTO `'.$table.'` SET `socialclass_id` = :socialclass_id, `domains_id` = :domains_id';
@@ -671,7 +720,7 @@ foreach ( $disciplines as $v) {
 
 
 
-$table = 'disciplinesdomains';
+$table = 'disciplines_domains';
 $nbreqtemp = 0;
 foreach ( $discdoms as $v) {
 	if (!$new->row('SELECT * FROM %'.$table.' WHERE %disciplines_id = :disciplines_id AND %domains_id = :domains_id ', array('disciplines_id'=>$v['disc_id'], 'domains_id'=>$v['domain_id']))) {
@@ -793,29 +842,6 @@ foreach ( $steps as $v) {
 
 
 
-$table = 'jobs';
-//$nbreq++;
-$nbreqtemp = 0;
-foreach ( $jobs as $v) {
-	if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>$v['job_id']))) {
-		$nbreq++;
-		$nbreqtemp++;
-		$datas = array(
-				'id' => $v['job_id'],
-				'book_id' => ($v['job_book'] ? 1 : 8),
-				'name' => $v['job_name'],
-				'description' => $v['job_desc'],
-				'created' => $datetime->date,
-				'updated' => $datetime->date,
-		);$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
-	}
-}$tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
-
-
-
-
-
-
 
 
 
@@ -840,7 +866,7 @@ foreach ($mails as $v) {
 }$tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
 
 
-$table = 'mailssent';
+$table = 'mails_sent';
 //$nbreq++;
 $nbreqtemp = 0;
 foreach ( $mails_sent as $v) {
@@ -937,6 +963,43 @@ foreach ( $revers as $v) {
 
 
 
+$table = 'maps';
+$nbreqtemp = 0;
+if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>1))) {
+	$sql = 'INSERT INTO `'.$table.'` SET `id` = :id, `name` = :name, `maxZoom` = :maxZoom, `image` = :image, `description` = :description, `created` = :created, `updated` = :updated';
+	$q = $new->prepare($sql);
+	$nbreq+=1;
+	$nbreqtemp+=1;
+	$q->execute(array('id' => 1,'name' => 'Tri-Kazel', 'image'=>'uploads/maps/esteren_nouvelle_cartepg_91220092.jpeg','maxZoom'=>10, 'description' => 'Carte de Tri-Kazel officielle, réalisée par Chris',	'created' => $datetime->date, 'updated' => $datetime->date,));
+}
+$tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
+
+
+
+
+$table = 'zones';
+$nbreqtemp = 0;
+if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>1))) {
+	$sql = 'INSERT INTO `'.$table.'` SET `id` = :id, `name` = :name,`coordinates` = :coordinates,`map_id` = :map_id, `created` = :created, `updated` = :updated';
+	$q = $new->prepare($sql);
+	$nbreq+=2;
+	$nbreqtemp+=2;
+	$q->execute(array('id' => 1,'name' => 'Calvaire', 'coordinates'=>'931,501 892,510 883,525 848,533 851,545 785,579 789,586 749,596 764,614 751,619 754,628 728,639 719,634 707,656 698,661 692,674 672,681 677,691 656,708 640,706 631,730 598,754 598,763 605,771 605,787 610,803 567,816 543,831 519,850 534,866 575,879 574,887 553,899 554,915 570,926 582,922 589,935 604,938 612,948 604,954 605,968 588,977 591,986 648,994 670,985 669,972 693,967 693,958 711,950 702,939 753,916 757,898 807,890 816,917 886,909 857,847 861,843 873,841 885,846 886,841 868,820 870,771 860,753 882,719 883,716 911,705 936,686 961,686 975,668 973,654 1013,644 1014,633 1036,631 992,610 975,595 974,577 1011,567 1010,557 1030,553 1027,540 1030,531 993,524 975,505 956,503 943,496','map_id'=>1, 'created' => $datetime->date, 'updated' => $datetime->date,));
+	$q->execute(array('id' => 2,'name' => 'Île aux Cairns', 'coordinates'=>'2584,2999 2511,3039 2524,3070 2517,3087 2487,3093 2503,3110 2468,3151 2496,3161 2516,3156 2525,3162 2509,3174 2484,3180 2462,3172 2445,3199 2423,3206 2432,3217 2449,3216 2497,3259 2449,3284 2466,3310 2447,3317 2433,3336 2428,3397 2444,3406 2429,3421 2465,3427 2445,3444 2476,3441 2472,3471 2455,3458 2462,3488 2480,3503 2489,3489 2520,3500 2538,3509 2543,3524 2543,3544 2576,3541 2662,3538 2684,3527 2803,3515 2814,3497 2822,3467 2912,3460 2871,3425 2866,3388 2827,3354 2846,3346 2847,3333 2896,3320 2894,3308 2847,3286 2862,3278 2847,3250 2836,3242 2837,3225 2861,3213 2834,3181 2856,3179 2837,3150 2783,3119 2783,3119 2801,3092 2794,3078 2814,3075 2786,3045 2764,3035 2756,3016 2730,3020 2698,3001 2708,2992 2713,2974 2701,2956 2689,2959 2673,2987 2708,2992 2708,2992 2698,3001 2667,3006 2649,2996 2625,3012 2599,2978 2601,2953 2589,2951 2576,2971 2531,2961 2519,2970 2503,2965 2452,2999 2492,3005 2520,3011 2563,3000 2558,2983 2531,2961 2576,2971 2585,2983 2599,2978 2625,3012','map_id'=>1, 'created' => $datetime->date, 'updated' => $datetime->date,));
+}
+$tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -944,18 +1007,23 @@ foreach ( $revers as $v) {
 
 require __DIR__.'\\..\\src\\CorahnRin\\CharactersBundle\\Classes\\Money.php';
 
+showtime($temp_time, 'Suppression du contenu des tables d\'association');
+
 use CorahnRin\CharactersBundle\Classes\Money as Money;
 $table = 'characters';
 $t = $new->req('describe %'.$table);
-$new->noRes('delete from %charways');
-$new->noRes('delete from %chardomains');
-$new->noRes('delete from %charsocialclass');
-$new->noRes('delete from %charavtgs');
+
+$new->noRes('delete from %characters_ways');
+$new->noRes('delete from %characters_domains');
+//$new->noRes('delete from %characters_social_class');
+$new->noRes('delete from %characters_avantages');
 $new->noRes('delete from %characters_armors');
 $new->noRes('delete from %characters_weapons');
-$new->noRes('delete from %charsetbacks');
-$new->noRes('delete from %chardisciplines');
-$new->noRes('delete from %charflux');
+$new->noRes('delete from %characters_setbacks');
+$new->noRes('delete from %characters_disciplines');
+$new->noRes('delete from %characters_flux');
+
+showtime($temp_time, 'Terminé !');
 
 $to_add = array();
 $new->noRes('delete from %'.$table);
@@ -986,6 +1054,8 @@ foreach ( $characters as $v) {
                 $domaines->$d->val --;
             }
 		}
+        $cnt->classe_sociale = $new->row('SELECT %id FROM %social_class WHERE %name = ?', array($cnt->classe_sociale));
+        $cnt->classe_sociale = $cnt->classe_sociale['id'];
 		$datas = array(
 			'id' => $v['char_id'],
 			'name' => $v['char_name'],
@@ -1000,7 +1070,12 @@ foreach ( $characters as $v) {
 			'description' => $cnt->details_personnage->description,
 			'facts' => @isset($cnt->details_personnage->faits) ? $cnt->details_personnage->faits : '',
 			'geoLiving' => $cnt->residence_geographique,//urbain/rural
-			'people' => $v['char_people'],
+			'people_id' => (
+                $v['char_people'] === 'Tri-Kazel' ? 1
+                : ($v['char_people'] === 'Tarish' ? 2
+                : ($v['char_people'] === 'Osag' ? 3
+                : ($v['char_people'] === 'Continent' ? 4 : 0)))
+            ),
 			'mentalResist' => $cnt->resistance_mentale->exp,
 			'health' => $cnt->sante,
 			'stamina' => $cnt->vigueur,
@@ -1037,8 +1112,8 @@ foreach ( $characters as $v) {
 		$countvoies = 0;
 		foreach ($voies as $voie) {
 			$datasVoies = array( 'character_id' => $v['char_id'], 'way_id' => $voie->id, 'score' => $voie->val, );
-			if (!$new->row('SELECT * FROM %charways WHERE %character_id = :character_id AND %way_id = :way_id AND %score = :score', $datasVoies)) {
-				$new->noRes('INSERT INTO %charways SET %%%fields', $datasVoies); $countvoies++;
+			if (!$new->row('SELECT * FROM %characters_ways WHERE %character_id = :character_id AND %way_id = :way_id AND %score = :score', $datasVoies)) {
+				$new->noRes('INSERT INTO %characters_ways SET %%%fields', $datasVoies); $countvoies++;
 			}
 		}
 		if ($countvoies === 5) { showtime($temp_time, ' Ajout des voies OK'); }
@@ -1048,18 +1123,18 @@ foreach ( $characters as $v) {
 		$countdoms = 0;
 		foreach ($domaines as $domain) {
 			$datasDoms = array( 'character_id' => $v['char_id'], 'domain_id' => $domain->id, 'score' => $domain->val, );
-			if (!$new->row('SELECT * FROM %chardomains WHERE %character_id = :character_id AND %domain_id = :domain_id AND %score = :score', $datasDoms)) {
-				$new->noRes('INSERT INTO %chardomains SET %%%fields', $datasDoms); $countdoms++;
+			if (!$new->row('SELECT * FROM %characters_domains WHERE %character_id = :character_id AND %domain_id = :domain_id AND %score = :score', $datasDoms)) {
+				$new->noRes('INSERT INTO %characters_domains SET %%%fields', $datasDoms); $countdoms++;
 			}
 			$discs = (array) $domain->disciplines;
 			if (!empty($discs)) {
 				foreach ($discs as $disc) {
-					$assoDiscId = $new->row('SELECT %id FROM %disciplinesdomains WHERE %disciplines_id = :disciplines_id AND %domains_id = :domains_id ', array('disciplines_id'=>$disc->id,'domains_id'=>$domain->id));
+					$assoDiscId = $new->row('SELECT %id FROM %disciplines_domains WHERE %disciplines_id = :disciplines_id AND %domains_id = :domains_id ', array('disciplines_id'=>$disc->id,'domains_id'=>$domain->id));
 					$id = isset($assoDiscId['id']) ? $assoDiscId['id'] : null;
 					if (!$id) { exit('Erreur...'.print_r($v, true)); }
 					$datasDisc = array( 'character_id' => $v['char_id'], 'score' => $disc->val, 'discipline_id' => $id);
-					if (!$new->row('SELECT * FROM %chardisciplines WHERE %character_id = :character_id AND %discipline_id = :discipline_id AND %score = :score', $datasDisc)) {
-						$new->noRes('INSERT INTO %chardisciplines SET %%%fields', $datasDisc); $countdoms++;
+					if (!$new->row('SELECT * FROM %characters_disciplines WHERE %character_id = :character_id AND %discipline_id = :discipline_id AND %score = :score', $datasDisc)) {
+						$new->noRes('INSERT INTO %characters_disciplines SET %%%fields', $datasDisc); $countdoms++;
 						showtime($temp_time, ' Ajout d\'une discipline');
 					}
 				}
@@ -1080,24 +1155,25 @@ foreach ( $characters as $v) {
 			foreach ($all_rev as $k => $val) { if ($k !== 10 && $avoid === false) { $all_rev[$k]['isAvoided'] = 1; $avoid = true; } }
 		}
 		foreach ($all_rev as $val) {
-			$new->noRes('INSERT INTO %charsetbacks SET %%%fields ', $val);
+			$new->noRes('INSERT INTO %characters_setbacks SET %%%fields ', $val);
 		}
-		showtime($temp_time, ' Ajout de '.count($all_rev).' revers '.($avoid ? ' dont un évité ' : ''));
-
+		if (count($all_rev)) {
+            showtime($temp_time, ' Ajout de '.count($all_rev).' revers '.($avoid ? ' dont un évité ' : ''));
+        }
 
 		$avtg = $cnt->avantages;
 		$desv = $cnt->desavantages;
 		$combat = $cnt->arts_combat;
 
 		$avtgnb = 0; $desvnb = 0; $combatnb = 0;
-		foreach ($avtg as $val) { $new->noRes('INSERT INTO %charavtgs SET %%%fields', array('character_id'=>$v['char_id'], 'avantage_id' => $val->id, 'doubleValue' => $val->val)); $avtgnb++; }
-		foreach ($desv as $val) { $new->noRes('INSERT INTO %charavtgs SET %%%fields', array('character_id'=>$v['char_id'], 'avantage_id' => $val->id, 'doubleValue' => $val->val)); $desvnb++; }
-		foreach ($combat as $val) { $new->noRes('INSERT INTO %charavtgs SET %character_id = :character_id, %avantage_id = (SELECT %id FROM `avantages` WHERE `name` LIKE :type), %doubleValue = :doubleValue', array('character_id'=>$v['char_id'], 'doubleValue' => 0, 'type' => '%'.$val->name.'%')); $combatnb++; }
+		foreach ($avtg as $val) { $new->noRes('INSERT INTO %characters_avantages SET %%%fields', array('character_id'=>$v['char_id'], 'avantage_id' => $val->id, 'doubleValue' => $val->val)); $avtgnb++; }
+		foreach ($desv as $val) { $new->noRes('INSERT INTO %characters_avantages SET %%%fields', array('character_id'=>$v['char_id'], 'avantage_id' => $val->id, 'doubleValue' => $val->val)); $desvnb++; }
+		foreach ($combat as $val) { $new->noRes('INSERT INTO %characters_avantages SET %character_id = :character_id, %avantage_id = (SELECT %id FROM `avantages` WHERE `name` LIKE :type), %doubleValue = :doubleValue', array('character_id'=>$v['char_id'], 'doubleValue' => 0, 'type' => '%'.$val->name.'%')); $combatnb++; }
 		if ($desvnb) { showtime($temp_time, ' Ajout de '.$desvnb.' désavantage(s) '); }
 		if ($combatnb) { showtime($temp_time, ' Ajout de '.$combatnb.' art(s) de combat '); }
 
 		$flux = $cnt->flux;
-		$sql = 'INSERT INTO %charflux SET %character_id = :character_id, %flux = (SELECT %id FROM `flux` WHERE `name` LIKE :type), %quantity = :qty';
+		$sql = 'INSERT INTO %characters_flux SET %character_id = :character_id, %flux = (SELECT %id FROM `flux` WHERE `name` LIKE :type), %quantity = :qty';
 		$addflux = 0;
 		if ($flux->mineral > 0) { $new->noRes($sql, array('character_id' => $v['char_id'], 'qty' => $flux->mineral, 'type' => 'mineral')); $addflux++; }
 		if ($flux->vegetal > 0) { $new->noRes($sql, array('character_id' => $v['char_id'], 'qty' => $flux->vegetal, 'type' => 'vegetal')); $addflux++; }
@@ -1152,15 +1228,15 @@ foreach ( $characters as $v) {
 	usleep(250000);
 }$tables_done[]=$table;showtime($temp_time, $charreq.' requêtes pour la table "'.$table.'"');
 $nbreq += $charreq;
-$tables_done[] = 'chardisciplines';
-$tables_done[] = 'chardomains';
+$tables_done[] = 'characters_disciplines';
+$tables_done[] = 'characters_domains';
 $tables_done[] = 'characters_armors';
 $tables_done[] = 'characters_weapons';
-$tables_done[] = 'charsetbacks';
-$tables_done[] = 'charavtgs';
-$tables_done[] = 'charflux';
-$tables_done[] = 'charsocialclass';
-$tables_done[] = 'charways';
+$tables_done[] = 'characters_setbacks';
+$tables_done[] = 'characters_avantages';
+$tables_done[] = 'characters_flux';
+//$tables_done[] = 'characters_social_class';
+$tables_done[] = 'characters_ways';
 
 
 
