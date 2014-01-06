@@ -360,7 +360,7 @@ if ($del === 'o') {
     exec('php ../app/console fos:user:promote pierstoval --super');
     if (!$usernb) { showtime($temp_time, 'Aucun utilisateur à ajouter'); }
     showtime($temp_time, $usernb.' requêtes pour la table "users"');
-    if ($new->noRes('ALTER TABLE `users` AUTO_INCREMENT = ?', array($maxid))) {
+    if ($new->noRes('ALTER TABLE `users` AUTO_INCREMENT = ?', array($maxid+1))) {
         showtime($temp_time, 'Réinitialisation de l\'auto-increment après les insertions et rétablissements d\'id pour les utilisateurs');
     }
     $nbreq += $usernb;
