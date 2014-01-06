@@ -966,11 +966,11 @@ foreach ( $revers as $v) {
 $table = 'maps';
 $nbreqtemp = 0;
 if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>1))) {
-	$sql = 'INSERT INTO `'.$table.'` SET `id` = :id, `name` = :name, `maxZoom` = :maxZoom, `image` = :image, `description` = :description, `created` = :created, `updated` = :updated';
+	$sql = 'INSERT INTO `'.$table.'` SET `id` = :id, `name` = :name, `nameSlug` = :nameSlug, `maxZoom` = :maxZoom, `image` = :image, `description` = :description, `created` = :created, `updated` = :updated';
 	$q = $new->prepare($sql);
 	$nbreq+=1;
 	$nbreqtemp+=1;
-	$q->execute(array('id' => 1,'name' => 'Tri-Kazel', 'image'=>'uploads/maps/esteren_nouvelle_cartepg_91220092.jpeg','maxZoom'=>10, 'description' => 'Carte de Tri-Kazel officielle, réalisée par Chris',	'created' => $datetime->date, 'updated' => $datetime->date,));
+	$q->execute(array('id' => 1,'name' => 'Tri-Kazel', 'nameSlug'=>'tri-kazel', 'image'=>'uploads/maps/esteren_nouvelle_cartepg_91220092.jpeg','maxZoom'=>10, 'description' => 'Carte de Tri-Kazel officielle, réalisée par Chris',	'created' => $datetime->date, 'updated' => $datetime->date,));
 }
 $tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
 
