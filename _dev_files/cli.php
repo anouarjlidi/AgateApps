@@ -1005,7 +1005,7 @@ $tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table 
 
 
 
-require __DIR__.'\\..\\src\\CorahnRin\\CharactersBundle\\Classes\\Money.php';
+require __DIR__.'/../src/CorahnRin/CharactersBundle/Classes/Money.php';
 
 showtime($temp_time, 'Suppression du contenu des tables d\'association');
 
