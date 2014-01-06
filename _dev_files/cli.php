@@ -1031,7 +1031,7 @@ $struct = array();foreach($t as $v) { $struct[$v['Field']] = $v; } unset($t);
 //pr($struct);
 $charreq = 0;
 $characters = $old->req('SELECT * FROM %est_characters');
-require __DIR__.'\..\src\CorahnRin\ToolsBundle\Resources\libs\functions\remove_accents.func.php';
+require __DIR__.'/../src/CorahnRin/ToolsBundle/Resources/libs/functions/remove_accents.func.php';
 
 foreach ( $characters as $v) {
 	if (!$new->row('SELECT * FROM %'.$table.' WHERE %name = :name', array('name'=>$v['char_name']))) {
