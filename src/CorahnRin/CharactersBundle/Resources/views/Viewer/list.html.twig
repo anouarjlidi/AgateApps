@@ -8,18 +8,63 @@
 
 <table class="table table-condensed table-striped">
 	<tr>
-		<th><a href="{{ path('corahnrin_characters_viewer_list',{'field':'id'}) }}" class="btn btn-link">#</a></th>
-		<th><a href="{{ path('corahnrin_characters_viewer_list',{'field':'name'}) }}" class="btn btn-link">{{ 'Nom' | tr }}</a></th>
-		<th><a href="#{#{ path('corahnrin_characters_viewer_list',{'field':'job'}) }#}" class="btn btn-link">{{ 'Métier' | tr }}</a></th>
-		<th><a href="{{ path('corahnrin_characters_viewer_list',{'field':'people'}) }}" class="btn btn-link">{{ 'Peuple' | tr }}</a></th>
-		<th><a href="{{ path('corahnrin_characters_viewer_list',{'field':'region_id'}) }}" class="btn btn-link">{{ 'Région de naissance' | tr }}</a></th>
+		<th>
+            <a href="{{ path('corahnrin_characters_viewer_list',{'field':'id','order':orderlink}) }}" class="btn btn-link">
+                {% if orderget == 'id' %}
+                    <span class="glyphicon-half icon-chevron-{{ ordertype == 'asc' ? 'up' : 'down' }}"></span>
+                    <strong class="text-underline text-black">
+                {% endif %}
+                    #
+                {% if orderget == 'id' %}</strong>{% endif %}
+            </a>
+        </th>
+		<th>
+            <a href="{{ path('corahnrin_characters_viewer_list',{'field':'name','order':orderlink}) }}" class="btn btn-link">
+                {% if orderget == 'name' %}
+                    <span class="glyphicon-half icon-chevron-{{ ordertype == 'asc' ? 'up' : 'down' }}"></span>
+                    <strong class="text-underline text-black">
+                {% endif %}
+                {{ 'Nom' | tr }}
+                {% if orderget == 'name' %}</strong>{% endif %}
+            </a>
+        </th>
+		<th>
+            <a href="{{ path('corahnrin_characters_viewer_list',{'field':'job','order':orderlink}) }}" class="btn btn-link">
+                {% if orderget == 'job' %}
+                    <span class="glyphicon-half icon-chevron-{{ ordertype == 'asc' ? 'up' : 'down' }}"></span>
+                    <strong class="text-underline text-black">
+                {% endif %}
+                {{ 'Métier' | tr }}
+                {% if orderget == 'job' %}</strong>{% endif %}
+            </a>
+        </th>
+		<th>
+            <a href="{{ path('corahnrin_characters_viewer_list',{'field':'people','order':orderlink}) }}" class="btn btn-link">
+                {% if orderget == 'people' %}
+                    <span class="glyphicon-half icon-chevron-{{ ordertype == 'asc' ? 'up' : 'down' }}"></span>
+                    <strong class="text-underline text-black">
+                {% endif %}
+                {{ 'Peuple' | tr }}
+                {% if orderget == 'people' %}</strong>{% endif %}
+            </a>
+        </th>
+		<th>
+            <a href="{{ path('corahnrin_characters_viewer_list',{'field':'region','order':orderlink}) }}" class="btn btn-link">
+                {% if orderget == 'region' %}
+                    <span class="glyphicon-half icon-chevron-{{ ordertype == 'asc' ? 'up' : 'down' }}"></span>
+                    <strong class="text-underline text-black">
+                {% endif %}
+                {{ 'Région de naissance' | tr }}
+                {% if orderget == 'region' %}</strong>{% endif %}
+            </a>
+        </th>
 	</tr>
 	{% for character in list %}
 		<tr>
 			<td>{{ character.id }}</td>
 			<td><a href="{{ path('corahnrin_characters_viewer_view', {'id':character.id,'nameSlug':character.nameSlug}) }}" class="btn btn-link btn-sm" title="{{ 'Voir le personnage %character_name%' | tr({'%character_name%':character.name}) }}">{{ character.name }}</a></td>
 			<td>{{ character.job ? character.job.name : '(Personnalisé) '~character.jobCustom | tr}}</td>
-			<td>{{ character.people | tr }}</td>
+			<td>{{ character.people.name | tr }}</td>
 			<td>{{ character.region.name | tr }}</td>
 		</tr>
 	{% endfor %}

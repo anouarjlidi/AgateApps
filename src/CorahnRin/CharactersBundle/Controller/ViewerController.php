@@ -27,11 +27,12 @@ class ViewerController extends Controller
     {
 		$request = $this->getRequest();
 		$orderget = $request->query->get('field') ?: 'name';
-		$ordertype = $request->query->get('type') ?: 'asc';
+		$ordertype = $request->query->get('order') ?: 'asc';
 		$ordertype = strtolower($ordertype) === 'desc' ? 'desc' : 'asc';
 		$repo = $this->getDoctrine()->getManager()->getRepository('CorahnRinCharactersBundle:Characters');
     	$datas = $repo->findBy(array(), array($orderget=>$ordertype));
-		return array('list'=>$datas,'ordertype' => $ordertype, 'orderget' => $orderget);
+        $orderlink = $ordertype === 'desc' ? 'asc' : 'desc';
+		return array('list'=>$datas,'ordertype' => $ordertype,'orderlink' => $orderlink, 'orderget' => $orderget);
     }
 
     /**
