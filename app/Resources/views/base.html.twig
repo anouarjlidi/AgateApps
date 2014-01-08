@@ -18,7 +18,7 @@
                 '@CorahnRinPagesBundle/Resources/public/css/corahn_rin.css'
                 '@CorahnRinPagesBundle/Resources/public/css/bootstrap-more.css'
                 '@CorahnRinMapsBundle/Resources/public/css/maps.css'
-                filter="cssrewrite,yui_css"
+                filter="cssrewrite,?yui_css"
                 output="css/main.css"
             %}<link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
             {% endstylesheets %}
@@ -48,7 +48,7 @@
                 '@CorahnRinPagesBundle/Resources/public/js/jquery-ui-1.10.3.custom.min.js'
                 '@CorahnRinPagesBundle/Resources/public/js/corahn_rin.js'
                 output="js/main.js"
-                filter="yui_js"
+                filter="?yui_js"
             %}<script type="text/javascript" src="{{ asset_url }}"></script>{% endjavascripts %}
         {% endblock %}
 
