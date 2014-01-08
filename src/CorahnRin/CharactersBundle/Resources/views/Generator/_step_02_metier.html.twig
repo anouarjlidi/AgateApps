@@ -2,13 +2,13 @@
 {% for jobs in jobs_list %}
     <div class="row">
         <h3>{{ jobs.0.book.name | tr }}</h3>
-        
+
         {% for job in jobs %}
-        
+
         <div class="col-sm-3">
             <div class="btn-group">
                 <button type="button" data-toggle="modal" data-target="#modal_job_{{ job.id }}" class="btn {{ job_value == job.id ? 'btn-inverse' : 'btn-default' }}">
-                    <span class="glyphicon glyphicon-search"></span>
+                    <span class="glyphicon icon-search"></span>
                 </button>
                 <button type="button" data-toggle="button-gen-choice" data-input-value="{{ job.id }}" data-target-node="#job_value" class="btn {{ job_value == job.id ? 'btn-inverse' : 'btn-default' }}">{{ job.name | tr }}</button>
             </div>
@@ -44,6 +44,6 @@
         </div>
 
         {% endfor %}
-        
+
     </div>
 {% endfor %}
