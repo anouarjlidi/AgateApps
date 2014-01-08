@@ -18,7 +18,7 @@ class StepLoader {
         $this->controller = $controller;
         $this->session = $session;
         $this->request = $request;
-        $this->filename = __DIR__.'\\'.'_step_'.str_pad($step->getId(), 2, 0, STR_PAD_LEFT).'_'.$step->getSlug().'.php';
+        $this->filename = __DIR__.'/'.'_step_'.str_pad($step->getId(), 2, 0, STR_PAD_LEFT).'_'.$step->getSlug().'.php';
     }
 
     /**
