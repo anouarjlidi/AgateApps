@@ -98,7 +98,7 @@
         //Applique les fonctions à tous les éléments
         for (var i = 0; i < number_of_elements; i++) {
             list_validators[i].onclick = func_update_translation;
-            list_copy_buttons[i].onclick = func_copy_initial_content();
+            list_copy_buttons[i].onclick = func_copy_initial_content
         }
 
     }
