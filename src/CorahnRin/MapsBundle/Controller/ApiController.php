@@ -14,7 +14,6 @@ use CorahnRin\MapsBundle\Classes\MapsTileManager;
 class ApiController extends Controller {
 
     private $img_size = 0;
-    private $json_params = 0;
 
     /**
      * @Route("/api/maps/image/{id}", requirements={"id":"\d+"})
@@ -81,9 +80,9 @@ class ApiController extends Controller {
         $response = new Response();
 
         $this->init();
-        
+
         $tilesManager = new MapsTileManager($map, $this->img_size);
-        
+
         $imgname = $tilesManager->mapDestinationName($zoom, $x, $y);
 
         if (!file_exists($imgname)) {
@@ -142,7 +141,7 @@ class ApiController extends Controller {
             'tilesUrl' => str_replace('{id}', $map->getId(), $route_tiles),
         );
 
-        $response->setContent(json_encode($datas, $this->json_params));
+        $response->setContent(json_encode($datas, P_JSON_ENCODE));
 
         //Envoi des données au navigateur;
         return $response;
@@ -158,10 +157,6 @@ class ApiController extends Controller {
      * Crée les paramètres json à utiliser et récupère le paramètre de la taille des tuiles
      */
     private function init() {
-        $this->json_params = JSON_NUMERIC_CHECK;
-        if (version_compare(PHP_VERSION, '5.4.0', '>')) {
-            $this->json_params = $this->json_params | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE;
-        }
 
         $this->img_size = (int) $this->container->getParameter('corahn_rin_maps.tile_size');
         if (!$this->img_size) {
@@ -178,8 +173,11 @@ class ApiController extends Controller {
     private function quit($msg = '', $code = 200) {
         $response = new Response();
         $response->headers->set('Content-type', 'application/json');
-        $msg = $this->get('corahnrin_translate')->translate($msg);
-        $response->setContent(json_encode(array('error' => $msg), $this->json_params));
+        $translator = $this->get('translator');
+        $translator->translationDomain('error.api');
+        $msg = $translator->translate($msg);
+        $translator->translationDomain();
+        $response->setContent(json_encode(array('error' => $msg), P_JSON_ENCODE));
         $response->setStatusCode($code);
         return $response;
     }
@@ -190,10 +188,10 @@ class ApiController extends Controller {
      * @throws \Symfony\Component\Config\Definition\Exception\Exception
      */
     private function exception($msg) {
-        $translator = $this->get('corahn_rin_translate');
-        $translator->routeTemplate('corahnrin_maps_api_error');
+        $translator = $this->get('translator');
+        $translator->translationDomain('error.api');
         $msg = $translator->translate($msg);
-        $translator->routeTemplate();
+        $translator->translationDomain();
         throw new \Symfony\Component\Config\Definition\Exception\Exception($msg);
     }
 }
