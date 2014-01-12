@@ -1,9 +1,48 @@
 {% extends "::layout.html.twig" %}
 
-{% block title %}{{ 'Mises à jour' | tr }} - {{ parent() }}{% endblock %}
+{% block title %}{{ 'Mises à jour' | trans }} - {{ parent() }}{% endblock %}
 
 {% block content_for_layout %}
 
-{{ steps | pr }}
+{{ translationDomain('content.updates') }}
+
+<h1>{{ 'Mises à jour' | trans }}</h1>
+
+<h2>{{ '%total% commits effectuées' | trans({'%total%' : total}) }}</h2>
+
+<ul class="list-unstyled">
+    {% for date,list in versions %}
+    <li>
+        <h3>{{ list._date | datetime }}</small></h3>
+        <ul>
+            {% for title, version in list %}
+                {% if is_array(version)%}
+                    <li>
+                        <header>
+                            <h4>
+                                {{ title | trans }}
+                                {% if version|length == 1 %}
+                                <small>{{ version.0.date | datetime }}</small>
+                                {% endif %}
+                            </h4>
+                        </header>
+                        <article class="version-article">
+                                {% if version|length == 1 %}
+                                    <p>{{ version.0.description | trans | raw}}</p>
+                                {% else %}
+                                    {% for v in version %}
+                                        <p>{{ v.description | trans | raw }}</p>
+                                    {% endfor %}
+                                {% endif %}
+                        </article>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </li>
+    {% endfor %}
+</ul>
+
+{{ translationDomain() }}
 
 {% endblock %}

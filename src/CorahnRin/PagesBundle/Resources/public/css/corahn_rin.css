@@ -6,3 +6,8 @@
 }
 
 li.active .btn { border-color: #000; }
+
+article.version-article {
+    padding-left: 25px;
+    margin-bottom: 10px;
+}
