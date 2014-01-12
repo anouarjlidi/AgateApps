@@ -1,4 +1,4 @@
-{{ translateRoute('corahnrin_pages_menu_menu') }}
+{{ translationDomain('menu.main') }}
 		<div class="navbar navbar-default" id="navigation">
 			<div class="navbar-header">
 				<button data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
@@ -13,20 +13,20 @@
 					{% for path,link in links %}
                         {% if 'dropdown_list_' in path %}
                             <li class="dropdown">
-                                <a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ link.name | tr }} <b class="caret"></b></a>
+                                <a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ link.name | trans }} <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     {% for id, el in link.list %}
-                                        <li><a href="{{ path(el.route, el.attributes) }}">{{ el.name }}</a></li>
+                                        <li><a href="{{ path(el.route, el.attributes) }}">{{ el.name | trans }}</a></li>
                                     {% else %}
-                                        <li>{{ 'Aucun élément' | tr }}...</li>
+                                        <li>{{ 'Aucun élément' | trans }}...</li>
                                     {% endfor %}
                                 </ul>
                             </li>
                         {% else %}
-                            <li><a href="{{ path(path) }}">{{ link | tr }}</a></li>
+                            <li><a href="{{ path(path) }}">{{ link | trans }}</a></li>
                         {% endif %}
 
-					{% else %}{{ 'Aucun élément' | tr }}{% endfor %}
+					{% else %}{{ 'Aucun élément' | trans }}{% endfor %}
 					{#<li class="dropdown">
 					<a data-toggle="dropdown" class="dropdown-toggle" href="#">Menu déroulant <b class="caret"></b></a>
 					<ul class="dropdown-menu">
@@ -43,22 +43,23 @@
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li class="dropdown">
-                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ 'Changer la langue %lang%' | tr({'%lang%' : '['~locale|upper~']'}) }} <b class="caret"></b></a>
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ 'Langue' | trans() }} [{{ locale|upper }}] <b class="caret"></b></a>
 					<ul class="dropdown-menu">
-                        {% for lang,literal in langs %}
-                            {% if lang == locale %}
+                        {% for lang in langs %}
+                            {% if lang.locale == locale %}
                                 <li class="active">
-                                    <a>{{ literal | tr }}</a>
+                                    <a>{{ lang.name | trans }}</a>
                                 </li>
                             {% else %}
                                 <li>
-                                    <a href="{{ path('corahnrin_translate_translate_changelang', {'lang':lang}) }}">{{ literal | tr }}</a>
+                                    <a href="{{ path('corahnrin_translation_translate_changelang', {'locale':lang.locale}) }}">{{ lang.name | trans }}</a>
                                 </li>
                             {% endif %}
                         {% endfor %}
 					</ul>
 					</li>
-					{% if app.user.username is not defined %}<li><a href="{{ path('fos_user_security_login') }}">{{ 'layout.login' | trans({},'FOSUserBundle') }}</a></li>
+					{% if app.user.username is not defined %}
+                        <li><a href="{{ path('fos_user_security_login') }}">{{ 'layout.login' | trans({},'FOSUserBundle') }}</a></li>
 					{% else %}
 						<li><a href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout' | trans({},'FOSUserBundle') }} [ {{ app.user.username }} ]</a></li>
 						{#<li class="dropdown">
@@ -76,4 +77,4 @@
 			</div>
 			<!--/.nav-collapse -->
 		</div><!--/.navbar.navbar-default-->
-{{ translateRoute() }}
+{{ translationDomain() }}

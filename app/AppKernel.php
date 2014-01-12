@@ -7,7 +7,7 @@ class AppKernel extends Kernel
 {
     public function registerBundles()
     {
-        
+
         $bundles = array(
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new Symfony\Bundle\SecurityBundle\SecurityBundle(),
@@ -25,7 +25,7 @@ class AppKernel extends Kernel
             new CorahnRin\UsersBundle\CorahnRinUsersBundle(),
             new CorahnRin\MapsBundle\CorahnRinMapsBundle(),
             new CorahnRin\ToolsBundle\CorahnRinToolsBundle(),
-            new CorahnRin\TranslateBundle\CorahnRinTranslateBundle(),
+            new CorahnRin\TranslationBundle\CorahnRinTranslationBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

@@ -1,9 +1,9 @@
-{{ translateRoute('corahnrin_pages_pages_footer') }}
+{{ translationDomain('content.footer') }}
 	<footer id="footer">
 		<div class="container">
-			<p class="text-muted text-center">{{ 'Version' | tr }} : {{ constant('P_VERSION_CODE') }} – <a href="{{ path('corahnrin_pages_versions_index') }}">{{ 'Dernière mise à jour' | tr }} : {{ constant('P_VERSION_DATE') }}</a></p>
-			<p class="text-muted text-center">{{ 'Tous droits réservés' | tr }} – Pierstoval 2012 - 2013</p>
-			<p class="text-muted text-center">{{ "Tous les contenus sont générés par l'auteur du site, mais proviennent des livres des Ombres d'Esteren, et appartiennent au collectif Forgesonges, et édité par Agate Editions." | tr }}</p>
+			<p class="text-muted text-center">{{ 'Version' | trans }} : {{ constant('P_VERSION_CODE') }} – <a href="{{ path('corahnrin_pages_versions_index') }}">{{ 'Dernière mise à jour' | trans }} : {{ constant('P_VERSION_DATE') }}</a></p>
+			<p class="text-muted text-center">{{ 'Tous droits réservés' | trans }} – Pierstoval 2012 - 2013</p>
+			<p class="text-muted text-center">{{ "Tous les contenus sont générés par l'auteur du site, mais proviennent des livres des Ombres d'Esteren, et appartiennent au collectif Forgesonges, et édité par Agate Editions." | trans }}</p>
 		</div>
 	</footer>
-{{ translateRoute() }}
+{{ translationDomain() }}

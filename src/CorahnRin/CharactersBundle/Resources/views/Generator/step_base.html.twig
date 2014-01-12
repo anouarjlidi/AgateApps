@@ -1,6 +1,6 @@
 {% extends "::layout.html.twig" %}
 
-{% block title %}{{ 'Générateur' | tr }} - {{ loaded_step.title | tr }} - {{ parent() }}{% endblock %}
+{% block title %}{{ 'Générateur' | trans }} - {{ loaded_step.title | trans }} - {{ parent() }}{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -18,12 +18,12 @@
 {% endblock %}
 
 {% block content_for_layout %}
-	<h1>{{ 'Étape' | tr }} {{ loaded_step.step }} : {{ loaded_step.title | tr }}</h1>
+	<h1>{{ 'Étape' | trans }} {{ loaded_step.step }} : {{ loaded_step.title | trans }}</h1>
     <form name="generator_form" id="generator_form" method="post" action="{{ path('corahnrin_characters_generator_step', {'step':loaded_step.step,'slug':loaded_step.slug}) }}">
         <fieldset id="generator_{{ loaded_step.slug }}}">
-            <button type="submit" id="submit_btn" class="btn btn-default">{{ 'Étape suivante' | tr }}</button>
+            <button type="submit" id="submit_btn" class="btn btn-default">{{ 'Étape suivante' | trans }}</button>
             {{ include(loaded_step_filename) }}
-            <button type="submit" id="submit_btn" class="btn btn-default">{{ 'Étape suivante' | tr }}</button>
+            <button type="submit" id="submit_btn" class="btn btn-default">{{ 'Étape suivante' | trans }}</button>
         </fieldset>
     </form>
 {% endblock %}

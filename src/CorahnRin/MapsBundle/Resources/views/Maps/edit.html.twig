@@ -1,6 +1,6 @@
 {% extends "::layout.html.twig" %}
 
-{% block title %}{{ 'Modifier une carte' | tr }} {{ map.name | tr }} - {{ parent() }}{% endblock %}
+{% block title %}{{ 'Modifier une carte' | trans }} {{ map.name | trans }} - {{ parent() }}{% endblock %}
 
 {% block content_for_layout %}
 <form id="map_edit_form" action="{{ path('corahnrin_maps_maps_edit', {'id':map.id}) }}" method="post">
@@ -8,10 +8,10 @@
         <div id="map_edit_menu" class="row">
             <div class="col-sm-3">
                 <ul class="list-inline">
-                    <li data-toggle="tooltip" title="{{ 'Terminer l\'édition' | tr }}"><button class="btn btn-success" type="submit"><span class="glyphicon icon-ok_2"></span></button></li>
-                    <li data-toggle="tooltip" title="{{ 'Désactiver le mouvement' | tr }}"><button class="btn btn-default" type="button" id="map_dont_move" data-map-container="map_container"><span class="glyphicon icon-move text-success"></span></button></li>
-                    <li data-toggle="tooltip" title="{{ 'Ajouter une zone' | tr }}"><button class="btn btn-default" type="button" id="map_add_zone" data-map-container="map_container" data-zones-container="map_zones"><span class="glyphicon icon-vector_path_polygon"></span></button></li>
-                    <li data-toggle="tooltip" title="{{ 'Supprimer' | tr }}"><button class="btn btn-danger" disabled="disabled" type="button" id="map_delete_element" data-target-to-delete=""><span class="glyphicon icon-bin"></span></button></li>
+                    <li data-toggle="tooltip" title="{{ 'Terminer l\'édition' | trans }}"><button class="btn btn-success" type="submit"><span class="glyphicon icon-ok_2"></span></button></li>
+                    <li data-toggle="tooltip" title="{{ 'Désactiver le mouvement' | trans }}"><button class="btn btn-default" type="button" id="map_dont_move" data-map-container="map_container"><span class="glyphicon icon-move text-success"></span></button></li>
+                    <li data-toggle="tooltip" title="{{ 'Ajouter une zone' | trans }}"><button class="btn btn-default" type="button" id="map_add_zone" data-map-container="map_container" data-zones-container="map_zones"><span class="glyphicon icon-vector_path_polygon"></span></button></li>
+                    <li data-toggle="tooltip" title="{{ 'Supprimer' | trans }}"><button class="btn btn-danger" disabled="disabled" type="button" id="map_delete_element" data-target-to-delete=""><span class="glyphicon icon-bin"></span></button></li>
                 </ul>
             </div>
             <div class="col-sm-3">

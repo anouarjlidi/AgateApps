@@ -36,7 +36,11 @@ twig:
 assetic:
     debug:          %kernel.debug%
     use_controller: false
-    bundles:        ['CorahnRinMapsBundle','CorahnRinCharactersBundle','CorahnRinTranslateBundle','CorahnRinPagesBundle']
+    bundles:
+        - 'CorahnRinMapsBundle'
+        - 'CorahnRinCharactersBundle'
+        - 'CorahnRinTranslationBundle'
+        - 'CorahnRinPagesBundle'
     #java: /usr/bin/java
     filters:
         cssrewrite: ~
@@ -93,3 +97,6 @@ services:
 
 corahn_rin_maps:
     tile_size: 168
+
+parameters:
+    translator.class:      CorahnRin\TranslationBundle\Translation\Translator

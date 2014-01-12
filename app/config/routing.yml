@@ -1,5 +1,5 @@
 corahn_rin_translate:
-    resource: "@CorahnRinTranslateBundle/Controller/"
+    resource: "@CorahnRinTranslationBundle/Controller/"
     type:     annotation
     prefix:   /
 

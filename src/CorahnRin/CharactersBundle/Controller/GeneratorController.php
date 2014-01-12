@@ -65,10 +65,10 @@ class GeneratorController extends Controller
         } else {
             //Si la méthode n'existe pas, alors on a demandé une étape en trop (ou en moins)
             //Dans ce cas, on renvoie une erreur
-            $translator = $this->get('corahnrin_translate');
-            $translator->routeTemplate('corahnrin_characters_generator_step');
+            $translator = $this->get('translator');
+            $translator->translationDomain('error.steps');
             $msg = $translator->translate('L\'étape %step% n\'a pas été trouvée...', array('%step%'=>$step->getStep()));
-            $translator->routeTemplate();
+            $translator->translationDomain();
             throw new \Symfony\Component\Config\Definition\Exception\Exception($msg);
             exit;
         }

@@ -1,7 +1,7 @@
 <input type="hidden" name="job_value" id="job_value" value="{{ job_value }}" />
 {% for jobs in jobs_list %}
     <div class="row">
-        <h3>{{ jobs.0.book.name | tr }}</h3>
+        <h3>{{ jobs.0.book.name | trans }}</h3>
 
         {% for job in jobs %}
 
@@ -10,31 +10,31 @@
                 <button type="button" data-toggle="modal" data-target="#modal_job_{{ job.id }}" class="btn {{ job_value == job.id ? 'btn-inverse' : 'btn-default' }}">
                     <span class="glyphicon icon-search"></span>
                 </button>
-                <button type="button" data-toggle="button-gen-choice" data-input-value="{{ job.id }}" data-target-node="#job_value" class="btn {{ job_value == job.id ? 'btn-inverse' : 'btn-default' }}">{{ job.name | tr }}</button>
+                <button type="button" data-toggle="button-gen-choice" data-input-value="{{ job.id }}" data-target-node="#job_value" class="btn {{ job_value == job.id ? 'btn-inverse' : 'btn-default' }}">{{ job.name | trans }}</button>
             </div>
             <div class="modal fade" id="modal_job_{{ job.id }}" aria-hidden="true" role="dialog" aria-labelledby="modal_job_label_{{ job.id }}">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title" id="modal_job_label_{{ job.id }}">{{ job.name | tr }} <small>{{ job.book.name | tr }}</small></h4>
+                            <h4 class="modal-title" id="modal_job_label_{{ job.id }}">{{ job.name | trans }} <small>{{ job.book.name | trans }}</small></h4>
                         </div>
                         <div class="modal-body">
-                            <p>{{ job.description | tr | raw }}</p>
-                            <p><span class="text-underline">{{ 'Domaine primaire' | tr }} :</span> {{ job.domainPrimary.name | tr }}</p>
+                            <p>{{ job.description | trans | raw }}</p>
+                            <p><span class="text-underline">{{ 'Domaine primaire' | trans }} :</span> {{ job.domainPrimary.name | trans }}</p>
                             <p>
-                                <span class="text-underline">{{ 'Domaines secondaires' | tr }} :</span>
+                                <span class="text-underline">{{ 'Domaines secondaires' | trans }} :</span>
                                 {% for domain in job.domainsSecondary %}
                                     {% if loop.index0 > 0 %} &ndash; {% endif %}
-                                    {{ domain.name | tr }}
+                                    {{ domain.name | trans }}
                                 {% else %}
-                                    {{ 'Au choix' | tr }}
+                                    {{ 'Au choix' | trans }}
                                 {% endfor %}
                             </p>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">{{ 'Fermer' | tr }}</button>
-                            <button type="button" class="btn btn-primary" data-toggle="button-gen-choice" data-input-value="{{ job.id }}" data-target-node="#job_value" data-base-class="btn-primary">{{ 'Sélectionner' | tr }}</button>
+                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">{{ 'Fermer' | trans }}</button>
+                            <button type="button" class="btn btn-primary" data-toggle="button-gen-choice" data-input-value="{{ job.id }}" data-target-node="#job_value" data-base-class="btn-primary">{{ 'Sélectionner' | trans }}</button>
                             <div class="clearfix"></div>
                         </div>
                     </div><!-- /.modal-content -->

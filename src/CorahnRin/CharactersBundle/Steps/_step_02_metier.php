@@ -34,10 +34,10 @@ if ($request->isMethod('POST')) {
         $session->set('character.jobCustom', $job_value);
         return $controller->_nextStep($session, $request);
     } else {
-        $translator = $controller->get('corahn_rin_translate');
-        $translator->routeTemplate('corahnrin_characters_generator_step');
+        $translator = $controller->get('translator');
+        $translator->translationDomain('error.steps');
         $msg = $translator->translate('Une erreur est survenue : mauvais contenu envoyé au personnage');
-        $translator->routeTemplate();
+        $translator->translationDomain();
         $session->getFlashBag()->add('error', $msg);
     }
 

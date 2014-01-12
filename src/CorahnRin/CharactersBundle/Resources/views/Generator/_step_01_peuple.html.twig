@@ -5,9 +5,9 @@
          data-div-choice-value="{{ people.id }}">
         <article>
             <header>
-                <h3 class="text-center">{{ people.name | tr }}</h3>
+                <h3 class="text-center">{{ people.name | trans }}</h3>
             </header>
-            <p>{{ people.description | tr | raw }}</p>
+            <p>{{ people.description | trans | raw }}</p>
         </article>
     </div>
     {% if loop.index % 2 == 0 %}
@@ -15,6 +15,6 @@
 <div class="row">
     {% endif %}
 {% else %}
-    <p class="alert alert-error">{{ 'Une erreur est survenue lors du chargement de la liste des peuples' | tr }}</p>
+    <p class="alert alert-error">{{ 'Une erreur est survenue lors du chargement de la liste des peuples' | trans }}</p>
 {% endfor %}
 </div>

@@ -1,4 +1,4 @@
-{{ translateRoute('corahnrin_pages_menu_admin') }}
+{{ translationDomain('menu.admin') }}
 {#
 		<div class="navbar navbar-default" id="navigation">
 			<div class="navbar-header">
@@ -11,14 +11,14 @@
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
-					{% for path,link in links %}<li><a href="{{ path(path) }}">{{ link | tr }}</a></li>
+					{% for path,link in links %}<li><a href="{{ path(path) }}">{{ link | trans }}</a></li>
 					{% endfor %}
-						
+
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					{% if app.user.username is not defined %}<li><a href="{{ path('fos_user_security_login') }}">{{ 'Connexion' | tr }}</a></li>
+					{% if app.user.username is not defined %}<li><a href="{{ path('fos_user_security_login') }}">{{ 'Connexion' | trans }}</a></li>
 					{% else %}
-						<li><a href="{{ path('fos_user_security_logout') }}">{{ 'Déconnexion' | tr}} [ {{ app.user.username is defined ? app.user.username : '' }} ]</a></li>
+						<li><a href="{{ path('fos_user_security_logout') }}">{{ 'Déconnexion' | trans}} [ {{ app.user.username is defined ? app.user.username : '' }} ]</a></li>
 						<!--<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
 						<ul class="dropdown-menu">
@@ -35,4 +35,4 @@
 			<!--/.nav-collapse -->
 		</div><!--/.navbar.navbar-default-->
 #}
-{{ translateRoute() }}
+{{ translationDomain() }}

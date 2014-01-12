@@ -7,21 +7,22 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 class MenusController extends Controller {
+
 	/**
 	 * @Template()
 	 */
 	public function menuAction($route = '') {
         if (preg_match('#^corahnrin_maps#isUu', $route)) {
-            $links_func = 'EsterenMaps';
+            $method_name = 'EsterenMaps';
             $brandTitle = 'Esteren Maps';
             $brandRoute = 'corahnrin_maps_maps_index';
         } else {
-            $links_func = 'CorahnRin';
+            $method_name = 'CorahnRin';
             $brandTitle = 'Corahn-Rin';
             $brandRoute = 'corahnrin_pages_pages_index';
         }
-        $links = $this->{'menu'.$links_func}();
-        $langs = $this->get('corahnrin_translate')->getLangs(null);
+        $links = $this->{'menu'.$method_name}();
+        $langs = $this->get('translator')->getLangs();
 		$username = $this->get('fos_user.user_provider.username');
 		return array(
             'links' => $links,
