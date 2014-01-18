@@ -3,7 +3,7 @@
 {% block title %}{{ 'Modifier une carte' | trans }} {{ map.name | trans }} - {{ parent() }}{% endblock %}
 
 {% block content_for_layout %}
-<form id="map_edit_form" action="{{ path('corahnrin_maps_maps_edit', {'id':map.id}) }}" method="post">
+<form id="map_edit_form" action="{{ url('corahnrin_maps_maps_edit', {'id':map.id}) }}" method="post">
     <fieldset>
         <div id="map_edit_menu" class="row">
             <div class="col-sm-3">
@@ -54,14 +54,14 @@
         '@CorahnRinMapsBundle/Resources/public/js/map.js'
         output="js/maps.js"
         filter="?yui_js"
-    %}<script type="text/javascript" src="{{ asset_url }}"></script>
+    %}<script type="text/javascript" src="{{ app.request.getSchemeAndHttpHost() ~ asset_url }}"></script>
 {% endjavascripts %}
 
     {% javascripts
         '@CorahnRinMapsBundle/Resources/public/js/map_edit/*.js'
         output="js/maps_edit.js"
         filter="?yui_js"
-    %}<script type="text/javascript" src="{{ asset_url }}"></script>
+    %}<script type="text/javascript" src="{{ app.request.getSchemeAndHttpHost() ~ asset_url }}"></script>
 {% endjavascripts %}
 
     <script type="text/javascript">

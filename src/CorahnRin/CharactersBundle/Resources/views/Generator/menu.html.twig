@@ -1,22 +1,28 @@
 
-<nav class="nav">
-    {{ translationDomain('menu.generator') }}
-	{% for step in steps %}
-		{% if session_step >= step.step %}
-			<a class="btn btn-link btn-xs{% if loaded_step and loaded_step.step == step.step %} active{% endif %}" href="{{ path('corahnrin_characters_generator_step', {'step':step.step,'slug':step.slug}) }}">
-                {{ step.step }}. {{ step.title | trans }}
-            </a>
-		{% else %}
-			<a class="btn btn-link btn-xs disabled">{{ step.step }}. {{ step.title | trans }}</a>
-		{% endif %}
-	{% endfor %}
-    {% if app.session.get('generator_character') %}
-        <a class="btn btn-link btn-xs" href="{{ path('corahnrin_characters_generator_reset') }}">{{ 'Réinitialiser le personnage' | trans }}</a>
-    {% endif %}
-	<div class="progress">
-		<div class="progress-bar" role="progressbar" aria-valuenow="{{ bar_width }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ bar_width }}%;">
-			<span class="sr-only">{{ bar_width }}%</span>
-		</div>
-	</div>
-    {{ translationDomain() }}
-</nav>
+        <nav class="nav">
+        {{ translationDomain('menu.generator') }}
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" aria-valuenow="{{ bar_width }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ bar_width }}%;">
+                    <span class="sr-only">{{ bar_width }}%</span>
+                </div>
+            </div>
+            <ul class="list-unstyled list-sm-inline">
+        {% for step in steps %}
+{% if session_step >= step.step %}
+
+                    <li{% if loaded_step and loaded_step.step == step.step %} class="active"{% endif %}>
+                        <a href="{{ url('corahnrin_characters_generator_step', {'step':step.step,'slug':step.slug}) }}">
+                            {{ step.step }}. {{ step.title | trans }}
+                        </a>
+                    </li>
+            {% else %}
+<li>{{ step.step }}. {{ step.title | trans }}</li>
+            {% endif %}
+        {% endfor %}
+{% if app.session.get('step') > 1 %}
+<li><a href="{{ url('corahnrin_characters_generator_reset') }}">{{ 'Réinitialiser le personnage' | trans }}</a></li>
+        {% endif %}
+
+        </ul>
+        {{ translationDomain() }}
+        </nav>

@@ -8,12 +8,12 @@
 
 <h1>{{ 'Traduction des messages' | trans }}</h1>
 
-<p><a class="btn btn-sm alert-link btn-link" href="{{ path('corahnrin_translation_translate_manage') }}">&laquo; {{ 'Retour à la liste des traductions' | trans }}</a></p>
+<p><a class="btn btn-sm alert-link btn-link" href="{{ url('corahnrin_translation_translate_manage') }}">&laquo; {{ 'Retour à la liste des traductions' | trans }}</a></p>
 
 <h4>{{ 'Domaine de traduction' | trans }} : {{ domain }}</h4>
 <h4>{{ 'Langue' | trans }} : {{ lang.name | trans }}</h4>
 
-<form name="translate_update" id="translate_update" action="{{ path('corahnrin_translation_translate_edit', {'domain':domain,'locale':lang.locale}) }}" method="post">
+<form name="translate_update" id="translate_update" action="{{ url('corahnrin_translation_translate_edit', {'domain':domain,'locale':lang.locale}) }}" method="post">
     <fieldset>
         {#
         <div class="alert alert-info" id="always_save_indicator">
@@ -22,7 +22,7 @@
                 <input type="checkbox" id="always_save" checked />
             </label>
             <div class="clearfix"></div>
-            <a class="btn btn-sm alert-link btn-link" href="{{ path('corahnrin_translation_translate_manage') }}">&laquo; {{ 'Retour à la liste des traductions' | trans }}</a>
+            <a class="btn btn-sm alert-link btn-link" href="{{ url('corahnrin_translation_translate_manage') }}">&laquo; {{ 'Retour à la liste des traductions' | trans }}</a>
         </div>
         #}
         <hr />
@@ -70,5 +70,5 @@
         '@CorahnRinTranslationBundle/Resources/public/js/translation.js'
         filter="?yui_js"
         output="js/translation.js"
-    %}<script type="text/javascript" src="{{ asset_url }}"></script>{% endjavascripts %}
+    %}<script type="text/javascript" src="{{ app.request.getSchemeAndHttpHost() ~ asset_url }}"></script>{% endjavascripts %}
 {% endblock %}

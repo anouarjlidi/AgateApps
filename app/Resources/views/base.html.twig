@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" id="corahnrin">
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}Corahn-Rin{% endblock %}</title>
@@ -8,19 +8,18 @@
 
         {% block more_headers %}{% endblock %}
 
-        {% block stylesheets %}
-            {% stylesheets
+	{% block stylesheets %}{% stylesheets
                 '@CorahnRinPagesBundle/Resources/public/css/bootstrap.css'
-                '../vendor/twitter/bootstrap/dist/css/bootstrap-theme.min.css'
                 '@CorahnRinPagesBundle/Resources/public/css/initializer.css'
                 'bundles/corahnrinpages/css/glyphicons.css'
+                'bundles/corahnrinpages/css/corahnrin-theme.css'
                 '@CorahnRinPagesBundle/Resources/public/css/corahn_rin.css'
                 '@CorahnRinPagesBundle/Resources/public/css/bootstrap-more.css'
                 '@CorahnRinMapsBundle/Resources/public/css/maps.css'
                 filter="cssrewrite,?yui_css"
                 output="css/main.css"
-            %}<link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
-            {% endstylesheets %}
+            %}<link rel="stylesheet" href="{{ app.request.getSchemeAndHttpHost() ~ asset_url }}" type="text/css" />
+		{% endstylesheets %}
         {% endblock %}
 
         <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ asset('bundles/corahnrinpages/images/favicon-144.png') }}">
@@ -33,26 +32,26 @@
     <body>
         {% block body %}{% endblock %}
 
-        {% block javascripts %}
-            {% javascripts
-                '../vendor/twitter/bootstrap/js/tests/vendor/jquery.js'
-                '../vendor/twitter/bootstrap/js/button.js'
-                '../vendor/twitter/bootstrap/js/collapse.js'
-                '../vendor/twitter/bootstrap/js/dropdown.js'
-                '../vendor/twitter/bootstrap/js/modal.js'
-                '../vendor/twitter/bootstrap/js/tooltip.js'
-                '../vendor/twitter/bootstrap/js/popover.js'
-                '../vendor/twitter/bootstrap/js/transition.js'
-                '../vendor/twitter/bootstrap/js/tab.js'
-                '@CorahnRinPagesBundle/Resources/public/js/jqueryUI/jquery.ui.core.min.js'
-                '@CorahnRinPagesBundle/Resources/public/js/jqueryUI/jquery.ui.widget.min.js'
-                '@CorahnRinPagesBundle/Resources/public/js/jqueryUI/jquery.ui.mouse.min.js'
-                '@CorahnRinPagesBundle/Resources/public/js/jqueryUI/jquery.ui.draggable.min.js'
-                '@CorahnRinPagesBundle/Resources/public/js/corahn_rin.js'
-                output="js/main.js"
-                filter="?yui_js"
-            %}<script type="text/javascript" src="{{ asset_url }}"></script>{% endjavascripts %}
-        {% endblock %}
+{% block javascripts %}{% javascripts
+	'../vendor/twitter/bootstrap/js/tests/vendor/jquery.js'
+	'../vendor/twitter/bootstrap/js/button.js'
+	'../vendor/twitter/bootstrap/js/collapse.js'
+	'../vendor/twitter/bootstrap/js/dropdown.js'
+	'../vendor/twitter/bootstrap/js/modal.js'
+	'../vendor/twitter/bootstrap/js/tooltip.js'
+	'../vendor/twitter/bootstrap/js/popover.js'
+	'../vendor/twitter/bootstrap/js/transition.js'
+	'../vendor/twitter/bootstrap/js/tab.js'
+	'@CorahnRinPagesBundle/Resources/public/js/jqueryUI/jquery.ui.core.min.js'
+	'@CorahnRinPagesBundle/Resources/public/js/jqueryUI/jquery.ui.widget.min.js'
+	'@CorahnRinPagesBundle/Resources/public/js/jqueryUI/jquery.ui.mouse.min.js'
+	'@CorahnRinPagesBundle/Resources/public/js/jqueryUI/jquery.ui.draggable.min.js'
+	'@CorahnRinPagesBundle/Resources/public/js/corahn_rin.js'
+	output="js/main.js"
+	filter="?yui_js"
+%}<script type="text/javascript" src="{{ app.request.getSchemeAndHttpHost() ~ asset_url }}"></script>
+{% endjavascripts %}
+{% endblock %}
 
     </body>
 </html>

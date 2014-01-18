@@ -9,7 +9,7 @@
 <table class="table table-condensed table-striped">
 	<tr>
 		<th>
-            <a href="{{ path('corahnrin_characters_viewer_list',{'field':'id','order':orderlink}) }}" class="btn btn-link">
+            <a href="{{ url('corahnrin_characters_viewer_list',{'field':'id','order':orderlink}) }}" class="btn btn-link">
                 {% if orderget == 'id' %}
                     <span class="glyphicon-half icon-chevron-{{ ordertype == 'asc' ? 'up' : 'down' }}"></span>
                     <strong class="text-underline text-black">
@@ -19,7 +19,7 @@
             </a>
         </th>
 		<th>
-            <a href="{{ path('corahnrin_characters_viewer_list',{'field':'name','order':orderlink}) }}" class="btn btn-link">
+            <a href="{{ url('corahnrin_characters_viewer_list',{'field':'name','order':orderlink}) }}" class="btn btn-link">
                 {% if orderget == 'name' %}
                     <span class="glyphicon-half icon-chevron-{{ ordertype == 'asc' ? 'up' : 'down' }}"></span>
                     <strong class="text-underline text-black">
@@ -29,7 +29,7 @@
             </a>
         </th>
 		<th>
-            <a href="{{ path('corahnrin_characters_viewer_list',{'field':'job','order':orderlink}) }}" class="btn btn-link">
+            <a href="{{ url('corahnrin_characters_viewer_list',{'field':'job','order':orderlink}) }}" class="btn btn-link">
                 {% if orderget == 'job' %}
                     <span class="glyphicon-half icon-chevron-{{ ordertype == 'asc' ? 'up' : 'down' }}"></span>
                     <strong class="text-underline text-black">
@@ -39,7 +39,7 @@
             </a>
         </th>
 		<th>
-            <a href="{{ path('corahnrin_characters_viewer_list',{'field':'people','order':orderlink}) }}" class="btn btn-link">
+            <a href="{{ url('corahnrin_characters_viewer_list',{'field':'people','order':orderlink}) }}" class="btn btn-link">
                 {% if orderget == 'people' %}
                     <span class="glyphicon-half icon-chevron-{{ ordertype == 'asc' ? 'up' : 'down' }}"></span>
                     <strong class="text-underline text-black">
@@ -49,7 +49,7 @@
             </a>
         </th>
 		<th>
-            <a href="{{ path('corahnrin_characters_viewer_list',{'field':'region','order':orderlink}) }}" class="btn btn-link">
+            <a href="{{ url('corahnrin_characters_viewer_list',{'field':'region','order':orderlink}) }}" class="btn btn-link">
                 {% if orderget == 'region' %}
                     <span class="glyphicon-half icon-chevron-{{ ordertype == 'asc' ? 'up' : 'down' }}"></span>
                     <strong class="text-underline text-black">
@@ -62,7 +62,7 @@
 	{% for character in list %}
 		<tr>
 			<td>{{ character.id }}</td>
-			<td><a href="{{ path('corahnrin_characters_viewer_view', {'id':character.id,'nameSlug':character.nameSlug}) }}" class="btn btn-link btn-sm" title="{{ 'Voir le personnage %character_name%' | trans({'%character_name%':character.name}) }}">{{ character.name }}</a></td>
+			<td><a href="{{ url('corahnrin_characters_viewer_view', {'id':character.id,'nameSlug':character.nameSlug}) }}" class="btn btn-link btn-sm" title="{{ 'Voir le personnage %character_name%' | trans({'%character_name%':character.name}) }}">{{ character.name }}</a></td>
 			<td>{{ character.job ? character.job.name : '(Personnalisé) '~character.jobCustom | trans}}</td>
 			<td>{{ character.people.name | trans }}</td>
 			<td>{{ character.region.name | trans }}</td>

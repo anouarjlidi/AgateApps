@@ -11,7 +11,7 @@
                <ul class="list-unstyled">
                {% for domain, translation in catalogue %}
                     <li>
-                        <a class="bl" href="{{ path('corahnrin_translation_translate_edit', {'domain':domain,'locale':locale}) }}">
+                        <a class="bl" href="{{ url('corahnrin_translation_translate_edit', {'domain':domain,'locale':locale}) }}">
                             {{ domain }}
                             <span class="pull-right label label-{{ translation.class }}">({{ translation.count }} / {{ translation.total }})</span>
                         </a>

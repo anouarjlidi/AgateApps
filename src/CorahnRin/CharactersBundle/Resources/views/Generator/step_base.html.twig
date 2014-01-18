@@ -7,31 +7,33 @@
     {% stylesheets
         '@CorahnRinCharactersBundle/Resources/public/css/*'
         output="css/generator.css"
-    %}<link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+    %}<link rel="stylesheet" href="{{ app.request.getSchemeAndHttpHost() ~ asset_url }}" type="text/css" />
     {% endstylesheets %}
 {#        filter="yui_css"#}
 {% endblock %}
 
-{% block menus %}
-	{{ parent() }}
-	{% render(controller("CorahnRinCharactersBundle:Generator:menu", {"step":loaded_step})) %}
-{% endblock %}
-
 {% block content_for_layout %}
-	<h1>{{ 'Étape' | trans }} {{ loaded_step.step }} : {{ loaded_step.title | trans }}</h1>
-    <form name="generator_form" id="generator_form" method="post" action="{{ path('corahnrin_characters_generator_step', {'step':loaded_step.step,'slug':loaded_step.slug}) }}">
-        <fieldset id="generator_{{ loaded_step.slug }}}">
-            <button type="submit" id="submit_btn" class="btn btn-default">{{ 'Étape suivante' | trans }}</button>
-            {{ include(loaded_step_filename) }}
-            <button type="submit" id="submit_btn" class="btn btn-default">{{ 'Étape suivante' | trans }}</button>
-        </fieldset>
-    </form>
+    <div class="row">
+        <div class="col-sm-3">
+            {% render(controller("CorahnRinCharactersBundle:Generator:menu", {"step":loaded_step})) %}
+        </div>
+        <div class="col-sm-9">
+            <h1>{{ 'Étape' | trans }} {{ loaded_step.step }} : {{ loaded_step.title | trans }}</h1>
+            <form name="generator_form" id="generator_form" method="post" action="{{ url('corahnrin_characters_generator_step', {'step':loaded_step.step,'slug':loaded_step.slug}) }}">
+                <fieldset id="generator_{{ loaded_step.slug }}}">
+                    <button type="submit" id="submit_btn" class="btn btn-inverse">{{ 'Étape suivante' | trans }}</button>
+                    {{ include(loaded_step_filename) }}
+                    {#<button type="submit" id="submit_btn" class="btn btn-inverse">{{ 'Étape suivante' | trans }}</button>#}
+                </fieldset>
+            </form>
+        </div>
+    </div>
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}{% javascripts
         '@CorahnRinCharactersBundle/Resources/public/js/*'
         output="js/generator.js"
-    %}<script type="text/javascript" src="{{ asset_url }}"></script>{% endjavascripts %}
+    %}<script type="text/javascript" src="{{ app.request.getSchemeAndHttpHost() ~ asset_url }}"></script>{% endjavascripts %}
 {% endblock %}
 {#        filter="yui_js"#}

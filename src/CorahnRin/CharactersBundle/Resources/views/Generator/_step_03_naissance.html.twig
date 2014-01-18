@@ -1,6 +1,6 @@
 <input type="hidden" name="region_value" id="region_value" value="{{ region_value }}" />
 
-<div id="generator_world_map" style="background: url({{ path('corahnrin_maps_api_generatemapimage', {'id':1,"zoom":2,"dimensions-type":"p","width":840,"height":710,"position-type":"p","x":55,"y":5}) }});">
+<div id="generator_world_map" style="background: url({{ url('corahnrin_maps_api_generatemapimage', {'id':1,"zoom":2,"dimensions-type":"p","width":840,"height":710,"position-type":"p","x":55,"y":5}) }});">
     <svg version="1.1" xmlns="http://www.w3.org/2000/svg">
         {% for region in regions_list %}
             <polygon points="{{ region.coordinates }}" title="{{ region.name }}" data-region-id="{{ region.id }}" {{ region_value == region.id ? ' class="checked"' : '' }} />

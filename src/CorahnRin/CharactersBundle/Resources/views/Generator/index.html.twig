@@ -2,11 +2,13 @@
 
 {% block title %}{{ 'Générateur' | trans }} - {{ parent() }}{% endblock %}
 
-{% block menus %}
-	{{ parent() }}
-	{% render(controller("CorahnRinCharactersBundle:Generator:menu")) %}
-{% endblock %}
-
 {% block content_for_layout %}
-	<h1>{{ 'Générateur' | trans }}</h1>
+    <div class="row">
+        <div class="col-sm-3">
+            {% render(controller("CorahnRinCharactersBundle:Generator:menu", {"step":0})) %}
+        </div>
+        <div class="col-sm-9">
+            <h1>{{ 'Générateur' | trans }}</h1>
+        </div>
+    </div>
 {% endblock %}

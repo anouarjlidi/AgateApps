@@ -2,34 +2,30 @@
 {% block body %}
 
 <div id="wrapper">
+
+    {% block menus %}{# MENUS #}
+        {% render(controller("CorahnRinPagesBundle:Menus:menu", {'route':app.request.attributes.get('_route')})) %}
+    {% endblock %}
+
     <div id="layout" class="container">
+		{# FLASH MESSAGES #}{% for key, messageList in app.session.flashbag.all() %}
+			<div class="alert alert-{{ key }}">
+				{% for message in messageList %}
+					{{ message | trans({}, 'messages.flash') }}
+				{% endfor %}
+			</div>
+		{% endfor %}
+		{% block fos_user_content %}{% endblock fos_user_content %}
 
-        {# MENUS #}
-        {% block menus %}
-            {% render(controller("CorahnRinPagesBundle:Menus:menu", {'route':app.request.attributes.get('_route')})) %}
-        {% endblock %}
+        <div id="content">{# DYNAMIC CONTENT FOR LAYOUT #}
 
-        {# FLASH MESSAGES #}
-            {% for key, messageList in app.session.flashbag.all() %}
-                <div class="alert alert-{{ key }}">
-                    {% for message in messageList %}
-                        {{ message | trans({}, 'messages.flash') }}
-                    {% endfor %}
-                </div>
-            {% endfor %}
-
-        {% block fos_user_content %}{% endblock fos_user_content %}
-
-        {# DYNAMIC CONTENT FOR LAYOUT #}
-        <div id="content">
             {% block content_for_layout %}{% endblock %}
 
         </div><!--/#content-->
 
     </div><!--/#layout-->
 
-    {# FOOTER #}
-    {% include "CorahnRinPagesBundle:Pages:footer.html.twig" %}
+    {# FOOTER #}{% include "CorahnRinPagesBundle:Pages:footer.html.twig" %}
 
 </div><!--/#wrapper-->
 

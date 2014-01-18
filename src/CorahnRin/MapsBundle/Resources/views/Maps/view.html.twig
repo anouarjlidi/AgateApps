@@ -17,7 +17,7 @@
         '@CorahnRinMapsBundle/Resources/public/js/map.js'
         output="js/maps.js"
         filter="yui_js"
-    %}<script type="text/javascript" src="{{ asset_url }}"></script>{% endjavascripts %}
+    %}<script type="text/javascript" src="{{ app.request.getSchemeAndHttpHost() ~ asset_url }}"></script>{% endjavascripts %}
     <script type="text/javascript">
         document.corahn_rin_map = new Map();
     </script>
