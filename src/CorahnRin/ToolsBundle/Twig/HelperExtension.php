@@ -17,7 +17,7 @@ class HelperExtension extends \Twig_Extension {
 
     public function getFilters() {
         return array(
-            'pr' => new \Twig_Filter_Method($this, 'prFilter'),
+            'pr' => new \Twig_Filter_Method($this, 'prFunction'),
             'datetime' => new \Twig_Filter_Method($this, 'datetimeFilter')
         );
     }
@@ -27,6 +27,7 @@ class HelperExtension extends \Twig_Extension {
      */
     public function getFunctions() {
         return array(
+            'pr' => new \Twig_Function_Method($this, 'prFunction'),
             'is_array' => new \Twig_Function_Method($this, 'is_arrayFunction'),
         );
     }
@@ -41,7 +42,7 @@ class HelperExtension extends \Twig_Extension {
         return strftime($format, $d);
     }
 
-    public function prFilter($var, $return = false) {
+    public function prFunction($var, $return = false) {
 		return \CorahnRinTools\pr($var, $return);
     }
 
