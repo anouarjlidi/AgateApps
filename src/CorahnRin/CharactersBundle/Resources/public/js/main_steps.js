@@ -19,38 +19,28 @@
         }
         node.value = this.getAttribute('data-div-choice-value');
     });
-    
-    $('[data-toggle="button-gen-choice"]').click(function(){
-        var node, count, baseClass;
-        if (this.classList.contains('btn-inverse')) {
-            return false;
-        }
-        node = document.querySelectorAll('[data-toggle="button-gen-choice"].btn-inverse');
+
+    /**
+     * Fonction permettant d'activer les boutons et un input associé
+     */
+    $('[data-toggle="btn-gen-choice"]').bind('mousedown', function(){var e=this;setTimeout(function(){
+        var node, count,i=0,prev = e.previousElementSibling;
+        node = document.querySelectorAll('[data-toggle="btn-gen-choice"].active');
         count = node.length;
-        for (var i = 0; i < count; i++) {
-            baseClass = node[i].getAttribute('data-base-class');
-            node[i].classList.remove('btn-inverse');
-            node[i].classList.add( baseClass ? baseClass : 'btn-default');
-            if (node[i].previousElementSibling.classList.contains('btn') && node[i].previousElementSibling.parentNode.classList.contains('btn-group')) {
-                node[i].previousElementSibling.classList.remove('btn-inverse');
-                node[i].previousElementSibling.classList.add( baseClass ? baseClass : 'btn-default');
+        for (i=0;i<count;i++){
+            node[i].classList.remove('active');
+            if (node[i].previousElementSibling.classList.contains('btn')) {
+                node[i].previousElementSibling.classList.remove('active');
             }
         }
-        node = document.querySelectorAll('[data-toggle="button-gen-choice"][data-input-value="'+this.getAttribute('data-input-value')+'"]');
-        count = node.length;
-        for (var i = 0; i < count; i++) {
-            baseClass = node[i].getAttribute('data-base-class');
-            node[i].classList.add('btn-inverse');
-            if (node[i].previousElementSibling.classList.contains('btn') && node[i].previousElementSibling.parentNode.classList.contains('btn-group')) {
-                node[i].previousElementSibling.classList.add('btn-inverse');
-            }
+        e.classList.add('active');
+        if (prev.classList.contains('btn')) {
+            prev.classList.add('active');
         }
-        if (this.previousElementSibling.classList.contains('btn') && this.previousElementSibling.parentNode.classList.contains('btn-group')) {
-            this.previousElementSibling.classList.add('btn-inverse');
-        }
-        node = document.querySelector(this.getAttribute('data-target-node'))
-        node.value = this.getAttribute('data-input-value');
+        document.getElementById(e.getAttribute('data-target-node')).value = e.getAttribute('data-input-value');
+    },1);});
+
+    $('[data-toggle="btn-dist-click"]').bind('mouseup', function(){
+        $(document.getElementById(this.getAttribute('data-target-node'))).mousedown();
     });
-    
-    
 })(jQuery);
