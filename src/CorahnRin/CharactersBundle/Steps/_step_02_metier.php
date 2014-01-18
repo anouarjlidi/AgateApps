@@ -6,14 +6,9 @@
 //$books = $controller->getDoctrine()->getManager()->getRepository('CorahnRinCharactersBundle:Books')->findAll(true);
 //$jobs = array();foreach ($t as $v) { $jobs[$v->getId()] = $v; }unset($t);
 
-$jobs = $controller->getDoctrine()->getManager()->getRepository('CorahnRinCharactersBundle:Jobs')->findAll(true);
-$jobs_ordered = array();
-foreach ($jobs as $job) {
-//    $jobs_ordered[$job->getBook()->getId()]['book_name'] = $job->getBook()->getName();
-    $jobs_ordered[$job->getBook()->getId()][] = $job;
-}
+$jobs_list = $controller->getDoctrine()->getManager()->getRepository('CorahnRinCharactersBundle:Jobs')->findAllPerBook();
 
-$datas['jobs_list'] = $jobs_ordered;
+$datas['jobs_list'] = $jobs_list;
 $datas['job_value'] = '';
 
 $character_job = $session->get('character.job');
