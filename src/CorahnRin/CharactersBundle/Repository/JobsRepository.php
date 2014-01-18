@@ -9,4 +9,12 @@ use CorahnRin\ToolsBundle\Repository\CorahnRinRepository as CorahnRinRepository;
  */
 class JobsRepository extends CorahnRinRepository {
 
+    public function findAllPerBook($format = true) {
+        $jobs = $this->findAll($format);
+        $jobs_ordered = array();
+        foreach ($jobs as $job) {
+            $jobs_ordered[$job->getBook()->getId()][] = $job;
+        }
+        return $jobs_ordered;
+    }
 }
