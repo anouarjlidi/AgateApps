@@ -18,6 +18,8 @@ class StepLoader {
         $this->controller = $controller;
         $this->session = $session;
         $this->request = $request;
+        $this->stepEntity = $step;
+        $this->step = $step->getStep();
         $this->filename = __DIR__.'/'.'_step_'.str_pad($step->getId(), 2, 0, STR_PAD_LEFT).'_'.$step->getSlug().'.php';
     }
 
@@ -27,6 +29,14 @@ class StepLoader {
      */
     public function exists() {
         return file_exists($this->filename);
+    }
+
+    /**
+     * Retourne le nom complet de l'étape : {step}.{slug}
+     * @return string
+     */
+    public function stepFullName() {
+        return $this->stepEntity->getStep().'.'.$this->stepEntity->getSlug();
     }
 
     /**
@@ -53,6 +63,7 @@ class StepLoader {
      * @return type
      */
     private function _load_alias($controller, $session, $request, $step) {
+        $character = $session->get('character');
         return require $this->filename;
     }
 

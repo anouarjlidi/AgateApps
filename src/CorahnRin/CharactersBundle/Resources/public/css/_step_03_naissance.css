@@ -5,20 +5,29 @@
     position: relative;
 }
 #generator_world_map svg polygon {
-    position: absolute;
-    fill: rgba(238, 238, 238, 0.12);
-    opacity: 0.3;
-            transition-property: opacity;
-         -o-transition-property: opacity;
-       -moz-transition-property: opacity;
-    -webkit-transition-property: opacity;
-            transition-duration: 600ms;
-       -moz-transition-duration: 600ms;
-         -o-transition-duration: 600ms;
-    -webkit-transition-duration: 600ms;
+    fill: rgba(0, 0, 0, 0.5);
+    stroke: #FFFFFF;
+    stroke-width: 5;
+    -webkit-transition-property: all;
+       -moz-transition-property: all;
+         -o-transition-property: all;
+            transition-property: all;
+    -webkit-transition-duration: 400ms;
+       -moz-transition-duration: 400ms;
+         -o-transition-duration: 400ms;
+            transition-duration: 400ms;
 }
-#generator_world_map polygon:hover,
+#generator_world_map polygon:hover {
+    fill: rgba(0, 0, 0, 0.1);
+    stroke: #E8BE38;
+    cursor: pointer;
+}
+
 #generator_world_map polygon.checked {
-    opacity: 0.0;
-    cursor:pointer;
+    fill: rgba(0, 0, 0, 0.1);
+    stroke: #D96635;
+}
+
+#generator_world_map polygon.checked:hover {
+    stroke: #D2120C;
 }

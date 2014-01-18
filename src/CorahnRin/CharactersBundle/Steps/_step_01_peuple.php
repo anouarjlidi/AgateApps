@@ -3,26 +3,21 @@
  * Peuple
  */
 
-$datas = array();
-$t = $controller->getDoctrine()->getManager()->getRepository('CorahnRinCharactersBundle:People')->findAll();
-$peoples = array();
-foreach ($t as $v) { $peoples[$v->getId()] = $v; }
-unset($t);
-$datas['peoples'] = $peoples;
-$datas['people_value'] = '';
+$peoples = $controller->getDoctrine()->getManager()->getRepository('CorahnRinCharactersBundle:People')->findAll(true);
 
-$character_people = $session->get('character.people');
-if ($character_people) {
-    $datas['people_value'] = $character_people;
-}
+$datas = array(
+    'peoples' => $peoples,
+    'people_value' => (isset($character[$this->stepFullName()]) ? (int) $character[$this->stepFullName()] : null),
+);
 
 if ($request->isMethod('POST')) {
-    $people_id = $request->request->get('gen-div-choice');
+    $people_id = (int) $request->request->get('gen-div-choice');
     if (isset($peoples[$people_id])) {
-        $session->set('character.people', $people_id);
-        return $controller->_nextStep($session, $request);
+        $character[$this->stepFullName()] = $people_id;
+        $session->set('character', $character);
+        return $controller->_nextStep($this->step);
     } else {
-        $msg = $controller->get('corahn_rin_translate')->translate('Veuillez indiquer un peuple correct');
+        $msg = $controller->get('translator')->trans('Veuillez indiquer un peuple correct.', array(), 'error.steps');
         $session->getFlashBag()->add('error', $msg);
     }
 

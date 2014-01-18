@@ -3,27 +3,21 @@
  * Lieu de naissance
  */
 
-$regions = $controller->getDoctrine()->getManager()->getRepository('CorahnRinCharactersBundle:Regions')->findAll(true);
+$regions = $controller->getDoctrine()->getManager()->getRepository('CorahnRinMapsBundle:Zones')->findAll(true);
 
-$datas['regions_list'] = $regions;
-$datas['region_value'] = '';
-
-$character_region = $session->get('character.region');
-
-if ($character_region) {
-    $datas['region_value'] = $character_region;
-}
+$datas = array(
+    'regions_list' => $regions,
+    'region_value' => (isset($character[$this->stepFullName()]) ? (int) $character[$this->stepFullName()] : null),
+);
 
 if ($request->isMethod('POST')) {
-    $region_value = $request->request->get('region_value');
+    $region_value = (int) $request->request->get('region_value');
     if (isset($regions[$region_value])) {
-        $session->set('character.region', $region_value);
-        return $controller->_nextStep($session, $request);
+        $character[$this->stepFullName()] = $region_value;
+        $session->set('character', $character);
+        return $controller->_nextStep($this->step);
     } else {
-        $translator = $controller->get('translator');
-        $translator->translationDomain('error.steps');
-        $msg = $translator->translate('Une erreur est survenue : mauvais contenu envoyé au personnage');
-        $translator->translationDomain();
+        $msg = $controller->get('translator')->trans('Veuillez entrer un métier correct.', array(), 'error.steps');
         $session->getFlashBag()->add('error', $msg);
     }
 
