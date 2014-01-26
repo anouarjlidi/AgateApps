@@ -416,11 +416,14 @@
 }
 
 #corahnrin .btn-default:hover, #corahnrin .btn-default:focus {
-    background-color: #9E9E9E;
+    background-color: #888;
+    background-image: none;
 }
 
-#corahnrin .btn-default:hover, #corahnrin .btn-default:focus, #corahnrin .btn-default:active, #corahnrin .btn-default.active, #corahnrin .open .dropdown-toggle.btn-default {
-    background-color: #696969;
+#corahnrin .btn-default:active, #corahnrin .btn-default.active, #corahnrin .open .dropdown-toggle.btn-default {
+    background-color: #999;
+    border-color: #bbb;
+    background-image: none;
 }
 /*---- primary ----*/
 #corahnrin .btn-primary {
