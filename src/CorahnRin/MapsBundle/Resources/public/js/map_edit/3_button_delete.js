@@ -15,7 +15,7 @@ document.getElementById('map_delete_element').onclick = function(e){
     }
 
     this.setAttribute('disabled','disabled');
-    var inputChange = document.getElementById('map_add_zone_input_change');
+    var inputChange = document.getElementById('map_input_change');
     inputChange.setAttribute('data-input-id', '');
     inputChange.setAttribute('disabled','disabled');
     inputChange.value = '';

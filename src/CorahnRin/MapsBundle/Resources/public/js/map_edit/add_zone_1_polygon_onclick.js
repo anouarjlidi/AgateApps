@@ -20,7 +20,7 @@ document.addZonePolygonOnClick = function () {
 
     var inputNameId = "input_"+this.id.replace('_polygon', '_name'),
         inputTarget = document.getElementById(inputNameId),
-        inputChange = document.getElementById('map_add_zone_input_change');
+        inputChange = document.getElementById('map_input_change');
 
     // Récupération de la valeur correcte dans l'input
     inputChange.setAttribute('data-input-id', inputNameId);
