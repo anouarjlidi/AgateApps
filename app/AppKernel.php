@@ -26,6 +26,7 @@ class AppKernel extends Kernel
             new CorahnRin\MapsBundle\CorahnRinMapsBundle(),
             new CorahnRin\ToolsBundle\CorahnRinToolsBundle(),
             new CorahnRin\TranslationBundle\CorahnRinTranslationBundle(),
+            new CorahnRin\ImagickBundle\CorahnRinImagickBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
