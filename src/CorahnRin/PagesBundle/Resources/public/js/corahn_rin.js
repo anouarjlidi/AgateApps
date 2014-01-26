@@ -1,6 +1,8 @@
 (function($){
-    $('[data-toggle="tooltip"]').tooltip({
-        "placement" : "auto bottom",
+    $('[data-toggle="tooltip"]').tooltip('destroy').tooltip({
+        "placement" : function(event,element){
+            return element.getAttribute('data-placement') ? element.getAttribute('data-placement') : 'auto bottom';
+        },
         "container": "body"
     });
 })(jQuery);
