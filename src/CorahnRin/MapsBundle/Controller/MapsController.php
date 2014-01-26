@@ -38,8 +38,7 @@ class MapsController extends Controller
      * @Route("/admin/maps/create/")
      * @Template()
      */
-    public function createAction()
-    {
+    public function createAction() {
 
         $valid = false;
         $map = new Maps();
@@ -85,58 +84,16 @@ class MapsController extends Controller
      * @Route("/admin/maps/edit/{id}")
      * @Template()
      */
-    public function editAction(Maps $map)
-    {
+    public function editAction(Maps $map) {
 
         $request = $this->get('request');
 
         if ($request->getMethod() == 'POST') {
-            $post = $request->request;
 
-            $polygons_list = $post->get('map_add_zone_polygon');
-            $names = $post->get('map_add_zone_name');
-
-            $zones = array();
             $em = $this->getDoctrine()->getManager();
 
-            $ids = array();
-            foreach ($map->getZones() as $zone) {
-                $ids[$zone->getId()] = $zone;
-                $em->persist($zone);
-            }
+            $this->updateZones($map);
 
-            foreach ($polygons_list as $id => $coordinates) {
-                $zone = new Zones();
-                // Définition de la zone
-                $zone->setId($id)
-                    ->setName($names[$id])
-                    ->setMap($map)
-                    ->setCoordinates($coordinates);
-                unset($ids[$id]);
-
-                $getZone = $map->getZone($zone);
-                if (!$getZone){
-                    // Injection dans la map si elle n'existe pas encore
-                    $map->addZone($zone);
-                    $em->persist($zone);
-                } else {
-                    if ($getZone->getCoordinates() !== $zone->getCoordinates() ||
-                        $getZone->getName() !== $zone->getName()) {
-                        $getZone->setCoordinates($zone->getCoordinates());
-                        $getZone->setName($zone->getName());
-                        $map->setZone($getZone);
-                        $em->persist($getZone);
-                    }
-                }
-            }
-
-            if (!empty($ids)) {
-                foreach ($ids as $zone) {
-                    $em->persist($zone);
-                    $map->removeZone($zone);
-                    $em->remove($zone);
-                }
-            }
             $em->persist($map);
 
             $em->flush();
@@ -155,4 +112,51 @@ class MapsController extends Controller
     {
     }
 
+    private function updateZones(&$map) {
+        $post = $this->get('request')->request;
+
+        $polygons_list = $post->get('map_add_zone_polygon');
+        $names = $post->get('map_add_zone_name');
+
+        $em = $this->getDoctrine()->getManager();
+
+        $ids = array();
+        foreach ($map->getZones() as $zone) {
+            $ids[$zone->getId()] = $zone;
+            $em->persist($zone);
+        }
+
+        foreach ($polygons_list as $id => $coordinates) {
+            $zone = new Zones();
+            // Définition de la zone
+            $zone->setId($id)
+                ->setName($names[$id])
+                ->setMap($map)
+                ->setCoordinates($coordinates);
+            unset($ids[$id]);
+
+            $getZone = $map->getZone($zone);
+            if (!$getZone){
+                // Injection dans la map si elle n'existe pas encore
+                $map->addZone($zone);
+                $em->persist($zone);
+            } else {
+                if ($getZone->getCoordinates() !== $zone->getCoordinates() ||
+                    $getZone->getName() !== $zone->getName()) {
+                    $getZone->setCoordinates($zone->getCoordinates());
+                    $getZone->setName($zone->getName());
+                    $map->setZone($getZone);
+                    $em->persist($getZone);
+                }
+            }
+        }
+
+        if (!empty($ids)) {
+            foreach ($ids as $zone) {
+                $em->persist($zone);
+                $map->removeZone($zone);
+                $em->remove($zone);
+            }
+        }
+    }
 }
