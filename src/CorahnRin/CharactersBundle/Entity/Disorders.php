@@ -49,6 +49,14 @@ class Disorders
      * @ORM\OneToMany(targetEntity="DisordersWays", mappedBy="disorder")
      */
     protected $ways;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="deleted", type="boolean", nullable=false,options={"default":0})
+     */
+    protected $deleted;
+
     /**
      * Constructor
      */

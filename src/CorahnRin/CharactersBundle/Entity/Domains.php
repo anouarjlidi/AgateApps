@@ -31,7 +31,7 @@ class Domains
     /**
      * @var string
      *
-     * @ORM\Column(type="text", nullable=false)
+     * @ORM\Column(columnDefinition="TEXT", nullable=false)
      */
     protected $description;
 
@@ -63,6 +63,13 @@ class Domains
      * @ORM\ManyToMany(targetEntity="SocialClass", mappedBy="domains")
      */
     protected $socialClasses;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="deleted", type="boolean", nullable=false,options={"default":0})
+     */
+    protected $deleted;
 
     /**
      * Constructor

@@ -511,7 +511,7 @@ foreach ( $avdesv as $v) {
 			'bonusdisc' => $v['avdesv_bonusdisc'],
 			'isDesv' => (strpos($v['avdesv_type'], 'desv') !== false ? 1 : 0),
 			'isCombatArt' => (strpos($v['avdesv_name'], 'de combat') !== false ? 1 : 0),
-			'double' => $v['avdesv_double'],
+			'augmentation' => $v['avdesv_double'],
 			'created' => $datetime->date,
 			'updated' => $datetime->date,
 		);$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);

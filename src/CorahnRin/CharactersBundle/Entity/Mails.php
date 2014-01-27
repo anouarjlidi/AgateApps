@@ -31,14 +31,14 @@ class Mails
     /**
      * @var string
      *
-     * @ORM\Column(type="text", nullable=false)
+     * @ORM\Column(columnDefinition="TEXT", nullable=false)
      */
     protected $content;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="text", nullable=false)
+     * @ORM\Column(columnDefinition="TEXT", nullable=false)
      */
     protected $subject;
 
@@ -57,8 +57,12 @@ class Mails
      */
     protected $updated;
 
-
-
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="deleted", type="boolean", nullable=false,options={"default":0})
+     */
+    protected $deleted;
 
     /**
      * Get id

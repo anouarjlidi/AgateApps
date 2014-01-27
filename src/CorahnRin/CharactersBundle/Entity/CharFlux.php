@@ -32,11 +32,16 @@ class CharFlux
     /**
      * @var integer
      *
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="smallint")
      */
     protected $quantity;
 
-
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="deleted", type="boolean", nullable=false,options={"default":0})
+     */
+    protected $deleted;
 
     /**
      * Set flux

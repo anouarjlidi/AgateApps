@@ -24,7 +24,7 @@ class Steps
     /**
      * @var integer
      *
-     * @ORM\Column(type="integer", nullable=false, unique=true)
+     * @ORM\Column(type="smallint", nullable=false, unique=true)
      */
     protected $step;
 
@@ -57,6 +57,12 @@ class Steps
      */
     protected $updated;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="deleted", type="boolean", nullable=false,options={"default":0})
+     */
+    protected $deleted;
 
     /**
      * Get id

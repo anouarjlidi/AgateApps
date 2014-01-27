@@ -38,23 +38,23 @@ class Avantages
     /**
      * @var integer
      *
-     * @ORM\Column(type="integer", nullable=false)
+     * @ORM\Column(type="smallint", nullable=false)
      */
     protected $xp;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="text", nullable=false)
+     * @ORM\Column(columnDefinition="TEXT", nullable=false)
      */
     protected $description;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(type="integer", nullable=false)
+     * @ORM\Column(type="smallint", nullable=false)
      */
-    protected $double;
+    protected $augmentation;
 
     /**
      * @var string
@@ -98,6 +98,12 @@ class Avantages
      */
     protected $book;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="deleted", type="boolean", nullable=false,options={"default":0})
+     */
+    protected $deleted;
 
     /**
      * Get id

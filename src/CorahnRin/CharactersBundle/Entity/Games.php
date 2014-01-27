@@ -31,14 +31,14 @@ class Games
     /**
      * @var string
      *
-     * @ORM\Column(type="text", nullable=false)
+     * @ORM\Column(columnDefinition="TEXT", nullable=false)
      */
     protected $summary;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="text", nullable=false)
+     * @ORM\Column(columnDefinition="TEXT", nullable=false)
      */
     protected $gmNotes;
 
@@ -70,6 +70,13 @@ class Games
      * @ORM\OneToMany(targetEntity="Characters", mappedBy="game")
      */
     protected $characters;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="deleted", type="boolean", nullable=false,options={"default":0})
+     */
+    protected $deleted;
 
     /**
      * Constructor

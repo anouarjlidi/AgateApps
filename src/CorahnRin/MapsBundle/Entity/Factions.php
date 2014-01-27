@@ -67,6 +67,13 @@ class Factions
 	protected $markers;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="deleted", type="boolean", nullable=false,options={"default":0})
+     */
+    protected $deleted;
+
+    /**
      * Constructor
      */
     public function __construct()

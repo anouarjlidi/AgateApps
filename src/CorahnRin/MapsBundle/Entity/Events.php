@@ -60,8 +60,6 @@ class Events
      */
     protected $weather;
 
-
-
     /**
      * @var DoctrineCollection
      * @ORM\OneToMany(targetEntity="EventsMarkers", mappedBy="event")
@@ -97,6 +95,13 @@ class Events
      * @ORM\OneToMany(targetEntity="EventsZones", mappedBy="event")
      */
     protected $zones;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="deleted", type="boolean", nullable=false,options={"default":0})
+     */
+    protected $deleted;
 
     /**
      * Constructor

@@ -51,6 +51,14 @@ class Weather {
      * @ORM\ManyToMany(targetEntity="Events", inversedBy="weather")
      */
 	protected $events;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="deleted", type="boolean", nullable=false,options={"default":0})
+     */
+    protected $deleted;
+
     /**
      * Constructor
      */

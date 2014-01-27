@@ -51,6 +51,14 @@ class Npcs
      * @ORM\ManyToMany(targetEntity="Events", inversedBy="npcs")
      */
 	protected $events;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="deleted", type="boolean", nullable=false,options={"default":0})
+     */
+    protected $deleted;
+
     /**
      * Constructor
      */

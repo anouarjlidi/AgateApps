@@ -65,6 +65,14 @@ class Resources
      * @ORM\OneToMany(targetEntity="EventsResources", mappedBy="resource")
      */
 	protected $events;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="deleted", type="boolean", nullable=false,options={"default":0})
+     */
+    protected $deleted;
+
     /**
      * Constructor
      */

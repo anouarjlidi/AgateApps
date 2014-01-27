@@ -49,7 +49,7 @@ class Maps
     /**
      * @var string
      *
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(columnDefinition="TEXT", nullable=true)
      */
     protected $description;
 
@@ -100,6 +100,14 @@ class Maps
 	 * @ORM\OneToMany(targetEntity="Zones", mappedBy="map", cascade={"persist"})
 	 */
 	protected $zones;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="deleted", type="boolean", nullable=false,options={"default":0})
+     */
+    protected $deleted;
+
     /**
      * Constructor
      */

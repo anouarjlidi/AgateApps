@@ -38,7 +38,7 @@ class Weapons
     /**
      * @var integer
      *
-     * @ORM\Column(type="integer", nullable=false)
+     * @ORM\Column(type="smallint", nullable=false)
      */
     protected $price;
 
@@ -59,7 +59,7 @@ class Weapons
     /**
      * @var integer
      *
-     * @ORM\Column(type="integer", nullable=false)
+     * @ORM\Column(type="smallint", nullable=false)
      */
     protected $range;
 
@@ -78,6 +78,12 @@ class Weapons
      */
     protected $updated;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="deleted", type="boolean", nullable=false,options={"default":0})
+     */
+    protected $deleted;
 
     /**
      * Get id

@@ -38,14 +38,14 @@ class MailsSent
     /**
      * @var string
      *
-     * @ORM\Column(type="text", nullable=false)
+     * @ORM\Column(columnDefinition="TEXT", nullable=false)
      */
     protected $subject;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="text", nullable=false)
+     * @ORM\Column(columnDefinition="TEXT", nullable=false)
      */
     protected $content;
 
@@ -71,8 +71,12 @@ class MailsSent
      */
     protected $mail;
 
-
-
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="deleted", type="boolean", nullable=false,options={"default":0})
+     */
+    protected $deleted;
 
     /**
      * Get id

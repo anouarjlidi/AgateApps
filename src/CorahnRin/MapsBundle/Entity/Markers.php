@@ -32,7 +32,7 @@ class Markers
     /**
      * @var string
      *
-     * @ORM\Column(type="text", nullable=false)
+     * @ORM\Column(columnDefinition="TEXT", nullable=false)
      */
     protected $coordinates;
 
@@ -86,6 +86,14 @@ class Markers
      * @ORM\OneToMany(targetEntity="EventsMarkers", mappedBy="marker")
      */
     protected $events;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="deleted", type="boolean", nullable=false,options={"default":0})
+     */
+    protected $deleted;
+
     /**
      * Constructor
      */

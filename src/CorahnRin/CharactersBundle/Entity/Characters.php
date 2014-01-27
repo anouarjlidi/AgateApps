@@ -60,21 +60,21 @@ class Characters
     /**
      * @var string
      *
-     * @ORM\Column(type="text", nullable=false)
+     * @ORM\Column(columnDefinition="TEXT", nullable=false)
      */
     protected $description;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="text", nullable=false)
+     * @ORM\Column(columnDefinition="TEXT", nullable=false)
      */
     protected $story;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="text", nullable=false)
+     * @ORM\Column(columnDefinition="TEXT", nullable=false)
      */
     protected $facts;
 
@@ -123,42 +123,42 @@ class Characters
     /**
      * @var integer
      *
-     * @ORM\Column(type="integer", nullable=false)
+     * @ORM\Column(type="smallint", nullable=false)
      */
     protected $trauma;
 
     /**
      * @var integer
      *
-     * @ORM\Column(type="integer", nullable=false)
+     * @ORM\Column(type="smallint", nullable=false)
      */
     protected $traumaPermanent;
 
     /**
      * @var integer
      *
-     * @ORM\Column(type="integer", nullable=false)
+     * @ORM\Column(type="smallint", nullable=false)
      */
     protected $age;
 
     /**
      * @var integer
      *
-     * @ORM\Column(type="integer", nullable=false)
+     * @ORM\Column(type="smallint", nullable=false)
      */
     protected $mentalResist;
 
     /**
      * @var integer
      *
-     * @ORM\Column(type="integer", nullable=false)
+     * @ORM\Column(type="smallint", nullable=false)
      */
     protected $health;
 
     /**
      * @var integer
      *
-     * @ORM\Column(type="integer", nullable=false)
+     * @ORM\Column(type="smallint", nullable=false)
      */
     protected $stamina;
 
@@ -172,42 +172,42 @@ class Characters
     /**
      * @var integer
      *
-     * @ORM\Column(type="integer", nullable=false)
+     * @ORM\Column(type="smallint", nullable=false)
      */
     protected $speed;
 
     /**
      * @var integer
      *
-     * @ORM\Column(type="integer", nullable=false)
+     * @ORM\Column(type="smallint", nullable=false)
      */
     protected $defense;
 
     /**
      * @var integer
      *
-     * @ORM\Column(type="integer", nullable=false)
+     * @ORM\Column(type="smallint", nullable=false)
      */
     protected $rindath;
 
     /**
      * @var integer
      *
-     * @ORM\Column(type="integer", nullable=false)
+     * @ORM\Column(type="smallint", nullable=false)
      */
     protected $exaltation;
 
     /**
      * @var integer
      *
-     * @ORM\Column(type="integer", nullable=false)
+     * @ORM\Column(type="smallint", nullable=false)
      */
     protected $experienceActual;
 
     /**
      * @var integer
      *
-     * @ORM\Column(type="integer", nullable=false)
+     * @ORM\Column(type="smallint", nullable=false)
      */
     protected $experienceSpent;
 
@@ -378,7 +378,12 @@ class Characters
 
 	protected $baseChar;
 
-
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="deleted", type="boolean", nullable=false,options={"default":0})
+     */
+    protected $deleted;
 
     /**
      * Constructor

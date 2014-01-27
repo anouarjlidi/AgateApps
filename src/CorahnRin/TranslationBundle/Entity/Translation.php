@@ -30,14 +30,14 @@ class Translation
     /**
      * @var string
      *
-     * @ORM\Column(name="source", type="text")
+     * @ORM\Column(name="source", columnDefinition="TEXT")
      */
     private $source;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="translation", type="text", nullable=true)
+     * @ORM\Column(name="translation", columnDefinition="TEXT", nullable=true)
      */
     private $translation;
 
