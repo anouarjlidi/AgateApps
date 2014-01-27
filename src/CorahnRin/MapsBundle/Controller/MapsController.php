@@ -48,33 +48,33 @@ class MapsController extends Controller
         $request = $this->get('request');
 
         if ($request->getMethod() == 'POST') {
-                $form->bind($request);
-                $file = $map->getImage();
-                $basename = preg_replace('~\.[a-zA-Z0-9]+~isUu', '', $file->getClientOriginalName());
-                $basename = preg_replace('~[^a-zA-Z0-9]~isUu', '_', $basename);
-                $basename = preg_replace('~__+~', '_', $basename);
-                $dir = ROOT.DS.'web'.DS.'uploads'.DS.'maps';
-                if (!is_dir($dir)) {
-                    mkdir($dir, 0777, true);
-                }
-                $ext = $file->guessExtension();
-                $ext = $ext ? : 'bin';
+            $form->bind($request);
+            $file = $map->getImage();
+            $basename = preg_replace('~\.[a-zA-Z0-9]+~isUu', '', $file->getClientOriginalName());
+            $basename = preg_replace('~[^a-zA-Z0-9]~isUu', '_', $basename);
+            $basename = preg_replace('~__+~', '_', $basename);
+            $dir = ROOT.DS.'web'.DS.'uploads'.DS.'maps';
+            if (!is_dir($dir)) {
+                mkdir($dir, 0777, true);
+            }
+            $ext = $file->guessExtension();
+            $ext = $ext ? : 'bin';
 
-                $final_path = $basename.'_'.rand(1, 99999999).'.'.$ext;
+            $final_path = $basename.'_'.rand(1, 99999999).'.'.$ext;
 
-                $db_name = str_replace(ROOT.DS.'web'.DS, '', $dir.DS.$final_path);
+            $db_name = str_replace(ROOT.DS.'web'.DS, '', $dir.DS.$final_path);
 
-                $entity_image_name = str_replace('\\', '/', $db_name);
+            $entity_image_name = str_replace('\\', '/', $db_name);
 
-                $map->setImage($entity_image_name);
+            $map->setImage($entity_image_name);
 
-                if ($form->isValid()) {
-                    $valid = true;
-                    $file->move($dir, $final_path);
-                    $em = $this->getDoctrine()->getManager();
-                    $em->persist($map);
-                    $em->flush();
-                }
+            if ($form->isValid()) {
+                $valid = true;
+                $file->move($dir, $final_path);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($map);
+                $em->flush();
+            }
         }
 
         return array('form' => $form->createView(), 'map' => $map, 'valid' => $valid);
@@ -97,6 +97,8 @@ class MapsController extends Controller
             $em->persist($map);
 
             $em->flush();
+
+            $this->get('session')->getFlashBag()->add('success', 'Modifications enregistrées !');
 
         }
         $route_init = $this->generateUrl('corahnrin_maps_api_init');
