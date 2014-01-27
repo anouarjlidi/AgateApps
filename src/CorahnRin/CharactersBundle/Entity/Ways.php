@@ -38,14 +38,14 @@ class Ways
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=40, nullable=false, unique=true)
+     * @ORM\Column(type="string", length=40, unique=true)
      */
     protected $fault;
 
     /**
      * @var string
      *
-     * @ORM\Column(columnDefinition="TEXT", nullable=false)
+     * @ORM\Column(columnDefinition="TEXT")
      */
     protected $description;
 
@@ -235,7 +235,7 @@ class Ways
     /**
      * Get deleted
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getDeleted()
     {

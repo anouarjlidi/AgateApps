@@ -31,14 +31,14 @@ class Disciplines
     /**
      * @var string
      *
-     * @ORM\Column(columnDefinition="TEXT", nullable=false)
+     * @ORM\Column(columnDefinition="TEXT")
      */
     protected $description;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=40, nullable=false)
+     * @ORM\Column(type="string", length=40)
      */
     protected $rank;
 
@@ -241,7 +241,7 @@ class Disciplines
     /**
      * Get deleted
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getDeleted()
     {

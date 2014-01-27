@@ -31,7 +31,7 @@ class Domains
     /**
      * @var string
      *
-     * @ORM\Column(columnDefinition="TEXT", nullable=false)
+     * @ORM\Column(columnDefinition="TEXT")
      */
     protected $description;
 
@@ -276,7 +276,7 @@ class Domains
     /**
      * Get deleted
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getDeleted()
     {

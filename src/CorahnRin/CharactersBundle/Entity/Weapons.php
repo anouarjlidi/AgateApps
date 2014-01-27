@@ -31,35 +31,35 @@ class Weapons
     /**
      * @var boolean
      *
-     * @ORM\Column(type="boolean", nullable=false)
+     * @ORM\Column(type="boolean")
      */
     protected $damage;
 
     /**
      * @var integer
      *
-     * @ORM\Column(type="smallint", nullable=false)
+     * @ORM\Column(type="smallint")
      */
     protected $price;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=3, nullable=false)
+     * @ORM\Column(type="string", length=3)
      */
     protected $availability;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(type="boolean", nullable=false)
+     * @ORM\Column(type="boolean")
      */
     protected $melee;
 
     /**
      * @var integer
      *
-     * @ORM\Column(type="smallint", nullable=false)
+     * @ORM\Column(type="smallint")
      */
     protected $range;
 
@@ -295,7 +295,7 @@ class Weapons
     /**
      * Get deleted
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getDeleted()
     {

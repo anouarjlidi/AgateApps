@@ -38,42 +38,42 @@ class Avantages
     /**
      * @var integer
      *
-     * @ORM\Column(type="smallint", nullable=false)
+     * @ORM\Column(type="smallint")
      */
     protected $xp;
 
     /**
      * @var string
      *
-     * @ORM\Column(columnDefinition="TEXT", nullable=false)
+     * @ORM\Column(columnDefinition="TEXT")
      */
     protected $description;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(type="smallint", nullable=false)
+     * @ORM\Column(type="smallint")
      */
     protected $augmentation;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=10, nullable=false)
+     * @ORM\Column(type="string", length=10)
      */
     protected $bonusdisc;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(type="boolean", nullable=false)
+     * @ORM\Column(type="boolean")
      */
     protected $isDesv;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(type="boolean", nullable=false)
+     * @ORM\Column(type="boolean")
      */
     protected $isCombatArt;
 

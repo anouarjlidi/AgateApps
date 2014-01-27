@@ -31,7 +31,7 @@ class Jobs
     /**
      * @var string
      *
-     * @ORM\Column(columnDefinition="TEXT", nullable=false)
+     * @ORM\Column(columnDefinition="TEXT")
      */
     protected $description;
 
@@ -282,7 +282,7 @@ class Jobs
     /**
      * Get deleted
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getDeleted()
     {

@@ -38,21 +38,21 @@ class Pages
     /**
      * @var boolean
      *
-     * @ORM\Column(name="show_in_admin", type="boolean", nullable=false)
+     * @ORM\Column(name="show_in_admin", type="boolean")
      */
     protected $showInAdmin;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="show_in_menu", type="boolean", nullable=false)
+     * @ORM\Column(name="show_in_menu", type="boolean")
      */
     protected $showInMenu;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="require_login", type="boolean", nullable=false)
+     * @ORM\Column(name="require_login", type="boolean")
      */
     protected $requireLogin;
 

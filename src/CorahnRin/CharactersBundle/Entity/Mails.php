@@ -24,21 +24,21 @@ class Mails
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=50, nullable=false, unique=true)
+     * @ORM\Column(type="string", length=50, unique=true)
      */
     protected $code;
 
     /**
      * @var string
      *
-     * @ORM\Column(columnDefinition="TEXT", nullable=false)
+     * @ORM\Column(columnDefinition="TEXT")
      */
     protected $content;
 
     /**
      * @var string
      *
-     * @ORM\Column(columnDefinition="TEXT", nullable=false)
+     * @ORM\Column(columnDefinition="TEXT")
      */
     protected $subject;
 
@@ -205,7 +205,7 @@ class Mails
     /**
      * Get deleted
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getDeleted()
     {

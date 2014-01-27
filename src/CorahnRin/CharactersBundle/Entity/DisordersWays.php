@@ -31,7 +31,7 @@ class DisordersWays
     /**
      * @var boolean
      *
-     * @ORM\Column(type="boolean", nullable=false)
+     * @ORM\Column(type="boolean", options={"default":0})
      */
     protected $isMajor;
 
@@ -127,7 +127,7 @@ class DisordersWays
     /**
      * Get deleted
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getDeleted()
     {

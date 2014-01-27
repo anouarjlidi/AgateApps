@@ -56,7 +56,7 @@ class Maps
     /**
      * @var integer
      *
-     * @ORM\Column(type="smallint", nullable=false)
+     * @ORM\Column(type="smallint", options={"default":0})
      * @Assert\Range(
      *      min = 1,
      *      max = 10
@@ -435,7 +435,7 @@ class Maps
     /**
      * Get deleted
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getDeleted()
     {

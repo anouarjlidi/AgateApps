@@ -31,28 +31,28 @@ class Armors
     /**
      * @var string
      *
-     * @ORM\Column(columnDefinition="TEXT", nullable=false)
+     * @ORM\Column(columnDefinition="TEXT")
      */
     protected $description;
 
     /**
      * @var integer
      *
-     * @ORM\Column(type="smallint", nullable=false)
+     * @ORM\Column(type="smallint")
      */
     protected $protection;
 
     /**
      * @var integer
      *
-     * @ORM\Column(type="smallint", nullable=false)
+     * @ORM\Column(type="smallint")
      */
     protected $price;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=3, nullable=false)
+     * @ORM\Column(type="string", length=3)
      */
     protected $availability;
 
@@ -265,7 +265,7 @@ class Armors
     /**
      * Get deleted
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getDeleted()
     {

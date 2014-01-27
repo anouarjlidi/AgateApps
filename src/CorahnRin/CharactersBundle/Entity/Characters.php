@@ -46,7 +46,7 @@ class Characters
     /**
      * @var integer
      *
-     * @ORM\Column(type="boolean", nullable=false)
+     * @ORM\Column(type="smallint", nullable=false, options={"default":0})
      */
     protected $status;
 
@@ -60,42 +60,42 @@ class Characters
     /**
      * @var string
      *
-     * @ORM\Column(columnDefinition="TEXT", nullable=false)
+     * @ORM\Column(columnDefinition="TEXT")
      */
     protected $description;
 
     /**
      * @var string
      *
-     * @ORM\Column(columnDefinition="TEXT", nullable=false)
+     * @ORM\Column(columnDefinition="TEXT")
      */
     protected $story;
 
     /**
      * @var string
      *
-     * @ORM\Column(columnDefinition="TEXT", nullable=false)
+     * @ORM\Column(columnDefinition="TEXT")
      */
     protected $facts;
 
     /**
      * @var array
      *
-     * @ORM\Column(type="array", nullable=false)
+     * @ORM\Column(type="array")
      */
     protected $inventory;
 
     /**
      * @var \CorahnRin\CharactersBundle\Classes\Money
      *
-     * @ORM\Column(type="object", nullable=false)
+     * @ORM\Column(type="object")
      */
     protected $money;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=30, nullable=false)
+     * @ORM\Column(type="string", length=30)
      */
     protected $orientation;
 
@@ -116,21 +116,21 @@ class Characters
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=25, nullable=false)
+     * @ORM\Column(type="string", length=25)
      */
     protected $geoLiving;
 
     /**
      * @var integer
      *
-     * @ORM\Column(type="smallint", nullable=false)
+     * @ORM\Column(type="smallint")
      */
     protected $trauma;
 
     /**
      * @var integer
      *
-     * @ORM\Column(type="smallint", nullable=false)
+     * @ORM\Column(type="smallint")
      */
     protected $traumaPermanent;
 
@@ -144,70 +144,70 @@ class Characters
     /**
      * @var integer
      *
-     * @ORM\Column(type="smallint", nullable=false)
+     * @ORM\Column(type="smallint")
      */
     protected $mentalResist;
 
     /**
      * @var integer
      *
-     * @ORM\Column(type="smallint", nullable=false)
+     * @ORM\Column(type="smallint")
      */
     protected $health;
 
     /**
      * @var integer
      *
-     * @ORM\Column(type="smallint", nullable=false)
+     * @ORM\Column(type="smallint")
      */
     protected $stamina;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(type="boolean", nullable=false)
+     * @ORM\Column(type="boolean")
      */
     protected $survival;
 
     /**
      * @var integer
      *
-     * @ORM\Column(type="smallint", nullable=false)
+     * @ORM\Column(type="smallint")
      */
     protected $speed;
 
     /**
      * @var integer
      *
-     * @ORM\Column(type="smallint", nullable=false)
+     * @ORM\Column(type="smallint")
      */
     protected $defense;
 
     /**
      * @var integer
      *
-     * @ORM\Column(type="smallint", nullable=false)
+     * @ORM\Column(type="smallint")
      */
     protected $rindath;
 
     /**
      * @var integer
      *
-     * @ORM\Column(type="smallint", nullable=false)
+     * @ORM\Column(type="smallint")
      */
     protected $exaltation;
 
     /**
      * @var integer
      *
-     * @ORM\Column(type="smallint", nullable=false)
+     * @ORM\Column(type="smallint")
      */
     protected $experienceActual;
 
     /**
      * @var integer
      *
-     * @ORM\Column(type="smallint", nullable=false)
+     * @ORM\Column(type="smallint")
      */
     protected $experienceSpent;
 
@@ -1724,7 +1724,7 @@ class Characters
     /**
      * Get deleted
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getDeleted()
     {

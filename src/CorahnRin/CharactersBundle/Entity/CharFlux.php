@@ -37,13 +37,6 @@ class CharFlux
     protected $quantity;
 
     /**
-     * @var boolean
-     *
-     * @ORM\Column(name="deleted", type="boolean", nullable=false,options={"default":0})
-     */
-    protected $deleted;
-
-    /**
      * Set flux
      *
      * @param integer $flux
@@ -128,7 +121,7 @@ class CharFlux
     /**
      * Get deleted
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getDeleted()
     {

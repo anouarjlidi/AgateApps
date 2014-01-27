@@ -31,54 +31,54 @@ class Artifacts
     /**
      * @var integer
      *
-     * @ORM\Column(type="smallint", nullable=false)
+     * @ORM\Column(type="smallint")
      */
     protected $price;
 
     /**
      * @var integer
-     * @ORM\Column(type="smallint", nullable=false)
+     * @ORM\Column(type="smallint")
      */
     protected $consumption;
 
     /**
      * @var integer
-     * @ORM\Column(type="smallint", nullable=false)
+     * @ORM\Column(type="smallint")
      */
     protected $consumptionInterval;
 
     /**
      * @var integer
      *
-     * @ORM\Column(type="smallint", nullable=false)
+     * @ORM\Column(type="smallint")
      */
     protected $tank;
 
     /**
      * @var integer
      *
-     * @ORM\Column(type="smallint", nullable=false)
+     * @ORM\Column(type="smallint")
      */
     protected $resistance;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=70, nullable=false)
+     * @ORM\Column(type="string", length=70)
      */
     protected $vulnerability;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=20, nullable=false)
+     * @ORM\Column(type="string", length=20)
      */
     protected $handling;
 
     /**
      * @var integer
      *
-     * @ORM\Column(type="smallint", nullable=false)
+     * @ORM\Column(type="smallint")
      */
     protected $damage;
 
@@ -413,7 +413,7 @@ class Artifacts
     /**
      * Get deleted
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getDeleted()
     {

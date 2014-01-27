@@ -48,7 +48,7 @@ class EventsMarkersTypes {
 	/**
 	 * @var smallint
 	 *
-	 * @ORM\Column(type="smallint", nullable=false)
+	 * @ORM\Column(type="smallint")
 	 */
 	protected $percentage;
 
@@ -190,7 +190,7 @@ class EventsMarkersTypes {
     /**
      * Get deleted
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getDeleted()
     {

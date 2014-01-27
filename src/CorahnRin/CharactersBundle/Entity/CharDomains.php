@@ -36,13 +36,6 @@ class CharDomains
     protected $score;
 
     /**
-     * @var boolean
-     *
-     * @ORM\Column(name="deleted", type="boolean", nullable=false,options={"default":0})
-     */
-    protected $deleted;
-
-    /**
      * Set score
      *
      * @param integer $score
@@ -127,7 +120,7 @@ class CharDomains
     /**
      * Get deleted
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getDeleted()
     {

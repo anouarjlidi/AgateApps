@@ -31,7 +31,7 @@ class Miracles
     /**
      * @var boolean
      *
-     * @ORM\Column(type="boolean", nullable=false)
+     * @ORM\Column(type="boolean")
      */
     protected $isMajor;
 
@@ -175,7 +175,7 @@ class Miracles
     /**
      * Get deleted
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getDeleted()
     {
