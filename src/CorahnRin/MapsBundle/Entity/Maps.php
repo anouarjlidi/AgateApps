@@ -418,4 +418,27 @@ class Maps
     {
         return $this->nameSlug;
     }
+
+    /**
+     * Set deleted
+     *
+     * @param boolean $deleted
+     * @return Maps
+     */
+    public function setDeleted($deleted)
+    {
+        $this->deleted = $deleted;
+
+        return $this;
+    }
+
+    /**
+     * Get deleted
+     *
+     * @return boolean 
+     */
+    public function getDeleted()
+    {
+        return $this->deleted;
+    }
 }

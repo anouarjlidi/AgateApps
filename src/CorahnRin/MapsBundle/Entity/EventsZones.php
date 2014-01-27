@@ -173,4 +173,27 @@ class EventsZones {
     {
         return $this->zone;
     }
+
+    /**
+     * Set deleted
+     *
+     * @param boolean $deleted
+     * @return EventsZones
+     */
+    public function setDeleted($deleted)
+    {
+        $this->deleted = $deleted;
+
+        return $this;
+    }
+
+    /**
+     * Get deleted
+     *
+     * @return boolean 
+     */
+    public function getDeleted()
+    {
+        return $this->deleted;
+    }
 }

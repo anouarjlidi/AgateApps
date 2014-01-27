@@ -367,4 +367,50 @@ class Avantages
     {
         return $this->book;
     }
+
+    /**
+     * Set augmentation
+     *
+     * @param integer $augmentation
+     * @return Avantages
+     */
+    public function setAugmentation($augmentation)
+    {
+        $this->augmentation = $augmentation;
+
+        return $this;
+    }
+
+    /**
+     * Get augmentation
+     *
+     * @return integer 
+     */
+    public function getAugmentation()
+    {
+        return $this->augmentation;
+    }
+
+    /**
+     * Set deleted
+     *
+     * @param boolean $deleted
+     * @return Avantages
+     */
+    public function setDeleted($deleted)
+    {
+        $this->deleted = $deleted;
+
+        return $this;
+    }
+
+    /**
+     * Get deleted
+     *
+     * @return boolean 
+     */
+    public function getDeleted()
+    {
+        return $this->deleted;
+    }
 }

@@ -260,4 +260,27 @@ class Resources
     {
         return $this->events;
     }
+
+    /**
+     * Set deleted
+     *
+     * @param boolean $deleted
+     * @return Resources
+     */
+    public function setDeleted($deleted)
+    {
+        $this->deleted = $deleted;
+
+        return $this;
+    }
+
+    /**
+     * Get deleted
+     *
+     * @return boolean 
+     */
+    public function getDeleted()
+    {
+        return $this->deleted;
+    }
 }

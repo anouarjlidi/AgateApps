@@ -173,4 +173,27 @@ class EventsMarkersTypes {
     {
         return $this->markerType;
     }
+
+    /**
+     * Set deleted
+     *
+     * @param boolean $deleted
+     * @return EventsMarkersTypes
+     */
+    public function setDeleted($deleted)
+    {
+        $this->deleted = $deleted;
+
+        return $this;
+    }
+
+    /**
+     * Get deleted
+     *
+     * @return boolean 
+     */
+    public function getDeleted()
+    {
+        return $this->deleted;
+    }
 }

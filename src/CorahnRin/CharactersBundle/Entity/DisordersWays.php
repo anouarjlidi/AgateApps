@@ -110,4 +110,27 @@ class DisordersWays
     {
         return $this->isMajor;
     }
+
+    /**
+     * Set deleted
+     *
+     * @param boolean $deleted
+     * @return DisordersWays
+     */
+    public function setDeleted($deleted)
+    {
+        $this->deleted = $deleted;
+
+        return $this;
+    }
+
+    /**
+     * Get deleted
+     *
+     * @return boolean 
+     */
+    public function getDeleted()
+    {
+        return $this->deleted;
+    }
 }

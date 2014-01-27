@@ -259,4 +259,27 @@ class Domains
     {
         $this->socialClasses->removeElement($socialClasses);
     }
+
+    /**
+     * Set deleted
+     *
+     * @param boolean $deleted
+     * @return Domains
+     */
+    public function setDeleted($deleted)
+    {
+        $this->deleted = $deleted;
+
+        return $this;
+    }
+
+    /**
+     * Get deleted
+     *
+     * @return boolean 
+     */
+    public function getDeleted()
+    {
+        return $this->deleted;
+    }
 }

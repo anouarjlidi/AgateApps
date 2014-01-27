@@ -100,4 +100,27 @@ class DisciplinesDomains
     {
         return $this->domain;
     }
+
+    /**
+     * Set deleted
+     *
+     * @param boolean $deleted
+     * @return DisciplinesDomains
+     */
+    public function setDeleted($deleted)
+    {
+        $this->deleted = $deleted;
+
+        return $this;
+    }
+
+    /**
+     * Get deleted
+     *
+     * @return boolean 
+     */
+    public function getDeleted()
+    {
+        return $this->deleted;
+    }
 }

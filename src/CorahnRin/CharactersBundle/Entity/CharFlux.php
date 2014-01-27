@@ -111,4 +111,27 @@ class CharFlux
     {
         return $this->character;
     }
+
+    /**
+     * Set deleted
+     *
+     * @param boolean $deleted
+     * @return CharFlux
+     */
+    public function setDeleted($deleted)
+    {
+        $this->deleted = $deleted;
+
+        return $this;
+    }
+
+    /**
+     * Get deleted
+     *
+     * @return boolean 
+     */
+    public function getDeleted()
+    {
+        return $this->deleted;
+    }
 }

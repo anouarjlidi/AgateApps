@@ -218,4 +218,27 @@ class Ways
     {
         return $this->updated;
     }
+
+    /**
+     * Set deleted
+     *
+     * @param boolean $deleted
+     * @return Ways
+     */
+    public function setDeleted($deleted)
+    {
+        $this->deleted = $deleted;
+
+        return $this;
+    }
+
+    /**
+     * Get deleted
+     *
+     * @return boolean 
+     */
+    public function getDeleted()
+    {
+        return $this->deleted;
+    }
 }

@@ -111,4 +111,27 @@ class CharSetbacks
     {
         return $this->isAvoided;
     }
+
+    /**
+     * Set deleted
+     *
+     * @param boolean $deleted
+     * @return CharSetbacks
+     */
+    public function setDeleted($deleted)
+    {
+        $this->deleted = $deleted;
+
+        return $this;
+    }
+
+    /**
+     * Get deleted
+     *
+     * @return boolean 
+     */
+    public function getDeleted()
+    {
+        return $this->deleted;
+    }
 }

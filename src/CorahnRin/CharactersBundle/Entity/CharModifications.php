@@ -188,4 +188,27 @@ class CharModifications
     {
         return $this->user;
     }
+
+    /**
+     * Set deleted
+     *
+     * @param boolean $deleted
+     * @return CharModifications
+     */
+    public function setDeleted($deleted)
+    {
+        $this->deleted = $deleted;
+
+        return $this;
+    }
+
+    /**
+     * Get deleted
+     *
+     * @return boolean 
+     */
+    public function getDeleted()
+    {
+        return $this->deleted;
+    }
 }

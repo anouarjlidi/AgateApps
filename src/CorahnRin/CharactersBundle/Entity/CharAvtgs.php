@@ -110,4 +110,27 @@ class CharAvtgs
     {
         return $this->avantage;
     }
+
+    /**
+     * Set deleted
+     *
+     * @param boolean $deleted
+     * @return CharAvtgs
+     */
+    public function setDeleted($deleted)
+    {
+        $this->deleted = $deleted;
+
+        return $this;
+    }
+
+    /**
+     * Get deleted
+     *
+     * @return boolean 
+     */
+    public function getDeleted()
+    {
+        return $this->deleted;
+    }
 }

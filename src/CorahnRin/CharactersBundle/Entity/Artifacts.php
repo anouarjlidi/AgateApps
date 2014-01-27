@@ -396,4 +396,27 @@ class Artifacts
     {
         return $this->flux;
     }
+
+    /**
+     * Set deleted
+     *
+     * @param boolean $deleted
+     * @return Artifacts
+     */
+    public function setDeleted($deleted)
+    {
+        $this->deleted = $deleted;
+
+        return $this;
+    }
+
+    /**
+     * Get deleted
+     *
+     * @return boolean 
+     */
+    public function getDeleted()
+    {
+        return $this->deleted;
+    }
 }

@@ -173,4 +173,27 @@ class EventsRoutes {
     {
         return $this->route;
     }
+
+    /**
+     * Set deleted
+     *
+     * @param boolean $deleted
+     * @return EventsRoutes
+     */
+    public function setDeleted($deleted)
+    {
+        $this->deleted = $deleted;
+
+        return $this;
+    }
+
+    /**
+     * Get deleted
+     *
+     * @return boolean 
+     */
+    public function getDeleted()
+    {
+        return $this->deleted;
+    }
 }

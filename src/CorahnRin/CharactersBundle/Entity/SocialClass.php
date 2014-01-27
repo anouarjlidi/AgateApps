@@ -206,4 +206,27 @@ class SocialClass
     {
         return $this->description;
     }
+
+    /**
+     * Set deleted
+     *
+     * @param boolean $deleted
+     * @return SocialClass
+     */
+    public function setDeleted($deleted)
+    {
+        $this->deleted = $deleted;
+
+        return $this;
+    }
+
+    /**
+     * Get deleted
+     *
+     * @return boolean 
+     */
+    public function getDeleted()
+    {
+        return $this->deleted;
+    }
 }

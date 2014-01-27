@@ -224,4 +224,27 @@ class Disciplines
     {
         return $this->book;
     }
+
+    /**
+     * Set deleted
+     *
+     * @param boolean $deleted
+     * @return Disciplines
+     */
+    public function setDeleted($deleted)
+    {
+        $this->deleted = $deleted;
+
+        return $this;
+    }
+
+    /**
+     * Get deleted
+     *
+     * @return boolean 
+     */
+    public function getDeleted()
+    {
+        return $this->deleted;
+    }
 }

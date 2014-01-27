@@ -1707,4 +1707,27 @@ class Characters
     {
         return $this->SocialClassdomain2;
     }
+
+    /**
+     * Set deleted
+     *
+     * @param boolean $deleted
+     * @return Characters
+     */
+    public function setDeleted($deleted)
+    {
+        $this->deleted = $deleted;
+
+        return $this;
+    }
+
+    /**
+     * Get deleted
+     *
+     * @return boolean 
+     */
+    public function getDeleted()
+    {
+        return $this->deleted;
+    }
 }
