@@ -61,13 +61,12 @@ doctrine:
         user:     %database_user%
         password: %database_password%
         charset:  UTF8
-        # if using pdo_sqlite as your database driver, add the path in parameters.yml
-        # e.g. database_path: %kernel.root_dir%/data/data.db3
-        # path:     %database_path%
-
     orm:
         auto_generate_proxy_classes: %kernel.debug%
         auto_mapping: true
+        metadata_cache_driver: apc
+        result_cache_driver: apc
+        query_cache_driver: apc
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -89,14 +88,17 @@ stof_doctrine_extensions:
             sluggable: true
             timestampable: true
 
+# Services declaration
 services:
     twig.text_extension:
         class: Twig_Extensions_Extension_Text
         tags:
             - name: twig.extension
 
+# Corahn-Rin map tile size
 corahn_rin_maps:
     tile_size: 168
 
+# Overriding native translator
 parameters:
     translator.class:      CorahnRin\TranslationBundle\Translation\Translator
