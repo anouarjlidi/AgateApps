@@ -208,29 +208,6 @@ class Avantages
     }
 
     /**
-     * Set double
-     *
-     * @param integer $double
-     * @return Avantages
-     */
-    public function setDouble($double)
-    {
-        $this->double = $double;
-
-        return $this;
-    }
-
-    /**
-     * Get double
-     *
-     * @return integer
-     */
-    public function getDouble()
-    {
-        return $this->double;
-    }
-
-    /**
      * Set bonusdisc
      *
      * @param string $bonusdisc
@@ -384,7 +361,7 @@ class Avantages
     /**
      * Get augmentation
      *
-     * @return integer 
+     * @return integer
      */
     public function getAugmentation()
     {
@@ -407,7 +384,7 @@ class Avantages
     /**
      * Get deleted
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getDeleted()
     {
