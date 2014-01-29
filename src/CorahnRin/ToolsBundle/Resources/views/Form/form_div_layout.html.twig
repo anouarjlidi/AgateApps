@@ -226,13 +226,17 @@
     {% if label is empty %}
         {% set label = name|humanize %}
     {% endif %}
-    <button type="{{ type|default('button') }}" {{ block('button_attributes') }}>{{ label|trans({}, translation_domain) }}</button>
+    {% if class is not defined %}
+        {% set class = "btn btn-default" %}
+    {% endif %}
+    <button type="{{ type|default('button') }}" class="{{ class }}" {{ block('button_attributes') }}>{{ label|trans({}, translation_domain) }}</button>
 {% endspaceless %}
 {% endblock button_widget %}
 
 {% block submit_widget %}
 {% spaceless %}
     {% set type = type|default('submit') %}
+    {% set class = "btn btn-inverse" %}
     {{ block('button_widget') }}
 {% endspaceless %}
 {% endblock submit_widget %}
@@ -317,6 +321,8 @@
     {% else %}
         {% set form_method = "POST" %}
     {% endif %}
+    {% set class = (attr.class is defined) ? attr.class : '' %}
+    {% set attr = attr|merge({'class':class~' form-horizontal'}) %}
     <form method="{{ form_method|lower }}" action="{{ action }}"{% for attrname, attrvalue in attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}{% if multipart %} enctype="multipart/form-data"{% endif %}>
     {% if form_method != method %}
         <input type="hidden" name="_method" value="{{ method }}" />
