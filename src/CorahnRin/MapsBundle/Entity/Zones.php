@@ -32,7 +32,7 @@ class Zones
     /**
      * @var string
      *
-     * @ORM\Column(columnDefinition="TEXT")
+     * @ORM\Column(type="text")
      */
     protected $coordinates;
 

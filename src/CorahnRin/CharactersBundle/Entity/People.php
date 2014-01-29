@@ -31,7 +31,7 @@ class People
     /**
      * @var string
      *
-     * @ORM\Column(name="description", columnDefinition="TEXT")
+     * @ORM\Column(name="description", type="text")
      */
     protected $description;
 

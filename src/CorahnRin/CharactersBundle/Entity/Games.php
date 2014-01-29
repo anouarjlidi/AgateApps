@@ -31,14 +31,14 @@ class Games
     /**
      * @var string
      *
-     * @ORM\Column(columnDefinition="TEXT")
+     * @ORM\Column(type="text")
      */
     protected $summary;
 
     /**
      * @var string
      *
-     * @ORM\Column(columnDefinition="TEXT")
+     * @ORM\Column(type="text")
      */
     protected $gmNotes;
 

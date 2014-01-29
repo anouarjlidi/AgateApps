@@ -45,7 +45,7 @@ class Avantages
     /**
      * @var string
      *
-     * @ORM\Column(columnDefinition="TEXT")
+     * @ORM\Column(type="text")
      */
     protected $description;
 

@@ -32,7 +32,7 @@ class Routes
     /**
      * @var string
      *
-     * @ORM\Column(columnDefinition="TEXT")
+     * @ORM\Column(type="text")
      */
     protected $coordinates;
 
@@ -69,9 +69,16 @@ class Routes
     /**
      * @var DoctrineCollection
      *
-     * @ORM\ManyToMany(targetEntity="Markers", inversedBy="routes")
+     * @ORM\ManyToOne(targetEntity="Markers")
      */
-    protected $markers;
+    protected $markerStart;
+
+    /**
+     * @var DoctrineCollection
+     *
+     * @ORM\ManyToOne(targetEntity="Markers")
+     */
+    protected $markerEnd;
 
     /**
      * @var \Maps
@@ -107,7 +114,6 @@ class Routes
     public function __construct()
     {
         $this->resources = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->markers = new \Doctrine\Common\Collections\ArrayCollection();
         $this->events = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -247,39 +253,6 @@ class Routes
     }
 
     /**
-     * Add markers
-     *
-     * @param \CorahnRin\MapsBundle\Entity\Markers $markers
-     * @return Routes
-     */
-    public function addMarker(\CorahnRin\MapsBundle\Entity\Markers $markers)
-    {
-        $this->markers[] = $markers;
-
-        return $this;
-    }
-
-    /**
-     * Remove markers
-     *
-     * @param \CorahnRin\MapsBundle\Entity\Markers $markers
-     */
-    public function removeMarker(\CorahnRin\MapsBundle\Entity\Markers $markers)
-    {
-        $this->markers->removeElement($markers);
-    }
-
-    /**
-     * Get markers
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getMarkers()
-    {
-        return $this->markers;
-    }
-
-    /**
      * Set map
      *
      * @param \CorahnRin\MapsBundle\Entity\Maps $map
@@ -402,5 +375,51 @@ class Routes
     public function getDeleted()
     {
         return $this->deleted;
+    }
+
+    /**
+     * Set markerStart
+     *
+     * @param \CorahnRin\MapsBundle\Entity\Markers $markerStart
+     * @return Routes
+     */
+    public function setMarkerStart(\CorahnRin\MapsBundle\Entity\Markers $markerStart = null)
+    {
+        $this->markerStart = $markerStart;
+
+        return $this;
+    }
+
+    /**
+     * Get markerStart
+     *
+     * @return \CorahnRin\MapsBundle\Entity\Markers
+     */
+    public function getMarkerStart()
+    {
+        return $this->markerStart;
+    }
+
+    /**
+     * Set markerEnd
+     *
+     * @param \CorahnRin\MapsBundle\Entity\Markers $markerEnd
+     * @return Routes
+     */
+    public function setMarkerEnd(\CorahnRin\MapsBundle\Entity\Markers $markerEnd = null)
+    {
+        $this->markerEnd = $markerEnd;
+
+        return $this;
+    }
+
+    /**
+     * Get markerEnd
+     *
+     * @return \CorahnRin\MapsBundle\Entity\Markers
+     */
+    public function getMarkerEnd()
+    {
+        return $this->markerEnd;
     }
 }

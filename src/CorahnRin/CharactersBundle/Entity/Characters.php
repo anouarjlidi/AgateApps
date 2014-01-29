@@ -60,21 +60,21 @@ class Characters
     /**
      * @var string
      *
-     * @ORM\Column(columnDefinition="TEXT")
+     * @ORM\Column(type="text")
      */
     protected $description;
 
     /**
      * @var string
      *
-     * @ORM\Column(columnDefinition="TEXT")
+     * @ORM\Column(type="text")
      */
     protected $story;
 
     /**
      * @var string
      *
-     * @ORM\Column(columnDefinition="TEXT")
+     * @ORM\Column(type="text")
      */
     protected $facts;
 
