@@ -18,7 +18,6 @@ document.getElementById('map_dont_move').onclick = function(){
         this.children[0].classList.add('text-danger');
         this.children[0].classList.remove('text-success');
     }
-    this.onblur();
     this.setAttribute('data-active', active);
     return false;
 };
