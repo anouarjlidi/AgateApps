@@ -4,9 +4,30 @@ security:
         CorahnRin\UsersBundle\Entity\Users: sha512
 
     role_hierarchy:
-        ROLE_MANAGER:     ROLE_USER
-        ROLE_ADMIN:       [ROLE_USER, ROLE_MANAGER]
-        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_MANAGER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+        # Managers de contenu
+        ROLE_MANAGER:               ROLE_USER
+
+        # Maps
+        ROLE_ADMIN_MAPS:            ROLE_MANAGER
+        ROLE_ADMIN_MAPS_SUPER:      ROLE_ADMIN_MAPS_CONTENT
+
+        # Generator
+        ROLE_ADMIN_GENERATOR:       ROLE_MANAGER
+        ROLE_ADMIN_GENERATOR_SUPER: ROLE_ADMIN_GENERATOR
+
+        # Translator
+        ROLE_ADMIN_TRANSLATOR:      ROLE_MANAGER
+
+        # Admins
+        ROLE_ADMIN:
+            - ROLE_MANAGER
+            - ROLE_ADMIN_GENERATOR
+            - ROLE_ADMIN_MAPS
+        ROLE_SUPER_ADMIN:
+            - ROLE_ADMIN
+            - ROLE_ADMIN_GENERATOR_SUPER
+            - ROLE_ADMIN_MAPS_SUPER
+            - ROLE_ALLOWED_TO_SWITCH
 
     providers:
         main:
@@ -37,7 +58,11 @@ security:
                 key:        %secret%
 
     access_control:
-        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin/, role: ROLE_ADMIN }
+        - { path: ^/login$,             role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register,           role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/resetting,          role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin,              role: ROLE_USER }
+        - { path: ^/admin/maps,         role: ROLE_ADMIN_MAPS }
+        - { path: ^/admin/generator,    role: ROLE_ADMIN_GENERATOR }
+        - { path: ^/admin/manage_site,  role: ROLE_ADMIN }
+        - { path: ^/admin/super,        role: ROLE_SUPER_ADMIN }
