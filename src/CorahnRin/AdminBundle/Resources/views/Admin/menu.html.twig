@@ -1,38 +1,22 @@
 {{ translationDomain('menu.admin') }}
-{#
-		<div class="navbar navbar-default" id="navigation">
-			<div class="navbar-header">
-				<button data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-				<a href="" class="navbar-brand">Corahn-Rin</a>
-			</div>
-			<div class="navbar-collapse collapse">
-				<ul class="nav navbar-nav">
-					{% for path,link in links %}<li><a href="{{ url(path) }}">{{ link | trans }}</a></li>
-					{% endfor %}
+<ul class="nav nav-pills nav-stacked" id="admin_nav">
+    {% for key,link in links %}
 
-				</ul>
-				<ul class="nav navbar-nav navbar-right">
-					{% if app.user.username is not defined %}<li><a href="{{ url('fos_user_security_login') }}">{{ 'Connexion' | trans }}</a></li>
-					{% else %}
-						<li><a href="{{ url('fos_user_security_logout') }}">{{ 'Déconnexion' | trans}} [ {{ app.user.username is defined ? app.user.username : '' }} ]</a></li>
-						<!--<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-						<ul class="dropdown-menu">
-							<li><a href="#">Action</a></li>
-							<li><a href="#">Another action</a></li>
-							<li><a href="#">Something else here</a></li>
-							<li><a href="#">Separated lien</a></li>
-						</ul>
-						</li>-->
-					{% endif %}
-
-				</ul>
-			</div>
-			<!--/.nav-collapse -->
-		</div><!--/.navbar.navbar-default-->
-#}
+        {% if link._route is defined %}
+            <li{{ link._route == route ? ' class="active"' : '' }}>
+                <a href="{{ url(link._route, (link._params is defined) ? link._params : {}) }}">{{ key | trans }}</a>
+            </li>
+        {% else %}
+            <li><h4>{{ key | trans }}</h4></li>
+            <ul class="nav nav-pills nav-stacked admin_nav_level">
+                {% for anchor, path in link %}
+                <li{{ path._route == route ? ' class="active"' : '' }}>
+                    <a href="{{ url(path._route, (path._params is defined) ? path._params : {}) }}">{{ anchor | trans }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <li class="divider"></li>
+    {% endfor %}
+</ul>
 {{ translationDomain() }}
