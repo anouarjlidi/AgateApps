@@ -30,6 +30,13 @@ class Factions
     protected $name;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="text")
+     */
+    protected $description;
+
+    /**
      * @var \DateTime
      *
 	 * @Gedmo\Mapping\Annotation\Timestampable(on="create")
@@ -72,6 +79,10 @@ class Factions
      * @ORM\Column(name="deleted", type="boolean", nullable=false,options={"default":0})
      */
     protected $deleted;
+
+    public function __toString() {
+        return $this->id.' - '.$this->name;
+    }
 
     /**
      * Constructor
@@ -277,10 +288,33 @@ class Factions
     /**
      * Get deleted
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getDeleted()
     {
         return $this->deleted;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Factions
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 }
