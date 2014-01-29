@@ -45,6 +45,7 @@
 <li><a href="{{ url('fos_user_security_login') }}">{{ 'layout.login' | trans({},'FOSUserBundle') }}</a></li>
                         {% else %}
 <li><a href="{{ url('fos_user_security_logout') }}">{{ 'layout.logout' | trans({},'FOSUserBundle') }} [ {{ app.user.username }} ]</a></li>
+<li><a href="{{ url('corahnrin_admin_admin_index') }}">{{ 'Administration' | trans }}</a></li>
                         {% endif %}
 
                     </ul>

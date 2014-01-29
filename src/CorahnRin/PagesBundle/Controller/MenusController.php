@@ -34,13 +34,6 @@ class MenusController extends Controller {
         );
 	}
 
-	/**
-	 * @Template()
-	 */
-	public function adminAction() {
-		return new Response('menu 1');
-	}
-
     protected function menuCorahnRin(){
 		return array(
 			'corahnrin_characters_generator_index' => 'Générateur',
