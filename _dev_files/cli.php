@@ -123,8 +123,8 @@ function showtime(&$temp_time,$b){
 	$str = str_split($str);
 	$b = str_replace($str, array_fill(0,5,''), $b);
 //	 print($colors->getColoredString(number_format($temp_time, 4, ',', ' ')."\t\t".$b, "blue"));
-	$numb = number_format($temp_time, 2, ',', ' ');
-	$numb = substr($numb, 0, 8);
+	$numb = number_format($temp_time, 0, ',', ' ');
+	$numb = substr($numb, 0, 6);
 	$numb = str_pad($numb, 10, ' ', STR_PAD_LEFT);
 	$b = "[".$numb."]\t".$b;
 	$b = trim($b);
@@ -1181,24 +1181,46 @@ foreach ( $characters as $v) {
 		if ($flux->organique > 0) { $new->noRes($sql, array('character_id' => $v['char_id'], 'qty' => $flux->organique, 'type' => 'organique')); $addflux++; }
 		if ($addflux) { showtime($temp_time, ' Ajout de '.$addflux.' types de flux '); }
 
+        $t = 'artifacts';
 		if (!empty($cnt->artefacts)) {
-			foreach ($cnt->artefacts as $m) {
-				$to_add['artefacts'][] = $m;
+			foreach ($cnt->artefacts as $val) {
+                $val = trim($val);
+                if ($val) {
+                    $val = ucfirst(strtolower($val));
+                    if (!$new->row('SELECT * FROM %'.$t.' WHERE %name = :name', array('name'=>$val))) {
+                        $new->noRes('INSERT INTO %'.$t.''
+                                . 'SET %name = :name',
+                        array('name'=>$val, 'created' => $datetime->date, 'updated' => $datetime->date,));
+                        //$to_add['artefacts'][$val] = (isset($to_add['artefacts'][$val]) ? $to_add['artefacts'][$val] + 1 : 1);
+                    }
+
+                }
 			}
 		}
+        $t = 'ogham';
 		if (!empty($cnt->ogham)) {
-			foreach ($cnt->ogham as $m) {
-				$to_add['ogham'][] = $m;
+			foreach ($cnt->ogham as $val) {
+                $val = trim($val);
+                if ($val) {
+                    $to_add['ogham'][$val] = (isset($to_add['ogham'][$val]) ? $to_add['ogham'][$val] + 1 : 1);;
+                }
 			}
 		}
+        $t = 'miracles';
 		if (!empty($cnt->miracles->majeurs)) {
 			foreach ($cnt->miracles->majeurs as $val) {
-				$to_add['miracles_maj'][] = $val;
+                $val = trim($val);
+                if ($val) {
+                    $to_add['miracles_maj'][$val] = (isset($to_add['miracles_maj'][$val]) ? $to_add['miracles_maj'][$val] + 1 : 1);;
+                }
 			}
 		}
 		if (!empty($cnt->miracles->mineurs)) {
 			foreach ($cnt->miracles->mineurs as $val) {
-				$to_add['miracles_min'][] = $val;
+                $val = trim($val);
+                if ($val) {
+                    $to_add['miracles_min'][$val] = (isset($to_add['miracles_min'][$val]) ? $to_add['miracles_min'][$val] + 1 : 1);;
+                }
 			}
 		}
 
@@ -1222,7 +1244,7 @@ foreach ( $characters as $v) {
 
 	//	showtime($temp_time, 'Structure manquante pour la table "'.$table.'"');
 		foreach ($struct as $k => $s) {
-			if (!array_key_exists($s['Field'], $datas)) { echo $s['Field']."\n"; }
+			if (!array_key_exists($s['Field'], $datas) && $s['Field'] !== 'deleted') { echo $s['Field']."\n"; }
 		}
 	}
 	usleep(250000);
@@ -1256,6 +1278,9 @@ $tables_done[] = 'characters_ways';
 *****************************************************/
 // showtime($temp_time, 'Fin de l\'import, <strong style="color: #88f;">'.$nbreq.'</strong> insertions effectuées');
 showtime($temp_time, 'Fin de l\'import, '.$colors->getColoredString($nbreq, "green").' insertions effectuées');
+
+showtime($temp_time, 'Reste à ajouter :');
+print_r($to_add);
 
 $max = (microtime(true) - $time);
 $max = max($total_times);
