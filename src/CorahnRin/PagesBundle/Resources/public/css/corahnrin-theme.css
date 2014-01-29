@@ -508,6 +508,7 @@
     background-color: #B3492D;
     border-color: #B3492D;
 }
+
 /*---- danger ----*/
 #corahnrin .btn-danger {
     background-image: -webkit-gradient(linear, left 0%, left 100%, from(#A94B4B), to(#913333));
@@ -523,8 +524,9 @@
 #corahnrin .btn-danger:hover, #corahnrin .btn-danger:focus {
     background-color: #913333;
 }
+
 /** Alerts **/
-.alert-success {
+#corahnrin .alert-success {
     background-image: -webkit-gradient(linear, left 0%, left 100%, from(#5A6B53), to(#38552C));
     background-image: -o-gradient(linear, left 0%, left 100%, from(#5A6B53), to(#38552C));
     background-image: -webkit-linear-gradient(top, #5A6B53 0%, #38552C 100%);
@@ -534,4 +536,19 @@
     filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
     background-repeat: repeat-x;
     border-color: #123B10;
+}
+
+/** Nav pills **/
+#corahnrin .nav-pills > li.active > a, #corahnrin .nav-pills > li.active > a:hover, #corahnrin .nav-pills > li.active > a:focus {
+    background-color: rgba(43, 63, 106, 0.56);
+    color: #ddd;
+}
+
+#corahnrin .nav > li > a:hover, #corahnrin .nav > li > a:focus {
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+#corahnrin .breadcrumb {
+  background-color: rgba(245, 245, 245, 0.2);
+  padding: 4px 11px;
 }
