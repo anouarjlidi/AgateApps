@@ -37,3 +37,23 @@ footer#footer {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
     padding: 10px 0;
 }
+
+#corahnrin #admin_nav.nav > li > a,
+#corahnrin .admin_nav_level.nav > li > a {
+    padding: 4px 11px;
+}
+#corahnrin .nav li.divider {
+    height: 1px;
+    background: rgba(255,255,255,0.5);
+    margin: 10px 0;
+}
+#corahnrin input[type="file"] {
+    background-color: transparent;
+    border: none;
+    color: #ccc;
+    padding: 0;
+}
+#corahnrin hr {
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 10px #FFFFFF;
+}
