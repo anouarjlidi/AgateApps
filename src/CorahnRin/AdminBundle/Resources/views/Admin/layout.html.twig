@@ -1,7 +1,20 @@
-{% extends "::base.html.twig" %}
+{% extends "::layout.html.twig" %}
 
-{% block title %}CorahnRinAdminBundle:Admin:index{% endblock %}
+{% block title %}{{ 'Administration' | trans }} - {{ parent() }}{% endblock %}
 
-{% block body %}
-<h1>Welcome to the Admin:index page</h1>
+{% block content_for_layout %}
+<div class="row">
+    <div class="col-sm-3">
+        <h2>{{ 'Administration' | trans }}</h2>
+        {% render(controller("CorahnRinAdminBundle:Admin:menu", {'route':app.request.attributes.get('_route')})) %}
+    </div>
+    <div class="col-sm-9">
+        {% block admin_content %}
+            {% if controller %}
+                {% render(controller(controller, params)) %}
+            {% endif %}
+        {% endblock %}
+    </div>
+</div>
+
 {% endblock %}
