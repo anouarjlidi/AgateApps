@@ -66,6 +66,10 @@ class MarkersTypes
      */
     protected $deleted;
 
+    public function __toString() {
+        return $this->id.' - '.$this->name;
+    }
+
     /**
      * Constructor
      */
@@ -236,7 +240,7 @@ class MarkersTypes
     /**
      * Get deleted
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getDeleted()
     {

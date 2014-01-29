@@ -32,7 +32,7 @@ class Markers
     /**
      * @var string
      *
-     * @ORM\Column(columnDefinition="TEXT")
+     * @ORM\Column(type="text")
      */
     protected $coordinates;
 
@@ -51,13 +51,6 @@ class Markers
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $updated;
-
-    /**
-     * @var DoctrineCollection
-     *
-     * @ORM\ManyToMany(targetEntity="Routes", mappedBy="markers")
-     */
-    protected $routes;
 
     /**
      * @var DoctrineCollection
@@ -93,6 +86,10 @@ class Markers
      * @ORM\Column(name="deleted", type="boolean", nullable=false,options={"default":0})
      */
     protected $deleted;
+
+    public function __toString() {
+        return $this->id.' - '.$this->name;
+    }
 
     /**
      * Constructor
