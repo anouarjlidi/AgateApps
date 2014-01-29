@@ -11,7 +11,7 @@
 		{# FLASH MESSAGES #}{% for key, messageList in app.session.flashbag.all() %}
 			<div class="alert alert-{{ key }}">
 				{% for message in messageList %}
-					{{ message | trans({}, 'messages.flash') }}
+					{{ message | trans({}, 'messages.flash') | raw }}
 				{% endfor %}
 			</div>
 		{% endfor %}
