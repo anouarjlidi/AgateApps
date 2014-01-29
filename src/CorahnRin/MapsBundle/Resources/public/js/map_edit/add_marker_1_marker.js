@@ -1,39 +1,39 @@
 (function($){
-    var mapAddZone = document.getElementById('map_add_zone');
-    var mapContainerId = mapAddZone.getAttribute('data-map-container') ? mapAddZone.getAttribute('data-map-container') : 'map_container';
-    document.addZonePinDraggableObject = {
+    var mapAddMarker = document.getElementById('map_add_marker');
+    var mapContainerId = mapAddMarker.getAttribute('data-map-container') ? mapAddMarker.getAttribute('data-map-container') : 'map_container';
+    document.addMarkerPinDraggableObject = {
         start: function(e,ui){
-            document.addZoneMapContainerOffset = $('#'+mapContainerId).offset();
+            document.addMarkerMapContainerOffset = $('#'+mapContainerId).offset();
             ui.helper.css('position','absolute');
-            var x = parseInt(e.clientX - document.addZoneMapContainerOffset.left + window.pageXOffset);
-            var y = parseInt(e.clientY - document.addZoneMapContainerOffset.top + window.pageYOffset);
+            var x = parseInt(e.clientX - document.addMarkerMapContainerOffset.left + window.pageXOffset);
+            var y = parseInt(e.clientY - document.addMarkerMapContainerOffset.top + window.pageYOffset);
             var offsets = {};
-            document.addZoneMovingPinIndex = $('[data-target-polygon="'+ui.helper.attr('data-target-polygon')+'"]').index(this);
-            document.addZonePolygon = document.getElementById(ui.helper.attr('data-target-polygon'));
-            document.addZoneCoordinates = document.addZonePolygon.getAttribute('points').split(' ');
-            offsets.left = x - document.addZoneCoordinates[document.addZoneMovingPinIndex].split(',')[0];
-            offsets.top = y - document.addZoneCoordinates[document.addZoneMovingPinIndex].split(',')[1];
-            document.addZoneMovingPinOffset = offsets;
+            document.addMarkerMovingPinIndex = $('[data-target-polyline="'+ui.helper.attr('data-target-polyline')+'"]').index(this);
+            document.addMarkerPolyline = document.getElementById(ui.helper.attr('data-target-polyline'));
+            document.addMarkerCoordinates = document.addMarkerPolyline.getAttribute('points').split(' ');
+            offsets.left = x - document.addMarkerCoordinates[document.addMarkerMovingPinIndex].split(',')[0];
+            offsets.top = y - document.addMarkerCoordinates[document.addMarkerMovingPinIndex].split(',')[1];
+            document.addMarkerMovingPinOffset = offsets;
         },
         drag: function(e, ui){
-            document.addZoneMapContainerOffset = $('#'+mapContainerId).offset();
+            document.addMarkerMapContainerOffset = $('#'+mapContainerId).offset();
             ui.helper.css('position','absolute');
-            var coord = document.addZoneCoordinates.concat([]);
-            var index = document.addZoneMovingPinIndex;
-            var x = parseInt(e.clientX - document.addZoneMapContainerOffset.left + window.pageXOffset - document.addZoneMovingPinOffset.left);
-            var y = parseInt(e.clientY - document.addZoneMapContainerOffset.top + window.pageYOffset - document.addZoneMovingPinOffset.top);
+            var coord = document.addMarkerCoordinates.concat([]);
+            var index = document.addMarkerMovingPinIndex;
+            var x = parseInt(e.clientX - document.addMarkerMapContainerOffset.left + window.pageXOffset - document.addMarkerMovingPinOffset.left);
+            var y = parseInt(e.clientY - document.addMarkerMapContainerOffset.top + window.pageYOffset - document.addMarkerMovingPinOffset.top);
             coord[index] = x+','+y;
-            document.addZonePolygon.setAttribute('points', coord.join(' '));
+            document.addMarkerPolyline.setAttribute('points', coord.join(' '));
         },
         stop: function(e, ui){
-            document.addZoneMapContainerOffset = $('#'+mapContainerId).offset();
+            document.addMarkerMapContainerOffset = $('#'+mapContainerId).offset();
             ui.helper.css('position','absolute');
-            $(document.getElementById("input_"+document.addZonePolygon.id)).val(document.addZonePolygon.getAttribute('points'));
-            document.addZoneMovingPinIndex = null;
-            document.addZonePolygon = null;
-            document.addZoneCoordinates = null;
-            document.addZoneMovingPinOffset = null;
+            $(document.getElementById("input_"+document.addMarkerPolyline.id)).val(document.addMarkerPolyline.getAttribute('points'));
+            document.addMarkerMovingPinIndex = null;
+            document.addMarkerPolyline = null;
+            document.addMarkerCoordinates = null;
+            document.addMarkerMovingPinOffset = null;
         }
     };
-    $('.map-icon-target').draggable(document.addZonePinDraggableObject);
+    $('.map-icon-target').draggable(document.addMarkerPinDraggableObject);
 })(jQuery);

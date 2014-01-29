@@ -1,24 +1,24 @@
-document.addZonePolygonOnClick = function () {
+document.addRoutePolylineOnClick = function () {
     if (this.classList.contains('active')) {
-        // Aucun effet si le polygone courant est déjà sélectionné
-        // Aucun effet non plus si le polygone n'a pas pour parent "map_zones"
+        // Aucun effet si le polyline courant est déjà sélectionné
+        // Aucun effet non plus si le polyline n'a pas pour parent "map_routes"
         return false;
     }
 
-    // Suppression de la classe "active" des autres polygones
-    var list = document.getElementsByTagNameNS('http://www.w3.org/2000/svg', 'polygon'), len = list.length;
+    // Suppression de la classe "active" des autres polylines
+    var list = document.getElementsByTagNameNS('http://www.w3.org/2000/svg', 'polyline'), len = list.length;
     for (var i = 0; i < len; i++){
         if (list[i].id !== this.id) {
             list[i].classList.remove('active');
         }
     }
 
-    // Ajout de la classe "active" au polygone courant
+    // Ajout de la classe "active" au polyline courant
     this.classList.add('active');
 
     console.info(this);
 
-    var inputNameId = "input_"+this.id.replace('_polygon', '_name'),
+    var inputNameId = "input_"+this.id.replace('_polyline', '_name'),
         inputTarget = document.getElementById(inputNameId),
         inputChange = document.getElementById('map_input_change');
 
@@ -34,9 +34,9 @@ document.addZonePolygonOnClick = function () {
 
 
 (function(){
-    // Applique la fonction ci-dessus à tous les polygones
-    var list = document.getElementsByTagNameNS('http://www.w3.org/2000/svg', 'polygon'), len = list.length;
+    // Applique la fonction ci-dessus à tous les polylines
+    var list = document.getElementsByTagNameNS('http://www.w3.org/2000/svg', 'polyline'), len = list.length;
     for (var i = 0; i < len; i++){
-        list[i].onclick = document.addZonePolygonOnClick;
+        list[i].onclick = document.addRoutePolylineOnClick;
     }
 })();
