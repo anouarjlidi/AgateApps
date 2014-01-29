@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use CorahnRin\MapsBundle\Entity\Maps;
 use CorahnRin\MapsBundle\Entity\Zones;
+use CorahnRin\MapsBundle\Entity\Routes;
 use CorahnRin\MapsBundle\Form\MapsType;
 
 class MapsController extends Controller
@@ -28,19 +29,17 @@ class MapsController extends Controller
      * @Route("/maps/")
      * @Template()
      */
-    public function indexAction()
-    {
+    public function indexAction() {
         $list = $this->getDoctrine()->getManager()->getRepository('CorahnRinMapsBundle:Maps')->findAll();
         return array('list' => $list);
     }
 
     /**
-     * @Route("/admin/maps/create/")
-     * @Template()
+     * @Route("/admin/maps/add/")
+     * @Template("CorahnRinAdminBundle:Form:add.html.twig")
      */
-    public function createAction() {
+    public function addAction() {
 
-        $valid = false;
         $map = new Maps();
 
         $form = $this->createForm(new MapsType, $map);
@@ -69,15 +68,23 @@ class MapsController extends Controller
             $map->setImage($entity_image_name);
 
             if ($form->isValid()) {
-                $valid = true;
                 $file->move($dir, $final_path);
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($map);
                 $em->flush();
+                return $this->redirect($this->generateUrl('corahnrin_maps_maps_adminlist'));
             }
         }
 
-        return array('form' => $form->createView(), 'map' => $map, 'valid' => $valid);
+        return array(
+            'form' => $form->createView(),
+            'map' => $map,
+            'title' => 'Créer une nouvelle carte',
+            'breadcrumbs' => array(
+                'Accueil' => array('route' => 'corahnrin_pages_pages_index',),
+                'Cartes' => array('route'=>'corahnrin_maps_maps_adminlist'),
+            ),
+        );
     }
 
     /**
@@ -112,6 +119,17 @@ class MapsController extends Controller
      */
     public function deleteAction($id)
     {
+        return new Response('Maps delete action : '.$id);
+    }
+
+    /**
+     * @Route("/admin/maps/")
+     * @Template()
+     */
+    public function adminListAction() {
+        return array(
+            'maps' => $this->getDoctrine()->getManager()->getRepository('CorahnRinMapsBundle:Maps')->findAll(),
+        );
     }
 
     private function updateZones(&$map) {
@@ -158,6 +176,54 @@ class MapsController extends Controller
                 $em->persist($zone);
                 $map->removeZone($zone);
                 $em->remove($zone);
+            }
+        }
+    }
+
+    private function updateRoutes(&$map) {
+        $post = $this->get('request')->request;
+
+        $polylines_list = $post->get('map_add_route_polyline');
+        $names = $post->get('map_add_route_name');
+
+        $em = $this->getDoctrine()->getManager();
+
+        $ids = array();
+        foreach ($map->getRoutes() as $route) {
+            $ids[$route->getId()] = $route;
+            $em->persist($route);
+        }
+
+        foreach ($polylines_list as $id => $coordinates) {
+            $route = new Routes();
+            // Définition de la route
+            $route->setId($id)
+                ->setName($names[$id])
+                ->setMap($map)
+                ->setCoordinates($coordinates);
+            unset($ids[$id]);
+
+            $getRoute = $map->getRoute($route);
+            if (!$getRoute){
+                // Injection dans la map si elle n'existe pas encore
+                $map->addRoute($route);
+                $em->persist($route);
+            } else {
+                if ($getRoute->getCoordinates() !== $route->getCoordinates() ||
+                    $getRoute->getName() !== $route->getName()) {
+                    $getRoute->setCoordinates($route->getCoordinates());
+                    $getRoute->setName($route->getName());
+                    $map->setRoute($getRoute);
+                    $em->persist($getRoute);
+                }
+            }
+        }
+
+        if (!empty($ids)) {
+            foreach ($ids as $route) {
+                $em->persist($route);
+                $map->removeRoute($route);
+                $em->remove($route);
             }
         }
     }
