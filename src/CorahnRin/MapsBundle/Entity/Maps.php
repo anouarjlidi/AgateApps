@@ -49,7 +49,7 @@ class Maps
     /**
      * @var string
      *
-     * @ORM\Column(columnDefinition="TEXT", nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     protected $description;
 
@@ -107,6 +107,10 @@ class Maps
      * @ORM\Column(name="deleted", type="boolean", nullable=false,options={"default":0})
      */
     protected $deleted;
+
+    public function __toString() {
+        return $this->id.' - '.$this->name;
+    }
 
     /**
      * Constructor

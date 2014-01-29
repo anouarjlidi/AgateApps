@@ -16,10 +16,11 @@ class MapsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        ->add('name')
-	->add('image',      'file',	array('required'=>false))
-        ->add('description','textarea',	array('required'=>false))
-        ->add('maxZoom',    'integer',  array('rounding_mode'=>Transformer::ROUND_DOWN))
+        ->add('name', 'text',array('label'=>'Nom'))
+        ->add('image',      'file',	array('required'=>false, 'label'=>'Image'))
+        ->add('description','textarea',	array('required'=>false,'label'=>'Description'))
+        ->add('maxZoom',    'integer',  array('rounding_mode'=>Transformer::ROUND_DOWN,'label'=>'Zoom maximum'))
+        ->add('save', 'submit', array('label'=>'Enregistrer'))
         ;
     }
 

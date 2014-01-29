@@ -28,8 +28,8 @@
                     <button class="btn btn-block btn-default" type="button" id="map_add_zone" data-map-container="map_container" data-zones-container="map_zones">
                         <span class="glyphicon icon-vector_path_polygon"></span> {{ 'Ajouter une zone' | trans }}
                     </button>
-                    <button class="btn btn-default" type="button" id="map_add_route" data-map-container="map_container" data-routes-container="map_routes">
-                        <span class="glyphicon icon-vector_path_polygon"></span> {{ 'Ajouter une route' | trans }}
+                    <button class="btn btn-block btn-default" type="button" id="map_add_route" data-map-container="map_container" data-routes-container="map_routes">
+                        <span class="glyphicon icon-vector_path_line"></span> {{ 'Ajouter une route' | trans }}
                     </button>
                 </div>
             </div>
@@ -50,6 +50,19 @@
                                 {% endfor %}
                             {% endfor %}
                         </div>
+                        <svg id="map_routes" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                            {% for route in map.routes %}
+                                <polyline points="{{ route.coordinates }}" id="map_add_route_polyline[{{ route.id }}]" />
+                            {% endfor %}
+                        </svg>
+                        <div id="map_pins_polylines">
+                            {% for route in map.routes %}
+                                {% for coords in route.coordinates | split(' ') %}
+                                    {% set coord = coords | split(',') %}
+                                    <span class="glyphicon icon-screenshot map-icon-target" data-target-polyline="map_add_route_polyline[{{ route.id }}]" style="position: absolute;left: {{ coord.0 }}px;top: {{ coord.1 }}px;"></span>
+                                {% endfor %}
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -58,6 +71,10 @@
     {% for zone in map.zones %}
         <input type="hidden" value="{{ zone.name }}" name="map_add_zone_name[{{ zone.id }}]" id="input_map_add_zone_name[{{ zone.id }}]" />
         <input type="hidden" value="{{ zone.coordinates }}" name="map_add_zone_polygon[{{ zone.id }}]" id="input_map_add_zone_polygon[{{ zone.id }}]" />
+    {% endfor %}
+    {% for route in map.routes %}
+        <input type="hidden" value="{{ route.name }}" name="map_add_route_name[{{ route.id }}]" id="input_map_add_route_name[{{ route.id }}]" />
+        <input type="hidden" value="{{ route.coordinates }}" name="map_add_route_polyline[{{ route.id }}]" id="input_map_add_route_polyline[{{ route.id }}]" />
     {% endfor %}
 </form>
 {{ translationDomain() }}
