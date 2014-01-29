@@ -22,32 +22,58 @@
     position: absolute;
 }
 
-#map_zones {
-    width: 100%;
-    overflow: visible;
-}
-#map_zones,
-#map_zones * {
-    z-index: 2000;
-}
-#map_zones polygon {
-    fill: rgba(192, 192, 192, 0.1);
-    stroke: rgba(255, 255, 255, 0.7);
-    stroke-width: 1;
-}
-#map_zones polygon:hover {
-    cursor: pointer;
-    fill: rgba(192, 192, 192, 0.25);
-    stroke: rgba(255, 255, 255, 0.8);
-    stroke-width: 1;
-}
-#map_zones polygon.active,
-#map_zones polygon:active,
-#map_zones polygon:focus {
-    stroke: #fff;
-    fill: rgba(64, 64, 64, 0.25);
-    stroke-width: 2;
-}
+/** Conteneurs de points, lignes et polygones **/
+    #map_zones,
+    #map_routes {
+        width: 100%;
+        overflow: visible;
+    }
+    #map_zones, #map_zones *,
+    #map_routes, #map_routes * {
+        z-index: 2000;
+    }
+
+
+/** Polygones **/
+    #map_zones polygon {
+        fill: rgba(192, 192, 192, 0.1);
+        stroke: rgba(255, 255, 255, 0.7);
+        stroke-width: 1;
+    }
+    #map_zones polygon:hover {
+        cursor: pointer;
+        fill: rgba(192, 192, 192, 0.25);
+        stroke: rgba(255, 255, 255, 0.8);
+        stroke-width: 1;
+    }
+    #map_zones polygon.active,
+    #map_zones polygon:active,
+    #map_zones polygon:focus {
+        stroke: #fff;
+        fill: rgba(64, 64, 64, 0.25);
+        stroke-width: 2;
+    }
+
+/** Polylines **/
+    #map_routes polyline {
+        fill: none;
+        stroke: rgba(255, 255, 255, 0.7);
+        stroke-width: 2;
+    }
+    #map_routes polyline:hover {
+        cursor: pointer;
+        stroke: rgba(255, 255, 255, 0.8);
+        stroke-width: 2;
+    }
+    #map_routes polyline.active,
+    #map_routes polyline:active,
+    #map_routes polyline:focus {
+        stroke: #fff;
+        stroke-width: 3;
+    }
+
+
+
 #map_labels,
 #map_labels * {
     z-index: 3000;
