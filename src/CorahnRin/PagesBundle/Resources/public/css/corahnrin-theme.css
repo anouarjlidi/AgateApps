@@ -376,7 +376,7 @@
 }
 
 /** Boutons **/
-#corahnrin .btn {
+#corahnrin *:not('.input-group-btn') .btn {
     padding: 5px 12px;
 }
 

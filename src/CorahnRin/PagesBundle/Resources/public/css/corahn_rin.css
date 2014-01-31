@@ -46,6 +46,7 @@ footer#footer {
     height: 1px;
     background: rgba(255,255,255,0.5);
     margin: 10px 0;
+    list-style-type: none;
 }
 #corahnrin input[type="file"] {
     background-color: transparent;
