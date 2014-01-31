@@ -10,6 +10,10 @@ use Doctrine\ORM\EntityRepository as EntityRepository;
 abstract class CorahnRinRepository extends EntityRepository {
 
     public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null, $sortCollection = false) {
+        // Check
+        if ($this->getClassMetadata()->hasField('deleted') && !isset($criteria['deleted'])) {
+            $criteria['deleted'] = '0';
+        }
         $datas = parent::findBy($criteria, $orderBy, $limit, $offset);
         if ($datas && $sortCollection === true) {
             $datas = $this->sortCollection($datas);
@@ -50,9 +54,10 @@ abstract class CorahnRinRepository extends EntityRepository {
     public function sortCollection($collection){
         $total = array();
         $current = current($collection);
-        if (method_exists($current, 'getId')) {
+        $primary = $this->getClassMetadata()->getSingleIdentifierFieldName();
+        if (property_exists($current, $primary)) {
             foreach ($collection as $entity) {
-                $total[$entity->getId()] = $entity;
+                $total[$entity->{'get'.ucfirst($primary)}()] = $entity;
             }
         }
         return $total ?: $collection;
