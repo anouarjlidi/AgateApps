@@ -262,7 +262,7 @@
         {% if label is empty %}
             {% set label = name|humanize %}
         {% endif %}
-        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ label|trans({}, translation_domain) }}</label>
+        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ (attrname == 'title' or attrname == 'placeholder' ? (attrvalue | trans) : attrvalue) }}"{% endfor %}>{{ label|trans({}, translation_domain) }}</label>
     {% endif %}
 {% endspaceless %}
 {% endblock form_label %}
@@ -323,7 +323,7 @@
     {% endif %}
     {% set class = (attr.class is defined) ? attr.class : '' %}
     {% set attr = attr|merge({'class':class~' form-horizontal'}) %}
-    <form method="{{ form_method|lower }}" action="{{ action }}"{% for attrname, attrvalue in attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}{% if multipart %} enctype="multipart/form-data"{% endif %}>
+    <form method="{{ form_method|lower }}" action="{{ action }}"{% for attrname, attrvalue in attr %} {{ attrname }}="{{ (attrname == 'title' or attrname == 'placeholder' ? (attrvalue | trans) : attrvalue) }}"{% endfor %}{% if multipart %} enctype="multipart/form-data"{% endif %}>
     {% if form_method != method %}
         <input type="hidden" name="_method" value="{{ method }}" />
     {% endif %}
@@ -387,13 +387,13 @@
 {% block widget_container_attributes %}
 {% spaceless %}
     {% if id is not empty %}id="{{ id }}" {% endif %}
-    {% for attrname, attrvalue in attr %}{{ attrname }}="{{ attrvalue }}" {% endfor %}
+    {% for attrname, attrvalue in attr %}{{ attrname }}="{{ (attrname == 'title' or attrname == 'placeholder' ? (attrvalue | trans) : attrvalue) }}" {% endfor %}
 {% endspaceless %}
 {% endblock widget_container_attributes %}
 
 {% block button_attributes %}
 {% spaceless %}
     id="{{ id }}" name="{{ full_name }}"{% if disabled %} disabled="disabled"{% endif %}
-    {% for attrname, attrvalue in attr %}{{ attrname }}="{{ attrvalue }}" {% endfor %}
+    {% for attrname, attrvalue in attr %}{{ attrname }}="{{ (attrname == 'title' or attrname == 'placeholder' ? (attrvalue | trans) : attrvalue) }}" {% endfor %}
 {% endspaceless %}
 {% endblock button_attributes %}
