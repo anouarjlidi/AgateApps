@@ -1,9 +1,13 @@
-{% extends "::layout.html.twig" %}
+{% extends "CorahnRinAdminBundle:Admin:layout.html.twig" %}
 
-{% block title %}Index de la traduction - {{ parent() }}{% endblock %}
+{% block title %}{{ 'Index de la traduction' | trans }} - {{ parent() }}{% endblock %}
 
-{% block content_for_layout %}
-    <h1>Traductions</h1>
+{% block admin_content %}
+<ol class="breadcrumb">
+    <li><a href="{{ url('corahnrin_admin_admin_index') }}">{{ 'Accueil' | trans }}</a></li>
+    <li><a href="{{ url('corahnrin_translation_translate_adminlist') }}">{{ 'Traductions' | trans }}</a></li>
+</ol>
+    <h1>{{ 'Traductions' | trans }}</h1>
     <div class="row">
         {% for locale,catalogue in translations %}
             <div class="col-lg-3">
@@ -13,7 +17,7 @@
                     <li>
                         <a class="bl" href="{{ url('corahnrin_translation_translate_edit', {'domain':domain,'locale':locale}) }}">
                             {{ domain }}
-                            <span class="pull-right label label-{{ translation.class }}">({{ translation.count }} / {{ translation.total }})</span>
+                            <span class="pull-right label label-{% if translation.count == 0 %}danger{% elseif translation.count > 0 and translation.count < translation.total %}warning{% else %}success{% endif %}">({{ translation.count }} / {{ translation.total }})</span>
                         </a>
                     </li>
                {% else %}

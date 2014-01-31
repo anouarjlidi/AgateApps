@@ -49,7 +49,7 @@ class FactionsController extends Controller
             'faction' => $faction,
             'title' => 'Ajouter une faction',
             'breadcrumbs' => array(
-                'Accueil' => array('route' => 'corahnrin_pages_pages_index',),
+                'Accueil' => array('route' => 'corahnrin_admin_admin_index',),
                 'Factions' => array('route'=>'corahnrin_maps_factions_adminlist'),
             ),
         );
@@ -80,7 +80,7 @@ class FactionsController extends Controller
             'faction' => $faction,
             'title' => 'Modifier une faction',
             'breadcrumbs' => array(
-                'Accueil' => array('route' => 'corahnrin_pages_pages_index',),
+                'Accueil' => array('route' => 'corahnrin_admin_admin_index',),
                 'Factions' => array('route'=>'corahnrin_maps_factions_adminlist'),
             ),
         );

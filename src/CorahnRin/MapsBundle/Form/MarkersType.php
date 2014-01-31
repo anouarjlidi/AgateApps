@@ -19,16 +19,16 @@ class MarkersType extends AbstractType
             ->add('coordinates', 'text', array('required'=>false,'label'=>'Coordonnées'))
             ->add('faction', 'entity', array(
                 'class' => 'CorahnRin\MapsBundle\Entity\Factions',
-                'empty_value' => 'Choisissez une faction',
+                'empty_value' => '-- Choisissez une faction --',
                 'required'=>false,
             ))
             ->add('map', 'entity', array(
                 'class' => 'CorahnRin\MapsBundle\Entity\Maps',
-                'empty_value' => 'Choisissez une carte'
+                'empty_value' => '-- Choisissez une carte --'
             ))
             ->add('markerType', 'entity', array(
                 'class' => 'CorahnRin\MapsBundle\Entity\MarkersTypes',
-                'empty_value' => 'Choisissez un type'
+                'empty_value' => '-- Choisissez un type --'
             ))
             ->add('save', 'submit', array('label'=>'Enregistrer'))
         ;

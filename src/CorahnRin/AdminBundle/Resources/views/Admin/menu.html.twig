@@ -1,22 +1,4 @@
 {{ translationDomain('menu.admin') }}
-<ul class="nav nav-pills nav-stacked" id="admin_nav">
-    {% for key,link in links %}
-
-        {% if link._route is defined %}
-            <li{{ link._route == route ? ' class="active"' : '' }}>
-                <a href="{{ url(link._route, (link._params is defined) ? link._params : {}) }}">{{ key | trans }}</a>
-            </li>
-        {% else %}
-            <li><h4>{{ key | trans }}</h4></li>
-            <ul class="nav nav-pills nav-stacked admin_nav_level">
-                {% for anchor, path in link %}
-                <li{{ path._route == route ? ' class="active"' : '' }}>
-                    <a href="{{ url(path._route, (path._params is defined) ? path._params : {}) }}">{{ anchor | trans }}</a>
-                </li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-        <li class="divider"></li>
-    {% endfor %}
-</ul>
+{% import 'CorahnRinAdminBundle:Admin:tree-macro.html.twig' as macros %}
+{{ macros.tree(links, {'class':'nav nav-pills nav-stacked','id':'admin_nav'}) }}
 {{ translationDomain() }}

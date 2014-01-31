@@ -1,14 +1,17 @@
-{% extends "::layout.html.twig" %}
+{% extends "CorahnRinAdminBundle:Admin:layout.html.twig" %}
 
 {% block title %}{{ 'Mise à jour des traductions' | trans }}{% endblock %}
 
 
 
-{% block content_for_layout %}
+{% block admin_content %}
+
+<ol class="breadcrumb">
+    <li><a href="{{ url('corahnrin_admin_admin_index') }}">{{ 'Accueil' | trans }}</a></li>
+    <li><a href="{{ url('corahnrin_translation_translate_adminlist') }}">{{ 'Traductions' | trans }}</a></li>
+</ol>
 
 <h1>{{ 'Traduction des messages' | trans }}</h1>
-
-<p><a class="btn btn-sm alert-link btn-link" href="{{ url('corahnrin_translation_translate_manage') }}">&laquo; {{ 'Retour à la liste des traductions' | trans }}</a></p>
 
 <h4>{{ 'Domaine de traduction' | trans }} : {{ domain }}</h4>
 <h4>{{ 'Langue' | trans }} : {{ lang.name | trans }}</h4>
@@ -22,7 +25,7 @@
                 <input type="checkbox" id="always_save" checked />
             </label>
             <div class="clearfix"></div>
-            <a class="btn btn-sm alert-link btn-link" href="{{ url('corahnrin_translation_translate_manage') }}">&laquo; {{ 'Retour à la liste des traductions' | trans }}</a>
+            <a class="btn btn-sm alert-link btn-link" href="{{ url('corahnrin_translation_translate_adminlist') }}">&laquo; {{ 'Retour à la liste des traductions' | trans }}</a>
         </div>
         #}
         <hr />

@@ -31,7 +31,7 @@ class TranslateController extends Controller {
      * @Route("/admin/translations/")
      * @Template()
      */
-    public function manageAction() {
+    public function adminListAction() {
         $list = $this->getDoctrine()->getManager()->getRepository('CorahnRinTranslationBundle:Translation')->findAll();
 
         $translations = array();
@@ -43,7 +43,6 @@ class TranslateController extends Controller {
                 $translations[$locale][$domain] = array(
                     'count' => 0,
                     'total' => 0,
-                    'class' => 'danger',
                 );
             }
             if ($translation->getTranslation()){
@@ -51,9 +50,7 @@ class TranslateController extends Controller {
             }
 
             if ($translations[$locale][$domain]['count'] && $translations[$locale][$domain]['count'] < $translations[$locale][$domain]['total']) {
-                $translations[$locale][$domain]['class'] = 'warning';
             } elseif ($translations[$locale][$domain]['count'] && $translations[$locale][$domain]['count'] === $translations[$locale][$domain]['total']) {
-                $translations[$locale][$domain]['class'] = 'success';
             }
 
             $translations[$locale][$domain]['total']++;
@@ -61,7 +58,9 @@ class TranslateController extends Controller {
         }
         ksort($translations);
 
-        return array('translations'=>$translations);
+        return array(
+            'translations'=>$translations,
+        );
     }
 
     /**

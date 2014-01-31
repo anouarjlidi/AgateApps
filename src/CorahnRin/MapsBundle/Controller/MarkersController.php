@@ -50,7 +50,7 @@ class MarkersController extends Controller {
             'marker' => $marker,
             'title' => 'Ajouter un marqueur',
             'breadcrumbs' => array(
-                'Accueil' => array('route' => 'corahnrin_pages_pages_index',),
+                'Accueil' => array('route' => 'corahnrin_admin_admin_index',),
                 'Marqueurs' => array('route'=>'corahnrin_maps_markers_adminlist'),
             ),
         );
@@ -81,7 +81,7 @@ class MarkersController extends Controller {
             'form' => $form->createView(),
             'title' => 'Ajouter un type de marqueur',
             'breadcrumbs' => array(
-                'Accueil' => array('route' => 'corahnrin_pages_pages_index',),
+                'Accueil' => array('route' => 'corahnrin_admin_admin_index',),
                 'Marqueurs' => array('route'=>'corahnrin_maps_markers_adminlist'),
             ),
         );
@@ -113,7 +113,7 @@ class MarkersController extends Controller {
             'marker' => $marker,
             'title' => 'Modifier un marqueur',
             'breadcrumbs' => array(
-                'Accueil' => array('route' => 'corahnrin_pages_pages_index',),
+                'Accueil' => array('route' => 'corahnrin_admin_admin_index',),
                 'Marqueurs' => array('route'=>'corahnrin_maps_markers_adminlist'),
             ),
         );
@@ -145,7 +145,7 @@ class MarkersController extends Controller {
 //            'marker' => $markerType,
             'title' => 'Modifier un type de marqueur',
             'breadcrumbs' => array(
-                'Accueil' => array('route' => 'corahnrin_pages_pages_index',),
+                'Accueil' => array('route' => 'corahnrin_admin_admin_index',),
                 'Marqueurs' => array('route'=>'corahnrin_maps_markers_adminlist'),
             ),
         );

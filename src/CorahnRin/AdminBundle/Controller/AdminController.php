@@ -25,24 +25,21 @@ class AdminController extends Controller
 	 * @Template()
 	 */
 	public function menuAction($route) {
+
         $links = array(
             'Tableau de bord' => array(
                 '_route' => 'corahnrin_admin_admin_index',
-                '_params'=>array(),
             ),
             'Profil' => array(
                 'Éditer' => array(
                     '_route' => 'fos_user_profile_edit',
-                    '_params' => array(),
                 ),
                 'Voir' => array(
                     '_route' => 'fos_user_profile_show',
-                    '_params' => array(),
                 ),
             ),
         );
-        $context = $securityContext = $this->container->get('security.context');
-        if ($context->isGranted('ROLE_ADMIN_MAPS')) {
+        if ($this->get('security.context')->isGranted('ROLE_ADMIN_MAPS')) {
             $links['Esteren Maps'] = array(
                 'Cartes' => array(
                     '_route' => 'corahnrin_maps_maps_adminlist',
@@ -55,6 +52,7 @@ class AdminController extends Controller
                 ),
             );
         }
+        $links = $this->getDoctrine()->getManager()->getRepository('CorahnRinPagesBundle:Menus')->findTree('Administration');
 		return array(
             'links' => $links,
             'route' => $route,

@@ -1,41 +1,55 @@
 {% extends "CorahnRinAdminBundle:Admin:layout.html.twig" %}
 
-{% block title %}{{ 'Liste des cartes' | trans }} - {{ parent() }}{% endblock %}
+{% block title %}{{ 'Menus' | trans }} - {{ parent() }}{% endblock %}
 
 {% block admin_content %}
 
-<div class="navbar navbar-inverse">
-    <div class="">
-        <ul class="nav navbar-nav">
-            <li><a href="{{ url('corahnrin_maps_maps_add') }}">
-                <span class="glyphicon icon-plus"></span>
-                {{ 'Ajouter une carte' | trans }}
-            </a></li>
-        </ul>
+{% if is_granted('ROLE_ADMIN_MANAGE_SITE_SUPER') %}
+    <div class="navbar navbar-inverse">
+        <div class="">
+            <ul class="nav navbar-nav">
+                <li><a href="{{ url('corahnrin_pages_menus_add') }}">
+                    <span class="glyphicon icon-plus"></span>
+                    {{ 'Ajouter un nouveau lien / menu' | trans }}
+                </a></li>
+            </ul>
+        </div>
     </div>
-</div>
+{% endif %}
 
 <table class="table table-condensed">
     <tr>
         <th>#</th>
-        <th>{{ 'Nom' | trans }}</th>
-        <th>{{ 'Description' | trans }}</th>
-        <th>{{ 'Zoom maximum' | trans }}</th>
-        <th>{{ 'Actions' | trans }}</th>
+        <th>{{ 'Parent' | trans }}</th>
+        <th>{{ 'Lien' | trans }}</th>
+        <th>{{ 'Route' | trans }}</th>
+        <th>{{ 'Position' | trans }}</th>
+        <th class="w240">{{ 'Actions' | trans }}</th>
     </tr>
-    {% for map in maps %}
+    {% for menu in menus %}
     <tr>
-        <td>{{ map.id }}</td>
-        <td><strong>{{ map.name }}</strong></td>
-        <td>{{ map.description }}</td>
-        <td>{{ map.maxZoom }}</td>
+        <td>{{ menu.id }}</td>
+        <td class="w150">
+            {% if menu.parent %}
+                {{ menu.parent.name | striptags | trans }}
+            {% else %}
+            <div class="text-center">-</div>
+            {% endif %}
+        </td>
+        <td class="w150"><strong>{{ menu.name | striptags | trans }}</strong></td>
+        <td>{{ menu.route }}</td>
+        <td>{{ menu.position }}</td>
         <td>
-            <a href="{{ url('corahnrin_maps_maps_view', {'id':map.id, 'nameSlug':map.nameSlug}) }}" class="btn btn-sm btn-inverse">{{ 'Voir la carte' | trans }}</a>
-            <a href="{{ url('corahnrin_maps_maps_edit', {'id':map.id}) }}" class="btn btn-sm btn-inverse">{{ 'Éditer la carte' | trans }}</a>
+            {% if is_granted('ROLE_ADMIN_MANAGE_SITE') %}
+            <a href="{{ url('corahnrin_pages_menus_edit', {'id':menu.id}) }}" class="btn btn-sm btn-inverse">{{ 'Éditer' | trans }}</a>
+            {% endif %}
+            {% if is_granted('ROLE_ADMIN_MANAGE_SITE_SUPER') %}
+                <a href="{{ url('corahnrin_pages_menus_delete', {'id':menu.id}) }}" class="btn btn-sm btn-danger">{{ 'Supprimer' | trans }}</a>
+            {% endif %}
         </td>
     </tr>
     {% else %}
-    <tr><td colspan="4">{{ 'Aucun élément' | trans }}</td></tr>
+    <tr><td colspan="9">{{ 'Aucun élément' | trans }}</td></tr>
     {% endfor %}
 </table>
 

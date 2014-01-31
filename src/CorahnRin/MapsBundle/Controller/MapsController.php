@@ -48,30 +48,15 @@ class MapsController extends Controller
 
         if ($request->getMethod() == 'POST') {
             $form->bind($request);
-            $file = $map->getImage();
-            $basename = preg_replace('~\.[a-zA-Z0-9]+~isUu', '', $file->getClientOriginalName());
-            $basename = preg_replace('~[^a-zA-Z0-9]~isUu', '_', $basename);
-            $basename = preg_replace('~__+~', '_', $basename);
-            $dir = ROOT.DS.'web'.DS.'uploads'.DS.'maps';
-            if (!is_dir($dir)) {
-                mkdir($dir, 0777, true);
-            }
-            $ext = $file->guessExtension();
-            $ext = $ext ? : 'bin';
 
-            $final_path = $basename.'_'.rand(1, 99999999).'.'.$ext;
-
-            $db_name = str_replace(ROOT.DS.'web'.DS, '', $dir.DS.$final_path);
-
-            $entity_image_name = str_replace('\\', '/', $db_name);
-
-            $map->setImage($entity_image_name);
+            $pathinfo = $this->handleImage($map);
 
             if ($form->isValid()) {
-                $file->move($dir, $final_path);
+                $pathinfo['file']->move($pathinfo['dir'], $pathinfo['path']);
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($map);
                 $em->flush();
+                $this->get('session')->getFlashBag()->add('success', 'La carte <strong>'.$map->getName().'</strong> a été ajoutée');
                 return $this->redirect($this->generateUrl('corahnrin_maps_maps_adminlist'));
             }
         }
@@ -81,7 +66,7 @@ class MapsController extends Controller
             'map' => $map,
             'title' => 'Créer une nouvelle carte',
             'breadcrumbs' => array(
-                'Accueil' => array('route' => 'corahnrin_pages_pages_index',),
+                'Accueil' => array('route' => 'corahnrin_admin_admin_index',),
                 'Cartes' => array('route'=>'corahnrin_maps_maps_adminlist'),
             ),
         );
@@ -102,10 +87,10 @@ class MapsController extends Controller
             $this->updateZones($map);
 
             $em->persist($map);
-
             $em->flush();
 
             $this->get('session')->getFlashBag()->add('success', 'Modifications enregistrées !');
+            return $this->redirect($this->generateUrl('corahnrin_maps_maps_adminlist'));
 
         }
         $route_init = $this->generateUrl('corahnrin_maps_api_init');
@@ -114,12 +99,64 @@ class MapsController extends Controller
     }
 
     /**
+     * @Route("/admin/maps/edit_params/{id}")
+     * @Template("CorahnRinAdminBundle:Form:add.html.twig")
+     */
+    public function editParamsAction(Maps $map) {
+        $image = $map->getImage();
+        $pathinfo = null;
+        $map->setImage(null);
+        $form = $this->createForm(new MapsType, $map);
+
+        $form->handleRequest($this->get('request'));
+
+        if ($map->getImage()) {
+            $pathinfo = $this->handleImage($map);
+        } else {
+            $map->setImage($image);
+        }
+
+        if ($form->isValid()) {
+
+            if ($pathinfo) {
+                $pathinfo['file']->move($pathinfo['dir'], $pathinfo['path']);
+            }
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($map);
+            $em->flush();
+            $this->get('session')->getFlashBag()->add('success', 'Carte modifiée : <strong>'.$map->getName().'</strong>');
+            return $this->redirect($this->generateUrl('corahnrin_maps_maps_adminlist'));
+        }
+
+        return array(
+            'form' => $form->createView(),
+            'title' => 'Modifier une carte',
+            'breadcrumbs' => array(
+                'Accueil' => array('route' => 'corahnrin_admin_admin_index',),
+                'Cartes' => array('route'=>'corahnrin_maps_maps_adminlist'),
+            ),
+        );
+    }
+
+    /**
      * @Route("/admin/maps/delete/{id}")
      * @Template()
      */
-    public function deleteAction($id)
+    public function deleteAction(Maps $map)
     {
-        return new Response('Maps delete action : '.$id);
+        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN_MAPS_SUPER')) {
+            throw new AccessDeniedException();
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $map->setDeleted(1);
+        $em->persist($map);
+        $em->flush();
+
+        $this->get('session')->getFlashBag()->add('success', 'La carte <strong>'.$map->getName().'</strong> a été correctement supprimée.');
+
+        return $this->redirect($this->generateUrl('corahnrin_maps_maps_adminlist'));
     }
 
     /**
@@ -129,6 +166,33 @@ class MapsController extends Controller
     public function adminListAction() {
         return array(
             'maps' => $this->getDoctrine()->getManager()->getRepository('CorahnRinMapsBundle:Maps')->findAll(),
+        );
+    }
+
+    private function handleImage(&$map) {
+        $file = $map->getImage();
+        $basename = preg_replace('~\.[a-zA-Z0-9]+~isUu', '', $file->getClientOriginalName());
+        $basename = preg_replace('~[^a-zA-Z0-9]~isUu', '_', $basename);
+        $basename = preg_replace('~__+~', '_', $basename);
+        $dir = ROOT.DS.'web'.DS.'uploads'.DS.'maps';
+        if (!is_dir($dir)) {
+            mkdir($dir, 0777, true);
+        }
+        $ext = $file->guessExtension();
+        $ext = $ext ? : 'bin';
+
+        $final_path = $basename.'_'.rand(1, 99999999).'.'.$ext;
+
+        $db_name = str_replace(ROOT.DS.'web'.DS, '', $dir.DS.$final_path);
+
+        $final_image_name = str_replace('\\', '/', $db_name);
+
+        $map->setImage($final_image_name);
+
+        return array(
+            'file' => $file,
+            'dir' => $dir,
+            'path' => $final_path,
         );
     }
 

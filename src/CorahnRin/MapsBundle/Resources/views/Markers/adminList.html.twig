@@ -4,6 +4,13 @@
 
 {% block admin_content %}
 
+<ol class="breadcrumb">
+    <li><a href="{{ url('corahnrin_admin_admin_index') }}">{{ 'Accueil' | trans }}</a></li>
+    <li><a href="{{ url('corahnrin_maps_markers_adminlist') }}">{{ 'Marqueurs' | trans }}</a></li>
+</ol>
+
+<h1>{{ 'Marqueurs' | trans }}</h1>
+
 <div class="navbar navbar-inverse">
     <div class="">
         <ul class="nav navbar-nav">
