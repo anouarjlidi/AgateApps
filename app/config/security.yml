@@ -4,29 +4,36 @@ security:
         CorahnRin\UsersBundle\Entity\Users: sha512
 
     role_hierarchy:
-        # Managers de contenu
-        ROLE_MANAGER:               ROLE_USER
+        # Managers de contenu (utile pour les newsletter par exemple)
+        ROLE_MANAGER:                   ROLE_USER
 
         # Maps
-        ROLE_ADMIN_MAPS:            ROLE_MANAGER
-        ROLE_ADMIN_MAPS_SUPER:      ROLE_ADMIN_MAPS_CONTENT
+        ROLE_ADMIN_MAPS:                ROLE_MANAGER
+        ROLE_ADMIN_MAPS_SUPER:          ROLE_ADMIN_MAPS
 
         # Generator
-        ROLE_ADMIN_GENERATOR:       ROLE_MANAGER
-        ROLE_ADMIN_GENERATOR_SUPER: ROLE_ADMIN_GENERATOR
+        ROLE_ADMIN_GENERATOR:           ROLE_MANAGER
+        ROLE_ADMIN_GENERATOR_SUPER:     ROLE_ADMIN_GENERATOR
 
         # Translator
-        ROLE_ADMIN_TRANSLATOR:      ROLE_MANAGER
+        ROLE_ADMIN_TRANSLATOR:          ROLE_MANAGER
+
+        # Site manager
+        ROLE_ADMIN_MANAGE_SITE:         ROLE_MANAGER
+        ROLE_ADMIN_MANAGE_SITE_SUPER:   ROLE_ADMIN_MANAGE_SITE
 
         # Admins
         ROLE_ADMIN:
             - ROLE_MANAGER
             - ROLE_ADMIN_GENERATOR
             - ROLE_ADMIN_MAPS
+            - ROLE_ADMIN_MANAGE_SITE
+            - ROLE_ADMIN_TRANSLATOR
         ROLE_SUPER_ADMIN:
             - ROLE_ADMIN
             - ROLE_ADMIN_GENERATOR_SUPER
             - ROLE_ADMIN_MAPS_SUPER
+            - ROLE_ADMIN_MANAGE_SITE_SUPER
             - ROLE_ALLOWED_TO_SWITCH
 
     providers:
