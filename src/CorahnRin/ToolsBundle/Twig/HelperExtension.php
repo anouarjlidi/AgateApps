@@ -18,8 +18,13 @@ class HelperExtension extends \Twig_Extension {
     public function getFilters() {
         return array(
             'pr' => new \Twig_Filter_Method($this, 'prFunction'),
-            'datetime' => new \Twig_Filter_Method($this, 'datetimeFilter')
+            'datetime' => new \Twig_Filter_Method($this, 'datetimeFilter'),
+            'regex_replace' =>  new \Twig_Filter_Method($this, 'regexReplaceFilter'),
         );
+    }
+
+    public function regexReplaceFilter($source, $pattern, $replace) {
+        return preg_replace($pattern, $source, $replace);
     }
 
     /**
