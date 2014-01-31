@@ -760,6 +760,32 @@ $tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table 
 
 
 
+
+
+
+
+
+
+$table = 'languages';
+$nbreqtemp = 0;
+if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>1))) {
+	$sql = 'INSERT INTO `'.$table.'` SET `id` = :id, `name` = :name, `locale` = :locale';
+	$q = $new->prepare($sql);
+	$nbreq+=4;
+	$nbreqtemp+=4;
+	$q->execute(array('id' => 1,'locale' => 'fr','name' => 'Français'));
+	$q->execute(array('id' => 2,'locale' => 'en','name' => 'Anglais'));
+	$q->execute(array('id' => 3,'locale' => 'de','name' => 'Allemand'));
+	$q->execute(array('id' => 4,'locale' => 'es','name' => 'Espagnol'));
+}
+$tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
+
+
+
+
+
+
+
 $table = 'people';
 $nbreqtemp = 0;
 if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>1))) {
@@ -986,6 +1012,33 @@ if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>1))) {
 	$nbreqtemp+=2;
 	$q->execute(array('id' => 1,'name' => 'Calvaire', 'coordinates'=>'931,501 892,510 883,525 848,533 851,545 785,579 789,586 749,596 764,614 751,619 754,628 728,639 719,634 707,656 698,661 692,674 672,681 677,691 656,708 640,706 631,730 598,754 598,763 605,771 605,787 610,803 567,816 543,831 519,850 534,866 575,879 574,887 553,899 554,915 570,926 582,922 589,935 604,938 612,948 604,954 605,968 588,977 591,986 648,994 670,985 669,972 693,967 693,958 711,950 702,939 753,916 757,898 807,890 816,917 886,909 857,847 861,843 873,841 885,846 886,841 868,820 870,771 860,753 882,719 883,716 911,705 936,686 961,686 975,668 973,654 1013,644 1014,633 1036,631 992,610 975,595 974,577 1011,567 1010,557 1030,553 1027,540 1030,531 993,524 975,505 956,503 943,496','map_id'=>1, 'created' => $datetime->date, 'updated' => $datetime->date,));
 	$q->execute(array('id' => 2,'name' => 'Île aux Cairns', 'coordinates'=>'2584,2999 2511,3039 2524,3070 2517,3087 2487,3093 2503,3110 2468,3151 2496,3161 2516,3156 2525,3162 2509,3174 2484,3180 2462,3172 2445,3199 2423,3206 2432,3217 2449,3216 2497,3259 2449,3284 2466,3310 2447,3317 2433,3336 2428,3397 2444,3406 2429,3421 2465,3427 2445,3444 2476,3441 2472,3471 2455,3458 2462,3488 2480,3503 2489,3489 2520,3500 2538,3509 2543,3524 2543,3544 2576,3541 2662,3538 2684,3527 2803,3515 2814,3497 2822,3467 2912,3460 2871,3425 2866,3388 2827,3354 2846,3346 2847,3333 2896,3320 2894,3308 2847,3286 2862,3278 2847,3250 2836,3242 2837,3225 2861,3213 2834,3181 2856,3179 2837,3150 2783,3119 2783,3119 2801,3092 2794,3078 2814,3075 2786,3045 2764,3035 2756,3016 2730,3020 2698,3001 2708,2992 2713,2974 2701,2956 2689,2959 2673,2987 2708,2992 2708,2992 2698,3001 2667,3006 2649,2996 2625,3012 2599,2978 2601,2953 2589,2951 2576,2971 2531,2961 2519,2970 2503,2965 2452,2999 2492,3005 2520,3011 2563,3000 2558,2983 2531,2961 2576,2971 2585,2983 2599,2978 2625,3012','map_id'=>1, 'created' => $datetime->date, 'updated' => $datetime->date,));
+}
+$tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
+
+
+
+
+$table = 'zones';
+$nbreqtemp = 0;
+if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>1))) {
+	$sql = 'INSERT INTO `'.$table.'` SET `id` = :id, `name` = :name,`position` = :position, `parent_id` = :parent_id, `created` = :created, `updated` = :updated, `roles` = :roles';
+	$q = $new->prepare($sql);
+//	$nbreq+=2;
+//	$nbreqtemp+=2;
+    $q->execute(array ( 'id' => '2', 'name' => 'Cartes', 'position' => '1', 'created' => '2014-01-30 22:44:34', 'updated' => '2014-01-31 00:06:01', 'deleted' => '0', 'parent_id' => '10', 'route' => 'corahnrin_maps_maps_adminlist', 'roles' => 'a:1:{i:0;s:15:"ROLE_ADMIN_MAPS";}', ));$nbreq++;$nbreqtemp++;
+    $q->execute(array ( 'id' => '3', 'name' => 'Éditer', 'position' => '1', 'created' => '2014-01-30 22:46:46', 'updated' => '2014-01-31 00:09:05', 'deleted' => '0', 'parent_id' => '11', 'route' => 'fos_user_profile_edit', 'roles' => 'a:2:{i:0;s:9:"ROLE_USER";i:1;s:12:"ROLE_MANAGER";}', ));$nbreq++;$nbreqtemp++;
+    $q->execute(array ( 'id' => '4', 'name' => 'Voir', 'position' => '2', 'created' => '2014-01-30 22:52:28', 'updated' => '2014-01-31 00:09:22', 'deleted' => '0', 'parent_id' => '11', 'route' => 'fos_user_profile_show', 'roles' => 'a:1:{i:0;s:9:"ROLE_USER";}', ));$nbreq++;$nbreqtemp++;
+    $q->execute(array ( 'id' => '8', 'name' => 'Marqueurs', 'position' => '2', 'created' => '2014-01-30 23:14:17', 'updated' => '2014-01-31 00:06:49', 'deleted' => '0', 'parent_id' => '10', 'route' => 'corahnrin_maps_markers_adminlist', 'roles' => 'a:1:{i:0;s:15:"ROLE_ADMIN_MAPS";}', ));$nbreq++;$nbreqtemp++;
+    $q->execute(array ( 'id' => '9', 'name' => 'Factions', 'position' => '3', 'created' => '2014-01-30 23:14:48', 'updated' => '2014-01-31 00:07:41', 'deleted' => '0', 'parent_id' => '10', 'route' => 'corahnrin_maps_factions_adminlist', 'roles' => 'a:1:{i:0;s:15:"ROLE_ADMIN_MAPS";}', ));$nbreq++;$nbreqtemp++;
+    $q->execute(array ( 'id' => '10', 'name' => 'Esteren Maps', 'position' => '2', 'created' => '2014-01-30 23:19:28', 'updated' => '2014-01-31 19:21:40', 'deleted' => '0', 'parent_id' => '13', 'route' => NULL, 'roles' => 'a:1:{i:0;s:15:"ROLE_ADMIN_MAPS";}', ));$nbreq++;$nbreqtemp++;
+    $q->execute(array ( 'id' => '11', 'name' => 'Profil', 'position' => '1', 'created' => '2014-01-31 00:08:50', 'updated' => '2014-01-31 19:21:49', 'deleted' => '0', 'parent_id' => '13', 'route' => NULL, 'roles' => 'a:1:{i:0;s:9:"ROLE_USER";}', ));$nbreq++;$nbreqtemp++;
+    $q->execute(array ( 'id' => '12', 'name' => 'Tableau de bord', 'position' => '0', 'created' => '2014-01-31 00:09:51', 'updated' => '2014-01-31 18:19:25', 'deleted' => '0', 'parent_id' => '13', 'route' => 'corahnrin_admin_admin_index', 'roles' => 'a:1:{i:0;s:9:"ROLE_USER";}', ));$nbreq++;$nbreqtemp++;
+    $q->execute(array ( 'id' => '13', 'name' => '<h2>Administration</h2>', 'position' => '0', 'created' => '2014-01-31 18:18:28', 'updated' => '2014-01-31 18:18:28', 'deleted' => '0', 'parent_id' => NULL, 'route' => NULL, 'roles' => 'a:2:{i:0;s:9:"ROLE_USER";i:1;s:12:"ROLE_MANAGER";}', ));$nbreq++;$nbreqtemp++;
+    $q->execute(array ( 'id' => '14', 'name' => 'Traductions', 'position' => '1', 'created' => '2014-01-30 22:41:19', 'updated' => '2014-01-31 21:41:59', 'deleted' => '0', 'parent_id' => '16', 'route' => 'corahnrin_translation_translate_adminlist', 'roles' => 'a:1:{i:0;s:21:"ROLE_ADMIN_TRANSLATOR";}', ));$nbreq++;$nbreqtemp++;
+    $q->execute(array ( 'id' => '15', 'name' => 'Traductions', 'position' => '3', 'created' => '2014-01-31 19:24:16', 'updated' => '2014-01-31 21:42:05', 'deleted' => '1', 'parent_id' => NULL, 'route' => NULL, 'roles' => 'a:0:{}', ));$nbreq++;$nbreqtemp++;
+    $q->execute(array ( 'id' => '16', 'name' => 'Site', 'position' => '4', 'created' => '2014-01-31 19:35:07', 'updated' => '2014-01-31 19:35:34', 'deleted' => '0', 'parent_id' => '13', 'route' => NULL, 'roles' => 'a:1:{i:0;s:22:"ROLE_ADMIN_MANAGE_SITE";}', ));$nbreq++;$nbreqtemp++;
+    $q->execute(array ( 'id' => '17', 'name' => 'Menus', 'position' => '2', 'created' => '2014-01-31 21:44:13', 'updated' => '2014-01-31 21:44:13', 'deleted' => '0', 'parent_id' => '16', 'route' => 'corahnrin_pages_menus_adminlist', 'roles' => 'a:1:{i:0;s:22:"ROLE_ADMIN_MANAGE_SITE";}', ));$nbreq++;$nbreqtemp++;
+
 }
 $tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
 
@@ -1259,6 +1312,11 @@ $tables_done[] = 'characters_avantages';
 $tables_done[] = 'characters_flux';
 //$tables_done[] = 'characters_social_class';
 $tables_done[] = 'characters_ways';
+
+
+
+
+
 
 
 
