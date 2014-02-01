@@ -1021,7 +1021,7 @@ $tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table 
 $table = 'menus';
 $nbreqtemp = 0;
 if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>1))) {
-	$sql = 'INSERT INTO `'.$table.'` SET `id` = :id, `name` = :name,`position` = :position, `parent_id` = :parent_id, `created` = :created, `updated` = :updated, `roles` = :roles, `created` = :created, `updated` = :updated, `deleted` = :deleted ';
+	$sql = 'INSERT INTO `'.$table.'` SET `id` = :id, `name` = :name,`position` = :position, `parent_id` = :parent_id, `created` = :created, `updated` = :updated, `roles` = :roles, `deleted` = :deleted ';
 	$q = $new->prepare($sql);
 //	$nbreq+=2;
 //	$nbreqtemp+=2;
