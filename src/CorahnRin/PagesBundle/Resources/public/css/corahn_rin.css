@@ -9,6 +9,10 @@
     padding: 5px 20px;
 }
 
+p {
+    text-align: justify;
+}
+
 #form_login {
 	width: 430px;
 	margin-left: auto;
@@ -57,4 +61,17 @@ footer#footer {
 #corahnrin hr {
   border-color: rgba(255, 255, 255, 0.2);
   box-shadow: 0 0 10px #FFFFFF;
+}
+
+#corahnrin .navbar-nav > li > a,
+#corahnrin .navbar-brand{
+    padding: 10px 13px;
+    line-height: 15px;
+}
+
+#corahnrin .navbar {
+    min-height: 37px;
+}
+#corahnrin .navbar .container {
+    padding: 0 30px;
 }

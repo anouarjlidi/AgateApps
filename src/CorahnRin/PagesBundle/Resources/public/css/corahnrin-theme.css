@@ -552,3 +552,7 @@
   background-color: rgba(245, 245, 245, 0.2);
   padding: 4px 11px;
 }
+
+#corahnrin .jumbotron {
+    font-size: 16px;
+}
