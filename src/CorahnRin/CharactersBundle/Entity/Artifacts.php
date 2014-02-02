@@ -29,6 +29,12 @@ class Artifacts
     protected $name;
 
     /**
+     * @var string
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $description;
+
+    /**
      * @var integer
      *
      * @ORM\Column(type="smallint")
@@ -50,7 +56,7 @@ class Artifacts
     /**
      * @var integer
      *
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="smallint", nullable=true)
      */
     protected $tank;
 
@@ -64,21 +70,21 @@ class Artifacts
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=70)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $vulnerability;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="string", length=20, nullable=true)
      */
     protected $handling;
 
     /**
      * @var integer
      *
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="smallint", nullable=true)
      */
     protected $damage;
 
@@ -418,5 +424,28 @@ class Artifacts
     public function getDeleted()
     {
         return $this->deleted;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Artifacts
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 }

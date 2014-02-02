@@ -29,6 +29,13 @@ class Flux
     protected $name;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="text")
+     */
+    protected $description;
+
+    /**
      * @var \Datetime
      * @Gedmo\Mapping\Annotation\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
@@ -49,6 +56,10 @@ class Flux
      * @ORM\Column(name="deleted", type="boolean", nullable=false,options={"default":0})
      */
     protected $deleted;
+
+    function __toString() {
+        return $this->id.' - '.$this->name;
+    }
 
     /**
      * Get id
@@ -145,10 +156,33 @@ class Flux
     /**
      * Get deleted
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getDeleted()
     {
         return $this->deleted;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Flux
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 }

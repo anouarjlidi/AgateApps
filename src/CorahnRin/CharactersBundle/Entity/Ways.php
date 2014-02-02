@@ -71,6 +71,10 @@ class Ways
      */
     protected $deleted;
 
+    function __toString() {
+        return $this->id.' - '.$this->name;
+    }
+
     /**
      * Get id
      *

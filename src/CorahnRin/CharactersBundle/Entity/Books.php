@@ -31,7 +31,7 @@ class Books
     /**
      * @var string
      *
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     protected $description;
 
@@ -56,6 +56,10 @@ class Books
      * @ORM\Column(name="deleted", type="boolean", nullable=false,options={"default":0})
      */
     protected $deleted;
+
+    function __toString() {
+        return $this->id.' - '.$this->name;
+    }
 
     /**
      * Get id

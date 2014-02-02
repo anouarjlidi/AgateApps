@@ -29,6 +29,13 @@ class Ogham
     protected $name;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="text")
+     */
+    protected $description;
+
+    /**
      * @var \Datetime
      * @Gedmo\Mapping\Annotation\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
@@ -145,10 +152,33 @@ class Ogham
     /**
      * Get deleted
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getDeleted()
     {
         return $this->deleted;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Ogham
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 }

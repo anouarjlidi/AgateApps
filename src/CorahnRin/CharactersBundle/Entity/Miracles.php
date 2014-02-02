@@ -29,6 +29,13 @@ class Miracles
     protected $name;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="text")
+     */
+    protected $description;
+
+    /**
      * @var boolean
      *
      * @ORM\Column(type="boolean")
@@ -180,5 +187,28 @@ class Miracles
     public function getDeleted()
     {
         return $this->deleted;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Miracles
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 }

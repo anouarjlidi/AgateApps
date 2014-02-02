@@ -38,7 +38,7 @@ class Menus
     /**
      * @var integer
      *
-     * @ORM\Column(name="position", type="smallint")
+     * @ORM\Column(name="position", type="smallint", options={"default":0})
      */
     protected $position;
 
