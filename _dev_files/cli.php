@@ -262,7 +262,7 @@ if ($del === 'o') {
 //    showtime($temp_time, '');
 //    if ((int) $line) {
         showtime($temp_time, 'Exécution de la commande Symfony2 pour refaire le schéma à partir des entités...');
-        $r = shell_exec('php ../app/console doctrine:schema:update --force');
+        $r = shell_exec('php ../app/console doctrine:schema:create');
         if ($r) {
             $r = str_replace(array("\r","\n"),array('',''),$r);
             $r = trim($r);
@@ -659,35 +659,35 @@ $tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table 
 $socialclasses = $new->req('SELECT * FROM `social_class`');
 $table = 'socialclass_domains';
 $sreq = 0;
-$sql = 'INSERT INTO `'.$table.'` SET `socialclass_id` = :socialclass_id, `domains_id` = :domains_id';
+$sql = 'INSERT INTO `'.$table.'` SET `socialclass_id` = :socialclass_id, `domains_id` = :domain_id';
 if (!$new->row('SELECT * FROM %'.$table)) {
 	$q = $new->prepare($sql);
 	foreach ($socialclasses as $v) {
 		if ($v['name'] === 'Paysan') {
-			$q->execute(array('socialclass_id' => $v['id'], 'domains_id' => 5));$sreq++;
-			$q->execute(array('socialclass_id' => $v['id'], 'domains_id' => 8));$sreq++;
-			$q->execute(array('socialclass_id' => $v['id'], 'domains_id' => 10));$sreq++;
-			$q->execute(array('socialclass_id' => $v['id'], 'domains_id' => 15));$sreq++;
+			$q->execute(array('socialclass_id' => $v['id'], 'domain_id' => 5));$sreq++;
+			$q->execute(array('socialclass_id' => $v['id'], 'domain_id' => 8));$sreq++;
+			$q->execute(array('socialclass_id' => $v['id'], 'domain_id' => 10));$sreq++;
+			$q->execute(array('socialclass_id' => $v['id'], 'domain_id' => 15));$sreq++;
 		} elseif ($v['name'] === 'Artisan') {
-			$q->execute(array('socialclass_id' => $v['id'], 'domains_id' => 1));$sreq++;
-			$q->execute(array('socialclass_id' => $v['id'], 'domains_id' => 16));$sreq++;
-			$q->execute(array('socialclass_id' => $v['id'], 'domains_id' => 13));$sreq++;
-			$q->execute(array('socialclass_id' => $v['id'], 'domains_id' => 11));$sreq++;
+			$q->execute(array('socialclass_id' => $v['id'], 'domain_id' => 1));$sreq++;
+			$q->execute(array('socialclass_id' => $v['id'], 'domain_id' => 16));$sreq++;
+			$q->execute(array('socialclass_id' => $v['id'], 'domain_id' => 13));$sreq++;
+			$q->execute(array('socialclass_id' => $v['id'], 'domain_id' => 11));$sreq++;
 		} elseif ($v['name'] === 'Bourgeois') {
-			$q->execute(array('socialclass_id' => $v['id'], 'domains_id' => 1));$sreq++;
-			$q->execute(array('socialclass_id' => $v['id'], 'domains_id' => 16));$sreq++;
-			$q->execute(array('socialclass_id' => $v['id'], 'domains_id' => 12));$sreq++;
-			$q->execute(array('socialclass_id' => $v['id'], 'domains_id' => 11));$sreq++;
+			$q->execute(array('socialclass_id' => $v['id'], 'domain_id' => 1));$sreq++;
+			$q->execute(array('socialclass_id' => $v['id'], 'domain_id' => 16));$sreq++;
+			$q->execute(array('socialclass_id' => $v['id'], 'domain_id' => 12));$sreq++;
+			$q->execute(array('socialclass_id' => $v['id'], 'domain_id' => 11));$sreq++;
 		} elseif ($v['name'] === 'Clergé') {
-			$q->execute(array('socialclass_id' => $v['id'], 'domains_id' => 9));$sreq++;
-			$q->execute(array('socialclass_id' => $v['id'], 'domains_id' => 16));$sreq++;
-			$q->execute(array('socialclass_id' => $v['id'], 'domains_id' => 11));$sreq++;
-			$q->execute(array('socialclass_id' => $v['id'], 'domains_id' => 15));$sreq++;
+			$q->execute(array('socialclass_id' => $v['id'], 'domain_id' => 9));$sreq++;
+			$q->execute(array('socialclass_id' => $v['id'], 'domain_id' => 16));$sreq++;
+			$q->execute(array('socialclass_id' => $v['id'], 'domain_id' => 11));$sreq++;
+			$q->execute(array('socialclass_id' => $v['id'], 'domain_id' => 15));$sreq++;
 		} elseif ($v['name'] === 'Noblesse') {
-			$q->execute(array('socialclass_id' => $v['id'], 'domains_id' => 2));$sreq++;
-			$q->execute(array('socialclass_id' => $v['id'], 'domains_id' => 16));$sreq++;
-			$q->execute(array('socialclass_id' => $v['id'], 'domains_id' => 13));$sreq++;
-			$q->execute(array('socialclass_id' => $v['id'], 'domains_id' => 11));$sreq++;
+			$q->execute(array('socialclass_id' => $v['id'], 'domain_id' => 2));$sreq++;
+			$q->execute(array('socialclass_id' => $v['id'], 'domain_id' => 16));$sreq++;
+			$q->execute(array('socialclass_id' => $v['id'], 'domain_id' => 13));$sreq++;
+			$q->execute(array('socialclass_id' => $v['id'], 'domain_id' => 11));$sreq++;
 		}
 	}
 }
@@ -723,12 +723,12 @@ foreach ( $disciplines as $v) {
 $table = 'disciplines_domains';
 $nbreqtemp = 0;
 foreach ( $discdoms as $v) {
-	if (!$new->row('SELECT * FROM %'.$table.' WHERE %disciplines_id = :disciplines_id AND %domains_id = :domains_id ', array('disciplines_id'=>$v['disc_id'], 'domains_id'=>$v['domain_id']))) {
+	if (!$new->row('SELECT * FROM %'.$table.' WHERE %discipline_id = :discipline_id AND %domain_id = :domain_id ', array('discipline_id'=>$v['disc_id'], 'domain_id'=>$v['domain_id']))) {
 		$nbreq++;
 		$nbreqtemp++;
 		$datas = array(
-			'disciplines_id' => $v['disc_id'],
-			'domains_id' => $v['domain_id'],
+			'discipline_id' => $v['disc_id'],
+			'domain_id' => $v['domain_id'],
 		);$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
 	}
 }$tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
@@ -1021,26 +1021,51 @@ $tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table 
 $table = 'menus';
 $nbreqtemp = 0;
 if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>1))) {
-//	$nbreq+=2;
-//	$nbreqtemp+=2;
 
-    $new->query('SET autocommit = 0;');
-    $new->beginTransaction();
-	$sql = 'INSERT INTO `'.$table.'` SET `id` = :id, `name` = :name,`position` = :position, `parent_id` = :parent_id, `created` = :created, `updated` = :updated, `roles` = :roles, `deleted` = :deleted,`route` = :route ';
-	$q = $new->prepare($sql);
-    $q->execute(array ( 'id' => '1', 'name' => 'Administration', 'position' => '0', 'created' => '2014-01-31 18:18:28', 'updated' => '2014-01-31 18:18:28', 'deleted' => '0', 'parent_id' => NULL, 'route' => NULL, 'roles' => 'a:2:{i:0;s:9:"ROLE_USER";i:1;s:12:"ROLE_MANAGER";}', ));$nbreq++;$nbreqtemp++;
-    $q->execute(array ( 'id' => '10', 'name' => 'Esteren Maps', 'position' => '2', 'created' => '2014-01-30 23:19:28', 'updated' => '2014-01-31 19:21:40', 'deleted' => '0', 'parent_id' => '1', 'route' => NULL, 'roles' => 'a:1:{i:0;s:15:"ROLE_ADMIN_MAPS";}', ));$nbreq++;$nbreqtemp++;
-    $q->execute(array ( 'id' => '8', 'name' => 'Marqueurs', 'position' => '2', 'created' => '2014-01-30 23:14:17', 'updated' => '2014-01-31 00:06:49', 'deleted' => '0', 'parent_id' => '10', 'route' => 'corahnrin_maps_markers_adminlist', 'roles' => 'a:1:{i:0;s:15:"ROLE_ADMIN_MAPS";}', ));$nbreq++;$nbreqtemp++;
-    $q->execute(array ( 'id' => '9', 'name' => 'Factions', 'position' => '3', 'created' => '2014-01-30 23:14:48', 'updated' => '2014-01-31 00:07:41', 'deleted' => '0', 'parent_id' => '10', 'route' => 'corahnrin_maps_factions_adminlist', 'roles' => 'a:1:{i:0;s:15:"ROLE_ADMIN_MAPS";}', ));$nbreq++;$nbreqtemp++;
-    $q->execute(array ( 'id' => '2', 'name' => 'Cartes', 'position' => '13', 'created' => '2014-01-30 22:44:34', 'updated' => '2014-01-31 00:06:01', 'deleted' => '0', 'parent_id' => '10', 'route' => 'corahnrin_maps_maps_adminlist', 'roles' => 'a:1:{i:0;s:15:"ROLE_ADMIN_MAPS";}', ));$nbreq++;$nbreqtemp++;
-    $q->execute(array ( 'id' => '11', 'name' => 'Profil', 'position' => '13', 'created' => '2014-01-31 00:08:50', 'updated' => '2014-01-31 19:21:49', 'deleted' => '0', 'parent_id' => '1', 'route' => NULL, 'roles' => 'a:1:{i:0;s:9:"ROLE_USER";}', ));$nbreq++;$nbreqtemp++;
-    $q->execute(array ( 'id' => '3', 'name' => 'Éditer', 'position' => '13', 'created' => '2014-01-30 22:46:46', 'updated' => '2014-01-31 00:09:05', 'deleted' => '0', 'parent_id' => '11', 'route' => 'fos_user_profile_edit', 'roles' => 'a:2:{i:0;s:9:"ROLE_USER";i:1;s:12:"ROLE_MANAGER";}', ));$nbreq++;$nbreqtemp++;
-    $q->execute(array ( 'id' => '4', 'name' => 'Voir', 'position' => '2', 'created' => '2014-01-30 22:52:28', 'updated' => '2014-01-31 00:09:22', 'deleted' => '0', 'parent_id' => '11', 'route' => 'fos_user_profile_show', 'roles' => 'a:1:{i:0;s:9:"ROLE_USER";}', ));$nbreq++;$nbreqtemp++;
-    $q->execute(array ( 'id' => '12', 'name' => 'Tableau de bord', 'position' => '0', 'created' => '2014-01-31 00:09:51', 'updated' => '2014-01-31 18:19:25', 'deleted' => '0', 'parent_id' => '1', 'route' => 'corahnrin_admin_admin_index', 'roles' => 'a:1:{i:0;s:9:"ROLE_USER";}', ));$nbreq++;$nbreqtemp++;
-    $q->execute(array ( 'id' => '16', 'name' => 'Site', 'position' => '4', 'created' => '2014-01-31 19:35:07', 'updated' => '2014-01-31 19:35:34', 'deleted' => '0', 'parent_id' => '1', 'route' => NULL, 'roles' => 'a:1:{i:0;s:22:"ROLE_ADMIN_MANAGE_SITE";}', ));$nbreq++;$nbreqtemp++;
-    $q->execute(array ( 'id' => '14', 'name' => 'Traductions', 'position' => '13', 'created' => '2014-01-30 22:41:19', 'updated' => '2014-01-31 21:41:59', 'deleted' => '0', 'parent_id' => '16', 'route' => 'corahnrin_translation_translate_adminlist', 'roles' => 'a:1:{i:0;s:21:"ROLE_ADMIN_TRANSLATOR";}', ));$nbreq++;$nbreqtemp++;
-    $q->execute(array ( 'id' => '17', 'name' => 'Menus', 'position' => '2', 'created' => '2014-01-31 21:44:13', 'updated' => '2014-01-31 21:44:13', 'deleted' => '0', 'parent_id' => '16', 'route' => 'corahnrin_pages_menus_adminlist', 'roles' => 'a:1:{i:0;s:22:"ROLE_ADMIN_MANAGE_SITE";}', ));$nbreq++;$nbreqtemp++;
-    $new->commit();
+	$nbreq+=19;
+	$nbreqtemp+=19;
+
+    $sql = <<<'SQL'
+
+SET FOREIGN_KEY_CHECKS=0;
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+TRUNCATE TABLE `menus`;
+INSERT INTO `menus` (`id`, `parent_id`, `name`, `position`, `roles`, `route`, `created`, `updated`, `deleted`) VALUES
+(1, NULL, 'Administration', 0, 'a:2:{i:0;s:9:"ROLE_USER";i:1;s:12:"ROLE_MANAGER";}', NULL, '2014-01-31 18:18:28', '2014-01-31 18:18:28', 0),
+(2, 10, 'Cartes', 0, 'a:1:{i:0;s:15:"ROLE_ADMIN_MAPS";}', 'corahnrin_maps_maps_adminlist', '2014-01-30 22:44:34', '2014-01-31 00:06:01', 0),
+(3, 11, 'Éditer', 0, 'a:2:{i:0;s:9:"ROLE_USER";i:1;s:12:"ROLE_MANAGER";}', 'fos_user_profile_edit', '2014-01-30 22:46:46', '2014-01-31 00:09:05', 0),
+(4, 11, 'Voir', 0, 'a:1:{i:0;s:9:"ROLE_USER";}', 'fos_user_profile_show', '2014-01-30 22:52:28', '2014-01-31 00:09:22', 0),
+(8, 10, 'Marqueurs', 0, 'a:1:{i:0;s:15:"ROLE_ADMIN_MAPS";}', 'corahnrin_maps_markers_adminlist', '2014-01-30 23:14:17', '2014-01-31 00:06:49', 0),
+(9, 10, 'Factions', 0, 'a:1:{i:0;s:15:"ROLE_ADMIN_MAPS";}', 'corahnrin_maps_factions_adminlist', '2014-01-30 23:14:48', '2014-01-31 00:07:41', 0),
+(10, 1, 'Esteren Maps', 2, 'a:1:{i:0;s:15:"ROLE_ADMIN_MAPS";}', NULL, '2014-01-30 23:19:28', '2014-02-01 15:48:28', 0),
+(11, 1, 'Profil', 1, 'a:1:{i:0;s:9:"ROLE_USER";}', NULL, '2014-01-31 00:08:50', '2014-02-01 15:48:07', 0),
+(12, 1, 'Tableau de bord', 0, 'a:1:{i:0;s:9:"ROLE_USER";}', 'corahnrin_admin_admin_index', '2014-01-31 00:09:51', '2014-01-31 18:19:25', 0),
+(14, 16, 'Traductions', 0, 'a:1:{i:0;s:21:"ROLE_ADMIN_TRANSLATOR";}', 'corahnrin_translation_translate_adminlist', '2014-01-30 22:41:19', '2014-01-31 21:41:59', 0),
+(16, 1, 'Site', 4, 'a:1:{i:0;s:22:"ROLE_ADMIN_MANAGE_SITE";}', NULL, '2014-01-31 19:35:07', '2014-02-01 15:48:56', 0),
+(17, 16, 'Menus', 0, 'a:1:{i:0;s:22:"ROLE_ADMIN_MANAGE_SITE";}', 'corahnrin_pages_menus_adminlist', '2014-01-31 21:44:13', '2014-01-31 21:44:13', 0),
+(18, 1, 'Générateur de personnages', 3, 'a:1:{i:0;s:20:"ROLE_ADMIN_GENERATOR";}', NULL, '2014-02-01 15:49:16', '2014-02-01 15:49:16', 0),
+(19, 18, 'Armures', 0, 'a:1:{i:0;s:20:"ROLE_ADMIN_GENERATOR";}', 'corahnrin_characters_armors_adminlist', '2014-02-01 15:49:50', '2014-02-01 15:49:50', 0),
+(20, 18, 'Artefacts', 0, 'a:1:{i:0;s:20:"ROLE_ADMIN_GENERATOR";}', 'corahnrin_characters_artifacts_adminlist', '2014-02-01 16:43:29', '2014-02-01 16:43:29', 0),
+(21, 18, 'Avantages / Désavantages', 0, 'a:1:{i:0;s:20:"ROLE_ADMIN_GENERATOR";}', 'corahnrin_characters_avantages_adminlist', '2014-02-01 17:59:00', '2014-02-01 17:59:00', 0),
+(22, 18, 'Livres', 0, 'a:1:{i:0;s:20:"ROLE_ADMIN_GENERATOR";}', 'corahnrin_characters_books_adminlist', '2014-02-01 20:08:10', '2014-02-01 20:08:10', 0),
+(23, 18, 'Disciplines', 0, 'a:1:{i:0;s:20:"ROLE_ADMIN_GENERATOR";}', 'corahnrin_characters_disciplines_adminlist', '2014-02-02 16:15:14', '2014-02-02 17:01:54', 0),
+(24, 18, 'Domaines', 0, 'a:1:{i:0;s:20:"ROLE_ADMIN_GENERATOR";}', 'corahnrin_characters_domains_adminlist', '2014-02-02 17:01:38', '2014-02-02 17:01:38', 0);
+SET FOREIGN_KEY_CHECKS=1;
+COMMIT;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
+SQL;
+    $new->query($sql);
 
 }
 $tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
@@ -1185,7 +1210,7 @@ foreach ( $characters as $v) {
 			$discs = (array) $domain->disciplines;
 			if (!empty($discs)) {
 				foreach ($discs as $disc) {
-					$assoDiscId = $new->row('SELECT %id FROM %disciplines_domains WHERE %disciplines_id = :disciplines_id AND %domains_id = :domains_id ', array('disciplines_id'=>$disc->id,'domains_id'=>$domain->id));
+					$assoDiscId = $new->row('SELECT %id FROM %disciplines_domains WHERE %discipline_id = :discipline_id AND %domain_id = :domain_id ', array('discipline_id'=>$disc->id,'domain_id'=>$domain->id));
 					$id = isset($assoDiscId['id']) ? $assoDiscId['id'] : null;
 					if (!$id) { exit('Erreur...'.print_r($v, true)); }
 					$datasDisc = array( 'character_id' => $v['char_id'], 'score' => $disc->val, 'discipline_id' => $id);
