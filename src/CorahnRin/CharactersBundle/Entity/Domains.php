@@ -58,13 +58,6 @@ class Domains
     protected $way;
 
     /**
-     * @var \SocialClass
-     *
-     * @ORM\ManyToMany(targetEntity="SocialClass", mappedBy="domains")
-     */
-    protected $socialClasses;
-
-    /**
      * @var boolean
      *
      * @ORM\Column(name="deleted", type="boolean", nullable=false,options={"default":0})
@@ -72,17 +65,28 @@ class Domains
     protected $deleted;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Disciplines", mappedBy="domains")
+     */
+    protected $disciplines;
+
+    function __toString() {
+        return $this->id.' - '.$this->name;
+    }
+
+    /**
      * Constructor
      */
     public function __construct()
     {
-        $this->socialClasses = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->disciplines = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
@@ -105,7 +109,7 @@ class Domains
     /**
      * Get name
      *
-     * @return string
+     * @return string 
      */
     public function getName()
     {
@@ -128,7 +132,7 @@ class Domains
     /**
      * Get description
      *
-     * @return string
+     * @return string 
      */
     public function getDescription()
     {
@@ -151,7 +155,7 @@ class Domains
     /**
      * Get created
      *
-     * @return \DateTime
+     * @return \DateTime 
      */
     public function getCreated()
     {
@@ -174,90 +178,11 @@ class Domains
     /**
      * Get updated
      *
-     * @return \DateTime
+     * @return \DateTime 
      */
     public function getUpdated()
     {
         return $this->updated;
-    }
-
-    /**
-     * Set way
-     *
-     * @param \CorahnRin\CharactersBundle\Entity\Ways $way
-     * @return Domains
-     */
-    public function setWay(\CorahnRin\CharactersBundle\Entity\Ways $way = null)
-    {
-        $this->way = $way;
-
-        return $this;
-    }
-
-    /**
-     * Get way
-     *
-     * @return \CorahnRin\CharactersBundle\Entity\Ways
-     */
-    public function getWay()
-    {
-        return $this->way;
-    }
-
-    /**
-     * Add socialClasses
-     *
-     * @param \CorahnRin\CharactersBundle\Entity\SocialClass $socialClasses
-     * @return Domains
-     */
-    public function addSocialClasse(\CorahnRin\CharactersBundle\Entity\SocialClass $socialClasses)
-    {
-        $this->socialClasses[] = $socialClasses;
-
-        return $this;
-    }
-
-    /**
-     * Remove socialClasses
-     *
-     * @param \CorahnRin\CharactersBundle\Entity\SocialClass $socialClasses
-     */
-    public function removeSocialClasse(\CorahnRin\CharactersBundle\Entity\SocialClass $socialClasses)
-    {
-        $this->socialClasses->removeElement($socialClasses);
-    }
-
-    /**
-     * Get socialClasses
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getSocialClasses()
-    {
-        return $this->socialClasses;
-    }
-
-    /**
-     * Add socialClasses
-     *
-     * @param \CorahnRin\CharactersBundle\Entity\SocialClass $socialClasses
-     * @return Domains
-     */
-    public function addSocialClass(\CorahnRin\CharactersBundle\Entity\SocialClass $socialClasses)
-    {
-        $this->socialClasses[] = $socialClasses;
-
-        return $this;
-    }
-
-    /**
-     * Remove socialClasses
-     *
-     * @param \CorahnRin\CharactersBundle\Entity\SocialClass $socialClasses
-     */
-    public function removeSocialClass(\CorahnRin\CharactersBundle\Entity\SocialClass $socialClasses)
-    {
-        $this->socialClasses->removeElement($socialClasses);
     }
 
     /**
@@ -276,10 +201,66 @@ class Domains
     /**
      * Get deleted
      *
-     * @return boolean
+     * @return boolean 
      */
     public function getDeleted()
     {
         return $this->deleted;
+    }
+
+    /**
+     * Set way
+     *
+     * @param \CorahnRin\CharactersBundle\Entity\Ways $way
+     * @return Domains
+     */
+    public function setWay(\CorahnRin\CharactersBundle\Entity\Ways $way = null)
+    {
+        $this->way = $way;
+
+        return $this;
+    }
+
+    /**
+     * Get way
+     *
+     * @return \CorahnRin\CharactersBundle\Entity\Ways 
+     */
+    public function getWay()
+    {
+        return $this->way;
+    }
+
+    /**
+     * Add disciplines
+     *
+     * @param \CorahnRin\CharactersBundle\Entity\Disciplines $disciplines
+     * @return Domains
+     */
+    public function addDiscipline(\CorahnRin\CharactersBundle\Entity\Disciplines $disciplines)
+    {
+        $this->disciplines[] = $disciplines;
+
+        return $this;
+    }
+
+    /**
+     * Remove disciplines
+     *
+     * @param \CorahnRin\CharactersBundle\Entity\Disciplines $disciplines
+     */
+    public function removeDiscipline(\CorahnRin\CharactersBundle\Entity\Disciplines $disciplines)
+    {
+        $this->disciplines->removeElement($disciplines);
+    }
+
+    /**
+     * Get disciplines
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getDisciplines()
+    {
+        return $this->disciplines;
     }
 }

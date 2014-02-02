@@ -53,7 +53,7 @@ class SocialClass
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Domains", inversedBy="socialClasses")
+     * @ORM\ManyToMany(targetEntity="Domains")
      */
     protected $domains;
 

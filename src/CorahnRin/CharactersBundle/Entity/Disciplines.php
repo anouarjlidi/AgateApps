@@ -3,6 +3,7 @@
 namespace CorahnRin\CharactersBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\JoinColumn;
 
 /**
  * Disciplines
@@ -69,6 +70,17 @@ class Disciplines
      * @ORM\Column(name="deleted", type="boolean", nullable=false,options={"default":0})
      */
     protected $deleted;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Domains", inversedBy="disciplines")
+     * @ORM\JoinTable(name="disciplines_domains",
+     *      joinColumns={@JoinColumn(name="discipline_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@JoinColumn(name="domain_id", referencedColumnName="id")}
+     *  )
+     */
+    protected $domains;
 
     /**
      * Constructor
@@ -246,5 +258,38 @@ class Disciplines
     public function getDeleted()
     {
         return $this->deleted;
+    }
+
+    /**
+     * Add domains
+     *
+     * @param \CorahnRin\CharactersBundle\Entity\DisciplinesDomains $domains
+     * @return Disciplines
+     */
+    public function addDomain(\CorahnRin\CharactersBundle\Entity\DisciplinesDomains $domains)
+    {
+        $this->domains[] = $domains;
+
+        return $this;
+    }
+
+    /**
+     * Remove domains
+     *
+     * @param \CorahnRin\CharactersBundle\Entity\DisciplinesDomains $domains
+     */
+    public function removeDomain(\CorahnRin\CharactersBundle\Entity\DisciplinesDomains $domains)
+    {
+        $this->domains->removeElement($domains);
+    }
+
+    /**
+     * Get domains
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDomains()
+    {
+        return $this->domains;
     }
 }
