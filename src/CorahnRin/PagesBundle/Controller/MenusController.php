@@ -25,32 +25,8 @@ class MenusController extends Controller {
      * @Route("/admin/manage_site/menus/add/")
      * @Template("CorahnRinAdminBundle:Form:add.html.twig")
      */
-    public function addAction()
-    {
-        $menu = new Menus;
-        $form = $this->createForm(new MenusType, $menu, array('roles' => $this->container->getParameter('security.role_hierarchy.roles')));
-
-        $request = $this->get('request');
-
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($menu);
-            $em->flush();
-            $this->get('session')->getFlashBag()->add('success', 'Menu ajouté : <strong>'.$menu->getName().'</strong>');
-            return $this->redirect($this->generateUrl('corahnrin_pages_menus_adminlist'));
-        }
-
-        return array(
-            'form' => $form->createView(),
-            'title' => 'Ajouter un menu',
-            'breadcrumbs' => array(
-                'Accueil' => array('route' => 'corahnrin_admin_admin_index',),
-                'Menus' => array('route'=>'corahnrin_pages_menus_adminlist'),
-            ),
-        );
+    public function addAction() {
+        return $this->handle_request(new Menus);
     }
 
     /**
@@ -58,29 +34,7 @@ class MenusController extends Controller {
      * @Template("CorahnRinAdminBundle:Form:add.html.twig")
      */
     public function editAction(Menus $menu) {
-        $form = $this->createForm(new MenusType, $menu, array('roles' => $this->container->getParameter('security.role_hierarchy.roles')));
-
-        $request = $this->get('request');
-
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($menu);
-            $em->flush();
-            $this->get('session')->getFlashBag()->add('success', 'Menu modifié : <strong>'.$menu->getName().'</strong>');
-            return $this->redirect($this->generateUrl('corahnrin_pages_menus_adminlist'));
-        }
-
-        return array(
-            'form' => $form->createView(),
-            'title' => 'Modifier un menu',
-            'breadcrumbs' => array(
-                'Accueil' => array('route' => 'corahnrin_admin_admin_index',),
-                'Menus' => array('route'=>'corahnrin_pages_menus_adminlist'),
-            ),
-        );
+        return $this->handle_request($menu);
     }
 
     /**
@@ -159,5 +113,63 @@ class MenusController extends Controller {
 			'corahnrin_pages_pages_index' => 'Corahn-Rin',
 		);
         return $links;
+    }
+
+    private function handle_request($element) {
+        $method = preg_replace('#^'.str_replace('\\','\\\\',__CLASS__).'::([a-zA-Z]+)Action$#isUu', '$1', $this->getRequest()->get('_controller'));
+
+        if (null === $element->getPosition()){
+            $element->setPosition(0);
+        }
+
+        $form = $this->createForm(new MenusType, $element, array('roles' => $this->container->getParameter('security.role_hierarchy.roles')));
+
+        $request = $this->get('request');
+
+        $routes = array();
+        foreach ($this->container->get('router')->getRouteCollection()->all() as $name => $route) {
+            if (strpos($name, '_') !== 0 && !$route->compile()->getVariables() && !preg_match('#_(add|edit)[^_]*$#isUu', $name) && (!in_array('POST', $route->getMethods()) || (in_array('POST', $route->getMethods()) && in_array('GET', $route->getMethods())) )) {
+                $category = 'Autres';
+                if (strpos($name, 'corahnrin_characters_') === 0) { $category = 'Générateur de personnages'; }
+                if (strpos($name, 'corahnrin_maps_') === 0) { $category = 'Esteren Maps'; }
+                if (strpos($name, 'corahnrin_pages_') === 0) { $category = 'Pages'; }
+                if (strpos($name, 'corahnrin_admin_') === 0) { $category = 'Panneau d\'administration'; }
+                if (strpos($name, 'corahnrin_translation_') === 0) { $category = 'Traduction'; }
+                if (strpos($name, 'fos_user_') === 0) { $category = 'Utilisateurs'; }
+                $routes[$category][$name] = $name;
+                ksort($routes[$category]);
+            }
+        }
+        ksort($routes);
+        if ($routes) {
+            $form->add('route', 'choice', array(
+                'choices' => $routes,
+                'required'=>false,
+                'empty_value' => '-- Choisissez une route --',
+                'label' => 'Route',
+            ));
+        }
+
+        $request = $this->get('request');
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($element);
+            $em->flush();
+            $this->get('session')->getFlashBag()->add('success', 'Menu '.($method=='add'?'ajouté':'modifié').' : <strong>'.$element->getName().'</strong>');
+            return $this->redirect($this->generateUrl('corahnrin_pages_menus_adminlist'));
+        }
+
+        return array(
+            'form' => $form->createView(),
+            'title' => ($method=='add'?'Ajouter':'Modifier').' un menu',
+            'breadcrumbs' => array(
+                'Accueil' => array('route' => 'corahnrin_admin_admin_index',),
+                'Menus' => array('route'=>'corahnrin_pages_menus_adminlist'),
+            ),
+        );
     }
 }

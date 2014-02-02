@@ -16,7 +16,7 @@ class MenusType extends AbstractType
     {
         $builder
             ->add('name', 'text', array('label'=>'Ancre du lien'))
-            ->add('position', 'number')
+            ->add('position', 'integer', array('empty_data'=>0))
             ->add('route', 'text', array('required'=>false))
             ->add('roles', 'choice', array(
                 'required' => true,
