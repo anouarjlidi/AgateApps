@@ -155,8 +155,40 @@ class MarkersController extends Controller {
      * @Route("/admin/maps/markers/delete/{id}")
      * @Template()
      */
-    public function deleteAction($id)
+    public function deleteAction(Markers $marker)
     {
+        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN_MAPS_SUPER')) {
+            throw new AccessDeniedException();
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $marker->setDeleted(1);
+        $em->persist($marker);
+        $em->flush();
+
+        $this->get('session')->getFlashBag()->add('success', 'Le marqueur <strong>'.$marker->getName().'</strong> a été correctement supprimé.');
+
+        return $this->redirect($this->generateUrl('corahnrin_maps_markers_adminlist'));
+    }
+
+    /**
+     * @Route("/admin/maps/markers/deletetype/{id}")
+     * @Template()
+     */
+    public function deleteTypeAction(MarkersTypes $markerType)
+    {
+        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN_MAPS_SUPER')) {
+            throw new AccessDeniedException();
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $markerType->setDeleted(1);
+        $em->persist($markerType);
+        $em->flush();
+
+        $this->get('session')->getFlashBag()->add('success', 'Le type de marqueur <strong>'.$markerType->getName().'</strong> a été correctement supprimé.');
+
+        return $this->redirect($this->generateUrl('corahnrin_maps_markers_adminlist'));
     }
 
 

@@ -16,7 +16,7 @@ class MarkersType extends AbstractType
     {
         $builder
             ->add('name', 'text', array('label'=>'Nom'))
-            ->add('coordinates', 'text', array('required'=>false,'label'=>'Coordonnées'))
+            ->add('coordinates', 'text', array('empty_data'=>'-','label'=>'Coordonnées','required'=>false   ))
             ->add('faction', 'entity', array(
                 'class' => 'CorahnRin\MapsBundle\Entity\Factions',
                 'empty_value' => '-- Choisissez une faction --',
@@ -24,11 +24,13 @@ class MarkersType extends AbstractType
             ))
             ->add('map', 'entity', array(
                 'class' => 'CorahnRin\MapsBundle\Entity\Maps',
-                'empty_value' => '-- Choisissez une carte --'
+                'empty_value' => '-- Choisissez une carte --',
+                'label' => 'Carte',
             ))
             ->add('markerType', 'entity', array(
                 'class' => 'CorahnRin\MapsBundle\Entity\MarkersTypes',
-                'empty_value' => '-- Choisissez un type --'
+                'empty_value' => '-- Choisissez un type --',
+                'label' => 'Type',
             ))
             ->add('save', 'submit', array('label'=>'Enregistrer'))
         ;

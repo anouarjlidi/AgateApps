@@ -1,6 +1,6 @@
 {% extends "CorahnRinAdminBundle:Admin:layout.html.twig" %}
 
-{% block title %}{{ 'Liste des cartes' | trans }} - {{ parent() }}{% endblock %}
+{% block title %}{{ 'Marqueurs' | trans }} - {{ parent() }}{% endblock %}
 
 {% block admin_content %}
 
@@ -45,6 +45,9 @@
                 <td>{{ marker.faction.name is defined ? marker.faction.name : ' - ' }}</td>
                 <td>
                     <a href="{{ url('corahnrin_maps_markers_edit', {'id':marker.id}) }}" class="btn btn-sm btn-inverse">{{ 'Éditer' | trans }}</a>
+                    {% if is_granted('ROLE_ADMIN_MAPS_SUPER') %}
+                        <a href="{{ url('corahnrin_maps_markers_delete', {'id':marker.id}) }}" class="btn btn-sm btn-danger">{{ 'Supprimer' | trans }}</a>
+                    {% endif %}
                 </td>
             </tr>
             {% else %}
@@ -66,6 +69,9 @@
                 <td><strong>{{ markerType.name }}</strong></td>
                 <td>
                     <a href="{{ url('corahnrin_maps_markers_edittype', {'id':markerType.id}) }}" class="btn btn-sm btn-inverse">{{ 'Éditer' | trans }}</a>
+                    {% if is_granted('ROLE_ADMIN_MAPS_SUPER') %}
+                        <a href="{{ url('corahnrin_maps_markers_deletetype', {'id':markerType.id}) }}" class="btn btn-sm btn-danger">{{ 'Supprimer' | trans }}</a>
+                    {% endif %}
                 </td>
             </tr>
             {% else %}
