@@ -1213,8 +1213,8 @@ foreach ( $characters as $v) {
 					$assoDiscId = $new->row('SELECT * FROM %disciplines_domains WHERE %discipline_id = :discipline_id AND %domain_id = :domain_id ', array('discipline_id'=>$disc->id,'domain_id'=>$domain->id));
 					$id = isset($assoDiscId['discipline_id']) ? $assoDiscId['discipline_id'] : null;
 					if (!$id) { exit('Erreur...'.print_r($v, true)); }
-					$datasDisc = array( 'character_id' => $v['char_id'], 'score' => $disc->val, 'discipline_id' => $id);
-					if (!$new->row('SELECT * FROM %characters_disciplines WHERE %character_id = :character_id AND %discipline_id = :discipline_id AND %score = :score', $datasDisc)) {
+					$datasDisc = array( 'character_id' => $v['char_id'], 'domain_id' => $domain->id, 'score' => $disc->val, 'discipline_id' => $id);
+					if (!$new->row('SELECT * FROM %characters_disciplines WHERE %character_id = :character_id AND %discipline_id = :discipline_id AND %score = :score AND %domain_id = :domain_id', $datasDisc)) {
 						$new->noRes('INSERT INTO %characters_disciplines SET %%%fields', $datasDisc); $countdoms++;
 						showtime($temp_time, ' Ajout d\'une discipline');
 					}

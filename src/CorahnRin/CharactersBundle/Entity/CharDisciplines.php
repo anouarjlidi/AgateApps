@@ -30,6 +30,14 @@ class CharDisciplines
     protected $discipline;
 
     /**
+     * @var \Domains
+     *
+     * @ORM\Id
+	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Domains")
+     */
+    protected $domain;
+
+    /**
      * @var integer
      *
      * @ORM\Column(type="integer")
@@ -126,5 +134,28 @@ class CharDisciplines
     public function getDeleted()
     {
         return $this->deleted;
+    }
+
+    /**
+     * Set domain
+     *
+     * @param \CorahnRin\CharactersBundle\Entity\Domains $domain
+     * @return CharDisciplines
+     */
+    public function setDomain(\CorahnRin\CharactersBundle\Entity\Domains $domain)
+    {
+        $this->domain = $domain;
+
+        return $this;
+    }
+
+    /**
+     * Get domain
+     *
+     * @return \CorahnRin\CharactersBundle\Entity\Domains 
+     */
+    public function getDomain()
+    {
+        return $this->domain;
     }
 }
