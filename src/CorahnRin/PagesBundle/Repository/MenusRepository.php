@@ -17,7 +17,7 @@ class MenusRepository extends CorahnRinRepository {
         return $this->findBy(array(), $sortBy, null, null, $sortCollection);
     }
 
-    public function findTree($sourceElement) {
+    public function findTree($sourceElement = null) {
 
         $sortBy = array(
             'position' => 'asc',
@@ -31,9 +31,11 @@ class MenusRepository extends CorahnRinRepository {
         $final = array();
         foreach ($list as $k => $element) {
             if (
-                (is_numeric($sourceElement) && $element->getId() == $sourceElement)
+                !$sourceElement
                 ||
-                (is_string($sourceElement) && $element->getName() == $sourceElement)
+                ($sourceElement && is_numeric($sourceElement) && $element->getId() == $sourceElement)
+                ||
+                ($sourceElement && is_string($sourceElement) && $element->getName() == $sourceElement)
             ) {
                 $final = array($k=>$element);
             }
