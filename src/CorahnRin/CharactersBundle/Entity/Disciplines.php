@@ -72,7 +72,7 @@ class Disciplines
     protected $deleted;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var \Doctrine\Common\Collections\ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="Domains", inversedBy="disciplines")
      * @ORM\JoinTable(name="disciplines_domains",
@@ -87,12 +87,13 @@ class Disciplines
      */
     public function __construct()
     {
+        $this->domains = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
@@ -115,7 +116,7 @@ class Disciplines
     /**
      * Get name
      *
-     * @return string
+     * @return string 
      */
     public function getName()
     {
@@ -138,7 +139,7 @@ class Disciplines
     /**
      * Get description
      *
-     * @return string
+     * @return string 
      */
     public function getDescription()
     {
@@ -161,7 +162,7 @@ class Disciplines
     /**
      * Get rank
      *
-     * @return string
+     * @return string 
      */
     public function getRank()
     {
@@ -184,7 +185,7 @@ class Disciplines
     /**
      * Get created
      *
-     * @return \DateTime
+     * @return \DateTime 
      */
     public function getCreated()
     {
@@ -207,34 +208,11 @@ class Disciplines
     /**
      * Get updated
      *
-     * @return \DateTime
+     * @return \DateTime 
      */
     public function getUpdated()
     {
         return $this->updated;
-    }
-
-    /**
-     * Set book
-     *
-     * @param \CorahnRin\CharactersBundle\Entity\Books $book
-     * @return Disciplines
-     */
-    public function setBook(\CorahnRin\CharactersBundle\Entity\Books $book = null)
-    {
-        $this->book = $book;
-
-        return $this;
-    }
-
-    /**
-     * Get book
-     *
-     * @return \CorahnRin\CharactersBundle\Entity\Books
-     */
-    public function getBook()
-    {
-        return $this->book;
     }
 
     /**
@@ -253,7 +231,7 @@ class Disciplines
     /**
      * Get deleted
      *
-     * @return boolean
+     * @return boolean 
      */
     public function getDeleted()
     {
@@ -261,12 +239,35 @@ class Disciplines
     }
 
     /**
-     * Add domains
+     * Set book
      *
-     * @param \CorahnRin\CharactersBundle\Entity\DisciplinesDomains $domains
+     * @param \CorahnRin\CharactersBundle\Entity\Books $book
      * @return Disciplines
      */
-    public function addDomain(\CorahnRin\CharactersBundle\Entity\DisciplinesDomains $domains)
+    public function setBook(\CorahnRin\CharactersBundle\Entity\Books $book = null)
+    {
+        $this->book = $book;
+
+        return $this;
+    }
+
+    /**
+     * Get book
+     *
+     * @return \CorahnRin\CharactersBundle\Entity\Books 
+     */
+    public function getBook()
+    {
+        return $this->book;
+    }
+
+    /**
+     * Add domains
+     *
+     * @param \CorahnRin\CharactersBundle\Entity\Domains $domains
+     * @return Disciplines
+     */
+    public function addDomain(\CorahnRin\CharactersBundle\Entity\Domains $domains)
     {
         $this->domains[] = $domains;
 
@@ -276,9 +277,9 @@ class Disciplines
     /**
      * Remove domains
      *
-     * @param \CorahnRin\CharactersBundle\Entity\DisciplinesDomains $domains
+     * @param \CorahnRin\CharactersBundle\Entity\Domains $domains
      */
-    public function removeDomain(\CorahnRin\CharactersBundle\Entity\DisciplinesDomains $domains)
+    public function removeDomain(\CorahnRin\CharactersBundle\Entity\Domains $domains)
     {
         $this->domains->removeElement($domains);
     }
@@ -286,7 +287,7 @@ class Disciplines
     /**
      * Get domains
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getDomains()
     {
