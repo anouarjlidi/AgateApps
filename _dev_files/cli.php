@@ -1210,8 +1210,8 @@ foreach ( $characters as $v) {
 			$discs = (array) $domain->disciplines;
 			if (!empty($discs)) {
 				foreach ($discs as $disc) {
-					$assoDiscId = $new->row('SELECT %id FROM %disciplines_domains WHERE %discipline_id = :discipline_id AND %domain_id = :domain_id ', array('discipline_id'=>$disc->id,'domain_id'=>$domain->id));
-					$id = isset($assoDiscId['id']) ? $assoDiscId['id'] : null;
+					$assoDiscId = $new->row('SELECT * FROM %disciplines_domains WHERE %discipline_id = :discipline_id AND %domain_id = :domain_id ', array('discipline_id'=>$disc->id,'domain_id'=>$domain->id));
+					$id = isset($assoDiscId['discipline_id']) ? $assoDiscId['discipline_id'] : null;
 					if (!$id) { exit('Erreur...'.print_r($v, true)); }
 					$datasDisc = array( 'character_id' => $v['char_id'], 'score' => $disc->val, 'discipline_id' => $id);
 					if (!$new->row('SELECT * FROM %characters_disciplines WHERE %character_id = :character_id AND %discipline_id = :discipline_id AND %score = :score', $datasDisc)) {
