@@ -37,7 +37,7 @@
             {% endif %}
         </td>
         <td class="w150"><strong>{{ menu.name | striptags | trans }}</strong></td>
-        <td>{{ menu.route }}</td>
+        <td><small>{{ menu.route }}</small></td>
         <td>{{ menu.position }}</td>
         <td>
             {% if is_granted('ROLE_ADMIN_MANAGE_SITE') %}
