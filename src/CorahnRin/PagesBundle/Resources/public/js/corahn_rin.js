@@ -7,6 +7,15 @@
     });
 })(jQuery);
 
+(function(){
+    var a = document.querySelectorAll('a.btn-danger[href*=delete]');
+    for (var i = 0, l = a.length ; i < l ; i++) {
+        a[i].onclick = function(){
+            return confirm(confirm_delete);
+        };
+    }
+})();
+
 /*function reloadCss(){$('link').map(function(i,e){r=e.href;e.href='';e.href=r;});}*/
 
 String.prototype.trim=function(){return this.replace(/^\s+|\s+$/g, '');};
