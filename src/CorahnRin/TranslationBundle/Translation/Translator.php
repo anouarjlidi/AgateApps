@@ -136,7 +136,7 @@ class Translator extends BaseTranslator {
 
             if ($translations) {
                 foreach ($translations as $translation) {
-                    self::$catalogue[$locale][$domain][$translation->getToken()] = $translation;
+                    self::$catalogue[$locale][$translation->getDomain()][$translation->getToken()] = $translation;
                 }
             }
         }
