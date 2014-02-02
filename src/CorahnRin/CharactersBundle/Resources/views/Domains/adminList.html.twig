@@ -1,0 +1,39 @@
+{% extends "CorahnRinAdminBundle:Admin:layout.html.twig" %}
+
+{% block title %}{{ 'Domaines' | trans }} - {{ parent() }}{% endblock %}
+
+{% block admin_content %}
+
+<ol class="breadcrumb">
+    <li><a href="{{ url('corahnrin_admin_admin_index') }}">{{ 'Accueil' | trans }}</a></li>
+    <li><a href="{{ url('corahnrin_characters_domains_adminlist') }}">{{ 'Domaines' | trans }}</a></li>
+</ol>
+
+<h1>{{ 'Domaines' | trans }}</h1>
+
+<table class="table table-condensed">
+    <tr>
+        <th>#</th>
+        <th>{{ 'Nom' | trans }}</th>
+        <th>{{ 'Description' | trans }}</th>
+        <th>{{ 'Disciplines' | trans }}</th>
+        <th>{{ 'Livre' | trans }}</th>
+        <th>{{ 'Actions' | trans }}</th>
+    </tr>
+    {% for domaine in domains %}
+    <tr>
+        <td>{{ domaine.id }}</td>
+        <td>{{ domaine.name }}</td>
+        <td>{{ domaine.description }}</td>
+        <td>{{ domaine.disciplines | length }}</td>
+        <td>{{ domaine.book.name is defined ? domaine.book.name : ' - ' }}</td>
+        <td>
+            <a href="{{ url('corahnrin_characters_domains_edit', {'id':domaine.id}) }}" class="btn btn-sm btn-inverse">{{ 'Éditer' | trans }}</a>
+        </td>
+    </tr>
+    {% else %}
+    <tr><td colspan="5">{{ 'Aucun élément' | trans }}</td></tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
