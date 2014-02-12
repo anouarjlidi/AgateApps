@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * GeoEnvironments
  *
  * @ORM\Table(name="geo_environments")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Corahnrin\CharactersBundle\Repository\GeoEnvironmentsRepository")
  */
 class GeoEnvironments
 {

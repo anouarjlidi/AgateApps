@@ -23,9 +23,10 @@
 
 /* Format de texte */
 	/* Couleurs */
-	.text-white { color: white !important; }
-	.text-red { color: red !important; }
-	.text-green { color: green !important; }
+	*.text-white { color: white !important; }
+	*.text-red { color: red !important; }
+    *.text-darkred { color: darkred !important; }
+	*.text-green { color: green !important; }
 
 	/* Format */
 	.text-underline { text-decoration: underline; }

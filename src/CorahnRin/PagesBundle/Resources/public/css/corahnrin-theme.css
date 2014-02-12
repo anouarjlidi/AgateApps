@@ -1,7 +1,7 @@
 #corahnrin body {
     color: #e0e0e0;
     background-attachment: fixed;
-    background-color: #181818;
+    background-color: #000;
     background-image: url("../images/background-image.jpg");
     background-position: center top;
     background-repeat: no-repeat;
@@ -21,10 +21,6 @@
 
 #corahnrin .modal-header,
 #corahnrin .modal-footer {
-    border-color: #666;
-}
-
-#corahnrin .modal-header, #corahnrin .modal-footer {
     border-color: #666;
 }
 

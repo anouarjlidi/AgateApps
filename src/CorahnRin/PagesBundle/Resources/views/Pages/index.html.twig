@@ -1,9 +1,12 @@
+
 {% extends "::layout.html.twig" %}
 
-{% block title %}{{ 'Les Ombres d\'Esteren, Corahn-Rin le générateur de personnage' | trans }} - {{ parent() }}{% endblock %}
+{% block title %}{{ 'Les Ombres d\'Esteren, Corahn-Rin le générateur de personnage' | trans({}, 'pages.titles') }} - {{ parent() }}{% endblock %}
+
+{% trans_default_domain 'pages.index' %}
 
 {% block content_for_layout %}
-{{ translationDomain('pages.index') }}
+
 	<div class="alert alert-info">
 		<p>
             {{ 'Faites vos propositions !' | trans }}
@@ -46,5 +49,4 @@
 		</div>
 	</div>
 
-{{ translationDomain() }}
 {% endblock %}
