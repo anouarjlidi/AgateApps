@@ -69,14 +69,14 @@ class Routes
     /**
      * @var DoctrineCollection
      *
-     * @ORM\ManyToOne(targetEntity="Markers")
+     * @ORM\ManyToOne(targetEntity="Markers", inversedBy="routesStart")
      */
     protected $markerStart;
 
     /**
      * @var DoctrineCollection
      *
-     * @ORM\ManyToOne(targetEntity="Markers")
+     * @ORM\ManyToOne(targetEntity="Markers", inversedBy="routesEnd")
      */
     protected $markerEnd;
 
@@ -125,6 +125,19 @@ class Routes
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set id
+     *
+     * @param string $id
+     * @return Routes
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     /**

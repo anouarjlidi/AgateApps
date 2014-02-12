@@ -8,8 +8,8 @@
             var x = parseInt(e.clientX - document.addRouteMapContainerOffset.left + window.pageXOffset);
             var y = parseInt(e.clientY - document.addRouteMapContainerOffset.top + window.pageYOffset);
             var offsets = {};
-            document.addRouteMovingPinIndex = $('[data-target-polyline="'+ui.helper.attr('data-target-polyline')+'"]').index(this);
-            document.addRoutePolyline = document.getElementById(ui.helper.attr('data-target-polyline'));
+            document.addRouteMovingPinIndex = $('[data-target-element="'+ui.helper.attr('data-target-element')+'"]').index(this);
+            document.addRoutePolyline = document.getElementById(ui.helper.attr('data-target-element'));
             document.addRouteCoordinates = document.addRoutePolyline.getAttribute('points').split(' ');
             offsets.left = x - document.addRouteCoordinates[document.addRouteMovingPinIndex].split(',')[0];
             offsets.top = y - document.addRouteCoordinates[document.addRouteMovingPinIndex].split(',')[1];

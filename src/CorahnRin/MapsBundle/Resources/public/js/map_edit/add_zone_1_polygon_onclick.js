@@ -1,9 +1,16 @@
 document.addZonePolygonOnClick = function () {
-    if (this.classList.contains('active')) {
+    if (this.classList.contains('active')
+        || document.getElementById('map_container').getAttribute('data-add-element') === 'true'
+        || document.getElementById('map_add_zone').classList.contains('active')
+        || document.getElementById('map_add_route').classList.contains('active')
+        || document.getElementById('map_add_marker').classList.contains('active')
+        ) {
         // Aucun effet si le polygone courant est déjà sélectionné
-        // Aucun effet non plus si le polygone n'a pas pour parent "map_zones"
+        // Aucun effet non plus si le polygone n'a pas pour parent "map_svg_container"
         return false;
     }
+
+    document.getElementById('map_container').click();
 
     // Suppression de la classe "active" des autres polygones
     var list = document.getElementsByTagNameNS('http://www.w3.org/2000/svg', 'polygon'), len = list.length;
@@ -15,8 +22,6 @@ document.addZonePolygonOnClick = function () {
 
     // Ajout de la classe "active" au polygone courant
     this.classList.add('active');
-
-    console.info(this);
 
     var inputNameId = "input_"+this.id.replace('_polygon', '_name'),
         inputTarget = document.getElementById(inputNameId),

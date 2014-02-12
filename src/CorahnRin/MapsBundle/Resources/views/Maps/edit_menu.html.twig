@@ -1,0 +1,72 @@
+<div id="map_edit_menu">
+
+    {# ----------------- #}
+    {# -----GÉNÉRAL----- #}
+    <ul class="list-inline">
+        <li data-toggle="tooltip" title="{{ 'Terminer l\'édition' | trans }}"><button class="btn btn-success" type="submit"><span class="glyphicon icon-ok_2"></span></button></li>
+        <li data-toggle="tooltip" title="{{ 'Désactiver le mouvement' | trans }}"><button class="btn btn-inverse" type="button" id="map_dont_move" data-map-container="map_container"><span class="glyphicon icon-move text-success"></span></button></li>
+        <li data-toggle="tooltip" title="{{ 'Désactiver le magnétisme' | trans }}"><button class="btn btn-inverse" type="button" id="map_stop_magnetism" data-toggle="button"><span class="glyphicon icon-magnet"></span></button></li>
+    </ul>
+    {# ----------------- #}
+    {# ----------------- #}
+
+    <hr />
+
+    {# ----------------- #}
+    {# ----SÉLECTION---- #}
+    <label for="map_input_change">{{ 'Sélection' | trans }}</label>
+    <div class="input-group">
+        <span data-placement="right" data-toggle="tooltip" title="{{ 'Supprimer l\'élément sélectionné' | trans }}" class="input-group-btn">
+            <button class="btn btn-danger" disabled="disabled" type="button" id="map_delete_element" data-target-to-delete="">
+                <span class="glyphicon icon-bin"></span>
+            </button>
+        </span>
+        <input type="text" class="form-control" placeholder="{{ 'Nom de l\'élément sélectionné' | trans }}" disabled="disabled" value="" id="map_input_change" data-input-id="" />
+    </div>
+    <select class="form-control mt5 hide" id="map_select_marker_type">
+        <option value="">-- {{ 'Choisissez un type de marqueur' | trans }} --</option>
+    {% for markerType in markersTypes %}
+        <option value="{{ markerType.id }}">{{ markerType.name | trans }}</option>
+    {% endfor %}
+    </select>
+    <select class="form-control mt5 hide" id="map_select_route_type">
+        <option value="">-- {{ 'Choisissez un type de route' | trans }} --</option>
+    {% for routeType in routesTypes %}
+        <option value="{{ routeType.id }}">{{ routeType.name | trans }}</option>
+    {% endfor %}
+    </select>
+    {# ----------------- #}
+    {# ----------------- #}
+
+    <hr />
+
+    {# ------ZONES------ #}
+    <div class="btn-group btn-block">
+        <button class="btn btn-inverse text-green" type="button" id="map_hide_zones" title="{{ 'Masquer les zones' | trans }}" data-toggle="tooltip">
+            <span class="glyphicon icon-eye_open"></span>
+        </button>
+        <button class="btn btn-inverse" type="button" id="map_add_zone">
+            <span class="glyphicon icon-vector_path_polygon"></span> {{ 'Ajouter une zone' | trans }}
+        </button>
+    </div>
+
+    {# ------ROUTES------ #}
+    <div class="btn-group btn-block">
+        <button class="btn btn-inverse text-green" type="button" id="map_hide_routes" title="{{ 'Masquer les routes' | trans }}" data-toggle="tooltip">
+            <span class="glyphicon icon-eye_open"></span>
+        </button>
+        <button class="btn btn-inverse" type="button" id="map_add_route">
+            <span class="glyphicon icon-vector_path_line"></span> {{ 'Ajouter une route' | trans }}
+        </button>
+    </div>
+
+    {# -----MARQUEURS----- #}
+    <div class="btn-group btn-block">
+        <button class="btn btn-inverse text-green" type="button" id="map_hide_markers" title="{{ 'Masquer les marqueurs' | trans }}" data-toggle="tooltip">
+            <span class="glyphicon icon-eye_open"></span>
+        </button>
+        <button class="btn btn-inverse" type="button" id="map_add_marker">
+            <span class="glyphicon icon-pin"></span> {{ 'Ajouter un marqueur' | trans }}
+        </button>
+    </div>
+</div>

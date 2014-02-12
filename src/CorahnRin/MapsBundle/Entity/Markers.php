@@ -87,6 +87,20 @@ class Markers
      */
     protected $deleted;
 
+    /**
+     * @var DoctrineCollection
+     *
+     * @ORM\OneToMany(targetEntity="Routes", mappedBy="markerStart")
+     */
+    protected $routesStart;
+
+    /**
+     * @var DoctrineCollection
+     *
+     * @ORM\OneToMany(targetEntity="Routes", mappedBy="markerEnd")
+     */
+    protected $routesEnd;
+
     public function __toString() {
         return $this->id.' - '.$this->name;
     }
@@ -98,6 +112,17 @@ class Markers
     {
         $this->routes = new \Doctrine\Common\Collections\ArrayCollection();
         $this->events = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+        return $this;
     }
 
     /**
@@ -358,5 +383,99 @@ class Markers
     public function getDeleted()
     {
         return $this->deleted;
+    }
+
+    /**
+     * Add routesStart
+     *
+     * @param \CorahnRin\MapsBundle\Entity\Routes $routesStart
+     * @return Markers
+     */
+    public function addRoutesStart(\CorahnRin\MapsBundle\Entity\Routes $routesStart)
+    {
+        $this->routesStart[] = $routesStart;
+
+        return $this;
+    }
+
+    /**
+     * Remove routesStart
+     *
+     * @param \CorahnRin\MapsBundle\Entity\Routes $routesStart
+     */
+    public function removeRoutesStart(\CorahnRin\MapsBundle\Entity\Routes $routesStart)
+    {
+        $this->routesStart->removeElement($routesStart);
+    }
+
+    /**
+     * Get routesStart
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getRoutesStart()
+    {
+        return $this->routesStart;
+    }
+
+    /**
+     * Get routesStart
+     *
+     * @return array
+     */
+    public function getRoutesStartIds()
+    {
+        $array = array();
+        foreach ($this->routesStart as $routeStart) {
+            $array[$routeStart->getId()] = $routeStart->getId();
+        }
+        return $array;
+    }
+
+    /**
+     * Add routesEnd
+     *
+     * @param \CorahnRin\MapsBundle\Entity\Routes $routesEnd
+     * @return Markers
+     */
+    public function addRoutesEnd(\CorahnRin\MapsBundle\Entity\Routes $routesEnd)
+    {
+        $this->routesEnd[] = $routesEnd;
+
+        return $this;
+    }
+
+    /**
+     * Remove routesEnd
+     *
+     * @param \CorahnRin\MapsBundle\Entity\Routes $routesEnd
+     */
+    public function removeRoutesEnd(\CorahnRin\MapsBundle\Entity\Routes $routesEnd)
+    {
+        $this->routesEnd->removeElement($routesEnd);
+    }
+
+    /**
+     * Get routesEnd
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getRoutesEnd()
+    {
+        return $this->routesEnd;
+    }
+
+    /**
+     * Get routesEnd
+     *
+     * @return array
+     */
+    public function getRoutesEndIds()
+    {
+        $array = array();
+        foreach ($this->routesEnd as $routeEnd) {
+            $array[$routeEnd->getId()] = $routeEnd->getId();
+        }
+        return $array;
     }
 }

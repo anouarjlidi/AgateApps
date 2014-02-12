@@ -1,6 +1,5 @@
 (function($){
-    var mapAddZone = document.getElementById('map_add_zone');
-    var mapContainerId = mapAddZone.getAttribute('data-map-container') ? mapAddZone.getAttribute('data-map-container') : 'map_container';
+    var mapContainerId = 'map_container';
     document.addZonePinDraggableObject = {
         start: function(e,ui){
             document.addZoneMapContainerOffset = $('#'+mapContainerId).offset();
@@ -8,8 +7,8 @@
             var x = parseInt(e.clientX - document.addZoneMapContainerOffset.left + window.pageXOffset);
             var y = parseInt(e.clientY - document.addZoneMapContainerOffset.top + window.pageYOffset);
             var offsets = {};
-            document.addZoneMovingPinIndex = $('[data-target-polygon="'+ui.helper.attr('data-target-polygon')+'"]').index(this);
-            document.addZonePolygon = document.getElementById(ui.helper.attr('data-target-polygon'));
+            document.addZoneMovingPinIndex = $('[data-target-element="'+ui.helper.attr('data-target-element')+'"]').index(this);
+            document.addZonePolygon = document.getElementById(ui.helper.attr('data-target-element'));
             document.addZoneCoordinates = document.addZonePolygon.getAttribute('points').split(' ');
             offsets.left = x - document.addZoneCoordinates[document.addZoneMovingPinIndex].split(',')[0];
             offsets.top = y - document.addZoneCoordinates[document.addZoneMovingPinIndex].split(',')[1];

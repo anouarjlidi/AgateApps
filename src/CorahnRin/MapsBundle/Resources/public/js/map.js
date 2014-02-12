@@ -210,16 +210,19 @@
                 for (var y = 0; y < ymax; y++) {
                     for (var x = 0; x < xmax; x++) {
                         // Création de la balise <img>
-                        node = document.createElement('img');
-                        node.src = "";
-                        node.setAttribute('data-image-src', tilesUrl.replace('{zoom}',z).replace('{y}',y).replace('{x}',x));
-                        node.classList.add('map-image');
-                        node.style.top = (y * imgSize) + 'px';
-    //                    node.width = imgSize;
-    //                    node.height = imgSize;
-                        node.style.left = (x * imgSize) + 'px';
-                        node.id = 'tile_'+z+'_'+y+'_'+x;
-                        nodeContainer.appendChild(node);// Ajout de cette image au nodeContainer
+//                        node = document.createElement('img');
+//                        node.src = "";
+//                        node.setAttribute('data-image-src', tilesUrl.replace('{zoom}',z).replace('{y}',y).replace('{x}',x));
+//                        node.classList.add('map-image');
+//                        node.style.top = (y * imgSize) + 'px';
+//    //                    node.width = imgSize;
+//    //                    node.height = imgSize;
+//                        node.style.left = (x * imgSize) + 'px';
+//                          node.id = 'tile_'+z+'_'+y+'_'+x;
+
+                        node = '<img src="" id="tile_' + z + '_' + y + '_' + x+'" style="left: '+(x * imgSize)+'px;top: '+(y * imgSize)+'px;" class="map-image" data-image-src="'+(tilesUrl.replace('{zoom}',z).replace('{y}',y).replace('{x}',x))+'" />'
+//                        nodeContainer.appendChild(node);// Ajout de cette image au nodeContainer
+                        nodeContainer.innerHTML += node;
                     }
                 }
                 container.appendChild(nodeContainer);// Ajout du nodeContainer au container général de la map

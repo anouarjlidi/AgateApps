@@ -2,7 +2,7 @@
 
 namespace CorahnRin\MapsBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Response;
+//use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use CorahnRin\MapsBundle\Entity\Maps;
 use CorahnRin\MapsBundle\Entity\Zones;
 use CorahnRin\MapsBundle\Entity\Routes;
+use CorahnRin\MapsBundle\Entity\Markers;
 use CorahnRin\MapsBundle\Form\MapsType;
 
 class MapsController extends Controller
@@ -80,22 +81,39 @@ class MapsController extends Controller
 
         $request = $this->get('request');
 
+        $em = $this->getDoctrine()->getManager();
+
         if ($request->getMethod() == 'POST') {
 
-            $em = $this->getDoctrine()->getManager();
-
             $this->updateZones($map);
+            $this->updateMarkers($map);
+            $this->updateRoutes($map);
 
             $em->persist($map);
             $em->flush();
 
             $this->get('session')->getFlashBag()->add('success', 'Modifications enregistrées !');
-            return $this->redirect($this->generateUrl('corahnrin_maps_maps_adminlist'));
+            return $this->redirect($this->generateUrl('corahnrin_maps_maps_edit',array('id'=>$map->getId())));
 
         }
+
+        $routesTypes = $em->getRepository('CorahnRinMapsBundle:RoutesTypes')->findAll();
+        $markersTypes = $em->getRepository('CorahnRinMapsBundle:MarkersTypes')->findAll();
+
         $route_init = $this->generateUrl('corahnrin_maps_api_init');
-        $max = $this->getDoctrine()->getManager()->getRepository('CorahnRinMapsBundle:Zones')->getMax();
-        return array('map'=>$map,'route_init' => $route_init, 'max' => $max);
+
+        $maxZones = $em->getRepository('CorahnRinMapsBundle:Zones')->getMax();
+        $maxRoutes = $em->getRepository('CorahnRinMapsBundle:Routes')->getMax();
+        $maxMarkers = $em->getRepository('CorahnRinMapsBundle:Markers')->getMax();
+        return array(
+            'map'=>$map,
+            'routesTypes' => $routesTypes,
+            'markersTypes' => $markersTypes,
+            'route_init' => $route_init,
+            'maxZones' => $maxZones,
+            'maxRoutes' => $maxRoutes,
+            'maxMarkers' => $maxMarkers,
+        );
     }
 
     /**
@@ -237,11 +255,70 @@ class MapsController extends Controller
 
         if (!empty($ids)) {
             foreach ($ids as $zone) {
+                $zone->setDeleted(1);
                 $em->persist($zone);
                 $map->removeZone($zone);
-                $em->remove($zone);
             }
         }
+    }
+
+    private function updateMarkers(&$map) {
+        $post = $this->get('request')->request;
+
+        $list = $post->get('map_add_marker_coords');
+        $names = $post->get('map_add_marker_name');
+        $types = $post->get('map_add_marker_type');
+
+        $em = $this->getDoctrine()->getManager();
+
+        $markersTypes = $em->getRepository('CorahnRinMapsBundle:MarkersTypes')->findAll(true);
+
+        $ids = array();
+        foreach ($map->getMarkers() as $marker) {
+            $ids[$marker->getId()] = $marker;
+            $em->persist($marker);
+        }
+
+        if ($list) {
+            foreach ($list as $id => $coordinates) {
+                // Définition de la marker
+                if (!isset($markersTypes[$types[$id]])) {
+                    throw new \Symfony\Component\Config\Definition\Exception\Exception('Incorrect marker type');
+                }
+                $marker = new Markers();
+                $marker->setId($id)
+                    ->setName($names[$id])
+                    ->setMap($map)
+                    ->setMarkerType($markersTypes[$types[$id]])
+                    ->setCoordinates($coordinates);
+                unset($ids[$id]);
+
+                $getMarker = $map->getMarker($marker);
+                if (!$getMarker){
+                    // Injection dans la map si elle n'existe pas encore
+                    $map->addMarker($marker);
+                    $em->persist($marker);
+                } else {
+                    if ($getMarker->getCoordinates() !== $marker->getCoordinates() ||
+                        $getMarker->getName() !== $marker->getName()) {
+                        $getMarker->setCoordinates($marker->getCoordinates())
+                            ->setMarkerType($markersTypes[$types[$id]])
+                            ->setName($marker->getName());
+                        $map->setMarker($getMarker);
+                        $em->persist($getMarker);
+                    }
+                }
+            }
+
+            if (!empty($ids)) {
+                foreach ($ids as $marker) {
+                    $marker->setDeleted(1);
+                    $em->persist($marker);
+                    $map->removeMarker($marker);
+                }
+            }
+        }
+
     }
 
     private function updateRoutes(&$map) {
@@ -249,8 +326,13 @@ class MapsController extends Controller
 
         $polylines_list = $post->get('map_add_route_polyline');
         $names = $post->get('map_add_route_name');
+        $types = $post->get('map_add_route_type');
+        $starts = $post->get('map_add_route_start');
+        $ends = $post->get('map_add_route_end');
 
         $em = $this->getDoctrine()->getManager();
+
+        $routesTypes = $em->getRepository('CorahnRinMapsBundle:RoutesTypes')->findAll(true);
 
         $ids = array();
         foreach ($map->getRoutes() as $route) {
@@ -258,12 +340,23 @@ class MapsController extends Controller
             $em->persist($route);
         }
 
+        $markers_ids = array();
+        foreach ($map->getMarkers() as $marker) {
+            $markers_ids[$marker->getId()] = $marker;
+            $em->persist($marker);
+        }
+
+
         foreach ($polylines_list as $id => $coordinates) {
             $route = new Routes();
+
             // Définition de la route
             $route->setId($id)
                 ->setName($names[$id])
                 ->setMap($map)
+                ->setRouteType($routesTypes[$types[$id]])
+                ->setMarkerStart($markers_ids[$starts[$id]])
+                ->setMarkerEnd($markers_ids[$ends[$id]])
                 ->setCoordinates($coordinates);
             unset($ids[$id]);
 
@@ -277,6 +370,9 @@ class MapsController extends Controller
                     $getRoute->getName() !== $route->getName()) {
                     $getRoute->setCoordinates($route->getCoordinates());
                     $getRoute->setName($route->getName());
+                    $getRoute->setRouteType($route->getRouteType());
+                    $getRoute->setMarkerStart($route->getMarkerStart());
+                    $getRoute->setMarkerEnd($route->getMarkerEnd());
                     $map->setRoute($getRoute);
                     $em->persist($getRoute);
                 }
@@ -285,9 +381,9 @@ class MapsController extends Controller
 
         if (!empty($ids)) {
             foreach ($ids as $route) {
+                $route->setDeleted(1);
                 $em->persist($route);
                 $map->removeRoute($route);
-                $em->remove($route);
             }
         }
     }

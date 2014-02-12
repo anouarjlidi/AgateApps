@@ -23,56 +23,75 @@
 }
 
 /** Conteneurs de points, lignes et polygones **/
-    #map_zones,
-    #map_routes {
+    #map_markers,
+    #map_svg_container {
         width: 100%;
         overflow: visible;
     }
-    #map_zones, #map_zones *,
-    #map_routes, #map_routes * {
+    #map_svg_container,
+    #map_markers {
         z-index: 2000;
     }
+    #map_svg_container polygon { z-index: 2100; }
+    #map_svg_container polyline { z-index: 2200; }
+    #map_markers .map-marker { z-index: 2300; }
 
 
 /** Polygones **/
-    #map_zones polygon {
+    #map_svg_container polygon {
         fill: rgba(192, 192, 192, 0.1);
         stroke: rgba(255, 255, 255, 0.7);
         stroke-width: 1;
     }
-    #map_zones polygon:hover {
+    #map_svg_container polygon:hover {
         cursor: pointer;
         fill: rgba(192, 192, 192, 0.25);
         stroke: rgba(255, 255, 255, 0.8);
         stroke-width: 1;
     }
-    #map_zones polygon.active,
-    #map_zones polygon:active,
-    #map_zones polygon:focus {
+    #map_svg_container polygon.active,
+    #map_svg_container polygon:active,
+    #map_svg_container polygon:focus {
         stroke: #fff;
         fill: rgba(64, 64, 64, 0.25);
         stroke-width: 2;
     }
 
 /** Polylines **/
-    #map_routes polyline {
+    #map_svg_container polyline {
         fill: none;
         stroke: rgba(255, 255, 255, 0.7);
         stroke-width: 2;
     }
-    #map_routes polyline:hover {
+    #map_svg_container polyline:hover {
         cursor: pointer;
         stroke: rgba(255, 255, 255, 0.8);
         stroke-width: 2;
     }
-    #map_routes polyline.active,
-    #map_routes polyline:active,
-    #map_routes polyline:focus {
+    #map_svg_container polyline.active,
+    #map_svg_container polyline:active,
+    #map_svg_container polyline:focus {
         stroke: #fff;
         stroke-width: 3;
     }
 
-
+/** Marqueurs **/
+    #map_markers .map-marker {
+        font-size: 19px;
+        display: block;
+        height: 1em;
+        margin-top: -16px;
+        margin-left: -9px;
+        text-shadow: 2px -2px 10px #000;
+    }
+    #map_markers .map-marker:hover,
+    #map_markers .map-marker.active,
+    #map_markers .map-marker:active,
+    #map_markers .map-marker:focus {
+        color: #FFEBD5;
+        cursor: pointer;
+        text-shadow: 2px -2px 5px #000;
+    }
 
 #map_labels,
 #map_labels * {

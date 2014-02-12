@@ -305,6 +305,35 @@ class Maps
     }
 
     /**
+     * Get zone
+     *
+     * @return Zones
+     */
+    public function getRoute(\CorahnRin\MapsBundle\Entity\Routes $route)
+    {
+        foreach ($this->routes as $mapRoute) {
+            if ($mapRoute->getId() === $route->getId() ||
+                $mapRoute->getName() === $route->getName()) {
+                return $mapRoute;
+            }
+        }
+        return null;
+    }
+
+    /**
+     *
+     */
+    public function setRoute(\CorahnRin\MapsBundle\Entity\Routes $route) {
+        $exists = $this->getRoute($route);
+        if (!$exists) {
+            $this->addRoute($route);
+        } else {
+            $this->routes->removeElement($exists);
+            $this->addRoute($route);
+        }
+    }
+
+    /**
      * Add markers
      *
      * @param \CorahnRin\MapsBundle\Entity\Markers $markers
@@ -338,6 +367,35 @@ class Maps
     }
 
     /**
+     * Get zone
+     *
+     * @return Zones
+     */
+    public function getMarker(\CorahnRin\MapsBundle\Entity\Markers $marker)
+    {
+        foreach ($this->markers as $mapMarker) {
+            if ($mapMarker->getId() === $marker->getId() ||
+                $mapMarker->getName() === $marker->getName()) {
+                return $mapMarker;
+            }
+        }
+        return null;
+    }
+
+    /**
+     *
+     */
+    public function setMarker(\CorahnRin\MapsBundle\Entity\Markers $marker) {
+        $exists = $this->getMarker($marker);
+        if (!$exists) {
+            $this->addMarker($marker);
+        } else {
+            $this->markers->removeElement($exists);
+            $this->addMarker($marker);
+        }
+    }
+
+    /**
      * Add zones
      *
      * @param \CorahnRin\MapsBundle\Entity\Zones $zones
@@ -367,7 +425,6 @@ class Maps
      */
     public function getZone(\CorahnRin\MapsBundle\Entity\Zones $zone)
     {
-        $isset = false;
         foreach ($this->zones as $mapZone) {
             if ($mapZone->getId() === $zone->getId() ||
                 $mapZone->getName() === $zone->getName()) {
