@@ -5,12 +5,12 @@ namespace CorahnRin\CharactersBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * SocialClass
+ * SocialClasses
  *
  * @ORM\Table(name="social_class")
- * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\SocialClassRepository")
+ * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\SocialClassesRepository")
  */
-class SocialClass
+class SocialClasses
 {
     /**
      * @var integer
@@ -86,7 +86,7 @@ class SocialClass
      * Set name
      *
      * @param string $name
-     * @return SocialClass
+     * @return SocialClasses
      */
     public function setName($name)
     {
@@ -109,7 +109,7 @@ class SocialClass
      * Set created
      *
      * @param \DateTime $created
-     * @return SocialClass
+     * @return SocialClasses
      */
     public function setCreated($created)
     {
@@ -132,7 +132,7 @@ class SocialClass
      * Set updated
      *
      * @param \DateTime $updated
-     * @return SocialClass
+     * @return SocialClasses
      */
     public function setUpdated($updated)
     {
@@ -155,7 +155,7 @@ class SocialClass
      * Add domains
      *
      * @param \CorahnRin\CharactersBundle\Entity\Domains $domains
-     * @return SocialClass
+     * @return SocialClasses
      */
     public function addDomain(\CorahnRin\CharactersBundle\Entity\Domains $domains)
     {
@@ -188,7 +188,7 @@ class SocialClass
      * Set description
      *
      * @param string $description
-     * @return SocialClass
+     * @return SocialClasses
      */
     public function setDescription($description)
     {
@@ -211,7 +211,7 @@ class SocialClass
      * Set deleted
      *
      * @param boolean $deleted
-     * @return SocialClass
+     * @return SocialClasses
      */
     public function setDeleted($deleted)
     {
