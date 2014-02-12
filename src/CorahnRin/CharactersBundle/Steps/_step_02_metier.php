@@ -12,7 +12,13 @@ $datas = array(
 
 if ($request->isMethod('POST')) {
     $job_value = (int) $request->request->get('job_value');
-    if (isset($jobs[$job_value])) {
+	$job_exists = false;
+
+    for ($i = 0, $c = count($jobs_list) ; $i < $c ; $i++){
+        if (isset($jobs_list[$i][$job_value])) { $job_exists = true; $i = $c; }
+    }
+
+    if ($job_exists) {
         $character[$this->stepFullName()] = $job_value;
         $session->set('character', $character);
         return $controller->_nextStep($this->step);
