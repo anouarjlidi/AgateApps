@@ -18,10 +18,10 @@ class TranslateController extends Controller {
      */
     public function changeLangAction($locale) {
         //Récupération de la liste des langues disponibles
-        $this->get('session')->set('_locale', $lang);
+        $this->get('session')->set('_locale', $locale);
         $translator = $this->get('translator');
         $translator->translationDomain('messages.flash');
-        $msg = $translator->trans('La langue a été modifiée pour : %lang%', array('%lang%' => '['.$lang.']'));
+        $msg = $translator->trans('La langue a été modifiée pour : %lang%', array('%lang%' => '['.$locale.']'));
         $translator->translationDomain();
         $this->get('session')->getFlashBag()->add('info', $msg);
         return $this->redirect($this->getRequest()->getBaseUrl());
