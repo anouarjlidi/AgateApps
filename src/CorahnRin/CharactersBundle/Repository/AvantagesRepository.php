@@ -16,28 +16,7 @@ class AvantagesRepository extends CorahnRinRepository {
             ->leftJoin('p.book', 'b')
                 ->addSelect('b')
         ;
-        foreach ($criteria as $field => $value) {
-            $qb->where('p.'.$field.' = :'.$field)
-               ->setParameter($field, $value);
-        }
-        if (is_string($orderBy)) {
-            $qb->orderBy($orderBy);
-        } elseif (is_array($orderBy)) {
-            foreach ($orderBy as $field => $order) {
-                $qb->orderBy($field, $order);
-            }
-        }
-
-        if (null !== $offset) { $qb->setFirstResult($offset); }
-        if (null !== $limit) { $qb->setMaxResults($limit); }
-
-        $datas = $qb->getQuery()->getResult();
-
-        if ($sortCollection) {
-            $datas = $this->sortCollection($datas);
-        }
-
-        return $datas;
+        return $this->defaultFindBy($qb, $criteria, $orderBy, $limit, $offset, $sortCollection);
     }
 
     function findAllDifferenciated() {

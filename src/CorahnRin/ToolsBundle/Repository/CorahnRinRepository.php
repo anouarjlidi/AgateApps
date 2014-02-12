@@ -9,6 +9,32 @@ use Doctrine\ORM\EntityRepository as EntityRepository;
  */
 abstract class CorahnRinRepository extends EntityRepository {
 
+    protected function defaultFindBy(\Doctrine\ORM\QueryBuilder $qb, array $criteria, array $orderBy = null, $limit = null, $offset = null, $sortCollection = false) {
+
+        foreach ($criteria as $field => $value) {
+            $qb->where('r.'.$field.' = :'.$field)
+               ->setParameter($field, $value);
+        }
+        if (is_string($orderBy)) {
+            $qb->orderBy($orderBy);
+        } elseif (is_array($orderBy)) {
+            foreach ($orderBy as $field => $order) {
+                $qb->orderBy($field, $order);
+            }
+        }
+
+        if (null !== $offset) { $qb->setFirstResult($offset); }
+        if (null !== $limit) { $qb->setMaxResults($limit); }
+
+        $datas = $qb->getQuery()->getResult();
+
+        if ($sortCollection) {
+            $datas = $this->sortCollection($datas);
+        }
+
+        return $datas;
+    }
+
     public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null, $sortCollection = false) {
         // Check
         if ($this->getClassMetadata()->hasField('deleted') && !isset($criteria['deleted'])) {
