@@ -10,11 +10,11 @@
 
 	{% block stylesheets %}{% stylesheets
                 '@CorahnRinPagesBundle/Resources/public/css/bootstrap.css'
+                '@CorahnRinPagesBundle/Resources/public/css/bootstrap-more.css'
                 '@CorahnRinPagesBundle/Resources/public/css/initializer.css'
                 'bundles/corahnrinpages/css/glyphicons.css'
                 'bundles/corahnrinpages/css/corahnrin-theme.css'
                 '@CorahnRinPagesBundle/Resources/public/css/corahn_rin.css'
-                '@CorahnRinPagesBundle/Resources/public/css/bootstrap-more.css'
                 '@CorahnRinMapsBundle/Resources/public/css/maps.css'
                 filter="cssrewrite,?yui_css"
                 output="css/main.css"
@@ -51,7 +51,6 @@
 	filter="?yui_js"
 %}<script type="text/javascript" src="{{ app.request.getSchemeAndHttpHost() ~ asset_url }}"></script>
 {% endjavascripts %}
-<script type="text/javascript">{% include 'CorahnRinPagesBundle::javascript_words.js.twig' %}</script>
 {% endblock %}
     </body>
 </html>
