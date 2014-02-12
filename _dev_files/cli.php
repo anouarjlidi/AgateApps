@@ -566,7 +566,7 @@ foreach ( $jobs as $v) {
 		$nbreqtemp++;
 		$datas = array(
 				'id' => $v['job_id'],
-				'book_id' => ($v['job_book'] ? 1 : 8),
+				'book_id' => ($v['job_book'] ? 2 : 13),
 				'name' => $v['job_name'],
 				'description' => $v['job_desc'],
 				'created' => $datetime->date,
@@ -657,37 +657,37 @@ $tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table 
 
 
 $socialclasses = $new->req('SELECT * FROM `social_class`');
-$table = 'socialclass_domains';
+$table = 'socialclasses_domains';
 $sreq = 0;
-$sql = 'INSERT INTO `'.$table.'` SET `socialclass_id` = :socialclass_id, `domains_id` = :domain_id';
+$sql = 'INSERT INTO `'.$table.'` SET `socialclasses_id` = :socialclasses_id, `domains_id` = :domain_id';
 if (!$new->row('SELECT * FROM %'.$table)) {
 	$q = $new->prepare($sql);
 	foreach ($socialclasses as $v) {
 		if ($v['name'] === 'Paysan') {
-			$q->execute(array('socialclass_id' => $v['id'], 'domain_id' => 5));$sreq++;
-			$q->execute(array('socialclass_id' => $v['id'], 'domain_id' => 8));$sreq++;
-			$q->execute(array('socialclass_id' => $v['id'], 'domain_id' => 10));$sreq++;
-			$q->execute(array('socialclass_id' => $v['id'], 'domain_id' => 15));$sreq++;
+			$q->execute(array('socialclasses_id' => $v['id'], 'domain_id' => 5));$sreq++;
+			$q->execute(array('socialclasses_id' => $v['id'], 'domain_id' => 8));$sreq++;
+			$q->execute(array('socialclasses_id' => $v['id'], 'domain_id' => 10));$sreq++;
+			$q->execute(array('socialclasses_id' => $v['id'], 'domain_id' => 15));$sreq++;
 		} elseif ($v['name'] === 'Artisan') {
-			$q->execute(array('socialclass_id' => $v['id'], 'domain_id' => 1));$sreq++;
-			$q->execute(array('socialclass_id' => $v['id'], 'domain_id' => 16));$sreq++;
-			$q->execute(array('socialclass_id' => $v['id'], 'domain_id' => 13));$sreq++;
-			$q->execute(array('socialclass_id' => $v['id'], 'domain_id' => 11));$sreq++;
+			$q->execute(array('socialclasses_id' => $v['id'], 'domain_id' => 1));$sreq++;
+			$q->execute(array('socialclasses_id' => $v['id'], 'domain_id' => 16));$sreq++;
+			$q->execute(array('socialclasses_id' => $v['id'], 'domain_id' => 13));$sreq++;
+			$q->execute(array('socialclasses_id' => $v['id'], 'domain_id' => 11));$sreq++;
 		} elseif ($v['name'] === 'Bourgeois') {
-			$q->execute(array('socialclass_id' => $v['id'], 'domain_id' => 1));$sreq++;
-			$q->execute(array('socialclass_id' => $v['id'], 'domain_id' => 16));$sreq++;
-			$q->execute(array('socialclass_id' => $v['id'], 'domain_id' => 12));$sreq++;
-			$q->execute(array('socialclass_id' => $v['id'], 'domain_id' => 11));$sreq++;
+			$q->execute(array('socialclasses_id' => $v['id'], 'domain_id' => 1));$sreq++;
+			$q->execute(array('socialclasses_id' => $v['id'], 'domain_id' => 16));$sreq++;
+			$q->execute(array('socialclasses_id' => $v['id'], 'domain_id' => 12));$sreq++;
+			$q->execute(array('socialclasses_id' => $v['id'], 'domain_id' => 11));$sreq++;
 		} elseif ($v['name'] === 'Clergé') {
-			$q->execute(array('socialclass_id' => $v['id'], 'domain_id' => 9));$sreq++;
-			$q->execute(array('socialclass_id' => $v['id'], 'domain_id' => 16));$sreq++;
-			$q->execute(array('socialclass_id' => $v['id'], 'domain_id' => 11));$sreq++;
-			$q->execute(array('socialclass_id' => $v['id'], 'domain_id' => 15));$sreq++;
+			$q->execute(array('socialclasses_id' => $v['id'], 'domain_id' => 9));$sreq++;
+			$q->execute(array('socialclasses_id' => $v['id'], 'domain_id' => 16));$sreq++;
+			$q->execute(array('socialclasses_id' => $v['id'], 'domain_id' => 11));$sreq++;
+			$q->execute(array('socialclasses_id' => $v['id'], 'domain_id' => 15));$sreq++;
 		} elseif ($v['name'] === 'Noblesse') {
-			$q->execute(array('socialclass_id' => $v['id'], 'domain_id' => 2));$sreq++;
-			$q->execute(array('socialclass_id' => $v['id'], 'domain_id' => 16));$sreq++;
-			$q->execute(array('socialclass_id' => $v['id'], 'domain_id' => 13));$sreq++;
-			$q->execute(array('socialclass_id' => $v['id'], 'domain_id' => 11));$sreq++;
+			$q->execute(array('socialclasses_id' => $v['id'], 'domain_id' => 2));$sreq++;
+			$q->execute(array('socialclasses_id' => $v['id'], 'domain_id' => 16));$sreq++;
+			$q->execute(array('socialclasses_id' => $v['id'], 'domain_id' => 13));$sreq++;
+			$q->execute(array('socialclasses_id' => $v['id'], 'domain_id' => 11));$sreq++;
 		}
 	}
 }
@@ -711,7 +711,7 @@ foreach ( $disciplines as $v) {
 				'name' => $v['disc_name'],
 				'description' => '',
 				'rank' => $v['disc_rang'],
-				'book_id' => 1,
+				'book_id' => 2,
 				'created' => $datetime->date,
 				'updated' => $datetime->date,
 		);$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
@@ -751,6 +751,25 @@ if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>1))) {
 	$q->execute(array('id' => 3,'name' => 'Organique',	'created' => $datetime->date, 'updated' => $datetime->date,));
 	$q->execute(array('id' => 4,'name' => 'Fossile',	'created' => $datetime->date, 'updated' => $datetime->date,));
 	$q->execute(array('id' => 5,'name' => 'M',			'created' => $datetime->date, 'updated' => $datetime->date,));
+}
+$tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
+
+
+
+
+
+
+
+
+$table = 'geo_environments';
+$nbreqtemp = 0;
+if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>1))) {
+	$sql = 'INSERT INTO `'.$table.'` SET `id` = :id, `name` = :name, `description` = :description, `book_id` = :book_id, `domain_id` = :domain_id, `created` = :created, `updated` = :updated';
+	$q = $new->prepare($sql);
+	$nbreq+=2;
+	$nbreqtemp+=2;
+	$q->execute(array('id' => 1,'name' => 'Rural', 'book_id'=>2,'domain_id'=>5, 'description' => 'Votre personnage est issu d\'une campagne ou d\'un lieu relativement isolé.', 'created' => $datetime->date, 'updated' => $datetime->date,));
+	$q->execute(array('id' => 2,'name' => 'Urbain', 'book_id'=>2,'domain_id'=>11, 'description' => 'Votre personnage a vécu longtemps dans une ville, suffisamment pour qu\'il ait adopté les codes de la ville dans son mode de vie.', 'created' => $datetime->date, 'updated' => $datetime->date,));
 }
 $tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
 
@@ -1022,8 +1041,8 @@ $table = 'menus';
 $nbreqtemp = 0;
 if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>1))) {
 
-	$nbreq+=19;
-	$nbreqtemp+=19;
+	$nbreq+=20;
+	$nbreqtemp+=20;
 
     $sql = <<<'SQL'
 
@@ -1056,7 +1075,8 @@ INSERT INTO `menus` (`id`, `parent_id`, `name`, `position`, `roles`, `route`, `c
 (21, 18, 'Avantages / Désavantages', 0, 'a:1:{i:0;s:20:"ROLE_ADMIN_GENERATOR";}', 'corahnrin_characters_avantages_adminlist', '2014-02-01 17:59:00', '2014-02-01 17:59:00', 0),
 (22, 18, 'Livres', 0, 'a:1:{i:0;s:20:"ROLE_ADMIN_GENERATOR";}', 'corahnrin_characters_books_adminlist', '2014-02-01 20:08:10', '2014-02-01 20:08:10', 0),
 (23, 18, 'Disciplines', 0, 'a:1:{i:0;s:20:"ROLE_ADMIN_GENERATOR";}', 'corahnrin_characters_disciplines_adminlist', '2014-02-02 16:15:14', '2014-02-02 17:01:54', 0),
-(24, 18, 'Domaines', 0, 'a:1:{i:0;s:20:"ROLE_ADMIN_GENERATOR";}', 'corahnrin_characters_domains_adminlist', '2014-02-02 17:01:38', '2014-02-02 17:01:38', 0);
+(24, 18, 'Domaines', 0, 'a:1:{i:0;s:20:"ROLE_ADMIN_GENERATOR";}', 'corahnrin_characters_domains_adminlist', '2014-02-02 17:01:38', '2014-02-02 17:01:38', 0),
+(25, 10, 'Routes', 0, 'a:1:{i:0;s:15:"ROLE_ADMIN_MAPS";}', 'corahnrin_maps_routes_adminlist', '2014-02-12 16:04:05', '2014-02-12 16:04:05', 0);
 SET FOREIGN_KEY_CHECKS=1;
 COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
@@ -1069,6 +1089,61 @@ SQL;
 
 }
 $tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
+
+
+
+
+
+
+
+
+$table = 'factions';
+$nbreqtemp = 0;
+if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>1))) {
+
+	$nbreq+=8;
+	$nbreqtemp+=8;
+
+    $sql = <<<'SQL'
+
+        SET FOREIGN_KEY_CHECKS=0;
+        SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+        SET AUTOCOMMIT=0;
+        START TRANSACTION;
+        SET time_zone = "+00:00";
+        /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+        /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+        /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+        /*!40101 SET NAMES utf8 */;
+        INSERT INTO `factions` (`id`, `name`, `description`, `created`, `updated`, `deleted`) VALUES
+        (1, 'Temple', 'Les adeptes de la religion du Temple.', '2014-02-05 15:27:32', '2014-02-05 15:27:32', 0),
+        (2, 'Magience', 'Les partisans d''une société régie par des principes académiques & scientifiques.', '2014-02-05 15:29:24', '2014-02-05 15:29:24', 0),
+        (3, 'Démorthèn', 'Les populations honorant les cultes et traditions ancestrales de Tri Kazel.', '2014-02-05 15:30:48', '2014-02-05 15:30:48', 0),
+        (4, 'Neutre', 'Aucun des grands courants idéologiques ne dominent ce lieu.', '2014-02-05 15:34:04', '2014-02-05 15:34:04', 0),
+        (5, 'Osags', 'Rattachés au culte Démorthèn, les Osags en sont peut être l''expression la plus radicale.', '2014-02-05 15:35:35', '2014-02-05 15:35:35', 0),
+        (6, 'Tarish', 'Peuple nomade par excellence, ses communautés sont en mouvement constant.', '2014-02-05 15:38:04', '2014-02-05 15:38:04', 0),
+        (7, 'Loge botaniste', 'L''école magientiste appliquée aux plantes, herbes et végétaux en général.', '2014-02-05 15:40:50', '2014-02-05 15:40:50', 0),
+        (8, 'Loge minéraliste', 'L''école magientiste appliquée aux pierres, métaux et minéraux en général.', '2014-02-05 18:08:38', '2014-02-05 18:08:38', 0);
+        SET FOREIGN_KEY_CHECKS=1;
+        COMMIT;
+        /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+        /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+        /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+SQL;
+    $new->query($sql);
+
+}
+$tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1179,7 +1254,7 @@ foreach ( $characters as $v) {
 			'status' => $v['char_status'],
 			'SocialClassdomain1_id' => $socialclassdomains[0],
 			'SocialClassdomain2_id' => $socialclassdomains[1],
-			'socialClass_id' => $cnt->classe_sociale,
+			'socialClasses_id' => $cnt->classe_sociale,
 			'inventory' => serialize(array_merge($cnt->inventaire->possessions)),
 			'created' => date('Y-m-d H:i:s', (int) $v['char_date_creation']),
 			'updated' => date('Y-m-d H:i:s', ((int) $v['char_date_update'] ? (int) $v['char_date_update'] : (int) $v['char_date_creation'])),
@@ -1305,7 +1380,7 @@ foreach ( $characters as $v) {
 			}
 		}
 
-//		$sql = 'INSERT INTO %charsocialclass SET %character_id = :character_id, %domain1_id = :dom1, %domain2_id = :dom2, %created = :created, %updated = :updated, %socialClass_id = (SELECT Id FROM `socialclass` WHERE `name` LIKE :socialClass)';
+//		$sql = 'INSERT INTO %charsocialclass SET %character_id = :character_id, %domain1_id = :dom1, %domain2_id = :dom2, %created = :created, %updated = :updated, %socialClasses_id = (SELECT Id FROM `socialclass` WHERE `name` LIKE :socialClass)';
 //		$charsocialclass = array(
 //			'character_id' => $v['char_id'],
 //			'dom1' => $socialclassdomains[0],
