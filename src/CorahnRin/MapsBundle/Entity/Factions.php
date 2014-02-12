@@ -73,6 +73,13 @@ class Factions
 	 */
 	protected $markers;
 
+	/**
+	 * @var DoctrineCollection
+	 *
+	 * @ORM\ManyToOne(targetEntity="CorahnRin\CharactersBundle\Entity\Books")
+	 */
+	protected $book;
+
     /**
      * @var boolean
      *
