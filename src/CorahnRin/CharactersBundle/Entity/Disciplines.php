@@ -32,7 +32,7 @@ class Disciplines
     /**
      * @var string
      *
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text",nullable=true)
      */
     protected $description;
 
@@ -60,7 +60,7 @@ class Disciplines
 
     /**
      * @var \Books
-     * @ORM\ManyToOne(targetEntity="Books")
+     * @ORM\ManyToOne(targetEntity="Books", fetch="EAGER")
      */
     protected $book;
 
@@ -93,7 +93,7 @@ class Disciplines
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -116,7 +116,7 @@ class Disciplines
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -139,7 +139,7 @@ class Disciplines
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
@@ -162,7 +162,7 @@ class Disciplines
     /**
      * Get rank
      *
-     * @return string 
+     * @return string
      */
     public function getRank()
     {
@@ -185,7 +185,7 @@ class Disciplines
     /**
      * Get created
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreated()
     {
@@ -208,7 +208,7 @@ class Disciplines
     /**
      * Get updated
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdated()
     {
@@ -231,7 +231,7 @@ class Disciplines
     /**
      * Get deleted
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getDeleted()
     {
@@ -254,7 +254,7 @@ class Disciplines
     /**
      * Get book
      *
-     * @return \CorahnRin\CharactersBundle\Entity\Books 
+     * @return \CorahnRin\CharactersBundle\Entity\Books
      */
     public function getBook()
     {
@@ -287,7 +287,7 @@ class Disciplines
     /**
      * Get domains
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getDomains()
     {

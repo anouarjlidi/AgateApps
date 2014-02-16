@@ -29,9 +29,16 @@ class Weapons
     protected $name;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $description;
+
+    /**
      * @var boolean
      *
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="smallint")
      */
     protected $damage;
 
@@ -119,9 +126,32 @@ class Weapons
     }
 
     /**
+     * Set description
+     *
+     * @param string $description
+     * @return Weapons
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
      * Set damage
      *
-     * @param boolean $damage
+     * @param integer $damage
      * @return Weapons
      */
     public function setDamage($damage)
@@ -134,7 +164,7 @@ class Weapons
     /**
      * Get damage
      *
-     * @return boolean
+     * @return integer
      */
     public function getDamage()
     {
@@ -190,7 +220,7 @@ class Weapons
     /**
      * Set melee
      *
-     * @param boolean $melee
+     * @param integer $melee
      * @return Weapons
      */
     public function setMelee($melee)
@@ -203,7 +233,7 @@ class Weapons
     /**
      * Get melee
      *
-     * @return boolean
+     * @return integer
      */
     public function getMelee()
     {

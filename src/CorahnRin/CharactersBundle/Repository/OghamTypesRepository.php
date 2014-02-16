@@ -1,12 +1,12 @@
 <?php
 namespace CorahnRin\CharactersBundle\Repository;
-use Doctrine\ORM\EntityRepository;
+
 use CorahnRin\ToolsBundle\Repository\CorahnRinRepository as CorahnRinRepository;
 
 /**
- * PeopleRepository
+ * OghamTypesRepository
  *
  */
-class PeopleRepository extends CorahnRinRepository {
+class OghamTypesRepository extends CorahnRinRepository {
 
 }

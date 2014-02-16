@@ -15,10 +15,13 @@ class DomainsRepository extends CorahnRinRepository {
             ->from($this->_entityName, 'p')
             ->leftJoin('p.way', 'c')
                 ->addSelect('c')
+            ->leftJoin('p.disciplines', 'd')
+                ->addSelect('d')
+            ->leftJoin('d.book', 'b')
+                ->addSelect('b')
         ;
         return $this->defaultFindBy($qb, $criteria, $orderBy, $limit, $offset, $sortCollection);
     }
-
 
     public function findAllSortedByName(array $criteria = array(), array $orderBy = null, $limit = null, $offset = null, $sortCollection = true) {
         $orderBy = array('p.name'=>'asc');

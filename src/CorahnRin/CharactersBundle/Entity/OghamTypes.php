@@ -5,12 +5,12 @@ namespace CorahnRin\CharactersBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * People
+ * OghamTypes
  *
- * @ORM\Table(name="people")
- * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\PeopleRepository")
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\OghamTypesRepository")
  */
-class People
+class OghamTypes
 {
     /**
      * @var integer
@@ -19,21 +19,21 @@ class People
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    private $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
      */
-    protected $name;
+    private $name;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="text")
+     * @ORM\Column(name="description", type="string", length=255)
      */
-    protected $description;
+    private $description;
 
     /**
      * @var \Datetime
@@ -57,6 +57,7 @@ class People
      */
     protected $deleted;
 
+
     /**
      * Get id
      *
@@ -71,7 +72,7 @@ class People
      * Set name
      *
      * @param string $name
-     * @return People
+     * @return OghamTypes
      */
     public function setName($name)
     {
@@ -91,33 +92,10 @@ class People
     }
 
     /**
-     * Set description
-     *
-     * @param string $description
-     * @return People
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * Get description
-     *
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
      * Set created
      *
      * @param \DateTime $created
-     * @return Ogham
+     * @return OghamTypes
      */
     public function setCreated($created)
     {
@@ -140,7 +118,7 @@ class People
      * Set updated
      *
      * @param \DateTime $updated
-     * @return Ogham
+     * @return OghamTypes
      */
     public function setUpdated($updated)
     {
@@ -163,7 +141,7 @@ class People
      * Set deleted
      *
      * @param boolean $deleted
-     * @return People
+     * @return OghamTypes
      */
     public function setDeleted($deleted)
     {
@@ -175,10 +153,33 @@ class People
     /**
      * Get deleted
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getDeleted()
     {
         return $this->deleted;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return OghamTypes
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 }

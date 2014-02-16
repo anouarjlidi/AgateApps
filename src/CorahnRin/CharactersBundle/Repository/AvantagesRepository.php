@@ -9,16 +9,6 @@ use CorahnRin\ToolsBundle\Repository\CorahnRinRepository as CorahnRinRepository;
  */
 class AvantagesRepository extends CorahnRinRepository {
 
-    public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null, $sortCollection = false) {
-        $qb = $this->_em->createQueryBuilder()
-            ->select('p')
-            ->from($this->_entityName, 'p')
-            ->leftJoin('p.book', 'b')
-                ->addSelect('b')
-        ;
-        return $this->defaultFindBy($qb, $criteria, $orderBy, $limit, $offset, $sortCollection);
-    }
-
     function findAllDifferenciated() {
         $list = $this->findAll();
         $advantages = $disadvantages = array();

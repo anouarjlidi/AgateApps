@@ -5,17 +5,17 @@ namespace CorahnRin\CharactersBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Domains
+ * Peoples
  *
- * @ORM\Table(name="domains")
- * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\DomainsRepository")
+ * @ORM\Table(name="peoples")
+ * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\PeoplesRepository")
  */
-class Domains
+class Peoples
 {
     /**
      * @var integer
      *
-     * @ORM\Column(type="integer", nullable=false)
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -24,7 +24,7 @@ class Domains
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=70, nullable=false, unique=true)
+     * @ORM\Column(name="name", type="string", length=255)
      */
     protected $name;
 
@@ -34,6 +34,12 @@ class Domains
      * @ORM\Column(type="text",nullable=true)
      */
     protected $description;
+
+    /**
+     * @var \Books
+     * @ORM\ManyToOne(targetEntity="Books", fetch="EAGER")
+     */
+    protected $book;
 
     /**
      * @var \Datetime
@@ -51,37 +57,11 @@ class Domains
     protected $updated;
 
     /**
-     * @var \Ways
-     *
-     * @ORM\ManyToOne(targetEntity="Ways")
-     */
-    protected $way;
-
-    /**
      * @var boolean
      *
      * @ORM\Column(name="deleted", type="boolean", nullable=false,options={"default":0})
      */
     protected $deleted;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Disciplines", mappedBy="domains")
-     */
-    protected $disciplines;
-
-    function __toString() {
-        return $this->id.' - '.$this->name;
-    }
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->disciplines = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * Get id
@@ -97,7 +77,7 @@ class Domains
      * Set name
      *
      * @param string $name
-     * @return Domains
+     * @return Peoples
      */
     public function setName($name)
     {
@@ -120,7 +100,7 @@ class Domains
      * Set description
      *
      * @param string $description
-     * @return Domains
+     * @return Peoples
      */
     public function setDescription($description)
     {
@@ -143,7 +123,7 @@ class Domains
      * Set created
      *
      * @param \DateTime $created
-     * @return Domains
+     * @return Ogham
      */
     public function setCreated($created)
     {
@@ -166,7 +146,7 @@ class Domains
      * Set updated
      *
      * @param \DateTime $updated
-     * @return Domains
+     * @return Ogham
      */
     public function setUpdated($updated)
     {
@@ -189,7 +169,7 @@ class Domains
      * Set deleted
      *
      * @param boolean $deleted
-     * @return Domains
+     * @return Peoples
      */
     public function setDeleted($deleted)
     {
@@ -209,58 +189,25 @@ class Domains
     }
 
     /**
-     * Set way
+     * Set book
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Ways $way
-     * @return Domains
+     * @param \CorahnRin\CharactersBundle\Entity\Books $book
+     * @return Peoples
      */
-    public function setWay(\CorahnRin\CharactersBundle\Entity\Ways $way = null)
+    public function setBook(\CorahnRin\CharactersBundle\Entity\Books $book = null)
     {
-        $this->way = $way;
+        $this->book = $book;
 
         return $this;
     }
 
     /**
-     * Get way
+     * Get book
      *
-     * @return \CorahnRin\CharactersBundle\Entity\Ways
+     * @return \CorahnRin\CharactersBundle\Entity\Books
      */
-    public function getWay()
+    public function getBook()
     {
-        return $this->way;
-    }
-
-    /**
-     * Add disciplines
-     *
-     * @param \CorahnRin\CharactersBundle\Entity\Disciplines $disciplines
-     * @return Domains
-     */
-    public function addDiscipline(\CorahnRin\CharactersBundle\Entity\Disciplines $disciplines)
-    {
-        $this->disciplines[] = $disciplines;
-
-        return $this;
-    }
-
-    /**
-     * Remove disciplines
-     *
-     * @param \CorahnRin\CharactersBundle\Entity\Disciplines $disciplines
-     */
-    public function removeDiscipline(\CorahnRin\CharactersBundle\Entity\Disciplines $disciplines)
-    {
-        $this->disciplines->removeElement($disciplines);
-    }
-
-    /**
-     * Get disciplines
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getDisciplines()
-    {
-        return $this->disciplines;
+        return $this->book;
     }
 }

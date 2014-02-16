@@ -77,13 +77,15 @@ abstract class CorahnRinRepository extends EntityRepository {
         return $max;
     }
 
-    public function sortCollection($collection){
+    public function sortCollection($collection, $by = '_primary'){
         $total = array();
         $current = current($collection);
-        $primary = $this->getClassMetadata()->getSingleIdentifierFieldName();
-        if (property_exists($current, $primary)) {
+        if ('_primary' === $by) {
+            $by = $this->getClassMetadata()->getSingleIdentifierFieldName();
+        }
+        if (property_exists($current, $by)) {
             foreach ($collection as $entity) {
-                $total[$entity->{'get'.ucfirst($primary)}()] = $entity;
+                $total[$entity->{'get'.ucfirst($by)}()] = $entity;
             }
         }
         return $total ?: $collection;

@@ -31,7 +31,7 @@ class Miracles
     /**
      * @var string
      *
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text",nullable=true)
      */
     protected $description;
 
@@ -41,6 +41,12 @@ class Miracles
      * @ORM\Column(type="boolean")
      */
     protected $isMajor;
+
+    /**
+     * @var \Books
+     * @ORM\ManyToOne(targetEntity="Books", fetch="EAGER")
+     */
+    protected $book;
 
     /**
      * @var \Datetime
@@ -205,10 +211,33 @@ class Miracles
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Set book
+     *
+     * @param \CorahnRin\CharactersBundle\Entity\Books $book
+     * @return Miracles
+     */
+    public function setBook(\CorahnRin\CharactersBundle\Entity\Books $book = null)
+    {
+        $this->book = $book;
+
+        return $this;
+    }
+
+    /**
+     * Get book
+     *
+     * @return \CorahnRin\CharactersBundle\Entity\Books
+     */
+    public function getBook()
+    {
+        return $this->book;
     }
 }

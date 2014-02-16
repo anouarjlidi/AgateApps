@@ -42,6 +42,10 @@ class DisordersWays
      */
     protected $deleted;
 
+    function __toString() {
+        return $this->disorder->getName().' - '.$this->way->getName();
+    }
+
     /**
      * Set disorder
      *

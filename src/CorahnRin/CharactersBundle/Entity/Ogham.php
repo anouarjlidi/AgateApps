@@ -31,9 +31,21 @@ class Ogham
     /**
      * @var string
      *
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     protected $description;
+
+    /**
+     * @var \Books
+     * @ORM\ManyToOne(targetEntity="Books")
+     */
+    protected $book;
+
+    /**
+     * @var \Books
+     * @ORM\ManyToOne(targetEntity="OghamTypes")
+     */
+    protected $oghamType;
 
     /**
      * @var \Datetime
@@ -175,10 +187,56 @@ class Ogham
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Set book
+     *
+     * @param \CorahnRin\CharactersBundle\Entity\Books $book
+     * @return Ogham
+     */
+    public function setBook(\CorahnRin\CharactersBundle\Entity\Books $book = null)
+    {
+        $this->book = $book;
+
+        return $this;
+    }
+
+    /**
+     * Get book
+     *
+     * @return \CorahnRin\CharactersBundle\Entity\Books
+     */
+    public function getBook()
+    {
+        return $this->book;
+    }
+
+    /**
+     * Set oghamType
+     *
+     * @param \CorahnRin\CharactersBundle\Entity\OghamTypes $oghamType
+     * @return Ogham
+     */
+    public function setOghamType(\CorahnRin\CharactersBundle\Entity\OghamTypes $oghamType = null)
+    {
+        $this->oghamType = $oghamType;
+
+        return $this;
+    }
+
+    /**
+     * Get oghamType
+     *
+     * @return \CorahnRin\CharactersBundle\Entity\OghamTypes 
+     */
+    public function getOghamType()
+    {
+        return $this->oghamType;
     }
 }
