@@ -17,8 +17,8 @@ class ArmorsType extends AbstractType
         $builder
             ->add('name', 'text', array('label' => 'Nom'))
             ->add('description', 'textarea', array('label' => 'Description', 'required'=>false))
-            ->add('protection', 'integer')
-            ->add('price', 'integer', array('label'=>'Prix'))
+            ->add('protection', 'integer', array('label'=>'Protection'))
+            ->add('price', 'integer', array('label'=>'Prix (en daols de Braise)'))
             ->add('availability', 'choice', array(
                 'label' => 'Rareté',
                 'choices' => array(

@@ -17,13 +17,14 @@ class DisciplinesType extends AbstractType
         $builder
             ->add('name', 'text', array('label' => 'Nom'))
             ->add('description', 'textarea', array('label' => 'Description', 'required'=>false))
-            ->add('book', null, array('label'=>'Livre'))
+            ->add('book', null, array('label'=>'Livre', 'property'=>'name'))
             ->add('domains', 'entity', array(
                 'class' => 'CorahnRin\CharactersBundle\Entity\Domains',
                 'label'=>'Domaines',
                 'multiple' => true,
                 'required'=>true,
                 'attr'=>array('size'=>16),
+                'property'=>'name'
             ))
             ->add('save', 'submit', array('label'=>'Enregistrer'))
         ;

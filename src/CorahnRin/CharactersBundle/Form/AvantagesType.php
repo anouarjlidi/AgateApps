@@ -28,11 +28,11 @@ class AvantagesType extends AbstractType
                 'choices' => array(),
                 'multiple' => true,
                 'required'=>false,
-                'attr' => array('size'=>10),
+                'attr' => array('size'=>10)
             ))
             ->add('isDesv', null, array('label'=>'Désavantage','required'=>false))
             ->add('isCombatArt', null, array('label'=>'Art de combat','required'=>false))
-            ->add('book', null, array('label'=>'Livre'))
+            ->add('book', null, array('label'=>'Livre', 'property'=>'name'))
             ->add('save', 'submit', array('label'=>'Enregistrer'))
         ;
     }

@@ -17,7 +17,7 @@ class DomainsType extends AbstractType
         $builder
             ->add('name', 'text', array('label' => 'Nom','attr'=>array('disabled'=>'disabled')))
             ->add('description', 'textarea', array('label' => 'Description', 'required'=>false))
-            ->add('way', null, array('label'=>'Voie', 'attr'=>array('disabled'=>'disabled')))
+//            ->add('way', null, array('label'=>'Voie', 'attr'=>array('disabled'=>'disabled'), 'property'=>'name'))
         ;
     }
 

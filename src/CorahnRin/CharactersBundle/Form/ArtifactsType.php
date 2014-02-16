@@ -25,7 +25,7 @@ class ArtifactsType extends AbstractType
             ->add('vulnerability', 'text', array('label'=>'Vulnérabilités','required'=>false))
             ->add('handling', 'text', array('label'=>'Ergonomie','required'=>false))
             ->add('damage', 'number', array('label'=>'Dégâts infligés','required'=>false))
-            ->add('flux', null, array('label'=>'Type de Flux'))
+            ->add('flux', null, array('label'=>'Type de Flux', 'property'=>'name'))
             ->add('save', 'submit', array('label'=>'Enregistrer'))
         ;
     }
