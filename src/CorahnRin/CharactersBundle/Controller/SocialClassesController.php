@@ -2,6 +2,9 @@
 
 namespace CorahnRin\CharactersBundle\Controller;
 
+use CorahnRin\CharactersBundle\Entity\SocialClasses;
+use CorahnRin\CharactersBundle\Form\SocialClassesType;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -9,38 +12,79 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class SocialClassesController extends Controller
 {
     /**
-     * @Route("/admin/generator/socialclass/")
+     * @Route("/admin/generator/socialclasses/")
      * @Template()
      */
     public function adminListAction() {
-        $name = str_replace('Controller','',preg_replace('#^([a-zA-Z]+\\\)*#isu', '', __CLASS__));
         return array(
-            strtolower($name) => $this->getDoctrine()->getManager()->getRepository('CorahnRinCharactersBundle:'.$name)->findAll(),
+            'socialClasses' => $this->getDoctrine()->getManager()->getRepository('CorahnRinCharactersBundle:SocialClasses')->findAll(),
         );
     }
 
     /**
-     * @Route("/admin/generator/socialclass/add/")
+     * @Route("/admin/generator/socialclasses/add/")
      * @Template("CorahnRinAdminBundle:Form:add.html.twig")
      */
     public function addAction()
     {
+        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN_GENERATOR_SUPER')) {
+            throw new AccessDeniedException();
+        }
+        return $this->handle_request(new SocialClasses);
     }
 
     /**
-     * @Route("/admin/generator/socialclass/edit/{id}")
+     * @Route("/admin/generator/socialclasses/edit/{id}")
      * @Template("CorahnRinAdminBundle:Form:add.html.twig")
      */
-    public function editAction($id)
+    public function editAction(SocialClasses $socialClass)
     {
+        return $this->handle_request($socialClass);
     }
 
     /**
-     * @Route("/admin/generator/socialclass/delete/{id}")
+     * @Route("/admin/generator/socialclasses/delete/{id}")
      * @Template()
      */
-    public function deleteAction($id)
+    public function deleteAction(SocialClasses $element)
     {
+        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN_GENERATOR_SUPER')) {
+            throw new AccessDeniedException();
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $element->setDeleted(1);
+        $em->persist($element);
+        $em->flush();
+        $this->get('session')->getFlashBag()->add('success', 'Classe sociale supprimée : <strong>'.$element->getName().'</strong>');
+        return $this->redirect($this->generateUrl('corahnrin_characters_socialclasses_adminlist'));
     }
 
+    private function handle_request(SocialClasses $element) {
+        $method = preg_replace('#^'.str_replace('\\','\\\\',__CLASS__).'::([a-zA-Z]+)Action$#isUu', '$1', $this->getRequest()->get('_controller'));
+
+        $form = $this->createForm(new \CorahnRin\CharactersBundle\Form\SocialClassesType(), $element);
+
+        $request = $this->get('request');
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($element);
+            $em->flush();
+            $this->get('session')->getFlashBag()->add('success', 'Classe sociale '.($method=='add'?'ajoutée':'modifiée').' : <strong>'.$element->getName().'</strong>');
+            return $this->redirect($this->generateUrl('corahnrin_characters_socialclasses_adminlist'));
+        }
+
+        return array(
+            'form' => $form->createView(),
+            'title' => ($method=='add'?'Ajouter':'Modifier').' un revers',
+            'breadcrumbs' => array(
+                'Accueil' => array('route' => 'corahnrin_admin_admin_index',),
+                'Classes Sociales' => array('route'=>'corahnrin_characters_socialclasses_adminlist'),
+            ),
+        );
+    }
 }

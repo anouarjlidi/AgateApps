@@ -17,7 +17,15 @@ class SocialClassesType extends AbstractType
         $builder
             ->add('name', 'text', array('label' => 'Nom'))
             ->add('description', 'textarea', array('label' => 'Description', 'required'=>false))
-            ->add('domains')
+            ->add('domains', 'entity', array(
+                'class' => 'CorahnRin\CharactersBundle\Entity\Domains',
+                'label'=>'Domaines',
+                'multiple' => true,
+                'required'=>true,
+                'attr'=>array('size'=>16),
+                'property'=>'name'
+            ))
+            ->add('save','submit',array('label'=>'Enregistrer'))
         ;
     }
 
