@@ -1,6 +1,8 @@
 <?php
 namespace CorahnRin\CharactersBundle\Steps;
 
+use CorahnRin\CharactersBundle\Entity\Steps;
+
 /**
  * Charge les étapes pour le contrôleur
  * D'après un nom de fichier dépendant de l'étape injectée
@@ -10,6 +12,7 @@ class StepLoader {
 
     private $controller;
     private $session;
+    private $character;
     private $request;
     private $step;
     private $filename;
@@ -21,6 +24,7 @@ class StepLoader {
         $this->stepEntity = $step;
         $this->step = $step->getStep();
         $this->filename = __DIR__.'/'.'_step_'.str_pad($step->getId(), 2, 0, STR_PAD_LEFT).'_'.$step->getSlug().'.php';
+        $this->character = $session->get('character');
     }
 
     /**
@@ -35,17 +39,17 @@ class StepLoader {
      * Retourne le nom complet de l'étape : {step}.{slug}
      * @return string
      */
-    public function stepFullName() {
-        return $this->stepEntity->getStep().'.'.$this->stepEntity->getSlug();
+    public function stepFullName(Steps $step = null) {
+        if (null === $step) { $step = $this->stepEntity; }
+        return $step->getStep().'.'.$step->getSlug();
     }
 
     /**
-     * Exécute _load_alias()
-     * @see StepLoader::_load_alias()
+     * Redirige à l'étape suivante
      * @return array|object
      */
-    public function load() {
-        return $this->_load_alias($this->controller, $this->session, $this->request, $this->step);
+    public function nextStep() {
+        return $this->controller->_goToStep($this->step + 1);
     }
 
     /**
@@ -56,14 +60,13 @@ class StepLoader {
      * Si la réponse est un objet, c'est un objet RedirectResponse<br />
      *  Dans ce cas, on redirige, soit vers l'étape suivante, soit vers une autre page
      *
-     * @param type $controller Le contrôleur qui a exécuté cette fonction
-     * @param type $session La session en cours
-     * @param type $request La requête en cours
-     * @param type $step L'étape récupérée dans la base de données
-     * @return type
+     * @return array|object
      */
-    private function _load_alias($controller, $session, $request, $step) {
-        $character = $session->get('character');
+    public function load() {
+
+        // Initialisation des variables du scope local
+
+        // Chargement du fichier, les variables précédentes y seront utilisables
         return require $this->filename;
     }
 

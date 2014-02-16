@@ -1,0 +1,21 @@
+<input type="hidden" name="gen-div-choice" id="gen-div-choice" value="{{ geoEnvironment_value }}" />
+<div class="row">
+{% for geoEnvironment in geoEnvironments %}
+    <div class="col-sm-6 gen-div-choice{% if geoEnvironment_value == geoEnvironment.id %} selected{% endif %}"
+         data-div-choice-value="{{ geoEnvironment.id }}">
+        <article>
+            <header>
+                <h3 class="text-center">{{ geoEnvironment.name | trans }}</h3>
+            </header>
+            <p>{{ geoEnvironment.description | trans | raw }}</p>
+            <p><small>{{ 'Offre un bonus de +1 au domaine suivant :' | trans }} {{ geoEnvironment.domain.name }}</small></p>
+        </article>
+    </div>
+    {% if loop.index % 2 == 0 %}
+</div><!--/.row-->
+<div class="row">
+    {% endif %}
+{% else %}
+    <p class="alert alert-error">{{ 'Une erreur est survenue lors du chargement de la liste des environnements géographiques' | trans }}</p>
+{% endfor %}
+</div>

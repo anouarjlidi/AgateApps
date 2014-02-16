@@ -31,21 +31,21 @@ class GeoEnvironments
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="text")
+     * @ORM\Column(name="description",type="text",nullable=true)
      */
     private $description;
 
     /**
      * @var integer
      *
-     * @ORM\ManyToOne(targetEntity="Books")
+     * @ORM\ManyToOne(targetEntity="Books", fetch="EAGER")
      */
     private $book;
 
     /**
      * @var integer
      *
-     * @ORM\ManyToOne(targetEntity="Domains")
+     * @ORM\ManyToOne(targetEntity="Domains", fetch="EAGER")
      */
     private $domain;
 
