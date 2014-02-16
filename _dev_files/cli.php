@@ -805,17 +805,17 @@ $tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table 
 
 
 
-$table = 'people';
+$table = 'peoples';
 $nbreqtemp = 0;
 if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>1))) {
 	$sql = 'INSERT INTO `'.$table.'` SET `id` = :id, `name` = :name, `description` = :description, `created` = :created, `updated` = :updated';
 	$q = $new->prepare($sql);
 	$nbreq+=4;
 	$nbreqtemp+=4;
-	$q->execute(array('id' => 1,'name' => 'Tri-Kazel', 'description' => 'Les Tri-Kazeliens constituent la très grande majorité de la population de la péninsule. La plupart d\'entre eux conservent une stature assez robuste héritée des Osags mais peuvent aussi avoir des traits d\'autres peuples. Les Tri-Kazeliens sont issus de siècles de mélanges entre toutes les cultures ayant un jour ou l\'autre foulé le sol de la péninsule.<br /><br />De par cette origine, le PJ connaît un dialecte local ; il faut donc préciser de quel pays et région il est originaire.',	'created' => $datetime->date, 'updated' => $datetime->date,));
-	$q->execute(array('id' => 2,'name' => 'Tarish', 'description' => 'D\'origine inconnue, le peuple Tarish forme une minorité nomade qui parcourt depuis des décennies les terres de la péninsule. Il est aussi appelé "peuple de l\'ouest" car la légende veut qu\'il soit arrivé par l\'Océan Furieux. Les Tarishs se distinguent des Tri-Kazeliens par des pommettes hautes, le nez plutôt aquilin et les yeux souvent clairs. Beaucoup d\'entre eux deviennent des saltimbanques, des mystiques ou des artisans.<br />La culture Tarish, même si elle est diluée aujourd\'hui, conserve encore une base importante : c\'est un peuple nomade habitué aux longs périples et leur langue n\'a pas disparu, bien qu\'aucun étranger ne l\'ait jamais apprise.',	'created' => $datetime->date, 'updated' => $datetime->date,));
-	$q->execute(array('id' => 3,'name' => 'Osag', 'description' => "Habitués à ne compter que sur eux-mêmes, les Osags forment un peuple rude. Généralement dotés d'une carrure imposante, ils sont les descendants directs des clans traditionnels de la péninsule. La civilisation péninsulaire a beaucoup évolué depuis l'avènement des Trois Royaumes, mais certains clans sont restés fidèles aux traditions ancestrales et n'ont pas pris part à ces changements. Repliés sur leur mode de vie clanique, les Osags ne se sont pas métissés avec les autres peuples et ont gardé de nombreuses caractéristiques de leurs ancêtres. Les Osags font de grands guerriers et comptent parmi eux les plus célèbres Demorthèn.<br /><br />Leur langue a elle aussi survécu au passage des siècles. Les mots \"feondas\", \"C'maogh\", \"Dàmàthair\" - pour ne citer qu'eux - viennent tous de ce que les Tri-Kazeliens nomment la langue ancienne, mais qui est toujours utilisée par les Osags.",	'created' => $datetime->date, 'updated' => $datetime->date,));
-	$q->execute(array('id' => 4,'name' => 'Continent', 'description' => "Les hommes et les femmes du Continent sont souvent plus minces et plus élancés que les natifs de Tri-Kazel. Leur visage aura tendance à être plus fin mais avec des traits parfois taillés à la serpe. Un PJ choisissant ce peuple ne sera pas natif du Continent, mais plutôt le descendant direct d'au moins un parent Continental. Si les origines Continentales du PJ sont davantage diluées, on estime qu'il fait partie du peuple de Tri-Kazel.<br /><br />En fonction du passé de la famille du PJ et de son niveau d'intégration dans la société tri-kazelienne, il pourrait avoir appris leur langue d'origine Continentale ou bien un patois de la péninsule, au choix du PJ.",	'created' => $datetime->date, 'updated' => $datetime->date,));
+	$q->execute(array('id' => 1,'book_id'=>2,'name' => 'Tri-Kazel', 'description' => 'Les Tri-Kazeliens constituent la très grande majorité de la population de la péninsule. La plupart d\'entre eux conservent une stature assez robuste héritée des Osags mais peuvent aussi avoir des traits d\'autres peuples. Les Tri-Kazeliens sont issus de siècles de mélanges entre toutes les cultures ayant un jour ou l\'autre foulé le sol de la péninsule.<br /><br />De par cette origine, le PJ connaît un dialecte local ; il faut donc préciser de quel pays et région il est originaire.',	'created' => $datetime->date, 'updated' => $datetime->date,));
+	$q->execute(array('id' => 2,'book_id'=>2,'name' => 'Tarish', 'description' => 'D\'origine inconnue, le peuple Tarish forme une minorité nomade qui parcourt depuis des décennies les terres de la péninsule. Il est aussi appelé "peuple de l\'ouest" car la légende veut qu\'il soit arrivé par l\'Océan Furieux. Les Tarishs se distinguent des Tri-Kazeliens par des pommettes hautes, le nez plutôt aquilin et les yeux souvent clairs. Beaucoup d\'entre eux deviennent des saltimbanques, des mystiques ou des artisans.<br />La culture Tarish, même si elle est diluée aujourd\'hui, conserve encore une base importante : c\'est un peuple nomade habitué aux longs périples et leur langue n\'a pas disparu, bien qu\'aucun étranger ne l\'ait jamais apprise.',	'created' => $datetime->date, 'updated' => $datetime->date,));
+	$q->execute(array('id' => 3,'book_id'=>2,'name' => 'Osag', 'description' => "Habitués à ne compter que sur eux-mêmes, les Osags forment un peuple rude. Généralement dotés d'une carrure imposante, ils sont les descendants directs des clans traditionnels de la péninsule. La civilisation péninsulaire a beaucoup évolué depuis l'avènement des Trois Royaumes, mais certains clans sont restés fidèles aux traditions ancestrales et n'ont pas pris part à ces changements. Repliés sur leur mode de vie clanique, les Osags ne se sont pas métissés avec les autres peuples et ont gardé de nombreuses caractéristiques de leurs ancêtres. Les Osags font de grands guerriers et comptent parmi eux les plus célèbres Demorthèn.<br /><br />Leur langue a elle aussi survécu au passage des siècles. Les mots \"feondas\", \"C'maogh\", \"Dàmàthair\" - pour ne citer qu'eux - viennent tous de ce que les Tri-Kazeliens nomment la langue ancienne, mais qui est toujours utilisée par les Osags.",	'created' => $datetime->date, 'updated' => $datetime->date,));
+	$q->execute(array('id' => 4,'book_id'=>2,'name' => 'Continent', 'description' => "Les hommes et les femmes du Continent sont souvent plus minces et plus élancés que les natifs de Tri-Kazel. Leur visage aura tendance à être plus fin mais avec des traits parfois taillés à la serpe. Un PJ choisissant ce peuple ne sera pas natif du Continent, mais plutôt le descendant direct d'au moins un parent Continental. Si les origines Continentales du PJ sont davantage diluées, on estime qu'il fait partie du peuple de Tri-Kazel.<br /><br />En fonction du passé de la famille du PJ et de son niveau d'intégration dans la société tri-kazelienne, il pourrait avoir appris leur langue d'origine Continentale ou bien un patois de la péninsule, au choix du PJ.",	'created' => $datetime->date, 'updated' => $datetime->date,));
 }
 $tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
 
@@ -1041,8 +1041,8 @@ $table = 'menus';
 $nbreqtemp = 0;
 if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>1))) {
 
-	$nbreq+=20;
-	$nbreqtemp+=20;
+	$nbreq+=29;
+	$nbreqtemp+=29;
 
     $sql = <<<'SQL'
 
@@ -1055,7 +1055,6 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
-TRUNCATE TABLE `menus`;
 INSERT INTO `menus` (`id`, `parent_id`, `name`, `position`, `roles`, `route`, `created`, `updated`, `deleted`) VALUES
 (1, NULL, 'Administration', 0, 'a:2:{i:0;s:9:"ROLE_USER";i:1;s:12:"ROLE_MANAGER";}', NULL, '2014-01-31 18:18:28', '2014-01-31 18:18:28', 0),
 (2, 10, 'Cartes', 0, 'a:1:{i:0;s:15:"ROLE_ADMIN_MAPS";}', 'corahnrin_maps_maps_adminlist', '2014-01-30 22:44:34', '2014-01-31 00:06:01', 0),
@@ -1069,19 +1068,30 @@ INSERT INTO `menus` (`id`, `parent_id`, `name`, `position`, `roles`, `route`, `c
 (14, 16, 'Traductions', 0, 'a:1:{i:0;s:21:"ROLE_ADMIN_TRANSLATOR";}', 'corahnrin_translation_translate_adminlist', '2014-01-30 22:41:19', '2014-01-31 21:41:59', 0),
 (16, 1, 'Site', 4, 'a:1:{i:0;s:22:"ROLE_ADMIN_MANAGE_SITE";}', NULL, '2014-01-31 19:35:07', '2014-02-01 15:48:56', 0),
 (17, 16, 'Menus', 0, 'a:1:{i:0;s:22:"ROLE_ADMIN_MANAGE_SITE";}', 'corahnrin_pages_menus_adminlist', '2014-01-31 21:44:13', '2014-01-31 21:44:13', 0),
-(18, 1, 'Générateur de personnages', 3, 'a:1:{i:0;s:20:"ROLE_ADMIN_GENERATOR";}', NULL, '2014-02-01 15:49:16', '2014-02-01 15:49:16', 0),
+(18, 1, 'Corahn-Rin', 3, 'a:1:{i:0;s:20:"ROLE_ADMIN_GENERATOR";}', NULL, '2014-02-01 15:49:16', '2014-02-15 21:17:22', 0),
 (19, 18, 'Armures', 0, 'a:1:{i:0;s:20:"ROLE_ADMIN_GENERATOR";}', 'corahnrin_characters_armors_adminlist', '2014-02-01 15:49:50', '2014-02-01 15:49:50', 0),
 (20, 18, 'Artefacts', 0, 'a:1:{i:0;s:20:"ROLE_ADMIN_GENERATOR";}', 'corahnrin_characters_artifacts_adminlist', '2014-02-01 16:43:29', '2014-02-01 16:43:29', 0),
 (21, 18, 'Avantages / Désavantages', 0, 'a:1:{i:0;s:20:"ROLE_ADMIN_GENERATOR";}', 'corahnrin_characters_avantages_adminlist', '2014-02-01 17:59:00', '2014-02-01 17:59:00', 0),
 (22, 18, 'Livres', 0, 'a:1:{i:0;s:20:"ROLE_ADMIN_GENERATOR";}', 'corahnrin_characters_books_adminlist', '2014-02-01 20:08:10', '2014-02-01 20:08:10', 0),
 (23, 18, 'Disciplines', 0, 'a:1:{i:0;s:20:"ROLE_ADMIN_GENERATOR";}', 'corahnrin_characters_disciplines_adminlist', '2014-02-02 16:15:14', '2014-02-02 17:01:54', 0),
 (24, 18, 'Domaines', 0, 'a:1:{i:0;s:20:"ROLE_ADMIN_GENERATOR";}', 'corahnrin_characters_domains_adminlist', '2014-02-02 17:01:38', '2014-02-02 17:01:38', 0),
-(25, 10, 'Routes', 0, 'a:1:{i:0;s:15:"ROLE_ADMIN_MAPS";}', 'corahnrin_maps_routes_adminlist', '2014-02-12 16:04:05', '2014-02-12 16:04:05', 0);
+(25, 10, 'Routes', 0, 'a:1:{i:0;s:15:"ROLE_ADMIN_MAPS";}', 'corahnrin_maps_routes_adminlist', '2014-02-12 16:04:05', '2014-02-12 16:04:05', 0),
+(26, 18, 'Flux', 0, 'a:1:{i:0;s:20:"ROLE_ADMIN_GENERATOR";}', 'corahnrin_characters_flux_adminlist', '2014-02-15 14:27:29', '2014-02-15 14:27:29', 0),
+(27, 18, 'Métiers', 0, 'a:1:{i:0;s:20:"ROLE_ADMIN_GENERATOR";}', 'corahnrin_characters_jobs_adminlist', '2014-02-15 15:06:31', '2014-02-15 15:06:31', 0),
+(28, 18, 'Miracles', 0, 'a:1:{i:0;s:20:"ROLE_ADMIN_GENERATOR";}', 'corahnrin_characters_miracles_adminlist', '2014-02-15 20:43:39', '2014-02-15 20:43:39', 0),
+(29, 18, 'Ogham', 0, 'a:1:{i:0;s:20:"ROLE_ADMIN_GENERATOR";}', 'corahnrin_characters_ogham_adminlist', '2014-02-15 21:01:51', '2014-02-15 21:01:51', 0),
+(30, 18, 'Peuples', 0, 'a:1:{i:0;s:20:"ROLE_ADMIN_GENERATOR";}', 'corahnrin_characters_peoples_adminlist', '2014-02-15 22:41:51', '2014-02-15 22:47:03', 0),
+(31, 18, 'Revers', 0, 'a:1:{i:0;s:20:"ROLE_ADMIN_GENERATOR";}', 'corahnrin_characters_setbacks_adminlist', '2014-02-15 22:46:53', '2014-02-15 22:46:53', 0),
+(32, 18, 'Classes sociales', 0, 'a:1:{i:0;s:20:"ROLE_ADMIN_GENERATOR";}', 'corahnrin_characters_socialclasses_adminlist', '2014-02-15 22:56:14', '2014-02-15 22:56:30', 0),
+(33, 18, 'Traits de caractère', 0, 'a:1:{i:0;s:20:"ROLE_ADMIN_GENERATOR";}', 'corahnrin_characters_traits_adminlist', '2014-02-15 23:21:49', '2014-02-15 23:21:49', 0),
+(34, 18, 'Armes', 0, 'a:1:{i:0;s:20:"ROLE_ADMIN_GENERATOR";}', 'corahnrin_characters_weapons_adminlist', '2014-02-16 00:33:15', '2014-02-16 00:33:15', 0);
 SET FOREIGN_KEY_CHECKS=1;
 COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+;
 
 
 SQL;
@@ -1252,8 +1262,8 @@ foreach ( $characters as $v) {
 			'experienceActual' => (int) $cnt->experience->reste,
 			'experienceSpent' => $cnt->experience->total - $cnt->experience->reste,
 			'status' => $v['char_status'],
-			'SocialClassdomain1_id' => $socialclassdomains[0],
-			'SocialClassdomain2_id' => $socialclassdomains[1],
+			'SocialClassDomain1_id' => $socialclassdomains[0],
+			'SocialClassDomain2_id' => $socialclassdomains[1],
 			'socialClasses_id' => $cnt->classe_sociale,
 			'inventory' => serialize(array_merge($cnt->inventaire->possessions)),
 			'created' => date('Y-m-d H:i:s', (int) $v['char_date_creation']),
