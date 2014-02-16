@@ -62,6 +62,8 @@ class Translator extends BaseTranslator {
     public function trans($id, array $parameters = array(), $domain = null, $locale = null){
 
         if (
+            !$id
+            ||
             (is_string($id) && !trim($id))
             ||
             (is_object($id) && !trim($id->__toString()))
