@@ -12,19 +12,20 @@
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
 		{% for path,link in links %}
-			{% if 'dropdown_list_' in path %}	<li class="dropdown">
+			{% if 'dropdown_list_' in path %}
+                <li class="dropdown">
 
-				<a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ link.name | trans }} <b class="caret"></b></a>
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ link.name | trans }} <b class="caret"></b></a>
 
-				<ul class="dropdown-menu">
-					{% for id, el in link.list %}
-						<li><a href="{{ url(el.route, el.attributes) }}">{{ el.name | trans }}</a></li>
-					{% else %}
-						<li>{{ 'Aucun élément' | trans }}...</li>
-					{% endfor %}
-				</ul>
+                    <ul class="dropdown-menu">
+                        {% for id, el in link.list %}
+                            <li><a href="{{ url(el.route, el.attributes) }}">{{ el.name | trans }}</a></li>
+                        {% else %}
+                            <li>{{ 'Aucun élément' | trans }}...</li>
+                        {% endfor %}
+                    </ul>
 
-			</li>
+                </li>
 			{% else %}	<li><a href="{{ url(path) }}">{{ link | trans }}</a></li>{{ "\n" }}{% endif %}
 		{% else %}
 			{{ 'Aucun élément' | trans }}

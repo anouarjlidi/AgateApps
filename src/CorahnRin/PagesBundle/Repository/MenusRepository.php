@@ -22,6 +22,7 @@ class MenusRepository extends CorahnRinRepository {
         $sortBy = array(
             'position' => 'asc',
             'parent' => 'asc',
+            'name' => 'asc',
         );
         $list = $this->findBy(array(), $sortBy, null, null, false);
         //$this->findBy($sortBy, $orderBy, $limit, $offset, $sortCollection)
