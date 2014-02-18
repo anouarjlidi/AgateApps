@@ -1,5 +1,6 @@
 <?php $time = microtime(true);$temp_time = $time;
 
+
 echo 'Conversion Corahn-Rin'."\n";
 $arglocal = isset($argv[1]) ? $argv[1] : 'local';
 if ($arglocal === 'local') { exec('chcp 65001'); }
@@ -8,6 +9,7 @@ ini_set('cli_server.color', 1);
 $colors = new Colors();
 showtime($temp_time, 'Conversion des tables de l\'ancienne vers la nouvelle version');
 
+$global_time = microtime(true);
 $total_times = array();
 $total_msgs = array();
 
@@ -126,7 +128,7 @@ function showtime(&$temp_time,$b){
 	$numb = number_format($temp_time, 0, ',', ' ');
 	$numb = substr($numb, 0, 6);
 	$numb = str_pad($numb, 10, ' ', STR_PAD_LEFT);
-	$b = "[".$numb."]\t".$b;
+	$b = "[".$numb."ms]\t".$b;
 	$b = trim($b);
 	$b = trim($b, " \t\n\r\0\x0B");
 	$b = str_replace(array("\r","\n"), array('',''), $b);
@@ -808,7 +810,7 @@ $tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table 
 $table = 'peoples';
 $nbreqtemp = 0;
 if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>1))) {
-	$sql = 'INSERT INTO `'.$table.'` SET `id` = :id, `name` = :name, `description` = :description, `created` = :created, `updated` = :updated';
+	$sql = 'INSERT INTO `'.$table.'` SET `id` = :id, `book_id` = :book_id, `name` = :name, `description` = :description, `created` = :created, `updated` = :updated';
 	$q = $new->prepare($sql);
 	$nbreq+=4;
 	$nbreqtemp+=4;
@@ -1199,8 +1201,15 @@ $charreq = 0;
 $characters = $old->req('SELECT * FROM %est_characters');
 require __DIR__.'/../src/CorahnRin/ToolsBundle/Resources/libs/functions/remove_accents.func.php';
 
+
+$total_files = count($characters);
+$times = array();
+$current_file = 0;
+
 foreach ( $characters as $v) {
-	if (!$new->row('SELECT * FROM %'.$table.' WHERE %name = :name', array('name'=>$v['char_name']))) {
+	//if (!$new->row('SELECT * FROM %'.$table.' WHERE %name = :name', array('name'=>$v['char_name']))) {
+        $time_char = microtime(true);
+        $current_file++;
 		echo '----------------------------',"\n";
 		echo '----------------------------',"\n";
 		$cnt = json_decode($v['char_content']);
@@ -1234,7 +1243,7 @@ foreach ( $characters as $v) {
 			'region_id' => $v['char_origin'],
 			'story' => $cnt->details_personnage->histoire,
 			'description' => $cnt->details_personnage->description,
-			'facts' => @isset($cnt->details_personnage->faits) ? $cnt->details_personnage->faits : '',
+			'facts' => isset($cnt->details_personnage->faits) ? $cnt->details_personnage->faits : '',
 			'geoLiving' => $cnt->residence_geographique,//urbain/rural
 			'people_id' => (
                 $v['char_people'] === 'Tri-Kazel' ? 1
@@ -1368,7 +1377,7 @@ foreach ( $characters as $v) {
 			foreach ($cnt->ogham as $val) {
                 $val = trim($val);
                 if ($val) {
-                    $to_add['ogham'][$val] = (isset($to_add['ogham'][$val]) ? $to_add['ogham'][$val] + 1 : 1);;
+                    $to_add['ogham'][$val] = (isset($to_add['ogham'][$val]) ? $to_add['ogham'][$val] + 1 : 1);
                 }
 			}
 		}
@@ -1377,7 +1386,7 @@ foreach ( $characters as $v) {
 			foreach ($cnt->miracles->majeurs as $val) {
                 $val = trim($val);
                 if ($val) {
-                    $to_add['miracles_maj'][$val] = (isset($to_add['miracles_maj'][$val]) ? $to_add['miracles_maj'][$val] + 1 : 1);;
+                    $to_add['miracles_maj'][$val] = (isset($to_add['miracles_maj'][$val]) ? $to_add['miracles_maj'][$val] + 1 : 1);
                 }
 			}
 		}
@@ -1385,7 +1394,7 @@ foreach ( $characters as $v) {
 			foreach ($cnt->miracles->mineurs as $val) {
                 $val = trim($val);
                 if ($val) {
-                    $to_add['miracles_min'][$val] = (isset($to_add['miracles_min'][$val]) ? $to_add['miracles_min'][$val] + 1 : 1);;
+                    $to_add['miracles_min'][$val] = (isset($to_add['miracles_min'][$val]) ? $to_add['miracles_min'][$val] + 1 : 1);
                 }
 			}
 		}
@@ -1412,8 +1421,29 @@ foreach ( $characters as $v) {
 		foreach ($struct as $k => $s) {
 			if (!array_key_exists($s['Field'], $datas) && $s['Field'] !== 'deleted') { echo $s['Field']."\n"; }
 		}
-	}
-	usleep(250000);
+	//}
+	//usleep(250000);
+
+    $time_char = microtime(true) - $time_char;
+    $p = ($current_file * 100 / $total_files);
+    $p = number_format($p, 2, '.', '');
+    $str = 0;
+    $str = "\n".'['.  str_pad(number_format($time_char*1000, 0, '.',' '), 10, ' ', STR_PAD_LEFT).'ms]'."\t".'[';
+    $p2 = (int)($p/2);
+    for ($i = 0; $i <= 50; $i++) {
+        $str .= $p2 < $i ? ' ' : ($p2 === $i ? '>' : '=');
+    }
+    $str .= ']';
+    $times[] = $time_char;
+    if (count($times)) {
+        $median = array_sum($times) / count($times);
+    } else {
+        $median = 60*60*24*365;
+    }
+    $time_remaining = gmdate("H:i:s", $median * ($total_files - $current_file));
+    $remaining = '  Remaining: '.$time_remaining.' (estimation)';
+    $spent = ' Spent: '.gmdate('H:i:s', microtime(true) - $global_time);
+    echo "\n\n".' '.$str." ".$p.'% Char '.$current_file.'/'.$total_files."\t".$remaining.$spent." \n\n";
 }$tables_done[]=$table;showtime($temp_time, $charreq.' requêtes pour la table "'.$table.'"');
 $nbreq += $charreq;
 $tables_done[] = 'characters_disciplines';
