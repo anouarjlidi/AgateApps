@@ -1,27 +1,36 @@
 (function($){
+    var a;
+
     $('[data-toggle="tooltip"]').tooltip('destroy').tooltip({
         "placement" : function(event,element){
             return element.getAttribute('data-placement') ? element.getAttribute('data-placement') : 'auto bottom';
         },
         "container": "body"
     });
-})(jQuery);
 
-(function(){
-    var a = document.querySelectorAll('a.btn-danger[href*=delete]');
+    a = document.querySelectorAll('a.btn-danger[href*=delete]');
     for (var i = 0, l = a.length ; i < l ; i++) {
         a[i].onclick = function(){
             return confirm(confirm_delete);
         };
     }
-})();
 
-/*function reloadCss(){$('link').map(function(i,e){r=e.href;e.href='';e.href=r;});}*/
+    a = document.querySelectorAll('[data-onchangesubmit]');
+    for (var i = 0, l = a.length ; i < l ; i++) {
+        a[i].onchange = function(){
+            var a = this.getAttribute('data-onchangesubmit');
+            if (a !== 'false' && a !== '0') {
+                if ($(this).parents('form')) {
+                    $(this).parents('form').submit();
+                }
+            }
+            return false;
+        };
+    }
 
-String.prototype.trim=function(){return this.replace(/^\s+|\s+$/g, '');};
+    String.prototype.trim=function(){return this.replace(/^\s+|\s+$/g, '');};
 
-(function($){
-    console.clear();
+
     if (document.querySelectorAll('[data-prototype]').length) {
 
         var handler = document.getElementById('corahnrin_pagesbundle_menus_params'),
@@ -70,7 +79,7 @@ String.prototype.trim=function(){return this.replace(/^\s+|\s+$/g, '');};
             handler.appendChild(node);
             document.iteratorValue = iterator + 1;
         };
-    handler.innerHTML = '';
+        handler.innerHTML = '';
         handler.appendChild(addElementNode);
 
 
@@ -78,5 +87,6 @@ String.prototype.trim=function(){return this.replace(/^\s+|\s+$/g, '');};
             elements[i];
         }
 
-    }
+    }// end form prototypes
+
 })(jQuery);
