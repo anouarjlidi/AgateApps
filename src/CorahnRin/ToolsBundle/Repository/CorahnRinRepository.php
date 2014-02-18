@@ -60,6 +60,16 @@ abstract class CorahnRinRepository extends EntityRepository {
         return $this->getMax();
     }
 
+    public function getNumberOfElements() {
+        $qb = $this->_em->createQueryBuilder();
+        $qb->select('count(a)')
+			->where('a.deleted = 0')
+            ->from($this->getEntityName(), 'a');
+
+        $count = $qb->getQuery()->getSingleScalarResult();
+        return $count;
+    }
+
     /**
      * Récupère la valeur de l'AUTO_INCREMENT de la table de l'entité
      * @return int
