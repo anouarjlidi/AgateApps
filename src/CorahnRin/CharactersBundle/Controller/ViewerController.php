@@ -23,16 +23,52 @@ class ViewerController extends Controller
      * @Route("/characters/")
      * @Template()
      */
-    public function listAction()
-    {
+    public function listAction() {
 		$request = $this->getRequest();
-		$orderget = $request->query->get('field') ?: 'name';
-		$ordertype = $request->query->get('order') ?: 'asc';
-		$ordertype = strtolower($ordertype) === 'desc' ? 'desc' : 'asc';
+
+        // Variables GET
+        $page = (int) $request->query->get('page') ?: 1;
+        $limitPost = $request->request->get('limit');
+        $limit = $limitPost ?: ((int) $request->query->get('limit') ?: 20);
+		$searchField = $request->query->get('searchField') ?: 'name';
+		$order = $request->query->get('order') ?: 'asc';
+
+        if ($page < 1) { $page = 1; }
+        if ($limit < 5) { $limit = 5; }
+        elseif ($limit > 100) { $limit = 100; }
+		$order = strtolower($order) === 'desc' ? 'desc' : 'asc';
+
 		$repo = $this->getDoctrine()->getManager()->getRepository('CorahnRinCharactersBundle:Characters');
-    	$datas = $repo->findBy(array(), array($orderget=>$ordertype));
-        $orderlink = $ordertype === 'desc' ? 'asc' : 'desc';
-		return array('list'=>$datas,'ordertype' => $ordertype,'orderlink' => $orderlink, 'orderget' => $orderget);
+
+        $number_of_chars = $repo->getNumberOfElementsSearch($searchField, $order, $limit, ($page-1)*$limit);
+        $pages = ceil($number_of_chars / $limit);
+
+        if ($limitPost) {
+            if ($page > $pages) { $page = $pages; }
+            return $this->redirect($this->generateUrl('corahnrin_characters_viewer_list', array(
+                'searchField' => $searchField,
+                'order' => $order,
+                'page' => $page,
+                'limit' => $limitPost,
+            )));
+        }
+
+    	$characters_list = $repo->findSearch($searchField, $order, $limit, ($page-1)*$limit);
+
+        $orderSwaped = $order === 'desc' ? 'asc' : 'desc';
+		return array(
+            'characters_list' => $characters_list,
+            'number_of_chars' => $number_of_chars,
+            'pages' => $pages,
+            'linkDatas' => array(
+                'searchField' => $searchField,
+                'order' => $order,
+                'page' => $page,
+                'limit' => $limit,
+            ),
+            'orderSwaped' => $orderSwaped,
+            'page' => $page,
+        );
     }
 
     /**

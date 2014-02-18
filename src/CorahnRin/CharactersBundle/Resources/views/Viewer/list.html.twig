@@ -6,68 +6,132 @@
 
 <h2>{{'Visualiser un personnage'}}</h2>
 
+<h5>{{ 'Nombre total de personnages :' | trans }} {{ number_of_chars }}</h5>
+
 <table class="table table-condensed table-striped">
 	<tr>
 		<th>
-            <a href="{{ url('corahnrin_characters_viewer_list',{'field':'id','order':orderlink}) }}" class="btn btn-link">
-                {% if orderget == 'id' %}
-                    <span class="glyphicon-half icon-chevron-{{ ordertype == 'asc' ? 'up' : 'down' }}"></span>
+            {% set order = linkDatas.searchField == 'id' ? orderSwaped : linkDatas.order %}
+            <a href="{{ url('corahnrin_characters_viewer_list',linkDatas|merge({'searchField':'id','order':order})) }}" class="btn btn-link">
+                {% if linkDatas.searchField == 'id' %}
+                    <span class="glyphicon-half icon-chevron-{{ linkDatas.order == 'asc' ? 'up' : 'down' }}"></span>
                     <strong class="text-underline text-black">
                 {% endif %}
                     #
-                {% if orderget == 'id' %}</strong>{% endif %}
+                {% if linkDatas.searchField == 'id' %}</strong>{% endif %}
             </a>
         </th>
 		<th>
-            <a href="{{ url('corahnrin_characters_viewer_list',{'field':'name','order':orderlink}) }}" class="btn btn-link">
-                {% if orderget == 'name' %}
-                    <span class="glyphicon-half icon-chevron-{{ ordertype == 'asc' ? 'up' : 'down' }}"></span>
+            {% set order = linkDatas.searchField == 'name' ? orderSwaped : linkDatas.order %}
+            <a href="{{ url('corahnrin_characters_viewer_list',linkDatas|merge({'searchField':'name','order':order})) }}" class="btn btn-link">
+                {% if linkDatas.searchField == 'name' %}
+                    <span class="glyphicon-half icon-chevron-{{ linkDatas.order == 'asc' ? 'up' : 'down' }}"></span>
                     <strong class="text-underline text-black">
                 {% endif %}
                 {{ 'Nom' | trans }}
-                {% if orderget == 'name' %}</strong>{% endif %}
+                {% if linkDatas.searchField == 'name' %}</strong>{% endif %}
             </a>
         </th>
 		<th>
-            <a href="{{ url('corahnrin_characters_viewer_list',{'field':'job','order':orderlink}) }}" class="btn btn-link">
-                {% if orderget == 'job' %}
-                    <span class="glyphicon-half icon-chevron-{{ ordertype == 'asc' ? 'up' : 'down' }}"></span>
+            {% set order = linkDatas.searchField == 'job' ? orderSwaped : linkDatas.order %}
+            <a href="{{ url('corahnrin_characters_viewer_list',linkDatas|merge({'searchField':'job','order':order})) }}" class="btn btn-link">
+                {% if linkDatas.searchField == 'job' %}
+                    <span class="glyphicon-half icon-chevron-{{ linkDatas.order == 'asc' ? 'up' : 'down' }}"></span>
                     <strong class="text-underline text-black">
                 {% endif %}
                 {{ 'Métier' | trans }}
-                {% if orderget == 'job' %}</strong>{% endif %}
+                {% if linkDatas.searchField == 'job' %}</strong>{% endif %}
             </a>
         </th>
 		<th>
-            <a href="{{ url('corahnrin_characters_viewer_list',{'field':'people','order':orderlink}) }}" class="btn btn-link">
-                {% if orderget == 'people' %}
-                    <span class="glyphicon-half icon-chevron-{{ ordertype == 'asc' ? 'up' : 'down' }}"></span>
+            {% set order = linkDatas.searchField == 'people' ? orderSwaped : linkDatas.order %}
+            <a href="{{ url('corahnrin_characters_viewer_list',linkDatas|merge({'searchField':'people','order':order})) }}" class="btn btn-link">
+                {% if linkDatas.searchField == 'people' %}
+                    <span class="glyphicon-half icon-chevron-{{ linkDatas.order == 'asc' ? 'up' : 'down' }}"></span>
                     <strong class="text-underline text-black">
                 {% endif %}
                 {{ 'Peuple' | trans }}
-                {% if orderget == 'people' %}</strong>{% endif %}
+                {% if linkDatas.searchField == 'people' %}</strong>{% endif %}
             </a>
         </th>
 		<th>
-            <a href="{{ url('corahnrin_characters_viewer_list',{'field':'region','order':orderlink}) }}" class="btn btn-link">
-                {% if orderget == 'region' %}
-                    <span class="glyphicon-half icon-chevron-{{ ordertype == 'asc' ? 'up' : 'down' }}"></span>
+            {% set order = linkDatas.searchField == 'region' ? orderSwaped : linkDatas.order %}
+            <a href="{{ url('corahnrin_characters_viewer_list',linkDatas|merge({'searchField':'region','order':order})) }}" class="btn btn-link">
+                {% if linkDatas.searchField == 'region' %}
+                    <span class="glyphicon-half icon-chevron-{{ linkDatas.order == 'asc' ? 'up' : 'down' }}"></span>
                     <strong class="text-underline text-black">
                 {% endif %}
                 {{ 'Région de naissance' | trans }}
-                {% if orderget == 'region' %}</strong>{% endif %}
+                {% if linkDatas.searchField == 'region' %}</strong>{% endif %}
             </a>
         </th>
 	</tr>
-	{% for character in list %}
+	{% for character in characters_list %}
 		<tr>
 			<td>{{ character.id }}</td>
 			<td><a href="{{ url('corahnrin_characters_viewer_view', {'id':character.id,'nameSlug':character.nameSlug}) }}" class="btn btn-link btn-sm" title="{{ 'Voir le personnage %character_name%' | trans({'%character_name%':character.name}) }}">{{ character.name }}</a></td>
-			<td>{{ character.job ? character.job.name : '(Personnalisé) '~character.jobCustom | trans}}</td>
+			<td>
+                {% if character.job %}
+                    {{ character.job.name | trans }}
+                {% else %}
+                    ({{ 'Personnalisé' | trans }})
+                    {{ character.jobCustom | trans }}
+                {% endif %}
+            </td>
 			<td>{{ character.people.name | trans }}</td>
 			<td>{{ character.region.name | trans }}</td>
 		</tr>
 	{% endfor %}
 </table>
+
+<ul class="pagination pagination-sm">
+
+    <li{{ page == 1 ? ' class="disabled"' : '' }}><a href="{{ url('corahnrin_characters_viewer_list',linkDatas|merge({'page':page - 1})) }}">&larr; {{ 'Précédent' | trans }}</a></li>
+
+    {% if page-5 > 1 %}
+        <li><a href="{{ url('corahnrin_characters_viewer_list',linkDatas|merge({'page':1})) }}">1</a></li>
+        {% if page-5 > 2 %}
+        <li class="disabled"><a>...</a></li>
+        {% endif %}
+    {% endif %}
+    {% for i in page-5..page+5 %}
+        {% if i >= 1 and i <= pages %}
+            <li{{ i == page ? ' class="active"' : '' }}><a href="{{ url('corahnrin_characters_viewer_list',linkDatas|merge({'page':i})) }}">{{ i }}{% if i == page %} <span class="sr-only">({{ 'Current page' | trans }})</span>{% endif %}</a></li>
+        {% endif %}
+    {% endfor %}
+    {% if page+5 < pages %}
+        {% if page+5 < pages - 1 %}
+            <li class="disabled"><a>...</a></li>
+        {% endif %}
+        <li><a href="{{ url('corahnrin_characters_viewer_list',linkDatas|merge({'page':pages})) }}">{{ pages }}</a></li>
+    {% endif %}
+
+    <li{{ page == pages ? ' class="disabled"' : '' }}><a href="{{ url('corahnrin_characters_viewer_list',linkDatas|merge({'page':page+1})) }}">{{ 'Suivant' | trans }} &rarr;</a></li>
+
+</ul>
+
+<form method="post" action="{{ url('corahnrin_characters_viewer_list', linkDatas) }}" class="form-horizontal">
+    <fieldset>
+        <div class="form-group row">
+            <div class="col-lg-2">
+                <label for="number_per_page">
+                    {{ 'Nombre par page' | trans }}
+                </label>
+            </div>
+            <div class="col-lg-3">
+                <select id="number_per_page" name="limit" class="text-black input-sm form-control" data-onchangesubmit="true">
+                    <option{{ linkDatas.limit == 5 ? ' selected="selected"' : '' }} value="5">5</option>
+                    <option{{ linkDatas.limit == 10 ? ' selected="selected"' : '' }} value="10">10</option>
+                    <option{{ linkDatas.limit == 25 ? ' selected="selected"' : '' }} value="25">25</option>
+                    <option{{ linkDatas.limit == 50 ? ' selected="selected"' : '' }} value="50">50</option>
+                    <option{{ linkDatas.limit == 75 ? ' selected="selected"' : '' }} value="75">75</option>
+                    <option{{ linkDatas.limit == 100 ? ' selected="selected"' : '' }} value="100">100</option>
+                </select>
+            </div>
+            <noscript><button type="submit" class="btn btn-default">{{ 'Envoyer' | trans }}</button></noscript>
+        </div>
+    </fieldset>
+</form>
+
 
 {% endblock %}
