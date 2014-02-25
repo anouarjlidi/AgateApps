@@ -2,8 +2,10 @@
 
 namespace CorahnRin\TranslationBundle\Translation;
 
-use Symfony\Bundle\FrameworkBundle\Translation\Translator as BaseTranslator;
 use CorahnRin\TranslationBundle\Entity\Translation as Translation;
+
+use Symfony\Bundle\FrameworkBundle\Translation\Translator as BaseTranslator;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Class Translator
@@ -12,7 +14,7 @@ use CorahnRin\TranslationBundle\Entity\Translation as Translation;
  * @author Pierstoval
  * @version 1.0 08/01/2014
  */
-class Translator extends BaseTranslator {
+class Translator extends BaseTranslator implements TranslatorInterface {
 
     private static $catalogue = array();
     private static $temporary_domain = null;

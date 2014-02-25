@@ -3,7 +3,6 @@
 namespace CorahnRin\TranslationBundle\Controller;
 
 use CorahnRin\TranslationBundle\Entity\Languages as Languages;
-use CorahnRin\TranslationBundle\Entity\Translation as Translation;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,12 +15,12 @@ class TranslateController extends Controller {
     /**
      * @Route("/lang/{locale}")
      */
-    public function changeLangAction($locale) {
+    public function changeLangAction(Languages $lang) {
         //Récupération de la liste des langues disponibles
-        $this->get('session')->set('_locale', $locale);
+        $this->get('session')->set('_locale', $lang->getLocale());
         $translator = $this->get('translator');
         $translator->translationDomain('messages.flash');
-        $msg = $translator->trans('La langue a été modifiée pour : %lang%', array('%lang%' => '['.$locale.']'));
+        $msg = $translator->trans('La langue a été modifiée pour : %lang%', array('%lang%' => $translator->trans($lang->getName())));
         $translator->translationDomain();
         $this->get('session')->getFlashBag()->add('info', $msg);
         return $this->redirect($this->getRequest()->getBaseUrl());
