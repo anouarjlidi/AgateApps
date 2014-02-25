@@ -23,7 +23,9 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->scalarNode('tile_size')
-                    ->isRequired()
+                    ->defaultValue(168)
+                    ->info('La largeur et la hauteur des tuiles générées par l\'application Maps')
+                    ->example('168')
                 ->end()
             ->end()
         ;
