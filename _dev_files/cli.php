@@ -1278,7 +1278,14 @@ foreach ( $characters as $v) {
 			'created' => date('Y-m-d H:i:s', (int) $v['char_date_creation']),
 			'updated' => date('Y-m-d H:i:s', ((int) $v['char_date_update'] ? (int) $v['char_date_update'] : (int) $v['char_date_creation'])),
 		);
-		$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
+		$result = $new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
+        if (!$result) {
+            echo 'Erreur',"\n";
+            print_r($result);
+            echo 'Datas',"\n";
+            print_r($datas);
+            exit;
+        }
 
 		$charreq++;
 		showtime($temp_time, $charreq.' Ajout du personnage '.$v['char_id'].' : '.$v['char_name']);
@@ -1323,7 +1330,7 @@ foreach ( $characters as $v) {
 		$avoid = false;
 		$avoided = 0;
 		foreach ($revers as $rev) {
-			$all_rev[$rev->id] = array('character_id' => $v['char_id'], 'setback' => $rev->id, 'isAvoided' => 0);
+			$all_rev[$rev->id] = array('character_id' => $v['char_id'], 'setback_id' => $rev->id, 'isAvoided' => 0);
 		}
 		if (isset($all_rev[10])) {
 			$avoid = false;
