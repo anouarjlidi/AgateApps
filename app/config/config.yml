@@ -85,6 +85,10 @@ stof_doctrine_extensions:
             sluggable: true
             timestampable: true
 
+# Overriding native translator
+parameters:
+    translator.class:      CorahnRin\TranslationBundle\Translation\Translator
+
 # Services declaration
 services:
     twig.text_extension:
@@ -93,9 +97,10 @@ services:
             - name: twig.extension
 
 # Corahn-Rin map tile size
-corahn_rin_maps:
-    tile_size: 168
+#corahn_rin_maps:
+#    tile_size: 168
 
-# Overriding native translator
-parameters:
-    translator.class:      CorahnRin\TranslationBundle\Translation\Translator
+# Corahn-Rin character sheets source files folder
+#corahn_rin_characters:
+#    sheets_output: %kernel.root_dir%/cache/character_sheets/
+#    sheets_folder: %kernel.root_dir%/../src/CorahnRin/CharactersBundle/Sheets/files/
