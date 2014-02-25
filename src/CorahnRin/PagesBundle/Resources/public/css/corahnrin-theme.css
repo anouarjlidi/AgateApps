@@ -4,6 +4,7 @@
     background-color: #000;
     background-image: url("../images/background-image.jpg");
     background-position: center top;
+    background-size: cover;
     background-repeat: no-repeat;
 }
 
@@ -580,7 +581,7 @@
 }
 
 /** Tables **/
-#corahnrin .table-striped > tbody > tr:nth-child(2n+1) > td, 
+#corahnrin .table-striped > tbody > tr:nth-child(2n+1) > td,
 #corahnrin .table-striped > tbody > tr:nth-child(2n+1) > th {
 	background-color: rgba(105, 95, 75, 0.4);
 }
