@@ -1,9 +1,126 @@
 {% extends "::layout.html.twig" %}
 
-{% block title %}CorahnRinCharactersBundle:Viewer:view{% endblock %}
+{% block title %}{{'Visualiser un personnage'}} : {{ character.name }} - {{ parent() }}{% endblock %}
 
 {% block content_for_layout %}
 
-<h2>{{'Visualiser un personnage'}} : {{ character.name }}</h2>
+<h2>{{ character.name }}</h2>
+
+<p>
+    <a href="{{ url('corahnrin_characters_viewer_pdf',{"id":character.id,"nameSlug":character.nameSlug}) }}">{{ 'Voir en PDF' | trans }}</a>
+</p>
+
+{{ 'Nom' | trans }} :
+{{ character.name }}
+
+<br />
+
+{{ 'Joueur' | trans }} :
+{{ character.playerName }}
+
+<br />
+
+{{ 'Sexe' | trans }} :
+{{ ( character.sex == 'F' ? 'Femme' : 'Homme' ) | trans }}
+
+<br />
+
+{{ 'Âge' | trans }} :
+{{ character.age }}
+
+<br />
+
+{{ 'Peuple' | trans }} :
+{{ character.people.name | trans }}
+
+<br />
+
+{{ 'Métier' | trans }} :
+{% if character.job %}
+    {{ character.job.name | trans }}
+{% else %}
+    ({{ 'Personnalisé' | trans }}) {{ character.jobCustom | trans }}
+{% endif %}
+
+<br />
+
+{{ 'Description' | trans }} :
+{{ character.description | trans }}
+
+<br />
+
+{{ 'Voies' | trans }} :
+{% for charWay in character.ways %}
+    <br /> &nbsp; &ndash;
+    {{ charWay.way.name }} : {{ charWay.score }}
+{% endfor %}
+
+<br />
+
+{{ 'Avantages' | trans }} :
+{% set avtg = false %}
+{% for charAvtg in character.avantages %}
+    {% if not charAvtg.avantage.isDesv %}
+        {% set avtg = true %}
+        <br /> &nbsp; &ndash;
+        {{ ( character.sex == 'F' ? charAvtg.avantage.nameFemale : charAvtg.avantage.name ) | trans }}
+        {% if charAvtg.doubleValue > 1 %}
+            (x{{ charAvtg.doubleValue }})
+        {% endif %}
+    {% endif %}
+{% endfor %}
+{% if avtg == false %}{{ 'Aucun avantage' | trans }}{% endif %}
+
+<br />
+
+{{ 'Désavantages' | trans }} :
+{% set desv = false %}
+{% for charAvtg in character.avantages %}
+    {% if charAvtg.avantage.isDesv %}
+        {% set desv = true %}
+        <br /> &nbsp; &ndash;
+        {{ ( character.sex == 'F' ? charAvtg.avantage.nameFemale : charAvtg.avantage.name ) | trans }}
+        {% if charAvtg.doubleValue > 1 %}
+            (x{{ charAvtg.doubleValue }})
+        {% endif %}
+    {% endif %}
+{% endfor %}
+{% if desv == false %}{{ 'Aucun désavantage' | trans }}{% endif %}
+
+<br />
+
+{{ 'Vigueur' | trans}} : {{ character.stamina }}
+
+<br />
+
+{{ 'Survie' | trans}} : {{ character.survival }}
+
+<br />
+
+{{ 'Domaines' | trans }} :
+{% for charDomain in character.domains %}
+    <br /> &nbsp; &ndash;
+    {{ charDomain.domain.name | trans }}
+    {{ charDomain.score }}
+    {% for charDiscipline in character.disciplines %}
+        {% if charDiscipline.domain.id == charDomain.domain.id %}
+            {{ charDiscipline.discipline.name }}
+            {{ charDiscipline.score }}
+        {% endif %}
+    {% endfor %}
+{% endfor %}
+
+<br />
+
+{{ 'Score de base à l\'attaque' | trans }} :
+<br /> &nbsp; &ndash;
+{{ 'Combat au contact' | trans }} : {{ character.attackScore('melee') }}
+<br /> &nbsp; &ndash;
+{{ 'Tir & Lancer' | trans }} : {{ character.attackScore('ranged') }}
+
+<br />
+{{ 'Potentiel' | trans }} :
+{{ character.potential }}
+
 
 {% endblock %}

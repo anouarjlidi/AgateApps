@@ -3,7 +3,9 @@
 namespace CorahnRin\CharactersBundle\Controller;
 
 use CorahnRin\CharactersBundle\Entity\Characters;
+use CorahnRin\CharactersBundle\Classes\CharacterSheetPDF;
 
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -72,11 +74,37 @@ class ViewerController extends Controller
     }
 
     /**
-     * @Route("/characters/pdf/{id}-{name}.pdf")
-     * @Template()
+     * @Route("/characters/pdf/{id}-{nameSlug}.pdf")
      */
-    public function pdfAction($id, $name)
-    {
+    public function pdfAction(Characters $character) {
+        $response = new Response;
+
+        $printer_friendly = $this->get('request')->query->get('printer_friendly') === 'true';
+        $sheet_type = $this->get('request')->query->get('sheet_type') ?: 'original';
+
+        $output_dir = $this->get('service_container')->getParameter('corahn_rin_characters.sheets_output');
+        if (!is_dir($output_dir)) {
+            mkdir($output_dir, 0777, true);
+        }
+
+        $file_name = ucfirst($character->getNameSlug()).
+                ($printer_friendly ? '-pf' : '').
+                '-'.$sheet_type.
+                '-'.$this->get('translator')->getLocale().
+                '-'.$character->getId().
+                '.pdf';
+
+        if (!file_exists($output_dir.$file_name) || true) {
+            $pdf = $this->get('corahn_rin_characters.sheets_manager')
+                ->getManager('pdf')
+                ->generateSheet($character, $sheet_type, $printer_friendly)
+                ->output($output_dir.$file_name, 'F');
+        }
+
+        $response->setContent(file_get_contents($output_dir.$file_name));
+        $response->headers->add(array('Content-type'=>'application/pdf'));
+
+        return $response;
     }
 
     /**

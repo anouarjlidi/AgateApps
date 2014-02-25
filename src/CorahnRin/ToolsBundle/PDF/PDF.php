@@ -1,5 +1,5 @@
 <?php
-namespace CorahnRinTools;
+namespace CorahnRin\ToolsBundle\PDF;
 
 /**
  * Alias de tFPDF, implémente quelques fonctions de confort
@@ -8,11 +8,22 @@ namespace CorahnRinTools;
  * @version 1
  * @see tFPDF
  */
-class P_PDF extends FPDF {
+class PDF extends FPDF {
+
+    protected $fontpath;
+    protected $translator;
 
 	function __construct($orientation='P', $unit='mm', $size='A4') {
-		parent::__construct($orientation, $unit, $size);
+        $this->fontpath = str_replace(array('/','\\'), array(DIRECTORY_SEPARATOR,DIRECTORY_SEPARATOR),
+            __DIR__.'/../Resources/fpdf/fonts'
+        );
+		return parent::__construct($orientation, $unit, $size);
 	}
+
+    function setTranslator(\Symfony\Component\Translation\TranslatorInterface $translator) {
+        $this->translator = $translator;
+        return $this;
+    }
 
 	/**
 	 * Retourne un texte formaté avec des sauts de ligne pour chaque ligne de texte
@@ -25,7 +36,11 @@ class P_PDF extends FPDF {
 	 * @param int $width	Largeur maximale de la textbox
 	 * @author Pierstoval	06/06/2013
 	 */
-	function multiple_lines($text, $x, $y, $font, $size, $width, $lines, $line_offset) {
+	function multiple_lines($text, $x, $y, $font, $size, $width, $lines, $line_offset, $translate = false) {
+        if ($this->translator && $translate === true) {
+            $text = $this->translator->trans($text);
+            $translate = false;
+        }
 		$text = str_replace("\r", '', $text);
 		$text = str_replace("\n", ' ', $text);
 		$str = '';
@@ -48,15 +63,16 @@ class P_PDF extends FPDF {
 		$i = 0;
 		foreach($str as $v) {
 			if ($i < ($lines - 1)) {
-				$this->textbox($v, $x, $y + ($i * $line_offset), $font, $size, $width);
+				$this->textbox($v, $x, $y + ($i * $line_offset), $font, $size, $width, $translate);
 			} elseif ($i == ($lines - 1) && $lines !== 1) {
-				$this->textline($v.'(...)', $x, $y + ($i * $line_offset), $font, $size);
+				$this->textline($v.'(...)', $x, $y + ($i * $line_offset), $font, $size, $translate);
 				//$this->textbox('(...)', $x + $last_width + $size, $y + (($i-1) * $line_offset), $font, $size, $width);
 			} else {
 				break;
 			}
 			$i++;
 		}
+        return $this;
 	}
 
 	/**
@@ -70,7 +86,11 @@ class P_PDF extends FPDF {
 	 * @param int $width	Largeur maximale de la textbox
 	 * @author Pierstoval	06/06/2013
 	 */
-	function textbox($text, $x, $y, $font, $size, $width) {
+	function textbox($text, $x, $y, $font, $size, $width, $translate = false) {
+        if ($this->translator && $translate === true) {
+            $text = $this->translator->trans($text);
+            $translate = false;
+        }
 		$text = str_replace("\n", '', $text);
 		$text = str_replace("\r", '', $text);
 		$str = '';
@@ -89,7 +109,8 @@ class P_PDF extends FPDF {
 		if ($too_big === true) {
 			$str .= '(...)';
 		}
-		$this->textline($str, $x, $y, $font, $size);
+		$this->textline($str, $x, $y, $font, $size, $translate);
+        return $this;
 	}
 
 	/**
@@ -102,7 +123,10 @@ class P_PDF extends FPDF {
 	 * @param int $size		Taille du texte en pixels à l'instar de GD2
 	 * @author Pierstoval	06/06/2013
 	 */
-	function textline($text, $x, $y, $font, $size) {
+	function textline($text, $x, $y, $font, $size, $translate = true) {
+        if ($this->translator && $translate === true) {
+            $text = $this->translator->trans($text);
+        }
 		$text = str_replace("\n", '', $text);
 		$text = str_replace("\r", '', $text);
 // 		$ratio = 4.3291351805206; //Ceci est le ratio entre la police de texte de GD2 et celle de FPDF, cela permet la même taille de texte entre GD2 et FPDF pour la même valeur
@@ -118,5 +142,6 @@ class P_PDF extends FPDF {
 		$x *= 0.75;
 		$y *= 0.75;
 		$this->Text($x, $y, $text);
+        return $this;
 	}
 }

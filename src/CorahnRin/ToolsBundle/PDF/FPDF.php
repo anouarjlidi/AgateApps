@@ -1,5 +1,5 @@
 <?php
-namespace CorahnRinTools;
+namespace CorahnRin\ToolsBundle\PDF;
 
 /*******************************************************************************
  * FPDF                                                                         *
@@ -8,8 +8,6 @@ namespace CorahnRinTools;
 * Date:    2011-06-18                                                          *
 * Author:  Olivier PLATHEY                                                     *
 *******************************************************************************/
-
-define('P_FPDF_VERSION','1.7');
 
 /**
  * tFPDF (based on FPDF 1.7)
@@ -20,63 +18,63 @@ define('P_FPDF_VERSION','1.7');
 */
 class FPDF {
 
-	var $unifontSubset;
-	var $page;               // current page number
-	var $n;                  // current object number
-	var $offsets;            // array of object offsets
-	var $buffer;             // buffer holding in-memory PDF
-	var $pages;              // array containing pages
-	var $state;              // current document state
-	var $compress;           // compression flag
-	var $k;                  // scale factor (number of points in user unit)
-	var $DefOrientation;     // default orientation
-	var $CurOrientation;     // current orientation
-	var $StdPageSizes;       // standard page sizes
-	var $DefPageSize;        // default page size
-	var $CurPageSize;        // current page size
-	var $PageSizes;          // used for pages with non default sizes or orientations
-	var $wPt, $hPt;          // dimensions of current page in points
-	var $w, $h;              // dimensions of current page in user unit
-	var $lMargin;            // left margin
-	var $tMargin;            // top margin
-	var $rMargin;            // right margin
-	var $bMargin;            // page break margin
-	var $cMargin;            // cell margin
-	var $x, $y;              // current position in user unit
-	var $lasth;              // height of last printed cell
-	var $LineWidth;          // line width in user unit
-	var $fontpath;           // path containing fonts
-	var $CoreFonts;          // array of core font names
-	var $fonts;              // array of used fonts
-	var $FontFiles;          // array of font files
-	var $diffs;              // array of encoding differences
-	var $FontFamily;         // current font family
-	var $FontStyle;          // current font style
-	var $underline;          // underlining flag
-	var $CurrentFont;        // current font info
-	var $FontSizePt;         // current font size in points
-	var $FontSize;           // current font size in user unit
-	var $DrawColor;          // commands for drawing color
-	var $FillColor;          // commands for filling color
-	var $TextColor;          // commands for text color
-	var $ColorFlag;          // indicates whether fill and text colors are different
-	var $ws;                 // word spacing
-	var $images;             // array of used images
-	var $PageLinks;          // array of links in pages
-	var $links;              // array of internal links
-	var $AutoPageBreak;      // automatic page breaking
-	var $PageBreakTrigger;   // threshold used to trigger page breaks
-	var $InHeader;           // flag set when processing header
-	var $InFooter;           // flag set when processing footer
-	var $ZoomMode;           // zoom display mode
-	var $LayoutMode;         // layout display mode
-	var $title;              // title
-	var $subject;            // subject
-	var $author;             // author
-	var $keywords;           // keywords
-	var $creator;            // creator
-	var $AliasNbPages;       // alias for total number of pages
-	var $PDFVersion;         // PDF version number
+	protected $unifontSubset;
+	protected $page;               // current page number
+	protected $n;                  // current object number
+	protected $offsets;            // array of object offsets
+	protected $buffer;             // buffer holding in-memory PDF
+	protected $pages;              // array containing pages
+	protected $state;              // current document state
+	protected $compress;           // compression flag
+	protected $k;                  // scale factor (number of points in user unit)
+	protected $DefOrientation;     // default orientation
+	protected $CurOrientation;     // current orientation
+	protected $StdPageSizes;       // standard page sizes
+	protected $DefPageSize;        // default page size
+	protected $CurPageSize;        // current page size
+	protected $PageSizes;          // used for pages with non default sizes or orientations
+	protected $wPt, $hPt;          // dimensions of current page in points
+	protected $w, $h;              // dimensions of current page in user unit
+	protected $lMargin;            // left margin
+	protected $tMargin;            // top margin
+	protected $rMargin;            // right margin
+	protected $bMargin;            // page break margin
+	protected $cMargin;            // cell margin
+	protected $x, $y;              // current position in user unit
+	protected $lasth;              // height of last printed cell
+	protected $LineWidth;          // line width in user unit
+	protected $fontpath;           // path containing fonts
+	protected $CoreFonts;          // array of core font names
+	protected $fonts;              // array of used fonts
+	protected $FontFiles;          // array of font files
+	protected $diffs;              // array of encoding differences
+	protected $FontFamily;         // current font family
+	protected $FontStyle;          // current font style
+	protected $underline;          // underlining flag
+	protected $CurrentFont;        // current font info
+	protected $FontSizePt;         // current font size in points
+	protected $FontSize;           // current font size in user unit
+	protected $DrawColor;          // commands for drawing color
+	protected $FillColor;          // commands for filling color
+	protected $TextColor;          // commands for text color
+	protected $ColorFlag;          // indicates whether fill and text colors are different
+	protected $ws;                 // word spacing
+	protected $images;             // array of used images
+	protected $PageLinks;          // array of links in pages
+	protected $links;              // array of internal links
+	protected $AutoPageBreak;      // automatic page breaking
+	protected $PageBreakTrigger;   // threshold used to trigger page breaks
+	protected $InHeader;           // flag set when processing header
+	protected $InFooter;           // flag set when processing footer
+	protected $ZoomMode;           // zoom display mode
+	protected $LayoutMode;         // layout display mode
+	protected $title;              // title
+	protected $subject;            // subject
+	protected $author;             // author
+	protected $keywords;           // keywords
+	protected $creator;            // creator
+	protected $AliasNbPages;       // alias for total number of pages
+	protected $PDFVersion;         // PDF version number
 
 	/*******************************************************************************
 	 *                                                                              *
@@ -112,16 +110,13 @@ class FPDF {
 		$this->ColorFlag = false;
 		$this->ws = 0;
 		// Font path
-		if(defined('P_FPDF_FONTPATH'))
-		{
-			$this->fontpath = P_FPDF_FONTPATH;
-			if(substr($this->fontpath,-1)!='/' && substr($this->fontpath,-1)!='\\')
-				$this->fontpath .= DS;
-		}
-		elseif(is_dir(dirname(__FILE__).'/font'))
-		$this->fontpath = dirname(__FILE__).'/font/';
-		else
+		if(is_dir($this->fontpath)) {
+            $this->fontpath = $this->fontpath;
+		} elseif(is_dir(dirname(__FILE__).'/font')) {
+            $this->fontpath = dirname(__FILE__).'/font/';
+		} else {
 			$this->fontpath = '';
+        }
 		// Core fonts
 		$this->CoreFonts = array('courier', 'helvetica', 'times', 'symbol', 'zapfdingbats');
 		// Scale factor
@@ -509,15 +504,18 @@ class FPDF {
 			return;
 
 		if ($uni) {
-			if (defined('P_FPDF_SYSTEM_TTF_FONTS') && file_exists(P_FPDF_SYSTEM_TTF_FONTS.$file )) {
-				$ttffilename = P_FPDF_SYSTEM_TTF_FONTS.$file ;
-			}
-			elseif (file_exists($file)) {
-				$ttffilename = $file;
-			}
-			else  { $ttffilename = $this->_getfontpath().'unifont/'.$file ;
-			}
-			$unifilename = $this->_getfontpath().'unifont/'.strtolower(substr($file ,0,(strpos($file ,'.'))));
+            if (file_exists($file)) {
+                $ttffilename = $file;
+            }
+//            elseif (file_exists($this->_getfontpath().'../unifont/'.$file)) {
+//                $ttffilename = $this->_getfontpath().'../unifont/'.$file ;
+//            } elseif (file_exists(__DIR__.'../../PagesBundle/Resources/public/fonts/'.$file)) {
+//                $ttffilename = __DIR__.'../../PagesBundle/Resources/public/fonts/'.$file;
+//            } else {
+//                exit('Error');
+//                trigger_error('TTF file not found : '.$file, E_USER_ERROR);
+//            }
+			$unifilename = $this->_getfontpath().'../unifont/'.strtolower(substr($file ,0,(strpos($file ,'.'))));
 			$name = '';
 			$originalsize = 0;
 			$ttfstat = stat($ttffilename);
@@ -1294,7 +1292,9 @@ class FPDF {
 
 	function _getfontpath()
 	{
-		return $this->fontpath;
+		return str_replace(array('/','\\'), array(DIRECTORY_SEPARATOR,DIRECTORY_SEPARATOR),
+            preg_replace('#\\\$#isUu', '', $this->fontpath).'/'
+        );
 	}
 
 	function _checkoutput()
@@ -2024,8 +2024,12 @@ class FPDF {
 		// for each character
 		for ($cid=$startcid; $cid<$cwlen; $cid++) {
 			if ($cid==128 && (!file_exists($font['unifilename'].'.cw127.php'))) {
-				if (is_writable(dirname($this->_getfontpath().'unifont/x'))) {
-					$fh = fopen($font['unifilename'].'.cw127.php',"wb");
+				if (is_writable(dirname($this->_getfontpath().'../unifont/x'))) {
+                    $font['unifilename'] = str_replace('\\', '/', $font['unifilename']);
+                    $font['unifilename'] = preg_replace('#^.+/([^/]+)$#isUu', '$1', $font['unifilename']);
+                    $font['unifilename'] = $this->_getfontpath().'../unifont/'.$font['unifilename'];
+
+                    $fh = fopen($font['unifilename'].'.cw127.php',"wb");
 					$cw127='<?php'."\n";
 					$cw127.='$rangeid='.$rangeid.";\n";
 					$cw127.='$prevcid='.$prevcid.";\n";
@@ -2222,7 +2226,6 @@ class FPDF {
 
 	function _putinfo()
 	{
-		$this->_out('/Producer '.$this->_textstring('tFPDF '.P_FPDF_VERSION));
 		if(!empty($this->title))
 			$this->_out('/Title '.$this->_textstring($this->title));
 		if(!empty($this->subject))

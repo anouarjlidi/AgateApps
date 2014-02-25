@@ -1,5 +1,5 @@
 <?php
-namespace CorahnRinTools;
+namespace CorahnRin\ToolsBundle\PDF;
 
 /*******************************************************************************
  * Utility to parse TTF font files                                              *

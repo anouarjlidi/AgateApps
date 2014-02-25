@@ -53,14 +53,14 @@ class Jobs
     /**
      * @var \Books
      *
-     * @ORM\ManyToOne(targetEntity="Books")
+     * @ORM\ManyToOne(targetEntity="Books",fetch="EAGER")
      */
     protected $book;
 
     /**
      * @var \Domains
      *
-     * @ORM\ManyToOne(targetEntity="Domains")
+     * @ORM\ManyToOne(targetEntity="Domains",fetch="EAGER")
      */
     protected $domainPrimary;
 

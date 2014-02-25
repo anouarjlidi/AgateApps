@@ -3,6 +3,7 @@
 namespace CorahnRin\CharactersBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use CorahnRin\CharactersBundle\Exceptions\CharactersException as Exception;
 
 /**
  * Characters
@@ -86,7 +87,7 @@ class Characters
     protected $inventory;
 
     /**
-     * @var \CorahnRin\CharactersBundle\Classes\Money
+     * @var CorahnRin\CharactersBundle\Classes\Money
      *
      * @ORM\Column(type="object")
      */
@@ -123,16 +124,23 @@ class Characters
     /**
      * @var integer
      *
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="smallint", options={"default":0})
      */
     protected $trauma;
 
     /**
      * @var integer
      *
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="smallint", options={"default":0})
      */
     protected $traumaPermanent;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(type="smallint", options={"default":0})
+     */
+    protected $hardening;
 
     /**
      * @var integer
@@ -147,6 +155,13 @@ class Characters
      * @ORM\Column(type="smallint")
      */
     protected $mentalResist;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(type="smallint", options={"default":0})
+     */
+    protected $mentalResistExp;
 
     /**
      * @var integer
@@ -179,9 +194,23 @@ class Characters
     /**
      * @var integer
      *
+     * @ORM\Column(type="smallint",options={"default":0})
+     */
+    protected $speedExp;
+
+    /**
+     * @var integer
+     *
      * @ORM\Column(type="smallint")
      */
     protected $defense;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(type="smallint",options={"default":0})
+     */
+    protected $defenseExp;
 
     /**
      * @var integer
@@ -624,7 +653,7 @@ class Characters
     /**
      * Set money
      *
-     * @param \stdClass $money
+     * @param \CorahnRin\CharactersBundle\Classes\Money $money
      * @return Characters
      */
     public function setMoney($money)
@@ -637,7 +666,7 @@ class Characters
     /**
      * Get money
      *
-     * @return \stdClass
+     * @return CorahnRin\CharactersBundle\Classes\Money
      */
     public function getMoney()
     {
@@ -665,6 +694,26 @@ class Characters
     public function getOrientation()
     {
         return $this->orientation;
+    }
+
+    /**
+     * Get conscience value
+     *
+     * @return string
+     */
+    public function getConscience()
+    {
+        return $this->getWay('rai')->getScore() + $this->getWay('ide')->getScore();
+    }
+
+    /**
+     * Get instinct value
+     *
+     * @return string
+     */
+    public function getInstinct()
+    {
+        return $this->getWay('cre')->getScore() + $this->getWay('com')->getScore();
     }
 
     /**
@@ -1520,6 +1569,19 @@ class Characters
     }
 
     /**
+     * Get domain
+     *
+     * @param \CorahnRin\CharactersBundle\Entity\CharDomains $domains
+     */
+    public function getDomain($id) {
+        foreach ($this->domains as $charDomain) {
+            if ($charDomain->getDomain()->getId() == $id) {
+                return $charDomain;
+            }
+        }
+    }
+
+    /**
      * Add disciplines
      *
      * @param \CorahnRin\CharactersBundle\Entity\CharDisciplines $disciplines
@@ -1553,6 +1615,19 @@ class Characters
     }
 
     /**
+     * Get discipline
+     *
+     * @param \CorahnRin\CharactersBundle\Entity\CharDisciplines $disciplines
+     */
+    public function getDiscipline($id) {
+        foreach ($this->disciplines as $charDiscipline) {
+            if ($charDiscipline->getDiscipline()->getId() == $id) {
+                return $charDiscipline;
+            }
+        }
+    }
+
+    /**
      * Add ways
      *
      * @param \CorahnRin\CharactersBundle\Entity\CharWays $ways
@@ -1583,6 +1658,19 @@ class Characters
     public function getWays()
     {
         return $this->ways;
+    }
+
+    /**
+     * Get way
+     *
+     * @param \CorahnRin\CharactersBundle\Entity\CharWays $ways
+     */
+    public function getWay($shortName) {
+        foreach ($this->ways as $charWay) {
+            if ($charWay->getWay()->getShortName() == $shortName) {
+                return $charWay;
+            }
+        }
     }
 
     /**
@@ -1728,5 +1816,156 @@ class Characters
     public function getGame()
     {
         return $this->game;
+    }
+
+
+    /*-------------------------------------------------*/
+    /*-------------------------------------------------*/
+    /*-------Méthodes de récupération de données-------*/
+    /*-------------------------------------------------*/
+    /*-------------------------------------------------*/
+
+    public function getPotential(){
+        $creativity = $this->getWay('cre')->getScore();
+        if ($creativity == 1) {
+            return 1;
+        } elseif ($creativity >= 2 && $creativity <= 4) {
+            return 2;
+        } elseif ($creativity == 5) {
+            return 3;
+        } else {
+            throw new Exception('Le calcul du potentiel du personnage a renvoyé une erreur');
+        }
+    }
+
+    public function getAttackScore($type = 'melee', $discipline = null, $potential = '') {
+
+        // Récupération du score de voie
+        $way = $this->getWay('com')->getScore();
+
+        // Définition de l'id des domaines "Combat au contact" et "Tir & lancer"
+        if ($type === 'melee') {
+            $domain_id = 2;
+        } elseif ($type === 'ranged') {
+            $domain_id = 14;
+        } else {
+            throw new Exception('Vous devez indiquer un type d\'attaque entre "melee" et "ranged".');
+        }
+
+        // Récupération du score du domaine
+        $domain = $this->getDomain($domain_id)->getScore();
+
+        // Si on indique une discipline, le score du domaine sera remplacé par le score de discipline
+        if ($discipline) {
+            $discipline = $this->getDiscipline($discipline);
+
+            // Il faut impérativement que la discipline soit associée au même domaine
+            if ($discipline->getDomain()->getId() == $domain_id) {
+                // Remplacement du nouveau score
+                $domain = $discipline->getScore();
+            }
+        }
+
+        $attack = $way + $domain;
+
+        if ($potential == '+') {
+            $attack += $this->getPotential();
+        } elseif ($potential === '-') {
+            $attack -= $this->getPotential();
+        }
+
+        return $attack;
+    }
+
+    /**
+     * Set speedExp
+     *
+     * @param integer $speedExp
+     * @return Characters
+     */
+    public function setSpeedExp($speedExp)
+    {
+        $this->speedExp = $speedExp;
+
+        return $this;
+    }
+
+    /**
+     * Get speedExp
+     *
+     * @return integer
+     */
+    public function getSpeedExp()
+    {
+        return $this->speedExp;
+    }
+
+    /**
+     * Set defenseExp
+     *
+     * @param integer $defenseExp
+     * @return Characters
+     */
+    public function setDefenseExp($defenseExp)
+    {
+        $this->defenseExp = $defenseExp;
+
+        return $this;
+    }
+
+    /**
+     * Get defenseExp
+     *
+     * @return integer
+     */
+    public function getDefenseExp()
+    {
+        return $this->defenseExp;
+    }
+
+    /**
+     * Set mentalResistExp
+     *
+     * @param integer $mentalResistExp
+     * @return Characters
+     */
+    public function setMentalResistExp($mentalResistExp)
+    {
+        $this->mentalResistExp = $mentalResistExp;
+
+        return $this;
+    }
+
+    /**
+     * Get mentalResistExp
+     *
+     * @return integer
+     */
+    public function getMentalResistExp()
+    {
+        return $this->mentalResistExp;
+    }
+
+    /**
+     * Set hardening
+     *
+     * @param integer $hardening
+     * @return Characters
+     */
+    public function setHardening($hardening)
+    {
+        $this->hardening = $hardening;
+
+        return $this;
+    }
+
+    /**
+     * Get hardening
+     *
+     * @return integer
+     */
+    public function getHardening()
+    {
+        return $this->hardening;
     }
 }

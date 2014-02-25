@@ -24,8 +24,7 @@ class CharDisciplines
      * @var \DisciplinesDomains
      *
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="DisciplinesDomains")
-     * @ORM\Column(nullable=false,name="discipline_id")
+     * @ORM\ManyToOne(targetEntity="Disciplines")
      */
     protected $discipline;
 
@@ -33,7 +32,7 @@ class CharDisciplines
      * @var \Domains
      *
      * @ORM\Id
-	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Domains")
+	 * @ORM\ManyToOne(targetEntity="Domains")
      */
     protected $domain;
 
@@ -152,7 +151,7 @@ class CharDisciplines
     /**
      * Get domain
      *
-     * @return \CorahnRin\CharactersBundle\Entity\Domains 
+     * @return \CorahnRin\CharactersBundle\Entity\Domains
      */
     public function getDomain()
     {

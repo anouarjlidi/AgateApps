@@ -1,5 +1,5 @@
 <?php
-namespace CorahnRinTools;
+namespace CorahnRin\ToolsBundle\PDF;
 
 /*******************************************************************************
  * TTFontFile class                                                             *
@@ -23,15 +23,15 @@ namespace CorahnRinTools;
 // 0x00010000 for Windows
 // Either seems to work for a font embedded in a PDF file
 // when read by Adobe Reader on a Windows PC(!)
-define("_TTF_MAC_HEADER", false);
+//define("_TTF_MAC_HEADER", false);
 
 
 // TrueType Font Glyph operators
-define("GF_WORDS",(1 << 0));
-define("GF_SCALE",(1 << 3));
-define("GF_MORE",(1 << 5));
-define("GF_XYSCALE",(1 << 6));
-define("GF_TWOBYTWO",(1 << 7));
+//define("GF_WORDS",(1 << 0));
+//define("GF_SCALE",(1 << 3));
+//define("GF_MORE",(1 << 5));
+//define("GF_XYSCALE",(1 << 6));
+//define("GF_TWOBYTWO",(1 << 7));
 
 
 

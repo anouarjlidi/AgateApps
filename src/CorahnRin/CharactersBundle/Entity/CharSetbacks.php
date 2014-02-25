@@ -23,7 +23,6 @@ class CharSetbacks
     /**
      * @var \Setbacks
      *
-     * @ORM\Column(type="integer")
      * @ORM\Id
 	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Setbacks")
      */

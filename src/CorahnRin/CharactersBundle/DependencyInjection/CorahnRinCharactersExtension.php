@@ -24,5 +24,30 @@ class CorahnRinCharactersExtension extends Extension
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
+
+        foreach ($config as $name => $value) {
+            preg_match_all('#%([^%]+)%#isUu', $value, $matches, PREG_PATTERN_ORDER);
+            foreach ($matches[0] as $k => $match) {
+                $value = str_replace($match, $container->getParameter($matches[1][$k]), $value);
+            }
+            $config[$name] = $value;
+        }
+
+        if (!isset($config['sheets_folder'])) {
+            throw new \Exception('Le dossier des feuilles de personnage doit être mentionné dans la configuration.');
+        } elseif (!is_dir($config['sheets_folder'])) {
+            throw new \Exception('Le dossier des feuilles de personnage doit être un dossier valide.');
+        }
+
+        if (!isset($config['sheets_output'])) {
+            throw new \Exception('Le dossier de sortie des feuilles de personnage doit être mentionné dans la configuration.');
+        } elseif (!is_dir($config['sheets_output']) && is_writable($config['sheets_output'])) {
+            mkdir($config['sheets_output'], 0775, true);
+        }
+
+        foreach ($config as $name => $value) {
+            $container->setParameter('corahn_rin_characters.'.$name, $value);
+        }
+
     }
 }
