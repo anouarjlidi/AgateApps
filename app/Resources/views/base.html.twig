@@ -16,6 +16,8 @@
                 'bundles/corahnrinpages/css/corahnrin-theme.css'
                 '@CorahnRinPagesBundle/Resources/public/css/corahn_rin.css'
                 '@CorahnRinMapsBundle/Resources/public/css/maps.css'
+                '@CorahnRinPagesBundle/Resources/public/css/jqueryUI/jquery.ui.core.min.css'
+                '@CorahnRinPagesBundle/Resources/public/css/jqueryUI/jquery.ui.slider.min.css'
                 filter="cssrewrite,?yui_css"
                 output="css/main.css"
             %}<link rel="stylesheet" href="{{ app.request.getSchemeAndHttpHost() ~ asset_url }}" type="text/css" />
@@ -46,6 +48,7 @@
 	'@CorahnRinPagesBundle/Resources/public/js/jqueryUI/jquery.ui.widget.min.js'
 	'@CorahnRinPagesBundle/Resources/public/js/jqueryUI/jquery.ui.mouse.min.js'
 	'@CorahnRinPagesBundle/Resources/public/js/jqueryUI/jquery.ui.draggable.min.js'
+	'@CorahnRinPagesBundle/Resources/public/js/jqueryUI/jquery.ui.slider.min.js'
 	'@CorahnRinPagesBundle/Resources/public/js/corahn_rin.js'
 	output="js/main.js"
 	filter="?yui_js"

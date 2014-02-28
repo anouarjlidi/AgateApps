@@ -734,3 +734,29 @@
 #corahnrin .pagination > li:active > span {
 	background-color: rgba(105, 95, 75, 0.75);
 }
+
+
+/** jQueryUI **/
+#corahnrin .ui-slider .ui-slider-handle {
+    background-color: #aaa0aa;
+    border: 1px solid #666666;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+#corahnrin .ui-slider:hover .ui-slider-handle {
+    background-color: #C8BCAB;
+}
+
+#corahnrin .ui-slider .ui-slider-handle:hover {
+    background-color: #BEAC92;
+}
+
+#corahnrin .ui-slider {
+    background-color: rgba(132, 132, 132, 0.2);
+    border: solid 1px #666;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
