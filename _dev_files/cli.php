@@ -1359,7 +1359,7 @@ foreach ( $characters as $v) {
 		$avoid = false;
 		$avoided = 0;
 		foreach ($revers as $rev) {
-			$all_rev[$rev->id] = array('character_id' => $v['char_id'], 'setback' => $rev->id, 'isAvoided' => 0);
+			$all_rev[$rev->id] = array('character_id' => $v['char_id'], 'setback_id' => $rev->id, 'isAvoided' => 0);
 		}
 		if (isset($all_rev[10])) {
 			$avoid = false;
