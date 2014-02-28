@@ -1153,6 +1153,42 @@ $tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table 
 
 
 
+$table = 'markers';
+$nbreqtemp = 0;
+if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>1))) {
+
+	$nbreq+=4;
+	$nbreqtemp+=4;
+
+    $sql = <<<'SQL'
+    SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+    SET time_zone = "+00:00";
+    /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+    /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+    /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+    /*!40101 SET NAMES utf8 */;
+    INSERT INTO `markers` (`id`, `faction_id`, `map_id`, `name`, `coordinates`, `created`, `updated`, `deleted`, `markerType_id`) VALUES
+    (1, NULL, 1, 'Ard Amrach', '1555,728', '2014-02-14 14:40:17', '2014-02-14 14:40:17', 0, 1),
+    (2, NULL, 1, 'Rhingal', '1621,889', '2014-02-14 14:40:17', '2014-02-14 14:40:17', 0, 1),
+    (3, NULL, 1, 'Calvaire', '791,841', '2014-02-14 15:07:39', '2014-02-14 15:07:39', 0, 1),
+    (4, NULL, 1, 'Bois déchiré', '847,593', '2014-02-14 15:07:39', '2014-02-14 15:07:39', 0, 1);
+    /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+    /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+    /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+SQL;
+    $new->query($sql);
+
+}
+$tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
+
+
+
+
+
+
+
+
 
 
 
