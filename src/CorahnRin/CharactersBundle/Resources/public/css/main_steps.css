@@ -18,3 +18,8 @@ div.gen-div-choice.selected {
 div.gen-div-choice.selected:hover {
     background-color: rgba(238, 238, 238, 0.3);
 }
+
+div.divchoice-inside {
+    display: none;
+    padding-bottom: 10px;
+}

@@ -3,13 +3,24 @@
     /**
      * Fonction permettant d'utiliser des div pour changer la valeur d'un input
      */
-    $('.gen-div-choice').click(function(){
+    $('.gen-div-choice').on('click', function(){
         var node = document.getElementsByClassName('gen-div-choice'), count = node.length;
         if (this.classList.contains('selected')) {
             return false;
         }
+        if (this.classList.contains('divchoice-button')) {
+
+            return;
+        }
         for (var i = 0; i < count; i++) {
             node[i].classList.remove('selected');
+            if (node[i].getAttribute('data-divchoice-inside') === 'true') {
+                $(node[i].querySelector('.divchoice-inside')).slideUp(400);
+                for (var l = node[i].querySelectorAll('.divchoice-inside .btn'), c = l.length, j = 0; j < c; j++) {
+                    l[j].classList.remove('active');
+                    l[j].firstElementChild.checked = false;
+                };
+            }
         }
         this.classList.add('selected');
         if (this.getAttribute('data-target-node')) {
@@ -17,7 +28,41 @@
         } else {
             node = document.getElementById('gen-div-choice');
         }
+        if (this.getAttribute('data-divchoice-inside') === 'true') {
+            $(this.querySelector('.divchoice-inside')).slideDown(400);
+        }
         node.value = this.getAttribute('data-div-choice-value');
+    });
+
+    $('[data-toggle="buttons"][data-max-buttons] .btn').bind('click.maxbuttons', function(){
+        var parent = $(this).data('jq_parent');
+        if (!parent) {
+            parent = $(this).parents('[data-max-buttons]')[0];
+            $(this).data('jq_parent', parent);
+        }
+
+        var max = $(this).data('jq_max_number');
+        if (!max) {
+            max = parent.getAttribute('data-max-buttons');
+            $(this).data('jq_max_number', max);
+        }
+
+        if (this.classList.contains('active')) {
+            this.classList.remove('active');
+            this.firstElementChild.checked = false;
+        } else {
+            this.classList.add('active');
+            this.firstElementChild.checked = true;
+        }
+
+        var elements = parent.querySelectorAll('label.active');
+        console.info(elements);
+        if (elements.length > max) {
+            for (var i = max,c = elements.length; i < c ; i++) {
+                elements[i].classList.remove('active');
+                elements[i].firstElementChild.checked = false;
+            }
+        }
     });
 
     /**
@@ -40,7 +85,34 @@
         document.getElementById(e.getAttribute('data-target-node')).value = e.getAttribute('data-input-value');
     },1);});
 
+    /**
+     * Clic distant sur un élément
+     */
     $('[data-toggle="btn-dist-click"]').bind('mouseup', function(){
         $(document.getElementById(this.getAttribute('data-target-node'))).mousedown();
     });
+
+    /**
+     * Sliders UI
+     */
+    for (var el, l = document.querySelectorAll('[data-toggle="ui-slider"]'), c = l.length, i = 0; i < c; i++) {
+        el = l[i];
+        $(el).slider({
+            'range': el.getAttribute('data-slider-range') ? el.getAttribute('data-slider-range') : 'min',
+            'value': el.getAttribute('data-slider-value') ? parseInt(el.getAttribute('data-slider-value')) : 0,
+            'min': el.getAttribute('data-slider-min') ? parseInt(el.getAttribute('data-slider-min')) : 0,
+            'max': el.getAttribute('data-slider-max') ? parseInt(el.getAttribute('data-slider-max')) : 0,
+            'slide': function (e, ui) {
+                var id = el.getAttribute('data-slider-label');
+                if (id) {
+                    document.getElementById(id).innerHTML = ui.value;
+                }
+                var id = el.getAttribute('data-slider-input');
+                if (id) {
+                    document.getElementById(id).value = ui.value;
+                }
+            }
+        });
+    }
+
 })(jQuery);

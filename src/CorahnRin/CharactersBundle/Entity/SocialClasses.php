@@ -184,6 +184,15 @@ class SocialClasses
         return $this->domains;
     }
 
+    public function findDomainById($id) {
+        foreach ($this->domains as $domain) {
+            if ($domain->getId() == $id) {
+                return $domain;
+            }
+        }
+        return null;
+    }
+
     /**
      * Set description
      *
