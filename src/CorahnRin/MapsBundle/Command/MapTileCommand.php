@@ -39,7 +39,7 @@ class MapTileCommand extends ContainerAwareCommand {
             ."\n".'The command will generate a tile with three mandatory options:'
             ."\n".'x => the "x" value of the tile, from left to right, starting at 0'
             ."\n".'y => the "y" value of the tile, from top to bottom, starting at 0'
-            ."\n".'zoom (or -z) => the zoom value used to generate the tile, starting at 1'
+            ."\n".'zoom (or -z) => the zoom value used to generate the tile, starting at 0'
             ."\n\n".'You can also use the --replace command to overwrite any existing tile.')
 		->addArgument('id', InputArgument::OPTIONAL, 'Enter the id of the map you want to generate')
         ->addOption('id', 'i', InputOption::VALUE_OPTIONAL, 'Enter the id of the map you want to generate', null)
@@ -118,13 +118,13 @@ class MapTileCommand extends ContainerAwareCommand {
 
         // Récupération d'une valeur correcte du zoom
         self::$zoom = $map->getMaxZoom();
-        if (!$zoom || $zoom < 1 || $zoom > $map->getMaxZoom()) {
+        if ($zoom < 0 || $zoom > $map->getMaxZoom() || null === $zoom) {
             $zoom = $dialog->askAndValidate($output,
-                'Enter a correct zoom value between 1 and '.$map->getMaxZoom().":\n>",
+                'Enter a correct zoom value between 0 and '.$map->getMaxZoom().":\n>",
                 function ($z) {
                     $z = (int) $z;
                     if ($z >= 1 && $z <= MapTileCommand::$zoom) { return $z;}
-                    else { throw new \RunTimeException('Value must be between 1 and '.MapTileCommand::$zoom); }
+                    else { throw new \RunTimeException('Value must be between 0 and '.MapTileCommand::$zoom); }
                 });
         }
         if (3 <= $output->getVerbosity()) { $output->writeln('Zoom value of '.$zoom);  }
@@ -132,7 +132,7 @@ class MapTileCommand extends ContainerAwareCommand {
         $identification = $tilesManager->identifyImage($zoom);
 
         if (2 <= $output->getVerbosity()) { $output->writeln('Maximum size of '.$identification['xmax'].'x'.$identification['ymax'].' tiles');  }
-        if (2 <= $output->getVerbosity()) { $output->writeln('Ratio of '.($zoom / $map->getMaxZoom()));  }
+        if (2 <= $output->getVerbosity()) { $output->writeln('Crop unit : '.(1+($map->getMaxZoom() - $zoom))*$img_size);  }
         if (3 <= $output->getVerbosity()) { $output->writeln('Maximum size of '.$identification['wmax'].'x'.$identification['hmax'].' pixels');  }
 
         //Récupération de la valeur correcte de X et Y
@@ -194,7 +194,12 @@ class MapTileCommand extends ContainerAwareCommand {
                 $time = microtime(true);
                 $output->writeln('Executing tiles manager command');
             }
-            $cmd_output = $tilesManager->createTile($x, $y, $zoom);
+            $cmd_output = $tilesManager->createTile($x, $y, $zoom, true);
+            if (3 <= $output->getVerbosity()) {
+                $output->writeln('Executing following command :');
+                $output->writeln($cmd_output);
+            }
+            $cmd_output = shell_exec($cmd_output);
             if (2 <= $output->getVerbosity()) {
                 $time = microtime(true) - $time;
                 $time = number_format($time*1000, 2, '.', ',');

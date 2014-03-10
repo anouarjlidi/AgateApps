@@ -3,8 +3,13 @@
 namespace CorahnRin\MapsBundle\Entity;
 
 use Symfony\Component\Validator\Constraints as Assert;
+
+use JMS\Serializer\Annotation\ExclusionPolicy as ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose as Expose;
+
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection as DoctrineCollection;
+
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
@@ -12,6 +17,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @ORM\Table(name="maps")
  * @ORM\Entity(repositoryClass="CorahnRin\MapsBundle\Repository\MapsRepository")
+ * @ExclusionPolicy("all")
  */
 class Maps
 {
@@ -21,6 +27,7 @@ class Maps
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @Expose
      */
     protected $id;
 
@@ -28,6 +35,7 @@ class Maps
      * @var string
      *
      * @ORM\Column(type="string", length=255, nullable=false, unique=true)
+     * @Expose
      */
     protected $name;
 
@@ -36,6 +44,7 @@ class Maps
      *
      * @Gedmo\Slug(fields={"name"})
      * @ORM\Column(type="string", length=255, nullable=false, unique=true)
+     * @Expose
      */
     protected $nameSlug;
 
@@ -50,6 +59,7 @@ class Maps
      * @var string
      *
      * @ORM\Column(type="text", nullable=true)
+     * @Expose
      */
     protected $description;
 
@@ -61,6 +71,7 @@ class Maps
      *      min = 1,
      *      max = 10
      * )
+     * @Expose
      */
     protected $maxZoom;
 
@@ -98,6 +109,7 @@ class Maps
      * @var DoctrineCollection
 	 *
 	 * @ORM\OneToMany(targetEntity="Zones", mappedBy="map", cascade={"persist"})
+     * @Expose
 	 */
 	protected $zones;
 

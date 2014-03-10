@@ -2,6 +2,9 @@
 
 namespace CorahnRin\MapsBundle\Entity;
 
+use JMS\Serializer\Annotation\ExclusionPolicy as ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose as Expose;
+
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection as DoctrineCollection;
 
@@ -10,6 +13,7 @@ use Doctrine\Common\Collections\ArrayCollection as DoctrineCollection;
  *
  * @ORM\Table(name="zones")
  * @ORM\Entity(repositoryClass="CorahnRin\MapsBundle\Repository\ZonesRepository")
+ * @ExclusionPolicy("all")
  */
 class Zones
 {
@@ -19,6 +23,7 @@ class Zones
      * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @Expose
      */
     protected $id;
 
@@ -26,6 +31,7 @@ class Zones
      * @var string
      *
      * @ORM\Column(type="string", length=255, nullable=false, unique=true)
+     * @Expose
      */
     protected $name;
 
@@ -56,6 +62,7 @@ class Zones
      * @var \Maps
      *
      * @ORM\ManyToOne(targetEntity="Maps", inversedBy="zones")
+     * @Expose
      */
     protected $map;
 
@@ -63,6 +70,7 @@ class Zones
      * @var \Factions
      *
      * @ORM\ManyToOne(targetEntity="Factions", inversedBy="zones")
+     * @Expose
      */
     protected $faction;
 

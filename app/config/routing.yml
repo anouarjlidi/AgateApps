@@ -1,3 +1,8 @@
+corahn_rin_api:
+    resource: "@CorahnRinApiBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 corahn_rin_translate:
     resource: "@CorahnRinTranslationBundle/Controller/"
     type:     annotation

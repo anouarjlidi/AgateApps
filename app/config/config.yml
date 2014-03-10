@@ -73,10 +73,35 @@ swiftmailer:
     password:  %mailer_password%
     spool:     { type: memory }
 
+# ------------------------------------------------------------------
+# --------------------- Personal configuration ---------------------
+# ------------------------------------------------------------------
+
 fos_user:
     db_driver:     orm
     firewall_name: main
     user_class:    CorahnRin\UsersBundle\Entity\Users
+
+fos_rest:
+    param_fetcher_listener: true
+    body_listener: true
+    format_listener:
+        rules:
+            - { path: '^/api', priorities: ['json', 'html'], fallback_format: json, prefer_extension: true }
+            - { path: '^/', priorities: [ 'html', '*/*'], fallback_format: ~, prefer_extension: true }
+#        view_response_listener: 'force'
+#    routing_loader:
+#        include_format: false
+
+# JSON beautifier
+jms_serializer:
+    visitors:
+        json:
+            options: 480
+
+#sensio_framework_extra:
+#    view:    { annotations: true }
+#    router:  { annotations: true }
 
 # Doctrine extensions
 stof_doctrine_extensions:
@@ -104,3 +129,10 @@ services:
 #corahn_rin_characters:
 #    sheets_output: %kernel.root_dir%/cache/character_sheets/
 #    sheets_folder: %kernel.root_dir%/../src/CorahnRin/CharactersBundle/Sheets/files/
+
+# Corahn-Rin Api services
+corahn_rin_api:
+    services:
+        maps:       { entity: CorahnRin\MapsBundle\Entity\Maps }
+        markers:    { entity: CorahnRin\MapsBundle\Entity\Markers }
+        zones:      { entity: CorahnRin\MapsBundle\Entity\Zones }

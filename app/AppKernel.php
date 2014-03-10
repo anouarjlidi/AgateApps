@@ -18,7 +18,9 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+            new JMS\SerializerBundle\JMSSerializerBundle($this),
             new FOS\UserBundle\FOSUserBundle(),
+            new FOS\RestBundle\FOSRestBundle(),
             new CorahnRin\CharactersBundle\CorahnRinCharactersBundle(),
             new CorahnRin\PagesBundle\CorahnRinPagesBundle(),
             new CorahnRin\AdminBundle\CorahnRinAdminBundle(),
@@ -27,6 +29,7 @@ class AppKernel extends Kernel
             new CorahnRin\ToolsBundle\CorahnRinToolsBundle(),
             new CorahnRin\TranslationBundle\CorahnRinTranslationBundle(),
             new CorahnRin\ImagickBundle\CorahnRinImagickBundle(),
+            new CorahnRin\ApiBundle\CorahnRinApiBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test','dev_fast'))) {

@@ -2,16 +2,13 @@
 
 namespace CorahnRin\MapsBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 use CorahnRin\MapsBundle\Entity\Maps;
 use CorahnRin\MapsBundle\Classes\MapsTileManager;
 
-class ApiController extends Controller {
+class TilesController extends Controller {
 
     private $img_size = 0;
 
@@ -70,7 +67,7 @@ class ApiController extends Controller {
     }
 
     /**
-     * @Route("/api/maps/tile/{id}/{zoom}/{x}/{y}", requirements={"id":"\d+"})
+     * @Route("/api/maps/tile/{id}/{zoom}/{x}/{y}.jpg", requirements={"id":"\d+"})
      */
     public function tileAction(Maps $map, $zoom, $x, $y) {
         $zoom = (int) $zoom;
@@ -86,7 +83,22 @@ class ApiController extends Controller {
         $imgname = $tilesManager->mapDestinationName($zoom, $x, $y);
 
         if (!file_exists($imgname)) {
-            $tilesManager->createTile($x, $y, $zoom);
+            $ident = $tilesManager->identifyImage($zoom);
+            if ($x < 0 || $y < 0 || $x > $ident['xmax'] || $y > $ident['ymax']) {
+                $imgname = $this->get('kernel')->getCacheDir().'/maps/empty.jpg';
+                if (!file_exists($imgname)) {
+                    if (!is_dir(dirname($imgname))) {
+                        mkdir(dirname($imgname), 0777, true);
+                    }
+                    $image = imagecreatetruecolor($this->img_size, $this->img_size);
+                    imagefill($image, 0, 0, imagecolorallocate($image, 10, 10, 10));
+                    header('Content-type:image/jpeg');
+                    imagejpeg($image, $imgname, 0);
+                    imagedestroy($image);
+                }
+            } else {
+                $tilesManager->createTile($x, $y, $zoom, false, false);
+            }
         }
 
         // Si l'image n'existe pas à ce stade c'est que la création a échoué
@@ -100,52 +112,6 @@ class ApiController extends Controller {
 
     }
 
-    /**
-     * @Route("/api/maps/init/", defaults={"_format":"json"})
-     * @Method({"POST"})
-     */
-    public function initAction() {
-        $this->init();
-
-        $response = new Response();
-        $response->setStatusCode(200);
-        $response->headers->set('Content-type','application/json');
-
-        $id = $this->getRequest()->request->get('id');
-        if (!$id) {
-            return $this->quit('Un identifiant doit être indiqué');
-        }
-        $map = $this->getDoctrine()->getManager()->getRepository('CorahnRinMapsBundle:Maps')->findOneBy(array('id'=>$id));
-
-        if (!$map) {
-            return $this->quit('Aucune carte trouvée', 404);
-        }
-
-        $route_tiles = urldecode($this->generateUrl('corahnrin_maps_api_tile', array('zoom'=>'{zoom}','id'=>$map->getId(), 'x'=>'{x}','y'=>'{y}')));
-
-        $img_size = $this->container->getParameter('corahn_rin_maps.tile_size');
-        $tilesManager = new MapsTileManager($map, $img_size);
-
-        $identifications = array();
-        for ($i = 1; $i <= $map->getMaxZoom(); $i++) {
-            $identifications[$i] = $tilesManager->identifyImage($i);
-        }
-
-        $datas = array(
-            'id' => $map->getId(),
-            'name' => $map->getName(),
-            'nameSlug' => $map->getNameSlug(),
-            'identifications' => $identifications,
-            'maxZoom' => $map->getMaxZoom(),
-            'imgSize' => $img_size,
-            'tilesUrl' => str_replace('{id}', $map->getId(), $route_tiles),
-        );
-
-        $response->setContent(json_encode($datas, P_JSON_ENCODE));
-
-        //Envoi des données au navigateur;
-        return $response;
-    }
 
     /*-------------------------------------------------------------------------
     ---------------------------------------------------------------------------

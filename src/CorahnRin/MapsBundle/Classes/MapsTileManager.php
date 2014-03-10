@@ -53,8 +53,8 @@ class MapsTileManager {
      * @throws \RunTimeException
      */
     public function identifyImage($zoom) {
-
         if (!isset($this->identifications[$zoom])) {
+
             if (!$this->img_width || !$this->img_height) {
                 // Détermine la taille de l'image initiale une fois et place les attributs dans l'objet
                 $cmd = 'identify -format "%wx%h" "'.$this->mapSourceName().'"';
@@ -68,24 +68,25 @@ class MapsTileManager {
             }
 
             // Calcul des ratios et du nombre maximum de vignettes
-            $ratio = $zoom / $this->map->getMaxZoom();
-            $_w = (int) $this->img_width * $ratio;
-            $_h = (int) $this->img_height * $ratio;
-            $xmax = $_w / $this->img_size;
-            $ymax = $_h / $this->img_size;
-            if ((int)$xmax < $xmax) { $xmax = ((int) $xmax) + 1; }
-            if ((int)$ymax < $ymax) { $ymax = ((int) $ymax) + 1; }
+            $crop_unit = pow(2, $this->map->getMaxZoom() - $zoom) * $this->img_size;
 
-            $wmax = $xmax * $this->img_size;
-            $hmax = $ymax * $this->img_size;
+            $max_tiles_x = ceil($this->img_width / $crop_unit) - 1;
+            $max_tiles_y = ceil($this->img_height / $crop_unit) - 1;
+
+            $max_width = $max_tiles_x * $this->img_size;
+            $max_height = $max_tiles_y * $this->img_size;
+
+            $max_width_global = $crop_unit * ( $max_tiles_x + 1 );
+            $max_height_global = $crop_unit * ( $max_tiles_y + 1 );
 
             $this->identifications[$zoom] = array(
-                'xmax' => $xmax,
-                'ymax' => $ymax,
-                'tiles_max' => $xmax * $ymax,
-                'wmax' => $wmax,
-                'hmax' => $hmax,
-                'ratio' => $ratio,
+                'xmax' => $max_tiles_x,
+                'ymax' => $max_tiles_y,
+                'tiles_max' => $max_tiles_x * $max_tiles_y,
+                'wmax' => $max_width,
+                'hmax' => $max_height,
+                'wmax_global' => $max_width_global,
+                'hmax_global' => $max_height_global,
             );
         }
 
@@ -103,16 +104,26 @@ class MapsTileManager {
      * @return string
      * @throws \RunTimeException
      */
-    public function createTile($x, $y, $zoom, $dry_run = false) {
+    public function createTile($x, $y, $zoom, $dry_run = false, $throw_error = true) {
 
-        if ($zoom > $this->map->getMaxZoom()) { throw new \RunTimeException('"zoom" value must be between 1 and '.$this->map->getMaxZoom().'.'); }
-
-        $ratio = ( $zoom / $this->map->getMaxZoom() ) * 100;
+        if ($zoom > $this->map->getMaxZoom() || $zoom < 0) { throw new \RunTimeException('"zoom" value must be between 0 and '.$this->map->getMaxZoom().'.'); }
 
         $identification = $this->identifyImage($zoom);
 
-        if ($x < 0 || $x > $identification['xmax']) { throw new \RunTimeException('"x" value must be between 0 and '.$identification['xmax'].'.'); }
-        if ($y < 0 || $y > $identification['ymax']) { throw new \RunTimeException('"y" value must be between 0 and '.$identification['ymax'].'.'); }
+        if ($x < 0 || $x > $identification['xmax']) {
+            if ($throw_error) {
+                throw new \RunTimeException('"x" value must be between 0 and '.$identification['xmax'].'.');
+            } else {
+                return null;
+            }
+        }
+        if ($y < 0 || $y > $identification['ymax']) {
+            if ($throw_error) {
+                throw new \RunTimeException('"y" value must be between 0 and '.$identification['ymax'].'.');
+            } else {
+                return null;
+            }
+        }
 
         $imgname = $this->mapDestinationName($zoom, $x, $y);
         $this->imgname = $imgname;
@@ -120,20 +131,23 @@ class MapsTileManager {
             mkdir(dirname($imgname), 0777, true);
         }
 
-        $_x = $x*$this->img_size;
-        $_y = $y*$this->img_size;
+        $crop_unit = pow(2, $this->map->getMaxZoom() - $zoom) * $this->img_size;
+
+        $_x = $x * $crop_unit;
+        $_y = $y * $crop_unit;
+
         $cmd = 'convert'.
             ' "'.$this->mapSourceName().'"'.
-            ($ratio < 100 ? ' -resize '.$ratio.'%' : '').
             ' -background black'.//Le "surplus" sera noir
-            ' -extent '.$identification['wmax'].'x'.$identification['hmax'].'^'.//Redimensionne aux valeurs "width" et "height" maximales dépendant du zoom
-            ' -crop '.$this->img_size.'x'.$this->img_size.'+'.$_x.'+'.$_y.//Découpe l'image selon la taille demandée dans les paramètres
-            ' -extent '.$this->img_size.'x'.$this->img_size.'^'.//Et étend les éventuels pixels en trop ou en moins
+            ' -extent '.$identification['wmax_global'].'x'.$identification['hmax_global'].
+            ' -crop '.$crop_unit.'x'.$crop_unit.'+'.$_x.'+'.$_y.//Découpe l'image selon la taille demandée dans les paramètres
+            ' -resize '.$this->img_size.'x'.$this->img_size.'^'.//Redimensionne à la taille paramétrée
+            ' -extent '.$this->img_size.'x'.$this->img_size.//Et étend les éventuels pixels manquants, pour les bordures
+            ' -thumbnail '.$this->img_size.'x'.$this->img_size.//Crée un thumbnail en métadonnée, pour alléger le poids
             ' -quality 95'.//Une faible qualité réduira le poids des images
-            ' -thumbnail '.$this->img_size.'x'.$this->img_size.
             ' "'.$this->mapDestinationName($zoom, $x, $y).'"'
         ;
-
+//echo"\r\n".$cmd."\r\n";
         if ($dry_run === false) {
             return shell_exec($cmd);
         }
@@ -157,6 +171,16 @@ class MapsTileManager {
         if (!is_dir(dirname($imgname))) {
             mkdir(dirname($imgname), 0777, true);
         }
+        $cmd = 'convert'.
+            ' "'.$this->mapSourceName().'"'.
+            ' -background black'.//Le "surplus" sera noir
+            ' -crop '.$crop_unit.'x'.$crop_unit.'+'.$_x.'+'.$_y.//Découpe l'image selon la taille demandée dans les paramètres
+            ' -resize '.$width.'x'.$height.'^'.//Redimensionne à la taille paramétrée
+            ' -extent '.$width.'x'.$height.''.//Et étend les éventuels pixels manquants, pour les bordures
+            ' -thumbnail '.$width.'x'.$width.//Crée un thumbnail en métadonnée, pour alléger le poids
+            ' -quality 100'.//Une faible qualité réduira le poids des images
+            ' "'.$imgname.'"'
+        ;
         $cmd = 'convert'.
             ' "'.$this->mapSourceName().'"'.
             ($ratio < 100 ? ' -resize '.$ratio.'%' : '').

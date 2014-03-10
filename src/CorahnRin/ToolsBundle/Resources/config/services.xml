@@ -21,7 +21,7 @@
         <service id="corahnrin.twig.corahnrin_helper_extension" class="CorahnRin\ToolsBundle\Twig\HelperExtension">
             <tag name="twig.extension" />
         </service>
-        <service id="corahnrin.listener" class="CorahnRin\ToolsBundle\Listeners\Listener">
+        <service id="corahnrin.listener.deletion" class="CorahnRin\ToolsBundle\Listeners\DeletionListener">
             <tag name="doctrine.event_listener" event="prePersist" />
         </service>
     </services>

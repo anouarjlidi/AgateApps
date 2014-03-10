@@ -108,14 +108,14 @@ class MapTilesCommand extends ContainerAwareCommand {
 
         //Création de la liste des identifications
         //Calcul du nombre total de vignettes à créer
-        for ($zoom = 1; $zoom <= $map->getMaxZoom(); $zoom++) {
+        for ($zoom = 0; $zoom <= $map->getMaxZoom(); $zoom++) {
             $identifications[$zoom] = $tilesManager->identifyImage($zoom);
             $total_files += $identifications[$zoom]['tiles_max'];
         }
 
         $times = array();
 
-        for ($zoom = 1; $zoom <= $map->getMaxZoom(); $zoom++) {
+        for ($zoom = 0; $zoom <= $map->getMaxZoom(); $zoom++) {
             $identification = $identifications[$zoom];
 
 //            $total_files = ($xmax+1)*($ymax+1);
@@ -161,7 +161,9 @@ class MapTilesCommand extends ContainerAwareCommand {
                     if ($overwrite) {
                         $files_written++;
                         //Commande ImageMagick
-                        $cmd = $tilesManager->createTile($x, $y, $zoom);
+                        $cmd = $tilesManager->createTile($x, $y, $zoom, true);
+                        shell_exec($cmd);
+//                        $output->writeln($cmd);
 //                        $cmd = 'convert'.
 //                                ' "'.ROOT.'/web/'.$map->getImage().'"'.
 //                                ($ratio < 1 ? ' -resize '.($ratio*100) .'%' : '').

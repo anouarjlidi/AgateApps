@@ -107,6 +107,7 @@ class MapsController extends Controller
         $maxMarkers = $em->getRepository('CorahnRinMapsBundle:Markers')->getMax();
         return array(
             'map'=>$map,
+            'tile_size' => $this->container->getParameter('corahn_rin_maps.tile_size'),
             'routesTypes' => $routesTypes,
             'markersTypes' => $markersTypes,
             'route_init' => $route_init,
