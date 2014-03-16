@@ -75,3 +75,13 @@ footer#footer {
 #corahnrin .navbar .container {
     padding: 0 30px;
 }
+
+input.input-black {
+    color: #ccc;
+    border-color: #000;
+    background-color: #333;
+}
+input.input-black[disabled],
+input.input-black.disabled {
+    background-color: #252525;
+}

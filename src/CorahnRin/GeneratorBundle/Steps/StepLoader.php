@@ -122,4 +122,15 @@ class StepLoader {
         return require $this->filename;
     }
 
+    /**
+     * Crée une erreur "flash"
+     *
+     * @param string $msg
+     * @param string $type
+     * @param array $msgParams
+     */
+    public function flashMessage($msg, $type = 'error', $msgParams = array()) {
+        $msg = $this->controller->get('translator')->trans($msg, $msgParams, 'error.steps');
+        $this->session->getFlashBag()->add($type, $msg);
+    }
 }

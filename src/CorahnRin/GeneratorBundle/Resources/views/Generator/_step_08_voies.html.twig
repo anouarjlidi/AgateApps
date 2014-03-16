@@ -1,0 +1,26 @@
+<p class="alert alert-info">
+    {{ 'Les voies sont comprises entre 1 et 5, et la somme totale des voies doit être égale à 15.' | trans }}
+    <br />
+    {{ 'Pour obtenir des valeurs idéales, répartissez simplement les valeurs 1, 2, 3, 4 et 5 dans chacune des voies.' | trans }}
+</p>
+{% for id,way in ways_list %}
+    <div class="row mb10">
+        <div class="col-sm-2">
+            <p>{{ way.name | trans }}</p>
+        </div>
+        <div class="col-sm-2">
+            <div class="input-group">
+                <span class="input-group-btn">
+                    <button class="btn btn-inverse" data-toggle="increment" data-increment-min="1" data-increment-max="5" data-increment="-1" data-target-node="way_{{ id }}" data-sum-max="15" data-sum-selector=".input_way" type="button">-</button>
+                </span>
+                <input id="way_{{ id }}" name="ways[{{ id }}]" type="text" class="form-control input_way text-center input-black disabled" value="{{ ways_values[id] }}"/>
+                <span class="input-group-btn">
+                    <button class="btn btn-inverse" data-toggle="increment" data-increment-min="1" data-increment-max="5" data-increment="1" data-target-node="way_{{ id }}"  data-sum-max="15" data-sum-selector=".input_way" type="button">+</button>
+                </span>
+            </div><!-- /input-group -->
+        </div>
+        <div class="col-sm-8">
+            <p>{{ way.description | trans | raw }}</p>
+        </div>
+    </div>
+{% endfor %}

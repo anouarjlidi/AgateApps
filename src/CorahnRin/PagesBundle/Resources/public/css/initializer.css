@@ -29,6 +29,7 @@
 	*.text-red { color: red !important; }
     *.text-darkred { color: darkred !important; }
 	*.text-green { color: green !important; }
+    *.text-black { color: black !important; }
 
 	/* Format */
 	.text-underline { text-decoration: underline; }

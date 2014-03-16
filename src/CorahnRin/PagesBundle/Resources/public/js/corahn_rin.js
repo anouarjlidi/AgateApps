@@ -1,4 +1,4 @@
-(function($){
+(function($, d){
     var a;
 
     // Placement dynamique d'une tooltip
@@ -17,7 +17,7 @@
     });
 
     // Messages de confirmation de suppression (propre au BO)
-    a = document.querySelectorAll('a.btn-danger[href*=delete]');
+    a = d.querySelectorAll('a.btn-danger[href*=delete]');
     for (var i = 0, l = a.length ; i < l ; i++) {
         $(a[i]).on('click', function(){
             return confirm(CONFIRM_DELETE);
@@ -25,7 +25,7 @@
     }
 
     // Applique un "submit" au formulaire parent lorsque l'évènement se voit appliquer l'évènement "onchange"
-    a = document.querySelectorAll('[data-onchangesubmit]');
+    a = d.querySelectorAll('[data-onchangesubmit]');
     for (var i = 0, l = a.length ; i < l ; i++) {
         $(a[i]).on('change', function(){
             var a = this.getAttribute('data-onchangesubmit');
@@ -42,10 +42,10 @@
 
 
     // Form prototype (sélection multiple, propre au BO)
-    if (document.querySelectorAll('[data-prototype]').length) {
+    if (d.querySelectorAll('[data-prototype]').length) {
 
-        var handler = document.getElementById('corahnrin_pagesbundle_menus_params'),
-            elements = document.querySelectorAll('[data-collection-children]'),
+        var handler = d.getElementById('corahnrin_pagesbundle_menus_params'),
+            elements = d.querySelectorAll('[data-collection-children]'),
             onclick = function(){
                 $(this).parents('.input-group').remove();
             },
@@ -56,30 +56,30 @@
             deleteElementNode;
 
         prototype = $(handler.getAttribute('data-prototype').trim()).find('input')[0];
-        spanNode = document.createElement('span');
+        spanNode = d.createElement('span');
         spanNode.appendChild(prototype);
         prototype = spanNode.innerHTML;
 
-        deleteElementNode = document.createElement('button');
+        deleteElementNode = d.createElement('button');
         deleteElementNode.className = 'btn btn-delete';
         deleteElementNode.type = 'button';
         deleteElementNode.innerHTML = '<span class="glyphicon icon-bin text-red"></span>';
 
-        spanNode = document.createElement('span');
+        spanNode = d.createElement('span');
         spanNode.className = 'input-group-btn span-delete-node';
         spanNode.appendChild(deleteElementNode);
 
-        inputContainer = document.createElement('div');
+        inputContainer = d.createElement('div');
         inputContainer.className = 'input-group';
 
-        addElementNode = document.createElement('button');
+        addElementNode = d.createElement('button');
         addElementNode.className = 'btn btn-inverse btn-xs btn-block';
         addElementNode.type = 'button';
         addElementNode.innerHTML = '<span class="glyphicon icon-plus text-green"></span>';
         addElementNode.onclick = function(){
-            var iterator = !isNaN(document.iteratorValue) ? document.iteratorValue : 0,
-                node = document.createElement('div'),
-                handler = document.getElementById('corahnrin_pagesbundle_menus_params'),
+            var iterator = !isNaN(d.iteratorValue) ? d.iteratorValue : 0,
+                node = d.createElement('div'),
+                handler = d.getElementById('corahnrin_pagesbundle_menus_params'),
                 container = inputContainer.cloneNode(),
                 spanNodeToAdd = spanNode.cloneNode();
             spanNodeToAdd.onclick = onclick;
@@ -88,7 +88,7 @@
             node.innerHTML = node.innerHTML.replace(/__name__/gi, iterator);
             $(node).find('input').after(spanNodeToAdd);
             handler.appendChild(node);
-            document.iteratorValue = iterator + 1;
+            d.iteratorValue = iterator + 1;
         };
         handler.innerHTML = '';
         handler.appendChild(addElementNode);
@@ -100,4 +100,58 @@
 
     }// end form prototypes
 
-})(jQuery);
+
+    /**
+     * Implémentation de petits blocs de boutons et inputs pour incrémenter des valeurs dans un élément
+     */
+    $('[data-toggle="increment"]').on('click', function(){
+        var target = this.getAttribute('data-target-node'),
+            max = this.getAttribute('data-increment-max'),
+            min = this.getAttribute('data-increment-min'),
+            sumMax = parseInt(this.getAttribute('data-sum-max')),
+            sumSelector = this.getAttribute('data-sum-selector'),
+            sum = 0,
+            j,
+            useHtml = this.getAttribute('data-use-html') == 'true',
+            increment = parseInt(this.getAttribute('data-increment')),
+            value = parseInt(useHtml ? d.getElementById(target).innerHTML : d.getElementById(target).value);
+
+        if (isNaN(sumMax)) { sumMax = null; }
+        if (isNaN(max)) { max = null; }
+        if (isNaN(min)) { min = null; }
+        if (isNaN(value)) { value = null !== min ? min : 0; }
+        if (isNaN(increment)) {
+            console.error('Error in incrementation value for target '+target);
+            return false;
+        }
+
+        if (null !== sumMax) {
+            for (var i = 0, l = d.querySelectorAll(sumSelector), c = l.length ; i < c ; i++) {
+                if (useHtml) {
+                    j = parseInt(l[i].innerHTML);
+                } else {
+                    j = parseInt(l[i].value);
+                }
+                if (isNaN(j)) { j = 0; }
+                sum += j;
+            }
+            if (sum + increment <= sumMax) {
+                value += increment;
+            }
+        } else {
+            value += increment;
+        }
+
+
+        if (null !== max && value > max) { value = max; }
+        if (null !== min && value < min) { value = min; }
+
+        if (useHtml) {
+            d.getElementById(target).innerHTML = value;
+        } else {
+            d.getElementById(target).value = value;
+        }
+        return false;
+    });
+
+})(jQuery, document);
