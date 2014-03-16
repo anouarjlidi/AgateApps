@@ -1,6 +1,6 @@
 <?php
 
-namespace CorahnRin\CharactersBundle\Entity;
+namespace CorahnRin\GeneratorBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Steps
  *
  * @ORM\Table(name="steps")
- * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\StepsRepository")
+ * @ORM\Entity(repositoryClass="CorahnRin\GeneratorBundle\Repository\StepsRepository")
  */
 class Steps
 {
@@ -41,6 +41,13 @@ class Steps
      * @ORM\Column(type="string", length=75, nullable=false)
      */
     protected $title;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Steps")
+     */
+    protected $stepsToDisableOnChange;
 
     /**
      * @var \Datetime
@@ -205,10 +212,54 @@ class Steps
     /**
      * Get deleted
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getDeleted()
     {
         return $this->deleted;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->stepsToDisableOnChange = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add stepsToDisableOnChange
+     *
+     * @param Steps $stepsToDisableOnChange
+     * @return Steps
+     */
+    public function addStepToDisableOnChange(Steps $step)
+    {
+        if ($step->getStep() < $this->step) {
+            throw new \Exception('To add a step to disable on update, this step MUST have a "step" value superior to the dependant step.');
+        }
+
+        $this->stepsToDisableOnChange[] = $step;
+
+        return $this;
+    }
+
+    /**
+     * Remove stepsToDisableOnChange
+     *
+     * @param Steps $stepsToDisableOnChange
+     */
+    public function removeStepToDisableOnChange(Steps $step)
+    {
+        $this->stepsToDisableOnChange->removeElement($step);
+    }
+
+    /**
+     * Get stepsToDisableOnChange
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getStepsToDisableOnChange()
+    {
+        return $this->stepsToDisableOnChange;
     }
 }

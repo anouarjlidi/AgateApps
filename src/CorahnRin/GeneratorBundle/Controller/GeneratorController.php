@@ -1,13 +1,14 @@
 <?php
 
-namespace CorahnRin\CharactersBundle\Controller;
+namespace CorahnRin\GeneratorBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 //use CorahnRin\CharactersBundle\Entity\Characters;
-use CorahnRin\CharactersBundle\Steps\StepLoader;
+use CorahnRin\GeneratorBundle\Entity\Steps;
+use CorahnRin\GeneratorBundle\Steps\StepLoader;
 
 class GeneratorController extends Controller {
 
@@ -15,11 +16,11 @@ class GeneratorController extends Controller {
 
     /**
      * @Route("/characters/generate/")
-     * @Template("CorahnRinCharactersBundle:Generator:step_base.html.twig")
+     * @Template("CorahnRinGeneratorBundle:Generator:step_base.html.twig")
      */
     public function indexAction() {
-        $step = $this->getDoctrine()->getManager()->getRepository('CorahnRinCharactersBundle:Steps')->findOneBy(array('step'=>1));
-        return $this->redirect($this->generateUrl('corahnrin_characters_generator_step', array('step'=>$step->getStep(),'slug'=>$step->getSlug())));
+        $step = $this->getDoctrine()->getManager()->getRepository('CorahnRinGeneratorBundle:Steps')->findOneBy(array('step'=>1));
+        return $this->redirect($this->generateUrl('corahnrin_generator_generator_step', array('step'=>$step->getStep(),'slug'=>$step->getSlug())));
     }
 
     /**
@@ -32,14 +33,14 @@ class GeneratorController extends Controller {
         $session->set('character', array());
         $session->set('step', 1);
         $session->getFlashBag()->add('success', 'Le personnage en cours de création a été réinitialisé !');
-        return $this->redirect($this->generateUrl('corahnrin_characters_generator_index'));
+        return $this->redirect($this->generateUrl('corahnrin_generator_generator_index'));
     }
 
     /**
      * @Route("/characters/generate/{step}-{slug}", requirements={"step" = "\d+"})
-     * @Template("CorahnRinCharactersBundle:Generator:step_base.html.twig")
+     * @Template("CorahnRinGeneratorBundle:Generator:step_base.html.twig")
      */
-    public function stepAction(\CorahnRin\CharactersBundle\Entity\Steps $step) {
+    public function stepAction(Steps $step) {
         $datas = array(); // Tableau à retourner en fin de méthode
         $session = $this->get('session');
         $request = $this->getRequest();
@@ -51,7 +52,7 @@ class GeneratorController extends Controller {
 
         $character = $session->get('character');
 
-        $this->steps = $this->steps ?: $this->getDoctrine()->getManager()->getRepository('CorahnRinCharactersBundle:Steps')->findAll(true, 'step');
+        $this->steps = $this->steps ?: $this->getDoctrine()->getManager()->getRepository('CorahnRinGeneratorBundle:Steps')->findAll(true, 'step');
 
         for ($i = 1; $i <= $step->getStep() ; $i++) {
             $stepName = $this->steps[$i]->getStep().'.'.$this->steps[$i]->getSlug();
@@ -62,7 +63,7 @@ class GeneratorController extends Controller {
             }
         }
 
-        $stepLoader = new StepLoader($this, $session, $request, $step);
+        $stepLoader = new StepLoader($this, $session, $request, $step, $this->steps);
 
         if ($stepLoader->exists()){
             //Si la méthode existe on l'exécute pour lancer l'analyse de l'étape
@@ -78,7 +79,7 @@ class GeneratorController extends Controller {
 
                 //Fichier de la vue de l'étape
                 $datas['loaded_step_filename'] =
-                    'CorahnRinCharactersBundle:Generator:_step_'
+                    'CorahnRinGeneratorBundle:Generator:_step_'
                     .str_pad($step->getStep(), 2, '0', STR_PAD_LEFT)
                     .'_'
                     .$step->getSlug()
@@ -98,9 +99,9 @@ class GeneratorController extends Controller {
     /**
      * @Template()
      */
-    public function menuAction(\CorahnRin\CharactersBundle\Entity\Steps $step = null) {
+    public function menuAction(Steps $step = null) {
         $actual_step = (int) $this->get('session')->get('step') ?: 1;
-        $this->steps = $this->steps ?: $this->getDoctrine()->getManager()->getRepository('CorahnRinCharactersBundle:Steps')->findAll(true, 'step');
+        $this->steps = $this->steps ?: $this->getDoctrine()->getManager()->getRepository('CorahnRinGeneratorBundle:Steps')->findAll(true, 'step');
         $barWidth = count($this->steps) ? ($actual_step / count($this->steps) * 100) : 0;
         return array('steps'=>$this->steps, 'session_step' => $actual_step, 'bar_width' => $barWidth, 'loaded_step' => $step);
     }
@@ -117,12 +118,12 @@ class GeneratorController extends Controller {
     public function _goToStep($stepNumber) {
         $step = null;
         $step = $this->steps ? $this->steps[$stepNumber] : $this->getDoctrine()->getManager()
-            ->getRepository('CorahnRinCharactersBundle:Steps')
+            ->getRepository('CorahnRinGeneratorBundle:Steps')
             ->findOneBy(array('step' => $stepNumber));
 
         if ($step) {
             $url = $this->generateUrl(
-                'corahnrin_characters_generator_step',
+                'corahnrin_generator_generator_step',
                 array(
                     'step'=>$step->getStep(),
                     'slug'=>$step->getSlug(),

@@ -1,9 +1,9 @@
 <?php
 
-namespace CorahnRin\CharactersBundle\Sheets;
+namespace CorahnRin\GeneratorBundle\Sheets;
 
 use CorahnRin\CharactersBundle\Entity\Characters;
-use CorahnRin\CharactersBundle\Sheets\SheetsService;
+use CorahnRin\GeneratorBundle\Sheets\SheetsService;
 
 /**
  * Class ServiceManager
@@ -15,7 +15,7 @@ use CorahnRin\CharactersBundle\Sheets\SheetsService;
 abstract class SheetsManager implements ManagerInterface {
 
     /**
-     * @var CorahnRin\CharactersBundle\Sheets\SheetsService
+     * @var CorahnRin\GeneratorBundle\Sheets\SheetsService
      */
     private $service;
     private $locale;
@@ -51,7 +51,7 @@ abstract class SheetsManager implements ManagerInterface {
     /**
      * Renvoie le SheetsService
      *
-     * @return \CorahnRin\CharactersBundle\Sheets\SheetsService
+     * @return \CorahnRin\GeneratorBundle\Sheets\SheetsService
      */
     function getService() {
         return $this->service;
@@ -61,7 +61,7 @@ abstract class SheetsManager implements ManagerInterface {
      * Retourne le gestionnaire de feuille de personnage du type demandé
      *
      * @param string $type
-     * @return CorahnRin\CharactersBundle\Sheets\SheetsManager
+     * @return CorahnRin\GeneratorBundle\Sheets\SheetsManager
      */
     function getManager($type) {
         return $this->service->getManager($type);

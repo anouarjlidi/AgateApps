@@ -5,7 +5,7 @@
 {% block stylesheets %}
     {{ parent() }}
     {% stylesheets
-        '@CorahnRinCharactersBundle/Resources/public/css/*'
+        '@CorahnRinGeneratorBundle/Resources/public/css/*'
         output="css/generator.css"
     %}<link rel="stylesheet" href="{{ app.request.getSchemeAndHttpHost() ~ asset_url }}" type="text/css" />
     {% endstylesheets %}
@@ -15,11 +15,11 @@
 {% block content_for_layout %}
     <div class="row">
         <div class="col-sm-3 step_menu">
-            {% render(controller("CorahnRinCharactersBundle:Generator:menu", {"step":loaded_step})) %}
+            {% render(controller("CorahnRinGeneratorBundle:Generator:menu", {"step":loaded_step})) %}
         </div>
         <div class="col-sm-9 step_module">
             <h1>{{ 'Étape' | trans }} {{ loaded_step.step }} : {{ loaded_step.title | trans }}</h1>
-            <form name="generator_form" id="generator_form" method="post" action="{{ url('corahnrin_characters_generator_step', {'step':loaded_step.step,'slug':loaded_step.slug}) }}">
+            <form name="generator_form" id="generator_form" method="post" action="{{ url('corahnrin_generator_generator_step', {'step':loaded_step.step,'slug':loaded_step.slug}) }}">
                 <fieldset id="generator_{{ loaded_step.slug }}">
                     <button type="submit" id="submit_btn" class="btn btn-inverse">{{ 'Étape suivante' | trans }}</button>
                     <hr />
@@ -34,7 +34,7 @@
 
 {% block javascripts %}
     {{ parent() }}{% javascripts
-        '@CorahnRinCharactersBundle/Resources/public/js/*'
+        '@CorahnRinGeneratorBundle/Resources/public/js/*'
         output="js/generator.js"
     %}<script type="text/javascript" src="{{ app.request.getSchemeAndHttpHost() ~ asset_url }}"></script>{% endjavascripts %}
 {% endblock %}

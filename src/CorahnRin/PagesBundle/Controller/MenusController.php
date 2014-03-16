@@ -86,7 +86,7 @@ class MenusController extends Controller {
 
     protected function menuCorahnRin(){
 		return array(
-			'corahnrin_characters_generator_index' => 'Générateur',
+			'corahnrin_generator_generator_index' => 'Générateur',
 			'corahnrin_characters_viewer_list' => 'Personnages',
 			'corahnrin_maps_maps_index' => 'Esteren Maps',
 		);

@@ -1,23 +1,33 @@
 (function($){
     var a;
 
-    $('[data-toggle="tooltip"]').tooltip('destroy').tooltip({
+    // Placement dynamique d'une tooltip
+    $('[data-toggle="tooltip"]').tooltip({
         "placement" : function(event,element){
             return element.getAttribute('data-placement') ? element.getAttribute('data-placement') : 'auto bottom';
         },
         "container": "body"
+    }).on('show.bs.tooltip', function(){
+        var btn = this;
+        $('[data-toggle="tooltip"]').filter(
+            function(i,element){
+                return element != btn;
+            }
+        ).tooltip('hide');
     });
 
+    // Messages de confirmation de suppression (propre au BO)
     a = document.querySelectorAll('a.btn-danger[href*=delete]');
     for (var i = 0, l = a.length ; i < l ; i++) {
-        a[i].onclick = function(){
-            return confirm(confirm_delete);
-        };
+        $(a[i]).on('click', function(){
+            return confirm(CONFIRM_DELETE);
+        });
     }
 
+    // Applique un "submit" au formulaire parent lorsque l'évènement se voit appliquer l'évènement "onchange"
     a = document.querySelectorAll('[data-onchangesubmit]');
     for (var i = 0, l = a.length ; i < l ; i++) {
-        a[i].onchange = function(){
+        $(a[i]).on('change', function(){
             var a = this.getAttribute('data-onchangesubmit');
             if (a !== 'false' && a !== '0') {
                 if ($(this).parents('form')) {
@@ -25,12 +35,13 @@
                 }
             }
             return false;
-        };
+        });
     }
 
     String.prototype.trim=function(){return this.replace(/^\s+|\s+$/g, '');};
 
 
+    // Form prototype (sélection multiple, propre au BO)
     if (document.querySelectorAll('[data-prototype]').length) {
 
         var handler = document.getElementById('corahnrin_pagesbundle_menus_params'),

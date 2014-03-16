@@ -1,10 +1,10 @@
 <?php
 
-namespace CorahnRin\CharactersBundle\Sheets\Managers;
+namespace CorahnRin\GeneratorBundle\Sheets\Managers;
 
 use CorahnRin\CharactersBundle\Entity\Characters;
-use CorahnRin\CharactersBundle\Sheets\ManagerInterface;
-use CorahnRin\CharactersBundle\Sheets\SheetsManager;
+use CorahnRin\GeneratorBundle\Sheets\ManagerInterface;
+use CorahnRin\GeneratorBundle\Sheets\SheetsManager;
 use CorahnRin\ToolsBundle\PDF\PDF;
 
 /**

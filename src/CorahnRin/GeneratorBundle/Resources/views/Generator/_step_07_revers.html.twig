@@ -1,0 +1,42 @@
+
+<p class="alert alert-info">
+    {% if choice_available %}
+        {# Ici un commentaire sera ajouté lorsque la fonctionnalité de choix de revers sera implémentée #}
+    {% else %}
+        {{ 'Les revers sont tirés au hasard.' | trans }}<br />
+    {% endif %}
+    {% if age > 20 %}
+        {{ 'Votre personnage a %age% ans, ce qui vous impose d\'avoir au moins %setbacks_count% revers.' | trans({'%age%':age,'%setbacks_count%':setbacks_count}) | raw }}
+    {% else %}
+        {{ 'Votre personnage a %age% ans, il n\'a donc aucun revers.' | trans({'%age%':age}) }}
+    {% endif %}
+    <br />
+    {{ 'Les revers tirés automatiquement sont indiqués par le symbole "%symbol%".' | trans({'%symbol%':'<span class="glyphicon icon-hand_right"></span>'}) | raw }}
+</p>
+
+{% for setback in setbacks_list %}
+<div class="row mb15">
+
+    <div class="col-sm-3">
+        <p>
+            {% if setback_value[setback.id] is defined %}
+                <span class="text-{{ setback_value[setback.id].avoided == false and setback.id != 10 ? 'red' : 'green' }}">
+                    <span class="glyphicon icon-hand_right"></span>
+                    {{ setback.name | trans }}
+                </span>
+                {% if setback_value[setback.id].avoided == true %}
+                    <small class="bl">{{ 'Par chance, votre personnage a évité ce revers !' | trans }}</small>
+                {% endif %}
+
+            {% else %}
+                {{ setback.name | trans }}
+            {% endif %}
+        </p>
+    </div>
+    <div class="col-sm-9">
+        <p>{{ setback.description | trans }}</p>
+    </div>
+
+</div><!-- /.row -->
+
+{% endfor %}{# setbacks #}

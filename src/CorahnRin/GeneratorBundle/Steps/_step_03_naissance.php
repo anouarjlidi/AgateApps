@@ -3,7 +3,7 @@
  * Lieu de naissance
  */
 
-$regions = $this->controller->getDoctrine()->getManager()->getRepository('CorahnRinMapsBundle:Zones')->findAll(true);
+$regions = $this->em->getRepository('CorahnRinMapsBundle:Zones')->findAll(true);
 
 $datas = array(
     'regions_list' => $regions,
@@ -11,6 +11,7 @@ $datas = array(
 );
 
 if ($this->request->isMethod('POST')) {
+    $this->resetSteps();
     $region_value = (int) $this->request->request->get('region_value');
     if (isset($regions[$region_value])) {
         $this->character[$this->stepFullName()] = $region_value;

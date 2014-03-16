@@ -20,21 +20,6 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('corahn_rin_characters');
 
-        $rootNode
-            ->children()
-                ->scalarNode('sheets_folder')
-                    ->defaultValue(__DIR__.'/../Sheets/files')
-                    ->info('Defines the folder where all character sheets are stored, in order to use them with the character sheet manager.')
-                    ->example('%kernel.root_dir%/../src/CorahnRin/CharactersBundle/Sheets/files/')
-                ->end()
-                ->scalarNode('sheets_output')
-                    ->defaultValue('%kernel.root_dir%/cache/character_sheets/')
-                    ->info('Defines the folder where the sheets will be saved for "caching".')
-                    ->example('%kernel.root_dir%/cache/character_sheets/')
-                ->end()
-            ->end()
-        ;
-
         // Here you should define the parameters that are allowed to
         // configure your bundle. See the documentation linked above for
         // more information on that topic.

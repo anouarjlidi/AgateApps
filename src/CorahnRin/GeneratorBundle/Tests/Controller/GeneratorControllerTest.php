@@ -1,6 +1,6 @@
 <?php
 
-namespace CorahnRin\CharactersBundle\Tests\Controller;
+namespace CorahnRin\GeneratorBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

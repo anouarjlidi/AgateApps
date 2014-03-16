@@ -3,7 +3,7 @@
  * Peuple
  */
 
-$peoples = $this->controller->getDoctrine()->getManager()->getRepository('CorahnRinCharactersBundle:Peoples')->findAll(true);
+$peoples = $this->em->getRepository('CorahnRinCharactersBundle:Peoples')->findAll(true);
 
 $datas = array(
     'peoples' => $peoples,
@@ -11,6 +11,7 @@ $datas = array(
 );
 
 if ($this->request->isMethod('POST')) {
+    $this->resetSteps();
     $people_id = (int) $this->request->request->get('gen-div-choice');
     if (isset($peoples[$people_id])) {
         $this->character[$this->stepFullName()] = $people_id;

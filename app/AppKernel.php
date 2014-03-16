@@ -30,6 +30,7 @@ class AppKernel extends Kernel
             new CorahnRin\TranslationBundle\CorahnRinTranslationBundle(),
             new CorahnRin\ImagickBundle\CorahnRinImagickBundle(),
             new CorahnRin\ApiBundle\CorahnRinApiBundle(),
+            new CorahnRin\GeneratorBundle\CorahnRinGeneratorBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test','dev_fast'))) {

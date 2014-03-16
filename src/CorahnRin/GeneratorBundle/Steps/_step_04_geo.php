@@ -3,7 +3,7 @@
  * Peuple
  */
 
-$geoEnvironments = $this->controller->getDoctrine()->getManager()->getRepository('CorahnRinCharactersBundle:GeoEnvironments')->findAll(true);
+$geoEnvironments = $this->em->getRepository('CorahnRinCharactersBundle:GeoEnvironments')->findAll(true);
 
 $datas = array(
     'geoEnvironments' => $geoEnvironments,
@@ -11,6 +11,7 @@ $datas = array(
 );
 
 if ($this->request->isMethod('POST')) {
+    $this->resetSteps();
     $geoEnvironment_id = (int) $this->request->request->get('gen-div-choice');
     if (isset($geoEnvironments[$geoEnvironment_id])) {
         $this->character[$this->stepFullName()] = $geoEnvironment_id;

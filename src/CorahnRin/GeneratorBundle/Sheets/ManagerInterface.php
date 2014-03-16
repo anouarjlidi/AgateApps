@@ -1,9 +1,9 @@
 <?php
 
-namespace CorahnRin\CharactersBundle\Sheets;
+namespace CorahnRin\GeneratorBundle\Sheets;
 
 use CorahnRin\CharactersBundle\Entity\Characters;
-use CorahnRin\CharactersBundle\Sheets\SheetsService;
+use CorahnRin\GeneratorBundle\Sheets\SheetsService;
 
 /**
  * Interface ManagerInterface

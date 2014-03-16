@@ -1,6 +1,6 @@
 <?php
 
-namespace CorahnRin\CharactersBundle\Sheets;
+namespace CorahnRin\GeneratorBundle\Sheets;
 
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\HttpKernel\Kernel;
@@ -57,7 +57,7 @@ class SheetsService {
 
     private function createManager($type) {
         $type = ucfirst(strtolower($type));
-        $className = '\CorahnRin\CharactersBundle\Sheets\Managers\\'.$type.'Manager';
+        $className = '\CorahnRin\GeneratorBundle\Sheets\Managers\\'.$type.'Manager';
 
         $manager = new $className($this);
 

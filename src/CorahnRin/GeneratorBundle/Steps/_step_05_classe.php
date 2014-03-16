@@ -3,7 +3,7 @@
  * Peuple
  */
 
-$socialClasses = $this->controller->getDoctrine()->getManager()->getRepository('CorahnRinCharactersBundle:SocialClasses')->findAll(true);
+$socialClasses = $this->em->getRepository('CorahnRinCharactersBundle:SocialClasses')->findAll(true);
 
 $socialClassesDomains = (isset($this->character[$this->stepFullName()]['domains']) ? $this->character[$this->stepFullName()]['domains'] : array());
 
@@ -16,6 +16,7 @@ $datas = array(
 );
 
 if ($this->request->isMethod('POST')) {
+    $this->resetSteps();
     $socialClass_value = (int) $this->request->request->get('gen-div-choice');
     $socialClassDomains = $this->request->request->get('domains');
 

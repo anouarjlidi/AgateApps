@@ -8,6 +8,7 @@ $datas = array(
 );
 
 if ($this->request->isMethod('POST')) {
+    $this->resetSteps();
     $age = (int) $this->request->request->get('age');
     if (16 <= $age && $age <= 35) {
         $this->character[$this->stepFullName()] = $age;
