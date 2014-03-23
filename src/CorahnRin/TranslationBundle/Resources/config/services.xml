@@ -22,5 +22,10 @@
             <tag name="twig.extension" />
             <argument type="service" id="translator" />
         </service>
+
+        <service id="translation.loader.db" class="CorahnRin\TranslationBundle\Translation\TranslationLoader">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <tag name="translation.loader" alias="db" />
+        </service>
     </services>
 </container>

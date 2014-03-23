@@ -19,9 +19,7 @@ class TranslateController extends Controller {
         //Récupération de la liste des langues disponibles
         $this->get('session')->set('_locale', $lang->getLocale());
         $translator = $this->get('translator');
-        $translator->translationDomain('messages.flash');
         $msg = $translator->trans('La langue a été modifiée pour : %lang%', array('%lang%' => $translator->trans($lang->getName())));
-        $translator->translationDomain();
         $this->get('session')->getFlashBag()->add('info', $msg);
         return $this->redirect($this->getRequest()->getBaseUrl());
     }
@@ -78,14 +76,10 @@ class TranslateController extends Controller {
             }
         } else {
             if ($request->isXmlHttpRequest()) {
-                $this->get('translator')->translationDomain('error');
                 $this->get('session')->getFlashBag()->set('info', 'Mauvaise requête XHR.');
-                $this->get('translator')->translationDomain();
             }
             if ($request->isMethod('post')) {
-                $this->get('translator')->translationDomain('error');
                 $this->get('session')->getFlashBag()->set('info', 'Mauvaise requête Post.');
-                $this->get('translator')->translationDomain();
             }
             $translations = $this->getDoctrine()->getManager()
                 ->getRepository('CorahnRinTranslationBundle:Translation')

@@ -51,11 +51,22 @@ class Translator extends BaseTranslator implements TranslatorInterface {
             ->findAll();
     }
 
+    /**
+     * Recherche dans le moteur natif de Symfony2 si une traduction existe pour l'id donné
+     *
+     * @param string $locale
+     * @param string $id
+     * @param string $domain
+     * @return string|null
+     */
     function findInNativeCatalogue($locale, $id, $domain) {
         if (!isset($this->catalogues[$locale])) {
             $this->loadCatalogue($locale);
         }
-        return $this->catalogues[$locale]->get($id, $domain);
+        return $this->catalogues[$locale]->has($id, $domain)
+            && $this->catalogues[$locale]->get($id, $domain)
+             ? $this->catalogues[$locale]->get($id, $domain)
+             : null;
     }
 
     /**
@@ -83,33 +94,38 @@ class Translator extends BaseTranslator implements TranslatorInterface {
 
         if (!$domain) { $domain = 'messages'; }
 
-        $token = md5($id.'_'.$domain.'_'.$locale);
+        $translation = $this->findInNativeCatalogue($locale, $id, $domain);
 
-        // Génère le catalogue à partir de la locale et du domaine
-        $this->loadDbCatalogue($locale, $domain);
+        if (null === $translation) {
 
-        $translation = $this->findToken($token);
+            // Génère le catalogue BDD à partir de la locale et du domaine
+            $this->loadDbCatalogue($locale, $domain);
 
-        if ($translation) {
-            if ($translation->getTranslation()){
-                $translation = $translation->getTranslation();
+            $token = md5($id.'_'.$domain.'_'.$locale);
+            $translation = $this->findToken($token);
+
+            if ($translation) {
+                if ($translation->getTranslation()) {
+                    $translation = $translation->getTranslation();
+                } else {
+                    $translation = $id;
+                }
             } else {
-                $translation = $this->findInNativeCatalogue($locale, $id, $domain);
+                $em = $this->container->get('doctrine')->getManager();
+                $translation = new Translation();
+                $translation
+                    ->setToken($token)
+                    ->setSource($id)
+                    ->setDomain($domain)
+                    ->setLocale($locale);
+                $em->persist($translation);
+                $em->flush();
+                self::$catalogue[$locale][$domain][$token] = $translation;
+                $translation = $id;
             }
-        } else {
-            $em = $this->container->get('doctrine')->getManager();
-            $translation = new Translation();
-            $translation
-                ->setToken($token)
-                ->setSource($id)
-                ->setDomain($domain)
-                ->setLocale($locale);
-            $em->persist($translation);
-            $em->flush();
-            self::$catalogue[$locale][$domain][$token] = $translation;
-            $translation = $this->findInNativeCatalogue($locale, $id, $domain);
         }
 
+//        exit(strtr($translation, $parameters));
         return strtr($translation, $parameters);
     }
 
