@@ -17,20 +17,26 @@ class AppKernel extends Kernel
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
+
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+
             new JMS\SerializerBundle\JMSSerializerBundle($this),
+
             new FOS\UserBundle\FOSUserBundle(),
             new FOS\RestBundle\FOSRestBundle(),
+
             new CorahnRin\CharactersBundle\CorahnRinCharactersBundle(),
             new CorahnRin\PagesBundle\CorahnRinPagesBundle(),
             new CorahnRin\AdminBundle\CorahnRinAdminBundle(),
             new CorahnRin\UsersBundle\CorahnRinUsersBundle(),
-            new CorahnRin\MapsBundle\CorahnRinMapsBundle(),
             new CorahnRin\ToolsBundle\CorahnRinToolsBundle(),
-            new CorahnRin\TranslationBundle\CorahnRinTranslationBundle(),
             new CorahnRin\ImagickBundle\CorahnRinImagickBundle(),
             new CorahnRin\ApiBundle\CorahnRinApiBundle(),
             new CorahnRin\GeneratorBundle\CorahnRinGeneratorBundle(),
+
+            new EsterenMaps\MapsBundle\EsterenMapsBundle(),
+
+            new Pierstoval\Bundle\TranslationBundle\PierstovalTranslationBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test','dev_fast'))) {

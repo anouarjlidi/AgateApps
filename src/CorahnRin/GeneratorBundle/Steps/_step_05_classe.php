@@ -41,9 +41,10 @@ if ($this->request->isMethod('POST')) {
             $this->session->getFlashBag()->add('error', $msg);
         } else {
 
-            $this->character[$this->stepFullName()]['id'] = $socialClass_value;
-            $this->character[$this->stepFullName()]['domains'] = array_combine(array_keys($socialClassDomains), array_keys($socialClassDomains));
-            $this->session->set('character', $this->character);
+            $this->characterSet(array(
+                'id' => $socialClass_value,
+                'domains' => array_combine(array_keys($socialClassDomains), array_keys($socialClassDomains)),
+            ));
             return $this->nextStep();
         }
 

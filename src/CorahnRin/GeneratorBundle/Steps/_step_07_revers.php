@@ -20,8 +20,8 @@ if ($age > 30) { $nb_revers ++; }
 
 if (!$nb_revers && !$setback_value && !$choice_available) {
     // Cas où aucun revers n'est assigné (âge < 21 ans)
-    $this->character[$this->stepFullName()] = array();
-    $this->session->set('character', $this->character);
+    $this->characterSet(array());
+
 } elseif ($nb_revers && !$setback_value && !$choice_available) {
     // Dans le cas où l'utilisateur n'a pas la possibilité de choisir ses revers,
     // ils vont être déterminés par un jet automatique.
@@ -75,8 +75,7 @@ if (!$nb_revers && !$setback_value && !$choice_available) {
         }
         $loop_nb --;
     }
-    $this->character[$this->stepFullName()] = $setback_value;
-    $this->session->set('character', $this->character);
+    $this->characterSet($setback_value);
 }
 
 $datas = array(
@@ -99,8 +98,7 @@ if ($this->request->isMethod('POST')) {
         }
 
         if ($setback_exists) {
-            $this->character[$this->stepFullName()] = $setback_value;
-            $this->session->set('character', $this->character);
+            $this->characterSet($setback_value);
             return $this->nextStep();
         } else {
             $msg = $this->controller->get('translator')->trans('Veuillez entrer un métier correct.', array(), 'error.steps');

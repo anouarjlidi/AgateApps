@@ -11,8 +11,7 @@ if ($this->request->isMethod('POST')) {
     $this->resetSteps();
     $age = (int) $this->request->request->get('age');
     if (16 <= $age && $age <= 35) {
-        $this->character[$this->stepFullName()] = $age;
-        $this->session->set('character', $this->character);
+        $this->characterSet($age);
         return $this->nextStep();
     } else {
         $msg = $this->controller->get('translator')->trans('L\'âge doit être compris entre 16 et 35 ans.', array(), 'error.steps');

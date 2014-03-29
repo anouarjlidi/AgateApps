@@ -62,10 +62,10 @@ class MenusController extends Controller {
 	 * @Template()
 	 */
 	public function menuAction($route = '') {
-        if (preg_match('#^corahnrin_maps#isUu', $route)) {
+        if (preg_match('#^esteren_maps#isUu', $route)) {
             $method_name = 'EsterenMaps';
             $brandTitle = 'Esteren Maps';
-            $brandRoute = 'corahnrin_maps_maps_index';
+            $brandRoute = 'esterenmaps_maps_maps_index';
         } else {
             $method_name = 'CorahnRin';
             $brandTitle = 'Corahn-Rin';
@@ -88,16 +88,16 @@ class MenusController extends Controller {
 		return array(
 			'corahnrin_generator_generator_index' => 'Générateur',
 			'corahnrin_characters_viewer_list' => 'Personnages',
-			'corahnrin_maps_maps_index' => 'Esteren Maps',
+			'esterenmaps_maps_maps_index' => 'Esteren Maps',
 		);
     }
 
     protected function menuEsterenMaps(){
-        $maps = $this->getDoctrine()->getManager()->getRepository('CorahnRinMapsBundle:Maps')->findAll(true);
+        $maps = $this->getDoctrine()->getManager()->getRepository('EsterenMapsBundle:Maps')->findAll(true);
         $maps_list = array();
         foreach ($maps as $id => $map) {
             $maps_list[$id] = array(
-                'route' => 'corahnrin_maps_maps_view',
+                'route' => 'esterenmaps_maps_maps_view',
                 'name' => $map->getName(),
                 'attributes' => array(
                     'id' => $map->getId(),
@@ -131,10 +131,10 @@ class MenusController extends Controller {
             if (strpos($name, '_') !== 0 && !$route->compile()->getVariables() && !preg_match('#_(add|edit)[^_]*$#isUu', $name) && (!in_array('POST', $route->getMethods()) || (in_array('POST', $route->getMethods()) && in_array('GET', $route->getMethods())) )) {
                 $category = 'Autres';
                 if (strpos($name, 'corahnrin_characters_') === 0) { $category = 'Générateur de personnages'; }
-                if (strpos($name, 'corahnrin_maps_') === 0) { $category = 'Esteren Maps'; }
+                if (strpos($name, 'esterenmaps_maps_') === 0) { $category = 'Esteren Maps'; }
                 if (strpos($name, 'corahnrin_pages_') === 0) { $category = 'Pages'; }
                 if (strpos($name, 'corahnrin_admin_') === 0) { $category = 'Panneau d\'administration'; }
-                if (strpos($name, 'corahnrin_translation_') === 0) { $category = 'Traduction'; }
+                if (strpos($name, 'pierstoval_translation') === 0) { $category = 'Traduction'; }
                 if (strpos($name, 'fos_user_') === 0) { $category = 'Utilisateurs'; }
                 $routes[$category][$name] = $name;
                 ksort($routes[$category]);

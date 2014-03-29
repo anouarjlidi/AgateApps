@@ -20,8 +20,7 @@ if ($this->request->isMethod('POST')) {
     }
 
     if ($job_exists) {
-        $this->character[$this->stepFullName()] = $job_value;
-        $this->session->set('character', $this->character);
+        $this->characterSet($job_value);
         return $this->nextStep();
     } else {
         $msg = $this->controller->get('translator')->trans('Veuillez entrer un métier correct.', array(), 'error.steps');

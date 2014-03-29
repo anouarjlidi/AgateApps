@@ -14,8 +14,7 @@ if ($this->request->isMethod('POST')) {
     $this->resetSteps();
     $geoEnvironment_id = (int) $this->request->request->get('gen-div-choice');
     if (isset($geoEnvironments[$geoEnvironment_id])) {
-        $this->character[$this->stepFullName()] = $geoEnvironment_id;
-        $this->session->set('character', $this->character);
+        $this->characterSet($geoEnvironment_id);
         return $this->nextStep();
     } else {
         $msg = $this->controller->get('translator')->trans('Veuillez indiquer un peuple correct.', array(), 'error.steps');

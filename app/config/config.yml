@@ -1,6 +1,7 @@
 imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
+    - { resource: "@PierstovalTranslationBundle/Resources/config/services.xml" }
 
 framework:
     #esi:             ~
@@ -37,10 +38,11 @@ assetic:
     debug:          %kernel.debug%
     use_controller: false
     bundles:
-        - 'CorahnRinMapsBundle'
+        - 'EsterenMapsBundle'
         - 'CorahnRinCharactersBundle'
-        - 'CorahnRinTranslationBundle'
         - 'CorahnRinPagesBundle'
+        - 'CorahnRinGeneratorBundle'
+        - 'PierstovalTranslationBundle'
     #java: /usr/bin/java
     filters:
         cssrewrite: ~
@@ -110,10 +112,6 @@ stof_doctrine_extensions:
             sluggable: true
             timestampable: true
 
-# Overriding native translator
-parameters:
-    translator.class:      CorahnRin\TranslationBundle\Translation\Translator
-
 # Services declaration
 services:
     twig.text_extension:
@@ -122,7 +120,7 @@ services:
             - name: twig.extension
 
 # Corahn-Rin map tile size
-#corahn_rin_maps:
+#esterenmaps:
 #    tile_size: 168
 
 # Corahn-Rin character sheets source files folder
@@ -133,6 +131,9 @@ services:
 # Corahn-Rin Api services
 corahn_rin_api:
     services:
-        maps:       { entity: CorahnRin\MapsBundle\Entity\Maps }
-        markers:    { entity: CorahnRin\MapsBundle\Entity\Markers }
-        zones:      { entity: CorahnRin\MapsBundle\Entity\Zones }
+        maps:           { entity: EsterenMaps\MapsBundle\Entity\Maps }
+        markers:        { entity: EsterenMaps\MapsBundle\Entity\Markers }
+        markerstypes:   { entity: EsterenMaps\MapsBundle\Entity\MarkersTypes }
+        routes:         { entity: EsterenMaps\MapsBundle\Entity\Routes }
+        routestypes:    { entity: EsterenMaps\MapsBundle\Entity\RoutesTypes }
+        zones:          { entity: EsterenMaps\MapsBundle\Entity\Zones }

@@ -1047,27 +1047,26 @@ if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>1))) {
 	$nbreqtemp+=29;
 
     $sql = <<<'SQL'
-
 SET FOREIGN_KEY_CHECKS=0;
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+ /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
 INSERT INTO `menus` (`id`, `parent_id`, `name`, `position`, `roles`, `route`, `created`, `updated`, `deleted`) VALUES
 (1, NULL, 'Administration', 0, 'a:2:{i:0;s:9:"ROLE_USER";i:1;s:12:"ROLE_MANAGER";}', NULL, '2014-01-31 18:18:28', '2014-01-31 18:18:28', 0),
-(2, 10, 'Cartes', 0, 'a:1:{i:0;s:15:"ROLE_ADMIN_MAPS";}', 'corahnrin_maps_maps_adminlist', '2014-01-30 22:44:34', '2014-01-31 00:06:01', 0),
+(2, 10, 'Cartes', 0, 'a:1:{i:0;s:15:"ROLE_ADMIN_MAPS";}', 'esterenmaps_maps_maps_adminlist', '2014-01-30 22:44:34', '2014-01-31 00:06:01', 0),
 (3, 11, 'Éditer', 0, 'a:2:{i:0;s:9:"ROLE_USER";i:1;s:12:"ROLE_MANAGER";}', 'fos_user_profile_edit', '2014-01-30 22:46:46', '2014-01-31 00:09:05', 0),
 (4, 11, 'Voir', 0, 'a:1:{i:0;s:9:"ROLE_USER";}', 'fos_user_profile_show', '2014-01-30 22:52:28', '2014-01-31 00:09:22', 0),
-(8, 10, 'Marqueurs', 0, 'a:1:{i:0;s:15:"ROLE_ADMIN_MAPS";}', 'corahnrin_maps_markers_adminlist', '2014-01-30 23:14:17', '2014-01-31 00:06:49', 0),
-(9, 10, 'Factions', 0, 'a:1:{i:0;s:15:"ROLE_ADMIN_MAPS";}', 'corahnrin_maps_factions_adminlist', '2014-01-30 23:14:48', '2014-01-31 00:07:41', 0),
+(8, 10, 'Marqueurs', 0, 'a:1:{i:0;s:15:"ROLE_ADMIN_MAPS";}', 'esterenmaps_maps_markers_adminlist', '2014-01-30 23:14:17', '2014-01-31 00:06:49', 0),
+(9, 10, 'Factions', 0, 'a:1:{i:0;s:15:"ROLE_ADMIN_MAPS";}', 'esterenmaps_maps_factions_adminlist', '2014-01-30 23:14:48', '2014-01-31 00:07:41', 0),
 (10, 1, 'Esteren Maps', 2, 'a:1:{i:0;s:15:"ROLE_ADMIN_MAPS";}', NULL, '2014-01-30 23:19:28', '2014-02-01 15:48:28', 0),
 (11, 1, 'Profil', 1, 'a:1:{i:0;s:9:"ROLE_USER";}', NULL, '2014-01-31 00:08:50', '2014-02-01 15:48:07', 0),
 (12, 1, 'Tableau de bord', 0, 'a:1:{i:0;s:9:"ROLE_USER";}', 'corahnrin_admin_admin_index', '2014-01-31 00:09:51', '2014-01-31 18:19:25', 0),
-(14, 16, 'Traductions', 0, 'a:1:{i:0;s:21:"ROLE_ADMIN_TRANSLATOR";}', 'corahnrin_translation_translate_adminlist', '2014-01-30 22:41:19', '2014-01-31 21:41:59', 0),
+(14, 16, 'Traductions', 0, 'a:1:{i:0;s:21:"ROLE_ADMIN_TRANSLATOR";}', 'pierstoval_translation_translate_adminlist', '2014-01-30 22:41:19', '2014-01-31 21:41:59', 0),
 (16, 1, 'Site', 4, 'a:1:{i:0;s:22:"ROLE_ADMIN_MANAGE_SITE";}', NULL, '2014-01-31 19:35:07', '2014-02-01 15:48:56', 0),
 (17, 16, 'Menus', 0, 'a:1:{i:0;s:22:"ROLE_ADMIN_MANAGE_SITE";}', 'corahnrin_pages_menus_adminlist', '2014-01-31 21:44:13', '2014-01-31 21:44:13', 0),
 (18, 1, 'Corahn-Rin', 3, 'a:1:{i:0;s:20:"ROLE_ADMIN_GENERATOR";}', NULL, '2014-02-01 15:49:16', '2014-02-15 21:17:22', 0),
@@ -1077,7 +1076,7 @@ INSERT INTO `menus` (`id`, `parent_id`, `name`, `position`, `roles`, `route`, `c
 (22, 18, 'Livres', 0, 'a:1:{i:0;s:20:"ROLE_ADMIN_GENERATOR";}', 'corahnrin_characters_books_adminlist', '2014-02-01 20:08:10', '2014-02-01 20:08:10', 0),
 (23, 18, 'Disciplines', 0, 'a:1:{i:0;s:20:"ROLE_ADMIN_GENERATOR";}', 'corahnrin_characters_disciplines_adminlist', '2014-02-02 16:15:14', '2014-02-02 17:01:54', 0),
 (24, 18, 'Domaines', 0, 'a:1:{i:0;s:20:"ROLE_ADMIN_GENERATOR";}', 'corahnrin_characters_domains_adminlist', '2014-02-02 17:01:38', '2014-02-02 17:01:38', 0),
-(25, 10, 'Routes', 0, 'a:1:{i:0;s:15:"ROLE_ADMIN_MAPS";}', 'corahnrin_maps_routes_adminlist', '2014-02-12 16:04:05', '2014-02-12 16:04:05', 0),
+(25, 10, 'Routes', 0, 'a:1:{i:0;s:15:"ROLE_ADMIN_MAPS";}', 'esterenmaps_maps_routes_adminlist', '2014-02-12 16:04:05', '2014-02-12 16:04:05', 0),
 (26, 18, 'Flux', 0, 'a:1:{i:0;s:20:"ROLE_ADMIN_GENERATOR";}', 'corahnrin_characters_flux_adminlist', '2014-02-15 14:27:29', '2014-02-15 14:27:29', 0),
 (27, 18, 'Métiers', 0, 'a:1:{i:0;s:20:"ROLE_ADMIN_GENERATOR";}', 'corahnrin_characters_jobs_adminlist', '2014-02-15 15:06:31', '2014-02-15 15:06:31', 0),
 (28, 18, 'Miracles', 0, 'a:1:{i:0;s:20:"ROLE_ADMIN_GENERATOR";}', 'corahnrin_characters_miracles_adminlist', '2014-02-15 20:43:39', '2014-02-15 20:43:39', 0),
@@ -1092,8 +1091,6 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
-;
 
 
 SQL;

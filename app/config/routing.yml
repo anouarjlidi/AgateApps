@@ -8,13 +8,8 @@ corahn_rin_api:
     type:     annotation
     prefix:   /
 
-corahn_rin_translate:
-    resource: "@CorahnRinTranslationBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
-corahn_rin_maps:
-    resource: "@CorahnRinMapsBundle/Controller/"
+esterenmaps:
+    resource: "@EsterenMapsBundle/Controller/"
     type:     annotation
     prefix:   /
 
@@ -51,3 +46,9 @@ fos_user_resetting:
 fos_user_change_password:
     resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
     prefix: /profile
+
+pierstoval_translation:
+    # The name does not matter
+    resource: "@PierstovalTranslationBundle/Controller/"
+    type:     annotation
+    prefix:   /

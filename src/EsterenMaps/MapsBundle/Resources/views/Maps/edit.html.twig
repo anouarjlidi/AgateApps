@@ -1,0 +1,88 @@
+{% extends "::layout.html.twig" %}
+
+
+{% block stylesheets %}
+{{ parent() }}
+<style type="text/css" id="map_add_style"></style>
+{% endblock %}
+
+{% block title %}{{ 'Modifier une carte' | trans({},'pages.titles') }} {{ map.name | trans }} - {{ parent() }}{% endblock %}
+
+{% trans_default_domain 'admin.maps.edit' %}
+
+{% block content_for_layout %}
+
+<form id="map_edit_form" action="{{ url('esterenmaps_maps_maps_edit', {'id':map.id}) }}" method="post">
+    <fieldset>
+        <div class="row">
+            <div class="col-sm-3">
+                {% include 'EsterenMapsBundle:Maps:edit_menu.html.twig' %}
+            </div>
+            <div class="col-sm-9">
+                {#% include 'EsterenMapsBundle:Maps:edit_mapWrapper.html.twig' %#}
+                <div id="map"></div>
+            </div>
+        </div>
+    </fieldset>
+</form>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {#% javascripts
+        '@EsterenMapsBundle/Resources/public/js/jquery.mousewheel.min.js'
+        '@EsterenMapsBundle/Resources/public/js/jquery.transform2d.js'
+        '@EsterenMapsBundle/Resources/public/js/map.js'
+        output="js/maps.js"
+        filter="?yui_js"
+    %}<script type="text/javascript" src="{{ app.request.getSchemeAndHttpHost() ~ asset_url }}"></script>
+{% endjavascripts %#}
+
+    {% javascripts
+        '@EsterenMapsBundle/Resources/public/js/leaflet-src.js'
+        '@EsterenMapsBundle/Resources/public/js/map_main.js'
+        output="js/maps.js"
+
+    %}<script type="text/javascript" src="{{ app.request.getSchemeAndHttpHost() ~ asset_url }}"></script>{% endjavascripts %}
+{#filter="?yui_js"#}
+    {#{% javascripts
+        '@EsterenMapsBundle/Resources/public/js/map_edit/*'
+        output="js/maps_edit.js"
+        filter="?yui_js"
+    %}<script type="text/javascript" src="{{ app.request.getSchemeAndHttpHost() ~ asset_url }}"></script>
+{% endjavascripts %}#}
+
+    <script type="text/javascript">{% include 'EsterenMapsBundle::javascript_words.js.twig' %}</script>
+    <script type="text/javascript">
+        {#document.esterenmap = new Map({
+            allowZoom: false,
+            zoom: {{ map.maxZoom }}
+        });#}
+
+        var map = new CorahnRinMap({
+            maxZoom: {{ map.maxZoom }},
+            maxNativeZoom: {{ map.maxZoom }},
+            tileSize: {{ tile_size }}
+        }, {
+            id: {{ map.id }},
+            baseHost: "{{ app.request.getSchemeAndHttpHost() }}",
+            editMode: true,
+            markerMaxId: {{ maxMarkers }}
+        });
+        //map.getZones();
+        //map.getMarkers();
+        //map.getRoutes();
+
+        document.addZonePolygonId = {{ maxZones }};
+        document.addRoutePolylineId = {{ maxRoutes }};
+        document.addMarkerId = {{ maxMarkers }};
+    </script>
+
+    {% javascripts
+        '@EsterenMapsBundle/Resources/public/js/map_editor/*'
+        output="js/map_edit.js"
+        filter="?yui_js"
+    %}<script type="text/javascript" src="{{ app.request.getSchemeAndHttpHost() ~ asset_url }}"></script>
+{% endjavascripts %}
+{% endblock %}

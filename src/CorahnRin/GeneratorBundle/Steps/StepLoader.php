@@ -88,6 +88,17 @@ class StepLoader {
     }
 
     /**
+     * Affecte les données $datas au personnage à l'étape en cours, ou à l'étape demandée
+     * @param mixed $datas
+     * @param object|int $step
+     */
+    public function characterSet($datas, $step = null) {
+        $step = $this->getStep($step);
+        $this->character[$this->stepFullName($step)] = $datas;
+        $this->session->set('character', $this->character);
+    }
+
+    /**
      * Redirige à l'étape suivante
      * @return array|object
      */

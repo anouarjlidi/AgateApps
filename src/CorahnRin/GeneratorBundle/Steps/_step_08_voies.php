@@ -41,8 +41,7 @@ if ($this->request->isMethod('POST')) {
         return $datas;
     }
 
-    $this->character[$this->stepFullName()] = $ways_values;
-    $this->session->set('character', $this->character);
+    $this->characterSet($ways_values);
     return $this->nextStep();
 }
 return $datas;

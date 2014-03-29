@@ -68,6 +68,7 @@ security:
         - { path: ^/login$,             role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register,           role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting,          role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/,                   role: ROLE_USER }
         - { path: ^/admin,              role: ROLE_USER }
         - { path: ^/admin/maps,         role: ROLE_ADMIN_MAPS }
         - { path: ^/admin/generator,    role: ROLE_ADMIN_GENERATOR }
