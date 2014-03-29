@@ -8,18 +8,4 @@
         <parameter key="esterenmaps.tile_size">168</parameter>
     </parameters>
 
-    <!--
-    <parameters>
-        <parameter key="esterenmaps.example.class">CorahnRin\MapsBundle\Example</parameter>
-    </parameters>
-
-    <services>
-        <service id="esterenmaps.example" class="%esterenmaps.example.class%">
-            <argument type="service" id="service_id" />
-            <argument>plain_value</argument>
-            <argument>%parameter_name%</argument>
-        </service>
-    </services>
-    -->
 </container>
-g
