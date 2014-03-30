@@ -3,6 +3,7 @@
 namespace EsterenMaps\MapsBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
@@ -16,15 +17,14 @@ class TilesController extends Controller {
     /**
      * @Route("/api/maps/image/{id}", requirements={"id":"\d+"})
      */
-    public function generateMapImage(Maps $map) {
+    public function generateMapImageAction(Request $request, Maps $map) {
 
         $response = new Response();
         $this->init();
 
         $tilesManager = new MapsTileManager($map, $this->img_size);
 
-
-        $get_vars = $this->getRequest()->query;
+        $get_vars = $request->query;
         $dimensionsType = $get_vars->get('dimensions-type');
         $positionType = $get_vars->get('position-type');
 

@@ -58,14 +58,14 @@ class Games
     protected $updated;
 
     /**
-     * @var \Users
+     * @var Users
      *
      * @ORM\ManyToOne(targetEntity="CorahnRin\UsersBundle\Entity\Users")
      */
     protected $gameMaster;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Doctrine\Common\Collections\Collection
      *
      * @ORM\OneToMany(targetEntity="Characters", mappedBy="game")
      */

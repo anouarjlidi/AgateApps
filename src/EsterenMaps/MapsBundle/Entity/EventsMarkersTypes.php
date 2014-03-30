@@ -14,7 +14,7 @@ use Doctrine\Common\Collections\ArrayCollection as DoctrineCollection;
 class EventsMarkersTypes {
 
     /**
-     * @var \Events
+     * @var Events
      *
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Events", inversedBy="markersTypes")
@@ -22,7 +22,7 @@ class EventsMarkersTypes {
     protected $event;
 
     /**
-     * @var \MarkersTypes
+     * @var MarkersTypes
      *
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="MarkersTypes", inversedBy="events")
@@ -30,7 +30,7 @@ class EventsMarkersTypes {
     protected $markerType;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
 	 * @Gedmo\Mapping\Annotation\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
@@ -38,7 +38,7 @@ class EventsMarkersTypes {
     protected $created;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
 	 * @Gedmo\Mapping\Annotation\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)

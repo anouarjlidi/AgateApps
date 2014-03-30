@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class CharFlux
 {
     /**
-     * @var \Characters
+     * @var Characters
      *
      * @ORM\Id
 	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Characters", inversedBy="flux")
@@ -21,7 +21,7 @@ class CharFlux
     protected $character;
 
     /**
-     * @var \Flux
+     * @var Flux
      *
      * @ORM\Column(type="integer")
      * @ORM\Id

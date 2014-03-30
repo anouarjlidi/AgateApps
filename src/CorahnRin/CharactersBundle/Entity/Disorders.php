@@ -51,7 +51,7 @@ class Disorders
     protected $updated;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Doctrine\Common\Collections\Collection
      *
      * @ORM\OneToMany(targetEntity="DisordersWays", mappedBy="disorder")
      */

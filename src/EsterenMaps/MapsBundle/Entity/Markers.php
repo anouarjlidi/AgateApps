@@ -44,7 +44,7 @@ class Markers
     protected $coordinates;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
 	 * @Gedmo\Mapping\Annotation\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
@@ -52,7 +52,7 @@ class Markers
     protected $created;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
 	 * @Gedmo\Mapping\Annotation\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)

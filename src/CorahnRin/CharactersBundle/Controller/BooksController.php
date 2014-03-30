@@ -4,6 +4,7 @@ namespace CorahnRin\CharactersBundle\Controller;
 
 use \CorahnRin\CharactersBundle\Entity\Books;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -25,21 +26,21 @@ class BooksController extends Controller
      * @Route("/admin/generator/books/add/")
      * @Template("CorahnRinAdminBundle:Form:add.html.twig")
      */
-    public function addAction()
+    public function addAction(Request $request)
     {
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN_GENERATOR_SUPER')) {
             throw new AccessDeniedException();
         }
-        return $this->handle_request(new Books);
+        return $this->handle_request(new Books, $request);
     }
 
     /**
      * @Route("/admin/generator/books/edit/{id}")
      * @Template("CorahnRinAdminBundle:Form:add.html.twig")
      */
-    public function editAction(Books $book)
+    public function editAction(Books $book, Request $request)
     {
-        return $this->handle_request($book);
+        return $this->handle_request($book, $request);
     }
 
     /**
@@ -64,8 +65,6 @@ class BooksController extends Controller
         $method = preg_replace('#^'.str_replace('\\','\\\\',__CLASS__).'::([a-zA-Z]+)Action$#isUu', '$1', $this->getRequest()->get('_controller'));
 
         $form = $this->createForm(new \CorahnRin\CharactersBundle\Form\BooksType(), $element);
-
-        $request = $this->get('request');
 
         $form->handleRequest($request);
 

@@ -69,18 +69,30 @@
      * Fonction permettant d'activer les boutons et un input associé
      */
     $('[data-toggle="btn-gen-choice"]').bind('mousedown', function(){var e=this;setTimeout(function(){
-        var node, count,i=0,prev = e.previousElementSibling;
-        node = document.querySelectorAll('[data-toggle="btn-gen-choice"].active');
+        var node,
+            count,
+            i,
+            prev = e.previousElementSibling,
+            selector = '[data-toggle="btn-gen-choice"].active'
+        ;
+        if (e.getAttribute('data-group')) {
+            selector += '[data-group="'+e.getAttribute('data-group')+'"]';
+        }
+        node = document.querySelectorAll(selector);
         count = node.length;
         for (i=0;i<count;i++){
             node[i].classList.remove('active');
-            if (node[i].previousElementSibling.classList.contains('btn')) {
-                node[i].previousElementSibling.classList.remove('active');
+            if (node[i].previousElementSibling) {
+                if (node[i].previousElementSibling.classList.contains('btn')) {
+                    node[i].previousElementSibling.classList.remove('active');
+                }
             }
         }
         e.classList.add('active');
-        if (prev.classList.contains('btn')) {
-            prev.classList.add('active');
+        if (prev) {
+            if (prev.classList.contains('btn')) {
+                prev.classList.add('active');
+            }
         }
         document.getElementById(e.getAttribute('data-target-node')).value = e.getAttribute('data-input-value');
     },1);});

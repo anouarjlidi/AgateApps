@@ -5,6 +5,7 @@ namespace CorahnRin\CharactersBundle\Controller;
 use CorahnRin\CharactersBundle\Entity\Armors;
 use CorahnRin\CharactersBundle\Form\ArmorsType;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -26,19 +27,19 @@ class ArmorsController extends Controller
      * @Route("/admin/generator/armors/add/")
      * @Template("CorahnRinAdminBundle:Form:add.html.twig")
      */
-    public function addAction() {
+    public function addAction(Request $request) {
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN_GENERATOR_SUPER')) {
             throw new AccessDeniedException();
         }
-        return $this->handle_request(new Armors);
+        return $this->handle_request(new Armors, $request);
     }
 
     /**
      * @Route("/admin/generator/armors/edit/{id}")
      * @Template("CorahnRinAdminBundle:Form:add.html.twig")
      */
-    public function editAction(Armors $armor) {
-        return $this->handle_request($armor);
+    public function editAction(Armors $armor, Request $request) {
+        return $this->handle_request($armor, $request);
     }
 
     /**
@@ -59,12 +60,10 @@ class ArmorsController extends Controller
         return $this->redirect($this->generateUrl('corahnrin_characters_armors_adminlist'));
     }
 
-    private function handle_request(Armors $element) {
+    private function handle_request(Armors $element, Request $request) {
         $method = preg_replace('#^'.str_replace('\\','\\\\',__CLASS__).'::([a-zA-Z]+)Action$#isUu', '$1', $this->getRequest()->get('_controller'));
 
         $form = $this->createForm(new ArmorsType, $element);
-
-        $request = $this->get('request');
 
         $form->handleRequest($request);
 

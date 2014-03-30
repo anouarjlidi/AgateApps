@@ -33,15 +33,11 @@ class CorahnRinGeneratorExtension extends Extension
             $config[$name] = $value;
         }
 
-        if (!isset($config['sheets_folder'])) {
-            throw new \Exception('Le dossier des feuilles de personnage doit être mentionné dans la configuration.');
-        } elseif (!is_dir($config['sheets_folder'])) {
+        if (isset($config['sheets_folder']) && !is_dir($config['sheets_folder'])) {
             throw new \Exception('Le dossier des feuilles de personnage doit être un dossier valide.');
         }
 
-        if (!isset($config['sheets_output'])) {
-            throw new \Exception('Le dossier de sortie des feuilles de personnage doit être mentionné dans la configuration.');
-        } elseif (!is_dir($config['sheets_output']) && is_writable($config['sheets_output'])) {
+        if (isset($config['sheets_output']) && !is_dir($config['sheets_output']) && is_writable($config['sheets_output'])) {
             mkdir($config['sheets_output'], 0775, true);
         }
 

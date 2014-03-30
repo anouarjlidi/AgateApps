@@ -2,7 +2,7 @@
 
 namespace CorahnRin\PagesBundle\Controller;
 
-use CorahnRin\PagesBundle\Pages as Pages;
+use CorahnRin\PagesBundle\Entity\Pages as Pages;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;

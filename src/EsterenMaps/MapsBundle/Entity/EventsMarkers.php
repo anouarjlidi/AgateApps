@@ -14,7 +14,7 @@ use Doctrine\Common\Collections\ArrayCollection as DoctrineCollection;
 class EventsMarkers {
 
     /**
-     * @var \Events
+     * @var Events
      *
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Events", inversedBy="markers")
@@ -22,7 +22,7 @@ class EventsMarkers {
     protected $event;
 
     /**
-     * @var \Markers
+     * @var Markers
      *
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Markers", inversedBy="events")
@@ -37,7 +37,7 @@ class EventsMarkers {
 	protected $percentage;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
 	 * @Gedmo\Mapping\Annotation\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
@@ -45,7 +45,7 @@ class EventsMarkers {
     protected $created;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
 	 * @Gedmo\Mapping\Annotation\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)

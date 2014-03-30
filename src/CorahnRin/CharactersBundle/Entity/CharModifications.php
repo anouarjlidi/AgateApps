@@ -22,21 +22,21 @@ class CharModifications
     protected $id;
 
     /**
-     * @var \Characters
+     * @var Characters
      *
      * @ORM\Column(type="object", nullable=false)
      */
     protected $before;
 
     /**
-     * @var \Characters
+     * @var Characters
      *
      * @ORM\ManyToOne(targetEntity="Characters", inversedBy="modifications")
      */
     protected $character;
 
     /**
-     * @var \Users
+     * @var Users
      *
      * @ORM\ManyToOne(targetEntity="CorahnRin\UsersBundle\Entity\Users")
      */

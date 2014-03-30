@@ -43,7 +43,7 @@ class Miracles
     protected $isMajor;
 
     /**
-     * @var \Books
+     * @var Books
      * @ORM\ManyToOne(targetEntity="Books", fetch="EAGER")
      */
     protected $book;

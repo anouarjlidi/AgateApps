@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class CharAvtgs
 {
     /**
-     * @var \Characters
+     * @var Characters
      *
      * @ORM\Id
 	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Characters", inversedBy="avantages")
@@ -21,7 +21,7 @@ class CharAvtgs
     protected $character;
 
     /**
-     * @var \Avantages
+     * @var Avantages
      *
      * @ORM\Id
 	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Avantages")

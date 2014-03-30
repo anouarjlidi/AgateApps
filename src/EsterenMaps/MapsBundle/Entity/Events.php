@@ -29,14 +29,14 @@ class Events
     protected $name;
 
     /**
-     * @var \DateTime
+     * @var DateTime
 	 * @Gedmo\Mapping\Annotation\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $created;
 
     /**
-     * @var \DateTime
+     * @var DateTime
 	 * @Gedmo\Mapping\Annotation\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */

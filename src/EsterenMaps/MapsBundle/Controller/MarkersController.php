@@ -7,6 +7,7 @@ use EsterenMaps\MapsBundle\Entity\MarkersTypes;
 use EsterenMaps\MapsBundle\Form\MarkersType;
 use EsterenMaps\MapsBundle\Form\MarkersTypesType;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -28,11 +29,9 @@ class MarkersController extends Controller {
      * @Route("/admin/maps/markers/add/")
      * @Template("CorahnRinAdminBundle:Form:add.html.twig")
      */
-    public function addAction() {
+    public function addAction(Request $request) {
         $marker = new Markers;
         $form = $this->createForm(new MarkersType, $marker);
-
-        $request = $this->get('request');
 
         $form->handleRequest($request);
 
@@ -60,11 +59,9 @@ class MarkersController extends Controller {
      * @Route("/admin/maps/markers/types/add")
      * @Template("CorahnRinAdminBundle:Form:add.html.twig")
      */
-    public function addTypeAction() {
-        $markerType = new \EsterenMaps\MapsBundle\Entity\MarkersTypes;
+    public function addTypeAction(Request $request) {
+        $markerType = new MarkersTypes;
         $form = $this->createForm(new MarkersTypesType, $markerType);
-
-        $request = $this->get('request');
 
         $form->handleRequest($request);
 
@@ -91,11 +88,9 @@ class MarkersController extends Controller {
      * @Route("/admin/maps/markers/edit/{id}")
      * @Template("CorahnRinAdminBundle:Form:add.html.twig")
      */
-    public function editAction(Markers $marker) {
+    public function editAction(Markers $marker, Request $request) {
 
         $form = $this->createForm(new MarkersType, $marker);
-
-        $request = $this->get('request');
 
         $form->handleRequest($request);
 
@@ -123,11 +118,9 @@ class MarkersController extends Controller {
      * @Route("/admin/maps/markers/types/edit/{id}")
      * @Template("CorahnRinAdminBundle:Form:add.html.twig")
      */
-    public function editTypeAction(MarkersTypes $markerType) {
+    public function editTypeAction(MarkersTypes $markerType, Request $request) {
 
         $form = $this->createForm(new MarkersTypesType, $markerType);
-
-        $request = $this->get('request');
 
         $form->handleRequest($request);
 

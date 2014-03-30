@@ -28,11 +28,9 @@ class RoutesController extends Controller {
      * @Route("/admin/maps/routes/add/")
      * @Template("CorahnRinAdminBundle:Form:add.html.twig")
      */
-    public function addAction() {
+    public function addAction(Request $request) {
         $route = new Routes;
         $form = $this->createForm(new RoutesType, $route);
-
-        $request = $this->get('request');
 
         $form->handleRequest($request);
 
@@ -60,11 +58,9 @@ class RoutesController extends Controller {
      * @Route("/admin/maps/routes/types/add")
      * @Template("CorahnRinAdminBundle:Form:add.html.twig")
      */
-    public function addTypeAction() {
-        $routeType = new \EsterenMaps\MapsBundle\Entity\RoutesTypes;
+    public function addTypeAction(Request $request) {
+        $routeType = new RoutesTypes;
         $form = $this->createForm(new RoutesTypesType, $routeType);
-
-        $request = $this->get('request');
 
         $form->handleRequest($request);
 
@@ -91,11 +87,9 @@ class RoutesController extends Controller {
      * @Route("/admin/maps/routes/edit/{id}")
      * @Template("CorahnRinAdminBundle:Form:add.html.twig")
      */
-    public function editAction(Routes $route) {
+    public function editAction(Routes $route, Request $request) {
 
         $form = $this->createForm(new RoutesType, $route);
-
-        $request = $this->get('request');
 
         $form->handleRequest($request);
 
@@ -123,11 +117,9 @@ class RoutesController extends Controller {
      * @Route("/admin/maps/routes/types/edit/{id}")
      * @Template("CorahnRinAdminBundle:Form:add.html.twig")
      */
-    public function editTypeAction(RoutesTypes $routeType) {
+    public function editTypeAction(RoutesTypes $routeType, Request $request) {
 
         $form = $this->createForm(new RoutesTypesType, $routeType);
-
-        $request = $this->get('request');
 
         $form->handleRequest($request);
 

@@ -5,6 +5,7 @@ namespace CorahnRin\CharactersBundle\Controller;
 use CorahnRin\CharactersBundle\Entity\Setbacks;
 use CorahnRin\CharactersBundle\Form\SetbacksType;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -26,21 +27,21 @@ class SetbacksController extends Controller
      * @Route("/admin/generator/setbacks/add/")
      * @Template("CorahnRinAdminBundle:Form:add.html.twig")
      */
-    public function addAction()
+    public function addAction(Request $request)
     {
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN_GENERATOR_SUPER')) {
             throw new AccessDeniedException();
         }
-        return $this->handle_request(new Setbacks);
+        return $this->handle_request(new Setbacks, $request);
     }
 
     /**
      * @Route("/admin/generator/setbacks/edit/{id}")
      * @Template("CorahnRinAdminBundle:Form:add.html.twig")
      */
-    public function editAction(Setbacks $setback)
+    public function editAction(Setbacks $setback, Request $request)
     {
-        return $this->handle_request($setback);
+        return $this->handle_request($setback, $request);
     }
 
     /**
@@ -61,12 +62,10 @@ class SetbacksController extends Controller
         return $this->redirect($this->generateUrl('corahnrin_characters_setbacks_adminlist'));
     }
 
-    private function handle_request(Setbacks $element) {
+    private function handle_request(Setbacks $element, Request $request) {
         $method = preg_replace('#^'.str_replace('\\','\\\\',__CLASS__).'::([a-zA-Z]+)Action$#isUu', '$1', $this->getRequest()->get('_controller'));
 
         $form = $this->createForm(new \CorahnRin\CharactersBundle\Form\SetbacksType(), $element);
-
-        $request = $this->get('request');
 
         $form->handleRequest($request);
 

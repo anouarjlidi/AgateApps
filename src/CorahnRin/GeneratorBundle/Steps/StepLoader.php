@@ -23,9 +23,30 @@ class StepLoader {
     private $filename;
     private $step;
     private $steps;
+    private $steps_managers_directory;
+    private $steps_views_directory;
+    private $initiated = false;
+
     public $stepEntity;
 
-    function __construct(Controller $controller, SessionInterface $session, Request $request, Steps $step, $steps) {
+    function __construct($steps_managers_directory, $steps_views_directory) {
+
+        $this->steps_managers_directory = $steps_managers_directory;
+        $this->steps_views_directory = $steps_views_directory;
+    }
+
+    /**
+     * Initialise le StepLoader avec toutes les données nécessaires aux divers managers.
+     * L'injection se fait manuellement pour être sûr de palier à toute erreur liée à la durée de vie de la requête.
+     * Ainsi, les paramètres comme la session et la requête correspondent toujours aux bonnes informations.
+     *
+     * @param Controller $controller        Le contrôleur ayant chargé le StepLoader
+     * @param SessionInterface $session     La session en cours, pour récupérer le personnage
+     * @param Request $request              La requête, pour les données POST gérées par les managers
+     * @param Steps $step                   L'étape en cours
+     * @param $steps                        La liste des étapes (pour éviter une nouvelle injection
+     */
+    function initiate(Controller $controller, SessionInterface $session, Request $request, Steps $step, $steps) {
         $this->controller = $controller;
         $this->em = $controller->getDoctrine()->getManager();
         $this->session = $session;
@@ -33,8 +54,23 @@ class StepLoader {
         $this->stepEntity = $step;
         $this->step = $step->getStep();
         $this->steps = $steps;
-        $this->filename = __DIR__.'/'.'_step_'.str_pad($step->getId(), 2, 0, STR_PAD_LEFT).'_'.$step->getSlug().'.php';
+        $this->filename = $this->steps_managers_directory.'/'.'_step_'.str_pad($step->getId(), 2, 0, STR_PAD_LEFT).'_'.$step->getSlug().'.php';
         $this->character = $session->get('character');
+        $this->initiated = true;
+    }
+
+    /**
+     * Vérifie que le StepLoader a été initialisé
+     * @return bool
+     * @throws \Exception
+     */
+    function checkInitiated() {
+        if ($this->initiated) {
+            return true;
+        } else {
+            throw new \Exception('Le StepLoader doit être initialisé avant toute action supplémentaire.<br />'
+            .'Voir documentation de la classe "'.__CLASS__.'".');
+        }
     }
 
     /**
@@ -65,15 +101,6 @@ class StepLoader {
     }
 
     /**
-     * Retourne le nom complet de l'étape : {step}.{slug}
-     * @return string
-     */
-    public function stepFullName($step = null) {
-        $step = $this->getStep($step);
-        return $step->getStep().'.'.$step->getSlug();
-    }
-
-    /**
      * Renvoie la valeur de l'étape demandée dans le personnage en session.
      * Renvoie null si la clé n'existe pas
      * @param object|int $step
@@ -83,8 +110,27 @@ class StepLoader {
         $step = $this->getStep($step);
         $stepFullName = $this->stepFullName($step);
         return array_key_exists($stepFullName, $this->character)
-                ? $this->character[$stepFullName]
-                : null;
+            ? $this->character[$stepFullName]
+            : null;
+    }
+
+    /**
+     * Retourne le dossier de chargement des vues liées aux managers d'étape
+     * @return string
+     */
+    public function getViewsDirectory() {
+        return preg_replace('~:$~isUu', '', $this->steps_views_directory);
+    }
+
+    /**
+     * Retourne le nom complet de l'étape : {step}.{slug}
+     * Utilisé majoritairement en session pour définir les différentes clés
+     * @param Steps $step L'étape à parser. Si aucune étape n'est parsée, l'étape en cours est renvoyée
+     * @return string
+     */
+    public function stepFullName(Steps $step = null) {
+        $step = $this->getStep($step);
+        return $step->getStep().'.'.$step->getSlug();
     }
 
     /**

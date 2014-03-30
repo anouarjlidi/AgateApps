@@ -5,7 +5,12 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
+        <parameter key="corahn_rin_generator.sheets_folder">%kernel.root_dir%/../src/CorahnRin/GeneratorBundle/Sheets/files</parameter>
+        <parameter key="corahn_rin_generator.sheets_output">%kernel.root_dir%/cache/character_sheets/</parameter>
         <parameter key="corahn_rin_generator.sheets_manager.class">CorahnRin\GeneratorBundle\Sheets\SheetsService</parameter>
+        <parameter key="corahn_rin_generator.steps_managers">%kernel.root_dir%/../src/CorahnRin/GeneratorBundle/Steps</parameter>
+        <parameter key="corahn_rin_generator.steps_views">CorahnRinGeneratorBundle:Generator</parameter>
+        <parameter key="corahn_rin_generator.steps_loader.class">CorahnRin\GeneratorBundle\Steps\StepLoader</parameter>
     </parameters>
 
     <services>
@@ -13,6 +18,10 @@
             <argument>%corahn_rin_generator.sheets_folder%</argument>
             <argument type="service" id="translator" />
             <argument type="service" id="kernel" />
+        </service>
+        <service id="corahn_rin_generator.steps_loader" class="%corahn_rin_generator.steps_loader.class%">
+            <argument key="steps_manager_directory">%corahn_rin_generator.steps_managers%</argument>
+            <argument key="steps_views_directory">%corahn_rin_generator.steps_views%</argument>
         </service>
     </services>
 </container>

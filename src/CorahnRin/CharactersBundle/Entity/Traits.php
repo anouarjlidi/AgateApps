@@ -65,7 +65,7 @@ class Traits
     protected $updated;
 
     /**
-     * @var \Ways
+     * @var Ways
      *
      * @ORM\ManyToOne(targetEntity="Ways", fetch="EAGER")
      */

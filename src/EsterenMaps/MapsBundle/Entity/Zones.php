@@ -44,7 +44,7 @@ class Zones
     protected $coordinates;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
 	 * @Gedmo\Mapping\Annotation\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
@@ -52,7 +52,7 @@ class Zones
     protected $created;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
 	 * @Gedmo\Mapping\Annotation\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
@@ -60,14 +60,14 @@ class Zones
     protected $updated;
 
     /**
-     * @var \Maps
+     * @var Maps
      *
      * @ORM\ManyToOne(targetEntity="Maps", inversedBy="zones")
      */
     protected $map;
 
     /**
-     * @var \Factions
+     * @var Factions
      *
      * @ORM\ManyToOne(targetEntity="Factions", inversedBy="zones")
      * @Expose

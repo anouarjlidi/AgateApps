@@ -5,6 +5,7 @@ namespace CorahnRin\CharactersBundle\Controller;
 use CorahnRin\CharactersBundle\Entity\Flux;
 use CorahnRin\CharactersBundle\Form\FluxType;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -26,21 +27,21 @@ class FluxController extends Controller
      * @Route("/admin/generator/flux/add/")
      * @Template("CorahnRinAdminBundle:Form:add.html.twig")
      */
-    public function addAction()
+    public function addAction(Request $request)
     {
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN_GENERATOR_SUPER')) {
             throw new AccessDeniedException();
         }
-        return $this->handle_request(new Flux);
+        return $this->handle_request(new Flux, $request);
     }
 
     /**
      * @Route("/admin/generator/flux/edit/{id}")
      * @Template("CorahnRinAdminBundle:Form:add.html.twig")
      */
-    public function editAction(Flux $flux)
+    public function editAction(Flux $flux, Request $request)
     {
-        return $this->handle_request($flux);
+        return $this->handle_request($flux, $request);
     }
 
     /**
@@ -61,12 +62,10 @@ class FluxController extends Controller
         return $this->redirect($this->generateUrl('corahnrin_characters_flux_adminlist'));
     }
 
-    private function handle_request(Flux $element) {
+    private function handle_request(Flux $element, Request $request) {
         $method = preg_replace('#^'.str_replace('\\','\\\\',__CLASS__).'::([a-zA-Z]+)Action$#isUu', '$1', $this->getRequest()->get('_controller'));
 
         $form = $this->createForm(new \CorahnRin\CharactersBundle\Form\FluxType(), $element);
-
-        $request = $this->get('request');
 
         $form->handleRequest($request);
 

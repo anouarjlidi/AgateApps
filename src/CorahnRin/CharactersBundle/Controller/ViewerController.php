@@ -3,8 +3,8 @@
 namespace CorahnRin\CharactersBundle\Controller;
 
 use CorahnRin\CharactersBundle\Entity\Characters;
-use CorahnRin\CharactersBundle\Classes\CharacterSheetPDF;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -25,8 +25,7 @@ class ViewerController extends Controller
      * @Route("/characters/")
      * @Template()
      */
-    public function listAction() {
-		$request = $this->getRequest();
+    public function listAction(Request $request) {
 
         // Variables GET
         $page = (int) $request->query->get('page') ?: 1;
@@ -76,13 +75,13 @@ class ViewerController extends Controller
     /**
      * @Route("/characters/pdf/{id}-{nameSlug}.pdf")
      */
-    public function pdfAction(Characters $character) {
+    public function pdfAction(Characters $character, Request $request) {
         $response = new Response;
 
-        $printer_friendly = $this->get('request')->query->get('printer_friendly') === 'true';
-        $sheet_type = $this->get('request')->query->get('sheet_type') ?: 'original';
+        $printer_friendly = $request->query->get('printer_friendly') === 'true';
+        $sheet_type = $request->query->get('sheet_type') ?: 'original';
 
-        $output_dir = $this->get('service_container')->getParameter('corahn_rin_characters.sheets_output');
+        $output_dir = $this->get('service_container')->getParameter('corahn_rin_generator.sheets_output');
         if (!is_dir($output_dir)) {
             mkdir($output_dir, 0777, true);
         }
@@ -95,8 +94,8 @@ class ViewerController extends Controller
                 '.pdf';
 
         if (!file_exists($output_dir.$file_name) || true) {
-            $pdf = $this->get('corahn_rin_characters.sheets_manager')
-                ->getManager('pdf')
+            $manager = $this->get('corahn_rin_generator.sheets_manager');
+            $pdf = $manager->getManager('pdf')
                 ->generateSheet($character, $sheet_type, $printer_friendly)
                 ->output($output_dir.$file_name, 'F');
         }

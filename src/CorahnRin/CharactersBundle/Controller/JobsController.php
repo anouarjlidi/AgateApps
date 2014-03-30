@@ -5,6 +5,7 @@ namespace CorahnRin\CharactersBundle\Controller;
 use CorahnRin\CharactersBundle\Entity\Jobs;
 use CorahnRin\CharactersBundle\Form\JobsType;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -26,21 +27,21 @@ class JobsController extends Controller
      * @Route("/admin/generator/jobs/add/")
      * @Template("CorahnRinAdminBundle:Form:add.html.twig")
      */
-    public function addAction()
+    public function addAction(Request $request)
     {
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN_GENERATOR_SUPER')) {
             throw new AccessDeniedException();
         }
-        return $this->handle_request(new Jobs);
+        return $this->handle_request(new Jobs, $request);
     }
 
     /**
      * @Route("/admin/generator/jobs/edit/{id}")
      * @Template("CorahnRinAdminBundle:Form:add.html.twig")
      */
-    public function editAction(Jobs $job)
+    public function editAction(Jobs $job, Request $request)
     {
-        return $this->handle_request($job);
+        return $this->handle_request($job, $request);
     }
 
     /**
@@ -61,12 +62,10 @@ class JobsController extends Controller
         return $this->redirect($this->generateUrl('corahnrin_characters_jobs_adminlist'));
     }
 
-    private function handle_request(Jobs $element) {
+    private function handle_request(Jobs $element, Request $request) {
         $method = preg_replace('#^'.str_replace('\\','\\\\',__CLASS__).'::([a-zA-Z]+)Action$#isUu', '$1', $this->getRequest()->get('_controller'));
 
         $form = $this->createForm(new \CorahnRin\CharactersBundle\Form\JobsType(), $element);
-
-        $request = $this->get('request');
 
         $form->handleRequest($request);
 

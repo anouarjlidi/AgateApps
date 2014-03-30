@@ -51,7 +51,7 @@ class SocialClasses
     protected $updated;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Doctrine\Common\Collections\Collection
      *
      * @ORM\ManyToMany(targetEntity="Domains")
      */

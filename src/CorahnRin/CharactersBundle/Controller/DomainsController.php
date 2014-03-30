@@ -5,6 +5,7 @@ namespace CorahnRin\CharactersBundle\Controller;
 use CorahnRin\CharactersBundle\Entity\Domains;
 use CorahnRin\CharactersBundle\Form\DomainsType;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -26,17 +27,15 @@ class DomainsController extends Controller
      * @Route("/admin/generator/domains/edit/{id}")
      * @Template("CorahnRinAdminBundle:Form:add.html.twig")
      */
-    public function editAction(Domains $domain)
+    public function editAction(Domains $domain, Request $request)
     {
-        return $this->handle_request($domain);
+        return $this->handle_request($domain, $request);
     }
 
     private function handle_request(Domains $element) {
         $method = preg_replace('#^'.str_replace('\\','\\\\',__CLASS__).'::([a-zA-Z]+)Action$#isUu', '$1', $this->getRequest()->get('_controller'));
 
         $form = $this->createForm(new \CorahnRin\CharactersBundle\Form\DomainsType(), $element);
-
-        $request = $this->get('request');
 
         $form->handleRequest($request);
 

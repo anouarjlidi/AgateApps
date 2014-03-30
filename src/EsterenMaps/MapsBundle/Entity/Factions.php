@@ -44,7 +44,7 @@ class Factions
     protected $description;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
 	 * @Gedmo\Mapping\Annotation\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
@@ -52,7 +52,7 @@ class Factions
     protected $created;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
 	 * @Gedmo\Mapping\Annotation\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)

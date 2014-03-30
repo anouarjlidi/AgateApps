@@ -93,7 +93,6 @@
                         $(pin).draggable(document.addMarkerPinDraggableObject);
 
                         // Ajout des inputs
-                        id = id;
                         var input_coords = document.createElement('input');
                         input_coords.type = 'hidden';
                         input_coords.id = 'input_'+id.replace('_marker','_marker_coords');

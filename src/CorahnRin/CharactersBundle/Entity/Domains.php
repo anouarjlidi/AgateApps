@@ -51,7 +51,7 @@ class Domains
     protected $updated;
 
     /**
-     * @var \Ways
+     * @var Ways
      *
      * @ORM\ManyToOne(targetEntity="Ways")
      */
@@ -65,7 +65,7 @@ class Domains
     protected $deleted;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Doctrine\Common\Collections\Collection
      *
      * @ORM\ManyToMany(targetEntity="Disciplines", mappedBy="domains")
      */

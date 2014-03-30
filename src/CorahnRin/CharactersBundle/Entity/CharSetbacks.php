@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class CharSetbacks
 {
     /**
-     * @var \Characters
+     * @var Characters
      *
      * @ORM\Id
 	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Characters", inversedBy="setbacks")
@@ -21,7 +21,7 @@ class CharSetbacks
     protected $character;
 
     /**
-     * @var \Setbacks
+     * @var Setbacks
      *
      * @ORM\Id
 	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Setbacks")

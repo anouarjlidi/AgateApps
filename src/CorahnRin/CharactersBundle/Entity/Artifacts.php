@@ -104,7 +104,7 @@ class Artifacts
     protected $updated;
 
     /**
-     * @var \Flux
+     * @var Flux
      *
      * @ORM\ManyToOne(targetEntity="Flux", fetch="EAGER")
      */

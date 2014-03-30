@@ -14,7 +14,7 @@ use Doctrine\Common\Collections\ArrayCollection as DoctrineCollection;
 class EventsZones {
 
     /**
-     * @var \Events
+     * @var Events
      *
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Events", inversedBy="zones")
@@ -22,7 +22,7 @@ class EventsZones {
     protected $event;
 
     /**
-     * @var \Zones
+     * @var Zones
      *
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Zones", inversedBy="events")
@@ -30,7 +30,7 @@ class EventsZones {
     protected $zone;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
 	 * @Gedmo\Mapping\Annotation\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
@@ -38,7 +38,7 @@ class EventsZones {
     protected $created;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
 	 * @Gedmo\Mapping\Annotation\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)

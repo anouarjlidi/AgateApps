@@ -8,7 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 //use CorahnRin\CharactersBundle\Entity\Characters;
 use CorahnRin\GeneratorBundle\Entity\Steps;
-use CorahnRin\GeneratorBundle\Steps\StepLoader;
+use Symfony\Component\HttpFoundation\Request;
 
 class GeneratorController extends Controller {
 
@@ -40,10 +40,9 @@ class GeneratorController extends Controller {
      * @Route("/characters/generate/{step}-{slug}", requirements={"step" = "\d+"})
      * @Template("CorahnRinGeneratorBundle:Generator:step_base.html.twig")
      */
-    public function stepAction(Steps $step) {
+    public function stepAction(Request $request, Steps $step) {
         $datas = array(); // Tableau à retourner en fin de méthode
         $session = $this->get('session');
-        $request = $this->getRequest();
 
         //Si le personnage n'existe pas dans la session, on le crée
         if (!$session->get('character')) {
@@ -63,7 +62,14 @@ class GeneratorController extends Controller {
             }
         }
 
-        $stepLoader = new StepLoader($this, $session, $request, $step, $this->steps);
+//        $stepLoader = new StepLoader($this, $session, $request, $step, $this->steps);
+
+        /**
+         * @var CorahnRin\GeneratorBundle\Steps\StepLoader
+         */
+        $stepLoader = $this->container->get('corahn_rin_generator.steps_loader');
+
+        $stepLoader->initiate($this, $session, $request, $step, $this->steps);
 
         if ($stepLoader->exists()){
             //Si la méthode existe on l'exécute pour lancer l'analyse de l'étape
@@ -79,7 +85,8 @@ class GeneratorController extends Controller {
 
                 //Fichier de la vue de l'étape
                 $datas['loaded_step_filename'] =
-                    'CorahnRinGeneratorBundle:Generator:_step_'
+                    $stepLoader->getViewsDirectory().':'.
+                    '_step_'
                     .str_pad($step->getStep(), 2, '0', STR_PAD_LEFT)
                     .'_'
                     .$step->getSlug()

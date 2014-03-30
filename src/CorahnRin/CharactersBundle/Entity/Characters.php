@@ -2,8 +2,9 @@
 
 namespace CorahnRin\CharactersBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use CorahnRin\CharactersBundle\Exceptions\CharactersException as Exception;
+use CorahnRin\CharactersBundle\Exceptions\CharactersException;
 
 /**
  * Characters
@@ -87,7 +88,7 @@ class Characters
     protected $inventory;
 
     /**
-     * @var CorahnRin\CharactersBundle\Classes\Money
+     * @var \CorahnRin\CharactersBundle\Classes\Money
      *
      * @ORM\Column(type="object")
      */
@@ -159,13 +160,6 @@ class Characters
     /**
      * @var integer
      *
-     * @ORM\Column(type="smallint", options={"default":0})
-     */
-    protected $mentalResistExp;
-
-    /**
-     * @var integer
-     *
      * @ORM\Column(type="smallint")
      */
     protected $health;
@@ -194,23 +188,9 @@ class Characters
     /**
      * @var integer
      *
-     * @ORM\Column(type="smallint",options={"default":0})
-     */
-    protected $speedExp;
-
-    /**
-     * @var integer
-     *
      * @ORM\Column(type="smallint")
      */
     protected $defense;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(type="smallint",options={"default":0})
-     */
-    protected $defenseExp;
 
     /**
      * @var integer
@@ -291,55 +271,55 @@ class Characters
     protected $weapons;
 
     /**
-     * @var \SocialClasses
+     * @var SocialClasses
      *
      * @ORM\ManyToOne(targetEntity="SocialClasses")
      */
     protected $socialClasses;
 
     /**
-     * @var \Domains
+     * @var Domains
      *
      * @ORM\ManyToOne(targetEntity="Domains")
      */
     protected $SocialClassDomain1;
 
     /**
-     * @var \Domains
+     * @var Domains
      *
      * @ORM\ManyToOne(targetEntity="Domains")
      */
     protected $SocialClassDomain2;
 
     /**
-     * @var \Disorders
+     * @var Disorders
      *
      * @ORM\ManyToOne(targetEntity="Disorders")
      */
     protected $disorder;
 
     /**
-     * @var \Jobs
+     * @var Jobs
      *
      * @ORM\ManyToOne(targetEntity="Jobs")
      */
     protected $job;
 
     /**
-     * @var \Regions
+     * @var Regions
      *
      * @ORM\ManyToOne(targetEntity="Regions")
      */
     protected $region;
 
     /**
-     * @var \Traits
+     * @var Traits
      * @ORM\ManyToOne(targetEntity="Traits")
      */
     protected $traitFlaw;
 
     /**
-     * @var \Traits
+     * @var Traits
      * @ORM\ManyToOne(targetEntity="Traits")
      */
     protected $traitQuality;
@@ -394,13 +374,13 @@ class Characters
     protected $setbacks;
 
     /**
-     * @var \Users
+     * @var \CorahnRin\UsersBundle\Entity\Users
      * @ORM\ManyToOne(targetEntity="CorahnRin\UsersBundle\Entity\Users", inversedBy="characters")
      */
     protected $user;
 
 	/**
-	 * @var \Games
+	 * @var Games
 	 * @ORM\ManyToOne(targetEntity="Games", inversedBy="characters")
 	 */
 	protected $game;
@@ -419,18 +399,18 @@ class Characters
      */
     public function __construct()
     {
-        $this->armors = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->artifacts = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->miracles = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->ogham = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->weapons = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->avantages = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->domains = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->disciplines = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->ways = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->flux = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->modifications = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->setbacks = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->armors = new ArrayCollection();
+        $this->artifacts = new ArrayCollection();
+        $this->miracles = new ArrayCollection();
+        $this->ogham = new ArrayCollection();
+        $this->weapons = new ArrayCollection();
+        $this->avantages = new ArrayCollection();
+        $this->domains = new ArrayCollection();
+        $this->disciplines = new ArrayCollection();
+        $this->ways = new ArrayCollection();
+        $this->flux = new ArrayCollection();
+        $this->modifications = new ArrayCollection();
+        $this->setbacks = new ArrayCollection();
     }
 
     /**
@@ -666,7 +646,7 @@ class Characters
     /**
      * Get money
      *
-     * @return CorahnRin\CharactersBundle\Classes\Money
+     * @return \CorahnRin\CharactersBundle\Classes\Money
      */
     public function getMoney()
     {
@@ -1133,10 +1113,10 @@ class Characters
     /**
      * Set people
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Peoples $people
+     * @param Peoples $people
      * @return Characters
      */
-    public function setPeople(\CorahnRin\CharactersBundle\Entity\Peoples $people = null)
+    public function setPeople(Peoples $people = null)
     {
         $this->people = $people;
 
@@ -1146,7 +1126,7 @@ class Characters
     /**
      * Get people
      *
-     * @return \CorahnRin\CharactersBundle\Entity\Peoples
+     * @return Peoples
      */
     public function getPeople()
     {
@@ -1156,10 +1136,10 @@ class Characters
     /**
      * Add armors
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Armors $armors
+     * @param Armors $armors
      * @return Characters
      */
-    public function addArmor(\CorahnRin\CharactersBundle\Entity\Armors $armors)
+    public function addArmor(Armors $armors)
     {
         $this->armors[] = $armors;
 
@@ -1169,9 +1149,9 @@ class Characters
     /**
      * Remove armors
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Armors $armors
+     * @param Armors $armors
      */
-    public function removeArmor(\CorahnRin\CharactersBundle\Entity\Armors $armors)
+    public function removeArmor(Armors $armors)
     {
         $this->armors->removeElement($armors);
     }
@@ -1189,10 +1169,10 @@ class Characters
     /**
      * Add artifacts
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Artifacts $artifacts
+     * @param Artifacts $artifacts
      * @return Characters
      */
-    public function addArtifact(\CorahnRin\CharactersBundle\Entity\Artifacts $artifacts)
+    public function addArtifact(Artifacts $artifacts)
     {
         $this->artifacts[] = $artifacts;
 
@@ -1202,9 +1182,9 @@ class Characters
     /**
      * Remove artifacts
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Artifacts $artifacts
+     * @param Artifacts $artifacts
      */
-    public function removeArtifact(\CorahnRin\CharactersBundle\Entity\Artifacts $artifacts)
+    public function removeArtifact(Artifacts $artifacts)
     {
         $this->artifacts->removeElement($artifacts);
     }
@@ -1222,10 +1202,10 @@ class Characters
     /**
      * Add miracles
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Miracles $miracles
+     * @param Miracles $miracles
      * @return Characters
      */
-    public function addMiracle(\CorahnRin\CharactersBundle\Entity\Miracles $miracles)
+    public function addMiracle(Miracles $miracles)
     {
         $this->miracles[] = $miracles;
 
@@ -1235,9 +1215,9 @@ class Characters
     /**
      * Remove miracles
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Miracles $miracles
+     * @param Miracles $miracles
      */
-    public function removeMiracle(\CorahnRin\CharactersBundle\Entity\Miracles $miracles)
+    public function removeMiracle(Miracles $miracles)
     {
         $this->miracles->removeElement($miracles);
     }
@@ -1255,10 +1235,10 @@ class Characters
     /**
      * Add ogham
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Ogham $ogham
+     * @param Ogham $ogham
      * @return Characters
      */
-    public function addOgham(\CorahnRin\CharactersBundle\Entity\Ogham $ogham)
+    public function addOgham(Ogham $ogham)
     {
         $this->ogham[] = $ogham;
 
@@ -1268,9 +1248,9 @@ class Characters
     /**
      * Remove ogham
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Ogham $ogham
+     * @param Ogham $ogham
      */
-    public function removeOgham(\CorahnRin\CharactersBundle\Entity\Ogham $ogham)
+    public function removeOgham(Ogham $ogham)
     {
         $this->ogham->removeElement($ogham);
     }
@@ -1288,10 +1268,10 @@ class Characters
     /**
      * Add weapons
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Weapons $weapons
+     * @param Weapons $weapons
      * @return Characters
      */
-    public function addWeapon(\CorahnRin\CharactersBundle\Entity\Weapons $weapons)
+    public function addWeapon(Weapons $weapons)
     {
         $this->weapons[] = $weapons;
 
@@ -1301,9 +1281,9 @@ class Characters
     /**
      * Remove weapons
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Weapons $weapons
+     * @param Weapons $weapons
      */
-    public function removeWeapon(\CorahnRin\CharactersBundle\Entity\Weapons $weapons)
+    public function removeWeapon(Weapons $weapons)
     {
         $this->weapons->removeElement($weapons);
     }
@@ -1321,10 +1301,10 @@ class Characters
     /**
      * Set socialClasses
      *
-     * @param \CorahnRin\CharactersBundle\Entity\SocialClasses $socialClasses
+     * @param SocialClasses $socialClasses
      * @return Characters
      */
-    public function setSocialClasses(\CorahnRin\CharactersBundle\Entity\SocialClasses $socialClasses = null)
+    public function setSocialClasses(SocialClasses $socialClasses = null)
     {
         $this->socialClasses = $socialClasses;
 
@@ -1334,7 +1314,7 @@ class Characters
     /**
      * Get socialClasses
      *
-     * @return \CorahnRin\CharactersBundle\Entity\SocialClasses
+     * @return SocialClasses
      */
     public function getSocialClasses()
     {
@@ -1344,10 +1324,10 @@ class Characters
     /**
      * Set SocialClassDomain1
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Domains $socialClassDomain1
+     * @param Domains $socialClassDomain1
      * @return Characters
      */
-    public function setSocialClassDomain1(\CorahnRin\CharactersBundle\Entity\Domains $socialClassDomain1 = null)
+    public function setSocialClassDomain1(Domains $socialClassDomain1 = null)
     {
         $this->SocialClassDomain1 = $socialClassDomain1;
 
@@ -1357,7 +1337,7 @@ class Characters
     /**
      * Get SocialClassDomain1
      *
-     * @return \CorahnRin\CharactersBundle\Entity\Domains
+     * @return Domains
      */
     public function getSocialClassDomain1()
     {
@@ -1367,10 +1347,10 @@ class Characters
     /**
      * Set SocialClassDomain2
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Domains $socialClassDomain2
+     * @param Domains $socialClassDomain2
      * @return Characters
      */
-    public function setSocialClassDomain2(\CorahnRin\CharactersBundle\Entity\Domains $socialClassDomain2 = null)
+    public function setSocialClassDomain2(Domains $socialClassDomain2 = null)
     {
         $this->SocialClassDomain2 = $socialClassDomain2;
 
@@ -1380,7 +1360,7 @@ class Characters
     /**
      * Get SocialClassDomain2
      *
-     * @return \CorahnRin\CharactersBundle\Entity\Domains
+     * @return Domains
      */
     public function getSocialClassDomain2()
     {
@@ -1390,10 +1370,10 @@ class Characters
     /**
      * Set disorder
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Disorders $disorder
+     * @param Disorders $disorder
      * @return Characters
      */
-    public function setDisorder(\CorahnRin\CharactersBundle\Entity\Disorders $disorder = null)
+    public function setDisorder(Disorders $disorder = null)
     {
         $this->disorder = $disorder;
 
@@ -1403,7 +1383,7 @@ class Characters
     /**
      * Get disorder
      *
-     * @return \CorahnRin\CharactersBundle\Entity\Disorders
+     * @return Disorders
      */
     public function getDisorder()
     {
@@ -1413,10 +1393,10 @@ class Characters
     /**
      * Set job
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Jobs $job
+     * @param Jobs $job
      * @return Characters
      */
-    public function setJob(\CorahnRin\CharactersBundle\Entity\Jobs $job = null)
+    public function setJob(Jobs $job = null)
     {
         $this->job = $job;
 
@@ -1426,7 +1406,7 @@ class Characters
     /**
      * Get job
      *
-     * @return \CorahnRin\CharactersBundle\Entity\Jobs
+     * @return Jobs
      */
     public function getJob()
     {
@@ -1436,10 +1416,10 @@ class Characters
     /**
      * Set region
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Regions $region
+     * @param Regions $region
      * @return Characters
      */
-    public function setRegion(\CorahnRin\CharactersBundle\Entity\Regions $region = null)
+    public function setRegion(Regions $region = null)
     {
         $this->region = $region;
 
@@ -1449,7 +1429,7 @@ class Characters
     /**
      * Get region
      *
-     * @return \CorahnRin\CharactersBundle\Entity\Regions
+     * @return Regions
      */
     public function getRegion()
     {
@@ -1459,10 +1439,10 @@ class Characters
     /**
      * Set traitFlaw
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Traits $traitFlaw
+     * @param Traits $traitFlaw
      * @return Characters
      */
-    public function setTraitFlaw(\CorahnRin\CharactersBundle\Entity\Traits $traitFlaw = null)
+    public function setTraitFlaw(Traits $traitFlaw = null)
     {
         $this->traitFlaw = $traitFlaw;
 
@@ -1472,7 +1452,7 @@ class Characters
     /**
      * Get traitFlaw
      *
-     * @return \CorahnRin\CharactersBundle\Entity\Traits
+     * @return Traits
      */
     public function getTraitFlaw()
     {
@@ -1482,10 +1462,10 @@ class Characters
     /**
      * Set traitQuality
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Traits $traitQuality
+     * @param Traits $traitQuality
      * @return Characters
      */
-    public function setTraitQuality(\CorahnRin\CharactersBundle\Entity\Traits $traitQuality = null)
+    public function setTraitQuality(Traits $traitQuality = null)
     {
         $this->traitQuality = $traitQuality;
 
@@ -1495,7 +1475,7 @@ class Characters
     /**
      * Get traitQuality
      *
-     * @return \CorahnRin\CharactersBundle\Entity\Traits
+     * @return Traits
      */
     public function getTraitQuality()
     {
@@ -1505,10 +1485,10 @@ class Characters
     /**
      * Add avantages
      *
-     * @param \CorahnRin\CharactersBundle\Entity\CharAvtgs $avantages
+     * @param CharAvtgs $avantages
      * @return Characters
      */
-    public function addAvantage(\CorahnRin\CharactersBundle\Entity\CharAvtgs $avantages)
+    public function addAvantage(CharAvtgs $avantages)
     {
         $this->avantages[] = $avantages;
 
@@ -1518,9 +1498,9 @@ class Characters
     /**
      * Remove avantages
      *
-     * @param \CorahnRin\CharactersBundle\Entity\CharAvtgs $avantages
+     * @param CharAvtgs $avantages
      */
-    public function removeAvantage(\CorahnRin\CharactersBundle\Entity\CharAvtgs $avantages)
+    public function removeAvantage(CharAvtgs $avantages)
     {
         $this->avantages->removeElement($avantages);
     }
@@ -1538,10 +1518,10 @@ class Characters
     /**
      * Add domains
      *
-     * @param \CorahnRin\CharactersBundle\Entity\CharDomains $domains
+     * @param CharDomains $domains
      * @return Characters
      */
-    public function addDomain(\CorahnRin\CharactersBundle\Entity\CharDomains $domains)
+    public function addDomain(CharDomains $domains)
     {
         $this->domains[] = $domains;
 
@@ -1551,9 +1531,9 @@ class Characters
     /**
      * Remove domains
      *
-     * @param \CorahnRin\CharactersBundle\Entity\CharDomains $domains
+     * @param CharDomains $domains
      */
-    public function removeDomain(\CorahnRin\CharactersBundle\Entity\CharDomains $domains)
+    public function removeDomain(CharDomains $domains)
     {
         $this->domains->removeElement($domains);
     }
@@ -1569,25 +1549,12 @@ class Characters
     }
 
     /**
-     * Get domain
-     *
-     * @param \CorahnRin\CharactersBundle\Entity\CharDomains $domains
-     */
-    public function getDomain($id) {
-        foreach ($this->domains as $charDomain) {
-            if ($charDomain->getDomain()->getId() == $id) {
-                return $charDomain;
-            }
-        }
-    }
-
-    /**
      * Add disciplines
      *
-     * @param \CorahnRin\CharactersBundle\Entity\CharDisciplines $disciplines
+     * @param CharDisciplines $disciplines
      * @return Characters
      */
-    public function addDiscipline(\CorahnRin\CharactersBundle\Entity\CharDisciplines $disciplines)
+    public function addDiscipline(CharDisciplines $disciplines)
     {
         $this->disciplines[] = $disciplines;
 
@@ -1597,9 +1564,9 @@ class Characters
     /**
      * Remove disciplines
      *
-     * @param \CorahnRin\CharactersBundle\Entity\CharDisciplines $disciplines
+     * @param CharDisciplines $disciplines
      */
-    public function removeDiscipline(\CorahnRin\CharactersBundle\Entity\CharDisciplines $disciplines)
+    public function removeDiscipline(CharDisciplines $disciplines)
     {
         $this->disciplines->removeElement($disciplines);
     }
@@ -1615,25 +1582,12 @@ class Characters
     }
 
     /**
-     * Get discipline
-     *
-     * @param \CorahnRin\CharactersBundle\Entity\CharDisciplines $disciplines
-     */
-    public function getDiscipline($id) {
-        foreach ($this->disciplines as $charDiscipline) {
-            if ($charDiscipline->getDiscipline()->getId() == $id) {
-                return $charDiscipline;
-            }
-        }
-    }
-
-    /**
      * Add ways
      *
-     * @param \CorahnRin\CharactersBundle\Entity\CharWays $ways
+     * @param CharWays $ways
      * @return Characters
      */
-    public function addWay(\CorahnRin\CharactersBundle\Entity\CharWays $ways)
+    public function addWay(CharWays $ways)
     {
         $this->ways[] = $ways;
 
@@ -1643,9 +1597,9 @@ class Characters
     /**
      * Remove ways
      *
-     * @param \CorahnRin\CharactersBundle\Entity\CharWays $ways
+     * @param CharWays $ways
      */
-    public function removeWay(\CorahnRin\CharactersBundle\Entity\CharWays $ways)
+    public function removeWay(CharWays $ways)
     {
         $this->ways->removeElement($ways);
     }
@@ -1661,25 +1615,12 @@ class Characters
     }
 
     /**
-     * Get way
-     *
-     * @param \CorahnRin\CharactersBundle\Entity\CharWays $ways
-     */
-    public function getWay($shortName) {
-        foreach ($this->ways as $charWay) {
-            if ($charWay->getWay()->getShortName() == $shortName) {
-                return $charWay;
-            }
-        }
-    }
-
-    /**
      * Add flux
      *
-     * @param \CorahnRin\CharactersBundle\Entity\CharFlux $flux
+     * @param CharFlux $flux
      * @return Characters
      */
-    public function addFlux(\CorahnRin\CharactersBundle\Entity\CharFlux $flux)
+    public function addFlux(CharFlux $flux)
     {
         $this->flux[] = $flux;
 
@@ -1689,9 +1630,9 @@ class Characters
     /**
      * Remove flux
      *
-     * @param \CorahnRin\CharactersBundle\Entity\CharFlux $flux
+     * @param CharFlux $flux
      */
-    public function removeFlux(\CorahnRin\CharactersBundle\Entity\CharFlux $flux)
+    public function removeFlux(CharFlux $flux)
     {
         $this->flux->removeElement($flux);
     }
@@ -1709,10 +1650,10 @@ class Characters
     /**
      * Add modifications
      *
-     * @param \CorahnRin\CharactersBundle\Entity\CharModifications $modifications
+     * @param CharModifications $modifications
      * @return Characters
      */
-    public function addModification(\CorahnRin\CharactersBundle\Entity\CharModifications $modifications)
+    public function addModification(CharModifications $modifications)
     {
         $this->modifications[] = $modifications;
 
@@ -1722,9 +1663,9 @@ class Characters
     /**
      * Remove modifications
      *
-     * @param \CorahnRin\CharactersBundle\Entity\CharModifications $modifications
+     * @param CharModifications $modifications
      */
-    public function removeModification(\CorahnRin\CharactersBundle\Entity\CharModifications $modifications)
+    public function removeModification(CharModifications $modifications)
     {
         $this->modifications->removeElement($modifications);
     }
@@ -1742,10 +1683,10 @@ class Characters
     /**
      * Add setbacks
      *
-     * @param \CorahnRin\CharactersBundle\Entity\CharSetbacks $setbacks
+     * @param CharSetbacks $setbacks
      * @return Characters
      */
-    public function addSetback(\CorahnRin\CharactersBundle\Entity\CharSetbacks $setbacks)
+    public function addSetback(CharSetbacks $setbacks)
     {
         $this->setbacks[] = $setbacks;
 
@@ -1755,9 +1696,9 @@ class Characters
     /**
      * Remove setbacks
      *
-     * @param \CorahnRin\CharactersBundle\Entity\CharSetbacks $setbacks
+     * @param CharSetbacks $setbacks
      */
-    public function removeSetback(\CorahnRin\CharactersBundle\Entity\CharSetbacks $setbacks)
+    public function removeSetback(CharSetbacks $setbacks)
     {
         $this->setbacks->removeElement($setbacks);
     }
@@ -1775,10 +1716,10 @@ class Characters
     /**
      * Set user
      *
-     * @param \CorahnRin\UsersBundle\Entity\Users $user
+     * @param Users|\CorahnRin\UsersBundle\Entity\Users $user
      * @return Characters
      */
-    public function setUser(\CorahnRin\UsersBundle\Entity\Users $user = null)
+    public function setUser(Users $user = null)
     {
         $this->user = $user;
 
@@ -1798,10 +1739,10 @@ class Characters
     /**
      * Set game
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Games $game
+     * @param Games $game
      * @return Characters
      */
-    public function setGame(\CorahnRin\CharactersBundle\Entity\Games $game = null)
+    public function setGame(Games $game = null)
     {
         $this->game = $game;
 
@@ -1811,11 +1752,34 @@ class Characters
     /**
      * Get game
      *
-     * @return \CorahnRin\CharactersBundle\Entity\Games
+     * @return Games
      */
     public function getGame()
     {
         return $this->game;
+    }
+
+    /**
+     * Set hardening
+     *
+     * @param integer $hardening
+     * @return Characters
+     */
+    public function setHardening($hardening)
+    {
+        $this->hardening = $hardening;
+
+        return $this;
+    }
+
+    /**
+     * Get hardening
+     *
+     * @return integer
+     */
+    public function getHardening()
+    {
+        return $this->hardening;
     }
 
 
@@ -1824,6 +1788,88 @@ class Characters
     /*-------Méthodes de récupération de données-------*/
     /*-------------------------------------------------*/
     /*-------------------------------------------------*/
+
+
+    /**
+     * Get domain
+     * @param int $id
+     * @return \CorahnRin\CharactersBundle\Entity\CharDomains
+     */
+    public function getDomain($id) {
+        foreach ($this->domains as $charDomain) {
+            if (
+                $charDomain->getDomain()->getId() == $id
+                || $charDomain->getDomain()->getName() == $id
+                || $charDomain->getDomain() === $id
+            ) {
+                return $charDomain;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Get way
+     *
+     * @param string $shortName
+     * @return \CorahnRin\CharactersBundle\Entity\CharWays|null
+     */
+    public function getWay($shortName) {
+        foreach ($this->ways as $charWay) {
+            if ($charWay->getWay()->getShortName() == $shortName) {
+                return $charWay;
+            }
+        }
+    }
+
+    /**
+     * Get discipline
+     * @param mixed $id La discipline à chercher. Peut être son ID, son nom ou l'objet lui-même.
+     * @return \CorahnRin\CharactersBundle\Entity\CharDisciplines|null
+     */
+    public function getDiscipline($id) {
+        foreach ($this->disciplines as $charDiscipline) {
+            if (
+                $charDiscipline->getDiscipline()->getId() == $id
+                || $charDiscipline->getDiscipline()->getName() == $id
+                || $charDiscipline->getDiscipline() == $id
+            ) {
+                return $charDiscipline;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Retourne le score de base de défense du personnage
+     * @return int
+     */
+    function getBaseDefense() {
+        $rai = $this->getWay('rai')->getScore();
+        $emp = $this->getWay('emp')->getScore();
+        return $rai + $emp + 5;
+    }
+
+    /**
+     * Retourne le score de base de rapidité du personnage
+     * @return int
+     */
+    function getBaseSpeed() {
+        $com = $this->getWay('com')->getScore();
+        $emp = $this->getWay('emp')->getScore();
+        return $com + $emp;
+    }
+
+    /**
+     * Retourne le score de base de rapidité du personnage
+     * @return int
+     */
+    function getBaseMentalResist() {
+        $ide = $this->getWay('ide')->getScore();
+        return $ide + 5;
+    }
+
+
 
     public function getPotential(){
         $creativity = $this->getWay('cre')->getScore();
@@ -1834,10 +1880,29 @@ class Characters
         } elseif ($creativity == 5) {
             return 3;
         } else {
-            throw new Exception('Le calcul du potentiel du personnage a renvoyé une erreur');
+            throw new CharactersException('Le calcul du potentiel du personnage a renvoyé une erreur');
         }
     }
 
+    /**
+     * Retourne le score de base de combat au contact
+     * @param null $discipline
+     * @param string $potential
+     * @return int
+     */
+    public function getMeleeAttackScore($discipline = null, $potential = '') {
+        return $this->getAttackScore('melee', $discipline, $potential);
+    }
+
+    /**
+     * Retourne le score de base du type de combat spécifié dans $type.
+     * Si $discipline est mentionné, il doit s'agir d'un identifiant valide de discipline,
+     * @param string $type
+     * @param null $discipline
+     * @param string $potential
+     * @return int
+     * @throws \CorahnRin\CharactersBundle\Exceptions\CharactersException
+     */
     public function getAttackScore($type = 'melee', $discipline = null, $potential = '') {
 
         // Récupération du score de voie
@@ -1849,7 +1914,7 @@ class Characters
         } elseif ($type === 'ranged') {
             $domain_id = 14;
         } else {
-            throw new Exception('Vous devez indiquer un type d\'attaque entre "melee" et "ranged".');
+            throw new CharactersException('Vous devez indiquer un type d\'attaque entre "melee" et "ranged".');
         }
 
         // Récupération du score du domaine
@@ -1875,97 +1940,5 @@ class Characters
         }
 
         return $attack;
-    }
-
-    /**
-     * Set speedExp
-     *
-     * @param integer $speedExp
-     * @return Characters
-     */
-    public function setSpeedExp($speedExp)
-    {
-        $this->speedExp = $speedExp;
-
-        return $this;
-    }
-
-    /**
-     * Get speedExp
-     *
-     * @return integer
-     */
-    public function getSpeedExp()
-    {
-        return $this->speedExp;
-    }
-
-    /**
-     * Set defenseExp
-     *
-     * @param integer $defenseExp
-     * @return Characters
-     */
-    public function setDefenseExp($defenseExp)
-    {
-        $this->defenseExp = $defenseExp;
-
-        return $this;
-    }
-
-    /**
-     * Get defenseExp
-     *
-     * @return integer
-     */
-    public function getDefenseExp()
-    {
-        return $this->defenseExp;
-    }
-
-    /**
-     * Set mentalResistExp
-     *
-     * @param integer $mentalResistExp
-     * @return Characters
-     */
-    public function setMentalResistExp($mentalResistExp)
-    {
-        $this->mentalResistExp = $mentalResistExp;
-
-        return $this;
-    }
-
-    /**
-     * Get mentalResistExp
-     *
-     * @return integer
-     */
-    public function getMentalResistExp()
-    {
-        return $this->mentalResistExp;
-    }
-
-    /**
-     * Set hardening
-     *
-     * @param integer $hardening
-     * @return Characters
-     */
-    public function setHardening($hardening)
-    {
-        $this->hardening = $hardening;
-
-        return $this;
-    }
-
-    /**
-     * Get hardening
-     *
-     * @return integer
-     */
-    public function getHardening()
-    {
-        return $this->hardening;
     }
 }

@@ -5,6 +5,7 @@ namespace CorahnRin\CharactersBundle\Controller;
 use CorahnRin\CharactersBundle\Entity\SocialClasses;
 use CorahnRin\CharactersBundle\Form\SocialClassesType;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -25,21 +26,21 @@ class SocialClassesController extends Controller
      * @Route("/admin/generator/socialclasses/add/")
      * @Template("CorahnRinAdminBundle:Form:add.html.twig")
      */
-    public function addAction()
+    public function addAction(Request $request)
     {
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN_GENERATOR_SUPER')) {
             throw new AccessDeniedException();
         }
-        return $this->handle_request(new SocialClasses);
+        return $this->handle_request(new SocialClasses, $request);
     }
 
     /**
      * @Route("/admin/generator/socialclasses/edit/{id}")
      * @Template("CorahnRinAdminBundle:Form:add.html.twig")
      */
-    public function editAction(SocialClasses $socialClass)
+    public function editAction(SocialClasses $socialClass, Request $request)
     {
-        return $this->handle_request($socialClass);
+        return $this->handle_request($socialClass, $request);
     }
 
     /**
@@ -60,12 +61,10 @@ class SocialClassesController extends Controller
         return $this->redirect($this->generateUrl('corahnrin_characters_socialclasses_adminlist'));
     }
 
-    private function handle_request(SocialClasses $element) {
+    private function handle_request(SocialClasses $element, Request $request) {
         $method = preg_replace('#^'.str_replace('\\','\\\\',__CLASS__).'::([a-zA-Z]+)Action$#isUu', '$1', $this->getRequest()->get('_controller'));
 
         $form = $this->createForm(new \CorahnRin\CharactersBundle\Form\SocialClassesType(), $element);
-
-        $request = $this->get('request');
 
         $form->handleRequest($request);
 

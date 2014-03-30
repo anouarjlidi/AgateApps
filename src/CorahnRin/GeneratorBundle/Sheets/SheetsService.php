@@ -32,12 +32,12 @@ class SheetsService {
      * @return ManagerInterface
      */
     function getManager($type) {
-        return isset($this->manager[$type]) ? $this->manager[$type] : $this->createManager($type);
+        return isset($this->managers[$type]) ? $this->managers[$type] : $this->createManager($type);
     }
 
     /**
      *
-     * @return Symfony\Component\Translation\TranslatorInterface
+     * @return \Symfony\Component\Translation\TranslatorInterface
      */
     function getTranslator(){
         return $this->translator;
@@ -61,7 +61,7 @@ class SheetsService {
 
         $manager = new $className($this);
 
-        $this->manager[$type] = $manager;
+        $this->managers[$type] = $manager;
 
         return $manager;
     }

@@ -5,6 +5,7 @@ namespace CorahnRin\CharactersBundle\Controller;
 use CorahnRin\CharactersBundle\Entity\Traits;
 use CorahnRin\CharactersBundle\Form\TraitsType;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -23,21 +24,21 @@ class TraitsController extends Controller
      * @Route("/admin/generator/traits/add/")
      * @Template("CorahnRinAdminBundle:Form:add.html.twig")
      */
-    public function addAction()
+    public function addAction(Request $request)
     {
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN_GENERATOR_SUPER')) {
             throw new AccessDeniedException();
         }
-        return $this->handle_request(new Traits);
+        return $this->handle_request(new Traits, $request);
     }
 
     /**
      * @Route("/admin/generator/traits/edit/{id}")
      * @Template("CorahnRinAdminBundle:Form:add.html.twig")
      */
-    public function editAction(Traits $trait)
+    public function editAction(Traits $trait, Request $request)
     {
-        return $this->handle_request($trait);
+        return $this->handle_request($trait, $request);
     }
 
     /**
@@ -58,12 +59,10 @@ class TraitsController extends Controller
         return $this->redirect($this->generateUrl('corahnrin_characters_traits_adminlist'));
     }
 
-    private function handle_request(Traits $element) {
+    private function handle_request(Traits $element, Request $request) {
         $method = preg_replace('#^'.str_replace('\\','\\\\',__CLASS__).'::([a-zA-Z]+)Action$#isUu', '$1', $this->getRequest()->get('_controller'));
 
         $form = $this->createForm(new \CorahnRin\CharactersBundle\Form\TraitsType(), $element);
-
-        $request = $this->get('request');
 
         $form->handleRequest($request);
 

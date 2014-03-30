@@ -14,7 +14,7 @@ use Doctrine\Common\Collections\ArrayCollection as DoctrineCollection;
 class EventsRoutes {
 
     /**
-     * @var \Events
+     * @var Events
      *
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Events", inversedBy="routes")
@@ -22,7 +22,7 @@ class EventsRoutes {
     protected $event;
 
     /**
-     * @var \Routes
+     * @var Routes
      *
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Routes", inversedBy="events")
@@ -30,7 +30,7 @@ class EventsRoutes {
     protected $route;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
 	 * @Gedmo\Mapping\Annotation\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
@@ -38,7 +38,7 @@ class EventsRoutes {
     protected $created;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
 	 * @Gedmo\Mapping\Annotation\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)

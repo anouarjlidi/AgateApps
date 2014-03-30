@@ -51,21 +51,21 @@ class Jobs
     protected $updated;
 
     /**
-     * @var \Books
+     * @var Books
      *
      * @ORM\ManyToOne(targetEntity="Books",fetch="EAGER")
      */
     protected $book;
 
     /**
-     * @var \Domains
+     * @var Domains
      *
      * @ORM\ManyToOne(targetEntity="Domains",fetch="EAGER")
      */
     protected $domainPrimary;
 
     /**
-     * @var \Domains
+     * @var Domains
      *
      * @ORM\ManyToMany(targetEntity="Domains")
      */

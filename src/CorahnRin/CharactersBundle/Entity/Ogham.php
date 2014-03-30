@@ -36,13 +36,13 @@ class Ogham
     protected $description;
 
     /**
-     * @var \Books
+     * @var Books
      * @ORM\ManyToOne(targetEntity="Books")
      */
     protected $book;
 
     /**
-     * @var \Books
+     * @var Books
      * @ORM\ManyToOne(targetEntity="OghamTypes")
      */
     protected $oghamType;

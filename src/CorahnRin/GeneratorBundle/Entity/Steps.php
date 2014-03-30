@@ -43,7 +43,7 @@ class Steps
     protected $title;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Doctrine\Common\Collections\Collection
      *
      * @ORM\ManyToMany(targetEntity="Steps")
      */

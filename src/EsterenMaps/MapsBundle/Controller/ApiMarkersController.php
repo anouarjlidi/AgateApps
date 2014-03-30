@@ -45,14 +45,14 @@ class ApiMarkersController extends FOSRestController {
      * @Method({"POST"})
      */
     /*
-    public function initAction() {
+    public function initAction(Request $request) {
         $this->init();
 
         $response = new Response();
         $response->setStatusCode(200);
         $response->headers->set('Content-type','application/json');
 
-        $id = $this->getRequest()->request->get('id');
+        $id = $request->request->get('id');
         if (!$id) {
             return $this->quit('Un identifiant doit être indiqué');
         }

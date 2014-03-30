@@ -93,7 +93,7 @@ class Avantages
     protected $updated;
 
     /**
-     * @var \Books
+     * @var Books
      * @ORM\ManyToOne(targetEntity="Books", fetch="EAGER")
      */
     protected $book;

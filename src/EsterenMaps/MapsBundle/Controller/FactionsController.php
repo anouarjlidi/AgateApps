@@ -5,6 +5,7 @@ namespace EsterenMaps\MapsBundle\Controller;
 use EsterenMaps\MapsBundle\Entity\Factions;
 use EsterenMaps\MapsBundle\Form\FactionsType;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -26,12 +27,10 @@ class FactionsController extends Controller
      * @Route("/admin/maps/factions/add/")
      * @Template("CorahnRinAdminBundle:Form:add.html.twig")
      */
-    public function addAction()
+    public function addAction(Request $request)
     {
         $faction = new Factions;
         $form = $this->createForm(new FactionsType, $faction);
-
-        $request = $this->get('request');
 
         $form->handleRequest($request);
 
@@ -59,10 +58,8 @@ class FactionsController extends Controller
      * @Route("/admin/maps/factions/edit/{id}")
      * @Template("CorahnRinAdminBundle:Form:add.html.twig")
      */
-    public function editAction(Factions $faction) {
+    public function editAction(Factions $faction, Request $request) {
         $form = $this->createForm(new FactionsType, $faction);
-
-        $request = $this->get('request');
 
         $form->handleRequest($request);
 

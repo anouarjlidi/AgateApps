@@ -1,4 +1,5 @@
-div.gen-div-choice {
+div.gen-div-choice,
+div.gen-div-choice-disabled {
    -webkit-transition: 0.2s background-color ease-in-out;
       -moz-transition: 0.2s background-color ease-in-out;
        -ms-transition: 0.2s background-color ease-in-out;
@@ -11,7 +12,8 @@ div.gen-div-choice:hover {
     cursor:pointer;
 }
 
-div.gen-div-choice.selected {
+div.gen-div-choice.selected,
+div.gen-div-choice-disabled.selected {
     background-color: rgba(238, 238, 238, 0.2);
 }
 

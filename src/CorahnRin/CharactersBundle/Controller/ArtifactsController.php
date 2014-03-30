@@ -4,6 +4,7 @@ namespace CorahnRin\CharactersBundle\Controller;
 
 use \CorahnRin\CharactersBundle\Entity\Artifacts;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -25,21 +26,21 @@ class ArtifactsController extends Controller
      * @Route("/admin/generator/artifacts/add/")
      * @Template("CorahnRinAdminBundle:Form:add.html.twig")
      */
-    public function addAction()
+    public function addAction(Request $request)
     {
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN_GENERATOR_SUPER')) {
             throw new AccessDeniedException();
         }
-        return $this->handle_request(new Artifacts);
+        return $this->handle_request(new Artifacts, $request);
     }
 
     /**
      * @Route("/admin/generator/artifacts/edit/{id}")
      * @Template("CorahnRinAdminBundle:Form:add.html.twig")
      */
-    public function editAction(Artifacts $artifact)
+    public function editAction(Artifacts $artifact, Request $request)
     {
-        return $this->handle_request($artifact);
+        return $this->handle_request($artifact, $request);
     }
 
     /**
@@ -60,12 +61,10 @@ class ArtifactsController extends Controller
         return $this->redirect($this->generateUrl('corahnrin_characters_artifacts_adminlist'));
     }
 
-    private function handle_request(Artifacts $element) {
+    private function handle_request(Artifacts $element, Request $request) {
         $method = preg_replace('#^'.str_replace('\\','\\\\',__CLASS__).'::([a-zA-Z]+)Action$#isUu', '$1', $this->getRequest()->get('_controller'));
 
         $form = $this->createForm(new \CorahnRin\CharactersBundle\Form\ArtifactsType(), $element);
-
-        $request = $this->get('request');
 
         $form->handleRequest($request);
 

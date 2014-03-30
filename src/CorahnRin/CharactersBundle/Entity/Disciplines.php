@@ -59,7 +59,7 @@ class Disciplines
     protected $updated;
 
     /**
-     * @var \Books
+     * @var Books
      * @ORM\ManyToOne(targetEntity="Books", fetch="EAGER")
      */
     protected $book;
@@ -72,7 +72,7 @@ class Disciplines
     protected $deleted;
 
     /**
-     * @var \Doctrine\Common\Collections\ArrayCollection
+     * @var Doctrine\Common\Collections\ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="Domains", inversedBy="disciplines")
      * @ORM\JoinTable(name="disciplines_domains",

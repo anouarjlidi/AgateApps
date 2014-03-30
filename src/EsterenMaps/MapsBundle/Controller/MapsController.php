@@ -3,6 +3,7 @@
 namespace EsterenMaps\MapsBundle\Controller;
 
 //use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -40,16 +41,14 @@ class MapsController extends Controller
      * @Route("/admin/maps/add/")
      * @Template("CorahnRinAdminBundle:Form:add.html.twig")
      */
-    public function addAction() {
+    public function addAction(Request $request) {
 
         $map = new Maps();
 
         $form = $this->createForm(new MapsType, $map);
 
-        $request = $this->get('request');
-
         if ($request->getMethod() == 'POST') {
-            $form->bind($request);
+            $form->submit($request);
 
             $pathinfo = $this->handleImage($map);
 
@@ -78,17 +77,15 @@ class MapsController extends Controller
      * @Route("/admin/maps/edit/{id}")
      * @Template()
      */
-    public function editAction(Maps $map) {
-
-        $request = $this->get('request');
+    public function editAction(Maps $map, Request $request) {
 
         $em = $this->getDoctrine()->getManager();
 
         if ($request->getMethod() == 'POST') {
 
-            $this->updateZones($map);
-            $this->updateMarkers($map);
-            $this->updateRoutes($map);
+            $this->updateZones($map, $request);
+            $this->updateMarkers($map, $request);
+            $this->updateRoutes($map, $request);
 
             $em->persist($map);
             $em->flush();
@@ -123,13 +120,13 @@ class MapsController extends Controller
      * @Route("/admin/maps/edit_params/{id}")
      * @Template("CorahnRinAdminBundle:Form:add.html.twig")
      */
-    public function editParamsAction(Maps $map) {
+    public function editParamsAction(Maps $map, Request $request) {
         $image = $map->getImage();
         $pathinfo = null;
         $map->setImage(null);
         $form = $this->createForm(new MapsType, $map);
 
-        $form->handleRequest($this->get('request'));
+        $form->handleRequest($request);
 
         if ($map->getImage()) {
             $pathinfo = $this->handleImage($map);
@@ -217,8 +214,8 @@ class MapsController extends Controller
         );
     }
 
-    private function updateZones(&$map) {
-        $post = $this->get('request')->request;
+    private function updateZones(&$map, Request $request) {
+        $post = $request->request;
 
         $polygons_list = $post->get('map_add_zone_polygon');
         $names = $post->get('map_add_zone_name');
@@ -265,8 +262,8 @@ class MapsController extends Controller
         }
     }
 
-    private function updateMarkers(&$map) {
-        $post = $this->get('request')->request;
+    private function updateMarkers(&$map, Request $request) {
+        $post = $request->request;
 
         $list = $post->get('map_add_marker_coords');
         $names = $post->get('map_add_marker_name');
@@ -324,8 +321,8 @@ class MapsController extends Controller
 
     }
 
-    private function updateRoutes(&$map) {
-        $post = $this->get('request')->request;
+    private function updateRoutes(&$map, Request $request) {
+        $post = $request->request;
 
         $polylines_list = $post->get('map_add_route_polyline');
         $names = $post->get('map_add_route_name');

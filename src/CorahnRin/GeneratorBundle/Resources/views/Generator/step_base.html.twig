@@ -23,8 +23,9 @@
                 <fieldset id="generator_{{ loaded_step.slug }}">
                     <button type="submit" id="submit_btn" class="btn btn-inverse">{{ 'Étape suivante' | trans }}</button>
                     <hr />
-                    {{ include(loaded_step_filename) }}
-                    {#<button type="submit" id="submit_btn" class="btn btn-inverse">{{ 'Étape suivante' | trans }}</button>#}
+                    {% include loaded_step_filename %}
+                    <hr />
+                    <button type="submit" id="submit_btn" class="btn btn-inverse">{{ 'Étape suivante' | trans }}</button>
                 </fieldset>
             </form>
         </div>

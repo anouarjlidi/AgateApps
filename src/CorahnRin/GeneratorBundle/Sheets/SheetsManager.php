@@ -3,7 +3,6 @@
 namespace CorahnRin\GeneratorBundle\Sheets;
 
 use CorahnRin\CharactersBundle\Entity\Characters;
-use CorahnRin\GeneratorBundle\Sheets\SheetsService;
 
 /**
  * Class ServiceManager
@@ -15,7 +14,7 @@ use CorahnRin\GeneratorBundle\Sheets\SheetsService;
 abstract class SheetsManager implements ManagerInterface {
 
     /**
-     * @var CorahnRin\GeneratorBundle\Sheets\SheetsService
+     * @var \CorahnRin\GeneratorBundle\Sheets\SheetsService
      */
     private $service;
     private $locale;
@@ -32,6 +31,7 @@ abstract class SheetsManager implements ManagerInterface {
      *  {type}_{locale}_{page}_{printerFriendly}_{extension}<br />
      * L'extension et la locale sont automatiquement récupérée depuis le traducteur injecté.
      *
+     * @param \CorahnRin\CharactersBundle\Entity\Characters $character
      * @param string $type Le type de feuille
      * @param boolean $printer_friendly
      * @param integer $page
@@ -61,7 +61,7 @@ abstract class SheetsManager implements ManagerInterface {
      * Retourne le gestionnaire de feuille de personnage du type demandé
      *
      * @param string $type
-     * @return CorahnRin\GeneratorBundle\Sheets\SheetsManager
+     * @return \CorahnRin\GeneratorBundle\Sheets\SheetsManager
      */
     function getManager($type) {
         return $this->service->getManager($type);

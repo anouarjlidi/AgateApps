@@ -21,7 +21,7 @@ class CharDisciplines
     protected $character;
 
     /**
-     * @var \DisciplinesDomains
+     * @var DisciplinesDomains
      *
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Disciplines")
@@ -29,7 +29,7 @@ class CharDisciplines
     protected $discipline;
 
     /**
-     * @var \Domains
+     * @var Domains
      *
      * @ORM\Id
 	 * @ORM\ManyToOne(targetEntity="Domains")

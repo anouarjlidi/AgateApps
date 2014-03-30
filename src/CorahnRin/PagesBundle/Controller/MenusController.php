@@ -25,16 +25,16 @@ class MenusController extends Controller {
      * @Route("/admin/manage_site/menus/add/")
      * @Template("CorahnRinAdminBundle:Form:add.html.twig")
      */
-    public function addAction() {
-        return $this->handle_request(new Menus);
+    public function addAction(Request $request) {
+        return $this->handle_request(new Menus, $request);
     }
 
     /**
      * @Route("/admin/manage_site/menus/edit/{id}")
      * @Template("CorahnRinAdminBundle:Form:add.html.twig")
      */
-    public function editAction(Menus $menu) {
-        return $this->handle_request($menu);
+    public function editAction(Menus $menu, Request $request) {
+        return $this->handle_request($menu, $request);
     }
 
     /**
@@ -115,7 +115,7 @@ class MenusController extends Controller {
         return $links;
     }
 
-    private function handle_request($element) {
+    private function handle_request($element, Request $request) {
         $method = preg_replace('#^'.str_replace('\\','\\\\',__CLASS__).'::([a-zA-Z]+)Action$#isUu', '$1', $this->getRequest()->get('_controller'));
 
         if (null === $element->getPosition()){
@@ -123,8 +123,6 @@ class MenusController extends Controller {
         }
 
         $form = $this->createForm(new MenusType, $element, array('roles' => $this->container->getParameter('security.role_hierarchy.roles')));
-
-        $request = $this->get('request');
 
         $routes = array();
         foreach ($this->container->get('router')->getRouteCollection()->all() as $name => $route) {
@@ -149,8 +147,6 @@ class MenusController extends Controller {
                 'label' => 'Route',
             ));
         }
-
-        $request = $this->get('request');
 
         $form->handleRequest($request);
 

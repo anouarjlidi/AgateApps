@@ -5,6 +5,7 @@ namespace CorahnRin\CharactersBundle\Controller;
 use CorahnRin\CharactersBundle\Entity\Ogham;
 use CorahnRin\CharactersBundle\Entity\OghamTypes;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -26,42 +27,42 @@ class OghamController extends Controller
      * @Route("/admin/generator/ogham/add/")
      * @Template("CorahnRinAdminBundle:Form:add.html.twig")
      */
-    public function addAction()
+    public function addAction(Request $request)
     {
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN_GENERATOR_SUPER')) {
             throw new AccessDeniedException();
         }
-        return $this->handle_request(new Ogham);
+        return $this->handle_request(new Ogham, $request);
     }
 
     /**
      * @Route("/admin/generator/ogham/addtype/")
      * @Template("CorahnRinAdminBundle:Form:add.html.twig")
      */
-    public function addTypeAction()
+    public function addTypeAction(Request $request)
     {
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN_GENERATOR_SUPER')) {
             throw new AccessDeniedException();
         }
-        return $this->handle_request(new OghamTypes);
+        return $this->handle_request(new OghamTypes, $request);
     }
 
     /**
      * @Route("/admin/generator/ogham/edit/{id}")
      * @Template("CorahnRinAdminBundle:Form:add.html.twig")
      */
-    public function editAction(Ogham $ogham)
+    public function editAction(Ogham $ogham, Request $request)
     {
-        return $this->handle_request($ogham);
+        return $this->handle_request($ogham, $request);
     }
 
     /**
      * @Route("/admin/generator/ogham/edittype/{id}")
      * @Template("CorahnRinAdminBundle:Form:add.html.twig")
      */
-    public function editTypeAction(OghamTypes $oghamType)
+    public function editTypeAction(OghamTypes $oghamType, Request $request)
     {
-        return $this->handle_request($oghamType);
+        return $this->handle_request($oghamType, $request);
     }
 
     /**
@@ -100,7 +101,7 @@ class OghamController extends Controller
         return $this->redirect($this->generateUrl('corahnrin_characters_ogham_adminlist'));
     }
 
-    private function handle_request($element) {
+    private function handle_request($element, Request $request) {
         $method = preg_replace('#^'.str_replace('\\','\\\\',__CLASS__).'::([a-zA-Z]+)Action$#isUu', '$1', $this->getRequest()->get('_controller'));
         $method = str_replace('Type','',$method);
 
@@ -112,8 +113,6 @@ class OghamController extends Controller
             $type = true;
             $form = $this->createForm(new \CorahnRin\CharactersBundle\Form\OghamTypesType(), $element);
         }
-
-        $request = $this->get('request');
 
         $form->handleRequest($request);
 

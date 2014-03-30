@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class DisordersWays
 {
     /**
-     * @var \Disorders
+     * @var Disorders
      *
      * @ORM\Id
 	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Disorders", inversedBy="ways")
@@ -21,7 +21,7 @@ class DisordersWays
     protected $disorder;
 
     /**
-     * @var \Ways
+     * @var Ways
      *
      * @ORM\Id
 	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Ways")

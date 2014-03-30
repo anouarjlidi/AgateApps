@@ -44,7 +44,7 @@ class Routes
     protected $coordinates;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
 	 * @Gedmo\Mapping\Annotation\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
@@ -52,7 +52,7 @@ class Routes
     protected $created;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
 	 * @Gedmo\Mapping\Annotation\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
@@ -90,14 +90,14 @@ class Routes
     protected $markerEnd;
 
     /**
-     * @var \Maps
+     * @var Maps
      *
      * @ORM\ManyToOne(targetEntity="Maps", inversedBy="routes")
      */
     protected $map;
 
     /**
-     * @var \Factions
+     * @var Factions
      *
      * @ORM\ManyToOne(targetEntity="Factions", inversedBy="routes")
      * @Expose
@@ -105,7 +105,7 @@ class Routes
     protected $faction;
 
     /**
-     * @var \RoutesTypes
+     * @var RoutesTypes
      *
      * @ORM\ManyToOne(targetEntity="RoutesTypes", inversedBy="routes")
      * @Expose

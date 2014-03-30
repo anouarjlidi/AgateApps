@@ -5,6 +5,7 @@ namespace CorahnRin\CharactersBundle\Controller;
 use CorahnRin\CharactersBundle\Entity\Miracles;
 use CorahnRin\CharactersBundle\Form\MiraclesType;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -26,21 +27,21 @@ class MiraclesController extends Controller
      * @Route("/admin/generator/miracles/add/")
      * @Template("CorahnRinAdminBundle:Form:add.html.twig")
      */
-    public function addAction()
+    public function addAction(Request $request)
     {
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN_GENERATOR_SUPER')) {
             throw new AccessDeniedException();
         }
-        return $this->handle_request(new Miracles);
+        return $this->handle_request(new Miracles, $request);
     }
 
     /**
      * @Route("/admin/generator/miracles/edit/{id}")
      * @Template("CorahnRinAdminBundle:Form:add.html.twig")
      */
-    public function editAction(Miracles $miracle)
+    public function editAction(Miracles $miracle, Request $request)
     {
-        return $this->handle_request($miracle);
+        return $this->handle_request($miracle, $request);
     }
 
     /**
@@ -61,12 +62,10 @@ class MiraclesController extends Controller
         return $this->redirect($this->generateUrl('corahnrin_characters_miracles_adminlist'));
     }
 
-    private function handle_request(Miracles $element) {
+    private function handle_request(Miracles $element, Request $request) {
         $method = preg_replace('#^'.str_replace('\\','\\\\',__CLASS__).'::([a-zA-Z]+)Action$#isUu', '$1', $this->getRequest()->get('_controller'));
 
         $form = $this->createForm(new \CorahnRin\CharactersBundle\Form\MiraclesType(), $element);
-
-        $request = $this->get('request');
 
         $form->handleRequest($request);
 

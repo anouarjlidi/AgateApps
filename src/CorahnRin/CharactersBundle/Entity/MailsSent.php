@@ -65,7 +65,7 @@ class MailsSent
     protected $updated;
 
     /**
-     * @var \Mails
+     * @var Mails
      *
      * @ORM\ManyToOne(targetEntity="Mails")
      */

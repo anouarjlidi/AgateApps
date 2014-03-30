@@ -239,8 +239,8 @@ class PdfManager extends SheetsManager implements ManagerInterface {
 		$tir = $character->getAttackScore('ranged');
 		$cac = $character->getAttackScore('melee');
 		$pot = $character->getPotential();
-		$rap = $character->getSpeed() + $character->getSpeedExp();
-		$def = $character->getDefense() + $character->getDefenseExp();
+		$rap = $character->getBaseSpeed() + $character->getSpeed();
+		$def = $character->getBaseDefense() + $character->getDefense();
 		$attitudes = array(
             array('tir' => $tir,		'cac' => $cac,		'def' => $def,		'rap' => $rap		),//Attitudes standards
             array('tir' => $tir+$pot,	'cac' => $cac+$pot,	'def' => $def-$pot,	'rap' => $rap		),//Attitudes offensives
@@ -262,8 +262,8 @@ class PdfManager extends SheetsManager implements ManagerInterface {
 		} else {
 			$pdf->SetTextColor(0x22, 0x11, 0x4);
 		}
-		if ($character->getDefenseExp()) {
-			for ($i = 1; $i <= $character->getDefenseExp(); $i++) {
+		if ($character->getDefense()) {
+			for ($i = 1; $i <= $character->getDefense(); $i++) {
 				if ($i > 5) {
 					$off = 12;
 				} else { $off = 0; }
@@ -273,7 +273,7 @@ class PdfManager extends SheetsManager implements ManagerInterface {
 
 
 		//Rapidité améliorée
-		for ($i = 1; $i <= $character->getSpeedExp(); $i++) {
+		for ($i = 1; $i <= $character->getSpeed(); $i++) {
 			$pdf->textline('●', 767+($i-1)*27.6, 219, $p['arial'], 30);
 		}
 
@@ -388,7 +388,7 @@ class PdfManager extends SheetsManager implements ManagerInterface {
                 '_'.($printer_friendly === true ? 'pf' : 'npf').
                 '.jpg', 0, 0, $general_width, $general_height);
 
-		$resist_mentale = $character->getMentalResist() + $character->getMentalResistExp();
+		$resist_mentale = $character->getBaseMentalResist() + $character->getMentalResist();
 		$pdf->textline($resist_mentale, 323, 528, $p['carbold'], 25);
 		$pdf->textline($character->getWay('com')->getScore(), 1050, 897, $p['carbold'], 28);
 		$pdf->textline($character->getWay('cre')->getScore(), 1050, 969, $p['carbold'], 28);

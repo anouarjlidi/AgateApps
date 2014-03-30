@@ -5,6 +5,7 @@ namespace CorahnRin\CharactersBundle\Controller;
 use CorahnRin\CharactersBundle\Entity\Disorders;
 use CorahnRin\CharactersBundle\Form\DisordersType;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -26,21 +27,21 @@ class DisordersController extends Controller
      * @Route("/admin/generator/disorders/add/")
      * @Template("CorahnRinAdminBundle:Form:add.html.twig")
      */
-    public function addAction()
+    public function addAction(Request $request)
     {
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN_GENERATOR_SUPER')) {
             throw new AccessDeniedException();
         }
-        return $this->handle_request(new Disorders);
+        return $this->handle_request(new Disorders, $request);
     }
 
     /**
      * @Route("/admin/generator/disorders/edit/{id}")
      * @Template("CorahnRinAdminBundle:Form:add.html.twig")
      */
-    public function editAction(Disorders $disorder)
+    public function editAction(Disorders $disorder, Request $request)
     {
-        return $this->handle_request($disorder);
+        return $this->handle_request($disorder, $request);
     }
 
     /**
@@ -61,12 +62,10 @@ class DisordersController extends Controller
         return $this->redirect($this->generateUrl('corahnrin_characters_disorders_adminlist'));
     }
 
-    private function handle_request(Disorders $element) {
+    private function handle_request(Disorders $element, Request $request) {
         $method = preg_replace('#^'.str_replace('\\','\\\\',__CLASS__).'::([a-zA-Z]+)Action$#isUu', '$1', $this->getRequest()->get('_controller'));
 
         $form = $this->createForm(new DisordersType(), $element);
-
-        $request = $this->get('request');
 
         $form->handleRequest($request);
 

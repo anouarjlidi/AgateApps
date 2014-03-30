@@ -6,6 +6,7 @@ use CorahnRin\CharactersBundle\Entity\Weapons;
 use CorahnRin\CharactersBundle\Form\WeaponsType;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
@@ -26,19 +27,19 @@ class WeaponsController extends Controller
      * @Route("/admin/generator/weapons/add/")
      * @Template("CorahnRinAdminBundle:Form:add.html.twig")
      */
-    public function addAction() {
+    public function addAction(Request $request) {
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN_GENERATOR_SUPER')) {
             throw new AccessDeniedException();
         }
-        return $this->handle_request(new Weapons);
+        return $this->handle_request(new Weapons, $request);
     }
 
     /**
      * @Route("/admin/generator/weapons/edit/{id}")
      * @Template("CorahnRinAdminBundle:Form:add.html.twig")
      */
-    public function editAction(Weapons $weapon) {
-        return $this->handle_request($weapon);
+    public function editAction(Weapons $weapon, Request $request) {
+        return $this->handle_request($weapon, $request);
     }
 
     /**
@@ -59,12 +60,10 @@ class WeaponsController extends Controller
         return $this->redirect($this->generateUrl('corahnrin_characters_weapons_adminlist'));
     }
 
-    private function handle_request(Weapons $element) {
+    private function handle_request(Weapons $element, Request $request) {
         $method = preg_replace('#^'.str_replace('\\','\\\\',__CLASS__).'::([a-zA-Z]+)Action$#isUu', '$1', $this->getRequest()->get('_controller'));
 
         $form = $this->createForm(new WeaponsType, $element);
-
-        $request = $this->get('request');
 
         $form->handleRequest($request);
 

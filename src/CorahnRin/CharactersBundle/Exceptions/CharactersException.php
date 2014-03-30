@@ -11,8 +11,8 @@ namespace CorahnRin\CharactersBundle\Exceptions;
  */
 class CharactersException extends \Exception {
 
-    function __construct($message, $code, $previous) {
-        $message = 'Erreur de type "Characters" : '.$message;
+    function __construct($message = '', $code = 0, $previous = null) {
+        $message = 'Erreur du personnage : '.$message;
         parent::__construct($message, $code, $previous);
     }
 

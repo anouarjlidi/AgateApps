@@ -1,14 +1,12 @@
 <?php
 /**
- * @StepLoader
+ * class @StepLoader
  * Métier
  */
 
-$traits = $this->em->getRepository('CorahnRinCharactersBundle:Jobs')->findAll(true);
-
 $ways = $this->getStepValue(8);
 
-exit(print_r($ways));
+$traits = $this->em->getRepository('CorahnRinCharactersBundle:Traits')->findAllDependingOnWays($ways);
 
 $quality = isset($this->character[$this->stepFullName()]['quality']) ? (int) $this->character[$this->stepFullName()]['quality'] : null;
 $flaw = isset($this->character[$this->stepFullName()]['flaw']) ? (int) $this->character[$this->stepFullName()]['flaw'] : null;
@@ -21,20 +19,20 @@ $datas = array(
 
 if ($this->request->isMethod('POST')) {
     $this->resetSteps();
-    $quality = (int) $this->request->request->get('trait_quality');
-    $flaw = (int) $this->request->request->get('trait_flaw');
+    $quality = (int) $this->request->request->get('quality');
+    $flaw = (int) $this->request->request->get('flaw');
 
-	$traits_exists = array_key_exists($traits, $quality) && array_key_exists($traits, $flaw);
+    $quality_exists = array_key_exists($quality, $traits['qualities']);
+	$flaw_exists = array_key_exists($flaw, $traits['flaws']);
 
-    if ($trait_exists) {
+    if ($quality_exists && $flaw_exists) {
         $this->characterSet(array(
             'quality' => $quality,
             'flaw' => $flaw,
         ));
         return $this->nextStep();
     } else {
-        $msg = $this->controller->get('translator')->trans('Les traits de caractère choisis sont incorrects.', array(), 'error.steps');
-        $this->session->getFlashBag()->add('error', $msg);
+        $this->flashMessage('Les traits de caractère choisis sont incorrects.', 'error.steps');
     }
 
 }

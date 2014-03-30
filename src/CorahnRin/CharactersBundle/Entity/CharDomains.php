@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class CharDomains
 {
     /**
-     * @var \Characters
+     * @var Characters
      *
      * @ORM\Id
 	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Characters", inversedBy="domains")
@@ -21,7 +21,7 @@ class CharDomains
     protected $character;
 
     /**
-     * @var \Domains
+     * @var Domains
      *
      * @ORM\Id
 	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Domains")

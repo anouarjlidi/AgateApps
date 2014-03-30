@@ -22,7 +22,7 @@ class Users extends BaseUser {
     protected $id;
 
 	/**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Doctrine\Common\Collections\Collection
      * @ORM\OneToMany(targetEntity="CorahnRin\CharactersBundle\Entity\Characters", mappedBy="user")
 	 */
 	protected $characters;
