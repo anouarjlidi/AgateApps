@@ -14,18 +14,7 @@ $total_times = array();
 $total_msgs = array();
 
 class Database extends PDO{public static $prefix;
-public $table='';
-private $c;
-private $d;
-private $f;
-private $g;
-private $h;
-private $i;
-private $j;
-private $l;
-private $m=false;
-private $n;
-private $o;
+public $table='';private $c;private $d;private $f;private $g;private $h;private $i;private $j;private $l;private $m=false;private $n;private $o;
 function __construct($p='127.0.0.1',$q='root',$r='',$s='mydb',$u='',$w='mysql'){if(isset($this->table)){$this->table=$this->table;
 }$y[PDO::ATTR_ERRMODE]=PDO::ERRMODE_EXCEPTION;
 self::$prefix=$u;
@@ -308,6 +297,29 @@ foreach ($tables as $v){
 
 
 showtime($temp_time, 'Récupération de la structure des tables');
+
+
+
+
+$del = ReadStdin('Vider les tables ? [o/N]', array('o','n'), 'n');
+if (preg_match('#^o#isUu', $del)) {$del = 'o';} else { $del = 'n'; }
+$del = strtolower($del);
+if ($del == 'o') {
+    $sql = 'SET FOREIGN_KEY_CHECKS=0;'.PHP_EOL;
+    foreach ($new_tables as $table) {
+        $sql .= 'TRUNCATE `'.$table.'`;'.PHP_EOL;
+    }
+    $sql .= 'SET FOREIGN_KEY_CHECKS=1;'.PHP_EOL;
+
+    $new->noRes($sql);
+    showtime($temp_time, 'Fin du vidage des tables');
+}
+
+
+
+
+
+
 
 /*---------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------
@@ -1290,6 +1302,7 @@ foreach ( $characters as $v) {
 			'defense' => $cnt->defense->amelioration,
 			'speed' => $cnt->rapidite->amelioration,
 			'survival' => $cnt->survie,
+            'hardening' => 0,
 			'trauma' => $cnt->traumatismes->curables,
 			'traumaPermanent' => $cnt->traumatismes->permanents,
 			'rindath' => 0,
