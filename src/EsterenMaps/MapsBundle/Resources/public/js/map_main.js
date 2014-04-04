@@ -5,18 +5,16 @@
      * @param object params Un objet JSON contenant les paramètres à appliquer
      * @returns CorahnRinMap
      */
-    function CorahnRinMap(user_leaflet_options, user_map_options) {
+    function CorahnRinMap(user_leaflet_options, userL_map_options) {
 
         // Données utilisées dans le scope de la classe
         var _this = this,
-            base_map_options,
-                 map_options = {},
-            base_leaflet_options,
-                 leaflet_options = {},
-            _map
+            baseL_map_options, map_options = {},
+            base_leaflet_options, leaflet_options = {},
+            L_map
         ;
 
-        base_map_options = {
+        baseL_map_options = {
             id: 0,
             container: 'map',
             baseHost: w.location.protocol + "//" + w.location.hostname + (w.location.port && ":" + w.location.port),
@@ -31,8 +29,8 @@
             editMode: false
         };
 
-        if (base_map_options){ for (var attr in base_map_options) { map_options[attr] = base_map_options[attr]; } }
-        if (user_map_options){ for (var attr in user_map_options) { map_options[attr] = user_map_options[attr]; } }
+        if (baseL_map_options){ for (var attr in baseL_map_options) { map_options[attr] = baseL_map_options[attr]; } }
+        if (userL_map_options){ for (var attr in userL_map_options) { map_options[attr] = userL_map_options[attr]; } }
         map_options.tilesUrl = map_options.baseHost + map_options.tilesUrl.replace('{id}',map_options.id);
         map_options.mapApiUrl = map_options.baseHost + map_options.mapApiUrl.replace('{id}',map_options.id);
 
@@ -87,11 +85,11 @@
                     }
                     if (coords && coords.length == 1) { coords = coords[0]; }
                     if (names == 'routes') {
-                        element = L.polyline(coords).addTo(_map);
+                        element = L.polyline(coords).addTo(L_map);
                     } else if (names === 'zones') {
-                        element = L.polygon(coords).addTo(_map);
+                        element = L.polygon(coords).addTo(L_map);
                     } else if (names === 'markers') {
-                        element = L.marker(coords).addTo(_map);
+                        element = L.marker(coords).addTo(L_map);
                     } else {
                         element = elements[i];
                     }
@@ -105,7 +103,6 @@
         //
 
         this.get = function(option) { return map_options[option]; };
-
         this.getMarkers = function(){ return markers; };
 
         this.load = function(names, callback, options) {
@@ -142,7 +139,7 @@
             $(d.getElementById(map_options.container)).height($(w).height() - $('#footer').outerHeight(true) - $('#navigation').outerHeight(true));
         };
 
-        this.map = function(){ return _map; };
+        this.map = function(){ return L_map; };
 
         this.loadElements = function(type) {
             ;
@@ -152,8 +149,8 @@
         // Initialisations
         //
         this.resetHeight();
-        _map = L.map(map_options.container, {"center":[0,0],"zoom":map_options.zoom});// Création de la map
-        L.tileLayer(map_options.tilesUrl, leaflet_options).addTo(_map);// Création du calque des tuiles
+        L_map = L.map(map_options.container, {"center":[0,0],"zoom":map_options.zoom});// Création de la map
+        L.tileLayer(map_options.tilesUrl, leaflet_options).addTo(L_map);// Création du calque des tuiles
         L.Icon.Default.imagePath = map_options.imgUrl.replace(/\/$/gi, '');
         $(w).resize(this.resetHeight);
         map_options.markerMaxId++;
@@ -164,37 +161,37 @@
         if (map_options.editMode == true) {
 
             d.getElementById('map_add_marker').onclick = function(){
-                if (_map.getContainer().getAttribute('data-add-marker')) {
+                if (L_map.getContainer().getAttribute('data-add-marker')) {
                     this.classList.remove('active');
-                    _map.getContainer().removeAttribute('data-add-marker');
+                    L_map.getContainer().removeAttribute('data-add-marker');
                 } else {
                     this.classList.add('active');
-                    _map.getContainer().setAttribute('data-add-marker', 'true');
+                    L_map.getContainer().setAttribute('data-add-marker', 'true');
                 }
             };
 
-            _map.on('click', function(e){
-                if (_map.getContainer().getAttribute('data-add-marker') == 'true') {
-                    var latlng = e.latlng.lat+','+e.latlng.lon,
+            L_map.on('click', function(e){
+                if (L_map.getContainer().getAttribute('data-add-marker') == 'true') {
+                    var latlng = e.latlng.lat+','+e.latlng.lng,
                         marker = new L.marker(e.latlng, {
                             id: 'marker_'+map_options.markerMaxId,
                             clickable: true,
                             draggable: true,
                             riseOnHover: true
-                        }).addTo(map);
+                        }).addTo(L_map);
                     marker.bindPopup(
-'<div class="input-group">'
-    +'<span class="input-group-btn" title="" data-toggle="tooltip" data-placement="right" title="'+msg_delete+'">'
-        +'<button data-target-to-delete="{type}_{id}" type="button" class="btn btn-danger deleteMarker">'
-            +'<span class="glyphicon icon-bin"></span>'
-        +'</button>'
-    +'</span>'
-    +'<input type="text" id="{type}_{id}_name" name="{type}[{id}][name]" value="" placeholder="'+msg_name+'" class="form-control">'
-+'</div>'
+                        '<div class="input-group">'
+                            +'<span class="input-group-btn" title="" data-toggle="tooltip" data-placement="right" title="'+msg_delete+'">'
+                                +'<button data-target-to-delete="{type}_{id}" type="button" class="btn btn-danger deleteMarker">'
+                                    +'<span class="glyphicon icon-bin"></span>'
+                                +'</button>'
+                            +'</span>'
+                            +'<input type="text" id="{type}_{id}_name" name="{type}[{id}][name]" value="" placeholder="'+msg_name+'" class="form-control">'
+                        +'</div>'
                     );
                     map_options.markerMaxId++;
                     d.getElementById('map_add_marker').classList.remove('active');
-                    _map.getContainer().removeAttribute('data-add-marker');
+                    L_map.getContainer().removeAttribute('data-add-marker');
                     marker.on('dragend', function(e){
                         var marker = e.target;
                         var position = marker.getLatLng();
