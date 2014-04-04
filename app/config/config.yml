@@ -14,7 +14,7 @@ framework:
     csrf_protection: ~
     validation:
         enable_annotations: true
-        cache: apc
+#        cache: apc
     templating:
         engines: ['twig','php']
         #assets_version: SomeVersionScheme

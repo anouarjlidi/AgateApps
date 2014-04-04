@@ -4,6 +4,7 @@ namespace CorahnRin\CharactersBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use CorahnRin\UsersBundle\Entity\Users;
 use CorahnRin\CharactersBundle\Exceptions\CharactersException;
 
 /**
@@ -1716,7 +1717,7 @@ class Characters
     /**
      * Set user
      *
-     * @param Users|\CorahnRin\UsersBundle\Entity\Users $user
+     * @param \CorahnRin\UsersBundle\Entity\Users $user
      * @return Characters
      */
     public function setUser(Users $user = null)
