@@ -5,16 +5,16 @@
      * @param object params Un objet JSON contenant les paramètres à appliquer
      * @returns CorahnRinMap
      */
-    function CorahnRinMap(user_leaflet_options, userL_map_options) {
+    function EsterenMap(user_leaflet_options, user_map_options) {
 
         // Données utilisées dans le scope de la classe
         var _this = this,
-            baseL_map_options, map_options = {},
+            base_map_options, map_options = {},
             base_leaflet_options, leaflet_options = {},
             L_map
         ;
 
-        baseL_map_options = {
+        base_map_options = {
             id: 0,
             container: 'map',
             baseHost: w.location.protocol + "//" + w.location.hostname + (w.location.port && ":" + w.location.port),
@@ -26,11 +26,16 @@
             zoom: 0,
             markerMaxId: 0,
             markerBaseHtml: '',
+            LeafletMarkerBaseOptions: {
+                clickable: true,
+                draggable: false,
+                riseOnHover: true
+            },
             editMode: false
         };
 
-        if (baseL_map_options){ for (var attr in baseL_map_options) { map_options[attr] = baseL_map_options[attr]; } }
-        if (userL_map_options){ for (var attr in userL_map_options) { map_options[attr] = userL_map_options[attr]; } }
+        if (base_map_options){ for (var attr in base_map_options) { map_options[attr] = base_map_options[attr]; } }
+        if (user_map_options){ for (var attr in user_map_options) { map_options[attr] = user_map_options[attr]; } }
         map_options.tilesUrl = map_options.baseHost + map_options.tilesUrl.replace('{id}',map_options.id);
         map_options.mapApiUrl = map_options.baseHost + map_options.mapApiUrl.replace('{id}',map_options.id);
 
@@ -106,10 +111,13 @@
         this.getMarkers = function(){ return markers; };
 
         this.load = function(names, callback, options) {
-            var url,ajax_object;
+            var url,
+                ajax_object;
+
             names = names.toLowerCase();
             if (_this.map_elements[names] === undefined) {
-                _this.map_elements[names] = [];
+                console.error('Éléments à charger incorrects.');
+                return false;
             }
 
             if (callback_load_elements == callback) {
@@ -145,6 +153,34 @@
             ;
         }
 
+        this.addMarker = function(latLng, leafletUserOptions, customUserOptions) {
+            var leafletOptions = this.map_options.LeafletMarkerBaseOptions,
+                customUserOptions = customUserOptions ? customUserOptions : {},
+                marker;
+            for (var attrName in leafletUserOptions) {
+                leafletOptions[attrname] = leafletUserOptions[attrName];
+            }
+
+            if (!leafletOptions.id) {
+                while (d.getElementById('marker_'+map_options.markerMaxId)) {
+                    map_options.markerMaxId ++;
+                }
+                leafletOptions.id = 'marker_'+map_options.markerMaxId;
+            }
+
+            marker = new L.marker(e.latlng, leafletOptions).addTo(L_map);
+
+            if (leafletOptions.draggable && customUserOptions.dragEndCallback) {
+                marker.on('dragend', dragEndCallback);
+            }
+
+            if (customUserOptions.popupContent) {
+                marker.bindPopup(customUserOptions.popupContent);
+            }
+
+            return this;
+        }
+
         //
         // Initialisations
         //
@@ -170,33 +206,22 @@
                 }
             };
 
-            L_map.on('click', function(e){
+            L_map.on('click', function(map_event){
                 if (L_map.getContainer().getAttribute('data-add-marker') == 'true') {
-                    var latlng = e.latlng.lat+','+e.latlng.lng,
-                        marker = new L.marker(e.latlng, {
-                            id: 'marker_'+map_options.markerMaxId,
-                            clickable: true,
-                            draggable: true,
-                            riseOnHover: true
-                        }).addTo(L_map);
-                    marker.bindPopup(
-                        '<div class="input-group">'
-                            +'<span class="input-group-btn" title="" data-toggle="tooltip" data-placement="right" title="'+msg_delete+'">'
-                                +'<button data-target-to-delete="{type}_{id}" type="button" class="btn btn-danger deleteMarker">'
-                                    +'<span class="glyphicon icon-bin"></span>'
-                                +'</button>'
-                            +'</span>'
-                            +'<input type="text" id="{type}_{id}_name" name="{type}[{id}][name]" value="" placeholder="'+msg_name+'" class="form-control">'
-                        +'</div>'
-                    );
-                    map_options.markerMaxId++;
+                    var latlng = map_event.latlng.lat+','+map_event.latlng.lng;
+                    _this.addMarker(latlng, {
+                        clickable: true,
+                        draggable: true,
+                        riseOnHover: true
+                    }, {
+                        dragEndCallback: function(event){
+                            var marker = event.target;
+                            var position = marker.getLatLng();
+                            marker.setLatLng(position).update();
+                        }
+                    });
                     d.getElementById('map_add_marker').classList.remove('active');
                     L_map.getContainer().removeAttribute('data-add-marker');
-                    marker.on('dragend', function(e){
-                        var marker = e.target;
-                        var position = marker.getLatLng();
-                        marker.setLatLng(position).update();
-                    });
                 }
 
             });
@@ -206,6 +231,6 @@
         return this;
     }
 
-    w.CorahnRinMap = CorahnRinMap;
+    w.EsterenMap = EsterenMap;
 
 })(jQuery, L, document, window);
