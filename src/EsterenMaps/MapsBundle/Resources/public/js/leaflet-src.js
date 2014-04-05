@@ -6078,7 +6078,9 @@ L.Circle.include(!L.Path.CANVAS ? {} : {
 
 	_containsPoint: function (p) {
 		var center = this._point,
-		    w2 = this.options.stroke ? this.options.weight / 2 : 0;
+		    w2 = this
+
+                .stroke ? this.options.weight / 2 : 0;
 
 		return (p.distanceTo(center) <= this._radius + w2);
 	}

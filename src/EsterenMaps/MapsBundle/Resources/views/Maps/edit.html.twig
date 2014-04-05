@@ -43,7 +43,7 @@
         '@EsterenMapsBundle/Resources/public/js/leaflet-src.js'
         '@EsterenMapsBundle/Resources/public/js/map_main.js'
         output="js/maps.js"
-
+        filter=""
     %}<script type="text/javascript" src="{{ app.request.getSchemeAndHttpHost() ~ asset_url }}"></script>{% endjavascripts %}
 {#filter="?yui_js"#}
     {#{% javascripts
@@ -55,34 +55,36 @@
 
     <script type="text/javascript">{% include 'EsterenMapsBundle::javascript_words.js.twig' %}</script>
     <script type="text/javascript">
-        {#document.esterenmap = new Map({
-            allowZoom: false,
-            zoom: {{ map.maxZoom }}
-        });#}
+        (function(){
+            document.map = new EsterenMap({
+                id: {{ map.id }},
+                baseHost: "{{ app.request.getSchemeAndHttpHost() }}",
+                editMode: true,
+                markerMaxId: {{ maxMarkers }},
+                maxZoneId: {{ maxZones }},
+                maxRouteId: {{ maxRoutes }},
+                maxMarkerId: {{ maxMarkers }},
+                LeafletMapBaseOptions: {
+                    attribution: '&copy; Corahn-Rin',
+                    zoom: 1,
+                    maxZoom: {{ map.maxZoom }},
+                    maxBounds: [[-80.9,-180],[85.05,259.19]]
+                },
+                LeafletLayerBaseOptions: {
+                    maxZoom: {{ map.maxZoom }},
+                    maxNativeZoom: {{ map.maxZoom }},
+                    tileSize: {{ tile_size }},
+                    noWrap: false,
+                    continuousWorld: true
+                },
+                LeafletMarkerBaseOptions: {
+                    draggable: true
+                },
+                LeafletRouteBaseOptions: {
 
-        var map = new EsterenMap({
-            maxZoom: {{ map.maxZoom }},
-            maxNativeZoom: {{ map.maxZoom }},
-            tileSize: {{ tile_size }}
-        }, {
-            id: {{ map.id }},
-            baseHost: "{{ app.request.getSchemeAndHttpHost() }}",
-            editMode: true,
-            markerMaxId: {{ maxMarkers }}
-        });
-        //map.getZones();
-        //map.getMarkers();
-        //map.getRoutes();
-
-        document.addZonePolygonId = {{ maxZones }};
-        document.addRoutePolylineId = {{ maxRoutes }};
-        document.addMarkerId = {{ maxMarkers }};
+                }
+            });
+        })();
     </script>
 
-    {% javascripts
-        '@EsterenMapsBundle/Resources/public/js/map_editor/*'
-        output="js/map_edit.js"
-        filter="?yui_js"
-    %}<script type="text/javascript" src="{{ app.request.getSchemeAndHttpHost() ~ asset_url }}"></script>
-{% endjavascripts %}
 {% endblock %}

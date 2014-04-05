@@ -121,3 +121,8 @@
 .map-icon-target:hover {
     cursor:pointer;
 }
+
+
+#corahnrin .leaflet-container {
+    background-color: black;
+}

@@ -1,5 +1,31 @@
-(function($, d){
+/**
+ * Merges two objects recursively
+ * @param targetObject
+ * @param sourceObject
+ * @returns {*}
+ */
+function mergeRecursive (targetObject, sourceObject) {
+    var property;
+    for (property in sourceObject) {
+        if (sourceObject.hasOwnProperty(property)) {
+            try {
+                targetObject[property] =
+                    (sourceObject[property].constructor == Object)
+                        ? this.mergeRecursive(targetObject[property], sourceObject[property])
+                        : sourceObject[property];
+            }
+            catch(e) { targetObject[property] = sourceObject[property]; }
+        }
+    }
+    return targetObject;
+};
+
+(function($, d, w){
     var a;
+
+    String.prototype.trim=function(){
+        return this.replace(/^\s+|\s+$/g, '');
+    };
 
     // Placement dynamique d'une tooltip
     $('[data-toggle="tooltip"]').tooltip({
@@ -37,8 +63,6 @@
             return false;
         });
     }
-
-    String.prototype.trim=function(){return this.replace(/^\s+|\s+$/g, '');};
 
 
     // Form prototype (sélection multiple, propre au BO)
@@ -154,4 +178,4 @@
         return false;
     });
 
-})(jQuery, document);
+})(jQuery, document, window);
