@@ -126,3 +126,14 @@
 #corahnrin .leaflet-container {
     background-color: black;
 }
+
+#corahnrin .leaflet-popup-content {
+    color: #222222;
+}
+#corahnrin .leaflet-popup-content-wrapper,
+#corahnrin .leaflet-popup-tip {
+    background-color: rgba(255, 255, 255, 0.85);
+    -webkit-box-shadow: 0 3px 10px #000000;
+    -moz-box-shadow: 0 3px 10px #000000;
+    box-shadow: 0 3px 10px #000000;
+}

@@ -1,0 +1,22 @@
+{% spaceless %}
+    {% set id = marker.id ? marker.id : '{id}' %}
+    <h3>{{ 'Marqueur' | trans }}</h3>
+    <input type="hidden" id="marker_coords_{{ id }}" name="marker[{id}][coords]" value="{latlng}" />
+    <div class="row">
+        <label for="marker_name_{id}" class="col-sm-2 control-label">{{ 'Nom' | trans }}</label>
+        <div class="col-sm-10">
+            <input required="required" type="text" id="marker_name_{id}" name="marker[{id}][name]" placeholder="{{ 'Nom' | trans }}" class="form-control" value="" />
+        </div>
+    </div>
+    <div class="row">
+        <label for="marker_type_{id}" class="col-sm-2 control-label">{{ 'Type' | trans }}</label>
+        <div class="col-sm-10">
+            <select required="required" id="marker_type_{id}" name="marker[{id}][type]" class="form-control">
+                <option value="" {{ id ? '' : 'selected="selected"' }}>-- {{ 'Choisissez un type de marqueur' | trans }} --</option>
+                {% for markerType in markersTypes %}
+                    <option value="{{ markerType.id }}" {{ id == markerType.id ? 'selected="selected"' : '' }}>{{ markerType.name | trans | replace("'","&#130;") }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+{% endspaceless %}

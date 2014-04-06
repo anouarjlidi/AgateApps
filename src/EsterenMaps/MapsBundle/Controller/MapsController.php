@@ -109,6 +109,7 @@ class MapsController extends Controller
             'tile_size' => $this->container->getParameter('esterenmaps.tile_size'),
             'routesTypes' => $routesTypes,
             'markersTypes' => $markersTypes,
+            'emptyMarker' => new Markers(),
             'route_init' => $route_init,
             'maxZones' => $maxZones,
             'maxRoutes' => $maxRoutes,

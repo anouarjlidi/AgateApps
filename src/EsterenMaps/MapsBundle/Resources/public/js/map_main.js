@@ -130,15 +130,21 @@
 
 
             L_map.on('click', function(map_event){
-                var latlng;
-                if (this.getContainer().getAttribute('data-add-marker') == 'true') {
+                var latlng,
+                    _this = document.map,
+                    popupContent = _this.map_options.LeafletPopupBaseContent,
+                    container = document.map._map.getContainer()
+                ;
+                if (container.getAttribute('data-add-marker') == 'true') {
                     latlng = map_event.latlng.lat+','+map_event.latlng.lng;
+                    popupContent = popupContent.replace('{latlng}', latlng);
+                    popupContent = popupContent.replace('{type}', '');
                     _this.addMarker(map_event.latlng, {
                         clickable: true,
                         draggable: true,
                         riseOnHover: true
                     }, {
-                        popupContent: _this.map_options.baseMarkerPopupContent,
+                        popupContent: popupContent,
                         dragEndCallback: function(event){
                             var marker = event.target;
                             var position = marker.getLatLng();
@@ -146,7 +152,7 @@
                         }
                     });
                     d.getElementById('map_add_marker').classList.remove('active');
-                    this.getContainer().removeAttribute('data-add-marker');
+                    container.removeAttribute('data-add-marker');
                 }
 
             });
@@ -166,10 +172,11 @@
      * @returns {EsterenMap}
      */
     EsterenMap.prototype.addMarker = function(latLng, leafletUserOptions, customUserOptions) {
-        var map_options = this.map_options,
+        var _this = this,
+            map_options = _this.map_options,
             leafletOptions = map_options.LeafletMarkerBaseOptions,
-            marker,
-            L_map = this._map;
+            marker,popup,popupContent,popupOptions,
+            L_map = _this._map;
 
         customUserOptions = mergeRecursive(customUserOptions, customUserOptions);
 
@@ -195,8 +202,16 @@
             console.error('DragEndCallback parameter must be a function.');
         }
 
-        if (customUserOptions.popupContent && typeof customUserOptions.popupContent === 'string') {
-            marker.bindPopup(customUserOptions.popupContent);
+        popupContent = customUserOptions.popupContent;
+        if (popupContent && typeof popupContent === 'string') {
+            popupContent = popupContent.replace('{id}', ''+leafletOptions.id);
+            popupOptions = _this.map_options.LeafletPopupBaseOptions;
+            if (customUserOptions.popupOptions) {
+                popupOptions = mergeRecursive(popupOptions, customUserOptions.popupOptions);
+            }
+            popup = L.popup(popupOptions);
+            popup.setContent(popupContent);
+            marker.bindPopup(popup);
         } else if (customUserOptions.popupContent && typeof customUserOptions.popupContent !== 'string') {
             console.error('popupContent parameter must be a string.');
         }
@@ -236,7 +251,11 @@
         maxRouteId: 1,
         maxZoneId: 1,
         markerBaseHtml: '',
-        baseMarkerPopupContent: '',
+        LeafletPopupBaseContent: '',
+        LeafletPopupBaseOptions: {
+            maxWidth: 350,
+            minWidth: 280
+        },
         LeafletMapBaseOptions: {
             center: [0,0],
             zoom: 1,
