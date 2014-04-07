@@ -2,6 +2,7 @@
 
 namespace CorahnRin\ToolsBundle\Repository;
 use Doctrine\ORM\EntityRepository as EntityRepository;
+use Doctrine\ORM\Query;
 
 /**
  * CorahnRinRepository
@@ -99,5 +100,22 @@ abstract class CorahnRinRepository extends EntityRepository {
             }
         }
         return $total ?: $collection;
+    }
+
+    public function getIds() {
+        $qb = $this->_em->createQueryBuilder()
+            ->select('a.id')
+            ->from($this->_entityName, 'a')
+        ;
+        $result = $qb->getQuery()
+            ->getResult(Query::HYDRATE_ARRAY);
+
+        $array = array();
+
+        foreach ($result as $id){
+            $array[] = $id['id'];
+        }
+
+        return $array;
     }
 }

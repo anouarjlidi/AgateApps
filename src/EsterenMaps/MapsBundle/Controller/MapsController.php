@@ -102,13 +102,22 @@ class MapsController extends Controller
         $route_init = '';
 
         $maxZones = $em->getRepository('EsterenMapsBundle:Zones')->getMax();
+        $idsZones = $em->getRepository('EsterenMapsBundle:Zones')->getIds();
+
         $maxRoutes = $em->getRepository('EsterenMapsBundle:Routes')->getMax();
+        $idsRoutes = $em->getRepository('EsterenMapsBundle:Routes')->getIds();
+
         $maxMarkers = $em->getRepository('EsterenMapsBundle:Markers')->getMax();
+        $idsMarkers = $em->getRepository('EsterenMapsBundle:Markers')->getIds();
+
         return array(
             'map'=>$map,
             'tile_size' => $this->container->getParameter('esterenmaps.tile_size'),
             'routesTypes' => $routesTypes,
             'markersTypes' => $markersTypes,
+            'idsMarkers' => $idsMarkers,
+            'idsZones' => $idsZones,
+            'idsRoutes' => $idsRoutes,
             'emptyMarker' => new Markers(),
             'route_init' => $route_init,
             'maxZones' => $maxZones,
