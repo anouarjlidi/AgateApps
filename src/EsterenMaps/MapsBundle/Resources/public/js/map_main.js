@@ -145,10 +145,41 @@
                         riseOnHover: true
                     }, {
                         popupContent: popupContent,
-                        dragEndCallback: function(event){
-                            var marker = event.target;
-                            var position = marker.getLatLng();
-                            marker.setLatLng(position).update();
+                        clickCallback: function(e){
+                            var marker = e.target,
+                                id = marker.options.alt,
+                                popup = marker.getPopup()
+                            ;
+
+                            if (popup._isOpen) {
+                                console.info('popup open');
+                                d.getElementById('marker_popup_name').value = d.getElementById('marker_'+id+'_name').value;
+                                d.getElementById('marker_popup_type').value = d.getElementById('marker_'+id+'_type').value;
+                                d.getElementById('marker_popup_faction').value = d.getElementById('marker_'+id+'_faction').value;
+
+                                d.getElementById('marker_popup_name').onkeyup = function(){
+                                    d.getElementById('marker_'+id+'_name').value = this.value;
+                                    return false;
+                                };
+                                d.getElementById('marker_popup_type').onchange = function(){
+                                    d.getElementById('marker_'+id+'_type').value = this.value;
+                                    return false;
+                                };
+                                d.getElementById('marker_popup_faction').onchange = function(){
+                                    d.getElementById('marker_'+id+'_faction').value = this.value;
+                                    return false;
+                                };
+                            } else {
+                                console.info('popup closed');
+                            }
+
+                        },
+                        dragCallback: function(e){
+                            var marker = e.target,
+                                id = marker.options.alt,
+                                latlng = marker.getLatLng();
+                            marker.setLatLng(latlng).update();
+                            d.getElementById('marker_'+id+'_coords').value = latlng.lat+','+latlng.lng;
                         }
                     });
                     d.getElementById('map_add_marker').classList.remove('active');
@@ -174,8 +205,10 @@
     EsterenMap.prototype.addMarker = function(latLng, leafletUserOptions, customUserOptions) {
         var _this = this,
             map_options = _this.map_options,
+            id,
+            option,
             leafletOptions = map_options.LeafletMarkerBaseOptions,
-            marker,popup,popupContent,popupOptions,
+            marker,popup,popupContent,popupOptions,clickCallback,
             L_map = _this._map;
 
         customUserOptions = mergeRecursive(customUserOptions, customUserOptions);
@@ -184,27 +217,19 @@
             leafletOptions = mergeRecursive(leafletOptions, leafletUserOptions);
         }
 
-        console.info(leafletOptions);
-
-        if (!leafletOptions.id) {
-            while (d.getElementById('marker_'+map_options.maxMarkerId)) {
-                map_options.maxMarkerId ++;
-            }
-            leafletOptions.id = 'marker_'+map_options.maxMarkerId;
+        while (d.getElementById('marker_'+this.map_options.maxMarkerId+'_name')) {
+            this.map_options.maxMarkerId ++;
         }
+
+        id = this.map_options.maxMarkerId;
+
+        leafletOptions.alt = id;
 
         marker = new L.marker(latLng, leafletOptions).addTo(L_map);
 
-        if (leafletOptions.draggable && customUserOptions.dragEndCallback && typeof customUserOptions.dragEndCallback === 'function') {
-            // Ajoute un callback sur le "dragEnd" si demandé
-            marker.on('dragend', customUserOptions.dragEndCallback);
-        } else if (leafletOptions.draggable && customUserOptions.dragEndCallback && typeof customUserOptions.dragEndCallback !== 'function') {
-            console.error('DragEndCallback parameter must be a function.');
-        }
-
+        // Création d'une popup
         popupContent = customUserOptions.popupContent;
         if (popupContent && typeof popupContent === 'string') {
-            popupContent = popupContent.replace('{id}', ''+leafletOptions.id);
             popupOptions = _this.map_options.LeafletPopupBaseOptions;
             if (customUserOptions.popupOptions) {
                 popupOptions = mergeRecursive(popupOptions, customUserOptions.popupOptions);
@@ -215,6 +240,24 @@
         } else if (customUserOptions.popupContent && typeof customUserOptions.popupContent !== 'string') {
             console.error('popupContent parameter must be a string.');
         }
+
+        // Application des events listeners
+        for (option in customUserOptions) {
+            if (option.match(/Callback$/)) {
+                marker.addEventListener(option.replace('Callback',''), customUserOptions[option]);
+            }
+        }
+
+        if (this.map_options.editMode) {
+            $('#inputs_container').append(
+                '<input type="hidden" id="marker_'+id+'_name" name="marker['+id+'][name]" value="" />'+
+                '<input type="hidden" id="marker_'+id+'_faction" name="marker['+id+'][faction]" value="" />'+
+                '<input type="hidden" id="marker_'+id+'_coords" name="marker['+id+'][coords]" value="'+latLng.lat+','+latLng.lng+'" />'+
+                '<input type="hidden" id="marker_'+id+'_type" name="marker['+id+'][type]" value="1" />'
+            );
+        }
+
+        this._markers.push(marker);
 
         return this;
     }
@@ -295,6 +338,7 @@
     };
 
     EsterenMap.prototype._map = null;
+    EsterenMap.prototype._markers = [];
 
 //    EsterenMap.prototype.;
 

@@ -1,20 +1,28 @@
 {% spaceless %}
-    {% set id = marker.id ? marker.id : '{id}' %}
     <h3>{{ 'Marqueur' | trans }}</h3>
-    <input type="hidden" id="marker_coords_{{ id }}" name="marker[{id}][coords]" value="{latlng}" />
     <div class="row">
-        <label for="marker_name_{id}" class="col-sm-2 control-label">{{ 'Nom' | trans }}</label>
+        <label for="marker_popup_name" class="col-sm-2 control-label">{{ 'Nom' | trans | replace("'","&#130;") }}</label>
         <div class="col-sm-10">
-            <input required="required" type="text" id="marker_name_{id}" name="marker[{id}][name]" placeholder="{{ 'Nom' | trans }}" class="form-control" value="" />
+            <input required="required" type="text" id="marker_popup_name" name="marker_popup_name" placeholder="{{ 'Nom' | trans | replace("'","&#130;") }}" class="form-control" value="" />
         </div>
     </div>
     <div class="row">
-        <label for="marker_type_{id}" class="col-sm-2 control-label">{{ 'Type' | trans }}</label>
+        <label for="marker_popup_type" class="col-sm-2 control-label">{{ 'Type' | trans }}</label>
         <div class="col-sm-10">
-            <select required="required" id="marker_type_{id}" name="marker[{id}][type]" class="form-control">
-                <option value="" {{ id ? '' : 'selected="selected"' }}>-- {{ 'Choisissez un type de marqueur' | trans }} --</option>
+            <select required="required" id="marker_popup_type" name="marker_popup_type" class="form-control">
                 {% for markerType in markersTypes %}
-                    <option value="{{ markerType.id }}" {{ id == markerType.id ? 'selected="selected"' : '' }}>{{ markerType.name | trans | replace("'","&#130;") }}</option>
+                    <option value="{{ markerType.id }}">{{ markerType.name | trans | replace("'","&#130;") }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="row">
+        <label for="marker_popup_faction" class="col-sm-2 control-label">{{ 'Faction' | trans }}</label>
+        <div class="col-sm-10">
+            <select required="required" id="marker_popup_faction" name="marker_popup_faction" class="form-control">
+                <option value="">-- {{ 'Choisissez une faction' | trans | replace("'","&#130;") }} --</option>
+                {% for faction in factions %}
+                    <option value="{{ faction.id }}">{{ faction.name | trans | replace("'","&#130;") }}</option>
                 {% endfor %}
             </select>
         </div>

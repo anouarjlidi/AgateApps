@@ -18,6 +18,10 @@ use EsterenMaps\MapsBundle\Form\MapsType;
 class MapsController extends Controller
 {
 
+    private $markersTypes;
+    private $routesTypes;
+    private $factions;
+
     /**
      * @Route("/maps/{id}-{nameSlug}", requirements={"id":"\d+"})
      * @Template()
@@ -81,11 +85,19 @@ class MapsController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
+        $routesTypes = $em->getRepository('EsterenMapsBundle:RoutesTypes')->findAll(true);
+        $markersTypes = $em->getRepository('EsterenMapsBundle:MarkersTypes')->findAll(true);
+        $factions = $em->getRepository('EsterenMapsBundle:Factions')->findAll(true);
+
+        $this->routesTypes = $routesTypes;
+        $this->markersTypes = $markersTypes;
+        $this->factions = $factions;
+
         if ($request->getMethod() == 'POST') {
 
-            $this->updateZones($map, $request);
+//            $this->updateZones($map, $request);
             $this->updateMarkers($map, $request);
-            $this->updateRoutes($map, $request);
+//            $this->updateRoutes($map, $request);
 
             $em->persist($map);
             $em->flush();
@@ -94,9 +106,6 @@ class MapsController extends Controller
             return $this->redirect($this->generateUrl('esterenmaps_maps_maps_edit',array('id'=>$map->getId())));
 
         }
-
-        $routesTypes = $em->getRepository('EsterenMapsBundle:RoutesTypes')->findAll();
-        $markersTypes = $em->getRepository('EsterenMapsBundle:MarkersTypes')->findAll();
 
 //        $route_init = $this->generateUrl('esterenmaps_maps_api_init');
         $route_init = '';
@@ -115,6 +124,7 @@ class MapsController extends Controller
             'tile_size' => $this->container->getParameter('esterenmaps.tile_size'),
             'routesTypes' => $routesTypes,
             'markersTypes' => $markersTypes,
+            'factions' => $factions,
             'idsMarkers' => $idsMarkers,
             'idsZones' => $idsZones,
             'idsRoutes' => $idsRoutes,
@@ -275,57 +285,43 @@ class MapsController extends Controller
     private function updateMarkers(&$map, Request $request) {
         $post = $request->request;
 
-        $list = $post->get('map_add_marker_coords');
-        $names = $post->get('map_add_marker_name');
-        $types = $post->get('map_add_marker_type');
+        $markers_post = $post->get('marker');
+        $t = $map->getMarkers();
+        $markers_map = array();
+        foreach ($t as $m) { $markers_map[$m->getId()] = $m; }
 
         $em = $this->getDoctrine()->getManager();
 
-        $markersTypes = $em->getRepository('EsterenMapsBundle:MarkersTypes')->findAll(true);
+        if (!$markers_post) { $markers_post = array(); }
 
-        $ids = array();
-        foreach ($map->getMarkers() as $marker) {
-            $ids[$marker->getId()] = $marker;
+        // Mise à jour des marqueurs
+        foreach ($markers_post as $id => $marker_post) {
+            if (isset($markers_map[$id])) {
+                $marker = $markers_map[$id];
+            } else {
+                $marker = new Markers();
+            }
+            $marker
+                ->setName($marker_post['name'])
+                ->setCoordinates($marker_post['coords'])
+                ->setMarkerType($this->markersTypes[$marker_post['type']])
+                ->setMap($map)
+            ;
+            if ($marker_post['faction']) {
+                $marker->setFaction($this->factions[$marker_post['faction']]);
+                $em->persist($this->factions[$marker_post['faction']]);
+            } else {
+                $marker->setFaction(null);
+            }
             $em->persist($marker);
         }
 
-        if ($list) {
-            foreach ($list as $id => $coordinates) {
-                // Définition de la marker
-                if (!isset($markersTypes[$types[$id]])) {
-                    throw new \Symfony\Component\Config\Definition\Exception\Exception('Incorrect marker type');
-                }
-                $marker = new Markers();
-                $marker->setId($id)
-                    ->setName($names[$id])
-                    ->setMap($map)
-                    ->setMarkerType($markersTypes[$types[$id]])
-                    ->setCoordinates($coordinates);
-                unset($ids[$id]);
-
-                $getMarker = $map->getMarker($marker);
-                if (!$getMarker){
-                    // Injection dans la map si elle n'existe pas encore
-                    $map->addMarker($marker);
-                    $em->persist($marker);
-                } else {
-                    if ($getMarker->getCoordinates() !== $marker->getCoordinates() ||
-                        $getMarker->getName() !== $marker->getName()) {
-                        $getMarker->setCoordinates($marker->getCoordinates())
-                            ->setMarkerType($markersTypes[$types[$id]])
-                            ->setName($marker->getName());
-                        $map->setMarker($getMarker);
-                        $em->persist($getMarker);
-                    }
-                }
-            }
-
-            if (!empty($ids)) {
-                foreach ($ids as $marker) {
-                    $marker->setDeleted(1);
-                    $em->persist($marker);
-                    $map->removeMarker($marker);
-                }
+        // Suppression des marqueurs absents des données POST
+        foreach ($markers_map as $marker) {
+            $id = $marker->getId();
+            if (!isset($markers_post[$id])) {
+                $marker->setDeleted(true);
+                $em->persist($marker);
             }
         }
 
