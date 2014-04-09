@@ -14,36 +14,36 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 
 class ApiMapsController extends FOSRestController {
 
-    /**
-     * @Rest\View()
-     */
-    public function cgetAction() {
-        $repo = $this->getDoctrine()->getManager()->getRepository('EsterenMapsBundle:Maps');
-
-        $maps = $repo->findAll();
-        if (!$maps) {
-            throw $this->createNotFoundException('No map found');
-        }
-        return array('maps'=>$maps);
-    }
-
-    /**
-     * @Rest\View()
-     */
-    public function getAction($id) {
-        $repo = $this->getDoctrine()->getManager()->getRepository('EsterenMapsBundle:Maps');
-
-        $map = $repo->find($id);
-        if (!$map) {
-            throw $this->createNotFoundException('Incorrect ID : No map found.');
-        }
-        return array('map'=>$map);
-    }
-
-    /**
-     * @Route("/api/maps/init/", defaults={"_format":"json"})
-     * @Method({"POST"})
-     */
+//    /**
+//     * @Rest\View()
+//     */
+//    public function cgetAction() {
+//        $repo = $this->getDoctrine()->getManager()->getRepository('EsterenMapsBundle:Maps');
+//
+//        $maps = $repo->findAll();
+//        if (!$maps) {
+//            throw $this->createNotFoundException('No map found');
+//        }
+//        return array('maps'=>$maps);
+//    }
+//
+//    /**
+//     * @Rest\View()
+//     */
+//    public function getAction($id) {
+//        $repo = $this->getDoctrine()->getManager()->getRepository('EsterenMapsBundle:Maps');
+//
+//        $map = $repo->find($id);
+//        if (!$map) {
+//            throw $this->createNotFoundException('Incorrect ID : No map found.');
+//        }
+//        return array('map'=>$map);
+//    }
+//
+//    /**
+//     * @Route("/api/maps/init/", defaults={"_format":"json"})
+//     * @Method({"POST"})
+//     */
     /*
     public function initAction(Request $request) {
         $this->init();

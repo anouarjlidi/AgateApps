@@ -1,11 +1,11 @@
 (function($, L, d, w){
 
-    var EsterenMap = function (user_map_options) {
+    var EsterenMap = function (user_mapOptions) {
 
         // Données utilisées dans le scope de la classe
         var _this = this,
             L_map,
-            map_options = this.map_options
+            mapOptions = this.mapOptions
         ;
 
         if (!L) {
@@ -14,14 +14,16 @@
         }
 
         // Merge des options de base
-        if (user_map_options){
-            map_options = mergeRecursive(map_options, user_map_options);
+        if (user_mapOptions){
+            mapOptions = mergeRecursive(mapOptions, user_mapOptions);
         }
-        map_options.tilesUrl = map_options.baseHost + map_options.tilesUrl.replace('{id}', ''+map_options.id);
-        map_options.mapApiUrl = map_options.baseHost + map_options.mapApiUrl.replace('{id}', ''+map_options.id);
-        this.map_options = map_options;
 
-        if (!d.getElementById(map_options.container)) {
+        // Formatage de l'url d'API qui doit utiliser l'ID de la map
+        mapOptions.apiUrls.tiles = mapOptions.apiUrls.tiles.replace('{id}', ''+mapOptions.id);
+
+        this.mapOptions = mapOptions;
+
+        if (!d.getElementById(mapOptions.container)) {
             console.error('Map could not initialize : wrong container id');
             return this;
         }
@@ -30,7 +32,7 @@
         // Méthodes privées
         //
 //        var callback_load_elements = function(e){
-//            var id = map_options.id,
+//            var id = mapOptions.id,
 //                elements = [],
 //                element,
 //                coords;
@@ -54,7 +56,7 @@
 //                    } else {
 //                        element = elements[i];
 //                    }
-//                    _this.map_elements[names].push(element);
+//                    _this.mapElements[names].push(element);
 //                }
 //            }
 //        };
@@ -62,34 +64,6 @@
         //
         // Méthodes publiques
         //
-
-//        _this.load = function(names, callback, options) {
-//            var url,
-//                ajax_object;
-//
-//            names = names.toLowerCase();
-//            if (_this.map_elements[names] === undefined) {
-//                console.error('Éléments à charger incorrects.');
-//                return false;
-//            }
-//
-//            if (callback_load_elements == callback) {
-//                url = map_options.mapApiUrl + '/' + names;
-//            } else {
-//                url = map_options.apiUrl + '/' + names;
-//            }
-//
-//            ajax_object = {
-//                url: url,
-//                dataType: 'json',
-//                success: callback
-//            };
-//            for (var attr in options) {
-//                ajax_object[attr] = options[attr];
-//            }
-//
-//            $.ajax(options);
-//        };
 
 //        _this.loadZones = function() { return _this.load('zones', callback_load_elements); };
 //        _this.loadRoutes = function() { return _this.load('routes', callback_load_elements); };
@@ -104,19 +78,19 @@
         this.resetHeight(this);
 
         // Création de la map
-        L_map = L.map(map_options.container, map_options.LeafletMapBaseOptions);
+        L_map = L.map(mapOptions.container, mapOptions.LeafletMapBaseOptions);
 
         // Création du calque des tuiles
-        L.tileLayer(map_options.tilesUrl, map_options.LeafletLayerBaseOptions).addTo(L_map);
+        L.tileLayer(mapOptions.apiUrls.tiles, mapOptions.LeafletLayerBaseOptions).addTo(L_map);
 
-        L.Icon.Default.imagePath = map_options.imgUrl.replace(/\/$/gi, '');
+        L.Icon.Default.imagePath = mapOptions.imgUrl.replace(/\/$/gi, '');
 
         _this._map = L_map;
 
         ////////////////////////////////
         ////////// Mode édition ////////
         ////////////////////////////////
-        if (map_options.editMode == true) {
+        if (mapOptions.editMode == true) {
 
             $('#map_add_marker').on('click', function(){
                 if (L_map.getContainer().getAttribute('data-add-marker')) {
@@ -131,57 +105,16 @@
 
             L_map.on('click', function(map_event){
                 var latlng,
-                    _this = document.map,
-                    popupContent = _this.map_options.LeafletPopupBaseContent,
-                    container = document.map._map.getContainer()
+                    popupContent = _this.mapOptions.LeafletPopupBaseContent,
+                    options = _this.mapOptions.CustomMarkerBaseOptionsEditMode,
+                    container = _this._map.getContainer()
                 ;
                 if (container.getAttribute('data-add-marker') == 'true') {
-                    latlng = map_event.latlng.lat+','+map_event.latlng.lng;
-                    popupContent = popupContent.replace('{latlng}', latlng);
-                    popupContent = popupContent.replace('{type}', '');
-                    _this.addMarker(map_event.latlng, {
-                        clickable: true,
-                        draggable: true,
-                        riseOnHover: true
-                    }, {
-                        popupContent: popupContent,
-                        clickCallback: function(e){
-                            var marker = e.target,
-                                id = marker.options.alt,
-                                popup = marker.getPopup()
-                            ;
-
-                            if (popup._isOpen) {
-                                console.info('popup open');
-                                d.getElementById('marker_popup_name').value = d.getElementById('marker_'+id+'_name').value;
-                                d.getElementById('marker_popup_type').value = d.getElementById('marker_'+id+'_type').value;
-                                d.getElementById('marker_popup_faction').value = d.getElementById('marker_'+id+'_faction').value;
-
-                                d.getElementById('marker_popup_name').onkeyup = function(){
-                                    d.getElementById('marker_'+id+'_name').value = this.value;
-                                    return false;
-                                };
-                                d.getElementById('marker_popup_type').onchange = function(){
-                                    d.getElementById('marker_'+id+'_type').value = this.value;
-                                    return false;
-                                };
-                                d.getElementById('marker_popup_faction').onchange = function(){
-                                    d.getElementById('marker_'+id+'_faction').value = this.value;
-                                    return false;
-                                };
-                            } else {
-                                console.info('popup closed');
-                            }
-
-                        },
-                        dragCallback: function(e){
-                            var marker = e.target,
-                                id = marker.options.alt,
-                                latlng = marker.getLatLng();
-                            marker.setLatLng(latlng).update();
-                            d.getElementById('marker_'+id+'_coords').value = latlng.lat+','+latlng.lng;
-                        }
-                    });
+//                    latlng = map_event.latlng.lat+','+map_event.latlng.lng;
+                    _this.addMarker(map_event.latlng,
+                        _this.mapOptions.LeafletMarkerBaseOptionsEditMode,
+                        mergeRecursive(options, {popupContent:popupContent})
+                    );
                     d.getElementById('map_add_marker').classList.remove('active');
                     container.removeAttribute('data-add-marker');
                 }
@@ -192,46 +125,138 @@
 
         $(window).resize(function(){_this.resetHeight(_this);});
 
+        this.loadMarkers();
+
         return this;
+    };
+
+
+
+    /**
+     * Exécute une requête AJAX dans le but de récupérer des éléments liés à la map
+     * via l'API
+     *
+     * @param name Le type d'élément à récupérer
+     * @param options les options à envoyer à l'objet AJAX
+     * @param callback La fonction à exécuter (ignoré dans certains cas)
+     * @returns {*}
+     */
+    EsterenMap.prototype.load = function(name, options, callback) {
+        var url, ajax_object;
+
+        name = name.toLowerCase();
+        if (this.mapElements[name] === undefined) {
+            console.error('Éléments à charger incorrects.');
+            return false;
+        }
+
+        url = this.mapOptions.apiUrls.base + '/' + name;
+
+        if (!callback && this.mapOptions.loaderCallbacks[name]) {
+            callback = this.mapOptions.loaderCallbacks[name];
+        }
+
+        ajax_object = {
+            url: url,
+            type: 'GET',
+            dataType: 'json',
+            success: callback
+        };
+        ajax_object = mergeRecursive(ajax_object, options);
+
+        $.ajax(ajax_object);
+
+        return this;
+    };
+
+    EsterenMap.prototype.loadMarkers = function(){
+        var _this = this;
+        return this.load('markers', {}, function(response){
+            var markers, i, marker,
+                popupContent = _this.mapOptions.LeafletPopupBaseContent,
+                options = _this.mapOptions.CustomMarkerBaseOptionsEditMode,
+                leafletOptions = _this.mapOptions.LeafletMarkerBaseOptionsEditMode,
+                coords
+            ;
+            if (response['map.'+_this.mapOptions.id+'.markers']) {
+                markers = response['map.'+_this.mapOptions.id+'.markers'];
+                for (i in markers) {
+                    marker = markers[i];
+                    console.info(marker);
+                    if (_this.mapOptions.editMode === true) {
+                        coords = marker.coordinates.split(',').map(function(e){return parseFloat(e);});
+                        coords = {
+                            lat: coords[0],
+                            lng: coords[1]
+                        }
+                        _this.addMarker(coords,
+                            mergeRecursive(leafletOptions, {alt: marker.id}),
+                            mergeRecursive(options, {
+                                popupContent:popupContent,
+                                markerName: marker.name,
+                                markerType: marker.marker_type.id,
+                                markerFaction: marker.faction ? marker.faction.id : ''
+                            })
+                        );
+                        console.info(mergeRecursive(options, {
+                            popupContent:popupContent,
+                            markerId: marker.id,
+                            markerName: marker.name,
+                            markerType: marker.marker_type.id,
+                            markerFaction: marker.faction ? marker.faction.id : ''
+                        }));
+                    } else {
+                        console.info('public mode');
+                    }
+                }
+            }
+        });
     };
 
     /**
      * Ajoute un marqueur à la carte
      * @param latLng
      * @param leafletUserOptions
-     * @param customUserOptions {}
+     * @param customUserOptions
      * @returns {EsterenMap}
      */
     EsterenMap.prototype.addMarker = function(latLng, leafletUserOptions, customUserOptions) {
         var _this = this,
-            map_options = _this.map_options,
+            mapOptions = _this.mapOptions,
             id,
             option,
-            leafletOptions = map_options.LeafletMarkerBaseOptions,
-            marker,popup,popupContent,popupOptions,clickCallback,
+            leafletOptions = mapOptions.LeafletMarkerBaseOptions,
+            marker,popup,popupContent,popupOptions,
             L_map = _this._map;
 
-        customUserOptions = mergeRecursive(customUserOptions, customUserOptions);
+        console.info('custom options', customUserOptions);
 
         if (leafletUserOptions) {
             leafletOptions = mergeRecursive(leafletOptions, leafletUserOptions);
         }
 
-        while (d.getElementById('marker_'+this.map_options.maxMarkerId+'_name')) {
-            this.map_options.maxMarkerId ++;
+        while (d.getElementById('marker_'+this.mapOptions.maxMarkerId+'_name')) {
+            this.mapOptions.maxMarkerId ++;
         }
 
-        id = this.map_options.maxMarkerId;
+        if (!leafletOptions.alt) {
+            id = this.mapOptions.maxMarkerId;
+        } else {
+            id = leafletOptions.alt;
+        }
+        while (d.getElementById('marker_'+id+'_name')) { id ++; }
 
         leafletOptions.alt = id;
+
+        console.info('markerId:'+id);
 
         marker = new L.marker(latLng, leafletOptions).addTo(L_map);
 
         // Création d'une popup
         popupContent = customUserOptions.popupContent;
         if (popupContent && typeof popupContent === 'string') {
-            popupOptions = _this.map_options.LeafletPopupBaseOptions;
-            if (customUserOptions.popupOptions) {
+            popupOptions = _this.mapOptions.LeafletPopupBaseOptions;
+            if (typeof customUserOptions.popupOptions !== 'undefined') {
                 popupOptions = mergeRecursive(popupOptions, customUserOptions.popupOptions);
             }
             popup = L.popup(popupOptions);
@@ -248,12 +273,12 @@
             }
         }
 
-        if (this.map_options.editMode) {
+        if (this.mapOptions.editMode) {
             $('#inputs_container').append(
-                '<input type="hidden" id="marker_'+id+'_name" name="marker['+id+'][name]" value="" />'+
-                '<input type="hidden" id="marker_'+id+'_faction" name="marker['+id+'][faction]" value="" />'+
+                '<input type="hidden" id="marker_'+id+'_name" name="marker['+id+'][name]" value="'+(customUserOptions.markerName?customUserOptions.markerName:'')+'" />'+
+                '<input type="hidden" id="marker_'+id+'_faction" name="marker['+id+'][faction]" value="'+(customUserOptions.markerFaction?customUserOptions.markerFaction:'')+'" />'+
                 '<input type="hidden" id="marker_'+id+'_coords" name="marker['+id+'][coords]" value="'+latLng.lat+','+latLng.lng+'" />'+
-                '<input type="hidden" id="marker_'+id+'_type" name="marker['+id+'][type]" value="1" />'
+                '<input type="hidden" id="marker_'+id+'_type" name="marker['+id+'][type]" value="'+(customUserOptions.markerType?customUserOptions.markerType:'1')+'" />'
             );
         }
 
@@ -262,15 +287,11 @@
         return this;
     }
 
-    EsterenMap.prototype.get = function(option) {
-        return this.map_options[option];
-    };
-
     EsterenMap.prototype.getMarkers = function(){
-        return this.map_elements['markers'];
+        return this.mapElements['markers'];
     };
 
-    EsterenMap.prototype.map_elements = {
+    EsterenMap.prototype.mapElements = {
         factions: [],
         routes: [],
         routesTypes: [],
@@ -279,15 +300,19 @@
         zones: []
     };
 
-    EsterenMap.prototype.map_options = {
+    EsterenMap.prototype.mapOptions = {
         id: 0,
         editMode: false,
         container: 'map',
-        baseHost: w.location.protocol + "//" + w.location.hostname + (w.location.port && ":" + w.location.port),
-        tilesUrl: '/api/maps/tile/{id}/{z}/{x}/{y}.jpg',
         imgUrl: '/bundles/esterenmaps/img',
-        apiUrl: '/api_test/',
-        mapApiUrl: '/api_test/maps/{id}',
+        apiUrls: {
+            base: '/api/maps/',
+            tiles: '/api/maps/tile/{id}/{z}/{x}/{y}.jpg'
+        },
+        loaderCallbacks: {
+            routes: function(){},
+            zones: function(){}
+        },
         center: [0,0],
         zoom: 1,
         maxMarkerId: 1,
@@ -321,6 +346,49 @@
             draggable: false,
             riseOnHover: true
         },
+        LeafletMarkerBaseOptionsEditMode: {
+            clickable: true,
+            draggable: true,
+            riseOnHover: true
+        },
+        CustomMarkerBaseOptionsEditMode: {
+            clickCallback: function(e){
+                var marker = e.target,
+                    id = marker.options.alt,
+                    popup = marker.getPopup()
+                ;
+
+                setTimeout(function(){
+                    if (popup._isOpen) {
+                        console.info('popup open');
+                        d.getElementById('marker_popup_name').value = d.getElementById('marker_'+id+'_name').value;
+                        d.getElementById('marker_popup_type').value = d.getElementById('marker_'+id+'_type').value;
+                        d.getElementById('marker_popup_faction').value = d.getElementById('marker_'+id+'_faction').value;
+
+                        d.getElementById('marker_popup_name').onkeyup = function(){
+                            d.getElementById('marker_'+id+'_name').value = this.value;
+                            return false;
+                        };
+                        d.getElementById('marker_popup_type').onchange = function(){
+                            d.getElementById('marker_'+id+'_type').value = this.value;
+                            return false;
+                        };
+                        d.getElementById('marker_popup_faction').onchange = function(){
+                            d.getElementById('marker_'+id+'_faction').value = this.value;
+                            return false;
+                        };
+                    }
+                },20);
+
+            },
+            dragCallback: function(e){
+                var marker = e.target,
+                    id = marker.options.alt,
+                    latlng = marker.getLatLng();
+                marker.setLatLng(latlng).update();
+                d.getElementById('marker_'+id+'_coords').value = latlng.lat+','+latlng.lng;
+            }
+        },
         LeafletRouteBaseOptions: {
 
         }
@@ -328,7 +396,7 @@
 
     EsterenMap.prototype.resetHeight = function(EsterenMap) {
         // Remet la valeur de la hauteur de façon correcte par rapport au navigateur.
-        $(d.getElementById(EsterenMap.map_options.container)).height(
+        $(d.getElementById(EsterenMap.mapOptions.container)).height(
               $(w).height()
             - $('#footer').outerHeight(true)
             - $('#navigation').outerHeight(true)

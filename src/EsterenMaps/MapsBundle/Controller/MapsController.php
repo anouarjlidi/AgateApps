@@ -119,8 +119,12 @@ class MapsController extends Controller
         $maxMarkers = $em->getRepository('EsterenMapsBundle:Markers')->getMax();
         $idsMarkers = $em->getRepository('EsterenMapsBundle:Markers')->getIds();
 
+        $tilesUrl = $this->generateUrl('esterenmaps_maps_tiles_tile', array('id'=>0,'x'=>0,'y'=>0,'zoom'=>0), true);
+        $tilesUrl = str_replace('0/0/0/0','{id}/{z}/{x}/{y}', $tilesUrl);
+
         return array(
             'map'=>$map,
+            'tilesUrl' => $tilesUrl,
             'tile_size' => $this->container->getParameter('esterenmaps.tile_size'),
             'routesTypes' => $routesTypes,
             'markersTypes' => $markersTypes,

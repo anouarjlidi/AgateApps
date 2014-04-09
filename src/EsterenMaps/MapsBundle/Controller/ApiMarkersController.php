@@ -14,36 +14,36 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 
 class ApiMarkersController extends FOSRestController {
 
-    /**
-     * @Rest\View()
-     */
-    public function cgetAction() {
-        $repo = $this->getDoctrine()->getManager()->getRepository('EsterenMapsBundle:Markers');
-
-        $markers = $repo->findAll();
-        if (!$markers) {
-            throw $this->createNotFoundException('No marker found');
-        }
-        return array('markers'=>$markers);
-    }
-
-    /**
-     * @Rest\View()
-     */
-    public function getAction($id) {
-        $repo = $this->getDoctrine()->getManager()->getRepository('EsterenMapsBundle:Markers');
-
-        $marker = $repo->find($id);
-        if (!$marker) {
-            throw $this->createNotFoundException('Incorrect ID : No marker found.');
-        }
-        return array('marker'=>$marker);
-    }
-
-    /**
-     * @Route("/api/markers/init/", defaults={"_format":"json"})
-     * @Method({"POST"})
-     */
+//    /**
+//     * @Rest\View()
+//     */
+//    public function cgetAction() {
+//        $repo = $this->getDoctrine()->getManager()->getRepository('EsterenMapsBundle:Markers');
+//
+//        $markers = $repo->findAll();
+//        if (!$markers) {
+//            throw $this->createNotFoundException('No marker found');
+//        }
+//        return array('markers'=>$markers);
+//    }
+//
+//    /**
+//     * @Rest\View()
+//     */
+//    public function getAction($id) {
+//        $repo = $this->getDoctrine()->getManager()->getRepository('EsterenMapsBundle:Markers');
+//
+//        $marker = $repo->find($id);
+//        if (!$marker) {
+//            throw $this->createNotFoundException('Incorrect ID : No marker found.');
+//        }
+//        return array('marker'=>$marker);
+//    }
+//
+//    /**
+//     * @Route("/api/markers/init/", defaults={"_format":"json"})
+//     * @Method({"POST"})
+//     */
     /*
     public function initAction(Request $request) {
         $this->init();

@@ -14,7 +14,7 @@ use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 
 /**
- * @Route("/api_test/{serviceName}")
+ * @Route("/api/{serviceName}")
  */
 class ApiController extends FOSRestController
 {

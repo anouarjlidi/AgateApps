@@ -24,11 +24,11 @@
             </div>
         </div>
         <div id="inputs_container">
-            {% for marker in map.markers %}
-                <input type="hidden" id="marker_{{ marker.id }}_name" name="marker[{{ marker.id }}][name]" value="{{ marker.name }}" />
-                <input type="hidden" id="marker_{{ marker.id }}_coords" name="marker[{{ marker.id }}][coords]" value="{{ marker.coordinates }}" />
-                <input type="hidden" id="marker_{{ marker.id }}_type" name="marker[{{ marker.id }}][type]" value="{{ marker.markerType.id }}" />
-            {% endfor %}
+            {#{% for marker in map.markers %}#}
+                {#<input type="hidden" id="marker_{{ marker.id }}_name" name="marker[{{ marker.id }}][name]" value="{{ marker.name }}" />#}
+                {#<input type="hidden" id="marker_{{ marker.id }}_coords" name="marker[{{ marker.id }}][coords]" value="{{ marker.coordinates }}" />#}
+                {#<input type="hidden" id="marker_{{ marker.id }}_type" name="marker[{{ marker.id }}][type]" value="{{ marker.markerType.id }}" />#}
+            {#{% endfor %}#}
         </div>
     </fieldset>
 </form>
@@ -65,8 +65,12 @@
         (function(){
             document.map = new EsterenMap({
                 id: {{ map.id }},
-                baseHost: "{{ app.request.getSchemeAndHttpHost() }}",
                 editMode: true,
+                imgUrl: "{{ asset('bundles/esterenmaps/img') }}",
+                apiUrls: {
+                    base: "{{ url('corahnrin_api_api_get', {'serviceName':'maps','id':map.id}) }}",
+                    tiles: "{{ tilesUrl }}"
+                },
                 idsZones: [{{ idsZones | join(',') }}],
                 idsRoutes: [{{ idsRoutes | join(',') }}],
                 idsMarkers: [{{ idsMarkers | join(',') }}],
@@ -91,7 +95,6 @@
                     draggable: true
                 },
                 LeafletRouteBaseOptions: {
-
                 }
             });
         })();
