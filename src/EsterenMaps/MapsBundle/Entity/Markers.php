@@ -5,8 +5,8 @@ namespace EsterenMaps\MapsBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection as DoctrineCollection;
 
-use JMS\Serializer\Annotation\ExclusionPolicy as ExclusionPolicy;
-use JMS\Serializer\Annotation\Expose as Expose;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
 
 /**
  * Markers
@@ -38,10 +38,26 @@ class Markers
     /**
      * @var string
      *
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Expose
      */
-    protected $coordinates;
+    protected $altitude;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Expose
+     */
+    protected $latitude;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Expose
+     */
+    protected $longitude;
 
     /**
      * @var DateTime
@@ -168,29 +184,6 @@ class Markers
     }
 
     /**
-     * Set coordinates
-     *
-     * @param string $coordinates
-     * @return Markers
-     */
-    public function setCoordinates($coordinates)
-    {
-        $this->coordinates = $coordinates;
-
-        return $this;
-    }
-
-    /**
-     * Get coordinates
-     *
-     * @return string
-     */
-    public function getCoordinates()
-    {
-        return $this->coordinates;
-    }
-
-    /**
      * Set created
      *
      * @param \DateTime $created
@@ -242,7 +235,7 @@ class Markers
      * @param \EsterenMaps\MapsBundle\Entity\Routes $routes
      * @return Markers
      */
-    public function addRoute(\EsterenMaps\MapsBundle\Entity\Routes $routes)
+    public function addRoute(Routes $routes)
     {
         $this->routes[] = $routes;
 
@@ -254,7 +247,7 @@ class Markers
      *
      * @param \EsterenMaps\MapsBundle\Entity\Routes $routes
      */
-    public function removeRoute(\EsterenMaps\MapsBundle\Entity\Routes $routes)
+    public function removeRoute(Routes $routes)
     {
         $this->routes->removeElement($routes);
     }
@@ -275,7 +268,7 @@ class Markers
      * @param \EsterenMaps\MapsBundle\Entity\Factions $faction
      * @return Markers
      */
-    public function setFaction(\EsterenMaps\MapsBundle\Entity\Factions $faction = null)
+    public function setFaction(Factions $faction = null)
     {
         $this->faction = $faction;
 
@@ -298,7 +291,7 @@ class Markers
      * @param \EsterenMaps\MapsBundle\Entity\Maps $map
      * @return Markers
      */
-    public function setMap(\EsterenMaps\MapsBundle\Entity\Maps $map = null)
+    public function setMap(Maps $map = null)
     {
         $this->map = $map;
 
@@ -321,7 +314,7 @@ class Markers
      * @param \EsterenMaps\MapsBundle\Entity\MarkersTypes $markerType
      * @return Markers
      */
-    public function setMarkerType(\EsterenMaps\MapsBundle\Entity\MarkersTypes $markerType = null)
+    public function setMarkerType(MarkersTypes $markerType = null)
     {
         $this->markerType = $markerType;
 
@@ -344,7 +337,7 @@ class Markers
      * @param \EsterenMaps\MapsBundle\Entity\EventsMarkers $events
      * @return Markers
      */
-    public function addEvent(\EsterenMaps\MapsBundle\Entity\EventsMarkers $events)
+    public function addEvent(EventsMarkers $events)
     {
         $this->events[] = $events;
 
@@ -356,7 +349,7 @@ class Markers
      *
      * @param \EsterenMaps\MapsBundle\Entity\EventsMarkers $events
      */
-    public function removeEvent(\EsterenMaps\MapsBundle\Entity\EventsMarkers $events)
+    public function removeEvent(EventsMarkers $events)
     {
         $this->events->removeElement($events);
     }
@@ -400,7 +393,7 @@ class Markers
      * @param \EsterenMaps\MapsBundle\Entity\Routes $routesStart
      * @return Markers
      */
-    public function addRoutesStart(\EsterenMaps\MapsBundle\Entity\Routes $routesStart)
+    public function addRoutesStart(Routes $routesStart)
     {
         $this->routesStart[] = $routesStart;
 
@@ -412,7 +405,7 @@ class Markers
      *
      * @param \EsterenMaps\MapsBundle\Entity\Routes $routesStart
      */
-    public function removeRoutesStart(\EsterenMaps\MapsBundle\Entity\Routes $routesStart)
+    public function removeRoutesStart(Routes $routesStart)
     {
         $this->routesStart->removeElement($routesStart);
     }
@@ -447,7 +440,7 @@ class Markers
      * @param \EsterenMaps\MapsBundle\Entity\Routes $routesEnd
      * @return Markers
      */
-    public function addRoutesEnd(\EsterenMaps\MapsBundle\Entity\Routes $routesEnd)
+    public function addRoutesEnd(Routes $routesEnd)
     {
         $this->routesEnd[] = $routesEnd;
 
@@ -459,7 +452,7 @@ class Markers
      *
      * @param \EsterenMaps\MapsBundle\Entity\Routes $routesEnd
      */
-    public function removeRoutesEnd(\EsterenMaps\MapsBundle\Entity\Routes $routesEnd)
+    public function removeRoutesEnd(Routes $routesEnd)
     {
         $this->routesEnd->removeElement($routesEnd);
     }
@@ -486,5 +479,74 @@ class Markers
             $array[$routeEnd->getId()] = $routeEnd->getId();
         }
         return $array;
+    }
+
+    /**
+     * Set altitude
+     *
+     * @param string $altitude
+     * @return Markers
+     */
+    public function setAltitude($altitude)
+    {
+        $this->altitude = $altitude;
+
+        return $this;
+    }
+
+    /**
+     * Get altitude
+     *
+     * @return string 
+     */
+    public function getAltitude()
+    {
+        return $this->altitude;
+    }
+
+    /**
+     * Set latitude
+     *
+     * @param string $latitude
+     * @return Markers
+     */
+    public function setLatitude($latitude)
+    {
+        $this->latitude = $latitude;
+
+        return $this;
+    }
+
+    /**
+     * Get latitude
+     *
+     * @return string 
+     */
+    public function getLatitude()
+    {
+        return $this->latitude;
+    }
+
+    /**
+     * Set longitude
+     *
+     * @param string $longitude
+     * @return Markers
+     */
+    public function setLongitude($longitude)
+    {
+        $this->longitude = $longitude;
+
+        return $this;
+    }
+
+    /**
+     * Get longitude
+     *
+     * @return string 
+     */
+    public function getLongitude()
+    {
+        return $this->longitude;
     }
 }

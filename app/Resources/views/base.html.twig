@@ -16,6 +16,7 @@
                 'bundles/corahnrinpages/css/corahnrin-theme.css'
                 '@CorahnRinPagesBundle/Resources/public/css/corahn_rin.css'
                 'bundles/esterenmaps/css/leaflet.css'
+                'bundles/esterenmaps/css/leaflet.draw.css'
                 '@EsterenMapsBundle/Resources/public/css/maps.css'
                 '@CorahnRinPagesBundle/Resources/public/css/jqueryUI/jquery.ui.core.min.css'
                 '@CorahnRinPagesBundle/Resources/public/css/jqueryUI/jquery.ui.slider.min.css'
@@ -35,7 +36,9 @@
     <body>
         {% block body %}{% endblock %}
 
-{% block javascripts %}{% javascripts
+{% block javascripts %}
+    <script type="text/javascript" src="{{ url('pierstoval_tools_assets_jstranslations') }}"></script>
+    {% javascripts
 	'../vendor/twitter/bootstrap/js/tests/vendor/jquery.js'
 	'../vendor/twitter/bootstrap/js/button.js'
 	'../vendor/twitter/bootstrap/js/collapse.js'

@@ -129,9 +129,9 @@ class MapsController extends Controller
             'routesTypes' => $routesTypes,
             'markersTypes' => $markersTypes,
             'factions' => $factions,
-            'idsMarkers' => $idsMarkers,
-            'idsZones' => $idsZones,
-            'idsRoutes' => $idsRoutes,
+            'idsMarkers' => ++$idsMarkers,
+            'idsZones' => ++$idsZones,
+            'idsRoutes' => ++$idsRoutes,
             'emptyMarker' => new Markers(),
             'route_init' => $route_init,
             'maxZones' => $maxZones,
@@ -307,7 +307,9 @@ class MapsController extends Controller
             }
             $marker
                 ->setName($marker_post['name'])
-                ->setCoordinates($marker_post['coords'])
+                ->setAltitude($marker_post['altitude'])
+                ->setLatitude($marker_post['latitude'])
+                ->setLongitude($marker_post['longitude'])
                 ->setMarkerType($this->markersTypes[$marker_post['type']])
                 ->setMap($map)
             ;

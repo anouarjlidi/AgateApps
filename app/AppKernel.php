@@ -37,6 +37,7 @@ class AppKernel extends Kernel
             new EsterenMaps\MapsBundle\EsterenMapsBundle(),
 
             new Pierstoval\Bundle\TranslationBundle\PierstovalTranslationBundle(),
+            new Pierstoval\Bundle\ToolsBundle\PierstovalToolsBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test','dev_fast'))) {

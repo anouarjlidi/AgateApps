@@ -16,7 +16,9 @@ class MarkersType extends AbstractType
     {
         $builder
             ->add('name', 'text', array('label'=>'Nom'))
-            ->add('coordinates', 'text', array('empty_data'=>'-','label'=>'Coordonnées','required'=>false   ))
+            ->add('latitude', 'text', array('empty_data'=>'-','label'=>'Latitude','required'=>false   ))
+            ->add('longitude', 'text', array('empty_data'=>'-','label'=>'Longitude','required'=>false   ))
+            ->add('altitude', 'text', array('empty_data'=>'-','label'=>'Altitude','required'=>false   ))
             ->add('faction', 'entity', array(
                 'class' => 'EsterenMaps\MapsBundle\Entity\Factions',
                 'empty_value' => '-- Choisissez une faction --',

@@ -23,13 +23,7 @@
                 <div id="map"></div>
             </div>
         </div>
-        <div id="inputs_container">
-            {#{% for marker in map.markers %}#}
-                {#<input type="hidden" id="marker_{{ marker.id }}_name" name="marker[{{ marker.id }}][name]" value="{{ marker.name }}" />#}
-                {#<input type="hidden" id="marker_{{ marker.id }}_coords" name="marker[{{ marker.id }}][coords]" value="{{ marker.coordinates }}" />#}
-                {#<input type="hidden" id="marker_{{ marker.id }}_type" name="marker[{{ marker.id }}][type]" value="{{ marker.markerType.id }}" />#}
-            {#{% endfor %}#}
-        </div>
+        <div id="inputs_container"></div>
     </fieldset>
 </form>
 {% endblock %}
@@ -48,6 +42,7 @@
 
     {% javascripts
         '@EsterenMapsBundle/Resources/public/js/leaflet-src.js'
+        '@EsterenMapsBundle/Resources/public/js/leaflet.draw-src.js'
         '@EsterenMapsBundle/Resources/public/js/map_main.js'
         output="js/maps.js"
         filter=""
@@ -60,9 +55,9 @@
     %}<script type="text/javascript" src="{{ app.request.getSchemeAndHttpHost() ~ asset_url }}"></script>
 {% endjavascripts %}#}
 
-    <script type="text/javascript">{% include 'EsterenMapsBundle::javascript_words.js.twig' %}</script>
     <script type="text/javascript">
         (function(){
+            try {
             document.map = new EsterenMap({
                 id: {{ map.id }},
                 editMode: true,
@@ -79,8 +74,6 @@
                 maxMarkerId: {{ maxMarkers }},
                 LeafletPopupBaseContent : '{{ include('EsterenMapsBundle:Maps:popupContentMarker.html.twig',{"marker":emptyMarker,"markersTypes":markersTypes}) }}',
                 LeafletMapBaseOptions: {
-                    attribution: '&copy; Corahn-Rin',
-                    zoom: 1,
                     maxZoom: {{ map.maxZoom }},
                     maxBounds: [[-80.9,-180],[85.05,259.19]]
                 },
@@ -97,6 +90,9 @@
                 LeafletRouteBaseOptions: {
                 }
             });
+            } catch (e) {
+                console.error(e);
+            }
         })();
     </script>
 

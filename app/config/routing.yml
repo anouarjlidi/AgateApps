@@ -1,3 +1,8 @@
+pierstoval_tools:
+    resource: "@PierstovalToolsBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 corahn_rin_generator:
     resource: "@CorahnRinGeneratorBundle/Controller/"
     type:     annotation

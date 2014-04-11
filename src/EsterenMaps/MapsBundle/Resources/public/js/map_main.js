@@ -4,7 +4,7 @@
 
         // Données utilisées dans le scope de la classe
         var _this = this,
-            L_map,
+            L_map,drawnItems,drawControl,
             mapOptions = this.mapOptions
         ;
 
@@ -28,51 +28,6 @@
             return this;
         }
 
-        //
-        // Méthodes privées
-        //
-//        var callback_load_elements = function(e){
-//            var id = mapOptions.id,
-//                elements = [],
-//                element,
-//                coords;
-//            if (e['map.'+id]) {
-//                elements = e['map.'+id+];
-//                for (var i = 0, c = elements.length ; i < c ; i++) {
-//                    if (elements[i].coordinates) {
-//                        coords = elements[i].coordinates.split(' ').map(function(e){
-//                            e = e.split(',');
-//                            e = L.latlng([e[0],e[1]]);
-//                            return e;
-//                        });
-//                    }
-//                    if (coords && coords.length == 1) { coords = coords[0]; }
-//                    if (names == 'routes') {
-//                        element = L.polyline(coords).addTo(L_map);
-//                    } else if (names === 'zones') {
-//                        element = L.polygon(coords).addTo(L_map);
-//                    } else if (names === 'markers') {
-//                        element = L.marker(coords).addTo(L_map);
-//                    } else {
-//                        element = elements[i];
-//                    }
-//                    _this.mapElements[names].push(element);
-//                }
-//            }
-//        };
-
-        //
-        // Méthodes publiques
-        //
-
-//        _this.loadZones = function() { return _this.load('zones', callback_load_elements); };
-//        _this.loadRoutes = function() { return _this.load('routes', callback_load_elements); };
-//        _this.loadMarkers = function() { return _this.load('markers', callback_load_elements); };
-
-//        _this.loadElements = function(type) {
-//
-//        }
-
         // Reset du wrapper avant création de la map
         // Force la redimension du wrapper lors de la redimension de la page
         this.resetHeight(this);
@@ -85,44 +40,74 @@
 
         L.Icon.Default.imagePath = mapOptions.imgUrl.replace(/\/$/gi, '');
 
-        _this._map = L_map;
+        this._map = L_map;
 
         ////////////////////////////////
         ////////// Mode édition ////////
         ////////////////////////////////
-        if (mapOptions.editMode == true) {
+        if (this.mapOptions.editMode == true) {
 
-            $('#map_add_marker').on('click', function(){
-                if (L_map.getContainer().getAttribute('data-add-marker')) {
-                    this.classList.remove('active');
-                    L_map.getContainer().removeAttribute('data-add-marker');
-                } else {
-                    this.classList.add('active');
-                    L_map.getContainer().setAttribute('data-add-marker', 'true');
-                }
-            });
+            //--------------------LEAFLET DRAW--------------------
+                // Initialise the FeatureGroup to store editable layers
+                drawnItems = new L.FeatureGroup();
+                this._map.addLayer(drawnItems);
 
+                // Initialise the draw control and pass it the FeatureGroup of editable layers
+                drawControl = new L.Control.Draw({
+                    draw: {
+                        circle: false,
+                        rectangle: false,
+                        polygon: {
+                            allowIntersection: false
+                        }
+                    },
+                    edit: {
+                        featureGroup: drawnItems
+                    }
+                });
+                this._map.addControl(drawControl);
+            //----------------------------------------------------
 
-            L_map.on('click', function(map_event){
-                var latlng,
+//            $('#map_add_marker').on('click', function(){
+//                if (L_map.getContainer().getAttribute('data-add-marker')) {
+//                    this.classList.remove('active');
+//                    L_map.getContainer().removeAttribute('data-add-marker');
+//                } else {
+//                    this.classList.add('active');
+//                    L_map.getContainer().setAttribute('data-add-marker', 'true');
+//                }
+//            });
+
+            _this = this;
+
+            this._map.on('draw:created', function(event){
+                var type = event.layerType,
+                    layer = event.layer,
+                    latlng = layer._latlng,
                     popupContent = _this.mapOptions.LeafletPopupBaseContent,
                     options = _this.mapOptions.CustomMarkerBaseOptionsEditMode,
-                    container = _this._map.getContainer()
+                    editOptions = _this.mapOptions.LeafletMarkerBaseOptionsEditMode
                 ;
-                if (container.getAttribute('data-add-marker') == 'true') {
-//                    latlng = map_event.latlng.lat+','+map_event.latlng.lng;
-                    _this.addMarker(map_event.latlng,
-                        _this.mapOptions.LeafletMarkerBaseOptionsEditMode,
+
+                console.info('event draw', event);
+
+                if (type === 'marker') {
+                    console.info('latlng', latlng);
+                    _this.addMarker(latlng,
+                        editOptions,
                         mergeRecursive(options, {popupContent:popupContent})
                     );
                     d.getElementById('map_add_marker').classList.remove('active');
-                    container.removeAttribute('data-add-marker');
                 }
+
+
+                return true;
 
             });
 
         }
 
+        _this = this;
         $(window).resize(function(){_this.resetHeight(_this);});
 
         this.loadMarkers();
@@ -182,12 +167,11 @@
                 markers = response['map.'+_this.mapOptions.id+'.markers'];
                 for (i in markers) {
                     marker = markers[i];
-                    console.info(marker);
                     if (_this.mapOptions.editMode === true) {
-                        coords = marker.coordinates.split(',').map(function(e){return parseFloat(e);});
                         coords = {
-                            lat: coords[0],
-                            lng: coords[1]
+                            lat: marker.latitude,
+                            lng: marker.longitude,
+                            altitude: marker.altitude
                         }
                         _this.addMarker(coords,
                             mergeRecursive(leafletOptions, {alt: marker.id}),
@@ -198,13 +182,6 @@
                                 markerFaction: marker.faction ? marker.faction.id : ''
                             })
                         );
-                        console.info(mergeRecursive(options, {
-                            popupContent:popupContent,
-                            markerId: marker.id,
-                            markerName: marker.name,
-                            markerType: marker.marker_type.id,
-                            markerFaction: marker.faction ? marker.faction.id : ''
-                        }));
                     } else {
                         console.info('public mode');
                     }
@@ -229,8 +206,6 @@
             marker,popup,popupContent,popupOptions,
             L_map = _this._map;
 
-        console.info('custom options', customUserOptions);
-
         if (leafletUserOptions) {
             leafletOptions = mergeRecursive(leafletOptions, leafletUserOptions);
         }
@@ -247,8 +222,6 @@
         while (d.getElementById('marker_'+id+'_name')) { id ++; }
 
         leafletOptions.alt = id;
-
-        console.info('markerId:'+id);
 
         marker = new L.marker(latLng, leafletOptions).addTo(L_map);
 
@@ -273,11 +246,13 @@
             }
         }
 
-        if (this.mapOptions.editMode) {
+        if (mapOptions.editMode) {
             $('#inputs_container').append(
                 '<input type="hidden" id="marker_'+id+'_name" name="marker['+id+'][name]" value="'+(customUserOptions.markerName?customUserOptions.markerName:'')+'" />'+
                 '<input type="hidden" id="marker_'+id+'_faction" name="marker['+id+'][faction]" value="'+(customUserOptions.markerFaction?customUserOptions.markerFaction:'')+'" />'+
-                '<input type="hidden" id="marker_'+id+'_coords" name="marker['+id+'][coords]" value="'+latLng.lat+','+latLng.lng+'" />'+
+                '<input type="hidden" id="marker_'+id+'_latitude" name="marker['+id+'][latitude]" value="'+latLng.lat+'" />'+
+                '<input type="hidden" id="marker_'+id+'_longitude" name="marker['+id+'][longitude]" value="'+latLng.lng+'" />'+
+                '<input type="hidden" id="marker_'+id+'_altitude" name="marker['+id+'][altitude]" value="0" />'+
                 '<input type="hidden" id="marker_'+id+'_type" name="marker['+id+'][type]" value="'+(customUserOptions.markerType?customUserOptions.markerType:'1')+'" />'
             );
         }
@@ -360,7 +335,6 @@
 
                 setTimeout(function(){
                     if (popup._isOpen) {
-                        console.info('popup open');
                         d.getElementById('marker_popup_name').value = d.getElementById('marker_'+id+'_name').value;
                         d.getElementById('marker_popup_type').value = d.getElementById('marker_'+id+'_type').value;
                         d.getElementById('marker_popup_faction').value = d.getElementById('marker_'+id+'_faction').value;
@@ -386,7 +360,8 @@
                     id = marker.options.alt,
                     latlng = marker.getLatLng();
                 marker.setLatLng(latlng).update();
-                d.getElementById('marker_'+id+'_coords').value = latlng.lat+','+latlng.lng;
+                d.getElementById('marker_'+id+'_latitude').value = latlng.lat;
+                d.getElementById('marker_'+id+'_longitude').value = latlng.lng;
             }
         },
         LeafletRouteBaseOptions: {
