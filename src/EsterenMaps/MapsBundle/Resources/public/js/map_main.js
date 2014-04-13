@@ -375,7 +375,8 @@
               $(w).height()
             - $('#footer').outerHeight(true)
             - $('#navigation').outerHeight(true)
-            - 20
+            - $('#map_edit_menu').outerHeight(true)
+            - 40
         );
         return EsterenMap;
     };

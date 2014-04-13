@@ -121,6 +121,7 @@ class MapsController extends Controller
 
         $tilesUrl = $this->generateUrl('esterenmaps_maps_tiles_tile', array('id'=>0,'x'=>0,'y'=>0,'zoom'=>0), true);
         $tilesUrl = str_replace('0/0/0/0','{id}/{z}/{x}/{y}', $tilesUrl);
+		$tilesUrl = preg_replace('~app_dev(_fast)\.php/~isUu', '', $tilesUrl);
 
         return array(
             'map'=>$map,

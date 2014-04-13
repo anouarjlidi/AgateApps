@@ -14,15 +14,19 @@
 
 <form id="map_edit_form" action="{{ url('esterenmaps_maps_maps_edit', {'id':map.id}) }}" method="post" class="form-horizontal">
     <fieldset>
-        <div class="row">
-            <div class="col-sm-3">
-                {% include 'EsterenMapsBundle:Maps:edit_menu.html.twig' %}
-            </div>
-            <div class="col-sm-9">
-                {#% include 'EsterenMapsBundle:Maps:edit_mapWrapper.html.twig' %#}
-                <div id="map"></div>
-            </div>
+        <div>
+            {% include 'EsterenMapsBundle:Maps:edit_menu.html.twig' %}
         </div>
+        <div id="map"></div>
+        {#<div class="row">#}
+            {#<div class="col-sm-3">#}
+                {#{% include 'EsterenMapsBundle:Maps:edit_menu.html.twig' %}#}
+            {#</div>#}
+            {#<div class="col-sm-9">#}
+                {#&#123;&#35;% include 'EsterenMapsBundle:Maps:edit_mapWrapper.html.twig' %&#35;&#125;#}
+                {#<div id="map"></div>#}
+            {#</div>#}
+        {#</div>#}
         <div id="inputs_container"></div>
     </fieldset>
 </form>
