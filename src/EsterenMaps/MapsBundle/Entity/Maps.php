@@ -232,7 +232,7 @@ class Maps
     /**
      * Get maxZoom
      *
-     * @return boolean
+     * @return integer
      */
     public function getMaxZoom()
     {
@@ -321,9 +321,10 @@ class Maps
     /**
      * Get zone
      *
-     * @return Zones
+     * @param Routes $route
+     * @return Routes
      */
-    public function getRoute(\EsterenMaps\MapsBundle\Entity\Routes $route)
+    public function getRoute(Routes $route)
     {
         foreach ($this->routes as $mapRoute) {
             if ($mapRoute->getId() === $route->getId() ||
@@ -335,9 +336,12 @@ class Maps
     }
 
     /**
+     * Get zone
      *
+     * @param Routes $route
+     * @return Maps
      */
-    public function setRoute(\EsterenMaps\MapsBundle\Entity\Routes $route) {
+    public function setRoute(Routes $route) {
         $exists = $this->getRoute($route);
         if (!$exists) {
             $this->addRoute($route);
@@ -345,15 +349,16 @@ class Maps
             $this->routes->removeElement($exists);
             $this->addRoute($route);
         }
+        return $this;
     }
 
     /**
      * Add markers
      *
-     * @param \EsterenMaps\MapsBundle\Entity\Markers $markers
+     * @param Markers $markers
      * @return Maps
      */
-    public function addMarker(\EsterenMaps\MapsBundle\Entity\Markers $markers)
+    public function addMarker(Markers $markers)
     {
         $this->markers[] = $markers;
 
@@ -363,9 +368,9 @@ class Maps
     /**
      * Remove markers
      *
-     * @param \EsterenMaps\MapsBundle\Entity\Markers $markers
+     * @param Markers $markers
      */
-    public function removeMarker(\EsterenMaps\MapsBundle\Entity\Markers $markers)
+    public function removeMarker(Markers $markers)
     {
         $this->markers->removeElement($markers);
     }
@@ -385,7 +390,7 @@ class Maps
      *
      * @return Zones
      */
-    public function getMarker(\EsterenMaps\MapsBundle\Entity\Markers $marker)
+    public function getMarker(Markers $marker)
     {
         foreach ($this->markers as $mapMarker) {
             if ($mapMarker->getId() === $marker->getId() ||
@@ -399,7 +404,7 @@ class Maps
     /**
      *
      */
-    public function setMarker(\EsterenMaps\MapsBundle\Entity\Markers $marker) {
+    public function setMarker(Markers $marker) {
         $exists = $this->getMarker($marker);
         if (!$exists) {
             $this->addMarker($marker);
@@ -412,10 +417,10 @@ class Maps
     /**
      * Add zones
      *
-     * @param \EsterenMaps\MapsBundle\Entity\Zones $zones
+     * @param Zones $zones
      * @return Maps
      */
-    public function addZone(\EsterenMaps\MapsBundle\Entity\Zones $zones)
+    public function addZone(Zones $zones)
     {
         $this->zones[] = $zones;
 
@@ -425,9 +430,9 @@ class Maps
     /**
      * Remove zones
      *
-     * @param \EsterenMaps\MapsBundle\Entity\Zones $zones
+     * @param Zones $zones
      */
-    public function removeZone(\EsterenMaps\MapsBundle\Entity\Zones $zones)
+    public function removeZone(Zones $zones)
     {
         $this->zones->removeElement($zones);
     }
@@ -437,7 +442,7 @@ class Maps
      *
      * @return Zones
      */
-    public function getZone(\EsterenMaps\MapsBundle\Entity\Zones $zone)
+    public function getZone(Zones $zone)
     {
         foreach ($this->zones as $mapZone) {
             if ($mapZone->getId() === $zone->getId() ||
@@ -451,7 +456,7 @@ class Maps
     /**
      *
      */
-    public function setZone(\EsterenMaps\MapsBundle\Entity\Zones $zone) {
+    public function setZone(Zones $zone) {
         $exists = $this->getZone($zone);
         if (!$exists) {
             $this->addZone($zone);

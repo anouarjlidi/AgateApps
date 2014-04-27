@@ -1,47 +1,38 @@
 <?php
 
-namespace EsterenMaps\MapsBundle\Classes;
+namespace EsterenMaps\MapsBundle\Services;
 
 use EsterenMaps\MapsBundle\Entity\Maps;
+use Symfony\Component\HttpKernel\KernelInterface;
 
-class MapsTileManager {
+class MapsTilesManager {
 
+    /**
+     * @var Maps
+     */
     private $map;
-    private $img_size;
+    private $tile_size;
     private $img_width;
     private $img_height;
     private $identifications = array();
     private $imgname = '';
 
-    function __construct (Maps $map, $img_size) {
-        $this->map = $map;
-        $this->img_size = $img_size;
-    }
-
-    public function getImgName() { return $this->imgname; }
-
-    /**
-     * Renvoie le fichier source de la map demandée
-     * @return string
-     */
-    public function mapSourceName() {
-        return ROOT.'/web/'.$this->map->getImage();
-    }
-
-    /**
-     * Renvoie le nom du fichier de la tuile demandée par son zoom et sa position en X et Y
-     * @param integer $zoom
-     * @param integer $x
-     * @param integer $y
-     * @return string
-     */
-    public function mapDestinationName($zoom, $x, $y, $width = null, $height = null) {
-        if ($width === null || $height === null) {
-            $imgname = ROOT.'/app/cache/maps_img/'.$this->map->getNameSlug().'/'.$this->map->getNameSlug().'_'.$zoom.'_'.$x.'_'.$y.'.jpg';
+    function __construct ($output_directory, $tile_size, KernelInterface $kernel) {
+        $this->tile_size = $tile_size;
+        $output_directory = trim($output_directory, '\\/');
+        if (strpos($output_directory, '@') === 0) {
+            $this->output_directory = $kernel->locateResource($output_directory);
         } else {
-            $imgname = ROOT.'/app/cache/maps_img/'.$this->map->getNameSlug().'/custom/'.$this->map->getNameSlug().'_'.$zoom.'_'.$x.'_'.$y.'_'.$width.'_'.$height.'.jpg';
+            $this->output_directory = $output_directory;
         }
-        return $imgname;
+    }
+
+    public function setMap (Maps $map) {
+        $this->map = $map;
+        if (!file_exists($this->map->getImage())) {
+            throw new \Exception('Map image could not be found.');
+        }
+        return $this;
     }
 
     /**
@@ -57,7 +48,7 @@ class MapsTileManager {
 
             if (!$this->img_width || !$this->img_height) {
                 // Détermine la taille de l'image initiale une fois et place les attributs dans l'objet
-                $cmd = 'identify -format "%wx%h" "'.$this->mapSourceName().'"';
+                $cmd = 'identify -format "%wx%h" "'.$this->map->getImage().'"';
                 $size = shell_exec($cmd);
                 if (!$size || !preg_match('#^[0-9]+x[0-9]+$#', $size)) {
                     throw new \RunTimeException('Error while retrieving map dimensions.');
@@ -68,13 +59,13 @@ class MapsTileManager {
             }
 
             // Calcul des ratios et du nombre maximum de vignettes
-            $crop_unit = pow(2, $this->map->getMaxZoom() - $zoom) * $this->img_size;
+            $crop_unit = pow(2, $this->map->getMaxZoom() - $zoom) * $this->tile_size;
 
             $max_tiles_x = ceil($this->img_width / $crop_unit) - 1;
             $max_tiles_y = ceil($this->img_height / $crop_unit) - 1;
 
-            $max_width = $max_tiles_x * $this->img_size;
-            $max_height = $max_tiles_y * $this->img_size;
+            $max_width = $max_tiles_x * $this->tile_size;
+            $max_height = $max_tiles_y * $this->tile_size;
 
             $max_width_global = $crop_unit * ( $max_tiles_x + 1 );
             $max_height_global = $crop_unit * ( $max_tiles_y + 1 );
@@ -94,15 +85,90 @@ class MapsTileManager {
     }
 
     /**
+     * @param integer $zoom
+     */
+    public function generateTiles($zoom) {
+        $max = $this->map->getMaxZoom();
+
+        $ratio = 1 / ( pow(2, $max - $zoom) ) * 100;
+
+        $output_scheme = $this->output_directory.'/temp_tiles/'.$this->map->getId().'/'.$zoom.'.jpg';
+        $output_final = $this->output_directory.'/'.$this->map->getId().'/'.$zoom.'/{x}/{y}.jpg';
+
+        if (!is_dir(dirname($output_scheme))) {
+            mkdir(dirname($output_scheme), 0775, true);
+        }
+
+        // Supprime tout fichier existant
+        $existing_files = glob(dirname($output_scheme).'/*');
+        foreach ($existing_files as $file) {
+            unlink($file);
+        }
+
+        $this->identifyImage($zoom);
+
+        $w = $this->img_width;
+        $h = $this->img_height;
+
+        if ($w >= $h) {
+            $h = $w;
+        } else {
+            $w = $h;
+        }
+
+        $cmd =
+            'convert "'.$this->map->getImage().'"' .
+            ' -background #000000'.
+            ' -extent '.$w.'x'.$h.
+            ' -resize '.$ratio.'% ' .
+            ' -crop '.$this->tile_size.'x'.$this->tile_size .
+            ' -background #000000'.
+            ' -extent '.$this->tile_size.'x'.$this->tile_size .
+            ' -thumbnail '.$this->tile_size.'x'.$this->tile_size .
+            ' "'.$output_scheme.'"'
+        ;
+
+        shell_exec($cmd);
+
+        $existing_files = glob(dirname($output_scheme).'/*');
+
+        sort($existing_files, SORT_NATURAL | SORT_FLAG_CASE);
+        $existing_files = array_values($existing_files);
+
+        $modulo = sqrt(count($existing_files));
+
+        foreach ($existing_files as $i => $file) {
+            $x = floor( $i / $modulo );
+            $y = $i % $modulo;
+            $filename = str_replace('{x}', $x, $output_final);
+            $filename = str_replace('{y}', $y, $filename);
+
+            if  (!is_dir(dirname($filename))) {
+                mkdir(dirname($filename), 0775, true);
+            }
+
+            rename($file, $filename);
+
+        }
+
+        // Supprime tout fichier existant
+        $existing_files = glob(dirname($output_scheme).'/*');
+        foreach ($existing_files as $file) {
+            unlink($file);
+        }
+    }
+
+    /**
      * Crée une commande de découpage de l'image de la carte en utilisant ImageMagick
      * Si "dry_run" est passé à "true", renvoie uniquement la commande
      * Sinon, exécute la commande via shell_exec() et retourne le résultat
      * @param integer $x
      * @param integer $y
      * @param integer $zoom
-     * @param integer $dry_run
-     * @return string
+     * @param bool|int $dry_run
+     * @param bool $throw_error
      * @throws \RunTimeException
+     * @return string
      */
     public function createTile($x, $y, $zoom, $dry_run = false, $throw_error = true) {
 
@@ -131,7 +197,7 @@ class MapsTileManager {
             mkdir(dirname($imgname), 0777, true);
         }
 
-        $crop_unit = pow(2, $this->map->getMaxZoom() - $zoom) * $this->img_size;
+        $crop_unit = pow(2, $this->map->getMaxZoom() - $zoom) * $this->tile_size;
 
         $_x = $x * $crop_unit;
         $_y = $y * $crop_unit;
@@ -141,9 +207,9 @@ class MapsTileManager {
             ' -background black'.//Le "surplus" sera noir
             ' -extent '.$identification['wmax_global'].'x'.$identification['hmax_global'].
             ' -crop '.$crop_unit.'x'.$crop_unit.'+'.$_x.'+'.$_y.//Découpe l'image selon la taille demandée dans les paramètres
-            ' -resize '.$this->img_size.'x'.$this->img_size.'^'.//Redimensionne à la taille paramétrée
-            ' -extent '.$this->img_size.'x'.$this->img_size.//Et étend les éventuels pixels manquants, pour les bordures
-            ' -thumbnail '.$this->img_size.'x'.$this->img_size.//Crée un thumbnail en métadonnée, pour alléger le poids
+            ' -resize '.$this->tile_size.'x'.$this->tile_size.'^'.//Redimensionne à la taille paramétrée
+            ' -extent '.$this->tile_size.'x'.$this->tile_size.//Et étend les éventuels pixels manquants, pour les bordures
+            ' -thumbnail '.$this->tile_size.'x'.$this->tile_size.//Crée un thumbnail en métadonnée, pour alléger le poids
             ' -quality 95'.//Une faible qualité réduira le poids des images
             ' "'.$this->mapDestinationName($zoom, $x, $y).'"'
         ;
@@ -162,6 +228,8 @@ class MapsTileManager {
      * @param integer $y
      * @param integer $width
      * @param integer $height
+     * @param bool $dry_run
+     * @return string
      */
     public function createImage($zoom, $x, $y, $width, $height, $dry_run = false) {
         $identification = $this->identifyImage($zoom);

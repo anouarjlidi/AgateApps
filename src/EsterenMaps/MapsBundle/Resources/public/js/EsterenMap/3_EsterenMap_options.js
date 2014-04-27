@@ -45,8 +45,7 @@
             zoom: 1,
             minZoom: 1,
             maxZoom: 1,
-            attributionControl: false,
-            maxBounds: [[-81.9,-181],[86,260]]
+            attributionControl: false
         },
         LeafletLayerBaseOptions: {
             attribution: '&copy; Esteren Maps',

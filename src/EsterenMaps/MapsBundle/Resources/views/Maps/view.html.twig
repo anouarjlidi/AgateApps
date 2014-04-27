@@ -37,11 +37,10 @@
                     imgUrl: "{{ asset('bundles/esterenmaps/img') }}",
                     apiUrls: {
                         base: "{{ url('corahnrin_api_api_get', {'serviceName':'maps','id':map.id}) }}",
-                        tiles: "{{ tilesUrl }}"
+                        tiles: "{{ asset('maps_tiles/1/{z}/{y}/{x}.jpg') }}"
                     },
                     LeafletMapBaseOptions: {
-                        maxZoom: {{ map.maxZoom }},
-                        maxBounds: [[-82,-182],[87,261]]
+                        maxZoom: {{ map.maxZoom }}
                     },
                     LeafletLayerBaseOptions: {
                         maxZoom: {{ map.maxZoom }},

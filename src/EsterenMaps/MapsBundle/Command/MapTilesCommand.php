@@ -6,7 +6,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use EsterenMaps\MapsBundle\Classes\MapsTileManager;
+use EsterenMaps\MapsBundle\Services\MapsTilesManager;
 
 class MapTilesCommand extends ContainerAwareCommand {
 
@@ -16,15 +16,13 @@ class MapTilesCommand extends ContainerAwareCommand {
 		$this
 		->setName('esterenmaps:generate:map-tiles')
 		->setDescription('Generate all tiles for a specific map.')
-		->setDescription('Generate all tiles for a specific map.')
         ->setHelp('This command is used to generate a tile image for one of your maps.'."\n"
             .'You can specify the id of the map by adding it as an argument, or as an option with "-i x" or "--i=x" where "x" is the map id'."\n"
             ."\n".'The command will generate all tiles of a map. The tiles number is calculated upon the image size and the maxZoom value'
             ."\n".'The higher is the maxZoom value, higher is the number of tiles.'
             ."\n".'This command can take a long time to execute, depending of your system.'
             ."\n".'but do not worry : you can restart it at any time and skip all existing files')
-		->addArgument('id', InputArgument::OPTIONAL, 'Enter the id of the map you want to generate')
-        ->addOption('id', 'i', InputOption::VALUE_OPTIONAL, 'Enter the id of the map you want to generate', null)
+        ->addArgument('id', InputArgument::OPTIONAL, 'Enter the id of the map you want to generate', null)
         ->addOption('replace', 'r', InputOption::VALUE_NONE, 'Replaces all existing tiles')
         ->addOption('skip', 'k', InputOption::VALUE_NONE, 'Skip all existing tiles')
         ;
@@ -53,7 +51,6 @@ class MapTilesCommand extends ContainerAwareCommand {
 
 		$output->writeln('Welcome to Corahn-Rin map tiles generator !'); usleep($sleep);
 		$output->writeln('Be careful : as maps may be huge, this application can use a lot of memory and take very long to execute.');
-		$output->writeln('You can stop the process with no problem, as you can decide to skip or overwrite all existing images.');usleep($sleep);
 		$output->writeln('');
 
         $map = null;
@@ -84,6 +81,19 @@ class MapTilesCommand extends ContainerAwareCommand {
 
 		$output->writeln('Generating map tiles for "'.$map->getName().'"');
 
+        $tilesManager = $this->getContainer()->get('esterenmaps.tiles_manager');
+
+        $img = $this->getContainer()->getParameter('kernel.root_dir').'/../web/'.$map->getImage();
+        $map->setImage($img);
+
+        $tilesManager->setMap($map);
+
+        for ($i = 0; $i <= $map->getMaxZoom(); $i++) {
+            $output->writeln('Processing extraction for zoom value '.$i);
+            $tilesManager->generateTiles($i);
+        }
+
+        return;
 
         $cmd = 'identify -format "%wx%h" "'.ROOT.'/web/'.$map->getImage().'"';
         $size = shell_exec($cmd);
