@@ -17,16 +17,8 @@
         <div>
             {% include 'EsterenMapsBundle:Maps:edit_menu.html.twig' %}
         </div>
+        <div id="sidebar"></div>
         <div id="map"></div>
-        {#<div class="row">#}
-            {#<div class="col-sm-3">#}
-                {#{% include 'EsterenMapsBundle:Maps:edit_menu.html.twig' %}#}
-            {#</div>#}
-            {#<div class="col-sm-9">#}
-                {#&#123;&#35;% include 'EsterenMapsBundle:Maps:edit_mapWrapper.html.twig' %&#35;&#125;#}
-                {#<div id="map"></div>#}
-            {#</div>#}
-        {#</div>#}
         <div id="inputs_container"></div>
     </fieldset>
 </form>
@@ -35,29 +27,20 @@
 {% block javascripts %}
     {{ parent() }}
 
-    {#% javascripts
-        '@EsterenMapsBundle/Resources/public/js/jquery.mousewheel.min.js'
-        '@EsterenMapsBundle/Resources/public/js/jquery.transform2d.js'
-        '@EsterenMapsBundle/Resources/public/js/map.js'
-        output="js/maps.js"
-        filter="?yui_js"
-    %}<script type="text/javascript" src="{{ app.request.getSchemeAndHttpHost() ~ asset_url }}"></script>
-{% endjavascripts %#}
-
     {% javascripts
         '@EsterenMapsBundle/Resources/public/js/leaflet-src.js'
+        '@EsterenMapsBundle/Resources/public/js/leaflet.sidebar-src.js'
         '@EsterenMapsBundle/Resources/public/js/leaflet.draw-src.js'
-        '@EsterenMapsBundle/Resources/public/js/map_main.js'
+        '@EsterenMapsBundle/Resources/public/js/EsterenMap/1_EsterenMap.js'
+        '@EsterenMapsBundle/Resources/public/js/EsterenMap/2_LeafletDrawOverrides.js'
+        '@EsterenMapsBundle/Resources/public/js/EsterenMap/3_EsterenMap_ActivateLeafletDraw.js'
+        '@EsterenMapsBundle/Resources/public/js/EsterenMap/3_EsterenMap_options.js'
+        '@EsterenMapsBundle/Resources/public/js/EsterenMap/4_EsterenMap_addMarker.js'
+        '@EsterenMapsBundle/Resources/public/js/EsterenMap/4_EsterenMap_addPolyline.js'
+        '@EsterenMapsBundle/Resources/public/js/EsterenMap/4_EsterenMap_addPolygon.js'
         output="js/maps.js"
         filter=""
     %}<script type="text/javascript" src="{{ app.request.getSchemeAndHttpHost() ~ asset_url }}"></script>{% endjavascripts %}
-{#filter="?yui_js"#}
-    {#{% javascripts
-        '@EsterenMapsBundle/Resources/public/js/map_edit/*'
-        output="js/maps_edit.js"
-        filter="?yui_js"
-    %}<script type="text/javascript" src="{{ app.request.getSchemeAndHttpHost() ~ asset_url }}"></script>
-{% endjavascripts %}#}
 
     <script type="text/javascript">
         (function(){
@@ -70,16 +53,9 @@
                     base: "{{ url('corahnrin_api_api_get', {'serviceName':'maps','id':map.id}) }}",
                     tiles: "{{ tilesUrl }}"
                 },
-                idsZones: [{{ idsZones | join(',') }}],
-                idsRoutes: [{{ idsRoutes | join(',') }}],
-                idsMarkers: [{{ idsMarkers | join(',') }}],
-                maxZoneId: {{ maxZones }},
-                maxRouteId: {{ maxRoutes }},
-                maxMarkerId: {{ maxMarkers }},
-                LeafletPopupBaseContent : '{{ include('EsterenMapsBundle:Maps:popupContentMarker.html.twig',{"marker":emptyMarker,"markersTypes":markersTypes}) }}',
                 LeafletMapBaseOptions: {
                     maxZoom: {{ map.maxZoom }},
-                    maxBounds: [[-80.9,-180],[85.05,259.19]]
+                    maxBounds: [[-82,-182],[87,261]]
                 },
                 LeafletLayerBaseOptions: {
                     maxZoom: {{ map.maxZoom }},
@@ -88,11 +64,12 @@
                     noWrap: false,
                     continuousWorld: true
                 },
-                LeafletMarkerBaseOptions: {
-                    draggable: true
-                },
-                LeafletRouteBaseOptions: {
-                }
+                idsZones: [{{ idsZones | join(',') }}],
+                idsRoutes: [{{ idsRoutes | join(',') }}],
+                idsMarkers: [{{ idsMarkers | join(',') }}],
+                maxZoneId: {{ maxZones }},
+                maxRouteId: {{ maxRoutes }},
+                maxMarkerId: {{ maxMarkers }}
             });
             } catch (e) {
                 console.error(e);

@@ -103,6 +103,7 @@
 	}
 .leaflet-control {
 	float: left;
+    color: #000;
 	clear: both;
 	}
 .leaflet-right .leaflet-control {

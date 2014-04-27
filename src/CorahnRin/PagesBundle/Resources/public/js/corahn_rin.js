@@ -1,11 +1,13 @@
 /**
  * Merges two objects recursively
- * @param targetObject
- * @param sourceObject
+ * @param targetObject object
+ * @param sourceObject object
  * @returns {*}
  */
 function mergeRecursive (targetObject, sourceObject) {
     var property;
+    if (!targetObject) { targetObject = {}; }
+    if (!sourceObject) { sourceObject = {}; }
     for (property in sourceObject) {
         if (sourceObject.hasOwnProperty(property)) {
             try {

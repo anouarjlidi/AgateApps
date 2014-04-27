@@ -19,15 +19,15 @@ class RoutesType extends AbstractType
             ->add('coordinates', 'text', array('empty_data'=>'-','label'=>'Coordonnées','required'=>false   ))
             ->add('markerStart', 'entity', array(
                 'class' => 'EsterenMaps\MapsBundle\Entity\Markers',
-                'empty_value' => '-- Choisissez un marqueur de "début" --',
-                'label' => 'Marqueur de "début"',
+                'empty_value' => '-- Choisissez un marqueur de départ --',
+                'label' => 'Marqueur de départ',
                 'required'=>true,
                 'property' => 'name',
             ))
             ->add('markerEnd', 'entity', array(
                 'class' => 'EsterenMaps\MapsBundle\Entity\Markers',
-                'empty_value' => '-- Choisissez un marqueur de "fin" --',
-                'label' => 'Marqueur de "fin"',
+                'empty_value' => '-- Choisissez un marqueur de fin --',
+                'label' => 'Marqueur de fin',
                 'required'=>true,
                 'property' => 'name',
             ))

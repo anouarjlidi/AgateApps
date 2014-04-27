@@ -15,6 +15,41 @@ class TilesController extends Controller {
     private $img_size = 0;
 
     /**
+     * @Route("/api/maps/settings/{id}", requirements={"id":"\d+"})
+     */
+    public function settingsAction(Maps $map, Request $request) {
+        $datas = array();
+
+        $get = $request->query;
+
+        $em = $this->getDoctrine()->getManager();
+
+        $markersTypes = $em->getRepository('EsterenMapsBundle:MarkersTypes')->findAll();
+        $routesTypes = $em->getRepository('EsterenMapsBundle:RoutesTypes')->findAll();
+        $factions = $em->getRepository('EsterenMapsBundle:Factions')->findAll();
+
+        if ($get->get('editMode') == true) {
+            $datas['LeafletPopupMarkerBaseContent'] = $this->renderView('EsterenMapsBundle:Maps:popupContentMarkerEditMode.html.twig',array('markersTypes'=>$markersTypes,'factions'=>$factions));
+            $datas['LeafletPopupPolylineBaseContent'] = $this->renderView('EsterenMapsBundle:Maps:popupContentPolylineEditMode.html.twig', array('markers'=>$map->getMarkers(),'routesTypes'=>$routesTypes,'factions'=>$factions));
+            $datas['LeafletPopupPolygonBaseContent'] = $this->renderView('EsterenMapsBundle:Maps:popupContentPolygonEditMode.html.twig',array('factions'=>$factions));
+        } else {
+            $datas['LeafletPopupMarkerBaseContent'] = $this->renderView('EsterenMapsBundle:Maps:popupContentMarker.html.twig',array('markersTypes'=>$markersTypes,'factions'=>$factions));
+            $datas['LeafletPopupPolylineBaseContent'] = $this->renderView('EsterenMapsBundle:Maps:popupContentPolyline.html.twig', array('markers'=>$map->getMarkers(),'routesTypes'=>$routesTypes,'factions'=>$factions));
+            $datas['LeafletPopupPolygonBaseContent'] = $this->renderView('EsterenMapsBundle:Maps:popupContentPolygon.html.twig',array('factions'=>$factions));
+        }
+
+        $datas = json_encode(array('settings'=>$datas), 480);
+
+        $response = new Response();
+
+        $response->headers->add(array('Content-type'=>'application/json'));
+
+        $response->setContent($datas);
+
+        return $response;
+    }
+
+    /**
      * @Route("/api/maps/image/{id}", requirements={"id":"\d+"})
      */
     public function generateMapImageAction(Request $request, Maps $map) {

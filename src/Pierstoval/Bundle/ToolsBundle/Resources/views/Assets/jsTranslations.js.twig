@@ -1,0 +1,105 @@
+{% spaceless %}
+{% trans_default_domain 'javascript_messages' %}
+//<script>//(only used for IDE)
+const CONFIRM_DELETE = "{{ 'Supprimer l\'élément ?' | trans()}}";
+const MSG_DELETE = "{{ 'Supprimer' | trans()}}";
+const MSG_NAME = "{{ 'Nom' | trans }}";
+const MSG_TYPE = "{{ 'Type' | trans }}";
+const MSG_FACTION = "{{ 'Faction' | trans }}";
+const MSG_MARKER = "{{ 'Marqueur' | trans }}";
+const MSG_ROUTE = "{{ 'Route' | trans }}";
+const MSG_ZONE = "{{ 'Zone' | trans }}";
+
+window['LeafletDrawTranslations'] = {
+    draw: {
+        toolbar: {
+            actions: {
+                title: '{{ 'Cancel drawing' | trans({},'Leaflet.draw') | replace("'","\'") }}',
+                text: '{{ 'Cancel' | trans({},'Leaflet.draw') | replace("'", "'") }}'
+            },
+            undo: {
+                title: '{{ 'Delete last point drawn' | trans({},'Leaflet.draw') | replace("'","\'") }}',
+                text: '{{ 'Delete last point' | trans({},'Leaflet.draw') | replace("'", "'") }}'
+            },
+            buttons: {
+                polyline: '{{ 'Draw a polyline' | trans({},'Leaflet.draw') | replace("'","\'") }}',
+                polygon: '{{ 'Draw a polygon' | trans({},'Leaflet.draw') | replace("'","\'") }}',
+                rectangle: '{{ 'Draw a rectangle' | trans({},'Leaflet.draw') | replace("'","\'") }}',
+                circle: '{{ 'Draw a circle' | trans({},'Leaflet.draw') | replace("'","\'") }}',
+                marker: '{{ 'Draw a marker' | trans({},'Leaflet.draw') | replace("'", "'") }}'
+            }
+        },
+        handlers: {
+            circle: {
+                tooltip: {
+                    start: '{{ 'Click and drag to draw circle.' | trans({},'Leaflet.draw') | replace("'", "'") }}'
+                }
+            },
+            marker: {
+                tooltip: {
+                    start: '{{ 'Click map to place marker.' | trans({},'Leaflet.draw') | replace("'", "'") }}'
+                }
+            },
+            polygon: {
+                tooltip: {
+                    start: '{{ 'Click to start drawing shape.' | trans({},'Leaflet.draw') | replace("'","\'") }}',
+                    cont: '{{ 'Click to continue drawing shape.' | trans({},'Leaflet.draw') | replace("'","\'") }}',
+                    end: '{{ 'Click first point to close this shape.' | trans({},'Leaflet.draw') | replace("'", "'") }}'
+                }
+            },
+            polyline: {
+                error: '{{ '<strong>Error:</strong> shape edges cannot cross!' | trans({},'Leaflet.draw') | replace("'","\'") }}',
+                tooltip: {
+                    start: '{{ 'Click to start drawing line.' | trans({},'Leaflet.draw') | replace("'","\'") }}',
+                    cont: '{{ 'Click to continue drawing line.' | trans({},'Leaflet.draw') | replace("'","\'") }}',
+                    end: '{{ 'Click last point to finish line.' | trans({},'Leaflet.draw') | replace("'", "'") }}'
+                }
+            },
+            rectangle: {
+                tooltip: {
+                    start: '{{ 'Click and drag to draw rectangle.' | trans({},'Leaflet.draw') | replace("'", "'") }}'
+                }
+            },
+            simpleshape: {
+                tooltip: {
+                    end: '{{ 'Release mouse to finish drawing.' | trans({},'Leaflet.draw') | replace("'", "'") }}'
+                }
+            }
+        }
+    },
+    edit: {
+        toolbar: {
+            actions: {
+                save: {
+                    title: '{{ 'Save changes.' | trans({},'Leaflet.draw') | replace("'","\'") }}',
+                    text: '{{ 'Save' | trans({},'Leaflet.draw') | replace("'", "'") }}'
+                },
+                cancel: {
+                    title: '{{ 'Cancel editing, discards all changes.' | trans({},'Leaflet.draw') | replace("'","\'") }}',
+                    text: '{{ 'Cancel' | trans({},'Leaflet.draw') | replace("'", "'") }}'
+                }
+            },
+            buttons: {
+                edit: '{{ 'Edit layers.' | trans({},'Leaflet.draw') | replace("'","\'") }}',
+                editDisabled: '{{ 'No layers to edit.' | trans({},'Leaflet.draw') | replace("'","\'") }}',
+                remove: '{{ 'Delete layers.' | trans({},'Leaflet.draw') | replace("'","\'") }}',
+                removeDisabled: '{{ 'No layers to delete.' | trans({},'Leaflet.draw') | replace("'", "'") }}'
+            }
+        },
+        handlers: {
+            edit: {
+                tooltip: {
+                    text: '{{ 'Drag handles, or marker to edit feature.' | trans({},'Leaflet.draw') | replace("'","\'") }}',
+                    subtext: '{{ 'Click cancel to undo changes.' | trans({},'Leaflet.draw') | replace("'", "'") }}'
+                }
+            },
+            remove: {
+                tooltip: {
+                    text: '{{ 'Click on a feature to remove' | trans({},'Leaflet.draw') | replace("'", "'") }}'
+                }
+            }
+        }
+    }
+};
+//</script>
+{% endspaceless %}

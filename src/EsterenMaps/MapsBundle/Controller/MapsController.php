@@ -27,9 +27,16 @@ class MapsController extends Controller
      * @Template()
      */
     public function viewAction(Maps $map) {
-//        $route_init = $this->generateUrl('esterenmaps_maps_api_init');
-        $route_init = '';
-        return array('map'=>$map,'route_init' => $route_init);
+
+        $tilesUrl = $this->generateUrl('esterenmaps_maps_tiles_tile', array('id'=>0,'x'=>0,'y'=>0,'zoom'=>0), true);
+        $tilesUrl = str_replace('0/0/0/0','{id}/{z}/{x}/{y}', $tilesUrl);
+        $tilesUrl = preg_replace('~app_dev(_fast)\.php/~isUu', '', $tilesUrl);
+
+        return array(
+            'map' => $map,
+            'tilesUrl' => $tilesUrl,
+            'tile_size' => $this->container->getParameter('esterenmaps.tile_size'),
+        );
     }
 
     /**
@@ -95,11 +102,12 @@ class MapsController extends Controller
 
         if ($request->getMethod() == 'POST') {
 
-//            $this->updateZones($map, $request);
             $this->updateMarkers($map, $request);
-//            $this->updateRoutes($map, $request);
+            $this->updateZones($map, $request);
+            $this->updateRoutes($map, $request);
 
             $em->persist($map);
+
             $em->flush();
 
             $this->get('session')->getFlashBag()->add('success', 'Modifications enregistrées !');
@@ -124,7 +132,7 @@ class MapsController extends Controller
 		$tilesUrl = preg_replace('~app_dev(_fast)\.php/~isUu', '', $tilesUrl);
 
         return array(
-            'map'=>$map,
+            'map' => $map,
             'tilesUrl' => $tilesUrl,
             'tile_size' => $this->container->getParameter('esterenmaps.tile_size'),
             'routesTypes' => $routesTypes,
@@ -184,7 +192,6 @@ class MapsController extends Controller
 
     /**
      * @Route("/admin/maps/delete/{id}")
-     * @Template()
      */
     public function deleteAction(Maps $map)
     {
@@ -242,49 +249,41 @@ class MapsController extends Controller
     private function updateZones(&$map, Request $request) {
         $post = $request->request;
 
-        $polygons_list = $post->get('map_add_zone_polygon');
-        $names = $post->get('map_add_zone_name');
+        $polygons = $post->get('polygon');
 
         $em = $this->getDoctrine()->getManager();
 
-        $ids = array();
+        $zones_map = array();
         foreach ($map->getZones() as $zone) {
-            $ids[$zone->getId()] = $zone;
+            $zones_map[$zone->getId()] = $zone;
             $em->persist($zone);
         }
 
-        foreach ($polygons_list as $id => $coordinates) {
-            $zone = new Zones();
-            // Définition de la zone
-            $zone->setId($id)
-                ->setName($names[$id])
-                ->setMap($map)
-                ->setCoordinates($coordinates);
-            unset($ids[$id]);
-
-            $getZone = $map->getZone($zone);
-            if (!$getZone){
-                // Injection dans la map si elle n'existe pas encore
-                $map->addZone($zone);
-                $em->persist($zone);
+        foreach ($polygons as $id => $polygon) {
+            if (isset($zones_map[$id])) {
+                $zone = $zones_map[$id];
             } else {
-                if ($getZone->getCoordinates() !== $zone->getCoordinates() ||
-                    $getZone->getName() !== $zone->getName()) {
-                    $getZone->setCoordinates($zone->getCoordinates());
-                    $getZone->setName($zone->getName());
-                    $map->setZone($getZone);
-                    $em->persist($getZone);
-                }
+                $zone = new Zones();
             }
+
+            // Définition de la zone
+            $zone->setName($polygon['name'])
+                ->setMap($map)
+                ->setFaction($this->factions[$polygon['faction']])
+                ->setCoordinates($polygon['coordinates']);
+            unset($zones_map[$id]);
+
+            $em->persist($zone);
+
         }
 
-        if (!empty($ids)) {
-            foreach ($ids as $zone) {
-                $zone->setDeleted(1);
-                $em->persist($zone);
-                $map->removeZone($zone);
-            }
+        // Suppression des zones absentes des données POST
+        foreach ($zones_map as $zone) {
+            $zone->setDeleted(true);
+            $map->removeZone($zone);
+            $em->persist($zone);
         }
+
     }
 
     private function updateMarkers(&$map, Request $request) {
@@ -334,22 +333,16 @@ class MapsController extends Controller
 
     }
 
-    private function updateRoutes(&$map, Request $request) {
+    private function updateRoutes(Maps &$map, Request $request) {
         $post = $request->request;
 
-        $polylines_list = $post->get('map_add_route_polyline');
-        $names = $post->get('map_add_route_name');
-        $types = $post->get('map_add_route_type');
-        $starts = $post->get('map_add_route_start');
-        $ends = $post->get('map_add_route_end');
+        $polylines = $post->get('polyline');
 
         $em = $this->getDoctrine()->getManager();
 
-        $routesTypes = $em->getRepository('EsterenMapsBundle:RoutesTypes')->findAll(true);
-
-        $ids = array();
+        $routes_map = array();
         foreach ($map->getRoutes() as $route) {
-            $ids[$route->getId()] = $route;
+            $routes_map[$route->getId()] = $route;
             $em->persist($route);
         }
 
@@ -360,44 +353,33 @@ class MapsController extends Controller
         }
 
 
-        foreach ($polylines_list as $id => $coordinates) {
-            $route = new Routes();
+        foreach ($polylines as $id => $polyline) {
+            if (isset($routes_map[$id])) {
+                $route = $routes_map[$id];
+            } else {
+                $route = new Routes();
+            }
 
             // Définition de la route
-            $route->setId($id)
-                ->setName($names[$id])
+            $route->setName($polyline['name'])
                 ->setMap($map)
-                ->setRouteType($routesTypes[$types[$id]])
-                ->setMarkerStart($markers_ids[$starts[$id]])
-                ->setMarkerEnd($markers_ids[$ends[$id]])
-                ->setCoordinates($coordinates);
-            unset($ids[$id]);
+                ->setRouteType($this->routesTypes[$polyline['type']])
+                ->setFaction($this->factions[$polyline['faction']])
+                ->setMarkerStart($markers_ids[$polyline['markerStart']])
+                ->setMarkerEnd($markers_ids[$polyline['markerEnd']])
+                ->setCoordinates($polyline['coordinates']);
+            unset($routes_map[$id]);
 
-            $getRoute = $map->getRoute($route);
-            if (!$getRoute){
-                // Injection dans la map si elle n'existe pas encore
-                $map->addRoute($route);
-                $em->persist($route);
-            } else {
-                if ($getRoute->getCoordinates() !== $route->getCoordinates() ||
-                    $getRoute->getName() !== $route->getName()) {
-                    $getRoute->setCoordinates($route->getCoordinates());
-                    $getRoute->setName($route->getName());
-                    $getRoute->setRouteType($route->getRouteType());
-                    $getRoute->setMarkerStart($route->getMarkerStart());
-                    $getRoute->setMarkerEnd($route->getMarkerEnd());
-                    $map->setRoute($getRoute);
-                    $em->persist($getRoute);
-                }
-            }
+            $em->persist($route);
+
         }
 
-        if (!empty($ids)) {
-            foreach ($ids as $route) {
-                $route->setDeleted(1);
-                $em->persist($route);
-                $map->removeRoute($route);
-            }
+        // Suppression des routes absentes des données POST
+        foreach ($routes_map as $route) {
+            $route->setDeleted(true);
+            $map->removeRoute($route);
+            $em->persist($route);
         }
+
     }
 }

@@ -5,27 +5,55 @@
 {% block content_for_layout %}
 
 <div id="map_wrapper">
-    <div id="map_container" data-zoom="1" data-map-id="{{ map.id }}" data-init-url="{{ route_init }}"></div>
+    <div id="sidebar"></div>
+    <div id="map"></div>
+    <div id="inputs_container"></div>
 </div>
 
 {% endblock %}
 
 {% block javascripts %}
-    {#{ parent() }}{% javascripts
-        '@EsterenMapsBundle/Resources/public/js/jquery.mousewheel.min.js'
-        '@EsterenMapsBundle/Resources/public/js/jquery.transform2d.js'
-        '@EsterenMapsBundle/Resources/public/js/map.js'
-        output="js/maps.js"
-        filter="yui_js"
-    %}<script type="text/javascript" src="{{ app.request.getSchemeAndHttpHost() ~ asset_url }}"></script>{% endjavascripts %#}
     {{ parent() }}
     {% javascripts
-        '@EsterenMapsBundle/Resources/public/js/leaflet-src.js'
-        '@EsterenMapsBundle/Resources/public/js/map_main.js'
-        output="js/maps.js"
-        filter="yui_js"
+    '@EsterenMapsBundle/Resources/public/js/leaflet-src.js'
+    '@EsterenMapsBundle/Resources/public/js/leaflet.sidebar-src.js'
+    '@EsterenMapsBundle/Resources/public/js/leaflet.draw-src.js'
+    '@EsterenMapsBundle/Resources/public/js/EsterenMap/1_EsterenMap.js'
+    '@EsterenMapsBundle/Resources/public/js/EsterenMap/2_LeafletDrawOverrides.js'
+    '@EsterenMapsBundle/Resources/public/js/EsterenMap/3_EsterenMap_ActivateLeafletDraw.js'
+    '@EsterenMapsBundle/Resources/public/js/EsterenMap/3_EsterenMap_options.js'
+    '@EsterenMapsBundle/Resources/public/js/EsterenMap/4_EsterenMap_addMarker.js'
+    '@EsterenMapsBundle/Resources/public/js/EsterenMap/4_EsterenMap_addPolyline.js'
+    '@EsterenMapsBundle/Resources/public/js/EsterenMap/4_EsterenMap_addPolygon.js'
+    output="js/maps.js"
+    filter=""
     %}<script type="text/javascript" src="{{ app.request.getSchemeAndHttpHost() ~ asset_url }}"></script>{% endjavascripts %}
+
     <script type="text/javascript">
-        //document.esterenmap = new Map();
+        (function(){
+            try {
+                document.map = new EsterenMap({
+                    id: {{ map.id }},
+                    imgUrl: "{{ asset('bundles/esterenmaps/img') }}",
+                    apiUrls: {
+                        base: "{{ url('corahnrin_api_api_get', {'serviceName':'maps','id':map.id}) }}",
+                        tiles: "{{ tilesUrl }}"
+                    },
+                    LeafletMapBaseOptions: {
+                        maxZoom: {{ map.maxZoom }},
+                        maxBounds: [[-82,-182],[87,261]]
+                    },
+                    LeafletLayerBaseOptions: {
+                        maxZoom: {{ map.maxZoom }},
+                        maxNativeZoom: {{ map.maxZoom }},
+                        tileSize: {{ tile_size }},
+                        noWrap: false,
+                        continuousWorld: true
+                    }
+                });
+            } catch (e) {
+                console.error(e);
+            }
+        })();
     </script>
 {% endblock %}

@@ -6,7 +6,7 @@
     {{ parent() }}
     {% stylesheets
         '@CorahnRinGeneratorBundle/Resources/public/css/*'
-        filter="cssrewrite,?yui_css"
+        filter="cssrewrite"
         output="css/generator.css"
     %}<link rel="stylesheet" href="{{ app.request.getSchemeAndHttpHost() ~ asset_url }}" type="text/css" />
     {% endstylesheets %}
@@ -36,7 +36,7 @@
 {% block javascripts %}
     {{ parent() }}{% javascripts
         '@CorahnRinGeneratorBundle/Resources/public/js/*'
-        filter="?yui_js"
+        filter=""
         output="js/generator.js"
     %}<script type="text/javascript" src="{{ app.request.getSchemeAndHttpHost() ~ asset_url }}"></script>{% endjavascripts %}
 {% endblock %}

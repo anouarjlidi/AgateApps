@@ -1,0 +1,20 @@
+{% spaceless %}
+    <h3>{{ 'Zone' | trans }}</h3>
+    <div class="row">
+        <label for="polygon_popup_name" class="col-sm-2 control-label">{{ 'Nom' | trans | replace("'","&#130;") }}</label>
+        <div class="col-sm-10">
+            <input required="required" type="text" id="polygon_popup_name" name="polygon_popup_name" placeholder="{{ 'Nom' | trans | replace("'","&#130;") }}" class="form-control" value="" />
+        </div>
+    </div>
+    <div class="row">
+        <label for="polygon_popup_faction" class="col-sm-2 control-label">{{ 'Faction' | trans }}</label>
+        <div class="col-sm-10">
+            <select id="polygon_popup_faction" name="polygon_popup_faction" class="form-control">
+                <option value="">-- {{ 'Choisissez une faction' | trans | replace("'","&#130;") }} --</option>
+                {% for faction in factions %}
+                    <option value="{{ faction.id }}">{{ faction.name | trans | replace("'","&#130;") }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+{% endspaceless %}
