@@ -1,6 +1,7 @@
 <?php
 /**
- * Peuple
+ * Classe sociale
+ * @var $this CorahnRin\GeneratorBundle\Steps\StepLoader
  */
 
 $socialClasses = $this->em->getRepository('CorahnRinCharactersBundle:SocialClasses')->findAll(true);

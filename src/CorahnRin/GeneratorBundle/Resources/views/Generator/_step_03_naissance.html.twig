@@ -1,9 +1,41 @@
 <input type="hidden" name="region_value" id="region_value" value="{{ region_value }}" />
 
-<div id="generator_world_map" style="width: 100%;overflow:hidden;background: no-repeat top left transparent url({{ url('esterenmaps_maps_tiles_generatemapimage', {'id':1,"zoom":2,"dimensions-type":"p","width":1000,"height":753,"position-type":"p"}) }});">
-    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" style="width:1000px;height:753px;overflow:scroll;">
-        {% for region in regions_list %}
-            <polygon style="-webkit-transform: scale(0.2,0.2);-moz-transform: scale(0.2,0.2);-ms-transform: scale(0.2,0.2);-o-transform: scale(0.2,0.2);transform: scale(0.2,0.2);" points="{{ region.coordinates }}" title="{{ region.name }}" data-region-id="{{ region.id }}" {{ region_value == region.id ? ' class="checked"' : '' }} />
-        {% endfor %}
-    </svg>
-</div>
+<div id="map"></div>
+<div id="sidebar"></div>
+
+<script type="text/javascript">
+    (function(){
+        document._map_params = {
+            id: {{ map.id }},
+            loaderCallbacks: {
+                zonesComplete: function() {
+                    var i, polygons;
+                    {% if region_value %}
+                        polygons = this._polygons;
+                        for (i in polygons) {
+                            if (polygons.hasOwnProperty(i)) {
+                                if (polygons[i]._esterenZone.id == {{ region_value }}) {
+                                    polygons[i].fireEvent('click');
+                                    polygons[i].hideSidebar();
+                                }
+                            }
+                        }
+                    {% endif %}
+                }
+            },
+            imgUrl: "{{ asset('bundles/esterenmaps/img') }}",
+            apiUrls: {
+                base: "{{ url('corahnrin_api_api_get', {'serviceName':'maps','id':map.id}) }}",
+                tiles: "{{ asset('maps_tiles/1/{z}/{y}/{x}.jpg') }}"
+            },
+            LeafletMapBaseOptions: {
+                maxZoom: {{ map.maxZoom }}
+            },
+            LeafletLayerBaseOptions: {
+                maxZoom: {{ map.maxZoom }},
+                maxNativeZoom: {{ map.maxZoom }},
+                tileSize: {{ tile_size }}
+            }
+        };
+    })();
+</script>

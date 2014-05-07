@@ -29,6 +29,9 @@
         return this;
     };
 
+    EsterenMap.prototype._markers = {};
+    EsterenMap.prototype._layerMarkers = {};
+
     /**
      * @this {EsterenMap}
      * @param response
@@ -45,6 +48,13 @@
         if (mapOptions.editMode === true) {
             options = this.cloneObject(options, mapOptions.CustomMarkerBaseOptionsEditMode);
             leafletOptions = this.cloneObject(leafletOptions, mapOptions.LeafletMarkerBaseOptionsEditMode);
+        }
+
+        for (i in this._markers) {
+            if (this._markers.hasOwnProperty(i)) {
+                this._map.removeLayer(this._markers[i]);
+                this._drawnItems.removeLayer(this._markers[i]);
+            }
         }
 
         if (response['map.'+mapOptions.id+'.markers']) {
@@ -180,11 +190,9 @@
     EsterenMap.prototype.addMarker = function(latLng, leafletUserOptions, customUserOptions) {
         var _this = this,
             mapOptions = this.options(),
-            id,
-            option,optionTag,
             leafletOptions = this.cloneObject(mapOptions.LeafletMarkerBaseOptions),
-            marker,popup,popupContent,popupOptions,
-            L_map = _this._map;
+            id,option,optionTag,
+            marker,popup,popupContent,popupOptions;
 
         if (leafletUserOptions) {
             leafletOptions = this.cloneObject(leafletOptions, leafletUserOptions);
@@ -247,7 +255,7 @@
             );
         }
 
-        marker.addTo(this._drawnItems);
+        this._drawnItems.addLayer(marker);
 
         this._markers[id] = marker;
 

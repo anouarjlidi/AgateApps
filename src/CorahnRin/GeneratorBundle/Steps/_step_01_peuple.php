@@ -1,6 +1,7 @@
 <?php
 /**
  * Peuple
+ * @var $this CorahnRin\GeneratorBundle\Steps\StepLoader
  */
 
 $peoples = $this->em->getRepository('CorahnRinCharactersBundle:Peoples')->findAll(true);

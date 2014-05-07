@@ -29,7 +29,8 @@
         return this;
     };
 
-
+    EsterenMap.prototype._polylines = {};
+    EsterenMap.prototype._layerPolylines = {};
 
     EsterenMap.prototype.mapOptions.LeafletPolylineBaseOptions = {
         color: "#f66",
@@ -124,6 +125,7 @@
 
     EsterenMap.prototype.mapOptions.loaderCallbacks.routes = function(response){
         var routes, i, route,
+            finalOptions,finalLeafletOptions,
             mapOptions = this.options(),
             popupContent = mapOptions.LeafletPopupPolylineBaseContent,
             options = mapOptions.CustomPolylineBaseOptions,
@@ -131,9 +133,16 @@
             coords
         ;
 
+        for (i in this._polylines) {
+            if (this._polylines.hasOwnProperty(i)) {
+                this._map.removeLayer(this._polylines[i]);
+                this._drawnItems.removeLayer(this._polylines[i]);
+            }
+        }
+
         if (mapOptions.editMode === true) {
-            options = mergeRecursive(options, mapOptions.CustomPolylineBaseOptionsEditMode);
-            leafletOptions = mergeRecursive(leafletOptions, mapOptions.LeafletPolylineBaseOptionsEditMode);
+            options = this.cloneObject(options, mapOptions.CustomPolylineBaseOptionsEditMode);
+            leafletOptions = this.cloneObject(leafletOptions, mapOptions.LeafletPolylineBaseOptionsEditMode);
         }
 
         if (response['map.'+mapOptions.id+'.routes']) {
@@ -142,19 +151,19 @@
                 if (routes.hasOwnProperty(i)) {
                     route = routes[i];
                     coords = JSON.parse(route.coordinates);
+                    finalLeafletOptions = this.cloneObject(leafletOptions, {id:route.id});
+                    finalOptions = this.cloneObject(options, {
+                        popupContent:popupContent,
+                        esterenRoute: route,
+                        polylineName: route.name,
+                        polylineType: route.route_type.id,
+                        polylineFaction: route.faction ? route.faction.id : '',
+                        polylineMarkerStart: route.marker_start ? route.marker_start.id : '',
+                        polylineMarkerEnd: route.marker_end ? route.marker_end.id : ''
+                    });
                     this.addPolyline(coords,
-                        mergeRecursive(leafletOptions, {
-                            id: route.id
-                        }),
-                        mergeRecursive(options, {
-                            popupContent:popupContent,
-                            esterenRoute: route,
-                            polylineName: route.name,
-                            polylineType: route.route_type.id,
-                            polylineFaction: route.faction ? route.faction.id : '',
-                            polylineMarkerStart: route.marker_start ? route.marker_start.id : '',
-                            polylineMarkerEnd: route.marker_end ? route.marker_end.id : ''
-                        })
+                        finalLeafletOptions,
+                        finalOptions
                     );
                 }//endif (polyline.hasOwnProperty)
             }//endfor
@@ -237,7 +246,7 @@
             );
         }
 
-        polyline.addTo(this._drawnItems);
+        this._drawnItems.addLayer(polyline);
 
         this._polylines[id] = polyline;
 

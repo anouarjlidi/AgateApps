@@ -1,6 +1,7 @@
 <?php
 /**
  * Métier
+ * @var $this CorahnRin\GeneratorBundle\Steps\StepLoader
  */
 
 $jobs = $this->em->getRepository('CorahnRinCharactersBundle:Jobs')->findAllPerBook();

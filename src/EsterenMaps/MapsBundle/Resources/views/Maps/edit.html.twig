@@ -45,31 +45,31 @@
     <script type="text/javascript">
         (function(){
             try {
-            document.map = new EsterenMap({
-                id: {{ map.id }},
-                editMode: true,
-                imgUrl: "{{ asset('bundles/esterenmaps/img') }}",
-                apiUrls: {
-                    base: "{{ url('corahnrin_api_api_get', {'serviceName':'maps','id':map.id}) }}",
-                    tiles: "{{ asset('maps_tiles/1/{z}/{y}/{x}.jpg') }}"
-                },
-                LeafletMapBaseOptions: {
-                    maxZoom: {{ map.maxZoom }}
-                },
-                LeafletLayerBaseOptions: {
-                    maxZoom: {{ map.maxZoom }},
-                    maxNativeZoom: {{ map.maxZoom }},
-                    tileSize: {{ tile_size }},
-                    noWrap: false,
-                    continuousWorld: true
-                },
-                idsZones: [{{ idsZones | join(',') }}],
-                idsRoutes: [{{ idsRoutes | join(',') }}],
-                idsMarkers: [{{ idsMarkers | join(',') }}],
-                maxZoneId: {{ maxZones }},
-                maxRouteId: {{ maxRoutes }},
-                maxMarkerId: {{ maxMarkers }}
-            });
+                document.map = new EsterenMap({
+                    id: {{ map.id }},
+                    editMode: true,
+                    imgUrl: "{{ asset('bundles/esterenmaps/img') }}",
+                    apiUrls: {
+                        base: "{{ url('corahnrin_api_api_get', {'serviceName':'maps','id':map.id}) }}",
+                        tiles: "{{ asset('maps_tiles/1/{z}/{y}/{x}.jpg') }}"
+                    },
+                    LeafletMapBaseOptions: {
+                        maxZoom: {{ map.maxZoom }}
+                    },
+                    LeafletLayerBaseOptions: {
+                        maxZoom: {{ map.maxZoom }},
+                        maxNativeZoom: {{ map.maxZoom }},
+                        tileSize: {{ tile_size }},
+                        noWrap: false,
+                        continuousWorld: true
+                    },
+                    idsZones: [{{ idsZones | join(',') }}],
+                    idsRoutes: [{{ idsRoutes | join(',') }}],
+                    idsMarkers: [{{ idsMarkers | join(',') }}],
+                    maxZoneId: {{ maxZones }},
+                    maxRouteId: {{ maxRoutes }},
+                    maxMarkerId: {{ maxMarkers }}
+                });
             } catch (e) {
                 console.error(e);
             }

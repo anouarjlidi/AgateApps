@@ -25,7 +25,6 @@ class GeneratorController extends Controller {
 
     /**
      * @Route("/characters/reset/")
-     * @Template()
      */
     public function resetAction()
     {
@@ -41,7 +40,7 @@ class GeneratorController extends Controller {
      * @Template("CorahnRinGeneratorBundle:Generator:step_base.html.twig")
      */
     public function stepAction(Request $request, Steps $step) {
-        $datas = array(); // Tableau à retourner en fin de méthode
+
         $session = $this->get('session');
 
         //Si le personnage n'existe pas dans la session, on le crée
@@ -65,7 +64,7 @@ class GeneratorController extends Controller {
 //        $stepLoader = new StepLoader($this, $session, $request, $step, $this->steps);
 
         /**
-         * @var CorahnRin\GeneratorBundle\Steps\StepLoader
+         * @var \CorahnRin\GeneratorBundle\Steps\StepLoader
          */
         $stepLoader = $this->container->get('corahn_rin_generator.steps_loader');
 
@@ -98,7 +97,7 @@ class GeneratorController extends Controller {
             //Si la méthode n'existe pas, alors on a demandé une étape en trop (ou en moins)
             //Dans ce cas, on renvoie une erreur
             $msg = $this->get('translator')->trans('L\'étape %step% n\'a pas été trouvée...', array('%step%'=>$step->getStep()), 'error.steps');
-            throw new \Symfony\Component\Config\Definition\Exception\Exception($msg);
+            throw new \Exception($msg);
             exit;
         }
     }

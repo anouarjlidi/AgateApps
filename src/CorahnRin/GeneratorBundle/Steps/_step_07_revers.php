@@ -1,6 +1,7 @@
 <?php
 /**
- * Métier
+ * Revers
+ * @var $this CorahnRin\GeneratorBundle\Steps\StepLoader
  */
 
 $setbacks = $this->em->getRepository('CorahnRinCharactersBundle:Setbacks')->findAll(true);

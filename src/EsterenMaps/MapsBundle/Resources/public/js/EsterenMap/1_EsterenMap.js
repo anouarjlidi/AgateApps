@@ -12,9 +12,12 @@
         // Données utilisées dans le scope de la classe
         var _this = this, ajaxD;
 
+        // Force le clonage des options pour ne pas altérer le prototype
+        this.mapOptions = this.options();
+
         if ( !(this instanceof EsterenMap) ) {
             console.error('Wrong scope check, incorrect instance.');
-            document.wrongInstance = this;
+            w.wrongInstance = this;
             return _this;
         }
 
@@ -68,7 +71,11 @@
 
         // Reset du wrapper avant création de la map
         // Force la redimension du wrapper lors de la redimension de la page
-        this.resetHeight();
+        if (this.mapOptions.autoResize) {
+            this.resetHeight();
+        } else {
+            this.resetHeight(this.mapOptions.containerHeight);
+        }
 
         this.initLeafletDraw();
 
@@ -76,7 +83,8 @@
         this._map = L.map(this.mapOptions.container, this.mapOptions.LeafletMapBaseOptions);
 
         // Création du calque des tuiles
-        L.tileLayer(this.mapOptions.apiUrls.tiles, this.mapOptions.LeafletLayerBaseOptions).addTo(this._map);
+        this._tileLayer = L.tileLayer(this.mapOptions.apiUrls.tiles, this.mapOptions.LeafletLayerBaseOptions);
+        this._map.addLayer(this._tileLayer);
 
         L.Icon.Default.imagePath = this.mapOptions.imgUrl.replace(/\/$/gi, '');
 
@@ -101,7 +109,7 @@
             this.activateLeafletDraw();
         } else {
             // Doit contenir les nouveaux éléments ajoutés à la carte
-            drawnItems = new L.FeatureGroup();
+            drawnItems = new L.LayerGroup();
             this._map.addLayer(drawnItems);
             this._drawnItems = drawnItems;
         }
@@ -109,11 +117,13 @@
         _this = this;
 
         // Force le resize à chaque redimension de la page
-        $(w).resize(function(){_this.resetHeight();});
+        if (this.mapOptions.autoResize) {
+            $(w).resize(function(){_this.resetHeight();});
+        }
 
-        this.loadMarkers();
-        this.loadRoutes();
-        this.loadZones();
+        if (this.mapOptions.loadedCallback) {
+            this.mapOptions.loadedCallback.call(this);
+        }
 
     };
 
@@ -124,9 +134,10 @@
      * @param {string} name Le type d'élément à récupérer
      * @param {object|null} [datas] les options à envoyer à l'objet AJAX
      * @param {function|null} [callback] La fonction à exécuter (ignoré dans certains cas)
+     * @param {function|null} [callbackComplete] La fonction à exécuter (ignoré dans certains cas)
      * @returns {*}
      */
-    EsterenMap.prototype._load = function(name, datas, callback) {
+    EsterenMap.prototype._load = function(name, datas, callback, callbackComplete) {
         var url, ajaxObject,
             _this = this,
             mapOptions = this.options()
@@ -142,10 +153,14 @@
             return false;
         }
 
-        url = this.mapOptions.apiUrls.base + '/' + name;
+        url = mapOptions.apiUrls.base + '/' + name;
 
         if (!callback && mapOptions.loaderCallbacks[name]) {
             callback = mapOptions.loaderCallbacks[name];
+        }
+
+        if (!callbackComplete && mapOptions.loaderCallbacks[name+'Complete']) {
+            callbackComplete = mapOptions.loaderCallbacks[name+'Complete'];
         }
 
         ajaxObject = {
@@ -159,6 +174,12 @@
                 callback.call(_this, response);
             }
         }
+        if (callbackComplete) {
+            ajaxObject.complete = function(){
+                callbackComplete.call(_this);
+            }
+        }
+
 
         $.ajax(ajaxObject);
 
@@ -198,29 +219,36 @@
         var newObject;
 
         // Crée un nouvel objet
-        newObject = $.extend(true,{},obj1);
+        newObject = $.extend(true, {}, obj1);
 
         if (obj2) {
             // Fusionne le deuxième avec le premier objet
-            newObject = $.extend(true, newObject, obj2);
+            newObject = $.extend(true, {}, newObject, obj2);
         }
 
         return newObject;
     };
 
     /**
-     * Redimensionne le conteneur de la carte en fonction de certanies données du layout
+     * Redimensionne le conteneur de la carte en fonction de certaines données du layout
+     * Si une hauteur est envoyée en paramètre, elle est directement affectée.
+     * Sinon, c'est une hauteur estimée selon le contenant et le reste de la page
+     * @param height La hauteur en pixels
      * @returns {EsterenMap}
      */
-    EsterenMap.prototype.resetHeight = function() {
+    EsterenMap.prototype.resetHeight = function(height) {
         // Remet la valeur de la hauteur de façon correcte par rapport au navigateur.
-        $(d.getElementById(this.options().container)).height(
-              $(w).height()
-            - $('#footer').outerHeight(true)
-            - $('#navigation').outerHeight(true)
-            - $('#map_edit_menu').outerHeight(true)
-            - 40
-        );
+        if (height) {
+            $(d.getElementById(this.options().container)).height(height);
+        } else {
+            $(d.getElementById(this.options().container)).height(
+                  $(w).height()
+                - $('#footer').outerHeight(true)
+                - $('#navigation').outerHeight(true)
+                - $('#map_edit_menu').outerHeight(true)
+                - 40
+            );
+        }
         return this;
     };
 

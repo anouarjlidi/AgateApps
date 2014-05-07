@@ -29,6 +29,9 @@
         return this;
     };
 
+    EsterenMap.prototype._polygons = {};
+    EsterenMap.prototype._layerPolygons = {};
+
     EsterenMap.prototype.mapOptions.LeafletPolygonBaseOptions = {
         color: "#fff",
         opacity: 0.2,
@@ -90,6 +93,7 @@
         }
     };
 
+    EsterenMap.prototype.mapOptions.loaderCallbacks.zonesComplete = null;
     EsterenMap.prototype.mapOptions.loaderCallbacks.zones = function(response){
         var zones, i, zone,
             mapOptions = this.options(),
@@ -102,6 +106,13 @@
         if (mapOptions.editMode === true) {
             options = this.cloneObject(options, mapOptions.CustomPolygonBaseOptionsEditMode);
             leafletOptions = this.cloneObject(leafletOptions, mapOptions.LeafletPolygonBaseOptionsEditMode);
+        }
+
+        for (i in this._polygons) {
+            if (this._polygons.hasOwnProperty(i)) {
+                this._map.removeLayer(this._polygons[i]);
+                this._drawnItems.removeLayer(this._polygons[i]);
+            }
         }
 
         if (response['map.'+mapOptions.id+'.zones']) {
@@ -198,7 +209,7 @@
             );
         }
 
-        polygon.addTo(this._drawnItems);
+        this._drawnItems.addLayer(polygon);
 
         this._polygons[id] = polygon;
 

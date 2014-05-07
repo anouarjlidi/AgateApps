@@ -2,11 +2,9 @@
 
     EsterenMap.prototype._map = null;
     EsterenMap.prototype._sidebar = {};
-    EsterenMap.prototype._markers = {};
-    EsterenMap.prototype._polylines = {};
-    EsterenMap.prototype._polygons = {};
     EsterenMap.prototype._drawControl = {};
     EsterenMap.prototype._drawnItems = {};
+    EsterenMap.prototype._tileLayer = {};
 
     EsterenMap.prototype.mapElements = {
         factions: true,
@@ -20,8 +18,15 @@
     EsterenMap.prototype.mapOptions = {
         id: 0,
         editMode: false,
+        autoResize: true,
+        containerHeight: 400,
         sidebarContainer: 'sidebar',
         container: 'map',
+        loadedCallback: function(){
+            this.loadMarkers();
+            this.loadRoutes();
+            this.loadZones();
+        },
         imgUrl: '/bundles/esterenmaps/img',
         apiUrls: {
             base: '/api/maps/',
@@ -54,7 +59,7 @@
             maxNativeZoom: 1,
             tileSize: 168,
             noWrap: false,
-            continuousWorld: false
+            continuousWorld: true
         }
     };
 

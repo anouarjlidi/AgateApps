@@ -14,7 +14,7 @@
         }
 
         // Doit contenir les nouveaux éléments ajoutés à la carte afin qu'ils soient éditables
-        drawnItems = new L.FeatureGroup();
+        drawnItems = new L.LayerGroup();
         this._map.addLayer(drawnItems);
 
         // Ajoute les boutons de contrôle
@@ -58,7 +58,7 @@
                 options.markerName = '';
                 options.markerType = '';
                 options.markerFaction = '';
-                options.addToSidebar = true;
+                options.popupIsSidebar = true;
 
                 latlng = layer._latlng;
 

@@ -1,0 +1,9 @@
+
+# Corahn-Rin map tile size
+#esterenmaps:
+#    tile_size: 168
+
+# Corahn-Rin character sheets source files folder
+#corahn_rin_characters:
+#    sheets_output: %kernel.root_dir%/cache/character_sheets/
+#    sheets_folder: %kernel.root_dir%/../src/CorahnRin/CharactersBundle/Sheets/files/

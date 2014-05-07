@@ -1,7 +1,7 @@
 <?php
 /**
- * class @StepLoader
- * Métier
+ * Orientation de la personnalité
+ * @var $this CorahnRin\GeneratorBundle\Steps\StepLoader
  */
 
 $orientation = $this->getStepValue();

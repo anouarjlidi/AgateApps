@@ -1,6 +1,7 @@
 <?php
 /**
- * Peuple
+ * Age
+ * @var $this CorahnRin\GeneratorBundle\Steps\StepLoader
  */
 
 $datas = array(

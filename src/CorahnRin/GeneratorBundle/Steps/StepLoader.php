@@ -3,9 +3,11 @@ namespace CorahnRin\GeneratorBundle\Steps;
 
 use CorahnRin\GeneratorBundle\Entity\Steps;
 
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use CorahnRin\GeneratorBundle\Controller\GeneratorController as Controller;
 
 /**
  * Charge les étapes pour le contrôleur, d'après un nom de fichier dépendant de l'étape injectée
@@ -15,11 +17,34 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  */
 class StepLoader {
 
+    /**
+     * @var Controller
+     */
     private $controller;
+
+    /**
+     * @var EntityManager
+     */
     private $em;
+
+    /**
+     * @var Session
+     */
     private $session;
+
+    /**
+     * @var array
+     */
     private $character;
+
+    /**
+     * @var Request
+     */
     private $request;
+
+    /**
+     * @var string
+     */
     private $filename;
     private $step;
     private $steps;
@@ -27,6 +52,9 @@ class StepLoader {
     private $steps_views_directory;
     private $initiated = false;
 
+    /**
+     * @var Steps
+     */
     public $stepEntity;
 
     function __construct($steps_managers_directory, $steps_views_directory) {
@@ -44,7 +72,7 @@ class StepLoader {
      * @param SessionInterface $session     La session en cours, pour récupérer le personnage
      * @param Request $request              La requête, pour les données POST gérées par les managers
      * @param Steps $step                   L'étape en cours
-     * @param $steps                        La liste des étapes (pour éviter une nouvelle injection
+     * @param array $steps                  La liste des étapes (pour éviter une nouvelle injection
      */
     function initiate(Controller $controller, SessionInterface $session, Request $request, Steps $step, $steps) {
         $this->controller = $controller;
@@ -169,13 +197,9 @@ class StepLoader {
      * Si la réponse est un objet, c'est un objet RedirectResponse<br />
      *  Dans ce cas, on redirige, soit vers l'étape suivante, soit vers une autre page
      *
-     * @return array|object
+     * @return mixed
      */
     public function load() {
-
-        // Initialisation des variables du scope local
-
-        // Chargement du fichier, les variables précédentes y seront utilisables
         return require $this->filename;
     }
 

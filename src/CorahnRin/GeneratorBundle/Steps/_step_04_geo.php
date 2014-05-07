@@ -1,6 +1,7 @@
 <?php
 /**
- * Peuple
+ * Lieu de résidence géographique
+ * @var $this CorahnRin\GeneratorBundle\Steps\StepLoader
  */
 
 $geoEnvironments = $this->em->getRepository('CorahnRinCharactersBundle:GeoEnvironments')->findAll(true);

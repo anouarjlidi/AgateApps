@@ -1,6 +1,7 @@
 <?php
 /**
- * Métier
+ * Voies
+ * @var $this CorahnRin\GeneratorBundle\Steps\StepLoader
  */
 
 $ways = $this->em->getRepository('CorahnRinCharactersBundle:Ways')->findAll(true);

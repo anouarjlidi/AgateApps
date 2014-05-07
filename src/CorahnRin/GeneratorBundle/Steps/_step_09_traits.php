@@ -1,7 +1,7 @@
 <?php
 /**
- * class @StepLoader
- * Métier
+ * Traits de caractère
+ * @var $this CorahnRin\GeneratorBundle\Steps\StepLoader
  */
 
 $ways = $this->getStepValue(8);

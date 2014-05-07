@@ -34,9 +34,27 @@
 {% endblock %}
 
 {% block javascripts %}
-    {{ parent() }}{% javascripts
+    {{ parent() }}
+    {% javascripts
+    '@EsterenMapsBundle/Resources/public/js/leaflet-src.js'
+    '@EsterenMapsBundle/Resources/public/js/leaflet.sidebar-src.js'
+    '@EsterenMapsBundle/Resources/public/js/leaflet.draw-src.js'
+    '@EsterenMapsBundle/Resources/public/js/EsterenMap/1_EsterenMap.js'
+    '@EsterenMapsBundle/Resources/public/js/EsterenMap/2_LeafletDrawOverrides.js'
+    '@EsterenMapsBundle/Resources/public/js/EsterenMap/3_EsterenMap_ActivateLeafletDraw.js'
+    '@EsterenMapsBundle/Resources/public/js/EsterenMap/3_EsterenMap_options.js'
+    '@EsterenMapsBundle/Resources/public/js/EsterenMap/4_EsterenMap_addMarker.js'
+    '@EsterenMapsBundle/Resources/public/js/EsterenMap/4_EsterenMap_addPolyline.js'
+    '@EsterenMapsBundle/Resources/public/js/EsterenMap/4_EsterenMap_addPolygon.js'
+    output="js/maps.js"
+    filter=""
+    %}<script type="text/javascript" src="{{ app.request.getSchemeAndHttpHost() ~ asset_url }}"></script>
+    {% endjavascripts %}
+
+    {% javascripts
         '@CorahnRinGeneratorBundle/Resources/public/js/*'
         filter=""
         output="js/generator.js"
-    %}<script type="text/javascript" src="{{ app.request.getSchemeAndHttpHost() ~ asset_url }}"></script>{% endjavascripts %}
+    %}<script type="text/javascript" src="{{ app.request.getSchemeAndHttpHost() ~ asset_url }}"></script>
+    {% endjavascripts %}
 {% endblock %}
