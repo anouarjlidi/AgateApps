@@ -14,7 +14,7 @@
         }
 
         // Doit contenir les nouveaux éléments ajoutés à la carte afin qu'ils soient éditables
-        drawnItems = new L.LayerGroup();
+        drawnItems = new L.FeatureGroup();
         this._map.addLayer(drawnItems);
 
         // Ajoute les boutons de contrôle
