@@ -32,8 +32,9 @@ twig:
     strict_variables: %kernel.debug%
     form:
         resources:
-            - 'CorahnRinToolsBundle:Form:form_div_layout.html.twig'
-            - 'CorahnRinToolsBundle:Form:fields.html.twig'
+            - 'PierstovalToolsBundle:Form:form_div_layout.html.twig'
+            - 'PierstovalToolsBundle:Form:fields.html.twig'
+            - 'PierstovalToolsBundle:Form:form_errors.html.twig'
 
 # Assetic Configuration
 assetic:
@@ -113,6 +114,7 @@ stof_doctrine_extensions:
         default:
             sluggable: true
             timestampable: true
+            softdeleteable: true
 
 # Services declaration
 services:

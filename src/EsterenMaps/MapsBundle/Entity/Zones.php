@@ -4,7 +4,7 @@ namespace EsterenMaps\MapsBundle\Entity;
 
 use JMS\Serializer\Annotation\ExclusionPolicy as ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose as Expose;
-
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection as DoctrineCollection;
 
@@ -12,6 +12,7 @@ use Doctrine\Common\Collections\ArrayCollection as DoctrineCollection;
  * Zones
  *
  * @ORM\Table(name="zones")
+ * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity(repositoryClass="EsterenMaps\MapsBundle\Repository\ZonesRepository")
  * @ExclusionPolicy("all")
  */
@@ -44,17 +45,17 @@ class Zones
     protected $coordinates;
 
     /**
-     * @var DateTime
+     * @var \Datetime
      *
-	 * @Gedmo\Mapping\Annotation\Timestampable(on="create")
+	 * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $created;
 
     /**
-     * @var DateTime
+     * @var \Datetime
      *
-	 * @Gedmo\Mapping\Annotation\Timestampable(on="update")
+	 * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $updated;
@@ -84,7 +85,7 @@ class Zones
     /**
      * @var boolean
      *
-     * @ORM\Column(name="deleted", type="boolean", nullable=false,options={"default":0})
+     * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
     protected $deleted;
 
@@ -288,28 +289,5 @@ class Zones
     public function getEvents()
     {
         return $this->events;
-    }
-
-    /**
-     * Set deleted
-     *
-     * @param boolean $deleted
-     * @return Zones
-     */
-    public function setDeleted($deleted)
-    {
-        $this->deleted = $deleted;
-
-        return $this;
-    }
-
-    /**
-     * Get deleted
-     *
-     * @return boolean
-     */
-    public function getDeleted()
-    {
-        return $this->deleted;
     }
 }

@@ -1,13 +1,14 @@
 <?php
 
 namespace CorahnRin\CharactersBundle\Entity;
-
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Flux
  *
  * @ORM\Table(name="flux")
+ * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\FluxRepository")
  */
 class Flux
@@ -37,7 +38,7 @@ class Flux
 
     /**
      * @var \Datetime
-     * @Gedmo\Mapping\Annotation\Timestampable(on="create")
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $created;
@@ -45,7 +46,7 @@ class Flux
     /**
      * @var \Datetime
 
-     * @Gedmo\Mapping\Annotation\Timestampable(on="update")
+     * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $updated;
@@ -53,7 +54,7 @@ class Flux
     /**
      * @var boolean
      *
-     * @ORM\Column(name="deleted", type="boolean", nullable=false,options={"default":0})
+     * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
     protected $deleted;
 
@@ -138,29 +139,6 @@ class Flux
     public function getUpdated()
     {
         return $this->updated;
-    }
-
-    /**
-     * Set deleted
-     *
-     * @param boolean $deleted
-     * @return Flux
-     */
-    public function setDeleted($deleted)
-    {
-        $this->deleted = $deleted;
-
-        return $this;
-    }
-
-    /**
-     * Get deleted
-     *
-     * @return boolean
-     */
-    public function getDeleted()
-    {
-        return $this->deleted;
     }
 
     /**

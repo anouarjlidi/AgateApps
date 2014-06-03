@@ -1,13 +1,14 @@
 <?php
 
 namespace CorahnRin\CharactersBundle\Entity;
-
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * DisordersWays
  *
  * @ORM\Table(name="disorders_ways")
+ * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\DisordersWaysRepository")
  */
 class DisordersWays
@@ -33,12 +34,12 @@ class DisordersWays
      *
      * @ORM\Column(type="boolean", options={"default":0})
      */
-    protected $isMajor;
+    protected $isMajor = 0;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="deleted", type="boolean", nullable=false,options={"default":0})
+     * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
     protected $deleted;
 
@@ -113,28 +114,5 @@ class DisordersWays
     public function getIsMajor()
     {
         return $this->isMajor;
-    }
-
-    /**
-     * Set deleted
-     *
-     * @param boolean $deleted
-     * @return DisordersWays
-     */
-    public function setDeleted($deleted)
-    {
-        $this->deleted = $deleted;
-
-        return $this;
-    }
-
-    /**
-     * Get deleted
-     *
-     * @return boolean
-     */
-    public function getDeleted()
-    {
-        return $this->deleted;
     }
 }

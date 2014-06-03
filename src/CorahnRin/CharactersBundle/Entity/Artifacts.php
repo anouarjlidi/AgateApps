@@ -1,13 +1,15 @@
 <?php
 
 namespace CorahnRin\CharactersBundle\Entity;
-
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Artifacts
  *
  * @ORM\Table(name="artifacts")
+ * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\ArtifactsRepository")
  */
 class Artifacts
@@ -25,6 +27,7 @@ class Artifacts
      * @var string
      *
      * @ORM\Column(type="string", length=70, nullable=false, unique=true)
+     * @Assert\NotBlank()
      */
     protected $name;
 
@@ -38,18 +41,24 @@ class Artifacts
      * @var integer
      *
      * @ORM\Column(type="smallint")
+     * @Assert\NotNull()
+     * @Assert\GreaterThanOrEqual(value=0)
      */
     protected $price;
 
     /**
      * @var integer
      * @ORM\Column(type="smallint")
+     * @Assert\NotNull()
+     * @Assert\GreaterThanOrEqual(value=0)
      */
     protected $consumption;
 
     /**
      * @var integer
      * @ORM\Column(type="smallint")
+     * @Assert\NotNull()
+     * @Assert\GreaterThanOrEqual(value=0)
      */
     protected $consumptionInterval;
 
@@ -57,6 +66,8 @@ class Artifacts
      * @var integer
      *
      * @ORM\Column(type="smallint", nullable=true)
+     * @Assert\NotNull()
+     * @Assert\GreaterThanOrEqual(value=0)
      */
     protected $tank;
 
@@ -64,6 +75,8 @@ class Artifacts
      * @var integer
      *
      * @ORM\Column(type="smallint")
+     * @Assert\NotNull()
+     * @Assert\GreaterThanOrEqual(value=0)
      */
     protected $resistance;
 
@@ -85,12 +98,13 @@ class Artifacts
      * @var integer
      *
      * @ORM\Column(type="smallint", nullable=true)
+     * @Assert\GreaterThanOrEqual(value=0)
      */
     protected $damage;
 
     /**
      * @var \Datetime
-     * @Gedmo\Mapping\Annotation\Timestampable(on="create")
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $created;
@@ -98,7 +112,7 @@ class Artifacts
     /**
      * @var \Datetime
 
-     * @Gedmo\Mapping\Annotation\Timestampable(on="update")
+     * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $updated;
@@ -106,14 +120,16 @@ class Artifacts
     /**
      * @var Flux
      *
-     * @ORM\ManyToOne(targetEntity="Flux", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="Flux")
+     * @Assert\NotNull()
+     * @ORM\JoinColumn(nullable=false)
      */
     protected $flux;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="deleted", type="boolean", nullable=false,options={"default":0})
+     * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
     protected $deleted;
 
@@ -401,29 +417,6 @@ class Artifacts
     public function getFlux()
     {
         return $this->flux;
-    }
-
-    /**
-     * Set deleted
-     *
-     * @param boolean $deleted
-     * @return Artifacts
-     */
-    public function setDeleted($deleted)
-    {
-        $this->deleted = $deleted;
-
-        return $this;
-    }
-
-    /**
-     * Get deleted
-     *
-     * @return boolean
-     */
-    public function getDeleted()
-    {
-        return $this->deleted;
     }
 
     /**

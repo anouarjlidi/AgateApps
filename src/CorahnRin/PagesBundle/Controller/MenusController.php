@@ -48,8 +48,7 @@ class MenusController extends Controller {
         }
 
         $em = $this->getDoctrine()->getManager();
-        $menu->setDeleted(1);
-        $em->persist($menu);
+        $em->remove($menu);
         $em->flush();
 
         $this->get('session')->getFlashBag()->add('success', 'Le lien de menu <strong>'.$menu->getName().'</strong> a été correctement supprimé.');

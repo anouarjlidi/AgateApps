@@ -55,7 +55,7 @@ class SetbacksController extends Controller
         }
 
         $em = $this->getDoctrine()->getManager();
-        $element->setDeleted(1);
+        $em->remove($element);
         $em->persist($element);
         $em->flush();
         $this->get('session')->getFlashBag()->add('success', 'Revers supprimé : <strong>'.$element->getName().'</strong>');

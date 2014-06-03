@@ -1,7 +1,7 @@
 <?php
 
 namespace CorahnRin\CharactersBundle\Entity;
-
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -110,29 +110,6 @@ class CharDisciplines
     public function getDiscipline()
     {
         return $this->discipline;
-    }
-
-    /**
-     * Set deleted
-     *
-     * @param boolean $deleted
-     * @return CharDisciplines
-     */
-    public function setDeleted($deleted)
-    {
-        $this->deleted = $deleted;
-
-        return $this;
-    }
-
-    /**
-     * Get deleted
-     *
-     * @return boolean
-     */
-    public function getDeleted()
-    {
-        return $this->deleted;
     }
 
     /**

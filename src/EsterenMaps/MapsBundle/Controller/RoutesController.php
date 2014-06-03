@@ -155,8 +155,7 @@ class RoutesController extends Controller {
         }
 
         $em = $this->getDoctrine()->getManager();
-        $route->setDeleted(1);
-        $em->persist($route);
+        $em->remove($route);
         $em->flush();
 
         $this->get('session')->getFlashBag()->add('success', 'Le route <strong>'.$route->getName().'</strong> a été correctement supprimé.');
@@ -175,8 +174,7 @@ class RoutesController extends Controller {
         }
 
         $em = $this->getDoctrine()->getManager();
-        $routeType->setDeleted(1);
-        $em->persist($routeType);
+        $em->remove($routeType);
         $em->flush();
 
         $this->get('session')->getFlashBag()->add('success', 'Le type de route <strong>'.$routeType->getName().'</strong> a été correctement supprimé.');

@@ -92,7 +92,12 @@
         {% if label is empty %}
             {% set label = name|humanize %}
         {% endif %}
-        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ (attrname == 'title' or attrname == 'placeholder' ? (attrvalue | trans) : attrvalue) }}"{% endfor %}>{{ label|trans({}, translation_domain) }}</label>
+        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ (attrname == 'title' or attrname == 'placeholder' ? (attrvalue | trans) : attrvalue) }}"{% endfor %}>
+            {{ label|trans({}, translation_domain) }}
+            {% if required %}
+                <span class="text-red">*</span>
+            {% endif %}
+        </label>
     {% endif %}
 {% endspaceless %}
 {% endblock form_label %}
@@ -108,7 +113,8 @@
         {% set form_method = "POST" %}
     {% endif %}
     {% set attr = attr|merge({'class':((attr.class is defined) ? attr.class : '')~' form-horizontal'}) %}
-    <form method="{{ form_method|lower }}" action="{{ action }}"{% for attrname, attrvalue in attr %} {{ attrname }}="{{ (attrname == 'title' or attrname == 'placeholder' ? (attrvalue | trans) : attrvalue) }}"{% endfor %}{% if multipart %} enctype="multipart/form-data"{% endif %}>
+    <form novalidate method="{{ form_method|lower }}" action="{{ action }}"{% for attrname, attrvalue in attr %} {{ attrname }}="{{ (attrname == 'title' or attrname == 'placeholder' ? (attrvalue | trans) : attrvalue) }}"{% endfor %}{% if multipart %} enctype="multipart/form-data"{% endif %}>
+    <p><span class="text-red">*</span>&nbsp;<em>{{ 'Champs obligatoires' | trans({}) }}</em></p>
     {% if form_method != method %}
         <input type="hidden" name="_method" value="{{ method }}" />
     {% endif %}

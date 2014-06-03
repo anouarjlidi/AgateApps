@@ -155,8 +155,7 @@ class MarkersController extends Controller {
         }
 
         $em = $this->getDoctrine()->getManager();
-        $marker->setDeleted(1);
-        $em->persist($marker);
+        $em->remove($marker);
         $em->flush();
 
         $this->get('session')->getFlashBag()->add('success', 'Le marqueur <strong>'.$marker->getName().'</strong> a été correctement supprimé.');
@@ -175,8 +174,7 @@ class MarkersController extends Controller {
         }
 
         $em = $this->getDoctrine()->getManager();
-        $markerType->setDeleted(1);
-        $em->persist($markerType);
+        $em->remove($markerType);
         $em->flush();
 
         $this->get('session')->getFlashBag()->add('success', 'Le type de marqueur <strong>'.$markerType->getName().'</strong> a été correctement supprimé.');

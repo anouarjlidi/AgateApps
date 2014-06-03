@@ -1,7 +1,7 @@
 <?php
 
 namespace CorahnRin\CharactersBundle\Entity;
-
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -102,28 +102,5 @@ class CharSetbacks
     public function getIsAvoided()
     {
         return $this->isAvoided;
-    }
-
-    /**
-     * Set deleted
-     *
-     * @param boolean $deleted
-     * @return CharSetbacks
-     */
-    public function setDeleted($deleted)
-    {
-        $this->deleted = $deleted;
-
-        return $this;
-    }
-
-    /**
-     * Get deleted
-     *
-     * @return boolean
-     */
-    public function getDeleted()
-    {
-        return $this->deleted;
     }
 }

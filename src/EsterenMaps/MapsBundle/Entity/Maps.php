@@ -6,16 +6,16 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 use JMS\Serializer\Annotation\ExclusionPolicy as ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose as Expose;
-
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection as DoctrineCollection;
 
-use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Maps
  *
  * @ORM\Table(name="maps")
+ * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity(repositoryClass="EsterenMaps\MapsBundle\Repository\MapsRepository")
  * @ExclusionPolicy("all")
  */
@@ -76,7 +76,7 @@ class Maps
     protected $maxZoom;
 
     /**
-     * @var DateTime
+     * @var \Datetime
      *
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
@@ -84,7 +84,7 @@ class Maps
     protected $created;
 
     /**
-     * @var DateTime
+     * @var \Datetime
      *
      * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
@@ -118,7 +118,7 @@ class Maps
     /**
      * @var boolean
      *
-     * @ORM\Column(name="deleted", type="boolean", nullable=false,options={"default":0})
+     * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
     protected $deleted;
 
@@ -497,28 +497,5 @@ class Maps
     public function getNameSlug()
     {
         return $this->nameSlug;
-    }
-
-    /**
-     * Set deleted
-     *
-     * @param boolean $deleted
-     * @return Maps
-     */
-    public function setDeleted($deleted)
-    {
-        $this->deleted = $deleted;
-
-        return $this;
-    }
-
-    /**
-     * Get deleted
-     *
-     * @return boolean
-     */
-    public function getDeleted()
-    {
-        return $this->deleted;
     }
 }

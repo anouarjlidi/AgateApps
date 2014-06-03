@@ -47,8 +47,8 @@ class HelperExtension extends \Twig_Extension {
         return strftime($format, $d);
     }
 
-    public function prFunction($var, $return = false) {
-		return \CorahnRinTools\pr($var, $return);
+    public function prFunction($var) {
+		return \CorahnRinTools\pr($var, false);
     }
 
 }

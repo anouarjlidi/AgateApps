@@ -1,7 +1,7 @@
 <?php
 
 namespace CorahnRin\CharactersBundle\Entity;
-
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -44,7 +44,7 @@ class CharModifications
 
     /**
      * @var \Datetime
-     * @Gedmo\Mapping\Annotation\Timestampable(on="create")
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $created;
@@ -52,7 +52,7 @@ class CharModifications
     /**
      * @var \Datetime
 
-     * @Gedmo\Mapping\Annotation\Timestampable(on="update")
+     * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $updated;
@@ -60,7 +60,7 @@ class CharModifications
     /**
      * @var boolean
      *
-     * @ORM\Column(name="deleted", type="boolean", nullable=false,options={"default":0})
+     * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
     protected $deleted;
 
@@ -189,26 +189,4 @@ class CharModifications
         return $this->user;
     }
 
-    /**
-     * Set deleted
-     *
-     * @param boolean $deleted
-     * @return CharModifications
-     */
-    public function setDeleted($deleted)
-    {
-        $this->deleted = $deleted;
-
-        return $this;
-    }
-
-    /**
-     * Get deleted
-     *
-     * @return boolean 
-     */
-    public function getDeleted()
-    {
-        return $this->deleted;
-    }
 }

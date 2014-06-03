@@ -52,7 +52,7 @@ class TraitsController extends Controller
         }
 
         $em = $this->getDoctrine()->getManager();
-        $element->setDeleted(1);
+        $em->remove($element);
         $em->persist($element);
         $em->flush();
         $this->get('session')->getFlashBag()->add('success', 'Trait de caractère supprimé : <strong>'.$element->getName().'</strong>');

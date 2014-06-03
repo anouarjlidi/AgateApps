@@ -1,7 +1,7 @@
 <?php
 
 namespace CorahnRin\CharactersBundle\Entity;
-
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
 
@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping\JoinColumn;
  * Disciplines
  *
  * @ORM\Table(name="disciplines")
+ * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\DisciplinesRepository")
  */
 class Disciplines
@@ -45,7 +46,7 @@ class Disciplines
 
     /**
      * @var \Datetime
-     * @Gedmo\Mapping\Annotation\Timestampable(on="create")
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $created;
@@ -53,7 +54,7 @@ class Disciplines
     /**
      * @var \Datetime
 
-     * @Gedmo\Mapping\Annotation\Timestampable(on="update")
+     * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $updated;
@@ -67,7 +68,7 @@ class Disciplines
     /**
      * @var boolean
      *
-     * @ORM\Column(name="deleted", type="boolean", nullable=false,options={"default":0})
+     * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
     protected $deleted;
 
@@ -213,29 +214,6 @@ class Disciplines
     public function getUpdated()
     {
         return $this->updated;
-    }
-
-    /**
-     * Set deleted
-     *
-     * @param boolean $deleted
-     * @return Disciplines
-     */
-    public function setDeleted($deleted)
-    {
-        $this->deleted = $deleted;
-
-        return $this;
-    }
-
-    /**
-     * Get deleted
-     *
-     * @return boolean
-     */
-    public function getDeleted()
-    {
-        return $this->deleted;
     }
 
     /**

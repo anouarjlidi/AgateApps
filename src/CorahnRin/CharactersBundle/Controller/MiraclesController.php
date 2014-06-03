@@ -55,8 +55,7 @@ class MiraclesController extends Controller
         }
 
         $em = $this->getDoctrine()->getManager();
-        $element->setDeleted(1);
-        $em->persist($element);
+        $em->remove($element);
         $em->flush();
         $this->get('session')->getFlashBag()->add('success', 'Miracle supprimé : <strong>'.$element->getName().'</strong>');
         return $this->redirect($this->generateUrl('corahnrin_characters_miracles_adminlist'));

@@ -8,6 +8,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use CorahnRin\CharactersBundle\Form\ArtifactsType;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class ArtifactsController extends Controller
 {
@@ -54,8 +56,7 @@ class ArtifactsController extends Controller
         }
 
         $em = $this->getDoctrine()->getManager();
-        $element->setDeleted(1);
-        $em->persist($element);
+        $em->remove($element);
         $em->flush();
         $this->get('session')->getFlashBag()->add('success', 'Artefact supprimé : <strong>'.$element->getName().'</strong>');
         return $this->redirect($this->generateUrl('corahnrin_characters_artifacts_adminlist'));
@@ -64,7 +65,7 @@ class ArtifactsController extends Controller
     private function handle_request(Artifacts $element, Request $request) {
         $method = preg_replace('#^'.str_replace('\\','\\\\',__CLASS__).'::([a-zA-Z]+)Action$#isUu', '$1', $this->getRequest()->get('_controller'));
 
-        $form = $this->createForm(new \CorahnRin\CharactersBundle\Form\ArtifactsType(), $element);
+        $form = $this->createForm(new ArtifactsType(), $element);
 
         $form->handleRequest($request);
 

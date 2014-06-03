@@ -54,7 +54,7 @@ class SocialClassesController extends Controller
         }
 
         $em = $this->getDoctrine()->getManager();
-        $element->setDeleted(1);
+        $em->remove($element);
         $em->persist($element);
         $em->flush();
         $this->get('session')->getFlashBag()->add('success', 'Classe sociale supprimée : <strong>'.$element->getName().'</strong>');

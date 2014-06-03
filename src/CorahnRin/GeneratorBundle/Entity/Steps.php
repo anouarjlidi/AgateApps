@@ -1,13 +1,15 @@
 <?php
 
 namespace CorahnRin\GeneratorBundle\Entity;
-
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Steps
  *
  * @ORM\Table(name="steps")
+ * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity(repositoryClass="CorahnRin\GeneratorBundle\Repository\StepsRepository")
  */
 class Steps
@@ -43,7 +45,7 @@ class Steps
     protected $title;
 
     /**
-     * @var Doctrine\Common\Collections\Collection
+     * @var Steps[]
      *
      * @ORM\ManyToMany(targetEntity="Steps")
      */
@@ -51,7 +53,7 @@ class Steps
 
     /**
      * @var \Datetime
-     * @Gedmo\Mapping\Annotation\Timestampable(on="create")
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $created;
@@ -59,7 +61,7 @@ class Steps
     /**
      * @var \Datetime
 
-     * @Gedmo\Mapping\Annotation\Timestampable(on="update")
+     * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $updated;
@@ -67,7 +69,7 @@ class Steps
     /**
      * @var boolean
      *
-     * @ORM\Column(name="deleted", type="boolean", nullable=false,options={"default":0})
+     * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
     protected $deleted;
 
@@ -195,41 +197,19 @@ class Steps
     {
         return $this->updated;
     }
-
-    /**
-     * Set deleted
-     *
-     * @param boolean $deleted
-     * @return Steps
-     */
-    public function setDeleted($deleted)
-    {
-        $this->deleted = $deleted;
-
-        return $this;
-    }
-
-    /**
-     * Get deleted
-     *
-     * @return boolean
-     */
-    public function getDeleted()
-    {
-        return $this->deleted;
-    }
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->stepsToDisableOnChange = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->stepsToDisableOnChange = new ArrayCollection();
     }
 
     /**
      * Add stepsToDisableOnChange
      *
-     * @param Steps $stepsToDisableOnChange
+     * @param Steps $step
+     * @throws \Exception
      * @return Steps
      */
     public function addStepToDisableOnChange(Steps $step)
@@ -246,7 +226,7 @@ class Steps
     /**
      * Remove stepsToDisableOnChange
      *
-     * @param Steps $stepsToDisableOnChange
+     * @param Steps $step
      */
     public function removeStepToDisableOnChange(Steps $step)
     {
@@ -256,7 +236,7 @@ class Steps
     /**
      * Get stepsToDisableOnChange
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Steps[]
      */
     public function getStepsToDisableOnChange()
     {

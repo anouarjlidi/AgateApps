@@ -1,7 +1,7 @@
 <?php
 
 namespace CorahnRin\PagesBundle\Entity;
-
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="menus",uniqueConstraints={@ORM\UniqueConstraint(name="menuParentUnique", columns={"name", "parent_id"})})
  * @ORM\Entity(repositoryClass="CorahnRin\PagesBundle\Repository\MenusRepository")
+ * @Gedmo\SoftDeleteable(fieldName="deleted")
  */
 class Menus
 {
@@ -57,15 +58,15 @@ class Menus
     protected $route;
 
     /**
-     * @var DateTime
-	 * @Gedmo\Mapping\Annotation\Timestampable(on="create")
+     * @var \Datetime
+	 * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $created;
 
     /**
-     * @var DateTime
-	 * @Gedmo\Mapping\Annotation\Timestampable(on="update")
+     * @var \Datetime
+	 * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $updated;
@@ -73,7 +74,7 @@ class Menus
     /**
      * @var boolean
      *
-     * @ORM\Column(name="deleted", type="boolean", nullable=false,options={"default":0})
+     * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
     protected $deleted;
 
@@ -235,35 +236,12 @@ class Menus
     }
 
     /**
-     * Set deleted
-     *
-     * @param boolean $deleted
-     * @return Menus
-     */
-    public function setDeleted($deleted)
-    {
-        $this->deleted = $deleted;
-
-        return $this;
-    }
-
-    /**
-     * Get deleted
-     *
-     * @return boolean
-     */
-    public function getDeleted()
-    {
-        return $this->deleted;
-    }
-
-    /**
      * Set parent
      *
-     * @param \CorahnRin\PagesBundle\Entity\Menus $parent
+     * @param Menus $parent
      * @return Menus
      */
-    public function setParent(\CorahnRin\PagesBundle\Entity\Menus $parent = null)
+    public function setParent(Menus $parent = null)
     {
         $this->parent = $parent;
 
@@ -273,7 +251,7 @@ class Menus
     /**
      * Get parent
      *
-     * @return \CorahnRin\PagesBundle\Entity\Menus
+     * @return Menus
      */
     public function getParent()
     {

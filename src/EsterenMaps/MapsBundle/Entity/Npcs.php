@@ -1,7 +1,7 @@
 <?php
 
 namespace EsterenMaps\MapsBundle\Entity;
-
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection as DoctrineCollection;
 
@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection as DoctrineCollection;
  * Npcs
  *
  * @ORM\Table(name="npcs")
+ * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity(repositoryClass="EsterenMaps\MapsBundle\Repository\NpcsRepository")
  */
 class Npcs
@@ -30,17 +31,17 @@ class Npcs
     protected $name;
 
     /**
-     * @var DateTime
+     * @var \Datetime
      *
-	 * @Gedmo\Mapping\Annotation\Timestampable(on="create")
+	 * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $created;
 
     /**
-     * @var DateTime
+     * @var \Datetime
      *
-	 * @Gedmo\Mapping\Annotation\Timestampable(on="update")
+	 * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $updated;
@@ -55,7 +56,7 @@ class Npcs
     /**
      * @var boolean
      *
-     * @ORM\Column(name="deleted", type="boolean", nullable=false,options={"default":0})
+     * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
     protected $deleted;
 
@@ -179,26 +180,4 @@ class Npcs
         return $this->events;
     }
 
-    /**
-     * Set deleted
-     *
-     * @param boolean $deleted
-     * @return Npcs
-     */
-    public function setDeleted($deleted)
-    {
-        $this->deleted = $deleted;
-
-        return $this;
-    }
-
-    /**
-     * Get deleted
-     *
-     * @return boolean 
-     */
-    public function getDeleted()
-    {
-        return $this->deleted;
-    }
 }

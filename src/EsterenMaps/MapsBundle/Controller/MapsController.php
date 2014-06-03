@@ -200,8 +200,7 @@ class MapsController extends Controller
         }
 
         $em = $this->getDoctrine()->getManager();
-        $map->setDeleted(1);
-        $em->persist($map);
+        $em->remove($map);
         $em->flush();
 
         $this->get('session')->getFlashBag()->add('success', 'La carte <strong>'.$map->getName().'</strong> a été correctement supprimée.');
@@ -219,7 +218,7 @@ class MapsController extends Controller
         );
     }
 
-    private function handleImage(&$map) {
+    private function handleImage(Maps &$map) {
         $file = $map->getImage();
         $basename = preg_replace('~\.[a-zA-Z0-9]+~isUu', '', $file->getClientOriginalName());
         $basename = preg_replace('~[^a-zA-Z0-9]~isUu', '_', $basename);
@@ -246,7 +245,7 @@ class MapsController extends Controller
         );
     }
 
-    private function updateZones(&$map, Request $request) {
+    private function updateZones(Maps &$map, Request $request) {
         $post = $request->request;
 
         $polygons = $post->get('polygon');
@@ -279,14 +278,13 @@ class MapsController extends Controller
 
         // Suppression des zones absentes des données POST
         foreach ($zones_map as $zone) {
-            $zone->setDeleted(true);
             $map->removeZone($zone);
-            $em->persist($zone);
+            $em->remove($zone);
         }
 
     }
 
-    private function updateMarkers(&$map, Request $request) {
+    private function updateMarkers(Maps &$map, Request $request) {
         $post = $request->request;
 
         $markers_post = $post->get('marker');
@@ -326,8 +324,8 @@ class MapsController extends Controller
         foreach ($markers_map as $marker) {
             $id = $marker->getId();
             if (!isset($markers_post[$id])) {
-                $marker->setDeleted(true);
-                $em->persist($marker);
+                $map->removeMarker($marker);
+                $em->remove($marker);
             }
         }
 
@@ -376,9 +374,8 @@ class MapsController extends Controller
 
         // Suppression des routes absentes des données POST
         foreach ($routes_map as $route) {
-            $route->setDeleted(true);
             $map->removeRoute($route);
-            $em->persist($route);
+            $em->remove($route);
         }
 
     }

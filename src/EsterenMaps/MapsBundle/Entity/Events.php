@@ -1,7 +1,7 @@
 <?php
 
 namespace EsterenMaps\MapsBundle\Entity;
-
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection as DoctrineCollection;
 
@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection as DoctrineCollection;
  * Events
  *
  * @ORM\Table(name="events")
+ * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity(repositoryClass="EsterenMaps\MapsBundle\Repository\EventsRepository")
  */
 class Events
@@ -29,15 +30,15 @@ class Events
     protected $name;
 
     /**
-     * @var DateTime
-	 * @Gedmo\Mapping\Annotation\Timestampable(on="create")
+     * @var \Datetime
+	 * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $created;
 
     /**
-     * @var DateTime
-	 * @Gedmo\Mapping\Annotation\Timestampable(on="update")
+     * @var \Datetime
+	 * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $updated;
@@ -99,7 +100,7 @@ class Events
     /**
      * @var boolean
      *
-     * @ORM\Column(name="deleted", type="boolean", nullable=false,options={"default":0})
+     * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
     protected $deleted;
 
@@ -495,26 +496,4 @@ class Events
         return $this->zones;
     }
 
-    /**
-     * Set deleted
-     *
-     * @param boolean $deleted
-     * @return Events
-     */
-    public function setDeleted($deleted)
-    {
-        $this->deleted = $deleted;
-
-        return $this;
-    }
-
-    /**
-     * Get deleted
-     *
-     * @return boolean 
-     */
-    public function getDeleted()
-    {
-        return $this->deleted;
-    }
 }

@@ -2,12 +2,15 @@
 
 namespace CorahnRin\CharactersBundle\Entity;
 
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Armors
  *
  * @ORM\Table(name="armors")
+ * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\ArmorsRepository")
  */
 class Armors
@@ -25,6 +28,7 @@ class Armors
      * @var string
      *
      * @ORM\Column(type="string", length=50, nullable=false, unique=true)
+     * @Assert\NotBlank()
      */
     protected $name;
 
@@ -39,6 +43,8 @@ class Armors
      * @var integer
      *
      * @ORM\Column(type="smallint")
+     * @Assert\GreaterThan(value=0)
+     * @Assert\NotNull()
      */
     protected $protection;
 
@@ -46,6 +52,8 @@ class Armors
      * @var integer
      *
      * @ORM\Column(type="smallint")
+     * @Assert\GreaterThan(value=0)
+     * @Assert\NotNull()
      */
     protected $price;
 
@@ -53,12 +61,13 @@ class Armors
      * @var string
      *
      * @ORM\Column(type="string", length=3)
+     * @Assert\Choice(choices={"CO","FR","RA","EX"})
      */
     protected $availability;
 
     /**
      * @var \Datetime
-     * @Gedmo\Mapping\Annotation\Timestampable(on="create")
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $created;
@@ -66,7 +75,7 @@ class Armors
     /**
      * @var \Datetime
 
-     * @Gedmo\Mapping\Annotation\Timestampable(on="update")
+     * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $updated;
@@ -74,7 +83,7 @@ class Armors
     /**
      * @var boolean
      *
-     * @ORM\Column(name="deleted", type="boolean", nullable=false,options={"default":0})
+     * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
     protected $deleted;
 
@@ -249,26 +258,4 @@ class Armors
         return $this->updated;
     }
 
-    /**
-     * Set deleted
-     *
-     * @param boolean $deleted
-     * @return Armors
-     */
-    public function setDeleted($deleted)
-    {
-        $this->deleted = $deleted;
-
-        return $this;
-    }
-
-    /**
-     * Get deleted
-     *
-     * @return boolean
-     */
-    public function getDeleted()
-    {
-        return $this->deleted;
-    }
 }

@@ -1,13 +1,14 @@
 <?php
 
 namespace CorahnRin\CharactersBundle\Entity;
-
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * GeoEnvironments
  *
  * @ORM\Table(name="geo_environments")
+ * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\GeoEnvironmentsRepository")
  */
 class GeoEnvironments
@@ -50,14 +51,14 @@ class GeoEnvironments
     private $domain;
 
     /**
-     * @var DateTime
+     * @var \Datetime
      *
      * @ORM\Column(name="created", type="datetime")
      */
     private $created;
 
     /**
-     * @var DateTime
+     * @var \Datetime
      *
      * @ORM\Column(name="updated", type="datetime")
      */
@@ -66,7 +67,7 @@ class GeoEnvironments
     /**
      * @var boolean
      *
-     * @ORM\Column(name="deleted", type="boolean")
+     * @ORM\Column(name="deleted", type="datetime")
      */
     private $deleted;
 
@@ -217,28 +218,5 @@ class GeoEnvironments
     public function getUpdated()
     {
         return $this->updated;
-    }
-
-    /**
-     * Set deleted
-     *
-     * @param boolean $deleted
-     * @return GeoEnvironments
-     */
-    public function setDeleted($deleted)
-    {
-        $this->deleted = $deleted;
-
-        return $this;
-    }
-
-    /**
-     * Get deleted
-     *
-     * @return boolean
-     */
-    public function getDeleted()
-    {
-        return $this->deleted;
     }
 }

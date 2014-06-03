@@ -3,6 +3,7 @@
 namespace CorahnRin\CharactersBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use CorahnRin\UsersBundle\Entity\Users;
 use CorahnRin\CharactersBundle\Exceptions\CharactersException;
@@ -10,6 +11,7 @@ use CorahnRin\CharactersBundle\Exceptions\CharactersException;
 /**
  * Characters
  *
+ * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\CharactersRepository")
  * @ORM\Table(name="characters",uniqueConstraints={@ORM\UniqueConstraint(name="idcUnique", columns={"name", "user_id"})})
  */
@@ -35,7 +37,7 @@ class Characters
      * @var string
      *
      * @ORM\Column(type="string", length=255, nullable=false)
-     * @Gedmo\Mapping\Annotation\Slug(fields={"name"},unique=false)
+     * @Gedmo\Slug(fields={"name"},unique=false)
      */
     protected $nameSlug;
 
@@ -108,13 +110,6 @@ class Characters
      * @ORM\Column(type="string", length=80, nullable=true)
      */
     protected $jobCustom;
-
-    /**
-     * @var Peoples
-     *
-     * @ORM\ManyToOne(targetEntity="Peoples")
-     */
-    protected $people;
 
     /**
      * @var string
@@ -222,19 +217,11 @@ class Characters
     protected $experienceSpent;
 
     /**
-     * @var \Datetime
-     * @Gedmo\Mapping\Annotation\Timestampable(on="create")
-     * @ORM\Column(type="datetime", nullable=false)
+     * @var Peoples
+     *
+     * @ORM\ManyToOne(targetEntity="Peoples")
      */
-    protected $created;
-
-    /**
-     * @var \Datetime
-
-     * @Gedmo\Mapping\Annotation\Timestampable(on="update")
-     * @ORM\Column(type="datetime", nullable=false)
-     */
-    protected $updated;
+    protected $people;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -386,14 +373,29 @@ class Characters
 	 */
 	protected $game;
 
-	protected $baseChar;
+    /**
+     * @var \Datetime
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime", nullable=false)
+     */
+    protected $created;
+
+    /**
+     * @var \Datetime
+
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(type="datetime", nullable=false)
+     */
+    protected $updated;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="deleted", type="boolean", nullable=false,options={"default":0})
+     * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
     protected $deleted;
+
+    protected $baseChar;
 
     /**
      * Constructor
@@ -1086,29 +1088,6 @@ class Characters
     public function getUpdated()
     {
         return $this->updated;
-    }
-
-    /**
-     * Set deleted
-     *
-     * @param boolean $deleted
-     * @return Characters
-     */
-    public function setDeleted($deleted)
-    {
-        $this->deleted = $deleted;
-
-        return $this;
-    }
-
-    /**
-     * Get deleted
-     *
-     * @return boolean
-     */
-    public function getDeleted()
-    {
-        return $this->deleted;
     }
 
     /**

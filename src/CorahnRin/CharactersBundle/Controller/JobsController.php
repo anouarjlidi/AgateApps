@@ -55,8 +55,7 @@ class JobsController extends Controller
         }
 
         $em = $this->getDoctrine()->getManager();
-        $element->setDeleted(1);
-        $em->persist($element);
+        $em->remove($element);
         $em->flush();
         $this->get('session')->getFlashBag()->add('success', 'Métier supprimé : <strong>'.$element->getName().'</strong>');
         return $this->redirect($this->generateUrl('corahnrin_characters_jobs_adminlist'));

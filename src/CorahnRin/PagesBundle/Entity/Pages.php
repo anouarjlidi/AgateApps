@@ -1,13 +1,14 @@
 <?php
 
 namespace CorahnRin\PagessBundle\Entity;
-
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Pages
  *
  * @ORM\Table(name="pages")
+ * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity(repositoryClass="CorahnRin\PagesBundle\Repository\PagesRepository")
  */
 class Pages
@@ -73,7 +74,7 @@ class Pages
     /**
      * @var boolean
      *
-     * @ORM\Column(name="deleted", type="boolean", nullable=false,options={"default":0})
+     * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
     protected $deleted;
 

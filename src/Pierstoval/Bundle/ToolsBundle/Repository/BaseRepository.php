@@ -1,21 +1,21 @@
 <?php
 
-namespace CorahnRin\ToolsBundle\Repository;
+namespace Pierstoval\Bundle\ToolsBundle\Repository;
 use Doctrine\ORM\EntityRepository as EntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 
 /**
- * CorahnRinRepository
+ * BaseRepository
  * Gestionnaire de repositories de Corahn-Rin
  */
-abstract class CorahnRinRepository extends EntityRepository {
-/*
+abstract class BaseRepository extends EntityRepository {
+
     protected function defaultFindBy(QueryBuilder $qb, array $criteria, array $orderBy = null, $limit = null, $offset = null, $sortCollection = false) {
 
         foreach ($criteria as $field => $value) {
             $qb->where('r.'.$field.' = :'.$field)
-               ->setParameter($field, $value);
+                ->setParameter($field, $value);
         }
         if (is_string($orderBy)) {
             $qb->orderBy($orderBy);
@@ -52,7 +52,7 @@ abstract class CorahnRinRepository extends EntityRepository {
     public function findAll($sortCollection = false) {
         return $this->findBy(array(), null, null, null, $sortCollection);
     }
-*/
+
     /**
      * Alias de getMax()
      * @see getMax()
@@ -65,7 +65,7 @@ abstract class CorahnRinRepository extends EntityRepository {
     public function getNumberOfElements() {
         $qb = $this->_em->createQueryBuilder();
         $qb->select('count(a)')
-			->where('a.deleted = 0')
+            ->where('a.deleted = 0')
             ->from($this->getEntityName(), 'a');
 
         $count = $qb->getQuery()->getSingleScalarResult();

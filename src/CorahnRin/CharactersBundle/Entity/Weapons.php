@@ -1,13 +1,15 @@
 <?php
 
 namespace CorahnRin\CharactersBundle\Entity;
-
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Weapons
  *
  * @ORM\Table(name="weapons")
+ * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\WeaponsRepository")
  */
 class Weapons
@@ -25,6 +27,7 @@ class Weapons
      * @var string
      *
      * @ORM\Column(type="string", length=50, nullable=false, unique=true)
+     * @Assert\NotBlank()
      */
     protected $name;
 
@@ -39,6 +42,8 @@ class Weapons
      * @var boolean
      *
      * @ORM\Column(type="smallint")
+     * @Assert\GreaterThan(value=0)
+     * @Assert\NotNull()
      */
     protected $damage;
 
@@ -46,6 +51,8 @@ class Weapons
      * @var integer
      *
      * @ORM\Column(type="smallint")
+     * @Assert\GreaterThan(value=0)
+     * @Assert\NotNull()
      */
     protected $price;
 
@@ -53,6 +60,7 @@ class Weapons
      * @var string
      *
      * @ORM\Column(type="string", length=3)
+     * @Assert\Choice(choices={"CO","FR","RA","EX"})
      */
     protected $availability;
 
@@ -61,18 +69,19 @@ class Weapons
      *
      * @ORM\Column(type="boolean")
      */
-    protected $melee;
+    protected $melee = true;
 
     /**
      * @var integer
      *
      * @ORM\Column(type="smallint")
+     * @Assert\GreaterThan(value=0)
      */
     protected $range;
 
     /**
      * @var \Datetime
-     * @Gedmo\Mapping\Annotation\Timestampable(on="create")
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $created;
@@ -80,7 +89,7 @@ class Weapons
     /**
      * @var \Datetime
 
-     * @Gedmo\Mapping\Annotation\Timestampable(on="update")
+     * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $updated;
@@ -88,7 +97,7 @@ class Weapons
     /**
      * @var boolean
      *
-     * @ORM\Column(name="deleted", type="boolean", nullable=false,options={"default":0})
+     * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
     protected $deleted;
 
@@ -307,28 +316,5 @@ class Weapons
     public function getUpdated()
     {
         return $this->updated;
-    }
-
-    /**
-     * Set deleted
-     *
-     * @param boolean $deleted
-     * @return Weapons
-     */
-    public function setDeleted($deleted)
-    {
-        $this->deleted = $deleted;
-
-        return $this;
-    }
-
-    /**
-     * Get deleted
-     *
-     * @return boolean
-     */
-    public function getDeleted()
-    {
-        return $this->deleted;
     }
 }

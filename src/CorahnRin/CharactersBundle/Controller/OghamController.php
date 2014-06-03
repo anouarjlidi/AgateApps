@@ -76,7 +76,7 @@ class OghamController extends Controller
         }
 
         $em = $this->getDoctrine()->getManager();
-        $element->setDeleted(1);
+        $em->remove($element);
         $em->persist($element);
         $em->flush();
         $this->get('session')->getFlashBag()->add('success', 'Ogham supprimé : <strong>'.$element->getName().'</strong>');
@@ -94,7 +94,7 @@ class OghamController extends Controller
         }
 
         $em = $this->getDoctrine()->getManager();
-        $element->setDeleted(1);
+        $em->remove($element);
         $em->persist($element);
         $em->flush();
         $this->get('session')->getFlashBag()->add('success', 'Type d\'Ogham supprimé : <strong>'.$element->getName().'</strong>');
