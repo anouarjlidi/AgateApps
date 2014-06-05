@@ -26,6 +26,7 @@ class Books
      * @var string
      *
      * @ORM\Column(type="string", length=80, nullable=false, unique=true)
+     * @Assert\NotBlank()
      */
     protected $name;
 
@@ -53,14 +54,9 @@ class Books
 
     /**
      * @var boolean
-     *
      * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
     protected $deleted;
-
-    function __toString() {
-        return $this->id.' - '.$this->name;
-    }
 
     /**
      * Get id

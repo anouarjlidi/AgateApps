@@ -7,6 +7,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use CorahnRin\UsersBundle\Entity\Users;
 use CorahnRin\CharactersBundle\Exceptions\CharactersException;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Characters
@@ -30,6 +31,7 @@ class Characters
      * @var string
      *
      * @ORM\Column(type="string", length=255, nullable=false)
+     * @Assert\NotBlank()
      */
     protected $name;
 
@@ -38,6 +40,7 @@ class Characters
      *
      * @ORM\Column(type="string", length=255, nullable=false)
      * @Gedmo\Slug(fields={"name"},unique=false)
+     * @Assert\NotBlank()
      */
     protected $nameSlug;
 
@@ -45,6 +48,7 @@ class Characters
      * @var string
      *
      * @ORM\Column(type="string", length=255, nullable=false)
+     * @Assert\NotBlank()
      */
     protected $playerName;
 
@@ -122,27 +126,35 @@ class Characters
      * @var integer
      *
      * @ORM\Column(type="smallint", options={"default":0})
+     * @Assert\NotNull()
+     * @Assert\GreaterThanOrEqual(value=0)
      */
-    protected $trauma;
+    protected $trauma = 0;
 
     /**
      * @var integer
      *
      * @ORM\Column(type="smallint", options={"default":0})
+     * @Assert\NotNull()
+     * @Assert\GreaterThanOrEqual(value=0)
      */
-    protected $traumaPermanent;
+    protected $traumaPermanent = 0;
 
     /**
      * @var integer
      *
      * @ORM\Column(type="smallint", options={"default":0})
+     * @Assert\NotNull()
+     * @Assert\GreaterThanOrEqual(value=0)
      */
-    protected $hardening;
+    protected $hardening = 0;
 
     /**
      * @var integer
      *
      * @ORM\Column(type="smallint", nullable=false)
+     * @Assert\NotNull()
+     * @Assert\GreaterThanOrEqual(value=0)
      */
     protected $age;
 
@@ -150,6 +162,8 @@ class Characters
      * @var integer
      *
      * @ORM\Column(type="smallint")
+     * @Assert\NotNull()
+     * @Assert\GreaterThanOrEqual(value=0)
      */
     protected $mentalResist;
 
@@ -157,6 +171,8 @@ class Characters
      * @var integer
      *
      * @ORM\Column(type="smallint")
+     * @Assert\NotNull()
+     * @Assert\GreaterThanOrEqual(value=0)
      */
     protected $health;
 
@@ -164,6 +180,17 @@ class Characters
      * @var integer
      *
      * @ORM\Column(type="smallint")
+     * @Assert\NotNull()
+     * @Assert\GreaterThanOrEqual(value=0)
+     */
+    protected $maxHealth;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(type="smallint")
+     * @Assert\NotNull()
+     * @Assert\GreaterThanOrEqual(value=0)
      */
     protected $stamina;
 
@@ -171,6 +198,8 @@ class Characters
      * @var boolean
      *
      * @ORM\Column(type="boolean")
+     * @Assert\NotNull()
+     * @Assert\GreaterThanOrEqual(value=0)
      */
     protected $survival;
 
@@ -178,6 +207,8 @@ class Characters
      * @var integer
      *
      * @ORM\Column(type="smallint")
+     * @Assert\NotNull()
+     * @Assert\GreaterThanOrEqual(value=0)
      */
     protected $speed;
 
@@ -185,6 +216,8 @@ class Characters
      * @var integer
      *
      * @ORM\Column(type="smallint")
+     * @Assert\NotNull()
+     * @Assert\GreaterThanOrEqual(value=0)
      */
     protected $defense;
 
@@ -192,6 +225,8 @@ class Characters
      * @var integer
      *
      * @ORM\Column(type="smallint")
+     * @Assert\NotNull()
+     * @Assert\GreaterThanOrEqual(value=0)
      */
     protected $rindath;
 
@@ -199,6 +234,8 @@ class Characters
      * @var integer
      *
      * @ORM\Column(type="smallint")
+     * @Assert\NotNull()
+     * @Assert\GreaterThanOrEqual(value=0)
      */
     protected $exaltation;
 
@@ -206,6 +243,8 @@ class Characters
      * @var integer
      *
      * @ORM\Column(type="smallint")
+     * @Assert\NotNull()
+     * @Assert\GreaterThanOrEqual(value=0)
      */
     protected $experienceActual;
 
@@ -213,46 +252,48 @@ class Characters
      * @var integer
      *
      * @ORM\Column(type="smallint")
+     * @Assert\NotNull()
+     * @Assert\GreaterThanOrEqual(value=0)
      */
     protected $experienceSpent;
 
     /**
      * @var Peoples
      *
-     * @ORM\ManyToOne(targetEntity="Peoples")
+     * @ORM\ManyToOne(targetEntity="Peoples", fetch="EAGER")
      */
     protected $people;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Armors[]
      *
      * @ORM\ManyToMany(targetEntity="Armors")
      */
     protected $armors;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Artifacts[]
      *
      * @ORM\ManyToMany(targetEntity="Artifacts")
      */
     protected $artifacts;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Miracles[]
      *
      * @ORM\ManyToMany(targetEntity="Miracles")
      */
     protected $miracles;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Ogham[]
      *
      * @ORM\ManyToMany(targetEntity="Ogham")
      */
     protected $ogham;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Weapons[]
      *
      * @ORM\ManyToMany(targetEntity="Weapons")
      */
@@ -261,7 +302,7 @@ class Characters
     /**
      * @var SocialClasses
      *
-     * @ORM\ManyToOne(targetEntity="SocialClasses")
+     * @ORM\ManyToOne(targetEntity="SocialClasses", fetch="EAGER")
      */
     protected $socialClasses;
 
@@ -289,14 +330,14 @@ class Characters
     /**
      * @var Jobs
      *
-     * @ORM\ManyToOne(targetEntity="Jobs")
+     * @ORM\ManyToOne(targetEntity="Jobs", fetch="EAGER")
      */
     protected $job;
 
     /**
      * @var Regions
      *
-     * @ORM\ManyToOne(targetEntity="Regions")
+     * @ORM\ManyToOne(targetEntity="Regions", fetch="EAGER")
      */
     protected $region;
 
@@ -313,49 +354,49 @@ class Characters
     protected $traitQuality;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Avantages[]
      *
      * @ORM\OneToMany(targetEntity="CharAvtgs", mappedBy="character")
      */
     protected $avantages;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Domains[]
      *
      * @ORM\OneToMany(targetEntity="CharDomains", mappedBy="character")
      */
     protected $domains;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Disciplines[]
      *
      * @ORM\OneToMany(targetEntity="CharDisciplines", mappedBy="character")
      */
     protected $disciplines;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Ways[]
      *
      * @ORM\OneToMany(targetEntity="CharWays", mappedBy="character")
      */
     protected $ways;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Flux[]
      *
      * @ORM\OneToMany(targetEntity="CharFlux", mappedBy="character")
      */
     protected $flux;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var CharModifications
      *
      * @ORM\OneToMany(targetEntity="CharModifications", mappedBy="character")
      */
     protected $modifications;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Setbacks[]
      *
      * @ORM\OneToMany(targetEntity="CharSetbacks", mappedBy="character")
      */
@@ -363,13 +404,13 @@ class Characters
 
     /**
      * @var \CorahnRin\UsersBundle\Entity\Users
-     * @ORM\ManyToOne(targetEntity="CorahnRin\UsersBundle\Entity\Users", inversedBy="characters")
+     * @ORM\ManyToOne(targetEntity="CorahnRin\UsersBundle\Entity\Users", inversedBy="characters", fetch="EAGER")
      */
     protected $user;
 
 	/**
 	 * @var Games
-	 * @ORM\ManyToOne(targetEntity="Games", inversedBy="characters")
+	 * @ORM\ManyToOne(targetEntity="Games", inversedBy="characters", fetch="EAGER")
 	 */
 	protected $game;
 
@@ -395,6 +436,10 @@ class Characters
      */
     protected $deleted;
 
+    /**
+     * Utilisé pour déterminer les différences lorsque le personnage sera mis à jour
+     * @var Characters
+     */
     protected $baseChar;
 
     /**
@@ -1139,7 +1184,7 @@ class Characters
     /**
      * Get armors
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Armors[]
      */
     public function getArmors()
     {
@@ -1172,7 +1217,7 @@ class Characters
     /**
      * Get artifacts
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Artifacts[]
      */
     public function getArtifacts()
     {
@@ -1205,7 +1250,7 @@ class Characters
     /**
      * Get miracles
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Miracles[]
      */
     public function getMiracles()
     {
@@ -1238,7 +1283,7 @@ class Characters
     /**
      * Get ogham
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Ogham[]
      */
     public function getOgham()
     {
@@ -1271,7 +1316,7 @@ class Characters
     /**
      * Get weapons
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Weapons[]
      */
     public function getWeapons()
     {
@@ -1488,7 +1533,7 @@ class Characters
     /**
      * Get avantages
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Avantages[]
      */
     public function getAvantages()
     {
@@ -1521,7 +1566,7 @@ class Characters
     /**
      * Get domains
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Domains[]
      */
     public function getDomains()
     {
@@ -1554,7 +1599,7 @@ class Characters
     /**
      * Get disciplines
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Disciplines[]
      */
     public function getDisciplines()
     {
@@ -1587,7 +1632,7 @@ class Characters
     /**
      * Get ways
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Ways[]
      */
     public function getWays()
     {
@@ -1620,7 +1665,7 @@ class Characters
     /**
      * Get flux
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Flux[]
      */
     public function getFlux()
     {
@@ -1628,7 +1673,7 @@ class Characters
     }
 
     /**
-     * Add modifications
+     * Add CharModifications[]
      *
      * @param CharModifications $modifications
      * @return Characters
@@ -1653,7 +1698,7 @@ class Characters
     /**
      * Get modifications
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return array
      */
     public function getModifications()
     {
@@ -1686,7 +1731,7 @@ class Characters
     /**
      * Get setbacks
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Setbacks[]
      */
     public function getSetbacks()
     {

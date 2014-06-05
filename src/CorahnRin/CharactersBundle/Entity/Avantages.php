@@ -26,6 +26,7 @@ class Avantages
      * @var string
      *
      * @ORM\Column(type="string", length=50, nullable=false, unique=true)
+     * @Assert\NotBlank()
      */
     protected $name;
 
@@ -33,6 +34,7 @@ class Avantages
      * @var string
      *
      * @ORM\Column(type="string", length=50, nullable=false)
+     * @Assert\NotBlank()
      */
     protected $nameFemale;
 
@@ -40,6 +42,8 @@ class Avantages
      * @var integer
      *
      * @ORM\Column(type="smallint")
+     * @Assert\NotNull()
+     * @Assert\GreaterThanOrEqual(value=0)
      */
     protected $xp;
 
@@ -54,6 +58,8 @@ class Avantages
      * @var boolean
      *
      * @ORM\Column(type="smallint")
+     * @Assert\NotNull()
+     * @Assert\GreaterThanOrEqual(value=0)
      */
     protected $augmentation;
 
@@ -61,6 +67,7 @@ class Avantages
      * @var string
      *
      * @ORM\Column(type="string", length=10)
+     * @Assert\NotBlank()
      */
     protected $bonusdisc;
 
@@ -79,6 +86,12 @@ class Avantages
     protected $isCombatArt;
 
     /**
+     * @var Books
+     * @ORM\ManyToOne(targetEntity="Books", fetch="EAGER")
+     */
+    protected $book;
+
+    /**
      * @var \Datetime
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
@@ -92,12 +105,6 @@ class Avantages
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $updated;
-
-    /**
-     * @var Books
-     * @ORM\ManyToOne(targetEntity="Books", fetch="EAGER")
-     */
-    protected $book;
 
     /**
      * @var boolean
