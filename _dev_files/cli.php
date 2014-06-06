@@ -447,6 +447,7 @@ foreach ( $voies as $v) {
 			'fault' => $v['voie_travers'],
 			'created' => $datetime->date,
 			'updated' => $datetime->date,
+            'deleted'=>null,
 		);$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
 	}
 }$tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
@@ -465,6 +466,7 @@ foreach ( $desordres as $v) {
 			'name' => $v['desordre_name'],
 			'created' => $datetime->date,
 			'updated' => $datetime->date,
+            'deleted'=>null,
 		);$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
 		$dis_maj = explode(',', $v['desordre_voies_maj']);
 		$dis_min = explode(',', $v['desordre_voies_min']);
@@ -503,6 +505,7 @@ foreach ( $traitscaractere as $v) {
 			'isMajor' => ($v['trait_mm'] === 'maj' ? 1 : 0),
 			'created' => $datetime->date,
 			'updated' => $datetime->date,
+            'deleted'=>null,
 		);$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
 	}
 }$tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
@@ -528,6 +531,7 @@ foreach ( $avdesv as $v) {
 			'augmentation' => $v['avdesv_double'],
 			'created' => $datetime->date,
 			'updated' => $datetime->date,
+            'deleted'=>null,
 		);$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
 	}
 }$tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
@@ -585,6 +589,7 @@ foreach ( $jobs as $v) {
 				'description' => $v['job_desc'],
 				'created' => $datetime->date,
 				'updated' => $datetime->date,
+            'deleted'=>null,
 		);$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
 	}
 }$tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
@@ -609,6 +614,7 @@ foreach ( $domains as $v) {
 				'way_id' => $v['voie_id'],
 				'created' => $datetime->date,
 				'updated' => $datetime->date,
+            'deleted'=>null,
 		);$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
 	}
 }$tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
@@ -728,6 +734,7 @@ foreach ( $disciplines as $v) {
 				'book_id' => 2,
 				'created' => $datetime->date,
 				'updated' => $datetime->date,
+            'deleted'=>null,
 		);$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
 	}
 }$tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
@@ -855,6 +862,7 @@ foreach ( $games as $v) {
 				'gameMaster_id' => $v['game_mj'],
 				'created' => $datetime->date,
 				'updated' => $datetime->date,
+            'deleted'=>null,
 		);$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
 	}
 }$tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
@@ -880,6 +888,7 @@ foreach ( $steps as $v) {
 				'title' => $v['gen_anchor'],
 				'created' => $datetime->date,
 				'updated' => $datetime->date,
+            'deleted'=>null,
 		);$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
 	}
 }$tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
@@ -920,6 +929,7 @@ foreach ($mails as $v) {
 				'subject' => $v['mail_subject'],
 				'created' => $datetime->date,
 				'updated' => $datetime->date,
+            'deleted'=>null,
 		);$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
 	}
 }$tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
@@ -973,6 +983,7 @@ foreach ( $regions as $v) {
 				'coordinates' => $v['region_htmlmap'],
 				'created' => $datetime->date,
 				'updated' => $datetime->date,
+            'deleted'=>null,
 		);$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
 	}
 }$tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
@@ -1000,6 +1011,7 @@ foreach ( $revers as $v) {
 				'malus' => $v['rev_malus'],
 				'created' => $datetime->date,
 				'updated' => $datetime->date,
+                'deleted'=>null,
 		);$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
 	}
 }$tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
@@ -1025,7 +1037,7 @@ foreach ( $revers as $v) {
 $table = 'maps';
 $nbreqtemp = 0;
 if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>1))) {
-	$sql = 'INSERT INTO `'.$table.'` SET `id` = :id, `name` = :name, `nameSlug` = :nameSlug, `maxZoom` = :maxZoom, `image` = :image, `description` = :description, `created` = :created, `updated` = :updated';
+	$sql = 'INSERT INTO `'.$table.'` SET `id` = :id, `name` = :name, `nameSlug` = :nameSlug, `maxZoom` = :maxZoom, `image` = :image, `description` = :description, `created` = :created, `updated` = :updated, ';
 	$q = $new->prepare($sql);
 	$nbreq+=1;
 	$nbreqtemp+=1;
@@ -1504,6 +1516,47 @@ $tables_done[] = 'characters_ways';
 
 
 
+
+
+// Rétablissement de l'attribut "deleted" à NULL pour palier aux erreurs liées à l'extension SoftDeleteable
+$sql = '
+    update `armors` set `deleted` = NULL;
+    update `artifacts` set `deleted` = NULL;
+    update `avantages` set `deleted` = NULL;
+    update `books` set `deleted` = NULL;
+    update `characters` set `deleted` = NULL;
+    update `characters_modifications` set `deleted` = NULL;
+    update `disciplines` set `deleted` = NULL;
+    update `disorders` set `deleted` = NULL;
+    update `disorders_ways` set `deleted` = NULL;
+    update `domains` set `deleted` = NULL;
+    update `flux` set `deleted` = NULL;
+    update `games` set `deleted` = NULL;
+    update `geo_environments` set `deleted` = NULL;
+    update `jobs` set `deleted` = NULL;
+    update `mails` set `deleted` = NULL;
+    update `mails_sent` set `deleted` = NULL;
+    update `miracles` set `deleted` = NULL;
+    update `ogham` set `deleted` = NULL;
+    update `peoples` set `deleted` = NULL;
+    update `regions` set `deleted` = NULL;
+    update `setbacks` set `deleted` = NULL;
+    update `social_class` set `deleted` = NULL;
+    update `traits` set `deleted` = NULL;
+    update `ways` set `deleted` = NULL;
+    update `weapons` set `deleted` = NULL;
+    update `steps` set `deleted` = NULL;
+    update `menus` set `deleted` = NULL;
+    update `pages` set `deleted` = NULL;
+    update `factions` set `deleted` = NULL;
+    update `maps` set `deleted` = NULL;
+    update `markers` set `deleted` = NULL;
+    update `markers_types` set `deleted` = NULL;
+    update `routes` set `deleted` = NULL;
+    update `routes_types` set `deleted` = NULL;
+    update `zones` set `deleted` = NULL;
+';
+$new->noRes($sql);
 
 
 
