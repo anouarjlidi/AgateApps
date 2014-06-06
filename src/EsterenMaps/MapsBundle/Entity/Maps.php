@@ -498,4 +498,12 @@ class Maps
     {
         return $this->nameSlug;
     }
+
+    /**
+     * Réinitialise correctement les informations de la map
+     */
+    public function refresh()
+    {
+        return $this;
+    }
 }

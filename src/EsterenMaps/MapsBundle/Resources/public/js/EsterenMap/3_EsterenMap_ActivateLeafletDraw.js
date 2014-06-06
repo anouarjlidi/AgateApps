@@ -37,7 +37,7 @@
 
         _this = this;
 
-        this._map.on('draw:created', function(event){
+        this._map.on('draw:created', function(event) {
             var type = event.layerType,
                 layer = event.layer,
                 mapOptions = _this.options(),
@@ -45,9 +45,7 @@
                 popupContent,
                 options,
                 editOptions
-            ;
-
-            d.drawEvent = event;
+                ;
 
             if (type === 'marker') {
                 popupContent = mapOptions.LeafletPopupMarkerBaseContent;
@@ -90,9 +88,46 @@
                 );
             }
 
+            return true;
+        });
+
+        this._map.on('draw:edited', function(event) {
+            var type = event.type,
+                layers = event.layers,
+                id,
+                inputId
+            ;
+
+            console.info('event draw:edited');
+            d.eventedited=event;
+
+            d.layersd=[];
+
+            layers.eachLayer(function (layer) {
+                console.info('currently on layer ', layer);
+                d.layersd.push(layer);
+                if (layer._esterenMarker && layer._esterenMarker.id) {
+                    $('#marker_'+layer._esterenMarker.id+'_latitude').val(layer.getLatLng().lat);
+                    $('#marker_'+layer._esterenMarker.id+'_longitude').val(layer.getLatLng().lng);
+                    console.info('edited marker '+layer._esterenMarker.id);
+
+                } else if (layer._esterenRoute && layer._esterenRoute.id) {
+                    inputId = '#polyline_'+layer._esterenRoute.id+'_coordinates';
+                    $(inputId).val(JSON.stringify(layer.getLatLngs()));
+                    console.info('edited route '+layer._esterenRoute.id);
+
+                } else if (layer._esterenZone && layer._esterenZone.id) {
+                    inputId = '#polygon_'+layer._esterenZone.id+'_coordinates';
+                    $(inputId).val(JSON.stringify(layer.getLatLngs()));
+                    console.info('edited zone '+layer._esterenZone.id);
+
+                }
+            });
 
             return true;
+        });
 
+        this._map.on('draw:deleted', function(event) {
         });
 
     };

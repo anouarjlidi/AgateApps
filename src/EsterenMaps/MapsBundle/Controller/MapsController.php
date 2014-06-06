@@ -106,6 +106,8 @@ class MapsController extends Controller
             $this->updateZones($map, $request);
             $this->updateRoutes($map, $request);
 
+            $map->refresh();
+
             $em->persist($map);
 
             $em->flush();
@@ -367,6 +369,8 @@ class MapsController extends Controller
                 ->setMarkerEnd($markers_ids[$polyline['markerEnd']])
                 ->setCoordinates($polyline['coordinates']);
             unset($routes_map[$id]);
+
+            $route->refresh();
 
             $em->persist($route);
 

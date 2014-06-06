@@ -61,7 +61,7 @@ class Routes
     protected $updated;
 
     /**
-     * @var DoctrineCollection
+     * @var Resources
      *
      * @ORM\ManyToMany(targetEntity="Resources", mappedBy="routes")
      */
@@ -75,7 +75,7 @@ class Routes
     protected $deleted = null;
 
     /**
-     * @var DoctrineCollection
+     * @var Markers
      *
      * @ORM\ManyToOne(targetEntity="Markers", inversedBy="routesStart")
      * @Expose
@@ -83,7 +83,7 @@ class Routes
     protected $markerStart;
 
     /**
-     * @var DoctrineCollection
+     * @var Markers
      *
      * @ORM\ManyToOne(targetEntity="Markers", inversedBy="routesEnd")
      * @Expose
@@ -114,7 +114,7 @@ class Routes
     protected $routeType;
 
     /**
-     * @var DoctrineCollection
+     * @var EventsRoutes[]
      *
      * @ORM\OneToMany(targetEntity="EventsRoutes", mappedBy="route")
      */
@@ -423,5 +423,29 @@ class Routes
     public function getMarkerEnd()
     {
         return $this->markerEnd;
+    }
+
+    /**
+     * Réinitialise correctement les informations de la route
+     */
+    public function refresh() {
+        $coords = json_decode($this->coordinates, true);
+
+        if ($this->markerStart) {
+            $coords[0] = array(
+                'lat' => $this->markerStart->getLatitude(),
+                'lng' => $this->markerStart->getLongitude(),
+            );
+        }
+        if ($this->markerEnd) {
+            $coords[count($coords)-1] = array(
+                'lat' => $this->markerEnd->getLatitude(),
+                'lng' => $this->markerEnd->getLongitude(),
+            );
+        }
+
+        $this->setCoordinates(json_encode($coords));
+
+        return $this;
     }
 }

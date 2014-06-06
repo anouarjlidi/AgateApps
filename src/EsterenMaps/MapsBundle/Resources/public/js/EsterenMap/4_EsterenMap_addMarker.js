@@ -92,7 +92,7 @@
     };
 
     EsterenMap.prototype.mapOptions.LeafletMarkerBaseOptionsEditMode = {
-        draggable: true
+        draggable: false
     };
 
     EsterenMap.prototype.mapOptions.CustomMarkerBaseOptions = {
