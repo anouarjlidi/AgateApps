@@ -230,10 +230,10 @@ class MailsSent
     /**
      * Set mail
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Mails $mail
+     * @param Mails $mail
      * @return MailsSent
      */
-    public function setMail(\CorahnRin\CharactersBundle\Entity\Mails $mail = null)
+    public function setMail(Mails $mail = null)
     {
         $this->mail = $mail;
 
@@ -243,7 +243,7 @@ class MailsSent
     /**
      * Get mail
      *
-     * @return \CorahnRin\CharactersBundle\Entity\Mails
+     * @return Mails
      */
     public function getMail()
     {

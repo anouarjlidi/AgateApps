@@ -230,10 +230,10 @@ class Traits
     /**
      * Set way
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Ways $way
+     * @param Ways $way
      * @return Traits
      */
-    public function setWay(\CorahnRin\CharactersBundle\Entity\Ways $way = null)
+    public function setWay(Ways $way = null)
     {
         $this->way = $way;
 
@@ -243,7 +243,7 @@ class Traits
     /**
      * Get way
      *
-     * @return \CorahnRin\CharactersBundle\Entity\Ways
+     * @return Ways
      */
     public function getWay()
     {

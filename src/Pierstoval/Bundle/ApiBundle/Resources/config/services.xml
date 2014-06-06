@@ -6,7 +6,7 @@
 
     <!--
     <parameters>
-        <parameter key="pierstoval_api.example.class">Pierstoval\Bundle\PierstovalApiBundle\Example</parameter>
+        <parameter key="pierstoval_api.example.class">Pierstoval\Bundle\Example</parameter>
     </parameters>
 
     <services>

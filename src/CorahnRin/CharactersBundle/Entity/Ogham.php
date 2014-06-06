@@ -175,10 +175,10 @@ class Ogham
     /**
      * Set book
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Books $book
+     * @param Books $book
      * @return Ogham
      */
-    public function setBook(\CorahnRin\CharactersBundle\Entity\Books $book = null)
+    public function setBook(Books $book = null)
     {
         $this->book = $book;
 
@@ -188,7 +188,7 @@ class Ogham
     /**
      * Get book
      *
-     * @return \CorahnRin\CharactersBundle\Entity\Books
+     * @return Books
      */
     public function getBook()
     {
@@ -198,10 +198,10 @@ class Ogham
     /**
      * Set oghamType
      *
-     * @param \CorahnRin\CharactersBundle\Entity\OghamTypes $oghamType
+     * @param OghamTypes $oghamType
      * @return Ogham
      */
-    public function setOghamType(\CorahnRin\CharactersBundle\Entity\OghamTypes $oghamType = null)
+    public function setOghamType(OghamTypes $oghamType = null)
     {
         $this->oghamType = $oghamType;
 
@@ -211,7 +211,7 @@ class Ogham
     /**
      * Get oghamType
      *
-     * @return \CorahnRin\CharactersBundle\Entity\OghamTypes 
+     * @return OghamTypes
      */
     public function getOghamType()
     {

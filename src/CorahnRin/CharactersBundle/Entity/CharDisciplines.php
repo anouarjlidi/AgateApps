@@ -3,6 +3,7 @@
 namespace CorahnRin\CharactersBundle\Entity;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * CharDisciplines
@@ -17,14 +18,16 @@ class CharDisciplines
      *
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Characters", inversedBy="disciplines")
+     * @Assert\NotNull()
      */
     protected $character;
 
     /**
-     * @var DisciplinesDomains
+     * @var Disciplines
      *
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Disciplines")
+     * @Assert\NotNull()
      */
     protected $discipline;
 
@@ -33,6 +36,7 @@ class CharDisciplines
      *
      * @ORM\Id
 	 * @ORM\ManyToOne(targetEntity="Domains")
+     * @Assert\NotNull()
      */
     protected $domain;
 
@@ -40,6 +44,8 @@ class CharDisciplines
      * @var integer
      *
      * @ORM\Column(type="integer")
+     * @Assert\NotNull()
+     * @Assert\GreaterThanOrEqual(value=0)
      */
     protected $score;
 
@@ -69,10 +75,10 @@ class CharDisciplines
     /**
      * Set character
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Characters $character
+     * @param Characters $character
      * @return CharDisciplines
      */
-    public function setCharacter(\CorahnRin\CharactersBundle\Entity\Characters $character)
+    public function setCharacter(Characters $character)
     {
         $this->character = $character;
 
@@ -82,7 +88,7 @@ class CharDisciplines
     /**
      * Get character
      *
-     * @return \CorahnRin\CharactersBundle\Entity\Characters
+     * @return Characters
      */
     public function getCharacter()
     {
@@ -92,10 +98,10 @@ class CharDisciplines
     /**
      * Set discipline
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Disciplines $discipline
+     * @param Disciplines $discipline
      * @return CharDisciplines
      */
-    public function setDiscipline(\CorahnRin\CharactersBundle\Entity\Disciplines $discipline)
+    public function setDiscipline(Disciplines $discipline)
     {
         $this->discipline = $discipline;
 
@@ -105,7 +111,7 @@ class CharDisciplines
     /**
      * Get discipline
      *
-     * @return \CorahnRin\CharactersBundle\Entity\Disciplines
+     * @return Disciplines
      */
     public function getDiscipline()
     {
@@ -115,10 +121,10 @@ class CharDisciplines
     /**
      * Set domain
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Domains $domain
+     * @param Domains $domain
      * @return CharDisciplines
      */
-    public function setDomain(\CorahnRin\CharactersBundle\Entity\Domains $domain)
+    public function setDomain(Domains $domain)
     {
         $this->domain = $domain;
 
@@ -128,7 +134,7 @@ class CharDisciplines
     /**
      * Get domain
      *
-     * @return \CorahnRin\CharactersBundle\Entity\Domains
+     * @return Domains
      */
     public function getDomain()
     {

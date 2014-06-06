@@ -3,6 +3,7 @@
 namespace CorahnRin\CharactersBundle\Entity;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * CharDomains
@@ -16,7 +17,8 @@ class CharDomains
      * @var Characters
      *
      * @ORM\Id
-	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Characters", inversedBy="domains")
+	 * @ORM\ManyToOne(targetEntity="Characters", inversedBy="domains")
+     * @Assert\NotNull()
      */
     protected $character;
 
@@ -24,7 +26,8 @@ class CharDomains
      * @var Domains
      *
      * @ORM\Id
-	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Domains")
+	 * @ORM\ManyToOne(targetEntity="Domains")
+     * @Assert\NotNull()
      */
     protected $domain;
 
@@ -32,6 +35,8 @@ class CharDomains
      * @var integer
      *
      * @ORM\Column(type="integer")
+     * @Assert\NotNull()
+     * @Assert\GreaterThanOrEqual(value=0)
      */
     protected $score;
 
@@ -61,10 +66,10 @@ class CharDomains
     /**
      * Set character
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Characters $character
+     * @param Characters $character
      * @return CharDomains
      */
-    public function setCharacter(\CorahnRin\CharactersBundle\Entity\Characters $character)
+    public function setCharacter(Characters $character)
     {
         $this->character = $character;
 
@@ -74,7 +79,7 @@ class CharDomains
     /**
      * Get character
      *
-     * @return \CorahnRin\CharactersBundle\Entity\Characters
+     * @return Characters
      */
     public function getCharacter()
     {
@@ -84,10 +89,10 @@ class CharDomains
     /**
      * Set domain
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Domains $domain
+     * @param Domains $domain
      * @return CharDomains
      */
-    public function setDomain(\CorahnRin\CharactersBundle\Entity\Domains $domain)
+    public function setDomain(Domains $domain)
     {
         $this->domain = $domain;
 
@@ -97,7 +102,7 @@ class CharDomains
     /**
      * Get domain
      *
-     * @return \CorahnRin\CharactersBundle\Entity\Domains
+     * @return Domains
      */
     public function getDomain()
     {

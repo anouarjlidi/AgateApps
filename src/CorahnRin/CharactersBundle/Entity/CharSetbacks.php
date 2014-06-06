@@ -16,7 +16,7 @@ class CharSetbacks
      * @var Characters
      *
      * @ORM\Id
-	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Characters", inversedBy="setbacks")
+	 * @ORM\ManyToOne(targetEntity="Characters", inversedBy="setbacks")
      */
     protected $character;
 
@@ -24,7 +24,7 @@ class CharSetbacks
      * @var Setbacks
      *
      * @ORM\Id
-	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Setbacks")
+	 * @ORM\ManyToOne(targetEntity="Setbacks")
      */
     protected $setback;
 

@@ -333,10 +333,10 @@ class Avantages
     /**
      * Set book
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Books $book
+     * @param Books $book
      * @return Avantages
      */
-    public function setBook(\CorahnRin\CharactersBundle\Entity\Books $book = null)
+    public function setBook(Books $book = null)
     {
         $this->book = $book;
 
@@ -346,7 +346,7 @@ class Avantages
     /**
      * Get book
      *
-     * @return \CorahnRin\CharactersBundle\Entity\Books
+     * @return Books
      */
     public function getBook()
     {

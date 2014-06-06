@@ -1,6 +1,6 @@
 <?php
 
-namespace Pierstoval\Bundle\PierstovalApiBundle\DependencyInjection;
+namespace Pierstoval\Bundle\ApiBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;

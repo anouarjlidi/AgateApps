@@ -28,7 +28,6 @@ class AppKernel extends Kernel
             new CorahnRin\CharactersBundle\CorahnRinCharactersBundle(),
             new CorahnRin\UsersBundle\CorahnRinUsersBundle(),
             new CorahnRin\ToolsBundle\CorahnRinToolsBundle(),
-            new CorahnRin\ImagickBundle\CorahnRinImagickBundle(),
             new CorahnRin\GeneratorBundle\CorahnRinGeneratorBundle(),
 
             new EsterenMaps\MapsBundle\EsterenMapsBundle(),

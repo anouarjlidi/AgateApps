@@ -6,7 +6,7 @@
 
 
     <parameters>
-        <parameter id="pierstoval_tools.imagick.path">/usr/bin/</parameter>
+        <parameter key="pierstoval_tools.imagick.path">/usr/bin/</parameter>
     </parameters>
 
     <services>

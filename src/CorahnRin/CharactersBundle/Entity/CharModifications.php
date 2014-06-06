@@ -146,10 +146,10 @@ class CharModifications
     /**
      * Set character
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Characters $character
+     * @param Characters $character
      * @return CharModifications
      */
-    public function setCharacter(\CorahnRin\CharactersBundle\Entity\Characters $character = null)
+    public function setCharacter(Characters $character = null)
     {
         $this->character = $character;
 
@@ -159,7 +159,7 @@ class CharModifications
     /**
      * Get character
      *
-     * @return \CorahnRin\CharactersBundle\Entity\Characters
+     * @return Characters
      */
     public function getCharacter()
     {

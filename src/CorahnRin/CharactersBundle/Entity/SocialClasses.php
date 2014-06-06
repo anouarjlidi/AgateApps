@@ -155,10 +155,10 @@ class SocialClasses
     /**
      * Add domains
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Domains $domains
+     * @param Domains $domains
      * @return SocialClasses
      */
-    public function addDomain(\CorahnRin\CharactersBundle\Entity\Domains $domains)
+    public function addDomain(Domains $domains)
     {
         $this->domains[] = $domains;
 
@@ -168,9 +168,9 @@ class SocialClasses
     /**
      * Remove domains
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Domains $domains
+     * @param Domains $domains
      */
-    public function removeDomain(\CorahnRin\CharactersBundle\Entity\Domains $domains)
+    public function removeDomain(Domains $domains)
     {
         $this->domains->removeElement($domains);
     }

@@ -17,7 +17,7 @@ class DisordersWays
      * @var Disorders
      *
      * @ORM\Id
-	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Disorders", inversedBy="ways")
+	 * @ORM\ManyToOne(targetEntity="Disorders", inversedBy="ways")
      */
     protected $disorder;
 
@@ -25,7 +25,7 @@ class DisordersWays
      * @var Ways
      *
      * @ORM\Id
-	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Ways")
+	 * @ORM\ManyToOne(targetEntity="Ways")
      */
     protected $way;
 

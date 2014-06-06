@@ -3,6 +3,7 @@
 namespace CorahnRin\CharactersBundle\Entity;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * CharAvtgs
@@ -16,7 +17,8 @@ class CharAvtgs
      * @var Characters
      *
      * @ORM\Id
-	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Characters", inversedBy="avantages")
+	 * @ORM\ManyToOne(targetEntity="Characters", inversedBy="avantages")
+     * @Assert\NotNull()
      */
     protected $character;
 
@@ -24,7 +26,8 @@ class CharAvtgs
      * @var Avantages
      *
      * @ORM\Id
-	 * @ORM\ManyToOne(targetEntity="\CorahnRin\CharactersBundle\Entity\Avantages")
+	 * @ORM\ManyToOne(targetEntity="Avantages")
+     * @Assert\NotNull()
      */
     protected $avantage;
 
@@ -32,6 +35,8 @@ class CharAvtgs
      * @var boolean
      *
      * @ORM\Column(type="integer")
+     * @Assert\NotNull()
+     * @Assert\GreaterThanOrEqual(value=0)
      */
     protected $doubleValue;
 
@@ -61,10 +66,10 @@ class CharAvtgs
     /**
      * Set character
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Characters $character
+     * @param Characters $character
      * @return CharAvtgs
      */
-    public function setCharacter(\CorahnRin\CharactersBundle\Entity\Characters $character)
+    public function setCharacter(Characters $character)
     {
         $this->character = $character;
 
@@ -74,7 +79,7 @@ class CharAvtgs
     /**
      * Get character
      *
-     * @return \CorahnRin\CharactersBundle\Entity\Characters
+     * @return Characters
      */
     public function getCharacter()
     {
@@ -84,10 +89,10 @@ class CharAvtgs
     /**
      * Set avantage
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Avantages $avantage
+     * @param Avantages $avantage
      * @return CharAvtgs
      */
-    public function setAvantage(\CorahnRin\CharactersBundle\Entity\Avantages $avantage)
+    public function setAvantage(Avantages $avantage)
     {
         $this->avantage = $avantage;
 
@@ -97,7 +102,7 @@ class CharAvtgs
     /**
      * Get avantage
      *
-     * @return \CorahnRin\CharactersBundle\Entity\Avantages
+     * @return Avantages
      */
     public function getAvantage()
     {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Pierstoval\Bundle\PierstovalApiBundle\DependencyInjection;
+namespace Pierstoval\Bundle\ApiBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;

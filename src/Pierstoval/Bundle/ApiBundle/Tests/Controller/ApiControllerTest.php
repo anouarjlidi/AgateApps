@@ -1,6 +1,6 @@
 <?php
 
-namespace Pierstoval\Bundle\PierstovalApiBundle\Tests\Controller;
+namespace Pierstoval\Bundle\ApiBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

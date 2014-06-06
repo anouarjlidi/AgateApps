@@ -189,10 +189,10 @@ class Domains
     /**
      * Set way
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Ways $way
+     * @param Ways $way
      * @return Domains
      */
-    public function setWay(\CorahnRin\CharactersBundle\Entity\Ways $way = null)
+    public function setWay(Ways $way = null)
     {
         $this->way = $way;
 
@@ -202,7 +202,7 @@ class Domains
     /**
      * Get way
      *
-     * @return \CorahnRin\CharactersBundle\Entity\Ways
+     * @return Ways
      */
     public function getWay()
     {
@@ -212,10 +212,10 @@ class Domains
     /**
      * Add disciplines
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Disciplines $disciplines
+     * @param Disciplines $disciplines
      * @return Domains
      */
-    public function addDiscipline(\CorahnRin\CharactersBundle\Entity\Disciplines $disciplines)
+    public function addDiscipline(Disciplines $disciplines)
     {
         $this->disciplines[] = $disciplines;
 
@@ -225,9 +225,9 @@ class Domains
     /**
      * Remove disciplines
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Disciplines $disciplines
+     * @param Disciplines $disciplines
      */
-    public function removeDiscipline(\CorahnRin\CharactersBundle\Entity\Disciplines $disciplines)
+    public function removeDiscipline(Disciplines $disciplines)
     {
         $this->disciplines->removeElement($disciplines);
     }

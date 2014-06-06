@@ -1,5 +1,5 @@
 <?php
-namespace CorahnRin\ToolsBundle\Command;
+namespace Pierstoval\Bundle\ToolsBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
@@ -12,7 +12,7 @@ class FilesCombineCommand extends ContainerAwareCommand {
 	protected function configure() {
 
 		$this
-		->setName('corahnrin:combine:files')
+		->setName('pierstoval:combine:files')
 		->setDescription('Combine multiple files.')
         ->setHelp('This command is used to generate a single file from multiple files, like LESS files..'."\n"
             .'Name the [output] file within its folder if you need'."\n"
@@ -36,14 +36,7 @@ class FilesCombineCommand extends ContainerAwareCommand {
 		//Récupération du service "dialog" pour les demandes à l'utilisateur
 		$dialog = $this->getHelperSet()->get('dialog');
 
-        $output->writeln('   ______                     __                   ____   _      ');
-        $output->writeln('  / ____/____   _____ ____ _ / /_   ____          / __ \\ (_)____ ');
-        $output->writeln(' / /    / __ \\ / ___// __ `// __ \\ / __ \\ ______ / /_/ // // __ \\');
-        $output->writeln('/ /___ / /_/ // /   / /_/ // / / // / / //_____// _, _// // / / /');
-        $output->writeln('\\____/ \\____//_/    \\__,_//_/ /_//_/ /_/       /_/ |_|/_//_/ /_/ ');
-        $output->writeln('');
-
-		$output->writeln('Welcome to Corahn-Rin Files Combinator !');
+		$output->writeln('Welcome to Pierstoval\'s Files Combinator !');
 		$output->writeln('With this command, you will be able to compile all files you want into one file !');
 		$output->writeln('This is really useful when you want to combine LESS files into one file, for LessPHP to work better with Symfony2');
 		$output->writeln('');

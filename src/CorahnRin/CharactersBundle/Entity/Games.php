@@ -238,10 +238,10 @@ class Games
     /**
      * Add characters
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Characters $characters
+     * @param Characters $characters
      * @return Games
      */
-    public function addCharacter(\CorahnRin\CharactersBundle\Entity\Characters $characters)
+    public function addCharacter(Characters $characters)
     {
         $this->characters[] = $characters;
 
@@ -251,9 +251,9 @@ class Games
     /**
      * Remove characters
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Characters $characters
+     * @param Characters $characters
      */
-    public function removeCharacter(\CorahnRin\CharactersBundle\Entity\Characters $characters)
+    public function removeCharacter(Characters $characters)
     {
         $this->characters->removeElement($characters);
     }

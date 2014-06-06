@@ -1,9 +1,6 @@
 <?php
 
-namespace Pierstoval\Bundle\PierstovalApiBundle\Controller;
-
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\HttpKernel\Exception\HttpException;
+namespace Pierstoval\Bundle\ApiBundle\Controller;
 
 use Doctrine\Common\Collections\Collection;
 

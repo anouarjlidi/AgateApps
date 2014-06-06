@@ -155,10 +155,10 @@ class Disorders
     /**
      * Add ways
      *
-     * @param \CorahnRin\CharactersBundle\Entity\CharWays $ways
+     * @param CharWays $ways
      * @return Disorders
      */
-    public function addWay(\CorahnRin\CharactersBundle\Entity\CharWays $ways)
+    public function addWay(CharWays $ways)
     {
         $this->ways[] = $ways;
 
@@ -168,9 +168,9 @@ class Disorders
     /**
      * Remove ways
      *
-     * @param \CorahnRin\CharactersBundle\Entity\CharWays $ways
+     * @param CharWays $ways
      */
-    public function removeWay(\CorahnRin\CharactersBundle\Entity\CharWays $ways)
+    public function removeWay(CharWays $ways)
     {
         $this->ways->removeElement($ways);
     }
@@ -201,7 +201,7 @@ class Disorders
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {

@@ -399,10 +399,10 @@ class Artifacts
     /**
      * Set flux
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Flux $flux
+     * @param Flux $flux
      * @return Artifacts
      */
-    public function setFlux(\CorahnRin\CharactersBundle\Entity\Flux $flux = null)
+    public function setFlux(Flux $flux = null)
     {
         $this->flux = $flux;
 
@@ -412,7 +412,7 @@ class Artifacts
     /**
      * Get flux
      *
-     * @return \CorahnRin\CharactersBundle\Entity\Flux
+     * @return Flux
      */
     public function getFlux()
     {

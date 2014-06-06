@@ -219,10 +219,10 @@ class Disciplines
     /**
      * Set book
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Books $book
+     * @param Books $book
      * @return Disciplines
      */
-    public function setBook(\CorahnRin\CharactersBundle\Entity\Books $book = null)
+    public function setBook(Books $book = null)
     {
         $this->book = $book;
 
@@ -232,7 +232,7 @@ class Disciplines
     /**
      * Get book
      *
-     * @return \CorahnRin\CharactersBundle\Entity\Books
+     * @return Books
      */
     public function getBook()
     {
@@ -242,10 +242,10 @@ class Disciplines
     /**
      * Add domains
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Domains $domains
+     * @param Domains $domains
      * @return Disciplines
      */
-    public function addDomain(\CorahnRin\CharactersBundle\Entity\Domains $domains)
+    public function addDomain(Domains $domains)
     {
         $this->domains[] = $domains;
 
@@ -255,9 +255,9 @@ class Disciplines
     /**
      * Remove domains
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Domains $domains
+     * @param Domains $domains
      */
-    public function removeDomain(\CorahnRin\CharactersBundle\Entity\Domains $domains)
+    public function removeDomain(Domains $domains)
     {
         $this->domains->removeElement($domains);
     }

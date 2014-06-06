@@ -1,5 +1,5 @@
 <?php
-namespace CorahnRin\ToolsBundle\Command;
+namespace Pierstoval\Bundle\ToolsBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
@@ -29,7 +29,7 @@ BASE_FILE
 
 		//public function addArgument($name, $mode = null, $description = '', $default = null)
 		$this
-		->setName('corahnrin:generate:repositories')
+		->setName('pierstoval:generate:repositories')
 		->setDescription('Generate entities repositories of a specific namespace.')
 		->addArgument(
 				'namespace',
@@ -221,9 +221,9 @@ BASE_FILE
 				$output->writeln('Added parameter "repositoryClass" to file "'.$file.'"');
 			}
 		}
-		
+
 		$output->writeln('End of function !');
 		$output->writeln('Thanks for using CorahnRinTools, and see you soon !');
-		
+
 	}
 }

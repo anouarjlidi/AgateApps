@@ -86,6 +86,8 @@ fos_user:
     db_driver:     orm
     firewall_name: main
     user_class:    CorahnRin\UsersBundle\Entity\Users
+    group:
+        group_class: CorahnRin\UsersBundle\Entity\Groups
 
 fos_rest:
     param_fetcher_listener: true

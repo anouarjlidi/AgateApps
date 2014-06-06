@@ -1818,7 +1818,7 @@ class Characters
     /**
      * Get domain
      * @param int $id
-     * @return \CorahnRin\CharactersBundle\Entity\CharDomains
+     * @return CharDomains
      */
     public function getDomain($id) {
         foreach ($this->domains as $charDomain) {
@@ -1837,7 +1837,7 @@ class Characters
      * Get way
      *
      * @param string $shortName
-     * @return \CorahnRin\CharactersBundle\Entity\CharWays|null
+     * @return CharWays|null
      */
     public function getWay($shortName) {
         foreach ($this->ways as $charWay) {
@@ -1850,7 +1850,7 @@ class Characters
     /**
      * Get discipline
      * @param mixed $id La discipline à chercher. Peut être son ID, son nom ou l'objet lui-même.
-     * @return \CorahnRin\CharactersBundle\Entity\CharDisciplines|null
+     * @return CharDisciplines|null
      */
     public function getDiscipline($id) {
         foreach ($this->disciplines as $charDiscipline) {

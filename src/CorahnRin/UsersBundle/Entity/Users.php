@@ -2,8 +2,10 @@
 
 namespace CorahnRin\UsersBundle\Entity;
 
-use FOS\UserBundle\Entity\User as BaseUser;use Gedmo\Mapping\Annotation as Gedmo;
+use FOS\UserBundle\Model\User as BaseUser;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use CorahnRin\CharactersBundle\Entity\Characters;
 
 /**
  * Users
@@ -22,10 +24,16 @@ class Users extends BaseUser {
     protected $id;
 
 	/**
-     * @var Doctrine\Common\Collections\Collection
+     * @var Characters[]
      * @ORM\OneToMany(targetEntity="CorahnRin\CharactersBundle\Entity\Characters", mappedBy="user")
 	 */
 	protected $characters;
+
+    /**
+     * @var Groups[]
+     * @ORM\ManyToMany(targetEntity="CorahnRin\UsersBundle\Entity\Groups")
+     */
+    protected $groups;
 
     /**
      * Constructor
@@ -35,7 +43,7 @@ class Users extends BaseUser {
 		parent::__construct();
         $this->characters = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Add characters
      *
@@ -45,7 +53,7 @@ class Users extends BaseUser {
     public function addCharacter(\CorahnRin\CharactersBundle\Entity\Characters $characters)
     {
         $this->characters[] = $characters;
-    
+
         return $this;
     }
 
@@ -62,20 +70,11 @@ class Users extends BaseUser {
     /**
      * Get characters
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return Characters[]
      */
     public function getCharacters()
     {
         return $this->characters;
     }
 
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
 }

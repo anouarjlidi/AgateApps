@@ -184,10 +184,10 @@ class Jobs
     /**
      * Set book
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Books $book
+     * @param Books $book
      * @return Jobs
      */
-    public function setBook(\CorahnRin\CharactersBundle\Entity\Books $book = null)
+    public function setBook(Books $book = null)
     {
         $this->book = $book;
 
@@ -197,7 +197,7 @@ class Jobs
     /**
      * Get book
      *
-     * @return \CorahnRin\CharactersBundle\Entity\Books
+     * @return Books
      */
     public function getBook()
     {
@@ -214,10 +214,10 @@ class Jobs
     /**
      * Set domainPrimary
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Domains $domainPrimary
+     * @param Domains $domainPrimary
      * @return Jobs
      */
-    public function setDomainPrimary(\CorahnRin\CharactersBundle\Entity\Domains $domainPrimary = null)
+    public function setDomainPrimary(Domains $domainPrimary = null)
     {
         $this->domainPrimary = $domainPrimary;
 
@@ -227,7 +227,7 @@ class Jobs
     /**
      * Get domainPrimary
      *
-     * @return \CorahnRin\CharactersBundle\Entity\Domains
+     * @return Domains
      */
     public function getDomainPrimary()
     {
@@ -237,10 +237,10 @@ class Jobs
     /**
      * Add domainsSecondary
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Domains $domainsSecondary
+     * @param Domains $domainsSecondary
      * @return Jobs
      */
-    public function addDomainsSecondary(\CorahnRin\CharactersBundle\Entity\Domains $domainsSecondary)
+    public function addDomainsSecondary(Domains $domainsSecondary)
     {
         $this->domainsSecondary[] = $domainsSecondary;
 
@@ -250,9 +250,9 @@ class Jobs
     /**
      * Remove domainsSecondary
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Domains $domainsSecondary
+     * @param Domains $domainsSecondary
      */
-    public function removeDomainsSecondary(\CorahnRin\CharactersBundle\Entity\Domains $domainsSecondary)
+    public function removeDomainsSecondary(Domains $domainsSecondary)
     {
         $this->domainsSecondary->removeElement($domainsSecondary);
     }

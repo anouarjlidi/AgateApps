@@ -1,7 +1,7 @@
 security:
     encoders:
         Symfony\Component\Security\Core\User\User: plaintext
-        CorahnRin\UsersBundle\Entity\Users: sha512
+        FOS\UserBundle\Model\UserInterface: sha512
 
     role_hierarchy:
         # Managers de contenu (utile pour les newsletter par exemple)
@@ -39,6 +39,8 @@ security:
     providers:
         main:
             id: fos_user.user_provider.username
+        fos_userbundle:
+            id: fos_user.user_provider.username
 #        in_memory:
 #            memory:
 #                users:
@@ -55,9 +57,10 @@ security:
             anonymous:      true
             provider:       main
             form_login:
-                login_path: fos_user_security_login
-                check_path: fos_user_security_check
-                csrf_provider: form.csrf_provider
+                provider:       fos_userbundle
+                login_path:     fos_user_security_login
+                check_path:     fos_user_security_check
+                csrf_provider:  form.csrf_provider
             logout:
                 path:       fos_user_security_logout
                 target:     /
@@ -71,7 +74,7 @@ security:
         - { path: ^/maps,               role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/maps,           role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/,                   role: ROLE_USER }
-        - { path: ^/admin,              role: ROLE_USER }
+        - { path: ^/profile,            role: ROLE_USER }
         - { path: ^/admin/maps,         role: ROLE_ADMIN_MAPS }
         - { path: ^/admin/generator,    role: ROLE_ADMIN_GENERATOR }
         - { path: ^/admin/manage_site,  role: ROLE_ADMIN }
