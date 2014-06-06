@@ -1,0 +1,10 @@
+
+# Api services
+pierstoval_api:
+    services:
+        maps:           { entity: EsterenMaps\MapsBundle\Entity\Maps }
+        markers:        { entity: EsterenMaps\MapsBundle\Entity\Markers }
+        markerstypes:   { entity: EsterenMaps\MapsBundle\Entity\MarkersTypes }
+        routes:         { entity: EsterenMaps\MapsBundle\Entity\Routes }
+        routestypes:    { entity: EsterenMaps\MapsBundle\Entity\RoutesTypes }
+        zones:          { entity: EsterenMaps\MapsBundle\Entity\Zones }

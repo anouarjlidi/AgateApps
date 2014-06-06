@@ -1,0 +1,56 @@
+{% extends "PierstovalAdminBundle:Admin:layout.html.twig" %}
+
+{% block title %}{{ 'Menus' | trans }} - {{ parent() }}{% endblock %}
+
+{% block admin_content %}
+
+{% if is_granted('ROLE_ADMIN_MANAGE_SITE_SUPER') %}
+    <div class="navbar navbar-inverse">
+        <div class="">
+            <ul class="nav navbar-nav">
+                <li><a href="{{ url('esteren_pages_menus_add') }}">
+                    <span class="glyphicon icon-plus"></span>
+                    {{ 'Ajouter un nouveau lien / menu' | trans }}
+                </a></li>
+            </ul>
+        </div>
+    </div>
+{% endif %}
+
+<table class="table table-condensed">
+    <tr>
+        <th>#</th>
+        <th>{{ 'Parent' | trans }}</th>
+        <th>{{ 'Lien' | trans }}</th>
+        <th>{{ 'Route' | trans }}</th>
+        <th>{{ 'Position' | trans }}</th>
+        <th class="w240">{{ 'Actions' | trans }}</th>
+    </tr>
+    {% for menu in menus %}
+    <tr>
+        <td>{{ menu.id }}</td>
+        <td class="w150">
+            {% if menu.parent %}
+                {{ menu.parent.name | striptags | trans }}
+            {% else %}
+            <div class="text-center">-</div>
+            {% endif %}
+        </td>
+        <td class="w150"><strong>{{ menu.name | striptags | trans }}</strong></td>
+        <td><small>{{ menu.route }}</small></td>
+        <td>{{ menu.position }}</td>
+        <td>
+            {% if is_granted('ROLE_ADMIN_MANAGE_SITE') %}
+            <a href="{{ url('esteren_pages_menus_edit', {'id':menu.id}) }}" class="btn btn-sm btn-inverse">{{ 'Éditer' | trans }}</a>
+            {% endif %}
+            {% if is_granted('ROLE_ADMIN_MANAGE_SITE_SUPER') %}
+                <a href="{{ url('esteren_pages_menus_delete', {'id':menu.id}) }}" class="btn btn-sm btn-danger">{{ 'Supprimer' | trans }}</a>
+            {% endif %}
+        </td>
+    </tr>
+    {% else %}
+    <tr><td colspan="9">{{ 'Aucun élément' | trans }}</td></tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

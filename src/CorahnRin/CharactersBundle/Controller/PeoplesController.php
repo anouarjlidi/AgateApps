@@ -25,7 +25,7 @@ class PeoplesController extends Controller
 
     /**
      * @Route("/admin/generator/peoples/add/")
-     * @Template("CorahnRinAdminBundle:Form:add.html.twig")
+     * @Template("PierstovalAdminBundle:Form:add.html.twig")
      */
     public function addAction(Request $request)
     {
@@ -37,7 +37,7 @@ class PeoplesController extends Controller
 
     /**
      * @Route("/admin/generator/peoples/edit/{id}")
-     * @Template("CorahnRinAdminBundle:Form:add.html.twig")
+     * @Template("PierstovalAdminBundle:Form:add.html.twig")
      */
     public function editAction(Peoples $people, Request $request)
     {
@@ -82,7 +82,7 @@ class PeoplesController extends Controller
             'form' => $form->createView(),
             'title' => ($method=='add'?'Ajouter':'Modifier').' un peuple',
             'breadcrumbs' => array(
-                'Accueil' => array('route' => 'corahnrin_admin_admin_index',),
+                'Accueil' => array('route' => 'pierstoval_admin_admin_index',),
                 'Peuples' => array('route'=>'corahnrin_characters_peoples_adminlist'),
             ),
         );

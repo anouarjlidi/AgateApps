@@ -1,30 +1,13 @@
-pierstoval_tools:
-    resource: "@PierstovalToolsBundle/Controller/"
-    type:     annotation
-    prefix:   /
 
+#-----------------------------------
+# Corahn-Rin relative routing
 corahn_rin_generator:
     resource: "@CorahnRinGeneratorBundle/Controller/"
     type:     annotation
     prefix:   /
 
-corahn_rin_api:
-    resource: "@CorahnRinApiBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
-esterenmaps:
-    resource: "@EsterenMapsBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
-corahn_rin_admin:
-    resource: "@CorahnRinAdminBundle/Controller/"
-    type:     annotation
-    prefix:   /admin/
-
-corahn_rin_pages:
-    resource: "@CorahnRinPagesBundle/Controller/"
+esteren_pages:
+    resource: "@EsterenPagesBundle/Controller/"
     type:     annotation
     prefix:   /
 
@@ -33,6 +16,14 @@ corahn_rin_characters:
     type:     annotation
     prefix:   /
 
+#-----------------------------------
+# Esteren Maps relative routing
+esterenmaps:
+    resource: "@EsterenMapsBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+# FOS relative Routing
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
 
@@ -52,8 +43,24 @@ fos_user_change_password:
     resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
     prefix: /profile
 
+#-----------------------------------
+# Pierstoval relative routing
+pierstoval_tools:
+    resource: "@PierstovalToolsBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 pierstoval_translation:
-    # The name does not matter
     resource: "@PierstovalTranslationBundle/Controller/"
     type:     annotation
     prefix:   /
+
+pierstoval_api:
+    resource: "@PierstovalApiBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+pierstoval_admin:
+    resource: "@PierstovalAdminBundle/Controller/"
+    type:     annotation
+    prefix:   /admin/

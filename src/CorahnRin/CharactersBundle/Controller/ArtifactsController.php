@@ -26,7 +26,7 @@ class ArtifactsController extends Controller
 
     /**
      * @Route("/admin/generator/artifacts/add/")
-     * @Template("CorahnRinAdminBundle:Form:add.html.twig")
+     * @Template("PierstovalAdminBundle:Form:add.html.twig")
      */
     public function addAction(Request $request)
     {
@@ -38,7 +38,7 @@ class ArtifactsController extends Controller
 
     /**
      * @Route("/admin/generator/artifacts/edit/{id}")
-     * @Template("CorahnRinAdminBundle:Form:add.html.twig")
+     * @Template("PierstovalAdminBundle:Form:add.html.twig")
      */
     public function editAction(Artifacts $artifact, Request $request)
     {
@@ -82,7 +82,7 @@ class ArtifactsController extends Controller
             'form' => $form->createView(),
             'title' => ($method=='add'?'Ajouter':'Modifier').' un Artefact',
             'breadcrumbs' => array(
-                'Accueil' => array('route' => 'corahnrin_admin_admin_index',),
+                'Accueil' => array('route' => 'pierstoval_admin_admin_index',),
                 'Artefacts' => array('route'=>'corahnrin_characters_artifacts_adminlist'),
             ),
         );

@@ -24,7 +24,7 @@ class SocialClassesController extends Controller
 
     /**
      * @Route("/admin/generator/socialclasses/add/")
-     * @Template("CorahnRinAdminBundle:Form:add.html.twig")
+     * @Template("PierstovalAdminBundle:Form:add.html.twig")
      */
     public function addAction(Request $request)
     {
@@ -36,7 +36,7 @@ class SocialClassesController extends Controller
 
     /**
      * @Route("/admin/generator/socialclasses/edit/{id}")
-     * @Template("CorahnRinAdminBundle:Form:add.html.twig")
+     * @Template("PierstovalAdminBundle:Form:add.html.twig")
      */
     public function editAction(SocialClasses $socialClass, Request $request)
     {
@@ -81,7 +81,7 @@ class SocialClassesController extends Controller
             'form' => $form->createView(),
             'title' => ($method=='add'?'Ajouter':'Modifier').' un revers',
             'breadcrumbs' => array(
-                'Accueil' => array('route' => 'corahnrin_admin_admin_index',),
+                'Accueil' => array('route' => 'pierstoval_admin_admin_index',),
                 'Classes Sociales' => array('route'=>'corahnrin_characters_socialclasses_adminlist'),
             ),
         );

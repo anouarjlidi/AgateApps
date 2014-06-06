@@ -25,7 +25,7 @@ class OghamController extends Controller
 
     /**
      * @Route("/admin/generator/ogham/add/")
-     * @Template("CorahnRinAdminBundle:Form:add.html.twig")
+     * @Template("PierstovalAdminBundle:Form:add.html.twig")
      */
     public function addAction(Request $request)
     {
@@ -37,7 +37,7 @@ class OghamController extends Controller
 
     /**
      * @Route("/admin/generator/ogham/addtype/")
-     * @Template("CorahnRinAdminBundle:Form:add.html.twig")
+     * @Template("PierstovalAdminBundle:Form:add.html.twig")
      */
     public function addTypeAction(Request $request)
     {
@@ -49,7 +49,7 @@ class OghamController extends Controller
 
     /**
      * @Route("/admin/generator/ogham/edit/{id}")
-     * @Template("CorahnRinAdminBundle:Form:add.html.twig")
+     * @Template("PierstovalAdminBundle:Form:add.html.twig")
      */
     public function editAction(Ogham $ogham, Request $request)
     {
@@ -58,7 +58,7 @@ class OghamController extends Controller
 
     /**
      * @Route("/admin/generator/ogham/edittype/{id}")
-     * @Template("CorahnRinAdminBundle:Form:add.html.twig")
+     * @Template("PierstovalAdminBundle:Form:add.html.twig")
      */
     public function editTypeAction(OghamTypes $oghamType, Request $request)
     {
@@ -130,7 +130,7 @@ class OghamController extends Controller
             'form' => $form->createView(),
             'title' => ($method=='add'?'Ajouter':'Modifier').' un '.($type?'type d\'':'').'Ogham',
             'breadcrumbs' => array(
-                'Accueil' => array('route' => 'corahnrin_admin_admin_index',),
+                'Accueil' => array('route' => 'pierstoval_admin_admin_index',),
                 'Ogham' => array('route'=>'corahnrin_characters_ogham_adminlist'),
             ),
         );

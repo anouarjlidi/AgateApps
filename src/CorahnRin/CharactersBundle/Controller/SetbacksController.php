@@ -25,7 +25,7 @@ class SetbacksController extends Controller
 
     /**
      * @Route("/admin/generator/setbacks/add/")
-     * @Template("CorahnRinAdminBundle:Form:add.html.twig")
+     * @Template("PierstovalAdminBundle:Form:add.html.twig")
      */
     public function addAction(Request $request)
     {
@@ -37,7 +37,7 @@ class SetbacksController extends Controller
 
     /**
      * @Route("/admin/generator/setbacks/edit/{id}")
-     * @Template("CorahnRinAdminBundle:Form:add.html.twig")
+     * @Template("PierstovalAdminBundle:Form:add.html.twig")
      */
     public function editAction(Setbacks $setback, Request $request)
     {
@@ -82,7 +82,7 @@ class SetbacksController extends Controller
             'form' => $form->createView(),
             'title' => ($method=='add'?'Ajouter':'Modifier').' un revers',
             'breadcrumbs' => array(
-                'Accueil' => array('route' => 'corahnrin_admin_admin_index',),
+                'Accueil' => array('route' => 'pierstoval_admin_admin_index',),
                 'Revers' => array('route'=>'corahnrin_characters_setbacks_adminlist'),
             ),
         );

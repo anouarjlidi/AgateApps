@@ -22,7 +22,7 @@ class TraitsController extends Controller
 
     /**
      * @Route("/admin/generator/traits/add/")
-     * @Template("CorahnRinAdminBundle:Form:add.html.twig")
+     * @Template("PierstovalAdminBundle:Form:add.html.twig")
      */
     public function addAction(Request $request)
     {
@@ -34,7 +34,7 @@ class TraitsController extends Controller
 
     /**
      * @Route("/admin/generator/traits/edit/{id}")
-     * @Template("CorahnRinAdminBundle:Form:add.html.twig")
+     * @Template("PierstovalAdminBundle:Form:add.html.twig")
      */
     public function editAction(Traits $trait, Request $request)
     {
@@ -79,7 +79,7 @@ class TraitsController extends Controller
             'form' => $form->createView(),
             'title' => ($method=='add'?'Ajouter':'Modifier').' un trait',
             'breadcrumbs' => array(
-                'Accueil' => array('route' => 'corahnrin_admin_admin_index',),
+                'Accueil' => array('route' => 'pierstoval_admin_admin_index',),
                 'Traits de caractère' => array('route'=>'corahnrin_characters_traits_adminlist'),
             ),
         );

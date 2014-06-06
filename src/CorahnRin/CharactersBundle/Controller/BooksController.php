@@ -24,7 +24,7 @@ class BooksController extends Controller
 
     /**
      * @Route("/admin/generator/books/add/")
-     * @Template("CorahnRinAdminBundle:Form:add.html.twig")
+     * @Template("PierstovalAdminBundle:Form:add.html.twig")
      */
     public function addAction(Request $request)
     {
@@ -36,7 +36,7 @@ class BooksController extends Controller
 
     /**
      * @Route("/admin/generator/books/edit/{id}")
-     * @Template("CorahnRinAdminBundle:Form:add.html.twig")
+     * @Template("PierstovalAdminBundle:Form:add.html.twig")
      */
     public function editAction(Books $book, Request $request)
     {
@@ -80,7 +80,7 @@ class BooksController extends Controller
             'form' => $form->createView(),
             'title' => ($method=='add'?'Ajouter':'Modifier').' un Livre',
             'breadcrumbs' => array(
-                'Accueil' => array('route' => 'corahnrin_admin_admin_index',),
+                'Accueil' => array('route' => 'pierstoval_admin_admin_index',),
                 'Livres' => array('route'=>'corahnrin_characters_books_adminlist'),
             ),
         );

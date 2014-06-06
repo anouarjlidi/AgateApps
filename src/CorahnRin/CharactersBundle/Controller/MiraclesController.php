@@ -25,7 +25,7 @@ class MiraclesController extends Controller
 
     /**
      * @Route("/admin/generator/miracles/add/")
-     * @Template("CorahnRinAdminBundle:Form:add.html.twig")
+     * @Template("PierstovalAdminBundle:Form:add.html.twig")
      */
     public function addAction(Request $request)
     {
@@ -37,7 +37,7 @@ class MiraclesController extends Controller
 
     /**
      * @Route("/admin/generator/miracles/edit/{id}")
-     * @Template("CorahnRinAdminBundle:Form:add.html.twig")
+     * @Template("PierstovalAdminBundle:Form:add.html.twig")
      */
     public function editAction(Miracles $miracle, Request $request)
     {
@@ -81,7 +81,7 @@ class MiraclesController extends Controller
             'form' => $form->createView(),
             'title' => ($method=='add'?'Ajouter':'Modifier').' un Miracle',
             'breadcrumbs' => array(
-                'Accueil' => array('route' => 'corahnrin_admin_admin_index',),
+                'Accueil' => array('route' => 'pierstoval_admin_admin_index',),
                 'Miracles' => array('route'=>'corahnrin_characters_miracles_adminlist'),
             ),
         );

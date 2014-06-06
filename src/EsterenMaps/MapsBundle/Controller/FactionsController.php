@@ -25,7 +25,7 @@ class FactionsController extends Controller
 
     /**
      * @Route("/admin/maps/factions/add/")
-     * @Template("CorahnRinAdminBundle:Form:add.html.twig")
+     * @Template("PierstovalAdminBundle:Form:add.html.twig")
      */
     public function addAction(Request $request)
     {
@@ -48,7 +48,7 @@ class FactionsController extends Controller
             'faction' => $faction,
             'title' => 'Ajouter une faction',
             'breadcrumbs' => array(
-                'Accueil' => array('route' => 'corahnrin_admin_admin_index',),
+                'Accueil' => array('route' => 'pierstoval_admin_admin_index',),
                 'Factions' => array('route'=>'esterenmaps_maps_factions_adminlist'),
             ),
         );
@@ -56,7 +56,7 @@ class FactionsController extends Controller
 
     /**
      * @Route("/admin/maps/factions/edit/{id}")
-     * @Template("CorahnRinAdminBundle:Form:add.html.twig")
+     * @Template("PierstovalAdminBundle:Form:add.html.twig")
      */
     public function editAction(Factions $faction, Request $request) {
         $form = $this->createForm(new FactionsType, $faction);
@@ -77,7 +77,7 @@ class FactionsController extends Controller
             'faction' => $faction,
             'title' => 'Modifier une faction',
             'breadcrumbs' => array(
-                'Accueil' => array('route' => 'corahnrin_admin_admin_index',),
+                'Accueil' => array('route' => 'pierstoval_admin_admin_index',),
                 'Factions' => array('route'=>'esterenmaps_maps_factions_adminlist'),
             ),
         );

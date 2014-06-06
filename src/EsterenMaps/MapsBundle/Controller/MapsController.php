@@ -50,7 +50,7 @@ class MapsController extends Controller
 
     /**
      * @Route("/admin/maps/add/")
-     * @Template("CorahnRinAdminBundle:Form:add.html.twig")
+     * @Template("PierstovalAdminBundle:Form:add.html.twig")
      */
     public function addAction(Request $request) {
 
@@ -78,7 +78,7 @@ class MapsController extends Controller
             'map' => $map,
             'title' => 'Créer une nouvelle carte',
             'breadcrumbs' => array(
-                'Accueil' => array('route' => 'corahnrin_admin_admin_index',),
+                'Accueil' => array('route' => 'pierstoval_admin_admin_index',),
                 'Cartes' => array('route'=>'esterenmaps_maps_maps_adminlist'),
             ),
         );
@@ -151,7 +151,7 @@ class MapsController extends Controller
 
     /**
      * @Route("/admin/maps/edit_params/{id}")
-     * @Template("CorahnRinAdminBundle:Form:add.html.twig")
+     * @Template("PierstovalAdminBundle:Form:add.html.twig")
      */
     public function editParamsAction(Maps $map, Request $request) {
         $image = $map->getImage();
@@ -184,7 +184,7 @@ class MapsController extends Controller
             'form' => $form->createView(),
             'title' => 'Modifier une carte',
             'breadcrumbs' => array(
-                'Accueil' => array('route' => 'corahnrin_admin_admin_index',),
+                'Accueil' => array('route' => 'pierstoval_admin_admin_index',),
                 'Cartes' => array('route'=>'esterenmaps_maps_maps_adminlist'),
             ),
         );

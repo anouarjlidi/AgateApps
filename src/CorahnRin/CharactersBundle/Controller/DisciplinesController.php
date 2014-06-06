@@ -25,7 +25,7 @@ class DisciplinesController extends Controller
 
     /**
      * @Route("/admin/generator/disciplines/add/")
-     * @Template("CorahnRinAdminBundle:Form:add.html.twig")
+     * @Template("PierstovalAdminBundle:Form:add.html.twig")
      */
     public function addAction(Request $request)
     {
@@ -37,7 +37,7 @@ class DisciplinesController extends Controller
 
     /**
      * @Route("/admin/generator/disciplines/edit/{id}")
-     * @Template("CorahnRinAdminBundle:Form:add.html.twig")
+     * @Template("PierstovalAdminBundle:Form:add.html.twig")
      */
     public function editAction(Disciplines $discipline, Request $request)
     {
@@ -81,7 +81,7 @@ class DisciplinesController extends Controller
             'form' => $form->createView(),
             'title' => ($method=='add'?'Ajouter':'Modifier').' un Discipline',
             'breadcrumbs' => array(
-                'Accueil' => array('route' => 'corahnrin_admin_admin_index',),
+                'Accueil' => array('route' => 'pierstoval_admin_admin_index',),
                 'Disciplines' => array('route'=>'corahnrin_characters_disciplines_adminlist'),
             ),
         );

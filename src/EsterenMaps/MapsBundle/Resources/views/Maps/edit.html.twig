@@ -50,7 +50,7 @@
                     editMode: true,
                     imgUrl: "{{ asset('bundles/esterenmaps/img') }}",
                     apiUrls: {
-                        base: "{{ url('corahnrin_api_api_get', {'serviceName':'maps','id':map.id}) }}",
+                        base: "{{ url('pierstoval_api_api_get', {'serviceName':'maps','id':map.id}) }}",
                         tiles: "{{ asset('maps_tiles/1/{z}/{y}/{x}.jpg') }}"
                     },
                     LeafletMapBaseOptions: {

@@ -9,30 +9,30 @@
         {% block more_headers %}{% endblock %}
 
 	{% block stylesheets %}{% stylesheets
-                '@CorahnRinPagesBundle/Resources/public/css/bootstrap.css'
-                '@CorahnRinPagesBundle/Resources/public/css/bootstrap-more.css'
-                '@CorahnRinPagesBundle/Resources/public/css/initializer.css'
-                'bundles/corahnrinpages/css/glyphicons.css'
-                'bundles/corahnrinpages/css/corahnrin-theme.css'
-                '@CorahnRinPagesBundle/Resources/public/css/corahn_rin.css'
+                '@EsterenPagesBundle/Resources/public/css/bootstrap.css'
+                '@EsterenPagesBundle/Resources/public/css/bootstrap-more.css'
+                '@EsterenPagesBundle/Resources/public/css/initializer.css'
+                'bundles/esterenpages/css/glyphicons.css'
+                'bundles/esterenpages/css/corahnrin-theme.css'
+                '@EsterenPagesBundle/Resources/public/css/corahn_rin.css'
                 'bundles/esterenmaps/css/leaflet.css'
                 'bundles/esterenmaps/css/leaflet.draw.css'
                 '@EsterenMapsBundle/Resources/public/css/leaflet.sidebar.css'
                 '@EsterenMapsBundle/Resources/public/css/maps.css'
-                '@CorahnRinPagesBundle/Resources/public/css/jqueryUI/jquery.ui.core.min.css'
-                '@CorahnRinPagesBundle/Resources/public/css/jqueryUI/jquery.ui.slider.min.css'
+                '@EsterenPagesBundle/Resources/public/css/jqueryUI/jquery.ui.core.min.css'
+                '@EsterenPagesBundle/Resources/public/css/jqueryUI/jquery.ui.slider.min.css'
                 filter="cssrewrite"
                 output="css/main.css"
             %}<link rel="stylesheet" href="{{ app.request.getSchemeAndHttpHost() ~ asset_url }}" type="text/css" />
 		{% endstylesheets %}
         {% endblock %}
 
-        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ asset('bundles/corahnrinpages/images/favicon-144.png') }}">
-        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ asset('bundles/corahnrinpages/images/favicon-114.png') }}">
-        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ asset('bundles/corahnrinpages/images/favicon-72.png') }}">
-        <link rel="apple-touch-icon-precomposed" sizes="57x57" href="{{ asset('bundles/corahnrinpages/images/favicon-57.png') }}">
-        <link rel="icon" type="image/x-icon" href="{{ asset('bundles/corahnrinpages/images/favicon-57.png') }}" />
-        <link rel="shortcut icon" href="{{ asset('bundles/corahnrinpages/images/favicon-57.png') }}">
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ asset('bundles/esterenpages/images/favicon-144.png') }}">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ asset('bundles/esterenpages/images/favicon-114.png') }}">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ asset('bundles/esterenpages/images/favicon-72.png') }}">
+        <link rel="apple-touch-icon-precomposed" sizes="57x57" href="{{ asset('bundles/esterenpages/images/favicon-57.png') }}">
+        <link rel="icon" type="image/x-icon" href="{{ asset('bundles/esterenpages/images/favicon-57.png') }}" />
+        <link rel="shortcut icon" href="{{ asset('bundles/esterenpages/images/favicon-57.png') }}">
     </head>
     <body>
         {% block body %}{% endblock %}
@@ -49,12 +49,12 @@
 	'../vendor/twitter/bootstrap/js/popover.js'
 	'../vendor/twitter/bootstrap/js/transition.js'
 	'../vendor/twitter/bootstrap/js/tab.js'
-	'@CorahnRinPagesBundle/Resources/public/js/jqueryUI/jquery.ui.core.min.js'
-	'@CorahnRinPagesBundle/Resources/public/js/jqueryUI/jquery.ui.widget.min.js'
-	'@CorahnRinPagesBundle/Resources/public/js/jqueryUI/jquery.ui.mouse.min.js'
-	'@CorahnRinPagesBundle/Resources/public/js/jqueryUI/jquery.ui.draggable.min.js'
-	'@CorahnRinPagesBundle/Resources/public/js/jqueryUI/jquery.ui.slider.min.js'
-	'@CorahnRinPagesBundle/Resources/public/js/corahn_rin.js'
+	'@EsterenPagesBundle/Resources/public/js/jqueryUI/jquery.ui.core.min.js'
+	'@EsterenPagesBundle/Resources/public/js/jqueryUI/jquery.ui.widget.min.js'
+	'@EsterenPagesBundle/Resources/public/js/jqueryUI/jquery.ui.mouse.min.js'
+	'@EsterenPagesBundle/Resources/public/js/jqueryUI/jquery.ui.draggable.min.js'
+	'@EsterenPagesBundle/Resources/public/js/jqueryUI/jquery.ui.slider.min.js'
+	'@EsterenPagesBundle/Resources/public/js/corahn_rin.js'
 	output="js/main.js"
 	filter=""
 %}<script type="text/javascript" src="{{ app.request.getSchemeAndHttpHost() ~ asset_url }}"></script>

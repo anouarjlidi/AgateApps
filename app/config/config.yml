@@ -43,7 +43,7 @@ assetic:
     bundles:
         - 'EsterenMapsBundle'
         - 'CorahnRinCharactersBundle'
-        - 'CorahnRinPagesBundle'
+        - 'EsterenPagesBundle'
         - 'CorahnRinGeneratorBundle'
         - 'PierstovalTranslationBundle'
     #java: /usr/bin/java

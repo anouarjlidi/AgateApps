@@ -25,7 +25,7 @@ class FluxController extends Controller
 
     /**
      * @Route("/admin/generator/flux/add/")
-     * @Template("CorahnRinAdminBundle:Form:add.html.twig")
+     * @Template("PierstovalAdminBundle:Form:add.html.twig")
      */
     public function addAction(Request $request)
     {
@@ -37,7 +37,7 @@ class FluxController extends Controller
 
     /**
      * @Route("/admin/generator/flux/edit/{id}")
-     * @Template("CorahnRinAdminBundle:Form:add.html.twig")
+     * @Template("PierstovalAdminBundle:Form:add.html.twig")
      */
     public function editAction(Flux $flux, Request $request)
     {
@@ -81,7 +81,7 @@ class FluxController extends Controller
             'form' => $form->createView(),
             'title' => ($method=='add'?'Ajouter':'Modifier').' un Flux',
             'breadcrumbs' => array(
-                'Accueil' => array('route' => 'corahnrin_admin_admin_index',),
+                'Accueil' => array('route' => 'pierstoval_admin_admin_index',),
                 'Flux' => array('route'=>'corahnrin_characters_flux_adminlist'),
             ),
         );

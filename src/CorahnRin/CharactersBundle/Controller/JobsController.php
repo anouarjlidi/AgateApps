@@ -25,7 +25,7 @@ class JobsController extends Controller
 
     /**
      * @Route("/admin/generator/jobs/add/")
-     * @Template("CorahnRinAdminBundle:Form:add.html.twig")
+     * @Template("PierstovalAdminBundle:Form:add.html.twig")
      */
     public function addAction(Request $request)
     {
@@ -37,7 +37,7 @@ class JobsController extends Controller
 
     /**
      * @Route("/admin/generator/jobs/edit/{id}")
-     * @Template("CorahnRinAdminBundle:Form:add.html.twig")
+     * @Template("PierstovalAdminBundle:Form:add.html.twig")
      */
     public function editAction(Jobs $job, Request $request)
     {
@@ -81,7 +81,7 @@ class JobsController extends Controller
             'form' => $form->createView(),
             'title' => ($method=='add'?'Ajouter':'Modifier').' un métier',
             'breadcrumbs' => array(
-                'Accueil' => array('route' => 'corahnrin_admin_admin_index',),
+                'Accueil' => array('route' => 'pierstoval_admin_admin_index',),
                 'Métiers' => array('route'=>'corahnrin_characters_jobs_adminlist'),
             ),
         );

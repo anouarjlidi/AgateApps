@@ -25,7 +25,7 @@ class DisordersController extends Controller
 
     /**
      * @Route("/admin/generator/disorders/add/")
-     * @Template("CorahnRinAdminBundle:Form:add.html.twig")
+     * @Template("PierstovalAdminBundle:Form:add.html.twig")
      */
     public function addAction(Request $request)
     {
@@ -37,7 +37,7 @@ class DisordersController extends Controller
 
     /**
      * @Route("/admin/generator/disorders/edit/{id}")
-     * @Template("CorahnRinAdminBundle:Form:add.html.twig")
+     * @Template("PierstovalAdminBundle:Form:add.html.twig")
      */
     public function editAction(Disorders $disorder, Request $request)
     {
@@ -81,7 +81,7 @@ class DisordersController extends Controller
             'form' => $form->createView(),
             'title' => ($method=='add'?'Ajouter':'Modifier').' un Désordre mental',
             'breadcrumbs' => array(
-                'Accueil' => array('route' => 'corahnrin_admin_admin_index',),
+                'Accueil' => array('route' => 'pierstoval_admin_admin_index',),
                 'Désordres mentaux' => array('route'=>'corahnrin_characters_disorders_adminlist'),
             ),
         );

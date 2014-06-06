@@ -1,10 +1,10 @@
-{% extends "CorahnRinAdminBundle:Admin:layout.html.twig" %}
+{% extends "PierstovalAdminBundle:Admin:layout.html.twig" %}
 
 {% block title %}{{ 'Index de la traduction' | trans }} - {{ parent() }}{% endblock %}
 
 {% block admin_content %}
     <ol class="breadcrumb">
-        <li><a href="{{ url('corahnrin_admin_admin_index') }}">{{ 'Accueil' | trans }}</a></li>
+        <li><a href="{{ url('pierstoval_admin_admin_index') }}">{{ 'Accueil' | trans }}</a></li>
         <li><a href="{{ url('pierstoval_translation_translate_adminlist') }}">{{ 'Traductions' | trans }}</a></li>
         <li>{{ 'Édition' | trans }}</li>
     </ol>

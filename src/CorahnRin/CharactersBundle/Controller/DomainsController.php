@@ -25,7 +25,7 @@ class DomainsController extends Controller
 
     /**
      * @Route("/admin/generator/domains/edit/{id}")
-     * @Template("CorahnRinAdminBundle:Form:add.html.twig")
+     * @Template("PierstovalAdminBundle:Form:add.html.twig")
      */
     public function editAction(Domains $domain, Request $request)
     {
@@ -52,7 +52,7 @@ class DomainsController extends Controller
             'form' => $form->createView(),
             'title' => 'Modifier un domaine',
             'breadcrumbs' => array(
-                'Accueil' => array('route' => 'corahnrin_admin_admin_index',),
+                'Accueil' => array('route' => 'pierstoval_admin_admin_index',),
                 'Domaines' => array('route'=>'corahnrin_characters_domains_adminlist'),
             ),
         );

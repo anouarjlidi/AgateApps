@@ -26,18 +26,19 @@ class AppKernel extends Kernel
             new FOS\RestBundle\FOSRestBundle(),
 
             new CorahnRin\CharactersBundle\CorahnRinCharactersBundle(),
-            new CorahnRin\PagesBundle\CorahnRinPagesBundle(),
-            new CorahnRin\AdminBundle\CorahnRinAdminBundle(),
             new CorahnRin\UsersBundle\CorahnRinUsersBundle(),
             new CorahnRin\ToolsBundle\CorahnRinToolsBundle(),
             new CorahnRin\ImagickBundle\CorahnRinImagickBundle(),
-            new CorahnRin\ApiBundle\CorahnRinApiBundle(),
             new CorahnRin\GeneratorBundle\CorahnRinGeneratorBundle(),
 
             new EsterenMaps\MapsBundle\EsterenMapsBundle(),
 
+            new Esteren\PagesBundle\EsterenPagesBundle(),
+
+            new Pierstoval\Bundle\ApiBundle\PierstovalApiBundle(),
             new Pierstoval\Bundle\TranslationBundle\PierstovalTranslationBundle(),
             new Pierstoval\Bundle\ToolsBundle\PierstovalToolsBundle(),
+            new Pierstoval\Bundle\AdminBundle\PierstovalAdminBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test','dev_fast'))) {

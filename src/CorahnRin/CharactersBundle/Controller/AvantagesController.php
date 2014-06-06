@@ -22,7 +22,7 @@ class AvantagesController extends Controller
 
     /**
      * @Route("/admin/generator/avantages/add/")
-     * @Template("CorahnRinAdminBundle:Form:add.html.twig")
+     * @Template("PierstovalAdminBundle:Form:add.html.twig")
      */
     public function addAction(Request $request)
     {
@@ -34,7 +34,7 @@ class AvantagesController extends Controller
 
     /**
      * @Route("/admin/generator/avantages/edit/{id}")
-     * @Template("CorahnRinAdminBundle:Form:add.html.twig")
+     * @Template("PierstovalAdminBundle:Form:add.html.twig")
      */
     public function editAction(Avantages $avantage, Request $request)
     {
@@ -113,7 +113,7 @@ class AvantagesController extends Controller
             'form' => $form->createView(),
             'title' => ($method=='add'?'Ajouter':'Modifier').' un '.($element->getIsDesv() ? 'Désavantage' : 'Avantage'),
             'breadcrumbs' => array(
-                'Accueil' => array('route' => 'corahnrin_admin_admin_index',),
+                'Accueil' => array('route' => 'pierstoval_admin_admin_index',),
                 'Avantages' => array('route'=>'corahnrin_characters_avantages_adminlist'),
             ),
         );

@@ -27,7 +27,7 @@ class RoutesController extends Controller {
 
     /**
      * @Route("/admin/maps/routes/add/")
-     * @Template("CorahnRinAdminBundle:Form:add.html.twig")
+     * @Template("PierstovalAdminBundle:Form:add.html.twig")
      */
     public function addAction(Request $request) {
         $route = new Routes;
@@ -49,7 +49,7 @@ class RoutesController extends Controller {
             'route' => $route,
             'title' => 'Ajouter une route',
             'breadcrumbs' => array(
-                'Accueil' => array('route' => 'corahnrin_admin_admin_index',),
+                'Accueil' => array('route' => 'pierstoval_admin_admin_index',),
                 'Routes' => array('route'=>'esterenmaps_maps_routes_adminlist'),
             ),
         );
@@ -57,7 +57,7 @@ class RoutesController extends Controller {
 
     /**
      * @Route("/admin/maps/routes/types/add")
-     * @Template("CorahnRinAdminBundle:Form:add.html.twig")
+     * @Template("PierstovalAdminBundle:Form:add.html.twig")
      */
     public function addTypeAction(Request $request) {
         $routeType = new RoutesTypes;
@@ -78,7 +78,7 @@ class RoutesController extends Controller {
             'form' => $form->createView(),
             'title' => 'Ajouter un type de route',
             'breadcrumbs' => array(
-                'Accueil' => array('route' => 'corahnrin_admin_admin_index',),
+                'Accueil' => array('route' => 'pierstoval_admin_admin_index',),
                 'Routes' => array('route'=>'esterenmaps_maps_routes_adminlist'),
             ),
         );
@@ -86,7 +86,7 @@ class RoutesController extends Controller {
 
     /**
      * @Route("/admin/maps/routes/edit/{id}")
-     * @Template("CorahnRinAdminBundle:Form:add.html.twig")
+     * @Template("PierstovalAdminBundle:Form:add.html.twig")
      */
     public function editAction(Routes $route, Request $request) {
 
@@ -108,7 +108,7 @@ class RoutesController extends Controller {
             'route' => $route,
             'title' => 'Modifier une route',
             'breadcrumbs' => array(
-                'Accueil' => array('route' => 'corahnrin_admin_admin_index',),
+                'Accueil' => array('route' => 'pierstoval_admin_admin_index',),
                 'Routes' => array('route'=>'esterenmaps_maps_routes_adminlist'),
             ),
         );
@@ -116,7 +116,7 @@ class RoutesController extends Controller {
 
     /**
      * @Route("/admin/maps/routes/types/edit/{id}")
-     * @Template("CorahnRinAdminBundle:Form:add.html.twig")
+     * @Template("PierstovalAdminBundle:Form:add.html.twig")
      */
     public function editTypeAction(RoutesTypes $routeType, Request $request) {
 
@@ -138,7 +138,7 @@ class RoutesController extends Controller {
 //            'route' => $routeType,
             'title' => 'Modifier un type de route',
             'breadcrumbs' => array(
-                'Accueil' => array('route' => 'corahnrin_admin_admin_index',),
+                'Accueil' => array('route' => 'pierstoval_admin_admin_index',),
                 'Routes' => array('route'=>'esterenmaps_maps_routes_adminlist'),
             ),
         );

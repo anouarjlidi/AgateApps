@@ -25,7 +25,7 @@ class ArmorsController extends Controller
 
     /**
      * @Route("/admin/generator/armors/add/")
-     * @Template("CorahnRinAdminBundle:Form:add.html.twig")
+     * @Template("PierstovalAdminBundle:Form:add.html.twig")
      */
     public function addAction(Request $request) {
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN_GENERATOR_SUPER')) {
@@ -36,7 +36,7 @@ class ArmorsController extends Controller
 
     /**
      * @Route("/admin/generator/armors/edit/{id}")
-     * @Template("CorahnRinAdminBundle:Form:add.html.twig")
+     * @Template("PierstovalAdminBundle:Form:add.html.twig")
      */
     public function editAction(Armors $armor, Request $request) {
         return $this->handle_request($armor, $request);
@@ -79,7 +79,7 @@ class ArmorsController extends Controller
             'form' => $form->createView(),
             'title' => ($method=='add'?'Ajouter':'Modifier').' une armure',
             'breadcrumbs' => array(
-                'Accueil' => array('route' => 'corahnrin_admin_admin_index',),
+                'Accueil' => array('route' => 'pierstoval_admin_admin_index',),
                 'Armors' => array('route'=>'corahnrin_characters_armors_adminlist'),
             ),
         );

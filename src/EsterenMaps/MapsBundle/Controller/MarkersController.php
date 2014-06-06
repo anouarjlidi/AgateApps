@@ -27,7 +27,7 @@ class MarkersController extends Controller {
 
     /**
      * @Route("/admin/maps/markers/add/")
-     * @Template("CorahnRinAdminBundle:Form:add.html.twig")
+     * @Template("PierstovalAdminBundle:Form:add.html.twig")
      */
     public function addAction(Request $request) {
         $marker = new Markers;
@@ -49,7 +49,7 @@ class MarkersController extends Controller {
             'marker' => $marker,
             'title' => 'Ajouter un marqueur',
             'breadcrumbs' => array(
-                'Accueil' => array('route' => 'corahnrin_admin_admin_index',),
+                'Accueil' => array('route' => 'pierstoval_admin_admin_index',),
                 'Marqueurs' => array('route'=>'esterenmaps_maps_markers_adminlist'),
             ),
         );
@@ -57,7 +57,7 @@ class MarkersController extends Controller {
 
     /**
      * @Route("/admin/maps/markers/types/add")
-     * @Template("CorahnRinAdminBundle:Form:add.html.twig")
+     * @Template("PierstovalAdminBundle:Form:add.html.twig")
      */
     public function addTypeAction(Request $request) {
         $markerType = new MarkersTypes;
@@ -78,7 +78,7 @@ class MarkersController extends Controller {
             'form' => $form->createView(),
             'title' => 'Ajouter un type de marqueur',
             'breadcrumbs' => array(
-                'Accueil' => array('route' => 'corahnrin_admin_admin_index',),
+                'Accueil' => array('route' => 'pierstoval_admin_admin_index',),
                 'Marqueurs' => array('route'=>'esterenmaps_maps_markers_adminlist'),
             ),
         );
@@ -86,7 +86,7 @@ class MarkersController extends Controller {
 
     /**
      * @Route("/admin/maps/markers/edit/{id}")
-     * @Template("CorahnRinAdminBundle:Form:add.html.twig")
+     * @Template("PierstovalAdminBundle:Form:add.html.twig")
      */
     public function editAction(Markers $marker, Request $request) {
 
@@ -108,7 +108,7 @@ class MarkersController extends Controller {
             'marker' => $marker,
             'title' => 'Modifier un marqueur',
             'breadcrumbs' => array(
-                'Accueil' => array('route' => 'corahnrin_admin_admin_index',),
+                'Accueil' => array('route' => 'pierstoval_admin_admin_index',),
                 'Marqueurs' => array('route'=>'esterenmaps_maps_markers_adminlist'),
             ),
         );
@@ -116,7 +116,7 @@ class MarkersController extends Controller {
 
     /**
      * @Route("/admin/maps/markers/types/edit/{id}")
-     * @Template("CorahnRinAdminBundle:Form:add.html.twig")
+     * @Template("PierstovalAdminBundle:Form:add.html.twig")
      */
     public function editTypeAction(MarkersTypes $markerType, Request $request) {
 
@@ -138,7 +138,7 @@ class MarkersController extends Controller {
 //            'marker' => $markerType,
             'title' => 'Modifier un type de marqueur',
             'breadcrumbs' => array(
-                'Accueil' => array('route' => 'corahnrin_admin_admin_index',),
+                'Accueil' => array('route' => 'pierstoval_admin_admin_index',),
                 'Marqueurs' => array('route'=>'esterenmaps_maps_markers_adminlist'),
             ),
         );
