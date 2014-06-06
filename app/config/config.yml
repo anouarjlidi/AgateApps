@@ -3,6 +3,7 @@ imports:
     - { resource: security.yml }
     - { resource: _esterenmaps.yml }
     - { resource: _corahn_rin.yml }
+    - { resource: _pierstoval.yml }
     - { resource: "@PierstovalTranslationBundle/Resources/config/services.xml" }
 
 framework:
@@ -69,6 +70,10 @@ doctrine:
     orm:
         auto_generate_proxy_classes: %kernel.debug%
         auto_mapping: true
+        filters:
+            softdeleteable:
+                class: Gedmo\SoftDeleteable\Filter\SoftDeleteableFilter
+                enabled: true
 
 # Swiftmailer Configuration
 swiftmailer:

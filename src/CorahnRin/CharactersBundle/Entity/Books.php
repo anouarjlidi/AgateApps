@@ -3,6 +3,7 @@
 namespace CorahnRin\CharactersBundle\Entity;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Books
@@ -56,7 +57,7 @@ class Books
      * @var boolean
      * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
-    protected $deleted;
+    protected $deleted = null;
 
     /**
      * Get id

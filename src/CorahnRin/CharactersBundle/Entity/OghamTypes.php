@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * OghamTypes
  *
- * @ORM\Table()
+ * @ORM\Table(name="ogham_types")
  * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity(repositoryClass="CorahnRin\CharactersBundle\Repository\OghamTypesRepository")
  */
@@ -56,7 +56,7 @@ class OghamTypes
      *
      * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
-    protected $deleted;
+    protected $deleted = null;
 
 
     /**

@@ -111,7 +111,7 @@ class Markers
      *
      * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
-    protected $deleted;
+    protected $deleted = null;
 
     /**
      * @var DoctrineCollection

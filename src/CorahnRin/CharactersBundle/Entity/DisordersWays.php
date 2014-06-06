@@ -41,7 +41,7 @@ class DisordersWays
      *
      * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
-    protected $deleted;
+    protected $deleted = null;
 
     function __toString() {
         return $this->disorder->getName().' - '.$this->way->getName();

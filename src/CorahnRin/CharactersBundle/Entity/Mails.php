@@ -63,7 +63,7 @@ class Mails
      *
      * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
-    protected $deleted;
+    protected $deleted = null;
 
     /**
      * Get id

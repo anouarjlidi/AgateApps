@@ -260,7 +260,7 @@ class Characters
     /**
      * @var Peoples
      *
-     * @ORM\ManyToOne(targetEntity="Peoples", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="Peoples")
      */
     protected $people;
 
@@ -434,7 +434,7 @@ class Characters
      *
      * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
-    protected $deleted;
+    protected $deleted = null;
 
     /**
      * Utilisé pour déterminer les différences lorsque le personnage sera mis à jour

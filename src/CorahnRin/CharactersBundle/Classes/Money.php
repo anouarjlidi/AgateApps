@@ -10,7 +10,7 @@ class Money {
 	
 	protected $name = 'Daol';
 	protected $names = array('Braise','Azur','Givre');
-	protected $names_literal = array('de Braise','d\'Azur','de Givre');
+	protected $names_literal = array('Daol%s% de Braise','Daol%s% d\'Azur','Daol%s% de Givre');
 	protected $ratio = array(10,10,10);
 	protected $values = array('Braise'=>0,'Azur'=>0,'Givre'=>0);
 	

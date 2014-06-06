@@ -1,10 +1,11 @@
 <?php
 
 namespace CorahnRin\CharactersBundle\Entity;
+
+use CorahnRin\UsersBundle\Entity\Users;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
-use CorahnRin\UsersBundle\Entity\Users;
-use Symfony\Bridge\Doctrine\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * CharModifications
@@ -41,7 +42,7 @@ class CharModifications
     /**
      * @var Users
      *
-     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\ManyToOne(targetEntity="CorahnRin\UsersBundle\Entity\Users")
      */
     protected $user;
 
@@ -65,7 +66,7 @@ class CharModifications
      *
      * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
-    protected $deleted;
+    protected $deleted = null;
 
     /**
      * Get id

@@ -71,7 +71,7 @@ class MarkersTypes
      *
      * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
-    protected $deleted;
+    protected $deleted = null;
 
     public function __toString() {
         return $this->id.' - '.$this->name;
