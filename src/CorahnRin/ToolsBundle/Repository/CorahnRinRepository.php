@@ -49,10 +49,18 @@ abstract class CorahnRinRepository extends EntityRepository {
         return $datas;
     }
 
-    public function findAll($sortCollection = false) {
-        return $this->findBy(array(), null, null, null, $sortCollection);
-    }
 */
+
+    public function findAll($sortCollection = false) {
+        $datas = $this->findBy(array());
+
+        if ($datas && $sortCollection === true) {
+            $datas = $this->sortCollection($datas);
+        }
+
+        return $datas;
+    }
+
     /**
      * Alias de getMax()
      * @see getMax()
