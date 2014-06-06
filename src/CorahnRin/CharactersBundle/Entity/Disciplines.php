@@ -4,6 +4,7 @@ namespace CorahnRin\CharactersBundle\Entity;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
+use Symfony\Bridge\Doctrine\Validator\Constraints as Assert;
 
 /**
  * Disciplines
@@ -27,6 +28,7 @@ class Disciplines
      * @var string
      *
      * @ORM\Column(type="string", length=50, nullable=false, unique=true)
+     * @Assert\NotBlank()
      */
     protected $name;
 
@@ -41,6 +43,7 @@ class Disciplines
      * @var string
      *
      * @ORM\Column(type="string", length=40)
+     * @Assert\NotBlank()
      */
     protected $rank;
 
@@ -60,12 +63,6 @@ class Disciplines
     protected $updated;
 
     /**
-     * @var Books
-     * @ORM\ManyToOne(targetEntity="Books", fetch="EAGER")
-     */
-    protected $book;
-
-    /**
      * @var boolean
      *
      * @ORM\Column(name="deleted", type="datetime", nullable=true)
@@ -73,7 +70,14 @@ class Disciplines
     protected $deleted;
 
     /**
-     * @var Doctrine\Common\Collections\ArrayCollection
+     * @var Books
+     * @ORM\ManyToOne(targetEntity="Books", fetch="EAGER")
+     * @Assert\NotNull()
+     */
+    protected $book;
+
+    /**
+     * @var Domains[]
      *
      * @ORM\ManyToMany(targetEntity="Domains", inversedBy="disciplines")
      * @ORM\JoinTable(name="disciplines_domains",
@@ -265,7 +269,7 @@ class Disciplines
     /**
      * Get domains
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Domains
      */
     public function getDomains()
     {

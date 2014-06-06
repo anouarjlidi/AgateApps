@@ -3,6 +3,7 @@
 namespace CorahnRin\CharactersBundle\Entity;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints as Assert;
 
 /**
  * CharWays
@@ -17,6 +18,7 @@ class CharWays
      *
      * @ORM\Id
 	 * @ORM\ManyToOne(targetEntity="Characters", inversedBy="ways")
+     * @Assert\NotNull()
      */
     protected $character;
 
@@ -25,6 +27,7 @@ class CharWays
      *
      * @ORM\Id
 	 * @ORM\ManyToOne(targetEntity="Ways")
+     * @Assert\NotNull()
      */
     protected $way;
 
@@ -32,6 +35,8 @@ class CharWays
      * @var integer
      *
      * @ORM\Column(type="integer")
+     * @Assert\NotNull()
+     * @Assert\GreaterThanOrEqual(value=0)
      */
     protected $score;
 

@@ -3,6 +3,8 @@
 namespace CorahnRin\CharactersBundle\Entity;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use CorahnRin\UsersBundle\Entity\Users;
+use Symfony\Bridge\Doctrine\Validator\Constraints as Assert;
 
 /**
  * CharModifications
@@ -18,6 +20,7 @@ class CharModifications
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Assert\NotNull()
      */
     protected $id;
 
@@ -38,7 +41,7 @@ class CharModifications
     /**
      * @var Users
      *
-     * @ORM\ManyToOne(targetEntity="CorahnRin\UsersBundle\Entity\Users")
+     * @ORM\ManyToOne(targetEntity="Users")
      */
     protected $user;
 

@@ -3,6 +3,7 @@
 namespace CorahnRin\CharactersBundle\Entity;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints as Assert;
 
 /**
  * CharSetbacks
@@ -17,6 +18,7 @@ class CharSetbacks
      *
      * @ORM\Id
 	 * @ORM\ManyToOne(targetEntity="Characters", inversedBy="setbacks")
+     * @Assert\NotNull()
      */
     protected $character;
 
@@ -25,6 +27,7 @@ class CharSetbacks
      *
      * @ORM\Id
 	 * @ORM\ManyToOne(targetEntity="Setbacks")
+     * @Assert\NotNull()
      */
     protected $setback;
 
@@ -33,7 +36,7 @@ class CharSetbacks
      *
      * @ORM\Column(type="boolean")
      */
-    protected $isAvoided;
+    protected $isAvoided = false;
 
     /**
      * Set character

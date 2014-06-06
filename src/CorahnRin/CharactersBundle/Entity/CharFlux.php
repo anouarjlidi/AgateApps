@@ -3,6 +3,7 @@
 namespace CorahnRin\CharactersBundle\Entity;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints as Assert;
 
 /**
  * CharFlux
@@ -17,6 +18,7 @@ class CharFlux
      *
      * @ORM\Id
 	 * @ORM\ManyToOne(targetEntity="Characters", inversedBy="flux")
+     * @Assert\NotNull()
      */
     protected $character;
 
@@ -26,6 +28,7 @@ class CharFlux
      * @ORM\Column(type="integer")
      * @ORM\Id
 	 * @ORM\ManyToOne(targetEntity="Flux")
+     * @Assert\NotNull()
      */
     protected $flux;
 
@@ -33,6 +36,8 @@ class CharFlux
      * @var integer
      *
      * @ORM\Column(type="smallint")
+     * @Assert\NotNull()
+     * @Assert\GreaterThanOrEqual(value=0)
      */
     protected $quantity;
 
