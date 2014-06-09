@@ -98,28 +98,21 @@
                 inputId
             ;
 
-            console.info('event draw:edited');
-            d.eventedited=event;
-
-            d.layersd=[];
-
             layers.eachLayer(function (layer) {
-                console.info('currently on layer ', layer);
-                d.layersd.push(layer);
                 if (layer._esterenMarker && layer._esterenMarker.id) {
+                    // Marqueur
                     $('#marker_'+layer._esterenMarker.id+'_latitude').val(layer.getLatLng().lat);
                     $('#marker_'+layer._esterenMarker.id+'_longitude').val(layer.getLatLng().lng);
-                    console.info('edited marker '+layer._esterenMarker.id);
 
                 } else if (layer._esterenRoute && layer._esterenRoute.id) {
+                    // Route
                     inputId = '#polyline_'+layer._esterenRoute.id+'_coordinates';
                     $(inputId).val(JSON.stringify(layer.getLatLngs()));
-                    console.info('edited route '+layer._esterenRoute.id);
 
                 } else if (layer._esterenZone && layer._esterenZone.id) {
+                    // Zone
                     inputId = '#polygon_'+layer._esterenZone.id+'_coordinates';
                     $(inputId).val(JSON.stringify(layer.getLatLngs()));
-                    console.info('edited zone '+layer._esterenZone.id);
 
                 }
             });
@@ -128,6 +121,36 @@
         });
 
         this._map.on('draw:deleted', function(event) {
+            var type = event.type,
+                layers = event.layers,
+                id,
+                inputId
+                ;
+
+            layers.eachLayer(function (layer) {
+                console.info('currently on layer ', layer);
+                if (layer._esterenMarker && layer._esterenMarker.id) {
+                    // Marqueur
+                    $('input,textarea').filter(function(i,element){
+                        return element.id.match('marker_'+layer._esterenMarker.id+'_');
+                    }).remove();
+
+                } else if (layer._esterenRoute && layer._esterenRoute.id) {
+                    // Route
+                    $('input,textarea').filter(function(i,element){
+                        return element.id.match('polyline_'+layer._esterenRoute.id+'_');
+                    }).remove();
+
+                } else if (layer._esterenZone && layer._esterenZone.id) {
+                    // Zone
+                    $('input,textarea').filter(function(i,element){
+                        return element.id.match('polygon_'+layer._esterenZone.id+'_');
+                    }).remove();
+
+                }
+            });
+
+            return true;
         });
 
     };
