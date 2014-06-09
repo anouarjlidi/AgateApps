@@ -382,7 +382,7 @@ if ($del === 'o') {
 
 
 
-
+/*
 $table = 'weapons';
 $nbreqtemp = 0;
 foreach ( $armes as $v) {
@@ -793,7 +793,7 @@ if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>1))) {
 	$q->execute(array('id' => 2,'name' => 'Urbain', 'book_id'=>2,'domain_id'=>11, 'description' => 'Votre personnage a vécu longtemps dans une ville, suffisamment pour qu\'il ait adopté les codes de la ville dans son mode de vie.', 'created' => $datetime->date, 'updated' => $datetime->date,));
 }
 $tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
-
+*/
 
 
 
@@ -825,7 +825,7 @@ $tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table 
 
 
 
-
+/*
 $table = 'peoples';
 $nbreqtemp = 0;
 if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>1))) {
@@ -839,7 +839,7 @@ if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>1))) {
 	$q->execute(array('id' => 4,'book_id'=>2,'name' => 'Continent', 'description' => "Les hommes et les femmes du Continent sont souvent plus minces et plus élancés que les natifs de Tri-Kazel. Leur visage aura tendance à être plus fin mais avec des traits parfois taillés à la serpe. Un PJ choisissant ce peuple ne sera pas natif du Continent, mais plutôt le descendant direct d'au moins un parent Continental. Si les origines Continentales du PJ sont davantage diluées, on estime qu'il fait partie du peuple de Tri-Kazel.<br /><br />En fonction du passé de la famille du PJ et de son niveau d'intégration dans la société tri-kazelienne, il pourrait avoir appris leur langue d'origine Continentale ou bien un patois de la péninsule, au choix du PJ.",	'created' => $datetime->date, 'updated' => $datetime->date,));
 }
 $tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
-
+*/
 
 
 
@@ -874,7 +874,7 @@ foreach ( $games as $v) {
 
 
 
-
+/*
 $table = 'steps';
 $nbreqtemp = 0;
 foreach ( $steps as $v) {
@@ -892,7 +892,7 @@ foreach ( $steps as $v) {
 		);$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
 	}
 }$tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
-
+*/
 
 
 
@@ -967,7 +967,7 @@ foreach ( $mails_sent as $v) {
 
 
 
-
+/*
 $table = 'regions';
 //$nbreq++;
 $nbreqtemp = 0;
@@ -1015,7 +1015,7 @@ foreach ( $revers as $v) {
 		);$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
 	}
 }$tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
-
+*/
 
 
 
@@ -1033,7 +1033,7 @@ foreach ( $revers as $v) {
 
 
 
-
+/*
 $table = 'maps';
 $nbreqtemp = 0;
 if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>1))) {
@@ -1044,7 +1044,7 @@ if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>1))) {
 	$q->execute(array('id' => 1,'name' => 'Tri-Kazel', 'nameSlug'=>'tri-kazel', 'image'=>'uploads/maps/esteren_nouvelle_cartepg_91220092.jpeg','maxZoom'=>10, 'description' => 'Carte de Tri-Kazel officielle, réalisée par Chris',	'created' => $datetime->date, 'updated' => $datetime->date,));
 }
 $tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
-
+*/
 
 
 
@@ -1062,7 +1062,7 @@ $tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table 
 
 
 
-
+/*
 $table = 'menus';
 $nbreqtemp = 0;
 if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>1))) {
@@ -1076,10 +1076,6 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
- /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
 INSERT INTO `menus` (`id`, `parent_id`, `name`, `position`, `roles`, `route`, `created`, `updated`, `deleted`) VALUES
 (1, NULL, 'Administration', 0, 'a:2:{i:0;s:9:"ROLE_USER";i:1;s:12:"ROLE_MANAGER";}', NULL, '2014-01-31 18:18:28', '2014-01-31 18:18:28', 0),
 (2, 10, 'Cartes', 0, 'a:1:{i:0;s:15:"ROLE_ADMIN_MAPS";}', 'esterenmaps_maps_maps_adminlist', '2014-01-30 22:44:34', '2014-01-31 00:06:01', 0),
@@ -1112,9 +1108,6 @@ INSERT INTO `menus` (`id`, `parent_id`, `name`, `position`, `roles`, `route`, `c
 (34, 18, 'Armes', 0, 'a:1:{i:0;s:20:"ROLE_ADMIN_GENERATOR";}', 'corahnrin_characters_weapons_adminlist', '2014-02-16 00:33:15', '2014-02-16 00:33:15', 0);
 SET FOREIGN_KEY_CHECKS=1;
 COMMIT;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 
 
 SQL;
@@ -1122,14 +1115,14 @@ SQL;
 
 }
 $tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
+*/
 
 
 
 
 
 
-
-
+/*
 $table = 'factions';
 $nbreqtemp = 0;
 if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>1))) {
@@ -1144,12 +1137,8 @@ if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>1))) {
         SET AUTOCOMMIT=0;
         START TRANSACTION;
         SET time_zone = "+00:00";
-        /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-        /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-        /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-        /*!40101 SET NAMES utf8 */;
-        INSERT INTO `factions` (`id`, `name`, `description`, `created`, `updated`, `deleted`) VALUES
-        (1, 'Temple', 'Les adeptes de la religion du Temple.', '2014-02-05 15:27:32', '2014-02-05 15:27:32', 0),
+INSERT INTO `factions` (`id`, `name`, `description`, `created`, `updated`, `deleted`) VALUES
+(1, 'Temple', 'Les adeptes de la religion du Temple.', '2014-02-05 15:27:32', '2014-02-05 15:27:32', 0),
         (2, 'Magience', 'Les partisans d''une société régie par des principes académiques & scientifiques.', '2014-02-05 15:29:24', '2014-02-05 15:29:24', 0),
         (3, 'Démorthèn', 'Les populations honorant les cultes et traditions ancestrales de Tri Kazel.', '2014-02-05 15:30:48', '2014-02-05 15:30:48', 0),
         (4, 'Neutre', 'Aucun des grands courants idéologiques ne dominent ce lieu.', '2014-02-05 15:34:04', '2014-02-05 15:34:04', 0),
@@ -1159,16 +1148,13 @@ if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>1))) {
         (8, 'Loge minéraliste', 'L''école magientiste appliquée aux pierres, métaux et minéraux en général.', '2014-02-05 18:08:38', '2014-02-05 18:08:38', 0);
         SET FOREIGN_KEY_CHECKS=1;
         COMMIT;
-        /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-        /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-        /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 
 SQL;
     $new->query($sql);
 
 }
 $tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
-
+*/
 
 
 
@@ -1513,6 +1499,7 @@ $tables_done[] = 'characters_avantages';
 $tables_done[] = 'characters_flux';
 //$tables_done[] = 'characters_social_class';
 $tables_done[] = 'characters_ways';
+
 
 
 
