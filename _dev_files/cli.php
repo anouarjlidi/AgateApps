@@ -3,6 +3,7 @@
 
 echo 'Conversion Corahn-Rin'."\n";
 $arglocal = isset($argv[1]) ? $argv[1] : 'local';
+$argverbose = isset($argv[2]) ? ($argv[2] === 'verbose') : false;
 if ($arglocal === 'local') { exec('chcp 65001'); }
 ini_set('cli_server.color', true);
 ini_set('cli_server.color', 1);
@@ -368,6 +369,8 @@ if ($del === 'o') {
             if ($enter_users) {
                 showtime($temp_time, 'Rétablissement de l\'id pour l\'utilisateur "'.$v['user_name'].'"');
             }
+        } elseif ($argverbose) {
+            echo 'Utilisateur existe déjà : '.$v['user_id'].' > '.$v['user_name'];
         }
         if ($v['user_id'] > $maxid) { $maxid = (int) $v['user_id']; }
     }$tables_done[]='users';
@@ -380,6 +383,66 @@ if ($del === 'o') {
     $nbreq += $usernb;
 }
 
+
+$fixtures = include 'fixtures.php';
+
+showtime($temp_time, '> Démarrage fixtures');
+if (is_array($fixtures) && !empty($fixtures)) {
+    $sql = '
+    ';
+    $params = array();
+    foreach ($fixtures as $table => $datas) {
+        $sql .= '
+
+        REPLACE INTO `'.$table.'` (';
+
+        $nbreqtemp = 0;
+        $nbKey = count($datas[0]);
+        $i = 0;
+        foreach ($datas[0] as $key => $val) {
+            $i++;
+            $sql .= ' `'.$key.'` ';
+            if ($i < $nbKey) { $sql .= ', '; }
+        }
+        $sql .= ') VALUES '."\n";
+        $nbDatas = count($datas);
+        $j = 0;
+        foreach ($datas as $k => $data) {
+            $sql .= ' ( ';
+            $i = 0;
+            $j++;
+            foreach ($data as $field => $val) {
+                $i++;
+                $sql .= ' :'.$table.'_'.$field.'_'.$k.' ';
+                $params[$table.'_'.$field.'_'.$k] = $val;
+                if ($i < $nbKey) { $sql .= ', '; }
+                if ($i == $nbKey) { $sql .= ' '; }
+            }
+            $sql .= ' ) ';
+            if ($j < $nbDatas) { $sql .= ', '; }
+            if ($j == $nbDatas) { $sql .= ';'; }
+            $sql .= "\n";
+            $nbreq++;
+            $nbreqtemp++;
+        }
+
+//        showtime($temp_time, '(via fixtures) '.$nbreqtemp.' requêtes pour la table "'.$table.'"');
+    }
+    $sql .= '
+    ';
+//    echo $sql;
+    try {
+        $stmt = $new->prepare($sql);
+        $stmt->execute($params);
+    } catch (\Exception $e) {
+        exit ('Exception fixtures : '.$e->getMessage());
+    }
+} else {
+    exit('ERREUR DANS LES FIXTURES !!!');
+}
+
+showtime($temp_time, '> Fin fixtures');
+exit;
 
 
 /*

@@ -1,6 +1,6 @@
 <?php
 
-$fixtures = array(
+return array(
 
     // `corahn_rin`.`armors`
     'armors' =>array(
