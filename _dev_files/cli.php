@@ -14,97 +14,12 @@ $global_time = microtime(true);
 $total_times = array();
 $total_msgs = array();
 
-class Database extends PDO{public static $prefix;
-public $table='';private $c;private $d;private $f;private $g;private $h;private $i;private $j;private $l;private $m=false;private $n;private $o;
-function __construct($p='127.0.0.1',$q='root',$r='',$s='mydb',$u='',$w='mysql'){if(isset($this->table)){$this->table=$this->table;
-}$y[PDO::ATTR_ERRMODE]=PDO::ERRMODE_EXCEPTION;
-self::$prefix=$u;
-$z=$w.':host='.$p.';
-dbname='.$s.'';
-$this->initErr(true);
-try{parent::__construct($z,$q,$r,$y);
-$this->dbname=$s;
-}catch(Exception $d){return $this->showErr($d,null,null,true);
-}$this->noRes('SET NAMES "utf8"');
-}protected function initErr($aa=false,$bb='fatal'){$this->show_err=$aa==true?true:false;
-if($bb==='warning'){$this->err_type=E_USER_WARNING;
-}elseif($bb==='fatal'){$this->err_type=E_USER_ERROR;
-}elseif($bb==='notice'){$this->err_type=E_USER_NOTICE;
-}else{$this->err_type=E_USER_WARNING;
-}}protected function showErr($d=null,$cc=null,$dd=null,$ee=false){$ff=is_object($d)?$d->getTrace():'';
-echo 'Une erreur MySQL est survenue...<br />'."\n";
-pr(array('pdo_ex'=>(is_object($d)?$d->getMessage():''),'qry'=>$cc,'datas'=>$this->last_values/*,'trace'=>$ff*/));
-exit("\n".'ERREUR'."\n");
-}public static function sbuildReq($cc,$gg=array(),$table='my_table'){$gg=(array) $gg;
-if(strpos($cc,'%%%fields')!==false){$hh=array();
-foreach($gg as $ii=>$jj){$ii=str_replace(':','',$ii);
-$hh[]='%'.$ii.' = :'.$ii;
-}$cc=str_replace('%%%fields',implode(', ',$hh),$cc);
-}if(strpos($cc,'%%%in')!==false){if(empty($gg)){$cc=str_replace('%%%in','0',$cc);
-}else{$kk=implode(', ',array_fill(0,count($gg),'?'));
-$cc=str_replace('%%%in',$kk,$cc);
-}}$cc=preg_replace('#%%([a-zA-Z0-9_]+)#',' `'.self::$prefix.'$1` ',$cc);
-$cc=preg_replace('#%([a-zA-Z0-9_]+)#',' `$1` ',$cc);
-$ll=array();
-foreach($gg as $mm=>$nn){if(!preg_match('#^:#isUu',$mm)&&!is_numeric($mm)){unset($gg[$mm]);
-$gg[':'.$mm]=$nn;
-}}$cc=str_replace("\n",' ',$cc);
-$cc=str_replace("\r",'',$cc);
-$cc=str_replace("\t",'',$cc);
-$cc=preg_replace('#\s\s+#Uu',' ',$cc);
-return $cc;
-}protected function last_id(){$oo=0;
-try{$oo=$this->lastInsertId();
-$oo=(int) $oo;
-}catch(Exception $d){$oo=$this->showErr($d,'',$oo,true);
-}return $oo;
-}public function req($cc,$gg=array()){$gg=(array) $gg;
-$cc=$this->buildReq($cc,$gg);
-$pp=$this->runReq($cc,$gg);
-if(is_object($pp)&&$pp->rowCount()>0){$qq=$pp->fetchAll(PDO::FETCH_ASSOC);
-foreach($qq as $rr=>$ss){foreach($ss as $tt=>$uu){if(is_numeric($uu)){$qq[$rr][$tt]=(int) $uu;
-}if(is_int($tt)){unset($qq[$rr][$tt]);
-}}}}elseif(is_array($pp)){$qq=$pp;
-}else{$qq=false;
-}$this->last_results=$qq;
-if(is_object($pp)){$pp->closeCursor();
-}return $qq;
-}public function row($cc,$gg=array()){$gg=(array) $gg;
-$cc=$this->buildReq($cc,$gg);
-if(!preg_match('#LIMIT +[0-9]+( *, *[0-9]+)?#isU',$cc)){$cc.=' LIMIT 0,1';
-}$pp=$this->runReq($cc,$gg);
-if(is_object($pp)&&$pp->rowCount()>0){$qq=$pp->fetch();
-foreach($qq as $rr=>$ss){if(is_numeric($ss)){$qq[$rr]=(int) $ss;
-}if(is_int($rr)){unset($qq[$rr]);
-}}}elseif(is_array($pp)){$qq=$pp;
-}else{$qq=false;
-}$this->last_results=$qq;
-if(is_object($pp)){$pp->closeCursor();
-}return $qq;
-}public function noRes($cc,$gg=array()){$gg=(array) $gg;
-$cc=$this->buildReq($cc,$gg);
-$pp=$this->runReq($cc,$gg);
-if(is_object($pp)&&$pp->rowCount()>0){$vv=$pp->rowCount();
-}elseif(is_array($pp)){$vv=$pp;
-}else{$vv=false;
-}$this->last_results=$vv;
-if($vv){$pp->closeCursor();
-}return $vv?true:false;
-}private function buildReq($cc,$gg=array()){if(strpos($cc,'[TABLE]')!==false){$cc=str_replace('%[TABLE]','[TABLE]',$cc);
-$cc=str_replace('[TABLE]','%'.$this->table,$cc);
-}$cc=$this->sbuildReq($cc,$gg,$this->table);
-$this->last_query=$cc;
-$this->last_values=$gg;
-return $cc;
-}private function runReq($cc,$gg=array()){$gg=(array) $gg;
-try{$pp=$this->prepare($cc);
-$pp->execute($gg);
-}catch(Exception $d){$pp=$this->showErr($d,$cc,$pp,true);
-}return $pp;}}
+include '_classDatabase.php';
+
 function showtime(&$temp_time,$b){
 	global $total_times;
-	global $colors;
-	global $total_msgs;
+//	global $colors;
+//	global $total_msgs;
 	$temp_time=microtime(true)-$temp_time;
 	$temp_time*=1000;
 	$total_times[]=$temp_time;
@@ -127,13 +42,13 @@ function showtime(&$temp_time,$b){
 	$temp_time=microtime(true);
 }
 
-define('P_DUMP_INTCOLOR','blue');define('P_DUMP_FLOATCOLOR','darkblue');define('P_DUMP_NUMSTRINGCOLOR','#c0c');define('P_DUMP_STRINGCOLOR','darkgreen');define('P_DUMP_RESSCOLOR','#aa0');define('P_DUMP_NULLCOLOR','#aaa');define('P_DUMP_BOOLTRUECOLOR','#0c0');define('P_DUMP_BOOLFALSECOLOR','red');define('P_DUMP_OBJECTCOLOR','auto');define('P_DUMP_PADDINGLEFT','25px');define('P_DUMP_WIDTH','');function pr($a,$b=false){if($b===true){return print_r($a);}else{echo print_r($a);}}function pDumpTxt($a=null){$d='';if(is_int($a)){$d.='<small><em>entier</em></small> <span style="color:'.P_DUMP_INTCOLOR.';">'.$a.'</span>';}elseif(is_float($a)){$d.='<small><em>décimal</em></small> <span style="color:'.P_DUMP_FLOATCOLOR.';">'.$a.'</span>';}elseif(is_numeric($a)){$d.='<small><em>chaîne numÃ©rique</em> ('.strlen($a).')</small> <span style="color:'.P_DUMP_NUMSTRINGCOLOR.';">\''.$a.'\'</span>';}elseif(is_string($a)){$d.='<small><em>chaîne</em> ('.strlen($a).')</small> <span style="color:'.P_DUMP_STRINGCOLOR.';">\''.htmlspecialchars($a).'\'</span>';}elseif(is_resource($a)){$d.='<small><em>ressource</em></small> <span style="color:'.P_DUMP_RESSCOLOR.';">'.get_resource_type($a).'</span>';}elseif(is_null($a)){$d.='<span style="color: '.P_DUMP_NULLCOLOR.';">null</span>';}elseif(is_bool($a)){$d.='<span style="color: '.($a===true?P_DUMP_BOOLTRUECOLOR:P_DUMP_BOOLFALSECOLOR).';">'.($a===true?'true':'false').'</span>';}elseif(is_object($a)){$d.='<div style="color:'.P_DUMP_OBJECTCOLOR.';"><small>';ob_start();var_dump($a);$e=ob_get_clean();$d.=$e.'</small></div>';}elseif(is_array($a)){$d.='<em>tableau</em> {'.p_dump($a).'}';}else{$d.=$a;}return $d;}function p_dump($f){$d='<div class="p_dump" style="height:auto;min-height:0;margin: 0 auto;'.(P_DUMP_WIDTH?'max-width: '.P_DUMP_WIDTH.';':'').' min-height: 20px;">';$d.='<pre style="height:auto;min-height:0;">';if(!is_array($f)){$d.='<div style="margin-left: 0;">';$d.=pDumpTxt($f);$d.='</div>';}else{$d.='<div style="height:auto;min-height:0;padding-left: '.P_DUMP_PADDINGLEFT.';">';foreach($f as $g=>$a){$d.='<div style="height:auto;min-height:0;">';if(is_int($g)){$d.='<span style="color:'.P_DUMP_INTCOLOR.';">'.$g.'</span>';}else{$d.='<span style="color:'.P_DUMP_STRINGCOLOR.';">\''.$g.'\'</span>';}$d.=' => ';$d.=pDumpTxt($a);$d.='</div>';}$d.='</div>';}$d.='</pre></div>';return $d;}
-function remove_comments(&$a){$b=explode("\n",$a);$a="";$c=count($b);$d=false;for($e=0;$e<$c;$e++){if(preg_match("/^\/\*/",preg_quote($b[$e]))){$d=true;}if(!$d){$a.=$b[$e]."\n";}if(preg_match("/\*\/$/",preg_quote($b[$e]))){$d=false;}}unset($b);return $a;}
-function remove_remarks($f){$b=explode("\n",$f);$f="";$c=count($b);$a="";for($e=0;$e<$c;$e++){if(($e!=($c-1))||(strlen($b[$e])>0)){if(isset($b[$e][0])&&$b[$e][0]!="#"){$a.=$b[$e]."\n";}else{$a.="\n";}$b[$e]="";}}return $a;}
-function split_sql_file($f,$g){$h=explode($g,$f);$f="";$a=array();$k=array();$l=count($h);for($e=0;$e<$l;$e++){if(($e!=($l-1))||(strlen($h[$e]>0))){$m=preg_match_all("/'/",$h[$e],$k);$n=preg_match_all("/(?<!\\\\)(\\\\\\\\)*\\\\'/",$h[$e],$k);$o=$m-$n;if(($o%2)==0){$a[]=$h[$e];$h[$e]="";}else{$p=$h[$e].$g;$h[$e]="";$q=false;for($r=$e+1;(!$q&&($r<$l));$r++){$m=preg_match_all("/'/",$h[$r],$k);$n=preg_match_all("/(?<!\\\\)(\\\\\\\\)*\\\\'/",$h[$r],$k);$o=$m-$n;if(($o%2)==1){$a[]=$p.$h[$r];$h[$r]="";$p="";$q=true;$e=$r;}else{$p.=$h[$r].$g;$h[$r]="";}}}}}return $a;}
-function get_query_from_file($a){$b=@fread(@fopen($a,'r'),@filesize($a))or die('problem ');$b=remove_remarks($b);$b=split_sql_file($b,';');$b=array_map('trim',$b);return $b;}
+define('P_DUMP_INTCOLOR','blue');define('P_DUMP_FLOATCOLOR','darkblue');define('P_DUMP_NUMSTRINGCOLOR','#c0c');define('P_DUMP_STRINGCOLOR','darkgreen');define('P_DUMP_RESSCOLOR','#aa0');define('P_DUMP_NULLCOLOR','#aaa');define('P_DUMP_BOOLTRUECOLOR','#0c0');define('P_DUMP_BOOLFALSECOLOR','red');define('P_DUMP_OBJECTCOLOR','auto');define('P_DUMP_PADDINGLEFT','25px');define('P_DUMP_WIDTH','');function pr($a,$b=false){if($b===true){return print_r($a,true);}else{echo print_r($a,true);return '';}}function pDumpTxt($a=null){$d='';if(is_int($a)){$d.='<small><em>entier</em></small> <span style="color:'.P_DUMP_INTCOLOR.';">'.$a.'</span>';}elseif(is_float($a)){$d.='<small><em>décimal</em></small> <span style="color:'.P_DUMP_FLOATCOLOR.';">'.$a.'</span>';}elseif(is_numeric($a)){$d.='<small><em>chaîne numÃ©rique</em> ('.strlen($a).')</small> <span style="color:'.P_DUMP_NUMSTRINGCOLOR.';">\''.$a.'\'</span>';}elseif(is_string($a)){$d.='<small><em>chaîne</em> ('.strlen($a).')</small> <span style="color:'.P_DUMP_STRINGCOLOR.';">\''.htmlspecialchars($a).'\'</span>';}elseif(is_resource($a)){$d.='<small><em>ressource</em></small> <span style="color:'.P_DUMP_RESSCOLOR.';">'.get_resource_type($a).'</span>';}elseif(is_null($a)){$d.='<span style="color: '.P_DUMP_NULLCOLOR.';">null</span>';}elseif(is_bool($a)){$d.='<span style="color: '.($a===true?P_DUMP_BOOLTRUECOLOR:P_DUMP_BOOLFALSECOLOR).';">'.($a===true?'true':'false').'</span>';}elseif(is_object($a)){$d.='<div style="color:'.P_DUMP_OBJECTCOLOR.';"><small>';ob_start();var_dump($a);$e=ob_get_clean();$d.=$e.'</small></div>';}elseif(is_array($a)){$d.='<em>tableau</em> {'.p_dump($a).'}';}else{$d.=$a;}return $d;}function p_dump($f){$d='<div class="p_dump" style="height:auto;min-height:0;margin: 0 auto;'.(P_DUMP_WIDTH?'max-width: '.P_DUMP_WIDTH.';':'').' min-height: 20px;">';$d.='<pre style="height:auto;min-height:0;">';if(!is_array($f)){$d.='<div style="margin-left: 0;">';$d.=pDumpTxt($f);$d.='</div>';}else{$d.='<div style="height:auto;min-height:0;padding-left: '.P_DUMP_PADDINGLEFT.';">';foreach($f as $g=>$a){$d.='<div style="height:auto;min-height:0;">';if(is_int($g)){$d.='<span style="color:'.P_DUMP_INTCOLOR.';">'.$g.'</span>';}else{$d.='<span style="color:'.P_DUMP_STRINGCOLOR.';">\''.$g.'\'</span>';}$d.=' => ';$d.=pDumpTxt($a);$d.='</div>';}$d.='</div>';}$d.='</pre></div>';return $d;}
+//function remove_comments(&$a){$b=explode("\n",$a);$a="";$c=count($b);$d=false;for($e=0;$e<$c;$e++){if(preg_match("/^\/\*/",preg_quote($b[$e]))){$d=true;}if(!$d){$a.=$b[$e]."\n";}if(preg_match("/\*\/$/",preg_quote($b[$e]))){$d=false;}}unset($b);return $a;}
+//function remove_remarks($f){$b=explode("\n",$f);$f="";$c=count($b);$a="";for($e=0;$e<$c;$e++){if(($e!=($c-1))||(strlen($b[$e])>0)){if(isset($b[$e][0])&&$b[$e][0]!="#"){$a.=$b[$e]."\n";}else{$a.="\n";}$b[$e]="";}}return $a;}
+//function split_sql_file($f,$g){$h=explode($g,$f);$f="";$a=array();$k=array();$l=count($h);for($e=0;$e<$l;$e++){if(($e!=($l-1))||(strlen($h[$e]>0))){$m=preg_match_all("/'/",$h[$e],$k);$n=preg_match_all("/(?<!\\\\)(\\\\\\\\)*\\\\'/",$h[$e],$k);$o=$m-$n;if(($o%2)==0){$a[]=$h[$e];$h[$e]="";}else{$p=$h[$e].$g;$h[$e]="";$q=false;for($r=$e+1;(!$q&&($r<$l));$r++){$m=preg_match_all("/'/",$h[$r],$k);$n=preg_match_all("/(?<!\\\\)(\\\\\\\\)*\\\\'/",$h[$r],$k);$o=$m-$n;if(($o%2)==1){$a[]=$p.$h[$r];$h[$r]="";$p="";$q=true;$e=$r;}else{$p.=$h[$r].$g;$h[$r]="";}}}}}return $a;}
+//function get_query_from_file($a){$b=@fread(@fopen($a,'r'),@filesize($a))or die('problem ');$b=remove_remarks($b);$b=split_sql_file($b,';');$b=array_map('trim',$b);return $b;}
 
-class Colors{private $a=array();private $b=array();public function __construct(){$this->a['black']='0;30';$this->a['dark_gray']='1;30';$this->a['blue']='0;34';$this->a['light_blue']='1;34';$this->a['green']='0;32';$this->a['light_green']='1;32';$this->a['cyan']='0;36';$this->a['light_cyan']='1;36';$this->a['red']='0;31';$this->a['light_red']='1;31';$this->a['purple']='0;35';$this->a['light_purple']='1;35';$this->a['brown']='0;33';$this->a['yellow']='1;33';$this->a['light_gray']='0;37';$this->a['white']='1;37';$this->b['black']='40';$this->b['red']='41';$this->b['green']='42';$this->b['yellow']='43';$this->b['blue']='44';$this->b['magenta']='45';$this->b['cyan']='46';$this->b['light_gray']='47';}public function getColoredString($d,$e=null,$f=null){return $d;$g="";if(isset($this->a[$e])){$g.="\033[".$this->a[$e]."m";}if(isset($this->b[$f])){$g.="\033[".$this->b[$f]."m";}$g.=$d."\033[0m";return $g;}public function getForegroundColors(){return array_keys($this->a);}public function getBackgroundColors(){return array_keys($this->b);}}
+class Colors{private $a=array();private $b=array();public function __construct(){$this->a['black']='0;30';$this->a['dark_gray']='1;30';$this->a['blue']='0;34';$this->a['light_blue']='1;34';$this->a['green']='0;32';$this->a['light_green']='1;32';$this->a['cyan']='0;36';$this->a['light_cyan']='1;36';$this->a['red']='0;31';$this->a['light_red']='1;31';$this->a['purple']='0;35';$this->a['light_purple']='1;35';$this->a['brown']='0;33';$this->a['yellow']='1;33';$this->a['light_gray']='0;37';$this->a['white']='1;37';$this->b['black']='40';$this->b['red']='41';$this->b['green']='42';$this->b['yellow']='43';$this->b['blue']='44';$this->b['magenta']='45';$this->b['cyan']='46';$this->b['light_gray']='47';}public function getColoredString($d){return $d;/*$g="";if(isset($this->a[$e])){$g.="\033[".$this->a[$e]."m";}if(isset($this->b[$f])){$g.="\033[".$this->b[$f]."m";}$g.=$d."\033[0m";return $g;*/}public function getForegroundColors(){return array_keys($this->a);}public function getBackgroundColors(){return array_keys($this->b);}}
 
 function ReadStdin($prompt, $valid_inputs, $default = '') {
     while(!isset($input) || (is_array($valid_inputs) && !in_array($input, $valid_inputs)) || ($valid_inputs == 'is_file' && !is_file($input))) {
@@ -387,14 +302,12 @@ if ($del === 'o') {
 $fixtures = include 'fixtures.php';
 
 showtime($temp_time, '> Démarrage fixtures');
+$tablesTemp = array();
 if (is_array($fixtures) && !empty($fixtures)) {
-    $sql = '
-    ';
-    $params = array();
     foreach ($fixtures as $table => $datas) {
-        $sql .= '
 
-        REPLACE INTO `'.$table.'` (';
+        $sql = '
+        INSERT INTO `'.$table.'` (';
 
         $nbreqtemp = 0;
         $nbKey = count($datas[0]);
@@ -408,41 +321,69 @@ if (is_array($fixtures) && !empty($fixtures)) {
         $nbDatas = count($datas);
         $j = 0;
         foreach ($datas as $k => $data) {
-            $sql .= ' ( ';
+
+            if (isset($data['id'])) {
+                $sqlTest = 'SELECT * from `'.$table.'` where `id` = :id';
+                if ($new->row($sqlTest, array('id'=>$data['id']))) { continue; }
+            } else {
+                if ($table === 'disciplines_domains') {
+                    $sqlTest = 'SELECT * from `'.$table.'` where `discipline_id` = :discipline_id and `domain_id` = :domain_id';
+                    if ($new->row($sqlTest, array('discipline_id'=>$data['discipline_id'],'domain_id'=>$data['domain_id']))) { continue; }
+
+                } elseif ($table === 'disorders_ways') {
+                    $sqlTest = 'SELECT * from `'.$table.'` where `disorder_id` = :disorder_id and `way_id` = :way_id';
+                    if ($new->row($sqlTest, array('disorder_id'=>$data['disorder_id'],'way_id'=>$data['way_id']))) { continue; }
+
+                } elseif ($table === 'jobs_domains') {
+                    $sqlTest = 'SELECT * from `'.$table.'` where `jobs_id` = :jobs_id and `domains_id` = :domains_id';
+                    if ($new->row($sqlTest, array('jobs_id'=>$data['jobs_id'],'domains_id'=>$data['domains_id']))) { continue; }
+
+                } elseif ($table === 'socialclasses_domains') {
+                    $sqlTest = 'SELECT * from `'.$table.'` where `socialclasses_id` = :socialclasses_id and `domains_id` = :domains_id';
+                    if ($new->row($sqlTest, array('socialclasses_id'=>$data['socialclasses_id'],'domains_id'=>$data['domains_id']))) { continue; }
+
+                } else {
+                    continue;
+                }
+            }
+
+            $sqlPart = $sql . ' ( ';
             $i = 0;
             $j++;
+            $params = array();
             foreach ($data as $field => $val) {
                 $i++;
-                $sql .= ' :'.$table.'_'.$field.'_'.$k.' ';
+                $sqlPart .= ' :'.$table.'_'.$field.'_'.$k.' ';
                 $params[$table.'_'.$field.'_'.$k] = $val;
-                if ($i < $nbKey) { $sql .= ', '; }
-                if ($i == $nbKey) { $sql .= ' '; }
+                if ($i < $nbKey) { $sqlPart .= ', '; }
+                if ($i == $nbKey) { $sqlPart .= ' '; }
             }
-            $sql .= ' ) ';
-            if ($j < $nbDatas) { $sql .= ', '; }
-            if ($j == $nbDatas) { $sql .= ';'; }
-            $sql .= "\n";
+            if (array_key_exists('deleted', $params)) {
+                $params['deleted'] = null;
+            }
+            $sqlPart .= ' ); ';
+//            if ($j < $nbDatas) { $sqlPart .= ', '; }
+//            if ($j == $nbDatas) { $sqlPart .= ';'; }
+            $sqlPart .= "\n";
             $nbreq++;
             $nbreqtemp++;
+            $tablesTemp[$table] = $table;
+
+            try {
+                $stmt = $new->prepare($sqlPart);
+                $stmt->execute($params);
+            } catch (\Exception $e) {
+                exit ('Exception fixtures : '.$e->getMessage());
+            }
         }
 
 //        showtime($temp_time, '(via fixtures) '.$nbreqtemp.' requêtes pour la table "'.$table.'"');
-    }
-    $sql .= '
-    ';
-//    echo $sql;
-    try {
-        $stmt = $new->prepare($sql);
-        $stmt->execute($params);
-    } catch (\Exception $e) {
-        exit ('Exception fixtures : '.$e->getMessage());
     }
 } else {
     exit('ERREUR DANS LES FIXTURES !!!');
 }
 
-showtime($temp_time, '> Fin fixtures');
-exit;
+showtime($temp_time, '> Fin fixtures : '.$nbreqtemp.' requêtes exécutées sur les tables suivantes : "'.implode(',', $tablesTemp).'"');
 
 
 /*
