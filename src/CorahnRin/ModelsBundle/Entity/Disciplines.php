@@ -1,6 +1,7 @@
 <?php
 
 namespace CorahnRin\ModelsBundle\Entity;
+use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
@@ -92,7 +93,7 @@ class Disciplines
      */
     public function __construct()
     {
-        $this->domains = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->domains = new ArrayCollection();
     }
 
     /**

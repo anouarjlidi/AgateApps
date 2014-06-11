@@ -1,6 +1,8 @@
 <?php
 
 namespace CorahnRin\ModelsBundle\Entity;
+
+use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -66,7 +68,7 @@ class Domains
     protected $deleted = null;
 
     /**
-     * @var Doctrine\Common\Collections\Collection
+     * @var Disciplines[]
      *
      * @ORM\ManyToMany(targetEntity="Disciplines", mappedBy="domains")
      */
@@ -81,7 +83,7 @@ class Domains
      */
     public function __construct()
     {
-        $this->disciplines = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->disciplines = new ArrayCollection();
     }
 
     /**

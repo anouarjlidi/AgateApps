@@ -1,6 +1,8 @@
 <?php
 
-namespace CorahnRin\GeneratorBundle\Sheets;
+namespace CorahnRin\GeneratorBundle\Services;
+
+use CorahnRin\GeneratorBundle\Sheets\SheetsManagerInterface;
 
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\HttpKernel\Kernel;
@@ -12,7 +14,7 @@ use Symfony\Component\HttpKernel\Kernel;
  * @author Pierstoval
  * @version 1.0 20/02/2014
  */
-class SheetsService {
+class Sheets {
 
     private $managers;
     private $sheets_folder;
@@ -29,7 +31,7 @@ class SheetsService {
      * Retourne le gestionnaire de feuille de personnage du type demandé
      *
      * @param string $type Le type de manager à récupérer
-     * @return ManagerInterface
+     * @return SheetsManagerInterface
      */
     function getManager($type) {
         return isset($this->managers[$type]) ? $this->managers[$type] : $this->createManager($type);
@@ -37,7 +39,7 @@ class SheetsService {
 
     /**
      *
-     * @return \Symfony\Component\Translation\TranslatorInterface
+     * @return TranslatorInterface
      */
     function getTranslator(){
         return $this->translator;

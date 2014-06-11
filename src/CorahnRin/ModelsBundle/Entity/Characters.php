@@ -5,8 +5,11 @@ namespace CorahnRin\ModelsBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+
+use CorahnRin\CharactersBundle\Classes\Money;
 use CorahnRin\UsersBundle\Entity\Users;
-use CorahnRin\ModelsBundle\Exceptions\CharactersException;
+use CorahnRin\CharactersBundle\Exceptions\CharactersException;
+
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -95,7 +98,7 @@ class Characters
     protected $inventory;
 
     /**
-     * @var \CorahnRin\ModelsBundle\Classes\Money
+     * @var \CorahnRin\CharactersBundle\Classes\Money
      *
      * @ORM\Column(type="object")
      */
@@ -403,7 +406,7 @@ class Characters
     protected $setbacks;
 
     /**
-     * @var \CorahnRin\UsersBundle\Entity\Users
+     * @var Users
      * @ORM\ManyToOne(targetEntity="CorahnRin\UsersBundle\Entity\Users", inversedBy="characters", fetch="EAGER")
      */
     protected $user;
@@ -681,7 +684,7 @@ class Characters
     /**
      * Set money
      *
-     * @param \CorahnRin\ModelsBundle\Classes\Money $money
+     * @param Money $money
      * @return Characters
      */
     public function setMoney($money)
@@ -694,7 +697,7 @@ class Characters
     /**
      * Get money
      *
-     * @return \CorahnRin\ModelsBundle\Classes\Money
+     * @return Money
      */
     public function getMoney()
     {
@@ -1741,7 +1744,7 @@ class Characters
     /**
      * Set user
      *
-     * @param \CorahnRin\UsersBundle\Entity\Users $user
+     * @param Users $user
      * @return Characters
      */
     public function setUser(Users $user = null)
@@ -1754,7 +1757,7 @@ class Characters
     /**
      * Get user
      *
-     * @return \CorahnRin\UsersBundle\Entity\Users
+     * @return Users
      */
     public function getUser()
     {
@@ -1823,9 +1826,11 @@ class Characters
     public function getDomain($id) {
         foreach ($this->domains as $charDomain) {
             if (
-                $charDomain->getDomain()->getId() == $id
+                $charDomain instanceof CharDomains &&
+                ($charDomain->getDomain()->getId() == $id
                 || $charDomain->getDomain()->getName() == $id
                 || $charDomain->getDomain() === $id
+                )
             ) {
                 return $charDomain;
             }
@@ -1841,10 +1846,14 @@ class Characters
      */
     public function getWay($shortName) {
         foreach ($this->ways as $charWay) {
-            if ($charWay->getWay()->getShortName() == $shortName) {
+            if (
+                $charWay instanceof CharWays &&
+                $charWay->getWay()->getShortName() == $shortName
+            ) {
                 return $charWay;
             }
         }
+        return null;
     }
 
     /**
@@ -1855,9 +1864,10 @@ class Characters
     public function getDiscipline($id) {
         foreach ($this->disciplines as $charDiscipline) {
             if (
-                $charDiscipline->getDiscipline()->getId() == $id
+                $charDiscipline instanceof CharDisciplines &&
+                ($charDiscipline->getDiscipline()->getId() == $id
                 || $charDiscipline->getDiscipline()->getName() == $id
-                || $charDiscipline->getDiscipline() == $id
+                || $charDiscipline->getDiscipline() == $id)
             ) {
                 return $charDiscipline;
             }
@@ -1925,8 +1935,8 @@ class Characters
      * @param string $type
      * @param null $discipline
      * @param string $potential
+     * @throws CharactersException
      * @return int
-     * @throws \CorahnRin\ModelsBundle\Exceptions\CharactersException
      */
     public function getAttackScore($type = 'melee', $discipline = null, $potential = '') {
 

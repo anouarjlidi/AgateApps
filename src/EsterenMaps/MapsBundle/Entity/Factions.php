@@ -84,7 +84,7 @@ class Factions
 	/**
 	 * @var DoctrineCollection
 	 *
-	 * @ORM\ManyToOne(targetEntity="CorahnRin\CharactersBundle\Entity\Books")
+	 * @ORM\ManyToOne(targetEntity="CorahnRin\ModelsBundle\Entity\Books")
 	 */
 	protected $book;
 

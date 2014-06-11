@@ -1,8 +1,10 @@
 <?php
 
 namespace CorahnRin\ModelsBundle\Entity;
+use CorahnRin\UsersBundle\Entity\Users;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Games
@@ -66,7 +68,7 @@ class Games
     protected $gameMaster;
 
     /**
-     * @var Doctrine\Common\Collections\Collection
+     * @var Characters[]
      *
      * @ORM\OneToMany(targetEntity="Characters", mappedBy="game")
      */
@@ -84,7 +86,7 @@ class Games
      */
     public function __construct()
     {
-        $this->characters = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->characters = new ArrayCollection();
     }
 
     /**
@@ -215,10 +217,10 @@ class Games
     /**
      * Set gameMaster
      *
-     * @param \CorahnRin\UsersBundle\Entity\Users $gameMaster
+     * @param Users $gameMaster
      * @return Games
      */
-    public function setGameMaster(\CorahnRin\UsersBundle\Entity\Users $gameMaster = null)
+    public function setGameMaster(Users $gameMaster = null)
     {
         $this->gameMaster = $gameMaster;
 
@@ -228,7 +230,7 @@ class Games
     /**
      * Get gameMaster
      *
-     * @return \CorahnRin\UsersBundle\Entity\Users
+     * @return Users
      */
     public function getGameMaster()
     {

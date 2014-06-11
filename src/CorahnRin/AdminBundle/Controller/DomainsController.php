@@ -4,11 +4,10 @@ namespace CorahnRin\AdminBundle\Controller;
 
 use CorahnRin\ModelsBundle\Entity\Domains;
 use CorahnRin\ModelsBundle\Form\DomainsType;
-
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 class DomainsController extends Controller
 {
@@ -16,10 +15,11 @@ class DomainsController extends Controller
      * @Route("/admin/generator/domains/")
      * @Template()
      */
-    public function adminListAction() {
-        $name = str_replace('Controller','',preg_replace('#^([a-zA-Z]+\\\)*#isu', '', __CLASS__));
+    public function adminListAction()
+    {
+        $name = str_replace('Controller', '', preg_replace('#^([a-zA-Z]+\\\)*#isu', '', __CLASS__));
         return array(
-            strtolower($name) => $this->getDoctrine()->getManager()->getRepository('CorahnRinCharactersBundle:'.$name)->findAll(),
+            strtolower($name) => $this->getDoctrine()->getManager()->getRepository('CorahnRinCharactersBundle:' . $name)->findAll(),
         );
     }
 
@@ -32,10 +32,11 @@ class DomainsController extends Controller
         return $this->handle_request($domain, $request);
     }
 
-    private function handle_request(Domains $element) {
-        $method = preg_replace('#^'.str_replace('\\','\\\\',__CLASS__).'::([a-zA-Z]+)Action$#isUu', '$1', $this->getRequest()->get('_controller'));
+    private function handle_request(Domains $element, Request $request)
+    {
+//        $method = preg_replace('#^' . str_replace('\\', '\\\\', __CLASS__) . '::([a-zA-Z]+)Action$#isUu', '$1', $request->get('_controller'));
 
-        $form = $this->createForm(new \CorahnRin\ModelsBundle\Form\DomainsType(), $element);
+        $form = $this->createForm(new DomainsType(), $element);
 
         $form->handleRequest($request);
 
@@ -44,7 +45,7 @@ class DomainsController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($element);
             $em->flush();
-            $this->get('session')->getFlashBag()->add('success', 'Domaine modifié : <strong>'.$element->getName().'</strong>');
+            $this->get('session')->getFlashBag()->add('success', 'Domaine modifié : <strong>' . $element->getName() . '</strong>');
             return $this->redirect($this->generateUrl('corahnrin_admin_domains_adminlist'));
         }
 
@@ -53,7 +54,7 @@ class DomainsController extends Controller
             'title' => 'Modifier un domaine',
             'breadcrumbs' => array(
                 'Accueil' => array('route' => 'pierstoval_admin_admin_index',),
-                'Domaines' => array('route'=>'corahnrin_admin_domains_adminlist'),
+                'Domaines' => array('route' => 'corahnrin_admin_domains_adminlist'),
             ),
         );
     }

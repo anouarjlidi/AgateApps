@@ -1,6 +1,7 @@
 <?php
 
 namespace CorahnRin\ModelsBundle\Entity;
+use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -208,7 +209,7 @@ class Jobs
      */
     public function __construct()
     {
-        $this->domainsSecondary = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->domainsSecondary = new ArrayCollection();
     }
 
     /**

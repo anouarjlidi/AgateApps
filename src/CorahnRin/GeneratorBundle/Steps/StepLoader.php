@@ -197,10 +197,15 @@ class StepLoader {
      * Si la réponse est un objet, c'est un objet RedirectResponse<br />
      *  Dans ce cas, on redirige, soit vers l'étape suivante, soit vers une autre page
      *
+     * @throws \Exception
      * @return mixed
      */
     public function load() {
-        return require $this->filename;
+        if (file_exists($this->filename)) {
+            return include $this->filename;
+        } else {
+            throw new \Exception('File calculated by StepLoader does not exist : "'.$this->filename.'"');
+        }
     }
 
     /**

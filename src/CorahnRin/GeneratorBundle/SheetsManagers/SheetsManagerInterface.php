@@ -2,8 +2,8 @@
 
 namespace CorahnRin\GeneratorBundle\Sheets;
 
-use CorahnRin\CharactersBundle\Entity\Characters;
-use CorahnRin\GeneratorBundle\Sheets\SheetsService;
+use CorahnRin\ModelsBundle\Entity\Characters;
+use CorahnRin\GeneratorBundle\Services\Sheets;
 
 /**
  * Interface ManagerInterface
@@ -12,9 +12,9 @@ use CorahnRin\GeneratorBundle\Sheets\SheetsService;
  * @author Pierstoval
  * @version 1.0 20/02/2014
  */
-interface ManagerInterface {
+interface SheetsManagerInterface {
 
-    function __construct(SheetsService $manager);
+    function __construct(Sheets $manager);
 
     function generateSheet(Characters $character, $type, $printer_friendly, $page);
 

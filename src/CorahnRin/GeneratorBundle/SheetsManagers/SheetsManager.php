@@ -2,7 +2,8 @@
 
 namespace CorahnRin\GeneratorBundle\Sheets;
 
-use CorahnRin\CharactersBundle\Entity\Characters;
+use CorahnRin\GeneratorBundle\Services\Sheets;
+use CorahnRin\ModelsBundle\Entity\Characters;
 
 /**
  * Class ServiceManager
@@ -11,15 +12,15 @@ use CorahnRin\CharactersBundle\Entity\Characters;
  * @author Pierstoval
  * @version 1.0 20/02/2014
  */
-abstract class SheetsManager implements ManagerInterface {
+abstract class SheetsManager implements SheetsManagerInterface {
 
     /**
-     * @var \CorahnRin\GeneratorBundle\Sheets\SheetsService
+     * @var Sheets
      */
     private $service;
     private $locale;
 
-    function __construct(SheetsService $service) {
+    function __construct(Sheets $service) {
         $this->service = $service;
         $this->locale = $service->getTranslator()->getLocale();
         $this->folder = $service->getFolder();
@@ -31,7 +32,7 @@ abstract class SheetsManager implements ManagerInterface {
      *  {type}_{locale}_{page}_{printerFriendly}_{extension}<br />
      * L'extension et la locale sont automatiquement récupérée depuis le traducteur injecté.
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Characters $character
+     * @param \CorahnRin\ModelsBundle\Entity\Characters $character
      * @param string $type Le type de feuille
      * @param boolean $printer_friendly
      * @param integer $page
@@ -51,7 +52,7 @@ abstract class SheetsManager implements ManagerInterface {
     /**
      * Renvoie le SheetsService
      *
-     * @return \CorahnRin\GeneratorBundle\Sheets\SheetsService
+     * @return Sheets
      */
     function getService() {
         return $this->service;
@@ -61,7 +62,7 @@ abstract class SheetsManager implements ManagerInterface {
      * Retourne le gestionnaire de feuille de personnage du type demandé
      *
      * @param string $type
-     * @return \CorahnRin\GeneratorBundle\Sheets\SheetsManager
+     * @return SheetsManager
      */
     function getManager($type) {
         return $this->service->getManager($type);

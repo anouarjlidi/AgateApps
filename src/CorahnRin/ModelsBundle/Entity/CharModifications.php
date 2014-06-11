@@ -173,10 +173,10 @@ class CharModifications
     /**
      * Set user
      *
-     * @param \CorahnRin\UsersBundle\Entity\Users $user
+     * @param Users $user
      * @return CharModifications
      */
-    public function setUser(\CorahnRin\UsersBundle\Entity\Users $user = null)
+    public function setUser(Users $user = null)
     {
         $this->user = $user;
 
@@ -186,7 +186,7 @@ class CharModifications
     /**
      * Get user
      *
-     * @return \CorahnRin\UsersBundle\Entity\Users
+     * @return Users
      */
     public function getUser()
     {

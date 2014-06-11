@@ -2,7 +2,7 @@
 
 namespace CorahnRin\GeneratorBundle\Sheets\Managers;
 
-use CorahnRin\CharactersBundle\Entity\Characters;
+use CorahnRin\ModelsBundle\Entity\Characters;
 use CorahnRin\GeneratorBundle\Sheets\ManagerInterface;
 use CorahnRin\GeneratorBundle\Sheets\SheetsManager;
 use CorahnRin\ToolsBundle\PDF\PDF;
@@ -41,10 +41,6 @@ class PdfManager extends SheetsManager implements ManagerInterface {
             'carbold' => array(
                 'file' => 'carolingia_old.ttf',
                 'name' => 'carolingia_old',
-            ),
-            'unz' => array(
-                'file' => 'UnZialish.ttf',
-                'name' => 'unzialish',
             ),
             'times' => array(
                 'file' => 'times.ttf',

@@ -4,22 +4,23 @@
      * Fonction permettant d'utiliser des div pour changer la valeur d'un input
      */
     $('.gen-div-choice').on('click', function(){
-        var node = document.getElementsByClassName('gen-div-choice'), count = node.length;
+        var nodes = document.getElementsByClassName('gen-div-choice'),
+            count = nodes.length,
+            node;
         if (this.classList.contains('selected')) {
             return false;
         }
         if (this.classList.contains('divchoice-button')) {
-
-            return;
+            return false;
         }
         for (var i = 0; i < count; i++) {
-            node[i].classList.remove('selected');
-            if (node[i].getAttribute('data-divchoice-inside') === 'true') {
-                $(node[i].querySelector('.divchoice-inside')).slideUp(400);
-                for (var l = node[i].querySelectorAll('.divchoice-inside .btn'), c = l.length, j = 0; j < c; j++) {
+            nodes[i].classList.remove('selected');
+            if (nodes[i].getAttribute('data-divchoice-inside') === 'true') {
+                $(nodes[i].querySelector('.divchoice-inside')).slideUp(400);
+                for (var l = nodes[i].querySelectorAll('.divchoice-inside .btn'), c = l.length, j = 0; j < c; j++) {
                     l[j].classList.remove('active');
                     l[j].firstElementChild.checked = false;
-                };
+                }
             }
         }
         this.classList.add('selected');
@@ -32,6 +33,7 @@
             $(this.querySelector('.divchoice-inside')).slideDown(400);
         }
         node.value = this.getAttribute('data-div-choice-value');
+        return false;
     });
 
     $('[data-toggle="buttons"][data-max-buttons] .btn').bind('click.maxbuttons', function(){
@@ -104,27 +106,33 @@
         $(document.getElementById(this.getAttribute('data-target-node'))).mousedown();
     });
 
-    /**
-     * Sliders UI
-     */
-    for (var el, l = document.querySelectorAll('[data-toggle="ui-slider"]'), c = l.length, i = 0; i < c; i++) {
-        el = l[i];
-        $(el).slider({
-            'range': el.getAttribute('data-slider-range') ? el.getAttribute('data-slider-range') : 'min',
-            'value': el.getAttribute('data-slider-value') ? parseInt(el.getAttribute('data-slider-value')) : 0,
-            'min': el.getAttribute('data-slider-min') ? parseInt(el.getAttribute('data-slider-min')) : 0,
-            'max': el.getAttribute('data-slider-max') ? parseInt(el.getAttribute('data-slider-max')) : 0,
-            'slide': function (e, ui) {
-                var id = el.getAttribute('data-slider-label');
-                if (id) {
-                    document.getElementById(id).innerHTML = ui.value;
+    (function(){
+        var el, i,
+            l = document.querySelectorAll('[data-toggle="ui-slider"]'),
+            c = l.length;
+        /**
+         * Sliders UI
+         */
+        for (i = 0; i < c; i++) {
+            el = l[i];
+            $(el).slider({
+                'range': el.getAttribute('data-slider-range') ? el.getAttribute('data-slider-range') : 'min',
+                'value': el.getAttribute('data-slider-value') ? parseInt(el.getAttribute('data-slider-value')) : 0,
+                'min': el.getAttribute('data-slider-min') ? parseInt(el.getAttribute('data-slider-min')) : 0,
+                'max': el.getAttribute('data-slider-max') ? parseInt(el.getAttribute('data-slider-max')) : 0,
+                'slide': function (e, ui) {
+                    var id;
+                    id = ui.handle.attr('data-slider-label');
+                    if (id) {
+                        document.getElementById(id).innerHTML = ui.value;
+                    }
+                    id = ui.handle.attr('data-slider-input');
+                    if (id) {
+                        document.getElementById(id).value = ui.value;
+                    }
                 }
-                var id = el.getAttribute('data-slider-input');
-                if (id) {
-                    document.getElementById(id).value = ui.value;
-                }
-            }
-        });
-    }
+            });
+        }
+    })();
 
 })(jQuery);

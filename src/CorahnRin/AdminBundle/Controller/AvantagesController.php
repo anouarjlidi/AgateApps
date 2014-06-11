@@ -2,13 +2,12 @@
 
 namespace CorahnRin\AdminBundle\Controller;
 
-use \CorahnRin\ModelsBundle\Entity\Avantages;
-use \CorahnRin\ModelsBundle\Form\AvantagesType;
-
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use CorahnRin\ModelsBundle\Entity\Avantages;
+use CorahnRin\ModelsBundle\Form\AvantagesType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 class AvantagesController extends Controller
 {
@@ -16,7 +15,8 @@ class AvantagesController extends Controller
      * @Route("/admin/generator/avantages/")
      * @Template()
      */
-    public function adminListAction() {
+    public function adminListAction()
+    {
         return $this->getDoctrine()->getManager()->getRepository('CorahnRinCharactersBundle:Avantages')->findAllDifferenciated();
     }
 
@@ -27,7 +27,7 @@ class AvantagesController extends Controller
     public function addAction(Request $request)
     {
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN_GENERATOR_SUPER')) {
-            throw new AccessDeniedException();
+            throw $this->createAccessDeniedException();
         }
         return $this->handle_request(new Avantages, $request);
     }
@@ -43,23 +43,23 @@ class AvantagesController extends Controller
 
     /**
      * @Route("/admin/generator/avantages/delete/{id}")
-     * @Template()
      */
     public function deleteAction(Avantages $element)
     {
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN_GENERATOR_SUPER')) {
-            throw new AccessDeniedException();
+            throw $this->createAccessDeniedException();
         }
 
         $em = $this->getDoctrine()->getManager();
         $em->remove($element);
         $em->flush();
-        $this->get('session')->getFlashBag()->add('success', 'Avantage supprimé : <strong>'.$element->getName().'</strong>');
+        $this->get('session')->getFlashBag()->add('success', 'Avantage supprimé : <strong>' . $element->getName() . '</strong>');
         return $this->redirect($this->generateUrl('corahnrin_admin_avantages_adminlist'));
     }
 
-    private function handle_request(Avantages $element, Request $request) {
-        $method = preg_replace('#^'.str_replace('\\','\\\\',__CLASS__).'::([a-zA-Z]+)Action$#isUu', '$1', $this->getRequest()->get('_controller'));
+    private function handle_request(Avantages $element, Request $request)
+    {
+        $method = preg_replace('#^' . str_replace('\\', '\\\\', __CLASS__) . '::([a-zA-Z]+)Action$#isUu', '$1', $request->get('_controller'));
 
         if ($element->getBonusdisc()) {
             $bonuses = explode(',', $element->getBonusdisc());
@@ -89,11 +89,11 @@ class AvantagesController extends Controller
         $form = $this->createForm(new AvantagesType(), $element);
 
         $form->add('bonusdisc', 'choice', array(
-            'label'=>'Bonus (+1)',
+            'label' => 'Bonus (+1)',
             'choices' => $bonuses,
             'multiple' => true,
-            'required'=>false,
-            'attr' => array('size'=>10),
+            'required' => false,
+            'attr' => array('size' => 10),
         ));
 
         $form->handleRequest($request);
@@ -105,16 +105,16 @@ class AvantagesController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($element);
             $em->flush();
-            $this->get('session')->getFlashBag()->add('success', ($element->getIsDesv() ? 'Désavantage' : 'Avantage').' '.($method=='add'?'ajouté':'modifié').' : <strong>'.$element->getName().'</strong>');
+            $this->get('session')->getFlashBag()->add('success', ($element->getIsDesv() ? 'Désavantage' : 'Avantage') . ' ' . ($method == 'add' ? 'ajouté' : 'modifié') . ' : <strong>' . $element->getName() . '</strong>');
             return $this->redirect($this->generateUrl('corahnrin_admin_avantages_adminlist'));
         }
 
         return array(
             'form' => $form->createView(),
-            'title' => ($method=='add'?'Ajouter':'Modifier').' un '.($element->getIsDesv() ? 'Désavantage' : 'Avantage'),
+            'title' => ($method == 'add' ? 'Ajouter' : 'Modifier') . ' un ' . ($element->getIsDesv() ? 'Désavantage' : 'Avantage'),
             'breadcrumbs' => array(
                 'Accueil' => array('route' => 'pierstoval_admin_admin_index',),
-                'Avantages' => array('route'=>'corahnrin_admin_avantages_adminlist'),
+                'Avantages' => array('route' => 'corahnrin_admin_avantages_adminlist'),
             ),
         );
     }

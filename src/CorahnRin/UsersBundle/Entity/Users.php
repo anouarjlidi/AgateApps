@@ -5,7 +5,7 @@ namespace CorahnRin\UsersBundle\Entity;
 use FOS\UserBundle\Model\User as BaseUser;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
-use CorahnRin\CharactersBundle\Entity\Characters;
+use CorahnRin\ModelsBundle\Entity\Characters;
 
 /**
  * Users
@@ -25,7 +25,7 @@ class Users extends BaseUser {
 
 	/**
      * @var Characters[]
-     * @ORM\OneToMany(targetEntity="CorahnRin\CharactersBundle\Entity\Characters", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="CorahnRin\ModelsBundle\Entity\Characters", mappedBy="user")
 	 */
 	protected $characters;
 
@@ -47,10 +47,10 @@ class Users extends BaseUser {
     /**
      * Add characters
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Characters $characters
+     * @param \CorahnRin\ModelsBundle\Entity\Characters $characters
      * @return Users
      */
-    public function addCharacter(\CorahnRin\CharactersBundle\Entity\Characters $characters)
+    public function addCharacter(\CorahnRin\ModelsBundle\Entity\Characters $characters)
     {
         $this->characters[] = $characters;
 
@@ -60,9 +60,9 @@ class Users extends BaseUser {
     /**
      * Remove characters
      *
-     * @param \CorahnRin\CharactersBundle\Entity\Characters $characters
+     * @param \CorahnRin\ModelsBundle\Entity\Characters $characters
      */
-    public function removeCharacter(\CorahnRin\CharactersBundle\Entity\Characters $characters)
+    public function removeCharacter(\CorahnRin\ModelsBundle\Entity\Characters $characters)
     {
         $this->characters->removeElement($characters);
     }

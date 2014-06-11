@@ -2,7 +2,7 @@
 
 namespace CorahnRin\CharactersBundle\Controller;
 
-use CorahnRin\CharactersBundle\Entity\Characters;
+use CorahnRin\ModelsBundle\Entity\Characters;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
