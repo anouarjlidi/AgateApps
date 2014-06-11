@@ -43,7 +43,7 @@ class MenusController extends Controller {
      */
     public function deleteAction(Menus $menu)
     {
-        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN_MAPS_SUPER')) {
+        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN_MANAGE_SITE_SUPER')) {
             throw new AccessDeniedException();
         }
 
