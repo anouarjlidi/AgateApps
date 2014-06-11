@@ -22,8 +22,10 @@ framework:
         engines: ['twig','php']
         #assets_version: SomeVersionScheme
     default_locale:  fr
+    trusted_hosts:   ~
     trusted_proxies: ~
-    session:         ~
+    session:
+        handler_id:  ~
     fragments:       ~
     http_method_override: true
 
