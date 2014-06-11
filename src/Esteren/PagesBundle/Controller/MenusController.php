@@ -128,7 +128,8 @@ class MenusController extends Controller {
             if (strpos($name, '_') !== 0 && !$route->compile()->getVariables() && !preg_match('#_(add|edit)[^_]*$#isUu', $name) && (!in_array('POST', $route->getMethods()) || (in_array('POST', $route->getMethods()) && in_array('GET', $route->getMethods())) )) {
                 $category = 'Autres';
                 if (strpos($name, 'corahnrin_characters_') === 0) { $category = 'Générateur de personnages'; }
-                if (strpos($name, 'esterenmaps_maps_') === 0) { $category = 'Esteren Maps'; }
+                if (strpos($name, 'corahnrin_admin_') === 0) { $category = 'Administration de Corahn-Rin'; }
+                if (strpos($name, 'esterenmaps_') === 0) { $category = 'Esteren Maps'; }
                 if (strpos($name, 'esteren_pages_') === 0) { $category = 'Pages'; }
                 if (strpos($name, 'pierstoval_admin_') === 0) { $category = 'Panneau d\'administration'; }
                 if (strpos($name, 'pierstoval_translation') === 0) { $category = 'Traduction'; }

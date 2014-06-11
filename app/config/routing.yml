@@ -1,3 +1,8 @@
+corahn_rin_admin:
+    resource: "@CorahnRinAdminBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 
 #-----------------------------------
 # Corahn-Rin relative routing

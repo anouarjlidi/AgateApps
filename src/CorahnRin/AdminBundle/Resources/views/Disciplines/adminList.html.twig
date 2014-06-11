@@ -1,0 +1,67 @@
+{% extends "PierstovalAdminBundle:Admin:layout.html.twig" %}
+
+{% block title %}{{ 'Disciplines' | trans }} - {{ parent() }}{% endblock %}
+
+{% block admin_content %}
+
+<ol class="breadcrumb">
+    <li><a href="{{ url('pierstoval_admin_admin_index') }}">{{ 'Accueil' | trans }}</a></li>
+    <li><a href="{{ url('corahnrin_admin_disciplines_adminlist') }}">{{ 'Disciplines' | trans }}</a></li>
+</ol>
+
+<h1>{{ 'Disciplines' | trans }}</h1>
+
+{% if is_granted('ROLE_ADMIN_GENERATOR_SUPER') %}
+    <div class="navbar navbar-inverse">
+        <div class="">
+            <ul class="nav navbar-nav">
+                <li><a href="{{ url('corahnrin_admin_disciplines_add') }}">
+                    <span class="glyphicon icon-plus"></span>
+                    {{ 'Ajouter une discipline' | trans }}
+                </a></li>
+            </ul>
+        </div>
+    </div>
+{% endif %}
+
+<table class="table table-condensed">
+    <tr>
+        <th>#</th>
+        <th>{{ 'Nom' | trans }}</th>
+        <th>{{ 'Description' | trans }}</th>
+        <th>{{ 'Domaines' | trans }}</th>
+        <th>{{ 'Livre' | trans }}</th>
+        <th>{{ 'Actions' | trans }}</th>
+    </tr>
+    {% for discipline in disciplines %}
+    <tr>
+        <td>{{ discipline.id }}</td>
+        <td>{{ discipline.name }}</td>
+        <td>{{ discipline.description }}</td>
+        <td>
+            {% for domain in discipline.domains %}
+                {% if loop.first %}
+                    <ul class="list-unstyled">
+                {% endif %}
+                        <li>{{ domain.name }}</li>
+                {% if loop.last %}
+                    </ul>
+                {% endif %}
+            {% else %}
+                {{ 'Aucun élément' | trans }}
+            {% endfor %}
+        </td>
+        <td>{{ discipline.book.name is defined ? discipline.book.name : ' - ' }}</td>
+        <td>
+            <a href="{{ url('corahnrin_admin_disciplines_edit', {'id':discipline.id}) }}" class="btn btn-sm btn-inverse">{{ 'Éditer' | trans }}</a>
+            {% if is_granted('ROLE_ADMIN_GENERATOR_SUPER') %}
+            <a href="{{ url('corahnrin_admin_disciplines_delete', {'id':discipline.id}) }}" class="btn btn-sm btn-danger">{{ 'Supprimer' | trans }}</a>
+            {% endif %}
+        </td>
+    </tr>
+    {% else %}
+    <tr><td colspan="5">{{ 'Aucun élément' | trans }}</td></tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

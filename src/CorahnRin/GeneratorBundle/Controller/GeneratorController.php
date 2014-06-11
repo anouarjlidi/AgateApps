@@ -6,7 +6,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-//use CorahnRin\CharactersBundle\Entity\Characters;
 use CorahnRin\GeneratorBundle\Entity\Steps;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -96,9 +95,8 @@ class GeneratorController extends Controller {
         } else {
             //Si la méthode n'existe pas, alors on a demandé une étape en trop (ou en moins)
             //Dans ce cas, on renvoie une erreur
-            $msg = $this->get('translator')->trans('L\'étape %step% n\'a pas été trouvée...', array('%step%'=>$step->getStep()), 'error.steps');
+            $msg = $this->container->get('translator')->trans('L\'étape %step% n\'a pas été trouvée...', array('%step%'=>$step->getStep()), 'error.steps');
             throw new \Exception($msg);
-            exit;
         }
     }
 
