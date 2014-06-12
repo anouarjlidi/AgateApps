@@ -1280,7 +1280,6 @@ foreach ( $characters as $v) {
         $nameSlugBase = $nameSlug;
         $i = '';
         $exists = $new->req('SELECT %id FROM %'.$table.' WHERE %nameSlug = :nameSlug', array('nameSlug'=>$nameSlugBase));
-        $exists = true;
         while ($exists) {
             echo 'Slug existe déjà : '.$nameSlugBase."\r\n";
             $i++;
