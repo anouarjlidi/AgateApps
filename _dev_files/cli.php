@@ -306,6 +306,8 @@ $tablesTemp = array();
 if (is_array($fixtures) && !empty($fixtures)) {
     foreach ($fixtures as $table => $datas) {
 
+        echo "Process ".$table;
+
         $sql = '
         INSERT INTO `'.$table.'` (';
 
@@ -322,60 +324,75 @@ if (is_array($fixtures) && !empty($fixtures)) {
         $j = 0;
         foreach ($datas as $k => $data) {
 
+            $process = true;
+
             if (isset($data['id'])) {
                 $sqlTest = 'SELECT * from `'.$table.'` where `id` = :id';
-                if ($new->row($sqlTest, array('id'=>$data['id']))) { continue; }
+                if ($new->row($sqlTest, array('id'=>$data['id']))) { $process = false; }
             } else {
                 if ($table === 'disciplines_domains') {
                     $sqlTest = 'SELECT * from `'.$table.'` where `discipline_id` = :discipline_id and `domain_id` = :domain_id';
-                    if ($new->row($sqlTest, array('discipline_id'=>$data['discipline_id'],'domain_id'=>$data['domain_id']))) { continue; }
+                    if ($new->row($sqlTest, array('discipline_id'=>$data['discipline_id'],'domain_id'=>$data['domain_id']))) { $process = false; }
 
                 } elseif ($table === 'disorders_ways') {
                     $sqlTest = 'SELECT * from `'.$table.'` where `disorder_id` = :disorder_id and `way_id` = :way_id';
-                    if ($new->row($sqlTest, array('disorder_id'=>$data['disorder_id'],'way_id'=>$data['way_id']))) { continue; }
+                    if ($new->row($sqlTest, array('disorder_id'=>$data['disorder_id'],'way_id'=>$data['way_id']))) { $process = false; }
 
                 } elseif ($table === 'jobs_domains') {
                     $sqlTest = 'SELECT * from `'.$table.'` where `jobs_id` = :jobs_id and `domains_id` = :domains_id';
-                    if ($new->row($sqlTest, array('jobs_id'=>$data['jobs_id'],'domains_id'=>$data['domains_id']))) { continue; }
+                    if ($new->row($sqlTest, array('jobs_id'=>$data['jobs_id'],'domains_id'=>$data['domains_id']))) { $process = false; }
 
                 } elseif ($table === 'socialclasses_domains') {
                     $sqlTest = 'SELECT * from `'.$table.'` where `socialclasses_id` = :socialclasses_id and `domains_id` = :domains_id';
-                    if ($new->row($sqlTest, array('socialclasses_id'=>$data['socialclasses_id'],'domains_id'=>$data['domains_id']))) { continue; }
+                    if ($new->row($sqlTest, array('socialclasses_id'=>$data['socialclasses_id'],'domains_id'=>$data['domains_id']))) { $process = false; }
 
                 } else {
-                    continue;
+                    $process = false;
                 }
             }
 
-            $sqlPart = $sql . ' ( ';
-            $i = 0;
-            $j++;
-            $params = array();
-            foreach ($data as $field => $val) {
-                $i++;
-                $sqlPart .= ' :'.$table.'_'.$field.'_'.$k.' ';
-                $params[$table.'_'.$field.'_'.$k] = $val;
-                if ($i < $nbKey) { $sqlPart .= ', '; }
-                if ($i == $nbKey) { $sqlPart .= ' '; }
-            }
-            if (array_key_exists('deleted', $params)) {
-                $params['deleted'] = null;
-            }
-            $sqlPart .= ' ); ';
-//            if ($j < $nbDatas) { $sqlPart .= ', '; }
-//            if ($j == $nbDatas) { $sqlPart .= ';'; }
-            $sqlPart .= "\n";
-            $nbreq++;
-            $nbreqtemp++;
-            $tablesTemp[$table] = $table;
+            if ($process) {
 
-            try {
-                $stmt = $new->prepare($sqlPart);
-                $stmt->execute($params);
-            } catch (\Exception $e) {
-                exit ('Exception fixtures : '.$e->getMessage());
+                $sqlPart = $sql . ' ( ';
+                $i = 0;
+                $j++;
+                $params = array();
+                foreach ($data as $field => $val) {
+                    $i++;
+                    $sqlPart .= ' :'.$table.'_'.$field.'_'.$k.' ';
+                    $params[$table.'_'.$field.'_'.$k] = $val;
+                    if ($i < $nbKey) { $sqlPart .= ', '; }
+                    if ($i == $nbKey) { $sqlPart .= ' '; }
+                }
+                if (array_key_exists('deleted', $params)) {
+                    $params['deleted'] = null;
+                }
+                $sqlPart .= ' ); ';
+    //            if ($j < $nbDatas) { $sqlPart .= ', '; }
+    //            if ($j == $nbDatas) { $sqlPart .= ';'; }
+                $sqlPart .= "\n";
+                $nbreq++;
+                $nbreqtemp++;
+                $tablesTemp[$table] = $table;
+
+                try {
+                    $stmt = $new->prepare($sqlPart);
+                    $stmt->execute($params);
+                } catch (\Exception $e) {
+                    echo '--------------------------------------------------------------------',"\r\n";
+                    echo "\t",'Erreur d\'insertion',"\r\n";
+                    echo "\t",'Exception : ',"\r\n\t\t",$e->getMessage(),"\r\n";
+                    echo "\t",'Table : ',"\r\n\t\t",$table,"\r\n";
+                    echo "\t",'Requête SQL : ',"\r\n\t\t",str_replace(array("\n","\r","\t"),array('','',''),$sqlPart),"\r\n";
+                    echo "\t",'Paramètres : ',"\r\n\t\t", print_r($params,true);
+                    echo "\r\n".'--------------------------------------------------------------------';
+
+                    exit;
+                }
             }
         }
+
+        echo ' > ' . $nbreqtemp." queries.\r\n";
 
 //        showtime($temp_time, '(via fixtures) '.$nbreqtemp.' requêtes pour la table "'.$table.'"');
     }
@@ -1051,7 +1068,7 @@ $tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table 
 */
 
 
-
+/*
 $table = 'zones';
 $nbreqtemp = 0;
 if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>1))) {
@@ -1063,7 +1080,7 @@ if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>1))) {
 	$q->execute(array('id' => 2,'name' => 'Île aux Cairns', 'coordinates'=>'2584,2999 2511,3039 2524,3070 2517,3087 2487,3093 2503,3110 2468,3151 2496,3161 2516,3156 2525,3162 2509,3174 2484,3180 2462,3172 2445,3199 2423,3206 2432,3217 2449,3216 2497,3259 2449,3284 2466,3310 2447,3317 2433,3336 2428,3397 2444,3406 2429,3421 2465,3427 2445,3444 2476,3441 2472,3471 2455,3458 2462,3488 2480,3503 2489,3489 2520,3500 2538,3509 2543,3524 2543,3544 2576,3541 2662,3538 2684,3527 2803,3515 2814,3497 2822,3467 2912,3460 2871,3425 2866,3388 2827,3354 2846,3346 2847,3333 2896,3320 2894,3308 2847,3286 2862,3278 2847,3250 2836,3242 2837,3225 2861,3213 2834,3181 2856,3179 2837,3150 2783,3119 2783,3119 2801,3092 2794,3078 2814,3075 2786,3045 2764,3035 2756,3016 2730,3020 2698,3001 2708,2992 2713,2974 2701,2956 2689,2959 2673,2987 2708,2992 2708,2992 2698,3001 2667,3006 2649,2996 2625,3012 2599,2978 2601,2953 2589,2951 2576,2971 2531,2961 2519,2970 2503,2965 2452,2999 2492,3005 2520,3011 2563,3000 2558,2983 2531,2961 2576,2971 2585,2983 2599,2978 2625,3012','map_id'=>1, 'created' => $datetime->date, 'updated' => $datetime->date,));
 }
 $tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
-
+*/
 
 
 /*
@@ -1163,7 +1180,7 @@ $tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table 
 
 
 
-
+/*
 $table = 'markers';
 $nbreqtemp = 0;
 if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>1))) {
@@ -1174,25 +1191,18 @@ if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>1))) {
     $sql = <<<'SQL'
     SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
     SET time_zone = "+00:00";
-    /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-    /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-    /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-    /*!40101 SET NAMES utf8 */;
     INSERT INTO `markers` (`id`, `faction_id`, `map_id`, `name`, `coordinates`, `created`, `updated`, `deleted`, `markerType_id`) VALUES
     (1, NULL, 1, 'Ard Amrach', '1555,728', '2014-02-14 14:40:17', '2014-02-14 14:40:17', 0, 1),
     (2, NULL, 1, 'Rhingal', '1621,889', '2014-02-14 14:40:17', '2014-02-14 14:40:17', 0, 1),
     (3, NULL, 1, 'Calvaire', '791,841', '2014-02-14 15:07:39', '2014-02-14 15:07:39', 0, 1),
     (4, NULL, 1, 'Bois déchiré', '847,593', '2014-02-14 15:07:39', '2014-02-14 15:07:39', 0, 1);
-    /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-    /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-    /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 
 SQL;
     $new->query($sql);
 
 }
 $tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table "'.$table.'"');
-
+*/
 
 
 
@@ -1265,7 +1275,19 @@ foreach ( $characters as $v) {
 		$money->convert();
 		$nameSlug = \CorahnRinTools\remove_accents($v['char_name']);
 		$nameSlug = preg_replace('~[^a-zA-Z0-9_-]+~isUu', '-', $nameSlug);
-		$nameSlug = preg_replace('~--+~isUu', '-', $nameSlug);
+        $nameSlug = preg_replace('~--+~isUu', '-', $nameSlug);
+
+        $nameSlugBase = $nameSlug;
+        $i = '';
+        $exists = $new->req('SELECT %id FROM %'.$table.' WHERE %nameSlug = :nameSlug', array('nameSlug'=>$nameSlugBase));
+        $exists = true;
+        while ($exists) {
+            echo 'Slug existe déjà : '.$nameSlugBase."\r\n";
+            $i++;
+            $nameSlugBase = $nameSlug . $i;
+            $exists = $new->row('SELECT %id FROM %'.$table.' WHERE %nameSlug = :nameSlug', array('nameSlug'=>$nameSlugBase));
+        }
+        $nameSlug = $nameSlugBase;
 
 		$domaines = $cnt->domaines;
 		$socialclassdomains = array();
