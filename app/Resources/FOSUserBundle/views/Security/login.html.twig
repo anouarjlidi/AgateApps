@@ -1,7 +1,7 @@
 {% extends "CorahnRinUsersBundle::layout.html.twig" %}
-{% block title %}{{ 'Connexion' | trans }} - {{parent()}}{% endblock %}
-
 {% trans_default_domain 'FOSUserBundle' %}
+
+{% block title %}{{ 'layout.login' | trans }} - {{parent()}}{% endblock %}
 
 {% block fos_user_content %}
 
@@ -10,7 +10,7 @@
 			<form action="{{ path("fos_user_security_check") }}" method="post" role="form" id="form_login">
 				<input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
 
-				<h2>{{ 'Connexion' | trans }}</h2>
+				<h2>{{ 'layout.login' | trans }}</h2>
 				<div class="form-group">
 					<label for="username">{{ 'security.login.username'|trans }}</label>
 					<input type="text" class="form-control" id="username" name="_username" value="{{ last_username }}" required="required" />
@@ -28,7 +28,5 @@
                 <input type="submit" class="btn btn-default" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
 			</form>
 		</section>
-
-		{{ parent() }}
 
 {% endblock %}
