@@ -9,14 +9,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-class JobsController extends Controller
-{
+class JobsController extends Controller {
     /**
      * @Route("/admin/generator/jobs/")
      * @Template()
      */
-    public function adminListAction()
-    {
+    public function adminListAction() {
         $name = str_replace('Controller', '', preg_replace('#^([a-zA-Z]+\\\)*#isu', '', __CLASS__));
         return array(
             strtolower($name) => $this->getDoctrine()->getManager()->getRepository('CorahnRinCharactersBundle:' . $name)->findAllPerBook(),
@@ -27,8 +25,7 @@ class JobsController extends Controller
      * @Route("/admin/generator/jobs/add/")
      * @Template("PierstovalAdminBundle:Form:add.html.twig")
      */
-    public function addAction(Request $request)
-    {
+    public function addAction(Request $request) {
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN_GENERATOR_SUPER')) {
             throw $this->createAccessDeniedException();
         }
@@ -39,16 +36,14 @@ class JobsController extends Controller
      * @Route("/admin/generator/jobs/edit/{id}")
      * @Template("PierstovalAdminBundle:Form:add.html.twig")
      */
-    public function editAction(Jobs $job, Request $request)
-    {
+    public function editAction(Jobs $job, Request $request) {
         return $this->handle_request($job, $request);
     }
 
     /**
      * @Route("/admin/generator/jobs/delete/{id}")
      */
-    public function deleteAction(Jobs $element)
-    {
+    public function deleteAction(Jobs $element) {
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN_GENERATOR_SUPER')) {
             throw $this->createAccessDeniedException();
         }
@@ -60,8 +55,7 @@ class JobsController extends Controller
         return $this->redirect($this->generateUrl('corahnrin_admin_jobs_adminlist'));
     }
 
-    private function handle_request(Jobs $element, Request $request)
-    {
+    private function handle_request(Jobs $element, Request $request) {
         $method = preg_replace('#^' . str_replace('\\', '\\\\', __CLASS__) . '::([a-zA-Z]+)Action$#isUu', '$1', $request->get('_controller'));
 
         $form = $this->createForm(new JobsType(), $element);
@@ -73,7 +67,8 @@ class JobsController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($element);
             $em->flush();
-            $this->get('session')->getFlashBag()->add('success', 'Métier ' . ($method == 'add' ? 'ajouté' : 'modifié') . ' : <strong>' . $element->getName() . '</strong>');
+            $this->get('session')->getFlashBag()->add('success', 'Métier ' . ($method == 'add' ? 'ajouté'
+                    : 'modifié') . ' : <strong>' . $element->getName() . '</strong>');
             return $this->redirect($this->generateUrl('corahnrin_admin_jobs_adminlist'));
         }
 

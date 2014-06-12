@@ -1,6 +1,7 @@
 <?php
 
 namespace CorahnRin\ModelsBundle\Entity;
+
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -11,8 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity(repositoryClass="CorahnRin\ModelsBundle\Repository\OghamTypesRepository")
  */
-class OghamTypes
-{
+class OghamTypes {
     /**
      * @var integer
      *
@@ -45,7 +45,6 @@ class OghamTypes
 
     /**
      * @var \Datetime
-
      * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
@@ -64,8 +63,7 @@ class OghamTypes
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -75,8 +73,7 @@ class OghamTypes
      * @param string $name
      * @return OghamTypes
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -87,8 +84,7 @@ class OghamTypes
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -98,8 +94,7 @@ class OghamTypes
      * @param \DateTime $created
      * @return OghamTypes
      */
-    public function setCreated($created)
-    {
+    public function setCreated($created) {
         $this->created = $created;
 
         return $this;
@@ -110,8 +105,7 @@ class OghamTypes
      *
      * @return \DateTime
      */
-    public function getCreated()
-    {
+    public function getCreated() {
         return $this->created;
     }
 
@@ -121,8 +115,7 @@ class OghamTypes
      * @param \DateTime $updated
      * @return OghamTypes
      */
-    public function setUpdated($updated)
-    {
+    public function setUpdated($updated) {
         $this->updated = $updated;
 
         return $this;
@@ -133,8 +126,7 @@ class OghamTypes
      *
      * @return \DateTime
      */
-    public function getUpdated()
-    {
+    public function getUpdated() {
         return $this->updated;
     }
 
@@ -144,8 +136,7 @@ class OghamTypes
      * @param string $description
      * @return OghamTypes
      */
-    public function setDescription($description)
-    {
+    public function setDescription($description) {
         $this->description = $description;
 
         return $this;
@@ -156,8 +147,7 @@ class OghamTypes
      *
      * @return string
      */
-    public function getDescription()
-    {
+    public function getDescription() {
         return $this->description;
     }
 }

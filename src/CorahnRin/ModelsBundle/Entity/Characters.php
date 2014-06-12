@@ -2,14 +2,12 @@
 
 namespace CorahnRin\ModelsBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Doctrine\ORM\Mapping as ORM;
-
 use CorahnRin\CharactersBundle\Classes\Money;
-use CorahnRin\UsersBundle\Entity\Users;
 use CorahnRin\CharactersBundle\Exceptions\CharactersException;
-
+use CorahnRin\UsersBundle\Entity\Users;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -19,8 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="CorahnRin\ModelsBundle\Repository\CharactersRepository")
  * @ORM\Table(name="characters",uniqueConstraints={@ORM\UniqueConstraint(name="idcUnique", columns={"name", "user_id"})})
  */
-class Characters
-{
+class Characters {
     /**
      * @var integer
      *
@@ -411,11 +408,11 @@ class Characters
      */
     protected $user;
 
-	/**
-	 * @var Games
-	 * @ORM\ManyToOne(targetEntity="Games", inversedBy="characters", fetch="EAGER")
-	 */
-	protected $game;
+    /**
+     * @var Games
+     * @ORM\ManyToOne(targetEntity="Games", inversedBy="characters", fetch="EAGER")
+     */
+    protected $game;
 
     /**
      * @var \Datetime
@@ -426,7 +423,6 @@ class Characters
 
     /**
      * @var \Datetime
-
      * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
@@ -448,8 +444,7 @@ class Characters
     /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->armors = new ArrayCollection();
         $this->artifacts = new ArrayCollection();
         $this->miracles = new ArrayCollection();
@@ -469,8 +464,7 @@ class Characters
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -480,8 +474,7 @@ class Characters
      * @param string $name
      * @return Characters
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -492,8 +485,7 @@ class Characters
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -503,8 +495,7 @@ class Characters
      * @param string $nameSlug
      * @return Characters
      */
-    public function setNameSlug($nameSlug)
-    {
+    public function setNameSlug($nameSlug) {
         $this->nameSlug = $nameSlug;
 
         return $this;
@@ -515,8 +506,7 @@ class Characters
      *
      * @return string
      */
-    public function getNameSlug()
-    {
+    public function getNameSlug() {
         return $this->nameSlug;
     }
 
@@ -526,8 +516,7 @@ class Characters
      * @param string $playerName
      * @return Characters
      */
-    public function setPlayerName($playerName)
-    {
+    public function setPlayerName($playerName) {
         $this->playerName = $playerName;
 
         return $this;
@@ -538,8 +527,7 @@ class Characters
      *
      * @return string
      */
-    public function getPlayerName()
-    {
+    public function getPlayerName() {
         return $this->playerName;
     }
 
@@ -549,8 +537,7 @@ class Characters
      * @param integer $status
      * @return Characters
      */
-    public function setStatus($status)
-    {
+    public function setStatus($status) {
         $this->status = $status;
 
         return $this;
@@ -561,8 +548,7 @@ class Characters
      *
      * @return integer
      */
-    public function getStatus()
-    {
+    public function getStatus() {
         return $this->status;
     }
 
@@ -572,8 +558,7 @@ class Characters
      * @param string $sex
      * @return Characters
      */
-    public function setSex($sex)
-    {
+    public function setSex($sex) {
         $this->sex = $sex;
 
         return $this;
@@ -584,8 +569,7 @@ class Characters
      *
      * @return string
      */
-    public function getSex()
-    {
+    public function getSex() {
         return $this->sex;
     }
 
@@ -595,8 +579,7 @@ class Characters
      * @param string $description
      * @return Characters
      */
-    public function setDescription($description)
-    {
+    public function setDescription($description) {
         $this->description = $description;
 
         return $this;
@@ -607,8 +590,7 @@ class Characters
      *
      * @return string
      */
-    public function getDescription()
-    {
+    public function getDescription() {
         return $this->description;
     }
 
@@ -618,8 +600,7 @@ class Characters
      * @param string $story
      * @return Characters
      */
-    public function setStory($story)
-    {
+    public function setStory($story) {
         $this->story = $story;
 
         return $this;
@@ -630,8 +611,7 @@ class Characters
      *
      * @return string
      */
-    public function getStory()
-    {
+    public function getStory() {
         return $this->story;
     }
 
@@ -641,8 +621,7 @@ class Characters
      * @param string $facts
      * @return Characters
      */
-    public function setFacts($facts)
-    {
+    public function setFacts($facts) {
         $this->facts = $facts;
 
         return $this;
@@ -653,8 +632,7 @@ class Characters
      *
      * @return string
      */
-    public function getFacts()
-    {
+    public function getFacts() {
         return $this->facts;
     }
 
@@ -664,8 +642,7 @@ class Characters
      * @param array $inventory
      * @return Characters
      */
-    public function setInventory($inventory)
-    {
+    public function setInventory($inventory) {
         $this->inventory = $inventory;
 
         return $this;
@@ -676,8 +653,7 @@ class Characters
      *
      * @return array
      */
-    public function getInventory()
-    {
+    public function getInventory() {
         return $this->inventory;
     }
 
@@ -687,8 +663,7 @@ class Characters
      * @param Money $money
      * @return Characters
      */
-    public function setMoney($money)
-    {
+    public function setMoney($money) {
         $this->money = $money;
 
         return $this;
@@ -699,8 +674,7 @@ class Characters
      *
      * @return Money
      */
-    public function getMoney()
-    {
+    public function getMoney() {
         return $this->money;
     }
 
@@ -710,8 +684,7 @@ class Characters
      * @param string $orientation
      * @return Characters
      */
-    public function setOrientation($orientation)
-    {
+    public function setOrientation($orientation) {
         $this->orientation = $orientation;
 
         return $this;
@@ -722,8 +695,7 @@ class Characters
      *
      * @return string
      */
-    public function getOrientation()
-    {
+    public function getOrientation() {
         return $this->orientation;
     }
 
@@ -732,8 +704,7 @@ class Characters
      *
      * @return string
      */
-    public function getConscience()
-    {
+    public function getConscience() {
         return $this->getWay('rai')->getScore() + $this->getWay('ide')->getScore();
     }
 
@@ -742,8 +713,7 @@ class Characters
      *
      * @return string
      */
-    public function getInstinct()
-    {
+    public function getInstinct() {
         return $this->getWay('cre')->getScore() + $this->getWay('com')->getScore();
     }
 
@@ -753,8 +723,7 @@ class Characters
      * @param string $jobCustom
      * @return Characters
      */
-    public function setJobCustom($jobCustom)
-    {
+    public function setJobCustom($jobCustom) {
         $this->jobCustom = $jobCustom;
 
         return $this;
@@ -765,8 +734,7 @@ class Characters
      *
      * @return string
      */
-    public function getJobCustom()
-    {
+    public function getJobCustom() {
         return $this->jobCustom;
     }
 
@@ -776,8 +744,7 @@ class Characters
      * @param string $geoLiving
      * @return Characters
      */
-    public function setGeoLiving($geoLiving)
-    {
+    public function setGeoLiving($geoLiving) {
         $this->geoLiving = $geoLiving;
 
         return $this;
@@ -788,8 +755,7 @@ class Characters
      *
      * @return string
      */
-    public function getGeoLiving()
-    {
+    public function getGeoLiving() {
         return $this->geoLiving;
     }
 
@@ -799,8 +765,7 @@ class Characters
      * @param integer $trauma
      * @return Characters
      */
-    public function setTrauma($trauma)
-    {
+    public function setTrauma($trauma) {
         $this->trauma = $trauma;
 
         return $this;
@@ -811,8 +776,7 @@ class Characters
      *
      * @return integer
      */
-    public function getTrauma()
-    {
+    public function getTrauma() {
         return $this->trauma;
     }
 
@@ -822,8 +786,7 @@ class Characters
      * @param integer $traumaPermanent
      * @return Characters
      */
-    public function setTraumaPermanent($traumaPermanent)
-    {
+    public function setTraumaPermanent($traumaPermanent) {
         $this->traumaPermanent = $traumaPermanent;
 
         return $this;
@@ -834,8 +797,7 @@ class Characters
      *
      * @return integer
      */
-    public function getTraumaPermanent()
-    {
+    public function getTraumaPermanent() {
         return $this->traumaPermanent;
     }
 
@@ -845,8 +807,7 @@ class Characters
      * @param integer $age
      * @return Characters
      */
-    public function setAge($age)
-    {
+    public function setAge($age) {
         $this->age = $age;
 
         return $this;
@@ -857,8 +818,7 @@ class Characters
      *
      * @return integer
      */
-    public function getAge()
-    {
+    public function getAge() {
         return $this->age;
     }
 
@@ -868,8 +828,7 @@ class Characters
      * @param integer $mentalResist
      * @return Characters
      */
-    public function setMentalResist($mentalResist)
-    {
+    public function setMentalResist($mentalResist) {
         $this->mentalResist = $mentalResist;
 
         return $this;
@@ -880,8 +839,7 @@ class Characters
      *
      * @return integer
      */
-    public function getMentalResist()
-    {
+    public function getMentalResist() {
         return $this->mentalResist;
     }
 
@@ -891,8 +849,7 @@ class Characters
      * @param integer $health
      * @return Characters
      */
-    public function setHealth($health)
-    {
+    public function setHealth($health) {
         $this->health = $health;
 
         return $this;
@@ -903,8 +860,7 @@ class Characters
      *
      * @return integer
      */
-    public function getHealth()
-    {
+    public function getHealth() {
         return $this->health;
     }
 
@@ -914,8 +870,7 @@ class Characters
      * @param integer $stamina
      * @return Characters
      */
-    public function setStamina($stamina)
-    {
+    public function setStamina($stamina) {
         $this->stamina = $stamina;
 
         return $this;
@@ -926,8 +881,7 @@ class Characters
      *
      * @return integer
      */
-    public function getStamina()
-    {
+    public function getStamina() {
         return $this->stamina;
     }
 
@@ -937,8 +891,7 @@ class Characters
      * @param boolean $survival
      * @return Characters
      */
-    public function setSurvival($survival)
-    {
+    public function setSurvival($survival) {
         $this->survival = $survival;
 
         return $this;
@@ -949,8 +902,7 @@ class Characters
      *
      * @return boolean
      */
-    public function getSurvival()
-    {
+    public function getSurvival() {
         return $this->survival;
     }
 
@@ -960,8 +912,7 @@ class Characters
      * @param integer $speed
      * @return Characters
      */
-    public function setSpeed($speed)
-    {
+    public function setSpeed($speed) {
         $this->speed = $speed;
 
         return $this;
@@ -972,8 +923,7 @@ class Characters
      *
      * @return integer
      */
-    public function getSpeed()
-    {
+    public function getSpeed() {
         return $this->speed;
     }
 
@@ -983,8 +933,7 @@ class Characters
      * @param integer $defense
      * @return Characters
      */
-    public function setDefense($defense)
-    {
+    public function setDefense($defense) {
         $this->defense = $defense;
 
         return $this;
@@ -995,8 +944,7 @@ class Characters
      *
      * @return integer
      */
-    public function getDefense()
-    {
+    public function getDefense() {
         return $this->defense;
     }
 
@@ -1006,8 +954,7 @@ class Characters
      * @param integer $rindath
      * @return Characters
      */
-    public function setRindath($rindath)
-    {
+    public function setRindath($rindath) {
         $this->rindath = $rindath;
 
         return $this;
@@ -1018,8 +965,7 @@ class Characters
      *
      * @return integer
      */
-    public function getRindath()
-    {
+    public function getRindath() {
         return $this->rindath;
     }
 
@@ -1029,8 +975,7 @@ class Characters
      * @param integer $exaltation
      * @return Characters
      */
-    public function setExaltation($exaltation)
-    {
+    public function setExaltation($exaltation) {
         $this->exaltation = $exaltation;
 
         return $this;
@@ -1041,8 +986,7 @@ class Characters
      *
      * @return integer
      */
-    public function getExaltation()
-    {
+    public function getExaltation() {
         return $this->exaltation;
     }
 
@@ -1052,8 +996,7 @@ class Characters
      * @param integer $experienceActual
      * @return Characters
      */
-    public function setExperienceActual($experienceActual)
-    {
+    public function setExperienceActual($experienceActual) {
         $this->experienceActual = $experienceActual;
 
         return $this;
@@ -1064,8 +1007,7 @@ class Characters
      *
      * @return integer
      */
-    public function getExperienceActual()
-    {
+    public function getExperienceActual() {
         return $this->experienceActual;
     }
 
@@ -1075,8 +1017,7 @@ class Characters
      * @param integer $experienceSpent
      * @return Characters
      */
-    public function setExperienceSpent($experienceSpent)
-    {
+    public function setExperienceSpent($experienceSpent) {
         $this->experienceSpent = $experienceSpent;
 
         return $this;
@@ -1087,8 +1028,7 @@ class Characters
      *
      * @return integer
      */
-    public function getExperienceSpent()
-    {
+    public function getExperienceSpent() {
         return $this->experienceSpent;
     }
 
@@ -1098,8 +1038,7 @@ class Characters
      * @param \DateTime $created
      * @return Characters
      */
-    public function setCreated($created)
-    {
+    public function setCreated($created) {
         $this->created = $created;
 
         return $this;
@@ -1110,8 +1049,7 @@ class Characters
      *
      * @return \DateTime
      */
-    public function getCreated()
-    {
+    public function getCreated() {
         return $this->created;
     }
 
@@ -1121,8 +1059,7 @@ class Characters
      * @param \DateTime $updated
      * @return Characters
      */
-    public function setUpdated($updated)
-    {
+    public function setUpdated($updated) {
         $this->updated = $updated;
 
         return $this;
@@ -1133,8 +1070,7 @@ class Characters
      *
      * @return \DateTime
      */
-    public function getUpdated()
-    {
+    public function getUpdated() {
         return $this->updated;
     }
 
@@ -1144,8 +1080,7 @@ class Characters
      * @param Peoples $people
      * @return Characters
      */
-    public function setPeople(Peoples $people = null)
-    {
+    public function setPeople(Peoples $people = null) {
         $this->people = $people;
 
         return $this;
@@ -1156,8 +1091,7 @@ class Characters
      *
      * @return Peoples
      */
-    public function getPeople()
-    {
+    public function getPeople() {
         return $this->people;
     }
 
@@ -1167,8 +1101,7 @@ class Characters
      * @param Armors $armors
      * @return Characters
      */
-    public function addArmor(Armors $armors)
-    {
+    public function addArmor(Armors $armors) {
         $this->armors[] = $armors;
 
         return $this;
@@ -1179,8 +1112,7 @@ class Characters
      *
      * @param Armors $armors
      */
-    public function removeArmor(Armors $armors)
-    {
+    public function removeArmor(Armors $armors) {
         $this->armors->removeElement($armors);
     }
 
@@ -1189,8 +1121,7 @@ class Characters
      *
      * @return Armors[]
      */
-    public function getArmors()
-    {
+    public function getArmors() {
         return $this->armors;
     }
 
@@ -1200,8 +1131,7 @@ class Characters
      * @param Artifacts $artifacts
      * @return Characters
      */
-    public function addArtifact(Artifacts $artifacts)
-    {
+    public function addArtifact(Artifacts $artifacts) {
         $this->artifacts[] = $artifacts;
 
         return $this;
@@ -1212,8 +1142,7 @@ class Characters
      *
      * @param Artifacts $artifacts
      */
-    public function removeArtifact(Artifacts $artifacts)
-    {
+    public function removeArtifact(Artifacts $artifacts) {
         $this->artifacts->removeElement($artifacts);
     }
 
@@ -1222,8 +1151,7 @@ class Characters
      *
      * @return Artifacts[]
      */
-    public function getArtifacts()
-    {
+    public function getArtifacts() {
         return $this->artifacts;
     }
 
@@ -1233,8 +1161,7 @@ class Characters
      * @param Miracles $miracles
      * @return Characters
      */
-    public function addMiracle(Miracles $miracles)
-    {
+    public function addMiracle(Miracles $miracles) {
         $this->miracles[] = $miracles;
 
         return $this;
@@ -1245,8 +1172,7 @@ class Characters
      *
      * @param Miracles $miracles
      */
-    public function removeMiracle(Miracles $miracles)
-    {
+    public function removeMiracle(Miracles $miracles) {
         $this->miracles->removeElement($miracles);
     }
 
@@ -1255,8 +1181,7 @@ class Characters
      *
      * @return Miracles[]
      */
-    public function getMiracles()
-    {
+    public function getMiracles() {
         return $this->miracles;
     }
 
@@ -1266,8 +1191,7 @@ class Characters
      * @param Ogham $ogham
      * @return Characters
      */
-    public function addOgham(Ogham $ogham)
-    {
+    public function addOgham(Ogham $ogham) {
         $this->ogham[] = $ogham;
 
         return $this;
@@ -1278,8 +1202,7 @@ class Characters
      *
      * @param Ogham $ogham
      */
-    public function removeOgham(Ogham $ogham)
-    {
+    public function removeOgham(Ogham $ogham) {
         $this->ogham->removeElement($ogham);
     }
 
@@ -1288,8 +1211,7 @@ class Characters
      *
      * @return Ogham[]
      */
-    public function getOgham()
-    {
+    public function getOgham() {
         return $this->ogham;
     }
 
@@ -1299,8 +1221,7 @@ class Characters
      * @param Weapons $weapons
      * @return Characters
      */
-    public function addWeapon(Weapons $weapons)
-    {
+    public function addWeapon(Weapons $weapons) {
         $this->weapons[] = $weapons;
 
         return $this;
@@ -1311,8 +1232,7 @@ class Characters
      *
      * @param Weapons $weapons
      */
-    public function removeWeapon(Weapons $weapons)
-    {
+    public function removeWeapon(Weapons $weapons) {
         $this->weapons->removeElement($weapons);
     }
 
@@ -1321,8 +1241,7 @@ class Characters
      *
      * @return Weapons[]
      */
-    public function getWeapons()
-    {
+    public function getWeapons() {
         return $this->weapons;
     }
 
@@ -1332,8 +1251,7 @@ class Characters
      * @param SocialClasses $socialClasses
      * @return Characters
      */
-    public function setSocialClasses(SocialClasses $socialClasses = null)
-    {
+    public function setSocialClasses(SocialClasses $socialClasses = null) {
         $this->socialClasses = $socialClasses;
 
         return $this;
@@ -1344,8 +1262,7 @@ class Characters
      *
      * @return SocialClasses
      */
-    public function getSocialClasses()
-    {
+    public function getSocialClasses() {
         return $this->socialClasses;
     }
 
@@ -1355,8 +1272,7 @@ class Characters
      * @param Domains $socialClassDomain1
      * @return Characters
      */
-    public function setSocialClassDomain1(Domains $socialClassDomain1 = null)
-    {
+    public function setSocialClassDomain1(Domains $socialClassDomain1 = null) {
         $this->SocialClassDomain1 = $socialClassDomain1;
 
         return $this;
@@ -1367,8 +1283,7 @@ class Characters
      *
      * @return Domains
      */
-    public function getSocialClassDomain1()
-    {
+    public function getSocialClassDomain1() {
         return $this->SocialClassDomain1;
     }
 
@@ -1378,8 +1293,7 @@ class Characters
      * @param Domains $socialClassDomain2
      * @return Characters
      */
-    public function setSocialClassDomain2(Domains $socialClassDomain2 = null)
-    {
+    public function setSocialClassDomain2(Domains $socialClassDomain2 = null) {
         $this->SocialClassDomain2 = $socialClassDomain2;
 
         return $this;
@@ -1390,8 +1304,7 @@ class Characters
      *
      * @return Domains
      */
-    public function getSocialClassDomain2()
-    {
+    public function getSocialClassDomain2() {
         return $this->SocialClassDomain2;
     }
 
@@ -1401,8 +1314,7 @@ class Characters
      * @param Disorders $disorder
      * @return Characters
      */
-    public function setDisorder(Disorders $disorder = null)
-    {
+    public function setDisorder(Disorders $disorder = null) {
         $this->disorder = $disorder;
 
         return $this;
@@ -1413,8 +1325,7 @@ class Characters
      *
      * @return Disorders
      */
-    public function getDisorder()
-    {
+    public function getDisorder() {
         return $this->disorder;
     }
 
@@ -1424,8 +1335,7 @@ class Characters
      * @param Jobs $job
      * @return Characters
      */
-    public function setJob(Jobs $job = null)
-    {
+    public function setJob(Jobs $job = null) {
         $this->job = $job;
 
         return $this;
@@ -1436,8 +1346,7 @@ class Characters
      *
      * @return Jobs
      */
-    public function getJob()
-    {
+    public function getJob() {
         return $this->job;
     }
 
@@ -1447,8 +1356,7 @@ class Characters
      * @param Regions $region
      * @return Characters
      */
-    public function setRegion(Regions $region = null)
-    {
+    public function setRegion(Regions $region = null) {
         $this->region = $region;
 
         return $this;
@@ -1459,8 +1367,7 @@ class Characters
      *
      * @return Regions
      */
-    public function getRegion()
-    {
+    public function getRegion() {
         return $this->region;
     }
 
@@ -1470,8 +1377,7 @@ class Characters
      * @param Traits $traitFlaw
      * @return Characters
      */
-    public function setTraitFlaw(Traits $traitFlaw = null)
-    {
+    public function setTraitFlaw(Traits $traitFlaw = null) {
         $this->traitFlaw = $traitFlaw;
 
         return $this;
@@ -1482,8 +1388,7 @@ class Characters
      *
      * @return Traits
      */
-    public function getTraitFlaw()
-    {
+    public function getTraitFlaw() {
         return $this->traitFlaw;
     }
 
@@ -1493,8 +1398,7 @@ class Characters
      * @param Traits $traitQuality
      * @return Characters
      */
-    public function setTraitQuality(Traits $traitQuality = null)
-    {
+    public function setTraitQuality(Traits $traitQuality = null) {
         $this->traitQuality = $traitQuality;
 
         return $this;
@@ -1505,8 +1409,7 @@ class Characters
      *
      * @return Traits
      */
-    public function getTraitQuality()
-    {
+    public function getTraitQuality() {
         return $this->traitQuality;
     }
 
@@ -1516,8 +1419,7 @@ class Characters
      * @param CharAvtgs $avantages
      * @return Characters
      */
-    public function addAvantage(CharAvtgs $avantages)
-    {
+    public function addAvantage(CharAvtgs $avantages) {
         $this->avantages[] = $avantages;
 
         return $this;
@@ -1528,8 +1430,7 @@ class Characters
      *
      * @param CharAvtgs $avantages
      */
-    public function removeAvantage(CharAvtgs $avantages)
-    {
+    public function removeAvantage(CharAvtgs $avantages) {
         $this->avantages->removeElement($avantages);
     }
 
@@ -1538,8 +1439,7 @@ class Characters
      *
      * @return Avantages[]
      */
-    public function getAvantages()
-    {
+    public function getAvantages() {
         return $this->avantages;
     }
 
@@ -1549,8 +1449,7 @@ class Characters
      * @param CharDomains $domains
      * @return Characters
      */
-    public function addDomain(CharDomains $domains)
-    {
+    public function addDomain(CharDomains $domains) {
         $this->domains[] = $domains;
 
         return $this;
@@ -1561,8 +1460,7 @@ class Characters
      *
      * @param CharDomains $domains
      */
-    public function removeDomain(CharDomains $domains)
-    {
+    public function removeDomain(CharDomains $domains) {
         $this->domains->removeElement($domains);
     }
 
@@ -1571,8 +1469,7 @@ class Characters
      *
      * @return Domains[]
      */
-    public function getDomains()
-    {
+    public function getDomains() {
         return $this->domains;
     }
 
@@ -1582,8 +1479,7 @@ class Characters
      * @param CharDisciplines $disciplines
      * @return Characters
      */
-    public function addDiscipline(CharDisciplines $disciplines)
-    {
+    public function addDiscipline(CharDisciplines $disciplines) {
         $this->disciplines[] = $disciplines;
 
         return $this;
@@ -1594,8 +1490,7 @@ class Characters
      *
      * @param CharDisciplines $disciplines
      */
-    public function removeDiscipline(CharDisciplines $disciplines)
-    {
+    public function removeDiscipline(CharDisciplines $disciplines) {
         $this->disciplines->removeElement($disciplines);
     }
 
@@ -1604,8 +1499,7 @@ class Characters
      *
      * @return Disciplines[]
      */
-    public function getDisciplines()
-    {
+    public function getDisciplines() {
         return $this->disciplines;
     }
 
@@ -1615,8 +1509,7 @@ class Characters
      * @param CharWays $ways
      * @return Characters
      */
-    public function addWay(CharWays $ways)
-    {
+    public function addWay(CharWays $ways) {
         $this->ways[] = $ways;
 
         return $this;
@@ -1627,8 +1520,7 @@ class Characters
      *
      * @param CharWays $ways
      */
-    public function removeWay(CharWays $ways)
-    {
+    public function removeWay(CharWays $ways) {
         $this->ways->removeElement($ways);
     }
 
@@ -1637,8 +1529,7 @@ class Characters
      *
      * @return Ways[]
      */
-    public function getWays()
-    {
+    public function getWays() {
         return $this->ways;
     }
 
@@ -1648,8 +1539,7 @@ class Characters
      * @param CharFlux $flux
      * @return Characters
      */
-    public function addFlux(CharFlux $flux)
-    {
+    public function addFlux(CharFlux $flux) {
         $this->flux[] = $flux;
 
         return $this;
@@ -1660,8 +1550,7 @@ class Characters
      *
      * @param CharFlux $flux
      */
-    public function removeFlux(CharFlux $flux)
-    {
+    public function removeFlux(CharFlux $flux) {
         $this->flux->removeElement($flux);
     }
 
@@ -1670,8 +1559,7 @@ class Characters
      *
      * @return Flux[]
      */
-    public function getFlux()
-    {
+    public function getFlux() {
         return $this->flux;
     }
 
@@ -1681,8 +1569,7 @@ class Characters
      * @param CharModifications $modifications
      * @return Characters
      */
-    public function addModification(CharModifications $modifications)
-    {
+    public function addModification(CharModifications $modifications) {
         $this->modifications[] = $modifications;
 
         return $this;
@@ -1693,8 +1580,7 @@ class Characters
      *
      * @param CharModifications $modifications
      */
-    public function removeModification(CharModifications $modifications)
-    {
+    public function removeModification(CharModifications $modifications) {
         $this->modifications->removeElement($modifications);
     }
 
@@ -1703,8 +1589,7 @@ class Characters
      *
      * @return array
      */
-    public function getModifications()
-    {
+    public function getModifications() {
         return $this->modifications;
     }
 
@@ -1714,8 +1599,7 @@ class Characters
      * @param CharSetbacks $setbacks
      * @return Characters
      */
-    public function addSetback(CharSetbacks $setbacks)
-    {
+    public function addSetback(CharSetbacks $setbacks) {
         $this->setbacks[] = $setbacks;
 
         return $this;
@@ -1726,8 +1610,7 @@ class Characters
      *
      * @param CharSetbacks $setbacks
      */
-    public function removeSetback(CharSetbacks $setbacks)
-    {
+    public function removeSetback(CharSetbacks $setbacks) {
         $this->setbacks->removeElement($setbacks);
     }
 
@@ -1736,8 +1619,7 @@ class Characters
      *
      * @return Setbacks[]
      */
-    public function getSetbacks()
-    {
+    public function getSetbacks() {
         return $this->setbacks;
     }
 
@@ -1747,8 +1629,7 @@ class Characters
      * @param Users $user
      * @return Characters
      */
-    public function setUser(Users $user = null)
-    {
+    public function setUser(Users $user = null) {
         $this->user = $user;
 
         return $this;
@@ -1759,8 +1640,7 @@ class Characters
      *
      * @return Users
      */
-    public function getUser()
-    {
+    public function getUser() {
         return $this->user;
     }
 
@@ -1770,8 +1650,7 @@ class Characters
      * @param Games $game
      * @return Characters
      */
-    public function setGame(Games $game = null)
-    {
+    public function setGame(Games $game = null) {
         $this->game = $game;
 
         return $this;
@@ -1782,8 +1661,7 @@ class Characters
      *
      * @return Games
      */
-    public function getGame()
-    {
+    public function getGame() {
         return $this->game;
     }
 
@@ -1793,8 +1671,7 @@ class Characters
      * @param integer $hardening
      * @return Characters
      */
-    public function setHardening($hardening)
-    {
+    public function setHardening($hardening) {
         $this->hardening = $hardening;
 
         return $this;
@@ -1805,8 +1682,7 @@ class Characters
      *
      * @return integer
      */
-    public function getHardening()
-    {
+    public function getHardening() {
         return $this->hardening;
     }
 
@@ -1828,8 +1704,8 @@ class Characters
             if (
                 $charDomain instanceof CharDomains &&
                 ($charDomain->getDomain()->getId() == $id
-                || $charDomain->getDomain()->getName() == $id
-                || $charDomain->getDomain() === $id
+                    || $charDomain->getDomain()->getName() == $id
+                    || $charDomain->getDomain() === $id
                 )
             ) {
                 return $charDomain;
@@ -1866,8 +1742,8 @@ class Characters
             if (
                 $charDiscipline instanceof CharDisciplines &&
                 ($charDiscipline->getDiscipline()->getId() == $id
-                || $charDiscipline->getDiscipline()->getName() == $id
-                || $charDiscipline->getDiscipline() == $id)
+                    || $charDiscipline->getDiscipline()->getName() == $id
+                    || $charDiscipline->getDiscipline() == $id)
             ) {
                 return $charDiscipline;
             }
@@ -1905,8 +1781,7 @@ class Characters
     }
 
 
-
-    public function getPotential(){
+    public function getPotential() {
         $creativity = $this->getWay('cre')->getScore();
         if ($creativity == 1) {
             return 1;

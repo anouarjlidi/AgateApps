@@ -1,8 +1,9 @@
 <?php
 
 namespace CorahnRin\ModelsBundle\Entity;
-use Gedmo\Mapping\Annotation as Gedmo;
+
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Mails
@@ -11,8 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity(repositoryClass="CorahnRin\ModelsBundle\Repository\MailsRepository")
  */
-class Mails
-{
+class Mails {
     /**
      * @var integer
      *
@@ -52,7 +52,6 @@ class Mails
 
     /**
      * @var \Datetime
-
      * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
@@ -70,8 +69,7 @@ class Mails
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -81,8 +79,7 @@ class Mails
      * @param string $code
      * @return Mails
      */
-    public function setCode($code)
-    {
+    public function setCode($code) {
         $this->code = $code;
 
         return $this;
@@ -93,8 +90,7 @@ class Mails
      *
      * @return string
      */
-    public function getCode()
-    {
+    public function getCode() {
         return $this->code;
     }
 
@@ -104,8 +100,7 @@ class Mails
      * @param string $content
      * @return Mails
      */
-    public function setContent($content)
-    {
+    public function setContent($content) {
         $this->content = $content;
 
         return $this;
@@ -116,8 +111,7 @@ class Mails
      *
      * @return string
      */
-    public function getContent()
-    {
+    public function getContent() {
         return $this->content;
     }
 
@@ -127,8 +121,7 @@ class Mails
      * @param string $subject
      * @return Mails
      */
-    public function setSubject($subject)
-    {
+    public function setSubject($subject) {
         $this->subject = $subject;
 
         return $this;
@@ -139,8 +132,7 @@ class Mails
      *
      * @return string
      */
-    public function getSubject()
-    {
+    public function getSubject() {
         return $this->subject;
     }
 
@@ -150,8 +142,7 @@ class Mails
      * @param \DateTime $created
      * @return Mails
      */
-    public function setCreated($created)
-    {
+    public function setCreated($created) {
         $this->created = $created;
 
         return $this;
@@ -162,8 +153,7 @@ class Mails
      *
      * @return \DateTime
      */
-    public function getCreated()
-    {
+    public function getCreated() {
         return $this->created;
     }
 
@@ -173,8 +163,7 @@ class Mails
      * @param \DateTime $updated
      * @return Mails
      */
-    public function setUpdated($updated)
-    {
+    public function setUpdated($updated) {
         $this->updated = $updated;
 
         return $this;
@@ -185,8 +174,7 @@ class Mails
      *
      * @return \DateTime
      */
-    public function getUpdated()
-    {
+    public function getUpdated() {
         return $this->updated;
     }
 }

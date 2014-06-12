@@ -3,8 +3,8 @@
 namespace CorahnRin\ModelsBundle\Entity;
 
 use CorahnRin\UsersBundle\Entity\Users;
-use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -13,8 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="characters_modifications")
  * @ORM\Entity(repositoryClass="CorahnRin\ModelsBundle\Repository\CharModificationsRepository")
  */
-class CharModifications
-{
+class CharModifications {
     /**
      * @var integer
      *
@@ -55,7 +54,6 @@ class CharModifications
 
     /**
      * @var \Datetime
-
      * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
@@ -73,8 +71,7 @@ class CharModifications
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -84,8 +81,7 @@ class CharModifications
      * @param \stdClass $before
      * @return CharModifications
      */
-    public function setBefore($before)
-    {
+    public function setBefore($before) {
         $this->before = $before;
 
         return $this;
@@ -96,8 +92,7 @@ class CharModifications
      *
      * @return \stdClass
      */
-    public function getBefore()
-    {
+    public function getBefore() {
         return $this->before;
     }
 
@@ -107,8 +102,7 @@ class CharModifications
      * @param \DateTime $created
      * @return CharModifications
      */
-    public function setCreated($created)
-    {
+    public function setCreated($created) {
         $this->created = $created;
 
         return $this;
@@ -119,8 +113,7 @@ class CharModifications
      *
      * @return \DateTime
      */
-    public function getCreated()
-    {
+    public function getCreated() {
         return $this->created;
     }
 
@@ -130,8 +123,7 @@ class CharModifications
      * @param \DateTime $updated
      * @return CharModifications
      */
-    public function setUpdated($updated)
-    {
+    public function setUpdated($updated) {
         $this->updated = $updated;
 
         return $this;
@@ -142,8 +134,7 @@ class CharModifications
      *
      * @return \DateTime
      */
-    public function getUpdated()
-    {
+    public function getUpdated() {
         return $this->updated;
     }
 
@@ -153,8 +144,7 @@ class CharModifications
      * @param Characters $character
      * @return CharModifications
      */
-    public function setCharacter(Characters $character = null)
-    {
+    public function setCharacter(Characters $character = null) {
         $this->character = $character;
 
         return $this;
@@ -165,8 +155,7 @@ class CharModifications
      *
      * @return Characters
      */
-    public function getCharacter()
-    {
+    public function getCharacter() {
         return $this->character;
     }
 
@@ -176,8 +165,7 @@ class CharModifications
      * @param Users $user
      * @return CharModifications
      */
-    public function setUser(Users $user = null)
-    {
+    public function setUser(Users $user = null) {
         $this->user = $user;
 
         return $this;
@@ -188,8 +176,7 @@ class CharModifications
      *
      * @return Users
      */
-    public function getUser()
-    {
+    public function getUser() {
         return $this->user;
     }
 

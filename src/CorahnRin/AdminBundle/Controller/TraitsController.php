@@ -9,14 +9,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-class TraitsController extends Controller
-{
+class TraitsController extends Controller {
     /**
      * @Route("/admin/generator/traits/")
      * @Template()
      */
-    public function adminListAction()
-    {
+    public function adminListAction() {
         return $this->getDoctrine()->getManager()->getRepository('CorahnRinCharactersBundle:Traits')->findAllDifferenciated();
     }
 
@@ -24,8 +22,7 @@ class TraitsController extends Controller
      * @Route("/admin/generator/traits/add/")
      * @Template("PierstovalAdminBundle:Form:add.html.twig")
      */
-    public function addAction(Request $request)
-    {
+    public function addAction(Request $request) {
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN_GENERATOR_SUPER')) {
             throw $this->createAccessDeniedException();
         }
@@ -36,16 +33,14 @@ class TraitsController extends Controller
      * @Route("/admin/generator/traits/edit/{id}")
      * @Template("PierstovalAdminBundle:Form:add.html.twig")
      */
-    public function editAction(Traits $trait, Request $request)
-    {
+    public function editAction(Traits $trait, Request $request) {
         return $this->handle_request($trait, $request);
     }
 
     /**
      * @Route("/admin/generator/traits/delete/{id}")
      */
-    public function deleteAction(Traits $element)
-    {
+    public function deleteAction(Traits $element) {
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN_GENERATOR_SUPER')) {
             throw $this->createAccessDeniedException();
         }
@@ -58,8 +53,7 @@ class TraitsController extends Controller
         return $this->redirect($this->generateUrl('corahnrin_admin_traits_adminlist'));
     }
 
-    private function handle_request(Traits $element, Request $request)
-    {
+    private function handle_request(Traits $element, Request $request) {
         $method = preg_replace('#^' . str_replace('\\', '\\\\', __CLASS__) . '::([a-zA-Z]+)Action$#isUu', '$1', $request->get('_controller'));
 
         $form = $this->createForm(new TraitsType(), $element);
@@ -71,7 +65,8 @@ class TraitsController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($element);
             $em->flush();
-            $this->get('session')->getFlashBag()->add('success', 'Trait de caractère ' . ($method == 'add' ? 'ajouté' : 'modifié') . ' : <strong>' . $element->getName() . '</strong>');
+            $this->get('session')->getFlashBag()->add('success', 'Trait de caractère ' . ($method == 'add' ? 'ajouté'
+                    : 'modifié') . ' : <strong>' . $element->getName() . '</strong>');
             return $this->redirect($this->generateUrl('corahnrin_admin_traits_adminlist'));
         }
 

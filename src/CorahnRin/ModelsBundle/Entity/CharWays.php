@@ -1,8 +1,9 @@
 <?php
 
 namespace CorahnRin\ModelsBundle\Entity;
-use Gedmo\Mapping\Annotation as Gedmo;
+
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * CharWays
@@ -10,13 +11,12 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="characters_ways")
  * @ORM\Entity(repositoryClass="CorahnRin\ModelsBundle\Repository\CharWaysRepository")
  */
-class CharWays
-{
+class CharWays {
     /**
      * @var Characters
      *
      * @ORM\Id
-	 * @ORM\ManyToOne(targetEntity="Characters", inversedBy="ways")
+     * @ORM\ManyToOne(targetEntity="Characters", inversedBy="ways")
      */
     protected $character;
 
@@ -24,7 +24,7 @@ class CharWays
      * @var Ways
      *
      * @ORM\Id
-	 * @ORM\ManyToOne(targetEntity="Ways")
+     * @ORM\ManyToOne(targetEntity="Ways")
      */
     protected $way;
 
@@ -41,8 +41,7 @@ class CharWays
      * @param integer $character
      * @return CharWays
      */
-    public function setCharacter($character)
-    {
+    public function setCharacter($character) {
         $this->character = $character;
 
         return $this;
@@ -53,8 +52,7 @@ class CharWays
      *
      * @return integer
      */
-    public function getCharacter()
-    {
+    public function getCharacter() {
         return $this->character;
     }
 
@@ -64,8 +62,7 @@ class CharWays
      * @param Ways $way
      * @return CharWays
      */
-    public function setWay(Ways $way)
-    {
+    public function setWay(Ways $way) {
         $this->way = $way;
 
         return $this;
@@ -76,8 +73,7 @@ class CharWays
      *
      * @return Ways
      */
-    public function getWay()
-    {
+    public function getWay() {
         return $this->way;
     }
 
@@ -87,8 +83,7 @@ class CharWays
      * @param integer $score
      * @return CharWays
      */
-    public function setScore($score)
-    {
+    public function setScore($score) {
         $this->score = $score;
 
         return $this;
@@ -99,8 +94,7 @@ class CharWays
      *
      * @return integer
      */
-    public function getScore()
-    {
+    public function getScore() {
         return $this->score;
     }
 }

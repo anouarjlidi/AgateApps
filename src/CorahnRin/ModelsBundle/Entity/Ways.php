@@ -1,6 +1,7 @@
 <?php
 
 namespace CorahnRin\ModelsBundle\Entity;
+
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -11,8 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity(repositoryClass="CorahnRin\ModelsBundle\Repository\WaysRepository")
  */
-class Ways
-{
+class Ways {
     /**
      * @var integer
      *
@@ -59,7 +59,6 @@ class Ways
 
     /**
      * @var \Datetime
-
      * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
@@ -73,7 +72,7 @@ class Ways
     protected $deleted = null;
 
     function __toString() {
-        return $this->id.' - '.$this->name;
+        return $this->id . ' - ' . $this->name;
     }
 
     /**
@@ -81,8 +80,7 @@ class Ways
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -92,8 +90,7 @@ class Ways
      * @param string $shortName
      * @return Ways
      */
-    public function setShortName($shortName)
-    {
+    public function setShortName($shortName) {
         $this->shortName = $shortName;
 
         return $this;
@@ -104,8 +101,7 @@ class Ways
      *
      * @return string
      */
-    public function getShortName()
-    {
+    public function getShortName() {
         return $this->shortName;
     }
 
@@ -115,8 +111,7 @@ class Ways
      * @param string $name
      * @return Ways
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -127,8 +122,7 @@ class Ways
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -138,8 +132,7 @@ class Ways
      * @param string $fault
      * @return Ways
      */
-    public function setFault($fault)
-    {
+    public function setFault($fault) {
         $this->fault = $fault;
 
         return $this;
@@ -150,8 +143,7 @@ class Ways
      *
      * @return string
      */
-    public function getFault()
-    {
+    public function getFault() {
         return $this->fault;
     }
 
@@ -161,8 +153,7 @@ class Ways
      * @param string $description
      * @return Ways
      */
-    public function setDescription($description)
-    {
+    public function setDescription($description) {
         $this->description = $description;
 
         return $this;
@@ -173,8 +164,7 @@ class Ways
      *
      * @return string
      */
-    public function getDescription()
-    {
+    public function getDescription() {
         return $this->description;
     }
 
@@ -184,8 +174,7 @@ class Ways
      * @param \DateTime $created
      * @return Ways
      */
-    public function setCreated($created)
-    {
+    public function setCreated($created) {
         $this->created = $created;
 
         return $this;
@@ -196,8 +185,7 @@ class Ways
      *
      * @return \DateTime
      */
-    public function getCreated()
-    {
+    public function getCreated() {
         return $this->created;
     }
 
@@ -207,8 +195,7 @@ class Ways
      * @param \DateTime $updated
      * @return Ways
      */
-    public function setUpdated($updated)
-    {
+    public function setUpdated($updated) {
         $this->updated = $updated;
 
         return $this;
@@ -219,8 +206,7 @@ class Ways
      *
      * @return \DateTime
      */
-    public function getUpdated()
-    {
+    public function getUpdated() {
         return $this->updated;
     }
 }

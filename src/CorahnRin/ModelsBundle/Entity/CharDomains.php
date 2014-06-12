@@ -1,8 +1,9 @@
 <?php
 
 namespace CorahnRin\ModelsBundle\Entity;
-use Gedmo\Mapping\Annotation as Gedmo;
+
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -11,13 +12,12 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="characters_domains")
  * @ORM\Entity(repositoryClass="CorahnRin\ModelsBundle\Repository\CharDomainsRepository")
  */
-class CharDomains
-{
+class CharDomains {
     /**
      * @var Characters
      *
      * @ORM\Id
-	 * @ORM\ManyToOne(targetEntity="Characters", inversedBy="domains")
+     * @ORM\ManyToOne(targetEntity="Characters", inversedBy="domains")
      * @Assert\NotNull()
      */
     protected $character;
@@ -26,7 +26,7 @@ class CharDomains
      * @var Domains
      *
      * @ORM\Id
-	 * @ORM\ManyToOne(targetEntity="Domains")
+     * @ORM\ManyToOne(targetEntity="Domains")
      * @Assert\NotNull()
      */
     protected $domain;
@@ -46,8 +46,7 @@ class CharDomains
      * @param integer $score
      * @return CharDomains
      */
-    public function setScore($score)
-    {
+    public function setScore($score) {
         $this->score = $score;
 
         return $this;
@@ -58,8 +57,7 @@ class CharDomains
      *
      * @return integer
      */
-    public function getScore()
-    {
+    public function getScore() {
         return $this->score;
     }
 
@@ -69,8 +67,7 @@ class CharDomains
      * @param Characters $character
      * @return CharDomains
      */
-    public function setCharacter(Characters $character)
-    {
+    public function setCharacter(Characters $character) {
         $this->character = $character;
 
         return $this;
@@ -81,8 +78,7 @@ class CharDomains
      *
      * @return Characters
      */
-    public function getCharacter()
-    {
+    public function getCharacter() {
         return $this->character;
     }
 
@@ -92,8 +88,7 @@ class CharDomains
      * @param Domains $domain
      * @return CharDomains
      */
-    public function setDomain(Domains $domain)
-    {
+    public function setDomain(Domains $domain) {
         $this->domain = $domain;
 
         return $this;
@@ -104,8 +99,7 @@ class CharDomains
      *
      * @return Domains
      */
-    public function getDomain()
-    {
+    public function getDomain() {
         return $this->domain;
     }
 }

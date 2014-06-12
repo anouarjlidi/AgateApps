@@ -9,14 +9,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-class DomainsController extends Controller
-{
+class DomainsController extends Controller {
     /**
      * @Route("/admin/generator/domains/")
      * @Template()
      */
-    public function adminListAction()
-    {
+    public function adminListAction() {
         $name = str_replace('Controller', '', preg_replace('#^([a-zA-Z]+\\\)*#isu', '', __CLASS__));
         return array(
             strtolower($name) => $this->getDoctrine()->getManager()->getRepository('CorahnRinCharactersBundle:' . $name)->findAll(),
@@ -27,13 +25,11 @@ class DomainsController extends Controller
      * @Route("/admin/generator/domains/edit/{id}")
      * @Template("PierstovalAdminBundle:Form:add.html.twig")
      */
-    public function editAction(Domains $domain, Request $request)
-    {
+    public function editAction(Domains $domain, Request $request) {
         return $this->handle_request($domain, $request);
     }
 
-    private function handle_request(Domains $element, Request $request)
-    {
+    private function handle_request(Domains $element, Request $request) {
 //        $method = preg_replace('#^' . str_replace('\\', '\\\\', __CLASS__) . '::([a-zA-Z]+)Action$#isUu', '$1', $request->get('_controller'));
 
         $form = $this->createForm(new DomainsType(), $element);

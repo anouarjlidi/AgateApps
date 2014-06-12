@@ -1,8 +1,9 @@
 <?php
 
 namespace CorahnRin\ModelsBundle\Entity;
-use Gedmo\Mapping\Annotation as Gedmo;
+
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * MailsSent
@@ -11,8 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity(repositoryClass="CorahnRin\ModelsBundle\Repository\MailsSentRepository")
  */
-class MailsSent
-{
+class MailsSent {
     /**
      * @var integer
      *
@@ -59,7 +59,6 @@ class MailsSent
 
     /**
      * @var \Datetime
-
      * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
@@ -84,8 +83,7 @@ class MailsSent
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -95,8 +93,7 @@ class MailsSent
      * @param string $toName
      * @return MailsSent
      */
-    public function setToName($toName)
-    {
+    public function setToName($toName) {
         $this->toName = $toName;
 
         return $this;
@@ -107,8 +104,7 @@ class MailsSent
      *
      * @return string
      */
-    public function getToName()
-    {
+    public function getToName() {
         return $this->toName;
     }
 
@@ -118,8 +114,7 @@ class MailsSent
      * @param string $toEmail
      * @return MailsSent
      */
-    public function setToEmail($toEmail)
-    {
+    public function setToEmail($toEmail) {
         $this->toEmail = $toEmail;
 
         return $this;
@@ -130,8 +125,7 @@ class MailsSent
      *
      * @return string
      */
-    public function getToEmail()
-    {
+    public function getToEmail() {
         return $this->toEmail;
     }
 
@@ -141,8 +135,7 @@ class MailsSent
      * @param string $subject
      * @return MailsSent
      */
-    public function setSubject($subject)
-    {
+    public function setSubject($subject) {
         $this->subject = $subject;
 
         return $this;
@@ -153,8 +146,7 @@ class MailsSent
      *
      * @return string
      */
-    public function getSubject()
-    {
+    public function getSubject() {
         return $this->subject;
     }
 
@@ -164,8 +156,7 @@ class MailsSent
      * @param string $content
      * @return MailsSent
      */
-    public function setContent($content)
-    {
+    public function setContent($content) {
         $this->content = $content;
 
         return $this;
@@ -176,8 +167,7 @@ class MailsSent
      *
      * @return string
      */
-    public function getContent()
-    {
+    public function getContent() {
         return $this->content;
     }
 
@@ -187,8 +177,7 @@ class MailsSent
      * @param \DateTime $created
      * @return MailsSent
      */
-    public function setCreated($created)
-    {
+    public function setCreated($created) {
         $this->created = $created;
 
         return $this;
@@ -199,8 +188,7 @@ class MailsSent
      *
      * @return \DateTime
      */
-    public function getCreated()
-    {
+    public function getCreated() {
         return $this->created;
     }
 
@@ -210,8 +198,7 @@ class MailsSent
      * @param \DateTime $updated
      * @return MailsSent
      */
-    public function setUpdated($updated)
-    {
+    public function setUpdated($updated) {
         $this->updated = $updated;
 
         return $this;
@@ -222,8 +209,7 @@ class MailsSent
      *
      * @return \DateTime
      */
-    public function getUpdated()
-    {
+    public function getUpdated() {
         return $this->updated;
     }
 
@@ -233,8 +219,7 @@ class MailsSent
      * @param Mails $mail
      * @return MailsSent
      */
-    public function setMail(Mails $mail = null)
-    {
+    public function setMail(Mails $mail = null) {
         $this->mail = $mail;
 
         return $this;
@@ -245,8 +230,7 @@ class MailsSent
      *
      * @return Mails
      */
-    public function getMail()
-    {
+    public function getMail() {
         return $this->mail;
     }
 }

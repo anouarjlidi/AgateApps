@@ -42,8 +42,6 @@ class Weapons
      * @var boolean
      *
      * @ORM\Column(type="smallint")
-     * @Assert\GreaterThan(value=0)
-     * @Assert\NotNull()
      */
     protected $damage;
 
@@ -51,8 +49,6 @@ class Weapons
      * @var integer
      *
      * @ORM\Column(type="smallint")
-     * @Assert\GreaterThan(value=0)
-     * @Assert\NotNull()
      */
     protected $price;
 
@@ -60,7 +56,6 @@ class Weapons
      * @var string
      *
      * @ORM\Column(type="string", length=3)
-     * @Assert\Choice(choices={"CO","FR","RA","EX"})
      */
     protected $availability;
 
@@ -75,7 +70,6 @@ class Weapons
      * @var integer
      *
      * @ORM\Column(type="smallint")
-     * @Assert\GreaterThan(value=0)
      */
     protected $range;
 

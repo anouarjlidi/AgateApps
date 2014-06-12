@@ -1,6 +1,7 @@
 <?php
 
 namespace CorahnRin\ModelsBundle\Entity;
+
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -11,8 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity(repositoryClass="CorahnRin\ModelsBundle\Repository\RegionsRepository")
  */
-class Regions
-{
+class Regions {
     /**
      * @var integer
      *
@@ -65,7 +65,7 @@ class Regions
     protected $updated;
 
     /**
-     * @var boolean
+     * @var \Datetime
      *
      * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
@@ -76,8 +76,7 @@ class Regions
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -87,8 +86,7 @@ class Regions
      * @param string $name
      * @return Regions
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -99,8 +97,7 @@ class Regions
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -110,8 +107,7 @@ class Regions
      * @param string $description
      * @return Regions
      */
-    public function setDescription($description)
-    {
+    public function setDescription($description) {
         $this->description = $description;
 
         return $this;
@@ -122,8 +118,7 @@ class Regions
      *
      * @return string
      */
-    public function getDescription()
-    {
+    public function getDescription() {
         return $this->description;
     }
 
@@ -133,8 +128,7 @@ class Regions
      * @param string $kingdom
      * @return Regions
      */
-    public function setKingdom($kingdom)
-    {
+    public function setKingdom($kingdom) {
         $this->kingdom = $kingdom;
 
         return $this;
@@ -145,8 +139,7 @@ class Regions
      *
      * @return string
      */
-    public function getKingdom()
-    {
+    public function getKingdom() {
         return $this->kingdom;
     }
 
@@ -156,8 +149,7 @@ class Regions
      * @param string $coordinates
      * @return Regions
      */
-    public function setCoordinates($coordinates)
-    {
+    public function setCoordinates($coordinates) {
         $this->coordinates = $coordinates;
 
         return $this;
@@ -168,8 +160,7 @@ class Regions
      *
      * @return string
      */
-    public function getCoordinates()
-    {
+    public function getCoordinates() {
         return $this->coordinates;
     }
 
@@ -179,8 +170,7 @@ class Regions
      * @param \DateTime $created
      * @return Regions
      */
-    public function setCreated($created)
-    {
+    public function setCreated($created) {
         $this->created = $created;
 
         return $this;
@@ -191,8 +181,7 @@ class Regions
      *
      * @return \DateTime
      */
-    public function getCreated()
-    {
+    public function getCreated() {
         return $this->created;
     }
 
@@ -202,8 +191,7 @@ class Regions
      * @param \DateTime $updated
      * @return Regions
      */
-    public function setUpdated($updated)
-    {
+    public function setUpdated($updated) {
         $this->updated = $updated;
 
         return $this;
@@ -214,8 +202,7 @@ class Regions
      *
      * @return \DateTime
      */
-    public function getUpdated()
-    {
+    public function getUpdated() {
         return $this->updated;
     }
 }

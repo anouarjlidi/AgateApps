@@ -1,9 +1,9 @@
 <?php
 
 namespace CorahnRin\ModelsBundle\Entity;
+
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Avantages
@@ -12,8 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity(repositoryClass="CorahnRin\ModelsBundle\Repository\AvantagesRepository")
  */
-class Avantages
-{
+class Avantages {
     /**
      * @var integer
      *
@@ -27,7 +26,6 @@ class Avantages
      * @var string
      *
      * @ORM\Column(type="string", length=50, nullable=false, unique=true)
-     * @Assert\NotBlank()
      */
     protected $name;
 
@@ -35,7 +33,6 @@ class Avantages
      * @var string
      *
      * @ORM\Column(type="string", length=50, nullable=false)
-     * @Assert\NotBlank()
      */
     protected $nameFemale;
 
@@ -43,8 +40,6 @@ class Avantages
      * @var integer
      *
      * @ORM\Column(type="smallint")
-     * @Assert\NotNull()
-     * @Assert\GreaterThanOrEqual(value=0)
      */
     protected $xp;
 
@@ -59,8 +54,6 @@ class Avantages
      * @var boolean
      *
      * @ORM\Column(type="smallint")
-     * @Assert\NotNull()
-     * @Assert\GreaterThanOrEqual(value=0)
      */
     protected $augmentation;
 
@@ -68,7 +61,6 @@ class Avantages
      * @var string
      *
      * @ORM\Column(type="string", length=10)
-     * @Assert\NotBlank()
      */
     protected $bonusdisc;
 
@@ -101,7 +93,6 @@ class Avantages
 
     /**
      * @var \Datetime
-
      * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
@@ -119,8 +110,7 @@ class Avantages
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -130,8 +120,7 @@ class Avantages
      * @param string $name
      * @return Avantages
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -142,8 +131,7 @@ class Avantages
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -153,8 +141,7 @@ class Avantages
      * @param string $nameFemale
      * @return Avantages
      */
-    public function setNameFemale($nameFemale)
-    {
+    public function setNameFemale($nameFemale) {
         $this->nameFemale = $nameFemale;
 
         return $this;
@@ -165,8 +152,7 @@ class Avantages
      *
      * @return string
      */
-    public function getNameFemale()
-    {
+    public function getNameFemale() {
         return $this->nameFemale;
     }
 
@@ -176,8 +162,7 @@ class Avantages
      * @param integer $xp
      * @return Avantages
      */
-    public function setXp($xp)
-    {
+    public function setXp($xp) {
         $this->xp = $xp;
 
         return $this;
@@ -188,8 +173,7 @@ class Avantages
      *
      * @return integer
      */
-    public function getXp()
-    {
+    public function getXp() {
         return $this->xp;
     }
 
@@ -199,8 +183,7 @@ class Avantages
      * @param string $description
      * @return Avantages
      */
-    public function setDescription($description)
-    {
+    public function setDescription($description) {
         $this->description = $description;
 
         return $this;
@@ -211,8 +194,7 @@ class Avantages
      *
      * @return string
      */
-    public function getDescription()
-    {
+    public function getDescription() {
         return $this->description;
     }
 
@@ -222,8 +204,7 @@ class Avantages
      * @param string $bonusdisc
      * @return Avantages
      */
-    public function setBonusdisc($bonusdisc)
-    {
+    public function setBonusdisc($bonusdisc) {
         $this->bonusdisc = $bonusdisc;
 
         return $this;
@@ -234,8 +215,7 @@ class Avantages
      *
      * @return string
      */
-    public function getBonusdisc()
-    {
+    public function getBonusdisc() {
         return $this->bonusdisc;
     }
 
@@ -245,8 +225,7 @@ class Avantages
      * @param boolean $isDesv
      * @return Avantages
      */
-    public function setIsDesv($isDesv)
-    {
+    public function setIsDesv($isDesv) {
         $this->isDesv = $isDesv;
 
         return $this;
@@ -257,8 +236,7 @@ class Avantages
      *
      * @return boolean
      */
-    public function getIsDesv()
-    {
+    public function getIsDesv() {
         return $this->isDesv;
     }
 
@@ -268,8 +246,7 @@ class Avantages
      * @param boolean $isCombatArt
      * @return Avantages
      */
-    public function setIsCombatArt($isCombatArt)
-    {
+    public function setIsCombatArt($isCombatArt) {
         $this->isCombatArt = $isCombatArt;
 
         return $this;
@@ -280,8 +257,7 @@ class Avantages
      *
      * @return boolean
      */
-    public function getIsCombatArt()
-    {
+    public function getIsCombatArt() {
         return $this->isCombatArt;
     }
 
@@ -291,8 +267,7 @@ class Avantages
      * @param \DateTime $created
      * @return Avantages
      */
-    public function setCreated($created)
-    {
+    public function setCreated($created) {
         $this->created = $created;
 
         return $this;
@@ -303,8 +278,7 @@ class Avantages
      *
      * @return \DateTime
      */
-    public function getCreated()
-    {
+    public function getCreated() {
         return $this->created;
     }
 
@@ -314,8 +288,7 @@ class Avantages
      * @param \DateTime $updated
      * @return Avantages
      */
-    public function setUpdated($updated)
-    {
+    public function setUpdated($updated) {
         $this->updated = $updated;
 
         return $this;
@@ -326,8 +299,7 @@ class Avantages
      *
      * @return \DateTime
      */
-    public function getUpdated()
-    {
+    public function getUpdated() {
         return $this->updated;
     }
 
@@ -337,8 +309,7 @@ class Avantages
      * @param Books $book
      * @return Avantages
      */
-    public function setBook(Books $book = null)
-    {
+    public function setBook(Books $book = null) {
         $this->book = $book;
 
         return $this;
@@ -349,8 +320,7 @@ class Avantages
      *
      * @return Books
      */
-    public function getBook()
-    {
+    public function getBook() {
         return $this->book;
     }
 
@@ -360,8 +330,7 @@ class Avantages
      * @param integer $augmentation
      * @return Avantages
      */
-    public function setAugmentation($augmentation)
-    {
+    public function setAugmentation($augmentation) {
         $this->augmentation = $augmentation;
 
         return $this;
@@ -372,8 +341,7 @@ class Avantages
      *
      * @return integer
      */
-    public function getAugmentation()
-    {
+    public function getAugmentation() {
         return $this->augmentation;
     }
 }

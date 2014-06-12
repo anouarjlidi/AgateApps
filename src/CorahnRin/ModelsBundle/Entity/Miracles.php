@@ -1,6 +1,7 @@
 <?php
 
 namespace CorahnRin\ModelsBundle\Entity;
+
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -11,8 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity(repositoryClass="CorahnRin\ModelsBundle\Repository\MiraclesRepository")
  */
-class Miracles
-{
+class Miracles {
     /**
      * @var integer
      *
@@ -58,7 +58,6 @@ class Miracles
 
     /**
      * @var \Datetime
-
      * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
@@ -76,8 +75,7 @@ class Miracles
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -87,8 +85,7 @@ class Miracles
      * @param string $name
      * @return Miracles
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -99,8 +96,7 @@ class Miracles
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -110,8 +106,7 @@ class Miracles
      * @param boolean $isMajor
      * @return Miracles
      */
-    public function setIsMajor($isMajor)
-    {
+    public function setIsMajor($isMajor) {
         $this->isMajor = $isMajor;
 
         return $this;
@@ -122,8 +117,7 @@ class Miracles
      *
      * @return boolean
      */
-    public function getIsMajor()
-    {
+    public function getIsMajor() {
         return $this->isMajor;
     }
 
@@ -133,8 +127,7 @@ class Miracles
      * @param \DateTime $created
      * @return Miracles
      */
-    public function setCreated($created)
-    {
+    public function setCreated($created) {
         $this->created = $created;
 
         return $this;
@@ -145,8 +138,7 @@ class Miracles
      *
      * @return \DateTime
      */
-    public function getCreated()
-    {
+    public function getCreated() {
         return $this->created;
     }
 
@@ -156,8 +148,7 @@ class Miracles
      * @param \DateTime $updated
      * @return Miracles
      */
-    public function setUpdated($updated)
-    {
+    public function setUpdated($updated) {
         $this->updated = $updated;
 
         return $this;
@@ -168,8 +159,7 @@ class Miracles
      *
      * @return \DateTime
      */
-    public function getUpdated()
-    {
+    public function getUpdated() {
         return $this->updated;
     }
 
@@ -179,8 +169,7 @@ class Miracles
      * @param string $description
      * @return Miracles
      */
-    public function setDescription($description)
-    {
+    public function setDescription($description) {
         $this->description = $description;
 
         return $this;
@@ -191,8 +180,7 @@ class Miracles
      *
      * @return string
      */
-    public function getDescription()
-    {
+    public function getDescription() {
         return $this->description;
     }
 
@@ -202,8 +190,7 @@ class Miracles
      * @param Books $book
      * @return Miracles
      */
-    public function setBook(Books $book = null)
-    {
+    public function setBook(Books $book = null) {
         $this->book = $book;
 
         return $this;
@@ -214,8 +201,7 @@ class Miracles
      *
      * @return Books
      */
-    public function getBook()
-    {
+    public function getBook() {
         return $this->book;
     }
 }

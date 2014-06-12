@@ -1,8 +1,9 @@
 <?php
 
 namespace CorahnRin\ModelsBundle\Entity;
-use Gedmo\Mapping\Annotation as Gedmo;
+
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * GeoEnvironments
@@ -11,8 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity(repositoryClass="CorahnRin\ModelsBundle\Repository\GeoEnvironmentsRepository")
  */
-class GeoEnvironments
-{
+class GeoEnvironments {
     /**
      * @var integer
      *
@@ -77,8 +77,7 @@ class GeoEnvironments
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -88,8 +87,7 @@ class GeoEnvironments
      * @param string $name
      * @return GeoEnvironments
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -100,8 +98,7 @@ class GeoEnvironments
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -111,8 +108,7 @@ class GeoEnvironments
      * @param string $description
      * @return GeoEnvironments
      */
-    public function setDescription($description)
-    {
+    public function setDescription($description) {
         $this->description = $description;
 
         return $this;
@@ -123,8 +119,7 @@ class GeoEnvironments
      *
      * @return string
      */
-    public function getDescription()
-    {
+    public function getDescription() {
         return $this->description;
     }
 
@@ -134,8 +129,7 @@ class GeoEnvironments
      * @param integer $book
      * @return GeoEnvironments
      */
-    public function setBook($book)
-    {
+    public function setBook($book) {
         $this->book = $book;
 
         return $this;
@@ -146,8 +140,7 @@ class GeoEnvironments
      *
      * @return integer
      */
-    public function getBook()
-    {
+    public function getBook() {
         return $this->book;
     }
 
@@ -157,8 +150,7 @@ class GeoEnvironments
      * @param integer $domain
      * @return GeoEnvironments
      */
-    public function setDomain($domain)
-    {
+    public function setDomain($domain) {
         $this->domain = $domain;
 
         return $this;
@@ -169,8 +161,7 @@ class GeoEnvironments
      *
      * @return integer
      */
-    public function getDomain()
-    {
+    public function getDomain() {
         return $this->domain;
     }
 
@@ -180,8 +171,7 @@ class GeoEnvironments
      * @param \DateTime $created
      * @return GeoEnvironments
      */
-    public function setCreated($created)
-    {
+    public function setCreated($created) {
         $this->created = $created;
 
         return $this;
@@ -192,8 +182,7 @@ class GeoEnvironments
      *
      * @return \DateTime
      */
-    public function getCreated()
-    {
+    public function getCreated() {
         return $this->created;
     }
 
@@ -203,8 +192,7 @@ class GeoEnvironments
      * @param \DateTime $updated
      * @return GeoEnvironments
      */
-    public function setUpdated($updated)
-    {
+    public function setUpdated($updated) {
         $this->updated = $updated;
 
         return $this;
@@ -215,8 +203,7 @@ class GeoEnvironments
      *
      * @return \DateTime
      */
-    public function getUpdated()
-    {
+    public function getUpdated() {
         return $this->updated;
     }
 }

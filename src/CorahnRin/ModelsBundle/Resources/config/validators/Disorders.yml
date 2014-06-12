@@ -1,0 +1,5 @@
+CorahnRin\ModelsBundle\Entity\Disorders:
+    properties:
+        name:
+            - NotBlank: ~
+            - Type: string

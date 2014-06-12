@@ -1,10 +1,11 @@
 <?php
 
 namespace CorahnRin\ModelsBundle\Entity;
+
 use CorahnRin\UsersBundle\Entity\Users;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Games
@@ -13,8 +14,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Entity(repositoryClass="CorahnRin\ModelsBundle\Repository\GamesRepository")
  * @ORM\Table(name="games", uniqueConstraints={@ORM\UniqueConstraint(name="idgUnique", columns={"name", "gameMaster_id"})})
  */
-class Games
-{
+class Games {
     /**
      * @var integer
      *
@@ -54,7 +54,6 @@ class Games
 
     /**
      * @var \Datetime
-
      * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
@@ -84,8 +83,7 @@ class Games
     /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->characters = new ArrayCollection();
     }
 
@@ -94,8 +92,7 @@ class Games
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -105,8 +102,7 @@ class Games
      * @param string $name
      * @return Games
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -117,8 +113,7 @@ class Games
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -128,8 +123,7 @@ class Games
      * @param string $summary
      * @return Games
      */
-    public function setSummary($summary)
-    {
+    public function setSummary($summary) {
         $this->summary = $summary;
 
         return $this;
@@ -140,8 +134,7 @@ class Games
      *
      * @return string
      */
-    public function getSummary()
-    {
+    public function getSummary() {
         return $this->summary;
     }
 
@@ -151,8 +144,7 @@ class Games
      * @param string $gmNotes
      * @return Games
      */
-    public function setGmNotes($gmNotes)
-    {
+    public function setGmNotes($gmNotes) {
         $this->gmNotes = $gmNotes;
 
         return $this;
@@ -163,8 +155,7 @@ class Games
      *
      * @return string
      */
-    public function getGmNotes()
-    {
+    public function getGmNotes() {
         return $this->gmNotes;
     }
 
@@ -174,8 +165,7 @@ class Games
      * @param \DateTime $created
      * @return Games
      */
-    public function setCreated($created)
-    {
+    public function setCreated($created) {
         $this->created = $created;
 
         return $this;
@@ -186,8 +176,7 @@ class Games
      *
      * @return \DateTime
      */
-    public function getCreated()
-    {
+    public function getCreated() {
         return $this->created;
     }
 
@@ -197,8 +186,7 @@ class Games
      * @param \DateTime $updated
      * @return Games
      */
-    public function setUpdated($updated)
-    {
+    public function setUpdated($updated) {
         $this->updated = $updated;
 
         return $this;
@@ -209,8 +197,7 @@ class Games
      *
      * @return \DateTime
      */
-    public function getUpdated()
-    {
+    public function getUpdated() {
         return $this->updated;
     }
 
@@ -220,8 +207,7 @@ class Games
      * @param Users $gameMaster
      * @return Games
      */
-    public function setGameMaster(Users $gameMaster = null)
-    {
+    public function setGameMaster(Users $gameMaster = null) {
         $this->gameMaster = $gameMaster;
 
         return $this;
@@ -232,8 +218,7 @@ class Games
      *
      * @return Users
      */
-    public function getGameMaster()
-    {
+    public function getGameMaster() {
         return $this->gameMaster;
     }
 
@@ -243,8 +228,7 @@ class Games
      * @param Characters $characters
      * @return Games
      */
-    public function addCharacter(Characters $characters)
-    {
+    public function addCharacter(Characters $characters) {
         $this->characters[] = $characters;
 
         return $this;
@@ -255,8 +239,7 @@ class Games
      *
      * @param Characters $characters
      */
-    public function removeCharacter(Characters $characters)
-    {
+    public function removeCharacter(Characters $characters) {
         $this->characters->removeElement($characters);
     }
 
@@ -265,8 +248,7 @@ class Games
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getCharacters()
-    {
+    public function getCharacters() {
         return $this->characters;
     }
 }

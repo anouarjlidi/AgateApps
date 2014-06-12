@@ -1,8 +1,9 @@
 <?php
 
 namespace CorahnRin\ModelsBundle\Entity;
-use Gedmo\Mapping\Annotation as Gedmo;
+
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -11,8 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="characters_disciplines")
  * @ORM\Entity(repositoryClass="CorahnRin\ModelsBundle\Repository\CharDisciplinesRepository")
  */
-class CharDisciplines
-{
+class CharDisciplines {
     /**
      * @var integer
      *
@@ -35,7 +35,7 @@ class CharDisciplines
      * @var Domains
      *
      * @ORM\Id
-	 * @ORM\ManyToOne(targetEntity="Domains")
+     * @ORM\ManyToOne(targetEntity="Domains")
      * @Assert\NotNull()
      */
     protected $domain;
@@ -55,8 +55,7 @@ class CharDisciplines
      * @param integer $score
      * @return CharDisciplines
      */
-    public function setScore($score)
-    {
+    public function setScore($score) {
         $this->score = $score;
 
         return $this;
@@ -67,8 +66,7 @@ class CharDisciplines
      *
      * @return integer
      */
-    public function getScore()
-    {
+    public function getScore() {
         return $this->score;
     }
 
@@ -78,8 +76,7 @@ class CharDisciplines
      * @param Characters $character
      * @return CharDisciplines
      */
-    public function setCharacter(Characters $character)
-    {
+    public function setCharacter(Characters $character) {
         $this->character = $character;
 
         return $this;
@@ -90,8 +87,7 @@ class CharDisciplines
      *
      * @return Characters
      */
-    public function getCharacter()
-    {
+    public function getCharacter() {
         return $this->character;
     }
 
@@ -101,8 +97,7 @@ class CharDisciplines
      * @param Disciplines $discipline
      * @return CharDisciplines
      */
-    public function setDiscipline(Disciplines $discipline)
-    {
+    public function setDiscipline(Disciplines $discipline) {
         $this->discipline = $discipline;
 
         return $this;
@@ -113,8 +108,7 @@ class CharDisciplines
      *
      * @return Disciplines
      */
-    public function getDiscipline()
-    {
+    public function getDiscipline() {
         return $this->discipline;
     }
 
@@ -124,8 +118,7 @@ class CharDisciplines
      * @param Domains $domain
      * @return CharDisciplines
      */
-    public function setDomain(Domains $domain)
-    {
+    public function setDomain(Domains $domain) {
         $this->domain = $domain;
 
         return $this;
@@ -136,8 +129,7 @@ class CharDisciplines
      *
      * @return Domains
      */
-    public function getDomain()
-    {
+    public function getDomain() {
         return $this->domain;
     }
 }

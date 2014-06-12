@@ -1,8 +1,9 @@
 <?php
 
 namespace CorahnRin\ModelsBundle\Entity;
-use Gedmo\Mapping\Annotation as Gedmo;
+
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -11,13 +12,12 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="characters_flux")
  * @ORM\Entity(repositoryClass="CorahnRin\ModelsBundle\Repository\CharFluxRepository")
  */
-class CharFlux
-{
+class CharFlux {
     /**
      * @var Characters
      *
      * @ORM\Id
-	 * @ORM\ManyToOne(targetEntity="Characters", inversedBy="flux")
+     * @ORM\ManyToOne(targetEntity="Characters", inversedBy="flux")
      * @Assert\NotNull()
      */
     protected $character;
@@ -27,7 +27,7 @@ class CharFlux
      *
      * @ORM\Column(type="integer")
      * @ORM\Id
-	 * @ORM\ManyToOne(targetEntity="Flux")
+     * @ORM\ManyToOne(targetEntity="Flux")
      * @Assert\NotNull()
      */
     protected $flux;
@@ -47,8 +47,7 @@ class CharFlux
      * @param integer $flux
      * @return CharFlux
      */
-    public function setFlux($flux)
-    {
+    public function setFlux($flux) {
         $this->flux = $flux;
 
         return $this;
@@ -59,8 +58,7 @@ class CharFlux
      *
      * @return integer
      */
-    public function getFlux()
-    {
+    public function getFlux() {
         return $this->flux;
     }
 
@@ -70,8 +68,7 @@ class CharFlux
      * @param integer $quantity
      * @return CharFlux
      */
-    public function setQuantity($quantity)
-    {
+    public function setQuantity($quantity) {
         $this->quantity = $quantity;
 
         return $this;
@@ -82,8 +79,7 @@ class CharFlux
      *
      * @return integer
      */
-    public function getQuantity()
-    {
+    public function getQuantity() {
         return $this->quantity;
     }
 
@@ -93,8 +89,7 @@ class CharFlux
      * @param Characters $character
      * @return CharFlux
      */
-    public function setCharacter(Characters $character)
-    {
+    public function setCharacter(Characters $character) {
         $this->character = $character;
 
         return $this;
@@ -105,8 +100,7 @@ class CharFlux
      *
      * @return Characters
      */
-    public function getCharacter()
-    {
+    public function getCharacter() {
         return $this->character;
     }
 }

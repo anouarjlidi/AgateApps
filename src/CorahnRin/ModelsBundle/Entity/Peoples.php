@@ -1,6 +1,7 @@
 <?php
 
 namespace CorahnRin\ModelsBundle\Entity;
+
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -11,8 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity(repositoryClass="CorahnRin\ModelsBundle\Repository\PeoplesRepository")
  */
-class Peoples
-{
+class Peoples {
     /**
      * @var integer
      *
@@ -51,7 +51,6 @@ class Peoples
 
     /**
      * @var \Datetime
-
      * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
@@ -69,8 +68,7 @@ class Peoples
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -80,8 +78,7 @@ class Peoples
      * @param string $name
      * @return Peoples
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -92,8 +89,7 @@ class Peoples
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -103,8 +99,7 @@ class Peoples
      * @param string $description
      * @return Peoples
      */
-    public function setDescription($description)
-    {
+    public function setDescription($description) {
         $this->description = $description;
 
         return $this;
@@ -115,8 +110,7 @@ class Peoples
      *
      * @return string
      */
-    public function getDescription()
-    {
+    public function getDescription() {
         return $this->description;
     }
 
@@ -126,8 +120,7 @@ class Peoples
      * @param \DateTime $created
      * @return Ogham
      */
-    public function setCreated($created)
-    {
+    public function setCreated($created) {
         $this->created = $created;
 
         return $this;
@@ -138,8 +131,7 @@ class Peoples
      *
      * @return \DateTime
      */
-    public function getCreated()
-    {
+    public function getCreated() {
         return $this->created;
     }
 
@@ -149,8 +141,7 @@ class Peoples
      * @param \DateTime $updated
      * @return Ogham
      */
-    public function setUpdated($updated)
-    {
+    public function setUpdated($updated) {
         $this->updated = $updated;
 
         return $this;
@@ -161,8 +152,7 @@ class Peoples
      *
      * @return \DateTime
      */
-    public function getUpdated()
-    {
+    public function getUpdated() {
         return $this->updated;
     }
 
@@ -172,8 +162,7 @@ class Peoples
      * @param Books $book
      * @return Peoples
      */
-    public function setBook(Books $book = null)
-    {
+    public function setBook(Books $book = null) {
         $this->book = $book;
 
         return $this;
@@ -184,8 +173,7 @@ class Peoples
      *
      * @return Books
      */
-    public function getBook()
-    {
+    public function getBook() {
         return $this->book;
     }
 }

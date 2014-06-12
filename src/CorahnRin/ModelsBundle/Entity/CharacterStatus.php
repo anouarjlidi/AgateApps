@@ -12,8 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="characters_status")
  * @ORM\Entity(repositoryClass="CorahnRin\ModelsBundle\Repository\CharacterStatusRepository")
  */
-class CharacterStatus
-{
+class CharacterStatus {
 
     /**
      * @var integer
@@ -66,8 +65,7 @@ class CharacterStatus
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -77,8 +75,7 @@ class CharacterStatus
      * @param string $name
      * @return CharacterStatus
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -89,8 +86,7 @@ class CharacterStatus
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -100,8 +96,7 @@ class CharacterStatus
      * @param string $description
      * @return CharacterStatus
      */
-    public function setDescription($description)
-    {
+    public function setDescription($description) {
         $this->description = $description;
 
         return $this;
@@ -112,8 +107,7 @@ class CharacterStatus
      *
      * @return string
      */
-    public function getDescription()
-    {
+    public function getDescription() {
         return $this->description;
     }
 
@@ -123,8 +117,7 @@ class CharacterStatus
      * @param \DateTime $created
      * @return CharacterStatus
      */
-    public function setCreated($created)
-    {
+    public function setCreated($created) {
         $this->created = $created;
 
         return $this;
@@ -135,8 +128,7 @@ class CharacterStatus
      *
      * @return \DateTime
      */
-    public function getCreated()
-    {
+    public function getCreated() {
         return $this->created;
     }
 
@@ -146,8 +138,7 @@ class CharacterStatus
      * @param \DateTime $updated
      * @return CharacterStatus
      */
-    public function setUpdated($updated)
-    {
+    public function setUpdated($updated) {
         $this->updated = $updated;
 
         return $this;
@@ -158,8 +149,7 @@ class CharacterStatus
      *
      * @return \DateTime
      */
-    public function getUpdated()
-    {
+    public function getUpdated() {
         return $this->updated;
     }
 
@@ -169,8 +159,7 @@ class CharacterStatus
      * @param \DateTime $deleted
      * @return CharacterStatus
      */
-    public function setDeleted($deleted)
-    {
+    public function setDeleted($deleted) {
         $this->deleted = $deleted;
 
         return $this;
@@ -181,8 +170,7 @@ class CharacterStatus
      *
      * @return \DateTime
      */
-    public function getDeleted()
-    {
+    public function getDeleted() {
         return $this->deleted;
     }
 }

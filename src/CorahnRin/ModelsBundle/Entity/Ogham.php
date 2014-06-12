@@ -1,6 +1,7 @@
 <?php
 
 namespace CorahnRin\ModelsBundle\Entity;
+
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -11,8 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity(repositoryClass="CorahnRin\ModelsBundle\Repository\OghamRepository")
  */
-class Ogham
-{
+class Ogham {
     /**
      * @var integer
      *
@@ -57,14 +57,13 @@ class Ogham
 
     /**
      * @var \Datetime
-
      * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $updated;
 
     /**
-     * @var boolean
+     * @var \Datetime
      *
      * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
@@ -75,8 +74,7 @@ class Ogham
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -86,8 +84,7 @@ class Ogham
      * @param string $name
      * @return Ogham
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -98,8 +95,7 @@ class Ogham
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -109,8 +105,7 @@ class Ogham
      * @param \DateTime $created
      * @return Ogham
      */
-    public function setCreated($created)
-    {
+    public function setCreated($created) {
         $this->created = $created;
 
         return $this;
@@ -121,8 +116,7 @@ class Ogham
      *
      * @return \DateTime
      */
-    public function getCreated()
-    {
+    public function getCreated() {
         return $this->created;
     }
 
@@ -132,8 +126,7 @@ class Ogham
      * @param \DateTime $updated
      * @return Ogham
      */
-    public function setUpdated($updated)
-    {
+    public function setUpdated($updated) {
         $this->updated = $updated;
 
         return $this;
@@ -144,8 +137,7 @@ class Ogham
      *
      * @return \DateTime
      */
-    public function getUpdated()
-    {
+    public function getUpdated() {
         return $this->updated;
     }
 
@@ -155,8 +147,7 @@ class Ogham
      * @param string $description
      * @return Ogham
      */
-    public function setDescription($description)
-    {
+    public function setDescription($description) {
         $this->description = $description;
 
         return $this;
@@ -167,8 +158,7 @@ class Ogham
      *
      * @return string
      */
-    public function getDescription()
-    {
+    public function getDescription() {
         return $this->description;
     }
 
@@ -178,8 +168,7 @@ class Ogham
      * @param Books $book
      * @return Ogham
      */
-    public function setBook(Books $book = null)
-    {
+    public function setBook(Books $book = null) {
         $this->book = $book;
 
         return $this;
@@ -190,8 +179,7 @@ class Ogham
      *
      * @return Books
      */
-    public function getBook()
-    {
+    public function getBook() {
         return $this->book;
     }
 
@@ -201,8 +189,7 @@ class Ogham
      * @param OghamTypes $oghamType
      * @return Ogham
      */
-    public function setOghamType(OghamTypes $oghamType = null)
-    {
+    public function setOghamType(OghamTypes $oghamType = null) {
         $this->oghamType = $oghamType;
 
         return $this;
@@ -213,8 +200,7 @@ class Ogham
      *
      * @return OghamTypes
      */
-    public function getOghamType()
-    {
+    public function getOghamType() {
         return $this->oghamType;
     }
 }

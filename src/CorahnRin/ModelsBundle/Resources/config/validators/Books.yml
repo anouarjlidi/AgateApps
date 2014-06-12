@@ -1,0 +1,19 @@
+CorahnRin\ModelsBundle\Entity\Books:
+    properties:
+        name:
+            - NotBlank: ~
+            - Type: string
+        xp:
+            - NotNull: ~
+            - GreaterThanOrEqual: { value: 0 }
+            - Type: integer
+        augmentation:
+            - NotNull: ~
+            - GreaterThanOrEqual: { value: 0 }
+            - Type: integer
+        bonusdisc:
+            - NotBlank: ~
+            - Type: string
+        book:
+            - NotNull: ~
+            - Type: CorahnRin\ModelsBundle\Entity\Books

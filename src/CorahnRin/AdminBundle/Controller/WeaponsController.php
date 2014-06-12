@@ -9,14 +9,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-class WeaponsController extends Controller
-{
+class WeaponsController extends Controller {
     /**
      * @Route("/admin/generator/weapons/")
      * @Template()
      */
-    public function adminListAction()
-    {
+    public function adminListAction() {
         $name = str_replace('Controller', '', preg_replace('#^([a-zA-Z]+\\\)*#isu', '', __CLASS__));
         return array(
             strtolower($name) => $this->getDoctrine()->getManager()->getRepository('CorahnRinCharactersBundle:' . $name)->findAll(),
@@ -27,8 +25,7 @@ class WeaponsController extends Controller
      * @Route("/admin/generator/weapons/add/")
      * @Template("PierstovalAdminBundle:Form:add.html.twig")
      */
-    public function addAction(Request $request)
-    {
+    public function addAction(Request $request) {
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN_GENERATOR_SUPER')) {
             throw $this->createAccessDeniedException();
         }
@@ -39,16 +36,14 @@ class WeaponsController extends Controller
      * @Route("/admin/generator/weapons/edit/{id}")
      * @Template("PierstovalAdminBundle:Form:add.html.twig")
      */
-    public function editAction(Weapons $weapon, Request $request)
-    {
+    public function editAction(Weapons $weapon, Request $request) {
         return $this->handle_request($weapon, $request);
     }
 
     /**
      * @Route("/admin/generator/weapons/delete/{id}")
      */
-    public function deleteAction(Weapons $element)
-    {
+    public function deleteAction(Weapons $element) {
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN_GENERATOR_SUPER')) {
             throw $this->createAccessDeniedException();
         }
@@ -60,8 +55,7 @@ class WeaponsController extends Controller
         return $this->redirect($this->generateUrl('corahnrin_admin_weapons_adminlist'));
     }
 
-    private function handle_request(Weapons $element, Request $request)
-    {
+    private function handle_request(Weapons $element, Request $request) {
         $method = preg_replace('#^' . str_replace('\\', '\\\\', __CLASS__) . '::([a-zA-Z]+)Action$#isUu', '$1', $request->get('_controller'));
 
         $form = $this->createForm(new WeaponsType, $element);
@@ -73,7 +67,8 @@ class WeaponsController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($element);
             $em->flush();
-            $this->get('session')->getFlashBag()->add('success', 'Arme ' . ($method == 'add' ? 'ajoutée' : 'modifiée') . ' : <strong>' . $element->getName() . '</strong>');
+            $this->get('session')->getFlashBag()->add('success', 'Arme ' . ($method == 'add' ? 'ajoutée'
+                    : 'modifiée') . ' : <strong>' . $element->getName() . '</strong>');
             return $this->redirect($this->generateUrl('corahnrin_admin_weapons_adminlist'));
         }
 

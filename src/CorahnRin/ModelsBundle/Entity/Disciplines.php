@@ -1,11 +1,10 @@
 <?php
 
 namespace CorahnRin\ModelsBundle\Entity;
+
 use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\JoinColumn;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Disciplines
@@ -14,8 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity(repositoryClass="CorahnRin\ModelsBundle\Repository\DisciplinesRepository")
  */
-class Disciplines
-{
+class Disciplines {
     /**
      * @var integer
      *
@@ -29,7 +27,6 @@ class Disciplines
      * @var string
      *
      * @ORM\Column(type="string", length=50, nullable=false, unique=true)
-     * @Assert\NotBlank()
      */
     protected $name;
 
@@ -44,7 +41,6 @@ class Disciplines
      * @var string
      *
      * @ORM\Column(type="string", length=40)
-     * @Assert\NotBlank()
      */
     protected $rank;
 
@@ -57,7 +53,6 @@ class Disciplines
 
     /**
      * @var \Datetime
-
      * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
@@ -73,7 +68,7 @@ class Disciplines
     /**
      * @var Books
      * @ORM\ManyToOne(targetEntity="Books", fetch="EAGER")
-     * @Assert\NotNull()
+     * @ORM\JoinColumn(nullable=false)
      */
     protected $book;
 
@@ -82,8 +77,8 @@ class Disciplines
      *
      * @ORM\ManyToMany(targetEntity="Domains", inversedBy="disciplines")
      * @ORM\JoinTable(name="disciplines_domains",
-     *      joinColumns={@JoinColumn(name="discipline_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@JoinColumn(name="domain_id", referencedColumnName="id")}
+     *      joinColumns={@ORM\JoinColumn(name="discipline_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="domain_id", referencedColumnName="id")}
      *  )
      */
     protected $domains;
@@ -91,8 +86,7 @@ class Disciplines
     /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->domains = new ArrayCollection();
     }
 
@@ -101,8 +95,7 @@ class Disciplines
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -112,8 +105,7 @@ class Disciplines
      * @param string $name
      * @return Disciplines
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -124,8 +116,7 @@ class Disciplines
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -135,8 +126,7 @@ class Disciplines
      * @param string $description
      * @return Disciplines
      */
-    public function setDescription($description)
-    {
+    public function setDescription($description) {
         $this->description = $description;
 
         return $this;
@@ -147,8 +137,7 @@ class Disciplines
      *
      * @return string
      */
-    public function getDescription()
-    {
+    public function getDescription() {
         return $this->description;
     }
 
@@ -158,8 +147,7 @@ class Disciplines
      * @param string $rank
      * @return Disciplines
      */
-    public function setRank($rank)
-    {
+    public function setRank($rank) {
         $this->rank = $rank;
 
         return $this;
@@ -170,8 +158,7 @@ class Disciplines
      *
      * @return string
      */
-    public function getRank()
-    {
+    public function getRank() {
         return $this->rank;
     }
 
@@ -181,8 +168,7 @@ class Disciplines
      * @param \DateTime $created
      * @return Disciplines
      */
-    public function setCreated($created)
-    {
+    public function setCreated($created) {
         $this->created = $created;
 
         return $this;
@@ -193,8 +179,7 @@ class Disciplines
      *
      * @return \DateTime
      */
-    public function getCreated()
-    {
+    public function getCreated() {
         return $this->created;
     }
 
@@ -204,8 +189,7 @@ class Disciplines
      * @param \DateTime $updated
      * @return Disciplines
      */
-    public function setUpdated($updated)
-    {
+    public function setUpdated($updated) {
         $this->updated = $updated;
 
         return $this;
@@ -216,8 +200,7 @@ class Disciplines
      *
      * @return \DateTime
      */
-    public function getUpdated()
-    {
+    public function getUpdated() {
         return $this->updated;
     }
 
@@ -227,8 +210,7 @@ class Disciplines
      * @param Books $book
      * @return Disciplines
      */
-    public function setBook(Books $book = null)
-    {
+    public function setBook(Books $book = null) {
         $this->book = $book;
 
         return $this;
@@ -239,8 +221,7 @@ class Disciplines
      *
      * @return Books
      */
-    public function getBook()
-    {
+    public function getBook() {
         return $this->book;
     }
 
@@ -250,8 +231,7 @@ class Disciplines
      * @param Domains $domains
      * @return Disciplines
      */
-    public function addDomain(Domains $domains)
-    {
+    public function addDomain(Domains $domains) {
         $this->domains[] = $domains;
 
         return $this;
@@ -262,8 +242,7 @@ class Disciplines
      *
      * @param Domains $domains
      */
-    public function removeDomain(Domains $domains)
-    {
+    public function removeDomain(Domains $domains) {
         $this->domains->removeElement($domains);
     }
 
@@ -272,8 +251,7 @@ class Disciplines
      *
      * @return Domains
      */
-    public function getDomains()
-    {
+    public function getDomains() {
         return $this->domains;
     }
 }

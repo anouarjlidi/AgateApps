@@ -1,8 +1,9 @@
 <?php
 
 namespace CorahnRin\ModelsBundle\Entity;
-use Gedmo\Mapping\Annotation as Gedmo;
+
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -11,13 +12,12 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="characters_setbacks")
  * @ORM\Entity(repositoryClass="CorahnRin\ModelsBundle\Repository\CharSetbacksRepository")
  */
-class CharSetbacks
-{
+class CharSetbacks {
     /**
      * @var Characters
      *
      * @ORM\Id
-	 * @ORM\ManyToOne(targetEntity="Characters", inversedBy="setbacks")
+     * @ORM\ManyToOne(targetEntity="Characters", inversedBy="setbacks")
      * @Assert\NotNull()
      */
     protected $character;
@@ -26,7 +26,7 @@ class CharSetbacks
      * @var Setbacks
      *
      * @ORM\Id
-	 * @ORM\ManyToOne(targetEntity="Setbacks")
+     * @ORM\ManyToOne(targetEntity="Setbacks")
      * @Assert\NotNull()
      */
     protected $setback;
@@ -44,8 +44,7 @@ class CharSetbacks
      * @param integer $character
      * @return CharSetbacks
      */
-    public function setCharacter($character)
-    {
+    public function setCharacter($character) {
         $this->character = $character;
 
         return $this;
@@ -56,8 +55,7 @@ class CharSetbacks
      *
      * @return integer
      */
-    public function getCharacter()
-    {
+    public function getCharacter() {
         return $this->character;
     }
 
@@ -67,8 +65,7 @@ class CharSetbacks
      * @param integer $setback
      * @return CharSetbacks
      */
-    public function setSetback($setback)
-    {
+    public function setSetback($setback) {
         $this->setback = $setback;
 
         return $this;
@@ -79,8 +76,7 @@ class CharSetbacks
      *
      * @return integer
      */
-    public function getSetback()
-    {
+    public function getSetback() {
         return $this->setback;
     }
 
@@ -90,8 +86,7 @@ class CharSetbacks
      * @param boolean $isAvoided
      * @return CharSetbacks
      */
-    public function setIsAvoided($isAvoided)
-    {
+    public function setIsAvoided($isAvoided) {
         $this->isAvoided = $isAvoided;
 
         return $this;
@@ -102,8 +97,7 @@ class CharSetbacks
      *
      * @return boolean
      */
-    public function getIsAvoided()
-    {
+    public function getIsAvoided() {
         return $this->isAvoided;
     }
 }

@@ -1,8 +1,9 @@
 <?php
 
 namespace CorahnRin\ModelsBundle\Entity;
-use Gedmo\Mapping\Annotation as Gedmo;
+
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * DisordersWays
@@ -11,13 +12,12 @@ use Doctrine\ORM\Mapping as ORM;
  * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity(repositoryClass="CorahnRin\ModelsBundle\Repository\DisordersWaysRepository")
  */
-class DisordersWays
-{
+class DisordersWays {
     /**
      * @var Disorders
      *
      * @ORM\Id
-	 * @ORM\ManyToOne(targetEntity="Disorders", inversedBy="ways")
+     * @ORM\ManyToOne(targetEntity="Disorders", inversedBy="ways")
      */
     protected $disorder;
 
@@ -25,7 +25,7 @@ class DisordersWays
      * @var Ways
      *
      * @ORM\Id
-	 * @ORM\ManyToOne(targetEntity="Ways")
+     * @ORM\ManyToOne(targetEntity="Ways")
      */
     protected $way;
 
@@ -44,7 +44,7 @@ class DisordersWays
     protected $deleted = null;
 
     function __toString() {
-        return $this->disorder->getName().' - '.$this->way->getName();
+        return $this->disorder->getName() . ' - ' . $this->way->getName();
     }
 
     /**
@@ -53,8 +53,7 @@ class DisordersWays
      * @param integer $disorder
      * @return DisordersWays
      */
-    public function setDisorder($disorder)
-    {
+    public function setDisorder($disorder) {
         $this->disorder = $disorder;
 
         return $this;
@@ -65,8 +64,7 @@ class DisordersWays
      *
      * @return integer
      */
-    public function getDisorder()
-    {
+    public function getDisorder() {
         return $this->disorder;
     }
 
@@ -76,8 +74,7 @@ class DisordersWays
      * @param integer $way
      * @return DisordersWays
      */
-    public function setWay($way)
-    {
+    public function setWay($way) {
         $this->way = $way;
 
         return $this;
@@ -88,8 +85,7 @@ class DisordersWays
      *
      * @return integer
      */
-    public function getWay()
-    {
+    public function getWay() {
         return $this->way;
     }
 
@@ -99,8 +95,7 @@ class DisordersWays
      * @param boolean $isMajor
      * @return DisordersWays
      */
-    public function setIsMajor($isMajor)
-    {
+    public function setIsMajor($isMajor) {
         $this->isMajor = $isMajor;
 
         return $this;
@@ -111,8 +106,7 @@ class DisordersWays
      *
      * @return boolean
      */
-    public function getIsMajor()
-    {
+    public function getIsMajor() {
         return $this->isMajor;
     }
 }

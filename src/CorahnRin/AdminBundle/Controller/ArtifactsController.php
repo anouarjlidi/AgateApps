@@ -9,14 +9,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-class ArtifactsController extends Controller
-{
+class ArtifactsController extends Controller {
     /**
      * @Route("/admin/generator/artifacts/")
      * @Template()
      */
-    public function adminListAction()
-    {
+    public function adminListAction() {
         $name = str_replace('Controller', '', preg_replace('#^([a-zA-Z]+\\\)*#isu', '', __CLASS__));
         return array(
             strtolower($name) => $this->getDoctrine()->getManager()->getRepository('CorahnRinCharactersBundle:' . $name)->findAll(),
@@ -27,8 +25,7 @@ class ArtifactsController extends Controller
      * @Route("/admin/generator/artifacts/add/")
      * @Template("PierstovalAdminBundle:Form:add.html.twig")
      */
-    public function addAction(Request $request)
-    {
+    public function addAction(Request $request) {
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN_GENERATOR_SUPER')) {
             throw $this->createAccessDeniedException();
         }
@@ -39,16 +36,14 @@ class ArtifactsController extends Controller
      * @Route("/admin/generator/artifacts/edit/{id}")
      * @Template("PierstovalAdminBundle:Form:add.html.twig")
      */
-    public function editAction(Artifacts $artifact, Request $request)
-    {
+    public function editAction(Artifacts $artifact, Request $request) {
         return $this->handle_request($artifact, $request);
     }
 
     /**
      * @Route("/admin/generator/artifacts/delete/{id}")
      */
-    public function deleteAction(Artifacts $element)
-    {
+    public function deleteAction(Artifacts $element) {
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN_GENERATOR_SUPER')) {
             throw $this->createAccessDeniedException();
         }
@@ -60,8 +55,7 @@ class ArtifactsController extends Controller
         return $this->redirect($this->generateUrl('corahnrin_admin_artifacts_adminlist'));
     }
 
-    private function handle_request(Artifacts $element, Request $request)
-    {
+    private function handle_request(Artifacts $element, Request $request) {
         $method = preg_replace('#^' . str_replace('\\', '\\\\', __CLASS__) . '::([a-zA-Z]+)Action$#isUu', '$1', $request->get('_controller'));
 
         $form = $this->createForm(new ArtifactsType(), $element);
@@ -73,7 +67,8 @@ class ArtifactsController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($element);
             $em->flush();
-            $this->get('session')->getFlashBag()->add('success', 'Artefact ' . ($method == 'add' ? 'ajouté' : 'modifié') . ' : <strong>' . $element->getName() . '</strong>');
+            $this->get('session')->getFlashBag()->add('success', 'Artefact ' . ($method == 'add' ? 'ajouté'
+                    : 'modifié') . ' : <strong>' . $element->getName() . '</strong>');
             return $this->redirect($this->generateUrl('corahnrin_admin_artifacts_adminlist'));
         }
 

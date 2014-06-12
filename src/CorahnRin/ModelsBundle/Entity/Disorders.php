@@ -53,18 +53,18 @@ class Disorders
     protected $updated;
 
     /**
-     * @var DisordersWays[]
-     *
-     * @ORM\OneToMany(targetEntity="DisordersWays", mappedBy="disorder")
-     */
-    protected $ways;
-
-    /**
      * @var boolean
      *
      * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
     protected $deleted = null;
+
+    /**
+     * @var DisordersWays[]
+     *
+     * @ORM\OneToMany(targetEntity="DisordersWays", mappedBy="disorder")
+     */
+    protected $ways;
 
     /**
      * Constructor

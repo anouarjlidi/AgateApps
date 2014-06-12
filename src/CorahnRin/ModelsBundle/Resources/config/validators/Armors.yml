@@ -1,0 +1,17 @@
+CorahnRin\ModelsBundle\Entity\Armors:
+    properties:
+        name:
+            - NotBlank: ~
+            - Type: string
+        protection:
+            - NotNull: ~
+            - GreaterThanOrEqual: { value: 0 }
+            - Type: integer
+        price:
+            - NotNull: ~
+            - GreaterThanOrEqual: { value: 0 }
+            - Type: integer
+        availability:
+            - NotNull: ~
+            - Choice: { choices: { "CO", "FR", "RA", "EX" } }
+            - Type: string

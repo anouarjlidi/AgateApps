@@ -1,6 +1,7 @@
 <?php
 
 namespace CorahnRin\ModelsBundle\Entity;
+
 use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
@@ -12,8 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity(repositoryClass="CorahnRin\ModelsBundle\Repository\JobsRepository")
  */
-class Jobs
-{
+class Jobs {
     /**
      * @var integer
      *
@@ -38,21 +38,6 @@ class Jobs
     protected $description;
 
     /**
-     * @var \Datetime
-     * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(type="datetime", nullable=false)
-     */
-    protected $created;
-
-    /**
-     * @var \Datetime
-
-     * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(type="datetime", nullable=false)
-     */
-    protected $updated;
-
-    /**
      * @var Books
      *
      * @ORM\ManyToOne(targetEntity="Books",fetch="EAGER")
@@ -74,6 +59,20 @@ class Jobs
     protected $domainsSecondary;
 
     /**
+     * @var \Datetime
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime", nullable=false)
+     */
+    protected $created;
+
+    /**
+     * @var \Datetime
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(type="datetime", nullable=false)
+     */
+    protected $updated;
+
+    /**
      * @var boolean
      *
      * @ORM\Column(name="deleted", type="datetime", nullable=true)
@@ -85,8 +84,7 @@ class Jobs
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -96,8 +94,7 @@ class Jobs
      * @param string $name
      * @return Jobs
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -108,8 +105,7 @@ class Jobs
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -119,8 +115,7 @@ class Jobs
      * @param string $description
      * @return Jobs
      */
-    public function setDescription($description)
-    {
+    public function setDescription($description) {
         $this->description = $description;
 
         return $this;
@@ -131,8 +126,7 @@ class Jobs
      *
      * @return string
      */
-    public function getDescription()
-    {
+    public function getDescription() {
         return $this->description;
     }
 
@@ -142,8 +136,7 @@ class Jobs
      * @param \DateTime $created
      * @return Jobs
      */
-    public function setCreated($created)
-    {
+    public function setCreated($created) {
         $this->created = $created;
 
         return $this;
@@ -154,8 +147,7 @@ class Jobs
      *
      * @return \DateTime
      */
-    public function getCreated()
-    {
+    public function getCreated() {
         return $this->created;
     }
 
@@ -165,8 +157,7 @@ class Jobs
      * @param \DateTime $updated
      * @return Jobs
      */
-    public function setUpdated($updated)
-    {
+    public function setUpdated($updated) {
         $this->updated = $updated;
 
         return $this;
@@ -177,8 +168,7 @@ class Jobs
      *
      * @return \DateTime
      */
-    public function getUpdated()
-    {
+    public function getUpdated() {
         return $this->updated;
     }
 
@@ -188,8 +178,7 @@ class Jobs
      * @param Books $book
      * @return Jobs
      */
-    public function setBook(Books $book = null)
-    {
+    public function setBook(Books $book = null) {
         $this->book = $book;
 
         return $this;
@@ -200,15 +189,14 @@ class Jobs
      *
      * @return Books
      */
-    public function getBook()
-    {
+    public function getBook() {
         return $this->book;
     }
+
     /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->domainsSecondary = new ArrayCollection();
     }
 
@@ -218,8 +206,7 @@ class Jobs
      * @param Domains $domainPrimary
      * @return Jobs
      */
-    public function setDomainPrimary(Domains $domainPrimary = null)
-    {
+    public function setDomainPrimary(Domains $domainPrimary = null) {
         $this->domainPrimary = $domainPrimary;
 
         return $this;
@@ -230,8 +217,7 @@ class Jobs
      *
      * @return Domains
      */
-    public function getDomainPrimary()
-    {
+    public function getDomainPrimary() {
         return $this->domainPrimary;
     }
 
@@ -241,8 +227,7 @@ class Jobs
      * @param Domains $domainsSecondary
      * @return Jobs
      */
-    public function addDomainsSecondary(Domains $domainsSecondary)
-    {
+    public function addDomainsSecondary(Domains $domainsSecondary) {
         $this->domainsSecondary[] = $domainsSecondary;
 
         return $this;
@@ -253,8 +238,7 @@ class Jobs
      *
      * @param Domains $domainsSecondary
      */
-    public function removeDomainsSecondary(Domains $domainsSecondary)
-    {
+    public function removeDomainsSecondary(Domains $domainsSecondary) {
         $this->domainsSecondary->removeElement($domainsSecondary);
     }
 
@@ -263,8 +247,7 @@ class Jobs
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getDomainsSecondary()
-    {
+    public function getDomainsSecondary() {
         return $this->domainsSecondary;
     }
 }

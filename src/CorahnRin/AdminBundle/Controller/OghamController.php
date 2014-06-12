@@ -11,14 +11,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-class OghamController extends Controller
-{
+class OghamController extends Controller {
     /**
      * @Route("/admin/generator/ogham/")
      * @Template()
      */
-    public function adminListAction()
-    {
+    public function adminListAction() {
         return array(
             'ogham_list' => $this->getDoctrine()->getManager()->getRepository('CorahnRinCharactersBundle:Ogham')->findAll(),
             'oghamTypes' => $this->getDoctrine()->getManager()->getRepository('CorahnRinCharactersBundle:OghamTypes')->findAll(),
@@ -29,8 +27,7 @@ class OghamController extends Controller
      * @Route("/admin/generator/ogham/add/")
      * @Template("PierstovalAdminBundle:Form:add.html.twig")
      */
-    public function addAction(Request $request)
-    {
+    public function addAction(Request $request) {
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN_GENERATOR_SUPER')) {
             throw $this->createAccessDeniedException();
         }
@@ -41,8 +38,7 @@ class OghamController extends Controller
      * @Route("/admin/generator/ogham/addtype/")
      * @Template("PierstovalAdminBundle:Form:add.html.twig")
      */
-    public function addTypeAction(Request $request)
-    {
+    public function addTypeAction(Request $request) {
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN_GENERATOR_SUPER')) {
             throw $this->createAccessDeniedException();
         }
@@ -53,8 +49,7 @@ class OghamController extends Controller
      * @Route("/admin/generator/ogham/edit/{id}")
      * @Template("PierstovalAdminBundle:Form:add.html.twig")
      */
-    public function editAction(Ogham $ogham, Request $request)
-    {
+    public function editAction(Ogham $ogham, Request $request) {
         return $this->handle_request($ogham, $request);
     }
 
@@ -62,16 +57,14 @@ class OghamController extends Controller
      * @Route("/admin/generator/ogham/edittype/{id}")
      * @Template("PierstovalAdminBundle:Form:add.html.twig")
      */
-    public function editTypeAction(OghamTypes $oghamType, Request $request)
-    {
+    public function editTypeAction(OghamTypes $oghamType, Request $request) {
         return $this->handle_request($oghamType, $request);
     }
 
     /**
      * @Route("/admin/generator/ogham/delete/{id}")
      */
-    public function deleteAction(Ogham $element)
-    {
+    public function deleteAction(Ogham $element) {
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN_GENERATOR_SUPER')) {
             throw $this->createAccessDeniedException();
         }
@@ -87,8 +80,7 @@ class OghamController extends Controller
     /**
      * @Route("/admin/generator/ogham/deletetype/{id}")
      */
-    public function deleteTypeAction(OghamTypes $element)
-    {
+    public function deleteTypeAction(OghamTypes $element) {
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN_GENERATOR_SUPER')) {
             throw $this->createAccessDeniedException();
         }
@@ -101,8 +93,7 @@ class OghamController extends Controller
         return $this->redirect($this->generateUrl('corahnrin_admin_ogham_adminlist'));
     }
 
-    private function handle_request($element, Request $request)
-    {
+    private function handle_request($element, Request $request) {
         $method = preg_replace('#^' . str_replace('\\', '\\\\', __CLASS__) . '::([a-zA-Z]+)Action$#isUu', '$1', $request->get('_controller'));
         $method = str_replace('Type', '', $method);
 
@@ -125,7 +116,9 @@ class OghamController extends Controller
             $em->persist($element);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->add('success', ($type ? 'Type d\'' : '') . 'Ogham ' . ($method == 'add' ? 'ajouté' : 'modifié') . ' : <strong>' . $element->getName() . '</strong>');
+            $this->get('session')->getFlashBag()->add('success', ($type ? 'Type d\''
+                    : '') . 'Ogham ' . ($method == 'add' ? 'ajouté'
+                    : 'modifié') . ' : <strong>' . $element->getName() . '</strong>');
             return $this->redirect($this->generateUrl('corahnrin_admin_ogham_adminlist'));
         }
 

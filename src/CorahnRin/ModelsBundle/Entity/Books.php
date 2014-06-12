@@ -1,9 +1,9 @@
 <?php
 
 namespace CorahnRin\ModelsBundle\Entity;
+
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Books
@@ -12,8 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity(repositoryClass="CorahnRin\ModelsBundle\Repository\BooksRepository")
  */
-class Books
-{
+class Books {
     /**
      * @var integer
      *
@@ -27,7 +26,6 @@ class Books
      * @var string
      *
      * @ORM\Column(type="string", length=80, nullable=false, unique=true)
-     * @Assert\NotBlank()
      */
     protected $name;
 
@@ -47,7 +45,6 @@ class Books
 
     /**
      * @var \Datetime
-
      * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
@@ -64,8 +61,7 @@ class Books
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -75,8 +71,7 @@ class Books
      * @param string $name
      * @return Books
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -87,8 +82,7 @@ class Books
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -98,8 +92,7 @@ class Books
      * @param string $description
      * @return Books
      */
-    public function setDescription($description)
-    {
+    public function setDescription($description) {
         $this->description = $description;
 
         return $this;
@@ -110,8 +103,7 @@ class Books
      *
      * @return string
      */
-    public function getDescription()
-    {
+    public function getDescription() {
         return $this->description;
     }
 
@@ -121,8 +113,7 @@ class Books
      * @param \DateTime $created
      * @return Books
      */
-    public function setCreated($created)
-    {
+    public function setCreated($created) {
         $this->created = $created;
 
         return $this;
@@ -133,8 +124,7 @@ class Books
      *
      * @return \DateTime
      */
-    public function getCreated()
-    {
+    public function getCreated() {
         return $this->created;
     }
 
@@ -144,8 +134,7 @@ class Books
      * @param \DateTime $updated
      * @return Books
      */
-    public function setUpdated($updated)
-    {
+    public function setUpdated($updated) {
         $this->updated = $updated;
 
         return $this;
@@ -156,8 +145,7 @@ class Books
      *
      * @return \DateTime
      */
-    public function getUpdated()
-    {
+    public function getUpdated() {
         return $this->updated;
     }
 

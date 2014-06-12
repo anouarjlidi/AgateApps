@@ -1,6 +1,7 @@
 <?php
 
 namespace CorahnRin\ModelsBundle\Entity;
+
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -11,8 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="CorahnRin\ModelsBundle\Repository\TraitsRepository")
  * @ORM\Table(name="traits",uniqueConstraints={@ORM\UniqueConstraint(name="idxUnique", columns={"name", "way_id"})})
  */
-class Traits
-{
+class Traits {
     /**
      * @var integer
      *
@@ -51,6 +51,13 @@ class Traits
     protected $isMajor;
 
     /**
+     * @var Ways
+     *
+     * @ORM\ManyToOne(targetEntity="Ways", fetch="EAGER")
+     */
+    protected $way;
+
+    /**
      * @var \Datetime
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
@@ -59,18 +66,10 @@ class Traits
 
     /**
      * @var \Datetime
-
      * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $updated;
-
-    /**
-     * @var Ways
-     *
-     * @ORM\ManyToOne(targetEntity="Ways", fetch="EAGER")
-     */
-    protected $way;
 
     /**
      * @var boolean
@@ -84,8 +83,7 @@ class Traits
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -95,8 +93,7 @@ class Traits
      * @param string $name
      * @return Traits
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -107,8 +104,7 @@ class Traits
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -118,8 +114,7 @@ class Traits
      * @param string $nameFemale
      * @return Traits
      */
-    public function setNameFemale($nameFemale)
-    {
+    public function setNameFemale($nameFemale) {
         $this->nameFemale = $nameFemale;
 
         return $this;
@@ -130,8 +125,7 @@ class Traits
      *
      * @return string
      */
-    public function getNameFemale()
-    {
+    public function getNameFemale() {
         return $this->nameFemale;
     }
 
@@ -141,8 +135,7 @@ class Traits
      * @param boolean $isQuality
      * @return Traits
      */
-    public function setIsQuality($isQuality)
-    {
+    public function setIsQuality($isQuality) {
         $this->isQuality = $isQuality;
 
         return $this;
@@ -153,8 +146,7 @@ class Traits
      *
      * @return boolean
      */
-    public function getIsQuality()
-    {
+    public function getIsQuality() {
         return $this->isQuality;
     }
 
@@ -164,8 +156,7 @@ class Traits
      * @param boolean $isMajor
      * @return Traits
      */
-    public function setIsMajor($isMajor)
-    {
+    public function setIsMajor($isMajor) {
         $this->isMajor = $isMajor;
 
         return $this;
@@ -176,8 +167,7 @@ class Traits
      *
      * @return boolean
      */
-    public function getIsMajor()
-    {
+    public function getIsMajor() {
         return $this->isMajor;
     }
 
@@ -187,8 +177,7 @@ class Traits
      * @param \DateTime $created
      * @return Traits
      */
-    public function setCreated($created)
-    {
+    public function setCreated($created) {
         $this->created = $created;
 
         return $this;
@@ -199,8 +188,7 @@ class Traits
      *
      * @return \DateTime
      */
-    public function getCreated()
-    {
+    public function getCreated() {
         return $this->created;
     }
 
@@ -210,8 +198,7 @@ class Traits
      * @param \DateTime $updated
      * @return Traits
      */
-    public function setUpdated($updated)
-    {
+    public function setUpdated($updated) {
         $this->updated = $updated;
 
         return $this;
@@ -222,8 +209,7 @@ class Traits
      *
      * @return \DateTime
      */
-    public function getUpdated()
-    {
+    public function getUpdated() {
         return $this->updated;
     }
 
@@ -233,8 +219,7 @@ class Traits
      * @param Ways $way
      * @return Traits
      */
-    public function setWay(Ways $way = null)
-    {
+    public function setWay(Ways $way = null) {
         $this->way = $way;
 
         return $this;
@@ -245,8 +230,7 @@ class Traits
      *
      * @return Ways
      */
-    public function getWay()
-    {
+    public function getWay() {
         return $this->way;
     }
 }

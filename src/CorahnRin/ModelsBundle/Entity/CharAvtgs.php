@@ -1,8 +1,9 @@
 <?php
 
 namespace CorahnRin\ModelsBundle\Entity;
-use Gedmo\Mapping\Annotation as Gedmo;
+
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -11,13 +12,12 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="characters_avantages")
  * @ORM\Entity(repositoryClass="CorahnRin\ModelsBundle\Repository\CharAvtgsRepository")
  */
-class CharAvtgs
-{
+class CharAvtgs {
     /**
      * @var Characters
      *
      * @ORM\Id
-	 * @ORM\ManyToOne(targetEntity="Characters", inversedBy="avantages")
+     * @ORM\ManyToOne(targetEntity="Characters", inversedBy="avantages")
      * @Assert\NotNull()
      */
     protected $character;
@@ -26,7 +26,7 @@ class CharAvtgs
      * @var Avantages
      *
      * @ORM\Id
-	 * @ORM\ManyToOne(targetEntity="Avantages")
+     * @ORM\ManyToOne(targetEntity="Avantages")
      * @Assert\NotNull()
      */
     protected $avantage;
@@ -46,8 +46,7 @@ class CharAvtgs
      * @param integer $doubleValue
      * @return CharAvtgs
      */
-    public function setDoubleValue($doubleValue)
-    {
+    public function setDoubleValue($doubleValue) {
         $this->doubleValue = $doubleValue;
 
         return $this;
@@ -58,8 +57,7 @@ class CharAvtgs
      *
      * @return integer
      */
-    public function getDoubleValue()
-    {
+    public function getDoubleValue() {
         return $this->doubleValue;
     }
 
@@ -69,8 +67,7 @@ class CharAvtgs
      * @param Characters $character
      * @return CharAvtgs
      */
-    public function setCharacter(Characters $character)
-    {
+    public function setCharacter(Characters $character) {
         $this->character = $character;
 
         return $this;
@@ -81,8 +78,7 @@ class CharAvtgs
      *
      * @return Characters
      */
-    public function getCharacter()
-    {
+    public function getCharacter() {
         return $this->character;
     }
 
@@ -92,8 +88,7 @@ class CharAvtgs
      * @param Avantages $avantage
      * @return CharAvtgs
      */
-    public function setAvantage(Avantages $avantage)
-    {
+    public function setAvantage(Avantages $avantage) {
         $this->avantage = $avantage;
 
         return $this;
@@ -104,8 +99,7 @@ class CharAvtgs
      *
      * @return Avantages
      */
-    public function getAvantage()
-    {
+    public function getAvantage() {
         return $this->avantage;
     }
 }

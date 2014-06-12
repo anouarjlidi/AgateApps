@@ -6,26 +6,22 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class OghamTypesType extends AbstractType
-{
-        /**
+class OghamTypesType extends AbstractType {
+    /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
+    public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
             ->add('name', 'text', array('label' => 'Nom'))
-            ->add('description', 'textarea', array('label' => 'Description', 'required'=>false))
-            ->add('save','submit',array('label'=>'Enregistrer'))
-        ;
+            ->add('description', 'textarea', array('label' => 'Description', 'required' => false))
+            ->add('save', 'submit', array('label' => 'Enregistrer'));
     }
 
     /**
      * @param OptionsResolverInterface $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
+    public function setDefaultOptions(OptionsResolverInterface $resolver) {
         $resolver->setDefaults(array(
             'data_class' => 'CorahnRin\ModelsBundle\Entity\OghamTypes'
         ));
@@ -34,8 +30,7 @@ class OghamTypesType extends AbstractType
     /**
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return 'corahnrin_charactersbundle_oghamtypes';
     }
 }

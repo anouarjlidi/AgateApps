@@ -13,8 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity(repositoryClass="CorahnRin\ModelsBundle\Repository\DomainsRepository")
  */
-class Domains
-{
+class Domains {
     /**
      * @var integer
      *
@@ -39,33 +38,11 @@ class Domains
     protected $description;
 
     /**
-     * @var \Datetime
-     * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(type="datetime", nullable=false)
-     */
-    protected $created;
-
-    /**
-     * @var \Datetime
-
-     * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(type="datetime", nullable=false)
-     */
-    protected $updated;
-
-    /**
      * @var Ways
      *
      * @ORM\ManyToOne(targetEntity="Ways")
      */
     protected $way;
-
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="deleted", type="datetime", nullable=true)
-     */
-    protected $deleted = null;
 
     /**
      * @var Disciplines[]
@@ -74,15 +51,35 @@ class Domains
      */
     protected $disciplines;
 
+    /**
+     * @var \Datetime
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime", nullable=false)
+     */
+    protected $created;
+
+    /**
+     * @var \Datetime
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(type="datetime", nullable=false)
+     */
+    protected $updated;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="deleted", type="datetime", nullable=true)
+     */
+    protected $deleted = null;
+
     function __toString() {
-        return $this->id.' - '.$this->name;
+        return $this->id . ' - ' . $this->name;
     }
 
     /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->disciplines = new ArrayCollection();
     }
 
@@ -91,8 +88,7 @@ class Domains
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -102,8 +98,7 @@ class Domains
      * @param string $name
      * @return Domains
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -114,8 +109,7 @@ class Domains
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -125,8 +119,7 @@ class Domains
      * @param string $description
      * @return Domains
      */
-    public function setDescription($description)
-    {
+    public function setDescription($description) {
         $this->description = $description;
 
         return $this;
@@ -137,8 +130,7 @@ class Domains
      *
      * @return string
      */
-    public function getDescription()
-    {
+    public function getDescription() {
         return $this->description;
     }
 
@@ -148,8 +140,7 @@ class Domains
      * @param \DateTime $created
      * @return Domains
      */
-    public function setCreated($created)
-    {
+    public function setCreated($created) {
         $this->created = $created;
 
         return $this;
@@ -160,8 +151,7 @@ class Domains
      *
      * @return \DateTime
      */
-    public function getCreated()
-    {
+    public function getCreated() {
         return $this->created;
     }
 
@@ -171,8 +161,7 @@ class Domains
      * @param \DateTime $updated
      * @return Domains
      */
-    public function setUpdated($updated)
-    {
+    public function setUpdated($updated) {
         $this->updated = $updated;
 
         return $this;
@@ -183,8 +172,7 @@ class Domains
      *
      * @return \DateTime
      */
-    public function getUpdated()
-    {
+    public function getUpdated() {
         return $this->updated;
     }
 
@@ -194,8 +182,7 @@ class Domains
      * @param Ways $way
      * @return Domains
      */
-    public function setWay(Ways $way = null)
-    {
+    public function setWay(Ways $way = null) {
         $this->way = $way;
 
         return $this;
@@ -206,8 +193,7 @@ class Domains
      *
      * @return Ways
      */
-    public function getWay()
-    {
+    public function getWay() {
         return $this->way;
     }
 
@@ -217,8 +203,7 @@ class Domains
      * @param Disciplines $disciplines
      * @return Domains
      */
-    public function addDiscipline(Disciplines $disciplines)
-    {
+    public function addDiscipline(Disciplines $disciplines) {
         $this->disciplines[] = $disciplines;
 
         return $this;
@@ -229,8 +214,7 @@ class Domains
      *
      * @param Disciplines $disciplines
      */
-    public function removeDiscipline(Disciplines $disciplines)
-    {
+    public function removeDiscipline(Disciplines $disciplines) {
         $this->disciplines->removeElement($disciplines);
     }
 
@@ -239,8 +223,7 @@ class Domains
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getDisciplines()
-    {
+    public function getDisciplines() {
         return $this->disciplines;
     }
 }

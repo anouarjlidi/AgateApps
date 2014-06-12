@@ -1,9 +1,9 @@
 <?php
 
 namespace CorahnRin\ModelsBundle\Entity;
+
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Artifacts
@@ -12,8 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity(repositoryClass="CorahnRin\ModelsBundle\Repository\ArtifactsRepository")
  */
-class Artifacts
-{
+class Artifacts {
     /**
      * @var integer
      *
@@ -27,7 +26,6 @@ class Artifacts
      * @var string
      *
      * @ORM\Column(type="string", length=70, nullable=false, unique=true)
-     * @Assert\NotBlank()
      */
     protected $name;
 
@@ -41,24 +39,18 @@ class Artifacts
      * @var integer
      *
      * @ORM\Column(type="smallint")
-     * @Assert\NotNull()
-     * @Assert\GreaterThanOrEqual(value=0)
      */
     protected $price;
 
     /**
      * @var integer
      * @ORM\Column(type="smallint")
-     * @Assert\NotNull()
-     * @Assert\GreaterThanOrEqual(value=0)
      */
     protected $consumption;
 
     /**
      * @var integer
      * @ORM\Column(type="smallint")
-     * @Assert\NotNull()
-     * @Assert\GreaterThanOrEqual(value=0)
      */
     protected $consumptionInterval;
 
@@ -66,8 +58,6 @@ class Artifacts
      * @var integer
      *
      * @ORM\Column(type="smallint", nullable=true)
-     * @Assert\NotNull()
-     * @Assert\GreaterThanOrEqual(value=0)
      */
     protected $tank;
 
@@ -75,8 +65,6 @@ class Artifacts
      * @var integer
      *
      * @ORM\Column(type="smallint")
-     * @Assert\NotNull()
-     * @Assert\GreaterThanOrEqual(value=0)
      */
     protected $resistance;
 
@@ -98,9 +86,16 @@ class Artifacts
      * @var integer
      *
      * @ORM\Column(type="smallint", nullable=true)
-     * @Assert\GreaterThanOrEqual(value=0)
      */
     protected $damage;
+
+    /**
+     * @var Flux
+     *
+     * @ORM\ManyToOne(targetEntity="Flux")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    protected $flux;
 
     /**
      * @var \Datetime
@@ -111,20 +106,10 @@ class Artifacts
 
     /**
      * @var \Datetime
-
      * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $updated;
-
-    /**
-     * @var Flux
-     *
-     * @ORM\ManyToOne(targetEntity="Flux")
-     * @Assert\NotNull()
-     * @ORM\JoinColumn(nullable=false)
-     */
-    protected $flux;
 
     /**
      * @var boolean
@@ -138,8 +123,7 @@ class Artifacts
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -149,8 +133,7 @@ class Artifacts
      * @param string $name
      * @return Artifacts
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -161,8 +144,7 @@ class Artifacts
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -172,8 +154,7 @@ class Artifacts
      * @param integer $price
      * @return Artifacts
      */
-    public function setPrice($price)
-    {
+    public function setPrice($price) {
         $this->price = $price;
 
         return $this;
@@ -184,8 +165,7 @@ class Artifacts
      *
      * @return integer
      */
-    public function getPrice()
-    {
+    public function getPrice() {
         return $this->price;
     }
 
@@ -195,8 +175,7 @@ class Artifacts
      * @param integer $consumption
      * @return Artifacts
      */
-    public function setConsumption($consumption)
-    {
+    public function setConsumption($consumption) {
         $this->consumption = $consumption;
 
         return $this;
@@ -207,8 +186,7 @@ class Artifacts
      *
      * @return integer
      */
-    public function getConsumption()
-    {
+    public function getConsumption() {
         return $this->consumption;
     }
 
@@ -218,8 +196,7 @@ class Artifacts
      * @param integer $consumptionInterval
      * @return Artifacts
      */
-    public function setConsumptionInterval($consumptionInterval)
-    {
+    public function setConsumptionInterval($consumptionInterval) {
         $this->consumptionInterval = $consumptionInterval;
 
         return $this;
@@ -230,8 +207,7 @@ class Artifacts
      *
      * @return integer
      */
-    public function getConsumptionInterval()
-    {
+    public function getConsumptionInterval() {
         return $this->consumptionInterval;
     }
 
@@ -241,8 +217,7 @@ class Artifacts
      * @param integer $tank
      * @return Artifacts
      */
-    public function setTank($tank)
-    {
+    public function setTank($tank) {
         $this->tank = $tank;
 
         return $this;
@@ -253,8 +228,7 @@ class Artifacts
      *
      * @return integer
      */
-    public function getTank()
-    {
+    public function getTank() {
         return $this->tank;
     }
 
@@ -264,8 +238,7 @@ class Artifacts
      * @param integer $resistance
      * @return Artifacts
      */
-    public function setResistance($resistance)
-    {
+    public function setResistance($resistance) {
         $this->resistance = $resistance;
 
         return $this;
@@ -276,8 +249,7 @@ class Artifacts
      *
      * @return integer
      */
-    public function getResistance()
-    {
+    public function getResistance() {
         return $this->resistance;
     }
 
@@ -287,8 +259,7 @@ class Artifacts
      * @param string $vulnerability
      * @return Artifacts
      */
-    public function setVulnerability($vulnerability)
-    {
+    public function setVulnerability($vulnerability) {
         $this->vulnerability = $vulnerability;
 
         return $this;
@@ -299,8 +270,7 @@ class Artifacts
      *
      * @return string
      */
-    public function getVulnerability()
-    {
+    public function getVulnerability() {
         return $this->vulnerability;
     }
 
@@ -310,8 +280,7 @@ class Artifacts
      * @param string $handling
      * @return Artifacts
      */
-    public function setHandling($handling)
-    {
+    public function setHandling($handling) {
         $this->handling = $handling;
 
         return $this;
@@ -322,8 +291,7 @@ class Artifacts
      *
      * @return string
      */
-    public function getHandling()
-    {
+    public function getHandling() {
         return $this->handling;
     }
 
@@ -333,8 +301,7 @@ class Artifacts
      * @param integer $damage
      * @return Artifacts
      */
-    public function setDamage($damage)
-    {
+    public function setDamage($damage) {
         $this->damage = $damage;
 
         return $this;
@@ -345,8 +312,7 @@ class Artifacts
      *
      * @return integer
      */
-    public function getDamage()
-    {
+    public function getDamage() {
         return $this->damage;
     }
 
@@ -356,8 +322,7 @@ class Artifacts
      * @param \DateTime $created
      * @return Artifacts
      */
-    public function setCreated($created)
-    {
+    public function setCreated($created) {
         $this->created = $created;
 
         return $this;
@@ -368,8 +333,7 @@ class Artifacts
      *
      * @return \DateTime
      */
-    public function getCreated()
-    {
+    public function getCreated() {
         return $this->created;
     }
 
@@ -379,8 +343,7 @@ class Artifacts
      * @param \DateTime $updated
      * @return Artifacts
      */
-    public function setUpdated($updated)
-    {
+    public function setUpdated($updated) {
         $this->updated = $updated;
 
         return $this;
@@ -391,8 +354,7 @@ class Artifacts
      *
      * @return \DateTime
      */
-    public function getUpdated()
-    {
+    public function getUpdated() {
         return $this->updated;
     }
 
@@ -402,8 +364,7 @@ class Artifacts
      * @param Flux $flux
      * @return Artifacts
      */
-    public function setFlux(Flux $flux = null)
-    {
+    public function setFlux(Flux $flux = null) {
         $this->flux = $flux;
 
         return $this;
@@ -414,8 +375,7 @@ class Artifacts
      *
      * @return Flux
      */
-    public function getFlux()
-    {
+    public function getFlux() {
         return $this->flux;
     }
 
@@ -425,8 +385,7 @@ class Artifacts
      * @param string $description
      * @return Artifacts
      */
-    public function setDescription($description)
-    {
+    public function setDescription($description) {
         $this->description = $description;
 
         return $this;
@@ -437,8 +396,7 @@ class Artifacts
      *
      * @return string
      */
-    public function getDescription()
-    {
+    public function getDescription() {
         return $this->description;
     }
 }

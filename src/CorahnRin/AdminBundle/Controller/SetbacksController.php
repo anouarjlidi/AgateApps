@@ -9,14 +9,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-class SetbacksController extends Controller
-{
+class SetbacksController extends Controller {
     /**
      * @Route("/admin/generator/setbacks/")
      * @Template()
      */
-    public function adminListAction()
-    {
+    public function adminListAction() {
         $name = str_replace('Controller', '', preg_replace('#^([a-zA-Z]+\\\)*#isu', '', __CLASS__));
         return array(
             strtolower($name) => $this->getDoctrine()->getManager()->getRepository('CorahnRinCharactersBundle:' . $name)->findAll(),
@@ -27,8 +25,7 @@ class SetbacksController extends Controller
      * @Route("/admin/generator/setbacks/add/")
      * @Template("PierstovalAdminBundle:Form:add.html.twig")
      */
-    public function addAction(Request $request)
-    {
+    public function addAction(Request $request) {
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN_GENERATOR_SUPER')) {
             throw $this->createAccessDeniedException();
         }
@@ -39,16 +36,14 @@ class SetbacksController extends Controller
      * @Route("/admin/generator/setbacks/edit/{id}")
      * @Template("PierstovalAdminBundle:Form:add.html.twig")
      */
-    public function editAction(Setbacks $setback, Request $request)
-    {
+    public function editAction(Setbacks $setback, Request $request) {
         return $this->handle_request($setback, $request);
     }
 
     /**
      * @Route("/admin/generator/setbacks/delete/{id}")
      */
-    public function deleteAction(Setbacks $element)
-    {
+    public function deleteAction(Setbacks $element) {
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN_GENERATOR_SUPER')) {
             throw $this->createAccessDeniedException();
         }
@@ -61,8 +56,7 @@ class SetbacksController extends Controller
         return $this->redirect($this->generateUrl('corahnrin_admin_setbacks_adminlist'));
     }
 
-    private function handle_request(Setbacks $element, Request $request)
-    {
+    private function handle_request(Setbacks $element, Request $request) {
         $method = preg_replace('#^' . str_replace('\\', '\\\\', __CLASS__) . '::([a-zA-Z]+)Action$#isUu', '$1', $request->get('_controller'));
 
         $form = $this->createForm(new SetbacksType(), $element);
@@ -74,7 +68,8 @@ class SetbacksController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($element);
             $em->flush();
-            $this->get('session')->getFlashBag()->add('success', 'Revers ' . ($method == 'add' ? 'ajouté' : 'modifié') . ' : <strong>' . $element->getName() . '</strong>');
+            $this->get('session')->getFlashBag()->add('success', 'Revers ' . ($method == 'add' ? 'ajouté'
+                    : 'modifié') . ' : <strong>' . $element->getName() . '</strong>');
             return $this->redirect($this->generateUrl('corahnrin_admin_setbacks_adminlist'));
         }
 
