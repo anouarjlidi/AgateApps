@@ -46,7 +46,7 @@
         opacity: 0.5,
         fillColor: '#0f0',
         fillOpacity: 0.1,
-        weight: 5
+        weight: 3
     };
 
     EsterenMap.prototype.mapOptions.CustomPolygonBaseOptions = {

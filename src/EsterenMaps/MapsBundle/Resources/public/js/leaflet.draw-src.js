@@ -128,11 +128,11 @@
                 return;
             }
 
+            L.Handler.prototype.enable.call(this);
+
             this.fire('enabled', { handler: this.type });
 
             this._map.fire('draw:drawstart', { layerType: this.type });
-
-            L.Handler.prototype.enable.call(this);
         },
 
         disable: function () {
@@ -200,7 +200,7 @@
             repeatMode: false,
             drawError: {
                 color: '#b00b00',
-                timeout: 500
+                timeout: 2500
             },
             icon: new L.DivIcon({
                 iconSize: new L.Point(8, 8),
@@ -1861,27 +1861,27 @@
 
             L.Control.prototype.initialize.call(this, options);
 
-            var id, toolbar;
+            var toolbar;
 
             this._toolbars = {};
 
             // Initialize toolbars
             if (L.DrawToolbar && this.options.draw) {
                 toolbar = new L.DrawToolbar(this.options.draw);
-                id = L.stamp(toolbar);
-                this._toolbars[id] = toolbar;
+
+                this._toolbars[L.DrawToolbar.TYPE] = toolbar;
 
                 // Listen for when toolbar is enabled
-                this._toolbars[id].on('enable', this._toolbarEnabled, this);
+                this._toolbars[L.DrawToolbar.TYPE].on('enable', this._toolbarEnabled, this);
             }
 
             if (L.EditToolbar && this.options.edit) {
                 toolbar = new L.EditToolbar(this.options.edit);
-                id = L.stamp(toolbar);
-                this._toolbars[id] = toolbar;
+
+                this._toolbars[L.EditToolbar.TYPE] = toolbar;
 
                 // Listen for when toolbar is enabled
-                this._toolbars[id].on('enable', this._toolbarEnabled, this);
+                this._toolbars[L.EditToolbar.TYPE].on('enable', this._toolbarEnabled, this);
             }
         },
 
@@ -1929,10 +1929,10 @@
         },
 
         _toolbarEnabled: function (e) {
-            var id = '' + L.stamp(e.target);
+            var enabledToolbar = e.target;
 
             for (var toolbarId in this._toolbars) {
-                if (this._toolbars.hasOwnProperty(toolbarId) && toolbarId !== id) {
+                if (this._toolbars[toolbarId] !== enabledToolbar) {
                     this._toolbars[toolbarId].disable();
                 }
             }
@@ -2268,6 +2268,10 @@
 
     L.DrawToolbar = L.Toolbar.extend({
 
+        statics: {
+            TYPE: 'draw'
+        },
+
         options: {
             polyline: {},
             polygon: {},
@@ -2356,6 +2360,10 @@
      });*/
 
     L.EditToolbar = L.Toolbar.extend({
+        statics: {
+            TYPE: 'edit'
+        },
+
         options: {
             edit: {
                 selectedPathOptions: {
@@ -2365,7 +2373,10 @@
 
                     fill: true,
                     fillColor: '#fe57a1',
-                    fillOpacity: 0.1
+                    fillOpacity: 0.1,
+
+                    // Whether to user the existing layers color
+                    maintainColor: false
                 }
             },
             remove: {},
@@ -2378,7 +2389,7 @@
                 if (typeof options.edit.selectedPathOptions === 'undefined') {
                     options.edit.selectedPathOptions = this.options.edit.selectedPathOptions;
                 }
-                options.edit = L.extend({}, this.options.edit, options.edit);
+                options.edit.selectedPathOptions = L.extend({}, this.options.edit.selectedPathOptions, options.edit.selectedPathOptions);
             }
 
             if (options.remove) {
@@ -2694,6 +2705,12 @@
             if (this._selectedPathOptions) {
                 pathOptions = L.Util.extend({}, this._selectedPathOptions);
 
+                // Use the existing color of the layer
+                if (pathOptions.maintainColor) {
+                    pathOptions.color = layer.options.color;
+                    pathOptions.fillColor = layer.options.fillColor;
+                }
+
                 if (isMarker) {
                     this._toggleMarkerHighlight(layer);
                 } else {
@@ -2754,9 +2771,6 @@
         }
     });
 
-    if (window['LeafletDrawTranslations']) {
-        L.drawLocal = mergeRecursive(L.drawLocal, window['LeafletDrawTranslations']);
-    }
 
     L.EditToolbar.Delete = L.Handler.extend({
         statics: {

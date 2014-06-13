@@ -242,7 +242,8 @@
 }
 
 .leaflet-draw-tooltip:before {
-    border-right: 6px solid rgba(0, 0, 0, 0.5);
+    border-right: 6px solid black;
+    border-right-color: rgba(0, 0, 0, 0.5);
     border-top: 6px solid transparent;
     border-bottom: 6px solid transparent;
     content: "";
@@ -302,7 +303,7 @@
 /* ================================================================== */
 
 .leaflet-oldie .leaflet-draw-toolbar {
-    border: 3px solid #999;
+    border: 1px solid #999;
 }
 
 .leaflet-oldie .leaflet-draw-toolbar a {

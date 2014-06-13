@@ -27,7 +27,14 @@
                 }
             },
             edit: {
-                featureGroup: drawnItems
+                featureGroup: drawnItems,
+                edit: {
+                    selectedPathOptions: {
+                        dashArray: '7, 7',
+                        weight: 2,
+                        maintainColor: true
+                    }
+                }
             }
         });
 
