@@ -40,6 +40,13 @@
         '@EsterenMapsBundle/Resources/public/js/EsterenMap/4_EsterenMap_addPolygon.js'
         output="js/maps.js"
         filter=""
+    %}
+    <script type="text/javascript" src="{{ app.request.getSchemeAndHttpHost() ~ asset_url }}"></script>{% endjavascripts %}
+
+    {% javascripts
+    '@EsterenMapsBundle/Resources/public/js/map_edit.js'
+    output="js/map_edit_more.js"
+    filter=""
     %}<script type="text/javascript" src="{{ app.request.getSchemeAndHttpHost() ~ asset_url }}"></script>{% endjavascripts %}
 
     <script type="text/javascript">
