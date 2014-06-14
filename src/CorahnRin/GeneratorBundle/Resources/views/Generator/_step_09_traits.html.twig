@@ -1,8 +1,8 @@
 <input type="hidden" name="quality" id="quality" value="{{ quality }}" />
 <input type="hidden" name="flaw" id="flaw" value="{{ flaw }}" />
 <div class="row">
-    <div class="col-sm-6">
-        <h4>{{ 'Qualités' | trans }}</h4>
+    <div id="list_qualities" class="col-sm-6">
+        <h4 class="text-center">{{ 'Qualités' | trans }}</h4>
         {% for trait in traits_list.qualities %}
             {% if loop.first %}
                 <div class="row mb5">
@@ -20,8 +20,8 @@
 
         {% endfor %}{# qualities #}
     </div>
-    <div class="col-sm-6">
-        <h4>{{ 'Défauts' | trans }}</h4>
+    <div id="list_flaws" class="col-sm-6">
+        <h4 class="text-center">{{ 'Défauts' | trans }}</h4>
         {% for trait in traits_list.flaws %}
             {% if loop.first %}
                 <div class="row mb5">

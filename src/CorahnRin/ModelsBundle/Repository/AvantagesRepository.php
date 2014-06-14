@@ -9,8 +9,11 @@ use CorahnRin\ToolsBundle\Repository\CorahnRinRepository as CorahnRinRepository;
  */
 class AvantagesRepository extends CorahnRinRepository {
 
+    /**
+     * @return array Un tableau de deux tableaux : "advantages" et "disadvantages"
+     */
     function findAllDifferenciated() {
-        $list = $this->findAll();
+        $list = $this->findAll(true);
         $advantages = $disadvantages = array();
         foreach ($list as $id => $element) {
             if ($element->getIsDesv()) {

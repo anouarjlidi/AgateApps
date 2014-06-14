@@ -4,35 +4,37 @@
  * @var $this CorahnRin\GeneratorBundle\Steps\StepLoader
  */
 
-$ways = $this->getStepValue(8);
+$global_list = $this->em->getRepository('CorahnRinModelsBundle:Avantages')->findAllDifferenciated($ways);
 
-$traits = $this->em->getRepository('CorahnRinModelsBundle:Traits')->findAllDependingOnWays($ways);
-
-$quality = isset($this->character[$this->stepFullName()]['quality']) ? (int) $this->character[$this->stepFullName()]['quality'] : null;
-$flaw = isset($this->character[$this->stepFullName()]['flaw']) ? (int) $this->character[$this->stepFullName()]['flaw'] : null;
+$advantages = isset($this->character[$this->stepFullName()]['advantages']) ? (int) $this->character[$this->stepFullName()]['advantages'] : array();
+$disadvantages = isset($this->character[$this->stepFullName()]['disadvantages']) ? (int) $this->character[$this->stepFullName()]['disadvantages'] : array();
 
 $datas = array(
-    'quality' => $quality,
-    'flaw' => $flaw,
-    'traits_list' => $traits,
+    'advantages' => $advantages,
+    'disadvantages' => $disadvantages,
+    'advantages_list' => $global_list['advantages'],
+    'disadvantages_list' => $global_list['disadvantages'],
 );
 
 if ($this->request->isMethod('POST')) {
     $this->resetSteps();
-    $quality = (int) $this->request->request->get('quality');
-    $flaw = (int) $this->request->request->get('flaw');
+    $advantages_selected = $this->request->request->get('advantages');
+    $disadvantages_selected = $this->request->request->get('disadvantages');
 
-    $quality_exists = array_key_exists($quality, $traits['qualities']);
-	$flaw_exists = array_key_exists($flaw, $traits['flaws']);
+    $error = false;
+
+    foreach($advantages_selected as $id => $value) {
+        //
+    }
 
     if ($quality_exists && $flaw_exists) {
         $this->characterSet(array(
-            'quality' => $quality,
-            'flaw' => $flaw,
+            'advantages' => $advantages,
+            'disadvantages' => $disadvantages,
         ));
         return $this->nextStep();
     } else {
-        $this->flashMessage('Les traits de caractère choisis sont incorrects.', 'error.steps');
+        $this->flashMessage('Une erreur est survenue dans la sélection d\'avantages ou de désavantages.', 'error.steps');
     }
 
 }

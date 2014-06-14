@@ -5,7 +5,7 @@
 {% block stylesheets %}
     {{ parent() }}
     {% stylesheets
-        '@CorahnRinGeneratorBundle/Resources/public/css/*'
+        '@CorahnRinGeneratorBundle/Resources/public/css/*.css'
         filter="cssrewrite"
         output="css/generator.css"
     %}<link rel="stylesheet" href="{{ app.request.getSchemeAndHttpHost() ~ asset_url }}" type="text/css" />
@@ -52,7 +52,7 @@
     {% endjavascripts %}
 
     {% javascripts
-        '@CorahnRinGeneratorBundle/Resources/public/js/*'
+        '@CorahnRinGeneratorBundle/Resources/public/js/*.js'
         filter=""
         output="js/generator.js"
     %}<script type="text/javascript" src="{{ app.request.getSchemeAndHttpHost() ~ asset_url }}"></script>

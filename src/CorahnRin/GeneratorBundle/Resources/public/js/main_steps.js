@@ -122,11 +122,11 @@
                 'max': el.getAttribute('data-slider-max') ? parseInt(el.getAttribute('data-slider-max')) : 0,
                 'slide': function (e, ui) {
                     var id;
-                    id = ui.handle.attr('data-slider-label');
+                    id = $(e.target).attr('data-slider-label');
                     if (id) {
                         document.getElementById(id).innerHTML = ui.value;
                     }
-                    id = ui.handle.attr('data-slider-input');
+                    id = $(e.target).attr('data-slider-input');
                     if (id) {
                         document.getElementById(id).value = ui.value;
                     }
