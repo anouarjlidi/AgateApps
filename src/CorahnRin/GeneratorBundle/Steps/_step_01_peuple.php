@@ -4,7 +4,7 @@
  * @var $this CorahnRin\GeneratorBundle\Steps\StepLoader
  */
 
-$peoples = $this->em->getRepository('CorahnRinCharactersBundle:Peoples')->findAll(true);
+$peoples = $this->em->getRepository('CorahnRinModelsBundle:Peoples')->findAll(true);
 
 $datas = array(
     'peoples' => $peoples,

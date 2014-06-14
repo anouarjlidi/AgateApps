@@ -18,8 +18,8 @@ class OghamController extends Controller {
      */
     public function adminListAction() {
         return array(
-            'ogham_list' => $this->getDoctrine()->getManager()->getRepository('CorahnRinCharactersBundle:Ogham')->findAll(),
-            'oghamTypes' => $this->getDoctrine()->getManager()->getRepository('CorahnRinCharactersBundle:OghamTypes')->findAll(),
+            'ogham_list' => $this->getDoctrine()->getManager()->getRepository('CorahnRinModelsBundle:Ogham')->findAll(),
+            'oghamTypes' => $this->getDoctrine()->getManager()->getRepository('CorahnRinModelsBundle:OghamTypes')->findAll(),
         );
     }
 

@@ -4,7 +4,7 @@
  * @var $this CorahnRin\GeneratorBundle\Steps\StepLoader
  */
 
-$ways = $this->em->getRepository('CorahnRinCharactersBundle:Ways')->findAll(true);
+$ways = $this->em->getRepository('CorahnRinModelsBundle:Ways')->findAll(true);
 
 $ways_values = isset($this->character[$this->stepFullName()]) ? $this->character[$this->stepFullName()] : null;
 if (null === $ways_values) {

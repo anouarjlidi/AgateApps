@@ -39,7 +39,7 @@ class ViewerController extends Controller
         elseif ($limit > 100) { $limit = 100; }
 		$order = strtolower($order) === 'desc' ? 'desc' : 'asc';
 
-		$repo = $this->getDoctrine()->getManager()->getRepository('CorahnRinCharactersBundle:Characters');
+		$repo = $this->getDoctrine()->getManager()->getRepository('CorahnRinModelsBundle:Characters');
 
         $number_of_chars = $repo->getNumberOfElementsSearch($searchField, $order, $limit, ($page-1)*$limit);
         $pages = ceil($number_of_chars / $limit);

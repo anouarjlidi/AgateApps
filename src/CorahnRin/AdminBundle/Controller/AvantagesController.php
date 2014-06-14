@@ -15,7 +15,7 @@ class AvantagesController extends Controller {
      * @Template()
      */
     public function adminListAction() {
-        return $this->getDoctrine()->getManager()->getRepository('CorahnRinCharactersBundle:Avantages')->findAllDifferenciated();
+        return $this->getDoctrine()->getManager()->getRepository('CorahnRinModelsBundle:Avantages')->findAllDifferenciated();
     }
 
     /**
@@ -63,7 +63,7 @@ class AvantagesController extends Controller {
             $element->setBonusDisc(null);
         }
 
-        $bonuses = $this->getDoctrine()->getManager()->getRepository('CorahnRinCharactersBundle:Domains')->findAllSortedByName();
+        $bonuses = $this->getDoctrine()->getManager()->getRepository('CorahnRinModelsBundle:Domains')->findAllSortedByName();
 
         $bonuses['100g'] = '100 Daols de Givre';
         $bonuses['50g'] = '50 Daols de Givre';

@@ -15,7 +15,7 @@ class TraitsController extends Controller {
      * @Template()
      */
     public function adminListAction() {
-        return $this->getDoctrine()->getManager()->getRepository('CorahnRinCharactersBundle:Traits')->findAllDifferenciated();
+        return $this->getDoctrine()->getManager()->getRepository('CorahnRinModelsBundle:Traits')->findAllDifferenciated();
     }
 
     /**

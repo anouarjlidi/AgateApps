@@ -17,7 +17,7 @@ class WeaponsController extends Controller {
     public function adminListAction() {
         $name = str_replace('Controller', '', preg_replace('#^([a-zA-Z]+\\\)*#isu', '', __CLASS__));
         return array(
-            strtolower($name) => $this->getDoctrine()->getManager()->getRepository('CorahnRinCharactersBundle:' . $name)->findAll(),
+            strtolower($name) => $this->getDoctrine()->getManager()->getRepository('CorahnRinModelsBundle:' . $name)->findAll(),
         );
     }
 

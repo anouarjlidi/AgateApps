@@ -16,7 +16,7 @@ class SocialClassesController extends Controller {
      */
     public function adminListAction() {
         return array(
-            'socialClasses' => $this->getDoctrine()->getManager()->getRepository('CorahnRinCharactersBundle:SocialClasses')->findAll(),
+            'socialClasses' => $this->getDoctrine()->getManager()->getRepository('CorahnRinModelsBundle:SocialClasses')->findAll(),
         );
     }
 

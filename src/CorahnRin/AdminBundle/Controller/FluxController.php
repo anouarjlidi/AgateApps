@@ -17,7 +17,7 @@ class FluxController extends Controller {
     public function adminListAction() {
         $name = str_replace('Controller', '', preg_replace('#^([a-zA-Z]+\\\)*#isu', '', __CLASS__));
         return array(
-            strtolower($name) . '_list' => $this->getDoctrine()->getManager()->getRepository('CorahnRinCharactersBundle:' . $name)->findAll(),
+            strtolower($name) . '_list' => $this->getDoctrine()->getManager()->getRepository('CorahnRinModelsBundle:' . $name)->findAll(),
         );
     }
 

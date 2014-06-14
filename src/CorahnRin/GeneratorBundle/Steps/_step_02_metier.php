@@ -4,7 +4,7 @@
  * @var $this CorahnRin\GeneratorBundle\Steps\StepLoader
  */
 
-$jobs = $this->em->getRepository('CorahnRinCharactersBundle:Jobs')->findAllPerBook();
+$jobs = $this->em->getRepository('CorahnRinModelsBundle:Jobs')->findAllPerBook();
 
 $datas = array(
     'job_value' => isset($this->character[$this->stepFullName()]) ? (int) $this->character[$this->stepFullName()] : null,
