@@ -1,0 +1,47 @@
+<div class="row">
+    <div class="ml20 mb10">
+        {{ 'Expérience' }} : <span class="well well-sm"><span id="xp">{{ current_xp }}</span> / 100</span>
+    </div>
+    <div id="list_advantages" class="col-sm-6">
+        <h4 class="text-center">{{ 'Avantages' | trans }}</h4>
+        {% for avtg in advantages_list %}
+            {% if loop.first %}
+                <div class="row mb5">
+            {% endif %}
+
+            <div class="col-sm-6">
+                <label class="change_avtg btn btn-inverse btn-block {{ advantages[avtg.id] is defined and advantages[avtg.id] > 0 ? 'active' : '' }}">
+                    <input type="radio" name="advantages[{{ avtg.id }}]" value="{{ advantages[avtg.id] is defined and advantages[avtg.id] ? advantages[avtg.id] : '0' }}" id="avtg-{{ avtg.id }}" data-input-value="{{ avtg.id }}" class="hidden" />{{ avtg.name | trans }}
+                </label>
+            </div>
+
+            {% if loop.index % 2 == 0 and not loop.last %}
+                </div><!-- /.row --><div class="row mb5">
+            {% elseif loop.last %}
+                </div><!-- /.row -->
+            {% endif %}
+
+        {% endfor %}{# advantages #}
+    </div>
+    <div id="list_disadvantages" class="col-sm-6">
+        <h4 class="text-center">{{ 'Désavantages' | trans }}</h4>
+        {% for desv in disadvantages_list %}
+            {% if loop.first %}
+                <div class="row mb5">
+            {% endif %}
+
+            <div class="col-sm-6">
+                <label class="change_desv btn btn-inverse btn-block {{ disadvantages[desv.id] is defined and disadvantages[desv.id] > 0  ? 'active' : '' }}">
+                    <input type="radio" name="disadvantages[{{ desv.id }}]" value="{{ disadvantages[desv.id] is defined and disadvantages[desv.id] ? disadvantages[desv.id] : '0' }}" id="desv-{{ desv.id }}" data-input-value="{{ desv.id }}" class="hidden" />{{ desv.name | trans }}
+                </label>
+            </div>
+
+            {% if loop.index % 2 == 0 and not loop.last %}
+                </div><!-- /.row --><div class="row mb5">
+            {% elseif loop.last %}
+                </div><!-- /.row -->
+            {% endif %}
+
+        {% endfor %}{# disadvantages #}
+    </div>
+</div>

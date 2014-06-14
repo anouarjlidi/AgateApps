@@ -55,7 +55,7 @@ class TraitsRepository extends CorahnRinRepository {
      * (key) wayid => (value) way score
      * @param Ways[] $ways
      * @throws \Exception
-     * @return Traits[]
+     * @return array
      */
     function findAllDependingOnWays(array $ways) {
         $qb = $this->_em

@@ -1,17 +1,17 @@
 <?php
 namespace CorahnRin\GeneratorBundle\Steps;
 
+use CorahnRin\GeneratorBundle\Controller\GeneratorController as Controller;
 use CorahnRin\GeneratorBundle\Entity\Steps;
-
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use CorahnRin\GeneratorBundle\Controller\GeneratorController as Controller;
 
 /**
  * Charge les étapes pour le contrôleur, d'après un nom de fichier dépendant de l'étape injectée
- * @author Alex "Pierstoval" <pierstoval@gmail.com>
+ *
+ * @author  Alex "Pierstoval" <pierstoval@gmail.com>
  * @version 1.0 27/12/2013
  * @version 1.1 16/03/2014 Injection de la liste des étapes dans le loader. Ajout de quelques méthodes pour faciliter la gestion des étapes et de la session.
  */
@@ -46,10 +46,30 @@ class StepLoader {
      * @var string
      */
     private $filename;
+
+    /**
+     * @var integer
+     */
     private $step;
+
+    /**
+     * @var Steps[]
+     */
     private $steps;
+
+    /**
+     * @var string
+     */
     private $steps_managers_directory;
+
+    /**
+     * @var string
+     */
     private $steps_views_directory;
+
+    /**
+     * @var bool
+     */
     private $initiated = false;
 
     /**
@@ -68,11 +88,11 @@ class StepLoader {
      * L'injection se fait manuellement pour être sûr de palier à toute erreur liée à la durée de vie de la requête.
      * Ainsi, les paramètres comme la session et la requête correspondent toujours aux bonnes informations.
      *
-     * @param Controller $controller        Le contrôleur ayant chargé le StepLoader
-     * @param SessionInterface $session     La session en cours, pour récupérer le personnage
-     * @param Request $request              La requête, pour les données POST gérées par les managers
-     * @param Steps $step                   L'étape en cours
-     * @param array $steps                  La liste des étapes (pour éviter une nouvelle injection
+     * @param Controller       $controller Le contrôleur ayant chargé le StepLoader
+     * @param SessionInterface $session    La session en cours, pour récupérer le personnage
+     * @param Request          $request    La requête, pour les données POST gérées par les managers
+     * @param Steps            $step       L'étape en cours
+     * @param array            $steps      La liste des étapes (pour éviter une nouvelle injection
      */
     function initiate(Controller $controller, SessionInterface $session, Request $request, Steps $step, $steps) {
         $this->controller = $controller;
@@ -89,6 +109,7 @@ class StepLoader {
 
     /**
      * Vérifie que le StepLoader a été initialisé
+     *
      * @return bool
      * @throws \Exception
      */
@@ -97,12 +118,13 @@ class StepLoader {
             return true;
         } else {
             throw new \Exception('Le StepLoader doit être initialisé avant toute action supplémentaire.<br />'
-            .'Voir documentation de la classe "'.__CLASS__.'".');
+                .'Voir documentation de la classe "'.__CLASS__.'".');
         }
     }
 
     /**
      * Vérifie si le fichier de l'étape existe
+     *
      * @return boolean
      */
     public function exists() {
@@ -113,24 +135,30 @@ class StepLoader {
      * Récupère une étape à partir du numéro de l'étape demandée
      *
      * @param object|int $step
-     * @return \CorahnRin\GeneratorBundle\Entity\Steps
+     * @return Steps
      * @throws \Exception
      */
     public function getStep($step = null) {
-        if (null === $step) { $step = $this->stepEntity; }
+        if (null === $step) {
+            return $this->stepEntity;
+        }
+        if ($step instanceof Steps) {
+            return $step;
+        }
         if (is_numeric($step)) {
             if (array_key_exists($step, $this->steps)) {
-                $step = $this->steps[$step];
+                return $this->steps[$step];
             } else {
                 throw new \Exception('Step not found in StepLoader\'s steps list.');
             }
         }
-        return $step;
+        return false;
     }
 
     /**
      * Renvoie la valeur de l'étape demandée dans le personnage en session.
      * Renvoie null si la clé n'existe pas
+     *
      * @param object|int $step
      * @return mixed
      */
@@ -144,6 +172,7 @@ class StepLoader {
 
     /**
      * Retourne le dossier de chargement des vues liées aux managers d'étape
+     *
      * @return string
      */
     public function getViewsDirectory() {
@@ -153,6 +182,7 @@ class StepLoader {
     /**
      * Retourne le nom complet de l'étape : {step}.{slug}
      * Utilisé majoritairement en session pour définir les différentes clés
+     *
      * @param Steps $step L'étape à parser. Si aucune étape n'est parsée, l'étape en cours est renvoyée
      * @return string
      */
@@ -163,7 +193,8 @@ class StepLoader {
 
     /**
      * Affecte les données $datas au personnage à l'étape en cours, ou à l'étape demandée
-     * @param mixed $datas
+     *
+     * @param mixed      $datas
      * @param object|int $step
      */
     public function characterSet($datas, $step = null) {
@@ -174,6 +205,7 @@ class StepLoader {
 
     /**
      * Redirige à l'étape suivante
+     *
      * @return array|object
      */
     public function nextStep() {
@@ -213,7 +245,7 @@ class StepLoader {
      *
      * @param string $msg
      * @param string $type
-     * @param array $msgParams
+     * @param array  $msgParams
      */
     public function flashMessage($msg, $type = 'error', $msgParams = array()) {
         $msg = $this->controller->get('translator')->trans($msg, $msgParams, 'error.steps');
