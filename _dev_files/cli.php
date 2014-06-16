@@ -1,5 +1,8 @@
-<?php $time = microtime(true);$temp_time = $time;
+<?php
 
+use CorahnRin\CharactersBundle\Classes\Money as Money;
+
+$time = microtime(true);$temp_time = $time;
 
 echo 'Conversion Corahn-Rin'."\n";
 $arglocal = isset($argv[1]) ? $argv[1] : 'local';
@@ -1230,291 +1233,294 @@ $tables_done[]=$table;showtime($temp_time, $nbreqtemp.' requêtes pour la table 
 
 
 
-require __DIR__.'/../src/CorahnRin/CharactersBundle/Classes/Money.php';
+$del = ReadStdin('Importer les personnages ? [O/n]', array('o','n'), 'n');
+if (preg_match('#^o#isUu', $del)) {$del = 'o';} else { $del = 'n'; }
 
-showtime($temp_time, 'Suppression du contenu des tables d\'association');
-
-use CorahnRin\CharactersBundle\Classes\Money as Money;
-$table = 'characters';
-$t = $new->req('describe %'.$table);
-
-$new->noRes('delete from %characters_ways');
-$new->noRes('delete from %characters_domains');
-//$new->noRes('delete from %characters_social_class');
-$new->noRes('delete from %characters_avantages');
-$new->noRes('delete from %characters_armors');
-$new->noRes('delete from %characters_weapons');
-$new->noRes('delete from %characters_setbacks');
-$new->noRes('delete from %characters_disciplines');
-$new->noRes('delete from %characters_flux');
-
-showtime($temp_time, 'Terminé !');
 
 $to_add = array();
-$new->noRes('delete from %'.$table);
-$struct = array();foreach($t as $v) { $struct[$v['Field']] = $v; } unset($t);
-//pr($struct);
-$charreq = 0;
-$characters = $old->req('SELECT * FROM %est_characters');
-require __DIR__.'/../src/CorahnRin/ToolsBundle/Resources/libs/functions/remove_accents.func.php';
+if ($del === 'o') {
+    require __DIR__.'/../src/CorahnRin/CharactersBundle/Classes/Money.php';
+
+    showtime($temp_time, 'Suppression du contenu des tables d\'association');
+    $table = 'characters';
+    $t = $new->req('describe %'.$table);
+
+    $new->noRes('delete from %characters_ways');
+    $new->noRes('delete from %characters_domains');
+    //$new->noRes('delete from %characters_social_class');
+    $new->noRes('delete from %characters_avantages');
+    $new->noRes('delete from %characters_armors');
+    $new->noRes('delete from %characters_weapons');
+    $new->noRes('delete from %characters_setbacks');
+    $new->noRes('delete from %characters_disciplines');
+    $new->noRes('delete from %characters_flux');
+
+    showtime($temp_time, 'Terminé !');
+    $new->noRes('delete from %'.$table);
+    $struct = array();foreach($t as $v) { $struct[$v['Field']] = $v; } unset($t);
+    //pr($struct);
+    $charreq = 0;
+    $characters = $old->req('SELECT * FROM %est_characters');
+    require __DIR__.'/../src/CorahnRin/ToolsBundle/Resources/libs/functions/remove_accents.func.php';
 
 
-$total_files = count($characters);
-$times = array();
-$current_file = 0;
+    $total_files = count($characters);
+    $times = array();
+    $current_file = 0;
 
-foreach ( $characters as $v) {
-	//if (!$new->row('SELECT * FROM %'.$table.' WHERE %name = :name', array('name'=>$v['char_name']))) {
-        $time_char = microtime(true);
-        $current_file++;
-		echo '----------------------------',"\n";
-		echo '----------------------------',"\n";
-		$cnt = json_decode($v['char_content']);
-		$money = new Money();
-		$money->addBraise($cnt->inventaire->argent);
-		$money->convert();
-		$nameSlug = \CorahnRinTools\remove_accents($v['char_name']);
-		$nameSlug = preg_replace('~[^a-zA-Z0-9_-]+~isUu', '-', $nameSlug);
-        $nameSlug = preg_replace('~--+~isUu', '-', $nameSlug);
+    foreach ( $characters as $v) {
+        //if (!$new->row('SELECT * FROM %'.$table.' WHERE %name = :name', array('name'=>$v['char_name']))) {
+            $time_char = microtime(true);
+            $current_file++;
+            echo '----------------------------',"\n";
+            echo '----------------------------',"\n";
+            $cnt = json_decode($v['char_content']);
+            $money = new Money();
+            $money->addBraise($cnt->inventaire->argent);
+            $money->convert();
+            $nameSlug = \CorahnRinTools\remove_accents($v['char_name']);
+            $nameSlug = preg_replace('~[^a-zA-Z0-9_-]+~isUu', '-', $nameSlug);
+            $nameSlug = preg_replace('~--+~isUu', '-', $nameSlug);
 
-        $nameSlugBase = $nameSlug;
-        $i = '';
-        $exists = $new->req('SELECT %id FROM %'.$table.' WHERE %nameSlug = :nameSlug', array('nameSlug'=>$nameSlugBase));
-        while ($exists) {
-            echo 'Slug existe déjà : '.$nameSlugBase."\r\n";
-            $i++;
-            $nameSlugBase = $nameSlug . $i;
-            $exists = $new->row('SELECT %id FROM %'.$table.' WHERE %nameSlug = :nameSlug', array('nameSlug'=>$nameSlugBase));
-        }
-        $nameSlug = $nameSlugBase;
-
-		$domaines = $cnt->domaines;
-		$socialclassdomains = array();
-		foreach ($domaines as $d => $domain) {
-			if ($domain->val > 0 && count($socialclassdomains) < 2) {
-//                print_r(array($d=>$domain));print_r(array('domaines'=>$domaines));exit;
-                $socialclassdomains[] = $domain->id;
-                $domaines->$d->val --;
+            $nameSlugBase = $nameSlug;
+            $i = '';
+            $exists = $new->req('SELECT %id FROM %'.$table.' WHERE %nameSlug = :nameSlug', array('nameSlug'=>$nameSlugBase));
+            while ($exists) {
+                echo 'Slug existe déjà : '.$nameSlugBase."\r\n";
+                $i++;
+                $nameSlugBase = $nameSlug . $i;
+                $exists = $new->row('SELECT %id FROM %'.$table.' WHERE %nameSlug = :nameSlug', array('nameSlug'=>$nameSlugBase));
             }
-		}
-        $cnt->classe_sociale = $new->row('SELECT %id FROM %social_class WHERE %name = ?', array($cnt->classe_sociale));
-        $cnt->classe_sociale = $cnt->classe_sociale['id'];
-		$datas = array(
-			'id' => $v['char_id'],
-			'name' => $v['char_name'],
-			'nameSlug' => $nameSlug,
-			'job_id' => is_numeric($v['char_job']) ? $v['char_job'] : null,
-			'jobCustom' => !is_numeric($v['char_job']) ? $v['char_job'] : null,
-			'sex' => substr($cnt->details_personnage->sexe, 0, 1) === 'H' ? 'M' : 'F',
-			'age' => $cnt->age,
-			'playerName' => $cnt->details_personnage->joueur,
-			'region_id' => $v['char_origin'],
-			'story' => $cnt->details_personnage->histoire,
-			'description' => $cnt->details_personnage->description,
-			'facts' => isset($cnt->details_personnage->faits) ? $cnt->details_personnage->faits : '',
-			'geoLiving' => $cnt->residence_geographique,//urbain/rural
-			'people_id' => (
-                $v['char_people'] === 'Tri-Kazel' ? 1
-                : ($v['char_people'] === 'Tarish' ? 2
-                : ($v['char_people'] === 'Osag' ? 3
-                : ($v['char_people'] === 'Continent' ? 4 : 0)))
-            ),
-			'mentalResist' => $cnt->resistance_mentale->exp,
-			'health' => $cnt->sante,
-			'stamina' => $cnt->vigueur,
-			'defense' => $cnt->defense->amelioration,
-			'speed' => $cnt->rapidite->amelioration,
-			'survival' => $cnt->survie,
-            'hardening' => 0,
-			'trauma' => $cnt->traumatismes->curables,
-			'traumaPermanent' => $cnt->traumatismes->permanents,
-			'rindath' => 0,
-			'money' => serialize($money),
-			'game_id' => $new->row('select * from games where id = ?', array($v['game_id'])) ? $v['game_id'] : null,
-			'user_id' => $new->row('select * from users where id = ?', array($v['user_id'])) ? $v['user_id'] : null,
-			'disorder_id' => $cnt->desordre_mental->id,
-			'exaltation' => 0,
-			'orientation' => $cnt->orientation->name === 'Instinctive' ? 'Instinctive' : 'Rational',
-			'traitFlaw_id' => $cnt->traits_caractere->defaut->id,
-			'traitQuality_id' => $cnt->traits_caractere->qualite->id,
-			'experienceActual' => (int) $cnt->experience->reste,
-			'experienceSpent' => $cnt->experience->total - $cnt->experience->reste,
-			'status' => $v['char_status'],
-			'SocialClassDomain1_id' => $socialclassdomains[0],
-			'SocialClassDomain2_id' => $socialclassdomains[1],
-			'socialClasses_id' => $cnt->classe_sociale,
-			'inventory' => serialize(array_merge($cnt->inventaire->possessions)),
-			'created' => date('Y-m-d H:i:s', (int) $v['char_date_creation']),
-			'updated' => date('Y-m-d H:i:s', ((int) $v['char_date_update'] ? (int) $v['char_date_update'] : (int) $v['char_date_creation'])),
-		);
-		$new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
+            $nameSlug = $nameSlugBase;
 
-		$charreq++;
-		showtime($temp_time, $charreq.' Ajout du personnage '.$v['char_id'].' : '.$v['char_name']);
+            $domaines = $cnt->domaines;
+            $socialclassdomains = array();
+            foreach ($domaines as $d => $domain) {
+                if ($domain->val > 0 && count($socialclassdomains) < 2) {
+    //                print_r(array($d=>$domain));print_r(array('domaines'=>$domaines));exit;
+                    $socialclassdomains[] = $domain->id;
+                    $domaines->$d->val --;
+                }
+            }
+            $cnt->classe_sociale = $new->row('SELECT %id FROM %social_class WHERE %name = ?', array($cnt->classe_sociale));
+            $cnt->classe_sociale = $cnt->classe_sociale['id'];
+            $datas = array(
+                'id' => $v['char_id'],
+                'name' => $v['char_name'],
+                'nameSlug' => $nameSlug,
+                'job_id' => is_numeric($v['char_job']) ? $v['char_job'] : null,
+                'jobCustom' => !is_numeric($v['char_job']) ? $v['char_job'] : null,
+                'sex' => substr($cnt->details_personnage->sexe, 0, 1) === 'H' ? 'M' : 'F',
+                'age' => $cnt->age,
+                'playerName' => $cnt->details_personnage->joueur,
+                'region_id' => $v['char_origin'],
+                'story' => $cnt->details_personnage->histoire,
+                'description' => $cnt->details_personnage->description,
+                'facts' => isset($cnt->details_personnage->faits) ? $cnt->details_personnage->faits : '',
+                'geoLiving' => $cnt->residence_geographique,//urbain/rural
+                'people_id' => (
+                    $v['char_people'] === 'Tri-Kazel' ? 1
+                    : ($v['char_people'] === 'Tarish' ? 2
+                    : ($v['char_people'] === 'Osag' ? 3
+                    : ($v['char_people'] === 'Continent' ? 4 : 0)))
+                ),
+                'mentalResist' => $cnt->resistance_mentale->exp,
+                'health' => $cnt->sante,
+                'stamina' => $cnt->vigueur,
+                'defense' => $cnt->defense->amelioration,
+                'speed' => $cnt->rapidite->amelioration,
+                'survival' => $cnt->survie,
+                'hardening' => 0,
+                'trauma' => $cnt->traumatismes->curables,
+                'traumaPermanent' => $cnt->traumatismes->permanents,
+                'rindath' => 0,
+                'money' => serialize($money),
+                'game_id' => $new->row('select * from games where id = ?', array($v['game_id'])) ? $v['game_id'] : null,
+                'user_id' => $new->row('select * from users where id = ?', array($v['user_id'])) ? $v['user_id'] : null,
+                'disorder_id' => $cnt->desordre_mental->id,
+                'exaltation' => 0,
+                'orientation' => $cnt->orientation->name === 'Instinctive' ? 'Instinctive' : 'Rational',
+                'traitFlaw_id' => $cnt->traits_caractere->defaut->id,
+                'traitQuality_id' => $cnt->traits_caractere->qualite->id,
+                'experienceActual' => (int) $cnt->experience->reste,
+                'experienceSpent' => $cnt->experience->total - $cnt->experience->reste,
+                'status' => $v['char_status'],
+                'SocialClassDomain1_id' => $socialclassdomains[0],
+                'SocialClassDomain2_id' => $socialclassdomains[1],
+                'socialClasses_id' => $cnt->classe_sociale,
+                'inventory' => serialize(array_merge($cnt->inventaire->possessions)),
+                'created' => date('Y-m-d H:i:s', (int) $v['char_date_creation']),
+                'updated' => date('Y-m-d H:i:s', ((int) $v['char_date_update'] ? (int) $v['char_date_update'] : (int) $v['char_date_creation'])),
+            );
+            $new->noRes('INSERT INTO %'.$table.' SET %%%fields', $datas);
 
-		$voies = $cnt->voies;
-		$countvoies = 0;
-		foreach ($voies as $voie) {
-			$datasVoies = array( 'character_id' => $v['char_id'], 'way_id' => $voie->id, 'score' => $voie->val, );
-			if (!$new->row('SELECT * FROM %characters_ways WHERE %character_id = :character_id AND %way_id = :way_id AND %score = :score', $datasVoies)) {
-				$new->noRes('INSERT INTO %characters_ways SET %%%fields', $datasVoies); $countvoies++;
-			}
-		}
-		if ($countvoies === 5) { showtime($temp_time, ' Ajout des voies OK'); }
+            $charreq++;
+            showtime($temp_time, $charreq.' Ajout du personnage '.$v['char_id'].' : '.$v['char_name']);
+
+            $voies = $cnt->voies;
+            $countvoies = 0;
+            foreach ($voies as $voie) {
+                $datasVoies = array( 'character_id' => $v['char_id'], 'way_id' => $voie->id, 'score' => $voie->val, );
+                if (!$new->row('SELECT * FROM %characters_ways WHERE %character_id = :character_id AND %way_id = :way_id AND %score = :score', $datasVoies)) {
+                    $new->noRes('INSERT INTO %characters_ways SET %%%fields', $datasVoies); $countvoies++;
+                }
+            }
+            if ($countvoies === 5) { showtime($temp_time, ' Ajout des voies OK'); }
 
 
 
-		$countdoms = 0;
-		foreach ($domaines as $domain) {
-			$datasDoms = array( 'character_id' => $v['char_id'], 'domain_id' => $domain->id, 'score' => $domain->val, );
-			if (!$new->row('SELECT * FROM %characters_domains WHERE %character_id = :character_id AND %domain_id = :domain_id AND %score = :score', $datasDoms)) {
-				$new->noRes('INSERT INTO %characters_domains SET %%%fields', $datasDoms); $countdoms++;
-			}
-			$discs = (array) $domain->disciplines;
-			if (!empty($discs)) {
-				foreach ($discs as $disc) {
-					$assoDiscId = $new->row('SELECT * FROM %disciplines_domains WHERE %discipline_id = :discipline_id AND %domain_id = :domain_id ', array('discipline_id'=>$disc->id,'domain_id'=>$domain->id));
-					$id = isset($assoDiscId['discipline_id']) ? $assoDiscId['discipline_id'] : null;
-					if (!$id) { exit('Erreur...'.print_r($v, true)); }
-					$datasDisc = array( 'character_id' => $v['char_id'], 'domain_id' => $domain->id, 'score' => $disc->val, 'discipline_id' => $id);
-					if (!$new->row('SELECT * FROM %characters_disciplines WHERE %character_id = :character_id AND %discipline_id = :discipline_id AND %score = :score AND %domain_id = :domain_id', $datasDisc)) {
-						$new->noRes('INSERT INTO %characters_disciplines SET %%%fields', $datasDisc); $countdoms++;
-						showtime($temp_time, ' Ajout d\'une discipline');
-					}
-				}
-			}
-		}
-		showtime($temp_time, ' Ajout des domaines OK');
-
-		$revers = $cnt->revers;
-		$revdatas = array('character_id' => $v['char_id']);
-		$all_rev = array();
-		$avoid = false;
-		$avoided = 0;
-		foreach ($revers as $rev) {
-			$all_rev[$rev->id] = array('character_id' => $v['char_id'], 'setback_id' => $rev->id, 'isAvoided' => 0);
-		}
-		if (isset($all_rev[10])) {
-			$avoid = false;
-			foreach ($all_rev as $k => $val) { if ($k !== 10 && $avoid === false) { $all_rev[$k]['isAvoided'] = 1; $avoid = true; } }
-		}
-		foreach ($all_rev as $val) {
-			$new->noRes('INSERT INTO %characters_setbacks SET %%%fields ', $val);
-		}
-		if (count($all_rev)) {
-            showtime($temp_time, ' Ajout de '.count($all_rev).' revers '.($avoid ? ' dont un évité ' : ''));
-        }
-
-		$avtg = $cnt->avantages;
-		$desv = $cnt->desavantages;
-		$combat = $cnt->arts_combat;
-
-		$avtgnb = 0; $desvnb = 0; $combatnb = 0;
-		foreach ($avtg as $val) { $new->noRes('INSERT INTO %characters_avantages SET %%%fields', array('character_id'=>$v['char_id'], 'avantage_id' => $val->id, 'doubleValue' => $val->val)); $avtgnb++; }
-		foreach ($desv as $val) { $new->noRes('INSERT INTO %characters_avantages SET %%%fields', array('character_id'=>$v['char_id'], 'avantage_id' => $val->id, 'doubleValue' => $val->val)); $desvnb++; }
-		foreach ($combat as $val) { $new->noRes('INSERT INTO %characters_avantages SET %character_id = :character_id, %avantage_id = (SELECT %id FROM `avantages` WHERE `name` LIKE :type), %doubleValue = :doubleValue', array('character_id'=>$v['char_id'], 'doubleValue' => 0, 'type' => '%'.$val->name.'%')); $combatnb++; }
-		if ($desvnb) { showtime($temp_time, ' Ajout de '.$desvnb.' désavantage(s) '); }
-		if ($combatnb) { showtime($temp_time, ' Ajout de '.$combatnb.' art(s) de combat '); }
-
-		$flux = $cnt->flux;
-		$sql = 'INSERT INTO %characters_flux SET %character_id = :character_id, %flux = (SELECT %id FROM `flux` WHERE `name` LIKE :type), %quantity = :qty';
-		$addflux = 0;
-		if ($flux->mineral > 0) { $new->noRes($sql, array('character_id' => $v['char_id'], 'qty' => $flux->mineral, 'type' => 'mineral')); $addflux++; }
-		if ($flux->vegetal > 0) { $new->noRes($sql, array('character_id' => $v['char_id'], 'qty' => $flux->vegetal, 'type' => 'vegetal')); $addflux++; }
-		if ($flux->fossile > 0) { $new->noRes($sql, array('character_id' => $v['char_id'], 'qty' => $flux->vegetal, 'type' => 'fossile')); $addflux++; }
-		if ($flux->organique > 0) { $new->noRes($sql, array('character_id' => $v['char_id'], 'qty' => $flux->organique, 'type' => 'organique')); $addflux++; }
-		if ($addflux) { showtime($temp_time, ' Ajout de '.$addflux.' types de flux '); }
-
-        $t = 'artifacts';
-		if (!empty($cnt->artefacts)) {
-			foreach ($cnt->artefacts as $val) {
-                $val = trim($val);
-                if ($val) {
-                    $val = ucfirst(strtolower($val));
-                    if (!$new->row('SELECT * FROM %'.$t.' WHERE %name = :name', array('name'=>$val))) {
-                        $new->noRes('INSERT INTO %'.$t.''
-                                . 'SET %name = :name',
-                        array('name'=>$val, 'created' => $datetime->date, 'updated' => $datetime->date,));
-                        //$to_add['artefacts'][$val] = (isset($to_add['artefacts'][$val]) ? $to_add['artefacts'][$val] + 1 : 1);
+            $countdoms = 0;
+            foreach ($domaines as $domain) {
+                $datasDoms = array( 'character_id' => $v['char_id'], 'domain_id' => $domain->id, 'score' => $domain->val, );
+                if (!$new->row('SELECT * FROM %characters_domains WHERE %character_id = :character_id AND %domain_id = :domain_id AND %score = :score', $datasDoms)) {
+                    $new->noRes('INSERT INTO %characters_domains SET %%%fields', $datasDoms); $countdoms++;
+                }
+                $discs = (array) $domain->disciplines;
+                if (!empty($discs)) {
+                    foreach ($discs as $disc) {
+                        $assoDiscId = $new->row('SELECT * FROM %disciplines_domains WHERE %discipline_id = :discipline_id AND %domain_id = :domain_id ', array('discipline_id'=>$disc->id,'domain_id'=>$domain->id));
+                        $id = isset($assoDiscId['discipline_id']) ? $assoDiscId['discipline_id'] : null;
+                        if (!$id) { exit('Erreur...'.print_r($v, true)); }
+                        $datasDisc = array( 'character_id' => $v['char_id'], 'domain_id' => $domain->id, 'score' => $disc->val, 'discipline_id' => $id);
+                        if (!$new->row('SELECT * FROM %characters_disciplines WHERE %character_id = :character_id AND %discipline_id = :discipline_id AND %score = :score AND %domain_id = :domain_id', $datasDisc)) {
+                            $new->noRes('INSERT INTO %characters_disciplines SET %%%fields', $datasDisc); $countdoms++;
+                            showtime($temp_time, ' Ajout d\'une discipline');
+                        }
                     }
-
                 }
-			}
-		}
-        $t = 'ogham';
-		if (!empty($cnt->ogham)) {
-			foreach ($cnt->ogham as $val) {
-                $val = trim($val);
-                if ($val) {
-                    $to_add['ogham'][$val] = (isset($to_add['ogham'][$val]) ? $to_add['ogham'][$val] + 1 : 1);
+            }
+            showtime($temp_time, ' Ajout des domaines OK');
+
+            $revers = $cnt->revers;
+            $revdatas = array('character_id' => $v['char_id']);
+            $all_rev = array();
+            $avoid = false;
+            $avoided = 0;
+            foreach ($revers as $rev) {
+                $all_rev[$rev->id] = array('character_id' => $v['char_id'], 'setback_id' => $rev->id, 'isAvoided' => 0);
+            }
+            if (isset($all_rev[10])) {
+                $avoid = false;
+                foreach ($all_rev as $k => $val) { if ($k !== 10 && $avoid === false) { $all_rev[$k]['isAvoided'] = 1; $avoid = true; } }
+            }
+            foreach ($all_rev as $val) {
+                $new->noRes('INSERT INTO %characters_setbacks SET %%%fields ', $val);
+            }
+            if (count($all_rev)) {
+                showtime($temp_time, ' Ajout de '.count($all_rev).' revers '.($avoid ? ' dont un évité ' : ''));
+            }
+
+            $avtg = $cnt->avantages;
+            $desv = $cnt->desavantages;
+            $combat = $cnt->arts_combat;
+
+            $avtgnb = 0; $desvnb = 0; $combatnb = 0;
+            foreach ($avtg as $val) { $new->noRes('INSERT INTO %characters_avantages SET %%%fields', array('character_id'=>$v['char_id'], 'avantage_id' => $val->id, 'doubleValue' => $val->val)); $avtgnb++; }
+            foreach ($desv as $val) { $new->noRes('INSERT INTO %characters_avantages SET %%%fields', array('character_id'=>$v['char_id'], 'avantage_id' => $val->id, 'doubleValue' => $val->val)); $desvnb++; }
+            foreach ($combat as $val) { $new->noRes('INSERT INTO %characters_avantages SET %character_id = :character_id, %avantage_id = (SELECT %id FROM `avantages` WHERE `name` LIKE :type), %doubleValue = :doubleValue', array('character_id'=>$v['char_id'], 'doubleValue' => 0, 'type' => '%'.$val->name.'%')); $combatnb++; }
+            if ($desvnb) { showtime($temp_time, ' Ajout de '.$desvnb.' désavantage(s) '); }
+            if ($combatnb) { showtime($temp_time, ' Ajout de '.$combatnb.' art(s) de combat '); }
+
+            $flux = $cnt->flux;
+            $sql = 'INSERT INTO %characters_flux SET %character_id = :character_id, %flux = (SELECT %id FROM `flux` WHERE `name` LIKE :type), %quantity = :qty';
+            $addflux = 0;
+            if ($flux->mineral > 0) { $new->noRes($sql, array('character_id' => $v['char_id'], 'qty' => $flux->mineral, 'type' => 'mineral')); $addflux++; }
+            if ($flux->vegetal > 0) { $new->noRes($sql, array('character_id' => $v['char_id'], 'qty' => $flux->vegetal, 'type' => 'vegetal')); $addflux++; }
+            if ($flux->fossile > 0) { $new->noRes($sql, array('character_id' => $v['char_id'], 'qty' => $flux->vegetal, 'type' => 'fossile')); $addflux++; }
+            if ($flux->organique > 0) { $new->noRes($sql, array('character_id' => $v['char_id'], 'qty' => $flux->organique, 'type' => 'organique')); $addflux++; }
+            if ($addflux) { showtime($temp_time, ' Ajout de '.$addflux.' types de flux '); }
+
+            $t = 'artifacts';
+            if (!empty($cnt->artefacts)) {
+                foreach ($cnt->artefacts as $val) {
+                    $val = trim($val);
+                    if ($val) {
+                        $val = ucfirst(strtolower($val));
+                        if (!$new->row('SELECT * FROM %'.$t.' WHERE %name = :name', array('name'=>$val))) {
+                            $new->noRes('INSERT INTO %'.$t.''
+                                    . 'SET %name = :name',
+                            array('name'=>$val, 'created' => $datetime->date, 'updated' => $datetime->date,));
+                            //$to_add['artefacts'][$val] = (isset($to_add['artefacts'][$val]) ? $to_add['artefacts'][$val] + 1 : 1);
+                        }
+
+                    }
                 }
-			}
-		}
-        $t = 'miracles';
-		if (!empty($cnt->miracles->majeurs)) {
-			foreach ($cnt->miracles->majeurs as $val) {
-                $val = trim($val);
-                if ($val) {
-                    $to_add['miracles_maj'][$val] = (isset($to_add['miracles_maj'][$val]) ? $to_add['miracles_maj'][$val] + 1 : 1);
+            }
+            $t = 'ogham';
+            if (!empty($cnt->ogham)) {
+                foreach ($cnt->ogham as $val) {
+                    $val = trim($val);
+                    if ($val) {
+                        $to_add['ogham'][$val] = (isset($to_add['ogham'][$val]) ? $to_add['ogham'][$val] + 1 : 1);
+                    }
                 }
-			}
-		}
-		if (!empty($cnt->miracles->mineurs)) {
-			foreach ($cnt->miracles->mineurs as $val) {
-                $val = trim($val);
-                if ($val) {
-                    $to_add['miracles_min'][$val] = (isset($to_add['miracles_min'][$val]) ? $to_add['miracles_min'][$val] + 1 : 1);
+            }
+            $t = 'miracles';
+            if (!empty($cnt->miracles->majeurs)) {
+                foreach ($cnt->miracles->majeurs as $val) {
+                    $val = trim($val);
+                    if ($val) {
+                        $to_add['miracles_maj'][$val] = (isset($to_add['miracles_maj'][$val]) ? $to_add['miracles_maj'][$val] + 1 : 1);
+                    }
                 }
-			}
-		}
+            }
+            if (!empty($cnt->miracles->mineurs)) {
+                foreach ($cnt->miracles->mineurs as $val) {
+                    $val = trim($val);
+                    if ($val) {
+                        $to_add['miracles_min'][$val] = (isset($to_add['miracles_min'][$val]) ? $to_add['miracles_min'][$val] + 1 : 1);
+                    }
+                }
+            }
 
-//		$sql = 'INSERT INTO %charsocialclass SET %character_id = :character_id, %domain1_id = :dom1, %domain2_id = :dom2, %created = :created, %updated = :updated, %socialClasses_id = (SELECT Id FROM `socialclass` WHERE `name` LIKE :socialClass)';
-//		$charsocialclass = array(
-//			'character_id' => $v['char_id'],
-//			'dom1' => $socialclassdomains[0],
-//			'dom2' => $socialclassdomains[1],
-//			'socialClass' => $cnt->classe_sociale,
-//			'created' => date('Y-m-d H:i:s', (int) $v['char_date_creation']),
-//			'updated' => date('Y-m-d H:i:s', (int) $v['char_date_creation']),
-//		);
-//		if ($new->noRes($sql, $charsocialclass)) { showtime($temp_time, ' Ajout des domaines de la classe sociale du personnage'); }
+    //		$sql = 'INSERT INTO %charsocialclass SET %character_id = :character_id, %domain1_id = :dom1, %domain2_id = :dom2, %created = :created, %updated = :updated, %socialClasses_id = (SELECT Id FROM `socialclass` WHERE `name` LIKE :socialClass)';
+    //		$charsocialclass = array(
+    //			'character_id' => $v['char_id'],
+    //			'dom1' => $socialclassdomains[0],
+    //			'dom2' => $socialclassdomains[1],
+    //			'socialClass' => $cnt->classe_sociale,
+    //			'created' => date('Y-m-d H:i:s', (int) $v['char_date_creation']),
+    //			'updated' => date('Y-m-d H:i:s', (int) $v['char_date_creation']),
+    //		);
+    //		if ($new->noRes($sql, $charsocialclass)) { showtime($temp_time, ' Ajout des domaines de la classe sociale du personnage'); }
 
 
-		foreach ($cnt->inventaire->armes as $arme) { $new->noRes('INSERT INTO %characters_weapons SET %%%fields ', array('characters_id' => $v['char_id'], 'weapons_id' => $arme->id)); }
-		if (!empty($cnt->inventaire->armes)) { showtime($temp_time, ' Ajout des armes du personnage'); }
+            foreach ($cnt->inventaire->armes as $arme) { $new->noRes('INSERT INTO %characters_weapons SET %%%fields ', array('characters_id' => $v['char_id'], 'weapons_id' => $arme->id)); }
+            if (!empty($cnt->inventaire->armes)) { showtime($temp_time, ' Ajout des armes du personnage'); }
 
-		foreach ($cnt->inventaire->armures as $armure) { $new->noRes('INSERT INTO %characters_armors SET %%%fields ', array('characters_id' => $v['char_id'], 'armors_id' => $armure->id)); }
-		if (!empty($cnt->inventaire->armures)) { showtime($temp_time, ' Ajout des armures du personnage'); }
+            foreach ($cnt->inventaire->armures as $armure) { $new->noRes('INSERT INTO %characters_armors SET %%%fields ', array('characters_id' => $v['char_id'], 'armors_id' => $armure->id)); }
+            if (!empty($cnt->inventaire->armures)) { showtime($temp_time, ' Ajout des armures du personnage'); }
 
-	//	showtime($temp_time, 'Structure manquante pour la table "'.$table.'"');
-		foreach ($struct as $k => $s) {
-			if (!array_key_exists($s['Field'], $datas) && $s['Field'] !== 'deleted') { echo $s['Field']."\n"; }
-		}
-	//}
-	//usleep(250000);
+        //	showtime($temp_time, 'Structure manquante pour la table "'.$table.'"');
+            foreach ($struct as $k => $s) {
+                if (!array_key_exists($s['Field'], $datas) && $s['Field'] !== 'deleted') { echo $s['Field']."\n"; }
+            }
+        //}
+        //usleep(250000);
 
-    $time_char = microtime(true) - $time_char;
-    $p = ($current_file * 100 / $total_files);
-    $p = number_format($p, 2, '.', '');
-    $str = 0;
-    $str = "\n".'['.  str_pad(number_format($time_char*1000, 0, '.',' '), 10, ' ', STR_PAD_LEFT).'ms]'."\t".'[';
-    $p2 = (int)($p/2);
-    for ($i = 0; $i <= 50; $i++) {
-        $str .= $p2 < $i ? ' ' : ($p2 === $i ? '>' : '=');
-    }
-    $str .= ']';
-    $times[] = $time_char;
-    if (count($times)) {
-        $median = array_sum($times) / count($times);
-    } else {
-        $median = 60*60*24*365;
-    }
-    $time_remaining = gmdate("H:i:s", $median * ($total_files - $current_file));
-    $remaining = '  Remaining: '.$time_remaining.' (estimation)';
-    $spent = ' Spent: '.gmdate('H:i:s', microtime(true) - $global_time);
-    echo "\n\n".' '.$str." ".$p.'% Char '.$current_file.'/'.$total_files."\t".$remaining.$spent." \n\n";
-}$tables_done[]=$table;showtime($temp_time, $charreq.' requêtes pour la table "'.$table.'"');
-$nbreq += $charreq;
+        $time_char = microtime(true) - $time_char;
+        $p = ($current_file * 100 / $total_files);
+        $p = number_format($p, 2, '.', '');
+        $str = 0;
+        $str = "\n".'['.  str_pad(number_format($time_char*1000, 0, '.',' '), 10, ' ', STR_PAD_LEFT).'ms]'."\t".'[';
+        $p2 = (int)($p/2);
+        for ($i = 0; $i <= 50; $i++) {
+            $str .= $p2 < $i ? ' ' : ($p2 === $i ? '>' : '=');
+        }
+        $str .= ']';
+        $times[] = $time_char;
+        if (count($times)) {
+            $median = array_sum($times) / count($times);
+        } else {
+            $median = 60*60*24*365;
+        }
+        $time_remaining = gmdate("H:i:s", $median * ($total_files - $current_file));
+        $remaining = '  Remaining: '.$time_remaining.' (estimation)';
+        $spent = ' Spent: '.gmdate('H:i:s', microtime(true) - $global_time);
+        echo "\n\n".' '.$str." ".$p.'% Char '.$current_file.'/'.$total_files."\t".$remaining.$spent." \n\n";
+    }$tables_done[]=$table;showtime($temp_time, $charreq.' requêtes pour la table "'.$table.'"');
+    $nbreq += $charreq;
+}//fin characters
 $tables_done[] = 'characters_disciplines';
 $tables_done[] = 'characters_domains';
 $tables_done[] = 'characters_armors';
