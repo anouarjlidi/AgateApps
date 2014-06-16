@@ -1,9 +1,10 @@
 <?php
 
 namespace CorahnRin\ModelsBundle\Entity;
+
 use Doctrine\Common\Collections\ArrayCollection;
-use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Disorders
@@ -12,8 +13,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity(repositoryClass="CorahnRin\ModelsBundle\Repository\DisordersRepository")
  */
-class Disorders
-{
+class Disorders {
+
     /**
      * @var integer
      *
@@ -46,7 +47,6 @@ class Disorders
 
     /**
      * @var \Datetime
-
      * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
@@ -69,8 +69,7 @@ class Disorders
     /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->ways = new ArrayCollection();
     }
 
@@ -79,8 +78,7 @@ class Disorders
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -90,8 +88,7 @@ class Disorders
      * @param string $name
      * @return Disorders
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -102,8 +99,7 @@ class Disorders
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -113,8 +109,7 @@ class Disorders
      * @param \DateTime $created
      * @return Disorders
      */
-    public function setCreated($created)
-    {
+    public function setCreated($created) {
         $this->created = $created;
 
         return $this;
@@ -125,8 +120,7 @@ class Disorders
      *
      * @return \DateTime
      */
-    public function getCreated()
-    {
+    public function getCreated() {
         return $this->created;
     }
 
@@ -136,8 +130,7 @@ class Disorders
      * @param \DateTime $updated
      * @return Disorders
      */
-    public function setUpdated($updated)
-    {
+    public function setUpdated($updated) {
         $this->updated = $updated;
 
         return $this;
@@ -148,8 +141,7 @@ class Disorders
      *
      * @return \DateTime
      */
-    public function getUpdated()
-    {
+    public function getUpdated() {
         return $this->updated;
     }
 
@@ -159,8 +151,7 @@ class Disorders
      * @param CharWays $ways
      * @return Disorders
      */
-    public function addWay(CharWays $ways)
-    {
+    public function addWay(CharWays $ways) {
         $this->ways[] = $ways;
 
         return $this;
@@ -171,8 +162,7 @@ class Disorders
      *
      * @param CharWays $ways
      */
-    public function removeWay(CharWays $ways)
-    {
+    public function removeWay(CharWays $ways) {
         $this->ways->removeElement($ways);
     }
 
@@ -181,8 +171,7 @@ class Disorders
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getWays()
-    {
+    public function getWays() {
         return $this->ways;
     }
 
@@ -192,8 +181,7 @@ class Disorders
      * @param string $description
      * @return Disorders
      */
-    public function setDescription($description)
-    {
+    public function setDescription($description) {
         $this->description = $description;
 
         return $this;
@@ -204,8 +192,28 @@ class Disorders
      *
      * @return string
      */
-    public function getDescription()
-    {
+    public function getDescription() {
         return $this->description;
+    }
+
+    /**
+     * Set deleted
+     *
+     * @param \DateTime $deleted
+     * @return Disorders
+     */
+    public function setDeleted($deleted) {
+        $this->deleted = $deleted;
+
+        return $this;
+    }
+
+    /**
+     * Get deleted
+     *
+     * @return \DateTime
+     */
+    public function getDeleted() {
+        return $this->deleted;
     }
 }

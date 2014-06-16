@@ -12,6 +12,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Entity(repositoryClass="CorahnRin\ModelsBundle\Repository\CharWaysRepository")
  */
 class CharWays {
+
     /**
      * @var Characters
      *

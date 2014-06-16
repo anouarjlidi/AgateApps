@@ -3,8 +3,8 @@
 namespace CorahnRin\ModelsBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Domains
@@ -14,6 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="CorahnRin\ModelsBundle\Repository\DomainsRepository")
  */
 class Domains {
+
     /**
      * @var integer
      *
@@ -73,7 +74,7 @@ class Domains {
     protected $deleted = null;
 
     function __toString() {
-        return $this->id . ' - ' . $this->name;
+        return $this->id.' - '.$this->name;
     }
 
     /**
@@ -225,5 +226,26 @@ class Domains {
      */
     public function getDisciplines() {
         return $this->disciplines;
+    }
+
+    /**
+     * Set deleted
+     *
+     * @param \DateTime $deleted
+     * @return Domains
+     */
+    public function setDeleted($deleted) {
+        $this->deleted = $deleted;
+
+        return $this;
+    }
+
+    /**
+     * Get deleted
+     *
+     * @return \DateTime
+     */
+    public function getDeleted() {
+        return $this->deleted;
     }
 }

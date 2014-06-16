@@ -2,8 +2,8 @@
 
 namespace CorahnRin\ModelsBundle\Entity;
 
-use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Ways
@@ -13,6 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="CorahnRin\ModelsBundle\Repository\WaysRepository")
  */
 class Ways {
+
     /**
      * @var integer
      *
@@ -72,7 +73,7 @@ class Ways {
     protected $deleted = null;
 
     function __toString() {
-        return $this->id . ' - ' . $this->name;
+        return $this->id.' - '.$this->name;
     }
 
     /**
@@ -208,5 +209,26 @@ class Ways {
      */
     public function getUpdated() {
         return $this->updated;
+    }
+
+    /**
+     * Set deleted
+     *
+     * @param \DateTime $deleted
+     * @return Ways
+     */
+    public function setDeleted($deleted) {
+        $this->deleted = $deleted;
+
+        return $this;
+    }
+
+    /**
+     * Get deleted
+     *
+     * @return \DateTime
+     */
+    public function getDeleted() {
+        return $this->deleted;
     }
 }

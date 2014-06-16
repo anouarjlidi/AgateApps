@@ -2,8 +2,8 @@
 
 namespace CorahnRin\ModelsBundle\Entity;
 
-use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Books
@@ -13,6 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="CorahnRin\ModelsBundle\Repository\BooksRepository")
  */
 class Books {
+
     /**
      * @var integer
      *
@@ -149,4 +150,25 @@ class Books {
         return $this->updated;
     }
 
+
+    /**
+     * Set deleted
+     *
+     * @param \DateTime $deleted
+     * @return Books
+     */
+    public function setDeleted($deleted) {
+        $this->deleted = $deleted;
+
+        return $this;
+    }
+
+    /**
+     * Get deleted
+     *
+     * @return \DateTime
+     */
+    public function getDeleted() {
+        return $this->deleted;
+    }
 }

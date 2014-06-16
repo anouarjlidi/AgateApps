@@ -13,6 +13,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Entity(repositoryClass="CorahnRin\ModelsBundle\Repository\DisordersWaysRepository")
  */
 class DisordersWays {
+
     /**
      * @var Disorders
      *
@@ -44,7 +45,7 @@ class DisordersWays {
     protected $deleted = null;
 
     function __toString() {
-        return $this->disorder->getName() . ' - ' . $this->way->getName();
+        return $this->disorder->getName().' - '.$this->way->getName();
     }
 
     /**
@@ -108,5 +109,26 @@ class DisordersWays {
      */
     public function getIsMajor() {
         return $this->isMajor;
+    }
+
+    /**
+     * Set deleted
+     *
+     * @param \DateTime $deleted
+     * @return DisordersWays
+     */
+    public function setDeleted($deleted) {
+        $this->deleted = $deleted;
+
+        return $this;
+    }
+
+    /**
+     * Get deleted
+     *
+     * @return \DateTime
+     */
+    public function getDeleted() {
+        return $this->deleted;
     }
 }

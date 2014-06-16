@@ -13,6 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="CorahnRin\ModelsBundle\Repository\CharFluxRepository")
  */
 class CharFlux {
+
     /**
      * @var Characters
      *

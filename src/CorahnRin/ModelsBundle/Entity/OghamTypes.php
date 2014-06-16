@@ -2,8 +2,8 @@
 
 namespace CorahnRin\ModelsBundle\Entity;
 
-use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * OghamTypes
@@ -13,6 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="CorahnRin\ModelsBundle\Repository\OghamTypesRepository")
  */
 class OghamTypes {
+
     /**
      * @var integer
      *
@@ -149,5 +150,26 @@ class OghamTypes {
      */
     public function getDescription() {
         return $this->description;
+    }
+
+    /**
+     * Set deleted
+     *
+     * @param \DateTime $deleted
+     * @return OghamTypes
+     */
+    public function setDeleted($deleted) {
+        $this->deleted = $deleted;
+
+        return $this;
+    }
+
+    /**
+     * Get deleted
+     *
+     * @return \DateTime
+     */
+    public function getDeleted() {
+        return $this->deleted;
     }
 }

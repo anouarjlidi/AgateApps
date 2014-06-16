@@ -13,6 +13,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Entity(repositoryClass="CorahnRin\ModelsBundle\Repository\GeoEnvironmentsRepository")
  */
 class GeoEnvironments {
+
     /**
      * @var integer
      *
@@ -205,5 +206,26 @@ class GeoEnvironments {
      */
     public function getUpdated() {
         return $this->updated;
+    }
+
+    /**
+     * Set deleted
+     *
+     * @param \DateTime $deleted
+     * @return GeoEnvironments
+     */
+    public function setDeleted($deleted) {
+        $this->deleted = $deleted;
+
+        return $this;
+    }
+
+    /**
+     * Get deleted
+     *
+     * @return \DateTime
+     */
+    public function getDeleted() {
+        return $this->deleted;
     }
 }

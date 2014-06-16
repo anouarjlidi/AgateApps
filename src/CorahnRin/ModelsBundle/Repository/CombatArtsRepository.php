@@ -4,9 +4,9 @@ namespace CorahnRin\ModelsBundle\Repository;
 use CorahnRin\ToolsBundle\Repository\CorahnRinRepository as CorahnRinRepository;
 
 /**
- * SetbacksRepository
+ * CombatArtsRepository
  *
  */
-class SetbacksRepository extends CorahnRinRepository {
+class CombatArtsRepository extends CorahnRinRepository {
 
 }

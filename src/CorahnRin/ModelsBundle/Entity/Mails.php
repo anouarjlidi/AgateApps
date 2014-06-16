@@ -13,6 +13,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Entity(repositoryClass="CorahnRin\ModelsBundle\Repository\MailsRepository")
  */
 class Mails {
+
     /**
      * @var integer
      *
@@ -176,5 +177,26 @@ class Mails {
      */
     public function getUpdated() {
         return $this->updated;
+    }
+
+    /**
+     * Set deleted
+     *
+     * @param \DateTime $deleted
+     * @return Mails
+     */
+    public function setDeleted($deleted) {
+        $this->deleted = $deleted;
+
+        return $this;
+    }
+
+    /**
+     * Get deleted
+     *
+     * @return \DateTime
+     */
+    public function getDeleted() {
+        return $this->deleted;
     }
 }

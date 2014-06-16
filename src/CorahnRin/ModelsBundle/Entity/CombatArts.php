@@ -4,75 +4,65 @@ namespace CorahnRin\ModelsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Weapons
+ * CombatArts
  *
- * @ORM\Table(name="weapons")
+ * @ORM\Table(name="combat_arts")
  * @Gedmo\SoftDeleteable(fieldName="deleted")
- * @ORM\Entity(repositoryClass="CorahnRin\ModelsBundle\Repository\WeaponsRepository")
+ * @ORM\Entity(repositoryClass="CorahnRin\ModelsBundle\Repository\CombatArtsRepository")
  */
-class Weapons {
+class CombatArts {
 
     /**
      * @var integer
      *
-     * @ORM\Column(type="integer", nullable=false)
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=50, nullable=false, unique=true)
-     * @Assert\NotBlank()
+     * @ORM\Column(name="name", type="string", length=255)
      */
-    protected $name;
+    private $name;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(name="description", type="text")
      */
-    protected $description;
+    private $description;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(name="ranged", type="boolean")
      */
-    protected $damage;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(type="smallint")
-     */
-    protected $price;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=3)
-     */
-    protected $availability;
+    private $ranged;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(name="melee", type="boolean")
      */
-    protected $melee = true;
+    private $melee;
 
     /**
      * @var integer
      *
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(name="xp", type="smallint")
      */
-    protected $range;
+    private $xp;
+
+    /**
+     * @var Books
+     * @ORM\ManyToOne(targetEntity="Books", fetch="EAGER")
+     */
+    protected $book;
 
     /**
      * @var \Datetime
@@ -95,6 +85,7 @@ class Weapons {
      */
     protected $deleted = null;
 
+
     /**
      * Get id
      *
@@ -108,7 +99,7 @@ class Weapons {
      * Set name
      *
      * @param string $name
-     * @return Weapons
+     * @return CombatArts
      */
     public function setName($name) {
         $this->name = $name;
@@ -129,7 +120,7 @@ class Weapons {
      * Set description
      *
      * @param string $description
-     * @return Weapons
+     * @return CombatArts
      */
     public function setDescription($description) {
         $this->description = $description;
@@ -147,73 +138,31 @@ class Weapons {
     }
 
     /**
-     * Set damage
+     * Set ranged
      *
-     * @param integer $damage
-     * @return Weapons
+     * @param boolean $ranged
+     * @return CombatArts
      */
-    public function setDamage($damage) {
-        $this->damage = $damage;
+    public function setRanged($ranged) {
+        $this->ranged = $ranged;
 
         return $this;
     }
 
     /**
-     * Get damage
+     * Get ranged
      *
-     * @return integer
+     * @return boolean
      */
-    public function getDamage() {
-        return $this->damage;
-    }
-
-    /**
-     * Set price
-     *
-     * @param integer $price
-     * @return Weapons
-     */
-    public function setPrice($price) {
-        $this->price = $price;
-
-        return $this;
-    }
-
-    /**
-     * Get price
-     *
-     * @return integer
-     */
-    public function getPrice() {
-        return $this->price;
-    }
-
-    /**
-     * Set availability
-     *
-     * @param string $availability
-     * @return Weapons
-     */
-    public function setAvailability($availability) {
-        $this->availability = $availability;
-
-        return $this;
-    }
-
-    /**
-     * Get availability
-     *
-     * @return string
-     */
-    public function getAvailability() {
-        return $this->availability;
+    public function getRanged() {
+        return $this->ranged;
     }
 
     /**
      * Set melee
      *
-     * @param integer $melee
-     * @return Weapons
+     * @param boolean $melee
+     * @return CombatArts
      */
     public function setMelee($melee) {
         $this->melee = $melee;
@@ -224,38 +173,59 @@ class Weapons {
     /**
      * Get melee
      *
-     * @return integer
+     * @return boolean
      */
     public function getMelee() {
         return $this->melee;
     }
 
     /**
-     * Set range
+     * Set xp
      *
-     * @param integer $range
-     * @return Weapons
+     * @param integer $xp
+     * @return CombatArts
      */
-    public function setRange($range) {
-        $this->range = $range;
+    public function setXp($xp) {
+        $this->xp = $xp;
 
         return $this;
     }
 
     /**
-     * Get range
+     * Get xp
      *
      * @return integer
      */
-    public function getRange() {
-        return $this->range;
+    public function getXp() {
+        return $this->xp;
+    }
+
+    /**
+     * Set book
+     *
+     * @param Books $book
+     * @return Avantages
+     */
+    public function setBook(Books $book = null) {
+        $this->book = $book;
+
+        return $this;
+    }
+
+    /**
+     * Get book
+     *
+     * @return Books
+     */
+    public function getBook() {
+        return $this->book;
     }
 
     /**
      * Set created
      *
      * @param \DateTime $created
-     * @return Weapons
+     * @return CombatArts
      */
     public function setCreated($created) {
         $this->created = $created;
@@ -276,7 +246,7 @@ class Weapons {
      * Set updated
      *
      * @param \DateTime $updated
-     * @return Weapons
+     * @return CombatArts
      */
     public function setUpdated($updated) {
         $this->updated = $updated;
@@ -297,7 +267,7 @@ class Weapons {
      * Set deleted
      *
      * @param \DateTime $deleted
-     * @return Weapons
+     * @return CombatArts
      */
     public function setDeleted($deleted) {
         $this->deleted = $deleted;

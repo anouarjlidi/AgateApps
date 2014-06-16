@@ -15,6 +15,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Table(name="games", uniqueConstraints={@ORM\UniqueConstraint(name="idgUnique", columns={"name", "gameMaster_id"})})
  */
 class Games {
+
     /**
      * @var integer
      *
@@ -250,5 +251,26 @@ class Games {
      */
     public function getCharacters() {
         return $this->characters;
+    }
+
+    /**
+     * Set deleted
+     *
+     * @param \DateTime $deleted
+     * @return Games
+     */
+    public function setDeleted($deleted) {
+        $this->deleted = $deleted;
+
+        return $this;
+    }
+
+    /**
+     * Get deleted
+     *
+     * @return \DateTime
+     */
+    public function getDeleted() {
+        return $this->deleted;
     }
 }

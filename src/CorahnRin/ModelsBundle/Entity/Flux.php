@@ -2,8 +2,8 @@
 
 namespace CorahnRin\ModelsBundle\Entity;
 
-use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Flux
@@ -13,6 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="CorahnRin\ModelsBundle\Repository\FluxRepository")
  */
 class Flux {
+
     /**
      * @var integer
      *
@@ -58,7 +59,7 @@ class Flux {
     protected $deleted = null;
 
     function __toString() {
-        return $this->id . ' - ' . $this->name;
+        return $this->id.' - '.$this->name;
     }
 
     /**
@@ -152,5 +153,26 @@ class Flux {
      */
     public function getDescription() {
         return $this->description;
+    }
+
+    /**
+     * Set deleted
+     *
+     * @param \DateTime $deleted
+     * @return Flux
+     */
+    public function setDeleted($deleted) {
+        $this->deleted = $deleted;
+
+        return $this;
+    }
+
+    /**
+     * Get deleted
+     *
+     * @return \DateTime
+     */
+    public function getDeleted() {
+        return $this->deleted;
     }
 }

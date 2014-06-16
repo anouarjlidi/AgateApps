@@ -2,8 +2,8 @@
 
 namespace CorahnRin\ModelsBundle\Entity;
 
-use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Avantages
@@ -13,6 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="CorahnRin\ModelsBundle\Repository\AvantagesRepository")
  */
 class Avantages {
+
     /**
      * @var integer
      *
@@ -77,6 +78,13 @@ class Avantages {
      * @ORM\Column(type="boolean")
      */
     protected $isCombatArt;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(type="smallint", options={"default"="0"})
+     */
+    protected $group = 0;
 
     /**
      * @var Books
@@ -343,5 +351,47 @@ class Avantages {
      */
     public function getAugmentation() {
         return $this->augmentation;
+    }
+
+    /**
+     * Set group
+     *
+     * @param integer $group
+     * @return Avantages
+     */
+    public function setGroup($group) {
+        $this->group = $group;
+
+        return $this;
+    }
+
+    /**
+     * Get group
+     *
+     * @return integer
+     */
+    public function getGroup() {
+        return $this->group;
+    }
+
+    /**
+     * Set deleted
+     *
+     * @param \DateTime $deleted
+     * @return Avantages
+     */
+    public function setDeleted($deleted) {
+        $this->deleted = $deleted;
+
+        return $this;
+    }
+
+    /**
+     * Get deleted
+     *
+     * @return \DateTime
+     */
+    public function getDeleted() {
+        return $this->deleted;
     }
 }

@@ -14,6 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="CorahnRin\ModelsBundle\Repository\CharModificationsRepository")
  */
 class CharModifications {
+
     /**
      * @var integer
      *
@@ -180,4 +181,25 @@ class CharModifications {
         return $this->user;
     }
 
+
+    /**
+     * Set deleted
+     *
+     * @param \DateTime $deleted
+     * @return CharModifications
+     */
+    public function setDeleted($deleted) {
+        $this->deleted = $deleted;
+
+        return $this;
+    }
+
+    /**
+     * Get deleted
+     *
+     * @return \DateTime
+     */
+    public function getDeleted() {
+        return $this->deleted;
+    }
 }

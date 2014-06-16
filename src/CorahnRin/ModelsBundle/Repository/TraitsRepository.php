@@ -53,6 +53,7 @@ class TraitsRepository extends CorahnRinRepository {
      * ATTENTION :
      * Le tableau $ways DOIT être structuré de cette façon :
      * (key) wayid => (value) way score
+     *
      * @param Ways[] $ways
      * @throws \Exception
      * @return array
@@ -69,9 +70,9 @@ class TraitsRepository extends CorahnRinRepository {
                 throw new \Exception('Error in ways values. Must be equivalent to this : array( [WAY_ID] => [WAY_VALUE] )');
             }
             if ($id >= 4 || $id <= 2) {
-                $qb->orWhere('w.id = :way' . $id . ' AND t.isMajor = :way' . $id . 'major')
-                   ->setParameter(':way' . $id, $id)
-                   ->setParameter(':way' . $id . 'major', $value >= 4);
+                $qb->orWhere('w.id = :way'.$id.' AND t.isMajor = :way'.$id.'major')
+                   ->setParameter(':way'.$id, $id)
+                   ->setParameter(':way'.$id.'major', $value >= 4);
             }
         }
 

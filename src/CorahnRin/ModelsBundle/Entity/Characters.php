@@ -18,6 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="characters",uniqueConstraints={@ORM\UniqueConstraint(name="idcUnique", columns={"name", "user_id"})})
  */
 class Characters {
+
     /**
      * @var integer
      *
@@ -437,6 +438,7 @@ class Characters {
 
     /**
      * Utilisé pour déterminer les différences lorsque le personnage sera mis à jour
+     *
      * @var Characters
      */
     protected $baseChar;
@@ -1696,6 +1698,7 @@ class Characters {
 
     /**
      * Get domain
+     *
      * @param int $id
      * @return CharDomains
      */
@@ -1734,6 +1737,7 @@ class Characters {
 
     /**
      * Get discipline
+     *
      * @param mixed $id La discipline à chercher. Peut être son ID, son nom ou l'objet lui-même.
      * @return CharDisciplines|null
      */
@@ -1753,6 +1757,7 @@ class Characters {
 
     /**
      * Retourne le score de base de défense du personnage
+     *
      * @return int
      */
     function getBaseDefense() {
@@ -1763,6 +1768,7 @@ class Characters {
 
     /**
      * Retourne le score de base de rapidité du personnage
+     *
      * @return int
      */
     function getBaseSpeed() {
@@ -1773,6 +1779,7 @@ class Characters {
 
     /**
      * Retourne le score de base de rapidité du personnage
+     *
      * @return int
      */
     function getBaseMentalResist() {
@@ -1796,7 +1803,8 @@ class Characters {
 
     /**
      * Retourne le score de base de combat au contact
-     * @param null $discipline
+     *
+     * @param null   $discipline
      * @param string $potential
      * @return int
      */
@@ -1807,8 +1815,9 @@ class Characters {
     /**
      * Retourne le score de base du type de combat spécifié dans $type.
      * Si $discipline est mentionné, il doit s'agir d'un identifiant valide de discipline,
+     *
      * @param string $type
-     * @param null $discipline
+     * @param null   $discipline
      * @param string $potential
      * @throws CharactersException
      * @return int
@@ -1850,5 +1859,47 @@ class Characters {
         }
 
         return $attack;
+    }
+
+    /**
+     * Set maxHealth
+     *
+     * @param integer $maxHealth
+     * @return Characters
+     */
+    public function setMaxHealth($maxHealth) {
+        $this->maxHealth = $maxHealth;
+
+        return $this;
+    }
+
+    /**
+     * Get maxHealth
+     *
+     * @return integer
+     */
+    public function getMaxHealth() {
+        return $this->maxHealth;
+    }
+
+    /**
+     * Set deleted
+     *
+     * @param \DateTime $deleted
+     * @return Characters
+     */
+    public function setDeleted($deleted) {
+        $this->deleted = $deleted;
+
+        return $this;
+    }
+
+    /**
+     * Get deleted
+     *
+     * @return \DateTime
+     */
+    public function getDeleted() {
+        return $this->deleted;
     }
 }

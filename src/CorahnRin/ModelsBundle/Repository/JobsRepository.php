@@ -1,6 +1,6 @@
 <?php
 namespace CorahnRin\ModelsBundle\Repository;
-use Doctrine\ORM\EntityRepository;
+
 use CorahnRin\ToolsBundle\Repository\CorahnRinRepository as CorahnRinRepository;
 
 /**
@@ -8,8 +8,6 @@ use CorahnRin\ToolsBundle\Repository\CorahnRinRepository as CorahnRinRepository;
  *
  */
 class JobsRepository extends CorahnRinRepository {
-
-//
 
     public function findAllPerBook($format = true) {
         $jobs = $this->findAll($format);

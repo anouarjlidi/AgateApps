@@ -3,8 +3,8 @@
 namespace CorahnRin\ModelsBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * SocialClasses
@@ -14,6 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="CorahnRin\ModelsBundle\Repository\SocialClassesRepository")
  */
 class SocialClasses {
+
     /**
      * @var integer
      *
@@ -202,5 +203,26 @@ class SocialClasses {
      */
     public function getDescription() {
         return $this->description;
+    }
+
+    /**
+     * Set deleted
+     *
+     * @param \DateTime $deleted
+     * @return SocialClasses
+     */
+    public function setDeleted($deleted) {
+        $this->deleted = $deleted;
+
+        return $this;
+    }
+
+    /**
+     * Get deleted
+     *
+     * @return \DateTime
+     */
+    public function getDeleted() {
+        return $this->deleted;
     }
 }

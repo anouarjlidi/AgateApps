@@ -1,6 +1,7 @@
 <?php
 namespace CorahnRin\ModelsBundle\Repository;
-use Doctrine\ORM\EntityRepository;
+
+use CorahnRin\ModelsBundle\Entity\Characters;
 use CorahnRin\ToolsBundle\Repository\CorahnRinRepository as CorahnRinRepository;
 
 /**
@@ -9,8 +10,9 @@ use CorahnRin\ToolsBundle\Repository\CorahnRinRepository as CorahnRinRepository;
  */
 class CharactersRepository extends CorahnRinRepository {
 
-    private function getQb() {
-        $qb = $this->_em->createQueryBuilder()
+    private function getQbFull() {
+        $qb = $this->_em
+            ->createQueryBuilder()
             ->select('characters')
             ->from($this->_entityName, 'characters')
             ->leftJoin('characters.job', 'job')->addSelect('job')
@@ -24,28 +26,49 @@ class CharactersRepository extends CorahnRinRepository {
             ->leftJoin('characters.miracles', 'miracles')->addSelect('miracles')
             ->leftJoin('characters.domains', 'domains')->addSelect('domains')
             ->leftJoin('characters.disciplines', 'disciplines')->addSelect('disciplines')
-            ->leftJoin('characters.avantages', 'avantages')->addSelect('avantages')
-        ;
+            ->leftJoin('characters.avantages', 'avantages')->addSelect('avantages');
         return $qb;
     }
 
+    /**
+     * @param $id
+     * @return Characters|null
+     */
+    public function findFetched($id) {
+        return $this
+            ->getQbFull()
+            ->where('characters.id = :id')
+            ->setParameter('id', (int) $id)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
+    /**
+     * @param string $searchField   Le champ dans lequel exécuter la requête
+     * @param string $order         L'ordre (asc ou desc)
+     * @param int    $limit         Le nombre d'éléments à récupérer
+     * @param int    $offset        L'offset de départ
+     * @param bool   $getCount      Récupérer uniquement le nombre de résultats totaux (sans les informations "limit" et "offset")
+     * @return Characters[]
+     */
     public function findSearch($searchField = 'id', $order = 'asc', $limit = 20, $offset = 0, $getCount = false) {
 
-        $qb = $this->_em->createQueryBuilder()
+        $qb = $this->_em
+            ->createQueryBuilder()
             ->select('characters')
             ->from($this->_entityName, 'characters')
             ->leftJoin('characters.job', 'job')->addSelect('job')
             ->leftJoin('characters.people', 'people')->addSelect('people')
-            ->leftJoin('characters.region', 'region')->addSelect('region')
-        ;
+            ->leftJoin('characters.region', 'region')->addSelect('region');
 
         if ($getCount) {
             $qb->addSelect('count(characters) as number');
         }
 
         if ($searchField === 'job') {
-            $qb ->addOrderBy('job.name', $order)
-                ->addOrderBy('characters.jobCustom', $order);
+            $qb->addOrderBy('job.name', $order)
+               ->addOrderBy('characters.jobCustom', $order);
         } elseif ($searchField === 'people') {
             $qb->orderBy('people.name');
         } elseif ($searchField === 'region') {

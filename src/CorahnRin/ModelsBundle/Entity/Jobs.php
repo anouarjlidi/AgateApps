@@ -3,8 +3,8 @@
 namespace CorahnRin\ModelsBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Jobs
@@ -14,6 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="CorahnRin\ModelsBundle\Repository\JobsRepository")
  */
 class Jobs {
+
     /**
      * @var integer
      *
@@ -249,5 +250,26 @@ class Jobs {
      */
     public function getDomainsSecondary() {
         return $this->domainsSecondary;
+    }
+
+    /**
+     * Set deleted
+     *
+     * @param \DateTime $deleted
+     * @return Jobs
+     */
+    public function setDeleted($deleted) {
+        $this->deleted = $deleted;
+
+        return $this;
+    }
+
+    /**
+     * Get deleted
+     *
+     * @return \DateTime
+     */
+    public function getDeleted() {
+        return $this->deleted;
     }
 }
