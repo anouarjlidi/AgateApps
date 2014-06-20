@@ -88,7 +88,6 @@ $datas = array(
 );
 
 if ($this->request->isMethod('POST')) {
-    $this->resetSteps();
 
     if ($choice_available) {
         $setback_value = (int) $this->request->request->get('setback_value');
@@ -102,8 +101,7 @@ if ($this->request->isMethod('POST')) {
             $this->characterSet($setback_value);
             return $this->nextStep();
         } else {
-            $msg = $this->controller->get('translator')->trans('Veuillez entrer un métier correct.', array(), 'error.steps');
-            $this->session->getFlashBag()->add('error', $msg);
+            $this->flashMessage('Veuillez entrer un métier correct.');
         }
     } else {
         return $this->nextStep();

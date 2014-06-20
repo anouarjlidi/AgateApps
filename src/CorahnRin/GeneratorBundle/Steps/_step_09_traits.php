@@ -18,7 +18,6 @@ $datas = array(
 );
 
 if ($this->request->isMethod('POST')) {
-    $this->resetSteps();
     $quality = (int) $this->request->request->get('quality');
     $flaw = (int) $this->request->request->get('flaw');
 

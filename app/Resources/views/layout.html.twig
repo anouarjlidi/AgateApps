@@ -9,9 +9,10 @@
 
     <div id="layout" class="container">
 		{# FLASH MESSAGES #}{% for key, messageList in app.session.flashbag.all() %}
-			<div class="alert alert-{{ key }}">
+			<div class="alert alert-{{ key == 'error' ? 'danger' : key }}">
 				{% for message in messageList %}
 					{{ message | trans({}, 'messages.flash') | raw }}
+                    {% if not loop.last %}<br />{% endif %}
 				{% endfor %}
 			</div>
 		{% endfor %}

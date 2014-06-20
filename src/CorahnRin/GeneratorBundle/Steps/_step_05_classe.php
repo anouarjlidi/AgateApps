@@ -17,7 +17,6 @@ $datas = array(
 );
 
 if ($this->request->isMethod('POST')) {
-    $this->resetSteps();
     $socialClass_value = (int) $this->request->request->get('gen-div-choice');
     $socialClassDomains = $this->request->request->get('domains');
 
@@ -38,8 +37,7 @@ if ($this->request->isMethod('POST')) {
 
         // S'il y a une erreur c'est que l'un des domaines n'est pas associé à la classe sociale choisie.
         if ($error) {
-            $msg = $this->controller->get('translator')->trans('Les domaines choisis ne sont pas associés à la classe sociale sélectionnée.', array(), 'error.steps');
-            $this->session->getFlashBag()->add('error', $msg);
+            $this->flashMessage('Les domaines choisis ne sont pas associés à la classe sociale sélectionnée.');
         } else {
 
             $this->characterSet(array(
@@ -52,16 +50,12 @@ if ($this->request->isMethod('POST')) {
     } else {
 
         // ERREURS
-
         if (!isset($socialClasses[$socialClass_value])) {
-            $msg = $this->controller->get('translator')->trans('Classe sociale non trouvée.', array(), 'error.steps');
-            $this->session->getFlashBag()->add('error', $msg);
+            $this->flashMessage('Veuillez sélectionner une classe sociale valide.');
         } elseif (count($socialClassDomains) != 2) {
-            $msg = $this->controller->get('translator')->trans('Vous devez choisir 2 domaines pour lesquels vous obtiendrez un bonus de +1. Ces domaines doivent être choisi dans la classe sociale sélectionnée.', array(), 'error.steps');
-            $this->session->getFlashBag()->add('info', $msg);
+            $this->flashMessage('Vous devez choisir 2 domaines pour lesquels vous obtiendrez un bonus de +1. Ces domaines doivent être choisi dans la classe sociale sélectionnée.', 'warning');
         } elseif (!isset($socialClassDomains[$socialClass_value])) {
-            $msg = $this->controller->get('translator')->trans('Les domaines choisis ne sont pas associés à la classe sociale sélectionnée.', array(), 'error.steps');
-            $this->session->getFlashBag()->add('error', $msg);
+            $this->flashMessage('Les domaines choisis ne sont pas associés à la classe sociale sélectionnée.');
         }
     }
 

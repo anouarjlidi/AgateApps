@@ -44,7 +44,6 @@ $datas = array(
 );
 
 if ($this->request->isMethod('POST')) {
-    $this->resetSteps();
     $orientation = $this->request->request->get('gen-div-choice');
 
     $orientation_exists = array_key_exists($orientation, $orientations);

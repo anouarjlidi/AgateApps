@@ -12,14 +12,12 @@ $datas = array(
 );
 
 if ($this->request->isMethod('POST')) {
-    $this->resetSteps();
     $geoEnvironment_id = (int) $this->request->request->get('gen-div-choice');
     if (isset($geoEnvironments[$geoEnvironment_id])) {
         $this->characterSet($geoEnvironment_id);
         return $this->nextStep();
     } else {
-        $msg = $this->controller->get('translator')->trans('Veuillez indiquer un peuple correct.', array(), 'error.steps');
-        $this->session->getFlashBag()->add('error', $msg);
+        $this->flashMessage('Veuillez indiquer un peuple correct.');
     }
 
 }

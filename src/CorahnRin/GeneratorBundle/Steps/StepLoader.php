@@ -198,9 +198,22 @@ class StepLoader {
      * @param object|int $step
      */
     public function characterSet($datas, $step = null) {
-        $step = $this->getStep($step);
-        $this->character[$this->stepFullName($step)] = $datas;
+        $step = $this->stepFullName($step);
+        $this->character[$step] = $datas;
         $this->session->set('character', $this->character);
+    }
+
+    /**
+     * @param null $step
+     * @return $this
+     */
+    function clearStep($step = null) {
+        $step = $this->stepFullName($step);
+        if (isset($this->character[$step])) {
+            unset($this->character[$step]);
+        }
+        $this->session->set('character', $this->character);
+        return $this;
     }
 
     /**
@@ -214,11 +227,14 @@ class StepLoader {
 
     /**
      * Supprime de la session les valeurs qui dépendent de l'étape en cours
+     *
+     * @return $this
      */
     public function resetSteps() {
         foreach ($this->stepEntity->getStepsToDisableOnChange() as $s) {
             unset($this->character[$this->stepFullName($s)]);
         }
+        return $this;
     }
 
     /**
@@ -234,7 +250,14 @@ class StepLoader {
      */
     public function load() {
         if (file_exists($this->filename)) {
-            return include $this->filename;
+            $returnValue = include $this->filename;
+            if (is_array($returnValue) && $this->request->isMethod('POST')) {
+                $this->clearStep()
+                     ->resetSteps();
+            } elseif (is_object($returnValue) && $this->request->isMethod('POST')) {
+                $this->resetSteps();
+            }
+            return $returnValue;
         } else {
             throw new \Exception('File calculated by StepLoader does not exist : "'.$this->filename.'"');
         }
@@ -246,9 +269,11 @@ class StepLoader {
      * @param string $msg
      * @param string $type
      * @param array  $msgParams
+     * @return $this
      */
     public function flashMessage($msg, $type = 'error', $msgParams = array()) {
         $msg = $this->controller->get('translator')->trans($msg, $msgParams, 'error.steps');
         $this->session->getFlashBag()->add($type, $msg);
+        return $this;
     }
 }
