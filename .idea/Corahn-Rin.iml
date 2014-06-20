@@ -44,7 +44,6 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/symfony" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/twig/extensions" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/twig/twig" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/twitter/bootstrap" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/willdurand/jsonp-callback-validator" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/willdurand/negotiation" />
       <excludeFolder url="file://$MODULE_DIR$/web/bundles" />
@@ -99,7 +98,6 @@
           <root url="file://$MODULE_DIR$/vendor/doctrine/orm" />
           <root url="file://$MODULE_DIR$/vendor/friendsofsymfony/user-bundle" />
           <root url="file://$MODULE_DIR$/vendor/doctrine/annotations" />
-          <root url="file://$MODULE_DIR$/vendor/twitter/bootstrap" />
           <root url="file://$MODULE_DIR$/vendor/kriswallsmith/assetic" />
           <root url="file://$MODULE_DIR$/vendor/sensio/distribution-bundle" />
           <root url="file://$MODULE_DIR$/vendor/stof/doctrine-extensions-bundle" />
@@ -142,7 +140,6 @@
           <root url="file://$MODULE_DIR$/vendor/doctrine/orm" />
           <root url="file://$MODULE_DIR$/vendor/friendsofsymfony/user-bundle" />
           <root url="file://$MODULE_DIR$/vendor/doctrine/annotations" />
-          <root url="file://$MODULE_DIR$/vendor/twitter/bootstrap" />
           <root url="file://$MODULE_DIR$/vendor/kriswallsmith/assetic" />
           <root url="file://$MODULE_DIR$/vendor/sensio/distribution-bundle" />
           <root url="file://$MODULE_DIR$/vendor/stof/doctrine-extensions-bundle" />
