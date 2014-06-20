@@ -25,8 +25,10 @@ class AppKernel extends Kernel
             new FOS\UserBundle\FOSUserBundle(),
             new FOS\RestBundle\FOSRestBundle(),
 
+            new CorahnRin\AdminBundle\CorahnRinAdminBundle(),
             new CorahnRin\CharactersBundle\CorahnRinCharactersBundle(),
             new CorahnRin\UsersBundle\CorahnRinUsersBundle(),
+            new CorahnRin\ModelsBundle\CorahnRinModelsBundle(),
             new CorahnRin\ToolsBundle\CorahnRinToolsBundle(),
             new CorahnRin\GeneratorBundle\CorahnRinGeneratorBundle(),
 
@@ -38,8 +40,6 @@ class AppKernel extends Kernel
             new Pierstoval\Bundle\TranslationBundle\PierstovalTranslationBundle(),
             new Pierstoval\Bundle\ToolsBundle\PierstovalToolsBundle(),
             new Pierstoval\Bundle\AdminBundle\PierstovalAdminBundle(),
-            new CorahnRin\AdminBundle\CorahnRinAdminBundle(),
-            new CorahnRin\ModelsBundle\CorahnRinModelsBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test','dev_fast'))) {

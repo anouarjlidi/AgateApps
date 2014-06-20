@@ -1,0 +1,9 @@
+{
+    "name": "corahn-rin",
+    "version": "0.1",
+    "dependencies": {
+        "bootstrap": "~3.1",
+        "jquery": "~1.11",
+        "jquery-ui": "~1.10.3"
+    }
+}

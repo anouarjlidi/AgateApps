@@ -69,8 +69,15 @@ footer#footer {
     line-height: 15px;
 }
 
+
+#corahnrin .navbar-brand {
+    height: auto !important;
+}
+
 #corahnrin .navbar {
     min-height: 37px;
+    max-height: 37px;
+    height: 37px;
 }
 #corahnrin .navbar .container {
     padding: 0 30px;

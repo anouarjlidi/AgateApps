@@ -17,15 +17,13 @@ monolog:
             type:  stream
             path:  %kernel.logs_dir%/%kernel.environment%.log
             level: debug
-        firephp:
-            type:  firephp
-            level: info
-        chromephp:
-            type:  chromephp
-            level: info
 
 assetic:
     use_controller: false
+    filters:
+        less:
+            node: "C:\\nodejs\\node.exe"
+            node_paths: [ "C:\\Users\\Pierstoval\\AppData\\Roaming\\npm\\node_modules" ]
 
 #swiftmailer:
 #    delivery_address: me@example.com

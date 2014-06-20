@@ -22,7 +22,6 @@
         "sensio/framework-extra-bundle": "~3.0",
         "incenteev/composer-parameter-handler": "~2.0",
         "friendsofsymfony/user-bundle": "dev-master",
-        "twitter/bootstrap": "3.*",
         "stof/doctrine-extensions-bundle": "dev-master",
         "friendsofsymfony/rest-bundle": "1.*",
         "jms/serializer": "dev-master",
