@@ -10,8 +10,31 @@
             {% endif %}
 
             <div class="col-sm-6">
-                <label class="change_avtg btn btn-inverse btn-block {{ advantages[avtg.id] is defined and advantages[avtg.id] > 0 ? 'active' : '' }}">
-                    <input type="radio" name="advantages[{{ avtg.id }}]" value="{{ advantages[avtg.id] is defined and advantages[avtg.id] ? advantages[avtg.id] : '0' }}" id="avtg-{{ avtg.id }}" data-input-value="{{ avtg.id }}" class="hidden" />{{ avtg.name | trans }}
+                {% set classMore = '' %}
+                {% if advantages[avtg.id] is defined and advantages[avtg.id] > 0 %}
+                    {% if advantages[avtg.id] == 1 %}
+                        {% set classMore = ' btn-inverse' %}
+                    {% elseif advantages[avtg.id] == 2 %}
+                        {% set classMore = ' btn-info' %}
+                    {% endif %}
+                {% endif %}
+                <label
+                      for="avtg-{{ avtg.id }}"
+                      data-toggle="tooltip"
+                      title="{{ (avtg.description | trans({},'Entity.Avantages')) | escape('html_attr') }} ({{ 'Coût en XP' | trans | escape('html_attr') }} : {{ avtg.xp }})"
+                      data-placement="top"
+                      id="label-avdesv-{{ avtg.id }}"
+                      class="change_avdesv change_avtg btn btn-block{{ classMore }}">
+                    <input data-augmentation="{{ avtg.augmentation }}"
+                           type="hidden"
+                           name="advantages[{{ avtg.id }}]"
+                           value="{{ advantages[avtg.id] is defined and advantages[avtg.id] ? advantages[avtg.id] : '0' }}"
+                           id="avtg-{{ avtg.id }}"
+                           data-element-id="{{ avtg.id }}"
+                           data-element-cost="{{ avtg.xp }}"
+                           class="_hidden input_avtg" />
+                    <span{% if avtg.augmentation > 0 %} class="text-underline"{% endif %}>{{ avtg.name | trans({}, 'Entity.Avantages') }}</span>
+
                 </label>
             </div>
 
@@ -30,9 +53,32 @@
                 <div class="row mb5">
             {% endif %}
 
+            {% set classMore = '' %}
+            {% if disadvantages[desv.id] is defined and disadvantages[desv.id] > 0 %}
+                {% if disadvantages[desv.id] == 1 %}
+                    {% set classMore = ' btn-inverse' %}
+                {% elseif disadvantages[desv.id] == 2 %}
+                    {% set classMore = ' btn-info' %}
+                {% elseif disadvantages[desv.id] == 3 %}
+                    {% set classMore = ' btn-primary' %}
+                {% endif %}
+            {% endif %}
             <div class="col-sm-6">
-                <label class="change_desv btn btn-inverse btn-block {{ disadvantages[desv.id] is defined and disadvantages[desv.id] > 0  ? 'active' : '' }}">
-                    <input type="radio" name="disadvantages[{{ desv.id }}]" value="{{ disadvantages[desv.id] is defined and disadvantages[desv.id] ? disadvantages[desv.id] : '0' }}" id="desv-{{ desv.id }}" data-input-value="{{ desv.id }}" class="hidden" />{{ desv.name | trans }}
+                <label for="desv-{{ desv.id }}"
+                       data-toggle="tooltip"
+                       title="{{ (desv.description | trans({},'Entity.Avantages')) | escape('html_attr') }} ({{ 'Gain en XP' | trans | escape('html_attr') }} : {{ desv.xp }})"
+                       data-placement="top"
+                       id="label-avdesv-{{ desv.id }}"
+                       class="change_avdesv change_desv btn btn-block">
+                    <input data-augmentation="{{ desv.augmentation }}"
+                           type="hidden"
+                           name="disadvantages[{{ desv.id }}]"
+                           value="{{ disadvantages[desv.id] is defined and disadvantages[desv.id] ? disadvantages[desv.id] : '0' }}"
+                           id="desv-{{ desv.id }}"
+                           data-element-id="{{ desv.id }}"
+                           data-element-cost="{{ desv.xp }}"
+                           class="_hidden input_desv" />
+                    <span{% if desv.augmentation > 0 %} class="text-underline"{% endif %}>{{ desv.name | trans }}</span>
                 </label>
             </div>
 

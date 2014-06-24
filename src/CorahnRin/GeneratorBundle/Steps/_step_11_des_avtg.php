@@ -25,7 +25,7 @@ foreach ($advantages as $id => $value) {
     }
 }
 foreach ($disadvantages as $id => $value) {
-    if ($id == 0) {
+    if ($id == 50) {
         // Cas particulier du désavantage "Traumatisme"
         $current_xp += $value * $global_list['disadvantages'][$id]->getXp();
     } else {
@@ -46,13 +46,14 @@ $datas = array(
 );
 
 if ($this->request->isMethod('POST')) {
-    $this->resetSteps();
     $advantages_selected = $this->request->request->get('advantages');
     $disadvantages_selected = $this->request->request->get('disadvantages');
 
     $error = false;
 
-    \CorahnRinTools\pr($this->request->request->all());exit;
+    if (count($this->request->request->all())) {
+        \CorahnRinTools\pr($this->request->request->all());exit;
+    }
 
     foreach ($advantages_selected as $id => $value) {
         if (

@@ -1,0 +1,8 @@
+#list_advantages .change_avdesv,
+#list_disadvantages .change_avdesv{
+    -webkit-transition: background 400ms;
+       -moz-transition: background 400ms;
+        -ms-transition: background 400ms;
+         -o-transition: background 400ms;
+            transition: background 400ms;
+}
