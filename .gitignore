@@ -3,10 +3,15 @@ app/bootstrap*
 
 # Symfony directories
 vendor/*
-*/logs/*
-*/cache/*
+app/logs/*
+app/cache/*
 web/uploads/*
 web/bundles/*
+web/components/*
+web/uploads/*
+
+# Esteren Maps
+/web/maps_tiles/*
 
 # Eclipse
 .settings/
@@ -15,17 +20,18 @@ web/bundles/*
 .project
 
 # Configuration files
-app/config/parameters.ini
 app/config/parameters.yml
 
 # Backups
 *.php~
 
-# Fichiers dev
-#_dev_files/
+# Fichiers dev netbeans
 /nbproject
 
 # Ignore temporaire
 app/Resources/Translations/*
 web/css/*
 web/js/*
+
+# Future implementation structure de Symfony2
+/var/*

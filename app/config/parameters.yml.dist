@@ -1,15 +1,17 @@
+ This file is auto-generated during the composer install
 parameters:
-    database_driver:   pdo_mysql
-    database_host:     127.0.0.1
-    database_port:     ~
-    database_name:     symfony
-    database_user:     root
+    database_driver: pdo_mysql
+    database_host: localhost
+    database_port: ~
+    database_name: corahn_rin
+    database_user: corahn_rin
     database_password: ~
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: null
+    mailer_password: null
+    locale: fr
+    secret: ChangeSecretToken
+    node_path: /usr/local/bin/node
+    node_modules_path: /usr/local/lib/node_modules
 
-    mailer_transport:  smtp
-    mailer_host:       127.0.0.1
-    mailer_user:       ~
-    mailer_password:   ~
-
-    locale:            en
-    secret:            ThisTokenIsNotSoSecretChangeIt

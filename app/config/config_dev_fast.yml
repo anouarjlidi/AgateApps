@@ -22,8 +22,8 @@ assetic:
     use_controller: false
     filters:
         less:
-            node: "C:\\nodejs\\node.exe"
-            node_paths: [ "C:\\Users\\Pierstoval\\AppData\\Roaming\\npm\\node_modules" ]
+            node: %node_path%
+            node_paths: [ %node_path% , %node_modules_path% ]
 
 #swiftmailer:
 #    delivery_address: me@example.com
