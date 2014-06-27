@@ -25,12 +25,14 @@
             'bundles/esterenpages/css/corahnrin-theme.css'
 
             '@EsterenPagesBundle/Resources/public/css/corahn_rin.css'
+
             'bundles/esterenmaps/css/leaflet.css'
             'bundles/esterenmaps/css/leaflet.draw.css'
             '@EsterenMapsBundle/Resources/public/css/leaflet.sidebar.css'
             '@EsterenMapsBundle/Resources/public/css/maps.css'
-            '@EsterenPagesBundle/Resources/public/css/jqueryUI/jquery.ui.core.min.css'
-            '@EsterenPagesBundle/Resources/public/css/jqueryUI/jquery.ui.slider.min.css'
+
+            'components/jquery-ui/themes/vader/jquery-ui.min.css'
+            'components/jquery-ui/themes/vader/jquery.ui.theme.css'
             filter="cssrewrite"
             output="css/main.css" %}
         <link rel="stylesheet" href="{{ app.request.getSchemeAndHttpHost() ~ asset_url }}" type="text/css" />
