@@ -6,8 +6,8 @@
 
     <parameters>
         <parameter key="corahn_rin_generator.sheets_manager.class">CorahnRin\GeneratorBundle\Services\Sheets</parameter>
-        <parameter key="corahn_rin_generator.sheets_folder">%kernel.root_dir%/../src/CorahnRin/GeneratorBundle/Sheets/files</parameter>
-        <parameter key="corahn_rin_generator.sheets_output">%kernel.root_dir%/cache/character_sheets/</parameter>
+        <parameter key="corahn_rin_generator.sheets_folder">%kernel.root_dir%/../src/CorahnRin/GeneratorBundle/SheetsManagers/files</parameter>
+        <parameter key="corahn_rin_generator.sheets_output">%kernel.cache_dir%/character_sheets/</parameter>
 
         <parameter key="corahn_rin_generator.steps_loader.class">CorahnRin\GeneratorBundle\Steps\StepLoader</parameter>
         <parameter key="corahn_rin_generator.steps_managers">%kernel.root_dir%/../src/CorahnRin/GeneratorBundle/Steps</parameter>

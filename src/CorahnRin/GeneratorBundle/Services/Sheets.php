@@ -59,7 +59,11 @@ class Sheets {
 
     private function createManager($type) {
         $type = ucfirst(strtolower($type));
-        $className = '\CorahnRin\GeneratorBundle\Sheets\Managers\\'.$type.'Manager';
+        $className = '\CorahnRin\GeneratorBundle\SheetsManagers\\Managers\\'.$type.'Manager';
+
+        if (!class_exists($className)) {
+            throw new \Exception('"'.$type.'" sheet manager not found with fqn "'.$className.'".');
+        }
 
         $manager = new $className($this);
 

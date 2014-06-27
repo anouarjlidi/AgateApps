@@ -1,6 +1,6 @@
 <?php
 
-namespace CorahnRin\GeneratorBundle\Sheets;
+namespace CorahnRin\GeneratorBundle\SheetsManagers;
 
 use CorahnRin\GeneratorBundle\Services\Sheets;
 use CorahnRin\ModelsBundle\Entity\Characters;

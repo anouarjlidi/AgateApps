@@ -1,10 +1,10 @@
 <?php
 
-namespace CorahnRin\GeneratorBundle\Sheets\Managers;
+namespace CorahnRin\GeneratorBundle\SheetsManagers\Managers;
 
 use CorahnRin\ModelsBundle\Entity\Characters;
-use CorahnRin\GeneratorBundle\Sheets\ManagerInterface;
-use CorahnRin\GeneratorBundle\Sheets\SheetsManager;
+use CorahnRin\GeneratorBundle\SheetsManagers\SheetsManagerInterface;
+use CorahnRin\GeneratorBundle\SheetsManagers\SheetsManager;
 use CorahnRin\ToolsBundle\PDF\PDF;
 
 /**
@@ -14,7 +14,7 @@ use CorahnRin\ToolsBundle\PDF\PDF;
  * @author Pierstoval
  * @version 1.0 20/02/2014
  */
-class PdfManager extends SheetsManager implements ManagerInterface {
+class PdfManager extends SheetsManager implements SheetsManagerInterface {
 
     protected function originalSheet(Characters $character, $printer_friendly = false, $page = 0) {
 
