@@ -107,7 +107,7 @@ class DisordersWays {
      *
      * @return boolean
      */
-    public function getIsMajor() {
+    public function isMajor() {
         return $this->isMajor;
     }
 

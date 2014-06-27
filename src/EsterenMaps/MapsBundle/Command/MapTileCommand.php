@@ -115,6 +115,7 @@ class MapTileCommand extends ContainerAwareCommand {
 
         // Création du tilesManager
         $tilesManager = new MapsTileManager($map, $img_size);
+        //TODO : Refaire ce système pour s'adapter au nouveau service
 
         // Récupération d'une valeur correcte du zoom
         self::$zoom = $map->getMaxZoom();

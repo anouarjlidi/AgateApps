@@ -83,7 +83,7 @@ class AvantagesController extends Controller {
         $form = $this->createForm(new AvantagesType(), $element);
 
         $form->add('bonusdisc', 'choice', array(
-            'label' => 'Bonus (+1)',
+            'label' => 'Bonus/Malus (+1 ou -1)',
             'choices' => $bonuses,
             'multiple' => true,
             'required' => false,
@@ -92,7 +92,7 @@ class AvantagesController extends Controller {
 
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isValid() && $request->isMethod('POST')) {
 
             $element->setBonusDisc(implode(',', array_keys($element->getBonusdisc())));
 

@@ -107,6 +107,7 @@ class MapTilesCommand extends ContainerAwareCommand {
 
         // Création du tilesManager
         $tilesManager = new MapsTileManager($map, $img_size);
+        //TODO : Refaire ce système pour s'adapter au nouveau service
 
         $files_written = 0;
 		$overwrite_all = (int) $input->getOption('replace');

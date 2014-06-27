@@ -63,7 +63,7 @@ class MapsController extends Controller
 
             $pathinfo = $this->handleImage($map);
 
-            if ($form->isValid()) {
+            if ($form->isValid() && $request->isMethod('POST')) {
                 $pathinfo['file']->move($pathinfo['dir'], $pathinfo['path']);
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($map);
@@ -169,7 +169,7 @@ class MapsController extends Controller
             $map->setImage($image);
         }
 
-        if ($form->isValid()) {
+        if ($form->isValid() && $request->isMethod('POST')) {
 
             if ($pathinfo) {
                 $pathinfo['file']->move($pathinfo['dir'], $pathinfo['path']);

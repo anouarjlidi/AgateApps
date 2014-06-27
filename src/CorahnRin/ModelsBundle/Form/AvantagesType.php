@@ -22,7 +22,8 @@ class AvantagesType extends AbstractType {
                 'choices' => range(0, 3),
             ))
             ->add('bonusdisc', 'choice', array(
-                'label' => 'Bonus (+1)',
+                // À redéfinir dans le contrôleur pour appliquer les "choice"
+                'label' => 'Bonus/Malus (+1 ou -1)',
                 'choices' => array(),
                 'multiple' => true,
                 'required' => false,

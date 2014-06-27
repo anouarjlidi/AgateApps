@@ -5,6 +5,11 @@ namespace EsterenMaps\MapsBundle\Services;
 use EsterenMaps\MapsBundle\Entity\Maps;
 use Symfony\Component\HttpKernel\KernelInterface;
 
+/**
+ * Class MapsTilesManager
+ *
+ * @package EsterenMaps\MapsBundle\Services
+ */
 class MapsTilesManager {
 
     /**

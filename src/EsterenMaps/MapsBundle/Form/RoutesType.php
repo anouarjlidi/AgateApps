@@ -16,7 +16,7 @@ class RoutesType extends AbstractType
     {
         $builder
             ->add('name', 'text', array('label'=>'Nom'))
-            ->add('coordinates', 'text', array('empty_data'=>'-','label'=>'Coordonnées','required'=>false   ))
+            ->add('coordinates', 'textarea', array('empty_data'=>'-','label'=>'Coordonnées','required'=>false   ))
             ->add('markerStart', 'entity', array(
                 'class' => 'EsterenMaps\MapsBundle\Entity\Markers',
                 'empty_value' => '-- Choisissez un marqueur de départ --',

@@ -8,7 +8,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 use EsterenMaps\MapsBundle\Entity\Maps;
-use EsterenMaps\MapsBundle\Classes\MapsTileManager;
 
 class TilesController extends Controller {
 
@@ -57,7 +56,10 @@ class TilesController extends Controller {
         $response = new Response();
         $this->init();
 
-        $tilesManager = new MapsTileManager($map, $this->img_size);
+
+        $tilesManager = $this->container->get('esterenmaps.tiles_manager');
+
+        $tilesManager->setMap($map);
 
         $get_vars = $request->query;
         $dimensionsType = $get_vars->get('dimensions-type');
@@ -114,7 +116,9 @@ class TilesController extends Controller {
 
         $this->init();
 
-        $tilesManager = new MapsTileManager($map, $this->img_size);
+        $tilesManager = $this->container->get('esterenmaps.tiles_manager');
+
+        $tilesManager->setMap($map);
 
         $imgname = $tilesManager->mapDestinationName($zoom, $x, $y);
 

@@ -35,7 +35,7 @@ class RoutesController extends Controller {
 
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isValid() && $request->isMethod('POST')) {
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($route);
@@ -65,7 +65,7 @@ class RoutesController extends Controller {
 
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isValid() && $request->isMethod('POST')) {
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($routeType);
@@ -94,7 +94,7 @@ class RoutesController extends Controller {
 
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isValid() && $request->isMethod('POST')) {
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($route);
@@ -124,7 +124,7 @@ class RoutesController extends Controller {
 
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isValid() && $request->isMethod('POST')) {
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($routeType);

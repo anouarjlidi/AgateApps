@@ -350,7 +350,7 @@ class PdfManager extends SheetsManager implements SheetsManagerInterface {
 			$min = array();
 			$maj = array();
             foreach ($character->getMiracles() as $miracle) {
-                if ($miracle->getIsMajor()) {
+                if ($miracle->isMajor()) {
                     $maj[] = $translator->trans($miracle->getName());
                 } else {
                     $min[] = $translator->trans($miracle->getName());
