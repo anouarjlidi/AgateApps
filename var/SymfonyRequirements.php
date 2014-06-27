@@ -119,10 +119,10 @@ class PhpIniRequirement extends Requirement
      *
      * @param string           $cfgName    The configuration name used for ini_get()
      * @param Boolean|callback $evaluation Either a Boolean indicating whether the configuration should evaluate to true or false,
-    or a callback function receiving the configuration value as parameter to determine the fulfillment of the requirement
+                                                    or a callback function receiving the configuration value as parameter to determine the fulfillment of the requirement
      * @param Boolean $approveCfgAbsence If true the Requirement will be fulfilled even if the configuration option does not exist, i.e. ini_get() returns false.
-    This is helpful for abandoned configs in later PHP versions or configs of an optional extension, like Suhosin.
-    Example: You require a config to be true but PHP later removes this config and defaults it to true internally.
+                                                    This is helpful for abandoned configs in later PHP versions or configs of an optional extension, like Suhosin.
+                                                    Example: You require a config to be true but PHP later removes this config and defaults it to true internally.
      * @param string|null $testMessage The message for testing the requirement (when null and $evaluation is a Boolean a default message is derived)
      * @param string|null $helpHtml    The help text formatted in HTML for resolving the problem (when null and $evaluation is a Boolean a default help is derived)
      * @param string|null $helpText    The help text (when null, it will be inferred from $helpHtml, i.e. stripped from HTML tags)
@@ -221,10 +221,10 @@ class RequirementCollection implements IteratorAggregate
      *
      * @param string           $cfgName    The configuration name used for ini_get()
      * @param Boolean|callback $evaluation Either a Boolean indicating whether the configuration should evaluate to true or false,
-    or a callback function receiving the configuration value as parameter to determine the fulfillment of the requirement
+                                                    or a callback function receiving the configuration value as parameter to determine the fulfillment of the requirement
      * @param Boolean $approveCfgAbsence If true the Requirement will be fulfilled even if the configuration option does not exist, i.e. ini_get() returns false.
-    This is helpful for abandoned configs in later PHP versions or configs of an optional extension, like Suhosin.
-    Example: You require a config to be true but PHP later removes this config and defaults it to true internally.
+                                                    This is helpful for abandoned configs in later PHP versions or configs of an optional extension, like Suhosin.
+                                                    Example: You require a config to be true but PHP later removes this config and defaults it to true internally.
      * @param string      $testMessage The message for testing the requirement (when null and $evaluation is a Boolean a default message is derived)
      * @param string      $helpHtml    The help text formatted in HTML for resolving the problem (when null and $evaluation is a Boolean a default help is derived)
      * @param string|null $helpText    The help text (when null, it will be inferred from $helpHtml, i.e. stripped from HTML tags)
@@ -239,10 +239,10 @@ class RequirementCollection implements IteratorAggregate
      *
      * @param string           $cfgName    The configuration name used for ini_get()
      * @param Boolean|callback $evaluation Either a Boolean indicating whether the configuration should evaluate to true or false,
-    or a callback function receiving the configuration value as parameter to determine the fulfillment of the requirement
+                                                    or a callback function receiving the configuration value as parameter to determine the fulfillment of the requirement
      * @param Boolean $approveCfgAbsence If true the Requirement will be fulfilled even if the configuration option does not exist, i.e. ini_get() returns false.
-    This is helpful for abandoned configs in later PHP versions or configs of an optional extension, like Suhosin.
-    Example: You require a config to be true but PHP later removes this config and defaults it to true internally.
+                                                    This is helpful for abandoned configs in later PHP versions or configs of an optional extension, like Suhosin.
+                                                    Example: You require a config to be true but PHP later removes this config and defaults it to true internally.
      * @param string      $testMessage The message for testing the requirement (when null and $evaluation is a Boolean a default message is derived)
      * @param string      $helpHtml    The help text formatted in HTML for resolving the problem (when null and $evaluation is a Boolean a default help is derived)
      * @param string|null $helpText    The help text (when null, it will be inferred from $helpHtml, i.e. stripped from HTML tags)
@@ -388,45 +388,47 @@ class SymfonyRequirements extends RequirementCollection
         $installedPhpVersion = phpversion();
 
         $this->addRequirement(
-             version_compare($installedPhpVersion, self::REQUIRED_PHP_VERSION, '>='),
-                 sprintf('PHP version must be at least %s (%s installed)', self::REQUIRED_PHP_VERSION, $installedPhpVersion),
-                 sprintf('You are running PHP version "<strong>%s</strong>", but Symfony needs at least PHP "<strong>%s</strong>" to run.
+            version_compare($installedPhpVersion, self::REQUIRED_PHP_VERSION, '>='),
+            sprintf('PHP version must be at least %s (%s installed)', self::REQUIRED_PHP_VERSION, $installedPhpVersion),
+            sprintf('You are running PHP version "<strong>%s</strong>", but Symfony needs at least PHP "<strong>%s</strong>" to run.
                 Before using Symfony, upgrade your PHP installation, preferably to the latest version.',
-                     $installedPhpVersion, self::REQUIRED_PHP_VERSION),
-                 sprintf('Install PHP %s or newer (installed version is %s)', self::REQUIRED_PHP_VERSION, $installedPhpVersion)
+                $installedPhpVersion, self::REQUIRED_PHP_VERSION),
+            sprintf('Install PHP %s or newer (installed version is %s)', self::REQUIRED_PHP_VERSION, $installedPhpVersion)
         );
 
         $this->addRequirement(
-             version_compare($installedPhpVersion, '5.3.16', '!='),
-                 'PHP version must not be 5.3.16 as Symfony won\'t work properly with it',
-                 'Install PHP 5.3.17 or newer (or downgrade to an earlier PHP version)'
+            version_compare($installedPhpVersion, '5.3.16', '!='),
+            'PHP version must not be 5.3.16 as Symfony won\'t work properly with it',
+            'Install PHP 5.3.17 or newer (or downgrade to an earlier PHP version)'
         );
 
         $this->addRequirement(
-             is_dir(__DIR__.'/../vendor/composer'),
-                 'Vendor libraries must be installed',
-                 'Vendor libraries are missing. Install composer following instructions from <a href="http://getcomposer.org/">http://getcomposer.org/</a>. ' .
-                 'Then run "<strong>php composer.phar install</strong>" to install them.'
+            is_dir(__DIR__.'/../vendor/composer'),
+            'Vendor libraries must be installed',
+            'Vendor libraries are missing. Install composer following instructions from <a href="http://getcomposer.org/">http://getcomposer.org/</a>. ' .
+                'Then run "<strong>php composer.phar install</strong>" to install them.'
         );
 
-        $baseDir = basename(__DIR__);
+        $cacheDir = is_dir(__DIR__.'/../var/cache') ? __DIR__.'/../var/cache' : __DIR__.'/cache';
 
         $this->addRequirement(
-             is_writable(__DIR__.'/cache'),
-                 "$baseDir/cache/ directory must be writable",
-                 "Change the permissions of the \"<strong>$baseDir/cache/</strong>\" directory so that the web server can write into it."
+            is_writable($cacheDir),
+            'app/cache/ or var/cache/ directory must be writable',
+            'Change the permissions of either "<strong>app/cache/</strong>" or  "<strong>var/cache/</strong>" directory so that the web server can write into it.'
         );
 
+        $logsDir = is_dir(__DIR__.'/../var/logs') ? __DIR__.'/../var/logs' : __DIR__.'/logs';
+
         $this->addRequirement(
-             is_writable(__DIR__.'/logs'),
-                 "$baseDir/logs/ directory must be writable",
-                 "Change the permissions of the \"<strong>$baseDir/logs/</strong>\" directory so that the web server can write into it."
+            is_writable($logsDir),
+            'app/logs/ or var/logs/ directory must be writable',
+            'Change the permissions of either "<strong>app/logs/</strong>" or  "<strong>var/logs/</strong>" directory so that the web server can write into it.'
         );
 
         $this->addPhpIniRequirement(
-             'date.timezone', true, false,
-                 'date.timezone setting must be set',
-                 'Set the "<strong>date.timezone</strong>" setting in php.ini<a href="#phpini">*</a> (like Europe/Paris).'
+            'date.timezone', true, false,
+            'date.timezone setting must be set',
+            'Set the "<strong>date.timezone</strong>" setting in php.ini<a href="#phpini">*</a> (like Europe/Paris).'
         );
 
         if (version_compare($installedPhpVersion, self::REQUIRED_PHP_VERSION, '>=')) {
@@ -438,54 +440,54 @@ class SymfonyRequirements extends RequirementCollection
             }
 
             $this->addRequirement(
-                 isset($timezones[date_default_timezone_get()]),
-                     sprintf('Configured default timezone "%s" must be supported by your installation of PHP', date_default_timezone_get()),
-                     'Your default timezone is not supported by PHP. Check for typos in your <strong>php.ini</strong> file and have a look at the list of deprecated timezones at <a href="http://php.net/manual/en/timezones.others.php">http://php.net/manual/en/timezones.others.php</a>.'
+                isset($timezones[date_default_timezone_get()]),
+                sprintf('Configured default timezone "%s" must be supported by your installation of PHP', date_default_timezone_get()),
+                'Your default timezone is not supported by PHP. Check for typos in your <strong>php.ini</strong> file and have a look at the list of deprecated timezones at <a href="http://php.net/manual/en/timezones.others.php">http://php.net/manual/en/timezones.others.php</a>.'
             );
         }
 
         $this->addRequirement(
-             function_exists('json_encode'),
-                 'json_encode() must be available',
-                 'Install and enable the <strong>JSON</strong> extension.'
+            function_exists('json_encode'),
+            'json_encode() must be available',
+            'Install and enable the <strong>JSON</strong> extension.'
         );
 
         $this->addRequirement(
-             function_exists('session_start'),
-                 'session_start() must be available',
-                 'Install and enable the <strong>session</strong> extension.'
+            function_exists('session_start'),
+            'session_start() must be available',
+            'Install and enable the <strong>session</strong> extension.'
         );
 
         $this->addRequirement(
-             function_exists('ctype_alpha'),
-                 'ctype_alpha() must be available',
-                 'Install and enable the <strong>ctype</strong> extension.'
+            function_exists('ctype_alpha'),
+            'ctype_alpha() must be available',
+            'Install and enable the <strong>ctype</strong> extension.'
         );
 
         $this->addRequirement(
-             function_exists('token_get_all'),
-                 'token_get_all() must be available',
-                 'Install and enable the <strong>Tokenizer</strong> extension.'
+            function_exists('token_get_all'),
+            'token_get_all() must be available',
+            'Install and enable the <strong>Tokenizer</strong> extension.'
         );
 
         $this->addRequirement(
-             function_exists('simplexml_import_dom'),
-                 'simplexml_import_dom() must be available',
-                 'Install and enable the <strong>SimpleXML</strong> extension.'
+            function_exists('simplexml_import_dom'),
+            'simplexml_import_dom() must be available',
+            'Install and enable the <strong>SimpleXML</strong> extension.'
         );
 
         if (function_exists('apc_store') && ini_get('apc.enabled')) {
             if (version_compare($installedPhpVersion, '5.4.0', '>=')) {
                 $this->addRequirement(
-                     version_compare(phpversion('apc'), '3.1.13', '>='),
-                         'APC version must be at least 3.1.13 when using PHP 5.4',
-                         'Upgrade your <strong>APC</strong> extension (3.1.13+).'
+                    version_compare(phpversion('apc'), '3.1.13', '>='),
+                    'APC version must be at least 3.1.13 when using PHP 5.4',
+                    'Upgrade your <strong>APC</strong> extension (3.1.13+).'
                 );
             } else {
                 $this->addRequirement(
-                     version_compare(phpversion('apc'), '3.0.17', '>='),
-                         'APC version must be at least 3.0.17',
-                         'Upgrade your <strong>APC</strong> extension (3.0.17+).'
+                    version_compare(phpversion('apc'), '3.0.17', '>='),
+                    'APC version must be at least 3.0.17',
+                    'Upgrade your <strong>APC</strong> extension (3.0.17+).'
                 );
             }
         }
@@ -494,131 +496,131 @@ class SymfonyRequirements extends RequirementCollection
 
         if (extension_loaded('suhosin')) {
             $this->addPhpIniRequirement(
-                 'suhosin.executor.include.whitelist',
-                     create_function('$cfgValue', 'return false !== stripos($cfgValue, "phar");'),
-                     false,
-                     'suhosin.executor.include.whitelist must be configured correctly in php.ini',
-                     'Add "<strong>phar</strong>" to <strong>suhosin.executor.include.whitelist</strong> in php.ini<a href="#phpini">*</a>.'
+                'suhosin.executor.include.whitelist',
+                create_function('$cfgValue', 'return false !== stripos($cfgValue, "phar");'),
+                false,
+                'suhosin.executor.include.whitelist must be configured correctly in php.ini',
+                'Add "<strong>phar</strong>" to <strong>suhosin.executor.include.whitelist</strong> in php.ini<a href="#phpini">*</a>.'
             );
         }
 
         if (extension_loaded('xdebug')) {
             $this->addPhpIniRequirement(
-                 'xdebug.show_exception_trace', false, true
+                'xdebug.show_exception_trace', false, true
             );
 
             $this->addPhpIniRequirement(
-                 'xdebug.scream', false, true
+                'xdebug.scream', false, true
             );
 
             $this->addPhpIniRecommendation(
-                 'xdebug.max_nesting_level',
-                     create_function('$cfgValue', 'return $cfgValue > 100;'),
-                     true,
-                     'xdebug.max_nesting_level should be above 100 in php.ini',
-                     'Set "<strong>xdebug.max_nesting_level</strong>" to e.g. "<strong>250</strong>" in php.ini<a href="#phpini">*</a> to stop Xdebug\'s infinite recursion protection erroneously throwing a fatal error in your project.'
+                'xdebug.max_nesting_level',
+                create_function('$cfgValue', 'return $cfgValue > 100;'),
+                true,
+                'xdebug.max_nesting_level should be above 100 in php.ini',
+                'Set "<strong>xdebug.max_nesting_level</strong>" to e.g. "<strong>250</strong>" in php.ini<a href="#phpini">*</a> to stop Xdebug\'s infinite recursion protection erroneously throwing a fatal error in your project.'
             );
         }
 
         $pcreVersion = defined('PCRE_VERSION') ? (float) PCRE_VERSION : null;
 
         $this->addRequirement(
-             null !== $pcreVersion,
-                 'PCRE extension must be available',
-                 'Install the <strong>PCRE</strong> extension (version 8.0+).'
+            null !== $pcreVersion,
+            'PCRE extension must be available',
+            'Install the <strong>PCRE</strong> extension (version 8.0+).'
         );
 
         /* optional recommendations follow */
 
         $this->addRecommendation(
-             file_get_contents(__FILE__) === file_get_contents(__DIR__.'/../vendor/sensio/distribution-bundle/Sensio/Bundle/DistributionBundle/Resources/skeleton/app/SymfonyRequirements.php'),
-                 'Requirements file should be up-to-date',
-                 'Your requirements file is outdated. Run composer install and re-check your configuration.'
+            file_get_contents(__FILE__) === file_get_contents(__DIR__.'/../vendor/sensio/distribution-bundle/Sensio/Bundle/DistributionBundle/Resources/skeleton/app/SymfonyRequirements.php'),
+            'Requirements file should be up-to-date',
+            'Your requirements file is outdated. Run composer install and re-check your configuration.'
         );
 
         $this->addRecommendation(
-             version_compare($installedPhpVersion, '5.3.4', '>='),
-                 'You should use at least PHP 5.3.4 due to PHP bug #52083 in earlier versions',
-                 'Your project might malfunction randomly due to PHP bug #52083 ("Notice: Trying to get property of non-object"). Install PHP 5.3.4 or newer.'
+            version_compare($installedPhpVersion, '5.3.4', '>='),
+            'You should use at least PHP 5.3.4 due to PHP bug #52083 in earlier versions',
+            'Your project might malfunction randomly due to PHP bug #52083 ("Notice: Trying to get property of non-object"). Install PHP 5.3.4 or newer.'
         );
 
         $this->addRecommendation(
-             version_compare($installedPhpVersion, '5.3.8', '>='),
-                 'When using annotations you should have at least PHP 5.3.8 due to PHP bug #55156',
-                 'Install PHP 5.3.8 or newer if your project uses annotations.'
+            version_compare($installedPhpVersion, '5.3.8', '>='),
+            'When using annotations you should have at least PHP 5.3.8 due to PHP bug #55156',
+            'Install PHP 5.3.8 or newer if your project uses annotations.'
         );
 
         $this->addRecommendation(
-             version_compare($installedPhpVersion, '5.4.0', '!='),
-                 'You should not use PHP 5.4.0 due to the PHP bug #61453',
-                 'Your project might not work properly due to the PHP bug #61453 ("Cannot dump definitions which have method calls"). Install PHP 5.4.1 or newer.'
+            version_compare($installedPhpVersion, '5.4.0', '!='),
+            'You should not use PHP 5.4.0 due to the PHP bug #61453',
+            'Your project might not work properly due to the PHP bug #61453 ("Cannot dump definitions which have method calls"). Install PHP 5.4.1 or newer.'
         );
 
         $this->addRecommendation(
-             version_compare($installedPhpVersion, '5.4.11', '>='),
-                 'When using the logout handler from the Symfony Security Component, you should have at least PHP 5.4.11 due to PHP bug #63379 (as a workaround, you can also set invalidate_session to false in the security logout handler configuration)',
-                 'Install PHP 5.4.11 or newer if your project uses the logout handler from the Symfony Security Component.'
+            version_compare($installedPhpVersion, '5.4.11', '>='),
+            'When using the logout handler from the Symfony Security Component, you should have at least PHP 5.4.11 due to PHP bug #63379 (as a workaround, you can also set invalidate_session to false in the security logout handler configuration)',
+            'Install PHP 5.4.11 or newer if your project uses the logout handler from the Symfony Security Component.'
         );
 
         $this->addRecommendation(
-             (version_compare($installedPhpVersion, '5.3.18', '>=') && version_compare($installedPhpVersion, '5.4.0', '<'))
-             ||
-             version_compare($installedPhpVersion, '5.4.8', '>='),
-                 'You should use PHP 5.3.18+ or PHP 5.4.8+ to always get nice error messages for fatal errors in the development environment due to PHP bug #61767/#60909',
-                 'Install PHP 5.3.18+ or PHP 5.4.8+ if you want nice error messages for all fatal errors in the development environment.'
+            (version_compare($installedPhpVersion, '5.3.18', '>=') && version_compare($installedPhpVersion, '5.4.0', '<'))
+            ||
+            version_compare($installedPhpVersion, '5.4.8', '>='),
+            'You should use PHP 5.3.18+ or PHP 5.4.8+ to always get nice error messages for fatal errors in the development environment due to PHP bug #61767/#60909',
+            'Install PHP 5.3.18+ or PHP 5.4.8+ if you want nice error messages for all fatal errors in the development environment.'
         );
 
         if (null !== $pcreVersion) {
             $this->addRecommendation(
-                 $pcreVersion >= 8.0,
-                     sprintf('PCRE extension should be at least version 8.0 (%s installed)', $pcreVersion),
-                     '<strong>PCRE 8.0+</strong> is preconfigured in PHP since 5.3.2 but you are using an outdated version of it. Symfony probably works anyway but it is recommended to upgrade your PCRE extension.'
+                $pcreVersion >= 8.0,
+                sprintf('PCRE extension should be at least version 8.0 (%s installed)', $pcreVersion),
+                '<strong>PCRE 8.0+</strong> is preconfigured in PHP since 5.3.2 but you are using an outdated version of it. Symfony probably works anyway but it is recommended to upgrade your PCRE extension.'
             );
         }
 
         $this->addRecommendation(
-             class_exists('DomDocument'),
-                 'PHP-XML module should be installed',
-                 'Install and enable the <strong>PHP-XML</strong> module.'
+            class_exists('DomDocument'),
+            'PHP-XML module should be installed',
+            'Install and enable the <strong>PHP-XML</strong> module.'
         );
 
         $this->addRecommendation(
-             function_exists('mb_strlen'),
-                 'mb_strlen() should be available',
-                 'Install and enable the <strong>mbstring</strong> extension.'
+            function_exists('mb_strlen'),
+            'mb_strlen() should be available',
+            'Install and enable the <strong>mbstring</strong> extension.'
         );
 
         $this->addRecommendation(
-             function_exists('iconv'),
-                 'iconv() should be available',
-                 'Install and enable the <strong>iconv</strong> extension.'
+            function_exists('iconv'),
+            'iconv() should be available',
+            'Install and enable the <strong>iconv</strong> extension.'
         );
 
         $this->addRecommendation(
-             function_exists('utf8_decode'),
-                 'utf8_decode() should be available',
-                 'Install and enable the <strong>XML</strong> extension.'
+            function_exists('utf8_decode'),
+            'utf8_decode() should be available',
+            'Install and enable the <strong>XML</strong> extension.'
         );
 
         if (!defined('PHP_WINDOWS_VERSION_BUILD')) {
             $this->addRecommendation(
-                 function_exists('posix_isatty'),
-                     'posix_isatty() should be available',
-                     'Install and enable the <strong>php_posix</strong> extension (used to colorize the CLI output).'
+                function_exists('posix_isatty'),
+                'posix_isatty() should be available',
+                'Install and enable the <strong>php_posix</strong> extension (used to colorize the CLI output).'
             );
         }
 
         $this->addRecommendation(
-             class_exists('Locale'),
-                 'intl extension should be available',
-                 'Install and enable the <strong>intl</strong> extension (used for validators).'
+            class_exists('Locale'),
+            'intl extension should be available',
+            'Install and enable the <strong>intl</strong> extension (used for validators).'
         );
 
         if (class_exists('Collator')) {
             $this->addRecommendation(
-                 null !== new Collator('fr_FR'),
-                     'intl extension should be correctly configured',
-                     'The intl extension does not behave properly. This problem is typical on PHP 5.3.X x64 WIN builds.'
+                null !== new Collator('fr_FR'),
+                'intl extension should be correctly configured',
+                'The intl extension does not behave properly. This problem is typical on PHP 5.3.X x64 WIN builds.'
             );
         }
 
@@ -637,9 +639,9 @@ class SymfonyRequirements extends RequirementCollection
             }
 
             $this->addRecommendation(
-                 version_compare($version, '4.0', '>='),
-                     'intl ICU version should be at least 4+',
-                     'Upgrade your <strong>intl</strong> extension with a newer ICU version (4+).'
+                version_compare($version, '4.0', '>='),
+                'intl ICU version should be at least 4+',
+                'Upgrade your <strong>intl</strong> extension with a newer ICU version (4+).'
             );
         }
 
@@ -658,18 +660,18 @@ class SymfonyRequirements extends RequirementCollection
         ;
 
         $this->addRecommendation(
-             $accelerator,
-                 'a PHP accelerator should be installed',
-                 'Install and enable a <strong>PHP accelerator</strong> like APC (highly recommended).'
+            $accelerator,
+            'a PHP accelerator should be installed',
+            'Install and enable a <strong>PHP accelerator</strong> like APC (highly recommended).'
         );
 
         if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
             $this->addPhpIniRecommendation(
-                 'realpath_cache_size',
-                     create_function('$cfgValue', 'return (int) $cfgValue > 1000;'),
-                     false,
-                     'realpath_cache_size should be above 1024 in php.ini',
-                     'Set "<strong>realpath_cache_size</strong>" to e.g. "<strong>1024</strong>" in php.ini<a href="#phpini">*</a> to improve performance on windows.'
+                'realpath_cache_size',
+                create_function('$cfgValue', 'return (int) $cfgValue > 1000;'),
+                false,
+                'realpath_cache_size should be above 1024 in php.ini',
+                'Set "<strong>realpath_cache_size</strong>" to e.g. "<strong>1024</strong>" in php.ini<a href="#phpini">*</a> to improve performance on windows.'
             );
         }
 
@@ -682,17 +684,17 @@ class SymfonyRequirements extends RequirementCollection
         $this->addPhpIniRecommendation('session.auto_start', false);
 
         $this->addRecommendation(
-             class_exists('PDO'),
-                 'PDO should be installed',
-                 'Install <strong>PDO</strong> (mandatory for Doctrine).'
+            class_exists('PDO'),
+            'PDO should be installed',
+            'Install <strong>PDO</strong> (mandatory for Doctrine).'
         );
 
         if (class_exists('PDO')) {
             $drivers = PDO::getAvailableDrivers();
             $this->addRecommendation(
-                 count($drivers) > 0,
-                     sprintf('PDO should have some drivers installed (currently available: %s)', count($drivers) ? implode(', ', $drivers) : 'none'),
-                     'Install <strong>PDO drivers</strong> (mandatory for Doctrine).'
+                count($drivers) > 0,
+                sprintf('PDO should have some drivers installed (currently available: %s)', count($drivers) ? implode(', ', $drivers) : 'none'),
+                'Install <strong>PDO drivers</strong> (mandatory for Doctrine).'
             );
         }
     }
