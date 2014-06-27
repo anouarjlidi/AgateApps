@@ -1,37 +1,47 @@
 # Bootstrap
-app/bootstrap*
-
-# Symfony directories
-vendor/*
-app/logs/*
-app/cache/*
-web/uploads/*
-web/bundles/*
-web/components/*
-web/uploads/*
+/app/bootstrap*
 
 # Esteren Maps
 /web/maps_tiles/*
+!/web/maps_tiles/.gitkeep
+!/web/maps_tiles/empty.jpg
 
 # Eclipse
-.settings/
-.settings/*
-.buildpath
-.project
-
-# Configuration files
-app/config/parameters.yml
+/.settings/
+/.settings/*
+/.buildpath
+/.project
 
 # Backups
-*.php~
+/*.php~
 
 # Fichiers dev netbeans
 /nbproject
 
-# Ignore temporaire
-app/Resources/Translations/*
-web/css/*
-web/js/*
+# Ignore des assets et des traductions
+/app/Resources/Translations/*
+/web/css/*
+/web/js/*
 
-# Future implementation structure de Symfony2
-/var/*
+# Symfony directories
+/app/config/parameters.yml
+/app/cache/*
+/app/logs/*
+
+/web/uploads/*
+/web/components/*
+/web/uploads/*
+/web/bundles/
+
+/build/
+/vendor/
+
+/var/bootstrap.php.cache
+/var/cache/*
+/var/logs/*
+!var/cache/.gitkeep
+!var/logs/.gitkeep
+
+/bin/*
+!bin/console
+!bin/symfony_requirements
