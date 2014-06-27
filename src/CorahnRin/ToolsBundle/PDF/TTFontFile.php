@@ -37,39 +37,40 @@ namespace CorahnRin\ToolsBundle\PDF;
 
 class TTFontFile {
 
-	var $maxUni;
-	var $_pos;
-	var $numTables;
-	var $searchRange;
-	var $entrySelector;
-	var $rangeShift;
-	var $tables;
-	var $otables;
-	var $filename;
-	var $fh;
-	var $hmetrics;
-	var $glyphPos;
-	var $charToGlyph;
-	var $ascent;
-	var $descent;
-	var $name;
-	var $familyName;
-	var $styleName;
-	var $fullName;
-	var $uniqueFontID;
-	var $unitsPerEm;
-	var $bbox;
-	var $capHeight;
-	var $stemV;
-	var $italicAngle;
-	var $flags;
-	var $underlinePosition;
-	var $underlineThickness;
-	var $charWidths;
-	var $defaultWidth;
-	var $maxStrLenRead;
+	public $maxUni;
+	public $_pos;
+	public $numTables;
+	public $searchRange;
+	public $entrySelector;
+	public $rangeShift;
+	public $tables;
+	public $otables;
+	public $filename;
+	public $fh;
+	public $hmetrics;
+	public $glyphPos;
+	public $charToGlyph;
+	public $ascent;
+	public $descent;
+	public $name;
+	public $familyName;
+	public $styleName;
+	public $fullName;
+	public $uniqueFontID;
+	public $unitsPerEm;
+	public $bbox;
+	public $capHeight;
+	public $stemV;
+	public $italicAngle;
+	public $flags;
+	public $underlinePosition;
+	public $underlineThickness;
+	public $charWidths;
+	public $defaultWidth;
+	public $maxStrLenRead;
+    public $codeToGlyph;
 
-	function TTFontFile() {
+    function TTFontFile() {
 		$this->maxStrLenRead = 200000;	// Maximum size of glyf table to read in as string (otherwise reads each glyph from file)
 	}
 
@@ -1150,4 +1151,3 @@ class TTFontFile {
 }
 
 
-?>
