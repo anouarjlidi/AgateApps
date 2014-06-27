@@ -5,6 +5,7 @@ php app/console cache:clear --env=dev
 php app/console cache:clear --env=dev_fast
 
 echo " > Mise à jour des dépendances"
+php composer.phar selfupdate
 php composer.phar update -v
 bower update
 
