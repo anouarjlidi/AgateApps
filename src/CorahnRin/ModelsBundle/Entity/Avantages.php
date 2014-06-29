@@ -82,7 +82,7 @@ class Avantages {
     /**
      * @var integer
      *
-     * @ORM\Column(type="smallint", options={"default"="0"})
+     * @ORM\Column(type="smallint", options={"default"="0"}, nullable=true)
      */
     protected $group = 0;
 
