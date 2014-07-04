@@ -2,21 +2,20 @@
 
 namespace EsterenMaps\MapsBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use JMS\Serializer\Annotation\ExclusionPolicy as ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose as Expose;
 
 /**
- * RoutesTypes
+ * ZonesTypes
  *
- * @ORM\Table(name="routes_types")
+ * @ORM\Table(name="zones_types")
  * @Gedmo\SoftDeleteable(fieldName="deleted")
- * @ORM\Entity(repositoryClass="EsterenMaps\MapsBundle\Repository\RoutesTypesRepository")
+ * @ORM\Entity(repositoryClass="EsterenMaps\MapsBundle\Repository\ZonesTypesRepository")
  * @ExclusionPolicy("all")
  */
-class RoutesTypes {
+class ZonesTypes {
 
     /**
      * @var integer
@@ -54,19 +53,19 @@ class RoutesTypes {
 
     /**
      * @var Resources[]
-     * @ORM\ManyToMany(targetEntity="Resources", mappedBy="routesTypes")
+     * @ORM\ManyToMany(targetEntity="Resources", mappedBy="zonesTypes")
      */
     protected $resources;
 
     /**
-     * @var Routes[]
-     * @ORM\OneToMany(targetEntity="Routes", mappedBy="routeType")
+     * @var Zones[]
+     * @ORM\OneToMany(targetEntity="Zones", mappedBy="zoneType")
      */
-    protected $routes;
+    protected $zones;
 
     /**
-     * @var EventsRoutesTypes[]
-     * @ORM\OneToMany(targetEntity="EventsRoutesTypes", mappedBy="routeType")
+     * @var EventsZonesTypes[]
+     * @ORM\OneToMany(targetEntity="EventsZonesTypes", mappedBy="zoneType")
      */
     protected $events;
 
@@ -82,7 +81,7 @@ class RoutesTypes {
      */
     public function __construct() {
         $this->resources = new ArrayCollection();
-        $this->routes = new ArrayCollection();
+        $this->zones = new ArrayCollection();
         $this->events = new ArrayCollection();
     }
 
@@ -99,7 +98,7 @@ class RoutesTypes {
      * Set name
      *
      * @param string $name
-     * @return RoutesTypes
+     * @return ZonesTypes
      */
     public function setName($name) {
         $this->name = $name;
@@ -120,7 +119,7 @@ class RoutesTypes {
      * Set created
      *
      * @param \DateTime $created
-     * @return RoutesTypes
+     * @return ZonesTypes
      */
     public function setCreated($created) {
         $this->created = $created;
@@ -141,7 +140,7 @@ class RoutesTypes {
      * Set updated
      *
      * @param \DateTime $updated
-     * @return RoutesTypes
+     * @return ZonesTypes
      */
     public function setUpdated($updated) {
         $this->updated = $updated;
@@ -162,7 +161,7 @@ class RoutesTypes {
      * Add resources
      *
      * @param Resources $resources
-     * @return RoutesTypes
+     * @return ZonesTypes
      */
     public function addResource(Resources $resources) {
         $this->resources[] = $resources;
@@ -189,42 +188,42 @@ class RoutesTypes {
     }
 
     /**
-     * Add routes
+     * Add zones
      *
-     * @param Routes $routes
-     * @return RoutesTypes
+     * @param Zones $zones
+     * @return ZonesTypes
      */
-    public function addRoute(Routes $routes) {
-        $this->routes[] = $routes;
+    public function addZone(Zones $zones) {
+        $this->zones[] = $zones;
 
         return $this;
     }
 
     /**
-     * Remove routes
+     * Remove zones
      *
-     * @param Routes $routes
+     * @param Zones $zones
      */
-    public function removeRoute(Routes $routes) {
-        $this->routes->removeElement($routes);
+    public function removeZone(Zones $zones) {
+        $this->zones->removeElement($zones);
     }
 
     /**
-     * Get routes
+     * Get zones
      *
      * @return ArrayCollection
      */
-    public function getRoutes() {
-        return $this->routes;
+    public function getZones() {
+        return $this->zones;
     }
 
     /**
      * Add events
      *
-     * @param EventsRoutesTypes $events
-     * @return RoutesTypes
+     * @param EventsZonesTypes $events
+     * @return ZonesTypes
      */
-    public function addEvent(EventsRoutesTypes $events) {
+    public function addEvent(EventsZonesTypes $events) {
         $this->events[] = $events;
 
         return $this;
@@ -233,9 +232,9 @@ class RoutesTypes {
     /**
      * Remove events
      *
-     * @param EventsRoutesTypes $events
+     * @param EventsZonesTypes $events
      */
-    public function removeEvent(EventsRoutesTypes $events) {
+    public function removeEvent(EventsZonesTypes $events) {
         $this->events->removeElement($events);
     }
 
@@ -252,7 +251,7 @@ class RoutesTypes {
      * Set deleted
      *
      * @param \DateTime $deleted
-     * @return RoutesTypes
+     * @return ZonesTypes
      */
     public function setDeleted($deleted) {
         $this->deleted = $deleted;

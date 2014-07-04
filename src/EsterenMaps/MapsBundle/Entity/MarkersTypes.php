@@ -1,10 +1,10 @@
 <?php
 
 namespace EsterenMaps\MapsBundle\Entity;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection as DoctrineCollection;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use JMS\Serializer\Annotation\ExclusionPolicy as ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose as Expose;
 
@@ -16,8 +16,8 @@ use JMS\Serializer\Annotation\Expose as Expose;
  * @ORM\Entity(repositoryClass="EsterenMaps\MapsBundle\Repository\MarkersTypesRepository")
  * @ExclusionPolicy("all")
  */
-class MarkersTypes
-{
+class MarkersTypes {
+
     /**
      * @var integer
      *
@@ -39,7 +39,7 @@ class MarkersTypes
     /**
      * @var \Datetime
      *
-	 * @Gedmo\Timestampable(on="create")
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $created;
@@ -47,24 +47,24 @@ class MarkersTypes
     /**
      * @var \Datetime
      *
-	 * @Gedmo\Timestampable(on="update")
+     * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $updated;
 
     /**
-     * @var DoctrineCollection
+     * @var EventsMarkersTypes[]
      *
      * @ORM\OneToMany(targetEntity="EventsMarkersTypes", mappedBy="markerType")
      */
     protected $events;
 
-	/**
-     * @var DoctrineCollection
-	 *
-	 * @ORM\OneToMany(targetEntity="Markers", mappedBy="markerType")
-	 */
-	protected $markers;
+    /**
+     * @var Markers[]
+     *
+     * @ORM\OneToMany(targetEntity="Markers", mappedBy="markerType")
+     */
+    protected $markers;
 
     /**
      * @var boolean
@@ -80,10 +80,9 @@ class MarkersTypes
     /**
      * Constructor
      */
-    public function __construct()
-    {
-        $this->events = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->markers = new \Doctrine\Common\Collections\ArrayCollection();
+    public function __construct() {
+        $this->events = new ArrayCollection();
+        $this->markers = new ArrayCollection();
     }
 
     /**
@@ -91,8 +90,7 @@ class MarkersTypes
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -102,8 +100,7 @@ class MarkersTypes
      * @param string $name
      * @return MarkersTypes
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -114,8 +111,7 @@ class MarkersTypes
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -125,8 +121,7 @@ class MarkersTypes
      * @param \DateTime $created
      * @return MarkersTypes
      */
-    public function setCreated($created)
-    {
+    public function setCreated($created) {
         $this->created = $created;
 
         return $this;
@@ -137,8 +132,7 @@ class MarkersTypes
      *
      * @return \DateTime
      */
-    public function getCreated()
-    {
+    public function getCreated() {
         return $this->created;
     }
 
@@ -148,8 +142,7 @@ class MarkersTypes
      * @param \DateTime $updated
      * @return MarkersTypes
      */
-    public function setUpdated($updated)
-    {
+    public function setUpdated($updated) {
         $this->updated = $updated;
 
         return $this;
@@ -160,19 +153,17 @@ class MarkersTypes
      *
      * @return \DateTime
      */
-    public function getUpdated()
-    {
+    public function getUpdated() {
         return $this->updated;
     }
 
     /**
      * Add events
      *
-     * @param \EsterenMaps\MapsBundle\Entity\EventsMarkersTypes $events
+     * @param EventsMarkersTypes $events
      * @return MarkersTypes
      */
-    public function addEvent(\EsterenMaps\MapsBundle\Entity\EventsMarkersTypes $events)
-    {
+    public function addEvent(EventsMarkersTypes $events) {
         $this->events[] = $events;
 
         return $this;
@@ -181,31 +172,28 @@ class MarkersTypes
     /**
      * Remove events
      *
-     * @param \EsterenMaps\MapsBundle\Entity\EventsMarkersTypes $events
+     * @param EventsMarkersTypes $events
      */
-    public function removeEvent(\EsterenMaps\MapsBundle\Entity\EventsMarkersTypes $events)
-    {
+    public function removeEvent(EventsMarkersTypes $events) {
         $this->events->removeElement($events);
     }
 
     /**
      * Get events
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return EventsMarkersTypes[]
      */
-    public function getEvents()
-    {
+    public function getEvents() {
         return $this->events;
     }
 
     /**
      * Add markers
      *
-     * @param \EsterenMaps\MapsBundle\Entity\Markers $markers
+     * @param Markers $markers
      * @return MarkersTypes
      */
-    public function addMarker(\EsterenMaps\MapsBundle\Entity\Markers $markers)
-    {
+    public function addMarker(Markers $markers) {
         $this->markers[] = $markers;
 
         return $this;
@@ -214,20 +202,39 @@ class MarkersTypes
     /**
      * Remove markers
      *
-     * @param \EsterenMaps\MapsBundle\Entity\Markers $markers
+     * @param Markers $markers
      */
-    public function removeMarker(\EsterenMaps\MapsBundle\Entity\Markers $markers)
-    {
+    public function removeMarker(Markers $markers) {
         $this->markers->removeElement($markers);
     }
 
     /**
      * Get markers
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Markers[]
      */
-    public function getMarkers()
-    {
+    public function getMarkers() {
         return $this->markers;
+    }
+
+    /**
+     * Set deleted
+     *
+     * @param \DateTime $deleted
+     * @return MarkersTypes
+     */
+    public function setDeleted($deleted) {
+        $this->deleted = $deleted;
+
+        return $this;
+    }
+
+    /**
+     * Get deleted
+     *
+     * @return \DateTime
+     */
+    public function getDeleted() {
+        return $this->deleted;
     }
 }

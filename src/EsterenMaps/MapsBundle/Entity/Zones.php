@@ -2,11 +2,11 @@
 
 namespace EsterenMaps\MapsBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use JMS\Serializer\Annotation\ExclusionPolicy as ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose as Expose;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection as DoctrineCollection;
 
 /**
  * Zones
@@ -16,8 +16,8 @@ use Doctrine\Common\Collections\ArrayCollection as DoctrineCollection;
  * @ORM\Entity(repositoryClass="EsterenMaps\MapsBundle\Repository\ZonesRepository")
  * @ExclusionPolicy("all")
  */
-class Zones
-{
+class Zones {
+
     /**
      * @var integer
      *
@@ -47,7 +47,7 @@ class Zones
     /**
      * @var \Datetime
      *
-	 * @Gedmo\Timestampable(on="create")
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $created;
@@ -55,7 +55,7 @@ class Zones
     /**
      * @var \Datetime
      *
-	 * @Gedmo\Timestampable(on="update")
+     * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $updated;
@@ -76,11 +76,18 @@ class Zones
     protected $faction;
 
     /**
-     * @var DoctrineCollection
+     * @var ZonesTypes
      *
+     * @ORM\ManyToOne(targetEntity="ZonesTypes", inversedBy="zones")
+     * @Expose
+     */
+    protected $zoneType;
+
+    /**
+     * @var EventsZones[]
      * @ORM\OneToMany(targetEntity="EventsZones", mappedBy="zone")
      */
-	protected $events;
+    protected $events;
 
     /**
      * @var boolean
@@ -92,9 +99,8 @@ class Zones
     /**
      * Constructor
      */
-    public function __construct()
-    {
-        $this->events = new \Doctrine\Common\Collections\ArrayCollection();
+    public function __construct() {
+        $this->events = new ArrayCollection();
     }
 
     /**
@@ -102,19 +108,17 @@ class Zones
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
     /**
      * Set id
      *
-     * @param integer $name
+     * @param integer $id
      * @return Zones
      */
-    public function setId($id)
-    {
+    public function setId($id) {
         $this->id = $id;
 
         return $this;
@@ -126,8 +130,7 @@ class Zones
      * @param string $name
      * @return Zones
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -138,8 +141,7 @@ class Zones
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -149,8 +151,7 @@ class Zones
      * @param string $coordinates
      * @return Zones
      */
-    public function setCoordinates($coordinates)
-    {
+    public function setCoordinates($coordinates) {
         $this->coordinates = $coordinates;
 
         return $this;
@@ -161,8 +162,7 @@ class Zones
      *
      * @return string
      */
-    public function getCoordinates()
-    {
+    public function getCoordinates() {
         return $this->coordinates;
     }
 
@@ -172,8 +172,7 @@ class Zones
      * @param \DateTime $created
      * @return Zones
      */
-    public function setCreated($created)
-    {
+    public function setCreated($created) {
         $this->created = $created;
 
         return $this;
@@ -184,8 +183,7 @@ class Zones
      *
      * @return \DateTime
      */
-    public function getCreated()
-    {
+    public function getCreated() {
         return $this->created;
     }
 
@@ -195,8 +193,7 @@ class Zones
      * @param \DateTime $updated
      * @return Zones
      */
-    public function setUpdated($updated)
-    {
+    public function setUpdated($updated) {
         $this->updated = $updated;
 
         return $this;
@@ -207,19 +204,17 @@ class Zones
      *
      * @return \DateTime
      */
-    public function getUpdated()
-    {
+    public function getUpdated() {
         return $this->updated;
     }
 
     /**
      * Set map
      *
-     * @param \EsterenMaps\MapsBundle\Entity\Maps $map
+     * @param Maps $map
      * @return Zones
      */
-    public function setMap(\EsterenMaps\MapsBundle\Entity\Maps $map = null)
-    {
+    public function setMap(Maps $map = null) {
         $this->map = $map;
 
         return $this;
@@ -228,21 +223,19 @@ class Zones
     /**
      * Get map
      *
-     * @return \EsterenMaps\MapsBundle\Entity\Maps
+     * @return Maps
      */
-    public function getMap()
-    {
+    public function getMap() {
         return $this->map;
     }
 
     /**
      * Set faction
      *
-     * @param \EsterenMaps\MapsBundle\Entity\Factions $faction
+     * @param Factions $faction
      * @return Zones
      */
-    public function setFaction(\EsterenMaps\MapsBundle\Entity\Factions $faction = null)
-    {
+    public function setFaction(Factions $faction = null) {
         $this->faction = $faction;
 
         return $this;
@@ -251,21 +244,19 @@ class Zones
     /**
      * Get faction
      *
-     * @return \EsterenMaps\MapsBundle\Entity\Factions
+     * @return Factions
      */
-    public function getFaction()
-    {
+    public function getFaction() {
         return $this->faction;
     }
 
     /**
      * Add events
      *
-     * @param \EsterenMaps\MapsBundle\Entity\EventsZones $events
+     * @param EventsZones $events
      * @return Zones
      */
-    public function addEvent(\EsterenMaps\MapsBundle\Entity\EventsZones $events)
-    {
+    public function addEvent(EventsZones $events) {
         $this->events[] = $events;
 
         return $this;
@@ -274,20 +265,60 @@ class Zones
     /**
      * Remove events
      *
-     * @param \EsterenMaps\MapsBundle\Entity\EventsZones $events
+     * @param EventsZones $events
      */
-    public function removeEvent(\EsterenMaps\MapsBundle\Entity\EventsZones $events)
-    {
+    public function removeEvent(EventsZones $events) {
         $this->events->removeElement($events);
     }
 
     /**
      * Get events
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return ArrayCollection
      */
-    public function getEvents()
-    {
+    public function getEvents() {
         return $this->events;
+    }
+
+    /**
+     * Set zoneType
+     *
+     * @param ZonesTypes $zoneType
+     * @return Zones
+     */
+    public function setZoneType(ZonesTypes $zoneType = null) {
+        $this->zoneType = $zoneType;
+
+        return $this;
+    }
+
+    /**
+     * Get zoneType
+     *
+     * @return ZonesTypes
+     */
+    public function getZoneType() {
+        return $this->zoneType;
+    }
+
+    /**
+     * Set deleted
+     *
+     * @param \DateTime $deleted
+     * @return Zones
+     */
+    public function setDeleted($deleted) {
+        $this->deleted = $deleted;
+
+        return $this;
+    }
+
+    /**
+     * Get deleted
+     *
+     * @return \DateTime
+     */
+    public function getDeleted() {
+        return $this->deleted;
     }
 }

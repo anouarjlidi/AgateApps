@@ -1,9 +1,10 @@
 <?php
 
 namespace EsterenMaps\MapsBundle\Entity;
-use Gedmo\Mapping\Annotation as Gedmo;
+
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection as DoctrineCollection;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Events
@@ -12,11 +13,11 @@ use Doctrine\Common\Collections\ArrayCollection as DoctrineCollection;
  * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity(repositoryClass="EsterenMaps\MapsBundle\Repository\EventsRepository")
  */
-class Events
-{
+class Events {
+
     /**
      * @var integer
-	 *
+     *
      * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -31,68 +32,74 @@ class Events
 
     /**
      * @var \Datetime
-	 * @Gedmo\Timestampable(on="create")
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $created;
 
     /**
      * @var \Datetime
-	 * @Gedmo\Timestampable(on="update")
+     * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $updated;
 
     /**
-     * @var DoctrineCollection
+     * @var Foes[]
      * @ORM\ManyToMany(targetEntity="Foes", mappedBy="events")
      */
     protected $foes;
 
     /**
-     * @var DoctrineCollection
+     * @var Npcs[]
      * @ORM\ManyToMany(targetEntity="Npcs", mappedBy="events")
      */
     protected $npcs;
 
     /**
-     * @var DoctrineCollection
+     * @var Weather[]
      * @ORM\ManyToMany(targetEntity="Weather", mappedBy="events")
      */
     protected $weather;
 
     /**
-     * @var DoctrineCollection
+     * @var EventsMarkers[]
      * @ORM\OneToMany(targetEntity="EventsMarkers", mappedBy="event")
      */
     protected $markers;
 
     /**
-     * @var DoctrineCollection
+     * @var EventsMarkersTypes
      * @ORM\OneToMany(targetEntity="EventsMarkersTypes", mappedBy="event")
      */
     protected $markersTypes;
 
     /**
-     * @var DoctrineCollection
+     * @var EventsResources[]
      * @ORM\OneToMany(targetEntity="EventsResources", mappedBy="event")
      */
     protected $resources;
 
     /**
-     * @var DoctrineCollection
+     * @var EventsRoutes[]
      * @ORM\OneToMany(targetEntity="EventsRoutes", mappedBy="event")
      */
     protected $routes;
 
     /**
-     * @var DoctrineCollection
+     * @var EventsRoutesTypes[]
      * @ORM\OneToMany(targetEntity="EventsRoutesTypes", mappedBy="event")
      */
     protected $routesTypes;
 
     /**
-     * @var DoctrineCollection
+     * @var EventsZonesTypes[]
+     * @ORM\OneToMany(targetEntity="EventsZonesTypes", mappedBy="event")
+     */
+    protected $zonesTypes;
+
+    /**
+     * @var EventsZones[]
      * @ORM\OneToMany(targetEntity="EventsZones", mappedBy="event")
      */
     protected $zones;
@@ -107,17 +114,17 @@ class Events
     /**
      * Constructor
      */
-    public function __construct()
-    {
-        $this->foes = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->npcs = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->weather = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->markers = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->markersTypes = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->resources = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->routes = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->routesTypes = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->zones = new \Doctrine\Common\Collections\ArrayCollection();
+    public function __construct() {
+        $this->foes = new ArrayCollection();
+        $this->npcs = new ArrayCollection();
+        $this->weather = new ArrayCollection();
+        $this->markers = new ArrayCollection();
+        $this->markersTypes = new ArrayCollection();
+        $this->resources = new ArrayCollection();
+        $this->routes = new ArrayCollection();
+        $this->routesTypes = new ArrayCollection();
+        $this->zones = new ArrayCollection();
+        $this->zonesTypes = new ArrayCollection();
     }
 
     /**
@@ -125,8 +132,7 @@ class Events
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -136,8 +142,7 @@ class Events
      * @param string $name
      * @return Events
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -148,8 +153,7 @@ class Events
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -159,8 +163,7 @@ class Events
      * @param \DateTime $created
      * @return Events
      */
-    public function setCreated($created)
-    {
+    public function setCreated($created) {
         $this->created = $created;
 
         return $this;
@@ -171,8 +174,7 @@ class Events
      *
      * @return \DateTime
      */
-    public function getCreated()
-    {
+    public function getCreated() {
         return $this->created;
     }
 
@@ -182,8 +184,7 @@ class Events
      * @param \DateTime $updated
      * @return Events
      */
-    public function setUpdated($updated)
-    {
+    public function setUpdated($updated) {
         $this->updated = $updated;
 
         return $this;
@@ -194,19 +195,17 @@ class Events
      *
      * @return \DateTime
      */
-    public function getUpdated()
-    {
+    public function getUpdated() {
         return $this->updated;
     }
 
     /**
      * Add foes
      *
-     * @param \EsterenMaps\MapsBundle\Entity\Foes $foes
+     * @param Foes $foes
      * @return Events
      */
-    public function addFo(\EsterenMaps\MapsBundle\Entity\Foes $foes)
-    {
+    public function addFoe(Foes $foes) {
         $this->foes[] = $foes;
 
         return $this;
@@ -215,31 +214,28 @@ class Events
     /**
      * Remove foes
      *
-     * @param \EsterenMaps\MapsBundle\Entity\Foes $foes
+     * @param Foes $foes
      */
-    public function removeFo(\EsterenMaps\MapsBundle\Entity\Foes $foes)
-    {
+    public function removeFoe(Foes $foes) {
         $this->foes->removeElement($foes);
     }
 
     /**
      * Get foes
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return ArrayCollection
      */
-    public function getFoes()
-    {
+    public function getFoes() {
         return $this->foes;
     }
 
     /**
      * Add npcs
      *
-     * @param \EsterenMaps\MapsBundle\Entity\Npcs $npcs
+     * @param Npcs $npcs
      * @return Events
      */
-    public function addNpc(\EsterenMaps\MapsBundle\Entity\Npcs $npcs)
-    {
+    public function addNpc(Npcs $npcs) {
         $this->npcs[] = $npcs;
 
         return $this;
@@ -248,31 +244,28 @@ class Events
     /**
      * Remove npcs
      *
-     * @param \EsterenMaps\MapsBundle\Entity\Npcs $npcs
+     * @param Npcs $npcs
      */
-    public function removeNpc(\EsterenMaps\MapsBundle\Entity\Npcs $npcs)
-    {
+    public function removeNpc(Npcs $npcs) {
         $this->npcs->removeElement($npcs);
     }
 
     /**
      * Get npcs
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return ArrayCollection
      */
-    public function getNpcs()
-    {
+    public function getNpcs() {
         return $this->npcs;
     }
 
     /**
      * Add weather
      *
-     * @param \EsterenMaps\MapsBundle\Entity\Weather $weather
+     * @param Weather $weather
      * @return Events
      */
-    public function addWeather(\EsterenMaps\MapsBundle\Entity\Weather $weather)
-    {
+    public function addWeather(Weather $weather) {
         $this->weather[] = $weather;
 
         return $this;
@@ -281,31 +274,28 @@ class Events
     /**
      * Remove weather
      *
-     * @param \EsterenMaps\MapsBundle\Entity\Weather $weather
+     * @param Weather $weather
      */
-    public function removeWeather(\EsterenMaps\MapsBundle\Entity\Weather $weather)
-    {
+    public function removeWeather(Weather $weather) {
         $this->weather->removeElement($weather);
     }
 
     /**
      * Get weather
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return ArrayCollection
      */
-    public function getWeather()
-    {
+    public function getWeather() {
         return $this->weather;
     }
 
     /**
      * Add markers
      *
-     * @param \EsterenMaps\MapsBundle\Entity\EventsMarkers $markers
+     * @param EventsMarkers $markers
      * @return Events
      */
-    public function addMarker(\EsterenMaps\MapsBundle\Entity\EventsMarkers $markers)
-    {
+    public function addMarker(EventsMarkers $markers) {
         $this->markers[] = $markers;
 
         return $this;
@@ -314,31 +304,28 @@ class Events
     /**
      * Remove markers
      *
-     * @param \EsterenMaps\MapsBundle\Entity\EventsMarkers $markers
+     * @param EventsMarkers $markers
      */
-    public function removeMarker(\EsterenMaps\MapsBundle\Entity\EventsMarkers $markers)
-    {
+    public function removeMarker(EventsMarkers $markers) {
         $this->markers->removeElement($markers);
     }
 
     /**
      * Get markers
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return ArrayCollection
      */
-    public function getMarkers()
-    {
+    public function getMarkers() {
         return $this->markers;
     }
 
     /**
      * Add markersTypes
      *
-     * @param \EsterenMaps\MapsBundle\Entity\EventsMarkersTypes $markersTypes
+     * @param EventsMarkersTypes $markersTypes
      * @return Events
      */
-    public function addMarkersType(\EsterenMaps\MapsBundle\Entity\EventsMarkersTypes $markersTypes)
-    {
+    public function addMarkerType(EventsMarkersTypes $markersTypes) {
         $this->markersTypes[] = $markersTypes;
 
         return $this;
@@ -347,31 +334,28 @@ class Events
     /**
      * Remove markersTypes
      *
-     * @param \EsterenMaps\MapsBundle\Entity\EventsMarkersTypes $markersTypes
+     * @param EventsMarkersTypes $markersTypes
      */
-    public function removeMarkersType(\EsterenMaps\MapsBundle\Entity\EventsMarkersTypes $markersTypes)
-    {
+    public function removeMarkerType(EventsMarkersTypes $markersTypes) {
         $this->markersTypes->removeElement($markersTypes);
     }
 
     /**
      * Get markersTypes
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return ArrayCollection
      */
-    public function getMarkersTypes()
-    {
+    public function getMarkersTypes() {
         return $this->markersTypes;
     }
 
     /**
      * Add resources
      *
-     * @param \EsterenMaps\MapsBundle\Entity\EventsResources $resources
+     * @param EventsResources $resources
      * @return Events
      */
-    public function addResource(\EsterenMaps\MapsBundle\Entity\EventsResources $resources)
-    {
+    public function addResource(EventsResources $resources) {
         $this->resources[] = $resources;
 
         return $this;
@@ -380,31 +364,28 @@ class Events
     /**
      * Remove resources
      *
-     * @param \EsterenMaps\MapsBundle\Entity\EventsResources $resources
+     * @param EventsResources $resources
      */
-    public function removeResource(\EsterenMaps\MapsBundle\Entity\EventsResources $resources)
-    {
+    public function removeResource(EventsResources $resources) {
         $this->resources->removeElement($resources);
     }
 
     /**
      * Get resources
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return ArrayCollection
      */
-    public function getResources()
-    {
+    public function getResources() {
         return $this->resources;
     }
 
     /**
      * Add routes
      *
-     * @param \EsterenMaps\MapsBundle\Entity\EventsRoutes $routes
+     * @param EventsRoutes $routes
      * @return Events
      */
-    public function addRoute(\EsterenMaps\MapsBundle\Entity\EventsRoutes $routes)
-    {
+    public function addRoute(EventsRoutes $routes) {
         $this->routes[] = $routes;
 
         return $this;
@@ -413,31 +394,28 @@ class Events
     /**
      * Remove routes
      *
-     * @param \EsterenMaps\MapsBundle\Entity\EventsRoutes $routes
+     * @param EventsRoutes $routes
      */
-    public function removeRoute(\EsterenMaps\MapsBundle\Entity\EventsRoutes $routes)
-    {
+    public function removeRoute(EventsRoutes $routes) {
         $this->routes->removeElement($routes);
     }
 
     /**
      * Get routes
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return ArrayCollection
      */
-    public function getRoutes()
-    {
+    public function getRoutes() {
         return $this->routes;
     }
 
     /**
      * Add routesTypes
      *
-     * @param \EsterenMaps\MapsBundle\Entity\EventsRoutesTypes $routesTypes
+     * @param EventsRoutesTypes $routesTypes
      * @return Events
      */
-    public function addRoutesType(\EsterenMaps\MapsBundle\Entity\EventsRoutesTypes $routesTypes)
-    {
+    public function addRouteType(EventsRoutesTypes $routesTypes) {
         $this->routesTypes[] = $routesTypes;
 
         return $this;
@@ -446,31 +424,58 @@ class Events
     /**
      * Remove routesTypes
      *
-     * @param \EsterenMaps\MapsBundle\Entity\EventsRoutesTypes $routesTypes
+     * @param EventsRoutesTypes $routesTypes
      */
-    public function removeRoutesType(\EsterenMaps\MapsBundle\Entity\EventsRoutesTypes $routesTypes)
-    {
+    public function removeRouteType(EventsRoutesTypes $routesTypes) {
         $this->routesTypes->removeElement($routesTypes);
     }
 
     /**
      * Get routesTypes
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return ArrayCollection
      */
-    public function getRoutesTypes()
-    {
+    public function getRoutesTypes() {
         return $this->routesTypes;
+    }
+
+    /**
+     * Add zonesTypes
+     *
+     * @param EventsZonesTypes $zonesTypes
+     * @return Events
+     */
+    public function addZoneType(EventsZonesTypes $zonesTypes) {
+        $this->zonesTypes[] = $zonesTypes;
+
+        return $this;
+    }
+
+    /**
+     * Remove zonesTypes
+     *
+     * @param EventsZonesTypes $zonesTypes
+     */
+    public function removeZoneType(EventsZonesTypes $zonesTypes) {
+        $this->zonesTypes->removeElement($zonesTypes);
+    }
+
+    /**
+     * Get zonesTypes
+     *
+     * @return ArrayCollection
+     */
+    public function getZonesTypes() {
+        return $this->zonesTypes;
     }
 
     /**
      * Add zones
      *
-     * @param \EsterenMaps\MapsBundle\Entity\EventsZones $zones
+     * @param EventsZones $zones
      * @return Events
      */
-    public function addZone(\EsterenMaps\MapsBundle\Entity\EventsZones $zones)
-    {
+    public function addZone(EventsZones $zones) {
         $this->zones[] = $zones;
 
         return $this;
@@ -479,21 +484,39 @@ class Events
     /**
      * Remove zones
      *
-     * @param \EsterenMaps\MapsBundle\Entity\EventsZones $zones
+     * @param EventsZones $zones
      */
-    public function removeZone(\EsterenMaps\MapsBundle\Entity\EventsZones $zones)
-    {
+    public function removeZone(EventsZones $zones) {
         $this->zones->removeElement($zones);
     }
 
     /**
      * Get zones
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return ArrayCollection
      */
-    public function getZones()
-    {
+    public function getZones() {
         return $this->zones;
     }
 
+    /**
+     * Set deleted
+     *
+     * @param \DateTime $deleted
+     * @return Events
+     */
+    public function setDeleted($deleted) {
+        $this->deleted = $deleted;
+
+        return $this;
+    }
+
+    /**
+     * Get deleted
+     *
+     * @return \DateTime
+     */
+    public function getDeleted() {
+        return $this->deleted;
+    }
 }

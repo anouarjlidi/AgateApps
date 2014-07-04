@@ -1,10 +1,10 @@
 <?php
 
 namespace EsterenMaps\MapsBundle\Entity;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection as DoctrineCollection;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
 
@@ -16,8 +16,8 @@ use JMS\Serializer\Annotation\Expose;
  * @ORM\Entity(repositoryClass="EsterenMaps\MapsBundle\Repository\MarkersRepository")
  * @ExclusionPolicy("all")
  */
-class Markers
-{
+class Markers {
+
     /**
      * @var integer
      *
@@ -63,7 +63,7 @@ class Markers
     /**
      * @var \Datetime
      *
-	 * @Gedmo\Timestampable(on="create")
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $created;
@@ -71,13 +71,13 @@ class Markers
     /**
      * @var \Datetime
      *
-	 * @Gedmo\Timestampable(on="update")
+     * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $updated;
 
     /**
-     * @var DoctrineCollection
+     * @var Factions
      *
      * @ORM\ManyToOne(targetEntity="Factions", inversedBy="markers")
      * @Expose
@@ -85,14 +85,14 @@ class Markers
     protected $faction;
 
     /**
-     * @var DoctrineCollection
+     * @var Maps
      *
      * @ORM\ManyToOne(targetEntity="Maps", inversedBy="markers")
      */
     protected $map;
 
     /**
-     * @var DoctrineCollection
+     * @var MarkersTypes
      *
      * @ORM\ManyToOne(targetEntity="MarkersTypes", inversedBy="markers")
      * @Expose
@@ -100,7 +100,7 @@ class Markers
     protected $markerType;
 
     /**
-     * @var DoctrineCollection
+     * @var EventsMarkers[]
      *
      * @ORM\OneToMany(targetEntity="EventsMarkers", mappedBy="marker")
      */
@@ -114,14 +114,14 @@ class Markers
     protected $deleted = null;
 
     /**
-     * @var DoctrineCollection
+     * @var Routes[]
      *
      * @ORM\OneToMany(targetEntity="Routes", mappedBy="markerStart")
      */
     protected $routesStart;
 
     /**
-     * @var DoctrineCollection
+     * @var Routes[]
      *
      * @ORM\OneToMany(targetEntity="Routes", mappedBy="markerEnd")
      */
@@ -134,19 +134,20 @@ class Markers
     /**
      * Constructor
      */
-    public function __construct()
-    {
-        $this->routes = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->events = new \Doctrine\Common\Collections\ArrayCollection();
+    public function __construct() {
+        $this->routes = new ArrayCollection();
+        $this->routesStart = new ArrayCollection();
+        $this->routesEnd = new ArrayCollection();
+        $this->events = new ArrayCollection();
     }
 
     /**
      * Get id
      *
+     * @param $id
      * @return integer
      */
-    public function setId($id)
-    {
+    public function setId($id) {
         $this->id = $id;
         return $this;
     }
@@ -156,8 +157,7 @@ class Markers
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -167,8 +167,7 @@ class Markers
      * @param string $name
      * @return Markers
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -179,8 +178,7 @@ class Markers
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -190,8 +188,7 @@ class Markers
      * @param \DateTime $created
      * @return Markers
      */
-    public function setCreated($created)
-    {
+    public function setCreated($created) {
         $this->created = $created;
 
         return $this;
@@ -202,8 +199,7 @@ class Markers
      *
      * @return \DateTime
      */
-    public function getCreated()
-    {
+    public function getCreated() {
         return $this->created;
     }
 
@@ -213,8 +209,7 @@ class Markers
      * @param \DateTime $updated
      * @return Markers
      */
-    public function setUpdated($updated)
-    {
+    public function setUpdated($updated) {
         $this->updated = $updated;
 
         return $this;
@@ -225,19 +220,17 @@ class Markers
      *
      * @return \DateTime
      */
-    public function getUpdated()
-    {
+    public function getUpdated() {
         return $this->updated;
     }
 
     /**
      * Add routes
      *
-     * @param \EsterenMaps\MapsBundle\Entity\Routes $routes
+     * @param Routes $routes
      * @return Markers
      */
-    public function addRoute(Routes $routes)
-    {
+    public function addRoute(Routes $routes) {
         $this->routes[] = $routes;
 
         return $this;
@@ -246,31 +239,28 @@ class Markers
     /**
      * Remove routes
      *
-     * @param \EsterenMaps\MapsBundle\Entity\Routes $routes
+     * @param Routes $routes
      */
-    public function removeRoute(Routes $routes)
-    {
+    public function removeRoute(Routes $routes) {
         $this->routes->removeElement($routes);
     }
 
     /**
      * Get routes
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return ArrayCollection
      */
-    public function getRoutes()
-    {
+    public function getRoutes() {
         return $this->routes;
     }
 
     /**
      * Set faction
      *
-     * @param \EsterenMaps\MapsBundle\Entity\Factions $faction
+     * @param Factions $faction
      * @return Markers
      */
-    public function setFaction(Factions $faction = null)
-    {
+    public function setFaction(Factions $faction = null) {
         $this->faction = $faction;
 
         return $this;
@@ -279,21 +269,19 @@ class Markers
     /**
      * Get faction
      *
-     * @return \EsterenMaps\MapsBundle\Entity\Factions
+     * @return Factions
      */
-    public function getFaction()
-    {
+    public function getFaction() {
         return $this->faction;
     }
 
     /**
      * Set map
      *
-     * @param \EsterenMaps\MapsBundle\Entity\Maps $map
+     * @param Maps $map
      * @return Markers
      */
-    public function setMap(Maps $map = null)
-    {
+    public function setMap(Maps $map = null) {
         $this->map = $map;
 
         return $this;
@@ -302,21 +290,19 @@ class Markers
     /**
      * Get map
      *
-     * @return \EsterenMaps\MapsBundle\Entity\Maps
+     * @return Maps
      */
-    public function getMap()
-    {
+    public function getMap() {
         return $this->map;
     }
 
     /**
      * Set markerType
      *
-     * @param \EsterenMaps\MapsBundle\Entity\MarkersTypes $markerType
+     * @param MarkersTypes $markerType
      * @return Markers
      */
-    public function setMarkerType(MarkersTypes $markerType = null)
-    {
+    public function setMarkerType(MarkersTypes $markerType = null) {
         $this->markerType = $markerType;
 
         return $this;
@@ -325,21 +311,19 @@ class Markers
     /**
      * Get markerType
      *
-     * @return \EsterenMaps\MapsBundle\Entity\MarkersTypes
+     * @return MarkersTypes
      */
-    public function getMarkerType()
-    {
+    public function getMarkerType() {
         return $this->markerType;
     }
 
     /**
      * Add events
      *
-     * @param \EsterenMaps\MapsBundle\Entity\EventsMarkers $events
+     * @param EventsMarkers $events
      * @return Markers
      */
-    public function addEvent(EventsMarkers $events)
-    {
+    public function addEvent(EventsMarkers $events) {
         $this->events[] = $events;
 
         return $this;
@@ -348,31 +332,28 @@ class Markers
     /**
      * Remove events
      *
-     * @param \EsterenMaps\MapsBundle\Entity\EventsMarkers $events
+     * @param EventsMarkers $events
      */
-    public function removeEvent(EventsMarkers $events)
-    {
+    public function removeEvent(EventsMarkers $events) {
         $this->events->removeElement($events);
     }
 
     /**
      * Get events
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return ArrayCollection
      */
-    public function getEvents()
-    {
+    public function getEvents() {
         return $this->events;
     }
 
     /**
      * Add routesStart
      *
-     * @param \EsterenMaps\MapsBundle\Entity\Routes $routesStart
+     * @param Routes $routesStart
      * @return Markers
      */
-    public function addRoutesStart(Routes $routesStart)
-    {
+    public function addRoutesStart(Routes $routesStart) {
         $this->routesStart[] = $routesStart;
 
         return $this;
@@ -381,20 +362,18 @@ class Markers
     /**
      * Remove routesStart
      *
-     * @param \EsterenMaps\MapsBundle\Entity\Routes $routesStart
+     * @param Routes $routesStart
      */
-    public function removeRoutesStart(Routes $routesStart)
-    {
+    public function removeRoutesStart(Routes $routesStart) {
         $this->routesStart->removeElement($routesStart);
     }
 
     /**
      * Get routesStart
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return ArrayCollection
      */
-    public function getRoutesStart()
-    {
+    public function getRoutesStart() {
         return $this->routesStart;
     }
 
@@ -403,8 +382,7 @@ class Markers
      *
      * @return array
      */
-    public function getRoutesStartIds()
-    {
+    public function getRoutesStartIds() {
         $array = array();
         foreach ($this->routesStart as $routeStart) {
             $array[$routeStart->getId()] = $routeStart->getId();
@@ -415,11 +393,10 @@ class Markers
     /**
      * Add routesEnd
      *
-     * @param \EsterenMaps\MapsBundle\Entity\Routes $routesEnd
+     * @param Routes $routesEnd
      * @return Markers
      */
-    public function addRoutesEnd(Routes $routesEnd)
-    {
+    public function addRoutesEnd(Routes $routesEnd) {
         $this->routesEnd[] = $routesEnd;
 
         return $this;
@@ -428,20 +405,18 @@ class Markers
     /**
      * Remove routesEnd
      *
-     * @param \EsterenMaps\MapsBundle\Entity\Routes $routesEnd
+     * @param Routes $routesEnd
      */
-    public function removeRoutesEnd(Routes $routesEnd)
-    {
+    public function removeRoutesEnd(Routes $routesEnd) {
         $this->routesEnd->removeElement($routesEnd);
     }
 
     /**
      * Get routesEnd
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return ArrayCollection
      */
-    public function getRoutesEnd()
-    {
+    public function getRoutesEnd() {
         return $this->routesEnd;
     }
 
@@ -450,8 +425,7 @@ class Markers
      *
      * @return array
      */
-    public function getRoutesEndIds()
-    {
+    public function getRoutesEndIds() {
         $array = array();
         foreach ($this->routesEnd as $routeEnd) {
             $array[$routeEnd->getId()] = $routeEnd->getId();
@@ -465,8 +439,7 @@ class Markers
      * @param string $altitude
      * @return Markers
      */
-    public function setAltitude($altitude)
-    {
+    public function setAltitude($altitude) {
         $this->altitude = $altitude;
 
         return $this;
@@ -475,10 +448,9 @@ class Markers
     /**
      * Get altitude
      *
-     * @return string 
+     * @return string
      */
-    public function getAltitude()
-    {
+    public function getAltitude() {
         return $this->altitude;
     }
 
@@ -488,8 +460,7 @@ class Markers
      * @param string $latitude
      * @return Markers
      */
-    public function setLatitude($latitude)
-    {
+    public function setLatitude($latitude) {
         $this->latitude = $latitude;
 
         return $this;
@@ -498,10 +469,9 @@ class Markers
     /**
      * Get latitude
      *
-     * @return string 
+     * @return string
      */
-    public function getLatitude()
-    {
+    public function getLatitude() {
         return $this->latitude;
     }
 
@@ -511,8 +481,7 @@ class Markers
      * @param string $longitude
      * @return Markers
      */
-    public function setLongitude($longitude)
-    {
+    public function setLongitude($longitude) {
         $this->longitude = $longitude;
 
         return $this;
@@ -521,10 +490,30 @@ class Markers
     /**
      * Get longitude
      *
-     * @return string 
+     * @return string
      */
-    public function getLongitude()
-    {
+    public function getLongitude() {
         return $this->longitude;
+    }
+
+    /**
+     * Set deleted
+     *
+     * @param \DateTime $deleted
+     * @return Markers
+     */
+    public function setDeleted($deleted) {
+        $this->deleted = $deleted;
+
+        return $this;
+    }
+
+    /**
+     * Get deleted
+     *
+     * @return \DateTime
+     */
+    public function getDeleted() {
+        return $this->deleted;
     }
 }

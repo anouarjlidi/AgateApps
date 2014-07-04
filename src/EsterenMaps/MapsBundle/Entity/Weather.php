@@ -1,9 +1,10 @@
 <?php
 
 namespace EsterenMaps\MapsBundle\Entity;
-use Gedmo\Mapping\Annotation as Gedmo;
+
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection as DoctrineCollection;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Weather
@@ -33,7 +34,7 @@ class Weather {
     /**
      * @var \Datetime
      *
-	 * @Gedmo\Timestampable(on="create")
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $created;
@@ -41,17 +42,16 @@ class Weather {
     /**
      * @var \Datetime
      *
-	 * @Gedmo\Timestampable(on="update")
+     * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $updated;
 
     /**
-     * @var DoctrineCollection
-     *
+     * @var Events[]
      * @ORM\ManyToMany(targetEntity="Events", inversedBy="weather")
      */
-	protected $events;
+    protected $events;
 
     /**
      * @var boolean
@@ -63,9 +63,8 @@ class Weather {
     /**
      * Constructor
      */
-    public function __construct()
-    {
-        $this->events = new \Doctrine\Common\Collections\ArrayCollection();
+    public function __construct() {
+        $this->events = new ArrayCollection();
     }
 
     /**
@@ -73,8 +72,7 @@ class Weather {
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -84,8 +82,7 @@ class Weather {
      * @param string $name
      * @return Weather
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -96,8 +93,7 @@ class Weather {
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -107,8 +103,7 @@ class Weather {
      * @param \DateTime $created
      * @return Weather
      */
-    public function setCreated($created)
-    {
+    public function setCreated($created) {
         $this->created = $created;
 
         return $this;
@@ -119,8 +114,7 @@ class Weather {
      *
      * @return \DateTime
      */
-    public function getCreated()
-    {
+    public function getCreated() {
         return $this->created;
     }
 
@@ -130,8 +124,7 @@ class Weather {
      * @param \DateTime $updated
      * @return Weather
      */
-    public function setUpdated($updated)
-    {
+    public function setUpdated($updated) {
         $this->updated = $updated;
 
         return $this;
@@ -142,19 +135,17 @@ class Weather {
      *
      * @return \DateTime
      */
-    public function getUpdated()
-    {
+    public function getUpdated() {
         return $this->updated;
     }
 
     /**
      * Add events
      *
-     * @param \EsterenMaps\MapsBundle\Entity\Events $events
+     * @param Events $events
      * @return Weather
      */
-    public function addEvent(\EsterenMaps\MapsBundle\Entity\Events $events)
-    {
+    public function addEvent(Events $events) {
         $this->events[] = $events;
 
         return $this;
@@ -163,21 +154,39 @@ class Weather {
     /**
      * Remove events
      *
-     * @param \EsterenMaps\MapsBundle\Entity\Events $events
+     * @param Events $events
      */
-    public function removeEvent(\EsterenMaps\MapsBundle\Entity\Events $events)
-    {
+    public function removeEvent(Events $events) {
         $this->events->removeElement($events);
     }
 
     /**
      * Get events
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return ArrayCollection
      */
-    public function getEvents()
-    {
+    public function getEvents() {
         return $this->events;
     }
 
+    /**
+     * Set deleted
+     *
+     * @param \DateTime $deleted
+     * @return Weather
+     */
+    public function setDeleted($deleted) {
+        $this->deleted = $deleted;
+
+        return $this;
+    }
+
+    /**
+     * Get deleted
+     *
+     * @return \DateTime
+     */
+    public function getDeleted() {
+        return $this->deleted;
+    }
 }

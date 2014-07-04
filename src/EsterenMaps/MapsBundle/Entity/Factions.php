@@ -1,10 +1,11 @@
 <?php
 
 namespace EsterenMaps\MapsBundle\Entity;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection as DoctrineCollection;
 
+use CorahnRin\ModelsBundle\Entity\Books;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use JMS\Serializer\Annotation\ExclusionPolicy as ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose as Expose;
 
@@ -16,8 +17,8 @@ use JMS\Serializer\Annotation\Expose as Expose;
  * @ORM\Entity(repositoryClass="EsterenMaps\MapsBundle\Repository\FactionsRepository")
  * @ExclusionPolicy("all")
  */
-class Factions
-{
+class Factions {
+
     /**
      * @var integer
      *
@@ -47,7 +48,7 @@ class Factions
     /**
      * @var \Datetime
      *
-	 * @Gedmo\Timestampable(on="create")
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $created;
@@ -55,38 +56,35 @@ class Factions
     /**
      * @var \Datetime
      *
-	 * @Gedmo\Timestampable(on="update")
+     * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $updated;
 
     /**
-     * @var DoctrineCollection
-     *
+     * @var Zones[]
      * @ORM\OneToMany(targetEntity="Zones", mappedBy="faction")
      */
-	protected $zones;
+    protected $zones;
 
-	/**
-	 * @var DoctrineCollection
-	 *
-	 * @ORM\OneToMany(targetEntity="Routes", mappedBy="faction")
-	 */
-	protected $routes;
+    /**
+     * @var Routes[]
+     * @ORM\OneToMany(targetEntity="Routes", mappedBy="faction")
+     */
+    protected $routes;
 
-	/**
-	 * @var DoctrineCollection
-	 *
-	 * @ORM\OneToMany(targetEntity="Markers", mappedBy="faction")
-	 */
-	protected $markers;
+    /**
+     * @var Markers[]
+     * @ORM\OneToMany(targetEntity="Markers", mappedBy="faction")
+     */
+    protected $markers;
 
-	/**
-	 * @var DoctrineCollection
-	 *
-	 * @ORM\ManyToOne(targetEntity="CorahnRin\ModelsBundle\Entity\Books")
-	 */
-	protected $book;
+    /**
+     * @var Books[]
+     *
+     * @ORM\ManyToOne(targetEntity="CorahnRin\ModelsBundle\Entity\Books")
+     */
+    protected $book;
 
     /**
      * @var boolean
@@ -102,11 +100,10 @@ class Factions
     /**
      * Constructor
      */
-    public function __construct()
-    {
-        $this->zones = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->routes = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->markers = new \Doctrine\Common\Collections\ArrayCollection();
+    public function __construct() {
+        $this->zones = new ArrayCollection();
+        $this->routes = new ArrayCollection();
+        $this->markers = new ArrayCollection();
     }
 
     /**
@@ -114,8 +111,7 @@ class Factions
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -125,8 +121,7 @@ class Factions
      * @param string $name
      * @return Factions
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -137,8 +132,7 @@ class Factions
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -148,8 +142,7 @@ class Factions
      * @param \DateTime $created
      * @return Factions
      */
-    public function setCreated($created)
-    {
+    public function setCreated($created) {
         $this->created = $created;
 
         return $this;
@@ -160,8 +153,7 @@ class Factions
      *
      * @return \DateTime
      */
-    public function getCreated()
-    {
+    public function getCreated() {
         return $this->created;
     }
 
@@ -171,8 +163,7 @@ class Factions
      * @param \DateTime $updated
      * @return Factions
      */
-    public function setUpdated($updated)
-    {
+    public function setUpdated($updated) {
         $this->updated = $updated;
 
         return $this;
@@ -183,19 +174,17 @@ class Factions
      *
      * @return \DateTime
      */
-    public function getUpdated()
-    {
+    public function getUpdated() {
         return $this->updated;
     }
 
     /**
      * Add zones
      *
-     * @param \EsterenMaps\MapsBundle\Entity\Zones $zones
+     * @param Zones $zones
      * @return Factions
      */
-    public function addZone(\EsterenMaps\MapsBundle\Entity\Zones $zones)
-    {
+    public function addZone(Zones $zones) {
         $this->zones[] = $zones;
 
         return $this;
@@ -204,31 +193,28 @@ class Factions
     /**
      * Remove zones
      *
-     * @param \EsterenMaps\MapsBundle\Entity\Zones $zones
+     * @param Zones $zones
      */
-    public function removeZone(\EsterenMaps\MapsBundle\Entity\Zones $zones)
-    {
+    public function removeZone(Zones $zones) {
         $this->zones->removeElement($zones);
     }
 
     /**
      * Get zones
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return ArrayCollection
      */
-    public function getZones()
-    {
+    public function getZones() {
         return $this->zones;
     }
 
     /**
      * Add routes
      *
-     * @param \EsterenMaps\MapsBundle\Entity\Routes $routes
+     * @param Routes $routes
      * @return Factions
      */
-    public function addRoute(\EsterenMaps\MapsBundle\Entity\Routes $routes)
-    {
+    public function addRoute(Routes $routes) {
         $this->routes[] = $routes;
 
         return $this;
@@ -237,31 +223,28 @@ class Factions
     /**
      * Remove routes
      *
-     * @param \EsterenMaps\MapsBundle\Entity\Routes $routes
+     * @param Routes $routes
      */
-    public function removeRoute(\EsterenMaps\MapsBundle\Entity\Routes $routes)
-    {
+    public function removeRoute(Routes $routes) {
         $this->routes->removeElement($routes);
     }
 
     /**
      * Get routes
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return ArrayCollection
      */
-    public function getRoutes()
-    {
+    public function getRoutes() {
         return $this->routes;
     }
 
     /**
      * Add markers
      *
-     * @param \EsterenMaps\MapsBundle\Entity\Markers $markers
+     * @param Markers $markers
      * @return Factions
      */
-    public function addMarker(\EsterenMaps\MapsBundle\Entity\Markers $markers)
-    {
+    public function addMarker(Markers $markers) {
         $this->markers[] = $markers;
 
         return $this;
@@ -270,20 +253,18 @@ class Factions
     /**
      * Remove markers
      *
-     * @param \EsterenMaps\MapsBundle\Entity\Markers $markers
+     * @param Markers $markers
      */
-    public function removeMarker(\EsterenMaps\MapsBundle\Entity\Markers $markers)
-    {
+    public function removeMarker(Markers $markers) {
         $this->markers->removeElement($markers);
     }
 
     /**
      * Get markers
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return ArrayCollection
      */
-    public function getMarkers()
-    {
+    public function getMarkers() {
         return $this->markers;
     }
 
@@ -293,8 +274,7 @@ class Factions
      * @param string $description
      * @return Factions
      */
-    public function setDescription($description)
-    {
+    public function setDescription($description) {
         $this->description = $description;
 
         return $this;
@@ -305,8 +285,49 @@ class Factions
      *
      * @return string
      */
-    public function getDescription()
-    {
+    public function getDescription() {
         return $this->description;
+    }
+
+    /**
+     * Set deleted
+     *
+     * @param \DateTime $deleted
+     * @return Factions
+     */
+    public function setDeleted($deleted) {
+        $this->deleted = $deleted;
+
+        return $this;
+    }
+
+    /**
+     * Get deleted
+     *
+     * @return \DateTime
+     */
+    public function getDeleted() {
+        return $this->deleted;
+    }
+
+    /**
+     * Set book
+     *
+     * @param \CorahnRin\ModelsBundle\Entity\Books $book
+     * @return Factions
+     */
+    public function setBook(\CorahnRin\ModelsBundle\Entity\Books $book = null) {
+        $this->book = $book;
+
+        return $this;
+    }
+
+    /**
+     * Get book
+     *
+     * @return \CorahnRin\ModelsBundle\Entity\Books
+     */
+    public function getBook() {
+        return $this->book;
     }
 }

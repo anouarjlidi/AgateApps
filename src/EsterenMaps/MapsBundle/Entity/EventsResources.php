@@ -1,9 +1,9 @@
 <?php
 
 namespace EsterenMaps\MapsBundle\Entity;
-use Gedmo\Mapping\Annotation as Gedmo;
+
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection as DoctrineCollection;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * EventsResources
@@ -33,7 +33,7 @@ class EventsResources {
     /**
      * @var \Datetime
      *
-	 * @Gedmo\Timestampable(on="create")
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $created;
@@ -41,17 +41,17 @@ class EventsResources {
     /**
      * @var \Datetime
      *
-	 * @Gedmo\Timestampable(on="update")
+     * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $updated;
 
-	/**
-	 * @var smallint
-	 *
-	 * @ORM\Column(type="smallint")
-	 */
-	protected $percentage;
+    /**
+     * @var integer
+     *
+     * @ORM\Column(type="smallint")
+     */
+    protected $percentage;
 
     /**
      * @var boolean
@@ -66,8 +66,7 @@ class EventsResources {
      * @param \DateTime $created
      * @return EventsResources
      */
-    public function setCreated($created)
-    {
+    public function setCreated($created) {
         $this->created = $created;
 
         return $this;
@@ -78,8 +77,7 @@ class EventsResources {
      *
      * @return \DateTime
      */
-    public function getCreated()
-    {
+    public function getCreated() {
         return $this->created;
     }
 
@@ -89,8 +87,7 @@ class EventsResources {
      * @param \DateTime $updated
      * @return EventsResources
      */
-    public function setUpdated($updated)
-    {
+    public function setUpdated($updated) {
         $this->updated = $updated;
 
         return $this;
@@ -101,8 +98,7 @@ class EventsResources {
      *
      * @return \DateTime
      */
-    public function getUpdated()
-    {
+    public function getUpdated() {
         return $this->updated;
     }
 
@@ -112,8 +108,7 @@ class EventsResources {
      * @param integer $percentage
      * @return EventsResources
      */
-    public function setPercentage($percentage)
-    {
+    public function setPercentage($percentage) {
         $this->percentage = $percentage;
 
         return $this;
@@ -124,19 +119,17 @@ class EventsResources {
      *
      * @return integer
      */
-    public function getPercentage()
-    {
+    public function getPercentage() {
         return $this->percentage;
     }
 
     /**
      * Set event
      *
-     * @param \EsterenMaps\MapsBundle\Entity\Events $event
+     * @param Events $event
      * @return EventsResources
      */
-    public function setEvent(\EsterenMaps\MapsBundle\Entity\Events $event)
-    {
+    public function setEvent(Events $event) {
         $this->event = $event;
 
         return $this;
@@ -145,21 +138,19 @@ class EventsResources {
     /**
      * Get event
      *
-     * @return \EsterenMaps\MapsBundle\Entity\Events
+     * @return Events
      */
-    public function getEvent()
-    {
+    public function getEvent() {
         return $this->event;
     }
 
     /**
      * Set resource
      *
-     * @param \EsterenMaps\MapsBundle\Entity\Resources $resource
+     * @param Resources $resource
      * @return EventsResources
      */
-    public function setResource(\EsterenMaps\MapsBundle\Entity\Resources $resource)
-    {
+    public function setResource(Resources $resource) {
         $this->resource = $resource;
 
         return $this;
@@ -168,10 +159,30 @@ class EventsResources {
     /**
      * Get resource
      *
-     * @return \EsterenMaps\MapsBundle\Entity\Resources
+     * @return Resources
      */
-    public function getResource()
-    {
+    public function getResource() {
         return $this->resource;
+    }
+
+    /**
+     * Set deleted
+     *
+     * @param \DateTime $deleted
+     * @return EventsResources
+     */
+    public function setDeleted($deleted) {
+        $this->deleted = $deleted;
+
+        return $this;
+    }
+
+    /**
+     * Get deleted
+     *
+     * @return \DateTime
+     */
+    public function getDeleted() {
+        return $this->deleted;
     }
 }

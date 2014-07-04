@@ -1,9 +1,9 @@
 <?php
 
 namespace EsterenMaps\MapsBundle\Entity;
-use Gedmo\Mapping\Annotation as Gedmo;
+
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection as DoctrineCollection;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * EventsZones
@@ -33,7 +33,7 @@ class EventsZones {
     /**
      * @var \Datetime
      *
-	 * @Gedmo\Timestampable(on="create")
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $created;
@@ -41,17 +41,17 @@ class EventsZones {
     /**
      * @var \Datetime
      *
-	 * @Gedmo\Timestampable(on="update")
+     * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $updated;
 
-	/**
-	 * @var smallint
-	 *
-	 * @ORM\Column(type="smallint")
-	 */
-	protected $percentage;
+    /**
+     * @var integer
+     *
+     * @ORM\Column(type="smallint")
+     */
+    protected $percentage;
 
     /**
      * @var boolean
@@ -66,8 +66,7 @@ class EventsZones {
      * @param integer $event
      * @return EventsZones
      */
-    public function setEvent($event)
-    {
+    public function setEvent($event) {
         $this->event = $event;
 
         return $this;
@@ -78,8 +77,7 @@ class EventsZones {
      *
      * @return integer
      */
-    public function getEvent()
-    {
+    public function getEvent() {
         return $this->event;
     }
 
@@ -89,8 +87,7 @@ class EventsZones {
      * @param \DateTime $created
      * @return EventsZones
      */
-    public function setCreated($created)
-    {
+    public function setCreated($created) {
         $this->created = $created;
 
         return $this;
@@ -101,8 +98,7 @@ class EventsZones {
      *
      * @return \DateTime
      */
-    public function getCreated()
-    {
+    public function getCreated() {
         return $this->created;
     }
 
@@ -112,8 +108,7 @@ class EventsZones {
      * @param \DateTime $updated
      * @return EventsZones
      */
-    public function setUpdated($updated)
-    {
+    public function setUpdated($updated) {
         $this->updated = $updated;
 
         return $this;
@@ -124,8 +119,7 @@ class EventsZones {
      *
      * @return \DateTime
      */
-    public function getUpdated()
-    {
+    public function getUpdated() {
         return $this->updated;
     }
 
@@ -135,8 +129,7 @@ class EventsZones {
      * @param integer $percentage
      * @return EventsZones
      */
-    public function setPercentage($percentage)
-    {
+    public function setPercentage($percentage) {
         $this->percentage = $percentage;
 
         return $this;
@@ -147,19 +140,17 @@ class EventsZones {
      *
      * @return integer
      */
-    public function getPercentage()
-    {
+    public function getPercentage() {
         return $this->percentage;
     }
 
     /**
      * Set zone
      *
-     * @param \EsterenMaps\MapsBundle\Entity\Zones $zone
+     * @param Zones $zone
      * @return EventsZones
      */
-    public function setZone(\EsterenMaps\MapsBundle\Entity\Zones $zone)
-    {
+    public function setZone(Zones $zone) {
         $this->zone = $zone;
 
         return $this;
@@ -168,10 +159,30 @@ class EventsZones {
     /**
      * Get zone
      *
-     * @return \EsterenMaps\MapsBundle\Entity\Zones
+     * @return Zones
      */
-    public function getZone()
-    {
+    public function getZone() {
         return $this->zone;
+    }
+
+    /**
+     * Set deleted
+     *
+     * @param \DateTime $deleted
+     * @return EventsZones
+     */
+    public function setDeleted($deleted) {
+        $this->deleted = $deleted;
+
+        return $this;
+    }
+
+    /**
+     * Get deleted
+     *
+     * @return \DateTime
+     */
+    public function getDeleted() {
+        return $this->deleted;
     }
 }

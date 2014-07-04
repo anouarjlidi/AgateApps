@@ -1,10 +1,10 @@
 <?php
 
 namespace EsterenMaps\MapsBundle\Entity;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection as DoctrineCollection;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use JMS\Serializer\Annotation\ExclusionPolicy as ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose as Expose;
 
@@ -16,8 +16,8 @@ use JMS\Serializer\Annotation\Expose as Expose;
  * @ORM\Entity(repositoryClass="EsterenMaps\MapsBundle\Repository\RoutesRepository")
  * @ExclusionPolicy("all")
  */
-class Routes
-{
+class Routes {
+
     /**
      * @var integer
      *
@@ -47,7 +47,7 @@ class Routes
     /**
      * @var \Datetime
      *
-	 * @Gedmo\Timestampable(on="create")
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $created;
@@ -55,7 +55,7 @@ class Routes
     /**
      * @var \Datetime
      *
-	 * @Gedmo\Timestampable(on="update")
+     * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $updated;
@@ -118,15 +118,14 @@ class Routes
      *
      * @ORM\OneToMany(targetEntity="EventsRoutes", mappedBy="route")
      */
-	protected $events;
+    protected $events;
 
     /**
      * Constructor
      */
-    public function __construct()
-    {
-        $this->resources = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->events = new \Doctrine\Common\Collections\ArrayCollection();
+    public function __construct() {
+        $this->resources = new ArrayCollection();
+        $this->events = new ArrayCollection();
     }
 
     /**
@@ -134,8 +133,7 @@ class Routes
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -145,8 +143,7 @@ class Routes
      * @param string $id
      * @return Routes
      */
-    public function setId($id)
-    {
+    public function setId($id) {
         $this->id = $id;
 
         return $this;
@@ -158,8 +155,7 @@ class Routes
      * @param string $name
      * @return Routes
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -170,8 +166,7 @@ class Routes
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -181,8 +176,7 @@ class Routes
      * @param string $coordinates
      * @return Routes
      */
-    public function setCoordinates($coordinates)
-    {
+    public function setCoordinates($coordinates) {
         $this->coordinates = $coordinates;
 
         return $this;
@@ -193,8 +187,7 @@ class Routes
      *
      * @return string
      */
-    public function getCoordinates()
-    {
+    public function getCoordinates() {
         return $this->coordinates;
     }
 
@@ -204,8 +197,7 @@ class Routes
      * @param \DateTime $created
      * @return Routes
      */
-    public function setCreated($created)
-    {
+    public function setCreated($created) {
         $this->created = $created;
 
         return $this;
@@ -216,8 +208,7 @@ class Routes
      *
      * @return \DateTime
      */
-    public function getCreated()
-    {
+    public function getCreated() {
         return $this->created;
     }
 
@@ -227,8 +218,7 @@ class Routes
      * @param \DateTime $updated
      * @return Routes
      */
-    public function setUpdated($updated)
-    {
+    public function setUpdated($updated) {
         $this->updated = $updated;
 
         return $this;
@@ -239,19 +229,17 @@ class Routes
      *
      * @return \DateTime
      */
-    public function getUpdated()
-    {
+    public function getUpdated() {
         return $this->updated;
     }
 
     /**
      * Add resources
      *
-     * @param \EsterenMaps\MapsBundle\Entity\Resources $resources
+     * @param Resources $resources
      * @return Routes
      */
-    public function addResource(\EsterenMaps\MapsBundle\Entity\Resources $resources)
-    {
+    public function addResource(Resources $resources) {
         $this->resources[] = $resources;
 
         return $this;
@@ -260,31 +248,28 @@ class Routes
     /**
      * Remove resources
      *
-     * @param \EsterenMaps\MapsBundle\Entity\Resources $resources
+     * @param Resources $resources
      */
-    public function removeResource(\EsterenMaps\MapsBundle\Entity\Resources $resources)
-    {
+    public function removeResource(Resources $resources) {
         $this->resources->removeElement($resources);
     }
 
     /**
      * Get resources
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return ArrayCollection
      */
-    public function getResources()
-    {
+    public function getResources() {
         return $this->resources;
     }
 
     /**
      * Set map
      *
-     * @param \EsterenMaps\MapsBundle\Entity\Maps $map
+     * @param Maps $map
      * @return Routes
      */
-    public function setMap(\EsterenMaps\MapsBundle\Entity\Maps $map = null)
-    {
+    public function setMap(Maps $map = null) {
         $this->map = $map;
 
         return $this;
@@ -293,21 +278,19 @@ class Routes
     /**
      * Get map
      *
-     * @return \EsterenMaps\MapsBundle\Entity\Maps
+     * @return Maps
      */
-    public function getMap()
-    {
+    public function getMap() {
         return $this->map;
     }
 
     /**
      * Set faction
      *
-     * @param \EsterenMaps\MapsBundle\Entity\Factions $faction
+     * @param Factions $faction
      * @return Routes
      */
-    public function setFaction(\EsterenMaps\MapsBundle\Entity\Factions $faction = null)
-    {
+    public function setFaction(Factions $faction = null) {
         $this->faction = $faction;
 
         return $this;
@@ -316,21 +299,19 @@ class Routes
     /**
      * Get faction
      *
-     * @return \EsterenMaps\MapsBundle\Entity\Factions
+     * @return Factions
      */
-    public function getFaction()
-    {
+    public function getFaction() {
         return $this->faction;
     }
 
     /**
      * Set routeType
      *
-     * @param \EsterenMaps\MapsBundle\Entity\RoutesTypes $routeType
+     * @param RoutesTypes $routeType
      * @return Routes
      */
-    public function setRouteType(\EsterenMaps\MapsBundle\Entity\RoutesTypes $routeType = null)
-    {
+    public function setRouteType(RoutesTypes $routeType = null) {
         $this->routeType = $routeType;
 
         return $this;
@@ -339,21 +320,19 @@ class Routes
     /**
      * Get routeType
      *
-     * @return \EsterenMaps\MapsBundle\Entity\RoutesTypes
+     * @return RoutesTypes
      */
-    public function getRouteType()
-    {
+    public function getRouteType() {
         return $this->routeType;
     }
 
     /**
      * Add events
      *
-     * @param \EsterenMaps\MapsBundle\Entity\EventsRoutes $events
+     * @param EventsRoutes $events
      * @return Routes
      */
-    public function addEvent(\EsterenMaps\MapsBundle\Entity\EventsRoutes $events)
-    {
+    public function addEvent(EventsRoutes $events) {
         $this->events[] = $events;
 
         return $this;
@@ -362,31 +341,28 @@ class Routes
     /**
      * Remove events
      *
-     * @param \EsterenMaps\MapsBundle\Entity\EventsRoutes $events
+     * @param EventsRoutes $events
      */
-    public function removeEvent(\EsterenMaps\MapsBundle\Entity\EventsRoutes $events)
-    {
+    public function removeEvent(EventsRoutes $events) {
         $this->events->removeElement($events);
     }
 
     /**
      * Get events
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return ArrayCollection
      */
-    public function getEvents()
-    {
+    public function getEvents() {
         return $this->events;
     }
 
     /**
      * Set markerStart
      *
-     * @param \EsterenMaps\MapsBundle\Entity\Markers $markerStart
+     * @param Markers $markerStart
      * @return Routes
      */
-    public function setMarkerStart(\EsterenMaps\MapsBundle\Entity\Markers $markerStart = null)
-    {
+    public function setMarkerStart(Markers $markerStart = null) {
         $this->markerStart = $markerStart;
 
         return $this;
@@ -395,21 +371,19 @@ class Routes
     /**
      * Get markerStart
      *
-     * @return \EsterenMaps\MapsBundle\Entity\Markers
+     * @return Markers
      */
-    public function getMarkerStart()
-    {
+    public function getMarkerStart() {
         return $this->markerStart;
     }
 
     /**
      * Set markerEnd
      *
-     * @param \EsterenMaps\MapsBundle\Entity\Markers $markerEnd
+     * @param Markers $markerEnd
      * @return Routes
      */
-    public function setMarkerEnd(\EsterenMaps\MapsBundle\Entity\Markers $markerEnd = null)
-    {
+    public function setMarkerEnd(Markers $markerEnd = null) {
         $this->markerEnd = $markerEnd;
 
         return $this;
@@ -418,10 +392,9 @@ class Routes
     /**
      * Get markerEnd
      *
-     * @return \EsterenMaps\MapsBundle\Entity\Markers
+     * @return Markers
      */
-    public function getMarkerEnd()
-    {
+    public function getMarkerEnd() {
         return $this->markerEnd;
     }
 
@@ -438,7 +411,7 @@ class Routes
             );
         }
         if ($this->markerEnd) {
-            $coords[count($coords)-1] = array(
+            $coords[count($coords) - 1] = array(
                 'lat' => $this->markerEnd->getLatitude(),
                 'lng' => $this->markerEnd->getLongitude(),
             );
@@ -447,5 +420,26 @@ class Routes
         $this->setCoordinates(json_encode($coords));
 
         return $this;
+    }
+
+    /**
+     * Set deleted
+     *
+     * @param \DateTime $deleted
+     * @return Routes
+     */
+    public function setDeleted($deleted) {
+        $this->deleted = $deleted;
+
+        return $this;
+    }
+
+    /**
+     * Get deleted
+     *
+     * @return \DateTime
+     */
+    public function getDeleted() {
+        return $this->deleted;
     }
 }

@@ -1,9 +1,10 @@
 <?php
 
 namespace EsterenMaps\MapsBundle\Entity;
-use Gedmo\Mapping\Annotation as Gedmo;
+
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection as DoctrineCollection;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Resources
@@ -12,8 +13,8 @@ use Doctrine\Common\Collections\ArrayCollection as DoctrineCollection;
  * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity(repositoryClass="EsterenMaps\MapsBundle\Repository\ResourcesRepository")
  */
-class Resources
-{
+class Resources {
+
     /**
      * @var integer
      *
@@ -33,7 +34,7 @@ class Resources
     /**
      * @var \Datetime
      *
-	 * @Gedmo\Timestampable(on="create")
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $created;
@@ -41,31 +42,34 @@ class Resources
     /**
      * @var \Datetime
      *
-	 * @Gedmo\Timestampable(on="update")
+     * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $updated;
 
     /**
-     * @var DoctrineCollection
-     *
+     * @var Routes[]
      * @ORM\ManyToMany(targetEntity="Routes", inversedBy="resources")
      */
     protected $routes;
 
     /**
-     * @var DoctrineCollection
-     *
+     * @var RoutesTypes[]
      * @ORM\ManyToMany(targetEntity="RoutesTypes", inversedBy="resources")
      */
     protected $routesTypes;
 
     /**
-     * @var DoctrineCollection
-     *
+     * @var ZonesTypes[]
+     * @ORM\ManyToMany(targetEntity="ZonesTypes", inversedBy="resources")
+     */
+    protected $zonesTypes;
+
+    /**
+     * @var EventsResources[]
      * @ORM\OneToMany(targetEntity="EventsResources", mappedBy="resource")
      */
-	protected $events;
+    protected $events;
 
     /**
      * @var boolean
@@ -77,11 +81,11 @@ class Resources
     /**
      * Constructor
      */
-    public function __construct()
-    {
-        $this->routes = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->routesTypes = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->events = new \Doctrine\Common\Collections\ArrayCollection();
+    public function __construct() {
+        $this->routes = new ArrayCollection();
+        $this->routesTypes = new ArrayCollection();
+        $this->zonesTypes = new ArrayCollection();
+        $this->events = new ArrayCollection();
     }
 
     /**
@@ -89,8 +93,7 @@ class Resources
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -100,8 +103,7 @@ class Resources
      * @param string $name
      * @return Resources
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -112,8 +114,7 @@ class Resources
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -123,8 +124,7 @@ class Resources
      * @param \DateTime $created
      * @return Resources
      */
-    public function setCreated($created)
-    {
+    public function setCreated($created) {
         $this->created = $created;
 
         return $this;
@@ -135,8 +135,7 @@ class Resources
      *
      * @return \DateTime
      */
-    public function getCreated()
-    {
+    public function getCreated() {
         return $this->created;
     }
 
@@ -146,8 +145,7 @@ class Resources
      * @param \DateTime $updated
      * @return Resources
      */
-    public function setUpdated($updated)
-    {
+    public function setUpdated($updated) {
         $this->updated = $updated;
 
         return $this;
@@ -158,19 +156,17 @@ class Resources
      *
      * @return \DateTime
      */
-    public function getUpdated()
-    {
+    public function getUpdated() {
         return $this->updated;
     }
 
     /**
      * Add routes
      *
-     * @param \EsterenMaps\MapsBundle\Entity\Routes $routes
+     * @param Routes $routes
      * @return Resources
      */
-    public function addRoute(\EsterenMaps\MapsBundle\Entity\Routes $routes)
-    {
+    public function addRoute(Routes $routes) {
         $this->routes[] = $routes;
 
         return $this;
@@ -179,31 +175,28 @@ class Resources
     /**
      * Remove routes
      *
-     * @param \EsterenMaps\MapsBundle\Entity\Routes $routes
+     * @param Routes $routes
      */
-    public function removeRoute(\EsterenMaps\MapsBundle\Entity\Routes $routes)
-    {
+    public function removeRoute(Routes $routes) {
         $this->routes->removeElement($routes);
     }
 
     /**
      * Get routes
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return ArrayCollection
      */
-    public function getRoutes()
-    {
+    public function getRoutes() {
         return $this->routes;
     }
 
     /**
      * Add routesTypes
      *
-     * @param \EsterenMaps\MapsBundle\Entity\RoutesTypes $routesTypes
+     * @param RoutesTypes $routesTypes
      * @return Resources
      */
-    public function addRoutesType(\EsterenMaps\MapsBundle\Entity\RoutesTypes $routesTypes)
-    {
+    public function addRouteType(RoutesTypes $routesTypes) {
         $this->routesTypes[] = $routesTypes;
 
         return $this;
@@ -212,31 +205,28 @@ class Resources
     /**
      * Remove routesTypes
      *
-     * @param \EsterenMaps\MapsBundle\Entity\RoutesTypes $routesTypes
+     * @param RoutesTypes $routesTypes
      */
-    public function removeRoutesType(\EsterenMaps\MapsBundle\Entity\RoutesTypes $routesTypes)
-    {
+    public function removeRouteType(RoutesTypes $routesTypes) {
         $this->routesTypes->removeElement($routesTypes);
     }
 
     /**
      * Get routesTypes
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return ArrayCollection
      */
-    public function getRoutesTypes()
-    {
+    public function getRoutesTypes() {
         return $this->routesTypes;
     }
 
     /**
      * Add events
      *
-     * @param \EsterenMaps\MapsBundle\Entity\EventsResources $events
+     * @param EventsResources $events
      * @return Resources
      */
-    public function addEvent(\EsterenMaps\MapsBundle\Entity\EventsResources $events)
-    {
+    public function addEvent(EventsResources $events) {
         $this->events[] = $events;
 
         return $this;
@@ -245,21 +235,69 @@ class Resources
     /**
      * Remove events
      *
-     * @param \EsterenMaps\MapsBundle\Entity\EventsResources $events
+     * @param EventsResources $events
      */
-    public function removeEvent(\EsterenMaps\MapsBundle\Entity\EventsResources $events)
-    {
+    public function removeEvent(EventsResources $events) {
         $this->events->removeElement($events);
     }
 
     /**
      * Get events
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return ArrayCollection
      */
-    public function getEvents()
-    {
+    public function getEvents() {
         return $this->events;
     }
 
+    /**
+     * Set deleted
+     *
+     * @param \DateTime $deleted
+     * @return Resources
+     */
+    public function setDeleted($deleted) {
+        $this->deleted = $deleted;
+
+        return $this;
+    }
+
+    /**
+     * Get deleted
+     *
+     * @return \DateTime
+     */
+    public function getDeleted() {
+        return $this->deleted;
+    }
+
+    /**
+     * Add zonesTypes
+     *
+     * @param \EsterenMaps\MapsBundle\Entity\ZonesTypes $zonesTypes
+     * @return Resources
+     */
+    public function addZoneType(\EsterenMaps\MapsBundle\Entity\ZonesTypes $zonesTypes) {
+        $this->zonesTypes[] = $zonesTypes;
+
+        return $this;
+    }
+
+    /**
+     * Remove zonesTypes
+     *
+     * @param \EsterenMaps\MapsBundle\Entity\ZonesTypes $zonesTypes
+     */
+    public function removeZoneType(\EsterenMaps\MapsBundle\Entity\ZonesTypes $zonesTypes) {
+        $this->zonesTypes->removeElement($zonesTypes);
+    }
+
+    /**
+     * Get zonesTypes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getZonesTypes() {
+        return $this->zonesTypes;
+    }
 }

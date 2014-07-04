@@ -2,14 +2,12 @@
 
 namespace EsterenMaps\MapsBundle\Entity;
 
-use Symfony\Component\Validator\Constraints as Assert;
-
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use JMS\Serializer\Annotation\ExclusionPolicy as ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose as Expose;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection as DoctrineCollection;
-
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Maps
@@ -19,8 +17,8 @@ use Doctrine\Common\Collections\ArrayCollection as DoctrineCollection;
  * @ORM\Entity(repositoryClass="EsterenMaps\MapsBundle\Repository\MapsRepository")
  * @ExclusionPolicy("all")
  */
-class Maps
-{
+class Maps {
+
     /**
      * @var integer
      *
@@ -91,29 +89,29 @@ class Maps
      */
     protected $updated;
 
-	/**
-     * @var DoctrineCollection
-	 *
-	 * @ORM\OneToMany(targetEntity="Routes", mappedBy="map")
+    /**
+     * @var Routes[]
+     *
+     * @ORM\OneToMany(targetEntity="Routes", mappedBy="map")
      * @Expose
-	 */
-	protected $routes;
+     */
+    protected $routes;
 
-	/**
-     * @var DoctrineCollection
-	 *
-	 * @ORM\OneToMany(targetEntity="Markers", mappedBy="map")
+    /**
+     * @var Markers[]
+     *
+     * @ORM\OneToMany(targetEntity="Markers", mappedBy="map")
      * @Expose
-	 */
-	protected $markers;
+     */
+    protected $markers;
 
-	/**
-     * @var DoctrineCollection
-	 *
-	 * @ORM\OneToMany(targetEntity="Zones", mappedBy="map", cascade={"persist"})
+    /**
+     * @var Zones[]
+     *
+     * @ORM\OneToMany(targetEntity="Zones", mappedBy="map", cascade={"persist"})
      * @Expose
-	 */
-	protected $zones;
+     */
+    protected $zones;
 
     /**
      * @var boolean
@@ -129,12 +127,11 @@ class Maps
     /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->setMaxZoom(10);
-        $this->routes = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->markers = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->zones = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->routes = new ArrayCollection();
+        $this->markers = new ArrayCollection();
+        $this->zones = new ArrayCollection();
     }
 
     /**
@@ -142,8 +139,7 @@ class Maps
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -153,8 +149,7 @@ class Maps
      * @param string $name
      * @return Maps
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -165,8 +160,7 @@ class Maps
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -176,8 +170,7 @@ class Maps
      * @param string $image
      * @return Maps
      */
-    public function setImage($image)
-    {
+    public function setImage($image) {
         $this->image = $image;
 
         return $this;
@@ -188,8 +181,7 @@ class Maps
      *
      * @return string
      */
-    public function getImage()
-    {
+    public function getImage() {
         return $this->image;
     }
 
@@ -199,8 +191,7 @@ class Maps
      * @param string $description
      * @return Maps
      */
-    public function setDescription($description)
-    {
+    public function setDescription($description) {
         $this->description = $description;
 
         return $this;
@@ -211,8 +202,7 @@ class Maps
      *
      * @return string
      */
-    public function getDescription()
-    {
+    public function getDescription() {
         return $this->description;
     }
 
@@ -222,8 +212,7 @@ class Maps
      * @param boolean $maxZoom
      * @return Maps
      */
-    public function setMaxZoom($maxZoom)
-    {
+    public function setMaxZoom($maxZoom) {
         $this->maxZoom = $maxZoom;
 
         return $this;
@@ -234,8 +223,7 @@ class Maps
      *
      * @return integer
      */
-    public function getMaxZoom()
-    {
+    public function getMaxZoom() {
         return $this->maxZoom;
     }
 
@@ -245,8 +233,7 @@ class Maps
      * @param \DateTime $created
      * @return Maps
      */
-    public function setCreated($created)
-    {
+    public function setCreated($created) {
         $this->created = $created;
 
         return $this;
@@ -257,8 +244,7 @@ class Maps
      *
      * @return \DateTime
      */
-    public function getCreated()
-    {
+    public function getCreated() {
         return $this->created;
     }
 
@@ -268,8 +254,7 @@ class Maps
      * @param \DateTime $updated
      * @return Maps
      */
-    public function setUpdated($updated)
-    {
+    public function setUpdated($updated) {
         $this->updated = $updated;
 
         return $this;
@@ -280,19 +265,17 @@ class Maps
      *
      * @return \DateTime
      */
-    public function getUpdated()
-    {
+    public function getUpdated() {
         return $this->updated;
     }
 
     /**
      * Add routes
      *
-     * @param \EsterenMaps\MapsBundle\Entity\Routes $routes
+     * @param Routes $routes
      * @return Maps
      */
-    public function addRoute(\EsterenMaps\MapsBundle\Entity\Routes $routes)
-    {
+    public function addRoute(Routes $routes) {
         $this->routes[] = $routes;
 
         return $this;
@@ -301,20 +284,18 @@ class Maps
     /**
      * Remove routes
      *
-     * @param \EsterenMaps\MapsBundle\Entity\Routes $routes
+     * @param Routes $routes
      */
-    public function removeRoute(\EsterenMaps\MapsBundle\Entity\Routes $routes)
-    {
+    public function removeRoute(Routes $routes) {
         $this->routes->removeElement($routes);
     }
 
     /**
      * Get routes
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return ArrayCollection
      */
-    public function getRoutes()
-    {
+    public function getRoutes() {
         return $this->routes;
     }
 
@@ -324,11 +305,11 @@ class Maps
      * @param Routes $route
      * @return Routes
      */
-    public function getRoute(Routes $route)
-    {
+    public function getRoute(Routes $route) {
         foreach ($this->routes as $mapRoute) {
             if ($mapRoute->getId() === $route->getId() ||
-                $mapRoute->getName() === $route->getName()) {
+                $mapRoute->getName() === $route->getName()
+            ) {
                 return $mapRoute;
             }
         }
@@ -358,8 +339,7 @@ class Maps
      * @param Markers $markers
      * @return Maps
      */
-    public function addMarker(Markers $markers)
-    {
+    public function addMarker(Markers $markers) {
         $this->markers[] = $markers;
 
         return $this;
@@ -370,31 +350,30 @@ class Maps
      *
      * @param Markers $markers
      */
-    public function removeMarker(Markers $markers)
-    {
+    public function removeMarker(Markers $markers) {
         $this->markers->removeElement($markers);
     }
 
     /**
      * Get markers
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return ArrayCollection
      */
-    public function getMarkers()
-    {
+    public function getMarkers() {
         return $this->markers;
     }
 
     /**
      * Get zone
      *
+     * @param Markers $marker
      * @return Zones
      */
-    public function getMarker(Markers $marker)
-    {
+    public function getMarker(Markers $marker) {
         foreach ($this->markers as $mapMarker) {
             if ($mapMarker->getId() === $marker->getId() ||
-                $mapMarker->getName() === $marker->getName()) {
+                $mapMarker->getName() === $marker->getName()
+            ) {
                 return $mapMarker;
             }
         }
@@ -420,8 +399,7 @@ class Maps
      * @param Zones $zones
      * @return Maps
      */
-    public function addZone(Zones $zones)
-    {
+    public function addZone(Zones $zones) {
         $this->zones[] = $zones;
 
         return $this;
@@ -432,21 +410,21 @@ class Maps
      *
      * @param Zones $zones
      */
-    public function removeZone(Zones $zones)
-    {
+    public function removeZone(Zones $zones) {
         $this->zones->removeElement($zones);
     }
 
     /**
      * Get zone
      *
+     * @param Zones $zone
      * @return Zones
      */
-    public function getZone(Zones $zone)
-    {
+    public function getZone(Zones $zone) {
         foreach ($this->zones as $mapZone) {
             if ($mapZone->getId() === $zone->getId() ||
-                $mapZone->getName() === $zone->getName()) {
+                $mapZone->getName() === $zone->getName()
+            ) {
                 return $mapZone;
             }
         }
@@ -454,7 +432,7 @@ class Maps
     }
 
     /**
-     *
+     * @param Zones $zone
      */
     public function setZone(Zones $zone) {
         $exists = $this->getZone($zone);
@@ -469,10 +447,9 @@ class Maps
     /**
      * Get zones
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return ArrayCollection
      */
-    public function getZones()
-    {
+    public function getZones() {
         return $this->zones;
     }
 
@@ -482,8 +459,7 @@ class Maps
      * @param string $nameSlug
      * @return Maps
      */
-    public function setNameSlug($nameSlug)
-    {
+    public function setNameSlug($nameSlug) {
         $this->nameSlug = $nameSlug;
 
         return $this;
@@ -494,16 +470,36 @@ class Maps
      *
      * @return string
      */
-    public function getNameSlug()
-    {
+    public function getNameSlug() {
         return $this->nameSlug;
     }
 
     /**
      * Réinitialise correctement les informations de la map
      */
-    public function refresh()
-    {
+    public function refresh() {
+        //TODO
         return $this;
+    }
+
+    /**
+     * Set deleted
+     *
+     * @param \DateTime $deleted
+     * @return Maps
+     */
+    public function setDeleted($deleted) {
+        $this->deleted = $deleted;
+
+        return $this;
+    }
+
+    /**
+     * Get deleted
+     *
+     * @return \DateTime
+     */
+    public function getDeleted() {
+        return $this->deleted;
     }
 }

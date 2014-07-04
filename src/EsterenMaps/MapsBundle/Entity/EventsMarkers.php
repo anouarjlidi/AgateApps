@@ -1,9 +1,9 @@
 <?php
 
 namespace EsterenMaps\MapsBundle\Entity;
-use Gedmo\Mapping\Annotation as Gedmo;
+
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection as DoctrineCollection;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * EventsMarkers
@@ -30,17 +30,17 @@ class EventsMarkers {
      */
     protected $marker;
 
-	/**
-	 * @var smallint
-	 *
-	 * @ORM\Column(type="smallint")
-	 */
-	protected $percentage;
+    /**
+     * @var integer
+     *
+     * @ORM\Column(type="smallint")
+     */
+    protected $percentage;
 
     /**
      * @var \Datetime
      *
-	 * @Gedmo\Timestampable(on="create")
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $created;
@@ -48,7 +48,7 @@ class EventsMarkers {
     /**
      * @var \Datetime
      *
-	 * @Gedmo\Timestampable(on="update")
+     * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $updated;
@@ -66,8 +66,7 @@ class EventsMarkers {
      * @param integer $percentage
      * @return EventsMarkers
      */
-    public function setPercentage($percentage)
-    {
+    public function setPercentage($percentage) {
         $this->percentage = $percentage;
 
         return $this;
@@ -78,8 +77,7 @@ class EventsMarkers {
      *
      * @return integer
      */
-    public function getPercentage()
-    {
+    public function getPercentage() {
         return $this->percentage;
     }
 
@@ -89,8 +87,7 @@ class EventsMarkers {
      * @param \DateTime $created
      * @return EventsMarkers
      */
-    public function setCreated($created)
-    {
+    public function setCreated($created) {
         $this->created = $created;
 
         return $this;
@@ -101,8 +98,7 @@ class EventsMarkers {
      *
      * @return \DateTime
      */
-    public function getCreated()
-    {
+    public function getCreated() {
         return $this->created;
     }
 
@@ -112,8 +108,7 @@ class EventsMarkers {
      * @param \DateTime $updated
      * @return EventsMarkers
      */
-    public function setUpdated($updated)
-    {
+    public function setUpdated($updated) {
         $this->updated = $updated;
 
         return $this;
@@ -124,19 +119,17 @@ class EventsMarkers {
      *
      * @return \DateTime
      */
-    public function getUpdated()
-    {
+    public function getUpdated() {
         return $this->updated;
     }
 
     /**
      * Set event
      *
-     * @param \EsterenMaps\MapsBundle\Entity\Events $event
+     * @param Events $event
      * @return EventsMarkers
      */
-    public function setEvent(\EsterenMaps\MapsBundle\Entity\Events $event)
-    {
+    public function setEvent(Events $event) {
         $this->event = $event;
 
         return $this;
@@ -145,21 +138,19 @@ class EventsMarkers {
     /**
      * Get event
      *
-     * @return \EsterenMaps\MapsBundle\Entity\Events
+     * @return Events
      */
-    public function getEvent()
-    {
+    public function getEvent() {
         return $this->event;
     }
 
     /**
      * Set marker
      *
-     * @param \EsterenMaps\MapsBundle\Entity\Markers $marker
+     * @param Markers $marker
      * @return EventsMarkers
      */
-    public function setMarker(\EsterenMaps\MapsBundle\Entity\Markers $marker)
-    {
+    public function setMarker(Markers $marker) {
         $this->marker = $marker;
 
         return $this;
@@ -168,10 +159,30 @@ class EventsMarkers {
     /**
      * Get marker
      *
-     * @return \EsterenMaps\MapsBundle\Entity\Markers
+     * @return Markers
      */
-    public function getMarker()
-    {
+    public function getMarker() {
         return $this->marker;
+    }
+
+    /**
+     * Set deleted
+     *
+     * @param \DateTime $deleted
+     * @return EventsMarkers
+     */
+    public function setDeleted($deleted) {
+        $this->deleted = $deleted;
+
+        return $this;
+    }
+
+    /**
+     * Get deleted
+     *
+     * @return \DateTime
+     */
+    public function getDeleted() {
+        return $this->deleted;
     }
 }

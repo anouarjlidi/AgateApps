@@ -2,34 +2,33 @@
 
 namespace EsterenMaps\MapsBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * Foes
+ * EventsZonesTypes
  *
- * @ORM\Table(name="foes")
+ * @ORM\Table(name="events_zones_types")
  * @Gedmo\SoftDeleteable(fieldName="deleted")
- * @ORM\Entity(repositoryClass="EsterenMaps\MapsBundle\Repository\FoesRepository")
+ * @ORM\Entity(repositoryClass="EsterenMaps\MapsBundle\Repository\EventsZonesTypesRepository")
  */
-class Foes {
+class EventsZonesTypes {
 
     /**
-     * @var integer
+     * @var Events
      *
      * @ORM\Id
-     * @ORM\Column(type="integer", nullable=false)
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\ManyToOne(targetEntity="Events", inversedBy="zonesTypes")
      */
-    protected $id;
+    protected $event;
 
     /**
-     * @var string
+     * @var ZonesTypes
      *
-     * @ORM\Column(type="string", length=255, nullable=false, unique=true)
+     * @ORM\Id
+     * @ORM\ManyToOne(targetEntity="ZonesTypes", inversedBy="events")
      */
-    protected $name;
+    protected $zoneType;
 
     /**
      * @var \Datetime
@@ -48,10 +47,11 @@ class Foes {
     protected $updated;
 
     /**
-     * @var Events[]
-     * @ORM\ManyToMany(targetEntity="Events", inversedBy="foes")
+     * @var integer
+     *
+     * @ORM\Column(type="smallint")
      */
-    protected $events;
+    protected $percentage;
 
     /**
      * @var boolean
@@ -61,47 +61,10 @@ class Foes {
     protected $deleted = null;
 
     /**
-     * Constructor
-     */
-    public function __construct() {
-        $this->events = new ArrayCollection();
-    }
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId() {
-        return $this->id;
-    }
-
-    /**
-     * Set name
-     *
-     * @param string $name
-     * @return Foes
-     */
-    public function setName($name) {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName() {
-        return $this->name;
-    }
-
-    /**
      * Set created
      *
      * @param \DateTime $created
-     * @return Foes
+     * @return EventsZonesTypes
      */
     public function setCreated($created) {
         $this->created = $created;
@@ -122,7 +85,7 @@ class Foes {
      * Set updated
      *
      * @param \DateTime $updated
-     * @return Foes
+     * @return EventsZonesTypes
      */
     public function setUpdated($updated) {
         $this->updated = $updated;
@@ -140,40 +103,73 @@ class Foes {
     }
 
     /**
-     * Add events
+     * Set percentage
      *
-     * @param Events $events
-     * @return Foes
+     * @param integer $percentage
+     * @return EventsZonesTypes
      */
-    public function addEvent(Events $events) {
-        $this->events[] = $events;
+    public function setPercentage($percentage) {
+        $this->percentage = $percentage;
 
         return $this;
     }
 
     /**
-     * Remove events
+     * Get percentage
      *
-     * @param Events $events
+     * @return integer
      */
-    public function removeEvent(Events $events) {
-        $this->events->removeElement($events);
+    public function getPercentage() {
+        return $this->percentage;
     }
 
     /**
-     * Get events
+     * Set event
      *
-     * @return ArrayCollection
+     * @param Events $event
+     * @return EventsZonesTypes
      */
-    public function getEvents() {
-        return $this->events;
+    public function setEvent(Events $event) {
+        $this->event = $event;
+
+        return $this;
+    }
+
+    /**
+     * Get event
+     *
+     * @return Events
+     */
+    public function getEvent() {
+        return $this->event;
+    }
+
+    /**
+     * Set zoneType
+     *
+     * @param ZonesTypes $zoneType
+     * @return EventsZonesTypes
+     */
+    public function setZoneType(ZonesTypes $zoneType) {
+        $this->zoneType = $zoneType;
+
+        return $this;
+    }
+
+    /**
+     * Get zoneType
+     *
+     * @return ZonesTypes
+     */
+    public function getZoneType() {
+        return $this->zoneType;
     }
 
     /**
      * Set deleted
      *
      * @param \DateTime $deleted
-     * @return Foes
+     * @return EventsZonesTypes
      */
     public function setDeleted($deleted) {
         $this->deleted = $deleted;
