@@ -101,6 +101,7 @@ class Routes {
      * @var Factions
      *
      * @ORM\ManyToOne(targetEntity="Factions", inversedBy="routes")
+     * @ORM\JoinColumn(nullable=true)
      * @Expose
      */
     protected $faction;

@@ -63,14 +63,14 @@ class Zones {
     /**
      * @var Maps
      *
-     * @ORM\ManyToOne(targetEntity="Maps", inversedBy="zones")
+     * @ORM\ManyToOne(targetEntity="Maps", inversedBy="zones", fetch="EAGER")
      */
     protected $map;
 
     /**
      * @var Factions
      *
-     * @ORM\ManyToOne(targetEntity="Factions", inversedBy="zones")
+     * @ORM\ManyToOne(targetEntity="Factions", inversedBy="zones", fetch="EAGER")
      * @Expose
      */
     protected $faction;
@@ -78,7 +78,7 @@ class Zones {
     /**
      * @var ZonesTypes
      *
-     * @ORM\ManyToOne(targetEntity="ZonesTypes", inversedBy="zones")
+     * @ORM\ManyToOne(targetEntity="ZonesTypes", inversedBy="zones", fetch="EAGER")
      * @Expose
      */
     protected $zoneType;
@@ -274,7 +274,7 @@ class Zones {
     /**
      * Get events
      *
-     * @return ArrayCollection
+     * @return EventsZonesTypes[]
      */
     public function getEvents() {
         return $this->events;
