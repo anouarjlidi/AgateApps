@@ -16,6 +16,12 @@ class ZonesTypesType extends AbstractType
     {
         $builder
             ->add('name', 'text', array('label'=>'Nom'))
+            ->add('parent', 'entity', array(
+                'class' => 'EsterenMaps\MapsBundle\Entity\ZonesTypes',
+                'empty_value' => '-- Choisissez une catégorie parente --',
+                'label' => 'Catégorie parente',
+                'property' => 'name',
+            ))
             ->add('save', 'submit', array('label'=>'Enregistrer'))
         ;
     }

@@ -59,6 +59,14 @@ class ZonesTypes {
     protected $resources;
 
     /**
+     * @var ZonesTypes
+     *
+     * @ORM\ManyToOne(targetEntity="ZonesTypes")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $parent;
+
+    /**
      * @var Zones[]
      * @ORM\OneToMany(targetEntity="Zones", mappedBy="zoneType")
      */
@@ -76,6 +84,8 @@ class ZonesTypes {
      * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
     protected $deleted = null;
+
+    protected $children = array();
 
     /**
      * Constructor
@@ -268,4 +278,85 @@ class ZonesTypes {
     public function getDeleted() {
         return $this->deleted;
     }
+
+    /**
+     * Set parent
+     *
+     * @param ZonesTypes $parent
+     * @return ZonesTypes
+     */
+    public function setParent(ZonesTypes $parent = null) {
+        $this->parent = $parent;
+
+        return $this;
+    }
+
+    /**
+     * Get parent
+     *
+     * @return ZonesTypes
+     */
+    public function getParent() {
+        return $this->parent;
+    }
+
+    /**
+     * @param ZonesTypes $child
+     * @return $this
+     */
+    public function addChild($child) {
+        $this->children[$child->getId()] = $child;
+        return $this;
+    }
+
+    /**
+     * @param ZonesTypes[] $children
+     * @return $this
+     */
+    public function setChildren($children) {
+        $this->children = $children;
+        return $this;
+    }
+
+    /**
+     * @return ZonesTypes[]
+     */
+    public function getChildren() {
+        return $this->children;
+    }
+
+    /**
+     * @param ZonesTypes $child
+     * @return $this
+     */
+    public function removeChild($child) {
+        if (is_numeric($child)) {
+            unset($this->children[$child]);
+        } elseif (is_object($child)) {
+            unset($this->children[$child->getId()]);
+        }
+        return $this;
+
+    }
+
+    /**
+     * Retourne le parent à un certain niveau d'héritage
+     *
+     * @param int $level
+     * @return ZonesTypes|null
+     */
+    public function getParentByLevel($level = 0) {
+        $actualParent = $this->parent;
+        if ($actualParent) {
+            while ($level > 0) {
+                $actualParent = $actualParent->getParent();
+                $level--;
+                if (!$actualParent && $level > 0) {
+                    $level = 0;
+                }
+            }
+        }
+        return $actualParent;
+    }
+
 }

@@ -35,7 +35,9 @@
 	.text-underline { text-decoration: underline; }
 
 
+.mw50   { max-width:  50px; }
 
+.w50    { width:  50px; }
 .w100   { width: 100px; }
 .w150   { width: 150px; }
 .w180   { width: 180px; }

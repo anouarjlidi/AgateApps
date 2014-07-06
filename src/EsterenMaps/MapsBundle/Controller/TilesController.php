@@ -24,17 +24,18 @@ class TilesController extends Controller {
         $em = $this->getDoctrine()->getManager();
 
         $markersTypes = $em->getRepository('EsterenMapsBundle:MarkersTypes')->findAll();
+        $zonesTypes = $em->getRepository('EsterenMapsBundle:ZonesTypes')->findAll();
         $routesTypes = $em->getRepository('EsterenMapsBundle:RoutesTypes')->findAll();
         $factions = $em->getRepository('EsterenMapsBundle:Factions')->findAll();
 
         if ($get->get('editMode') == true) {
             $datas['LeafletPopupMarkerBaseContent'] = $this->renderView('EsterenMapsBundle:Maps:popupContentMarkerEditMode.html.twig',array('markersTypes'=>$markersTypes,'factions'=>$factions));
             $datas['LeafletPopupPolylineBaseContent'] = $this->renderView('EsterenMapsBundle:Maps:popupContentPolylineEditMode.html.twig', array('markers'=>$map->getMarkers(),'routesTypes'=>$routesTypes,'factions'=>$factions));
-            $datas['LeafletPopupPolygonBaseContent'] = $this->renderView('EsterenMapsBundle:Maps:popupContentPolygonEditMode.html.twig',array('factions'=>$factions));
+            $datas['LeafletPopupPolygonBaseContent'] = $this->renderView('EsterenMapsBundle:Maps:popupContentPolygonEditMode.html.twig',array('factions'=>$factions, 'zonesTypes'=>$zonesTypes));
         } else {
             $datas['LeafletPopupMarkerBaseContent'] = $this->renderView('EsterenMapsBundle:Maps:popupContentMarker.html.twig',array('markersTypes'=>$markersTypes,'factions'=>$factions));
             $datas['LeafletPopupPolylineBaseContent'] = $this->renderView('EsterenMapsBundle:Maps:popupContentPolyline.html.twig', array('markers'=>$map->getMarkers(),'routesTypes'=>$routesTypes,'factions'=>$factions));
-            $datas['LeafletPopupPolygonBaseContent'] = $this->renderView('EsterenMapsBundle:Maps:popupContentPolygon.html.twig',array('factions'=>$factions));
+            $datas['LeafletPopupPolygonBaseContent'] = $this->renderView('EsterenMapsBundle:Maps:popupContentPolygon.html.twig',array('factions'=>$factions, 'zonesTypes'=>$zonesTypes));
         }
 
         $datas = json_encode(array('settings'=>$datas), 480);

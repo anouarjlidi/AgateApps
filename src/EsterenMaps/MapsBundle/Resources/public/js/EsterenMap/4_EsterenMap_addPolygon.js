@@ -60,6 +60,7 @@
 
             if (polygon._sidebar.isVisible()) {
                 d.getElementById('polygon_popup_name').innerHTML = esterenZone.name;
+                d.getElementById('polygon_popup_type').innerHTML = esterenZone.zone_type ? esterenZone.zone_type.name : '';
                 d.getElementById('polygon_popup_faction').innerHTML = esterenZone.faction ? esterenZone.faction.name : '';
             }
         }
@@ -128,6 +129,7 @@
                         this.cloneObject(options, {
                             popupContent:popupContent,
                             esterenZone: zone,
+                            polylineType: zone.zone_type ? zone.zone_type.id : null,
                             polygonName: zone.name,
                             polygonFaction: zone.faction ? zone.faction.id : ''
                         })
@@ -205,7 +207,8 @@
             $('#inputs_container').append(
                 '<input type="hidden" id="polygon_'+id+'_name" name="polygon['+id+'][name]" value="'+(customUserOptions.polygonName?customUserOptions.polygonName:'')+'" />'+
                 '<input type="hidden" id="polygon_'+id+'_faction" name="polygon['+id+'][faction]" value="'+(customUserOptions.polygonFaction?customUserOptions.polygonFaction:'')+'" />'+
-                '<textarea style="display: none;" id="polygon_'+id+'_coordinates" name="polygon['+id+'][coordinates]">'+JSON.stringify(latLng)+'</textarea>'
+                '<textarea style="display: none;" id="polygon_'+id+'_coordinates" name="polygon['+id+'][coordinates]">'+JSON.stringify(latLng)+'</textarea>'+
+            '<input type="hidden" id="polygon_'+id+'_type" name="polygon['+id+'][type]" value="'+(customUserOptions.polygonType?customUserOptions.polygonType:'1')+'" />'
             );
         }
 

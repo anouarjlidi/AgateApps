@@ -24,10 +24,10 @@
 
 <table class="table table-condensed">
     <tr>
-        <th>#</th>
+        <th class="mw50">#</th>
         <th>{{ 'Nom' | trans }}</th>
         <th>{{ 'Description' | trans }}</th>
-        <th>{{ 'Actions' | trans }}</th>
+        <th class="w150">{{ 'Actions' | trans }}</th>
     </tr>
     {% for faction in factions %}
     <tr>
@@ -36,6 +36,9 @@
         <td>{{ faction.description }}</td>
         <td>
             <a href="{{ url('esterenmaps_maps_factions_edit', {'id':faction.id}) }}" class="btn btn-sm btn-inverse">{{ 'Éditer' | trans }}</a>
+            {% if is_granted('ROLE_ADMIN_MAPS_SUPER') %}
+                <a href="{{ url('esterenmaps_maps_factions_delete', {'id':faction.id}) }}" class="btn btn-sm btn-danger">{{ 'Supprimer' | trans }}</a>
+            {% endif %}
         </td>
     </tr>
     {% else %}

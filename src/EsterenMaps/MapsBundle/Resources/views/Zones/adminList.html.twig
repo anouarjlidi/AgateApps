@@ -1,4 +1,5 @@
 {% extends "PierstovalAdminBundle:Admin:layout.html.twig" %}
+{% import "EsterenMapsBundle:Zones:tree-macro.html.twig" as macros %}
 
 {% block title %}{{ 'Zones' | trans }} - {{ parent() }}{% endblock %}
 
@@ -26,22 +27,27 @@
     </div>
 </div>
 
-<div class="row">
-    <div class="col-sm-6">
+<ul class="nav nav-tabs" role="tablist">
+    <li class="active"><a href="#Zones" role="tab" data-toggle="tab">{{ 'Zones' | trans }}</a></li>
+    <li><a href="#ZonesTypes" role="tab" data-toggle="tab">{{ 'Types de zones' | trans }}</a></li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane active" id="Zones">
         <h3>{{ 'Zones' | trans }}</h3>
         <table class="table table-condensed">
             <tr>
-                <th>#</th>
+                <th class="mw50">#</th>
                 <th>{{ 'Nom' | trans }}</th>
                 <th>{{ 'Type' | trans }}</th>
                 <th>{{ 'Faction' | trans }}</th>
-                <th>{{ 'Actions' | trans }}</th>
+                <th class="w150">{{ 'Actions' | trans }}</th>
             </tr>
             {% for zone in zones %}
             <tr>
                 <td>{{ zone.id }}</td>
                 <td><strong>{{ zone.name }}</strong></td>
-                <td>{{ zone.zoneType.name is defined ? zone.zoneType.name : ' - ' }}</td>
+                <td>{{ zone.zoneType.name is defined ? zone.zoneType.name }}</td>
                 <td>{{ zone.faction.name is defined ? zone.faction.name : ' - ' }}</td>
                 <td>
                     <a href="{{ url('esterenmaps_maps_zones_edit', {'id':zone.id}) }}" class="btn btn-sm btn-inverse">{{ 'Éditer' | trans }}</a>
@@ -55,29 +61,18 @@
             {% endfor %}
         </table>
     </div>
-    <div class="col-sm-6">
+
+    <div class="tab-pane" id="ZonesTypes">
         <h3>{{ 'Types de zones' | trans }}</h3>
         <table class="table table-condensed">
             <tr>
-                <th>#</th>
+                <th class="mw50">#</th>
                 <th>{{ 'Nom' | trans }}</th>
-                <th>{{ 'Actions' | trans }}</th>
+                <th class="w150">{{ 'Actions' | trans }}</th>
             </tr>
-            {% for zoneType in zonesTypes %}
-            <tr>
-                <td>{{ zoneType.id }}</td>
-                <td><strong>{{ zoneType.name }}</strong></td>
-                <td>
-                    <a href="{{ url('esterenmaps_maps_zones_edittype', {'id':zoneType.id}) }}" class="btn btn-sm btn-inverse">{{ 'Éditer' | trans }}</a>
-                    {% if is_granted('ROLE_ADMIN_MAPS_SUPER') %}
-                        <a href="{{ url('esterenmaps_maps_zones_deletetype', {'id':zoneType.id}) }}" class="btn btn-sm btn-danger">{{ 'Supprimer' | trans }}</a>
-                    {% endif %}
-                </td>
-            </tr>
-            {% else %}
-            <tr><td colspan="5">{{ 'Aucun élément' | trans }}</td></tr>
-            {% endfor %}
+            {{ macros.zonesTypesTree(zonesTypes) }}
         </table>
     </div>
 </div>
+
 {% endblock %}

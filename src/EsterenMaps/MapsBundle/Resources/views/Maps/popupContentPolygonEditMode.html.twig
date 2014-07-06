@@ -7,6 +7,17 @@
         </div>
     </div>
     <div class="row">
+        <label for="polygon_popup_type" class="col-sm-2 control-label">{{ 'Type' | trans }}</label>
+        <div class="col-sm-10">
+            <select required="required" id="polygon_popup_type" name="polygon_popup_type" class="form-control">
+                <option value="">-- {{ 'Choisissez un type de zone' | trans | replace("'","&#130;") }} --</option>
+                {% for zoneType in zonesTypes %}
+                    <option value="{{ zoneType.id }}">{{ zoneType.name | trans | replace("'","&#130;") }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="row">
         <label for="polygon_popup_faction" class="col-sm-2 control-label">{{ 'Faction' | trans }}</label>
         <div class="col-sm-10">
             <select id="polygon_popup_faction" name="polygon_popup_faction" class="form-control">

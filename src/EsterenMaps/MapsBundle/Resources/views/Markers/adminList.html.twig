@@ -26,16 +26,21 @@
     </div>
 </div>
 
-<div class="row">
-    <div class="col-sm-6">
+<ul class="nav nav-tabs" role="tablist">
+    <li class="active"><a href="#Markers" role="tab" data-toggle="tab">{{ 'Marqueurs' | trans }}</a></li>
+    <li><a href="#MarkersTypes" role="tab" data-toggle="tab">{{ 'Types de marqueurs' | trans }}</a></li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane active" id="Markers">
         <h3>{{ 'Marqueurs' | trans }}</h3>
         <table class="table table-condensed">
             <tr>
-                <th>#</th>
+                <th class="mw50">#</th>
                 <th>{{ 'Nom' | trans }}</th>
                 <th>{{ 'Type' | trans }}</th>
                 <th>{{ 'Faction' | trans }}</th>
-                <th>{{ 'Actions' | trans }}</th>
+                <th class="w150">{{ 'Actions' | trans }}</th>
             </tr>
             {% for marker in markers %}
             <tr>
@@ -55,13 +60,14 @@
             {% endfor %}
         </table>
     </div>
-    <div class="col-sm-6">
+
+    <div class="tab-pane" id="MarkersTypes">
         <h3>{{ 'Types de marqueurs' | trans }}</h3>
         <table class="table table-condensed">
             <tr>
-                <th>#</th>
+                <th class="mw50">#</th>
                 <th>{{ 'Nom' | trans }}</th>
-                <th>{{ 'Actions' | trans }}</th>
+                <th class="w150">{{ 'Actions' | trans }}</th>
             </tr>
             {% for markerType in markersTypes %}
             <tr>

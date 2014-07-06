@@ -291,7 +291,6 @@ class Menus {
     /**
      * Retourne le parent à un certain niveau d'héritage
      * @param int $level
-     * @throws \Exception
      * @return Menus|null
      */
     public function getParentByLevel($level = 0) {

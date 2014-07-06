@@ -23,7 +23,6 @@ class MenusController extends Controller {
         $repo = $this->getDoctrine()->getManager()->getRepository('EsterenPagesBundle:Menus');
 
         $list = $repo->findForAdmin();
-        $list = $repo->orderTree(0, $list);
 
         foreach ($list as $element) {
             if ($element->getParent()){

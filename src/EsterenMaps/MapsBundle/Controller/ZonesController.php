@@ -20,9 +20,10 @@ class ZonesController extends Controller {
      * @Template()
      */
     public function adminListAction() {
+        $em = $this->getDoctrine()->getManager();
         return array(
-            'zones' => $this->getDoctrine()->getManager()->getRepository('EsterenMapsBundle:Zones')->findAll(),
-            'zonesTypes' => $this->getDoctrine()->getManager()->getRepository('EsterenMapsBundle:ZonesTypes')->findAll()
+            'zones' => $em->getRepository('EsterenMapsBundle:Zones')->findAll(),
+            'zonesTypes' => $em->getRepository('EsterenMapsBundle:ZonesTypes')->findForAdmin(),
         );
     }
 
@@ -158,7 +159,7 @@ class ZonesController extends Controller {
         $em->remove($zone);
         $em->flush();
 
-        $this->get('session')->getFlashBag()->add('success', 'Le zone <strong>'.$zone->getName().'</strong> a été correctement supprimé.');
+        $this->get('session')->getFlashBag()->add('success', 'La zone <strong>'.$zone->getName().'</strong> a été correctement supprimé.');
 
         return $this->redirect($this->generateUrl('esterenmaps_maps_zones_adminlist'));
     }

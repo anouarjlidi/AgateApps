@@ -11,10 +11,9 @@ use Esteren\PagesBundle\Entity\Menus;
 class MenusRepository extends CorahnRinRepository {
 
     /**
-     * @param bool $sortCollection
      * @return Menus[]
      */
-    public function findForAdmin($sortCollection = false) {
+    public function findForAdmin() {
         $qb = $this->_em
             ->createQueryBuilder()
             ->select('menus')
@@ -27,9 +26,13 @@ class MenusRepository extends CorahnRinRepository {
                ->addSelect('parent'.($i + 1));
         }
 
+        $qb->addOrderBy('menus.position', 'asc');
+        $qb->addOrderBy('menus.parent', 'asc');
+        $qb->addOrderBy('menus.name', 'asc');
+
         $list = $qb->getQuery()->getResult();
 
-        return $list;
+        return $this->orderTree(0, $list);
     }
 
     /**
@@ -72,7 +75,7 @@ class MenusRepository extends CorahnRinRepository {
      */
     public function orderTree($level,$list) {
         $elements = array();
-        foreach ($list as $id => $element) {
+        foreach ($list as $element) {
             $parent = $element->getParent() ? $element->getParent()->getId() : 0;
             if ($parent == $level) {
                 $element->setChildren($this->orderTree($element->getId(), $list));
