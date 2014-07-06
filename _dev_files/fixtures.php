@@ -843,4 +843,7 @@ $fixtures = array(
 
 );
 
+// Charge les données temporaires de la carte
+include 'fixtures_map_temp.php';
+
 return $fixtures;
