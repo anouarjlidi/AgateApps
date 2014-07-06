@@ -1,8 +1,9 @@
 <?php
 
 namespace Esteren\PagesBundle\Entity;
-use Gedmo\Mapping\Annotation as Gedmo;
+
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Menus
@@ -11,8 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="Esteren\PagesBundle\Repository\MenusRepository")
  * @Gedmo\SoftDeleteable(fieldName="deleted")
  */
-class Menus
-{
+class Menus {
+
     /**
      * @var integer
      *
@@ -30,7 +31,7 @@ class Menus
     protected $name;
 
     /**
-     * @var string
+     * @var Menus
      *
      * @ORM\ManyToOne(targetEntity="Menus")
      */
@@ -59,14 +60,14 @@ class Menus
 
     /**
      * @var \Datetime
-	 * @Gedmo\Timestampable(on="create")
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $created;
 
     /**
      * @var \Datetime
-	 * @Gedmo\Timestampable(on="update")
+     * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $updated;
@@ -80,32 +81,53 @@ class Menus
 
     protected $children = array();
 
+    /**
+     * @param Menus $child
+     * @return $this
+     */
     public function addChild($child) {
         $this->children[$child->getId()] = $child;
         return $this;
     }
 
+    /**
+     * @param Menus[] $children
+     * @return $this
+     */
     public function setChildren($children) {
         $this->children = $children;
         return $this;
     }
 
-    public function getChildren(){
+    /**
+     * @return Menus[]
+     */
+    public function getChildren() {
         return $this->children;
     }
 
+    /**
+     * @param Menus $child
+     * @return $this
+     */
     public function removeChild($child) {
         if (is_numeric($child)) {
             unset($this->children[$child]);
         } elseif (is_object($child)) {
             unset($this->children[$child->getId()]);
         }
+        return $this;
     }
 
-    public function __toString(){
-        $str = $this->id.' ';
-        if ($this->parent) {
-            $str .= strip_tags($this->parent->getName()).' '.html_entity_decode('&raquo;').' ';
+    /**
+     * @return string
+     */
+    public function __toString() {
+        $str = $this->id . ' ';
+        for ($i = 10; $i > 0; $i--) {
+            if ($this->getParentByLevel($i)) {
+                $str .= strip_tags($this->getParentByLevel($i)->getName()).' '.html_entity_decode('&raquo;').' ';
+            }
         }
         return $str.strip_tags($this->name);
     }
@@ -115,8 +137,7 @@ class Menus
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -126,8 +147,7 @@ class Menus
      * @param string $name
      * @return Menus
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -138,8 +158,7 @@ class Menus
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -149,8 +168,7 @@ class Menus
      * @param integer $position
      * @return Menus
      */
-    public function setPosition($position)
-    {
+    public function setPosition($position) {
         $this->position = $position;
 
         return $this;
@@ -161,8 +179,7 @@ class Menus
      *
      * @return integer
      */
-    public function getPosition()
-    {
+    public function getPosition() {
         return $this->position;
     }
 
@@ -172,8 +189,7 @@ class Menus
      * @param string $route
      * @return Menus
      */
-    public function setRoute($route)
-    {
+    public function setRoute($route) {
         $this->route = $route;
 
         return $this;
@@ -184,8 +200,7 @@ class Menus
      *
      * @return string
      */
-    public function getRoute()
-    {
+    public function getRoute() {
         return $this->route;
     }
 
@@ -195,8 +210,7 @@ class Menus
      * @param \DateTime $created
      * @return Menus
      */
-    public function setCreated($created)
-    {
+    public function setCreated($created) {
         $this->created = $created;
 
         return $this;
@@ -207,8 +221,7 @@ class Menus
      *
      * @return \DateTime
      */
-    public function getCreated()
-    {
+    public function getCreated() {
         return $this->created;
     }
 
@@ -218,8 +231,7 @@ class Menus
      * @param \DateTime $updated
      * @return Menus
      */
-    public function setUpdated($updated)
-    {
+    public function setUpdated($updated) {
         $this->updated = $updated;
 
         return $this;
@@ -230,8 +242,7 @@ class Menus
      *
      * @return \DateTime
      */
-    public function getUpdated()
-    {
+    public function getUpdated() {
         return $this->updated;
     }
 
@@ -241,9 +252,8 @@ class Menus
      * @param Menus $parent
      * @return Menus
      */
-    public function setParent(Menus $parent = null)
-    {
-        $this->parent = $parent;
+    public function setParent(Menus $parent = null) {
+        $this->parent = $parent;;
 
         return $this;
     }
@@ -253,8 +263,7 @@ class Menus
      *
      * @return Menus
      */
-    public function getParent()
-    {
+    public function getParent() {
         return $this->parent;
     }
 
@@ -264,8 +273,7 @@ class Menus
      * @param array $roles
      * @return Menus
      */
-    public function setRoles($roles)
-    {
+    public function setRoles($roles) {
         $this->roles = $roles;
 
         return $this;
@@ -276,8 +284,27 @@ class Menus
      *
      * @return array
      */
-    public function getRoles()
-    {
+    public function getRoles() {
         return $this->roles;
+    }
+
+    /**
+     * Retourne le parent à un certain niveau d'héritage
+     * @param int $level
+     * @throws \Exception
+     * @return Menus|null
+     */
+    public function getParentByLevel($level = 0) {
+        $actualParent = $this->parent;
+        if ($actualParent) {
+            while ($level > 0) {
+                $actualParent = $actualParent->getParent();
+                $level--;
+                if (!$actualParent && $level > 0) {
+                    $level = 0;
+                }
+            }
+        }
+        return $actualParent;
     }
 }

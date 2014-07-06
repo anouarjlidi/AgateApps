@@ -2,6 +2,7 @@
 namespace Esteren\PagesBundle\Repository;
 use Doctrine\ORM\EntityRepository;
 use CorahnRin\ToolsBundle\Repository\CorahnRinRepository as CorahnRinRepository;
+use Esteren\PagesBundle\Entity\Menus;
 
 /**
  * MenusRepository
@@ -9,14 +10,32 @@ use CorahnRin\ToolsBundle\Repository\CorahnRinRepository as CorahnRinRepository;
  */
 class MenusRepository extends CorahnRinRepository {
 
+    /**
+     * @param bool $sortCollection
+     * @return Menus[]
+     */
     public function findForAdmin($sortCollection = false) {
-        $sortBy = array(
-            'parent' => 'asc',
-            'position' => 'asc',
-        );
-        return $this->findBy(array(), $sortBy, null, null, $sortCollection);
+        $qb = $this->_em
+            ->createQueryBuilder()
+            ->select('menus')
+            ->from($this->_entityName, 'menus')
+            ->leftJoin('menus.parent', 'parent0')
+            ->addSelect('parent0');
+
+        for ($i = 0; $i < 10; $i++) {
+            $qb->leftJoin('parent'.$i.'.parent', 'parent'.($i + 1))
+               ->addSelect('parent'.($i + 1));
+        }
+
+        $list = $qb->getQuery()->getResult();
+
+        return $list;
     }
 
+    /**
+     * @param integer|string|null $sourceElement
+     * @return Menus[]
+     */
     public function findTree($sourceElement = null) {
 
         $sortBy = array(
@@ -48,10 +67,10 @@ class MenusRepository extends CorahnRinRepository {
     /**
      * Trie récursivement les liens de menu
      * @param int $level
-     * @param array $list
-     * @return array
+     * @param Menus[] $list
+     * @return Menus[]
      */
-    private function orderTree($level,$list) {
+    public function orderTree($level,$list) {
         $elements = array();
         foreach ($list as $id => $element) {
             $parent = $element->getParent() ? $element->getParent()->getId() : 0;
