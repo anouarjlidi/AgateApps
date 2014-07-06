@@ -1,6 +1,6 @@
 <?php
 
-return array(
+$fixtures = array(
 
     // `corahn_rin`.`armors`
     'armors' =>array(
@@ -824,4 +824,23 @@ return array(
         array('id' => '4','book_id' => 2,'melee'=>0,'ranged'=>1,'name' => 'Archerie','xp' => '20','description' => 'Niveau 5 requis en Tir et Lancer. Le personnage agit en dernier pendant le tour où il utilise cet art, mais il dispose d\'un bonus de 2 en Tir &amp; Lancer pour son attaque, et annule tout malus sur une cible en mouvement.','created' => '2014-04-09 08:56:43','updated' => '2014-04-09 08:56:43','deleted' => NULL),
         array('id' => '5','book_id' => 2,'melee'=>1,'ranged'=>0,'name' => 'Cavalerie','xp' => '20','description' => 'Discipline Equitation nécessaire. Si le personnage sur une monture subit moins de 5 dégâts, il n\'est pas désarçonné. Le personnage peut également charger en premier round d\'un combat, et bénéficier d\'un bonus de +3 à son jet (+4 avec une lance)','created' => '2014-04-09 08:56:43','updated' => '2014-04-09 08:56:43','deleted' => NULL),
     ),
+
+    'zones_types' => array(
+        array('id' => 1,'parent_id' => NULL,'name' => 'Politique','created' => '2014-07-06 19:43:13','updated' => '2014-07-06 19:43:13','deleted' => NULL),
+        array('id' => 2,'parent_id' => 1,'name' => 'Royaume','created' => '2014-07-06 19:45:31','updated' => '2014-07-06 19:45:31','deleted' => NULL),
+        array('id' => 3,'parent_id' => 1,'name' => 'Territoire','created' => '2014-07-06 19:45:52','updated' => '2014-07-06 19:45:52','deleted' => NULL),
+        array('id' => 4,'parent_id' => 1,'name' => 'Domaine','created' => '2014-07-06 19:46:04','updated' => '2014-07-06 19:46:04','deleted' => NULL),
+        array('id' => 5,'parent_id' => 1,'name' => 'Ville / Village','created' => '2014-07-06 19:46:10','updated' => '2014-07-06 19:46:10','deleted' => NULL),
+        array('id' => 6,'parent_id' => 1,'name' => 'Terre sacrée','created' => '2014-07-06 19:46:29','updated' => '2014-07-06 19:46:29','deleted' => NULL),
+        array('id' => 7,'parent_id' => NULL,'name' => 'Terrain','created' => '2014-07-06 19:47:19','updated' => '2014-07-06 19:47:19','deleted' => NULL),
+        array('id' => 8,'parent_id' => 7,'name' => 'Forêt','created' => '2014-07-06 19:47:41','updated' => '2014-07-06 19:47:41','deleted' => NULL),
+        array('id' => 9,'parent_id' => 7,'name' => 'Marais','created' => '2014-07-06 19:47:46','updated' => '2014-07-06 19:47:46','deleted' => NULL),
+        array('id' => 10,'parent_id' => 7,'name' => 'Montagnes','created' => '2014-07-06 19:47:54','updated' => '2014-07-06 19:47:54','deleted' => NULL),
+        array('id' => 11,'parent_id' => 7,'name' => 'Failles / Falaises','created' => '2014-07-06 19:48:03','updated' => '2014-07-06 19:48:03','deleted' => NULL),
+        array('id' => 12,'parent_id' => 7,'name' => 'Landes','created' => '2014-07-06 19:48:08','updated' => '2014-07-06 19:48:08','deleted' => NULL),
+        array('id' => 13,'parent_id' => 7,'name' => 'Mer','created' => '2014-07-06 19:55:44','updated' => '2014-07-06 19:55:44','deleted' => NULL)
+    ),
+
 );
+
+return $fixtures;
