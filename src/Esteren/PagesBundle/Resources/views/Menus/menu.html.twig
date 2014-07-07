@@ -35,10 +35,12 @@
 							<a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ 'Langue' | trans() }} [{{ locale|upper }}] <b class="caret"></b></a>
 							<ul class="dropdown-menu">
 								{% for lang in langs %}
-
-								{% if lang.locale == locale %}<li class="active"><a>{{ lang.name | trans }}</a></li>{% else %}<li><a href="{{ url('pierstoval_translation_translate_changelang', {'locale':lang.locale}) }}">{{ lang.name | trans }}</a></li>{% endif %}
+								    {% if lang.locale == locale %}
+                                        <li class="active"><a>{{ lang.name | trans }}</a></li>
+                                    {% else %}
+                                        <li><a href="{{ url(app.request.attributes.get('route'), {'_locale':lang.locale}) }}">{{ lang.name | trans }}</a></li>
+                                    {% endif %}
 								{% endfor %}
-
 							</ul>
                         </li>
 						{% if app.user.username is not defined %}

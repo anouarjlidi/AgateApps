@@ -26,7 +26,8 @@
         "friendsofsymfony/rest-bundle": "1.*",
         "jms/serializer": "dev-master",
         "jms/serializer-bundle": "dev-master",
-        "pierstoval/translation-bundle": "dev-master"
+        "pierstoval/translation-bundle": "dev-master",
+        "jms/i18n-routing-bundle": "1.*"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

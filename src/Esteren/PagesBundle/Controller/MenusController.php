@@ -84,7 +84,6 @@ class MenusController extends Controller {
         }
         $links = $this->{'menu'.$method_name}();
         $langs = $this->container->get('translator')->getLangs();
-        $username = $this->get('fos_user.user_provider.username');
         return array(
             'links' => $links,
             'brandTitle' => $brandTitle,

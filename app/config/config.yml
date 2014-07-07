@@ -49,7 +49,7 @@ assetic:
         - 'EsterenMapsBundle'
         - 'EsterenPagesBundle'
         - 'CorahnRinGeneratorBundle'
-        - 'PierstovalTranslationBundle'
+#        - 'PierstovalTranslationBundle'
     #java: /usr/bin/java
     filters:
         cssrewrite: ~
@@ -137,3 +137,8 @@ services:
         tags:
             - name: twig.extension
 
+# JMS RoutingBundle
+jms_i18n_routing:
+    default_locale: %locale%
+    locales: [fr,de,es,en]
+    strategy: prefix
