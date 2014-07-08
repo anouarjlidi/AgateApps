@@ -68,14 +68,14 @@ security:
                 key:        %secret%
 
     access_control:
-        - { path: ^/login$,             role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/register,           role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/resetting,          role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/maps,               role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/api/maps,           role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/,                   role: ROLE_USER }
-        - { path: ^/profile,            role: ROLE_USER }
-        - { path: ^/admin/maps,         role: ROLE_ADMIN_MAPS }
-        - { path: ^/admin/generator,    role: ROLE_ADMIN_GENERATOR }
-        - { path: ^/admin/manage_site,  role: ROLE_ADMIN }
-        - { path: ^/admin/super,        role: ROLE_SUPER_ADMIN }
+        - { path: ^(/(fr|de|en|es)?)?/login$,             role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^(/(fr|de|en|es)?)?/register,           role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^(/(fr|de|en|es)?)?/resetting,          role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^(/(fr|de|en|es)?)?/maps,               role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^(/(fr|de|en|es)?)?/api/maps,           role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^(/(fr|de|en|es)?)?/,                   role: ROLE_USER }
+        - { path: ^(/(fr|de|en|es)?)?/profile,            role: ROLE_USER }
+        - { path: ^(/(fr|de|en|es)?)?/admin/maps,         role: ROLE_ADMIN_MAPS }
+        - { path: ^(/(fr|de|en|es)?)?/admin/generator,    role: ROLE_ADMIN_GENERATOR }
+        - { path: ^(/(fr|de|en|es)?)?/admin/manage_site,  role: ROLE_ADMIN }
+        - { path: ^(/(fr|de|en|es)?)?/admin/super,        role: ROLE_SUPER_ADMIN }
