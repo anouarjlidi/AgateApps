@@ -4,7 +4,7 @@
 <div id="wrapper">
 
     {% block menus %}{# MENUS #}
-        {% render(controller("EsterenPagesBundle:Menus:menu", {'route':app.request.attributes.get('_route')})) %}
+        {% render(controller("EsterenPagesBundle:Menus:menu", {'route':app.request.attributes.get('_route'),'route_params':app.request.attributes.get('_route_params')} )) %}
     {% endblock %}
 
     <div id="layout" class="container">

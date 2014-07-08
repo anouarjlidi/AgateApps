@@ -72,7 +72,7 @@ class MenusController extends Controller {
     /**
      * @Template()
      */
-    public function menuAction($route = '') {
+    public function menuAction($route = '', $route_params = array()) {
         if (preg_match('#^esteren_maps#isUu', $route)) {
             $method_name = 'EsterenMaps';
             $brandTitle = 'Esteren Maps';
@@ -90,7 +90,8 @@ class MenusController extends Controller {
             'brandRoute' => $brandRoute,
             'route_name' => $route,
             'locale' => $this->get('session')->get('_locale'),
-            'langs' => $langs
+            'langs' => $langs,
+            'route_params' => $route_params ?: array(),
         );
     }
 
