@@ -45,6 +45,14 @@ class Routes {
     protected $coordinates;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(type="integer")
+     * @Expose
+     */
+    protected $distance;
+
+    /**
      * @var \Datetime
      *
      * @Gedmo\Timestampable(on="create")
@@ -400,26 +408,18 @@ class Routes {
     }
 
     /**
-     * Réinitialise correctement les informations de la route
+     * @return integer
      */
-    public function refresh() {
-        $coords = json_decode($this->coordinates, true);
+    public function getDistance() {
+        return $this->distance;
+    }
 
-        if ($this->markerStart) {
-            $coords[0] = array(
-                'lat' => $this->markerStart->getLatitude(),
-                'lng' => $this->markerStart->getLongitude(),
-            );
-        }
-        if ($this->markerEnd) {
-            $coords[count($coords) - 1] = array(
-                'lat' => $this->markerEnd->getLatitude(),
-                'lng' => $this->markerEnd->getLongitude(),
-            );
-        }
-
-        $this->setCoordinates(json_encode($coords));
-
+    /**
+     * @param integer $distance
+     * @return $this
+     */
+    public function setDistance($distance) {
+        $this->distance = (int) $distance;
         return $this;
     }
 
@@ -442,5 +442,65 @@ class Routes {
      */
     public function getDeleted() {
         return $this->deleted;
+    }
+
+    /**
+     * Réinitialise correctement les informations de la route
+     * @return $this
+     */
+    public function refresh() {
+        $coords = json_decode($this->coordinates, true);
+
+        if ($this->markerStart) {
+            $coords[0] = array(
+                'lat' => $this->markerStart->getLatitude(),
+                'lng' => $this->markerStart->getLongitude(),
+            );
+        }
+        if ($this->markerEnd) {
+            $coords[count($coords) - 1] = array(
+                'lat' => $this->markerEnd->getLatitude(),
+                'lng' => $this->markerEnd->getLongitude(),
+            );
+        }
+
+        $this->calcDistance();
+
+        $this->setCoordinates(json_encode($coords));
+
+        return $this;
+    }
+
+    /**
+     * @return integer
+     */
+    public function calcDistance() {
+        $distance = 0;
+        $points = json_decode($this->coordinates, true);
+
+        reset($points);
+
+        while ($current = current($points)) {
+            $next = next($points);
+            if (false !== $next) {
+                $currentX = $current['lng'];
+                $currentY = $current['lat'];
+                $nextX = $next['lng'];
+                $nextY = $next['lat'];
+
+                $distance += sqrt(
+                    ( $nextX * $nextX )
+                    - ( 2 * $currentX * $nextX )
+                    + ( $currentX * $currentX )
+                    + ( $nextY * $nextY )
+                    - ( 2 * $currentY * $nextY )
+                    + ( $currentY * $currentY )
+                );
+            }
+        }
+
+        $this->distance = $distance;
+
+        return $distance;
     }
 }

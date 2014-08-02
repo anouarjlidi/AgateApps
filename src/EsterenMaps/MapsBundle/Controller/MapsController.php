@@ -366,7 +366,7 @@ class MapsController extends Controller
                 ->setRouteType($this->routesTypes[$polyline['type']])
                 ->setFaction($polyline['faction'] ? $this->factions[$polyline['faction']] : null)
                 ->setMarkerStart($markers_ids[$polyline['markerStart']])
-                ->setMarkerEnd($markers_ids[$polyline['markerEnd']])
+                ->setMarkerEnd(isset($markers_ids[$polyline['markerEnd']]) ? $markers_ids[$polyline['markerEnd']] : null)
                 ->setCoordinates($polyline['coordinates']);
             unset($routes_map[$id]);
 
