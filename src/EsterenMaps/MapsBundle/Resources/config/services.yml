@@ -1,0 +1,16 @@
+parameters:
+    esterenmaps.tile_size: 168
+    esterenmaps.output_directory: %kernel.root_dir%/../web/maps_tiles/
+
+services:
+    esterenmaps.tiles_manager:
+        class: EsterenMaps\MapsBundle\Services\MapsTilesManager
+        output_directory: %esterenmaps.output_directory%
+        tile_size: %esterenmaps.tile_size%
+        kernel: @kernel
+
+    esterenmaps.directions:
+        class: EsterenMaps\MapsBundle\Services\Directions
+        arguments:
+            - @doctrine.orm.default_entity_manager
+            - @jms_serializer

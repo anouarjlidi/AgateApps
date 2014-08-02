@@ -21,7 +21,6 @@ class ApiController extends FOSRestController
     /**
      * @Route("/")
      * @Method({"GET"})
-     * @Rest\View()
      */
     public function cgetAction($serviceName)
     {
@@ -49,7 +48,7 @@ class ApiController extends FOSRestController
         $data = $repo->find($id);
 
         // La clé se voit supprimer son "s" en fin de chaîne
-        $key = preg_replace('#s$#isUu', '', $serviceName);
+        $key = rtrim($serviceName, 's');
 
         if ($subElement) {
 

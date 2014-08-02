@@ -5,16 +5,15 @@ namespace EsterenMaps\MapsBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use JMS\Serializer\Annotation\ExclusionPolicy as ExclusionPolicy;
-use JMS\Serializer\Annotation\Expose as Expose;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Routes
  *
  * @ORM\Table(name="routes")
- * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity(repositoryClass="EsterenMaps\MapsBundle\Repository\RoutesRepository")
- * @ExclusionPolicy("all")
+ * @Gedmo\SoftDeleteable(fieldName="deleted")
+ * @Serializer\ExclusionPolicy("all")
  */
 class Routes {
 
@@ -24,7 +23,7 @@ class Routes {
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @Expose
+     * @Serializer\Expose
      */
     protected $id;
 
@@ -32,7 +31,7 @@ class Routes {
      * @var string
      *
      * @ORM\Column(type="string", length=255, nullable=false, unique=true)
-     * @Expose
+     * @Serializer\Expose
      */
     protected $name;
 
@@ -40,7 +39,7 @@ class Routes {
      * @var string
      *
      * @ORM\Column(type="text")
-     * @Expose
+     * @Serializer\Expose
      */
     protected $coordinates;
 
@@ -48,7 +47,7 @@ class Routes {
      * @var integer
      *
      * @ORM\Column(type="integer")
-     * @Expose
+     * @Serializer\Expose
      */
     protected $distance;
 
@@ -86,7 +85,7 @@ class Routes {
      * @var Markers
      *
      * @ORM\ManyToOne(targetEntity="Markers", inversedBy="routesStart")
-     * @Expose
+     * @Serializer\Expose
      */
     protected $markerStart;
 
@@ -94,7 +93,7 @@ class Routes {
      * @var Markers
      *
      * @ORM\ManyToOne(targetEntity="Markers", inversedBy="routesEnd")
-     * @Expose
+     * @Serializer\Expose
      */
     protected $markerEnd;
 
@@ -110,7 +109,7 @@ class Routes {
      *
      * @ORM\ManyToOne(targetEntity="Factions", inversedBy="routes")
      * @ORM\JoinColumn(nullable=true)
-     * @Expose
+     * @Serializer\Expose
      */
     protected $faction;
 
@@ -118,7 +117,7 @@ class Routes {
      * @var RoutesTypes
      *
      * @ORM\ManyToOne(targetEntity="RoutesTypes", inversedBy="routes")
-     * @Expose
+     * @Serializer\Expose
      */
     protected $routeType;
 

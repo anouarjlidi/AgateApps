@@ -5,8 +5,7 @@ namespace EsterenMaps\MapsBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use JMS\Serializer\Annotation\ExclusionPolicy;
-use JMS\Serializer\Annotation\Expose;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Markers
@@ -14,7 +13,7 @@ use JMS\Serializer\Annotation\Expose;
  * @ORM\Table(name="markers")
  * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity(repositoryClass="EsterenMaps\MapsBundle\Repository\MarkersRepository")
- * @ExclusionPolicy("all")
+ * @Serializer\ExclusionPolicy("all")
  */
 class Markers {
 
@@ -24,7 +23,7 @@ class Markers {
      * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @Expose
+     * @Serializer\Expose
      */
     protected $id;
 
@@ -32,7 +31,7 @@ class Markers {
      * @var string
      *
      * @ORM\Column(type="string", length=255, nullable=false, unique=true)
-     * @Expose
+     * @Serializer\Expose
      */
     protected $name;
 
@@ -40,7 +39,7 @@ class Markers {
      * @var string
      *
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Expose
+     * @Serializer\Expose
      */
     protected $altitude;
 
@@ -48,7 +47,7 @@ class Markers {
      * @var string
      *
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Expose
+     * @Serializer\Expose
      */
     protected $latitude;
 
@@ -56,7 +55,7 @@ class Markers {
      * @var string
      *
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Expose
+     * @Serializer\Expose
      */
     protected $longitude;
 
@@ -80,7 +79,7 @@ class Markers {
      * @var Factions
      *
      * @ORM\ManyToOne(targetEntity="Factions", inversedBy="markers")
-     * @Expose
+     * @Serializer\Expose
      */
     protected $faction;
 
@@ -95,7 +94,7 @@ class Markers {
      * @var MarkersTypes
      *
      * @ORM\ManyToOne(targetEntity="MarkersTypes", inversedBy="markers")
-     * @Expose
+     * @Serializer\Expose
      */
     protected $markerType;
 
@@ -126,6 +125,13 @@ class Markers {
      * @ORM\OneToMany(targetEntity="Routes", mappedBy="markerEnd")
      */
     protected $routesEnd;
+
+    /**
+     * @var Routes
+     * @Serializer\Expose
+     * @Serializer\Type("EsterenMaps\MapsBundle\Entity\Routes")
+     */
+    public $route = null;
 
     public function __toString() {
         return $this->id.' - '.$this->name;
