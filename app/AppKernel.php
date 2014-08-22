@@ -24,11 +24,37 @@ class AppKernel extends Kernel {
 
             // JMS
             new JMS\SerializerBundle\JMSSerializerBundle($this),
-            new JMS\I18nRoutingBundle\JMSI18nRoutingBundle(),
 
             // FOS
             new FOS\UserBundle\FOSUserBundle(),
             new FOS\RestBundle\FOSRestBundle(),
+
+            // Sonata et dépendances
+            new Sonata\SeoBundle\SonataSeoBundle(),
+            new Sonata\CoreBundle\SonataCoreBundle(),
+            new Sonata\PageBundle\SonataPageBundle(),
+            new Sonata\IntlBundle\SonataIntlBundle(),
+            new Sonata\CacheBundle\SonataCacheBundle(),
+            new Sonata\BlockBundle\SonataBlockBundle(),
+            new Sonata\AdminBundle\SonataAdminBundle(),
+            new Sonata\MediaBundle\SonataMediaBundle(),
+            new Sonata\jQueryBundle\SonatajQueryBundle(),
+            new Sonata\MarkItUpBundle\SonataMarkItUpBundle(),
+            new Sonata\FormatterBundle\SonataFormatterBundle(),
+            new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
+            new Sonata\UserBundle\SonataUserBundle('FOSUserBundle'),
+            new Sonata\NotificationBundle\SonataNotificationBundle(),
+            new Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
+
+            new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+            new Knp\Bundle\MarkdownBundle\KnpMarkdownBundle(),
+            new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
+            new Symfony\Cmf\Bundle\RoutingBundle\CmfRoutingBundle(),
+
+            // Local Sonata generated bundles
+            new Application\Sonata\PageBundle\ApplicationSonataPageBundle(),
+            new Application\Sonata\UserBundle\ApplicationSonataUserBundle(),
+            new Application\Sonata\MediaBundle\ApplicationSonataMediaBundle(),
 
             // Corahn-Rin
             new CorahnRin\AdminBundle\CorahnRinAdminBundle(),

@@ -11,7 +11,18 @@ parameters:
     mailer_user: null
     mailer_password: null
     locale: fr
+    locales:
+        Français: fr
+        English: en
+        Deutsch: de
+        Español: es
+    locales_regex: fr|en|de|es
     secret: ChangeSecretToken
     node_path: /usr/local/bin/node
     node_modules_path: /usr/local/lib/node_modules
+    esteren_domains.corahn_rin: corahnrin.esteren.org
+    esteren_domains.esteren_maps: maps.esteren.org
+    esteren_domains.esteren_portal: www.esteren.org
+    sonata.base_metas: ""
+    sonata.base_desc: ""
 

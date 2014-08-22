@@ -1,7 +1,7 @@
 corahn_rin_admin:
     resource: "@CorahnRinAdminBundle/Controller/"
     type:     annotation
-    prefix:   /
+    prefix:   /{_locale}/
 
 
 #-----------------------------------
@@ -9,41 +9,41 @@ corahn_rin_admin:
 corahn_rin_generator:
     resource: "@CorahnRinGeneratorBundle/Controller/"
     type:     annotation
-    prefix:   /
+    prefix:   /{_locale}/
 
 esteren_pages:
     resource: "@EsterenPagesBundle/Controller/"
     type:     annotation
-    prefix:   /
+    prefix:   /{_locale}/
 
 corahn_rin_characters:
     resource: "@CorahnRinCharactersBundle/Controller/"
     type:     annotation
-    prefix:   /
+    prefix:   /{_locale}/
 
 #-----------------------------------
 # Esteren Maps relative routing
 esterenmaps:
     resource: "@EsterenMapsBundle/Controller/"
     type:     annotation
-    prefix:   /
+    prefix:   /{_locale}/
 
 #-----------------------------------
 # Pierstoval relative routing
 pierstoval_tools:
     resource: "@PierstovalToolsBundle/Controller/"
     type:     annotation
-    prefix:   /
+    prefix:   /{_locale}/
 
 pierstoval_translation:
     resource: "@PierstovalTranslationBundle/Controller/"
     type:     annotation
-    prefix:   /
+    prefix:   /{_locale}/
 
 pierstoval_api:
     resource: "@PierstovalApiBundle/Controller/"
     type:     annotation
-    prefix:   /
+    prefix:   /{_locale}/
 
 pierstoval_admin:
     resource: "@PierstovalAdminBundle/Controller/"
@@ -74,3 +74,15 @@ fos_user_change_password:
 fos_user_group:
     resource: "@FOSUserBundle/Resources/config/routing/group.xml"
     prefix: /group
+
+#-----------------------------------
+# Sonata relative Routing
+sonata_cache_cache:
+    resource: '@SonataCacheBundle/Resources/config/routing/cache.xml'
+    prefix: /
+sonata_page_exceptions:
+    resource: '@SonataPageBundle/Resources/config/routing/exceptions.xml'
+    prefix: /
+sonata_page_cache:
+    resource: '@SonataPageBundle/Resources/config/routing/cache.xml'
+    prefix: /

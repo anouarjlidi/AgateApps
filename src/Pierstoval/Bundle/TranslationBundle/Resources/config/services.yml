@@ -1,0 +1,32 @@
+parameters:
+    pierstoval_translate.translator.class: Pierstoval\Bundle\TranslationBundle\Translation\Translator
+    pierstoval_translate.loader: Pierstoval\Bundle\TranslationBundle\Translation\TranslationLoader
+    pierstoval_translate.extractor.class: Pierstoval\Bundle\TranslationBundle\Translation\Extractor
+    pierstoval.translator.outputDirectory: ~
+
+    # Overrides the Symfony2's translator. Disabled only when removing "import resources" for this file from config.yml
+    translator.class: %pierstoval_translate.translator.class%
+
+services:
+    translation.loader.db:
+        class: %pierstoval_translate.loader%
+        arguments:
+            - @doctrine.orm.entity_manager
+        tags:
+            - { name: translation.loader, alias: db }
+
+    pierstoval.translation.extractor:
+        class: %pierstoval_translate.extractor.class%
+        arguments: 
+            - @doctrine.orm.entity_manager
+            - @translation.writer
+            - %kernel.root_dir%
+            - %kernel.cache_dir%
+            - %pierstoval.translator.outputDirectory%
+
+    pierstoval_tools.listener.flush_translations:
+        class: Pierstoval\Bundle\TranslationBundle\Listeners\FlushTranslations
+        arguments:
+            - @translator
+        tags:
+            - { name: kernel.event_listener, event: kernel.finish_request, method: onKernelFinishRequest }

@@ -34,11 +34,11 @@
                         <li class="dropdown">
 							<a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ 'Langue' | trans() }} [{{ locale|upper }}] <b class="caret"></b></a>
 							<ul class="dropdown-menu">
-								{% for lang in langs %}
-								    {% if lang.locale == locale %}
-                                        <li class="active"><a>{{ lang.name | trans }}</a></li>
+								{% for lang,langLocale in langs %}
+								    {% if langLocale == locale %}
+                                        <li class="active"><a>{{ lang | trans }}</a></li>
                                     {% else %}
-                                        <li><a href="{{ url(route_name, (route_params | merge({'_locale':lang.locale})) ) }}">{{ lang.name | trans }}</a></li>
+                                        <li><a href="{{ url(route_name, (route_params | merge({'_locale':langLocale})) ) }}">{{ lang | trans }}</a></li>
                                     {% endif %}
 								{% endfor %}
 							</ul>
