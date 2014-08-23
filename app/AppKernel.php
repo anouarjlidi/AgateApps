@@ -54,6 +54,7 @@ class AppKernel extends Kernel {
             // Local Sonata generated bundles
             new Application\Sonata\PageBundle\ApplicationSonataPageBundle(),
             new Application\Sonata\UserBundle\ApplicationSonataUserBundle(),
+            new Application\Sonata\AdminBundle\ApplicationSonataAdminBundle(),
             new Application\Sonata\MediaBundle\ApplicationSonataMediaBundle(),
 
             // Corahn-Rin

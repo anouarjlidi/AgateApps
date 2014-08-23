@@ -105,6 +105,7 @@ sonata_page:
         - ^esteren(.*)
         - ^pierstoval(.*)
         - ^corahn(.*)
+        - ^fos
 
     ignore_routes:
         - sonata_page_esi_cache

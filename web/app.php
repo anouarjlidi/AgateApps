@@ -1,5 +1,14 @@
 <?php
 
+if (in_array(@$_SERVER['REMOTE_ADDR'], array(
+        '127.0.0.1',
+        '127.0.0.1:8888',
+        '127.0.0.1:8080',
+)) || preg_match('~\.esteren\.dev(:[0-9]+)?$~', $_SERVER['REMOTE_ADDR'])) {
+    // Permet en local d'utiliser app_dev_fast par défaut
+    include 'app_dev_fast.php';
+}
+
 use Symfony\Component\ClassLoader\ApcClassLoader;
 use Symfony\Component\HttpFoundation\Request;
 

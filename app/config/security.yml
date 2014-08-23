@@ -1,6 +1,7 @@
 security:
     acl:
         connection: default
+
     encoders:
         Symfony\Component\Security\Core\User\User: plaintext
         FOS\UserBundle\Model\UserInterface: sha512
@@ -59,29 +60,10 @@ security:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        # -> custom firewall for the admin area of the URL
-        admin:
-            pattern:            /admin/(.*)
-            context:            backoffice
-            remember_me:
-                key:            %secret%
-                lifetime:       3600
-                path:           /%locale%/admin
-            form_login:
-                provider:       fos_userbundle
-                login_path:     /%locale%/admin/login
-                use_forward:    false
-                check_path:     /%locale%/admin/login_check
-                failure_path:   null
-                default_target_path: /%locale%/admin/dashboard
-            logout:
-                path:           /admin/logout
-                target:         /
-            anonymous:          true
-
-        # This part is handled by the FOS User Bundle
+        # Classic front-office + specific user content
         main:
             pattern:            ^/
+            anonymous:          true
             context:            frontoffice
             remember_me:
                 key:            %secret%
@@ -96,19 +78,28 @@ security:
             logout:
                 path:           fos_user_security_logout
                 target:         /
-            anonymous:          true
+
+        # Sonata Backoffice
+        admin:
+            pattern:            /(%locales_regex%)/admin/(.*)
+            anonymous:          false
+            context:            backoffice
+            form_login:
+                provider:       fos_userbundle
+                login_path:     sonata_admin_security_login
+                use_forward:    false
+                check_path:     sonata_admin_security_check
+                failure_path:   null
+                default_target_path: /admin/dashboard
+            logout:
+                path:           sonata_admin_security_logout
+                target:         /%locale%/
 
     access_control:
-        - { path: ^/(%locales_regex%)/login$,             role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/(%locales_regex%)/register,           role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/(%locales_regex%)/resetting,          role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/(%locales_regex%)/maps,               role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/(%locales_regex%)/api/maps,           role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/(%locales_regex%)/,                   role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/(%locales_regex%)/profile,            role: ROLE_USER }
-        - { path: ^/(%locales_regex%)/admin/login,        role: ROLE_USER }
-        - { path: ^/(%locales_regex%)/admin/logout,       role: ROLE_USER }
-        - { path: ^/(%locales_regex%)/admin/maps,         role: ROLE_ADMIN_MAPS }
-        - { path: ^/(%locales_regex%)/admin/generator,    role: ROLE_ADMIN_GENERATOR }
-        - { path: ^/(%locales_regex%)/admin/manage_site,  role: ROLE_ADMIN }
-        - { path: ^/(%locales_regex%)/admin/super,        role: ROLE_SUPER_ADMIN }
+        - { path: ^/(%locales_regex%)/characters,         role: ROLE_USER }
+        - { path: ^/(%locales_regex%)/admin/,             role: SONATA_ADMIN, host: %esteren_domains.backoffice% }

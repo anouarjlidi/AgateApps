@@ -270,9 +270,9 @@ if ($del === 'o') {
     $maxid = 0;
     $table = "users";
     foreach ($users as $v) {
-        if (!$new->row('SELECT * FROM %'.$table.' WHERE %id = :id', array('id'=>$v['user_id']))) {
+        if (!$new->row('SELECT * FROM %fos_user_user WHERE %id = :id', array('id'=>$v['user_id']))) {
             $pwd = utf8_encode($v['user_email']);
-            if ($new->noRes('ALTER TABLE `users` AUTO_INCREMENT = 300')) { showtime($temp_time, 'Réinitialisation de l\'auto-increment pour l\'insertion'); }
+            if ($new->noRes('ALTER TABLE %fos_user_user AUTO_INCREMENT = 300')) { showtime($temp_time, 'Réinitialisation de l\'auto-increment pour l\'insertion'); }
             $r = shell_exec('php ../bin/console fos:user:create "'.$v['user_name'].'" "'.$v['user_email'].'" '.$pwd.'');
             $usernb++;
             if ($r) {
@@ -283,7 +283,7 @@ if ($del === 'o') {
                 showtime($temp_time, 'Terminé "'.$v['user_name'].'" "'.$v['user_email'].'" '.$pwd.'');
             }
 
-            $enter_users = $new->noRes('UPDATE `users` SET `id` = :id WHERE `email` = :email ',array('id'=>$v['user_id'], 'email'=>$v['user_email']));//Exécution de la requête sql
+            $enter_users = $new->noRes('UPDATE %fos_user_user SET %id = :id WHERE %email = :email ',array('id'=>$v['user_id'], 'email'=>$v['user_email']));//Exécution de la requête sql
             if ($enter_users) {
                 showtime($temp_time, 'Rétablissement de l\'id pour l\'utilisateur "'.$v['user_name'].'"');
             }
@@ -296,7 +296,7 @@ if ($del === 'o') {
     exec('php ../bin/console fos:user:promote pierstoval --super');
     if (!$usernb) { showtime($temp_time, 'Aucun utilisateur à ajouter'); }
     showtime($temp_time, $usernb.' requêtes pour la table "users"');
-    if ($new->noRes('ALTER TABLE `users` AUTO_INCREMENT = '.($maxid+1))) {
+    if ($new->noRes('ALTER TABLE `fos_user_user` AUTO_INCREMENT = '.($maxid+1))) {
         showtime($temp_time, 'Réinitialisation de l\'auto-increment après les insertions et rétablissements d\'id pour les utilisateurs');
     }
     $nbreq += $usernb;
@@ -1337,7 +1337,7 @@ if ($del === 'o') {
                 'rindath' => 0,
                 'money' => serialize($money),
                 'game_id' => $new->row('select * from games where id = ?', array($v['game_id'])) ? $v['game_id'] : null,
-                'user_id' => $new->row('select * from users where id = ?', array($v['user_id'])) ? $v['user_id'] : null,
+                'user_id' => $new->row('select * from fos_user_user where id = ?', array($v['user_id'])) ? $v['user_id'] : null,
                 'disorder_id' => $cnt->desordre_mental->id,
                 'exaltation' => 0,
                 'orientation' => $cnt->orientation->name === 'Instinctive' ? 'Instinctive' : 'Rational',

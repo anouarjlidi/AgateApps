@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class AdminController extends Controller
 {
     /**
-     * @Route("/")
+     * @Route("/old/")
      * @Template("PierstovalAdminBundle:Admin:layout.html.twig")
      */
     public function indexAction() {

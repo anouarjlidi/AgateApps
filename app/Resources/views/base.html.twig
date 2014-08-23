@@ -47,7 +47,38 @@
     <link rel="shortcut icon" href="{{ asset('bundles/esterenpages/images/favicon-57.png') }}">
 </head>
 <body>
-{% block body %}{% endblock %}
+{% block body %}
+
+    <div id="wrapper">
+
+        {% block menus %}{# MENUS #}
+            {% render(controller("EsterenPagesBundle:Menus:menu", {'route':app.request.attributes.get('_route'),'route_params':app.request.attributes.get('_route_params')} )) %}
+        {% endblock %}
+
+        <div id="layout" class="container">
+            {# FLASH MESSAGES #}{% for key, messageList in app.session.flashbag.all() %}
+                <div class="alert alert-{{ key == 'error' ? 'danger' : key }}">
+                    {% for message in messageList %}
+                        {{ message | trans({}, 'messages.flash') | raw }}
+                        {% if not loop.last %}<br />{% endif %}
+                    {% endfor %}
+                </div>
+            {% endfor %}
+            {% block fos_user_content %}{% endblock fos_user_content %}
+
+            <div id="content">{# DYNAMIC CONTENT FOR LAYOUT #}
+
+                {% block content_for_layout %}{% endblock %}
+
+            </div><!--/#content-->
+
+        </div><!--/#layout-->
+
+        {# FOOTER #}{% include "EsterenPagesBundle:Pages:footer.html.twig" %}
+
+    </div><!--/#wrapper-->
+
+{% endblock %}
 
 {% block javascripts %}
     {% if app.security.isGranted('ROLE_USER') %}
