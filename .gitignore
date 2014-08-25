@@ -7,7 +7,7 @@
 !/web/maps_tiles/empty.jpg
 
 # Backups entités
-/*.php~
+*.php~
 
 # PHPStorm
 /.idea/
