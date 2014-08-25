@@ -1,7 +1,10 @@
 corahn_rin_admin:
     resource: "@CorahnRinAdminBundle/Controller/"
     type:     annotation
+    host:     %esteren_domains.corahn_rin%
     prefix:   /{_locale}/
+    defaults:
+         _locale: %locale%
     requirements:
         _locale: ^(%locales_regex%)$
 
@@ -10,21 +13,30 @@ corahn_rin_admin:
 corahn_rin_generator:
     resource: "@CorahnRinGeneratorBundle/Controller/"
     type:     annotation
+    host:     %esteren_domains.corahn_rin%
     prefix:   /{_locale}/
+    defaults:
+         _locale: %locale%
     requirements:
         _locale: ^(%locales_regex%)$
 
 esteren_pages:
     resource: "@EsterenPagesBundle/Controller/"
     type:     annotation
+    host:     %esteren_domains.portal%
     prefix:   /{_locale}/
+    defaults:
+         _locale: %locale%
     requirements:
         _locale: ^(%locales_regex%)$
 
 corahn_rin_characters:
     resource: "@CorahnRinCharactersBundle/Controller/"
     type:     annotation
+    host:     %esteren_domains.corahn_rin%
     prefix:   /{_locale}/
+    defaults:
+         _locale: %locale%
     requirements:
         _locale: ^(%locales_regex%)$
 
@@ -33,7 +45,10 @@ corahn_rin_characters:
 esterenmaps:
     resource: "@EsterenMapsBundle/Controller/"
     type:     annotation
+    host:     %esteren_domains.esteren_maps%
     prefix:   /{_locale}/
+    defaults:
+         _locale: %locale%
     requirements:
         _locale: ^(%locales_regex%)$
 
@@ -43,6 +58,8 @@ pierstoval_tools:
     resource: "@PierstovalToolsBundle/Controller/"
     type:     annotation
     prefix:   /{_locale}/
+    defaults:
+         _locale: %locale%
     requirements:
         _locale: ^(%locales_regex%)$
 
@@ -50,6 +67,8 @@ pierstoval_translation:
     resource: "@PierstovalTranslationBundle/Controller/"
     type:     annotation
     prefix:   /{_locale}/
+    defaults:
+         _locale: %locale%
     requirements:
         _locale: ^(%locales_regex%)$
 
@@ -57,6 +76,8 @@ pierstoval_api:
     resource: "@PierstovalApiBundle/Controller/"
     type:     annotation
     prefix:   /{_locale}/
+    defaults:
+         _locale: %locale%
     requirements:
         _locale: ^(%locales_regex%)$
 
@@ -64,6 +85,8 @@ pierstoval_admin:
     resource: "@PierstovalAdminBundle/Controller/"
     type:     annotation
     prefix:   /{_locale}/admin/
+    defaults:
+         _locale: %locale%
     requirements:
         _locale: ^(%locales_regex%)$
 
@@ -72,36 +95,48 @@ pierstoval_admin:
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
     prefix: /{_locale}/
+    defaults:
+         _locale: %locale%
     requirements:
         _locale: ^(%locales_regex%)$
 
 fos_user_profile:
     resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
     prefix: /{_locale}/profile
+    defaults:
+         _locale: %locale%
     requirements:
         _locale: ^(%locales_regex%)$
 
 fos_user_register:
     resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
     prefix: /{_locale}/register
+    defaults:
+         _locale: %locale%
     requirements:
         _locale: ^(%locales_regex%)$
 
 fos_user_resetting:
     resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
     prefix: /{_locale}/resetting
+    defaults:
+         _locale: %locale%
     requirements:
         _locale: ^(%locales_regex%)$
 
 fos_user_change_password:
     resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
     prefix: /{_locale}/profile
+    defaults:
+         _locale: %locale%
     requirements:
         _locale: ^(%locales_regex%)$
 
 fos_user_group:
     resource: "@FOSUserBundle/Resources/config/routing/group.xml"
     prefix: /{_locale}/group
+    defaults:
+         _locale: %locale%
     requirements:
         _locale: ^(%locales_regex%)$
 
@@ -110,30 +145,38 @@ fos_user_group:
 sonata_cache_cache:
     resource:    "@SonataCacheBundle/Resources/config/routing/cache.xml"
     prefix:      /{_locale}/
+    defaults:
+         _locale: %locale%
     requirements:
         _locale: ^(%locales_regex%)$
 
 sonata_page_exceptions:
     resource:    "@SonataPageBundle/Resources/config/routing/exceptions.xml"
     prefix:      /{_locale}/
+    defaults:
+         _locale: %locale%
     requirements:
         _locale: ^(%locales_regex%)$
 
 sonata_page_cache:
     resource:    "@SonataPageBundle/Resources/config/routing/cache.xml"
     prefix:      /{_locale}/
+    defaults:
+         _locale: %locale%
     requirements:
         _locale: ^(%locales_regex%)$
 
 admin:
     resource: "@SonataAdminBundle/Resources/config/routing/sonata_admin.xml"
-    prefix:   /{_locale}/admin
+    prefix:   /{_locale}/
     host:     %esteren_domains.backoffice%
 
 _sonata_admin:
     resource:    .
     type:        sonata_admin
-    prefix:      /{_locale}/admin
+    prefix:      /{_locale}/
+    defaults:
+         _locale: %locale%
     requirements:
         _locale: ^(%locales_regex%)$
     host:        %esteren_domains.backoffice%
@@ -142,6 +185,8 @@ sonata_admin_security:
     resource:    "@ApplicationSonataAdminBundle/Controller/"
     type:        annotation
     prefix:      /{_locale}/
+    defaults:
+         _locale: %locale%
     requirements:
         _locale: ^(%locales_regex%)$
-    host:        %esteren_domains.backoffice%
+    host:        %esteren_domains.portal%

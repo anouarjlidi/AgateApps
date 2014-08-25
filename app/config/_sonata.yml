@@ -102,10 +102,10 @@ sonata_page:
     ignore_route_patterns:
         - ^(.*)admin(.*)   # ignore admin route, ie route containing 'admin'
         - ^_(.*)          # ignore symfony routes
-        - ^esteren(.*)
-        - ^pierstoval(.*)
-        - ^corahn(.*)
-        - ^fos
+        - esteren_?maps(.*)
+        - pierstoval_(.*)
+        - corahn_(.*)
+        - fos_
 
     ignore_routes:
         - sonata_page_esi_cache

@@ -24,6 +24,7 @@ parameters:
     esteren_domains.esteren_maps:   maps.esteren.org
     esteren_domains.portal:         www.esteren.org
     esteren_domains.backoffice:     back.esteren.org
+    esteren_domains.api:            api.esteren.org
     esteren_domains.cookieDomain:   .esteren.org
     sonata.base_metas: ""
     sonata.base_desc: ""

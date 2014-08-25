@@ -64,12 +64,13 @@ security:
         main:
             pattern:            ^/
             anonymous:          true
+            host:               %esteren_domains.portal%|%esteren_domains.corahn_rin%|%esteren_domains.esteren_maps%
             context:            frontoffice
             remember_me:
                 key:            %secret%
                 path:           /
             form_login:
-                provider:       fos_userbundle
+                provider:       main
                 login_path:     fos_user_security_login
                 use_forward:    false
                 check_path:     fos_user_security_check
@@ -81,25 +82,27 @@ security:
 
         # Sonata Backoffice
         admin:
-            pattern:            /(%locales_regex%)/admin/(.*)
+            pattern:            ^/
+            host:               %esteren_domains.backoffice%
             anonymous:          false
             context:            backoffice
+            remember_me:        false
             form_login:
                 provider:       fos_userbundle
                 login_path:     sonata_admin_security_login
                 use_forward:    false
                 check_path:     sonata_admin_security_check
                 failure_path:   null
-                default_target_path: /admin/dashboard
+                use_referer:    true
             logout:
                 path:           sonata_admin_security_logout
-                target:         /%locale%/
+                target:         http://%esteren_domains.portal%/%locale%/
 
     access_control:
-        - { path: ^/(%locales_regex%)/register,           role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/(%locales_regex%)/resetting,          role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/(%locales_regex%)/maps,               role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/(%locales_regex%)/api/maps,           role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/(%locales_regex%)/profile,            role: ROLE_USER }
-        - { path: ^/(%locales_regex%)/characters,         role: ROLE_USER }
-        - { path: ^/(%locales_regex%)/admin/,             role: SONATA_ADMIN, host: %esteren_domains.backoffice% }
+        - { path: ^/(%locales_regex%)/register,           roles: [IS_AUTHENTICATED_ANONYMOUSLY] }
+        - { path: ^/(%locales_regex%)/resetting,          roles: [IS_AUTHENTICATED_ANONYMOUSLY] }
+        - { path: ^/(%locales_regex%)/maps,               roles: [IS_AUTHENTICATED_ANONYMOUSLY] }
+        - { path: ^/(%locales_regex%)/api/maps,           roles: [IS_AUTHENTICATED_ANONYMOUSLY] }
+        - { path: ^/(%locales_regex%)/profile,            roles: [ROLE_USER] }
+        - { path: ^/(%locales_regex%)/characters,         roles: [ROLE_USER] }
+        - { path: ^/(%locales_regex%)/,                   roles: [SONATA_ADMIN, ROLE_USER],     host: %esteren_domains.backoffice }

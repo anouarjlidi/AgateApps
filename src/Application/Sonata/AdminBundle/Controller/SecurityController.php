@@ -16,7 +16,9 @@ class SecurityController extends Controller {
      */
     public function loginAction()
     {
-        return new Response('Login');
+        $controller = $this->container->get('fos_user.services.security_controller');
+        $controller->setContainer($this->container);
+        return $controller->loginAction();
     }
 
     /**
@@ -28,7 +30,7 @@ class SecurityController extends Controller {
     }
 
     /**
-     * @Route("/admin/logout", name="sonata_admin_security_logout")
+     * @Route("/logout", name="sonata_admin_security_logout", host="%esteren_domains.backoffice%")
      */
     public function logoutAction()
     {
