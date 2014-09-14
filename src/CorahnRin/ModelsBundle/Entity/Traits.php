@@ -89,6 +89,15 @@ class Traits {
     }
 
     /**
+     * @param integer $id
+     * @return $this
+     */
+    public function setId($id) {
+        $this->id = $id;
+        return $this;
+    }
+
+    /**
      * Set name
      *
      * @param string $name

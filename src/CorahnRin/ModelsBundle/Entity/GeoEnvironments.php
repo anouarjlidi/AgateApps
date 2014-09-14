@@ -21,56 +21,56 @@ class GeoEnvironments {
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
      */
-    private $name;
+    protected $name;
 
     /**
      * @var string
      *
      * @ORM\Column(name="description",type="text",nullable=true)
      */
-    private $description;
+    protected $description;
 
     /**
      * @var integer
      *
      * @ORM\ManyToOne(targetEntity="Books", fetch="EAGER")
      */
-    private $book;
+    protected $book;
 
     /**
      * @var integer
      *
      * @ORM\ManyToOne(targetEntity="Domains", fetch="EAGER")
      */
-    private $domain;
+    protected $domain;
+
+    /**
+     * @var \Datetime
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime", nullable=false)
+     */
+    protected $created;
+
+    /**
+     * @var \Datetime
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(type="datetime", nullable=false)
+     */
+    protected $updated;
 
     /**
      * @var \Datetime
      *
-     * @ORM\Column(name="created", type="datetime")
+     * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
-    private $created;
-
-    /**
-     * @var \Datetime
-     *
-     * @ORM\Column(name="updated", type="datetime")
-     */
-    private $updated;
-
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="deleted", type="datetime")
-     */
-    private $deleted;
+    protected $deleted = null;
 
 
     /**
@@ -80,6 +80,15 @@ class GeoEnvironments {
      */
     public function getId() {
         return $this->id;
+    }
+
+    /**
+     * @param integer $id
+     * @return $this
+     */
+    public function setId($id) {
+        $this->id = $id;
+        return $this;
     }
 
     /**

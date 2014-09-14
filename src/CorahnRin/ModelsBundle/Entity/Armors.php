@@ -80,12 +80,27 @@ class Armors {
     protected $deleted = null;
 
     /**
+     * @var Books
+     * @ORM\ManyToOne(targetEntity="Books")
+     */
+    protected $book;
+
+    /**
      * Get id
      *
      * @return integer
      */
     public function getId() {
         return $this->id;
+    }
+
+    /**
+     * @param integer $id
+     * @return $this
+     */
+    public function setId($id) {
+        $this->id = $id;
+        return $this;
     }
 
     /**
@@ -191,6 +206,27 @@ class Armors {
      */
     public function getAvailability() {
         return $this->availability;
+    }
+
+    /**
+     * Set book
+     *
+     * @param Books $book
+     * @return $this
+     */
+    public function setBook(Books $book = null) {
+        $this->book = $book;
+
+        return $this;
+    }
+
+    /**
+     * Get book
+     *
+     * @return Books
+     */
+    public function getBook() {
+        return $this->book;
     }
 
     /**

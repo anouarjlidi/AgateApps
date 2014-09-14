@@ -75,6 +75,15 @@ class Mails {
     }
 
     /**
+     * @param integer $id
+     * @return $this
+     */
+    public function setId($id) {
+        $this->id = $id;
+        return $this;
+    }
+
+    /**
      * Set code
      *
      * @param string $code

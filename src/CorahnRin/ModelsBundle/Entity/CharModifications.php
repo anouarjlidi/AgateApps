@@ -77,6 +77,15 @@ class CharModifications {
     }
 
     /**
+     * @param integer $id
+     * @return $this
+     */
+    public function setId($id) {
+        $this->id = $id;
+        return $this;
+    }
+
+    /**
      * Set before
      *
      * @param \stdClass $before

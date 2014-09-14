@@ -67,6 +67,12 @@ class Disorders {
     protected $ways;
 
     /**
+     * @var Books
+     * @ORM\ManyToOne(targetEntity="Books", fetch="EAGER")
+     */
+    protected $book;
+
+    /**
      * Constructor
      */
     public function __construct() {
@@ -80,6 +86,15 @@ class Disorders {
      */
     public function getId() {
         return $this->id;
+    }
+
+    /**
+     * @param integer $id
+     * @return $this
+     */
+    public function setId($id) {
+        $this->id = $id;
+        return $this;
     }
 
     /**
@@ -101,6 +116,27 @@ class Disorders {
      */
     public function getName() {
         return $this->name;
+    }
+
+    /**
+     * Set book
+     *
+     * @param Books $book
+     * @return $this
+     */
+    public function setBook(Books $book = null) {
+        $this->book = $book;
+
+        return $this;
+    }
+
+    /**
+     * Get book
+     *
+     * @return Books
+     */
+    public function getBook() {
+        return $this->book;
     }
 
     /**
