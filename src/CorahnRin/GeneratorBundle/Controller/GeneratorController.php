@@ -147,7 +147,7 @@ class GeneratorController extends Controller {
             return $this->redirect($url);
         } else {
             $msg = $this->get('corahn_rin_translate')->translate('Mauvaise étape redirigée.', array(), 'error.steps');
-            throw new \Symfony\Component\Config\Definition\Exception\Exception($msg);
+            throw new \Exception($msg);
         }
     }
 

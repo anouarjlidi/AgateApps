@@ -2,7 +2,7 @@
 
 namespace CorahnRin\ModelsBundle\Entity;
 
-use CorahnRin\UsersBundle\Entity\Users;
+use Application\Sonata\UserBundle\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -61,9 +61,9 @@ class Games {
     protected $updated;
 
     /**
-     * @var Users
+     * @var User
      *
-     * @ORM\ManyToOne(targetEntity="CorahnRin\UsersBundle\Entity\Users")
+     * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User")
      */
     protected $gameMaster;
 
@@ -214,10 +214,10 @@ class Games {
     /**
      * Set gameMaster
      *
-     * @param Users $gameMaster
+     * @param User $gameMaster
      * @return Games
      */
-    public function setGameMaster(Users $gameMaster = null) {
+    public function setGameMaster(User $gameMaster = null) {
         $this->gameMaster = $gameMaster;
 
         return $this;
@@ -226,7 +226,7 @@ class Games {
     /**
      * Get gameMaster
      *
-     * @return Users
+     * @return User
      */
     public function getGameMaster() {
         return $this->gameMaster;

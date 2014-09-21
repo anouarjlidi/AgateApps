@@ -2,7 +2,7 @@
 
 namespace CorahnRin\ModelsBundle\Entity;
 
-use CorahnRin\UsersBundle\Entity\Users;
+use Application\Sonata\UserBundle\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -40,9 +40,9 @@ class CharModifications {
     protected $character;
 
     /**
-     * @var Users
+     * @var User
      *
-     * @ORM\ManyToOne(targetEntity="CorahnRin\UsersBundle\Entity\Users")
+     * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User")
      */
     protected $user;
 
@@ -172,10 +172,10 @@ class CharModifications {
     /**
      * Set user
      *
-     * @param Users $user
+     * @param User $user
      * @return CharModifications
      */
-    public function setUser(Users $user = null) {
+    public function setUser(User $user = null) {
         $this->user = $user;
 
         return $this;
@@ -184,7 +184,7 @@ class CharModifications {
     /**
      * Get user
      *
-     * @return Users
+     * @return User
      */
     public function getUser() {
         return $this->user;

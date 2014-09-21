@@ -1,0 +1,31 @@
+@btn-default-color: #333;
+@btn-default-bg: #fff;
+@btn-default-border: #ccc;
+
+@btn-primary-color: #fff;
+@btn-success-color: #fff;
+@btn-info-color: #fff;
+@btn-warning-color: #fff;
+@btn-danger-color: #fff;
+
+@brand-primary: #2c2776;
+@brand-success: #2d4a29;
+@brand-info: #42777a;
+@brand-warning: #b58658;
+@brand-danger: #91494a;
+
+@p-state-enlightment: 30%;
+@p-state-text-enlightment: 40%;
+@p-state-color-opacity: 50%;
+
+@state-success-text: lighten(@brand-success, @p-state-text-enlightment);
+@state-success-bg: fadeout(lighten(@brand-success, @p-state-enlightment), @p-state-color-opacity);
+
+@state-info-text: lighten(@brand-info, @p-state-text-enlightment);
+@state-info-bg: fadeout(lighten(@brand-info, @p-state-enlightment), @p-state-color-opacity);
+
+@state-warning-text: lighten(@brand-warning, @p-state-text-enlightment);
+@state-warning-bg: fadeout(lighten(@brand-warning, @p-state-enlightment), @p-state-color-opacity);
+
+@state-danger-text: lighten(@brand-danger, @p-state-text-enlightment);
+@state-danger-bg: fadeout(lighten(@brand-danger, @p-state-enlightment), @p-state-color-opacity);

@@ -1,25 +1,28 @@
 {#% spaceless %#}<!DOCTYPE html>
-<html lang="fr" id="corahnrin">
+<html lang="fr" id="corahnrin" {{ sonata_seo_html_attributes() }}>
 <head>
     <meta charset="UTF-8"/>
     <title>{% block title %}Corahn-Rin{% endblock %}</title>
-    <meta name="generator" value="Corahn Rin {{ constant('P_VERSION_CODE') }} - {{ constant('P_VERSION_DATE') }} - Character manager by Pierstoval"/>
+    <meta name="generator" content="Pierstoval"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {{ sonata_seo_title() }}
+    {{ sonata_seo_metadatas() }}
 
     {% block more_headers %}{% endblock %}
 
     {% block stylesheets %}
         {% stylesheets
-        'components/bootstrap/less/bootstrap.less'
-        output="css/bootstrap.css"
+        'bundles/sonatapage/default.css'
+        'bundles/sonatapage/page.css'
+        '@EsterenPagesBundle/Resources/public/less/_main.less'
+        output="css/main.css"
         filter="less,cssrewrite"
         %}
         <link rel="stylesheet" href="{{ app.request.getSchemeAndHttpHost() ~ asset_url }}" type="text/css" />
         {% endstylesheets %}
 
-        {% stylesheets
-            '@EsterenPagesBundle/Resources/public/css/bootstrap-more.css'
-            '@EsterenPagesBundle/Resources/public/css/initializer.css'
+        {# % stylesheets
 
             'bundles/esterenpages/css/glyphicons.css'
             'bundles/esterenpages/css/corahnrin-theme.css'
@@ -36,7 +39,7 @@
             filter="cssrewrite"
             output="css/main.css" %}
         <link rel="stylesheet" href="{{ app.request.getSchemeAndHttpHost() ~ asset_url }}" type="text/css" />
-        {% endstylesheets %}
+        {% endstylesheets %#}
     {% endblock %}
 
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ asset('bundles/esterenpages/images/favicon-144.png') }}">
@@ -56,7 +59,8 @@
         {% endblock %}
 
         <div id="layout" class="container">
-            {# FLASH MESSAGES #}{% for key, messageList in app.session.flashbag.all() %}
+            {# FLASH MESSAGES
+            #}{% for key, messageList in app.session.flashbag.all() %}
                 <div class="alert alert-{{ key == 'error' ? 'danger' : key }}">
                     {% for message in messageList %}
                         {{ message | trans({}, 'messages.flash') | raw }}
@@ -81,9 +85,7 @@
 {% endblock %}
 
 {% block javascripts %}
-    {% if app.security.isGranted('ROLE_USER') %}
-        <script type="text/javascript" src="{{ url('pierstoval_tools_assets_jstranslations') }}"></script>
-    {% endif %}
+    <script type="text/javascript" src="{{ url('pierstoval_tools_assets_jstranslations') }}"></script>
     {% javascripts
 
     'components/jquery/dist/jquery.min.js'
@@ -102,6 +104,8 @@
     'components/jquery-ui/ui/minified/jquery.ui.mouse.min.js'
     'components/jquery-ui/ui/minified/jquery.ui.draggable.min.js'
     'components/jquery-ui/ui/minified/jquery.ui.slider.min.js'
+
+    '@SonataPageBundle/Resources/public/page.js'
 
     '@EsterenPagesBundle/Resources/public/js/corahn_rin.js'
 

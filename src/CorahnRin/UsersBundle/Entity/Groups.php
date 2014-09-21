@@ -2,7 +2,7 @@
 
 namespace CorahnRin\UsersBundle\Entity;
 
-use FOS\UserBundle\Model\Group as Group;
+use Application\Sonata\UserBundle\Entity\Group;
 
 use Doctrine\ORM\Mapping as ORM;
 
