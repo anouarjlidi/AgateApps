@@ -80,6 +80,12 @@ class Traits {
     protected $deleted = null;
 
     /**
+     * @var Books
+     * @ORM\ManyToOne(targetEntity="Books")
+     */
+    private $book;
+
+    /**
      * Get id
      *
      * @return integer
@@ -179,6 +185,27 @@ class Traits {
      */
     public function isMajor() {
         return $this->isMajor;
+    }
+
+    /**
+     * Set book
+     *
+     * @param Books $book
+     * @return Traits
+     */
+    public function setBook(Books $book = null) {
+        $this->book = $book;
+
+        return $this;
+    }
+
+    /**
+     * Get book
+     *
+     * @return Books
+     */
+    public function getBook() {
+        return $this->book;
     }
 
     /**

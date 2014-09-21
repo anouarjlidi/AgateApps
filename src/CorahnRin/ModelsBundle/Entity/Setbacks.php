@@ -66,6 +66,13 @@ class Setbacks {
     protected $deleted = null;
 
     /**
+     * @var Books
+     *
+     * @ORM\ManyToOne(targetEntity="Books",fetch="EAGER")
+     */
+    protected $book;
+
+    /**
      * Get id
      *
      * @return integer
@@ -207,5 +214,23 @@ class Setbacks {
      */
     public function getDeleted() {
         return $this->deleted;
+    }
+
+    /**
+     * @param Books $book
+     * @return $this
+     */
+    public function setBook(Books $book)
+    {
+        $this->book = $book;
+        return $this;
+    }
+
+    /**
+     * @return Books
+     */
+    public function getBook()
+    {
+        return $this->book;
     }
 }
