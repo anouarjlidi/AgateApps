@@ -20,4 +20,14 @@ class Site extends BaseSite
     {
         return $this->id;
     }
+
+    /**
+     * @param $id
+     * @return $this
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+        return $this;
+    }
 }

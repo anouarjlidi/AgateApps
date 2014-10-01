@@ -1,14 +1,15 @@
 <?php
 
-namespace CorahnRin\ModelsBundle\DataFixtures\ORM;
+namespace CorahnRin\GeneratorBundle\DataFixtures\ORM;
 
 use CorahnRin\GeneratorBundle\Entity\Steps;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Mapping\ClassMetadata;
 
-class LoadStepsData extends AbstractFixture implements OrderedFixtureInterface {
+class StepsFixtures extends AbstractFixture implements OrderedFixtureInterface {
 
     /**
      * @var ObjectManager
@@ -33,7 +34,7 @@ class LoadStepsData extends AbstractFixture implements OrderedFixtureInterface {
         $this->manager = $manager;
 
         /** @var EntityRepository $repo */
-        $repo = $this->manager->getRepository('CorahnRinModelsBundle:Steps');
+        $repo = $this->manager->getRepository('CorahnRinGeneratorBundle:Steps');
 
         $this->fixtureObject($repo, 20, 20, 'finalisation', 'Finalisation du personnage', array());
         $this->fixtureObject($repo, 19, 19, 'description_histoire', 'Description et histoire', array());
@@ -86,6 +87,10 @@ class LoadStepsData extends AbstractFixture implements OrderedFixtureInterface {
                 /** @var Steps $stepToDisable */
                 $stepToDisable = $this->getReference('corahnrin-step-'.$stepToDisableId);
                 $obj->addStepToDisableOnChange($stepToDisable);
+            }
+            if ($id) {
+                $metadata = $this->manager->getClassMetaData(get_class($obj));
+                $metadata->setIdGeneratorType(ClassMetadata::GENERATOR_TYPE_NONE);
             }
             $this->manager->persist($obj);
             $addRef = true;

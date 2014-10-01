@@ -8,8 +8,9 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Mapping\ClassMetadata;
 
-class LoadSetbacksData extends AbstractFixture implements OrderedFixtureInterface {
+class SetbacksFixtures extends AbstractFixture implements OrderedFixtureInterface {
 
     /**
      * @var ObjectManager
@@ -78,6 +79,10 @@ class LoadSetbacksData extends AbstractFixture implements OrderedFixtureInterfac
                 ->setUpdated($updated ? new \Datetime($updated) : null)
                 ->setDeleted($deleted ? new \Datetime($deleted) : null)
             ;
+            if ($id) {
+                $metadata = $this->manager->getClassMetaData(get_class($obj));
+                $metadata->setIdGeneratorType(ClassMetadata::GENERATOR_TYPE_NONE);
+            }
             $this->manager->persist($obj);
             $addRef = true;
         }

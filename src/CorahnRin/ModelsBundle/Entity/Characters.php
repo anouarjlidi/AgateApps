@@ -405,7 +405,7 @@ class Characters {
 
     /**
      * @var User
-     * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User", inversedBy="characters", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User", fetch="EAGER")
      */
     protected $user;
 

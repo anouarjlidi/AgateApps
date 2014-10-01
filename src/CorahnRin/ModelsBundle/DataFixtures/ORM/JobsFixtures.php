@@ -7,8 +7,9 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Mapping\ClassMetadata;
 
-class LoadJobsData extends AbstractFixture implements OrderedFixtureInterface {
+class JobsFixtures extends AbstractFixture implements OrderedFixtureInterface {
 
     /**
      * @var ObjectManager
@@ -57,7 +58,7 @@ class LoadJobsData extends AbstractFixture implements OrderedFixtureInterface {
         $this->fixtureObject($repo, 1, $book2, 'Artisan', 'Quel que soit son domaine, l\'artisan est un manuel qualifié.'."\n".'Forgeron, cuisinier, architecte, cordonnier, bûcheron, sculpteur, joailler ; les artisans couvrent un grand nombre de spécialités.'."\n".'Dans les cités où est implantée la magience, on trouve aussi des réparateurs d\'artefacts et des ouvriers spécialisés travaillant dans les usines.', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null, $domain1);
         $this->fixtureObject($repo, 2, $book2, 'Barde', 'Le statut de barde est hautement honorifique et les plus puissants monarques s\'entourent de ces artistes qui ont de véritables rôles d\'éminence grise.'."\n".'Artiste, acrobate, musicien, bouffon, le barde peut revêtir différents rôles.'."\n".'Il peut également être connu sous d\'autres noms, comme les poètes aveugles filidh ou les étranges céilli de l\'archipel des Tri-Sweszörs.', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null, $domain12);
         $this->fixtureObject($repo, 3, $book2, 'Chasseur', 'Il nourrit la communauté du produit de ses longues expéditions, qui durent parfois plusieurs jours.'."\n".'L\'expansion des villes a vu l\'apparition de chasseurs d\'un genre nouveau comme les ratiers.'."\n".'D\'autres, comme les Enfants de Neven, dédient leur existence à la traque des feondas.', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null, $domain5);
-        $this->fixtureObject($repo, 4, $book2, 'Chevalier', 'Ces hommes et ces femmes font partie de la noblesse et appartiennent le plus souvent à un ordre de chevalerie comme les Hilderins ou les Ronces.'."\n".'Certains sont des chevaliers errants, derniers héritiers d\'une famille noble ; d\'autres, les vassaux d\'un puissant seigneur.', '2014-04-09 08:56: 43', '2014-04-09 08:56:43', null, $domain2);
+        $this->fixtureObject($repo, 4, $book2, 'Chevalier', 'Ces hommes et ces femmes font partie de la noblesse et appartiennent le plus souvent à un ordre de chevalerie comme les Hilderins ou les Ronces.'."\n".'Certains sont des chevaliers errants, derniers héritiers d\'une famille noble ; d\'autres, les vassaux d\'un puissant seigneur.', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null, $domain2);
         $this->fixtureObject($repo, 5, $book2, 'Combattant', 'Il peut être soldat ou mercenaire, champion de justice, bagarreur de taverne ou détrousseur des rues sombres, etc.'."\n".'Il se spécialise dans les armes de contact.', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null, $domain2);
         $this->fixtureObject($repo, 6, $book2, 'Commerçant', 'Marchand ambulant ou tenancier d\'une échoppe bien achalandée, le commerçant peut négocier bien des marchandises.', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null, $domain11);
         $this->fixtureObject($repo, 7, $book2, 'Demorthèn', 'Représentant de la nature, il peut entrer en contact avec les esprits et leur demander d\'accomplir des tâches particulières.'."\n".'Il est le gardien des anciennes traditions péninsulaires et il est souvent considéré avec respect.'."\n".'Les apprentis Demorthèn sont appelés Ionnthèn.', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null, $domain6);
@@ -110,6 +111,10 @@ class LoadJobsData extends AbstractFixture implements OrderedFixtureInterface {
                 ->setUpdated($updated ? new \Datetime($updated) : null)
                 ->setDeleted($deleted ? new \Datetime($deleted) : null)
             ;
+            if ($id) {
+                $metadata = $this->manager->getClassMetaData(get_class($obj));
+                $metadata->setIdGeneratorType(ClassMetadata::GENERATOR_TYPE_NONE);
+            }
             $this->manager->persist($obj);
             $addRef = true;
         }

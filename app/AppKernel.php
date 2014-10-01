@@ -19,14 +19,18 @@ class AppKernel extends Kernel
             new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
+
             // Doctrine
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+
             // JMS
             new JMS\SerializerBundle\JMSSerializerBundle($this),
+
             // FOS
             new FOS\UserBundle\FOSUserBundle(),
             new FOS\RestBundle\FOSRestBundle(),
+
             // Sonata et dépendances
             new Sonata\SeoBundle\SonataSeoBundle(),
             new Sonata\CoreBundle\SonataCoreBundle(),
@@ -45,22 +49,26 @@ class AppKernel extends Kernel
             new Knp\Bundle\MarkdownBundle\KnpMarkdownBundle(),
             new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
             new Symfony\Cmf\Bundle\RoutingBundle\CmfRoutingBundle(),
+
             // Local Sonata generated bundles
             new Application\Sonata\PageBundle\ApplicationSonataPageBundle(),
             new Application\Sonata\UserBundle\ApplicationSonataUserBundle(),
             new Application\Sonata\AdminBundle\ApplicationSonataAdminBundle(),
             new Application\Sonata\MediaBundle\ApplicationSonataMediaBundle(),
+
             // Corahn-Rin
             new CorahnRin\AdminBundle\CorahnRinAdminBundle(),
             new CorahnRin\CharactersBundle\CorahnRinCharactersBundle(),
-            new CorahnRin\UsersBundle\CorahnRinUsersBundle(),
             new CorahnRin\ModelsBundle\CorahnRinModelsBundle(),
             new CorahnRin\ToolsBundle\CorahnRinToolsBundle(),
             new CorahnRin\GeneratorBundle\CorahnRinGeneratorBundle(),
+
             // Esteren général
             new Esteren\PagesBundle\EsterenPagesBundle(),
+
             // Esteren Maps
             new EsterenMaps\MapsBundle\EsterenMapsBundle(),
+
             // Pierstoval's tools
             new Pierstoval\Bundle\ApiBundle\PierstovalApiBundle(),
             new Pierstoval\Bundle\ToolsBundle\PierstovalToolsBundle(),
