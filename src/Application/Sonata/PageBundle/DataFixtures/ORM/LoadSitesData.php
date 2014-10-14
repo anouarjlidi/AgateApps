@@ -59,10 +59,10 @@ class SiteFixtures extends AbstractFixture implements OrderedFixtureInterface, C
         };
 
         $this->fixtureObject($repo, 1, 'Portail Esteren', '/', $host('portal'), true);
-        $this->fixtureObject($repo, 2, 'Backoffice Esteren', '/', $host('backoffice'), false);
-        $this->fixtureObject($repo, 3, 'Corahn-Rin', '/', $host('corahn_rin'), false);
-        $this->fixtureObject($repo, 4, 'Esteren Maps', '/', $host('esteren_maps'), false);
-        $this->fixtureObject($repo, 5, 'Esteren API', '/', $host('api'), false);
+//        $this->fixtureObject($repo, 2, 'Backoffice Esteren', '/', $host('backoffice'), false);
+//        $this->fixtureObject($repo, 3, 'Corahn-Rin', '/', $host('corahn_rin'), false);
+//        $this->fixtureObject($repo, 4, 'Esteren Maps', '/', $host('esteren_maps'), false);
+//        $this->fixtureObject($repo, 5, 'Esteren API', '/', $host('api'), false);
 
         $this->manager->flush();
     }

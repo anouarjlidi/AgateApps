@@ -12,6 +12,8 @@ sonata_user:
 # Sonata Admin
 sonata_admin:
     title:        Esteren
+    security:
+        handler: sonata.admin.security.handler.role
 #    title_logo:   logo.jpg
 
 # Sonata Blocks
@@ -103,8 +105,8 @@ sonata_page:
         - ^(.*)admin(.*)   # ignore admin route, ie route containing 'admin'
         - ^_(.*)          # ignore symfony routes
         - esteren_?maps(.*)
-        - pierstoval_(.*)
-        - corahn_(.*)
+        - pierstoval(.*)
+        - corahn(.*)
         - fos_
 
     ignore_routes:
@@ -119,7 +121,7 @@ sonata_page:
         - sonata_cache_apc
 
     ignore_uri_patterns:
-        - ^/(%locales_regex%)/admin/   # ignore admin route, ie route containing 'admin'
+        - ^/(%locales_regex%)/a/   # ignore admin route, ie route containing 'admin'
 
     page_defaults:
         homepage: {decorate: false} # disable decoration for homepage, key - is a page route

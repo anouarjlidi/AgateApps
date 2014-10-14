@@ -34,11 +34,14 @@
                         <li class="dropdown">
 							<a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ 'Langue' | trans() }} [{{ locale|upper }}] <b class="caret"></b></a>
 							<ul class="dropdown-menu">
-								{% for lang,langLocale in langs %}
-								    {% if langLocale == locale %}
-                                        <li class="active"><a>{{ lang | trans }}</a></li>
+								{% for language, loc in locales %}
+								    {% if loc == locale %}
+                                        <li class="active"><a>{{ language | trans }}</a></li>
+                                    {% elseif route_name is defined and route_name is not empty %}
+                                        <li><a href="{{ url(route_name, (route_params | merge({'_locale':loc})) ) }}">{{ language | trans }}</a></li>
                                     {% else %}
-                                        <li><a href="{{ url(route_name, (route_params | merge({'_locale':langLocale})) ) }}">{{ lang | trans }}</a></li>
+                                        {% set route_name = app.request.attributes.get('_route') %}
+                                        <li><a href="{{ url(route_name, (route_params | merge({'_locale':loc})) ) }}">{{ language | trans }}</a></li>
                                     {% endif %}
 								{% endfor %}
 							</ul>

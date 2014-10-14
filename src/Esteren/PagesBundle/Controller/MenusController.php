@@ -84,6 +84,11 @@ class MenusController extends Controller {
         }
         $links = $this->{'menu'.$method_name}();
         $langs = $this->container->get('translator')->getLangs();
+
+        if (!$route) {
+            $route = $this->container->get('request_stack')->getMasterRequest()->attributes->get('_route');
+        }
+
         return array(
             'links' => $links,
             'brandTitle' => $brandTitle,

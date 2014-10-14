@@ -99,6 +99,7 @@ fos_user_security:
          _locale: %locale%
     requirements:
         _locale: ^(%locales_regex%)$
+    host: %esteren_domains.portal%
 
 fos_user_profile:
     resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
@@ -107,6 +108,7 @@ fos_user_profile:
          _locale: %locale%
     requirements:
         _locale: ^(%locales_regex%)$
+    host: %esteren_domains.portal%
 
 fos_user_register:
     resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
@@ -115,6 +117,7 @@ fos_user_register:
          _locale: %locale%
     requirements:
         _locale: ^(%locales_regex%)$
+    host: %esteren_domains.portal%
 
 fos_user_resetting:
     resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
@@ -123,6 +126,7 @@ fos_user_resetting:
          _locale: %locale%
     requirements:
         _locale: ^(%locales_regex%)$
+    host: %esteren_domains.portal%
 
 fos_user_change_password:
     resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
@@ -131,6 +135,7 @@ fos_user_change_password:
          _locale: %locale%
     requirements:
         _locale: ^(%locales_regex%)$
+    host: %esteren_domains.portal%
 
 fos_user_group:
     resource: "@FOSUserBundle/Resources/config/routing/group.xml"
@@ -139,6 +144,7 @@ fos_user_group:
          _locale: %locale%
     requirements:
         _locale: ^(%locales_regex%)$
+    host: %esteren_domains.portal%
 
 #-----------------------------------
 # Sonata relative Routing
@@ -168,7 +174,7 @@ sonata_page_cache:
 
 admin:
     resource: "@SonataAdminBundle/Resources/config/routing/sonata_admin.xml"
-    prefix:   /{_locale}/
+    prefix:   /{_locale}/admin/
     host:     %esteren_domains.backoffice%
 
 _sonata_admin:
@@ -181,12 +187,66 @@ _sonata_admin:
         _locale: ^(%locales_regex%)$
     host:        %esteren_domains.backoffice%
 
-sonata_admin_security:
-    resource:    "@ApplicationSonataAdminBundle/Controller/"
-    type:        annotation
-    prefix:      /{_locale}/
+sonata_user:
+    resource: '@SonataUserBundle/Resources/config/routing/admin_security.xml'
+    prefix:      /{_locale}/admin
     defaults:
          _locale: %locale%
     requirements:
         _locale: ^(%locales_regex%)$
-    host:        %esteren_domains.portal%
+    host:        %esteren_domains.backoffice%
+
+sonata_user_security:
+    resource: "@SonataUserBundle/Resources/config/routing/sonata_security_1.xml"
+    prefix:     /{_locale}/
+    defaults:
+         _locale: %locale%
+    requirements:
+        _locale: ^(%locales_regex%)$
+    host:       %esteren_domains.backoffice%
+
+sonata_user_resetting:
+    resource: "@SonataUserBundle/Resources/config/routing/sonata_resetting_1.xml"
+    prefix:     /{_locale}/admin/resetting
+    defaults:
+         _locale: %locale%
+    requirements:
+        _locale: ^(%locales_regex%)$
+    host:       %esteren_domains.backoffice%
+
+sonata_user_profile:
+    resource: "@SonataUserBundle/Resources/config/routing/sonata_profile_1.xml"
+    prefix:     /{_locale}/admin/profile
+    defaults:
+         _locale: %locale%
+    requirements:
+        _locale: ^(%locales_regex%)$
+    host:       %esteren_domains.backoffice%
+
+sonata_user_register:
+    resource: "@SonataUserBundle/Resources/config/routing/sonata_registration_1.xml"
+    prefix:     /{_locale}/admin/register
+    defaults:
+         _locale: %locale%
+    requirements:
+        _locale: ^(%locales_regex%)$
+    host:       %esteren_domains.backoffice%
+
+sonata_user_change_password:
+    resource: "@SonataUserBundle/Resources/config/routing/sonata_change_password_1.xml"
+    prefix:     /{_locale}/admin/profile
+    defaults:
+         _locale: %locale%
+    requirements:
+        _locale: ^(%locales_regex%)$
+    host:       %esteren_domains.backoffice%
+
+sonata_admin_security:
+    resource:    "@ApplicationSonataAdminBundle/Controller/"
+    type:        annotation
+    prefix:      /
+    defaults:
+         _locale: %locale%
+    requirements:
+        _locale: ^(%locales_regex%)$
+    host:        %esteren_domains.backoffice%
