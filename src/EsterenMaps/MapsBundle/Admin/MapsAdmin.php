@@ -22,9 +22,9 @@ class MapsAdmin extends Admin {
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper) {
-        $datagridMapper
-            ->add('name')
-        ;
+//        $datagridMapper
+//            ->add('name')
+//        ;
     }
 
     protected function configureListFields(ListMapper $listMapper) {
