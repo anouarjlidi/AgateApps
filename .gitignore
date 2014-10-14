@@ -31,7 +31,7 @@
 
 /web/uploads/*
 /web/components/*
-/web/uploads/*
+/web/upload/*
 /web/bundles/
 
 /build/
