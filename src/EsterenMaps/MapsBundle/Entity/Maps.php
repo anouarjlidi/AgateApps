@@ -71,7 +71,7 @@ class Maps {
      * )
      * @Expose
      */
-    protected $maxZoom;
+    protected $maxZoom = 10;
 
     /**
      * @var \Datetime
@@ -128,7 +128,6 @@ class Maps {
      * Constructor
      */
     public function __construct() {
-        $this->setMaxZoom(10);
         $this->routes = new ArrayCollection();
         $this->markers = new ArrayCollection();
         $this->zones = new ArrayCollection();
