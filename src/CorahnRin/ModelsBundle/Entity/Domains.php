@@ -238,6 +238,18 @@ class Domains {
     }
 
     /**
+     * @param Disciplines $discipline
+     * @return bool
+     */
+    public function hasDiscipline(Disciplines $discipline)
+    {
+        $id = $discipline->getId();
+        return $this->disciplines->exists(function($key, Disciplines $element) use ($id) {
+            return $element->getId() == $id;
+        });
+    }
+
+    /**
      * Set deleted
      *
      * @param \DateTime $deleted

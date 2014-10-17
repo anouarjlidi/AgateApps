@@ -6,7 +6,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Sonata\UserBundle\Entity\BaseUser as BaseUser;
 
 /**
- * @ORM\Table(name="users")
  * @ORM\Entity(repositoryClass="Application\Sonata\UserBundle\Repository\UserRepository")
  */
 class User extends BaseUser {
@@ -22,5 +21,15 @@ class User extends BaseUser {
      */
     public function getId() {
         return $this->id;
+    }
+
+    /**
+     * @param integer $id
+     * @return $this
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+        return $this;
     }
 }

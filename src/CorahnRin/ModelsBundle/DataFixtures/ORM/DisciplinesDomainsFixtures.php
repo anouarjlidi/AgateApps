@@ -172,10 +172,14 @@ class DisciplinesDomainsFixtures extends AbstractFixture implements OrderedFixtu
                     throw new \Exception('Domain with id "'.$id.'" does not exist.');
                 }
                 $this->domains[$id] = $domain;
-                $this->manager->persist($domain);
             }
-            $discipline->addDomain($domain);
-            $domain->addDiscipline($discipline);
+            if (!$domain->hasDiscipline($discipline)) {
+                $discipline->addDomain($domain);
+                $domain->addDiscipline($discipline);
+                if (!$this->manager->getUnitOfWork()->isEntityScheduled($domain)) {
+                    $this->manager->persist($domain);
+                }
+            }
         }
         $this->manager->persist($discipline);
     }
