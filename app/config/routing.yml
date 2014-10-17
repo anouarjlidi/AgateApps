@@ -250,3 +250,15 @@ sonata_admin_security:
     requirements:
         _locale: ^(%locales_regex%)$
     host:        %esteren_domains.backoffice%
+
+
+#-----------------------------------
+# Application Sonata relative Routing
+application_sonata_page:
+    resource:    "@ApplicationSonataPageBundle/Controller/"
+    type:        annotation
+    prefix:      /
+    defaults:
+         _locale: %locale%
+    requirements:
+        _locale: ^(%locales_regex%)$

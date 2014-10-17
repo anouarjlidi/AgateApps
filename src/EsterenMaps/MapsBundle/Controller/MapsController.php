@@ -22,7 +22,7 @@ class MapsController extends Controller
     private $factions;
 
     /**
-     * @Route("/maps/{id}-{nameSlug}", requirements={"id":"\d+"})
+     * @Route("/{id}-{nameSlug}", requirements={"id":"\d+"})
      * @Template()
      */
     public function viewAction(Maps $map) {
@@ -39,7 +39,7 @@ class MapsController extends Controller
     }
 
     /**
-     * @Route("/maps/")
+     * @Route("/")
      * @Template()
      */
     public function indexAction() {
@@ -48,7 +48,7 @@ class MapsController extends Controller
     }
 
     /**
-     * @Route("/admin/maps/add/")
+     * @Route("/admin/add/")
      * @Template("PierstovalAdminBundle:Form:add.html.twig")
      */
     public function addAction(Request $request) {
@@ -84,7 +84,7 @@ class MapsController extends Controller
     }
 
     /**
-     * @Route("/admin/maps/edit/{id}")
+     * @Route("/admin/edit/{id}")
      * @Template()
      */
     public function editAction(Maps $map, Request $request) {
@@ -151,7 +151,7 @@ class MapsController extends Controller
     }
 
     /**
-     * @Route("/admin/maps/edit_params/{id}")
+     * @Route("/admin/edit_params/{id}")
      * @Template("PierstovalAdminBundle:Form:add.html.twig")
      */
     public function editParamsAction(Maps $map, Request $request) {
@@ -192,7 +192,7 @@ class MapsController extends Controller
     }
 
     /**
-     * @Route("/admin/maps/delete/{id}")
+     * @Route("/admin/delete/{id}")
      */
     public function deleteAction(Maps $map)
     {
@@ -210,7 +210,7 @@ class MapsController extends Controller
     }
 
     /**
-     * @Route("/admin/maps/")
+     * @Route("/admin/")
      * @Template()
      */
     public function adminListAction() {

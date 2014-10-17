@@ -14,9 +14,7 @@ use Symfony\Component\Security\Core\SecurityContext;
 class SecurityController extends Controller {
 
     /**
-     * @Route("/",           name="sonata_admin_root", host="%esteren_domains.backoffice%", defaults={"_locale":"fr"})
-     * @Route("/{_locale}",  name="sonata_admin_root_locale", host="%esteren_domains.backoffice%", defaults={"_locale":"fr"})
-     * @Route("/{_locale}/", name="sonata_admin_root_locale_slash", host="%esteren_domains.backoffice%", defaults={"_locale":"fr"})
+     * @Route("/{_locale}/",  name="sonata_admin_root", host="%esteren_domains.backoffice%", defaults={"_locale":"fr"})
      */
     public function rootAction()
     {
