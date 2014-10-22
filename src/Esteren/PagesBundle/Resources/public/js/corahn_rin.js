@@ -20,11 +20,12 @@ function mergeRecursive (targetObject, sourceObject) {
         }
     }
     return targetObject;
-};
+}
 
 (function($, d, w){
-    var a;
+    var a, c, i, l;
 
+    // Méthode .trim() pour toutes les chaînes de caractères
     String.prototype.trim=function(){
         return this.replace(/^\s+|\s+$/g, '');
     };
@@ -46,7 +47,7 @@ function mergeRecursive (targetObject, sourceObject) {
 
     // Messages de confirmation de suppression (propre au BO)
     a = d.querySelectorAll('a.btn-danger[href*=delete]');
-    for (var i = 0, l = a.length ; i < l ; i++) {
+    for (i = 0, l = a.length ; i < l ; i++) {
         $(a[i]).on('click', function(){
             return confirm(CONFIRM_DELETE);
         });
@@ -54,7 +55,7 @@ function mergeRecursive (targetObject, sourceObject) {
 
     // Applique un "submit" au formulaire parent lorsque l'évènement se voit appliquer l'évènement "onchange"
     a = d.querySelectorAll('[data-onchangesubmit]');
-    for (var i = 0, l = a.length ; i < l ; i++) {
+    for (i = 0, l = a.length ; i < l ; i++) {
         $(a[i]).on('change', function(){
             var a = this.getAttribute('data-onchangesubmit');
             if (a !== 'false' && a !== '0') {
@@ -120,8 +121,8 @@ function mergeRecursive (targetObject, sourceObject) {
         handler.appendChild(addElementNode);
 
 
-        for (var i = 0, l = elements.length ; i < l ; i++) {
-            elements[i];
+        for (i = 0, l = elements.length ; i < l ; i++) {
+            //elements[i];
         }
 
     }// end form prototypes
@@ -152,7 +153,7 @@ function mergeRecursive (targetObject, sourceObject) {
         }
 
         if (null !== sumMax) {
-            for (var i = 0, l = d.querySelectorAll(sumSelector), c = l.length ; i < c ; i++) {
+            for (i = 0, l = d.querySelectorAll(sumSelector), c = l.length ; i < c ; i++) {
                 if (useHtml) {
                     j = parseInt(l[i].innerHTML);
                 } else {

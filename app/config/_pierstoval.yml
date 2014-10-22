@@ -1,6 +1,12 @@
 
 # Api services
 pierstoval_api:
+    allowed_origins:
+        - %esteren_domains.corahn_rin%
+        - %esteren_domains.esteren_maps%
+        - %esteren_domains.portal%
+        - %esteren_domains.backoffice%
+        - %esteren_domains.api%
     services:
         maps:           { entity: EsterenMaps\MapsBundle\Entity\Maps }
         markers:        { entity: EsterenMaps\MapsBundle\Entity\Markers }

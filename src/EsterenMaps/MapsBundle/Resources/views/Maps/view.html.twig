@@ -37,7 +37,8 @@
                     imgUrl: "{{ asset('bundles/esterenmaps/img') }}",
                     apiUrls: {
                         base: "{{ url('pierstoval_api_api_get', {'serviceName':'maps','id':map.id}) }}",
-                        tiles: "{{ asset('maps_tiles/1/{z}/{y}/{x}.jpg') }}"
+                        settings: "{{ url('esterenmaps_api_maps_settings_local', {"id":map.id}) }}",
+                        tiles: "{{ app.request.getSchemeAndHttpHost() ~ asset('maps_tiles/1/{z}/{y}/{x}.jpg') }}"
                     },
                     LeafletMapBaseOptions: {
                         maxZoom: {{ map.maxZoom }}

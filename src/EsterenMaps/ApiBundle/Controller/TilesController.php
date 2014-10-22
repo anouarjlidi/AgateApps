@@ -1,63 +1,33 @@
 <?php
 
-namespace EsterenMaps\MapsBundle\Controller;
+namespace EsterenMaps\ApiBundle\Controller;
 
+use EsterenMaps\MapsBundle\Entity\Maps;
+use EsterenMaps\MapsBundle\Services\MapsTilesManager;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
-use EsterenMaps\MapsBundle\Entity\Maps;
-
-class TilesController extends Controller {
+class TilesController extends Controller
+{
 
     private $img_size = 0;
 
     /**
-     * @Route("/api/maps/settings/{id}", requirements={"id":"\d+"})
-     */
-    public function settingsAction(Maps $map, Request $request) {
-        $datas = array();
-
-        $get = $request->query;
-
-        $em = $this->getDoctrine()->getManager();
-
-        $markersTypes = $em->getRepository('EsterenMapsBundle:MarkersTypes')->findAll();
-        $zonesTypes = $em->getRepository('EsterenMapsBundle:ZonesTypes')->findAll();
-        $routesTypes = $em->getRepository('EsterenMapsBundle:RoutesTypes')->findAll();
-        $factions = $em->getRepository('EsterenMapsBundle:Factions')->findAll();
-
-        if ($get->get('editMode') == true) {
-            $datas['LeafletPopupMarkerBaseContent'] = $this->renderView('EsterenMapsBundle:Maps:popupContentMarkerEditMode.html.twig',array('markersTypes'=>$markersTypes,'factions'=>$factions));
-            $datas['LeafletPopupPolylineBaseContent'] = $this->renderView('EsterenMapsBundle:Maps:popupContentPolylineEditMode.html.twig', array('markers'=>$map->getMarkers(),'routesTypes'=>$routesTypes,'factions'=>$factions));
-            $datas['LeafletPopupPolygonBaseContent'] = $this->renderView('EsterenMapsBundle:Maps:popupContentPolygonEditMode.html.twig',array('factions'=>$factions, 'zonesTypes'=>$zonesTypes));
-        } else {
-            $datas['LeafletPopupMarkerBaseContent'] = $this->renderView('EsterenMapsBundle:Maps:popupContentMarker.html.twig',array('markersTypes'=>$markersTypes,'factions'=>$factions));
-            $datas['LeafletPopupPolylineBaseContent'] = $this->renderView('EsterenMapsBundle:Maps:popupContentPolyline.html.twig', array('markers'=>$map->getMarkers(),'routesTypes'=>$routesTypes,'factions'=>$factions));
-            $datas['LeafletPopupPolygonBaseContent'] = $this->renderView('EsterenMapsBundle:Maps:popupContentPolygon.html.twig',array('factions'=>$factions, 'zonesTypes'=>$zonesTypes));
-        }
-
-        $datas = json_encode(array('settings'=>$datas), 480);
-
-        $response = new Response();
-
-        $response->headers->add(array('Content-type'=>'application/json'));
-
-        $response->setContent($datas);
-
-        return $response;
-    }
-
-    /**
-     * @Route("/api/maps/image/{id}", requirements={"id":"\d+"})
+     * @Route("/maps/image/{id}", requirements={"id":"\d+"}, host="%esteren_domains.api%")
+     * @param Request $request
+     * @param Maps $map
+     * @throws \Exception
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function generateMapImageAction(Request $request, Maps $map) {
 
         $response = new Response();
         $this->init();
 
-
+        /** @var MapsTilesManager $tilesManager */
         $tilesManager = $this->container->get('esterenmaps.tiles_manager');
 
         $tilesManager->setMap($map);
@@ -106,7 +76,15 @@ class TilesController extends Controller {
     }
 
     /**
-     * @Route("/api/maps/tile/{id}/{zoom}/{x}/{y}.jpg", requirements={"id":"\d+"})
+     * @Route("/api/maps/tile/{id}/{zoom}/{x}/{y}.jpg", requirements={"id":"\d+"}, host="%esteren_domains.esteren_maps%", name="esterenmaps_api_tiles_tile_local")
+     * @Route("/maps/tile/{id}/{zoom}/{x}/{y}.jpg", requirements={"id":"\d+"}, host="%esteren_domains.api%", name="esterenmaps_api_tiles_tile_distant")
+     * @Cache(maxage="864000", expires="+10 days")
+     * @param Maps $map
+     * @param integer $zoom
+     * @param integer $x
+     * @param integer $y
+     * @throws \Exception
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function tileAction(Maps $map, $zoom, $x, $y) {
         $zoom = (int) $zoom;
@@ -189,12 +167,13 @@ class TilesController extends Controller {
 
     /**
      * Renvoie une exception traduite au navigateur.
-     * @param type $msg
-     * @throws \Symfony\Component\Config\Definition\Exception\Exception
+     * @param string $msg
+     * @throws \Exception
      */
     private function exception($msg) {
         $translator = $this->get('translator');
         $msg = $translator->translate($msg);
-        throw new \Symfony\Component\Config\Definition\Exception\Exception($msg);
+        throw new \Exception($msg);
     }
+
 }

@@ -27,6 +27,9 @@ class AppKernel extends Kernel
             // JMS
             new JMS\SerializerBundle\JMSSerializerBundle($this),
 
+            // Nelmio
+            new Nelmio\CorsBundle\NelmioCorsBundle(),
+
             // FOS
             new FOS\UserBundle\FOSUserBundle(),
             new FOS\RestBundle\FOSRestBundle(),
@@ -68,6 +71,7 @@ class AppKernel extends Kernel
 
             // Esteren Maps
             new EsterenMaps\MapsBundle\EsterenMapsBundle(),
+            new EsterenMaps\ApiBundle\EsterenMapsApiBundle(),
 
             // Pierstoval's tools
             new Pierstoval\Bundle\ApiBundle\PierstovalApiBundle(),

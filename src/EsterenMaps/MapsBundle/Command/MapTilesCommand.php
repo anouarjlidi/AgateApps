@@ -1,6 +1,7 @@
 <?php
 namespace EsterenMaps\MapsBundle\Command;
 
+use EsterenMaps\MapsBundle\Entity\Maps;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -30,7 +31,7 @@ class MapTilesCommand extends ContainerAwareCommand {
 
 	protected function execute(InputInterface $input, OutputInterface $output) {
 
-        $id = $input->getArgument('id') ?: ($input->getOption('id') ?: null);
+        $id = $input->hasArgument('id') ? $input->getArgument('id') : null;
 
         $global_time = microtime(true);
 		//Récupération du service "dialog" pour les demandes à l'utilisateur
@@ -42,32 +43,27 @@ class MapTilesCommand extends ContainerAwareCommand {
 
         $sleep = 50000;
 
-        $output->writeln('   ______                     __                   ____   _      ');
-        $output->writeln('  / ____/____   _____ ____ _ / /_   ____          / __ \\ (_)____ ');
-        $output->writeln(' / /    / __ \\ / ___// __ `// __ \\ / __ \\ ______ / /_/ // // __ \\');
-        $output->writeln('/ /___ / /_/ // /   / /_/ // / / // / / //_____// _, _// // / / /');
-        $output->writeln('\\____/ \\____//_/    \\__,_//_/ /_//_/ /_/       /_/ |_|/_//_/ /_/ ');
-        $output->writeln('');
-
 		$output->writeln('Welcome to Corahn-Rin map tiles generator !'); usleep($sleep);
 		$output->writeln('Be careful : as maps may be huge, this application can use a lot of memory and take very long to execute.');
 		$output->writeln('');
 
+        /** @var Maps $map */
         $map = null;
         // Recherche de la carte
         do {
             $map = $repo->findOneBy(array('id'=>$id));
             if (!$map) {
+                $maps_list = array();
                 if ($list === null) {//Création de la liste si jamais un mauvais id est entré
                     $list = $repo->findAll();
-
-                    $maps_list = array();
                     foreach ($list as $v) {
                         $maps_list[$v->getId()] = $v->getName();
                     }
                     unset($list);
                 }
-                $output->writeln('No map with this id.');
+                if ($id !== null) {
+                    $output->writeln('<comment>No map with id "'.$id.'".</comment>');
+                }
                 $id = $dialog->select(
                     $output,
                     'Select a map to generate:',
@@ -88,13 +84,18 @@ class MapTilesCommand extends ContainerAwareCommand {
 
         $tilesManager->setMap($map);
 
-        for ($i = 0; $i <= $map->getMaxZoom(); $i++) {
-            $output->writeln('Processing extraction for zoom value '.$i);
-            $tilesManager->generateTiles($i);
+        try {
+            for ($i = 0; $i <= $map->getMaxZoom(); $i++) {
+                $output->writeln('Processing extraction for zoom value '.$i);
+                $tilesManager->generateTiles($i, true);
+            }
+        } catch (\Exception $e) {
+            $output->writeln('<error>Error while processing extraction for zoom value "'.$i.'", got following message :</error>');
+            $output->writeln('<error>'.$e->getMessage().'</error>');
         }
 
         return;
-
+/*
         $cmd = 'identify -format "%wx%h" "'.ROOT.'/web/'.$map->getImage().'"';
         $size = shell_exec($cmd);
         if (!$size || !preg_match('#^[0-9]+x[0-9]+$#', $size)) {
@@ -219,6 +220,6 @@ class MapTilesCommand extends ContainerAwareCommand {
         $output->writeln($files_written.' files have been written !');
         $output->writeln('Execution time : '.gmdate('H:i:s', microtime(true) - $global_time));
 		$output->writeln('Thanks for using CorahnRin, and see you soon !');
-
+*/
 	}
 }

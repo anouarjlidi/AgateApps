@@ -16,6 +16,14 @@
         'bundles/sonatapage/default.css'
         'bundles/sonatapage/page.css'
         '@EsterenPagesBundle/Resources/public/less/_main.less'
+
+        'bundles/esterenmaps/css/leaflet.css'
+        'bundles/esterenmaps/css/leaflet.draw.css'
+        '@EsterenMapsBundle/Resources/public/css/leaflet.sidebar.css'
+        '@EsterenMapsBundle/Resources/public/css/maps.css'
+
+        'components/jquery-ui/themes/vader/jquery-ui.min.css'
+        'components/jquery-ui/themes/vader/jquery.ui.theme.css'
         output="css/main.css"
         filter="less,cssrewrite"
         %}
@@ -86,33 +94,41 @@
 
 {% block javascripts %}
     <script type="text/javascript" src="{{ url('pierstoval_tools_assets_jstranslations') }}"></script>
+
+    <script type="text/javascript" src="{{ asset('components/jquery/dist/jquery.min.js') }}"></script>
     {% javascripts
-
-    'components/jquery/dist/jquery.min.js'
-
-    'components/bootstrap/js/button.js'
-    'components/bootstrap/js/collapse.js'
-    'components/bootstrap/js/dropdown.js'
-    'components/bootstrap/js/modal.js'
-    'components/bootstrap/js/tooltip.js'
-    'components/bootstrap/js/popover.js'
-    'components/bootstrap/js/transition.js'
-    'components/bootstrap/js/tab.js'
-
-    'components/jquery-ui/ui/minified/jquery.ui.core.min.js'
-    'components/jquery-ui/ui/minified/jquery.ui.widget.min.js'
-    'components/jquery-ui/ui/minified/jquery.ui.mouse.min.js'
-    'components/jquery-ui/ui/minified/jquery.ui.draggable.min.js'
-    'components/jquery-ui/ui/minified/jquery.ui.slider.min.js'
-
-    '@SonataPageBundle/Resources/public/page.js'
-
-    '@EsterenPagesBundle/Resources/public/js/corahn_rin.js'
-
-    output="js/main.js"
-    filter="" %}
+        'components/bootstrap/js/button.js'
+        'components/bootstrap/js/collapse.js'
+        'components/bootstrap/js/dropdown.js'
+        'components/bootstrap/js/modal.js'
+        'components/bootstrap/js/tooltip.js'
+        'components/bootstrap/js/popover.js'
+        'components/bootstrap/js/transition.js'
+        'components/bootstrap/js/tab.js'
+        output="js/bootstrap.js"
+        filter="" %}
     <script type="text/javascript" src="{{ app.request.getSchemeAndHttpHost() ~ asset_url }}"></script>
     {% endjavascripts %}
+
+    {% javascripts
+        '@SonataPageBundle/Resources/public/page.js'
+        '@EsterenPagesBundle/Resources/public/js/corahn_rin.js'
+        output="js/main.js"
+        filter="" %}
+    <script type="text/javascript" src="{{ app.request.getSchemeAndHttpHost() ~ asset_url }}"></script>
+    {% endjavascripts %}
+
+    {% javascripts
+        'components/jquery-ui/ui/minified/jquery.ui.core.min.js'
+        'components/jquery-ui/ui/minified/jquery.ui.widget.min.js'
+        'components/jquery-ui/ui/minified/jquery.ui.mouse.min.js'
+        'components/jquery-ui/ui/minified/jquery.ui.draggable.min.js'
+        'components/jquery-ui/ui/minified/jquery.ui.slider.min.js'
+        output="js/jqueryui.js"
+        filter="" %}
+    <script type="text/javascript" src="{{ app.request.getSchemeAndHttpHost() ~ asset_url }}"></script>
+    {% endjavascripts %}
+
 {% endblock %}
 </body>
 </html>

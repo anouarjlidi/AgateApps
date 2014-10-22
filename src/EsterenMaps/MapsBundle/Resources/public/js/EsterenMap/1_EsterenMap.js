@@ -42,10 +42,15 @@
         }
 
         $.ajax({
-            url: this.mapOptions.apiUrls.base.replace('maps/','maps/settings/'),
-            type: 'GET',
+            url: this.mapOptions.apiUrls.settings,
+            headers: {
+                Origin: "http://"+w.location.hostname,
+                'Access-Control-Allow-origin': true
+            },
+            type: 'POST',
             dataType: 'json',
             data: ajaxD,
+            crossDomain: true,
             success: function(response) {
                 if (response.settings) {
                     _this.mapOptions = mergeRecursive(_this.mapOptions, response.settings);
@@ -167,6 +172,7 @@
             url: url,
             type: 'GET',
             dataType: 'json',
+            crossDomain: true,
             data: datas
         };
         if (callback) {

@@ -1,0 +1,9 @@
+parameters:
+    pierstoval.api.originChecker.class: Pierstoval\Bundle\ApiBundle\Services\OriginChecker
+
+services:
+    pierstoval.api.originChecker:
+        class: %pierstoval.api.originChecker.class%
+        arguments:
+            allowedOrigins: %pierstoval_api.allowed_origins%
+            kernelEnvironment: %kernel.environment%

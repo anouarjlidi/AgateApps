@@ -1,3 +1,12 @@
+esteren_maps_api:
+    resource: "@EsterenMapsApiBundle/Controller/"
+    type:     annotation
+    prefix:   /{_locale}/
+    defaults:
+         _locale: %locale%
+    requirements:
+        _locale: ^(%locales_regex%)$
+
 corahn_rin_admin:
     resource: "@CorahnRinAdminBundle/Controller/"
     type:     annotation

@@ -4,14 +4,16 @@ namespace Pierstoval\Bundle\ApiBundle\Controller;
 
 use Doctrine\Common\Collections\Collection;
 
+use Doctrine\ORM\EntityRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @Route("/api/{serviceName}")
+ * @Route("/{serviceName}", host="%esteren_domains.esteren_maps%")
  */
 class ApiController extends FOSRestController
 {
@@ -22,8 +24,10 @@ class ApiController extends FOSRestController
      * @Route("/")
      * @Method({"GET"})
      */
-    public function cgetAction($serviceName)
+    public function cgetAction($serviceName, Request $request)
     {
+        $this->checkAsker($request);
+
         $service = $this->getService($serviceName);
 
         $datas = $this->getDoctrine()->getManager()->getRepository($service['entity'])->findAll();
@@ -38,10 +42,13 @@ class ApiController extends FOSRestController
      * @Route("/{id}/{subElement}", requirements={"subElement"="([a-zA-Z0-9\._]/?)+","id"="\d+"})
      * @Method({"GET"})
      */
-    public function getAction($serviceName, $id, $subElement = null, $_route)
+    public function getAction($serviceName, $id, $subElement = null, $_route, Request $request)
     {
+        $this->checkAsker($request);
+
         $service = $this->getService($serviceName);
 
+        /** @var EntityRepository $repo */
         $repo = $this->getDoctrine()->getManager()->getRepository($service['entity']);
 
         // Récupération des données
@@ -139,24 +146,27 @@ class ApiController extends FOSRestController
      * @Route("/")
      * @Method({"PUT"})
      */
-    public function putAction($serviceName, $id)
+    public function putAction($serviceName, $id, Request $request)
     {
+        $this->checkAsker($request);
     }
 
     /**
      * @Route("/{id}")
      * @Method({"POST"})
      */
-    public function postAction($serviceName, $id)
+    public function postAction($serviceName, $id, Request $request)
     {
+        $this->checkAsker($request);
     }
 
     /**
      * @Route("/{id}")
      * @Method({"DELETE"})
      */
-    public function deleteAction($serviceName, $id)
+    public function deleteAction($serviceName, $id, Request $request)
     {
+        $this->checkAsker($request);
     }
 
 
@@ -164,6 +174,20 @@ class ApiController extends FOSRestController
     ----------------- MÉTHODES PRIVÉES -----------------
     --------------------------------------------------*/
 
+    /**
+     * @param Request $request
+     * @throws AccessDeniedException
+     */
+    private function checkAsker(Request $request)
+    {
+        $this->container->get('pierstoval.api.originChecker')->checkRequest($request);
+    }
+
+    /**
+     * @param string $serviceName
+     * @param bool $throwException
+     * @return null
+     */
     private function getService($serviceName, $throwException = true) {
         if (!$this->services) {
             $this->services = $this->container->getParameter('pierstoval_api.services');
@@ -178,6 +202,12 @@ class ApiController extends FOSRestController
         return null;
     }
 
+    /**
+     * @param mixed $data
+     * @param integer $statusCode
+     * @param array $headers
+     * @return \FOS\RestBundle\View\View|\Symfony\Component\HttpFoundation\Response
+     */
     protected function view($data = NULL, $statusCode = NULL, array $headers = Array()) {
         $view = parent::view($data, $statusCode, $headers);
         $view->setFormat($this->container->getParameter('pierstoval_api.format'));

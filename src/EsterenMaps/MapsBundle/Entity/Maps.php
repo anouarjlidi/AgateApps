@@ -190,8 +190,12 @@ class Maps {
      *
      * @return string
      */
-    public function getImage() {
-        return $this->image;
+    public function getImage($ds = null) {
+        $image = $this->image;
+        if ($ds !== null && in_array($ds, array('/','\\'))) {
+            $image = str_replace(array('/','\\'), $ds, $image);
+        }
+        return $image;
     }
 
     /**

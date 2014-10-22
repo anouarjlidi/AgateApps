@@ -30,6 +30,7 @@
         imgUrl: '/bundles/esterenmaps/img',
         apiUrls: {
             base: '/api/maps/',
+            settings: '/api/maps/settings/',
             tiles: '/api/maps/tile/{id}/{z}/{x}/{y}.jpg'
         },
         loaderCallbacks: {},

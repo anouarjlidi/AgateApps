@@ -5,9 +5,11 @@ parameters:
 services:
     esterenmaps.tiles_manager:
         class: EsterenMaps\MapsBundle\Services\MapsTilesManager
-        output_directory: %esterenmaps.output_directory%
-        tile_size: %esterenmaps.tile_size%
-        kernel: @kernel
+        arguments:
+            output_directory: %esterenmaps.output_directory%
+            tile_size: %esterenmaps.tile_size%
+            magick_binaries_path: %magick_binaries_path%
+            kernel: @kernel
 
     esterenmaps.directions:
         class: EsterenMaps\MapsBundle\Services\Directions

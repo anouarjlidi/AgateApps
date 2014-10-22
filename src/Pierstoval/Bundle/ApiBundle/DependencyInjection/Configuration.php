@@ -23,6 +23,11 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->scalarNode('format')->defaultValue('json')->end()
+                ->arrayNode('allowed_origins')
+                    ->prototype('scalar')->cannotBeEmpty()->isRequired()->end()
+                    ->isRequired()
+                    ->requiresAtLeastOneElement()
+                ->end()
                 ->arrayNode('services')
                     ->useAttributeAsKey('name', false)
                     ->prototype('array')

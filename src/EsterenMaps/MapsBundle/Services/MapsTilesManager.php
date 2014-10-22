@@ -21,10 +21,12 @@ class MapsTilesManager {
     private $img_height;
     private $identifications = array();
     private $imgname = '';
+    private $magickPath = '';
 
-    function __construct ($output_directory, $tile_size, KernelInterface $kernel) {
+    function __construct ($output_directory, $tile_size, $magick_binaries_path, KernelInterface $kernel) {
         $this->tile_size = $tile_size;
         $output_directory = trim($output_directory, '\\/');
+        $this->magickPath = trim($magick_binaries_path).DIRECTORY_SEPARATOR;
         if (strpos($output_directory, '@') === 0) {
             $this->output_directory = $kernel->locateResource($output_directory);
         } else {
@@ -53,10 +55,16 @@ class MapsTilesManager {
 
             if (!$this->img_width || !$this->img_height) {
                 // Détermine la taille de l'image initiale une fois et place les attributs dans l'objet
-                $cmd = 'identify -format "%wx%h" "'.$this->map->getImage().'"';
+                $cmd = $this->magickPath.'identify -format "%wx%h" "'.$this->map->getImage().'" 2>&1';
                 $size = shell_exec($cmd);
                 if (!$size || !preg_match('#^[0-9]+x[0-9]+$#', $size)) {
-                    throw new \RunTimeException('Error while retrieving map dimensions.');
+                    $size = trim($size);
+                    $msg = 'Error while retrieving map dimensions. Command returned error:'."\n\t".str_replace("\n","\n\t", $size);
+                    $msg = trim($msg);
+                    if (strpos($msg, 'no decode delegate') !== false) {
+                        $msg .= "\n".'Do you have installed necessary delegates for ImageMagick ?';
+                    }
+                    throw new \RunTimeException($msg);
                 }
                 list($w, $h) = explode('x',$size);
                 $this->img_width = $w;
@@ -91,8 +99,9 @@ class MapsTilesManager {
 
     /**
      * @param integer $zoom
+     * @param boolean $debug
      */
-    public function generateTiles($zoom) {
+    public function generateTiles($zoom, $debug = false) {
         $max = $this->map->getMaxZoom();
 
         $ratio = 1 / ( pow(2, $max - $zoom) ) * 100;
@@ -122,7 +131,7 @@ class MapsTilesManager {
         }
 
         $cmd =
-            'convert "'.$this->map->getImage().'"' .
+            $this->magickPath.'convert "'.$this->map->getImage(DIRECTORY_SEPARATOR).'"' .
             ' -background #000000'.
             ' -extent '.$w.'x'.$h.
             ' -resize '.$ratio.'% ' .
@@ -130,10 +139,21 @@ class MapsTilesManager {
             ' -background #000000'.
             ' -extent '.$this->tile_size.'x'.$this->tile_size .
             ' -thumbnail '.$this->tile_size.'x'.$this->tile_size .
-            ' "'.$output_scheme.'"'
+            ' "'.$output_scheme.'"' .
+            ' 2>&1'
         ;
 
-        shell_exec($cmd);
+        $command_result = shell_exec($cmd);
+
+        if ($command_result) {
+            $command_result = trim($command_result);
+            $msg = 'Error while processing conversion. Command returned error:'."\n\t".str_replace("\n","\n\t", $command_result);
+            $msg = trim($msg);
+            if ($debug) {
+                $msg .= "\n".'Executed command : '."\n\t".$cmd;
+            }
+            throw new \RunTimeException($msg);
+        }
 
         $existing_files = glob(dirname($output_scheme).'/*');
 
@@ -207,7 +227,7 @@ class MapsTilesManager {
         $_x = $x * $crop_unit;
         $_y = $y * $crop_unit;
 
-        $cmd = 'convert'.
+        $cmd = $this->magickPath.'convert'.
             ' "'.$this->mapSourceName().'"'.
             ' -background black'.//Le "surplus" sera noir
             ' -extent '.$identification['wmax_global'].'x'.$identification['hmax_global'].
@@ -244,7 +264,7 @@ class MapsTilesManager {
         if (!is_dir(dirname($imgname))) {
             mkdir(dirname($imgname), 0777, true);
         }
-        $cmd = 'convert'.
+        $cmd = $this->magickPath.'convert'.
             ' "'.$this->mapSourceName().'"'.
             ' -background black'.//Le "surplus" sera noir
             ' -crop '.$crop_unit.'x'.$crop_unit.'+'.$_x.'+'.$_y.//Découpe l'image selon la taille demandée dans les paramètres
@@ -254,7 +274,7 @@ class MapsTilesManager {
             ' -quality 100'.//Une faible qualité réduira le poids des images
             ' "'.$imgname.'"'
         ;
-        $cmd = 'convert'.
+        $cmd = $this->magickPath.'convert'.
             ' "'.$this->mapSourceName().'"'.
             ($ratio < 100 ? ' -resize '.$ratio.'%' : '').
             ' -background black'.//Le "surplus" sera noir

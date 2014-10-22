@@ -22,14 +22,14 @@ class MapsController extends Controller
     private $factions;
 
     /**
-     * @Route("/{id}-{nameSlug}", requirements={"id":"\d+"})
+     * @Route("/map-{nameSlug}")
      * @Template()
      */
     public function viewAction(Maps $map) {
 
-        $tilesUrl = $this->generateUrl('esterenmaps_maps_tiles_tile', array('id'=>0,'x'=>0,'y'=>0,'zoom'=>0), true);
+        $tilesUrl = $this->generateUrl('esterenmaps_api_tiles_tile_local', array('id'=>0,'x'=>0,'y'=>0,'zoom'=>0), true);
         $tilesUrl = str_replace('0/0/0/0','{id}/{z}/{x}/{y}', $tilesUrl);
-        $tilesUrl = preg_replace('~app_dev(_fast)\.php/~isUu', '', $tilesUrl);
+        $tilesUrl = preg_replace('~app_dev(_fast)?\.php/~isUu', '', $tilesUrl);
 
         return array(
             'map' => $map,
@@ -45,42 +45,6 @@ class MapsController extends Controller
     public function indexAction() {
         $list = $this->getDoctrine()->getManager()->getRepository('EsterenMapsBundle:Maps')->findAll();
         return array('list' => $list);
-    }
-
-    /**
-     * @Route("/admin/add/")
-     * @Template("PierstovalAdminBundle:Form:add.html.twig")
-     */
-    public function addAction(Request $request) {
-
-        $map = new Maps();
-
-        $form = $this->createForm(new MapsType, $map);
-
-        if ($request->getMethod() == 'POST') {
-            $form->submit($request);
-
-            $pathinfo = $this->handleImage($map);
-
-            if ($form->isValid() && $request->isMethod('POST')) {
-                $pathinfo['file']->move($pathinfo['dir'], $pathinfo['path']);
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($map);
-                $em->flush();
-                $this->get('session')->getFlashBag()->add('success', 'La carte <strong>'.$map->getName().'</strong> a été ajoutée');
-                return $this->redirect($this->generateUrl('esterenmaps_maps_maps_adminlist'));
-            }
-        }
-
-        return array(
-            'form' => $form->createView(),
-            'map' => $map,
-            'title' => 'Créer une nouvelle carte',
-            'breadcrumbs' => array(
-                'Accueil' => array('route' => 'pierstoval_admin_admin_index',),
-                'Cartes' => array('route'=>'esterenmaps_maps_maps_adminlist'),
-            ),
-        );
     }
 
     /**
@@ -128,7 +92,7 @@ class MapsController extends Controller
         $maxMarkers = $em->getRepository('EsterenMapsBundle:Markers')->getMax();
         $idsMarkers = $em->getRepository('EsterenMapsBundle:Markers')->getIds();
 
-        $tilesUrl = $this->generateUrl('esterenmaps_maps_tiles_tile', array('id'=>0,'x'=>0,'y'=>0,'zoom'=>0), true);
+        $tilesUrl = $this->generateUrl('esterenmaps_api_tiles_tile', array('id'=>0,'x'=>0,'y'=>0,'zoom'=>0), true);
         $tilesUrl = str_replace('0/0/0/0','{id}/{z}/{x}/{y}', $tilesUrl);
 		$tilesUrl = preg_replace('~app_dev(_fast)\.php/~isUu', '', $tilesUrl);
 
@@ -188,34 +152,6 @@ class MapsController extends Controller
                 'Accueil' => array('route' => 'pierstoval_admin_admin_index',),
                 'Cartes' => array('route'=>'esterenmaps_maps_maps_adminlist'),
             ),
-        );
-    }
-
-    /**
-     * @Route("/admin/delete/{id}")
-     */
-    public function deleteAction(Maps $map)
-    {
-        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN_MAPS_SUPER')) {
-            throw new AccessDeniedException();
-        }
-
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($map);
-        $em->flush();
-
-        $this->get('session')->getFlashBag()->add('success', 'La carte <strong>'.$map->getName().'</strong> a été correctement supprimée.');
-
-        return $this->redirect($this->generateUrl('esterenmaps_maps_maps_adminlist'));
-    }
-
-    /**
-     * @Route("/admin/")
-     * @Template()
-     */
-    public function adminListAction() {
-        return array(
-            'maps' => $this->getDoctrine()->getManager()->getRepository('EsterenMapsBundle:Maps')->findAll(),
         );
     }
 
