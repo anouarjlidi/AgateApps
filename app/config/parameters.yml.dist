@@ -18,9 +18,9 @@ parameters:
         Español: es
     locales_regex: fr|en|de|es
     secret: ChangeSecretToken
-    magick_binaries_path: '/usr/bin'
+    magick_binaries_path: /usr/bin
     node_path: /usr/local/bin/node
-    node_modules_path: /usr/local/lib/node_modules
+    node_modules_path: %kernel.root_dir%/../node_modules/
     esteren_domains.corahn_rin:     corahnrin.esteren.org
     esteren_domains.esteren_maps:   maps.esteren.org
     esteren_domains.portal:         www.esteren.org

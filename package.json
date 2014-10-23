@@ -1,0 +1,28 @@
+{
+    "name": "esteren",
+    "description": "Global Esteren project",
+    "homepage": "http://www.esteren.org/",
+    "author": "Alex \"Pierstoval\" Ancelet <pierstoval@gmail.com>",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Pierstoval/corahn_rin"
+    },
+    "dependencies": {
+        "less" : "~1",
+        "bower" : "~1",
+        "uglify-js": "~2",
+        "uglifycss": "~0"
+    },
+    "contributors": [
+        {
+            "name":     "Nelyhann",
+            "email":    "nelyhann@gmail.com"
+        },
+        {
+            "name":     "Joelle \"Iris\" Deschamp",
+            "email":    "iris.d.automne@gmail.com"
+        }
+    ],
+    "private": true,
+    "engines": { "node" : ">=0.4.0" }
+}
