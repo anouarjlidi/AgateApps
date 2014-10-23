@@ -1,0 +1,9 @@
+{% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
+
+{% block field %}
+    {% if value %}
+        <div style="width: 100%; height: 100%; min-height: 30px; background-color: {{ value }};"></div>
+    {% else %}
+        &ndash;
+    {% endif %}
+{% endblock %}

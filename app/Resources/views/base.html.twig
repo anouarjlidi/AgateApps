@@ -13,41 +13,26 @@
 
     {% block stylesheets %}
         {% stylesheets
+        '@EsterenPagesBundle/Resources/public/less/_main.less'
+
         'bundles/sonatapage/default.css'
         'bundles/sonatapage/page.css'
-        '@EsterenPagesBundle/Resources/public/less/_main.less'
 
         'bundles/esterenmaps/css/leaflet.css'
         'bundles/esterenmaps/css/leaflet.draw.css'
-        '@EsterenMapsBundle/Resources/public/css/leaflet.sidebar.css'
-        '@EsterenMapsBundle/Resources/public/css/maps.css'
+        'bundles/esterenmaps/css/leaflet.sidebar.css'
+        'bundles/esterenmaps/css/maps.css'
 
         'components/jquery-ui/themes/vader/jquery-ui.min.css'
         'components/jquery-ui/themes/vader/jquery.ui.theme.css'
-        output="css/main.css"
-        filter="less,cssrewrite"
+        'components/jquery.colorpicker/jquery.colorpicker.css'
+
+        output="css/global.css"
+        filter="less,cssrewrite,?uglifycss"
         %}
         <link rel="stylesheet" href="{{ app.request.getSchemeAndHttpHost() ~ asset_url }}" type="text/css" />
         {% endstylesheets %}
 
-        {# % stylesheets
-
-            'bundles/esterenpages/css/glyphicons.css'
-            'bundles/esterenpages/css/corahnrin-theme.css'
-
-            '@EsterenPagesBundle/Resources/public/css/corahn_rin.css'
-
-            'bundles/esterenmaps/css/leaflet.css'
-            'bundles/esterenmaps/css/leaflet.draw.css'
-            '@EsterenMapsBundle/Resources/public/css/leaflet.sidebar.css'
-            '@EsterenMapsBundle/Resources/public/css/maps.css'
-
-            'components/jquery-ui/themes/vader/jquery-ui.min.css'
-            'components/jquery-ui/themes/vader/jquery.ui.theme.css'
-            filter="cssrewrite"
-            output="css/main.css" %}
-        <link rel="stylesheet" href="{{ app.request.getSchemeAndHttpHost() ~ asset_url }}" type="text/css" />
-        {% endstylesheets %#}
     {% endblock %}
 
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ asset('bundles/esterenpages/images/favicon-144.png') }}">
@@ -94,7 +79,6 @@
 
 {% block javascripts %}
     <script type="text/javascript" src="{{ url('pierstoval_tools_assets_jstranslations') }}"></script>
-
     <script type="text/javascript" src="{{ asset('components/jquery/dist/jquery.min.js') }}"></script>
     {% javascripts
         'components/bootstrap/js/button.js'
@@ -106,26 +90,17 @@
         'components/bootstrap/js/transition.js'
         'components/bootstrap/js/tab.js'
         output="js/bootstrap.js"
-        filter="" %}
+        filter="?uglifyjs" %}
     <script type="text/javascript" src="{{ app.request.getSchemeAndHttpHost() ~ asset_url }}"></script>
     {% endjavascripts %}
 
     {% javascripts
+        'components/jquery.colorpicker/jquery.colorpicker.js'
+        'components/jquery.colorpicker/i18n/*.js'
         '@SonataPageBundle/Resources/public/page.js'
         '@EsterenPagesBundle/Resources/public/js/corahn_rin.js'
-        output="js/main.js"
-        filter="" %}
-    <script type="text/javascript" src="{{ app.request.getSchemeAndHttpHost() ~ asset_url }}"></script>
-    {% endjavascripts %}
-
-    {% javascripts
-        'components/jquery-ui/ui/minified/jquery.ui.core.min.js'
-        'components/jquery-ui/ui/minified/jquery.ui.widget.min.js'
-        'components/jquery-ui/ui/minified/jquery.ui.mouse.min.js'
-        'components/jquery-ui/ui/minified/jquery.ui.draggable.min.js'
-        'components/jquery-ui/ui/minified/jquery.ui.slider.min.js'
-        output="js/jqueryui.js"
-        filter="" %}
+        output="js/global.js"
+        filter="?uglifyjs" %}
     <script type="text/javascript" src="{{ app.request.getSchemeAndHttpHost() ~ asset_url }}"></script>
     {% endjavascripts %}
 

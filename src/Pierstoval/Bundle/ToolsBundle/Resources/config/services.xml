@@ -13,6 +13,10 @@
         <service id="pierstoval_tools.twig.json" class="Pierstoval\Bundle\ToolsBundle\Twig\JsonExtension">
             <tag name="twig.extension" />
         </service>
+        <service id="pierstoval_tools.twig.paths" class="Pierstoval\Bundle\ToolsBundle\Twig\PathsExtension">
+            <tag name="twig.extension" />
+            <argument type="string">%kernel.root_dir%</argument>
+        </service>
 
         <service id="pierstoval_tools.imagick" class="Pierstoval\Component\Imagick\Imagick">
             <argument id="convert_path">%pierstoval_tools.imagick.path%</argument>

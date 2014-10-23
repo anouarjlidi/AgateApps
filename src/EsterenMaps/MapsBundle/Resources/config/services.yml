@@ -16,12 +16,3 @@ services:
         arguments:
             - @doctrine.orm.default_entity_manager
             - @jms_serializer
-
-    esterenmaps.admin.map:
-        class: EsterenMaps\MapsBundle\Admin\MapsAdmin
-        tags:
-            - { name: sonata.admin, manager_type: orm, group: "EsterenMaps", label: "Map" }
-        arguments:
-            - ~
-            - EsterenMaps\MapsBundle\Entity\Maps
-            - ~

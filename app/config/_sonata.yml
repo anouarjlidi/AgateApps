@@ -14,6 +14,8 @@ sonata_admin:
     title:        Esteren
     security:
         handler: sonata.admin.security.handler.role
+    templates:
+        layout:  ApplicationSonataAdminBundle::standard_layout_override.html.twig
 #    title_logo:   logo.jpg
 
 # Sonata Blocks

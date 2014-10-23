@@ -1,0 +1,21 @@
+{% extends 'SonataAdminBundle::standard_layout.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('components/jquery.colorpicker/jquery.colorpicker.css') }}" />
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        const CURRENT_LOCALE = "{{ app.request.locale }}";
+    </script>
+    {% javascripts
+        'components/jquery.colorpicker/jquery.colorpicker.js'
+        'components/jquery.colorpicker/i18n/*.js'
+        'bundles/applicationsonataadmin/js/sonata_admin.js'
+        output="js/sonata_admin.js"
+        filter="?uglifyjs" %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

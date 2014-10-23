@@ -50,8 +50,6 @@ security:
     providers:
         main:
             id: fos_user.user_provider.username
-        fos_userbundle:
-            id: fos_user.user_provider.username
 #        in_memory:
 #            memory:
 #                users:
@@ -91,7 +89,7 @@ security:
             context:            backoffice
             remember_me:        false
             form_login:
-                provider:       fos_userbundle
+                provider:       main
                 login_path:     sonata_admin_security_login
                 use_forward:    false
                 check_path:     sonata_admin_security_check
@@ -99,11 +97,12 @@ security:
                 use_referer:    false
                 default_target_path: sonata_admin_dashboard
                 always_use_default_target_path: true
-            logout: true
-#                path:           sonata_admin_security_logout
-#                target:         http://%esteren_domains.portal%/%locale%/
+            logout:
+                path:           sonata_user_admin_security_logout
+                target:         http://%esteren_domains.portal%/%locale%/
 
     access_control:
+        - { path: ^/(%locales_regex%)/,                   roles: [IS_AUTHENTICATED_ANONYMOUSLY] }
         - { path: ^/(%locales_regex%)/profile,            roles: [ROLE_USER] }
         - { path: ^/(%locales_regex%)/characters,         roles: [ROLE_USER] }
         - { path: ^/(%locales_regex%)/admin_login,        host: %esteren_domains.backoffice%, roles: [IS_AUTHENTICATED_ANONYMOUSLY] }

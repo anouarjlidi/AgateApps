@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use JMS\Serializer\Annotation\ExclusionPolicy as ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose as Expose;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * MarkersType
@@ -15,8 +16,10 @@ use JMS\Serializer\Annotation\Expose as Expose;
  * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity(repositoryClass="EsterenMaps\MapsBundle\Repository\MarkersTypesRepository")
  * @ExclusionPolicy("all")
+ * @Gedmo\Uploadable(allowOverwrite=true, filenameGenerator="SHA1")
  */
-class MarkersTypes {
+class MarkersTypes
+{
 
     /**
      * @var integer
@@ -35,6 +38,21 @@ class MarkersTypes {
      * @Expose
      */
     protected $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="text", nullable=true)
+     * @Expose
+     */
+    protected $description;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Gedmo\UploadableFilePath()
+     */
+    protected $iconName;
 
     /**
      * @var \Datetime
@@ -73,14 +91,16 @@ class MarkersTypes {
      */
     protected $deleted = null;
 
-    public function __toString() {
-        return $this->id.' - '.$this->name;
+    public function __toString()
+    {
+        return $this->id . ' - ' . $this->name;
     }
 
     /**
      * Constructor
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->events = new ArrayCollection();
         $this->markers = new ArrayCollection();
     }
@@ -90,7 +110,8 @@ class MarkersTypes {
      *
      * @return integer
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
@@ -100,7 +121,8 @@ class MarkersTypes {
      * @param string $name
      * @return MarkersTypes
      */
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
 
         return $this;
@@ -111,7 +133,8 @@ class MarkersTypes {
      *
      * @return string
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
 
@@ -121,7 +144,8 @@ class MarkersTypes {
      * @param \DateTime $created
      * @return MarkersTypes
      */
-    public function setCreated($created) {
+    public function setCreated($created)
+    {
         $this->created = $created;
 
         return $this;
@@ -132,7 +156,8 @@ class MarkersTypes {
      *
      * @return \DateTime
      */
-    public function getCreated() {
+    public function getCreated()
+    {
         return $this->created;
     }
 
@@ -142,7 +167,8 @@ class MarkersTypes {
      * @param \DateTime $updated
      * @return MarkersTypes
      */
-    public function setUpdated($updated) {
+    public function setUpdated($updated)
+    {
         $this->updated = $updated;
 
         return $this;
@@ -153,7 +179,8 @@ class MarkersTypes {
      *
      * @return \DateTime
      */
-    public function getUpdated() {
+    public function getUpdated()
+    {
         return $this->updated;
     }
 
@@ -163,7 +190,8 @@ class MarkersTypes {
      * @param EventsMarkersTypes $events
      * @return MarkersTypes
      */
-    public function addEvent(EventsMarkersTypes $events) {
+    public function addEvent(EventsMarkersTypes $events)
+    {
         $this->events[] = $events;
 
         return $this;
@@ -174,7 +202,8 @@ class MarkersTypes {
      *
      * @param EventsMarkersTypes $events
      */
-    public function removeEvent(EventsMarkersTypes $events) {
+    public function removeEvent(EventsMarkersTypes $events)
+    {
         $this->events->removeElement($events);
     }
 
@@ -183,7 +212,8 @@ class MarkersTypes {
      *
      * @return EventsMarkersTypes[]
      */
-    public function getEvents() {
+    public function getEvents()
+    {
         return $this->events;
     }
 
@@ -193,7 +223,8 @@ class MarkersTypes {
      * @param Markers $markers
      * @return MarkersTypes
      */
-    public function addMarker(Markers $markers) {
+    public function addMarker(Markers $markers)
+    {
         $this->markers[] = $markers;
 
         return $this;
@@ -204,7 +235,8 @@ class MarkersTypes {
      *
      * @param Markers $markers
      */
-    public function removeMarker(Markers $markers) {
+    public function removeMarker(Markers $markers)
+    {
         $this->markers->removeElement($markers);
     }
 
@@ -213,7 +245,8 @@ class MarkersTypes {
      *
      * @return Markers[]
      */
-    public function getMarkers() {
+    public function getMarkers()
+    {
         return $this->markers;
     }
 
@@ -223,7 +256,8 @@ class MarkersTypes {
      * @param \DateTime $deleted
      * @return MarkersTypes
      */
-    public function setDeleted($deleted) {
+    public function setDeleted($deleted)
+    {
         $this->deleted = $deleted;
 
         return $this;
@@ -234,7 +268,46 @@ class MarkersTypes {
      *
      * @return \DateTime
      */
-    public function getDeleted() {
+    public function getDeleted()
+    {
         return $this->deleted;
     }
+
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     * @return $this
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIconName()
+    {
+        return $this->iconName;
+    }
+
+    /**
+     * @param string $iconName
+     * @return $this
+     */
+    public function setIconName($iconName)
+    {
+        $this->iconName = $iconName;
+        return $this;
+    }
+
 }

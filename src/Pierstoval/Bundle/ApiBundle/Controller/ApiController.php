@@ -13,7 +13,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @Route("/{serviceName}", host="%esteren_domains.esteren_maps%")
+ * @Route("/{serviceName}", host="%esteren_domains.api%")
  */
 class ApiController extends FOSRestController
 {
@@ -41,8 +41,13 @@ class ApiController extends FOSRestController
      * @Route("/{id}", requirements={"id"="\d+"}, defaults={"subElement"=""})
      * @Route("/{id}/{subElement}", requirements={"subElement"="([a-zA-Z0-9\._]/?)+","id"="\d+"})
      * @Method({"GET"})
+     * @param string $serviceName
+     * @param integer $id
+     * @param string $subElement
+     * @param Request $request
+     * @return \FOS\RestBundle\View\View|\Symfony\Component\HttpFoundation\Response
      */
-    public function getAction($serviceName, $id, $subElement = null, $_route, Request $request)
+    public function getAction($serviceName, $id, $subElement = null, Request $request)
     {
         $this->checkAsker($request);
 

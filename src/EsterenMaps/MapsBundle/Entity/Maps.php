@@ -16,8 +16,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity(repositoryClass="EsterenMaps\MapsBundle\Repository\MapsRepository")
  * @ExclusionPolicy("all")
+ * @Gedmo\Uploadable(allowOverwrite=true, filenameGenerator="SHA1")
  */
-class Maps {
+class Maps
+{
 
     /**
      * @var integer
@@ -50,6 +52,7 @@ class Maps {
      * @var string
      *
      * @ORM\Column(type="string", length=255, nullable=false)
+     * @Gedmo\UploadableFilePath()
      */
     protected $image;
 
@@ -120,14 +123,16 @@ class Maps {
      */
     protected $deleted = null;
 
-    public function __toString() {
-        return $this->id.' - '.$this->name;
+    public function __toString()
+    {
+        return $this->id . ' - ' . $this->name;
     }
 
     /**
      * Constructor
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->routes = new ArrayCollection();
         $this->markers = new ArrayCollection();
         $this->zones = new ArrayCollection();
@@ -138,7 +143,8 @@ class Maps {
      *
      * @return integer
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
@@ -158,7 +164,8 @@ class Maps {
      * @param string $name
      * @return Maps
      */
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
 
         return $this;
@@ -169,7 +176,8 @@ class Maps {
      *
      * @return string
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
 
@@ -179,7 +187,8 @@ class Maps {
      * @param string $image
      * @return Maps
      */
-    public function setImage($image) {
+    public function setImage($image)
+    {
         $this->image = $image;
 
         return $this;
@@ -190,12 +199,9 @@ class Maps {
      *
      * @return string
      */
-    public function getImage($ds = null) {
-        $image = $this->image;
-        if ($ds !== null && in_array($ds, array('/','\\'))) {
-            $image = str_replace(array('/','\\'), $ds, $image);
-        }
-        return $image;
+    public function getImage()
+    {
+        return $this->image;
     }
 
     /**
@@ -204,7 +210,8 @@ class Maps {
      * @param string $description
      * @return Maps
      */
-    public function setDescription($description) {
+    public function setDescription($description)
+    {
         $this->description = $description;
 
         return $this;
@@ -215,7 +222,8 @@ class Maps {
      *
      * @return string
      */
-    public function getDescription() {
+    public function getDescription()
+    {
         return $this->description;
     }
 
@@ -225,7 +233,8 @@ class Maps {
      * @param boolean $maxZoom
      * @return Maps
      */
-    public function setMaxZoom($maxZoom) {
+    public function setMaxZoom($maxZoom)
+    {
         $this->maxZoom = $maxZoom;
 
         return $this;
@@ -236,7 +245,8 @@ class Maps {
      *
      * @return integer
      */
-    public function getMaxZoom() {
+    public function getMaxZoom()
+    {
         return $this->maxZoom;
     }
 
@@ -246,7 +256,8 @@ class Maps {
      * @param \DateTime $created
      * @return Maps
      */
-    public function setCreated($created) {
+    public function setCreated($created)
+    {
         $this->created = $created;
 
         return $this;
@@ -257,7 +268,8 @@ class Maps {
      *
      * @return \DateTime
      */
-    public function getCreated() {
+    public function getCreated()
+    {
         return $this->created;
     }
 
@@ -267,7 +279,8 @@ class Maps {
      * @param \DateTime $updated
      * @return Maps
      */
-    public function setUpdated($updated) {
+    public function setUpdated($updated)
+    {
         $this->updated = $updated;
 
         return $this;
@@ -278,7 +291,8 @@ class Maps {
      *
      * @return \DateTime
      */
-    public function getUpdated() {
+    public function getUpdated()
+    {
         return $this->updated;
     }
 
@@ -288,7 +302,8 @@ class Maps {
      * @param Routes $routes
      * @return Maps
      */
-    public function addRoute(Routes $routes) {
+    public function addRoute(Routes $routes)
+    {
         $this->routes[] = $routes;
 
         return $this;
@@ -299,7 +314,8 @@ class Maps {
      *
      * @param Routes $routes
      */
-    public function removeRoute(Routes $routes) {
+    public function removeRoute(Routes $routes)
+    {
         $this->routes->removeElement($routes);
     }
 
@@ -308,7 +324,8 @@ class Maps {
      *
      * @return ArrayCollection
      */
-    public function getRoutes() {
+    public function getRoutes()
+    {
         return $this->routes;
     }
 
@@ -318,7 +335,8 @@ class Maps {
      * @param Routes $route
      * @return Routes
      */
-    public function getRoute(Routes $route) {
+    public function getRoute(Routes $route)
+    {
         foreach ($this->routes as $mapRoute) {
             if ($mapRoute->getId() === $route->getId() ||
                 $mapRoute->getName() === $route->getName()
@@ -335,7 +353,8 @@ class Maps {
      * @param Routes $route
      * @return Maps
      */
-    public function setRoute(Routes $route) {
+    public function setRoute(Routes $route)
+    {
         $exists = $this->getRoute($route);
         if (!$exists) {
             $this->addRoute($route);
@@ -352,7 +371,8 @@ class Maps {
      * @param Markers $markers
      * @return Maps
      */
-    public function addMarker(Markers $markers) {
+    public function addMarker(Markers $markers)
+    {
         $this->markers[] = $markers;
 
         return $this;
@@ -363,7 +383,8 @@ class Maps {
      *
      * @param Markers $markers
      */
-    public function removeMarker(Markers $markers) {
+    public function removeMarker(Markers $markers)
+    {
         $this->markers->removeElement($markers);
     }
 
@@ -372,7 +393,8 @@ class Maps {
      *
      * @return ArrayCollection
      */
-    public function getMarkers() {
+    public function getMarkers()
+    {
         return $this->markers;
     }
 
@@ -382,7 +404,8 @@ class Maps {
      * @param Markers $marker
      * @return Zones
      */
-    public function getMarker(Markers $marker) {
+    public function getMarker(Markers $marker)
+    {
         foreach ($this->markers as $mapMarker) {
             if ($mapMarker->getId() === $marker->getId() ||
                 $mapMarker->getName() === $marker->getName()
@@ -394,9 +417,13 @@ class Maps {
     }
 
     /**
-     *
+     * Contrairement au nom de cette méthode, celle-ci AJOUTE un marqueur,
+     *    et uniquement si celui-ci n'est pas déjà ajouté à la map.
+     * @param Markers $marker
+     * @return $this
      */
-    public function setMarker(Markers $marker) {
+    public function setMarker(Markers $marker)
+    {
         $exists = $this->getMarker($marker);
         if (!$exists) {
             $this->addMarker($marker);
@@ -404,6 +431,7 @@ class Maps {
             $this->markers->removeElement($exists);
             $this->addMarker($marker);
         }
+        return $this;
     }
 
     /**
@@ -412,7 +440,8 @@ class Maps {
      * @param Zones $zones
      * @return Maps
      */
-    public function addZone(Zones $zones) {
+    public function addZone(Zones $zones)
+    {
         $this->zones[] = $zones;
 
         return $this;
@@ -423,7 +452,8 @@ class Maps {
      *
      * @param Zones $zones
      */
-    public function removeZone(Zones $zones) {
+    public function removeZone(Zones $zones)
+    {
         $this->zones->removeElement($zones);
     }
 
@@ -433,7 +463,8 @@ class Maps {
      * @param Zones $zone
      * @return Zones
      */
-    public function getZone(Zones $zone) {
+    public function getZone(Zones $zone)
+    {
         foreach ($this->zones as $mapZone) {
             if ($mapZone->getId() === $zone->getId() ||
                 $mapZone->getName() === $zone->getName()
@@ -447,7 +478,8 @@ class Maps {
     /**
      * @param Zones $zone
      */
-    public function setZone(Zones $zone) {
+    public function setZone(Zones $zone)
+    {
         $exists = $this->getZone($zone);
         if (!$exists) {
             $this->addZone($zone);
@@ -462,7 +494,8 @@ class Maps {
      *
      * @return ArrayCollection
      */
-    public function getZones() {
+    public function getZones()
+    {
         return $this->zones;
     }
 
@@ -472,7 +505,8 @@ class Maps {
      * @param string $nameSlug
      * @return Maps
      */
-    public function setNameSlug($nameSlug) {
+    public function setNameSlug($nameSlug)
+    {
         $this->nameSlug = $nameSlug;
 
         return $this;
@@ -483,14 +517,16 @@ class Maps {
      *
      * @return string
      */
-    public function getNameSlug() {
+    public function getNameSlug()
+    {
         return $this->nameSlug;
     }
 
     /**
      * Réinitialise correctement les informations de la map
      */
-    public function refresh() {
+    public function refresh()
+    {
         //TODO
         return $this;
     }
@@ -501,7 +537,8 @@ class Maps {
      * @param \DateTime $deleted
      * @return Maps
      */
-    public function setDeleted($deleted) {
+    public function setDeleted($deleted)
+    {
         $this->deleted = $deleted;
 
         return $this;
@@ -512,7 +549,8 @@ class Maps {
      *
      * @return \DateTime
      */
-    public function getDeleted() {
+    public function getDeleted()
+    {
         return $this->deleted;
     }
 }

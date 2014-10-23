@@ -30,6 +30,15 @@ function mergeRecursive (targetObject, sourceObject) {
         return this.replace(/^\s+|\s+$/g, '');
     };
 
+    // Activation des colorpickers
+    if (d.querySelectorAll('.colorpicker')) {
+        $('.cp-i18n').colorpicker({
+            regional: CURRENT_LOCALE,
+            showNoneButton: true,
+            alpha: true
+        });
+    }
+
     // Placement dynamique d'une tooltip
     $('[data-toggle="tooltip"]').tooltip({
         "placement" : function(event,element){
