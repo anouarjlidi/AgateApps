@@ -105,6 +105,6 @@ security:
         - { path: ^/(%locales_regex%)/,                   roles: [IS_AUTHENTICATED_ANONYMOUSLY] }
         - { path: ^/(%locales_regex%)/profile,            roles: [ROLE_USER] }
         - { path: ^/(%locales_regex%)/characters,         roles: [ROLE_USER] }
-        - { path: ^/(%locales_regex%)/admin_login,        host: %esteren_domains.backoffice%, roles: [IS_AUTHENTICATED_ANONYMOUSLY] }
-        - { path: ^/(%locales_regex%)/admin_check,        host: %esteren_domains.backoffice%, roles: [IS_AUTHENTICATED_ANONYMOUSLY] }
-        - { path: ^/(%locales_regex%)/(admin|sonata)/,    host: %esteren_domains.backoffice%, roles: [ROLE_SONATA_ADMIN] }
+        - { path: ^/(%locales_regex%)/admin_login,              host: %esteren_domains.backoffice%, roles: [IS_AUTHENTICATED_ANONYMOUSLY] }
+        - { path: ^/(%locales_regex%)/admin_check,              host: %esteren_domains.backoffice%, roles: [IS_AUTHENTICATED_ANONYMOUSLY] }
+        - { path: ^/(%locales_regex%)/(?!admin_(login|check))/, host: %esteren_domains.backoffice%, roles: [ROLE_SONATA_ADMIN] }

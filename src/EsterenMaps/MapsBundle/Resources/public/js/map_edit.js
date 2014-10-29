@@ -44,4 +44,5 @@
         }
         d.getElementById('map_add_style').innerHTML = css;
     });
+
 })(jQuery, document, window);

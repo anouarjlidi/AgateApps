@@ -12,12 +12,12 @@ class AppKernel extends Kernel
         $bundles = array(
 
             // Symfony
-            new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
-            new Symfony\Bundle\SecurityBundle\SecurityBundle(),
             new Symfony\Bundle\TwigBundle\TwigBundle(),
             new Symfony\Bundle\MonologBundle\MonologBundle(),
-            new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
+            new Symfony\Bundle\SecurityBundle\SecurityBundle(),
+            new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
+            new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
 
             // Doctrine
@@ -72,6 +72,7 @@ class AppKernel extends Kernel
             // Esteren Maps
             new EsterenMaps\MapsBundle\EsterenMapsBundle(),
             new EsterenMaps\ApiBundle\EsterenMapsApiBundle(),
+            new EsterenMaps\AdminBundle\EsterenMapsAdminBundle(),
 
             // Pierstoval's tools
             new Pierstoval\Bundle\ApiBundle\PierstovalApiBundle(),

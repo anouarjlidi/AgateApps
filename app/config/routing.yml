@@ -1,6 +1,10 @@
-esteren_maps_api:
-    resource: "@EsterenMapsApiBundle/Controller/"
+
+#-----------------------------------
+# Corahn-Rin relative routing
+corahn_rin_generator:
+    resource: "@CorahnRinGeneratorBundle/Controller/"
     type:     annotation
+    host:     %esteren_domains.corahn_rin%
     prefix:   /{_locale}/
     defaults:
          _locale: %locale%
@@ -17,10 +21,8 @@ corahn_rin_admin:
     requirements:
         _locale: ^(%locales_regex%)$
 
-#-----------------------------------
-# Corahn-Rin relative routing
-corahn_rin_generator:
-    resource: "@CorahnRinGeneratorBundle/Controller/"
+corahn_rin_characters:
+    resource: "@CorahnRinCharactersBundle/Controller/"
     type:     annotation
     host:     %esteren_domains.corahn_rin%
     prefix:   /{_locale}/
@@ -39,16 +41,6 @@ esteren_pages:
     requirements:
         _locale: ^(%locales_regex%)$
 
-corahn_rin_characters:
-    resource: "@CorahnRinCharactersBundle/Controller/"
-    type:     annotation
-    host:     %esteren_domains.corahn_rin%
-    prefix:   /{_locale}/
-    defaults:
-         _locale: %locale%
-    requirements:
-        _locale: ^(%locales_regex%)$
-
 #-----------------------------------
 # Esteren Maps relative routing
 esterenmaps:
@@ -60,6 +52,25 @@ esterenmaps:
          _locale: %locale%
     requirements:
         _locale: ^(%locales_regex%)$
+
+esterenmaps_api:
+    resource: "@EsterenMapsApiBundle/Controller/"
+    type:     annotation
+    prefix:   /{_locale}/
+    defaults:
+         _locale: %locale%
+    requirements:
+        _locale: ^(%locales_regex%)$
+
+esterenmaps_admin:
+    resource:    "@EsterenMapsAdminBundle/Controller/"
+    type:        annotation
+    prefix:      /{_locale}/
+    defaults:
+         _locale: %locale%
+    requirements:
+        _locale: ^(%locales_regex%)$
+    host:        %esteren_domains.backoffice%
 
 #-----------------------------------
 # Pierstoval relative routing

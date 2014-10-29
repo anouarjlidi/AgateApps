@@ -1,0 +1,108 @@
+{% extends "ApplicationSonataAdminBundle::standard_layout_override.html.twig" %}
+
+
+{% block stylesheets %}
+{{ parent() }}
+{% stylesheets
+'bundles/esterenpages/less/glyphicons.less'
+'bundles/esterenmaps/css/leaflet.css'
+'bundles/esterenmaps/css/leaflet.draw.css'
+'bundles/esterenmaps/css/leaflet.sidebar.css'
+'bundles/esterenmaps/css/maps.css'
+output="css/global_admin_maps.css"
+filter="less,cssrewrite,?uglifycss"
+%}
+<link rel="stylesheet" href="{{ app.request.getSchemeAndHttpHost() ~ asset_url }}" type="text/css" />
+{% endstylesheets %}
+<style type="text/css" id="map_add_style"></style>
+{% endblock %}
+
+{% block title %}{{ 'Modifier une carte' | trans({},'pages.titles') }} {{ map.name | trans }} - {{ parent() }}{% endblock %}
+
+{% trans_default_domain 'admin.maps.edit' %}
+
+{% block sonata_admin_content %}
+
+<form id="map_edit_form" action="{{ url('admin_esterenmaps_maps_maps_editInteractive', {'id':map.id}) }}" method="post" class="form-horizontal">
+    <fieldset>
+        <div id="map_wrapper">
+            <div id="maps_admin_container">
+                {% include 'EsterenMapsAdminBundle:AdminMaps:edit_menu.html.twig' %}
+            </div>
+            <div id="sidebar"></div>
+            <div id="map"></div>
+            <div id="inputs_container"></div>
+        </div>
+    </fieldset>
+</form>
+{% endblock %}
+
+{% block more_javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript" src="{{ asset('bundles/esterenpages/js/corahn_rin.js') }}"></script>
+
+    {% javascripts
+        '@EsterenMapsBundle/Resources/public/js/leaflet-src.js'
+        '@EsterenMapsBundle/Resources/public/js/leaflet.sidebar-src.js'
+        '@EsterenMapsBundle/Resources/public/js/leaflet.draw-src.js'
+        '@EsterenMapsBundle/Resources/public/js/EsterenMap/1_EsterenMap.js'
+        '@EsterenMapsBundle/Resources/public/js/EsterenMap/2_LeafletDrawOverrides.js'
+        '@EsterenMapsBundle/Resources/public/js/EsterenMap/3_EsterenMap_ActivateLeafletDraw.js'
+        '@EsterenMapsBundle/Resources/public/js/EsterenMap/3_EsterenMap_options.js'
+        '@EsterenMapsBundle/Resources/public/js/EsterenMap/4_EsterenMap_addMarker.js'
+        '@EsterenMapsBundle/Resources/public/js/EsterenMap/4_EsterenMap_addPolyline.js'
+        '@EsterenMapsBundle/Resources/public/js/EsterenMap/4_EsterenMap_addPolygon.js'
+        output="js/maps.js"
+        filter="?uglifyjs"
+    %}
+    <script type="text/javascript" src="{{ app.request.getSchemeAndHttpHost() ~ asset_url }}"></script>{% endjavascripts %}
+
+    {% javascripts
+    '@EsterenMapsBundle/Resources/public/js/map_edit.js'
+    output="js/map_edit_more.js"
+    filter="?uglifyjs"
+    %}<script type="text/javascript" src="{{ app.request.getSchemeAndHttpHost() ~ asset_url }}"></script>{% endjavascripts %}
+
+    <script type="text/javascript" src="{{ url('esterenmaps_api_maps_settings_distant', {"id":map.id,"_format":"js"}) }}"></script>
+    <script type="text/javascript">
+        (function($, d){
+            $(d).ready(function(){
+                {{ render(controller('EsterenMapsApiBundle:Maps:settings', {"id":map.id,"_format":"js", "request": app.request})) }}
+                try {
+                    d.map = new EsterenMap({
+                        id: {{ map.id }},
+                        editMode: true,
+                        imgUrl: "{{ asset('bundles/esterenmaps/img') }}",
+                        apiUrls: {
+                            base: "{{ url('pierstoval_api_api_get', {'serviceName':'maps','id':map.id}) }}",
+                            {# settings: "{{ url('esterenmaps_api_maps_settings_distant', {"id":map.id}) }}", #}
+                            tiles: "{{ app.request.getSchemeAndHttpHost() ~ asset('maps_tiles/1/{z}/{y}/{x}.jpg') }}"
+                        },
+                        LeafletMapBaseOptions: {
+                            maxZoom: {{ map.maxZoom }}
+                        },
+                        LeafletLayerBaseOptions: {
+                            maxZoom: {{ map.maxZoom }},
+                            maxNativeZoom: {{ map.maxZoom }},
+                            tileSize: {{ tile_size }},
+                            noWrap: false,
+                            continuousWorld: true
+                        },
+                        autoResize: false,
+                        containerHeight: 600,
+                        idsZones: [{{ idsZones | join(',') }}],
+                        idsRoutes: [{{ idsRoutes | join(',') }}],
+                        idsMarkers: [{{ idsMarkers | join(',') }}],
+                        maxZoneId: {{ maxZones }},
+                        maxRouteId: {{ maxRoutes }},
+                        maxMarkerId: {{ maxMarkers }}
+                    });
+                } catch (e) {
+                    console.error(e);
+                }
+            });
+        })(jQuery, document);
+    </script>
+
+{% endblock %}

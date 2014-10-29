@@ -5,6 +5,7 @@
     EsterenMap.prototype._drawControl = {};
     EsterenMap.prototype._drawnItems = {};
     EsterenMap.prototype._tileLayer = {};
+    EsterenMap.prototype.settings = false;
 
     EsterenMap.prototype.mapElements = {
         factions: true,
@@ -22,6 +23,7 @@
         containerHeight: 400,
         sidebarContainer: 'sidebar',
         container: 'map',
+        wrapper: 'map_wrapper',
         loadedCallback: function(){
             this.loadMarkers();
             this.loadRoutes();

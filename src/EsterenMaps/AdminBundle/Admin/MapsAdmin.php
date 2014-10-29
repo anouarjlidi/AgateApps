@@ -1,6 +1,6 @@
 <?php
 
-namespace EsterenMaps\MapsBundle\Admin;
+namespace EsterenMaps\AdminBundle\Admin;
 
 use EsterenMaps\MapsBundle\Entity\Maps;
 use Sonata\AdminBundle\Admin\Admin;
@@ -64,7 +64,7 @@ class MapsAdmin extends Admin {
                 'actions' => array(
                     'edit' => array(),
                     'interactive' => array(
-                        'template' => 'EsterenMapsBundle::sonata_action.html.twig'
+                        'template' => 'EsterenMapsAdminBundle:AdminMaps:sonata_action_button.html.twig'
                     ),
                     'delete' => array(),
                 )

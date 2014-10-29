@@ -1,7 +1,0 @@
-
-{% if is_granted('ROLE_ADMIN_MAPS_SUPER') %}
-    <a href="{{ url('esterenmaps_maps_maps_edit', {'id':object.id}) }}" class="btn btn-sm btn-default edit_link" title="{{ 'action_edit'|trans({}, 'SonataAdminBundle') }}">
-        <i class="glyphicon glyphicon-edit"></i>
-        {{ 'Édition interactive'|trans({}, 'SonataAdminBundle') }}
-    </a>
-{% endif %}

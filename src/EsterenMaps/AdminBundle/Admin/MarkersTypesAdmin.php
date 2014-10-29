@@ -1,6 +1,6 @@
 <?php
 
-namespace EsterenMaps\MapsBundle\Admin;
+namespace EsterenMaps\AdminBundle\Admin;
 
 use EsterenMaps\MapsBundle\Entity\MarkersTypes;
 use Sonata\AdminBundle\Admin\Admin;

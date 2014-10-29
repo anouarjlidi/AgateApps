@@ -16,9 +16,9 @@ class MapsController extends Controller
 
     /**
      * @Route("/api/maps/settings/{id}", requirements={"id":"\d+"}, host="%esteren_domains.esteren_maps%", name="esterenmaps_api_maps_settings_local")
-     * @Route("/maps/settings/{id}", requirements={"id":"\d+"}, host="%esteren_domains.api%", name="esterenmaps_api_maps_settings_distant")
+     * @Route("/maps/settings/{id}.{_format}", requirements={"id":"\d+","_format":"js|json"}, defaults={"_format":"json"}, host="%esteren_domains.api%", name="esterenmaps_api_maps_settings_distant")
      */
-    public function settingsAction(Maps $map, Request $request) {
+    public function settingsAction(Maps $map, Request $request, $_format) {
         $this->container->get('pierstoval.api.originChecker')->checkRequest($request);
 
         $datas = array();
@@ -42,15 +42,14 @@ class MapsController extends Controller
             $datas['LeafletPopupPolygonBaseContent'] = $this->renderView('EsterenMapsApiBundle:Maps:popupContentPolygon.html.twig',array('factions'=>$factions, 'zonesTypes'=>$zonesTypes));
         }
 
-        $datas = json_encode(array('settings'=>$datas), 480);
-
         $response = new Response();
+        $datas = json_encode(array('settings'=>$datas), 335);
 
-        $response->headers->add(array('Content-type' => 'application/json; charset=utf-8',));
-
-        if ($request->headers->has('Origin')) {
-            // Corrige les erreurs liées à AJAX et aux requêtes Cross-Origin
-//            $response->headers->set('Access-Control-Allow-Origin', $request->headers->get('Origin'));
+        if ($_format === 'json') {
+            $response->headers->add(array('Content-type' => 'application/json; charset=utf-8',));
+        } elseif ($_format === 'js') {
+            $response->headers->add(array('Content-type' => 'text/javascript; charset=utf-8',));
+            $datas = 'EsterenMap.prototype.settings = '.$datas.';';
         }
 
         $response->setContent($datas);

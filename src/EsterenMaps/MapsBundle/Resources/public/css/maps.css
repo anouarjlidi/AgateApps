@@ -1,3 +1,6 @@
+#map {
+    background-color: black;
+}
 #map_wrapper,
 #map_container,
 #map_container img,
@@ -100,6 +103,7 @@
 
 #map_edit_menu {
     z-index:  25000;
+    padding: 10px 10px 0 10px;
 }
 
 #map_container .zoom-container {
@@ -115,8 +119,8 @@
     z-index: 4000;
     color: #ccc;
     font-size: 16px;
-    margin: -8px 0px 0px -8px;
-    text-shadow: 0px 0px 4px #000;
+    margin: -8px 0 0 -8px;
+    text-shadow: 0 0 4px #000;
 }
 .map-icon-target:hover {
     cursor:pointer;

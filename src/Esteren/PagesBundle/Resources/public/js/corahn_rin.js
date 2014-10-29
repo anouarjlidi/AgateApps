@@ -32,7 +32,7 @@ function mergeRecursive (targetObject, sourceObject) {
 
     // Activation des colorpickers
     if (d.querySelectorAll('.colorpicker')) {
-        $('.cp-i18n').colorpicker({
+        $('.colorpicker').colorpicker({
             regional: CURRENT_LOCALE,
             showNoneButton: true,
             alpha: true

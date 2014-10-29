@@ -12,7 +12,7 @@
 
 {% endblock %}
 
-{% block javascripts %}
+{% block more_javascripts %}
     {{ parent() }}
     {% javascripts
     '@EsterenMapsBundle/Resources/public/js/leaflet-src.js'
@@ -26,7 +26,7 @@
     '@EsterenMapsBundle/Resources/public/js/EsterenMap/4_EsterenMap_addPolyline.js'
     '@EsterenMapsBundle/Resources/public/js/EsterenMap/4_EsterenMap_addPolygon.js'
     output="js/maps.js"
-    filter=""
+    filter="?uglifyjs"
     %}<script type="text/javascript" src="{{ app.request.getSchemeAndHttpHost() ~ asset_url }}"></script>{% endjavascripts %}
 
     <script type="text/javascript">

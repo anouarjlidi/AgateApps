@@ -1,7 +1,7 @@
 services:
 
     esterenmaps.admin.map:
-        class: EsterenMaps\MapsBundle\Admin\MapsAdmin
+        class: EsterenMaps\AdminBundle\Admin\MapsAdmin
         tags:
             - { name: sonata.admin, manager_type: orm, group: "EsterenMaps", label: "Map" }
         arguments:
@@ -11,7 +11,7 @@ services:
             - @stof_doctrine_extensions.uploadable.manager
 
     esterenmaps.admin.markersTypes:
-        class: EsterenMaps\MapsBundle\Admin\MarkersTypesAdmin
+        class: EsterenMaps\AdminBundle\Admin\MarkersTypesAdmin
         tags:
             - { name: sonata.admin, manager_type: orm, group: "EsterenMaps", label: "MarkersTypes" }
         arguments:
@@ -21,7 +21,7 @@ services:
             - @stof_doctrine_extensions.uploadable.manager
 
     esterenmaps.admin.routesTypes:
-        class: EsterenMaps\MapsBundle\Admin\RoutesTypesAdmin
+        class: EsterenMaps\AdminBundle\Admin\RoutesTypesAdmin
         tags:
             - { name: sonata.admin, manager_type: orm, group: "EsterenMaps", label: "RoutesTypes" }
         arguments:
