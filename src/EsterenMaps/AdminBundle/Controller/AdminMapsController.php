@@ -6,6 +6,7 @@ use EsterenMaps\MapsBundle\Entity\Factions;
 use EsterenMaps\MapsBundle\Entity\Maps;
 use EsterenMaps\MapsBundle\Entity\Markers;
 use EsterenMaps\MapsBundle\Entity\MarkersTypes;
+use EsterenMaps\MapsBundle\Entity\Routes;
 use EsterenMaps\MapsBundle\Entity\RoutesTypes;
 use EsterenMaps\MapsBundle\Entity\Zones;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -27,6 +28,9 @@ class AdminMapsController extends Controller {
     /**
      * @Route("/esterenmaps/maps/maps/edit-interactive/{id}", name="admin_esterenmaps_maps_maps_editInteractive")
      * @Template()
+     * @param Maps $map
+     * @param Request $request
+     * @return array
      */
     public function editAction(Maps $map, Request $request) {
 
@@ -52,8 +56,8 @@ class AdminMapsController extends Controller {
 
             $em->flush();
 
-            $this->get('session')->getFlashBag()->add('success', 'Modifications enregistrées !');
-            return $this->redirect($this->generateUrl('esterenmaps_maps_maps_edit',array('id'=>$map->getId())));
+            $request->getSession()->getFlashBag()->add('success', 'Modifications enregistrées !');
+            return $this->redirect($this->generateUrl('admin_esterenmaps_maps_maps_editInteractive',array('id'=>$map->getId())));
 
         }
 
@@ -106,22 +110,24 @@ class AdminMapsController extends Controller {
             $em->persist($zone);
         }
 
-        foreach ($polygons as $id => $polygon) {
-            if (isset($zones_map[$id])) {
-                $zone = $zones_map[$id];
-            } else {
-                $zone = new Zones();
+        if (!empty($polygon)) {
+            foreach ($polygons as $id => $polygon) {
+                if (isset($zones_map[$id])) {
+                    $zone = $zones_map[$id];
+                } else {
+                    $zone = new Zones();
+                }
+
+                // Définition de la zone
+                $zone->setName($polygon['name'])
+                    ->setMap($map)
+                    ->setFaction($this->factions[$polygon['faction']])
+                    ->setCoordinates($polygon['coordinates']);
+                unset($zones_map[$id]);
+
+                $em->persist($zone);
+
             }
-
-            // Définition de la zone
-            $zone->setName($polygon['name'])
-                ->setMap($map)
-                ->setFaction($this->factions[$polygon['faction']])
-                ->setCoordinates($polygon['coordinates']);
-            unset($zones_map[$id]);
-
-            $em->persist($zone);
-
         }
 
         // Suppression des zones absentes des données POST
@@ -137,6 +143,7 @@ class AdminMapsController extends Controller {
 
         $markers_post = $post->get('marker');
         $t = $map->getMarkers();
+        /** @var Markers[] $markers_map */
         $markers_map = array();
         foreach ($t as $m) { $markers_map[$m->getId()] = $m; }
 
@@ -198,28 +205,29 @@ class AdminMapsController extends Controller {
             $em->persist($marker);
         }
 
+        if (!empty($polylines)) {
+            foreach ($polylines as $id => $polyline) {
+                if (isset($routes_map[$id])) {
+                    $route = $routes_map[$id];
+                } else {
+                    $route = new Routes();
+                }
 
-        foreach ($polylines as $id => $polyline) {
-            if (isset($routes_map[$id])) {
-                $route = $routes_map[$id];
-            } else {
-                $route = new Routes();
+                // Définition de la route
+                $route->setName($polyline['name'])
+                    ->setMap($map)
+                    ->setRouteType($this->routesTypes[$polyline['type']])
+                    ->setFaction($polyline['faction'] ? $this->factions[$polyline['faction']] : null)
+                    ->setMarkerStart($markers_ids[$polyline['markerStart']])
+                    ->setMarkerEnd(isset($markers_ids[$polyline['markerEnd']]) ? $markers_ids[$polyline['markerEnd']] : null)
+                    ->setCoordinates($polyline['coordinates']);
+                unset($routes_map[$id]);
+
+                $route->refresh();
+
+                $em->persist($route);
+
             }
-
-            // Définition de la route
-            $route->setName($polyline['name'])
-                ->setMap($map)
-                ->setRouteType($this->routesTypes[$polyline['type']])
-                ->setFaction($polyline['faction'] ? $this->factions[$polyline['faction']] : null)
-                ->setMarkerStart($markers_ids[$polyline['markerStart']])
-                ->setMarkerEnd(isset($markers_ids[$polyline['markerEnd']]) ? $markers_ids[$polyline['markerEnd']] : null)
-                ->setCoordinates($polyline['coordinates']);
-            unset($routes_map[$id]);
-
-            $route->refresh();
-
-            $em->persist($route);
-
         }
 
         // Suppression des routes absentes des données POST

@@ -162,22 +162,3 @@ cmf_routing:
             # enable the symfony default router with a lower priority
             router.default: 150
             sonata.page.router: 100
-
-nelmio_cors:
-    paths:
-      "^/":
-          allow_origin:
-              - %esteren_domains.api%
-              - %esteren_domains.portal%
-              - %esteren_domains.backoffice%
-              - %esteren_domains.corahn_rin%
-              - %esteren_domains.esteren_maps%
-          allow_headers: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept']
-          allow_methods: ['POST','GET','DELETE','PUT','OPTIONS']
-          max_age: 1
-          hosts:
-              - "^%esteren_domains.api%$"
-              - "^%esteren_domains.portal%$"
-              - "^%esteren_domains.backoffice%$"
-              - "^%esteren_domains.corahn_rin%$"
-              - "^%esteren_domains.esteren_maps%$"

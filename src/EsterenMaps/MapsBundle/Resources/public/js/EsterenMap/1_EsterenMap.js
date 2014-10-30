@@ -41,33 +41,28 @@
             ajaxD.editMode = true;
         }
 
-        if (this.settings === false) {
-            $.ajax({
-                url: this.mapOptions.apiUrls.settings,
-                headers: {
-                    Origin: "http://"+w.location.hostname,
-                    'Access-Control-Allow-origin': true
-                },
-                type: 'GET',
-                dataType: 'json',
-                data: ajaxD,
-                crossDomain: true,
-                success: function(response) {
-                    if (response.settings) {
-                        _this.mapOptions = mergeRecursive(_this.mapOptions, response.settings);
-                        _this._initiate();
-                    } else {
-                        console.error('Map couldn\'t initiate because settings response was not correct.');
-                    }
-                },
-                error: function(){
-                    console.error('Error while loading settings');
+        $.ajax({
+            url: this.mapOptions.apiUrls.settings,
+            headers: {
+                Origin: "http://"+w.location.hostname,
+                'Access-Control-Allow-origin': true
+            },
+            type: 'POST',
+            dataType: 'json',
+            data: ajaxD,
+            crossDomain: true,
+            success: function(response) {
+                if (response.settings) {
+                    _this.mapOptions = mergeRecursive(_this.mapOptions, response.settings);
+                    _this._initiate();
+                } else {
+                    console.error('Map couldn\'t initiate because settings response was not correct.');
                 }
-            });
-        } else {
-            this.mapOptions = mergeRecursive(this.mapOptions, this.settings);
-            this._initiate();
-        }
+            },
+            error: function(){
+                console.error('Error while loading settings');
+            }
+        });
 
         return this;
     };

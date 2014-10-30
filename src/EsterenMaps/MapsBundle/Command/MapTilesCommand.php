@@ -79,8 +79,13 @@ class MapTilesCommand extends ContainerAwareCommand {
 
         $tilesManager = $this->getContainer()->get('esterenmaps.tiles_manager');
 
-        $img = $this->getContainer()->getParameter('kernel.root_dir').'/../web/'.$map->getImage();
-        $map->setImage($img);
+        if (!file_exists($map->getImage())) {
+            $img = $this->getContainer()->getParameter('kernel.root_dir').'/../web/'.$map->getImage();
+            $map->setImage($img);
+        }
+        if (!file_exists($map->getImage())) {
+            throw new \RuntimeException('Map image cannot be found.');
+        }
 
         $tilesManager->setMap($map);
 

@@ -37,7 +37,7 @@ class MapsTilesManager {
     public function setMap (Maps $map) {
         $this->map = $map;
         if (!file_exists($this->map->getImage())) {
-            throw new \Exception('Map image could not be found.');
+            throw new \Exception('Map image could not be found : '.$map->getImage());
         }
         return $this;
     }
@@ -131,7 +131,7 @@ class MapsTilesManager {
         }
 
         $cmd =
-            $this->magickPath.'convert "'.$this->map->getImage(DIRECTORY_SEPARATOR).'"' .
+            $this->magickPath.'convert "'.$this->map->getImage().'"' .
             ' -background #000000'.
             ' -extent '.$w.'x'.$h.
             ' -resize '.$ratio.'% ' .

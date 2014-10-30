@@ -64,7 +64,6 @@ filter="less,cssrewrite,?uglifycss"
     filter="?uglifyjs"
     %}<script type="text/javascript" src="{{ app.request.getSchemeAndHttpHost() ~ asset_url }}"></script>{% endjavascripts %}
 
-    <script type="text/javascript" src="{{ url('esterenmaps_api_maps_settings_distant', {"id":map.id,"_format":"js"}) }}"></script>
     <script type="text/javascript">
         (function($, d){
             $(d).ready(function(){
@@ -76,7 +75,7 @@ filter="less,cssrewrite,?uglifycss"
                         imgUrl: "{{ asset('bundles/esterenmaps/img') }}",
                         apiUrls: {
                             base: "{{ url('pierstoval_api_api_get', {'serviceName':'maps','id':map.id}) }}",
-                            {# settings: "{{ url('esterenmaps_api_maps_settings_distant', {"id":map.id}) }}", #}
+                            settings: "{{ url('esterenmaps_api_maps_settings_distant', {"id":map.id}) }}",
                             tiles: "{{ app.request.getSchemeAndHttpHost() ~ asset('maps_tiles/1/{z}/{y}/{x}.jpg') }}"
                         },
                         LeafletMapBaseOptions: {
