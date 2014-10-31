@@ -5,6 +5,9 @@
         "bootstrap": "~3",
         "jquery": "~1.11",
         "jquery-ui": "~1.10",
+        "leaflet": ">=0.7.3",
+        "leaflet-sidebar": ">=0.1",
+        "leaflet-draw": ">=0.2.1",
         "jquery.colorpicker": "~1"
     }
 }
