@@ -41,6 +41,12 @@ twig:
         kernel_root_dir: %kernel.root_dir%
         locales: %locales%
         locales_regex: %locales_regex%
+        esteren_domains_corahn_rin: %esteren_domains.corahn_rin%
+        esteren_domains_esteren_maps: %esteren_domains.esteren_maps%
+        esteren_domains_portal: %esteren_domains.portal%
+        esteren_domains_backoffice: %esteren_domains.backoffice%
+        esteren_domains_api: %esteren_domains.api%
+        esteren_domains_cookieDomain: %esteren_domains.cookieDomain%
     form:
         # Overrides des formulaires
         resources:

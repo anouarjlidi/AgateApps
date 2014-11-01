@@ -67,16 +67,15 @@ filter="less,cssrewrite,?uglifycss"
     <script type="text/javascript">
         (function($, d){
             $(d).ready(function(){
-                {{ render(controller('EsterenMapsApiBundle:Maps:settings', {"id":map.id,"_format":"js", "request": app.request})) }}
                 try {
                     d.map = new EsterenMap({
                         id: {{ map.id }},
                         editMode: true,
                         imgUrl: "{{ asset('bundles/esterenmaps/img') }}",
                         apiUrls: {
-                            base: "{{ url('pierstoval_api_api_get', {'serviceName':'maps','id':map.id}) }}",
+                            base: "http://{{ esteren_domains_api }}/{{ app.request.locale }}",
                             settings: "{{ url('esterenmaps_api_maps_settings_distant', {"id":map.id}) }}",
-                            tiles: "{{ app.request.getSchemeAndHttpHost() ~ asset('maps_tiles/1/{z}/{y}/{x}.jpg') }}"
+                            tiles: "http://{{ esteren_domains_api }}{{ asset('maps_tiles/'~map.id~'/{z}/{y}/{x}.jpg') }}"
                         },
                         LeafletMapBaseOptions: {
                             maxZoom: {{ map.maxZoom }}

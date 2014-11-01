@@ -29,21 +29,18 @@
         return this;
     };
 
-    EsterenMap.prototype._polylines = {};
-    EsterenMap.prototype._layerPolylines = {};
-
-    EsterenMap.prototype.mapOptions.LeafletPolylineBaseOptions = {
+    EsterenMap.prototype._mapOptions.LeafletPolylineBaseOptions = {
         color: "#f66",
         opacity: 0.4,
         weight: 3,
         clickable: true
     };
-    EsterenMap.prototype.mapOptions.LeafletPolylineBaseOptionsEditMode = {
+    EsterenMap.prototype._mapOptions.LeafletPolylineBaseOptionsEditMode = {
         color: "#03f",
         opacity: 0.5,
         weight: 5
     };
-    EsterenMap.prototype.mapOptions.CustomPolylineBaseOptions = {
+    EsterenMap.prototype._mapOptions.CustomPolylineBaseOptions = {
         popupIsSidebar: true,
         clickCallback: function(e){
             var polyline = e.target,
@@ -61,7 +58,7 @@
             }
         }
     };
-    EsterenMap.prototype.mapOptions.CustomPolylineBaseOptionsEditMode = {
+    EsterenMap.prototype._mapOptions.CustomPolylineBaseOptionsEditMode = {
         clickCallback: function(e){
             var polyline = e.target,
                 id = polyline.options.className.replace('drawn_polyline_','')
@@ -123,7 +120,7 @@
         }
     };
 
-    EsterenMap.prototype.mapOptions.loaderCallbacks.routes = function(response){
+    EsterenMap.prototype._mapOptions.loaderCallbacks.routes = function(response){
         var routes, i, route,
             finalOptions,finalLeafletOptions,
             mapOptions = this.options(),
@@ -191,12 +188,12 @@
             leafletOptions = mergeRecursive(leafletOptions, leafletUserOptions);
         }
 
-        while (d.getElementById('polyline_'+this.mapOptions.maxPolylineId+'_name')) {
-            this.mapOptions.maxPolylineId ++;
+        while (d.getElementById('polyline_'+this._mapOptions.maxPolylineId+'_name')) {
+            this._mapOptions.maxPolylineId ++;
         }
 
         if (!leafletOptions.id) {
-            id = this.mapOptions.maxPolylineId;
+            id = this._mapOptions.maxPolylineId;
         } else {
             id = leafletOptions.id;
         }

@@ -29,10 +29,7 @@
         return this;
     };
 
-    EsterenMap.prototype._polygons = {};
-    EsterenMap.prototype._layerPolygons = {};
-
-    EsterenMap.prototype.mapOptions.LeafletPolygonBaseOptions = {
+    EsterenMap.prototype._mapOptions.LeafletPolygonBaseOptions = {
         color: "#fff",
         opacity: 0.2,
         fillColor: '#eee',
@@ -41,7 +38,7 @@
         clickable: true
     };
 
-    EsterenMap.prototype.mapOptions.LeafletPolygonBaseOptionsEditMode = {
+    EsterenMap.prototype._mapOptions.LeafletPolygonBaseOptionsEditMode = {
         color: "#0f0",
         opacity: 0.5,
         fillColor: '#0f0',
@@ -49,7 +46,7 @@
         weight: 3
     };
 
-    EsterenMap.prototype.mapOptions.CustomPolygonBaseOptions = {
+    EsterenMap.prototype._mapOptions.CustomPolygonBaseOptions = {
         popupIsSidebar: true,
         clickCallback: function(e){
             var polygon = e.target,
@@ -66,7 +63,7 @@
         }
     };
 
-    EsterenMap.prototype.mapOptions.CustomPolygonBaseOptionsEditMode = {
+    EsterenMap.prototype._mapOptions.CustomPolygonBaseOptionsEditMode = {
         clickCallback: function(e){
             var polygon = e.target,
                 id = polygon.options.className.replace('drawn_polygon_','')
@@ -94,8 +91,7 @@
         }
     };
 
-    EsterenMap.prototype.mapOptions.loaderCallbacks.zonesComplete = null;
-    EsterenMap.prototype.mapOptions.loaderCallbacks.zones = function(response){
+    EsterenMap.prototype._mapOptions.loaderCallbacks.zones = function(response){
         var zones, i, zone,
             mapOptions = this.options(),
             popupContent = mapOptions.LeafletPopupPolygonBaseContent,
@@ -160,12 +156,12 @@
             leafletOptions = mergeRecursive(leafletOptions, leafletUserOptions);
         }
 
-        while (d.getElementById('polygon_'+this.mapOptions.maxPolygonId+'_name')) {
-            this.mapOptions.maxPolygonId ++;
+        while (d.getElementById('polygon_'+this._mapOptions.maxPolygonId+'_name')) {
+            this._mapOptions.maxPolygonId ++;
         }
 
         if (!leafletOptions.id) {
-            id = this.mapOptions.maxPolygonId;
+            id = this._mapOptions.maxPolygonId;
         } else {
             id = leafletOptions.id;
         }

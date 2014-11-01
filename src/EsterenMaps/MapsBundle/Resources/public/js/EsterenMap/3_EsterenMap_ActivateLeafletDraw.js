@@ -6,10 +6,11 @@
      */
     EsterenMap.prototype.activateLeafletDraw = function(){
         var _this = this,
+            mapOptions = this.options(),
             drawControl,drawnItems
         ;
 
-        if (this.mapOptions.editMode !== true) {
+        if (mapOptions.editMode !== true) {
             return false;
         }
 

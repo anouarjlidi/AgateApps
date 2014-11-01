@@ -36,9 +36,9 @@
                     id: {{ map.id }},
                     imgUrl: "{{ asset('bundles/esterenmaps/img') }}",
                     apiUrls: {
-                        base: "{{ url('pierstoval_api_api_get', {'serviceName':'maps','id':map.id}) }}",
-                        settings: "{{ url('esterenmaps_api_maps_settings_local', {"id":map.id}) }}",
-                        tiles: "{{ app.request.getSchemeAndHttpHost() ~ asset('maps_tiles/1/{z}/{y}/{x}.jpg') }}"
+                        base: "http://{{ esteren_domains_api }}/{{ app.request.locale }}",
+                        settings: "{{ url('esterenmaps_api_maps_settings_distant', {"id":map.id}) }}",
+                        tiles: "http://{{ esteren_domains_api }}{{ asset('maps_tiles/'~map.id~'/{z}/{y}/{x}.jpg') }}"
                     },
                     LeafletMapBaseOptions: {
                         maxZoom: {{ map.maxZoom }}

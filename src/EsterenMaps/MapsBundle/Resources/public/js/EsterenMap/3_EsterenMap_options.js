@@ -5,9 +5,17 @@
     EsterenMap.prototype._drawControl = {};
     EsterenMap.prototype._drawnItems = {};
     EsterenMap.prototype._tileLayer = {};
-    EsterenMap.prototype.settings = false;
 
-    EsterenMap.prototype.mapElements = {
+    EsterenMap.prototype._markers = {};
+    EsterenMap.prototype._polygons = {};
+    EsterenMap.prototype._polylines = {};
+
+    EsterenMap.prototype._layerMarkers = {};
+    EsterenMap.prototype._layerPolygons = {};
+    EsterenMap.prototype._layerPolylines = {};
+
+    EsterenMap.prototype.mapAllowedElements = {
+        maps: true,
         factions: true,
         routes: true,
         routesTypes: true,
@@ -16,7 +24,7 @@
         zones: true
     };
 
-    EsterenMap.prototype.mapOptions = {
+    EsterenMap.prototype._mapOptions = {
         id: 0,
         editMode: false,
         autoResize: true,
@@ -31,7 +39,7 @@
         },
         imgUrl: '/bundles/esterenmaps/img',
         apiUrls: {
-            base: '/api/maps/',
+            base: '/api/',
             settings: '/api/maps/settings/',
             tiles: '/api/maps/tile/{id}/{z}/{x}/{y}.jpg'
         },

@@ -29,14 +29,11 @@
         return this;
     };
 
-    EsterenMap.prototype._markers = {};
-    EsterenMap.prototype._layerMarkers = {};
-
     /**
      * @this {EsterenMap}
      * @param response
      */
-    EsterenMap.prototype.mapOptions.loaderCallbacks.markers = function(response){
+    EsterenMap.prototype._mapOptions.loaderCallbacks.markers = function(response){
         var markers, i, marker,
             mapOptions = this.options(),
             popupContent = mapOptions.LeafletPopupMarkerBaseContent,
@@ -86,16 +83,16 @@
     };
 
 
-    EsterenMap.prototype.mapOptions.LeafletMarkerBaseOptions = {
+    EsterenMap.prototype._mapOptions.LeafletMarkerBaseOptions = {
         clickable: true,
         draggable: false
     };
 
-    EsterenMap.prototype.mapOptions.LeafletMarkerBaseOptionsEditMode = {
+    EsterenMap.prototype._mapOptions.LeafletMarkerBaseOptionsEditMode = {
         draggable: false
     };
 
-    EsterenMap.prototype.mapOptions.CustomMarkerBaseOptions = {
+    EsterenMap.prototype._mapOptions.CustomMarkerBaseOptions = {
         popupIsSidebar: true,
         clickCallback: function(e){
             var marker = e.target,
@@ -112,7 +109,7 @@
         }
     };
 
-    EsterenMap.prototype.mapOptions.CustomMarkerBaseOptionsEditMode = {
+    EsterenMap.prototype._mapOptions.CustomMarkerBaseOptionsEditMode = {
         clickCallback: function(e){
             var marker = e.target,
                 id = marker.options.alt
@@ -198,12 +195,12 @@
             leafletOptions = this.cloneObject(leafletOptions, leafletUserOptions);
         }
 
-        while (d.getElementById('marker_'+this.mapOptions.maxMarkerId+'_name')) {
-            this.mapOptions.maxMarkerId ++;
+        while (d.getElementById('marker_'+this._mapOptions.maxMarkerId+'_name')) {
+            this._mapOptions.maxMarkerId ++;
         }
 
         if (!leafletOptions.alt) {
-            id = this.mapOptions.maxMarkerId;
+            id = this._mapOptions.maxMarkerId;
         } else {
             id = leafletOptions.alt;
         }
