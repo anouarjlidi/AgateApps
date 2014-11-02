@@ -5,9 +5,7 @@ namespace EsterenMaps\MapsBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use JMS\Serializer\Annotation\ExclusionPolicy as ExclusionPolicy;
-use JMS\Serializer\Annotation\Expose as Expose;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * MarkersType
@@ -15,7 +13,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  * @ORM\Table(name="markers_types")
  * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity(repositoryClass="EsterenMaps\MapsBundle\Repository\MarkersTypesRepository")
- * @ExclusionPolicy("all")
+ * @Serializer\ExclusionPolicy("all")
  * @Gedmo\Uploadable(allowOverwrite=true, filenameGenerator="SHA1")
  */
 class MarkersTypes
@@ -27,7 +25,7 @@ class MarkersTypes
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @Expose
+     * @Serializer\Expose
      */
     protected $id;
 
@@ -35,7 +33,7 @@ class MarkersTypes
      * @var string
      *
      * @ORM\Column(type="string", length=255, nullable=false, unique=true)
-     * @Expose
+     * @Serializer\Expose
      */
     protected $name;
 
@@ -43,7 +41,7 @@ class MarkersTypes
      * @var string
      *
      * @ORM\Column(type="text", nullable=true)
-     * @Expose
+     * @Serializer\Expose
      */
     protected $description;
 
@@ -51,8 +49,12 @@ class MarkersTypes
      * @var string
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Gedmo\UploadableFilePath()
+     * @Serializer\Expose
      */
     protected $iconName;
+
+    /** @var array */
+    protected $iconDimensions = null;
 
     /**
      * @var \Datetime
@@ -297,6 +299,9 @@ class MarkersTypes
      */
     public function getIconName()
     {
+        if (!$this->iconDimensions) {
+            $this->setIconDimensions();
+        }
         return $this->iconName;
     }
 
@@ -307,7 +312,43 @@ class MarkersTypes
     public function setIconName($iconName)
     {
         $this->iconName = $iconName;
+        if (!$this->iconDimensions) {
+            $this->setIconDimensions();
+        }
         return $this;
     }
 
+    /**
+     * Récupère la largeur et la hauteur de l'image dans un array
+     *
+     * @Serializer\VirtualProperty
+     * @Serializer\SerializedName("iconDimensions")
+     * @Serializer\Type("array")
+     *
+     * @link http://php.net/manual/fr/function.getimagesize.php
+     * @return string
+     */
+    public function getIconDimensions()
+    {
+        if ($this->iconDimensions) {
+            return $this->iconDimensions;
+        } else {
+            return $this->setIconDimensions();
+        }
+    }
+
+    /**
+     * @return array
+     */
+    private function setIconDimensions()
+    {
+        if (!$this->iconDimensions) {
+            $info = $this->iconName ? getimagesize($this->iconName) : array(null,null);
+            $this->iconDimensions = array(
+                'width' => isset($info[0]) ? $info[0] : null,
+                'height' => isset($info[1]) ? $info[1] : null,
+            );
+        }
+        return $this->iconDimensions;
+    }
 }

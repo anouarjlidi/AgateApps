@@ -10,11 +10,13 @@
         this._sidebar.show();
         return this;
     };
+
     L.Polyline.prototype.hideSidebar = function(){
         this._sidebar.hide();
         this._sidebar.setContent('');
         return this;
     };
+
     L.Polyline.prototype.toggleSidebar = function(){
         if (this._sidebar.isVisible()) {
             this.hideSidebar();
@@ -23,6 +25,7 @@
         }
         return this;
     };
+
     L.Polyline.prototype.bindSidebar = function(sidebar, content){
         this._sidebar = sidebar;
         this._sidebarContent = content;
@@ -35,11 +38,13 @@
         weight: 3,
         clickable: true
     };
+
     EsterenMap.prototype._mapOptions.LeafletPolylineBaseOptionsEditMode = {
         color: "#03f",
         opacity: 0.5,
         weight: 5
     };
+
     EsterenMap.prototype._mapOptions.CustomPolylineBaseOptions = {
         popupIsSidebar: true,
         clickCallback: function(e){
@@ -58,6 +63,7 @@
             }
         }
     };
+
     EsterenMap.prototype._mapOptions.CustomPolylineBaseOptionsEditMode = {
         clickCallback: function(e){
             var polyline = e.target,
@@ -149,6 +155,11 @@
                     route = routes[i];
                     coords = JSON.parse(route.coordinates);
                     finalLeafletOptions = this.cloneObject(leafletOptions, {id:route.id});
+
+                    if (route.route_type.color) {
+                        finalLeafletOptions.color = route.route_type.color;
+                    }
+
                     finalOptions = this.cloneObject(options, {
                         popupContent:popupContent,
                         esterenRoute: route,
@@ -165,6 +176,15 @@
                 }//endif (polyline.hasOwnProperty)
             }//endfor
         }// endif response
+    };
+
+    EsterenMap.prototype._mapOptions.loaderCallbacks.routesTypes = function(response){
+        if (response['routestypes'] && response['routestypes'].length > 0) {
+            this._routesTypes = response['routestypes'];
+        } else {
+            console.error('Error while retrieving routes types');
+        }
+        return this;
     };
 
     /**

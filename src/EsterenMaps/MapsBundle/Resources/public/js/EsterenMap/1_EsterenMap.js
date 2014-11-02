@@ -48,10 +48,6 @@
 
         $.ajax({
             url: this._mapOptions.apiUrls.settings,
-            //headers: {
-            //    Origin: "http://"+w.location.hostname,
-            //    'Access-Control-Allow-origin': true
-            //},
             type: 'POST',
             dataType: 'json',
             data: ajaxD,
@@ -76,6 +72,13 @@
     EsterenMap.prototype._initiate = function() {
 
         var drawnItems,sidebar, _this, mapOptions;
+
+        if (this.initiated === true || d.initiatedEsterenMap === true) {
+            console.error('Map already set.');
+            return false;
+        }
+        this.initiated = true;
+        d.initiatedEsterenMap = true;
 
         // Formatage de l'url d'API qui doit utiliser l'ID de la map
         this._mapOptions.apiUrls.tiles = this.options().apiUrls.tiles.replace('{id}', ''+this.options().id);
@@ -112,6 +115,11 @@
                 sidebar.hide();
             });
             this._sidebar = sidebar;
+        }
+
+        // Initialisation des filtres si demandé
+        if (mapOptions.showFilters === true) {
+            this.initFilters();
         }
 
         ////////////////////////////////
@@ -242,6 +250,11 @@
     EsterenMap.prototype.loadZones = function(){
         var mapOptions = this.options();
         return this._load(["maps",mapOptions.id,"zones"], null, null, mapOptions.loaderCallbacks.zones);
+    };
+
+    EsterenMap.prototype.loadRoutesTypes = function(){
+        var mapOptions = this.options();
+        return this._load(["routestypes"], null, null, mapOptions.loaderCallbacks.routesTypes);
     };
 
     /**

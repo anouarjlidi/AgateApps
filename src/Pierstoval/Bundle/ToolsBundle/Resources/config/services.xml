@@ -21,5 +21,11 @@
         <service id="pierstoval_tools.imagick" class="Pierstoval\Component\Imagick\Imagick">
             <argument id="convert_path">%pierstoval_tools.imagick.path%</argument>
         </service>
+
+        <service id="pierstoval_tools.serializer_listeners.paths" class="Pierstoval\Bundle\ToolsBundle\Serializer\PathsHandler">
+            <tag name="jms_serializer.event_subscriber" />
+            <argument type="service" id="pierstoval_tools.twig.paths" />
+            <argument>%esteren_domains.portal%</argument>
+        </service>
     </services>
 </container>

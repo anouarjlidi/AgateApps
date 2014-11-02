@@ -14,6 +14,7 @@ pierstoval_api:
         routes:         { entity: EsterenMaps\MapsBundle\Entity\Routes }
         routestypes:    { entity: EsterenMaps\MapsBundle\Entity\RoutesTypes }
         zones:          { entity: EsterenMaps\MapsBundle\Entity\Zones }
+        zonestypes:     { entity: EsterenMaps\MapsBundle\Entity\ZonesTypes }
 
 # Gestion de CORS
 # Fork de NelmioCorsBundle

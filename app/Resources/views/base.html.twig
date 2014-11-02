@@ -79,7 +79,7 @@
 
 {% block javascripts %}
     <script type="text/javascript" src="{{ url('pierstoval_tools_assets_jstranslations', {"_locale":app.request.locale}) }}"></script>
-    <script type="text/javascript" src="{{ asset('components/jquery/dist/jquery.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('components/jquery/dist/jquery.min.js', null, true) }}"></script>
     {% javascripts
         'components/bootstrap/js/button.js'
         'components/bootstrap/js/collapse.js'

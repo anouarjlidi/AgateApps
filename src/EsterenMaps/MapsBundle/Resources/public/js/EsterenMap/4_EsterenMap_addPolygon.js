@@ -91,6 +91,15 @@
         }
     };
 
+    EsterenMap.prototype._mapOptions.loaderCallbacks.zonesTypes = function(response){
+        if (response['routestypes'] && response['routestypes'].length > 0) {
+            this._routesTypes = response['routestypes'];
+        } else {
+            console.error('Error while retrieving routes types');
+        }
+        return this;
+    };
+
     EsterenMap.prototype._mapOptions.loaderCallbacks.zones = function(response){
         var zones, i, zone,
             mapOptions = this.options(),

@@ -14,19 +14,25 @@
     EsterenMap.prototype._layerPolygons = {};
     EsterenMap.prototype._layerPolylines = {};
 
+    EsterenMap.prototype._markersTypes = {};
+    EsterenMap.prototype._routesTypes = {};
+    EsterenMap.prototype._zonesTypes = {};
+
     EsterenMap.prototype.mapAllowedElements = {
         maps: true,
         factions: true,
         routes: true,
-        routesTypes: true,
+        routestypes: true,
         markers: true,
-        markersTypes: true,
-        zones: true
+        markerstypes: true,
+        zones: true,
+        zonestypes: true
     };
 
     EsterenMap.prototype._mapOptions = {
         id: 0,
         editMode: false,
+        showFilters: true,
         autoResize: true,
         containerHeight: 400,
         sidebarContainer: 'sidebar',
@@ -36,6 +42,7 @@
             this.loadMarkers();
             this.loadRoutes();
             this.loadZones();
+            this.loadRoutesTypes();
         },
         imgUrl: '/bundles/esterenmaps/img',
         apiUrls: {
