@@ -14,7 +14,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @Route("/", host="%esteren_domains.api%", requirements={"serviceName":"([a-zA-Z0-9\._]/?)+"})
+ * @Route("/", host="%esteren_domains.api%", requirements={"serviceName":"([a-zA-Z0-9\._]?)+"})
  */
 class ApiController extends FOSRestController
 {
