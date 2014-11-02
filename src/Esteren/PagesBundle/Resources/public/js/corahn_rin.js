@@ -31,7 +31,7 @@ function mergeRecursive (targetObject, sourceObject) {
     };
 
     // Activation des colorpickers
-    if (d.querySelectorAll('.colorpicker')) {
+    if (d.querySelectorAll('.colorpicker') && $.colorpicker) {
         $('.colorpicker').colorpicker({
             regional: CURRENT_LOCALE,
             showNoneButton: true,
