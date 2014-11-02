@@ -5,6 +5,7 @@ namespace Pierstoval\Bundle\ApiBundle\Controller;
 use Doctrine\Common\Collections\Collection;
 
 use Doctrine\ORM\EntityRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use FOS\RestBundle\Controller\FOSRestController;
@@ -13,7 +14,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @Route("/{serviceName}", host="%esteren_domains.api%")
+ * @Route("/", host="%esteren_domains.api%", requirements={"serviceName":"([a-zA-Z0-9\._]/?)+"})
  */
 class ApiController extends FOSRestController
 {
@@ -21,7 +22,7 @@ class ApiController extends FOSRestController
     private $serviceName;
 
     /**
-     * @Route("/")
+     * @Route("/{serviceName}")
      * @Method({"GET"})
      */
     public function cgetAction($serviceName, Request $request)
@@ -38,9 +39,10 @@ class ApiController extends FOSRestController
     }
 
     /**
-     * @Route("/{id}", requirements={"id"="\d+"}, defaults={"subElement"=""})
-     * @Route("/{id}/{subElement}", requirements={"subElement"="([a-zA-Z0-9\._]/?)+","id"="\d+"})
+     * @Route("/{serviceName}/{id}", requirements={"id": "\d+"}, defaults={"subElement": ""}, name="pierstoval_api_api_get")
+     * @Route("/{serviceName}/{id}/{subElement}", requirements={"subElement": "([a-zA-Z0-9\._]/?)+", "id": "\d+"}, name="pierstoval_api_api_get_subrequest")
      * @Method({"GET"})
+     * @Cache(maxage=0, expires="yesterday")
      * @param string $serviceName
      * @param integer $id
      * @param string $subElement
@@ -148,7 +150,7 @@ class ApiController extends FOSRestController
     }
 
     /**
-     * @Route("/")
+     * @Route("/{serviceName}")
      * @Method({"PUT"})
      */
     public function putAction($serviceName, $id, Request $request)
@@ -157,7 +159,7 @@ class ApiController extends FOSRestController
     }
 
     /**
-     * @Route("/{id}")
+     * @Route("/{serviceName}/{id}")
      * @Method({"POST"})
      */
     public function postAction($serviceName, $id, Request $request)
@@ -166,7 +168,7 @@ class ApiController extends FOSRestController
     }
 
     /**
-     * @Route("/{id}")
+     * @Route("/{serviceName}/{id}")
      * @Method({"DELETE"})
      */
     public function deleteAction($serviceName, $id, Request $request)
