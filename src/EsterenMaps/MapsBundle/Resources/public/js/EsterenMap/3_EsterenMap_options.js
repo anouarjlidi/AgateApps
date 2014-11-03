@@ -2,9 +2,12 @@
 
     EsterenMap.prototype._map = null;
     EsterenMap.prototype._sidebar = {};
+    EsterenMap.prototype._filtersControl = {};
     EsterenMap.prototype._drawControl = {};
     EsterenMap.prototype._drawnItems = {};
     EsterenMap.prototype._tileLayer = {};
+
+    EsterenMap.prototype._refDatas = false;
 
     EsterenMap.prototype._markers = {};
     EsterenMap.prototype._polygons = {};
@@ -26,7 +29,9 @@
         markers: true,
         markerstypes: true,
         zones: true,
-        zonestypes: true
+        zonestypes: true,
+        settings: true,
+        "ref-datas": true
     };
 
     EsterenMap.prototype._mapOptions = {
@@ -42,7 +47,6 @@
             this.loadMarkers();
             this.loadRoutes();
             this.loadZones();
-            this.loadRoutesTypes();
         },
         imgUrl: '/bundles/esterenmaps/img',
         apiUrls: {

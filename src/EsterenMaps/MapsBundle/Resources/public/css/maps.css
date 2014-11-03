@@ -150,3 +150,43 @@
 #corahnrin .leaflet-sidebar {
     height: auto;
 }
+
+/*
+Edit mode
+*/
+#leaflet-filters-control {
+    background: white;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    padding: 0 10px 10px 10px;
+    min-width: 30px;
+    min-height: 30px;
+    overflow-wrap: break-word;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.leaflet-filters-control .leaflet-filters-control-content {
+    -webkit-transition-property: opacity;
+    -moz-transition-property: opacity;
+    -o-transition-property: opacity;
+    transition-property: opacity;
+    -webkit-transition-duration: 400ms;
+    -moz-transition-duration: 400ms;
+    -o-transition-duration: 400ms;
+    transition-duration: 400ms;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+.leaflet-filters-control.expanded .leaflet-filters-control-content {
+    width: 100%;
+    height: auto;
+    opacity: 1;
+    margin-bottom: 25px;
+}
+#leaflet-filters-toggle {
+    position: absolute;
+    bottom: 5px;
+    left: 10px;
+}

@@ -41,29 +41,7 @@
             return this;
         }
 
-        ajaxD = {};
-        if (this._mapOptions.editMode == true) {
-            ajaxD.editMode = true;
-        }
-
-        $.ajax({
-            url: this._mapOptions.apiUrls.settings,
-            type: 'POST',
-            dataType: 'json',
-            data: ajaxD,
-            crossDomain: true,
-            success: function(response) {
-                if (response.settings) {
-                    _this._mapOptions = mergeRecursive(_this._mapOptions, response.settings);
-                    _this._initiate();
-                } else {
-                    console.error('Map couldn\'t initiate because settings response was not correct.');
-                }
-            },
-            error: function(){
-                console.error('Error while loading settings');
-            }
-        });
+        this.loadSettings();
 
         return this;
     };
@@ -154,12 +132,14 @@
      * @param {array|string} name Le type d'élément à récupérer. Si plusieurs éléments sont indiqués dans un tableau, chacun sera validé à partir des options "allowedElement", cela créera une requête plus précise. Exemple : ["maps","routes"]. Des nombres sont autorisés pour récupérer un ID.
      * @param {object|null} [datas] les options à envoyer à l'objet AJAX
      * @param {string|null} [method] La méthode HTTP. GET par défaut.
-     * @param {function|null} [callback] La fonction à exécuter (ignoré dans certains cas)
-     * @param {function|null} [callbackComplete] La fonction à exécuter (ignoré dans certains cas)
+     * @param {function|null} [callback] Une fonction de callback à envoyer à la méthode "success" de l'objet Ajax.
+     * @param {function|null} [callbackComplete] Idem que "callback" mais pour la méthode "complete"
+     * @param {function|null} [callbackError] Idem que "callback" mais pour la méthode "error"
      * @returns {*}
      */
-    EsterenMap.prototype._load = function(name, datas, method, callback, callbackComplete) {
+    EsterenMap.prototype._load = function(name, datas, method, callback, callbackComplete, callbackError) {
         var url, ajaxObject, i, c,
+            otherParams = {},
             _this = this,
             mapOptions = this.options(),
             allowedMethods = ["GET","POST"]
@@ -175,6 +155,12 @@
             datas = {};
         }
 
+        //TODO : Evolution #754
+        if ($.isPlainObject(name)) {
+            name = name.uri;
+        }
+        //#754
+
         // D'abord, on autorise les chaînes de caractères avec des "/".
         // Cela permet d'écrire des requêtes de ce type : EsterenMap._load('maps/1/markers')
         // On le vérifiera comme un tableau.
@@ -182,7 +168,7 @@
             name = name.split('/');
         }
 
-        if (typeof name === 'string') {
+        if (name && typeof name === 'string') {
             // Dans le cas ou name est une chaîne de caractères,
             // elle doit exister dans mapAllowedElements en tant que clé,
             // et être passée à true (on peut la passer à "false" pour désactiver le chargement de certaines données)
@@ -191,7 +177,7 @@
                 console.error('Éléments à charger incorrects.');
                 return false;
             }
-        } else if (Object.prototype.toString.call( name ) === '[object Array]') {
+        } else if (name && Object.prototype.toString.call( name ) === '[object Array]') {
             // Sinon, name doit être obligatoirement un array.
             // On n'autorise pas les objets littéraux.
             // Cela permet de forcer un tableau parcourable avec une boucle "for"
@@ -207,6 +193,8 @@
                 }
             }
             name = name.join('/');
+        } else if (!name) {
+            console.error('Wrong uri sent to EsterenMap dynamic loader.');
         }
 
         // On s'assure d'une sécurité maximale
@@ -231,10 +219,41 @@
                 callbackComplete.call(_this);
             }
         }
+        if (typeof(callbackError) === 'function') {
+            ajaxObject.callbackError = function(){
+                callbackError.call(_this);
+            }
+        }
 
         $.ajax(ajaxObject);
 
         return this;
+    };
+
+    EsterenMap.prototype.loadSettings = function(){
+        var ajaxD = {}, _this = this;
+
+        if (this._mapOptions.editMode == true) {
+            ajaxD.editMode = true;
+        }
+
+        return this._load(["maps","settings",this.options().id], ajaxD, "GET",
+            function(response){
+                //callback "success"
+                _this.mapAllowedElements.settings = false;// Désactive les settings une fois chargés
+                if (response.settings) {
+                    _this._mapOptions = mergeRecursive(_this._mapOptions, response.settings);
+                    _this._initiate();
+                } else {
+                    console.error('Map couldn\'t initiate because settings response was not correct.');
+                }
+            },
+            null, //callback "Complete"
+            function(){
+                //callback "Error"
+                console.error('Error while loading settings');
+            }
+        );
     };
 
     EsterenMap.prototype.loadMarkers = function(){
@@ -255,6 +274,32 @@
     EsterenMap.prototype.loadRoutesTypes = function(){
         var mapOptions = this.options();
         return this._load(["routestypes"], null, null, mapOptions.loaderCallbacks.routesTypes);
+    };
+
+    EsterenMap.prototype.loadRefDatas = function(callback){
+        var _this = this,
+            refDatasService = "ref-datas",
+            finalCallback;
+
+        if (this._refDatas) {
+            // Si les données ont déjà été chargées, on va simplement exécuter callback
+            // Avec un tableau similaire
+            callback.call(this, {refDatasService: this._refDatas});
+            return this;
+        }
+
+        // Ici, on force la surcharge de l'argument "callback"
+        // Cela dans le but de permettre de définir les données de référence dans l'objet EsterenMap
+        // à partir du moment où elles l'ont été au moins une fois.
+        // Elles seront de facto rechargées, sans requête AJAX
+        finalCallback = function(response) {
+            _this._refDatas = response;
+            _this._markersTypes = response[refDatasService].markersTypes;
+            _this._routesTypes = response[refDatasService].routesTypes;
+            _this._zonesTypes = response[refDatasService].zonesTypes;
+            callback.call(_this, response);
+        };
+        return this._load(["maps",refDatasService], null, "GET", finalCallback);
     };
 
     /**

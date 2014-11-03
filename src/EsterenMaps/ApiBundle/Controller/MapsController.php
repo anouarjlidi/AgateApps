@@ -2,6 +2,7 @@
 
 namespace EsterenMaps\ApiBundle\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -17,6 +18,7 @@ class MapsController extends Controller
     /**
      * @Route("/api/maps/settings/{id}", requirements={"id":"\d+"}, host="%esteren_domains.esteren_maps%", name="esterenmaps_api_maps_settings_local")
      * @Route("/maps/settings/{id}.{_format}", requirements={"id":"\d+","_format":"js|json"}, defaults={"_format":"json"}, host="%esteren_domains.api%", name="esterenmaps_api_maps_settings_distant")
+     * @Method("GET")
      */
     public function settingsAction(Maps $map, Request $request, $_format) {
         $this->container->get('pierstoval.api.originChecker')->checkRequest($request);
@@ -57,5 +59,35 @@ class MapsController extends Controller
         return $response;
     }
 
+    /**
+     * @Route("/api/maps/ref-datas", host="%esteren_domains.esteren_maps%", name="esterenmaps_api_maps_filters_local")
+     * @Route("/maps/ref-datas", host="%esteren_domains.api%", name="esterenmaps_api_maps_filters_distant")
+     * @Method("GET")
+     */
+    public function mapRefDatasAction(Request $request)
+    {
+        $serializer = $this->get('jms_serializer');
+
+        $em = $this->getDoctrine()->getManager();
+
+        $markersTypes = $em->getRepository('EsterenMapsBundle:MarkersTypes')->findAll();
+        $routesTypes = $em->getRepository('EsterenMapsBundle:RoutesTypes')->findAll();
+        $zonesTypes = $em->getRepository('EsterenMapsBundle:ZonesTypes')->findAll();
+
+        $datas = array(
+            'markersTypes' => $markersTypes,
+            'routesTypes' => $routesTypes,
+            'zonesTypes' => $zonesTypes,
+        );
+
+        $response = new Response();
+        $datas = $serializer->serialize(array('ref-datas' => $datas), 'json');
+
+        $response->headers->add(array('Content-type' => 'application/json; charset=utf-8',));
+
+        $response->setContent($datas);
+
+        return $response;
+    }
 
 }
