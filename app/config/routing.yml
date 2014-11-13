@@ -80,23 +80,25 @@ pierstoval_tools:
     resource: "@PierstovalToolsBundle/Controller/"
     type:     annotation
     prefix:   /{_locale}/
+    host:     %esteren_domains.portal%
     defaults:
          _locale: %locale%
     requirements:
         _locale: ^(%locales_regex%)$
 
-pierstoval_translation:
-    resource: "@PierstovalTranslationBundle/Controller/"
-    type:     annotation
-    prefix:   /{_locale}/
-    defaults:
-         _locale: %locale%
-    requirements:
-        _locale: ^(%locales_regex%)$
+#pierstoval_translation:
+#    resource: "@PierstovalTranslationBundle/Controller/"
+#    type:     annotation
+#    prefix:   /{_locale}/
+#    defaults:
+#         _locale: %locale%
+#    requirements:
+#        _locale: ^(%locales_regex%)$
 
 pierstoval_api:
     resource: "@PierstovalApiBundle/Controller/"
     type:     annotation
+    host:     %esteren_domains.api%
     prefix:   /{_locale}/
     defaults:
          _locale: %locale%
@@ -106,6 +108,7 @@ pierstoval_api:
 pierstoval_admin:
     resource: "@PierstovalAdminBundle/Controller/"
     type:     annotation
+    host:     %esteren_domains.portal%
     prefix:   /{_locale}/admin/
     defaults:
          _locale: %locale%
