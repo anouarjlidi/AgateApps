@@ -48,18 +48,33 @@ security:
             - ROLE_ALLOWED_TO_SWITCH
 
     providers:
-        main:
+        fos_user:
             id: fos_user.user_provider.username
-#        in_memory:
-#            memory:
-#                users:
-#                    user:  { password: userpass, roles: [ 'ROLE_USER' ] }
-#                    admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
 
     firewalls:
         dev:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
+
+        # Sonata Backoffice
+        admin:
+            pattern:            ^/
+            host:               %esteren_domains.backoffice%
+            anonymous:          true
+            context:            backoffice
+            remember_me:        false
+            form_login:
+                provider:       fos_user
+                login_path:     sonata_user_admin_security_login
+                use_forward:    false
+                check_path:     sonata_user_admin_security_check
+                failure_path:   null
+                use_referer:    false
+                default_target_path: sonata_admin_dashboard
+                always_use_default_target_path: true
+            logout:
+                path:           sonata_user_admin_security_logout
+                target:         root
 
         # Classic front-office + specific user content
         main:
@@ -71,7 +86,7 @@ security:
                 key:            %secret%
                 path:           /
             form_login:
-                provider:       main
+                provider:       fos_user
                 login_path:     fos_user_security_login
                 use_forward:    false
                 check_path:     fos_user_security_check
@@ -79,32 +94,10 @@ security:
                 use_referer:    true
             logout:
                 path:           fos_user_security_logout
-                target:         /
-
-        # Sonata Backoffice
-        admin:
-            pattern:            ^/
-            host:               %esteren_domains.backoffice%
-            anonymous:          true
-            context:            backoffice
-            remember_me:        false
-            form_login:
-                provider:       main
-                login_path:     sonata_admin_security_login
-                use_forward:    false
-                check_path:     sonata_admin_security_check
-                failure_path:   null
-                use_referer:    false
-                default_target_path: sonata_admin_dashboard
-                always_use_default_target_path: true
-            logout:
-                path:           sonata_user_admin_security_logout
-                target:         http://%esteren_domains.portal%/%locale%/
+                target:         root
 
     access_control:
-        - { path: ^/(%locales_regex%)/,                   roles: [IS_AUTHENTICATED_ANONYMOUSLY] }
-        - { path: ^/(%locales_regex%)/profile,            roles: [ROLE_USER] }
-        - { path: ^/(%locales_regex%)/characters,         roles: [ROLE_USER] }
-        - { path: ^/(%locales_regex%)/admin_login,              host: %esteren_domains.backoffice%, roles: [IS_AUTHENTICATED_ANONYMOUSLY] }
-        - { path: ^/(%locales_regex%)/admin_check,              host: %esteren_domains.backoffice%, roles: [IS_AUTHENTICATED_ANONYMOUSLY] }
-        - { path: ^/(%locales_regex%)/(?!admin_(login|check))/, host: %esteren_domains.backoffice%, roles: [ROLE_SONATA_ADMIN] }
+        - { path: ^/(%locales_regex%)/,                         roles: [IS_AUTHENTICATED_ANONYMOUSLY] }
+        - { path: ^/(%locales_regex%)/profile,                  roles: [ROLE_USER] }
+        - { path: ^/(%locales_regex%)/characters,               roles: [ROLE_USER] }
+        - { path: ^/(%locales_regex%)/admin/,                   host: %esteren_domains.backoffice%, roles: [ROLE_SONATA_ADMIN] }

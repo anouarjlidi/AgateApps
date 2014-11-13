@@ -1,0 +1,117 @@
+
+#-----------------------------------
+# Sonata relative Routing
+sonata_cache_cache:
+    resource:    "@SonataCacheBundle/Resources/config/routing/cache.xml"
+    prefix:      /{_locale}/
+    defaults:
+         _locale: %locale%
+    requirements:
+        _locale: ^(%locales_regex%)$
+
+sonata_page_exceptions:
+    resource:    "@SonataPageBundle/Resources/config/routing/exceptions.xml"
+    prefix:      /{_locale}/
+    defaults:
+         _locale: %locale%
+    requirements:
+        _locale: ^(%locales_regex%)$
+
+sonata_page_cache:
+    resource:    "@SonataPageBundle/Resources/config/routing/cache.xml"
+    prefix:      /{_locale}/
+    defaults:
+         _locale: %locale%
+    requirements:
+        _locale: ^(%locales_regex%)$
+
+admin:
+    resource: "@SonataAdminBundle/Resources/config/routing/sonata_admin.xml"
+    prefix:   /{_locale}/admin/
+    host:     %esteren_domains.backoffice%
+
+_sonata_admin:
+    resource:    .
+    type:        sonata_admin
+    prefix:      /{_locale}/
+    defaults:
+         _locale: %locale%
+    requirements:
+        _locale: ^(%locales_regex%)$
+    host:        %esteren_domains.backoffice%
+
+sonata_user:
+    resource: '@SonataUserBundle/Resources/config/routing/admin_security.xml'
+    prefix:      /{_locale}/admin/
+    defaults:
+         _locale: %locale%
+    requirements:
+        _locale: ^(%locales_regex%)$
+    host:        %esteren_domains.backoffice%
+
+sonata_user_security:
+    resource: "@SonataUserBundle/Resources/config/routing/sonata_security_1.xml"
+    prefix:     /{_locale}/admin/
+    defaults:
+         _locale: %locale%
+    requirements:
+        _locale: ^(%locales_regex%)$
+    host:       %esteren_domains.backoffice%
+
+sonata_user_resetting:
+    resource: "@SonataUserBundle/Resources/config/routing/sonata_resetting_1.xml"
+    prefix:     /{_locale}/admin/resetting
+    defaults:
+         _locale: %locale%
+    requirements:
+        _locale: ^(%locales_regex%)$
+    host:       %esteren_domains.backoffice%
+
+sonata_user_profile:
+    resource: "@SonataUserBundle/Resources/config/routing/sonata_profile_1.xml"
+    prefix:     /{_locale}/admin/profile
+    defaults:
+         _locale: %locale%
+    requirements:
+        _locale: ^(%locales_regex%)$
+    host:       %esteren_domains.backoffice%
+
+sonata_user_register:
+    resource: "@SonataUserBundle/Resources/config/routing/sonata_registration_1.xml"
+    prefix:     /{_locale}/admin/register
+    defaults:
+         _locale: %locale%
+    requirements:
+        _locale: ^(%locales_regex%)$
+    host:       %esteren_domains.backoffice%
+
+sonata_user_change_password:
+    resource: "@SonataUserBundle/Resources/config/routing/sonata_change_password_1.xml"
+    prefix:     /{_locale}/admin/profile
+    defaults:
+         _locale: %locale%
+    requirements:
+        _locale: ^(%locales_regex%)$
+    host:       %esteren_domains.backoffice%
+
+sonata_admin_security:
+    resource:    "@ApplicationSonataAdminBundle/Controller/"
+    type:        annotation
+    prefix:     /
+    defaults:
+         _locale: %locale%
+    requirements:
+        _locale: ^(%locales_regex%)$
+    host:        %esteren_domains.backoffice%
+
+
+#-----------------------------------
+# Application Sonata relative Routing
+application_sonata_page:
+    resource:    "@ApplicationSonataPageBundle/Controller/"
+    type:        annotation
+    prefix:      /
+    defaults:
+         _locale: %locale%
+    requirements:
+        _locale: ^(%locales_regex%)$
