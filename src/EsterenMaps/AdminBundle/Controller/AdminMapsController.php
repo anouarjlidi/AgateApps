@@ -26,13 +26,17 @@ class AdminMapsController extends Controller {
     private $factions;
 
     /**
-     * @Route("/esterenmaps/maps/maps/edit-interactive/{id}", name="admin_esterenmaps_maps_maps_editInteractive")
+     * @Route("/admin/esterenmaps/maps/maps/edit-interactive/{id}", name="admin_esterenmaps_maps_maps_editInteractive")
      * @Template()
      * @param Maps $map
      * @param Request $request
      * @return array
      */
     public function editAction(Maps $map, Request $request) {
+
+        if (!$this->container->get('security.context')->isGranted('ROLE_SONATA_ADMIN')) {
+            throw $this->createAccessDeniedException();
+        }
 
         $em = $this->getDoctrine()->getManager();
 
