@@ -50,6 +50,7 @@
 
         setContent: function(content){
             $(this._controlContent).html('').append(content);
+
             return this;
         },
 
@@ -60,7 +61,7 @@
                 filtersMsgRoutesTypes = typeof MSG_ROUTES_TYPES !== 'undefined' ? MSG_ROUTES_TYPES : 'Types de routes',
                 filtersMsgZonesTypes = typeof MSG_ZONES_TYPES !== 'undefined' ? MSG_ZONES_TYPES : 'Types de zones',
                 filtersMsgMarkersTypes = typeof MSG_MARKERS_TYPES !== 'undefined' ? MSG_MARKERS_TYPES : 'Types de marqueurs',
-                listsClasses = 'list-unstyled col-sm-8',
+                listsClasses = 'list-unstyled',
                 listsElementsClasses = '',
                 nodesList = {
                     "markersTypes": [],
@@ -80,10 +81,12 @@
                 $.each(this._esterenMap._markersTypes, function(index, markerType) {
                     var node = L.DomUtil.create('li', listsElementsClasses, list);
                     node.innerHTML =
-                        '<label for="markerType'+markerType.id+'">'
+                        '<div class="checkbox-inline">'
+                        +'<label for="markerType'+markerType.id+'">'
                         +'<input id="markerType'+markerType.id+'" type="checkbox" class="leaflet-filter-checkbox" />'
                         +markerType.name
                         +'</label>'
+                        +'</div>'
                     ;
                     nodesList.markersTypes.push(node);
                 });
@@ -96,10 +99,12 @@
                 $.each(this._esterenMap._routesTypes, function(index, routeType) {
                     var node = L.DomUtil.create('li', listsElementsClasses, list);
                     node.innerHTML =
-                        '<label for="routeType'+routeType.id+'">'
+                        '<div class="checkbox-inline">'
+                        +'<label for="routeType'+routeType.id+'">'
                         +'<input id="routeType'+routeType.id+'" type="checkbox" class="leaflet-filter-checkbox" />'
                         +routeType.name
                         +'</label>'
+                        +'</div>'
                     ;
                     nodesList.routesTypes.push(node);
                 });
@@ -112,10 +117,12 @@
                 $.each(this._esterenMap._zonesTypes, function(index, zoneType) {
                     var node = L.DomUtil.create('li', listsElementsClasses, list);
                     node.innerHTML =
-                        '<label for="routeType'+routeType.id+'">'
+                        '<div class="checkbox-inline">'
+                        +'<label for="routeType'+routeType.id+'">'
                         +'<input id="routeType'+routeType.id+'" type="checkbox" class="leaflet-filter-checkbox" />'
                         +routeType.name
                         +'</label>'
+                        +'</div>'
                     ;
                     nodesList.zonesTypes.push(node);
                 });
@@ -126,23 +133,14 @@
             // On persiste ici à utiliser le concept objet
             // pour être sûr que des listeners ne sont pas "perdus" en route
 
-            content = $('<div />').css('overflow-y', 'scroll')
-                .append('<h3>'+filtersMsgTitle+'</h3>')
-                .append(
-                    $('<div />').addClass('row')
-                        .append($('<div />').addClass('col-sm-4').html('<h4>'+filtersMsgMarkersTypes+'</h4>'))
-                        .append($('<div />').addClass('col-sm-8').append(nodesList.markersTypesUL))
-                )
-                .append(
-                    $('<div />').addClass('row')
-                        .append($('<div />').addClass('col-sm-4').html('<h4>'+filtersMsgRoutesTypes+'</h4>'))
-                        .append($('<div />').addClass('col-sm-8').append(nodesList.routesTypesUL))
-                )
-                .append(
-                    $('<div />').addClass('row')
-                        .append($('<div />').addClass('col-sm-4').html('<h4>'+filtersMsgZonesTypes+'</h4>'))
-                        .append($('<div />').addClass('col-sm-8').append(nodesList.zonesTypesUL))
-                )
+            content = $('<div />')
+                .append($('<h3 />').text(filtersMsgTitle))
+                .append($('<h4 />').text(filtersMsgMarkersTypes))
+                .append(nodesList.markersTypesUL)
+                .append($('<h4 />').text(filtersMsgRoutesTypes))
+                .append(nodesList.routesTypesUL)
+                .append($('<h4 />').text(filtersMsgZonesTypes))
+                .append(nodesList.zonesTypesUL)
             ;
 
             return content;
@@ -178,48 +176,41 @@
             });
 
             L.DomEvent
-                .addListener(controlDiv, 'click', L.DomEvent.stopPropagation)
-                .addListener(controlDiv, 'click', L.DomEvent.preventDefault)
-                .addListener(controlContent, 'click', L.DomEvent.stopPropagation)
-                .addListener(controlContent, 'click', L.DomEvent.preventDefault)
-                .addListener(link, 'click', function () {
-                    var container = $(d.getElementById(mapOptions.container)),
-                        $controlDiv = $(this).parents('.leaflet-draw-section.leaflet-filters-control'),
-                        controlDiv = $controlDiv[0];
-
-                    if (!$controlDiv.data('baseWidth')) {
-                        $controlDiv.data({
-                            'baseWidth': $controlDiv.width(),
-                            'baseHeight': $controlDiv.height()
-                        });
-                    }
+                .addListener(link, 'click', function (e) {
+                    var controlDiv = $(this).parents('.leaflet-draw-section.leaflet-filters-control')[0];
 
                     if (!controlDiv.classList.contains('expanded')) {
-                        $controlDiv.stop().animate({
-                            width: (container.width() / 2),
-                            height: (container.height() / 2)
-                        }, 500);
                         controlDiv.classList.add('expanded');
                         link.children[0].classList.remove('icon-resize_full');
                         link.children[0].classList.add('icon-resize_small');
+                        setTimeout(function(){
+                            controlDiv.classList.add('expanded-full');
+                        }, 400);
                     } else {
-                        $controlDiv.stop().animate({
-                            width: $controlDiv.data('baseWidth'),
-                            height: $controlDiv.data('baseHeight')
-                        }, 500);
+                        controlDiv.classList.remove('expanded-full');
                         controlDiv.classList.remove('expanded');
                         link.children[0].classList.add('icon-resize_full');
                         link.children[0].classList.remove('icon-resize_small');
                     }
 
                     return false;
-                });
+                })
+                .addListener(link, 'click', L.DomEvent.stopPropagation)
+            ;
 
             this._controlDiv = controlDiv;
             this._controlLink = link;
             this._controlContent = controlContent;
 
             this.setContent(this.createContent());
+
+            L.DomEvent
+                .on(this._controlDiv, 'click', L.DomEvent.stopPropagation)
+                .on(this._controlDiv, 'mousedown', L.DomEvent.stopPropagation)
+                .on(this._controlDiv, 'touchstart', L.DomEvent.stopPropagation)
+                .on(this._controlDiv, 'dblclick', L.DomEvent.stopPropagation)
+                .on(this._controlDiv, 'mousewheel', L.DomEvent.stopPropagation)
+                .on(this._controlDiv, 'MozMousePixelScroll', L.DomEvent.stopPropagation);
 
             return controlDiv;
         }

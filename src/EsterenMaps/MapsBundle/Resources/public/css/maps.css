@@ -162,11 +162,18 @@ Edit mode
     padding: 0 10px 10px 10px;
     min-width: 30px;
     min-height: 30px;
-    overflow-wrap: break-word;
-    overflow-y: auto;
-    overflow-x: hidden;
+    max-height: 30px;
+    width: 20px;
+    -webkit-transition-property: width,height;
+    -moz-transition-property: width,height;
+    -o-transition-property: width,height;
+    transition-property: width,height;
+    -webkit-transition-duration: 400ms;
+    -moz-transition-duration: 400ms;
+    -o-transition-duration: 400ms;
+    transition-duration: 400ms;
 }
-.leaflet-filters-control .leaflet-filters-control-content {
+#leaflet-filters-control .leaflet-filters-control-content {
     -webkit-transition-property: opacity;
     -moz-transition-property: opacity;
     -o-transition-property: opacity;
@@ -178,8 +185,9 @@ Edit mode
     opacity: 0;
     width: 0;
     height: 0;
+    overflow: hidden;
 }
-.leaflet-filters-control.expanded .leaflet-filters-control-content {
+#leaflet-filters-control.expanded .leaflet-filters-control-content {
     width: 100%;
     height: auto;
     opacity: 1;
@@ -189,4 +197,34 @@ Edit mode
     position: absolute;
     bottom: 5px;
     left: 10px;
+}
+#leaflet-filters-control.expanded-full {
+    max-height: 100%;
+}
+@media(max-width:767px) {
+    #leaflet-filters-control.expanded {
+        width: 100%;
+        padding: 0;
+    }
+}
+@media(min-width:768px) and (max-width:991px) {
+    #leaflet-filters-control.expanded {
+        width: 305px;
+    }
+}
+@media(min-width:992px) and (max-width:1199px) {
+    #leaflet-filters-control.expanded {
+        width: 390px;
+    }
+}
+
+@media(min-width:1200px) {
+    #leaflet-filters-control.expanded {
+        width: 460px;
+    }
+}
+
+/** Leaflet overrides **/
+html body .leaflet-container .leaflet-container {
+    font: inherit;
 }
