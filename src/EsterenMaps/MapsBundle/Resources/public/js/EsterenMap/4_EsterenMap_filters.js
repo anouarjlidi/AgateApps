@@ -24,6 +24,9 @@
         _controlContent: null,
         _controlLink: null,
 
+        _cntSet: false,
+        _lstnSet: false,
+
         initialize: function (options, map) {
             // Constructeur
             if (!(map instanceof EsterenMap)) {
@@ -48,13 +51,12 @@
             return this._esterenMap;
         },
 
-        setContent: function(content){
-            $(this._controlContent).html('').append(content);
-
-            return this;
-        },
-
         createContent: function(){
+            if (this._cntSet) {
+                console.error('Content has already been set for this filter panel.');
+                return false;
+            }
+
             var content,
                 _this = this,
                 filtersMsgTitle = typeof MSG_CONTROL_FILTERS_TITLE !== 'undefined' ? MSG_CONTROL_FILTERS_TITLE : 'Filtres',
@@ -118,9 +120,9 @@
                     var node = L.DomUtil.create('li', listsElementsClasses, list);
                     node.innerHTML =
                         '<div class="checkbox-inline">'
-                        +'<label for="routeType'+routeType.id+'">'
-                        +'<input id="routeType'+routeType.id+'" type="checkbox" class="leaflet-filter-checkbox" />'
-                        +routeType.name
+                        +'<label for="zoneType'+zoneType.id+'">'
+                        +'<input id="zoneType'+zoneType.id+'" type="checkbox" class="leaflet-filter-checkbox" />'
+                        +zoneType.name
                         +'</label>'
                         +'</div>'
                     ;
@@ -143,7 +145,11 @@
                 .append(nodesList.zonesTypesUL)
             ;
 
-            return content;
+            $(this._controlContent).html('').append(content);
+
+            this._cntSet= true;
+
+            return this;
         },
 
         onAdd: function (leafletMap) {
@@ -202,7 +208,8 @@
             this._controlLink = link;
             this._controlContent = controlContent;
 
-            this.setContent(this.createContent());
+            this.createContent();
+            this.setEvents();
 
             L.DomEvent
                 .on(this._controlDiv, 'click', L.DomEvent.stopPropagation)
@@ -213,6 +220,32 @@
                 .on(this._controlDiv, 'MozMousePixelScroll', L.DomEvent.stopPropagation);
 
             return controlDiv;
+        },
+
+        setEvents: function(){
+            if (this._lstnSet) {
+                console.error('Content has already been set for this filter panel.');
+                return false;
+            }
+            var inputs = $(this._controlContent).find('input.leaflet-filter-checkbox');
+
+            inputs.on('change', function(){
+                if (!d.getElementById('filtersStyle')) {
+                    $('<style />').attr('id', 'filtersStyle').appendTo('head');
+                }
+                var styleContainer = d.getElementById('filtersStyle'),
+                    html = '';
+                inputs.each(function(i,input){
+                    if ($(input).is(':checked')) {
+                        html += '[data-leaflet-object-type="'+input.id+'"]{display:none;}';
+                    }
+                });
+                styleContainer.innerHTML = html;
+            });
+
+            this._lstnSet = true;
+
+            return this;
         }
     });
 

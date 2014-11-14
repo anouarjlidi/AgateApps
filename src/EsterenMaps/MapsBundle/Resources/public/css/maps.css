@@ -195,8 +195,10 @@ Edit mode
 }
 #leaflet-filters-toggle {
     position: absolute;
-    bottom: 5px;
-    left: 10px;
+    bottom: 2px;
+    left: 2px;
+    padding: 4px 7px;
+    display: block;
 }
 #leaflet-filters-control.expanded-full {
     max-height: 100%;
