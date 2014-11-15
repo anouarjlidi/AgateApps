@@ -7,12 +7,13 @@ use CorahnRin\ModelsBundle\Entity\Domains;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 
 class DisciplinesDomainsFixtures extends AbstractFixture implements OrderedFixtureInterface {
 
     /**
-     * @var ObjectManager
+     * @var EntityManager
      */
     private $manager;
 

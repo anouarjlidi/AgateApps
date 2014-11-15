@@ -68,6 +68,7 @@ class MapsFixtures extends AbstractFixture implements OrderedFixtureInterface {
                 ->setDeleted(null)
             ;
             if ($id) {
+                /** @var ClassMetadata $metadata */
                 $metadata = $this->manager->getClassMetaData(get_class($obj));
                 $metadata->setIdGeneratorType(ClassMetadata::GENERATOR_TYPE_NONE);
             }

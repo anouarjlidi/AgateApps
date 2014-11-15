@@ -79,6 +79,7 @@ class DisordersFixtures extends AbstractFixture implements OrderedFixtureInterfa
                 ->setDeleted($deleted ? new \Datetime($deleted) : null)
             ;
             if ($id) {
+                /** @var ClassMetadata $metadata */
                 $metadata = $this->manager->getClassMetaData(get_class($obj));
                 $metadata->setIdGeneratorType(ClassMetadata::GENERATOR_TYPE_NONE);
             }

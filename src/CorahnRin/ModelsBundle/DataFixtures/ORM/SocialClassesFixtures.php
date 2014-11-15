@@ -90,6 +90,7 @@ class SocialClassesFixtures extends AbstractFixture implements OrderedFixtureInt
                 $obj->addDomain($domain);
             }
             if ($id) {
+                /** @var ClassMetadata $metadata */
                 $metadata = $this->manager->getClassMetaData(get_class($obj));
                 $metadata->setIdGeneratorType(ClassMetadata::GENERATOR_TYPE_NONE);
             }
