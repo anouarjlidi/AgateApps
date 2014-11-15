@@ -92,6 +92,11 @@
         draggable: false
     };
 
+    EsterenMap.prototype._mapOptions.LeafletIconBaseOptions = {
+        shadowUrl: '',
+        shadowRetinaUrl: ''
+    };
+
     EsterenMap.prototype._mapOptions.CustomMarkerBaseOptions = {
         popupIsSidebar: true,
         clickCallback: function(e){
@@ -188,11 +193,16 @@
         var _this = this,
             mapOptions = this.options(),
             leafletOptions = this.cloneObject(mapOptions.LeafletMarkerBaseOptions),
-            id,option,optionTag,
+            iconOptions = this.cloneObject(mapOptions.LeafletIconBaseOptions),
+            id,option,optionTag,icon,
             marker,popup,popupContent,popupOptions;
 
         if (leafletUserOptions) {
             leafletOptions = this.cloneObject(leafletOptions, leafletUserOptions);
+        }
+
+        if (customUserOptions.icon) {
+            iconOptions = this.cloneObject(iconOptions, customUserOptions.icon);
         }
 
         while (d.getElementById('marker_'+this._mapOptions.maxMarkerId+'_name')) {
@@ -250,6 +260,15 @@
                 '<input type="hidden" id="marker_'+id+'_altitude" name="marker['+id+'][altitude]" value="0" />'+
                 '<input type="hidden" id="marker_'+id+'_type" name="marker['+id+'][type]" value="'+(customUserOptions.markerType?customUserOptions.markerType:'1')+'" />'
             );
+        }
+
+        // Ajout de l'icône au cas où
+        if (marker._esterenMarker.marker_type && marker._esterenMarker.marker_type.icon_name) {
+            iconOptions.iconUrl = marker._esterenMarker.marker_type.icon_name;
+            iconOptions.iconSize = [marker._esterenMarker.marker_type.iconDimensions.width, marker._esterenMarker.marker_type.iconDimensions.height];
+            iconOptions.iconAnchor = [ parseInt(iconOptions.iconSize[0] / 2), parseInt(iconOptions.iconSize[1] / 2) ];
+            icon = L.icon(iconOptions);
+            marker.setIcon(icon);
         }
 
         this._drawnItems.addLayer(marker);

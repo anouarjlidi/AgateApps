@@ -203,6 +203,22 @@ Edit mode
 #leaflet-filters-control.expanded-full {
     max-height: 100%;
 }
+.leaflet-filters-control-content ul li {
+    display: inline-block;
+    margin: 0 20px 0 0;
+    padding: 0;
+}
+.leaflet-filters-control-content ul li label {
+    margin: 0;
+}
+.leaflet-filters-control-content ul li label:hover {
+    cursor: pointer;
+    color: #444;
+}
+.leaflet-filters-control-content ul li .checkbox-inline {
+    padding-top: 0;
+    padding-bottom: 0;
+}
 @media(max-width:767px) {
     #leaflet-filters-control.expanded {
         width: 100%;

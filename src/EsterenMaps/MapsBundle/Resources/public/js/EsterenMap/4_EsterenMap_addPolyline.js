@@ -41,8 +41,8 @@
 
     EsterenMap.prototype._mapOptions.LeafletPolylineBaseOptionsEditMode = {
         color: "#03f",
-        opacity: 0.5,
-        weight: 5
+        opacity: 0.75,
+        weight: 6
     };
 
     EsterenMap.prototype._mapOptions.CustomPolylineBaseOptions = {
