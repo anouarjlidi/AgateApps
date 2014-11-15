@@ -24,6 +24,11 @@ class ApiController extends FOSRestController
     /**
      * @Route("/{serviceName}")
      * @Method({"GET"})
+     * @Cache(maxage=0, expires="yesterday")
+     *
+     * @param $serviceName
+     * @param Request $request
+     * @return \FOS\RestBundle\View\View|\Symfony\Component\HttpFoundation\Response
      */
     public function cgetAction($serviceName, Request $request)
     {
@@ -43,6 +48,7 @@ class ApiController extends FOSRestController
      * @Route("/{serviceName}/{id}/{subElement}", requirements={"subElement": "([a-zA-Z0-9\._]/?)+", "id": "\d+"}, name="pierstoval_api_api_get_subrequest")
      * @Method({"GET"})
      * @Cache(maxage=0, expires="yesterday")
+     *
      * @param string $serviceName
      * @param integer $id
      * @param string $subElement
@@ -88,7 +94,7 @@ class ApiController extends FOSRestController
 
                 if ($class) {
                     // Seulement à la première occurrence
-                    $metadatas = $this->get('jms_serializer')->getMetadataFactory()->getMetadataForClass($class);
+                    $metadatas = $this->container->get('jms_serializer')->getMetadataFactory()->getMetadataForClass($class);
 
                     if (isset($metadatas->propertyMetadata[$element])) {
                         $subService = $this->getService($element, false);
@@ -129,7 +135,7 @@ class ApiController extends FOSRestController
 
                         $data = $data->filter(
                             function($entry) use ($element) {
-                               return $entry->getId() == $element;
+                               return method_exists($element, 'getId') && $entry->getId() == $element;
                             }
                         );
                         $data = $data->first();
