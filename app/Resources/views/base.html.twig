@@ -31,17 +31,17 @@
         output="css/global.css"
         filter="less,cssrewrite,?uglifycss"
         %}
-        <link rel="stylesheet" href="{{ app.request.getSchemeAndHttpHost() ~ asset_url }}" type="text/css" />
+        <link rel="stylesheet" href="{{ asset(asset_url, null, true) }}" type="text/css" />
         {% endstylesheets %}
 
     {% endblock %}
 
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ asset('bundles/esterenpages/images/favicon-144.png') }}">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ asset('bundles/esterenpages/images/favicon-114.png') }}">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ asset('bundles/esterenpages/images/favicon-72.png') }}">
-    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="{{ asset('bundles/esterenpages/images/favicon-57.png') }}">
-    <link rel="icon" type="image/x-icon" href="{{ asset('bundles/esterenpages/images/favicon-57.png') }}"/>
-    <link rel="shortcut icon" href="{{ asset('bundles/esterenpages/images/favicon-57.png') }}">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ asset('bundles/esterenpages/images/favicon-144.png', null, false) }}">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ asset('bundles/esterenpages/images/favicon-114.png', null, false) }}">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ asset('bundles/esterenpages/images/favicon-72.png', null, false) }}">
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="{{ asset('bundles/esterenpages/images/favicon-57.png', null, false) }}">
+    <link rel="icon" type="image/x-icon" href="{{ asset('bundles/esterenpages/images/favicon-57.png', null, false) }}"/>
+    <link rel="shortcut icon" href="{{ asset('bundles/esterenpages/images/favicon-57.png', null, false) }}">
 </head>
 <body>
 {% block body %}
@@ -103,7 +103,7 @@
         '@EsterenPagesBundle/Resources/public/js/corahn_rin.js'
         output="js/global.js"
         filter="?uglifyjs" %}
-    <script type="text/javascript" src="{{ asset(asset_url) }}"></script>
+    <script type="text/javascript" src="{{ asset(asset_url, null, true) }}"></script>
     {% endjavascripts %}
 
 {% endblock %}

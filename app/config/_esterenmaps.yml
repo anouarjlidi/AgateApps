@@ -7,3 +7,22 @@
 #corahn_rin_characters:
 #    sheets_output: %kernel.root_dir%/cache/character_sheets/
 #    sheets_folder: %kernel.root_dir%/../src/CorahnRin/CharactersBundle/SheetsManagers/files/
+
+# Assets
+assetic:
+    assets:
+        esteren_maps_js:
+            inputs:
+                - '@EsterenMapsBundle/Resources/public/js/leaflet-src.js'
+                - '@EsterenMapsBundle/Resources/public/js/leaflet.sidebar-src.js'
+                - '@EsterenMapsBundle/Resources/public/js/leaflet.draw-src.js'
+                - '@EsterenMapsBundle/Resources/public/js/EsterenMap/1_EsterenMap.js'
+                - '@EsterenMapsBundle/Resources/public/js/EsterenMap/2_LeafletDrawOverrides.js'
+                - '@EsterenMapsBundle/Resources/public/js/EsterenMap/3_EsterenMap_ActivateLeafletDraw.js'
+                - '@EsterenMapsBundle/Resources/public/js/EsterenMap/3_EsterenMap_options.js'
+                - '@EsterenMapsBundle/Resources/public/js/EsterenMap/4_EsterenMap_addMarker.js'
+                - '@EsterenMapsBundle/Resources/public/js/EsterenMap/4_EsterenMap_addPolyline.js'
+                - '@EsterenMapsBundle/Resources/public/js/EsterenMap/4_EsterenMap_addPolygon.js'
+                - '@EsterenMapsBundle/Resources/public/js/EsterenMap/4_EsterenMap_filters.js'
+            filters:
+                - ?uglifyjs
