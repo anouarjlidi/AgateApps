@@ -12,7 +12,7 @@
 
 {% endblock %}
 
-{% block more_javascripts %}
+{% block javascripts %}
     {{ parent() }}
     {% javascripts
     '@EsterenMapsBundle/Resources/public/js/leaflet-src.js'
@@ -31,9 +31,9 @@
     %}<script type="text/javascript" src="{{ app.request.getSchemeAndHttpHost() ~ asset_url }}"></script>{% endjavascripts %}
 
     <script type="text/javascript">
-        (function(){
+        (function(d){
             try {
-                document.map = new EsterenMap({
+                d.map = new EsterenMap({
                     id: {{ map.id }},
                     imgUrl: "{{ asset('bundles/esterenmaps/img') }}",
                     apiUrls: {
@@ -55,6 +55,6 @@
             } catch (e) {
                 console.error(e);
             }
-        })();
+        })(document);
     </script>
 {% endblock %}
