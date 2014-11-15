@@ -237,7 +237,10 @@
             ajaxD.editMode = true;
         }
 
-        return this._load(["maps","settings",this.options().id], ajaxD, "GET",
+        return this._load(
+            ["maps","settings",this.options().id],
+            ajaxD,
+            "GET",
             function(response){
                 //callback "success"
                 _this.mapAllowedElements.settings = false;// Désactive les settings une fois chargés

@@ -35,7 +35,9 @@ class MarkersTypesAdmin extends Admin {
      */
     public function prePersist($object)
     {
-        $this->uploadableManager->markEntityToUpload($object, $object->getIconName());
+        if ($object->getIconName()){
+            $this->uploadableManager->markEntityToUpload($object, $object->getIconName());
+        }
     }
 
     /**
@@ -44,7 +46,9 @@ class MarkersTypesAdmin extends Admin {
      */
     public function preUpdate($object)
     {
-        $this->uploadableManager->markEntityToUpload($object, $object->getIconName());
+        if ($object->getIconName()){
+            $this->uploadableManager->markEntityToUpload($object, $object->getIconName());
+        }
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper) {

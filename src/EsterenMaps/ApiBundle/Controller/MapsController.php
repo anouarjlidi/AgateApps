@@ -25,7 +25,7 @@ class MapsController extends Controller
 
         $datas = array();
 
-        $post = $request->request;
+        $get = $request->query;
 
         $em = $this->getDoctrine()->getManager();
 
@@ -34,7 +34,7 @@ class MapsController extends Controller
         $routesTypes = $em->getRepository('EsterenMapsBundle:RoutesTypes')->findAll();
         $factions = $em->getRepository('EsterenMapsBundle:Factions')->findAll();
 
-        if ($post->get('editMode') == true) {
+        if ($get->get('editMode') === 'true') {
             $datas['LeafletPopupMarkerBaseContent'] = $this->renderView('EsterenMapsApiBundle:Maps:popupContentMarkerEditMode.html.twig',array('markersTypes'=>$markersTypes,'factions'=>$factions));
             $datas['LeafletPopupPolylineBaseContent'] = $this->renderView('EsterenMapsApiBundle:Maps:popupContentPolylineEditMode.html.twig', array('markers'=>$map->getMarkers(),'routesTypes'=>$routesTypes,'factions'=>$factions));
             $datas['LeafletPopupPolygonBaseContent'] = $this->renderView('EsterenMapsApiBundle:Maps:popupContentPolygonEditMode.html.twig',array('factions'=>$factions, 'zonesTypes'=>$zonesTypes));
