@@ -37,6 +37,22 @@ class ZonesTypes {
     protected $name;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="text", nullable=true)
+     * @Expose
+     */
+    protected $description;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=75, nullable=true)
+     * @Expose
+     */
+    protected $color;
+
+    /**
      * @var \Datetime
      *
      * @Gedmo\Timestampable(on="create")
@@ -103,6 +119,16 @@ class ZonesTypes {
      */
     public function getId() {
         return $this->id;
+    }
+
+    /**
+     * @param integer $id
+     * @return $this
+     */
+    public function setId($id)
+    {
+        $this->id = (int) $id;
+        return $this;
     }
 
     /**
@@ -337,6 +363,42 @@ class ZonesTypes {
         }
         return $this;
 
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @return string
+     */
+    public function getColor()
+    {
+        return $this->color;
+    }
+
+    /**
+     * @param string $color
+     * @return RoutesTypes
+     */
+    public function setColor($color)
+    {
+        $this->color = $color;
+        return $this;
+    }
+
+    /**
+     * @param string $description
+     * @return $this
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+        return $this;
     }
 
     /**

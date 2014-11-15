@@ -38,6 +38,14 @@ class Markers {
     /**
      * @var string
      *
+     * @ORM\Column(type="text", nullable=true)
+     * @Serializer\Expose
+     */
+    protected $description;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Serializer\Expose
      */
@@ -151,7 +159,7 @@ class Markers {
      * Get id
      *
      * @param $id
-     * @return integer
+     * @return $this
      */
     public function setId($id) {
         $this->id = $id;
@@ -171,7 +179,7 @@ class Markers {
      * Set name
      *
      * @param string $name
-     * @return Markers
+     * @return $this
      */
     public function setName($name) {
         $this->name = $name;
@@ -521,5 +529,26 @@ class Markers {
      */
     public function getDeleted() {
         return $this->deleted;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return $this
+     */
+    public function setDescription($description) {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription() {
+        return $this->description;
     }
 }

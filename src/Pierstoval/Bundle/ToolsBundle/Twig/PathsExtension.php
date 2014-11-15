@@ -31,6 +31,9 @@ class PathsExtension extends \Twig_Extension {
      * @return string
      */
     public function absoluteToWebPath($path) {
+        if (!file_exists($path) || strpos($path, 'http') !== false) {
+            return $path;
+        }
         $path = str_replace($this->rootDir, '', $path);
         if (preg_match('~^[^§]+/web/~isUu', $path)) {
             $path = preg_replace('~^[^§]+/web/~isUu', '/', $path);

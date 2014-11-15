@@ -7,9 +7,9 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
-use EsterenMaps\MapsBundle\Entity\Maps;
+use EsterenMaps\MapsBundle\Entity\RoutesTypes;
 
-class MapsFixtures extends AbstractFixture implements OrderedFixtureInterface {
+class RoutesTypesFixtures extends AbstractFixture implements OrderedFixtureInterface {
 
     /**
      * @var ObjectManager
@@ -22,7 +22,7 @@ class MapsFixtures extends AbstractFixture implements OrderedFixtureInterface {
      */
     function getOrder()
     {
-        return 1;
+        return 0;
     }
 
     /**
@@ -33,14 +33,16 @@ class MapsFixtures extends AbstractFixture implements OrderedFixtureInterface {
     {
         $this->manager = $manager;
 
-        $repo = $this->manager->getRepository('EsterenMapsBundle:Maps');
+        $repo = $this->manager->getRepository('EsterenMapsBundle:RoutesTypes');
 
-        $this->fixtureObject($repo, 1, 'Tri-Kazel', 'tri-kazel', 'uploads/maps/esteren_nouvelle_cartepg_91220092.jpeg', 'Carte de Tri-Kazel officielle, réalisée par Chris', 5, '2014-04-09 08:57:25', '2014-04-09 08:57:25');
+        $this->fixtureObject($repo, 1, 'Chemin', '', 'rgba(165,110,52,1)', '2014-04-27 15:28:15', '2014-04-27 15:28:15', null);
+        $this->fixtureObject($repo, 2, 'Route', '', 'rgba(199,191,183,1)', '2014-04-27 15:28:31', '2014-04-27 15:28:31', null);
+        $this->fixtureObject($repo, 3, 'Sentier de loup', '', 'rgba(194,176,76,1)', '2014-05-10 16:49:38', '2014-05-10 16:49:38', null);
 
         $this->manager->flush();
     }
 
-    public function fixtureObject(EntityRepository $repo, $id, $name, $nameSlug, $image, $description, $maxZoom, $created, $updated = null)
+    public function fixtureObject(EntityRepository $repo, $id, $name, $description, $color, $created, $updated, $deleted = null)
     {
         $obj = null;
         $newObject = false;
@@ -56,16 +58,14 @@ class MapsFixtures extends AbstractFixture implements OrderedFixtureInterface {
             $newObject = true;
         }
         if ($newObject === true) {
-            $obj = new Maps();
+            $obj = new RoutesTypes();
             $obj->setId($id)
                 ->setName($name)
                 ->setDescription($description)
-                ->setNameSlug($nameSlug)
-                ->setImage($image)
-                ->setMaxZoom($maxZoom)
+                ->setColor($color)
                 ->setCreated($created ? new \Datetime($created) : new \Datetime())
                 ->setUpdated($updated ? new \Datetime($updated) : null)
-                ->setDeleted(null)
+                ->setDeleted($deleted ? new \Datetime($deleted) : null)
             ;
             if ($id) {
                 /** @var ClassMetadata $metadata */
@@ -76,7 +76,7 @@ class MapsFixtures extends AbstractFixture implements OrderedFixtureInterface {
             $addRef = true;
         }
         if ($addRef === true && $obj) {
-            $this->addReference('esterenmaps-maps-'.$id, $obj);
+            $this->addReference('esterenmaps-routestypes-'.$id, $obj);
         }
     }
 }

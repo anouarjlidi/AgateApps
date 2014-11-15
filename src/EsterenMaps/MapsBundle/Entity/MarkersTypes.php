@@ -6,6 +6,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use JMS\Serializer\Annotation as Serializer;
+use Pierstoval\Bundle\ToolsBundle\Serializer\AbstractPathEntity;
+use Pierstoval\Bundle\ToolsBundle\Serializer\PathInterface;
 
 /**
  * MarkersType
@@ -16,7 +18,7 @@ use JMS\Serializer\Annotation as Serializer;
  * @Serializer\ExclusionPolicy("all")
  * @Gedmo\Uploadable(allowOverwrite=true, filenameGenerator="SHA1")
  */
-class MarkersTypes
+class MarkersTypes extends AbstractPathEntity implements PathInterface
 {
 
     /**
@@ -115,6 +117,16 @@ class MarkersTypes
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @param integer $id
+     * @return $this
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+        return $this;
     }
 
     /**
@@ -319,13 +331,9 @@ class MarkersTypes
     }
 
     /**
-     * Récupère la largeur et la hauteur de l'image dans un array
-     *
      * @Serializer\VirtualProperty
      * @Serializer\SerializedName("iconDimensions")
      * @Serializer\Type("array")
-     *
-     * @link http://php.net/manual/fr/function.getimagesize.php
      * @return string
      */
     public function getIconDimensions()
@@ -338,6 +346,8 @@ class MarkersTypes
     }
 
     /**
+     * Récupère la largeur et la hauteur de l'image dans un array
+     * @link http://php.net/manual/fr/function.getimagesize.php
      * @return array
      */
     private function setIconDimensions()
@@ -350,5 +360,12 @@ class MarkersTypes
             );
         }
         return $this->iconDimensions;
+    }
+
+    public function listenSerializePaths()
+    {
+        return array(
+            'getIconName' => 'setIconName',
+        );
     }
 }

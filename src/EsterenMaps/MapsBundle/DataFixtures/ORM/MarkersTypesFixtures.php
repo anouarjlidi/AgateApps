@@ -7,9 +7,9 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
-use EsterenMaps\MapsBundle\Entity\Maps;
+use EsterenMaps\MapsBundle\Entity\MarkersTypes;
 
-class MapsFixtures extends AbstractFixture implements OrderedFixtureInterface {
+class MarkersTypesFixtures extends AbstractFixture implements OrderedFixtureInterface {
 
     /**
      * @var ObjectManager
@@ -22,7 +22,7 @@ class MapsFixtures extends AbstractFixture implements OrderedFixtureInterface {
      */
     function getOrder()
     {
-        return 1;
+        return 0;
     }
 
     /**
@@ -33,14 +33,20 @@ class MapsFixtures extends AbstractFixture implements OrderedFixtureInterface {
     {
         $this->manager = $manager;
 
-        $repo = $this->manager->getRepository('EsterenMapsBundle:Maps');
+        $repo = $this->manager->getRepository('EsterenMapsBundle:MarkersTypes');
 
-        $this->fixtureObject($repo, 1, 'Tri-Kazel', 'tri-kazel', 'uploads/maps/esteren_nouvelle_cartepg_91220092.jpeg', 'Carte de Tri-Kazel officielle, réalisée par Chris', 5, '2014-04-09 08:57:25', '2014-04-09 08:57:25');
+        $this->fixtureObject($repo, 1, 'Cité', '', '', '2014-04-09 09:20:37', '2014-05-08 16:19:26', null);
+        $this->fixtureObject($repo, 2, 'Port (village côtier, ...)', '', '', '2014-05-08 16:19:19', '2014-05-10 17:20:31', null);
+        $this->fixtureObject($repo, 3, 'Carrefour', '', '', '2014-05-08 16:22:17', '2014-05-08 16:22:17', null);
+        $this->fixtureObject($repo, 4, 'Sanctuaire', '', '', '2014-05-10 16:51:00', '2014-05-10 16:51:00', null);
+        $this->fixtureObject($repo, 5, 'Site d\'intérêt', '', '', '2014-05-10 17:13:47', '2014-05-10 17:13:47', null);
+        $this->fixtureObject($repo, 6, 'Fortifications (châteaux, angardes, rosace)', '', '', '2014-05-10 17:17:38', '2014-05-10 17:18:47', null);
+        $this->fixtureObject($repo, 7, 'Souterrain (mine, cité troglodyte, réseau de cavernes)', '', '', '2014-05-10 17:21:40', '2014-05-10 17:21:40', null);
 
         $this->manager->flush();
     }
 
-    public function fixtureObject(EntityRepository $repo, $id, $name, $nameSlug, $image, $description, $maxZoom, $created, $updated = null)
+    public function fixtureObject(EntityRepository $repo, $id, $name, $description, $icon, $created, $updated, $deleted = null)
     {
         $obj = null;
         $newObject = false;
@@ -56,16 +62,14 @@ class MapsFixtures extends AbstractFixture implements OrderedFixtureInterface {
             $newObject = true;
         }
         if ($newObject === true) {
-            $obj = new Maps();
+            $obj = new MarkersTypes();
             $obj->setId($id)
                 ->setName($name)
                 ->setDescription($description)
-                ->setNameSlug($nameSlug)
-                ->setImage($image)
-                ->setMaxZoom($maxZoom)
+                ->setIconName($icon)
                 ->setCreated($created ? new \Datetime($created) : new \Datetime())
                 ->setUpdated($updated ? new \Datetime($updated) : null)
-                ->setDeleted(null)
+                ->setDeleted($deleted ? new \Datetime($deleted) : null)
             ;
             if ($id) {
                 /** @var ClassMetadata $metadata */
@@ -76,7 +80,7 @@ class MapsFixtures extends AbstractFixture implements OrderedFixtureInterface {
             $addRef = true;
         }
         if ($addRef === true && $obj) {
-            $this->addReference('esterenmaps-maps-'.$id, $obj);
+            $this->addReference('esterenmaps-markerstypes-'.$id, $obj);
         }
     }
 }
