@@ -31,7 +31,7 @@
 
     EsterenMap.prototype._mapOptions.LeafletPolygonBaseOptions = {
         color: "#fff",
-        opacity: 0.2,
+        opacity: 0.3,
         fillColor: '#eee',
         fillOpacity: 0.1,
         weight: 2,
@@ -39,11 +39,7 @@
     };
 
     EsterenMap.prototype._mapOptions.LeafletPolygonBaseOptionsEditMode = {
-        color: "#0f0",
-        opacity: 0.5,
-        fillColor: '#0f0',
-        fillOpacity: 0.1,
-        weight: 3
+        opacity: 0.5
     };
 
     EsterenMap.prototype._mapOptions.CustomPolygonBaseOptions = {
@@ -92,27 +88,23 @@
     };
 
     EsterenMap.prototype._mapOptions.loaderCallbacks.zonesTypes = function(response){
-        if (response['routestypes'] && response['routestypes'].length > 0) {
-            this._routesTypes = response['routestypes'];
+        if (response['zonestypes'] && response['zonestypes'].length > 0) {
+            this._zonesTypes = response['zonestypes'];
         } else {
-            console.error('Error while retrieving routes types');
+            console.error('Error while retrieving zones types');
         }
         return this;
     };
 
     EsterenMap.prototype._mapOptions.loaderCallbacks.zones = function(response){
         var zones, i, zone,
+            finalOptions,finalLeafletOptions,
             mapOptions = this.options(),
             popupContent = mapOptions.LeafletPopupPolygonBaseContent,
             options = mapOptions.CustomPolygonBaseOptions,
             leafletOptions = mapOptions.LeafletPolygonBaseOptions,
             coords
         ;
-
-        if (mapOptions.editMode === true) {
-            options = this.cloneObject(options, mapOptions.CustomPolygonBaseOptionsEditMode);
-            leafletOptions = this.cloneObject(leafletOptions, mapOptions.LeafletPolygonBaseOptionsEditMode);
-        }
 
         for (i in this._polygons) {
             if (this._polygons.hasOwnProperty(i)) {
@@ -121,23 +113,34 @@
             }
         }
 
+        if (mapOptions.editMode === true) {
+            options = this.cloneObject(options, mapOptions.CustomPolygonBaseOptionsEditMode);
+            leafletOptions = this.cloneObject(leafletOptions, mapOptions.LeafletPolygonBaseOptionsEditMode);
+        }
+
         if (response['map.'+mapOptions.id+'.zones']) {
             zones = response['map.'+mapOptions.id+'.zones'];
             for (i in zones) {
                 if (zones.hasOwnProperty(i)) {
                     zone = zones[i];
-                        coords = JSON.parse(zone.coordinates);
-                        this.addPolygon(coords,
-                            this.cloneObject(leafletOptions, {
-                            id: zone.id
-                        }),
-                        this.cloneObject(options, {
-                            popupContent:popupContent,
-                            esterenZone: zone,
-                            polylineType: zone.zone_type ? zone.zone_type.id : null,
-                            polygonName: zone.name,
-                            polygonFaction: zone.faction ? zone.faction.id : ''
-                        })
+                    coords = JSON.parse(zone.coordinates);
+                    finalLeafletOptions = this.cloneObject(leafletOptions, {id:zone.id});
+
+                    if (zone.zone_type && zone.zone_type.color) {
+                        finalLeafletOptions.color = zone.zone_type.color;
+                        finalLeafletOptions.fillColor = zone.zone_type.color;
+                    }
+
+                    finalOptions = this.cloneObject(options, {
+                        popupContent:popupContent,
+                        esterenZone: zone,
+                        polygonName: zone.name,
+                        polygonType: zone.zone_type ? zone.zone_type.id : null,
+                        polygonFaction: zone.faction ? zone.faction.id : ''
+                    });
+                    this.addPolygon(coords,
+                        finalLeafletOptions,
+                        finalOptions
                     );
                 }//endif (polygon.hasOwnProperty)
             }//endfor
@@ -213,15 +216,15 @@
                 '<input type="hidden" id="polygon_'+id+'_name" name="polygon['+id+'][name]" value="'+(customUserOptions.polygonName?customUserOptions.polygonName:'')+'" />'+
                 '<input type="hidden" id="polygon_'+id+'_faction" name="polygon['+id+'][faction]" value="'+(customUserOptions.polygonFaction?customUserOptions.polygonFaction:'')+'" />'+
                 '<textarea style="display: none;" id="polygon_'+id+'_coordinates" name="polygon['+id+'][coordinates]">'+JSON.stringify(latLng)+'</textarea>'+
-            '<input type="hidden" id="polygon_'+id+'_type" name="polygon['+id+'][type]" value="'+(customUserOptions.polygonType?customUserOptions.polygonType:'1')+'" />'
+                '<input type="hidden" id="polygon_'+id+'_type" name="polygon['+id+'][type]" value="'+(customUserOptions.polygonType?customUserOptions.polygonType:'1')+'" />'
             );
         }
 
         this._drawnItems.addLayer(polygon);
 
         option = 'zoneType'+(customUserOptions.polygonType?customUserOptions.polygonType:'1');
-        polyline._path.dataset.leafletObjectType = option;
-        polyline._path.setAttribute('data-leaflet-object-type', option);
+        polygon._path.dataset.leafletObjectType = option;
+        polygon._path.setAttribute('data-leaflet-object-type', option);
 
         this._polygons[id] = polygon;
 
