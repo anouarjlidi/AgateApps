@@ -42,7 +42,7 @@ class ZonesTypesFixtures extends AbstractFixture implements OrderedFixtureInterf
 
         $this->fixtureObject($repo, 1, null, 'Politique', '', '', '2014-07-06 19:43:13', '2014-07-06 19:43:13', null);
         $this->fixtureObject($repo, 2, 1, 'Royaume', '', '#E05151', '2014-07-06 19:45:31', '2014-07-06 19:45:31', null);
-        $this->fixtureObject($repo, 3, 1, 'Territoire', '#E4AA8E', '', '2014-07-06 19:45:52', '2014-07-06 19:45:52', null);
+        $this->fixtureObject($repo, 3, 1, 'Territoire', '', '#E4AA8E', '2014-07-06 19:45:52', '2014-07-06 19:45:52', null);
         $this->fixtureObject($repo, 4, 1, 'Domaine', '', '#BBA748', '2014-07-06 19:46:04', '2014-07-06 19:46:04', null);
         $this->fixtureObject($repo, 5, 1, 'Ville / Village', '', '#F1E091', '2014-07-06 19:46:10', '2014-07-06 19:46:10', null);
         $this->fixtureObject($repo, 6, 1, 'Terre sacrée', '', '#CCA9D9', '2014-07-06 19:46:29', '2014-07-06 19:46:29', null);
