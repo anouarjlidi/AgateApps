@@ -2,6 +2,7 @@
 namespace Pierstoval\Bundle\TranslationBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Pierstoval\Bundle\TranslationBundle\Entity\Translation;
 
 /**
  * TranslationRepository
@@ -11,6 +12,63 @@ class TranslationRepository extends EntityRepository {
 
     public function findByTokens($tokens = array()) {
         return $this->findBy(array('token' => $tokens));
+    }
+
+    public function getDomains()
+    {
+        $dql = 'SELECT o.domain as domain FROM Pierstoval\Bundle\TranslationBundle\Entity\Translation o GROUP BY o.domain';
+
+        $query = $this->_em->createQuery($dql);
+
+        $result = $query->getResult();
+        foreach ($result as $k => $v) {
+            $result[$k] = $v['domain'];
+        }
+
+        return $result;
+    }
+
+    public function getLocales()
+    {
+        $dql = 'SELECT o.locale as locale FROM Pierstoval\Bundle\TranslationBundle\Entity\Translation o GROUP BY o.locale';
+
+        $query = $this->_em->createQuery($dql);
+
+        $result = $query->getResult();
+        foreach ($result as $k => $v) {
+            $result[$k] = $v['locale'];
+        }
+
+        return $result;
+    }
+
+    public function findOneLikes(Translation $translation)
+    {
+        $em = $this->_em;
+        $dql = "
+        SELECT translationsLike
+        FROM PierstovalTranslationBundle:Translation translationsLike
+        WHERE
+               translationsLike.source LIKE concat('%',:source,'%')
+            OR translationsLike.translation LIKE concat('%',:source,'%')
+        ";
+
+        $params = array('source' => $translation->getSource());
+
+        if ($translation->getTranslation()) {
+            $dql .= "
+            OR translationsLike.source LIKE concat('%',:trans,'%')
+            OR translationsLike.translation LIKE concat('%',:trans,'%')
+            ";
+            $params['trans'] = $translation->getTranslation();
+        }
+
+        $dql .= " ORDER BY translationsLike.domain ASC, translationsLike.source ASC";
+
+        $query = $em->createQuery($dql);
+        $query->setParameters($params);
+
+        return $query->getResult();
     }
 
     /**

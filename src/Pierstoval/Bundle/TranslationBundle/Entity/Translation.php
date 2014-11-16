@@ -61,6 +61,11 @@ class Translation
      */
     private $translationsLike;
 
+    public function __toString()
+    {
+        return $this->source;
+    }
+
     function __construct() {
         $this->translationsLike = new ArrayCollection();
     }

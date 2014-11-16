@@ -1,0 +1,24 @@
+<div>
+    {% if translations|length %}
+        <table class="table table-condensed">
+            <tr>
+                <th colspan="4"><h4>{{ 'Traductions similaires' | trans }}</h4></th>
+            </tr>
+            <tr>
+                <th style="width: 30px;">{{ 'Locale' | trans }}</th>
+                <th style="width: 190px;">{{ 'Domaine de traduction' | trans }}</th>
+                <th >{{ 'Source' | trans }}</th>
+                <th >{{ 'Traduction (si spécifiée)' | trans }}</th>
+            </tr>
+            {% for translation in translations %}
+                <tr>
+                    <td>{{ translation.locale }}</td>
+                    <td>{{ translation.domain }}</td>
+                    <td>{{ translation.source }}</td>
+                    <td>{{ translation.translation }}</td>
+                </tr>
+            {% endfor %}
+
+        </table>
+    {% endif %}
+</div>

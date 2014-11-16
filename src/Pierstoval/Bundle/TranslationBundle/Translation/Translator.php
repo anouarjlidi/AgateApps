@@ -2,6 +2,7 @@
 
 namespace Pierstoval\Bundle\TranslationBundle\Translation;
 
+use Doctrine\ORM\EntityManager;
 use Pierstoval\Bundle\TranslationBundle\Entity\Translation as Translation;
 
 use Symfony\Bundle\FrameworkBundle\Translation\Translator as BaseTranslator;
@@ -18,31 +19,38 @@ use Symfony\Component\Translation\TranslatorInterface;
  */
 class Translator extends BaseTranslator implements TranslatorInterface {
 
+    /**
+     * @var ContainerInterface
+     */
+    protected $container;
+
     private static $catalogue = array();
     private static $temporary_domain = null;
 
     protected $locales = array();
     protected $hasToBeFlushed = false;
     protected $flushed = false;
-    protected $entityManager;
 
-    function __construct($container, MessageSelector $selector, $loaderIds = array(), array $options = array()) {
-        if ($container->isScopeActive('request')) {
-            $locale = $container->get('session')->get('_locale');
-            if (!$locale) { $locale = $container->getParameter('locale'); }
-            if (!$locale) { $locale = $container->getParameter('fallback_locale'); }
-            if (!$locale) { $locale = $container->get('request')->get('locale'); }
-            if (!$locale) { $locale = 'fr'; }
-            $locale = preg_replace('#_.*$#isUu', '', $locale);
-            $container->get('session')->set('_locale', $locale);
-            $container->get('request')->setLocale($locale);
-        }
+    /** @var EntityManager $_em */
+    protected $_em;
 
-        $this->locales = $container->getParameter('locales');
+    function __construct(ContainerInterface $container, MessageSelector $selector, $loaderIds = array(), array $options = array()) {
+        parent::__construct($container, $selector, $loaderIds, $options);
 
-        $this->_em = $container->get('doctrine')->getManager();
+//        if ($container->isScopeActive('request')) {
+//            $locale = $container->get('session')->get('_locale');
+//            if (!$locale) { $locale = $container->getParameter('locale'); }
+//            if (!$locale) { $locale = $container->getParameter('fallback_locale'); }
+//            if (!$locale) { $locale = $container->get('request')->get('locale'); }
+//            if (!$locale) { $locale = 'fr'; }
+//            $locale = preg_replace('#_.*$#isUu', '', $locale);
+//            $container->get('session')->set('_locale', $locale);
+//            $container->get('request')->setLocale($locale);
+//        }
 
-        return parent::__construct($container, $selector, $loaderIds, $options);
+        $this->locales = $this->container->getParameter('locales');
+
+        $this->_em = $this->container->get('doctrine')->getManager();
     }
 
     public static function temporaryDomain($domain = null) {
@@ -98,17 +106,14 @@ class Translator extends BaseTranslator implements TranslatorInterface {
 
         if (
             !$id
-            ||
-            (is_string($id) && !trim($id))
-            ||
-            (is_object($id) && !trim($id->__toString()))
+            || (is_string($id) && !trim($id))
+            || is_numeric($id)
+            || (is_object($id) && method_exists($id, '__toString') && !trim($id->__toString()))
         ) {
             return $id;
         }
 
         if (!$locale) { $locale = $this->getLocale(); }
-        if (!$locale) { $locale = $this->container->get('request')->get('locale'); }
-        if (!$locale) { $locale = 'fr'; }
 
         if (!$domain && self::$temporary_domain) {
             $domain = self::$temporary_domain;
@@ -125,6 +130,8 @@ class Translator extends BaseTranslator implements TranslatorInterface {
             $this->loadDbCatalogue($locale, $domain);
 
             $token = md5($id.'_'.$domain.'_'.$locale);
+
+            /** @var Translation $translation */
             $translation = $this->findToken($token);
 
             if ($translation) {
@@ -142,7 +149,6 @@ class Translator extends BaseTranslator implements TranslatorInterface {
                     ->setLocale($locale);
                 $this->hasToBeFlushed = true;
                 $this->_em->persist($translation);
-//                $this->_em->flush();
                 self::$catalogue[$locale][$domain][$token] = $translation;
                 $translation = $id;
             }
@@ -173,6 +179,7 @@ class Translator extends BaseTranslator implements TranslatorInterface {
 
             if ($translations) {
                 foreach ($translations as $translation) {
+                    /** @var Translation $translation */
                     self::$catalogue[$locale][$translation->getDomain()][$translation->getToken()] = $translation;
                 }
             }

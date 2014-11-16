@@ -30,3 +30,15 @@ services:
             - @translator
         tags:
             - { name: kernel.event_listener, event: kernel.finish_request, method: onKernelFinishRequest }
+            - { name: kernel.event_listener, event: kernel.terminate, method: onKernelFinishRequest }
+
+
+    pierstoval_tools.admin.translations:
+        class: Pierstoval\Bundle\TranslationBundle\Admin\TranslationAdmin
+#       <tag name="sonata.admin" manager_type="orm" group="sonata_page" label_catalogue="%sonata.page.admin.page.translation_domain%" label="page" label_translator_strategy="sonata.admin.label.strategy.underscore"/>
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Translations", label: "Translations" }
+        arguments:
+            - ~
+            - Pierstoval\Bundle\TranslationBundle\Entity\Translation
+            - ~
