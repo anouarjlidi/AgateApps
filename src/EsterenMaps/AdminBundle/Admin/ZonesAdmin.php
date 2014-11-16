@@ -7,7 +7,7 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 
-class ZonesTypesAdmin extends Admin {
+class ZonesAdmin extends Admin {
 
     protected function configureFormFields(FormMapper $formMapper) {
         $formMapper

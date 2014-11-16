@@ -86,7 +86,7 @@ class Markers {
     /**
      * @var Factions
      *
-     * @ORM\ManyToOne(targetEntity="Factions", inversedBy="markers")
+     * @ORM\ManyToOne(targetEntity="Factions", inversedBy="markers", fetch="EAGER")
      * @Serializer\Expose
      */
     protected $faction;
@@ -94,14 +94,14 @@ class Markers {
     /**
      * @var Maps
      *
-     * @ORM\ManyToOne(targetEntity="Maps", inversedBy="markers")
+     * @ORM\ManyToOne(targetEntity="Maps", inversedBy="markers", fetch="EAGER")
      */
     protected $map;
 
     /**
      * @var MarkersTypes
      *
-     * @ORM\ManyToOne(targetEntity="MarkersTypes", inversedBy="markers")
+     * @ORM\ManyToOne(targetEntity="MarkersTypes", inversedBy="markers", fetch="EAGER")
      * @Serializer\Expose
      */
     protected $markerType;
