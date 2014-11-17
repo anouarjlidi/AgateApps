@@ -26,3 +26,4 @@ assetic:
                 - '@EsterenMapsBundle/Resources/public/js/EsterenMap/4_EsterenMap_filters.js'
             filters:
                 - ?uglifyjs
+            output: 'js/maps_lib.js'

@@ -6,8 +6,8 @@
         "jquery": "~1.11",
         "jquery-ui": "~1.10",
         "leaflet": ">=0.7.3",
-        "leaflet-sidebar": ">=0.1",
-        "leaflet-draw": ">=0.2.1",
+        "leaflet-sidebar": "git@github.com:Turbo87/leaflet-sidebar.git",
+        "leaflet-draw": "git@github.com:Leaflet/Leaflet.draw.git",
         "jquery.colorpicker": "~1"
     }
 }
