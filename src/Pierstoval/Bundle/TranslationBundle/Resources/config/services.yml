@@ -15,6 +15,14 @@ services:
         tags:
             - { name: translation.loader, alias: db }
 
+    pierstoval_translator:
+        class: %pierstoval_translate.translator.class%
+        arguments:
+            - @service_container
+            - @translator.selector
+            - []
+            - {cache_dir: %kernel.cache_dir%/translations, debug: %kernel.debug%}
+
     pierstoval.translation.extractor:
         class: %pierstoval_translate.extractor.class%
         arguments: 
@@ -27,7 +35,7 @@ services:
     pierstoval_tools.listener.flush_translations:
         class: Pierstoval\Bundle\TranslationBundle\Listeners\FlushTranslations
         arguments:
-            - @translator
+            - @pierstoval_translator
         tags:
             - { name: kernel.event_listener, event: kernel.finish_request, method: onKernelFinishRequest }
             - { name: kernel.event_listener, event: kernel.terminate, method: onKernelFinishRequest }

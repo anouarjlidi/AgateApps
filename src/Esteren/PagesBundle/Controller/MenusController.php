@@ -83,7 +83,7 @@ class MenusController extends Controller {
             $brandRoute = 'esteren_pages_pages_index';
         }
         $links = $this->{'menu'.$method_name}();
-        $langs = $this->container->get('translator')->getLangs();
+        $langs = $this->container->get('pierstoval_translator')->getLangs();
 
         if (!$route) {
             $route = $this->container->get('request_stack')->getMasterRequest()->attributes->get('_route');
