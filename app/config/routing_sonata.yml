@@ -25,6 +25,24 @@ sonata_page_cache:
     requirements:
         _locale: ^(%locales_regex%)$
 
+gallery:
+    resource: '@SonataMediaBundle/Resources/config/routing/gallery.xml'
+    host:     %esteren_domains.portal%
+    prefix:   /{_locale}/media/gallery/
+    defaults:
+         _locale: %locale%
+    requirements:
+        _locale: ^(%locales_regex%)$
+
+media:
+    resource: '@SonataMediaBundle/Resources/config/routing/media.xml'
+    host:     %esteren_domains.portal%
+    prefix:   /{_locale}/media/
+    defaults:
+         _locale: %locale%
+    requirements:
+        _locale: ^(%locales_regex%)$
+
 admin:
     resource: "@SonataAdminBundle/Resources/config/routing/sonata_admin.xml"
     prefix:   /{_locale}/admin/
