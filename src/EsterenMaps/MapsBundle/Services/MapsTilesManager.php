@@ -132,11 +132,11 @@ class MapsTilesManager {
 
         $cmd =
             $this->magickPath.'convert "'.$this->map->getImage().'"' .
-            ' -background #000000'.
+            ' -background "#000000"'.
             ' -extent '.$w.'x'.$h.
-            ' -resize '.$ratio.'% ' .
+            ' -resize "'.$ratio.'%" ' .
             ' -crop '.$this->tile_size.'x'.$this->tile_size .
-            ' -background #000000'.
+            ' -background "#000000"'.
             ' -extent '.$this->tile_size.'x'.$this->tile_size .
             ' -thumbnail '.$this->tile_size.'x'.$this->tile_size .
             ' "'.$output_scheme.'"' .
