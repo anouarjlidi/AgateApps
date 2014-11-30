@@ -27,3 +27,30 @@ assetic:
             filters:
                 - ?uglifyjs
             output: 'js/maps_lib.js'
+
+
+# Médias spécifiques à Esteren Maps
+sonata_media:
+    contexts:
+        esteren_maps:
+            providers:
+                - sonata.media.provider.image
+            formats:
+                xs:   { width: 50,   quality: 100 }
+                s:    { width: 100,  quality: 90 }
+                m:    { width: 250,  quality: 80 }
+                l:    { width: 500,  quality: 75 }
+                xl:   { width: 968,  quality: 70 }
+                xxl:  { width: 1366, quality: 70 }
+                3xl:  { width: 1900,  quality: 70 }
+                4xl:  { width: 2500,  quality: 70 }
+
+        esteren_maps_markers_types:
+            providers:
+                - sonata.media.provider.image
+            formats:
+                icon:   { width: 34,  quality: 100 }
+                small:  { width: 100, quality: 90 }
+                medium: { width: 250, quality: 80 }
+                big:    { width: 500, quality: 75 }
+                large:  { width: 968, quality: 70 }

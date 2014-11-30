@@ -2,12 +2,12 @@
 
 namespace EsterenMaps\MapsBundle\Entity;
 
+use Application\Sonata\MediaBundle\Entity\Media;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use JMS\Serializer\Annotation as Serializer;
-use Pierstoval\Bundle\ToolsBundle\Serializer\AbstractPathEntity;
-use Pierstoval\Bundle\ToolsBundle\Serializer\PathInterface;
+use Sonata\MediaBundle\Model\MediaInterface;
 
 /**
  * MarkersType
@@ -16,9 +16,8 @@ use Pierstoval\Bundle\ToolsBundle\Serializer\PathInterface;
  * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity(repositoryClass="EsterenMaps\MapsBundle\Repository\MarkersTypesRepository")
  * @Serializer\ExclusionPolicy("all")
- * @Gedmo\Uploadable(allowOverwrite=true, filenameGenerator="SHA1")
  */
-class MarkersTypes extends AbstractPathEntity implements PathInterface
+class MarkersTypes
 {
 
     /**
@@ -48,15 +47,11 @@ class MarkersTypes extends AbstractPathEntity implements PathInterface
     protected $description;
 
     /**
-     * @var string
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Gedmo\UploadableFilePath()
+     * @var Media
+     * @ORM\ManyToOne(targetEntity="Application\Sonata\MediaBundle\Entity\Media", cascade={"persist"}, fetch="EAGER")
      * @Serializer\Expose
      */
-    protected $iconName;
-
-    /** @var array */
-    protected $iconDimensions = null;
+    protected $icon;
 
     /**
      * @var \Datetime
@@ -307,65 +302,21 @@ class MarkersTypes extends AbstractPathEntity implements PathInterface
     }
 
     /**
-     * @return string
+     * @return Media
      */
-    public function getIconName()
+    public function getIcon()
     {
-        if (!$this->iconDimensions) {
-            $this->setIconDimensions();
-        }
-        return $this->iconName;
+        return $this->icon;
     }
 
     /**
-     * @param string $iconName
+     * @param Media $icon
      * @return $this
      */
-    public function setIconName($iconName)
+    public function setIcon(Media $icon)
     {
-        $this->iconName = $iconName;
-        if (!$this->iconDimensions) {
-            $this->setIconDimensions();
-        }
+        $this->icon = $icon;
+        $icon->setMediaFormats(array(''));
         return $this;
-    }
-
-    /**
-     * @Serializer\VirtualProperty
-     * @Serializer\SerializedName("iconDimensions")
-     * @Serializer\Type("array")
-     * @return string
-     */
-    public function getIconDimensions()
-    {
-        if ($this->iconDimensions) {
-            return $this->iconDimensions;
-        } else {
-            return $this->setIconDimensions();
-        }
-    }
-
-    /**
-     * Récupère la largeur et la hauteur de l'image dans un array
-     * @link http://php.net/manual/fr/function.getimagesize.php
-     * @return array
-     */
-    private function setIconDimensions()
-    {
-        if (!$this->iconDimensions) {
-            $info = $this->iconName ? getimagesize($this->iconName) : array(null,null);
-            $this->iconDimensions = array(
-                'width' => isset($info[0]) ? $info[0] : null,
-                'height' => isset($info[1]) ? $info[1] : null,
-            );
-        }
-        return $this->iconDimensions;
-    }
-
-    public function listenSerializePaths()
-    {
-        return array(
-            'getIconName' => 'setIconName',
-        );
     }
 }

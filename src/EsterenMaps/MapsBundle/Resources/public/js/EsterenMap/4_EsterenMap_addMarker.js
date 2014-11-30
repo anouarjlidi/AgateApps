@@ -194,7 +194,7 @@
             mapOptions = this.options(),
             leafletOptions = this.cloneObject(mapOptions.LeafletMarkerBaseOptions),
             iconOptions = this.cloneObject(mapOptions.LeafletIconBaseOptions),
-            id,option,optionTag,icon,
+            id,option,optionTag,icon,iconHeight,iconWidth,
             marker,popup,popupContent,popupOptions;
 
         if (leafletUserOptions) {
@@ -263,12 +263,29 @@
         }
 
         // Ajout de l'icône au cas où
-        if (marker._esterenMarker.marker_type && marker._esterenMarker.marker_type.icon_name) {
-            iconOptions.iconUrl = marker._esterenMarker.marker_type.icon_name;
-            iconOptions.iconSize = [marker._esterenMarker.marker_type.iconDimensions.width, marker._esterenMarker.marker_type.iconDimensions.height];
-            iconOptions.iconAnchor = [ parseInt(iconOptions.iconSize[0] / 2), parseInt(iconOptions.iconSize[1] / 2) ];
-            icon = L.icon(iconOptions);
-            marker.setIcon(icon);
+        if (marker._esterenMarker.marker_type && marker._esterenMarker.marker_type.icon) {
+            iconOptions.iconUrl = marker._esterenMarker.marker_type.icon.formats.icon.url;
+
+            iconWidth = marker._esterenMarker.marker_type.icon.formats.icon.width;
+            iconHeight = marker._esterenMarker.marker_type.icon.formats.icon.height;
+            if (iconWidth || iconHeight) {
+                // N'applique une icône QUE si la hauteur ou la largeur sont définies
+
+                if (!iconWidth) {
+                    // Calcule la largeur de l'icône à partir du ratio largeur/largeur_icone si celle-ci n'est pas définie
+                    iconWidth = parseInt(marker._esterenMarker.marker_type.icon.width / (marker._esterenMarker.marker_type.icon.height / iconHeight));
+                }
+                if (!iconHeight) {
+                    // Calcule la hauteur de l'icône à partir du ratio largeur/largeur_icone si celle-ci n'est pas définie
+                    iconHeight = parseInt(marker._esterenMarker.marker_type.icon.height / (marker._esterenMarker.marker_type.icon.width / iconWidth));
+                }
+
+                iconOptions.iconSize = [iconWidth, iconHeight];
+                iconOptions.iconAnchor = [parseInt(iconWidth / 2), parseInt(iconHeight / 2)];
+
+                icon = L.icon(iconOptions);
+                marker.setIcon(icon);
+            }
         }
 
         this._drawnItems.addLayer(marker);

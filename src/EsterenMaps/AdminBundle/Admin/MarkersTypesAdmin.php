@@ -25,30 +25,11 @@ class MarkersTypesAdmin extends Admin {
         $formMapper
             ->add('name', 'text', array('required'=>true))
             ->add('description', 'textarea', array('required'=>false))
-            ->add('iconName', 'file', array('required' => false, 'data_class' => null, 'mapped' => true))
+            ->add('icon', 'sonata_media_type', array(
+                'provider' => 'sonata.media.provider.image',
+                'context'  => 'esteren_maps_markers_types',
+            ))
         ;
-    }
-
-    /**
-     * @param MarkersTypes $object
-     * @return mixed
-     */
-    public function prePersist($object)
-    {
-        if ($object->getIconName()){
-            $this->uploadableManager->markEntityToUpload($object, $object->getIconName());
-        }
-    }
-
-    /**
-     * @param MarkersTypes $object
-     * @return mixed
-     */
-    public function preUpdate($object)
-    {
-        if ($object->getIconName()){
-            $this->uploadableManager->markEntityToUpload($object, $object->getIconName());
-        }
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper) {
@@ -61,6 +42,7 @@ class MarkersTypesAdmin extends Admin {
         $listMapper
             ->addIdentifier('name', 'text')
             ->add('description', 'text')
+            ->add('icon')
             ->add('iconName', 'text', array('template' => 'ApplicationSonataAdminBundle:Templates:sonata_field_viewImage.html.twig'))
         ;
 

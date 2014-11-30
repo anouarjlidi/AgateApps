@@ -26,6 +26,7 @@
             <tag name="jms_serializer.event_subscriber" />
             <argument type="service" id="pierstoval_tools.twig.paths" />
             <argument>%esteren_domains.portal%</argument>
+            <argument type="service" id="sonata.media.provider.image" />
         </service>
     </services>
 </container>
