@@ -25,8 +25,8 @@ class MapsTilesManager {
 
     function __construct ($output_directory, $tile_size, $magick_binaries_path, KernelInterface $kernel) {
         $this->tile_size = $tile_size;
-        $output_directory = trim($output_directory, '\\/');
-        $this->magickPath = trim($magick_binaries_path).DIRECTORY_SEPARATOR;
+        $output_directory = rtrim($output_directory, '\\/');
+        $this->magickPath = rtrim($magick_binaries_path, '\\/').DIRECTORY_SEPARATOR;
         if (strpos($output_directory, '@') === 0) {
             $this->output_directory = $kernel->locateResource($output_directory);
         } else {
