@@ -33,7 +33,7 @@ define('DS', '/'); //Définition du séparateur dans le cas ou l'on est sur wind
 //define('P_CSS',			WEBROOT.DS.'css');
 //define('P_JS',			WEBROOT.DS.'js');
 //define('CHAR_EXPORT',	WEBROOT.DS.'files'.DS.'characters_export');
-define('P_LOGS', '..'.DS.'logs');
+define('P_LOGS', ROOT.DS.'..'.DS.'logs');
 if (!is_dir(P_LOGS)) { mkdir(P_LOGS, 0777); }
 ## Constante de stockage du fichier de temps d'exécutions
 //define('P_EXECTIME_LOGFILE', P_LOGS.DS.'exectime'.DS.date('Y.m.d').'.log');
