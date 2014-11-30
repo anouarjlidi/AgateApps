@@ -39,4 +39,14 @@ class Media extends BaseMedia implements SerializableMediaUrl
     {
         return $this->id;
     }
+
+    /**
+     * @param integer $id
+     * @return $this
+     */
+    public function setId($id)
+    {
+        $this->id = (int) $id;
+        return $this;
+    }
 }

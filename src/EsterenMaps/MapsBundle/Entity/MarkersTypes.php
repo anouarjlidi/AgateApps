@@ -316,7 +316,6 @@ class MarkersTypes
     public function setIcon(Media $icon)
     {
         $this->icon = $icon;
-        $icon->setMediaFormats(array(''));
         return $this;
     }
 }

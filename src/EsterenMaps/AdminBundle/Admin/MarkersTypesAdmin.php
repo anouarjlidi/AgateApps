@@ -43,7 +43,6 @@ class MarkersTypesAdmin extends Admin {
             ->addIdentifier('name', 'text')
             ->add('description', 'text')
             ->add('icon')
-            ->add('iconName', 'text', array('template' => 'ApplicationSonataAdminBundle:Templates:sonata_field_viewImage.html.twig'))
         ;
 
     }
