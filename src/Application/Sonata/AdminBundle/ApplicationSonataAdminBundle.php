@@ -1,8 +1,8 @@
 <?php
 /**
- * This file is part of the <name> project.
+ * This file is part of the Esteren project.
  *
- * (c) <yourname> <youremail>
+ * (c) Pierstoval <pierstoval@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -18,7 +18,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  * References :
  *   bundles : http://symfony.com/doc/current/book/bundles.html
  *
- * @author <yourname> <youremail>
+ * @author Pierstoval <pierstoval@gmail.com>
  */
 class ApplicationSonataAdminBundle extends Bundle
 {

@@ -147,8 +147,8 @@ sonata_seo:
         title:            Esteren
         metas:
             name:
-                keywords:    %sonata.base_metas%
-                description: %sonata.base_desc%
+                keywords:    ""
+                description: ""
                 robots:      index, follow
 
             property:

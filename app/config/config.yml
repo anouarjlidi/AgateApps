@@ -6,6 +6,7 @@ imports:
     - { resource: _corahn_rin.yml }
     - { resource: _pierstoval.yml }
     - { resource: _sonata.yml }
+    - { resource: "@PierstovalTranslationBundle/Resources/config/services.yml" }
 
 framework:
     #esi:             ~

@@ -49,8 +49,4 @@ sonata_media:
             providers:
                 - sonata.media.provider.image
             formats:
-                icon:   { width: 34,  quality: 100 }
-                small:  { width: 100, quality: 90 }
-                medium: { width: 250, quality: 80 }
-                big:    { width: 500, quality: 75 }
-                large:  { width: 968, quality: 70 }
+                icon:   { width: 25,  quality: 100 }

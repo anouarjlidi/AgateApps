@@ -1,4 +1,4 @@
-
+# Default mandatory parameters
 parameters:
     database_driver: pdo_mysql
     database_host: localhost
@@ -27,6 +27,3 @@ parameters:
     esteren_domains.backoffice:     back.esteren.org
     esteren_domains.api:            api.esteren.org
     esteren_domains.cookieDomain:   .esteren.org
-    sonata.base_metas: ""
-    sonata.base_desc: ""
-

@@ -1,9 +1,9 @@
 <?php
 
 /**
- * This file is part of the <name> project.
+ * This file is part of the Esteren project.
  *
- * (c) <yourname> <youremail>
+ * (c) Pierstoval <pierstoval@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -19,7 +19,7 @@ use Sonata\PageBundle\Entity\BasePage as BasePage;
  * References :
  *   working with object : http://www.doctrine-project.org/projects/orm/2.0/docs/reference/working-with-objects/en
  *
- * @author <yourname> <youremail>
+ * @author Pierstoval <pierstoval@gmail.com>
  */
 class Page extends BasePage
 {
