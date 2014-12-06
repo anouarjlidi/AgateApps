@@ -291,7 +291,9 @@
         this._drawnItems.addLayer(marker);
 
         option = 'markerType'+(customUserOptions.markerType?customUserOptions.markerType:'1');
-        marker._icon.dataset.leafletObjectType = option;
+        if (marker._icon.dataset) {
+            marker._icon.dataset.leafletObjectType = option;
+        }
         marker._icon.setAttribute('data-leaflet-object-type', option);
 
         this._markers[id] = marker;

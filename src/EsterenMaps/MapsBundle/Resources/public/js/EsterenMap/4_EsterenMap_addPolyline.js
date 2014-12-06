@@ -266,7 +266,9 @@
         this._drawnItems.addLayer(polyline);
 
         option = 'routeType'+(customUserOptions.polylineType?customUserOptions.polylineType:'1');
-        polyline._path.dataset.leafletObjectType = option;
+        if (polyline._path.dataset) {
+            polyline._path.dataset.leafletObjectType = option;
+        }
         polyline._path.setAttribute('data-leaflet-object-type', option);
 
         this._polylines[id] = polyline;

@@ -223,7 +223,9 @@
         this._drawnItems.addLayer(polygon);
 
         option = 'zoneType'+(customUserOptions.polygonType?customUserOptions.polygonType:'1');
-        polygon._path.dataset.leafletObjectType = option;
+        if (polygon._path.dataset) {
+            polygon._path.dataset.leafletObjectType = option;
+        }
         polygon._path.setAttribute('data-leaflet-object-type', option);
 
         this._polygons[id] = polygon;
