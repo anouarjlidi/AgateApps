@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 use EsterenMaps\MapsBundle\Entity\Maps;
 
@@ -21,7 +22,9 @@ class MapsController extends Controller
      * @Method("GET")
      */
     public function settingsAction(Maps $map, Request $request, $_format) {
-        $this->container->get('pierstoval.api.originChecker')->checkRequest($request);
+        if ($check = $this->checkAsker($request)) {
+            return $check;
+        }
 
         $datas = array();
 
@@ -66,6 +69,10 @@ class MapsController extends Controller
      */
     public function mapRefDatasAction(Request $request)
     {
+        if ($check = $this->checkAsker($request)) {
+            return $check;
+        }
+
         $serializer = $this->get('jms_serializer');
 
         $em = $this->getDoctrine()->getManager();
@@ -88,6 +95,25 @@ class MapsController extends Controller
         $response->setContent($datas);
 
         return $response;
+    }
+
+    /*--------------------------------------------------
+    ----------------- MÉTHODES PRIVÉES -----------------
+    --------------------------------------------------*/
+
+    /**
+     * @param Request $request
+     * @return false|Response
+     * @throws AccessDeniedException
+     */
+    private function checkAsker(Request $request)
+    {
+        try {
+            $this->container->get('pierstoval.api.originChecker')->checkRequest($request);
+            return false;
+        } catch (AccessDeniedException $e) {
+            return new Response($e->getMessage(), 403);
+        }
     }
 
 }

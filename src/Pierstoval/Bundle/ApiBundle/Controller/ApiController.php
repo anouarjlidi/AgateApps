@@ -3,15 +3,15 @@
 namespace Pierstoval\Bundle\ApiBundle\Controller;
 
 use Doctrine\Common\Collections\Collection;
-
 use Doctrine\ORM\EntityRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use FOS\RestBundle\Controller\FOSRestController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * @Route("/", requirements={"serviceName":"([a-zA-Z0-9\._]?)+"})
@@ -32,7 +32,9 @@ class ApiController extends FOSRestController
      */
     public function cgetAction($serviceName, Request $request)
     {
-        $this->checkAsker($request);
+        if ($check = $this->checkAsker($request)) {
+            return $check;
+        }
 
         $service = $this->getService($serviceName);
 
@@ -57,7 +59,9 @@ class ApiController extends FOSRestController
      */
     public function getAction($serviceName, $id, $subElement = null, Request $request)
     {
-        $this->checkAsker($request);
+        if ($check = $this->checkAsker($request)) {
+            return $check;
+        }
 
         $service = $this->getService($serviceName);
 
@@ -76,7 +80,7 @@ class ApiController extends FOSRestController
 
             $class = $service['entity'];
             if (count($elements)) {
-                $key .= '.'.$data->getId();
+                $key .= '.' . $data->getId();
             }
 
             foreach ($elements as $k => $element) {
@@ -99,15 +103,15 @@ class ApiController extends FOSRestController
                     if (isset($metadatas->propertyMetadata[$element])) {
                         $subService = $this->getService($element, false);
                         if ($subService) {
-                            $data = $data->{'get'.ucfirst($element)}();
-                            $key .= '.'.$element;
+                            $data = $data->{'get' . ucfirst($element)}();
+                            $key .= '.' . $element;
                         } else {
-                            $subService = $this->getService($element.'s', false);
+                            $subService = $this->getService($element . 's', false);
                             if ($subService) {
-                                $data = $data->{'get'.ucfirst($element)}();
-                                $key .= '.'.$element;
+                                $data = $data->{'get' . ucfirst($element)}();
+                                $key .= '.' . $element;
                             } else {
-                                throw $this->createNotFoundException('No attribute "'.$element.'" available for this object. #1');
+                                throw $this->createNotFoundException('No attribute "' . $element . '" available for this object. #1');
                             }
                         }
                     } elseif (isset($metadatas->propertyMetadata[preg_replace('#s$#isUu', '', $element)])) {
@@ -115,36 +119,36 @@ class ApiController extends FOSRestController
                         $subService = $this->getService($element, false);
                         if ($subService) {
 //                            $subEntity = new $subService['entity']();
-                            $data = $data->{'get'.ucfirst($element)}();
-                            $key .= '.'.$element;
+                            $data = $data->{'get' . ucfirst($element)}();
+                            $key .= '.' . $element;
                         } else {
-                            throw $this->createNotFoundException('No attribute "'.$element.'" available for this object. #2');
+                            throw $this->createNotFoundException('No attribute "' . $element . '" available for this object. #2');
                         }
                     } else {
-                        if (method_exists($data, 'get'.ucfirst($element))) {
-                            $data = $data->{'get'.ucfirst($element)}();
-                        } elseif (method_exists($data, 'get'.preg_replace('#s$#isUu','',ucfirst($element)))) {
-                            $data = $data->{'get'.preg_replace('#s$#isUu','',ucfirst($element))}();
+                        if (method_exists($data, 'get' . ucfirst($element))) {
+                            $data = $data->{'get' . ucfirst($element)}();
+                        } elseif (method_exists($data, 'get' . preg_replace('#s$#isUu', '', ucfirst($element)))) {
+                            $data = $data->{'get' . preg_replace('#s$#isUu', '', ucfirst($element))}();
                         } else {
-                            throw $this->createNotFoundException('No attribute "'.$element.'" available for this object. #3');
+                            throw $this->createNotFoundException('No attribute "' . $element . '" available for this object. #3');
                         }
                     }
                 } elseif (is_numeric($element)) {
-                    $element = (int) $element;
+                    $element = (int)$element;
                     if ($data instanceof Collection) {
 
                         $data = $data->filter(
-                            function($entry) use ($element) {
-                               return method_exists($element, 'getId') && $entry->getId() == $element;
+                            function ($entry) use ($element) {
+                                return method_exists($element, 'getId') && $entry->getId() == $element;
                             }
                         );
                         $data = $data->first();
-                        $key .= '.'.$element;
+                        $key .= '.' . $element;
                     } else {
                         throw $this->createNotFoundException('Elements not found');
                     }
                 } else {
-                    throw $this->createNotFoundException('No attribute "'.$element.'" available for this object. #4');
+                    throw $this->createNotFoundException('No attribute "' . $element . '" available for this object. #4');
                 }
                 $class = null;
             }
@@ -158,30 +162,47 @@ class ApiController extends FOSRestController
     /**
      * @Route("/{serviceName}")
      * @Method({"PUT"})
+     * @param $serviceName
+     * @param $id
+     * @param Request $request
+     * @return false|\Symfony\Component\HttpFoundation\Response
      */
     public function putAction($serviceName, $id, Request $request)
     {
-        $this->checkAsker($request);
+        if ($check = $this->checkAsker($request)) {
+            return $check;
+        }
     }
 
     /**
      * @Route("/{serviceName}/{id}")
      * @Method({"POST"})
+     * @param $serviceName
+     * @param $id
+     * @param Request $request
+     * @return false|\Symfony\Component\HttpFoundation\Response
      */
     public function postAction($serviceName, $id, Request $request)
     {
-        $this->checkAsker($request);
+        if ($check = $this->checkAsker($request)) {
+            return $check;
+        }
     }
 
     /**
      * @Route("/{serviceName}/{id}")
      * @Method({"DELETE"})
+     * @param $serviceName
+     * @param $id
+     * @param Request $request
+     * @return false|\Symfony\Component\HttpFoundation\Response
      */
     public function deleteAction($serviceName, $id, Request $request)
     {
-        $this->checkAsker($request);
+        if ($check = $this->checkAsker($request)) {
+            return $check;
+        }
     }
-
 
     /*--------------------------------------------------
     ----------------- MÉTHODES PRIVÉES -----------------
@@ -189,11 +210,17 @@ class ApiController extends FOSRestController
 
     /**
      * @param Request $request
+     * @return false|Response
      * @throws AccessDeniedException
      */
     private function checkAsker(Request $request)
     {
-        $this->container->get('pierstoval.api.originChecker')->checkRequest($request);
+        try {
+            $this->container->get('pierstoval.api.originChecker')->checkRequest($request);
+            return false;
+        } catch (AccessDeniedException $e) {
+            return new Response($e->getMessage(), 403);
+        }
     }
 
     /**
@@ -201,7 +228,8 @@ class ApiController extends FOSRestController
      * @param bool $throwException
      * @return null
      */
-    private function getService($serviceName, $throwException = true) {
+    private function getService($serviceName, $throwException = true)
+    {
         if (!$this->services) {
             $this->services = $this->container->getParameter('pierstoval_api.services');
         }
@@ -210,7 +238,8 @@ class ApiController extends FOSRestController
             return $this->services[$serviceName];
         }
         if ($throwException) {
-            throw $this->createNotFoundException("Service \"$serviceName\" not found in the API.\nDid you forget to specify it in your configuration ?\nAvailable services : ".implode(', ',array_keys($this->services)));
+            throw $this->createNotFoundException("Service \"$serviceName\" not found in the API.\nDid you forget to specify it in your configuration ?\nAvailable services : " . implode(', ',
+                    array_keys($this->services)));
         }
         return null;
     }
@@ -221,7 +250,8 @@ class ApiController extends FOSRestController
      * @param array $headers
      * @return \FOS\RestBundle\View\View|\Symfony\Component\HttpFoundation\Response
      */
-    protected function view($data = NULL, $statusCode = NULL, array $headers = Array()) {
+    protected function view($data = null, $statusCode = null, array $headers = Array())
+    {
         $view = parent::view($data, $statusCode, $headers);
         $view->setFormat($this->container->getParameter('pierstoval_api.format'));
         $view->setHeader('Content-type', 'application/json; charset=utf-8');
