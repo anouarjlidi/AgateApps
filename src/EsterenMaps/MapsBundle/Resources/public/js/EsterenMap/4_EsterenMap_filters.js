@@ -85,7 +85,7 @@
                     node.innerHTML =
                         '<div class="checkbox-inline">'
                         +'<label for="markerType'+markerType.id+'">'
-                        +'<input id="markerType'+markerType.id+'" type="checkbox" class="leaflet-filter-checkbox" />'
+                        +'<input id="markerType'+markerType.id+'" type="checkbox" class="leaflet-filter-checkbox" checked="checked" />'
                         +markerType.name
                         +'</label>'
                         +'</div>'
@@ -103,7 +103,7 @@
                     node.innerHTML =
                         '<div class="checkbox-inline">'
                         +'<label for="routeType'+routeType.id+'">'
-                        +'<input id="routeType'+routeType.id+'" type="checkbox" class="leaflet-filter-checkbox" />'
+                        +'<input id="routeType'+routeType.id+'" type="checkbox" class="leaflet-filter-checkbox" checked="checked" />'
                         +routeType.name
                         +'</label>'
                         +'</div>'
@@ -121,7 +121,7 @@
                     node.innerHTML =
                         '<div class="checkbox-inline">'
                         +'<label for="zoneType'+zoneType.id+'">'
-                        +'<input id="zoneType'+zoneType.id+'" type="checkbox" class="leaflet-filter-checkbox" />'
+                        +'<input id="zoneType'+zoneType.id+'" type="checkbox" class="leaflet-filter-checkbox" checked="checked" />'
                         +zoneType.name
                         +'</label>'
                         +'</div>'
@@ -236,7 +236,7 @@
                 var styleContainer = d.getElementById('filtersStyle'),
                     html = '';
                 inputs.each(function(i,input){
-                    if ($(input).is(':checked')) {
+                    if (!$(input).is(':checked')) {
                         html += '[data-leaflet-object-type="'+input.id+'"]{display:none;}';
                     }
                 });

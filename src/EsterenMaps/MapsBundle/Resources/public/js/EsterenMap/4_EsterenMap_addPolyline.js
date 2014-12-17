@@ -34,8 +34,8 @@
 
     EsterenMap.prototype._mapOptions.LeafletPolylineBaseOptions = {
         color: "#f66",
-        opacity: 0.4,
-        weight: 3,
+        opacity: 0.75,
+        weight: 4,
         clickable: true
     };
 
