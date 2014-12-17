@@ -35,12 +35,12 @@ class MapsFixtures extends AbstractFixture implements OrderedFixtureInterface {
 
         $repo = $this->manager->getRepository('EsterenMapsBundle:Maps');
 
-        $this->fixtureObject($repo, 1, 'Tri-Kazel', 'tri-kazel', 'uploads/maps/esteren_nouvelle_cartepg_91220092.jpeg', 'Carte de Tri-Kazel officielle, réalisée par Chris', 5, '2014-04-09 08:57:25', '2014-04-09 08:57:25');
+        $this->fixtureObject($repo, 1, 'Tri-Kazel', 'tri-kazel', 'uploads/maps/esteren_nouvelle_cartepg_91220092.jpeg', 'Carte de Tri-Kazel officielle, réalisée par Chris', 5, 2, 50, 0, '2014-04-09 08:57:25', '2014-04-09 08:57:25');
 
         $this->manager->flush();
     }
 
-    public function fixtureObject(EntityRepository $repo, $id, $name, $nameSlug, $image, $description, $maxZoom, $created, $updated = null)
+    public function fixtureObject(EntityRepository $repo, $id, $name, $nameSlug, $image, $description, $maxZoom, $startZoom, $startX, $startY, $created, $updated = null)
     {
         $obj = null;
         $newObject = false;
@@ -63,6 +63,9 @@ class MapsFixtures extends AbstractFixture implements OrderedFixtureInterface {
                 ->setNameSlug($nameSlug)
                 ->setImage($image)
                 ->setMaxZoom($maxZoom)
+                ->setStartZoom($startZoom)
+                ->setStartX($startX)
+                ->setStartY($startY)
                 ->setCreated($created ? new \Datetime($created) : new \Datetime())
                 ->setUpdated($updated ? new \Datetime($updated) : null)
                 ->setDeleted(null)

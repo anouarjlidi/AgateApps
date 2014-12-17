@@ -67,14 +67,43 @@ class Maps
     /**
      * @var integer
      *
-     * @ORM\Column(type="smallint", options={"default":0})
+     * @ORM\Column(type="smallint", options={"default":1})
+     * @Assert\Range(
+     *      min = 1,
+     *      max = 50
+     * )
+     * @Expose
+     */
+    protected $maxZoom = 10;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(type="smallint", options={"default":1})
      * @Assert\Range(
      *      min = 1,
      *      max = 10
      * )
      * @Expose
      */
-    protected $maxZoom = 10;
+    protected $startZoom = 10;
+
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(type="smallint", options={"default":1})
+     * @Expose
+     */
+    protected $startX = 0;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(type="smallint", options={"default":1})
+     * @Expose
+     */
+    protected $startY = 0;
 
     /**
      * @var \Datetime
@@ -553,4 +582,59 @@ class Maps
     {
         return $this->deleted;
     }
+
+    /**
+     * @return int
+     */
+    public function getStartZoom()
+    {
+        return $this->startZoom;
+    }
+
+    /**
+     * @param int $startZoom
+     * @return $this
+     */
+    public function setStartZoom($startZoom)
+    {
+        $this->startZoom = $startZoom;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getStartX()
+    {
+        return $this->startX;
+    }
+
+    /**
+     * @param int $startX
+     * @return $this
+     */
+    public function setStartX($startX)
+    {
+        $this->startX = $startX;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getStartY()
+    {
+        return $this->startY;
+    }
+
+    /**
+     * @param int $startY
+     * @return $this
+     */
+    public function setStartY($startY)
+    {
+        $this->startY = $startY;
+        return $this;
+    }
+
 }

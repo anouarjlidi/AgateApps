@@ -28,6 +28,8 @@
                         tiles: "http://{{ esteren_domains_api }}{{ asset('maps_tiles/'~map.id~'/{z}/{y}/{x}.jpg') }}"
                     },
                     LeafletMapBaseOptions: {
+                        zoom: {{ map.startZoom }},
+                        center: [{{ map.startX }}, {{ map.startY }}],
                         maxZoom: {{ map.maxZoom }}
                     },
                     LeafletLayerBaseOptions: {

@@ -56,7 +56,6 @@
         },
         loaderCallbacks: {},
         center: [0,0],
-        zoom: 1,
         maxMarkerId: 1,
         maxPolylineId: 1,
         maxPolygonId: 1,
