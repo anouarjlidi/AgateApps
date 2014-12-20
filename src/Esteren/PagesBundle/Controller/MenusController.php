@@ -73,7 +73,11 @@ class MenusController extends Controller {
      * @Template()
      */
     public function menuAction($route = '', $route_params = array()) {
-        if (preg_match('#^esteren_maps#isUu', $route)) {
+        $masterRequest = $this->container->get('request_stack')->getMasterRequest();
+
+        $domain = $masterRequest->getHost();
+
+        if ($domain === $this->container->getParameter('esteren_domains.esteren_maps')) {
             $method_name = 'EsterenMaps';
             $brandTitle = 'Esteren Maps';
             $brandRoute = 'esterenmaps_maps_maps_index';
@@ -86,7 +90,7 @@ class MenusController extends Controller {
         $langs = $this->container->get('pierstoval_translator')->getLangs();
 
         if (!$route) {
-            $route = $this->container->get('request_stack')->getMasterRequest()->attributes->get('_route');
+            $route = $masterRequest->attributes->get('_route');
         }
 
         return array(
@@ -94,7 +98,7 @@ class MenusController extends Controller {
             'brandTitle' => $brandTitle,
             'brandRoute' => $brandRoute,
             'route_name' => $route,
-            'locale' => $this->get('session')->get('_locale'),
+            'locale' => $masterRequest->getLocale(),
             'langs' => $langs,
             'route_params' => $route_params ?: array(),
         );
@@ -102,8 +106,8 @@ class MenusController extends Controller {
 
     protected function menuCorahnRin() {
         return array(
-            'corahnrin_generator_generator_index' => 'Générateur',
-            'corahnrin_characters_viewer_list' => 'Personnages',
+//            'corahnrin_generator_generator_index' => 'Générateur',
+//            'corahnrin_characters_viewer_list' => 'Personnages',
             'esterenmaps_maps_maps_index' => 'Esteren Maps',
         );
     }

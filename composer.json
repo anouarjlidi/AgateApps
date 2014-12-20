@@ -29,6 +29,8 @@
         "friendsofsymfony/rest-bundle":    "1.*",
         "stof/doctrine-extensions-bundle": "~1.1@dev",
 
+        "pierstoval/translation-bundle":   "dev-master",
+
         "sonata-project/seo-bundle":                "~1",
         "sonata-project/page-bundle":               ">=2.3.7,<2.4",
         "sonata-project/intl-bundle":               "~2.2",

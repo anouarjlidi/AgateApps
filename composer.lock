@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "b7b1f0e070173d59fda9db481dccbf7d",
+    "hash": "7e919862d136f4b40e052a9e16bc1031",
     "packages": [
         {
             "name": "dflydev/markdown",
@@ -67,16 +67,16 @@
         },
         {
             "name": "doctrine/annotations",
-            "version": "v1.2.1",
+            "version": "v1.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/annotations.git",
-                "reference": "6a6bec0670bb6e71a263b08bc1b98ea242928633"
+                "reference": "d63108433190110c0ceb8be6460dda6f78348950"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/annotations/zipball/6a6bec0670bb6e71a263b08bc1b98ea242928633",
-                "reference": "6a6bec0670bb6e71a263b08bc1b98ea242928633",
+                "url": "https://api.github.com/repos/doctrine/annotations/zipball/d63108433190110c0ceb8be6460dda6f78348950",
+                "reference": "d63108433190110c0ceb8be6460dda6f78348950",
                 "shasum": ""
             },
             "require": {
@@ -131,7 +131,7 @@
                 "docblock",
                 "parser"
             ],
-            "time": "2014-09-25 16:45:30"
+            "time": "2014-12-18 18:30:08"
         },
         {
             "name": "doctrine/cache",
@@ -2348,6 +2348,55 @@
             "time": "2014-01-09 22:37:17"
         },
         {
+            "name": "pierstoval/translation-bundle",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Pierstoval/TranslationBundle.git",
+                "reference": "52e9cfeda95a06056ea087c304cf375593f5183f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Pierstoval/TranslationBundle/zipball/52e9cfeda95a06056ea087c304cf375593f5183f",
+                "reference": "52e9cfeda95a06056ea087c304cf375593f5183f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3",
+                "symfony/symfony": ">=2.4,<3"
+            },
+            "suggest": {
+                "sonata-project/admin-bundle": "Useful to add an Admin interface to manage your translations with SonataAdminBundle"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-0": {
+                    "Pierstoval": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alex Pierstoval",
+                    "email": "pierstoval@gmail.com",
+                    "homepage": "http://www.pierstoval.com/"
+                }
+            ],
+            "description": "Adds database management for Symfony2's native translator, a db to files translations extractor, a translation catcher whenever id or source is not found, and a translation UI to manage it.",
+            "homepage": "https://github.com/Pierstoval/TranslationBundle/",
+            "keywords": [
+                "Symfony2",
+                "internationalization",
+                "trans",
+                "translate",
+                "translation"
+            ],
+            "time": "2014-12-20 15:03:51"
+        },
+        {
             "name": "psr/log",
             "version": "1.0.0",
             "source": {
@@ -3211,16 +3260,16 @@
         },
         {
             "name": "sonata-project/formatter-bundle",
-            "version": "2.3.2",
+            "version": "2.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataFormatterBundle.git",
-                "reference": "7f18f6c58302c3a1844bb04ab21512a2f1baadb1"
+                "reference": "e370b324b083f064bea53f99f0cd4da037abbf8c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataFormatterBundle/zipball/7f18f6c58302c3a1844bb04ab21512a2f1baadb1",
-                "reference": "7f18f6c58302c3a1844bb04ab21512a2f1baadb1",
+                "url": "https://api.github.com/repos/sonata-project/SonataFormatterBundle/zipball/e370b324b083f064bea53f99f0cd4da037abbf8c",
+                "reference": "e370b324b083f064bea53f99f0cd4da037abbf8c",
                 "shasum": ""
             },
             "require": {
@@ -3269,7 +3318,7 @@
                 "markitup",
                 "sonata"
             ],
-            "time": "2014-09-11 13:27:07"
+            "time": "2014-12-18 15:55:02"
         },
         {
             "name": "sonata-project/google-authenticator",
@@ -4594,6 +4643,7 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "stof/doctrine-extensions-bundle": 20,
+        "pierstoval/translation-bundle": 20,
         "sonata-project/datagrid-bundle": 20
     },
     "prefer-stable": false,

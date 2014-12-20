@@ -36,3 +36,7 @@ pierstoval_cors:
               - "^%esteren_domains.backoffice%$"
               - "^%esteren_domains.corahn_rin%$"
               - "^%esteren_domains.esteren_maps%$"
+
+pierstoval_translation:
+    locales: %locales%
+    use_sonata: true

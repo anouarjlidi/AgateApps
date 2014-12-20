@@ -11,11 +11,7 @@ parameters:
     mailer_user: null
     mailer_password: null
     locale: fr
-    locales:
-        Français: fr
-        English: en
-        Deutsch: de
-        Español: es
+    locales: fr,en,de,es
     locales_regex: fr|en|de|es
     secret: ChangeSecretToken
     magick_binaries_path: /usr/bin
