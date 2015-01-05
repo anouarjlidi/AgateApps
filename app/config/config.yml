@@ -8,6 +8,10 @@ imports:
     - { resource: _sonata.yml }
     - { resource: "@PierstovalTranslationBundle/Resources/config/services.yml" }
 
+parameters:
+    version_code: 0.1
+    version_date: 05/01/2015
+
 framework:
     #esi:             ~
     translator:      { fallback: %locale% }
@@ -39,6 +43,8 @@ twig:
     debug:            %kernel.debug%
     strict_variables: %kernel.debug%
     globals:
+        version_code: %version_code%
+        version_date: %version_date%
         kernel_root_dir: %kernel.root_dir%
         locales: %locales%
         locales_regex: %locales_regex%

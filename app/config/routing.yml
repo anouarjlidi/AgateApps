@@ -33,8 +33,8 @@ corahn_rin_characters:
     requirements:
         _locale: ^(%locales_regex%)$
 
-esteren_pages:
-    resource: "@EsterenPagesBundle/Controller/"
+esteren_portal:
+    resource: "@EsterenPortalBundle/Controller/"
     type:     annotation
     host:     %esteren_domains.portal%
     prefix:   /{_locale}/
@@ -42,6 +42,16 @@ esteren_pages:
          _locale: %locale%
     requirements:
         _locale: ^(%locales_regex%)$
+
+#esteren_pages:
+#    resource: "@EsterenPagesBundle/Controller/"
+#    type:     annotation
+#    host:     %esteren_domains.portal%
+#    prefix:   /{_locale}/
+#    defaults:
+#         _locale: %locale%
+#    requirements:
+#        _locale: ^(%locales_regex%)$
 
 #-----------------------------------
 # Esteren Maps relative routing

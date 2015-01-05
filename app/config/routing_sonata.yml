@@ -94,18 +94,18 @@ sonata_user_profile:
         _locale: ^(%locales_regex%)$
     host:       %esteren_domains.backoffice%
 
-sonata_user_register:
-    resource: "@SonataUserBundle/Resources/config/routing/sonata_registration_1.xml"
-    prefix:     /{_locale}/admin/register
-    defaults:
-         _locale: %locale%
-    requirements:
-        _locale: ^(%locales_regex%)$
-    host:       %esteren_domains.backoffice%
+#sonata_user_register:
+#    resource: "@SonataUserBundle/Resources/config/routing/sonata_registration_1.xml"
+#    prefix:     /{_locale}/admin/register
+#    defaults:
+#         _locale: %locale%
+#    requirements:
+#        _locale: ^(%locales_regex%)$
+#    host:       %esteren_domains.backoffice%
 
 sonata_user_change_password:
     resource: "@SonataUserBundle/Resources/config/routing/sonata_change_password_1.xml"
-    prefix:     /{_locale}/admin/profile
+    prefix:     /{_locale}/admin/change-password
     defaults:
          _locale: %locale%
     requirements:
@@ -128,7 +128,7 @@ sonata_admin_security:
 application_sonata_page:
     resource:    "@ApplicationSonataPageBundle/Controller/"
     type:        annotation
-    prefix:      /
+    prefix:      /{_locale}/
     defaults:
          _locale: %locale%
     requirements:

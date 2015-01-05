@@ -14,62 +14,6 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 class MenusController extends Controller {
 
     /**
-     * @Route("/admin/manage_site/menus/")
-     * @Template()
-     */
-    public function adminListAction() {
-
-        /** @var MenusRepository $repo */
-        $repo = $this->getDoctrine()->getManager()->getRepository('EsterenPagesBundle:Menus');
-
-        $list = $repo->findForAdmin();
-
-        foreach ($list as $element) {
-            if ($element->getParent()){
-                $element->getParent()->addChild($element);
-            }
-        }
-
-        return array(
-            'menus' => $list,
-        );
-    }
-
-    /**
-     * @Route("/admin/manage_site/menus/add/")
-     * @Template("PierstovalAdminBundle:Form:add.html.twig")
-     */
-    public function addAction(Request $request) {
-        return $this->handle_request(new Menus, $request);
-    }
-
-    /**
-     * @Route("/admin/manage_site/menus/edit/{id}")
-     * @Template("PierstovalAdminBundle:Form:add.html.twig")
-     */
-    public function editAction(Menus $menu, Request $request) {
-        return $this->handle_request($menu, $request);
-    }
-
-    /**
-     * @Route("/admin/manage_site/menus/delete/{id}")
-     */
-    public function deleteAction(Menus $menu) {
-        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN_MANAGE_SITE_SUPER')) {
-            throw new AccessDeniedException();
-        }
-
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($menu);
-        $em->flush();
-
-        $this->container->get('session')->getFlashBag()
-             ->add('success', 'Le lien de menu <strong>'.$menu->getName().'</strong> a été correctement supprimé.');
-
-        return $this->redirect($this->generateUrl('esteren_pages_menus_adminlist'));
-    }
-
-    /**
      * @Template()
      */
     public function menuAction($route = '', $route_params = array()) {
@@ -84,7 +28,7 @@ class MenusController extends Controller {
         } else {
             $method_name = 'CorahnRin';
             $brandTitle = 'Corahn-Rin';
-            $brandRoute = 'esteren_pages_pages_index';
+            $brandRoute = 'root';
         }
         $links = $this->{'menu'.$method_name}();
         $langs = $this->container->get('pierstoval_translator')->getLangs();
@@ -130,95 +74,9 @@ class MenusController extends Controller {
                 'name' => 'Voir une carte',
                 'list' => $maps_list,
             ),
-            'esteren_pages_pages_index' => 'Corahn-Rin',
+            'root' => 'Corahn-Rin',
         );
         return $links;
     }
 
-    /**
-     * @param Menus $element
-     * @param Request $request
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    private function handle_request($element, Request $request) {
-        $method = preg_replace('#^'.str_replace('\\', '\\\\', __CLASS__).'::([a-zA-Z]+)Action$#isUu', '$1', $request->get('_controller'));
-
-        if (null === $element->getPosition()) {
-            $element->setPosition(0);
-        }
-
-        $form = $this->createForm(new MenusType, $element, array('roles' => $this->container->getParameter('security.role_hierarchy.roles')));
-
-        $routes = array();
-        foreach ($this->container->get('router')->getRouteCollection()->all() as $name => $route) {
-            if (
-                strpos($name, '_') !== 0
-                && !$route->compile()->getVariables()
-                && !preg_match('#_(add|edit)[^_]*$#isUu', $name)
-                && (
-                    !in_array('POST', $route->getMethods())
-                    || (
-                        in_array('POST', $route->getMethods())
-                        && in_array('GET', $route->getMethods())
-                    )
-                )
-            ) {
-                $category = 'Autres';
-                if (strpos($name, 'corahnrin_characters_') === 0) {
-                    $category = 'Générateur de personnages';
-                }
-                if (strpos($name, 'corahnrin_admin_') === 0) {
-                    $category = 'Administration de Corahn-Rin';
-                }
-                if (strpos($name, 'esterenmaps_') === 0) {
-                    $category = 'Esteren Maps';
-                }
-                if (strpos($name, 'esteren_pages_') === 0) {
-                    $category = 'Pages';
-                }
-                if (strpos($name, 'pierstoval_admin_') === 0) {
-                    $category = 'Panneau d\'administration';
-                }
-                if (strpos($name, 'pierstoval_translation') === 0) {
-                    $category = 'Traduction';
-                }
-                if (strpos($name, 'fos_user_') === 0) {
-                    $category = 'Utilisateurs';
-                }
-                $routes[$category][$name] = $name;
-                ksort($routes[$category]);
-            }
-        }
-        ksort($routes);
-        if ($routes) {
-            $form->add('route', 'choice', array(
-                'choices' => $routes,
-                'required' => false,
-                'empty_value' => '-- Choisissez une route --',
-                'label' => 'Route',
-            ));
-        }
-
-        $form->handleRequest($request);
-
-        if ($form->isValid() && $request->isMethod('POST')) {
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($element);
-            $em->flush();
-            $request->getSession()->getFlashBag()->add('success',
-                'Menu '.($method == 'add' ? 'ajouté' : 'modifié').' : <strong>'.$element->getName().'</strong>'
-            );
-            return $this->redirect($this->generateUrl('esteren_pages_menus_adminlist'));
-        }
-
-        return array(
-            'form' => $form->createView(),
-            'title' => ($method == 'add' ? 'Ajouter' : 'Modifier').' un menu',
-            'breadcrumbs' => array(
-                'Accueil' => array('route' => 'pierstoval_admin_admin_index',),
-                'Menus' => array('route' => 'esteren_pages_menus_adminlist'),
-            ),
-        );
-    }
 }

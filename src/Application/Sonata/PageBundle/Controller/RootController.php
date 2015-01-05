@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Response;
 
 
 class RootController extends Controller {
@@ -21,9 +22,12 @@ class RootController extends Controller {
         $url = $this->generateUrl($request->attributes->get('_route'), array(), true);
         $locale = $this->container->getParameter('locale');
 
-        $url = rtrim($url, '/').'/'.$locale.'/';
+        if  (!preg_match('~('.$this->container->getParameter('locales_regex').')/?$~isU', $url)) {
+            $url = rtrim($url, '/') . '/' . $locale . '/';
+            return $this->redirect($url);
+        }
 
-        return $this->redirect($url);
+        return new Response('root');
     }
 
 } 

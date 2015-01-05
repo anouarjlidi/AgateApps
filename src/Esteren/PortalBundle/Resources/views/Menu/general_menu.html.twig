@@ -1,0 +1,44 @@
+{% if locale is not defined %}
+    {% set locale = app.request.attributes.get('_locale') %}
+{% endif %}
+<div class="navbar navbar-inverse" id="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="{{ url('root') }}" class="navbar-brand">{{ 'Accueil' | trans }}</a>
+        </div>
+        <div class="navbar-collapse collapse">
+
+            {{ knp_menu_render('EsterenPortalBundle:GeneralMenu:generalMenu', {'compressed': false, 'allow_safe_labels': true}) }}
+
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ 'Langue' | trans() }} [{{ locale|upper }}] <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        {% set route_name = app.request.attributes.get('_route') %}
+                        {% set route_params = app.request.attributes.get('_route_params') %}
+                        {% for loc, language in langs() %}
+                            {% if loc == locale %}
+                                <li class="active"><a>{{ language | trans }}</a></li>
+                            {% else %}
+                                <li><a href="{{ url(route_name, (route_params | merge({'_locale':loc})) ) }}">{{ language | trans }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </li>
+                {% if app.user.username is not defined %}
+                    <li><a href="{{ url('fos_user_security_login') }}">{{ 'layout.login' | trans({},'FOSUserBundle') }}</a></li>
+                {% else %}
+                    <li><a href="{{ url('fos_user_security_logout') }}">{{ 'layout.logout' | trans({},'FOSUserBundle') }} [ {{ app.user.username }} ]</a></li>
+                    <li><a href="{{ url('pierstoval_admin_admin_index') }}">{{ 'Administration' | trans }}</a></li>
+                {% endif %}
+
+            </ul>
+        </div>
+        <!--/.nav-collapse -->
+    </div>
+</div><!--/.navbar.navbar-default-->

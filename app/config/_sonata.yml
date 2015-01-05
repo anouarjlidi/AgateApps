@@ -20,12 +20,20 @@ sonata_admin:
 
 # Sonata Blocks
 sonata_block:
-    default_contexts: [esteren]
+    context_manager: sonata.page.block.context_manager
+    default_contexts: [sonata_page_bundle]
     blocks:
-        # Enable the SonataAdminBundle block
         sonata.user.block.menu:         ~ # used to display the menu in profile pages
         sonata.user.block.account:      ~ # used to display menu option (login option)
+        sonata.media.block.media:       ~
+        sonata.media.block.gallery:     ~
+        sonata.media.block.feature_media: ~
+        sonata.block.service.menu:      ~
+        sonata.block.service.text:      ~
+        esteren.block.service.general_menu: ~
         sonata.admin.block.admin_list:
+            contexts:   [admin]
+        sonata.admin_doctrine_orm.block.audit:
             contexts:   [admin]
 
 # Sonata i18n
@@ -101,6 +109,7 @@ sonata_formatter:
             service: sonata.formatter.text.twigengine
             extensions: [] # Twig formatter cannot have extensions
 
+
 # Sonata Pages
 sonata_page:
     multisite: host
@@ -112,6 +121,10 @@ sonata_page:
         - pierstoval(.*)
         - corahn(.*)
         - fos_
+        - sonata_cache_
+        - sonata_page_
+        - sonata_media_
+        - sonata_user_
 
     ignore_routes:
         - sonata_page_esi_cache
@@ -124,15 +137,39 @@ sonata_page:
         - sonata_cache_js_sync
         - sonata_cache_apc
 
-    ignore_uri_patterns:
-        - ^/(%locales_regex%)/a/   # ignore admin route, ie route containing 'admin'
-
     page_defaults:
         homepage: {decorate: false} # disable decoration for homepage, key - is a page route
 
-    default_template: default # template key from templates section, used as default for pages
+    default_template: default
     templates:
-        default: {path: '::base.html.twig', name: default }
+        default:
+            path: '::base.html.twig'
+            name: 'default'
+            containers:
+                header:
+                    name: Header
+                content_top:
+                    name: Top content
+                content:
+                    name: Main content
+                content_bottom:
+                    name: Bottom content
+                footer:
+                    name: Footer
+            matrix:
+                layout: |
+                    HHHHHHHH
+                    TTTTTTTT
+                    CCCCCCCC
+                    CCCCCCCC
+                    BBBBBBBB
+                    FFFFFFFF
+                mapping:
+                    H: header
+                    T: content_top
+                    C: content
+                    B: content_bottom
+                    F: footer
 
     # manage the http errors
     catch_exceptions:

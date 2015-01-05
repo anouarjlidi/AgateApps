@@ -55,6 +55,7 @@ class AppKernel extends Kernel
             new Application\Sonata\UserBundle\ApplicationSonataUserBundle(),
             new Application\Sonata\AdminBundle\ApplicationSonataAdminBundle(),
             new Application\Sonata\MediaBundle\ApplicationSonataMediaBundle(),
+            new Application\Sonata\BlockBundle\ApplicationSonataBlockBundle(),
 
             // Corahn-Rin
             new CorahnRin\AdminBundle\CorahnRinAdminBundle(),
@@ -64,6 +65,7 @@ class AppKernel extends Kernel
             new CorahnRin\GeneratorBundle\CorahnRinGeneratorBundle(),
 
             // Esteren général
+            new Esteren\PortalBundle\EsterenPortalBundle(),
             new Esteren\PagesBundle\EsterenPagesBundle(),
 
             // Esteren Maps
@@ -77,7 +79,6 @@ class AppKernel extends Kernel
             new Pierstoval\Bundle\ToolsBundle\PierstovalToolsBundle(),
             new Pierstoval\Bundle\AdminBundle\PierstovalAdminBundle(),
             new Pierstoval\Bundle\TranslationBundle\PierstovalTranslationBundle(),
-
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test', 'dev_fast'))) {
