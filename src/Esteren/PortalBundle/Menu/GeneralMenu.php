@@ -32,7 +32,6 @@ class GeneralMenu extends ContainerAware {
             $menu['Maps']->addChild($map->getName(), array(
                 'route' => 'esterenmaps_maps_maps_view',
                 'routeParameters' => array(
-                    'id' => $map->getId(),
                     'nameSlug' => $map->getNameSlug(),
                 ),
             ));
