@@ -1,24 +1,24 @@
-
-
 {% block sonata_page_breadcrumb %}
-    <section class="layout_breadcrumbs">
-        {% if sonata_seo_context is not defined %}
-            {% set sonata_seo_context = 'homepage' %}
-        {% endif %}
-        {{ sonata_block_render_event('breadcrumb', { 'context': sonata_seo_context, 'current_uri': app.request.requestUri }) }}
-    </section>
+    {% if page is defined %}
+        <section class="layout_breadcrumbs">
+            {% if sonata_seo_context is not defined %}
+                {% set sonata_seo_context = 'homepage' %}
+            {% endif %}
+            {{ sonata_block_render_event('breadcrumb', { 'context': sonata_seo_context, 'current_uri': app.request.requestUri }) }}
+        </section>
+    {% endif %}
 {% endblock %}
 
-<header class="layout_header">
-    {% if page.name != 'global'%}
-        {{ sonata_page_render_container('header', 'global') }}
-    {% endif %}
-    {{ sonata_page_render_container('header', page) }}
-</header>
-
 {% if page is defined %}
+    <header class="layout_header">
+        {% if page.name != 'global' %}
+            {{ sonata_page_render_container('header', 'global') }}
+        {% endif %}
+        {{ sonata_page_render_container('header', page) }}
+    </header>
+
     <section class="layout_page">
-        {% if page.name != 'global'%}
+        {% if page.name != 'global' %}
             {{ sonata_page_render_container('content_top', 'global') }}
         {% endif %}
         {{ sonata_page_render_container('content_top', page) }}
@@ -44,21 +44,18 @@
     <section class="layout_page">
         {{ sonata_page_render_container('content_bottom', page) }}
 
-        {% if page.name != 'global'%}
+        {% if page.name != 'global' %}
             {{ sonata_page_render_container('content_bottom', 'global') }}
         {% endif %}
     </section>
-{% endif %}
 
-<footer class="layout_footer">
-    {% if page.name != 'global'%}
-        {{ sonata_page_render_container('footer', 'global') }}
-    {% endif %}
-    {{ sonata_page_render_container('footer', page) }}
-</footer>
+    <footer class="layout_footer">
+        {% if page.name != 'global' %}
+            {{ sonata_page_render_container('footer', 'global') }}
+        {% endif %}
+        {{ sonata_page_render_container('footer', page) }}
+    </footer>
 
-
-{% if page is defined %}
     {# Editor #}
     {% if sonata_page.isEditor %}
         <div class="sonata_page_editor_wrapper">
@@ -69,7 +66,8 @@
 
                         {% if sites|length > 1 and site is defined %}
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ site.name }} <span class="caret"></span></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ site.name }}
+                                    <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
                                     {% for site in sites %}
                                         <li><a href="{{ site.url }}">{{ site.name }}</a></li>
@@ -82,16 +80,23 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Page <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 {% if page is defined %}
-                                    <li><a href="{{ path('admin_sonata_page_page_edit', {'id': page.id }) }}" target="_new">{{ "header.edit_page"|trans({}, 'SonataPageBundle') }}</a></li>
-                                    <li><a href="{{ path('admin_sonata_page_page_snapshot_create', {'id': page.id }) }}" target="_new">{{ "header.create_snapshot"|trans({}, 'SonataPageBundle') }}</a></li>
+                                    <li><a href="{{ path('admin_sonata_page_page_edit', {'id': page.id }) }}"
+                                           target="_new">{{ "header.edit_page"|trans({}, 'SonataPageBundle') }}</a></li>
+                                    <li><a href="{{ path('admin_sonata_page_page_snapshot_create', {'id': page.id }) }}"
+                                           target="_new">{{ "header.create_snapshot"|trans({}, 'SonataPageBundle') }}</a>
+                                    </li>
                                     <li class="divider"></li>
                                 {% endif %}
 
-                                <li><a href="{{ path('admin_sonata_page_page_list') }}" target="_new">{{ "header.view_all_pages"|trans({}, 'SonataPageBundle') }}</a></li>
+                                <li><a href="{{ path('admin_sonata_page_page_list') }}"
+                                       target="_new">{{ "header.view_all_pages"|trans({}, 'SonataPageBundle') }}</a>
+                                </li>
 
                                 {% if error_codes is defined and error_codes|length %}
                                     <li class="divider"></li>
-                                    <li><a href="{{ path('sonata_page_exceptions_list') }}" target="_new">{{ "header.view_all_exceptions"|trans({}, 'SonataPageBundle') }}</a></li>
+                                    <li><a href="{{ path('sonata_page_exceptions_list') }}"
+                                           target="_new">{{ "header.view_all_exceptions"|trans({}, 'SonataPageBundle') }}</a>
+                                    </li>
                                 {% endif %}
                             </ul>
                         </li>
@@ -100,20 +105,26 @@
                             <li>
                                 <a href="{{ url('admin_sonata_page_page_compose', {'id': page.id}) }}">
                                     <i class="fa fa-magic"></i>
-                                    {{ 'header.compose_page'|trans({}, 'SonataPageBundle')}}
+                                    {{ 'header.compose_page'|trans({}, 'SonataPageBundle') }}
                                 </a>
                             </li>
                         {% endif %}
 
                         {% if page is defined and not page.enabled %}
-                            <li><span style="padding-left: 20px; background: red;"><strong><em>{{ 'header.page_is_disabled'|trans([], 'SonataPageBundle') }}</em></strong></span></li>
+                            <li>
+                                <span style="padding-left: 20px; background: red;"><strong><em>{{ 'header.page_is_disabled'|trans([], 'SonataPageBundle') }}</em></strong></span>
+                            </li>
                         {% endif %}
 
                         {% if sonata_page.isInlineEditionOn and page is defined %}
                             <li>
                                 <form class="form-inline" style="margin: 0">
-                                    <label class="checkbox inline" for="page-action-enabled-edit"><input type="checkbox" id="page-action-enabled-edit" />{{ 'header.show_zone'|trans({}, 'SonataPageBundle') }}</label>
-                                    <input type="submit" class="btn" value="{{ 'btn_save_position'|trans({}, 'SonataPageBundle') }}" id="page-action-save-position" />
+                                    <label class="checkbox inline" for="page-action-enabled-edit"><input type="checkbox"
+                                                                                                         id="page-action-enabled-edit" />{{ 'header.show_zone'|trans({}, 'SonataPageBundle') }}
+                                    </label>
+                                    <input type="submit" class="btn"
+                                           value="{{ 'btn_save_position'|trans({}, 'SonataPageBundle') }}"
+                                           id="page-action-save-position" />
                                 </form>
                             </li>
                         {% endif %}
@@ -121,32 +132,32 @@
                 </div>
             </header>
         </div>
-    {% endif %}
-{% endif %}
 
-{% if sonata_page.isEditor and sonata_page.isInlineEditionOn %}
-    <!-- CMS specific variables -->
-    <script>
-        jQuery(document).ready(function() {
-            Sonata.Page.init({
-                url: {
-                    block_save_position: '{{ path('admin_sonata_page_block_savePosition') }}',
-                    block_edit:          '{{ path('admin_sonata_page_block_edit', {'id': 'BLOCK_ID'}) }}'
-                }
-            });
-        });
-    </script>
+        {% if sonata_page.isInlineEditionOn %}
+            <!-- CMS specific variables -->
+            <script>
+                jQuery(document).ready(function () {
+                    Sonata.Page.init({
+                        url: {
+                            block_save_position: '{{ path('admin_sonata_page_block_savePosition') }}',
+                            block_edit: '{{ path('admin_sonata_page_block_edit', {'id': 'BLOCK_ID'}) }}'
+                        }
+                    });
+                });
+            </script>
+        {% endif %}
+    {% endif %}
 {% endif %}
 
 {% block sonata_page_asset_footer %}
     {% if page is defined %}
         {% if page.javascript is not empty %}
-            <script>
+            <script type="text/javascript">
                 {{ page.javascript|raw }}
             </script>
         {% endif %}
         {% if page.stylesheet is not empty %}
-            <style>
+            <style type="text/css">
                 {{ page.stylesheet|raw }}
             </style>
         {% endif %}

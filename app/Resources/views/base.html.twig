@@ -80,9 +80,8 @@
             <div id="content">{# DYNAMIC CONTENT FOR LAYOUT #}
 
                 {% block sonata_page_container %}
-                    {% block content_for_layout %}
-                        {% include '::sonata_content.html.twig' %}
-                    {% endblock %}
+                    {% include '::sonata_content.html.twig' %}
+                    {% block content_for_layout %}{% endblock %}
                 {% endblock %}
 
             </div><!--/#content-->
