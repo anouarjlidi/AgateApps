@@ -155,11 +155,14 @@
             datas = {};
         }
 
-        //TODO : Evolution #754
         if ($.isPlainObject(name)) {
-            name = name.uri;
+            name = name.uri || name;
+            datas = name.datas || datas;
+            method = name.method || method;
+            callback = name.callback || callback;
+            callbackComplete = name.callbackComplete || callbackComplete;
+            callbackError = name.callbackError || callbackError;
         }
-        //#754
 
         // D'abord, on autorise les chaînes de caractères avec des "/".
         // Cela permet d'écrire des requêtes de ce type : EsterenMap._load('maps/1/markers')
