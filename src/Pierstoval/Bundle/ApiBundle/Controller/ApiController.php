@@ -3,7 +3,9 @@
 namespace Pierstoval\Bundle\ApiBundle\Controller;
 
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
@@ -160,14 +162,13 @@ class ApiController extends FOSRestController
     }
 
     /**
-     * @Route("/{serviceName}")
+     * @Route("/{serviceName}", name="pierstoval_api_api_put")
      * @Method({"PUT"})
      * @param $serviceName
-     * @param $id
      * @param Request $request
      * @return false|\Symfony\Component\HttpFoundation\Response
      */
-    public function putAction($serviceName, $id, Request $request)
+    public function putAction($serviceName, Request $request)
     {
         if ($check = $this->checkAsker($request)) {
             return $check;
@@ -175,7 +176,7 @@ class ApiController extends FOSRestController
     }
 
     /**
-     * @Route("/{serviceName}/{id}")
+     * @Route("/{serviceName}/{id}", requirements={"id": "\d+"}, name="pierstoval_api_api_post")
      * @Method({"POST"})
      * @param $serviceName
      * @param $id
@@ -187,10 +188,59 @@ class ApiController extends FOSRestController
         if ($check = $this->checkAsker($request)) {
             return $check;
         }
+        $service = $this->getService($serviceName);
+
+        $serviceName = rtrim($serviceName, 's');
+
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository($service['entity']);
+
+        $object = $repo->createQueryBuilder('o')
+            ->where('o.id = :id')
+            ->getQuery()
+            ->setParameter('id', $id)
+            ->getOneOrNullResult(Query::HYDRATE_ARRAY);
+
+        if (!$object) {
+            return $this->createNotFoundException();
+        }
+
+        // Merge
+        $userObject = array_merge($object, $request->request->all());
+
+        // Serialize POST and deserialize to get full object
+        $serializer = $this->container->get('serializer');
+        $json = $serializer->serialize($userObject, 'json');
+        $userObject = $serializer->deserialize($json, $service['entity'], 'json');
+
+        $errors = $this->get('validator')->validate($userObject);
+
+        if (!count($errors)) {
+
+            $em->merge($userObject);
+            $em->flush();
+
+            $userObject = $repo->find($id);
+
+            $datas = array(
+                'old'.ucfirst($serviceName) => $object,
+                'new'.ucfirst($serviceName) => $userObject,
+            );
+
+        } else {
+            $datas = array(
+                'error' => true,
+                'msg' => $this->get('translator')->trans('Invalid form, please re-check.'),
+                'errors' => $errors,
+            );
+        }
+
+        return $this->view($datas);
     }
 
     /**
-     * @Route("/{serviceName}/{id}")
+     * @Route("/{serviceName}/{id}", requirements={"id": "\d+"}, name="pierstoval_api_api_delete")
      * @Method({"DELETE"})
      * @param $serviceName
      * @param $id
