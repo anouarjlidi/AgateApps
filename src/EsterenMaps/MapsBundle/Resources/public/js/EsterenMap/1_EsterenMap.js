@@ -145,23 +145,25 @@
             allowedMethods = ["GET","POST"]
         ;
 
-        method = method ? method.toUpperCase() : "GET";
-        if (allowedMethods.indexOf(method) === -1) {
-            method = "GET";
-            console.warn('Wrong HTTP method for _load() method. Allowed : '+allowedMethods.join(', '));
-        }
-
-        if (!datas) {
-            datas = {};
-        }
-
         if ($.isPlainObject(name)) {
-            name = name.uri || name;
+            console.info('fetched plain object');
+            name = name.uri || name ;
             datas = name.datas || datas;
             method = name.method || method;
             callback = name.callback || callback;
             callbackComplete = name.callbackComplete || callbackComplete;
             callbackError = name.callbackError || callbackError;
+        }
+
+        method = method ? method.toUpperCase() : "GET";
+        if (allowedMethods.indexOf(method) === -1) {
+            method = "GET";
+            console.warn('Wrong HTTP method for _load() method. Allowed : '+allowedMethods.join(', '));
+            return false;
+        }
+
+        if (!datas) {
+            datas = {};
         }
 
         // D'abord, on autorise les chaînes de caractères avec des "/".

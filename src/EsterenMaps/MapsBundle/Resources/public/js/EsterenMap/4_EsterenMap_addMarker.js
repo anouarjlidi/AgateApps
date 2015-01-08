@@ -89,7 +89,7 @@
     };
 
     EsterenMap.prototype._mapOptions.LeafletMarkerBaseOptionsEditMode = {
-        draggable: false
+        draggable: true
     };
 
     EsterenMap.prototype._mapOptions.LeafletIconBaseOptions = {
@@ -142,37 +142,52 @@
             }
 
         },
+        dblclickCallback: function(e){
+            var marker = e.target,
+                msg = CONFIRM_DELETE || 'Supprimer ?',
+                id = marker._esterenMarker ? marker._esterenMarker.id : null;
+            console.info('dblclick marker', e);
+            if (marker._esterenMap.options().editMode == true && id) {
+                console.info('before check');
+                if (confirm(msg)) {
+                    if (d.getElementById('marker_' + id + '_deleted')) {
+                        d.getElementById('marker_' + id + '_deleted').value = 'true';
+                    } else {
+                        $('<input type="hidden" value="true" />')
+                            .attr({
+                                'id': 'marker_' + id + '_deleted',
+                                'name': 'marker[' + id + '][deleted]'
+                            }).appendTo('#inputs_container');
+                    }
+                    marker._map.removeLayer(marker);
+                    marker.fire('remove');
+                    console.info('removed marker');
+                }
+            }
+            return false;
+        },
         moveCallback: function(e){
             var marker = e.target,
                 id = marker.options.alt,
                 latlng = marker.getLatLng();
 //                marker.setLatLng(latlng).update();
+            console.info('moved marker', e);
             d.getElementById('marker_'+id+'_latitude').value = latlng.lat;
             d.getElementById('marker_'+id+'_longitude').value = latlng.lng;
+            if (marker._esterenMarker) {
+                marker._esterenMarker.latitude = latlng.lat;
+                marker._esterenMarker.longitude = latlng.lng;
+            }
         },
         addCallback: function(e){
             var marker = e.target,
                 id = marker.options.alt;
+            console.info('added marker', e);
             if (marker._esterenMap.editMode == true && id) {
                 if (d.getElementById('marker_'+id+'_deleted')) {
                     d.getElementById('marker_'+id+'_deleted').value = 'false';
                 } else {
                     $('<input type="hidden" value="false" />')
-                        .attr({
-                            'id':'marker_'+id+'_deleted',
-                            'name':'marker['+id+'][deleted]'
-                        }).appendTo('#inputs_container');
-                }
-            }
-        },
-        removeCallback: function(e){
-            var marker = e.target,
-                id = marker.options.alt;
-            if (marker._esterenMap.editMode == true && id) {
-                if (d.getElementById('marker_'+id+'_deleted')) {
-                    d.getElementById('marker_'+id+'_deleted').value = 'true';
-                } else {
-                    $('<input type="hidden" value="true" />')
                         .attr({
                             'id':'marker_'+id+'_deleted',
                             'name':'marker['+id+'][deleted]'
