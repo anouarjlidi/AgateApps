@@ -185,9 +185,13 @@ class ApiController extends FOSRestController
      */
     public function postAction($serviceName, $id, Request $request)
     {
+        $datas = array();
+
         if ($check = $this->checkAsker($request)) {
             return $check;
         }
+
+        $serializer = $this->container->get('serializer');
         $service = $this->getService($serviceName);
 
         $serviceName = rtrim($serviceName, 's');
@@ -196,23 +200,36 @@ class ApiController extends FOSRestController
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository($service['entity']);
 
-        $object = $repo->createQueryBuilder('o')
-            ->where('o.id = :id')
-            ->getQuery()
-            ->setParameter('id', $id)
-            ->getOneOrNullResult(Query::HYDRATE_ARRAY);
+        // Get full item from database
+        $object = $repo->find($id);
 
         if (!$object) {
             return $this->createNotFoundException();
         }
 
-        // Merge
-        $userObject = array_merge($object, $request->request->all());
+        if (!$request->request->get('dataToEdit')) {
+            // Transform the full item recursively into an array
+            $object = $serializer->deserialize($serializer->serialize($object, 'json'), 'array', 'json');
+            $requestObject = $serializer->deserialize($request->get('json'), 'array', 'json');
 
-        // Serialize POST and deserialize to get full object
-        $serializer = $this->container->get('serializer');
-        $json = $serializer->serialize($userObject, 'json');
-        $userObject = $serializer->deserialize($json, $service['entity'], 'json');
+            // Merge the two arrays with request parameters
+            $userObject = array_merge($object, $requestObject);
+
+            // Serialize POST and deserialize to get full object
+            $json = $serializer->serialize($userObject, 'json');
+            $userObject = $serializer->deserialize($json, $service['entity'], 'json');
+        } else {
+            $userObject = $serializer->deserialize($request->get('json'), 'array', 'json');
+            foreach ($request->request->get('dataset') as $field => $params) {
+                if (isset($userObject[$field])) {
+                    if ($params === true) {
+                        $object->{'set'.ucfirst($field)}($userObject[$field]);
+                    } else {
+                        // TODO
+                    }
+                }
+            }
+        }
 
         $errors = $this->get('validator')->validate($userObject);
 
@@ -221,12 +238,8 @@ class ApiController extends FOSRestController
             $em->merge($userObject);
             $em->flush();
 
-            $userObject = $repo->find($id);
-
-            $datas = array(
-                'old'.ucfirst($serviceName) => $object,
-                'new'.ucfirst($serviceName) => $userObject,
-            );
+            $datas['result'] = $object;
+            $datas['request'] = $userObject;
 
         } else {
             $datas = array(
