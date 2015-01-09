@@ -104,17 +104,18 @@ abstract class BaseRepository extends EntityRepository {
     }
 
     public function getIds() {
-        $qb = $this->_em->createQueryBuilder()
-            ->select('a.id')
-            ->from($this->_entityName, 'a')
-        ;
-        $result = $qb->getQuery()
+        $prKey = $this->getClassMetadata()->getSingleIdentifierFieldName();
+        $result = $this->_em
+            ->createQueryBuilder()
+            ->select('entity.' . $prKey)
+            ->from($this->_entityName, 'entity')
+            ->getQuery()
             ->getResult(Query::HYDRATE_ARRAY);
 
         $array = array();
 
-        foreach ($result as $id){
-            $array[] = $id['id'];
+        foreach ($result as $id) {
+            $array[] = $id[$prKey];
         }
 
         return $array;
