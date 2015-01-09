@@ -64,20 +64,18 @@ filter="less,cssrewrite,?uglifycss"
                             tiles: "http://{{ esteren_domains_api }}{{ asset('maps_tiles/'~map.id~'/{z}/{y}/{x}.jpg') }}"
                         },
                         LeafletMapBaseOptions: {
-                            maxZoom: {{ map.maxZoom }}
+                            maxZoom: {{ map.maxZoom }},
+                            maxBounds: [[85.23,-183], [11,41]]
                         },
                         LeafletLayerBaseOptions: {
                             maxZoom: {{ map.maxZoom }},
                             maxNativeZoom: {{ map.maxZoom }},
                             tileSize: {{ tile_size }},
                             noWrap: false,
-                            continuousWorld: true
+                            bounds: [[85.23,-183], [11,41]]
                         },
                         autoResize: false,
                         containerHeight: 600,
-                        idsZones: [{{ idsZones | join(',') }}],
-                        idsRoutes: [{{ idsRoutes | join(',') }}],
-                        idsMarkers: [{{ idsMarkers | join(',') }}],
                         maxZoneId: {{ maxZones }},
                         maxRouteId: {{ maxRoutes }},
                         maxMarkerId: {{ maxMarkers }}

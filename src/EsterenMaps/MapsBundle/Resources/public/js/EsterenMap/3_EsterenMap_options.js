@@ -13,10 +13,6 @@
     EsterenMap.prototype._polygons = {};
     EsterenMap.prototype._polylines = {};
 
-    EsterenMap.prototype._layerMarkers = {};
-    EsterenMap.prototype._layerPolygons = {};
-    EsterenMap.prototype._layerPolylines = {};
-
     EsterenMap.prototype._markersTypes = {};
     EsterenMap.prototype._routesTypes = {};
     EsterenMap.prototype._zonesTypes = {};
@@ -79,7 +75,7 @@
             maxZoom: 1,
             maxNativeZoom: 1,
             tileSize: 168,
-            noWrap: false,
+            noWrap: true,
             continuousWorld: true
         }
     };
