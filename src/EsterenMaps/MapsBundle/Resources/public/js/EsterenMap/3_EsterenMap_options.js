@@ -6,6 +6,7 @@
     EsterenMap.prototype._drawControl = {};
     EsterenMap.prototype._drawnItems = {};
     EsterenMap.prototype._tileLayer = {};
+    EsterenMap.prototype._editedMarker = null;
 
     EsterenMap.prototype._refDatas = false;
 

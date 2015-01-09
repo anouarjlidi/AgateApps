@@ -58,7 +58,6 @@
             }
 
             var content,
-                _this = this,
                 filtersMsgTitle = typeof MSG_CONTROL_FILTERS_TITLE !== 'undefined' ? MSG_CONTROL_FILTERS_TITLE : 'Filtres',
                 filtersMsgRoutesTypes = typeof MSG_ROUTES_TYPES !== 'undefined' ? MSG_ROUTES_TYPES : 'Types de routes',
                 filtersMsgZonesTypes = typeof MSG_ZONES_TYPES !== 'undefined' ? MSG_ZONES_TYPES : 'Types de zones',
@@ -73,8 +72,7 @@
                     "routesTypesUL": [],
                     "zonesTypesUL": []
                 },
-                list, node,
-                i, c, callback
+                list
             ;
 
             // ------------- MARKERS -------------
@@ -152,16 +150,13 @@
             return this;
         },
 
-        onAdd: function (leafletMap) {
-            var _this = this,
-                controlDiv, link, textTitle, mapOptions, controlContent;
+        onAdd: function () {
+            var controlDiv, link, textTitle, controlContent;
 
             if (!(this._esterenMap instanceof EsterenMap)) {
                 console.error('Fitlers control can only be added to a LeafletMap with an EsterenMap. Have you forgotten the second argument to the constructor ?');
                 return false;
             }
-
-            mapOptions = this._esterenMap.options();
 
             textTitle = (typeof(MSG_CONTROL_FILTERS_TITLE) !== 'undefined') ? MSG_CONTROL_FILTERS_TITLE : 'Filters';
 
@@ -181,9 +176,10 @@
                 "container": "body"
             });
 
+            // Listener FiltersControl
             L.DomEvent
-                .addListener(link, 'click', function (e) {
-                    var controlDiv = $(this).parents('.leaflet-draw-section.leaflet-filters-control')[0];
+                .addListener(link, 'click', function () {
+                    var controlDiv = d.getElementById('leaflet-filters-control');
 
                     if (!controlDiv.classList.contains('expanded')) {
                         controlDiv.classList.add('expanded');
@@ -203,6 +199,17 @@
                 })
                 .addListener(link, 'click', L.DomEvent.stopPropagation)
             ;
+
+            // Listeners FiltersControl disable
+            this._esterenMap._map.on('click', function(){
+                var controlDiv = d.getElementById('leaflet-filters-control');
+                if (controlDiv.classList.contains('expanded')) {
+                    controlDiv.classList.remove('expanded-full');
+                    controlDiv.classList.remove('expanded');
+                    link.children[0].classList.add('icon-resize_full');
+                    link.children[0].classList.remove('icon-resize_small');
+                }
+            });
 
             this._controlDiv = controlDiv;
             this._controlLink = link;

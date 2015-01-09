@@ -29,6 +29,32 @@
         return this;
     };
 
+    L.Marker.prototype._updateEM = function() {
+        var esterenMarker = this._esterenMarker || {},
+            id = esterenMarker.id || null;
+        if (id && esterenMarker && this._map) {
+            this._esterenMap._load({
+                uri: "markers/" + id,
+                datas: {
+                    json: JSON.stringify(esterenMarker)
+                },
+                method: "POST"
+            });
+        }
+    };
+
+    EsterenMap.prototype.esterenMarkerTypePrototype = function() {
+        return this._markersTypes[0] || {};
+    };
+
+    EsterenMap.prototype.esterenMarkerPrototype = {
+        id: null,
+        name: null,
+        marker_type: null,
+        latitude: null,
+        longitude: null
+    };
+
     /**
      * @this {EsterenMap}
      * @param response
@@ -117,26 +143,35 @@
     EsterenMap.prototype._mapOptions.CustomMarkerBaseOptionsEditMode = {
         clickCallback: function(e){
             var marker = e.target,
+                esterenMarker = marker._esterenMarker,
                 id = marker.options.alt
             ;
 
+            marker.dragging.enable();
+            marker._esterenMap._editedMarker = marker;
             marker.showSidebar();
 
-            if (marker._sidebar.isVisible()) {
-                d.getElementById('marker_popup_name').value = d.getElementById('marker_'+id+'_name').value;
-                d.getElementById('marker_popup_type').value = d.getElementById('marker_'+id+'_type').value;
-                d.getElementById('marker_popup_faction').value = d.getElementById('marker_'+id+'_faction').value;
+            if (marker._sidebar.isVisible() && esterenMarker) {
+                d.getElementById('marker_popup_name').value = esterenMarker.name;
+                d.getElementById('marker_popup_type').value = esterenMarker.marker_type ? esterenMarker.marker_type.id : null;
+                d.getElementById('marker_popup_faction').value = esterenMarker.faction ? esterenMarker.faction.id : null;
 
                 d.getElementById('marker_popup_name').onkeyup = function(){
-                    d.getElementById('marker_'+id+'_name').value = this.value;
+                    esterenMarker.name = this.value;
+                    if (this._timeout) { clearTimeout(this._timeout); }
+                    this._timeout = setTimeout(function(){ marker._updateEM(); }, 1750);
                     return false;
                 };
                 d.getElementById('marker_popup_type').onchange = function(){
-                    d.getElementById('marker_'+id+'_type').value = this.value;
+                    esterenMarker.marker_type = marker._esterenMap._markersTypes[this.value] || null;
+                    if (this._timeout) { clearTimeout(this._timeout); }
+                    this._timeout = setTimeout(function(){ marker._updateEM(); }, 1750);
                     return false;
                 };
                 d.getElementById('marker_popup_faction').onchange = function(){
                     d.getElementById('marker_'+id+'_faction').value = this.value;
+                    if (this._timeout) { clearTimeout(this._timeout); }
+                    this._timeout = setTimeout(function(){ marker._updateEM(); }, 1750);
                     return false;
                 };
             }
@@ -166,7 +201,7 @@
             }
             return false;
         },
-        moveCallback: function(e){
+        dragendCallback: function(e) {
             var marker = e.target,
                 id = marker.options.alt,
                 latlng = marker.getLatLng();
@@ -178,6 +213,7 @@
                 marker._esterenMarker.latitude = latlng.lat;
                 marker._esterenMarker.longitude = latlng.lng;
             }
+            marker._updateEM();
         },
         addCallback: function(e){
             var marker = e.target,

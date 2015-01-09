@@ -105,6 +105,10 @@
         ////////////////////////////////
         if (mapOptions.editMode == true) {
             this.activateLeafletDraw();
+            this._map.on('click', function(){
+                if (_this._editedMarker) { _this._editedMarker.dragging.disable(); }
+                _this._editedMarker = null;
+            });
         } else {
             // Doit contenir les nouveaux éléments ajoutés à la carte
             drawnItems = new L.LayerGroup();
@@ -123,6 +127,28 @@
             mapOptions.loadedCallback.call(this);
         }
 
+    };
+
+    EsterenMap.prototype.refDatas = function(name, id) {
+        var datas = this.cloneObject((this._refDatas['ref-datas'] ? this._refDatas['ref-datas'] : this._refDatas));
+        if (name) {
+            if (datas[name]) {
+                if (id) {
+                    if (datas[name][id]) {
+                        datas = datas[name][id];
+                    } else {
+                        console.warn('No ref data with id "'+id+'" in refs "'+name+'"');
+                        datas = {};
+                    }
+                } else {
+                    datas = datas[name];
+                }
+            } else {
+                console.warn('No ref data with id "'+id+'" in refs "'+name+'"');
+                datas = {};
+            }
+        }
+        return datas;
     };
 
     /**
@@ -147,12 +173,12 @@
 
         if ($.isPlainObject(name)) {
             console.info('fetched plain object');
-            name = name.uri || name ;
             datas = name.datas || datas;
             method = name.method || method;
             callback = name.callback || callback;
             callbackComplete = name.callbackComplete || callbackComplete;
             callbackError = name.callbackError || callbackError;
+            name = name.uri || name ;
         }
 
         method = method ? method.toUpperCase() : "GET";
@@ -200,6 +226,7 @@
             name = name.join('/');
         } else if (!name) {
             console.error('Wrong uri sent to EsterenMap dynamic loader.');
+            return false;
         }
 
         // On s'assure d'une sécurité maximale
@@ -279,11 +306,6 @@
         return this._load(["maps",mapOptions.id,"zones"], null, null, mapOptions.loaderCallbacks.zones);
     };
 
-    EsterenMap.prototype.loadRoutesTypes = function(){
-        var mapOptions = this.options();
-        return this._load(["routestypes"], null, null, mapOptions.loaderCallbacks.routesTypes);
-    };
-
     EsterenMap.prototype.loadRefDatas = function(callback){
         var _this = this,
             refDatasService = "ref-datas",
@@ -292,7 +314,7 @@
         if (this._refDatas) {
             // Si les données ont déjà été chargées, on va simplement exécuter callback
             // Avec un tableau similaire
-            callback.call(this, {refDatasService: this._refDatas});
+            callback.call(this, {refDatasService: this.refDatas()});
             return this;
         }
 
