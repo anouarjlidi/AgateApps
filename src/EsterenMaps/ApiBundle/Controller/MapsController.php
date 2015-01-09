@@ -81,7 +81,7 @@ class MapsController extends Controller
             'markersTypes' => $em->getRepository('EsterenMapsBundle:MarkersTypes')->findAll(true),
             'routesTypes' => $em->getRepository('EsterenMapsBundle:RoutesTypes')->findAll(true),
             'zonesTypes' => $em->getRepository('EsterenMapsBundle:ZonesTypes')->findAll(true),
-            'factions' => $em->getRepository('CorahnRinModelsBundle:Factions')->findAll(true),
+            'factions' => $em->getRepository('EsterenMapsBundle:Factions')->findAll(true),
         );
 
         $response = new Response();
