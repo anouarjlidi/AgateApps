@@ -1,8 +1,8 @@
 <?php
 
 if (in_array(@$_SERVER['HTTP_HOST'], array('127.0.0.1','127.0.0.1:8888','127.0.0.1:8080',))
-    || preg_match('~\.esteren\.dev(:[0-9]+)?$~', $_SERVER['HTTP_HOST'])) {
-    // Permet en local d'utiliser app_dev_fast par défaut
+    || preg_match('~\.esteren\.dev(?::[0-9]+)?$~', $_SERVER['HTTP_HOST'])) {
+    // Permet en local d'utiliser app_dev par défaut dans un environnement de dev
     include 'app_dev.php';
     exit;
 }
