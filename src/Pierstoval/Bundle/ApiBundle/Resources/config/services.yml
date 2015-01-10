@@ -7,3 +7,10 @@ services:
         arguments:
             allowedOrigins: %pierstoval_api.allowed_origins%
             kernelEnvironment: %kernel.environment%
+
+    pierstoval.api.listener:
+        class: Pierstoval\Bundle\ApiBundle\Listeners\JsonResponseListener
+        arguments:
+            kernel: @kernel
+        tags:
+            - { name: kernel.event_subscriber }
