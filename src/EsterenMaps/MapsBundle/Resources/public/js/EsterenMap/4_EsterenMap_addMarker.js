@@ -35,10 +35,19 @@
         if (id && esterenMarker && this._map) {
             this._esterenMap._load({
                 uri: "markers/" + id,
-                datas: {
-                    json: JSON.stringify(esterenMarker)
-                },
-                method: "POST"
+                method: "POST",
+                data: {
+                    json: esterenMarker,
+                    mapping: {
+                        name: true,
+                        description: true,
+                        longitude: true,
+                        latitude: true,
+                        marker_type: {
+                            objectField: 'markerType'
+                        }
+                    }
+                }
             });
         }
     };
@@ -272,7 +281,12 @@
         marker = L.marker(latLng, leafletOptions);
 
         marker._esterenMap = this;
-        marker._esterenMarker = customUserOptions.esterenMarker;
+        if (customUserOptions.esterenMarker) {
+            marker._esterenMarker = customUserOptions.esterenMarker;
+        } else {
+            marker._esterenMarker = this.esterenMarkerPrototype;
+            marker._esterenMarker.marker_type = this.refDatas('markersTypes', 1);
+        }
 
         // Création d'une popup
         popupContent = customUserOptions.popupContent;

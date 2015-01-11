@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use JMS\Serializer\Annotation as Serializer;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Markers
@@ -102,7 +103,10 @@ class Markers {
      * @var MarkersTypes
      *
      * @ORM\ManyToOne(targetEntity="MarkersTypes", inversedBy="markers", fetch="EAGER")
+     * @ORM\JoinColumn(nullable=false)
      * @Serializer\Expose
+     * @Assert\NotBlank()
+     * @Assert\Valid()
      */
     protected $markerType;
 

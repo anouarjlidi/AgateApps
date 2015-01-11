@@ -173,7 +173,7 @@
 
         if ($.isPlainObject(name)) {
             console.info('fetched plain object');
-            datas = name.datas || datas;
+            datas = name.datas || name.data || datas;
             method = name.method || method;
             callback = name.callback || callback;
             callbackComplete = name.callbackComplete || callbackComplete;
