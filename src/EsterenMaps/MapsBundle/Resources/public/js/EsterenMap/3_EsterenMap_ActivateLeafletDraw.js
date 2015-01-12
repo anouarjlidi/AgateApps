@@ -136,7 +136,6 @@
                 ;
 
             layers.eachLayer(function (layer) {
-                console.info('currently on layer ', layer);
                 if (layer._esterenMarker && layer._esterenMarker.id) {
                     // Marqueur
                     $('input,textarea').filter(function(i,element){

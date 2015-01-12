@@ -172,7 +172,6 @@
         ;
 
         if ($.isPlainObject(name)) {
-            console.info('fetched plain object');
             datas = name.datas || name.data || datas;
             method = name.method || method;
             callback = name.callback || callback;
@@ -184,7 +183,7 @@
         method = method ? method.toUpperCase() : "GET";
         if (allowedMethods.indexOf(method) === -1) {
             method = "GET";
-            console.warn('Wrong HTTP method for _load() method. Allowed : '+allowedMethods.join(', '));
+            console.error('Wrong HTTP method for _load() method. Allowed : '+allowedMethods.join(', '));
             return false;
         }
 
