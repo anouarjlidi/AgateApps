@@ -2,9 +2,11 @@
 
 namespace Pierstoval\Bundle\ApiBundle\Controller;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\PersistentCollection;
 use Doctrine\ORM\Query;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
@@ -80,7 +82,11 @@ class ApiController extends FOSRestController
         $key = rtrim($serviceName, 's');
 
         if ($subElement) {
-            $this->fetchSubElement($subElement, $service, $key, $data);
+            $data = $this->fetchSubElement($subElement, $service, $data, $key);
+            if ($data instanceof Response) {
+                // Means we have an error, probably
+                return $data;
+            }
         }
 
         $data = array($key => $data);
@@ -341,86 +347,88 @@ class ApiController extends FOSRestController
      *
      * @param array $subElement
      * @param array $service
-     * @param string $key
      * @param mixed $data
+     * @param string $key
+     *
+     * @return mixed
+     * @throws \Exception
      */
-    private function fetchSubElement($subElement, $service, &$key, &$data) {
+    private function fetchSubElement($subElement, $service, $data, &$key) {
 
         $elements = explode('/', trim($subElement, '/'));
 
-        $class = $service['entity'];
         if (count($elements)) {
-            $key .= '.' . $data->getId();
+            $key .= '.' . $this->getPropertyValue('_id', $data, $service['name']);
         }
 
         foreach ($elements as $k => $element) {
-
-            if (!$class) {
-                $class = $this->getService($element, false);
-                if ($class) {
-                    $class = $class['entity'];
-                } elseif (!($data instanceof Collection)) {
-                    $class = get_class($data);
-                } else {
-                    $class = null;
-                }
-            }
-
-            if ($class) {
-                // Seulement à la première occurrence
-                $metadatas = $this->container->get('jms_serializer')->getMetadataFactory()->getMetadataForClass($class);
-
-                if (isset($metadatas->propertyMetadata[$element])) {
-                    $subService = $this->getService($element, false);
-                    if ($subService) {
-                        $data = $data->{'get' . ucfirst($element)}();
-                        $key .= '.' . $element;
-                    } else {
-                        $subService = $this->getService($element . 's', false);
-                        if ($subService) {
-                            $data = $data->{'get' . ucfirst($element)}();
-                            $key .= '.' . $element;
-                        } else {
-                            throw $this->createNotFoundException('No attribute "' . $element . '" available for "'.$subService.'" object. #1');
+            $key .= '.'.$element;
+            if (is_numeric($element)) {
+                // Get an element when subElement is "/element/{id}"
+                $element = (int) $element;
+                if (is_array($data) || $data instanceof \Traversable) {
+                    $found = false;
+                    foreach ($data as $searchingData) {
+                        if ($this->getPropertyValue('_id', $searchingData) === $element) {
+                            $found = true;
+                            $data = $searchingData;
                         }
                     }
-                } elseif (isset($metadatas->propertyMetadata[preg_replace('#s$#isUu', '', $element)])) {
-                    $element = preg_replace('#s$#isUu', '', $element);
-                    $subService = $this->getService($element, false);
-                    if ($subService) {
-//                            $subEntity = new $subService['entity']();
-                        $data = $data->{'get' . ucfirst($element)}();
-                        $key .= '.' . $element;
-                    } else {
-                        throw $this->createNotFoundException('No attribute "' . $element . '" available for this object. #2');
+                    if (!$found) {
+                        return $this->error('Found no element with identifier "'.$element.'" in requested object.', array(), 404);
                     }
                 } else {
-                    if (method_exists($data, 'get' . ucfirst($element))) {
-                        $data = $data->{'get' . ucfirst($element)}();
-                    } elseif (method_exists($data, 'get' . preg_replace('#s$#isUu', '', ucfirst($element)))) {
-                        $data = $data->{'get' . preg_replace('#s$#isUu', '', ucfirst($element))}();
-                    } else {
-                        throw $this->createNotFoundException('No attribute "' . $element . '" available for this object. #3');
-                    }
-                }
-            } elseif (is_numeric($element)) {
-                $element = (int)$element;
-                if ($data instanceof Collection) {
-
-                    $data = $data->filter(
-                        function ($entry) use ($element) {
-                            return method_exists($element, 'getId') && $entry->getId() == $element;
-                        }
-                    );
-                    $data = $data->first();
-                    $key .= '.' . $element;
-                } else {
-                    throw $this->createNotFoundException('Elements not found');
+                    return $this->error('Identifier cannot be requested for a collection.');
                 }
             } else {
-                throw $this->createNotFoundException('No attribute "' . $element . '" available for "'.$class.'" object. #4');
+                $data = $this->getPropertyValue($element, $data);
             }
-            $class = null;
+
         }
+
+        return $data;
+    }
+
+    /**
+     * @param $field
+     * @param $object
+     *
+     * @return int
+     * @throws \Exception
+     */
+    private function getPropertyValue($field, $object)
+    {
+        if (!is_object($object)) {
+            throw new \Exception('Field "'.$field.'" cannot be retrieved as analyzed element is not an object.');
+        }
+        $metadatas = $this->getDoctrine()->getManager()->getClassMetadata(get_class($object));
+
+        if ($field === '_id') {
+            // Check for identifier
+            return (int) (array_values($metadatas->getIdentifierValues($object))[0]);
+        } else {
+            // Check for any other field
+            $service = $this->getService($field, false);
+            if ($service) {
+                return $this->getDoctrine()->getManager()
+                    ->getRepository($service['entity'])
+                    ->findBy(array(
+                        $metadatas->getAssociationMappedByTargetField($field) => $this->getPropertyValue('_id', $object)
+                    ));
+            }
+            if ($metadatas->hasField($field) || $metadatas->hasAssociation($field)) {
+                $reflectionProperty = $metadatas->getReflectionClass()->getProperty($field);
+                $reflectionProperty->setAccessible(true);
+
+                $data = $reflectionProperty->getValue($object);
+                if ($data instanceof PersistentCollection) {
+                    $data = $data->getValues();
+                }
+                return $data;
+            } else {
+                throw new \Exception('Field "'.$field.'" does not exist in "'.(new \ReflectionClass($object))->getShortName().'" object');
+            }
+        }
+
     }
 }
