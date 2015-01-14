@@ -106,6 +106,8 @@
                 inputId
             ;
 
+            console.info('edited layer', layers);
+
             layers.eachLayer(function (layer) {
                 if (layer._esterenMarker && layer._esterenMarker.id) {
                     // Marqueur

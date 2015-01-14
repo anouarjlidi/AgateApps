@@ -1,5 +1,3 @@
-(function($, L, d, w){
-
     EsterenMap.prototype._map = null;
     EsterenMap.prototype._sidebar = {};
     EsterenMap.prototype._filtersControl = {};
@@ -7,6 +5,8 @@
     EsterenMap.prototype._drawnItems = {};
     EsterenMap.prototype._tileLayer = {};
     EsterenMap.prototype._editedMarker = null;
+    EsterenMap.prototype._editedPolyline = null;
+    EsterenMap.prototype._editedPolygon = null;
 
     EsterenMap.prototype._refDatas = false;
 
@@ -81,4 +81,3 @@
         }
     };
 
-})(jQuery, L, document, window);

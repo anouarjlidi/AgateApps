@@ -108,6 +108,10 @@
             this._map.on('click', function(){
                 if (_this._editedMarker) { _this._editedMarker.dragging.disable(); }
                 _this._editedMarker = null;
+                if (_this._editedPolyline) { _this._editedPolyline.editing.disable(); }
+                _this._editedPolyline = null;
+                if (_this._editedPolygon) { _this._editedPolygon.editing.disable(); }
+                _this._editedPolygon = null;
             });
         } else {
             // Doit contenir les nouveaux éléments ajoutés à la carte
@@ -137,15 +141,15 @@
                     if (datas[name][id]) {
                         datas = datas[name][id];
                     } else {
-                        console.warn('No ref data with id "'+id+'" in refs "'+name+'"');
+                        console.warn('No ref data with id "'+id+'" in "'+name+'"');
                         datas = {};
                     }
                 } else {
                     datas = datas[name];
                 }
             } else {
-                console.warn('No ref data with id "'+id+'" in refs "'+name+'"');
-                datas = {};
+                console.warn('No ref data with id "'+id+'" in "'+name+'"');
+                datas = null;
             }
         }
         return datas;
@@ -155,7 +159,7 @@
      * Exécute une requête AJAX dans le but de récupérer des éléments liés à la map
      * via l'API
      *
-     * @param {array|string} name Le type d'élément à récupérer. Si plusieurs éléments sont indiqués dans un tableau, chacun sera validé à partir des options "allowedElement", cela créera une requête plus précise. Exemple : ["maps","routes"]. Des nombres sont autorisés pour récupérer un ID.
+     * @param {object|string} name Le type d'élément à récupérer. Si plusieurs éléments sont indiqués dans un tableau, chacun sera validé à partir des options "allowedElement", cela créera une requête plus précise. Exemple : ["maps","routes"]. Des nombres sont autorisés pour récupérer un ID.
      * @param {object|null} [datas] les options à envoyer à l'objet AJAX
      * @param {string|null} [method] La méthode HTTP. GET par défaut.
      * @param {function|null} [callback] Une fonction de callback à envoyer à la méthode "success" de l'objet Ajax.
@@ -168,7 +172,7 @@
             otherParams = {},
             _this = this,
             mapOptions = this.options(),
-            allowedMethods = ["GET","POST"]
+            allowedMethods = ["GET", "POST", "PUT"]
         ;
 
         if ($.isPlainObject(name)) {

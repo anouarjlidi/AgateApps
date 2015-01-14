@@ -29,13 +29,26 @@
         return this;
     };
 
+    L.Marker.prototype.updateIcon = function(){
+        // Change l'image de l'icône
+        this._icon.src = this._esterenMarker.marker_type.icon.formats.icon.url;
+
+        // Met à jour l'attribut "data" pour les filtres
+        $(this._icon).attr('data-leaflet-object-type', 'markerType'+this._esterenMarker.marker_type.id);
+    };
+
     L.Marker.prototype._updateEM = function() {
-        var esterenMarker = this._esterenMarker || {},
+        var esterenMarker = this._esterenMarker || null,
             id = esterenMarker.id || null;
-        if (id && esterenMarker && this._map) {
+        if (esterenMarker && this._map) {
+            esterenMarker.map = esterenMarker.map || {id: this._esterenMap.options().id };
+            esterenMarker.latitude = this._latlng.lat;
+            esterenMarker.longitude = this._latlng.lng;
+            esterenMarker.altitude = this._latlng.alt;
+            esterenMarker.faction = esterenMarker.faction || null;
             this._esterenMap._load({
-                uri: "markers/" + id,
-                method: "POST",
+                uri: "markers" + (id ? '/'+id : ''),
+                method: id ? "POST" : "PUT", // Si on n'a pas d'ID, c'est qu'on crée un nouveau marqueur
                 data: {
                     json: esterenMarker,
                     mapping: {
@@ -43,23 +56,42 @@
                         description: true,
                         longitude: true,
                         latitude: true,
+                        map: true,
                         marker_type: {
                             objectField: 'markerType'
-                        }
+                        },
+                        faction: true
                     }
+                },
+                callback: function(response) {
+                    var map = this,
+                        marker = response.newObject;
+                    if (!response.error) {
+                        if (marker && marker.id) {
+                            map._markers[marker.id]._esterenMarker = marker;
+                            map._markers[marker.id].updateIcon();
+                        } else {
+                            console.warn('Marker retrieved by API does not have ID.');
+                        }
+                    } else {
+                        console.error('Api sent back an error while attempting to '+(id?'update':'insert')+' a marker.');
+                    }
+                },
+                callbackError: function() {
+                    console.error('Could not make a request to '+(id?'update':'insert')+' a marker.');
                 }
             });
+        } else {
+            console.error('Tried to update an empty marker.');
         }
-    };
-
-    EsterenMap.prototype.esterenMarkerTypePrototype = function() {
-        return this._markersTypes[0] || {};
     };
 
     EsterenMap.prototype.esterenMarkerPrototype = {
         id: null,
         name: null,
+        description: null,
         marker_type: null,
+        faction: null,
         latitude: null,
         longitude: null
     };
@@ -107,7 +139,7 @@
                     options.markerFaction = marker.faction ? marker.faction.id : '';
 
                     leafletOptions.alt = marker.id;
-                    
+
                     this.addMarker(coords,
                         leafletOptions,
                         options
@@ -124,7 +156,7 @@
     };
 
     EsterenMap.prototype._mapOptions.LeafletMarkerBaseOptionsEditMode = {
-        draggable: true
+        draggable: false
     };
 
     EsterenMap.prototype._mapOptions.LeafletIconBaseOptions = {
@@ -152,35 +184,34 @@
     EsterenMap.prototype._mapOptions.CustomMarkerBaseOptionsEditMode = {
         clickCallback: function(e){
             var marker = e.target,
+                map = marker._esterenMap,
                 esterenMarker = marker._esterenMarker,
-                id = marker.options.alt
+                id = esterenMarker.id || marker.options.alt
             ;
 
             marker.dragging.enable();
-            marker._esterenMap._editedMarker = marker;
             marker.showSidebar();
+            map._editedMarker = marker;
 
             if (marker._sidebar.isVisible() && esterenMarker) {
                 d.getElementById('marker_popup_name').value = esterenMarker.name;
                 d.getElementById('marker_popup_type').value = esterenMarker.marker_type ? esterenMarker.marker_type.id : null;
-                d.getElementById('marker_popup_faction').value = esterenMarker.faction ? esterenMarker.faction.id : null;
+                d.getElementById('marker_popup_faction').value = esterenMarker.faction ? esterenMarker.faction.id : "";
 
                 d.getElementById('marker_popup_name').onkeyup = function(){
-                    esterenMarker.name = this.value;
+                    map._markers[id]._esterenMarker.name = this.value;
                     if (this._timeout) { clearTimeout(this._timeout); }
-                    this._timeout = setTimeout(function(){ marker._updateEM(); }, 1750);
+                    this._timeout = setTimeout(function(){ map._markers[id]._updateEM(); }, 1000);
                     return false;
                 };
                 d.getElementById('marker_popup_type').onchange = function(){
-                    esterenMarker.marker_type = marker._esterenMap._markersTypes[this.value] || null;
-                    if (this._timeout) { clearTimeout(this._timeout); }
-                    this._timeout = setTimeout(function(){ marker._updateEM(); }, 1750);
+                    map._markers[id]._esterenMarker.marker_type = map.refDatas('markersTypes', this.value);
+                    map._markers[id]._updateEM();
                     return false;
                 };
                 d.getElementById('marker_popup_faction').onchange = function(){
-                    d.getElementById('marker_'+id+'_faction').value = this.value;
-                    if (this._timeout) { clearTimeout(this._timeout); }
-                    this._timeout = setTimeout(function(){ marker._updateEM(); }, 1750);
+                    map._markers[id]._esterenMarker.faction = map.refDatas('factions', this.value);
+                    map._markers[id]._updateEM();
                     return false;
                 };
             }
@@ -279,6 +310,7 @@
         if (customUserOptions.esterenMarker) {
             marker._esterenMarker = customUserOptions.esterenMarker;
         } else {
+            // Ici on tente de créer un nouveau marqueur
             marker._esterenMarker = this.esterenMarkerPrototype;
             marker._esterenMarker.marker_type = this.refDatas('markersTypes', 1);
         }
