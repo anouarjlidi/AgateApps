@@ -98,6 +98,74 @@ class ApiController extends FOSRestController
     public function putAction($serviceName, Request $request)
     {
         $this->checkAsker($request);
+
+        $datas = array();
+
+        $serializer = $this->container->get('serializer');
+        $service = $this->getService($serviceName);
+
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository($service['entity']);
+
+        // Generate a new object
+        $object = new $service['entity'];
+
+        $post = $request->request;
+
+        // The user object has to be the "json" parameter
+        $userObject = $post->has('json') ? $post->get('json') : null;
+
+        if (!$userObject) {
+            return $this->error('You must specify the "%param%" parameter.', array('%param%' => 'json'));
+        }
+        if (is_string($userObject)) {
+            // Allows either JSON string or array
+            $userObject = json_decode($post->get('json'), true);
+            if (!$userObject) {
+                return $this->error('Error while parsing json.');
+            }
+        }
+
+        if ($post->get('mapping')) {
+            $object = $this->container->get('pierstoval_api.entity_merger')->merge($object, $userObject, $post->get('mapping'));
+        } else {
+            // Transform the full item recursively into an array
+            $object = $serializer->deserialize($serializer->serialize($object, 'json'), 'array', 'json');
+            $requestObject = json_decode($request->get('json'), true);
+
+            // Merge the two arrays with request parameters
+            $userObject = array_merge($object, $requestObject);
+
+            // Serialize POST and deserialize to get full object
+            $json = $serializer->serialize($userObject, 'json');
+            $object = $serializer->deserialize($json, $service['entity'], 'json');
+        }
+
+        $errors = $this->get('validator')->validate($object);
+
+        if (!count($errors)) {
+
+            $id = $em->getUnitOfWork()->getSingleIdentifierValue($object);
+
+            if ($id && $repo->find($id)) {
+                throw new \InvalidArgumentException('"PUT" method is used to insert new datas. If you want to merge object, use the "POST" method instead.');
+            } else {
+                $em->persist($object);
+            }
+
+            $em->flush();
+
+            $datas['newObject'] = $object;
+        } else {
+            return $this->view(array(
+                'error' => true,
+                'message' => $this->get('translator')->trans('Invalid form, please re-check. Errors', array(), 'pierstoval_api.exceptions'),
+                'errors' => $errors,
+            ), 500);
+        }
+
+        return $this->view($datas);
     }
 
     /**
