@@ -11,7 +11,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @ORM\Table(name="npcs")
  * @Gedmo\SoftDeleteable(fieldName="deleted")
- * @ORM\Entity(repositoryClass="EsterenMaps\MapsBundle\Repository\NpcsRepository")
+ * @ORM\Entity()
  */
 class Npcs {
 

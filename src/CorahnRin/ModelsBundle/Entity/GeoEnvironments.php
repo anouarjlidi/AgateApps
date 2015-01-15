@@ -10,7 +10,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @ORM\Table(name="geo_environments")
  * @Gedmo\SoftDeleteable(fieldName="deleted")
- * @ORM\Entity(repositoryClass="CorahnRin\ModelsBundle\Repository\GeoEnvironmentsRepository")
+ * @ORM\Entity()
  */
 class GeoEnvironments {
 

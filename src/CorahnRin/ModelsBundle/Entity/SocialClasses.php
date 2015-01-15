@@ -11,7 +11,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @ORM\Table(name="social_class")
  * @Gedmo\SoftDeleteable(fieldName="deleted")
- * @ORM\Entity(repositoryClass="CorahnRin\ModelsBundle\Repository\SocialClassesRepository")
+ * @ORM\Entity()
  */
 class SocialClasses {
 

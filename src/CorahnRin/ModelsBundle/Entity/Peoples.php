@@ -10,7 +10,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @ORM\Table(name="peoples")
  * @Gedmo\SoftDeleteable(fieldName="deleted")
- * @ORM\Entity(repositoryClass="CorahnRin\ModelsBundle\Repository\PeoplesRepository")
+ * @ORM\Entity()
  */
 class Peoples {
 

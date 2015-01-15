@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * CharDomains
  *
  * @ORM\Table(name="characters_domains")
- * @ORM\Entity(repositoryClass="CorahnRin\ModelsBundle\Repository\CharDomainsRepository")
+ * @ORM\Entity()
  */
 class CharDomains {
 

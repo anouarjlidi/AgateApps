@@ -10,7 +10,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @ORM\Table(name="events_markers")
  * @Gedmo\SoftDeleteable(fieldName="deleted")
- * @ORM\Entity(repositoryClass="EsterenMaps\MapsBundle\Repository\EventsMarkersRepository")
+ * @ORM\Entity()
  */
 class EventsMarkers {
 

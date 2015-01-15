@@ -13,7 +13,7 @@ use JMS\Serializer\Annotation\Expose as Expose;
  *
  * @ORM\Table(name="zones_types")
  * @Gedmo\SoftDeleteable(fieldName="deleted")
- * @ORM\Entity(repositoryClass="EsterenMaps\MapsBundle\Repository\ZonesTypesRepository")
+ * @ORM\Entity()
  * @ExclusionPolicy("all")
  */
 class ZonesTypes {

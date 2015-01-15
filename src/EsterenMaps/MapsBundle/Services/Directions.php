@@ -8,6 +8,11 @@ use EsterenMaps\MapsBundle\Entity\Markers;
 use EsterenMaps\MapsBundle\Repository\MarkersRepository;
 use JMS\Serializer\Serializer;
 
+/**
+ * Class Directions
+ * Utilise l'algorithme de Dijkstra pour calculer le trajet entre deux marqueurs
+ * @package EsterenMaps\MapsBundle\Services
+ */
 class Directions {
 
     /**
@@ -20,6 +25,10 @@ class Directions {
      */
     private $serializer;
 
+    /**
+     * @param EntityManager $entityManager
+     * @param Serializer    $serializer
+     */
     public function __construct(EntityManager $entityManager, Serializer $serializer) {
         $this->entityManager = $entityManager;
         $this->serializer = $serializer;

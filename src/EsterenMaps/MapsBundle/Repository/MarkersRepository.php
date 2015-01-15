@@ -8,6 +8,11 @@ use EsterenMaps\MapsBundle\Entity\Maps;
  */
 class MarkersRepository extends BaseRepository {
 
+    /**
+     * Get all markers with their routes (start/end) linked to a specific map.
+     * @param Maps $map
+     * @return array
+     */
     public function getAllWithRoutesArray(Maps $map) {
 
         $dql = '
@@ -20,7 +25,7 @@ class MarkersRepository extends BaseRepository {
                     markerStartEnd,
                     markerEndEnd
 
-            FROM '.$this->getClassName().' markers
+            FROM '.$this->_entityName.' markers
 
             LEFT JOIN markers.routesStart routesStart
                 LEFT JOIN routesStart.markerStart markerStartStart

@@ -14,7 +14,7 @@ use Sonata\MediaBundle\Model\MediaInterface;
  *
  * @ORM\Table(name="markers_types")
  * @Gedmo\SoftDeleteable(fieldName="deleted")
- * @ORM\Entity(repositoryClass="EsterenMaps\MapsBundle\Repository\MarkersTypesRepository")
+ * @ORM\Entity()
  * @Serializer\ExclusionPolicy("all")
  */
 class MarkersTypes

@@ -1,6 +1,7 @@
 <?php
 namespace CorahnRin\ModelsBundle\Repository;
 
+use CorahnRin\ModelsBundle\Entity\Avantages;
 use Pierstoval\Bundle\ToolsBundle\Repository\BaseRepository;
 
 /**
@@ -13,6 +14,7 @@ class AvantagesRepository extends BaseRepository {
      * @return array Un tableau de deux tableaux : "advantages" et "disadvantages"
      */
     function findAllDifferenciated() {
+        /** @var Avantages[] $list */
         $list = $this->findAll(true);
         $advantages = $disadvantages = array();
         foreach ($list as $id => $element) {

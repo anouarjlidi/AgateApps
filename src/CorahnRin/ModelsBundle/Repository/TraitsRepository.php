@@ -9,13 +9,15 @@ use Pierstoval\Bundle\ToolsBundle\Repository\BaseRepository;
  * TraitsRepository
  *
  */
-class TraitsRepository extends BaseRepository {
+class TraitsRepository extends BaseRepository
+{
 
     /**
      * @return array
      */
-    function findAllDifferenciated() {
-        $list = $this->findBy(array(), array('name' => 'asc'), null, null, true);
+    function findAllDifferenciated()
+    {
+        $list      = $this->findBy(array(), array('name' => 'asc'), null, null, true);
         $qualities = $flaws = array();
         foreach ($list as $id => $element) {
             if ($element instanceof Traits) {
@@ -28,15 +30,17 @@ class TraitsRepository extends BaseRepository {
         }
         return array(
             'qualities' => $qualities,
-            'flaws' => $flaws,
+            'flaws'     => $flaws,
         );
     }
 
     /**
      * @param Traits[] $traits
+     *
      * @return array
      */
-    function sortQualitiesFlaws($traits) {
+    public function sortQualitiesFlaws($traits)
+    {
         $list = array('qualities' => array(), 'flaws' => array());
         foreach ($traits as $trait) {
             if ($trait->getIsQuality()) {
@@ -55,10 +59,12 @@ class TraitsRepository extends BaseRepository {
      * (key) wayid => (value) way score
      *
      * @param Ways[] $ways
+     *
      * @throws \Exception
      * @return array
      */
-    function findAllDependingOnWays(array $ways) {
+    public function findAllDependingOnWays(array $ways)
+    {
         $qb = $this->_em
             ->createQueryBuilder()
             ->select('t')

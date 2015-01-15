@@ -11,7 +11,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * Games
  *
  * @Gedmo\SoftDeleteable(fieldName="deleted")
- * @ORM\Entity(repositoryClass="CorahnRin\ModelsBundle\Repository\GamesRepository")
+ * @ORM\Entity()
  * @ORM\Table(name="games", uniqueConstraints={@ORM\UniqueConstraint(name="idgUnique", columns={"name", "gameMaster_id"})})
  */
 class Games {

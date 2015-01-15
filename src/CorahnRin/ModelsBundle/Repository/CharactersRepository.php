@@ -8,10 +8,17 @@ use Pierstoval\Bundle\ToolsBundle\Repository\BaseRepository;
  * CharactersRepository
  *
  */
-class CharactersRepository extends BaseRepository {
+class CharactersRepository extends BaseRepository
+{
 
-    private function getQbFull() {
-        $qb = $this->_em
+    /**
+     * @param $id
+     *
+     * @return Characters|null
+     */
+    public function findFetched($id)
+    {
+        return $this->_em
             ->createQueryBuilder()
             ->select('characters')
             ->from($this->_entityName, 'characters')
@@ -26,33 +33,25 @@ class CharactersRepository extends BaseRepository {
             ->leftJoin('characters.miracles', 'miracles')->addSelect('miracles')
             ->leftJoin('characters.domains', 'domains')->addSelect('domains')
             ->leftJoin('characters.disciplines', 'disciplines')->addSelect('disciplines')
-            ->leftJoin('characters.avantages', 'avantages')->addSelect('avantages');
-        return $qb;
-    }
-
-    /**
-     * @param $id
-     * @return Characters|null
-     */
-    public function findFetched($id) {
-        return $this
-            ->getQbFull()
+            ->leftJoin('characters.avantages', 'avantages')->addSelect('avantages')
             ->where('characters.id = :id')
             ->setParameter('id', (int) $id)
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getOneOrNullResult();
     }
 
     /**
-     * @param string $searchField   Le champ dans lequel exécuter la requête
-     * @param string $order         L'ordre (asc ou desc)
-     * @param int    $limit         Le nombre d'éléments à récupérer
-     * @param int    $offset        L'offset de départ
-     * @param bool   $getCount      Récupérer uniquement le nombre de résultats totaux (sans les informations "limit" et "offset")
+     * @param string $searchField Le champ dans lequel exécuter la requête
+     * @param string $order       L'ordre (asc ou desc)
+     * @param int    $limit       Le nombre d'éléments à récupérer
+     * @param int    $offset      L'offset de départ
+     * @param bool   $getCount    Récupérer uniquement le nombre de résultats totaux (sans les informations "limit" et
+     *                            "offset")
+     *
      * @return Characters[]
      */
-    public function findSearch($searchField = 'id', $order = 'asc', $limit = 20, $offset = 0, $getCount = false) {
+    public function findSearch($searchField = 'id', $order = 'asc', $limit = 20, $offset = 0, $getCount = false)
+    {
 
         $qb = $this->_em
             ->createQueryBuilder()
@@ -92,7 +91,16 @@ class CharactersRepository extends BaseRepository {
         return $datas;
     }
 
-    public function getNumberOfElementsSearch($searchField = 'id', $order = 'asc', $limit = 20, $offset = 0) {
+    /**
+     * @param string $searchField
+     * @param string $order
+     * @param int    $limit
+     * @param int    $offset
+     *
+     * @return Characters[]
+     */
+    public function getNumberOfElementsSearch($searchField = 'id', $order = 'asc', $limit = 20, $offset = 0)
+    {
         return $this->findSearch($searchField, $order, $limit, $offset, true);
     }
 

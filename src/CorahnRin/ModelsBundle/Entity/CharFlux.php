@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * CharFlux
  *
  * @ORM\Table(name="characters_flux")
- * @ORM\Entity(repositoryClass="CorahnRin\ModelsBundle\Repository\CharFluxRepository")
+ * @ORM\Entity()
  */
 class CharFlux {
 

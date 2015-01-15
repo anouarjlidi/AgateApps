@@ -9,7 +9,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * CharWays
  *
  * @ORM\Table(name="characters_ways")
- * @ORM\Entity(repositoryClass="CorahnRin\ModelsBundle\Repository\CharWaysRepository")
+ * @ORM\Entity()
  */
 class CharWays {
 

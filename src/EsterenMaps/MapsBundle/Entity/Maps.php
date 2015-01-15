@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="maps")
  * @Gedmo\SoftDeleteable(fieldName="deleted")
- * @ORM\Entity(repositoryClass="EsterenMaps\MapsBundle\Repository\MapsRepository")
+ * @ORM\Entity()
  * @ExclusionPolicy("all")
  * @Gedmo\Uploadable(allowOverwrite=true, filenameGenerator="SHA1")
  */

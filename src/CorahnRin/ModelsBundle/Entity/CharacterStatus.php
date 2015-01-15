@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * CharacterStatus
  *
  * @ORM\Table(name="characters_status")
- * @ORM\Entity(repositoryClass="CorahnRin\ModelsBundle\Repository\CharacterStatusRepository")
+ * @ORM\Entity()
  */
 class CharacterStatus {
 

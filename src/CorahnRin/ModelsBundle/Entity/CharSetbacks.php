@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * CharSetbacks
  *
  * @ORM\Table(name="characters_setbacks")
- * @ORM\Entity(repositoryClass="CorahnRin\ModelsBundle\Repository\CharSetbacksRepository")
+ * @ORM\Entity()
  */
 class CharSetbacks {
 

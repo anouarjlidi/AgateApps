@@ -43,16 +43,6 @@ esteren_portal:
     requirements:
         _locale: ^(%locales_regex%)$
 
-#esteren_pages:
-#    resource: "@EsterenPagesBundle/Controller/"
-#    type:     annotation
-#    host:     %esteren_domains.portal%
-#    prefix:   /{_locale}/
-#    defaults:
-#         _locale: %locale%
-#    requirements:
-#        _locale: ^(%locales_regex%)$
-
 #-----------------------------------
 # Esteren Maps relative routing
 esterenmaps:
