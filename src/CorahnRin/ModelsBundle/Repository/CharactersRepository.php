@@ -2,13 +2,13 @@
 namespace CorahnRin\ModelsBundle\Repository;
 
 use CorahnRin\ModelsBundle\Entity\Characters;
-use CorahnRin\ToolsBundle\Repository\CorahnRinRepository as CorahnRinRepository;
+use Pierstoval\Bundle\ToolsBundle\Repository\BaseRepository;
 
 /**
  * CharactersRepository
  *
  */
-class CharactersRepository extends CorahnRinRepository {
+class CharactersRepository extends BaseRepository {
 
     private function getQbFull() {
         $qb = $this->_em

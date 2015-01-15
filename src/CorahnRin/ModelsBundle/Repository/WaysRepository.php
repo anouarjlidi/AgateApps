@@ -1,12 +1,12 @@
 <?php
 namespace CorahnRin\ModelsBundle\Repository;
 
-use CorahnRin\ToolsBundle\Repository\CorahnRinRepository as CorahnRinRepository;
+use Pierstoval\Bundle\ToolsBundle\Repository\BaseRepository;
 
 /**
  * WaysRepository
  *
  */
-class WaysRepository extends CorahnRinRepository {
+class WaysRepository extends BaseRepository {
 
 }

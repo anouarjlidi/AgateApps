@@ -1,13 +1,13 @@
 <?php
 namespace CorahnRin\ModelsBundle\Repository;
 
-use CorahnRin\ToolsBundle\Repository\CorahnRinRepository as CorahnRinRepository;
+use Pierstoval\Bundle\ToolsBundle\Repository\BaseRepository;
 
 /**
  * AvantagesRepository
  *
  */
-class AvantagesRepository extends CorahnRinRepository {
+class AvantagesRepository extends BaseRepository {
 
     /**
      * @return array Un tableau de deux tableaux : "advantages" et "disadvantages"

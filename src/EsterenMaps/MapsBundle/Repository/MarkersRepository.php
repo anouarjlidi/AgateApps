@@ -1,15 +1,15 @@
 <?php
 namespace EsterenMaps\MapsBundle\Repository;
-use CorahnRin\ToolsBundle\Repository\CorahnRinRepository as CorahnRinRepository;
+use Pierstoval\Bundle\ToolsBundle\Repository\BaseRepository;
 use EsterenMaps\MapsBundle\Entity\Maps;
 
 /**
  * MarkersRepository
  */
-class MarkersRepository extends CorahnRinRepository {
+class MarkersRepository extends BaseRepository {
 
     public function getAllWithRoutesArray(Maps $map) {
-        
+
         $dql = '
             SELECT
                 markers,

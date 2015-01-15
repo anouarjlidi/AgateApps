@@ -3,13 +3,13 @@ namespace CorahnRin\ModelsBundle\Repository;
 
 use CorahnRin\ModelsBundle\Entity\Traits;
 use CorahnRin\ModelsBundle\Entity\Ways;
-use CorahnRin\ToolsBundle\Repository\CorahnRinRepository;
+use Pierstoval\Bundle\ToolsBundle\Repository\BaseRepository;
 
 /**
  * TraitsRepository
  *
  */
-class TraitsRepository extends CorahnRinRepository {
+class TraitsRepository extends BaseRepository {
 
     /**
      * @return array

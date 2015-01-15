@@ -1,13 +1,13 @@
 <?php
 namespace CorahnRin\GeneratorBundle\Repository;
 
-use CorahnRin\ToolsBundle\Repository\CorahnRinRepository as CorahnRinRepository;
+use Pierstoval\Bundle\ToolsBundle\Repository\BaseRepository;
 
 /**
  * StepsRepository
  *
  */
-class StepsRepository extends CorahnRinRepository {
+class StepsRepository extends BaseRepository {
 
 
 

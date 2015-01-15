@@ -1,14 +1,14 @@
 <?php
 namespace Esteren\PagesBundle\Repository;
 use Doctrine\ORM\EntityRepository;
-use CorahnRin\ToolsBundle\Repository\CorahnRinRepository as CorahnRinRepository;
+use Pierstoval\Bundle\ToolsBundle\Repository\BaseRepository;
 use Esteren\PagesBundle\Entity\Menus;
 
 /**
  * MenusRepository
  *
  */
-class MenusRepository extends CorahnRinRepository {
+class MenusRepository extends BaseRepository {
 
     /**
      * @return Menus[]

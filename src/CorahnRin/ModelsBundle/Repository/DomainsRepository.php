@@ -1,20 +1,32 @@
 <?php
 namespace CorahnRin\ModelsBundle\Repository;
 
-use CorahnRin\ToolsBundle\Repository\CorahnRinRepository as CorahnRinRepository;
+use Pierstoval\Bundle\ToolsBundle\Repository\BaseRepository;
 
 /**
  * DomainsRepository
  *
  */
-class DomainsRepository extends CorahnRinRepository {
+class DomainsRepository extends BaseRepository
+{
 
-    public function findAllSortedByName(array $criteria = array(), array $orderBy = null, $limit = null, $offset = null, $sortCollection = true) {
-        $orderBy = array('name' => 'asc');
-        $datas = $this->findBy($criteria, $orderBy, $limit, $offset, $sortCollection);
+    /**
+     * Renvoie la liste de tous les noms de Domains triés par ID
+     * @return array
+     */
+    public function findAllSortedByName()
+    {
+        $datas = $this->_em
+            ->createQueryBuilder()
+            ->select('domains.name as name')
+            ->from($this->_entityName, 'domains')
+            ->orderBy('domains.name', 'asc')
+            ->getQuery()->getArrayResult()
+        ;
         foreach ($datas as $id => $element) {
-            $datas[$id] = $element->getName();
+            $datas[$id] = $element['name'];
         }
         return $datas;
     }
+
 }

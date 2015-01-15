@@ -1,12 +1,12 @@
 <?php
 namespace Esteren\PagesBundle\Repository;
 use Doctrine\ORM\EntityRepository;
-use CorahnRin\ToolsBundle\Repository\CorahnRinRepository as CorahnRinRepository;
+use Pierstoval\Bundle\ToolsBundle\Repository\BaseRepository;
 
 /**
  * PagesRepository
  *
  */
-class PagesRepository extends CorahnRinRepository {
+class PagesRepository extends BaseRepository {
 
 }

@@ -1,12 +1,12 @@
 <?php
 namespace EsterenMaps\MapsBundle\Repository;
 use Doctrine\ORM\EntityRepository;
-use CorahnRin\ToolsBundle\Repository\CorahnRinRepository as CorahnRinRepository;
+use Pierstoval\Bundle\ToolsBundle\Repository\BaseRepository;
 
 /**
  * EventsRoutesTypesRepository
  *
  */
-class EventsRoutesTypesRepository extends CorahnRinRepository {
+class EventsRoutesTypesRepository extends BaseRepository {
 
 }

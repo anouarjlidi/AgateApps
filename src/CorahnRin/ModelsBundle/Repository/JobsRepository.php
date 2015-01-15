@@ -1,14 +1,20 @@
 <?php
 namespace CorahnRin\ModelsBundle\Repository;
 
-use CorahnRin\ToolsBundle\Repository\CorahnRinRepository as CorahnRinRepository;
+use Pierstoval\Bundle\ToolsBundle\Repository\BaseRepository;
 
 /**
  * JobsRepository
  *
  */
-class JobsRepository extends CorahnRinRepository {
+class JobsRepository extends BaseRepository {
 
+    /**
+     * Renvoie la liste des métiers triés par livre associé.
+     *
+     * @param bool $format
+     * @return array
+     */
     public function findAllPerBook($format = true) {
         $jobs = $this->findAll($format);
         $jobs_ordered = array();
