@@ -140,7 +140,7 @@ class Maps
     /**
      * @var Zones[]
      *
-     * @ORM\OneToMany(targetEntity="Zones", mappedBy="map", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Zones", mappedBy="map")
      * @Expose
      */
     protected $zones;
@@ -556,7 +556,9 @@ class Maps
      */
     public function refresh()
     {
-        //TODO
+        foreach ($this->routes as $route) {
+            $route->refresh();
+        }
         return $this;
     }
 
