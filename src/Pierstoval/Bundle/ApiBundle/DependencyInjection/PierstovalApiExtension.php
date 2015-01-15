@@ -26,6 +26,12 @@ class PierstovalApiExtension extends Extension
             $config['format'] = 'json';
         }
 
+        if (isset($config['services'])) {
+            foreach ($config['services'] as $name => $v) {
+                $config['services'][$name]['name'] = $name;
+            }
+        }
+
         foreach ($config as $name => $value) {
             $container->setParameter('pierstoval_api.'.$name, $value);
         }
