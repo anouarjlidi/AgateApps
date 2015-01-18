@@ -1,18 +1,26 @@
-# Bootstrap
-/app/bootstrap*
+# SF
+/web/bundles/
+/app/bootstrap.php.cache
+/app/cache/*
+/app/config/parameters.yml
+/app/logs/*
+!app/cache/.gitkeep
+!app/logs/.gitkeep
+/app/phpunit.xml
+/build/
+/vendor/
+/bin/
+/composer.phar
 
 # Esteren Maps
 /web/maps_tiles/*
 !/web/maps_tiles/.gitkeep
 !/web/maps_tiles/empty.jpg
 
-# Backups entités
+# Backups entities
 *.php~
 
-# PHPStorm
-/.idea/
-
-# Ignore des assets
+# Assets
 /web/js/
 !/web/js/.gitkeep
 /web/css/
@@ -23,29 +31,6 @@
 /web/uploads/
 !/web/uploads/.gitkeep
 !/web/uploads/media/.gitkeep
-
-
-# Symfony directories
-/app/config/parameters.yml
-/app/cache/*
-/app/logs/*
-
-/web/uploads/*
 /web/components/*
-/web/upload/*
-/web/bundles/
-
-/build/
-/vendor/
-
-/var/bootstrap.php.cache
-/var/cache/*
-/var/logs/*
-!var/cache/.gitkeep
-!var/logs/.gitkeep
-
-/bin/*
-!bin/console
-!bin/symfony_requirements
 
 /node_modules/
