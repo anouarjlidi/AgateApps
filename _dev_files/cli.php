@@ -142,7 +142,7 @@ if (preg_match('#^o#isUu', $del)) {$del = 'o';} else { $del = 'n'; }
 if ($del === 'o') {
     showtime($temp_time, 'Suppression de la nouvelle base de données via Symfony2');
 
-    $r = shell_exec('php ../bin/console doctrine:database:drop --force');
+    $r = shell_exec('php ../app/console doctrine:database:drop --force');
     if ($r) {
         $r = str_replace(array("\r","\n"),array('',''),$r);
         $r = trim($r);
@@ -153,7 +153,7 @@ if ($del === 'o') {
     flush();
 
     showtime($temp_time, 'Création de la nouvelle base de données via Symfony2');
-    $r = shell_exec('php ../bin/console doctrine:database:create');
+    $r = shell_exec('php ../app/console doctrine:database:create');
     if ($r) {
         $r = str_replace(array("\r","\n"),array('',''),$r);
         $r = trim($r);
@@ -172,7 +172,7 @@ if ($del === 'o') {
 //    showtime($temp_time, '');
 //    if ((int) $line) {
         showtime($temp_time, 'Exécution de la commande Symfony2 pour refaire le schéma à partir des entités...');
-        $r = shell_exec('php ../bin/console doctrine:schema:create');
+        $r = shell_exec('php ../app/console doctrine:schema:create');
         if ($r) {
             $r = str_replace(array("\r","\n"),array('',''),$r);
             $r = trim($r);
@@ -273,7 +273,7 @@ if ($del === 'o') {
         if (!$new->row('SELECT * FROM %fos_user_user WHERE %id = :id', array('id'=>$v['user_id']))) {
             $pwd = utf8_encode($v['user_email']);
             if ($new->noRes('ALTER TABLE %fos_user_user AUTO_INCREMENT = 300')) { showtime($temp_time, 'Réinitialisation de l\'auto-increment pour l\'insertion'); }
-            $r = shell_exec('php ../bin/console fos:user:create "'.$v['user_name'].'" "'.$v['user_email'].'" '.$pwd.'');
+            $r = shell_exec('php ../app/console fos:user:create "'.$v['user_name'].'" "'.$v['user_email'].'" '.$pwd.'');
             $usernb++;
             if ($r) {
                 $r = str_replace(array("\r","\n"),array('',''),$r);
@@ -293,7 +293,7 @@ if ($del === 'o') {
         if ($v['user_id'] > $maxid) { $maxid = (int) $v['user_id']; }
     }$tables_done[]='users';
 
-    exec('php ../bin/console fos:user:promote pierstoval --super');
+    exec('php ../app/console fos:user:promote pierstoval --super');
     if (!$usernb) { showtime($temp_time, 'Aucun utilisateur à ajouter'); }
     showtime($temp_time, $usernb.' requêtes pour la table "users"');
     if ($new->noRes('ALTER TABLE `fos_user_user` AUTO_INCREMENT = '.($maxid+1))) {

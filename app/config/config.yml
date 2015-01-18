@@ -2,176 +2,73 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: services.yml }
-    - { resource: _esterenmaps.yml }
-    - { resource: _corahn_rin.yml }
-    - { resource: _pierstoval.yml }
-    - { resource: _sonata.yml }
-    - { resource: "@PierstovalTranslationBundle/Resources/config/services.yml" }
-
-parameters:
-    version_code: 0.1
-    version_date: 05/01/2015
+    - { resource: _app.yml }
 
 framework:
     #esi:             ~
-    translator:      { fallback: %locale% }
-    secret:          %secret%
+    translator:      { fallback: "%locale%" }
+    secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
         strict_requirements: ~
     form:            ~
     csrf_protection: ~
-    validation:
-        enable_annotations: true
-#        cache: apc
+    validation:      { enable_annotations: true }
     templating:
         engines: ['twig']
         #assets_version: SomeVersionScheme
-    default_locale:  %locale%
+    default_locale:  "%locale%"
     trusted_hosts:   ~
     trusted_proxies: ~
     session:
         # handler_id set to null will use default session handler from php.ini
         handler_id:  ~
-        cookie_domain: %esteren_domains.cookieDomain%
-        name:   SF2ESTERENSID
     fragments:       ~
     http_method_override: true
 
 # Twig Configuration
 twig:
-    debug:            %kernel.debug%
-    strict_variables: %kernel.debug%
-    globals:
-        version_code: %version_code%
-        version_date: %version_date%
-        kernel_root_dir: %kernel.root_dir%
-        locales: %locales%
-        locales_regex: %locales_regex%
-        esteren_domains_corahn_rin: %esteren_domains.corahn_rin%
-        esteren_domains_esteren_maps: %esteren_domains.esteren_maps%
-        esteren_domains_portal: %esteren_domains.portal%
-        esteren_domains_backoffice: %esteren_domains.backoffice%
-        esteren_domains_api: %esteren_domains.api%
-        esteren_domains_cookieDomain: %esteren_domains.cookieDomain%
-    form:
-        # Overrides des formulaires
-        resources:
-            - 'PierstovalToolsBundle:Form:form_div_layout.html.twig'
-            - 'PierstovalToolsBundle:Form:fields.html.twig'
-            - 'PierstovalToolsBundle:Form:form_errors.html.twig'
-            - 'SonataAdminBundle:Form:silex_form_div_layout.html.twig'
-            - 'SonataFormatterBundle:Form:formatter.html.twig'
+    debug:            "%kernel.debug%"
+    strict_variables: "%kernel.debug%"
 
 # Assetic Configuration
 assetic:
-    debug:          %kernel.debug%
+    debug:          "%kernel.debug%"
     use_controller: false
-    bundles:
-        - 'EsterenMapsBundle'
-        - 'EsterenPagesBundle'
-        - 'CorahnRinGeneratorBundle'
-        - 'ApplicationSonataAdminBundle'
-        - 'EsterenMapsAdminBundle'
-#        - 'PierstovalTranslationBundle'
+    bundles:        [ ]
+    #java: /usr/bin/java
     filters:
         cssrewrite: ~
-        less:
-            node: %node_path%
-            node_paths: [ %node_modules_path% ]
-        uglifyjs:
-            node: %node_path%
-            node_paths: [ %node_modules_path% ]
-        uglifycss:
-            node: %node_path%
-            node_paths: [ %node_modules_path% ]
+        #closure:
+        #    jar: "%kernel.root_dir%/Resources/java/compiler.jar"
+        #yui_css:
+        #    jar: "%kernel.root_dir%/Resources/java/yuicompressor-2.4.7.jar"
 
 # Doctrine Configuration
 doctrine:
     dbal:
-        driver:   %database_driver%
-        host:     %database_host%
-        port:     %database_port%
-        dbname:   %database_name%
-        user:     %database_user%
-        password: %database_password%
+        driver:   "%database_driver%"
+        host:     "%database_host%"
+        port:     "%database_port%"
+        dbname:   "%database_name%"
+        user:     "%database_user%"
+        password: "%database_password%"
         charset:  UTF8
-        types:
-            json: Sonata\Doctrine\Types\JsonType
+        # if using pdo_sqlite as your database driver:
+        #   1. add the path in parameters.yml
+        #     e.g. database_path: "%kernel.root_dir%/data/data.db3"
+        #   2. Uncomment database_path in parameters.yml.dist
+        #   3. Uncomment next line:
+        #     path:     "%database_path%"
+
     orm:
-        auto_generate_proxy_classes: %kernel.debug%
+        auto_generate_proxy_classes: "%kernel.debug%"
         auto_mapping: true
-        filters:
-            softdeleteable:
-                class: Gedmo\SoftDeleteable\Filter\SoftDeleteableFilter
-                enabled: true
 
 # Swiftmailer Configuration
 swiftmailer:
-    transport: %mailer_transport%
-    host:      %mailer_host%
-    username:  %mailer_user%
-    password:  %mailer_password%
+    transport: "%mailer_transport%"
+    host:      "%mailer_host%"
+    username:  "%mailer_user%"
+    password:  "%mailer_password%"
     spool:     { type: memory }
-
-fos_user:
-    db_driver:     orm
-    firewall_name: main
-    user_class:    Application\Sonata\UserBundle\Entity\User
-    group:
-        group_class: Application\Sonata\UserBundle\Entity\Group
-        group_manager: sonata.user.orm.group_manager
-    service:
-        user_manager: sonata.user.orm.user_manager
-
-fos_rest:
-    param_fetcher_listener: true
-    body_listener: true
-    format_listener:
-        rules:
-            - { path: '^/((%locales_regex%)/)?api', priorities: ['json', 'html'], fallback_format: json, prefer_extension: true }
-            - { path: '^/', priorities: [ 'html', '*/*'], fallback_format: ~, prefer_extension: true }
-#        view_response_listener: 'force'
-#    routing_loader:
-#        include_format: false
-
-# JSON beautifier
-jms_serializer:
-    visitors:
-        json:
-            options: 480
-
-#sensio_framework_extra:
-#    view:    { annotations: true }
-#    router:  { annotations: true }
-
-# Doctrine extensions
-stof_doctrine_extensions:
-    default_locale: %locale%
-    uploadable:
-        default_file_path: %kernel.root_dir%/../web/uploads
-        mime_type_guesser_class: Stof\DoctrineExtensionsBundle\Uploadable\MimeTypeGuesserAdapter
-        default_file_info_class: Stof\DoctrineExtensionsBundle\Uploadable\UploadedFileInfo
-    orm:
-        default:
-            uploadable: true
-            sluggable: true
-            timestampable: true
-            softdeleteable: true
-
-# Services declaration
-services:
-    twig.text_extension:
-        class: Twig_Extensions_Extension_Text
-        tags:
-            - name: twig.extension
-
-# Symfony CMF Routing
-cmf_routing:
-    chain:
-        routers_by_id:
-            # enable the DynamicRouter with high priority to allow overwriting configured routes with content
-            #cmf_routing.dynamic_router: 200
-            # enable the symfony default router with a lower priority
-            router.default: 150
-            sonata.page.router: 100

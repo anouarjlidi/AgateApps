@@ -1,2 +1,2 @@
 @echo off
-php bin/console %*
+php app/console %*

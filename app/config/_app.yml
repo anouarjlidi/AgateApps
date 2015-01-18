@@ -1,0 +1,148 @@
+imports:
+    - { resource: _esterenmaps.yml }
+    - { resource: _corahn_rin.yml }
+    - { resource: _pierstoval.yml }
+    - { resource: _sonata.yml }
+
+parameters:
+    version_code: 0.1
+    version_date: 05/01/2015
+
+framework:
+    translator:      { fallback: %locale% } # Activate translator
+    session:
+        cookie_domain: %esteren_domains.cookieDomain%
+        name:   SF2ESTERENSID
+
+# Twig Configuration
+twig:
+    globals:
+        version_code: %version_code%
+        version_date: %version_date%
+        kernel_root_dir: %kernel.root_dir%
+        locales: %locales%
+        locales_regex: %locales_regex%
+        esteren_domains_corahn_rin: %esteren_domains.corahn_rin%
+        esteren_domains_esteren_maps: %esteren_domains.esteren_maps%
+        esteren_domains_portal: %esteren_domains.portal%
+        esteren_domains_backoffice: %esteren_domains.backoffice%
+        esteren_domains_api: %esteren_domains.api%
+        esteren_domains_cookieDomain: %esteren_domains.cookieDomain%
+    form:
+        # Overrides des formulaires
+        resources:
+            - 'PierstovalToolsBundle:Form:form_div_layout.html.twig'
+            - 'PierstovalToolsBundle:Form:fields.html.twig'
+            - 'PierstovalToolsBundle:Form:form_errors.html.twig'
+            - 'SonataAdminBundle:Form:silex_form_div_layout.html.twig'
+            - 'SonataFormatterBundle:Form:formatter.html.twig'
+
+assetic:
+    bundles:
+        - 'EsterenMapsBundle'
+        - 'EsterenPagesBundle'
+        - 'CorahnRinGeneratorBundle'
+        - 'ApplicationSonataAdminBundle'
+        - 'EsterenMapsAdminBundle'
+#        - 'PierstovalTranslationBundle'
+    filters:
+        cssrewrite: ~
+        less:
+            node: %node_path%
+            node_paths: [ %node_modules_path% ]
+        uglifyjs:
+            node: %node_path%
+            node_paths: [ %node_modules_path% ]
+        uglifycss:
+            node: %node_path%
+            node_paths: [ %node_modules_path% ]
+
+# Doctrine Configuration
+doctrine:
+    orm:
+        filters:
+            softdeleteable:
+                class: Gedmo\SoftDeleteable\Filter\SoftDeleteableFilter
+                enabled: true
+
+fos_user:
+    db_driver:     orm
+    firewall_name: main
+    user_class:    Application\Sonata\UserBundle\Entity\User
+    group:
+        group_class: Application\Sonata\UserBundle\Entity\Group
+        group_manager: sonata.user.orm.group_manager
+    service:
+        user_manager: sonata.user.orm.user_manager
+
+fos_rest:
+    param_fetcher_listener: true
+    body_listener: true
+    format_listener:
+        rules:
+            - { path: '^/((%locales_regex%)/)?api', priorities: ['json', 'html'], fallback_format: json, prefer_extension: true }
+            - { path: '^/', priorities: [ 'html', '*/*'], fallback_format: ~, prefer_extension: true }
+
+# JSON beautifier
+jms_serializer:
+    visitors:
+        json:
+            options: 480
+
+# Doctrine extensions
+stof_doctrine_extensions:
+    default_locale: %locale%
+    uploadable:
+        default_file_path: %kernel.root_dir%/../web/uploads
+        mime_type_guesser_class: Stof\DoctrineExtensionsBundle\Uploadable\MimeTypeGuesserAdapter
+        default_file_info_class: Stof\DoctrineExtensionsBundle\Uploadable\UploadedFileInfo
+    orm:
+        default:
+            uploadable: true
+            sluggable: true
+            timestampable: true
+            softdeleteable: true
+
+# Services declaration
+services:
+    twig.text_extension:
+        class: Twig_Extensions_Extension_Text
+        tags:
+            - name: twig.extension
+
+# Symfony CMF Routing
+cmf_routing:
+    chain:
+        routers_by_id:
+            # enable the DynamicRouter with high priority to allow overwriting configured routes with content
+            #cmf_routing.dynamic_router: 200
+            # enable the symfony default router with a lower priority
+            router.default: 150
+            sonata.page.router: 100
+
+assetic:
+    debug:          %kernel.debug%
+    use_controller: false
+    bundles:
+        - 'EsterenMapsBundle'
+        - 'EsterenPagesBundle'
+        - 'CorahnRinGeneratorBundle'
+        - 'ApplicationSonataAdminBundle'
+        - 'EsterenMapsAdminBundle'
+        - 'PierstovalTranslationBundle'
+    filters:
+        cssrewrite: ~
+        less:
+            node: %node_path%
+            node_paths: [ %node_modules_path% ]
+        uglifyjs:
+            node: %node_path%
+            node_paths: [ %node_modules_path% ]
+        uglifycss:
+            node: %node_path%
+            node_paths: [ %node_modules_path% ]
+
+doctrine:
+    dbal:
+        types:
+            json: Sonata\Doctrine\Types\JsonType
