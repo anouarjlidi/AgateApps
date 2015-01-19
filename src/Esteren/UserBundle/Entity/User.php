@@ -4,24 +4,24 @@ namespace Esteren\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Entity\User as BaseUser;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
  * @ORM\Entity()
+ * @ORM\Table(name="fos_user_user")
  */
 class User extends BaseUser {
 
-    /**
-     * @var integer $id
-     */
-    protected $id;
+    use TimestampableEntity;
 
     /**
-     * Get id
-     * @return integer $id
+     * @var integer $id
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
-    public function getId() {
-        return $this->id;
-    }
+    protected $id;
 
     /**
      * @param integer $id

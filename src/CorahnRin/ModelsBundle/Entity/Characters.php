@@ -4,7 +4,7 @@ namespace CorahnRin\ModelsBundle\Entity;
 
 use CorahnRin\CharactersBundle\Classes\Money;
 use CorahnRin\CharactersBundle\Exceptions\CharactersException;
-use Application\Sonata\UserBundle\Entity\User;
+use Esteren\UserBundle\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -405,7 +405,7 @@ class Characters {
 
     /**
      * @var User
-     * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="Esteren\UserBundle\Entity\User", fetch="EAGER")
      */
     protected $user;
 

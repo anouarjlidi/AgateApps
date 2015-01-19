@@ -152,15 +152,6 @@ fos_user_change_password:
         _locale: ^(%locales_regex%)$
     host: %esteren_domains.portal%
 
-fos_user_group:
-    resource: "@FOSUserBundle/Resources/config/routing/group.xml"
-    prefix: /{_locale}/group
-    defaults:
-         _locale: %locale%
-    requirements:
-        _locale: ^(%locales_regex%)$
-    host: %esteren_domains.portal%
-
 #-----------------------------------
 # Admin relative Routing
 easy_admin_bundle:

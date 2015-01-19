@@ -2,7 +2,7 @@
 
 namespace CorahnRin\ModelsBundle\Entity;
 
-use Application\Sonata\UserBundle\Entity\User;
+use Esteren\UserBundle\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -63,7 +63,7 @@ class Games {
     /**
      * @var User
      *
-     * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="Esteren\UserBundle\Entity\User")
      */
     protected $gameMaster;
 
