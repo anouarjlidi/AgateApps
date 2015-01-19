@@ -21,41 +21,20 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
 
-            // Doctrine
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
-
-            // JMS
             new JMS\SerializerBundle\JMSSerializerBundle($this),
-
-            // FOS
             new FOS\UserBundle\FOSUserBundle(),
             new FOS\RestBundle\FOSRestBundle(),
+            new JavierEguiluz\Bundle\EasyAdminBundle\EasyAdminBundle(),
 
             // Sonata et dépendances
-            new Sonata\SeoBundle\SonataSeoBundle(),
             new Sonata\CoreBundle\SonataCoreBundle(),
-            new Sonata\PageBundle\SonataPageBundle(),
             new Sonata\IntlBundle\SonataIntlBundle(),
-            new Sonata\CacheBundle\SonataCacheBundle(),
-            new Sonata\BlockBundle\SonataBlockBundle(),
-            new Sonata\AdminBundle\SonataAdminBundle(),
             new Sonata\MediaBundle\SonataMediaBundle(),
-            new Sonata\FormatterBundle\SonataFormatterBundle(),
             new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
-            new Sonata\UserBundle\SonataUserBundle('FOSUserBundle'),
             new Sonata\NotificationBundle\SonataNotificationBundle(),
-            new Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
-            new Knp\Bundle\MarkdownBundle\KnpMarkdownBundle(),
-            new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
-            new Symfony\Cmf\Bundle\RoutingBundle\CmfRoutingBundle(),
-
-            // Local Sonata generated bundles
-            new Application\Sonata\PageBundle\ApplicationSonataPageBundle(),
-            new Application\Sonata\UserBundle\ApplicationSonataUserBundle(),
-            new Application\Sonata\AdminBundle\ApplicationSonataAdminBundle(),
             new Application\Sonata\MediaBundle\ApplicationSonataMediaBundle(),
-            new Application\Sonata\BlockBundle\ApplicationSonataBlockBundle(),
 
             // Corahn-Rin
             new CorahnRin\AdminBundle\CorahnRinAdminBundle(),
@@ -67,6 +46,7 @@ class AppKernel extends Kernel
             // Esteren général
             new Esteren\PortalBundle\EsterenPortalBundle(),
             new Esteren\PagesBundle\EsterenPagesBundle(),
+            new Esteren\UserBundle\EsterenUserBundle(),
 
             // Esteren Maps
             new EsterenMaps\MapsBundle\EsterenMapsBundle(),

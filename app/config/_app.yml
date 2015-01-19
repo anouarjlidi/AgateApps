@@ -42,7 +42,7 @@ assetic:
         - 'EsterenMapsBundle'
         - 'EsterenPagesBundle'
         - 'CorahnRinGeneratorBundle'
-        - 'ApplicationSonataAdminBundle'
+#        - 'ApplicationSonataAdminBundle'
         - 'EsterenMapsAdminBundle'
 #        - 'PierstovalTranslationBundle'
     filters:
@@ -68,12 +68,7 @@ doctrine:
 fos_user:
     db_driver:     orm
     firewall_name: main
-    user_class:    Application\Sonata\UserBundle\Entity\User
-    group:
-        group_class: Application\Sonata\UserBundle\Entity\Group
-        group_manager: sonata.user.orm.group_manager
-    service:
-        user_manager: sonata.user.orm.user_manager
+    user_class:    Esteren\UserBundle\Entity\User
 
 fos_rest:
     param_fetcher_listener: true
@@ -110,16 +105,6 @@ services:
         tags:
             - name: twig.extension
 
-# Symfony CMF Routing
-cmf_routing:
-    chain:
-        routers_by_id:
-            # enable the DynamicRouter with high priority to allow overwriting configured routes with content
-            #cmf_routing.dynamic_router: 200
-            # enable the symfony default router with a lower priority
-            router.default: 150
-            sonata.page.router: 100
-
 assetic:
     debug:          %kernel.debug%
     use_controller: false
@@ -127,7 +112,6 @@ assetic:
         - 'EsterenMapsBundle'
         - 'EsterenPagesBundle'
         - 'CorahnRinGeneratorBundle'
-        - 'ApplicationSonataAdminBundle'
         - 'EsterenMapsAdminBundle'
         - 'PierstovalTranslationBundle'
     filters:

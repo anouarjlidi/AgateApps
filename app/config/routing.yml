@@ -85,15 +85,6 @@ pierstoval_tools:
     requirements:
         _locale: ^(%locales_regex%)$
 
-#pierstoval_translation:
-#    resource: "@PierstovalTranslationBundle/Controller/"
-#    type:     annotation
-#    prefix:   /{_locale}/
-#    defaults:
-#         _locale: %locale%
-#    requirements:
-#        _locale: ^(%locales_regex%)$
-
 pierstoval_api:
     resource: "@PierstovalApiBundle/Controller/"
     type:     annotation
@@ -169,3 +160,15 @@ fos_user_group:
     requirements:
         _locale: ^(%locales_regex%)$
     host: %esteren_domains.portal%
+
+#-----------------------------------
+# Admin relative Routing
+easy_admin_bundle:
+    resource: "@EasyAdminBundle/Controller/"
+    type:     annotation
+    prefix:   /{_locale}/
+    defaults:
+         _locale: %locale%
+    requirements:
+        _locale: ^(%locales_regex%)$
+    host: %esteren_domains.backoffice%
