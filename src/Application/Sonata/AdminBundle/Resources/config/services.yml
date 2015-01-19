@@ -1,3 +1,0 @@
-services:
-    fos_user.services.security_controller:
-        class: FOS\UserBundle\Controller\SecurityController
