@@ -34,8 +34,6 @@ twig:
             - 'PierstovalToolsBundle:Form:form_div_layout.html.twig'
             - 'PierstovalToolsBundle:Form:fields.html.twig'
             - 'PierstovalToolsBundle:Form:form_errors.html.twig'
-            - 'SonataAdminBundle:Form:silex_form_div_layout.html.twig'
-            - 'SonataFormatterBundle:Form:formatter.html.twig'
 
 assetic:
     bundles:

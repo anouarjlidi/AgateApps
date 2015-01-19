@@ -77,7 +77,7 @@ class ZonesTypes {
     /**
      * @var ZonesTypes
      *
-     * @ORM\ManyToOne(targetEntity="ZonesTypes")
+     * @ORM\ManyToOne(targetEntity="ZonesTypes", fetch="EXTRA_LAZY")
      * @ORM\JoinColumn(nullable=true)
      */
     protected $parent;
@@ -110,6 +110,11 @@ class ZonesTypes {
         $this->resources = new ArrayCollection();
         $this->zones = new ArrayCollection();
         $this->events = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return ($this->parent ? '> ' : '').$this->id.' '.$this->name;
     }
 
     /**

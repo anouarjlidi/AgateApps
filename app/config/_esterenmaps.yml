@@ -51,3 +51,63 @@ sonata_media:
                 - sonata.media.provider.image
             formats:
                 icon:   { width: 25,  quality: 100 }
+
+easy_admin:
+    entities:
+        Maps:
+            class: EsterenMaps\MapsBundle\Entity\Maps
+            list:
+                fields: [ id, name, nameSlug, maxZoom, startZoom, startX, startY ]
+            edit:
+                fields: [ name, nameSlug, image, description, maxZoom, startZoom, startX, startY ]
+            new:
+                fields: [ name, nameSlug, image, description, maxZoom, startZoom, startX, startY ]
+        Markers:
+            class: EsterenMaps\MapsBundle\Entity\Markers
+            list:
+                fields: [ id, name, latitude, longitude ]
+            edit:
+                fields: [ name, description, altitude, latitude, longitude, map, markerType, faction ]
+            new:
+                fields: [ name, description, altitude, latitude, longitude, map, markerType, faction ]
+        "Markers types":
+            class: EsterenMaps\MapsBundle\Entity\MarkersTypes
+            list:
+                fields: [ id, name, icon, markers ]
+            edit:
+                fields: [ name, icon, markers ]
+            new:
+                fields: [ name, icon, markers ]
+        Routes:
+            class: EsterenMaps\MapsBundle\Entity\Routes
+            list:
+                fields: [ id, name, distance, markerStart, markerEnd ]
+            edit:
+                fields: [ name, markerStart, markerEnd ]
+            new:
+                fields: [ name, markerStart, markerEnd ]
+        "Routes types":
+            class: EsterenMaps\MapsBundle\Entity\RoutesTypes
+            list:
+                fields: [ id, name, color, routes ]
+            edit:
+                fields: [ name, color ]
+            new:
+                fields: [ name, color ]
+        Zones:
+            class: EsterenMaps\MapsBundle\Entity\Zones
+            list:
+                fields: [ id, name, zoneType, map, faction ]
+            edit:
+                fields: [ name, coordinates, map, faction, zoneType ]
+            new:
+                fields: [ name, coordinates, map, faction, zoneType ]
+
+        "Zones types":
+            class: EsterenMaps\MapsBundle\Entity\ZonesTypes
+            list:
+                fields: [ id, name, color, parent, zones ]
+            edit:
+                fields: [ name, color, parent ]
+            new:
+                fields: [ name, color, parent ]
