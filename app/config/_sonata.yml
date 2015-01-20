@@ -1,8 +1,13 @@
 # Configuration for Sonata suite
 
+doctrine:
+    dbal:
+        types:
+            json: Sonata\Doctrine\Types\JsonType
+
 # Sonata User
 sonata_user:
-    security_acl: true
+    security_acl: false
     manager_type: orm
     profile:
         menu:

@@ -141,8 +141,3 @@ assetic:
         uglifycss:
             node: %node_path%
             node_paths: [ %node_modules_path% ]
-
-doctrine:
-    dbal:
-        types:
-            json: Sonata\Doctrine\Types\JsonType

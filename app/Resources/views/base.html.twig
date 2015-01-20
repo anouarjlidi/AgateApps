@@ -89,7 +89,15 @@
         </div><!--/#layout-->
 
         {# FOOTER #}
-        {% include "EsterenPagesBundle:Pages:footer.html.twig" %}
+        {% block footer %}
+        <footer id="footer">
+            <div class="container">
+                <p class="text-muted text-center">{{ 'Version' | trans }} : {{ version_code }} : {{ version_date }}</a></p>
+                <p class="text-muted text-center">{{ 'Tous droits réservés' | trans }} – Pierstoval 2012 - 2013</p>
+                <p class="text-muted text-center">{{ "Tous les contenus sont générés par l'auteur du site, mais proviennent des livres des Ombres d'Esteren, et appartiennent au collectif Forgesonges, et édité par Agate Editions." | trans }}</p>
+            </div>
+        </footer>
+        {% endblock %}
 
     </div><!--/#wrapper-->
 
