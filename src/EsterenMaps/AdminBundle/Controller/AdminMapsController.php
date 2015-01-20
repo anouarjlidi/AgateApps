@@ -50,7 +50,7 @@ class AdminMapsController extends Controller {
 
         if ($request->getMethod() == 'POST') {
 
-            $this->updateMarkers($map, $request);
+//            $this->updateMarkers($map, $request);
             $this->updateZones($map, $request);
             $this->updateRoutes($map, $request);
 
