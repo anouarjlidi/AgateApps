@@ -106,7 +106,7 @@
         if (mapOptions.editMode == true) {
             this.activateLeafletDraw();
             this._map.on('click', function(){
-                if (_this._editedMarker) { _this._editedMarker.dragging.disable(); }
+                if (_this._editedMarker) { _this._editedMarker.disableEditMode(); }
                 _this._editedMarker = null;
                 if (_this._editedPolyline) { _this._editedPolyline.editing.disable(); }
                 _this._editedPolyline = null;

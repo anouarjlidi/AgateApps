@@ -11,7 +11,7 @@ use JMS\Serializer\Annotation as Serializer;
  * Routes
  *
  * @ORM\Table(name="routes")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="EsterenMaps\MapsBundle\Repository\RoutesRepository")
  * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @Serializer\ExclusionPolicy("all")
  */

@@ -126,6 +126,9 @@
     cursor:pointer;
 }
 
+.leaflet-marker-icon.selected {
+    outline: solid 1px #a22;
+}
 
 #corahnrin .leaflet-container {
     background-color: black;

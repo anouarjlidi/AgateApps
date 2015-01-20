@@ -37,6 +37,11 @@
         $(this._icon).attr('data-leaflet-object-type', 'markerType'+this._esterenMarker.marker_type.id);
     };
 
+    L.Marker.prototype.disableEditMode = function() {
+        this.dragging.disable();
+        this._icon.classList.remove('selected');
+    };
+
     L.Marker.prototype._updateEM = function() {
         var esterenMarker = this._esterenMarker || null,
             id = esterenMarker.id || null;
@@ -189,8 +194,12 @@
                 id = esterenMarker.id || marker.options.alt
             ;
 
+            if (map._editedMarker) {
+                map._editedMarker.disableEditMode();
+            }
             marker.dragging.enable();
             marker.showSidebar();
+            marker._icon.classList.add('selected');
             map._editedMarker = marker;
 
             if (marker._sidebar.isVisible() && esterenMarker) {
