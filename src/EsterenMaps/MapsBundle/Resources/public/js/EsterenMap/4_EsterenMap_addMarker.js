@@ -43,9 +43,11 @@
     };
 
     L.Marker.prototype._updateEM = function() {
-        var esterenMarker = this._esterenMarker || null,
+        var baseMarker = this,
+            esterenMarker = this._esterenMarker || null,
             id = esterenMarker.id || null;
-        if (esterenMarker && this._map) {
+        this.launched = true;
+        if (esterenMarker && this._map && !this.launched) {
             esterenMarker.map = esterenMarker.map || {id: this._esterenMap.options().id };
             esterenMarker.latitude = this._latlng.lat;
             esterenMarker.longitude = this._latlng.lng;
@@ -73,6 +75,7 @@
                         marker = response.newObject;
                     if (!response.error) {
                         if (marker && marker.id) {
+                            map._markers[marker.id] = baseMarker;
                             map._markers[marker.id]._esterenMarker = marker;
                             map._markers[marker.id].updateIcon();
                         } else {
@@ -84,9 +87,12 @@
                 },
                 callbackError: function() {
                     console.error('Could not make a request to '+(id?'update':'insert')+' a marker.');
+                },
+                callbackComplete: function(){
+                    baseMarker.launched = false;
                 }
             });
-        } else {
+        } else if (!this.launched) {
             console.error('Tried to update an empty marker.');
         }
     };
@@ -194,9 +200,7 @@
                 id = esterenMarker.id || marker.options.alt
             ;
 
-            if (map._editedMarker) {
-                map._editedMarker.disableEditMode();
-            }
+            map.disableEditedElements();
             marker.dragging.enable();
             marker.showSidebar();
             marker._icon.classList.add('selected');
@@ -232,15 +236,6 @@
                 id = marker._esterenMarker ? marker._esterenMarker.id : null;
             if (marker._esterenMap.options().editMode == true && id) {
                 if (confirm(msg)) {
-                    if (d.getElementById('marker_' + id + '_deleted')) {
-                        d.getElementById('marker_' + id + '_deleted').value = 'true';
-                    } else {
-                        $('<input type="hidden" value="true" />')
-                            .attr({
-                                'id': 'marker_' + id + '_deleted',
-                                'name': 'marker[' + id + '][deleted]'
-                            }).appendTo('#inputs_container');
-                    }
                     marker._map.removeLayer(marker);
                     marker.fire('remove');
                 }
@@ -251,9 +246,6 @@
             var marker = e.target,
                 id = marker.options.alt,
                 latlng = marker.getLatLng();
-//                marker.setLatLng(latlng).update();
-            d.getElementById('marker_'+id+'_latitude').value = latlng.lat;
-            d.getElementById('marker_'+id+'_longitude').value = latlng.lng;
             if (marker._esterenMarker) {
                 marker._esterenMarker.latitude = latlng.lat;
                 marker._esterenMarker.longitude = latlng.lng;
@@ -350,17 +342,6 @@
             if (customUserOptions.hasOwnProperty(option) && option.match(/Callback$/)) {
                 marker.addEventListener(option.replace('Callback',''), customUserOptions[option]);
             }
-        }
-
-        if (mapOptions.editMode) {
-            $('#inputs_container').append(
-                '<input type="hidden" id="marker_'+id+'_name" name="marker['+id+'][name]" value="'+(customUserOptions.markerName?customUserOptions.markerName:'')+'" />'+
-                '<input type="hidden" id="marker_'+id+'_faction" name="marker['+id+'][faction]" value="'+(customUserOptions.markerFaction?customUserOptions.markerFaction:'')+'" />'+
-                '<input type="hidden" id="marker_'+id+'_latitude" name="marker['+id+'][latitude]" value="'+latLng.lat+'" />'+
-                '<input type="hidden" id="marker_'+id+'_longitude" name="marker['+id+'][longitude]" value="'+latLng.lng+'" />'+
-                '<input type="hidden" id="marker_'+id+'_altitude" name="marker['+id+'][altitude]" value="0" />'+
-                '<input type="hidden" id="marker_'+id+'_type" name="marker['+id+'][type]" value="'+(customUserOptions.markerType?customUserOptions.markerType:'1')+'" />'
-            );
         }
 
         // Ajout de l'icône au cas où

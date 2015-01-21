@@ -29,6 +29,80 @@
         return this;
     };
 
+    L.Polygon.prototype.disableEditMode = function() {
+        this._updateEM();
+        this.editing.disable();
+    };
+
+    L.Polygon.prototype.updateStyle = function(){
+        // Change l'image de l'icône
+        this._path.setAttribute('fill', this._esterenZone.zone_type.color);
+        this._path.setAttribute('stroke', this._esterenZone.zone_type.color);
+
+        // Met à jour l'attribut "data" pour les filtres
+        $(this._path).attr('data-leaflet-object-type', 'zoneType'+this._esterenZone.zone_type.id);
+
+    };
+
+    L.Polygon.prototype._updateEM = function() {
+        var baseZone = this,
+            esterenZone = this._esterenZone || null,
+            id = esterenZone.id || null;
+        if (esterenZone && this._map && !this.launched) {
+            esterenZone.map = esterenZone.map || {id: this._esterenMap.options().id };
+            esterenZone.coordinates = JSON.stringify(this._latlngs);
+            esterenZone.faction = esterenZone.faction || null;
+            this.launched = true;
+            this._esterenMap._load({
+                uri: "zones" + (id ? '/'+id : ''),
+                method: id ? "POST" : "PUT", // Si on n'a pas d'ID, c'est qu'on crée une nouvelle zone
+                data: {
+                    json: esterenZone,
+                    mapping: {
+                        name: true,
+                        coordinates: true,
+                        map: true,
+                        zone_type: {
+                            objectField: 'zoneType'
+                        },
+                        faction: true
+                    }
+                },
+                callback: function(response) {
+                    var map = this,
+                        zone = response.newObject;
+                    if (!response.error) {
+                        if (zone && zone.id) {
+                            map._polygons[zone.id] = baseZone;
+                            map._polygons[zone.id]._esterenZone = zone;
+                            map._polygons[zone.id].updateStyle();
+                        } else {
+                            console.warn('Zone retrieved by API does not have ID.');
+                        }
+                    } else {
+                        console.error('Api sent back an error while attempting to '+(id?'update':'insert')+' a zone.');
+                    }
+                },
+                callbackError: function() {
+                    console.error('Could not make a request to '+(id?'update':'insert')+' a zone.');
+                },
+                callbackComplete: function(){
+                    baseZone.launched = false;
+                }
+            });
+        } else if (!this.launched) {
+            console.error('Tried to update an empty zone.');
+        }
+    };
+
+    EsterenMap.prototype.esterenZonePrototype = {
+        id: null,
+        name: null,
+        zone_type: null,
+        faction: null,
+        coordinates: null
+    };
+
     EsterenMap.prototype._mapOptions.LeafletPolygonBaseOptions = {
         color: "#fff",
         opacity: 0.3,
@@ -62,28 +136,52 @@
     EsterenMap.prototype._mapOptions.CustomPolygonBaseOptionsEditMode = {
         clickCallback: function(e){
             var polygon = e.target,
+                map = polygon._esterenMap,
                 id = polygon.options.className.replace('drawn_polygon_','')
                 ;
 
+            map.disableEditedElements();
+            polygon.editing.enable();
             polygon.showSidebar();
+            map._editedPolygon = polygon;
 
             setTimeout(function(){
-                var marker, latlngs;
                 if (polygon._sidebar.isVisible()) {
-                    d.getElementById('polygon_popup_name').value = d.getElementById('polygon_'+id+'_name').value;
-                    d.getElementById('polygon_popup_faction').value = d.getElementById('polygon_'+id+'_faction').value;
+                    d.getElementById('polygon_popup_name').value = polygon._esterenZone.name;
+                    d.getElementById('polygon_popup_faction').value = polygon._esterenZone.faction ? polygon._esterenZone.faction.id : '';
+                    d.getElementById('polygon_popup_type').value = polygon._esterenZone.zone_type ? polygon._esterenZone.zone_type.id : '';
 
-                    d.getElementById('polygon_popup_name').onkeyup = function(){
-                        d.getElementById('polygon_'+id+'_name').value = this.value;
+                    $('#polygon_popup_name').off('keyup').on('keyup', function(){
+                        map._polygons[id]._esterenZone.name = this.value;
+                        if (this._timeout) { clearTimeout(this._timeout); }
+                        this._timeout = setTimeout(function(){ map._polygons[id]._updateEM(); }, 1000);
                         return false;
-                    };
-                    d.getElementById('polygon_popup_faction').onchange = function(){
-                        d.getElementById('polygon_'+id+'_faction').value = this.value;
+                    });
+                    $('#polygon_popup_type').off('change').on('change', function(){
+                        map._polygons[id]._esterenZone.zone_type = map.refDatas('zonesTypes', this.value);
+                        this._timeout = setTimeout(function(){ map._polygons[id]._updateEM(); }, 1000);
                         return false;
-                    };
+                    });
+                    $('#polygon_popup_faction').off('change').on('change', function(){
+                        map._polygons[id]._esterenZone.faction = map.refDatas('factions', this.value);
+                        this._timeout = setTimeout(function(){ map._polygons[id]._updateEM(); }, 1000);
+                        return false;
+                    });
                 }
             },20);
 
+        },
+        dblclickCallback: function(e){
+            var polygon = e.target,
+                msg = CONFIRM_DELETE || 'Supprimer ?',
+                id = polygon._esterenZone ? polygon._esterenZone.id : null;
+            if (polygon._esterenMap.options().editMode == true && id) {
+                if (confirm(msg)) {
+                    polygon._map.removeLayer(polygon);
+                    polygon.fire('remove');
+                }
+            }
+            return false;
         }
     };
 
@@ -148,7 +246,7 @@
     };
 
     /**
-     * Ajoute un marqueur à la carte
+     * Ajoute une zone à la carte
      * @param latLng
      * @param leafletUserOptions
      * @param customUserOptions
@@ -187,7 +285,13 @@
         polygon = L.polygon(latLng, leafletOptions);
 
         polygon._esterenMap = this;
-        polygon._esterenZone = customUserOptions.esterenZone;
+        if (customUserOptions.esterenZone) {
+            polygon._esterenZone = customUserOptions.esterenZone;
+        } else {
+            // Ici on tente de créer une nouvelle zone
+            polygon._esterenZone = this.esterenZonePrototype;
+            polygon._esterenZone.zone_type = this.refDatas('zonesTypes', 1);
+        }
 
         // Création d'une popup
         popupContent = customUserOptions.popupContent;
@@ -209,15 +313,6 @@
             if (customUserOptions.hasOwnProperty(option) && option.match(/Callback$/)) {
                 polygon.addEventListener(option.replace('Callback',''), customUserOptions[option]);
             }
-        }
-
-        if (mapOptions.editMode == true) {
-            $('#inputs_container').append(
-                '<input type="hidden" id="polygon_'+id+'_name" name="polygon['+id+'][name]" value="'+(customUserOptions.polygonName?customUserOptions.polygonName:'')+'" />'+
-                '<input type="hidden" id="polygon_'+id+'_faction" name="polygon['+id+'][faction]" value="'+(customUserOptions.polygonFaction?customUserOptions.polygonFaction:'')+'" />'+
-                '<textarea style="display: none;" id="polygon_'+id+'_coordinates" name="polygon['+id+'][coordinates]">'+JSON.stringify(latLng)+'</textarea>'+
-                '<input type="hidden" id="polygon_'+id+'_type" name="polygon['+id+'][type]" value="'+(customUserOptions.polygonType?customUserOptions.polygonType:'1')+'" />'
-            );
         }
 
         this._drawnItems.addLayer(polygon);

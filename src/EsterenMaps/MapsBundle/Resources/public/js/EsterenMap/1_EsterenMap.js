@@ -106,12 +106,7 @@
         if (mapOptions.editMode == true) {
             this.activateLeafletDraw();
             this._map.on('click', function(){
-                if (_this._editedMarker) { _this._editedMarker.disableEditMode(); }
-                _this._editedMarker = null;
-                if (_this._editedPolyline) { _this._editedPolyline.editing.disable(); }
-                _this._editedPolyline = null;
-                if (_this._editedPolygon) { _this._editedPolygon.editing.disable(); }
-                _this._editedPolygon = null;
+                _this.disableEditedElements();
             });
         } else {
             // Doit contenir les nouveaux éléments ajoutés à la carte
@@ -131,6 +126,23 @@
             mapOptions.loadedCallback.call(this);
         }
 
+    };
+
+    EsterenMap.prototype.disableEditedElements = function(){
+
+        if (this._editedPolygon) {
+            this._editedPolygon.disableEditMode();
+        }
+        if (this._editedPolyline) {
+            this._editedPolyline.disableEditMode();
+        }
+        if (this._editedMarker) {
+            this._editedMarker.disableEditMode();
+        }
+
+        this._editedPolygon = null;
+        this._editedPolyline = null;
+        this._editedMarker = null;
     };
 
     EsterenMap.prototype.refDatas = function(name, id) {

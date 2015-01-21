@@ -85,7 +85,7 @@
                 );
             } else if (type === 'polygon') {
                 options = mapOptions.CustomPolygonBaseOptionsEditMode;
-                popupContent = mapOptions.LeafletPopupPolygonBaseContent;
+                //popupContent = mapOptions.LeafletPopupPolygonBaseContent;
                 editOptions = mapOptions.LeafletPolygonBaseOptionsEditMode;
 
                 latlng = layer._latlngs;
@@ -109,21 +109,12 @@
             console.info('edited layer', layers);
 
             layers.eachLayer(function (layer) {
-                if (layer._esterenMarker && layer._esterenMarker.id) {
-                    // Marqueur
-                    $('#marker_'+layer._esterenMarker.id+'_latitude').val(layer.getLatLng().lat);
-                    $('#marker_'+layer._esterenMarker.id+'_longitude').val(layer.getLatLng().lng);
-
-                } else if (layer._esterenRoute && layer._esterenRoute.id) {
+                if (layer._esterenRoute && layer._esterenRoute.id) {
                     // Route
-                    inputId = '#polyline_'+layer._esterenRoute.id+'_coordinates';
-                    $(inputId).val(JSON.stringify(layer.getLatLngs()));
-
+                    layer.updateEM();
                 } else if (layer._esterenZone && layer._esterenZone.id) {
                     // Zone
-                    inputId = '#polygon_'+layer._esterenZone.id+'_coordinates';
-                    $(inputId).val(JSON.stringify(layer.getLatLngs()));
-
+                    layer.updateEM();
                 }
             });
 
