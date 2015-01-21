@@ -207,22 +207,22 @@
                 d.getElementById('marker_popup_type').value = esterenMarker.marker_type ? esterenMarker.marker_type.id : null;
                 d.getElementById('marker_popup_faction').value = esterenMarker.faction ? esterenMarker.faction.id : "";
 
-                d.getElementById('marker_popup_name').onkeyup = function(){
+                $('#marker_popup_name').off('keyup').on('keyup', function(){
                     map._markers[id]._esterenMarker.name = this.value;
                     if (this._timeout) { clearTimeout(this._timeout); }
                     this._timeout = setTimeout(function(){ map._markers[id]._updateEM(); }, 1000);
                     return false;
-                };
-                d.getElementById('marker_popup_type').onchange = function(){
+                });
+                $('#marker_popup_type').off('change').on('change', function(){
                     map._markers[id]._esterenMarker.marker_type = map.refDatas('markersTypes', this.value);
                     map._markers[id]._updateEM();
                     return false;
-                };
-                d.getElementById('marker_popup_faction').onchange = function(){
+                });
+                $('#marker_popup_faction').off('change').on('change', function(){
                     map._markers[id]._esterenMarker.faction = map.refDatas('factions', this.value);
                     map._markers[id]._updateEM();
                     return false;
-                };
+                });
             }
 
         },
