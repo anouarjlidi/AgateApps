@@ -169,7 +169,6 @@
                     });
                 }
             },20);
-
         },
         dblclickCallback: function(e){
             var polygon = e.target,

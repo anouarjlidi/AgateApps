@@ -160,7 +160,7 @@
                     datas = datas[name];
                 }
             } else {
-                console.warn('No ref data with id "'+id+'" in "'+name+'"');
+                console.warn('No ref data with name "'+name+'"');
                 datas = null;
             }
         }

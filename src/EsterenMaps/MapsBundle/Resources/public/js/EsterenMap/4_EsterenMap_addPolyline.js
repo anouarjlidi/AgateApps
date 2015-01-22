@@ -32,6 +32,121 @@
         return this;
     };
 
+    L.Polyline.prototype.disableEditMode = function() {
+        this._updateEM();
+        this.editing.disable();
+    };
+
+    L.Polyline.prototype.updateStyle = function(){
+        // Change l'image de l'icône
+        this._path.setAttribute('stroke', this._esterenRoute.route_type.color);
+
+        // Met à jour l'attribut "data" pour les filtres
+        $(this._path).attr('data-leaflet-object-type', 'routeType'+this._esterenRoute.route_type.id);
+
+    };
+
+    L.Polyline.prototype.calcDistance = function() {
+        var distance = 0,
+            points = this._latlngs,
+            i = 0,
+            l = points.length,
+            current, next, currentX, currentY, nextX, nextY;
+        do {
+            current = points[i];
+            next = points[i+1];
+            if (next) {
+                currentX = current.lng;
+                currentY = current.lat;
+                nextX = next.lng;
+                nextY = next.lat;
+                distance += Math.sqrt(
+                    ( nextX * nextX )
+                    - ( 2 * currentX * nextX )
+                    + ( currentX * currentX )
+                    + ( nextY * nextY )
+                    - ( 2 * currentY * nextY )
+                    + ( currentY * currentY )
+                );
+            }
+            i++;
+        } while (i < l);
+        if (this._esterenRoute) {
+            this._esterenRoute.distance = distance;
+        }
+        return distance;
+    };
+
+    L.Polyline.prototype._updateEM = function() {
+        var baseRoute = this,
+            esterenRoute = this._esterenRoute || null,
+            id = esterenRoute.id || null;
+        if (esterenRoute && this._map && !this.launched && esterenRoute.marker_start && esterenRoute.marker_end) {
+            esterenRoute.map = esterenRoute.map || {id: this._esterenMap.options().id };
+            esterenRoute.coordinates = JSON.stringify(this._latlngs);
+            esterenRoute.faction = esterenRoute.faction || null;
+            this.calcDistance();
+            this.launched = true;
+            this._esterenMap._load({
+                uri: "routes" + (id ? '/'+id : ''),
+                method: id ? "POST" : "PUT", // Si on n'a pas d'ID, c'est qu'on crée une nouvelle route
+                data: {
+                    json: esterenRoute,
+                    mapping: {
+                        name: true,
+                        coordinates: true,
+                        map: true,
+                        distance: true,
+                        route_type: {
+                            objectField: 'routeType'
+                        },
+                        marker_start: {
+                            objectField: 'markerStart'
+                        },
+                        marker_end: {
+                            objectField: 'markerEnd'
+                        },
+                        faction: true
+                    }
+                },
+                callback: function(response) {
+                    var map = this,
+                        route = response.newObject;
+                    if (!response.error) {
+                        if (route && route.id) {
+                            map._polylines[route.id] = baseRoute;
+                            map._polylines[route.id]._esterenRoute = route;
+                            map._polylines[route.id].updateStyle();
+                        } else {
+                            console.warn('Route retrieved by API does not have ID.');
+                        }
+                    } else {
+                        console.error('Api sent back an error while attempting to '+(id?'update':'insert')+' a route.');
+                    }
+                },
+                callbackError: function() {
+                    console.error('Could not make a request to '+(id?'update':'insert')+' a route.');
+                },
+                callbackComplete: function(){
+                    baseRoute.launched = false;
+                }
+            });
+        } else if (!this.launched && esterenRoute.marker_start && esterenRoute.marker_end) {
+            console.error('Tried to update an empty route.');
+        }
+    };
+
+    EsterenMap.prototype.esterenRoutePrototype = {
+        id: null,
+        name: null,
+        route_type: null,
+        marker_start: null,
+        marker_end: null,
+        faction: null,
+        distance: 0,
+        coordinates: null
+    };
+
     EsterenMap.prototype._mapOptions.LeafletPolylineBaseOptions = {
         color: "#f66",
         opacity: 0.75,
@@ -67,62 +182,86 @@
     EsterenMap.prototype._mapOptions.CustomPolylineBaseOptionsEditMode = {
         clickCallback: function(e){
             var polyline = e.target,
+                map = polyline._esterenMap,
                 id = polyline.options.className.replace('drawn_polyline_','')
                 ;
 
+            map.disableEditedElements();
+            polyline.editing.enable();
             polyline.showSidebar();
+            map._editedPolyline = polyline;
 
             setTimeout(function(){
-                var marker, latlngs;
+                var collectionStart, collectionEnd, markers;
                 if (polyline._sidebar.isVisible()) {
-                    d.getElementById('polyline_popup_name').value = d.getElementById('polyline_'+id+'_name').value;
-                    d.getElementById('polyline_popup_type').value = d.getElementById('polyline_'+id+'_type').value;
-                    d.getElementById('polyline_popup_markerStart').value = d.getElementById('polyline_'+id+'_markerStart').value;
-                    d.getElementById('polyline_popup_markerEnd').value = d.getElementById('polyline_'+id+'_markerEnd').value;
-                    d.getElementById('polyline_popup_faction').value = d.getElementById('polyline_'+id+'_faction').value;
+                    console.info('updating a route');
+                    markers = map._markers;
+                    collectionStart = $('#polyline_popup_markerStart option[value!=""]');
+                    collectionEnd = $('#polyline_popup_markerEnd option[value!=""]');
 
-                    d.getElementById('polyline_popup_name').onkeyup = function(){
-                        d.getElementById('polyline_'+id+'_name').value = this.value;
+                    $.each(markers, function(id,marker){
+                        if (!collectionEnd.filter('[value="'+id+'"]').length) {
+                            collectionEnd.last().after('<option value="'+id+'">'+marker.name+'</option>');
+                        }
+                        if (!collectionStart.filter('[value="'+id+'"]').length) {
+                            collectionStart.last().after('<option value="'+id+'">'+marker.name+'</option>');
+                        }
+                    });
+
+                    d.getElementById('polyline_popup_name').value = polyline._esterenRoute.name;
+                    d.getElementById('polyline_popup_faction').value = polyline._esterenRoute.faction ? polyline._esterenRoute.faction.id : '';
+                    d.getElementById('polyline_popup_type').value = polyline._esterenRoute.route_type ? polyline._esterenRoute.route_type.id : '';
+                    d.getElementById('polyline_popup_markerStart').value = polyline._esterenRoute.marker_start ? polyline._esterenRoute.marker_start.id : '';
+                    d.getElementById('polyline_popup_markerEnd').value = polyline._esterenRoute.marker_end ? polyline._esterenRoute.marker_end.id : '';
+
+                    $('#polyline_popup_name').off('keyup').on('keyup', function(){
+                        map._polylines[id]._esterenRoute.name = this.value;
+                        if (this._timeout) { clearTimeout(this._timeout); }
+                        this._timeout = setTimeout(function(){ map._polylines[id]._updateEM(); }, 1000);
                         return false;
-                    };
-                    d.getElementById('polyline_popup_type').onchange = function(){
-                        d.getElementById('polyline_'+id+'_type').value = this.value;
+                    });
+                    $('#polyline_popup_type').off('change').on('change', function(){
+                        map._polylines[id]._esterenRoute.route_type = map.refDatas('routesTypes', this.value);
+                        if (this._timeout) { clearTimeout(this._timeout); }
+                        this._timeout = setTimeout(function(){ map._polylines[id]._updateEM(); }, 1000);
                         return false;
-                    };
-                    d.getElementById('polyline_popup_faction').onchange = function(){
-                        d.getElementById('polyline_'+id+'_faction').value = this.value;
+                    });
+                    $('#polyline_popup_faction').off('change').on('change', function(){
+                        map._polylines[id]._esterenRoute.faction = map.refDatas('factions', this.value);
+                        if (this._timeout) { clearTimeout(this._timeout); }
+                        this._timeout = setTimeout(function(){ map._polylines[id]._updateEM(); }, 1000);
                         return false;
-                    };
-                    d.getElementById('polyline_popup_markerStart').onchange = function(){
-                        d.getElementById('polyline_'+id+'_markerStart').value = this.value;
-                        if (this.value && polyline._esterenMap._markers[this.value]) {
-                            marker = polyline._esterenMap._markers[this.value];
-                            latlngs = polyline._latlngs;
+                    });
+                    $('#polyline_popup_markerStart').off('change').on('change', function(){
+                        var marker, latlngs;
+                        if (this._timeout) { clearTimeout(this._timeout); }
+                        marker = markers[this.value] || null;
+                        latlngs = polyline._latlngs;
+                        if (marker) {
                             latlngs[0] = marker._latlng;
-                            polyline.setLatLngs(latlngs);
-                            d.getElementById('polyline_1_coordinates').value = JSON.stringify(latlngs);
-                            d.getElementById('polyline_1_coordinates').innerHTML = JSON.stringify(latlngs);
                         }
-
+                        polyline.setLatLngs(latlngs);
+                        polyline._esterenRoute.coordinates = JSON.stringify(latlngs);
+                        polyline._esterenRoute.marker_start = marker._esterenMarker;
+                        this._timeout = setTimeout(function(){ map._polylines[id]._updateEM(); }, 1000);
                         return false;
-                    };
-                    d.getElementById('polyline_popup_markerEnd').onchange = function(){
-                        d.getElementById('polyline_'+id+'_markerEnd').value = this.value;
-                        if (this.value && polyline._esterenMap._markers[this.value]) {
-                            marker = polyline._esterenMap._markers[this.value];
-                            latlngs = polyline._latlngs;
+                    });
+                    $('#polyline_popup_markerEnd').off('change').on('change', function(){
+                        var marker, latlngs;
+                        if (this._timeout) { clearTimeout(this._timeout); }
+                        marker = markers[this.value] || null;
+                        latlngs = polyline._latlngs;
+                        if (marker) {
                             latlngs[latlngs.length - 1] = marker._latlng;
-                            polyline.setLatLngs(latlngs);
-                            d.getElementById('polyline_1_coordinates').value = JSON.stringify(latlngs);
-                            d.getElementById('polyline_1_coordinates').innerHTML = JSON.stringify(latlngs);
                         }
-
+                        polyline.setLatLngs(latlngs);
+                        polyline._esterenRoute.coordinates = JSON.stringify(latlngs);
+                        polyline._esterenRoute.marker_end = marker._esterenMarker;
+                        this._timeout = setTimeout(function(){ map._polylines[id]._updateEM(); }, 1000);
                         return false;
-                    };
-
+                    });
                 }
             },20);
-
         }
     };
 
@@ -227,8 +366,13 @@
         polyline = L.polyline(latLng, leafletOptions);
 
         polyline._esterenMap = this;
-
-        polyline._esterenRoute = customUserOptions.esterenRoute;
+        if (customUserOptions.esterenRoute) {
+            polyline._esterenRoute = customUserOptions.esterenRoute;
+        } else {
+            // Ici on tente de créer une nouvelle zone
+            polyline._esterenRoute = this.esterenRoutePrototype;
+            polyline._esterenRoute.route_type = this.refDatas('routesTypes', 1);
+        }
 
         // Création d'une popup
         popupContent = customUserOptions.popupContent;
@@ -250,17 +394,6 @@
             if (customUserOptions.hasOwnProperty(option) && option.match(/Callback$/)) {
                 polyline.addEventListener(option.replace('Callback',''), customUserOptions[option]);
             }
-        }
-
-        if (mapOptions.editMode) {
-            $('#inputs_container').append(
-                '<input type="hidden" id="polyline_'+id+'_name" name="polyline['+id+'][name]" value="'+(customUserOptions.polylineName?customUserOptions.polylineName:'')+'" />'+
-                '<input type="hidden" id="polyline_'+id+'_faction" name="polyline['+id+'][faction]" value="'+(customUserOptions.polylineFaction?customUserOptions.polylineFaction:'')+'" />'+
-                '<textarea style="display: none;" id="polyline_'+id+'_coordinates" name="polyline['+id+'][coordinates]">'+JSON.stringify(latLng)+'</textarea>'+
-                '<input type="hidden" id="polyline_'+id+'_type" name="polyline['+id+'][type]" value="'+(customUserOptions.polylineType?customUserOptions.polylineType:'1')+'" />'+
-                '<input type="hidden" id="polyline_'+id+'_markerStart" name="polyline['+id+'][markerStart]" value="'+(customUserOptions.polylineMarkerStart?customUserOptions.polylineMarkerStart:'')+'" />'+
-                '<input type="hidden" id="polyline_'+id+'_markerEnd" name="polyline['+id+'][markerEnd]" value="'+(customUserOptions.polylineMarkerEnd?customUserOptions.polylineMarkerEnd:'')+'" />'
-            );
         }
 
         this._drawnItems.addLayer(polyline);
