@@ -146,12 +146,13 @@
     };
 
     EsterenMap.prototype.refDatas = function(name, id) {
-        var datas = this.cloneObject((this._refDatas['ref-datas'] ? this._refDatas['ref-datas'] : this._refDatas));
+        var datas = this.cloneObject((this._refDatas['ref-datas'] ? this._refDatas['ref-datas'] : this._refDatas)), grep;
         if (name) {
             if (datas[name]) {
-                if (id) {
-                    if (datas[name][id]) {
-                        datas = datas[name][id];
+                if (!isNaN(id)) {
+                    grep = $.grep(datas[name], function(element){return element.id == id;});
+                    if (grep.length) {
+                        datas = grep[0];
                     } else {
                         console.warn('No ref data with id "'+id+'" in "'+name+'"');
                         datas = {};
