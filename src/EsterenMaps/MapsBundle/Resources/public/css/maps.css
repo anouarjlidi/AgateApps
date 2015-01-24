@@ -174,7 +174,23 @@
     display: block;
     font-size: 14px;
 }
-
+.directions_helper ul {
+    position: absolute;
+    z-index: 1;
+    right: 0;
+    width: 100%;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.directions_helper ul li {
+    background: #f6f6f6;
+    padding: 1px 5px;
+    border-bottom: solid 1px #DFDFDF;
+}
+.directions_helper ul li:hover {
+    background: #eee;
+    cursor: pointer;
+}
 /*
 Edit mode
 */

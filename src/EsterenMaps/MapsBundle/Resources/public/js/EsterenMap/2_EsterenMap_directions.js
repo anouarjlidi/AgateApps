@@ -42,20 +42,7 @@
         },
 
         setEvents: function(){
-            var map = this._esterenMap,
-                controlContent = this._controlContent;
-            $(controlContent).find('form').on('submit', function(){
-                var datas = $(this).serializeArray(),
-                    markers = map._markers,
-                    start = datas.filter(function(e){return e.name==='start';})[0].value,
-                    end = datas.filter(function(e){return e.name==='end';})[0].value
-                ;
-                start = markers[start];
-                end = markers[end];
-                if (start && end) {
-                    console.info('start', 'end');
-                }
-            });
+            var map = this._esterenMap;
         },
 
         map: function(map){
@@ -71,6 +58,8 @@
         },
 
         createContent: function(){
+            var map = this._esterenMap;
+
             if (this._cntSet) {
                 console.error('Content has already been set for this direction panel.');
                 return false;
@@ -89,18 +78,21 @@
 
             content =
             '<div>' +
+                '<div id="directions_wait_overlay"></div>' +
                 '<h3>' + directionsMsgTitle + '</h3>' +
                 '<form action="#" id="directions_form" class="form-horizontal">' +
                     '<div class="form-group">' +
                         '<label for="directions_start" class="col-sm-3 control-label">' + directionsMsgStart + '</label>' +
                         '<div class="col-sm-9">' +
                             '<input type="text" name="start" id="directions_start" placeholder="' + directionsMsgStart + '" class="form-control" />' +
+                            '<div class="directions_helper"></div>' +
                         '</div>' +
                     '</div>' +
                     '<div class="form-group">' +
                         '<label for="directions_end" class="col-sm-3 control-label">' + directionsMsgEnd + '</label>' +
                         '<div class="col-sm-9">' +
                             '<input type="text" name="end" id="directions_end" placeholder="' + directionsMsgEnd + '" class="form-control" />' +
+                            '<div class="directions_helper"></div>' +
                         '</div>' +
                     '</div>' +
                     '<button class="btn btn-default" type="submit">' + msgSend + '</button>' +
@@ -110,6 +102,47 @@
             ;
 
             $(this._controlContent).html('').append(content);
+            $(this._controlContent).find('.directions_helper').on('click', function(e){
+                var input, li = e.target;
+                if (li.tagName.toLowerCase() === 'li') {
+                    input = li.parentElement.parentElement.previousElementSibling;
+                    input.value = li.innerHTML;
+                    li.parentElement.innerHTML = '';
+                }
+            });
+            $(this._controlContent).find('#directions_start,#directions_end').on('keyup', function(){
+                var $this = $(this),
+                    html = '', marker,
+                    value = $this.val().trim();
+                if (value) {
+                    for (marker in map._markers) {
+                        if (map._markers.hasOwnProperty(marker)) {
+                            marker = map._markers[marker]._esterenMarker;
+                            if (marker.name.match(new RegExp(value, 'gi'))) {
+                                html += '<li data-marker-id="'+marker.id+'">'+marker.name+'</li>';
+                            }
+                        }
+                    }
+                }
+                if (html) {
+                    html = '<ul class="list-unstyled">'+html+'</ul>';
+                }
+                $this.next('.directions_helper').html(html);
+            });
+            $(this._controlContent).find('#directions_form').on('submit', function(){
+                var datas = $(this).serializeArray(),
+                    markers = map._markers,
+                    start = datas.filter(function(e){return e.name==='start';})[0].value,
+                    end = datas.filter(function(e){return e.name==='end';})[0].value
+                ;
+                start = markers[start];
+                end = markers[end];
+                if (start && end) {
+                    d.getElementById('directions_wait_overlay').style.display = "block";
+                    console.info('start', start);
+                    console.info('end', end);
+                }
+            });
 
             this._cntSet= true;
 
