@@ -150,8 +150,28 @@
             return this;
         },
 
+        show: function(){
+            var controlDiv = this._controlDiv,
+                link = this._controlLink;
+            controlDiv.classList.add('expanded');
+            link.children[0].classList.remove('icon-resize_full');
+            link.children[0].classList.add('icon-resize_small');
+            setTimeout(function(){
+                controlDiv.classList.add('expanded-full');
+            }, 400);
+        },
+
+        hide: function(){
+            var controlDiv = this._controlDiv,
+                link = this._controlLink;
+            controlDiv.classList.remove('expanded-full');
+            controlDiv.classList.remove('expanded');
+            link.children[0].classList.add('icon-resize_full');
+            link.children[0].classList.remove('icon-resize_small');
+        },
+
         onAdd: function () {
-            var controlDiv, link, textTitle, controlContent;
+            var _this = this, controlDiv, link, textTitle, controlContent;
 
             if (!(this._esterenMap instanceof EsterenMap)) {
                 console.error('Fitlers control can only be added to a LeafletMap with an EsterenMap. Have you forgotten the second argument to the constructor ?');
@@ -182,19 +202,10 @@
                     var controlDiv = d.getElementById('leaflet-filters-control');
 
                     if (!controlDiv.classList.contains('expanded')) {
-                        controlDiv.classList.add('expanded');
-                        link.children[0].classList.remove('icon-resize_full');
-                        link.children[0].classList.add('icon-resize_small');
-                        setTimeout(function(){
-                            controlDiv.classList.add('expanded-full');
-                        }, 400);
+                        _this.show();
                     } else {
-                        controlDiv.classList.remove('expanded-full');
-                        controlDiv.classList.remove('expanded');
-                        link.children[0].classList.add('icon-resize_full');
-                        link.children[0].classList.remove('icon-resize_small');
+                        _this.hide();
                     }
-
                     return false;
                 })
                 .addListener(link, 'click', L.DomEvent.stopPropagation)
@@ -202,13 +213,7 @@
 
             // Listeners FiltersControl disable
             this._esterenMap._map.on('click', function(){
-                var controlDiv = d.getElementById('leaflet-filters-control');
-                if (controlDiv.classList.contains('expanded')) {
-                    controlDiv.classList.remove('expanded-full');
-                    controlDiv.classList.remove('expanded');
-                    link.children[0].classList.add('icon-resize_full');
-                    link.children[0].classList.remove('icon-resize_small');
-                }
+                _this.hide();
             });
 
             this._controlDiv = controlDiv;

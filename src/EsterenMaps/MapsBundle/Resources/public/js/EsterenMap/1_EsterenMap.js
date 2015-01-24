@@ -100,6 +100,11 @@
             this.initFilters();
         }
 
+        // Initialisation des filtres si demandé
+        if (mapOptions.showDirections === true) {
+            this.initDirections();
+        }
+
         ////////////////////////////////
         ////////// Mode édition ////////
         ////////////////////////////////

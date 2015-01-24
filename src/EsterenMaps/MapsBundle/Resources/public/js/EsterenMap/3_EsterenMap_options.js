@@ -18,6 +18,11 @@
     EsterenMap.prototype._routesTypes = {};
     EsterenMap.prototype._zonesTypes = {};
 
+    EsterenMap.prototype._directionsOptions = {
+        position: 'topleft'
+    };
+
+
     EsterenMap.prototype.mapAllowedElements = {
         maps: true,
         factions: true,
@@ -35,6 +40,7 @@
         id: 0,
         editMode: false,
         showFilters: true,
+        showDirections: true,
         autoResize: true,
         containerHeight: 400,
         sidebarContainer: 'sidebar',

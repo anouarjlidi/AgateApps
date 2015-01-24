@@ -29,15 +29,15 @@
                     },
                     LeafletMapBaseOptions: {
                         zoom: {{ map.startZoom }},
-                        center: [{{ map.startX }}, {{ map.startY }}],
-                        maxZoom: {{ map.maxZoom }}
+                        maxZoom: {{ map.maxZoom }},
+                        maxBounds: [[85.23,-183], [11,41]]
                     },
                     LeafletLayerBaseOptions: {
                         maxZoom: {{ map.maxZoom }},
                         maxNativeZoom: {{ map.maxZoom }},
                         tileSize: {{ tile_size }},
                         noWrap: false,
-                        continuousWorld: true
+                        bounds: [[85.23,-183], [11,41]]
                     }
                 });
             } catch (e) {
