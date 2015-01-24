@@ -85,18 +85,6 @@ class MapsController extends Controller
 
         }
 
-//        $route_init = $this->generateUrl('esterenmaps_maps_api_init');
-        $route_init = '';
-
-        $maxZones = $em->getRepository('EsterenMapsBundle:Zones')->getMax();
-        $idsZones = $em->getRepository('EsterenMapsBundle:Zones')->getIds();
-
-        $maxRoutes = $em->getRepository('EsterenMapsBundle:Routes')->getMax();
-        $idsRoutes = $em->getRepository('EsterenMapsBundle:Routes')->getIds();
-
-        $maxMarkers = $em->getRepository('EsterenMapsBundle:Markers')->getMax();
-        $idsMarkers = $em->getRepository('EsterenMapsBundle:Markers')->getIds();
-
         $tilesUrl = $this->generateUrl('esterenmaps_api_tiles_tile_distant', array('id'=>0,'x'=>0,'y'=>0,'zoom'=>0), true);
         $tilesUrl = str_replace('0/0/0/0','{id}/{z}/{x}/{y}', $tilesUrl);
 		$tilesUrl = preg_replace('~app_dev(_fast)\.php/~isUu', '', $tilesUrl);
@@ -108,14 +96,6 @@ class MapsController extends Controller
             'routesTypes' => $routesTypes,
             'markersTypes' => $markersTypes,
             'factions' => $factions,
-            'idsMarkers' => ++$idsMarkers,
-            'idsZones' => ++$idsZones,
-            'idsRoutes' => ++$idsRoutes,
-            'emptyMarker' => new Markers(),
-            'route_init' => $route_init,
-            'maxZones' => $maxZones,
-            'maxRoutes' => $maxRoutes,
-            'maxMarkers' => $maxMarkers,
         );
     }
 

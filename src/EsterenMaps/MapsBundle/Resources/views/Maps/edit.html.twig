@@ -56,13 +56,7 @@
                         tileSize: {{ tile_size }},
                         noWrap: false,
                         continuousWorld: true
-                    },
-                    idsZones: [{{ idsZones | join(',') }}],
-                    idsRoutes: [{{ idsRoutes | join(',') }}],
-                    idsMarkers: [{{ idsMarkers | join(',') }}],
-                    maxZoneId: {{ maxZones }},
-                    maxRouteId: {{ maxRoutes }},
-                    maxMarkerId: {{ maxMarkers }}
+                    }
                 });
             } catch (e) {
                 console.error(e);
