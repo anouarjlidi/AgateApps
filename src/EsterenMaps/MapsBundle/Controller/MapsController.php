@@ -14,6 +14,11 @@ use EsterenMaps\MapsBundle\Entity\Routes;
 use EsterenMaps\MapsBundle\Entity\Markers;
 use EsterenMaps\MapsBundle\Form\MapsType;
 
+/**
+ * Class MapsController
+ * @package EsterenMaps\MapsBundle\Controller
+ * @Route(host="%esteren_domains.esteren_maps%")
+ */
 class MapsController extends Controller
 {
 

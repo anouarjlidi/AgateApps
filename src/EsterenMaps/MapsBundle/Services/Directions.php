@@ -7,6 +7,7 @@ use EsterenMaps\MapsBundle\Entity\Maps;
 use EsterenMaps\MapsBundle\Entity\Markers;
 use EsterenMaps\MapsBundle\Repository\MarkersRepository;
 use JMS\Serializer\Serializer;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class Directions
@@ -108,9 +109,18 @@ class Directions {
         foreach ($paths as $step) {
             $marker = $allMarkers[$step['node']['id']];
             $marker['route'] = $allRoutes[$step['route']['id']];
-            $marker['routesStart'] = null;
-            $marker['routesEnd'] = null;
+            unset($marker['routesStart'], $marker['routesEnd']);
             $steps[] = $marker;
+        }
+
+        // Ad the last marker
+        /** @var Markers $end */
+        $endMarker = $allMarkers[$end->getId()];
+        unset($endMarker['routesStart'], $endMarker['routesEnd'], $endMarker['route']);
+        $steps[] = $endMarker;
+
+        foreach ($steps as $k => $step) {
+            unset($steps[$k]['route']['markerStart'], $steps[$k]['route']['markerEnd']);
         }
 
         $json = json_encode($steps);

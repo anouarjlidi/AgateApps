@@ -48,7 +48,6 @@ esteren_portal:
 esterenmaps:
     resource: "@EsterenMapsBundle/Controller/"
     type:     annotation
-    host:     %esteren_domains.esteren_maps%
     prefix:   /{_locale}/
     defaults:
          _locale: %locale%
