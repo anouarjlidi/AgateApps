@@ -39,7 +39,18 @@ class DirectionsController extends Controller {
             $serialized = file_get_contents($cachedFile);
         } else {
             $directions = $this->container->get('esterenmaps.directions')->getDirectionByMarkers($map, $from, $to);
-            $serialized = $serializer->serialize($directions, 'json');
+            if (count($directions)) {
+                $serialized = $serializer->serialize($directions, 'json');
+            } else {
+                $serialized = $serializer->serialize(array(
+                    'error' => true,
+                    'message' => $this->get('translator')->trans('No path found for this query.'),
+                    'query' => array(
+                        'from' => $from,
+                        'to' => $to,
+                    ),
+                ), 'json');
+            }
             file_put_contents($cachedFile, $serialized);
         }
 

@@ -231,18 +231,9 @@
             }
         } else if (name && Object.prototype.toString.call( name ) === '[object Array]') {
             // Sinon, name doit être obligatoirement un array.
-            // On n'autorise pas les objets littéraux.
-            // Cela permet de forcer un tableau parcourable avec une boucle "for"
-            for (i = 0, c = name.length ; i < c ; i++) {
-                // On teste les cas valides, et on négationne le if, pour plus de clarté sur le prérequis des attributs
-                // En l'occurrence, ce doit être soit un élément valable de mapAllowedElements,
-                // soit ce doit être un nombre (donc un identifiant qui sera valide ou non selon la requête)
-                if (
-                    !(this.mapAllowedElements[name[i]] === true || !isNaN(name[i]))
-                ) {
-                    console.error('Éléments à charger incorrects.');
-                    return false;
-                }
+            if (this.mapAllowedElements[name[0]] !== true) {
+                console.error('Éléments à charger incorrects.');
+                return false;
             }
             name = name.join('/');
         } else if (!name) {

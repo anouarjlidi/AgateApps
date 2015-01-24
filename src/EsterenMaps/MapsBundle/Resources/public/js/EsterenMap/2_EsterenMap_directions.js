@@ -129,19 +129,45 @@
                 }
                 $this.next('.directions_helper').html(html);
             });
-            $(this._controlContent).find('#directions_form').on('submit', function(){
+            $(this._controlContent).find('#directions_form').on('submit', function(e){
                 var datas = $(this).serializeArray(),
                     markers = map._markers,
+                    markerStart, markerEnd,
                     start = datas.filter(function(e){return e.name==='start';})[0].value,
                     end = datas.filter(function(e){return e.name==='end';})[0].value
                 ;
-                start = markers[start];
-                end = markers[end];
-                if (start && end) {
-                    d.getElementById('directions_wait_overlay').style.display = "block";
-                    console.info('start', start);
-                    console.info('end', end);
+                for (marker in markers) {
+                    if (markers.hasOwnProperty(marker)) {
+                        marker = markers[marker]._esterenMarker;
+                        if (!markerStart && marker.name === start) {
+                            markerStart = marker.id;
+                        }
+                        if (!markerEnd && marker.name === end) {
+                            markerEnd = marker.id;
+                        }
+                        if (markerStart && markerEnd) {
+                            break;
+                        }
+                    }
                 }
+                if (markerStart && markerEnd) {
+                    d.getElementById('directions_wait_overlay').style.display = "block";
+                    console.info('start', markerStart);
+                    console.info('end', markerEnd);
+                    map._load({
+                        uri:"maps/directions/1/7/52",
+                        callback: function(response) {
+                            if (response.error && response.message) {
+                                alert(response.message);
+                            } else {
+                                //TODO
+                            }
+                        }
+                    });
+                }
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
             });
 
             this._cntSet= true;

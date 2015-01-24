@@ -113,11 +113,13 @@ class Directions {
             $steps[] = $marker;
         }
 
-        // Ad the last marker
-        /** @var Markers $end */
-        $endMarker = $allMarkers[$end->getId()];
-        unset($endMarker['routesStart'], $endMarker['routesEnd'], $endMarker['route']);
-        $steps[] = $endMarker;
+        if (count($steps)) {
+            // Ad the last marker
+            /** @var Markers $end */
+            $endMarker = $allMarkers[$end->getId()];
+            unset($endMarker['routesStart'], $endMarker['routesEnd'], $endMarker['route']);
+            $steps[] = $endMarker;
+        }
 
         foreach ($steps as $k => $step) {
             unset($steps[$k]['route']['markerStart'], $steps[$k]['route']['markerEnd']);
@@ -162,7 +164,7 @@ class Directions {
             }
 
             unset($Q[$current['id']]);
-            if ($distances[$current['id']] == INF or $current['id'] === $target) {
+            if ($current['id'] === $target || !isset($distances[$current['id']]) || (isset($distances[$current['id']]) && $distances[$current['id']] == INF)) {
                 break;
             }
 
