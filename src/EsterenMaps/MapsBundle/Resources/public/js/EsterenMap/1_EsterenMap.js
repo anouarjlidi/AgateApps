@@ -326,7 +326,9 @@
         if (this._refDatas) {
             // Si les données ont déjà été chargées, on va simplement exécuter callback
             // Avec un tableau similaire
-            callback.call(this, {refDatasService: this.refDatas()});
+            var d = {};
+            d[refDatasService] = this.refDatas();
+            callback.call(this, d);
             return this;
         }
 

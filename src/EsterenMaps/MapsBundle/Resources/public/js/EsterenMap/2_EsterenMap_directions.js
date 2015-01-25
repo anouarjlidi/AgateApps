@@ -7,9 +7,7 @@
 
         this._directionsControl = control;
 
-        this.loadRefDatas(function(){
-            control.addTo(this._map);
-        });
+        control.addTo(this._map);
 
         control.setEvents();
 
@@ -21,11 +19,13 @@
             position: 'topleft'
         },
 
+        _pathColor: '#4444dd',
+
         _esterenMap: null,
         _controlDiv: null,
         _controlContent: null,
         _controlLink: null,
-        _route: null,
+        _steps: [],
 
         _cntSet: false,
         _lstnSet: false,
@@ -58,8 +58,46 @@
             return this._esterenMap;
         },
 
+        highlightPath: function(){
+            var path = this._steps,
+                map = this._esterenMap,
+                markers = map._markers,
+                routes = map._polylines,
+                i, l, step, marker, route;
+            for (i = 0, l = path.length; i < l; i++) {
+                step = path[i];
+                marker = markers[step.id];
+                route = step.route ? routes[step.route.id] : null;
+                marker._icon.classList.add('selected');
+                if (route && !route._path.classList.contains('highlighted')) {
+                    route._path.setAttribute('stroke-width', parseInt(route._path.getAttribute('stroke-width')) * 2);
+                    route._oldColor = route._path.getAttribute('stroke');
+                    route._path.setAttribute('stroke', this._pathColor);
+                    route._path.classList.add('highlighted');
+                }
+            }
+        },
+
         cleanDirections: function(){
-            var route = this._route;
+            var path = this._steps,
+                map = this._esterenMap,
+                markers = map._markers,
+                routes = map._polylines,
+                i, l, step, marker, route;
+            if (path && path.length) {
+                for (i = 0, l = path.length; i < l; i++) {
+                    step = path[i];
+                    marker = markers[step.id];
+                    route = step.route ? routes[step.route.id] : null;
+                    marker._icon.classList.remove('selected');
+                    if (route && route._path.classList.contains('highlighted')) {
+                        route._path.setAttribute('stroke-width', parseInt(route._path.getAttribute('stroke-width')) / 2);
+                        route._path.setAttribute('stroke', route._oldColor);
+                        route._path.classList.remove('highlighted');
+                    }
+                }
+            }
+            this._steps = [];
         },
 
         createContent: function(){
@@ -134,6 +172,7 @@
                     html = '<ul class="list-unstyled">'+html+'</ul>';
                 }
                 $this.next('.directions_helper').html(html);
+                return false;
             });
             $(this._controlContent).find('#directions_form').on('submit', function(e){
                 var datas = $(this).serializeArray(),
@@ -163,19 +202,20 @@
                     console.info('start', markerStart);
                     console.info('end', markerEnd);
                     map._load({
-                        uri: 'maps/directions/1/'+markerStart+'/'+markerEnd,
+                        uri: 'maps/directions/'+map.options().id+'/'+markerStart+'/'+markerEnd,
+                        datas: {},
                         callback: function(response) {
                             if (response.error && response.message) {
                                 $('#directions_message').text(response.message);
                                 setTimeout(function(){$('#directions_message').text('');}, 3000);
-                            } else {
-                                //TODO
+                            } else if (response.path && response.path.length) {
+                                control._steps = response.path;
+                                control.highlightPath();
+                                map._map.fitBounds(L.latLngBounds(response.bounds.northEast, response.bounds.southWest));
                             }
                         }
                     });
                 }
-                e.preventDefault();
-                e.stopPropagation();
                 return false;
             });
 

@@ -5,6 +5,7 @@
     L.Polyline.prototype._esterenRoute = {};
     L.Polyline.prototype._sidebar = {};
     L.Polyline.prototype._sidebarContent = '';
+    L.Polyline.prototype._oldColor = '';
     L.Polyline.prototype.showSidebar = function(){
         this._sidebar.setContent(this._sidebarContent);
         this._sidebar.show();

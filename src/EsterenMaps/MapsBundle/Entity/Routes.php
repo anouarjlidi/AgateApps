@@ -445,7 +445,17 @@ class Routes {
     }
 
     /**
+     * @return array
+     */
+    public function getDecodedCoordinates()
+    {
+        return json_decode($this->coordinates, true);
+    }
+
+    /**
      * Réinitialise correctement les informations de la route
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
      * @return $this
      */
     public function refresh() {
@@ -472,8 +482,6 @@ class Routes {
     }
 
     /**
-     * @ORM\PrePersist
-     * @ORM\PreUpdate
      * @return integer
      */
     public function calcDistance() {
