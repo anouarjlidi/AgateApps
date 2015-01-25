@@ -40,7 +40,17 @@ class DirectionsController extends Controller {
         } else {
             $directions = $this->container->get('esterenmaps.directions')->getDirectionByMarkers($map, $from, $to);
             if (count($directions)) {
-                $serialized = $serializer->serialize($directions, 'json');
+                $distance = 0;
+                foreach ($directions as $step) {
+                    $distance += $step->route ? $step->route->getDistance() : 0;
+                }
+                $serialized = $serializer->serialize(array(
+                    'total_distance' => $distance,
+                    'path' => $directions,
+                    'number_of_steps' => count($directions) - 2,
+                    'start' => $from,
+                    'end' => $to,
+                ), 'json');
             } else {
                 $serialized = $serializer->serialize(array(
                     'error' => true,

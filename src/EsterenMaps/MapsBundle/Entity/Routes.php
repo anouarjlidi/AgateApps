@@ -12,6 +12,7 @@ use JMS\Serializer\Annotation as Serializer;
  *
  * @ORM\Table(name="routes")
  * @ORM\Entity(repositoryClass="EsterenMaps\MapsBundle\Repository\RoutesRepository")
+ * @ORM\HasLifecycleCallbacks
  * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @Serializer\ExclusionPolicy("all")
  */
@@ -46,7 +47,7 @@ class Routes {
     /**
      * @var integer
      *
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="float", precision=6, scale=6)
      * @Serializer\Expose
      */
     protected $distance;
@@ -471,6 +472,8 @@ class Routes {
     }
 
     /**
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
      * @return integer
      */
     public function calcDistance() {

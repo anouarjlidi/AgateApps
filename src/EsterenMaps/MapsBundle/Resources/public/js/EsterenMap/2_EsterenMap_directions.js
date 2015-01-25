@@ -25,6 +25,7 @@
         _controlDiv: null,
         _controlContent: null,
         _controlLink: null,
+        _route: null,
 
         _cntSet: false,
         _lstnSet: false,
@@ -55,6 +56,10 @@
                 return this;
             }
             return this._esterenMap;
+        },
+
+        cleanDirections: function(){
+            var route = this._route;
         },
 
         createContent: function(){
@@ -96,6 +101,7 @@
                         '</div>' +
                     '</div>' +
                     '<button class="btn btn-default" type="submit">' + msgSend + '</button>' +
+                    '<div id="directions_message"></div>' +
                 '</div>' +
                 '</form>' +
             '</div>'
@@ -132,10 +138,12 @@
             $(this._controlContent).find('#directions_form').on('submit', function(e){
                 var datas = $(this).serializeArray(),
                     markers = map._markers,
+                    control = map._directionsControl,
                     markerStart, markerEnd,
                     start = datas.filter(function(e){return e.name==='start';})[0].value,
                     end = datas.filter(function(e){return e.name==='end';})[0].value
                 ;
+                control.cleanDirections();
                 for (marker in markers) {
                     if (markers.hasOwnProperty(marker)) {
                         marker = markers[marker]._esterenMarker;
@@ -155,10 +163,11 @@
                     console.info('start', markerStart);
                     console.info('end', markerEnd);
                     map._load({
-                        uri:"maps/directions/1/7/52",
+                        uri: 'maps/directions/1/'+markerStart+'/'+markerEnd,
                         callback: function(response) {
                             if (response.error && response.message) {
-                                alert(response.message);
+                                $('#directions_message').text(response.message);
+                                setTimeout(function(){$('#directions_message').text('');}, 3000);
                             } else {
                                 //TODO
                             }
