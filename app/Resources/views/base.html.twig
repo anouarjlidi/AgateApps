@@ -1,19 +1,13 @@
-{%- block sonata_page_html_tag -%}
 <!DOCTYPE html>
-<html id="corahnrin" {{ sonata_seo_html_attributes() }}>
-{% endblock %}
+<html id="corahnrin">
 
-{% block sonata_page_head %}
-<head {{ sonata_seo_head_attributes() }}>
+<head>
 
-    {% set title = sonata_seo_title() %}
-    {% set title = title | striptags | trim %}
-    <title>{% if title and title != 'Esteren'%}
+    <title>{% if title is defined and title != 'Esteren'%}
         {{ title }} - Esteren
     {% else %}
         Esteren
     {% endif %}</title>
-    {{ sonata_seo_metadatas() }}
 
     <meta name="generator" content="Pierstoval"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,9 +15,6 @@
     {% block stylesheets %}
         {% stylesheets
         '@EsterenPagesBundle/Resources/public/less/_main.less'
-
-        'bundles/sonatapage/default.css'
-        'bundles/sonatapage/page.css'
 
         'bundles/esterenmaps/css/leaflet.css'
         'bundles/esterenmaps/css/leaflet.draw.css'
@@ -51,11 +42,8 @@
     <link rel="icon" type="image/x-icon" href="{{ asset('bundles/esterenpages/images/favicon-57.png', null, false) }}"/>
     <link rel="shortcut icon" href="{{ asset('bundles/esterenpages/images/favicon-57.png', null, false) }}">
 </head>
-{% endblock %}
 
-{% block sonata_page_body_tag %}
 <body>
-{% endblock %}
 
 {% block body %}
 
@@ -79,10 +67,7 @@
 
             <div id="content">{# DYNAMIC CONTENT FOR LAYOUT #}
 
-                {% block sonata_page_container %}
-                    {% include '::sonata_content.html.twig' %}
-                    {% block content_for_layout %}{% endblock %}
-                {% endblock %}
+                {% block content_for_layout %}{% endblock %}
 
             </div><!--/#content-->
 
@@ -101,13 +86,6 @@
 
     </div><!--/#wrapper-->
 
-{% endblock %}
-
-{% block sonata_page_javascripts %}
-    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
-    <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-    {#{% for js in sonata_page.assets.javascripts %}<script src="{{ asset(js, null, true) }}" type="text/javascript"></script>{% endfor %}#}
-    <script type="text/javascript" src="{{ asset('bundles/sonatapage/page.js', null, true) }}"></script>
 {% endblock %}
 
 {% block javascripts %}
@@ -131,8 +109,6 @@
         'components/jquery.colorpicker/i18n/jquery.ui.colorpicker-en.js'
         'components/jquery.colorpicker/i18n/jquery.ui.colorpicker-fr.js'
 
-        '@SonataCoreBundle/Resources/public/js/base.js'
-        '@SonataPageBundle/Resources/public/page.js'
         '@EsterenPagesBundle/Resources/public/js/corahn_rin.js'
         output="js/global.js"
         filter="?uglifyjs" %}
