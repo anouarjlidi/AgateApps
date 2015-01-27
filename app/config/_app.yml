@@ -3,6 +3,7 @@ imports:
     - { resource: _corahn_rin.yml }
     - { resource: _pierstoval.yml }
     - { resource: _sonata.yml }
+    - { resource: _easy_admin.yml }
 
 parameters:
     version_code: 0.1
