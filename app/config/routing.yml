@@ -157,7 +157,7 @@ fos_user_change_password:
 easy_admin_bundle:
     resource: "@EasyAdminBundle/Controller/"
     type:     annotation
-    prefix:   /{_locale}/
+    prefix:   /{_locale}/admin/
     defaults:
          _locale: %locale%
     requirements:

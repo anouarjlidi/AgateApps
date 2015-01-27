@@ -58,56 +58,41 @@ easy_admin:
             class: EsterenMaps\MapsBundle\Entity\Maps
             list:
                 fields: [ id, name, nameSlug, maxZoom, startZoom, startX, startY ]
-            edit:
+            form:
                 fields: [ name, nameSlug, image, description, maxZoom, startZoom, startX, startY ]
-            new:
-                fields: [ name, nameSlug, image, description, maxZoom, startZoom, startX, startY ]
-        Markers:
-            class: EsterenMaps\MapsBundle\Entity\Markers
-            list:
-                fields: [ id, name, latitude, longitude ]
-            edit:
-                fields: [ name, description, altitude, latitude, longitude, map, markerType, faction ]
-            new:
-                fields: [ name, description, altitude, latitude, longitude, map, markerType, faction ]
+#        Markers:
+#            class: EsterenMaps\MapsBundle\Entity\Markers
+#            list:
+#                fields: [ id, name, latitude, longitude ]
+#            form:
+#                fields: [ name, description, altitude, latitude, longitude, map, markerType, faction ]
         "Markers types":
             class: EsterenMaps\MapsBundle\Entity\MarkersTypes
             list:
                 fields: [ id, name, icon, markers ]
-            edit:
+            form:
                 fields: [ name, icon, markers ]
-            new:
-                fields: [ name, icon, markers ]
-        Routes:
-            class: EsterenMaps\MapsBundle\Entity\Routes
-            list:
-                fields: [ id, name, distance, markerStart, markerEnd ]
-            edit:
-                fields: [ name, markerStart, markerEnd ]
-            new:
-                fields: [ name, markerStart, markerEnd ]
+#        Routes:
+#            class: EsterenMaps\MapsBundle\Entity\Routes
+#            list:
+#                fields: [ id, name, distance, markerStart, markerEnd ]
+#            form:
+#                fields: [ name, markerStart, markerEnd ]
         "Routes types":
             class: EsterenMaps\MapsBundle\Entity\RoutesTypes
             list:
                 fields: [ id, name, color, routes ]
-            edit:
+            form:
                 fields: [ name, color ]
-            new:
-                fields: [ name, color ]
-        Zones:
-            class: EsterenMaps\MapsBundle\Entity\Zones
-            list:
-                fields: [ id, name, zoneType, map, faction ]
-            edit:
-                fields: [ name, coordinates, map, faction, zoneType ]
-            new:
-                fields: [ name, coordinates, map, faction, zoneType ]
-
+#        Zones:
+#            class: EsterenMaps\MapsBundle\Entity\Zones
+#            list:
+#                fields: [ id, name, zoneType, map, faction ]
+#            form:
+#                fields: [ name, coordinates, map, faction, zoneType ]
         "Zones types":
             class: EsterenMaps\MapsBundle\Entity\ZonesTypes
             list:
                 fields: [ id, name, color, parent, zones ]
-            edit:
-                fields: [ name, color, parent ]
-            new:
+            form:
                 fields: [ name, color, parent ]
