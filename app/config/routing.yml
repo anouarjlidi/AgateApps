@@ -13,16 +13,6 @@ corahn_rin_generator:
     requirements:
         _locale: ^(%locales_regex%)$
 
-corahn_rin_admin:
-    resource: "@CorahnRinAdminBundle/Controller/"
-    type:     annotation
-    host:     %esteren_domains.corahn_rin%
-    prefix:   /{_locale}/
-    defaults:
-         _locale: %locale%
-    requirements:
-        _locale: ^(%locales_regex%)$
-
 corahn_rin_characters:
     resource: "@CorahnRinCharactersBundle/Controller/"
     type:     annotation
