@@ -5,38 +5,100 @@ easy_admin:
         ## Corahn-Rin
         Armors:
             class: CorahnRin\ModelsBundle\Entity\Armors
+            list:
+                fields: [ id, name, protection, price, availability ]
+            form:
+                fields: [ name, protection, price, availability ]
         Artifacts:
             class: CorahnRin\ModelsBundle\Entity\Artifacts
+            list:
+                fields: [ id, price, consumption, consumptionInterval, tank, resistance ]
+            form:
+                fields: [ price, consumption, consumptionInterval, tank, resistance ]
         Avantages:
             class: CorahnRin\ModelsBundle\Entity\Avantages
+            list:
+                fields: [ id, name, nameFemale, xp, augmentation, isDesv ]
+            form:
+                fields: [ name, nameFemale, xp, augmentation, bonusDisc, isDesv ]
         Books:
             class: CorahnRin\ModelsBundle\Entity\Books
+            list:
+                fields: [ id, name, description ]
+            form:
+                fields: [ name, description ]
         "Combat Arts":
             class: CorahnRin\ModelsBundle\Entity\CombatArts
+            list:
+                fields: [ id, name, ranged, melee, xp ]
+            form:
+                fields: [ name, ranged, melee, xp ]
         Disciplines:
             class: CorahnRin\ModelsBundle\Entity\Disciplines
+            list:
+                fields: [ id, name, rank, book, domains ]
+            form:
+                fields: [ name, rank, book, domains ]
         Disorders:
             class: CorahnRin\ModelsBundle\Entity\Disorders
-        Flux:
-            class: CorahnRin\ModelsBundle\Entity\Flux
+            list:
+                fields: [ id, name, ways, book ]
+            form:
+                fields: [ name, ways, book ]
         Jobs:
             class: CorahnRin\ModelsBundle\Entity\Jobs
+            list:
+                fields: [ id, name, domainPrimary, domainsSecondary, book ]
+            form:
+                fields: [ name, domainPrimary, domainsSecondary, book ]
         Miracles:
             class: CorahnRin\ModelsBundle\Entity\Miracles
+            list:
+                fields: [ id, name, isMajor, book ]
+            form:
+                fields: [ name, isMajor, book ]
         Ogham:
             class: CorahnRin\ModelsBundle\Entity\Ogham
+            list:
+                fields: [ id, name, oghamType, book ]
+            form:
+                fields: [ name, oghamType, book ]
         "Ogham types":
             class: CorahnRin\ModelsBundle\Entity\OghamTypes
+            list:
+                fields: [ id, name, description ]
+            form:
+                fields: [ name, description ]
         Peoples:
             class: CorahnRin\ModelsBundle\Entity\Peoples
+            list:
+                fields: [ id, name, description, book ]
+            form:
+                fields: [ name, description, book ]
         Setbacks:
             class: CorahnRin\ModelsBundle\Entity\Setbacks
+            list:
+                fields: [ id, name, malus, book ]
+            form:
+                fields: [ name, malus, book ]
         SocialClasses:
             class: CorahnRin\ModelsBundle\Entity\SocialClasses
+            list:
+                fields: [ id, name, description, domains ]
+            form:
+                fields: [ name, description, domains ]
         Traits:
             class: CorahnRin\ModelsBundle\Entity\Traits
+            list:
+                fields: [ id, name, nameFemale, isQuality, isMajor, way, book ]
+            form:
+                fields: [ name, nameFemale, isQuality, isMajor, way, book ]
         Weapons:
             class: CorahnRin\ModelsBundle\Entity\Weapons
+            list:
+                fields: [ id, name, damage, price, availability, melee, range ]
+            form:
+                fields: [ name, damage, price, availability, melee, range ]
 
         ####################
         ## Esteren Maps
