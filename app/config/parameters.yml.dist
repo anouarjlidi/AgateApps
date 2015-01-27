@@ -1,22 +1,26 @@
 # Default mandatory parameters
 parameters:
+
     database_driver: pdo_mysql
     database_host: localhost
     database_port: ~
     database_name: corahn_rin
     database_user: corahn_rin
     database_password: ~
+    database_path: %kernel.root_dir%/../bin/db
+
     mailer_transport: smtp
     mailer_host: 127.0.0.1
     mailer_user: null
     mailer_password: null
-    locale: fr
-    locales: fr,en,de,es
-    locales_regex: fr|en|de|es
+
     secret: ChangeSecretToken
+
     magick_binaries_path: /usr/bin
+
     node_path: /usr/local/bin/node
     node_modules_path: %kernel.root_dir%/../node_modules/
+
     esteren_domains.corahn_rin:     corahnrin.esteren.org
     esteren_domains.esteren_maps:   maps.esteren.org
     esteren_domains.portal:         www.esteren.org
