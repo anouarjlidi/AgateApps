@@ -9,7 +9,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * Npcs
  *
- * @ORM\Table(name="npcs")
+ * @ORM\Table(name="maps_npcs")
  * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity()
  */

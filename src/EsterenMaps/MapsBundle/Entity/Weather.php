@@ -9,7 +9,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * Weather
  *
- * @ORM\Table(name="weather")
+ * @ORM\Table(name="maps_weather")
  * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity()
  */

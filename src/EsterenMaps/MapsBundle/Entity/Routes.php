@@ -10,7 +10,7 @@ use JMS\Serializer\Annotation as Serializer;
 /**
  * Routes
  *
- * @ORM\Table(name="routes")
+ * @ORM\Table(name="maps_routes")
  * @ORM\Entity(repositoryClass="EsterenMaps\MapsBundle\Repository\RoutesRepository")
  * @ORM\HasLifecycleCallbacks
  * @Gedmo\SoftDeleteable(fieldName="deleted")

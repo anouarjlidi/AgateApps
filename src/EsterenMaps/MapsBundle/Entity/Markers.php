@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Markers
  *
- * @ORM\Table(name="markers")
+ * @ORM\Table(name="maps_markers")
  * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity(repositoryClass="EsterenMaps\MapsBundle\Repository\MarkersRepository")
  * @Serializer\ExclusionPolicy("all")

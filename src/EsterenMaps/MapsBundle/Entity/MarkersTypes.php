@@ -12,7 +12,7 @@ use Sonata\MediaBundle\Model\MediaInterface;
 /**
  * MarkersType
  *
- * @ORM\Table(name="markers_types")
+ * @ORM\Table(name="maps_markers_types")
  * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity()
  * @Serializer\ExclusionPolicy("all")

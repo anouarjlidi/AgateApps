@@ -9,7 +9,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * Resources
  *
- * @ORM\Table(name="resources")
+ * @ORM\Table(name="maps_resources")
  * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity()
  */

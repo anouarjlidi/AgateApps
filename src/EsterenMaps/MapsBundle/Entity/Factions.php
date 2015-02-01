@@ -12,7 +12,7 @@ use JMS\Serializer\Annotation\Expose as Expose;
 /**
  * Factions
  *
- * @ORM\Table(name="factions")
+ * @ORM\Table(name="maps_factions")
  * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity()
  * @ExclusionPolicy("all")

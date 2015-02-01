@@ -11,7 +11,7 @@ use JMS\Serializer\Annotation\Expose as Expose;
 /**
  * RoutesTypes
  *
- * @ORM\Table(name="routes_types")
+ * @ORM\Table(name="maps_routes_types")
  * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity()
  * @ExclusionPolicy("all")
