@@ -26,12 +26,6 @@ corahn_rin_characters:
 esteren_portal:
     resource: "@EsterenPortalBundle/Controller/"
     type:     annotation
-    host:     %esteren_domains.portal%
-    prefix:   /{_locale}/
-    defaults:
-         _locale: %locale%
-    requirements:
-        _locale: ^(%locales_regex%)$
 
 #-----------------------------------
 # Esteren Maps relative routing
@@ -80,16 +74,6 @@ pierstoval_api:
     type:     annotation
     host:     %esteren_domains.api%
     prefix:   /{_locale}/
-    defaults:
-         _locale: %locale%
-    requirements:
-        _locale: ^(%locales_regex%)$
-
-pierstoval_admin:
-    resource: "@PierstovalAdminBundle/Controller/"
-    type:     annotation
-    host:     %esteren_domains.portal%
-    prefix:   /{_locale}/admin/
     defaults:
          _locale: %locale%
     requirements:
