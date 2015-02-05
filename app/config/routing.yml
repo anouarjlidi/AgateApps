@@ -79,6 +79,16 @@ pierstoval_api:
     requirements:
         _locale: ^(%locales_regex%)$
 
+pierstoval_cms_front:
+    resource: "@PierstovalCmsBundle/Controller/FrontController.php"
+    type:     annotation
+    prefix:   /{_locale}/
+    host: %esteren_domains.portal%
+    defaults:
+         _locale: %locale%
+    requirements:
+        _locale: ^(%locales_regex%)$
+
 #-----------------------------------
 # FOS relative Routing
 fos_user_security:
@@ -131,7 +141,7 @@ fos_user_change_password:
 easy_admin_bundle:
     resource: "@EasyAdminBundle/Controller/"
     type:     annotation
-    prefix:   /{_locale}/admin/
+    prefix:   /{_locale}/
     defaults:
          _locale: %locale%
     requirements:

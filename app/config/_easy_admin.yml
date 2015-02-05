@@ -1,6 +1,16 @@
 
 easy_admin:
     entities:
+
+        ####################
+        ## Pierstoval CMS
+        "Cms Pages":
+            class: Pierstoval\Bundle\CmsBundle\Entity\Page
+            list:
+                fields: [ id, parent, title, slug, content, category, enabled ]
+            form:
+                fields: [ title, slug, content, metaDescription, metaTitle, metaKeywords, css, js, level, category, parent, enabled ]
+
         ####################
         ## Corahn-Rin
         Armors:

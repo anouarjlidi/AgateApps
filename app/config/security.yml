@@ -55,7 +55,6 @@ security:
         main:
             pattern:            ^/
             anonymous:          true
-            host:               (%esteren_domains.portal%|%esteren_domains.corahn_rin%|%esteren_domains.esteren_maps%)
             context:            frontoffice
             remember_me:
                 key:            %secret%
@@ -79,4 +78,4 @@ security:
         - { path: ^/(%locales_regex%)/,                         roles: [IS_AUTHENTICATED_ANONYMOUSLY] }
         - { path: ^/(%locales_regex%)/profile,                  roles: [ROLE_USER] }
         - { path: ^/(%locales_regex%)/characters,               roles: [ROLE_USER] }
-        - { path: ^/(%locales_regex%)/admin/,                   host: %esteren_domains.backoffice%, roles: [ROLE_MANAGER] }
+        - { path: ^/,                   host: %esteren_domains.backoffice%, roles: [ROLE_MANAGER] }

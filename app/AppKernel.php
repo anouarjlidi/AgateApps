@@ -54,9 +54,9 @@ class AppKernel extends Kernel
 
             // Pierstoval's tools
             new Pierstoval\Bundle\ApiBundle\PierstovalApiBundle(),
+            new Pierstoval\Bundle\CmsBundle\PierstovalCmsBundle(),
             new Pierstoval\Bundle\CorsBundle\PierstovalCorsBundle(),
             new Pierstoval\Bundle\ToolsBundle\PierstovalToolsBundle(),
-            new Pierstoval\Bundle\AdminBundle\PierstovalAdminBundle(),
             new Pierstoval\Bundle\TranslationBundle\PierstovalTranslationBundle(),
         );
 
