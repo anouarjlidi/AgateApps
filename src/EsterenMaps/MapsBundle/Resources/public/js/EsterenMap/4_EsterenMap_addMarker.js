@@ -46,8 +46,8 @@
         var baseMarker = this,
             esterenMarker = this._esterenMarker || null,
             id = esterenMarker.id || null;
-        this.launched = true;
         if (esterenMarker && this._map && !this.launched) {
+            this.launched = true;
             esterenMarker.map = esterenMarker.map || {id: this._esterenMap.options().id };
             esterenMarker.latitude = this._latlng.lat;
             esterenMarker.longitude = this._latlng.lng;
@@ -244,7 +244,6 @@
         },
         dragendCallback: function(e) {
             var marker = e.target,
-                id = marker.options.alt,
                 latlng = marker.getLatLng();
             if (marker._esterenMarker) {
                 marker._esterenMarker.latitude = latlng.lat;

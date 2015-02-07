@@ -1,16 +1,8 @@
 
-easy_admin:
-    entities:
-
-        ####################
-        ## Pierstoval CMS
-        "Cms Pages":
-            class: Pierstoval\Bundle\CmsBundle\Entity\Page
-            list:
-                fields: [ id, parent, title, slug, content, category, enabled ]
-            form:
-                fields: [ title, slug, content, metaDescription, metaTitle, metaKeywords, css, js, level, category, parent, enabled ]
-
+#easy_admin:
+#    entities:
+parameters:
+    override: |
         ####################
         ## Corahn-Rin
         Armors:
@@ -110,6 +102,8 @@ easy_admin:
             form:
                 fields: [ name, damage, price, availability, melee, range ]
 
+easy_admin:
+    entities:
         ####################
         ## Esteren Maps
         Maps:
@@ -154,3 +148,12 @@ easy_admin:
                 fields: [ id, name, color, parent, zones ]
             form:
                 fields: [ name, color, parent ]
+
+        ####################
+        ## Pierstoval CMS
+        "Cms Pages":
+            class: Pierstoval\Bundle\CmsBundle\Entity\Page
+            list:
+                fields: [ id, parent, title, slug, content, category, enabled ]
+            form:
+                fields: [ title, slug, content, metaDescription, metaTitle, metaKeywords, css, js, level, category, parent, enabled ]

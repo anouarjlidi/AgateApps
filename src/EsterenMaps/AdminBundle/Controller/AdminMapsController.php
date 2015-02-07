@@ -26,17 +26,13 @@ class AdminMapsController extends Controller {
     private $factions;
 
     /**
-     * @Route("/admin/esterenmaps/maps/maps/edit-interactive/{id}", name="admin_esterenmaps_maps_maps_editInteractive")
+     * @Route("/maps/edit-interactive/{id}", name="admin_esterenmaps_maps_maps_editInteractive")
      * @Template()
      * @param Maps $map
      * @param Request $request
      * @return array
      */
     public function editAction(Maps $map, Request $request) {
-
-        if (!$this->container->get('security.context')->isGranted('ROLE_SONATA_ADMIN')) {
-            throw $this->createAccessDeniedException();
-        }
 
         $em = $this->getDoctrine()->getManager();
 
@@ -53,7 +49,7 @@ class AdminMapsController extends Controller {
         $tilesUrl = preg_replace('~app_dev(_fast)\.php/~isUu', '', $tilesUrl);
 
         return array(
-            'admin_pool' => $this->get('sonata.admin.pool'),// Config sonata
+            'config' => $this->container->getParameter('easy_admin.config'),
             'map' => $map,
             'tilesUrl' => $tilesUrl,
             'tile_size' => $this->container->getParameter('esterenmaps.tile_size'),

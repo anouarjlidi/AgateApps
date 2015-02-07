@@ -1,7 +1,7 @@
-{% extends "ApplicationSonataAdminBundle::standard_layout_override.html.twig" %}
+{% extends "EasyAdminBundle::layout.html.twig" %}
+{% trans_default_domain 'admin.maps.edit' %}
 
-
-{% block stylesheets %}
+{% block head_stylesheets %}
 {{ parent() }}
 {% stylesheets
 'bundles/esterenpages/less/glyphicons.less'
@@ -19,30 +19,32 @@ filter="less,cssrewrite,?uglifycss"
 
 {% block title %}{{ 'Modifier une carte' | trans({},'pages.titles') }} {{ map.name | trans }} - {{ parent() }}{% endblock %}
 
-{% trans_default_domain 'admin.maps.edit' %}
-
-{% block sonata_admin_content %}
-
-<form id="map_edit_form" action="{{ url('admin_esterenmaps_maps_maps_editInteractive', {'id':map.id}) }}" method="post" class="form-horizontal">
-    <fieldset>
-        <div id="map_wrapper">
-            <div id="maps_admin_container">
-                {% include 'EsterenMapsAdminBundle:AdminMaps:edit_menu.html.twig' %}
-            </div>
-            <div id="sidebar"></div>
-            <div id="map"></div>
-            <div id="inputs_container"></div>
+{% block content %}
+    <div class="row">
+        <div id="content-header" class="col-sm-12">
+            {% block content_header %}{% endblock %}
         </div>
-    </fieldset>
-</form>
+
+        <div id="main" class="col-sm-12">
+            <div id="map_wrapper">
+                <div id="maps_admin_container">
+                    {% include 'EsterenMapsAdminBundle:AdminMaps:edit_menu.html.twig' %}
+                </div>
+                <div id="esterenmap_sidebar"></div>
+                <div id="map"></div>
+                <div id="inputs_container"></div>
+            </div>
+        </div>
+
+    </div>
 {% endblock %}
 
-{% block more_javascripts %}
+{% block body_javascript %}
     {{ parent() }}
 
-    <script type="text/javascript" src="{{ asset('bundles/esterenpages/js/corahn_rin.js') }}"></script>
-
-    {% javascripts '@esteren_maps_js' output="js/maps.js" %}<script type="text/javascript" src="{{ asset(asset_url, null, true) }}"></script>{% endjavascripts %}
+    <script type="text/javascript" src="{{ asset('components/jquery/dist/jquery.min.js', null, true) }}"></script>
+    {% javascripts '@esteren_general' %}<script type="text/javascript" src="{{ asset(asset_url, null, true) }}"></script>{% endjavascripts %}
+    {% javascripts '@esteren_maps_js' %}<script type="text/javascript" src="{{ asset(asset_url, null, true) }}"></script>{% endjavascripts %}
 
     {% javascripts
     '@EsterenMapsBundle/Resources/public/js/map_edit.js'
@@ -75,8 +77,8 @@ filter="less,cssrewrite,?uglifycss"
                             noWrap: false,
                             bounds: [[85.23,-183], [11,41]]
                         },
-                        autoResize: false,
-                        containerHeight: 600
+                        autoResize: true,
+                        containerHeight: '100%'
                     });
                 } catch (e) {
                     console.error(e);

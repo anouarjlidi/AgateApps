@@ -60,6 +60,27 @@ assetic:
         uglifycss:
             node: %node_path%
             node_paths: [ %node_modules_path% ]
+    assets:
+        esteren_general:
+            inputs:
+                - 'components/jquery-ui/ui/jquery.ui.core.js'
+                - 'components/jquery-ui/ui/jquery.ui.widget.js'
+                - 'components/bootstrap/js/button.js'
+                - 'components/bootstrap/js/collapse.js'
+                - 'components/bootstrap/js/dropdown.js'
+                - 'components/bootstrap/js/modal.js'
+                - 'components/bootstrap/js/tooltip.js'
+                - 'components/bootstrap/js/popover.js'
+                - 'components/bootstrap/js/transition.js'
+                - 'components/bootstrap/js/tab.js'
+                - 'components/jquery.colorpicker/jquery.colorpicker.js'
+                - 'components/jquery.colorpicker/i18n/jquery.ui.colorpicker-de.js'
+                - 'components/jquery.colorpicker/i18n/jquery.ui.colorpicker-en.js'
+                - 'components/jquery.colorpicker/i18n/jquery.ui.colorpicker-fr.js'
+                - '@EsterenPagesBundle/Resources/public/js/corahn_rin.js'
+            filters:
+                - ?uglifyjs
+            output: 'js/global.js'
 
 # Doctrine Configuration
 doctrine:

@@ -96,27 +96,7 @@
 {% block javascripts %}
     <script type="text/javascript" src="{{ url('pierstoval_tools_assets_jstranslations', {"_locale":app.request.locale}) }}"></script>
     <script type="text/javascript" src="{{ asset('components/jquery/dist/jquery.min.js', null, true) }}"></script>
-    {% javascripts
-        'components/jquery-ui/ui/jquery.ui.core.js'
-        'components/jquery-ui/ui/jquery.ui.widget.js'
-
-        'components/bootstrap/js/button.js'
-        'components/bootstrap/js/collapse.js'
-        'components/bootstrap/js/dropdown.js'
-        'components/bootstrap/js/modal.js'
-        'components/bootstrap/js/tooltip.js'
-        'components/bootstrap/js/popover.js'
-        'components/bootstrap/js/transition.js'
-        'components/bootstrap/js/tab.js'
-
-        'components/jquery.colorpicker/jquery.colorpicker.js'
-        'components/jquery.colorpicker/i18n/jquery.ui.colorpicker-de.js'
-        'components/jquery.colorpicker/i18n/jquery.ui.colorpicker-en.js'
-        'components/jquery.colorpicker/i18n/jquery.ui.colorpicker-fr.js'
-
-        '@EsterenPagesBundle/Resources/public/js/corahn_rin.js'
-        output="js/global.js"
-        filter="?uglifyjs" %}
+    {% javascripts '@esteren_general' %}
     <script type="text/javascript" src="{{ asset(asset_url, null, true) }}"></script>
     {% endjavascripts %}
 {% endblock %}

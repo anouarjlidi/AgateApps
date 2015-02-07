@@ -43,7 +43,7 @@
         showDirections: true,
         autoResize: true,
         containerHeight: 400,
-        sidebarContainer: 'sidebar',
+        sidebarContainer: 'esterenmap_sidebar',
         container: 'map',
         wrapper: 'map_wrapper',
         loadedCallback: function(){
