@@ -49,6 +49,8 @@
 
     <div id="wrapper">
 
+    {% block layout %}
+
         {% block menus %}{# MENUS #}
             {% include 'EsterenPortalBundle:Menu:general_menu.html.twig' %}
         {% endblock %}
@@ -63,9 +65,10 @@
                     {% endfor %}
                 </div>
             {% endfor %}
-            {% block fos_user_content %}{% endblock fos_user_content %}
 
             <div id="content">{# DYNAMIC CONTENT FOR LAYOUT #}
+
+                {% block fos_user_content %}{% endblock fos_user_content %}
 
                 {% block content_for_layout %}{% endblock %}
 
@@ -83,6 +86,8 @@
             </div>
         </footer>
         {% endblock %}
+
+    {% endblock %}
 
     </div><!--/#wrapper-->
 
