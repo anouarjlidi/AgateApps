@@ -259,6 +259,11 @@ Edit mode
     padding-top: 0;
     padding-bottom: 0;
 }
+/* hide old edit/remove buttons, they were mandatory but no more now */
+.leaflet-container .leaflet-draw-edit-edit,
+.leaflet-container .leaflet-draw-edit-remove {
+    display: none;
+}
 @media(max-width:767px) {
     #leaflet-filters-control.expanded {
         width: 100%;
