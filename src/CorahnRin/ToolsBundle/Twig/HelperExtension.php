@@ -48,7 +48,6 @@ class HelperExtension extends \Twig_Extension {
     }
 
     public function prFunction($var) {
-		return \CorahnRinTools\pr($var, false);
     }
 
 }
