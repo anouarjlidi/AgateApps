@@ -41,6 +41,10 @@ DirectoryIndex app.php
     RewriteCond %{REQUEST_FILENAME} -f
     RewriteRule .? - [L]
 
+    RewriteCond %{REQUEST_URI} maps_tiles/ [NC]
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule .? %{ENV:BASE}/maps_tiles/empty.jpg [L,R=301]
+
     # Rewrite all other queries to the front controller.
     RewriteRule .? %{ENV:BASE}/app.php [L]
 </IfModule>

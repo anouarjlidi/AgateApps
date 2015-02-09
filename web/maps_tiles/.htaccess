@@ -1,9 +1,0 @@
-ErrorDocument 404 http://jdr.pierstoval.com/CorahnRin/web/maps_tiles/empty.jpg
-
-# If requested resource exists as a file or directory go to it
-RewriteCond %{REQUEST_FILENAME} -f [OR]
-RewriteCond %{REQUEST_FILENAME} -d
-RewriteRule (.*) - [L]
-
-# Else rewrite requests for non-existent resources to /index.php
-RewriteRule (.*) empty.jpg [L]
