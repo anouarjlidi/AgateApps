@@ -17,10 +17,10 @@ class GlobalController extends Controller
      */
     public function rootAction(Request $request)
     {
-        $url = $this->generateUrl($request->attributes->get('_route'), array(), true);
         $locale = $this->container->getParameter('locale');
-        if  (!preg_match('~('.$this->container->getParameter('locales_regex').')/?$~isU', $url)) {
-            $url = rtrim($url, '/') . '/' . $locale . '/';
+        $requestUri = $request->server->get('REQUEST_URI');
+        if  (!preg_match('~('.$this->container->getParameter('locales_regex').')/?$~isU', $requestUri)) {
+            $url = rtrim($request->getSchemeAndHttpHost(), '/') . rtrim($requestUri, '/') . '/' . $locale . '/';
             return $this->redirect($url);
         }
         return new Response('root');
