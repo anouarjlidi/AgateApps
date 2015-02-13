@@ -34,6 +34,8 @@ class AdminMapsController extends Controller {
      */
     public function editAction(Maps $map, Request $request) {
 
+        $this->denyAccessUnlessGranted('ROLE_MANAGER');
+
         $em = $this->getDoctrine()->getManager();
 
         $routesTypes = $em->getRepository('EsterenMapsBundle:RoutesTypes')->findAll(true);

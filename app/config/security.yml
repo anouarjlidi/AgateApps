@@ -50,12 +50,9 @@ security:
         dev:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
-
-        # Classic front-office + specific user content
         main:
             pattern:            ^/
-            anonymous:          true
-            context:            frontoffice
+            anonymous:          ~
             remember_me:
                 key:            %secret%
                 path:           /
@@ -63,9 +60,8 @@ security:
                 provider:       fos_user
                 login_path:     fos_user_security_login
                 csrf_provider:  form.csrf_provider
-                use_forward:    false
+                use_forward:    true
                 check_path:     fos_user_security_check
-                failure_path:   null
                 use_referer:    true
             logout:
                 path:           fos_user_security_logout
@@ -75,7 +71,6 @@ security:
     # of your application based on roles, ip, host or methods
     # http://symfony.com/doc/current/book/security.html#security-book-access-control-matching-options
     access_control:
-        - { path: ^/(%locales_regex%)/,                         roles: [IS_AUTHENTICATED_ANONYMOUSLY] }
         - { path: ^/(%locales_regex%)/profile,                  roles: [ROLE_USER] }
         - { path: ^/(%locales_regex%)/characters,               roles: [ROLE_USER] }
-        - { path: ^/,                   host: %esteren_domains.backoffice%, roles: [ROLE_MANAGER] }
+        - { path: ^/,                                           host: %esteren_domains.backoffice%, roles: ROLE_MANAGER }
