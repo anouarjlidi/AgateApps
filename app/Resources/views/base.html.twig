@@ -68,9 +68,13 @@
 
             <div id="content">{# DYNAMIC CONTENT FOR LAYOUT #}
 
+                {% block cms_breadcrumbs %}{% endblock %}
+
                 {% block fos_user_content %}{% endblock fos_user_content %}
 
                 {% block content_for_layout %}{% endblock %}
+
+                {% block cms_page_content %}{% endblock %}
 
             </div><!--/#content-->
 

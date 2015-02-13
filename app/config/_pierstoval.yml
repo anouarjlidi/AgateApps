@@ -40,3 +40,7 @@ pierstoval_cors:
 pierstoval_translation:
     locales: %locales%
     use_sonata: true
+
+pierstoval_cms:
+    layouts:
+        - { resource: ::base.html.twig, type: front }
