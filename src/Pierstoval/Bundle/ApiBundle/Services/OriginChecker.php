@@ -32,28 +32,21 @@ class OriginChecker {
     {
         $allowedOrigins = $this->allowedOrigins;
 
-        if (strpos($this->kernelEnvironment, 'dev') !== 0) {
-            // Autorise depuis l'environnement local si on est en mode dev
-            $allowedOrigins[] = '127.0.0.1';
-            $allowedOrigins[] = 'localhost';
-        }
-
-        // Ajoute également le serveur courant et l'hôte courant aux autorisations (pour les requêtes internes)
+        // Allows automatically the current server to allow internal requests
         $allowedOrigins[] = $request->server->get('SERVER_ADDR');
         $host = $request->getHost();
         if (!in_array($host, $allowedOrigins)) {
             $allowedOrigins[] = $host;
         }
 
-        // Définira si une url est matchée ou non
         $match = false;
 
-        // Vérifie le header Origin
+        // Checks Origin header
         if ($request->headers->has('Origin')) {
             $origin = $request->headers->get('Origin');
             $origin = preg_replace('~https?://~isUu', '', $origin);
             $origin = trim($origin, '/');
-            // Vérifie si le header Origin est correct
+            // Checks if the header corresponds to an allowed origin
             foreach ($allowedOrigins as $address) {
                 if ($origin === $address) {
                     $match = true;
@@ -61,7 +54,7 @@ class OriginChecker {
             }
         }
 
-        // Vérifie l'adresse IP de l'utilisateur
+        // Also checks the users' IP address as a potential allowed origin
         $remoteAddr = $request->server->get('REMOTE_ADDR');
         foreach ($allowedOrigins as $address) {
             if ($remoteAddr === $address) {
@@ -75,4 +68,4 @@ class OriginChecker {
 
     }
 
-} 
+}

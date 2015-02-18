@@ -32,6 +32,22 @@ class PierstovalApiExtension extends Extension
             }
         }
 
+        if (strpos($container->getParameter('kernel.environment'), 'dev') === 0) {
+            // If we're in dev environment, automatically allows localhost
+            $config['allowed_origins'][] = '127.0.0.1';
+            $config['allowed_origins'][] = 'localhost';
+            $config['allowed_origins'][] = '::1';
+        }
+        if (isset($_SERVER['REMOTE_ADDR'])) {
+            $config['allowed_origins'][] = $_SERVER['REMOTE_ADDR'];
+        }
+        if (isset($_SERVER['SERVER_ADDR'])) {
+            $config['allowed_origins'][] = $_SERVER['SERVER_ADDR'];
+        }
+
+        // Remove duplicates, in case remote and server are the same as your dev environment
+        $config['allowed_origins'] = array_unique($config['allowed_origins']);
+
         foreach ($config as $name => $value) {
             $container->setParameter('pierstoval_api.'.$name, $value);
         }

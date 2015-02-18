@@ -2,8 +2,6 @@
 
 namespace Pierstoval\Bundle\ApiBundle\Controller;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\PersistentCollection;
@@ -11,16 +9,13 @@ use Doctrine\ORM\Query;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\View\View;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
- * @Route("/", requirements={"serviceName":"([a-zA-Z0-9\._]?)+"}, defaults={"_format":"json"})
+ * @Route("/", requirements={"serviceName":"([a-zA-Z0-9\._]?)+"})
  */
 class ApiController extends FOSRestController
 {
@@ -28,13 +23,13 @@ class ApiController extends FOSRestController
     private $serviceName;
 
     /**
-     * @Route("/{serviceName}", defaults={"_format": "json"}, name="pierstoval_api_cget")
+     * @Route("/{serviceName}", name="pierstoval_api_cget")
      * @Method({"GET"})
-     * @Cache(maxage=0, expires="yesterday")
      *
-     * @param $serviceName
+     * @param string  $serviceName
      * @param Request $request
-     * @return \FOS\RestBundle\View\View|\Symfony\Component\HttpFoundation\Response
+     *
+     * @return View|Response
      */
     public function cgetAction($serviceName, Request $request)
     {
@@ -58,13 +53,13 @@ class ApiController extends FOSRestController
      * @Route("/{serviceName}/{id}", requirements={"id": "\d+"}, defaults={"subElement": ""}, name="pierstoval_api_get")
      * @Route("/{serviceName}/{id}/{subElement}", requirements={"subElement": "([a-zA-Z0-9\._]/?)+", "id": "\d+"}, name="pierstoval_api_get_subrequest")
      * @Method({"GET"})
-     * @Cache(maxage=0, expires="yesterday")
      *
-     * @param string $serviceName
+     * @param string  $serviceName
      * @param integer $id
-     * @param string $subElement
+     * @param string  $subElement
      * @param Request $request
-     * @return \FOS\RestBundle\View\View|\Symfony\Component\HttpFoundation\Response
+     *
+     * @return View|Response
      */
     public function getAction($serviceName, $id, $subElement = null, Request $request)
     {
@@ -75,16 +70,16 @@ class ApiController extends FOSRestController
         /** @var EntityRepository $repo */
         $repo = $this->getDoctrine()->getManager()->getRepository($service['entity']);
 
-        // Récupération des données
+        // Fetch datas
         $data = $repo->find($id);
 
-        // La clé se voit supprimer son "s" en fin de chaîne
+        // The entity key has it's trailing "s" removed
         $key = rtrim($serviceName, 's');
 
         if ($subElement) {
             $data = $this->fetchSubElement($subElement, $service, $data, $key);
             if ($data instanceof Response) {
-                // Means we have an error, probably
+                // Means we have an error, probably, so we send it to the browser
                 return $data;
             }
         }
@@ -95,11 +90,13 @@ class ApiController extends FOSRestController
     }
 
     /**
-     * @Route("/{serviceName}", name="pierstoval_api_put")
+     * @Route("/{serviceName}", requirements={"serviceName": "\w+"}, name="pierstoval_api_put")
      * @Method({"PUT"})
-     * @param $serviceName
+     *
+     * @param string  $serviceName
      * @param Request $request
-     * @return false|\Symfony\Component\HttpFoundation\Response
+     *
+     * @return View|Response
      */
     public function putAction($serviceName, Request $request)
     {
@@ -108,10 +105,10 @@ class ApiController extends FOSRestController
         $datas = array();
 
         $serializer = $this->container->get('serializer');
-        $service = $this->getService($serviceName);
+        $service    = $this->getService($serviceName);
 
         /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
+        $em   = $this->getDoctrine()->getManager();
         $repo = $em->getRepository($service['entity']);
 
         // Generate a new object
@@ -134,17 +131,18 @@ class ApiController extends FOSRestController
         }
 
         if ($post->get('mapping')) {
-            $object = $this->container->get('pierstoval_api.entity_merger')->merge($object, $userObject, $post->get('mapping'));
+            $object = $this->container->get('pierstoval_api.entity_merger')->merge($object, $userObject,
+                $post->get('mapping'));
         } else {
             // Transform the full item recursively into an array
-            $object = $serializer->deserialize($serializer->serialize($object, 'json'), 'array', 'json');
+            $object        = $serializer->deserialize($serializer->serialize($object, 'json'), 'array', 'json');
             $requestObject = json_decode($request->get('json'), true);
 
             // Merge the two arrays with request parameters
             $userObject = array_merge($object, $requestObject);
 
             // Serialize POST and deserialize to get full object
-            $json = $serializer->serialize($userObject, 'json');
+            $json   = $serializer->serialize($userObject, 'json');
             $object = $serializer->deserialize($json, $service['entity'], 'json');
         }
 
@@ -165,9 +163,10 @@ class ApiController extends FOSRestController
             $datas['newObject'] = $object;
         } else {
             return $this->view(array(
-                'error' => true,
-                'message' => $this->get('translator')->trans('Invalid form, please re-check. Errors', array(), 'pierstoval_api.exceptions'),
-                'errors' => $errors,
+                'error'   => true,
+                'message' => $this->get('translator')->trans('Invalid form, please re-check. Errors', array(),
+                    'pierstoval_api.exceptions'),
+                'errors'  => $errors,
             ), 500);
         }
 
@@ -175,12 +174,14 @@ class ApiController extends FOSRestController
     }
 
     /**
-     * @Route("/{serviceName}/{id}.{_format}", requirements={"id": "\d+"}, defaults={"_format":"json"}, name="pierstoval_api_post")
+     * @Route("/{serviceName}/{id}", requirements={"id": "\d+"}, name="pierstoval_api_post")
      * @Method({"POST"})
-     * @param $serviceName
-     * @param $id
+     *
+     * @param string  $serviceName
+     * @param integer $id
      * @param Request $request
-     * @return false|\Symfony\Component\HttpFoundation\Response
+     *
+     * @return View|Response
      */
     public function postAction($serviceName, $id, Request $request)
     {
@@ -189,10 +190,10 @@ class ApiController extends FOSRestController
         $datas = array();
 
         $serializer = $this->container->get('serializer');
-        $service = $this->getService($serviceName);
+        $service    = $this->getService($serviceName);
 
         /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
+        $em   = $this->getDoctrine()->getManager();
         $repo = $em->getRepository($service['entity']);
 
         // Get full item from database
@@ -219,17 +220,18 @@ class ApiController extends FOSRestController
         }
 
         if ($post->get('mapping')) {
-            $object = $this->container->get('pierstoval_api.entity_merger')->merge($object, $userObject, $post->get('mapping'));
+            $object = $this->container->get('pierstoval_api.entity_merger')->merge($object, $userObject,
+                $post->get('mapping'));
         } else {
             // Transform the full item recursively into an array
-            $object = $serializer->deserialize($serializer->serialize($object, 'json'), 'array', 'json');
+            $object        = $serializer->deserialize($serializer->serialize($object, 'json'), 'array', 'json');
             $requestObject = json_decode($request->get('json'), true);
 
             // Merge the two arrays with request parameters
             $userObject = array_merge($object, $requestObject);
 
             // Serialize POST and deserialize to get full object
-            $json = $serializer->serialize($userObject, 'json');
+            $json   = $serializer->serialize($userObject, 'json');
             $object = $serializer->deserialize($json, $service['entity'], 'json');
         }
 
@@ -243,9 +245,10 @@ class ApiController extends FOSRestController
             $datas['newObject'] = $repo->find($id);
         } else {
             return $this->view(array(
-                'error' => true,
-                'message' => $this->get('translator')->trans('Invalid form, please re-check. Errors', array(), 'pierstoval_api.exceptions'),
-                'errors' => $errors,
+                'error'   => true,
+                'message' => $this->get('translator')->trans('Invalid form, please re-check. Errors', array(),
+                    'pierstoval_api.exceptions'),
+                'errors'  => $errors,
             ), 500);
         }
 
@@ -255,24 +258,21 @@ class ApiController extends FOSRestController
     /**
      * @Route("/{serviceName}/{id}", requirements={"id": "\d+"}, name="pierstoval_api_delete")
      * @Method({"DELETE"})
-     * @param $serviceName
-     * @param $id
+     *
+     * @param string  $serviceName
+     * @param integer $id
      * @param Request $request
-     * @return View
+     *
+     * @return View|Response
      */
     public function deleteAction($serviceName, $id, Request $request)
     {
         $this->checkAsker($request);
+        //TODO
     }
-
-    /*--------------------------------------------------
-    ----------------- MÉTHODES PRIVÉES -----------------
-    --------------------------------------------------*/
 
     /**
      * @param Request $request
-     * @return false|Response
-     * @throws AccessDeniedException
      */
     private function checkAsker(Request $request)
     {
@@ -280,11 +280,13 @@ class ApiController extends FOSRestController
     }
 
     /**
-     * Retrieves a service name depending
+     * Retrieves a service name from the configuration
+     *
      * @param string $serviceName
-     * @param bool $throwException
+     * @param bool   $throwException
+     *
      * @throws \InvalidArgumentException
-     * @return null
+     * @return null|string
      */
     private function getService($serviceName, $throwException = true)
     {
@@ -297,11 +299,12 @@ class ApiController extends FOSRestController
         }
         if ($throwException) {
             if ($this->container->get('kernel')->getEnvironment() === 'prod') {
-                throw new \InvalidArgumentException($this->get('translator')->trans('Unrecognized service %service%', array('%service%' => $serviceName,)),1);
+                throw new \InvalidArgumentException($this->get('translator')->trans('Unrecognized service %service%',
+                    array('%service%' => $serviceName,)), 1);
             } else {
                 throw new \InvalidArgumentException($this->get('translator')->trans(
-                    "Service \"%service%\" not found in the API.\n" .
-                    "Did you forget to specify it in your configuration ?\n" .
+                    "Service \"%service%\" not found in the API.\n".
+                    "Did you forget to specify it in your configuration ?\n".
                     "Available services : %services%",
                     array('%service%' => $serviceName, '%services%' => implode(', ', array_keys($this->services)),)
                 ), 1);
@@ -311,10 +314,13 @@ class ApiController extends FOSRestController
     }
 
     /**
-     * @param mixed $data
+     * Returns a view by serializing its data, thanks to the FOSRestController
+     *
+     * @param mixed   $data
      * @param integer $statusCode
-     * @param array $headers
-     * @return \FOS\RestBundle\View\View
+     * @param array   $headers
+     *
+     * @return View|Response
      */
     protected function view($data = null, $statusCode = null, array $headers = Array())
     {
@@ -328,16 +334,19 @@ class ApiController extends FOSRestController
     /**
      * Handles a classic error (not an exception).
      * The difference between this method and an exception is that with this method you can specify HTTP code.
+     *
      * @param string $message
-     * @param array $messageParams
-     * @param int $code
-     * @return \FOS\RestBundle\View\View
+     * @param array  $messageParams
+     * @param int    $code
+     *
+     * @return View
      */
-    protected function error($message = '', $messageParams = array(), $code = 404) {
+    protected function error($message = '', $messageParams = array(), $code = 404)
+    {
         $message = $this->get('translator')->trans($message, $messageParams, 'pierstoval_api.exceptions');
 
         return $this->view(array(
-            'error' => true,
+            'error'   => true,
             'message' => $message,
         ), $code);
     }
@@ -345,20 +354,21 @@ class ApiController extends FOSRestController
     /**
      * Parse the subelement request from "get" action in to get a fully "recursive" parameter check.
      *
-     * @param array $subElement
-     * @param array $service
-     * @param mixed $data
+     * @param array  $subElement
+     * @param array  $service
+     * @param mixed  $data
      * @param string $key
      *
      * @return mixed
      * @throws \Exception
      */
-    private function fetchSubElement($subElement, $service, $data, &$key) {
+    private function fetchSubElement($subElement, $service, $data, &$key)
+    {
 
         $elements = explode('/', trim($subElement, '/'));
 
         if (count($elements)) {
-            $key .= '.' . $this->getPropertyValue('_id', $data, $service['name']);
+            $key .= '.'.$this->getPropertyValue('_id', $data, $service['name']);
         }
 
         foreach ($elements as $k => $element) {
@@ -371,11 +381,12 @@ class ApiController extends FOSRestController
                     foreach ($data as $searchingData) {
                         if ($this->getPropertyValue('_id', $searchingData) === $element) {
                             $found = true;
-                            $data = $searchingData;
+                            $data  = $searchingData;
                         }
                     }
                     if (!$found) {
-                        return $this->error('Found no element with identifier "'.$element.'" in requested object.', array(), 404);
+                        return $this->error('Found no element with identifier "'.$element.'" in requested object.',
+                            array(), 404);
                     }
                 } else {
                     return $this->error('Identifier cannot be requested for a collection.');
@@ -390,6 +401,9 @@ class ApiController extends FOSRestController
     }
 
     /**
+     * Retrieves the value of a property in an object.
+     * The special "_id" field retrieves the primary key.
+     *
      * @param $field
      * @param $object
      *
@@ -410,7 +424,8 @@ class ApiController extends FOSRestController
             // Check for any other field
             $service = $this->getService($field, false);
             if ($service) {
-                return $this->getDoctrine()->getManager()
+                return $this
+                    ->getDoctrine()->getManager()
                     ->getRepository($service['entity'])
                     ->findBy(array(
                         $metadatas->getAssociationMappedByTargetField($field) => $this->getPropertyValue('_id', $object)
