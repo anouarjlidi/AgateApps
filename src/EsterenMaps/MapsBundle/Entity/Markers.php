@@ -102,7 +102,7 @@ class Markers {
     /**
      * @var MarkersTypes
      *
-     * @ORM\ManyToOne(targetEntity="MarkersTypes", inversedBy="markers", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="MarkersTypes", inversedBy="markers", fetch="EAGER", fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      * @Serializer\Expose
      * @Assert\NotBlank()

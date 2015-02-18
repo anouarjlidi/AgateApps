@@ -70,7 +70,7 @@ class Zones {
     /**
      * @var Factions
      *
-     * @ORM\ManyToOne(targetEntity="Factions", inversedBy="zones", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="Factions", inversedBy="zones", fetch="EAGER", fetch="EAGER")
      * @Expose
      */
     protected $faction;
@@ -78,7 +78,7 @@ class Zones {
     /**
      * @var ZonesTypes
      *
-     * @ORM\ManyToOne(targetEntity="ZonesTypes", inversedBy="zones", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="ZonesTypes", inversedBy="zones", fetch="EAGER", fetch="EAGER")
      * @Expose
      */
     protected $zoneType;

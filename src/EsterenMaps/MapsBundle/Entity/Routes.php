@@ -108,7 +108,7 @@ class Routes {
     /**
      * @var Factions
      *
-     * @ORM\ManyToOne(targetEntity="Factions", inversedBy="routes")
+     * @ORM\ManyToOne(targetEntity="Factions", inversedBy="routes", fetch="EAGER")
      * @ORM\JoinColumn(nullable=true)
      * @Serializer\Expose
      */
@@ -117,7 +117,7 @@ class Routes {
     /**
      * @var RoutesTypes
      *
-     * @ORM\ManyToOne(targetEntity="RoutesTypes", inversedBy="routes")
+     * @ORM\ManyToOne(targetEntity="RoutesTypes", inversedBy="routes", fetch="EAGER")
      * @Serializer\Expose
      */
     protected $routeType;
