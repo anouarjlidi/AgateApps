@@ -136,8 +136,8 @@ fos_user_change_password:
 
 #-----------------------------------
 # Admin relative Routing
-easy_admin_bundle:
-    resource: "@EasyAdminBundle/Controller/"
+application_admin:
+    resource: "@ApplicationAdminBundle/Controller"
     type:     annotation
     prefix:   /{_locale}/
     defaults:

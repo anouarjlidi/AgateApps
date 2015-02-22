@@ -34,6 +34,9 @@ class AppKernel extends Kernel
             new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
             new Sonata\NotificationBundle\SonataNotificationBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+
+            // Application global
+            new Application\AdminBundle\ApplicationAdminBundle(),
             new Application\Sonata\MediaBundle\ApplicationSonataMediaBundle(),
 
             // Corahn-Rin
