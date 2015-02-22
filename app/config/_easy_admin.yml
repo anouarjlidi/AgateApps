@@ -154,6 +154,6 @@ easy_admin:
         "Cms Pages":
             class: Pierstoval\Bundle\CmsBundle\Entity\Page
             list:
-                fields: [ id, parent, title, slug, content, category, enabled ]
+                fields: [ id, parent, title, slug, content, category, homepage, host, enabled ]
             form:
-                fields: [ title, slug, content, metaDescription, metaTitle, metaKeywords, css, js, category, parent, enabled ]
+                fields: [ title, slug, content, metaDescription, metaTitle, metaKeywords, css, js, category, parent, host, homepage, enabled ]
