@@ -30,8 +30,7 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->scalarNode('site_name')->defaultNull()->end()
-                ->scalarNode('home_default_pattern')->defaultNull()->end()
+                ->booleanNode('multiple_hosts')->defaultFalse()->end()
                 ->arrayNode('layouts')
                     ->defaultValue(array(
                         'front' => array(
