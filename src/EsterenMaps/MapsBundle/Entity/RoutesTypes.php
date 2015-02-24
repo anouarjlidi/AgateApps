@@ -87,6 +87,12 @@ class RoutesTypes {
     protected $events;
 
     /**
+     * @var RoutesTransports
+     * @ORM\OneToMany(targetEntity="EsterenMaps\MapsBundle\Entity\RoutesTransports", mappedBy="routeType")
+     */
+    protected $transports;
+
+    /**
      * @var boolean
      *
      * @ORM\Column(name="deleted", type="datetime", nullable=true)
@@ -105,6 +111,7 @@ class RoutesTypes {
         $this->resources = new ArrayCollection();
         $this->routes = new ArrayCollection();
         $this->events = new ArrayCollection();
+        $this->transports = new ArrayCollection();
     }
 
     /**
@@ -334,6 +341,36 @@ class RoutesTypes {
     {
         $this->description = $description;
         return $this;
+    }
+
+    /**
+     * Add transports
+     *
+     * @param RoutesTransports $transports
+     * @return RoutesTypes
+     */
+    public function addTransport(RoutesTransports $transports) {
+        $this->transports[] = $transports;
+
+        return $this;
+    }
+
+    /**
+     * Remove transports
+     *
+     * @param RoutesTransports $transports
+     */
+    public function removeTransport(RoutesTransports $transports) {
+        $this->transports->removeElement($transports);
+    }
+
+    /**
+     * Get transports
+     *
+     * @return ArrayCollection
+     */
+    public function getTransports() {
+        return $this->transports;
     }
 
 }
