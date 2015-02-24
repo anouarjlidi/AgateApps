@@ -67,6 +67,13 @@ class RoutesTransports
     protected $positiveRatio = false;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="deleted", type="datetime", nullable=true)
+     */
+    protected $deleted = null;
+
+    /**
      * @return int
      */
     public function getId()
@@ -158,6 +165,25 @@ class RoutesTransports
     public function setPositiveRatio($positiveRatio)
     {
         $this->positiveRatio = $positiveRatio;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDeleted()
+    {
+        return $this->deleted;
+    }
+
+    /**
+     * @param int $deleted
+     *
+     * @return RoutesTransports
+     */
+    public function setDeleted($deleted)
+    {
+        $this->deleted = $deleted;
         return $this;
     }
 

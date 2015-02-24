@@ -93,7 +93,7 @@ class RoutesTypes {
     protected $transports;
 
     /**
-     * @var boolean
+     * @var integer
      *
      * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
