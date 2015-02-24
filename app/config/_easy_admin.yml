@@ -148,6 +148,18 @@ easy_admin:
                 fields: [ id, name, color, parent, zones ]
             form:
                 fields: [ name, color, parent ]
+        "Transports":
+            class: EsterenMaps\MapsBundle\Entity\TransportTypes
+            list:
+                fields: [ id, name, slug, { property: speed, format: "%.2f" }, description ]
+            form:
+                fields: [ name, slug, { property: speed, help: "(Km/h)" }, description ]
+        "Routes Transports":
+            class: EsterenMaps\MapsBundle\Entity\RoutesTransports
+            list:
+                fields: [ routeType, transportType, { property: percentage, format: %.2f } ]
+            form:
+                fields: [ routeType, transportType, percentage ]
 
         ####################
         ## Pierstoval CMS

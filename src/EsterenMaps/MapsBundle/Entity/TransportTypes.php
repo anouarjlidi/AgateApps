@@ -62,10 +62,10 @@ class TransportTypes
     /**
      * @var string
      *
-     * @ORM\Column(name="speed", type="string", length=255, nullable=false, unique=true)
+     * @ORM\Column(name="speed", type="decimal", scale=4, precision=8)
+     * @Assert\NotNull()
+     * @Assert\Range(max="10000", min="-10000")
      * @Expose
-     * @Assert\Type(type="integer")
-     * @Assert\GreaterThanOrEqual(value=1)
      */
     protected $speed;
     /**
@@ -74,6 +74,11 @@ class TransportTypes
      * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
     protected $deleted = null;
+
+    public function __toString()
+    {
+        return $this->id.' - '.$this->name;
+    }
 
     /**
      * @return int
@@ -86,7 +91,7 @@ class TransportTypes
     /**
      * @param int $id
      *
-     * @return TransportType
+     * @return TransportTypes
      */
     public function setId($id)
     {
@@ -105,7 +110,7 @@ class TransportTypes
     /**
      * @param string $name
      *
-     * @return TransportType
+     * @return TransportTypes
      */
     public function setName($name)
     {
@@ -124,7 +129,7 @@ class TransportTypes
     /**
      * @param string $slug
      *
-     * @return TransportType
+     * @return TransportTypes
      */
     public function setSlug($slug)
     {
@@ -143,7 +148,7 @@ class TransportTypes
     /**
      * @param string $description
      *
-     * @return TransportType
+     * @return TransportTypes
      */
     public function setDescription($description)
     {
@@ -162,7 +167,7 @@ class TransportTypes
     /**
      * @param string $speed
      *
-     * @return TransportType
+     * @return TransportTypes
      */
     public function setSpeed($speed)
     {
@@ -181,7 +186,7 @@ class TransportTypes
     /**
      * @param \Datetime $deleted
      *
-     * @return TransportType
+     * @return TransportTypes
      */
     public function setDeleted(\Datetime $deleted = null)
     {
