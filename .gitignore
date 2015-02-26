@@ -31,6 +31,5 @@
 /web/uploads/
 !/web/uploads/.gitkeep
 !/web/uploads/media/.gitkeep
-/web/components/*
 
 /node_modules/
