@@ -5,8 +5,7 @@ namespace EsterenMaps\MapsBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use JMS\Serializer\Annotation\ExclusionPolicy as ExclusionPolicy;
-use JMS\Serializer\Annotation\Expose as Expose;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Zones
@@ -14,7 +13,7 @@ use JMS\Serializer\Annotation\Expose as Expose;
  * @ORM\Table(name="maps_zones")
  * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity(repositoryClass="EsterenMaps\MapsBundle\Repository\ZonesRepository")
- * @ExclusionPolicy("all")
+ * @Serializer\ExclusionPolicy("all")
  */
 class Zones {
 
@@ -24,22 +23,22 @@ class Zones {
      * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @Expose
+     * @Serializer\Expose
      */
     protected $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="name", "type="string", length=255, nullable=false, unique=true)
-     * @Expose
+     * @ORM\Column(name="name", type="string", length=255, nullable=false, unique=true)
+     * @Serializer\Expose
      */
     protected $name;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="description", "type="text", nullable=true)
+     * @ORM\Column(name="description", type="text", nullable=true)
      * @Serializer\Expose
      */
     protected $description;
@@ -47,8 +46,8 @@ class Zones {
     /**
      * @var string
      *
-     * @ORM\Column(name="coordinates", "type="text")
-     * @Expose
+     * @ORM\Column(name="coordinates", type="text")
+     * @Serializer\Expose
      */
     protected $coordinates;
 
@@ -79,7 +78,7 @@ class Zones {
      * @var Factions
      *
      * @ORM\ManyToOne(targetEntity="Factions", inversedBy="zones", fetch="EAGER", fetch="EAGER")
-     * @Expose
+     * @Serializer\Expose
      */
     protected $faction;
 
@@ -87,7 +86,7 @@ class Zones {
      * @var ZonesTypes
      *
      * @ORM\ManyToOne(targetEntity="ZonesTypes", inversedBy="zones", fetch="EAGER", fetch="EAGER")
-     * @Expose
+     * @Serializer\Expose
      */
     protected $zoneType;
 

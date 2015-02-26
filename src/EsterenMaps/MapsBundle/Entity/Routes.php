@@ -31,7 +31,7 @@ class Routes {
     /**
      * @var string
      *
-     * @ORM\Column(name="name", "type="string", length=255, nullable=true)
+     * @ORM\Column(name="name", type="string", length=255, nullable=true)
      * @Serializer\Expose
      */
     protected $name;
@@ -39,7 +39,7 @@ class Routes {
     /**
      * @var string
      *
-     * @ORM\Column(name="description", "type="text", nullable=true)
+     * @ORM\Column(name="description", type="text", nullable=true)
      * @Serializer\Expose
      */
     protected $description;
@@ -47,7 +47,7 @@ class Routes {
     /**
      * @var string
      *
-     * @ORM\Column(name="coordinates", "type="text")
+     * @ORM\Column(name="coordinates", type="text")
      * @Serializer\Expose
      */
     protected $coordinates;
@@ -55,7 +55,7 @@ class Routes {
     /**
      * @var integer
      *
-     * @ORM\Column(name="distance", "type="float", precision=12, scale=6)
+     * @ORM\Column(name="distance", type="float", precision=12, scale=6)
      * @Serializer\Expose
      */
     protected $distance;
