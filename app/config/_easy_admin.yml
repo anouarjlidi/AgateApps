@@ -112,36 +112,36 @@ easy_admin:
                 fields: [ id, name, nameSlug, maxZoom, startZoom, startX, startY ]
             form:
                 fields: [ name, nameSlug, image, description, maxZoom, startZoom, startX, startY ]
-#        Markers:
-#            class: EsterenMaps\MapsBundle\Entity\Markers
-#            list:
-#                fields: [ id, name, latitude, longitude ]
-#            form:
-#                fields: [ name, description, altitude, latitude, longitude, map, markerType, faction ]
+        Markers:
+            class: EsterenMaps\MapsBundle\Entity\Markers
+            list:
+                fields: [ id, name, latitude, longitude, markerType ]
+            form:
+                fields: [ name, description, map, markerType, faction ]
         "Markers types":
             class: EsterenMaps\MapsBundle\Entity\MarkersTypes
             list:
                 fields: [ id, name, icon, markers ]
             form:
                 fields: [ name, icon, markers ]
-#        Routes:
-#            class: EsterenMaps\MapsBundle\Entity\Routes
-#            list:
-#                fields: [ id, name, distance, markerStart, markerEnd ]
-#            form:
-#                fields: [ name, markerStart, markerEnd ]
+        Routes:
+            class: EsterenMaps\MapsBundle\Entity\Routes
+            list:
+                fields: [ id, name, distance, description, markerStart, markerEnd ]
+            form:
+                fields: [ name, description, markerStart, markerEnd ]
         "Routes types":
             class: EsterenMaps\MapsBundle\Entity\RoutesTypes
             list:
                 fields: [ id, name, color, routes ]
             form:
                 fields: [ name, color ]
-#        Zones:
-#            class: EsterenMaps\MapsBundle\Entity\Zones
-#            list:
-#                fields: [ id, name, zoneType, map, faction ]
-#            form:
-#                fields: [ name, coordinates, map, faction, zoneType ]
+        Zones:
+            class: EsterenMaps\MapsBundle\Entity\Zones
+            list:
+                fields: [ id, name, description, zoneType, map, faction ]
+            form:
+                fields: [ name, description, map, faction, zoneType ]
         "Zones types":
             class: EsterenMaps\MapsBundle\Entity\ZonesTypes
             list:
