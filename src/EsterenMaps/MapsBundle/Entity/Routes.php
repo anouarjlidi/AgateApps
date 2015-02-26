@@ -31,7 +31,7 @@ class Routes {
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(name="name", "type="string", length=255, nullable=true)
      * @Serializer\Expose
      */
     protected $name;
@@ -39,7 +39,15 @@ class Routes {
     /**
      * @var string
      *
-     * @ORM\Column(type="text")
+     * @ORM\Column(name="description", "type="text", nullable=true)
+     * @Serializer\Expose
+     */
+    protected $description;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="coordinates", "type="text")
      * @Serializer\Expose
      */
     protected $coordinates;
@@ -47,7 +55,7 @@ class Routes {
     /**
      * @var integer
      *
-     * @ORM\Column(type="float", precision=6, scale=6)
+     * @ORM\Column(name="distance", "type="float", precision=12, scale=6)
      * @Serializer\Expose
      */
     protected $distance;
@@ -180,6 +188,24 @@ class Routes {
     }
 
     /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     * @return Routes
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+        return $this;
+    }
+
+    /**
      * Set coordinates
      *
      * @param string $coordinates
@@ -187,6 +213,8 @@ class Routes {
      */
     public function setCoordinates($coordinates) {
         $this->coordinates = $coordinates;
+
+        $this->calcDistance();
 
         return $this;
     }
@@ -419,7 +447,7 @@ class Routes {
      * @return $this
      */
     public function setDistance($distance) {
-        $this->distance = (int) $distance;
+        $this->distance = $distance;
         return $this;
     }
 

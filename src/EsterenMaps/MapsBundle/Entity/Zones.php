@@ -31,7 +31,7 @@ class Zones {
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=255, nullable=false, unique=true)
+     * @ORM\Column(name="name", "type="string", length=255, nullable=false, unique=true)
      * @Expose
      */
     protected $name;
@@ -39,7 +39,15 @@ class Zones {
     /**
      * @var string
      *
-     * @ORM\Column(type="text")
+     * @ORM\Column(name="description", "type="text", nullable=true)
+     * @Serializer\Expose
+     */
+    protected $description;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="coordinates", "type="text")
      * @Expose
      */
     protected $coordinates;
@@ -143,6 +151,24 @@ class Zones {
      */
     public function getName() {
         return $this->name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     * @return Routes
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+        return $this;
     }
 
     /**
