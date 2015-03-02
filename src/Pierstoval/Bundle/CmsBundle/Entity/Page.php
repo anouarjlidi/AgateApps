@@ -10,10 +10,13 @@
 
 namespace Pierstoval\Bundle\CmsBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\IpTraceable\Traits\IpTraceableEntity;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -22,11 +25,14 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Entity(repositoryClass="Pierstoval\Bundle\CmsBundle\Repository\PageRepository")
  * @ORM\Table(name="pierstoval_cms_pages")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
+ * @Gedmo\TranslationEntity(class="Pierstoval\Bundle\CmsBundle\Entity\PageTranslation")
  * @UniqueEntity("slug")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Page
 {
 
+    use SoftDeleteableEntity;
     use TimestampableEntity;
     use BlameableEntity;
     use IpTraceableEntity;
@@ -50,7 +56,6 @@ class Page
 
     /**
      * @var string
-     * @Gedmo\Translatable
      * @Gedmo\Slug(fields={"title"})
      * @ORM\Column(name="slug", type="string", length=255, unique=true)
      * @Assert\Length(max=255)
@@ -123,8 +128,8 @@ class Page
 
     /**
      * @var Page
-     * @ORM\ManyToOne(targetEntity="Pierstoval\Bundle\CmsBundle\Entity\Page", inversedBy="children")
-     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="CASCADE")
+     * @ORM\ManyToOne(targetEntity="Pierstoval\Bundle\CmsBundle\Entity\Page", inversedBy="children", fetch="EAGER")
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="cascade")
      */
     protected $parent;
 
@@ -135,18 +140,23 @@ class Page
     protected $children;
 
     /**
-     * @var \Datetime
-     * @ORM\Column(name="deleted_at", type="datetime", nullable=true)
+     * @var PageTranslation[]|ArrayCollection
+     * @ORM\OneToMany(targetEntity="PageTranslation", mappedBy="object", cascade={"persist", "remove"})
      */
-    protected $deletedAt = null;
+    private $translations;
 
     public function __toString()
     {
         return $this->title;
     }
 
+    public function __construct()
+    {
+        $this->translations = new ArrayCollection();
+    }
+
     /**
-     * @return mixed
+     * @return string
      */
     public function getTitle()
     {
@@ -154,7 +164,7 @@ class Page
     }
 
     /**
-     * @param mixed $title
+     * @param string $title
      *
      * @return Page
      */
@@ -165,7 +175,7 @@ class Page
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getSlug()
     {
@@ -173,7 +183,7 @@ class Page
     }
 
     /**
-     * @param mixed $slug
+     * @param string $slug
      *
      * @return Page
      */
@@ -241,7 +251,7 @@ class Page
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getMetaKeywords()
     {
@@ -249,7 +259,7 @@ class Page
     }
 
     /**
-     * @param mixed $metaKeywords
+     * @param string $metaKeywords
      *
      * @return Page
      */
@@ -279,7 +289,7 @@ class Page
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getCss()
     {
@@ -287,7 +297,7 @@ class Page
     }
 
     /**
-     * @param mixed $css
+     * @param string $css
      *
      * @return Page
      */
@@ -298,7 +308,7 @@ class Page
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getJs()
     {
@@ -306,7 +316,7 @@ class Page
     }
 
     /**
-     * @param mixed $js
+     * @param string $js
      *
      * @return Page
      */
@@ -336,7 +346,7 @@ class Page
     }
 
     /**
-     * @return mixed
+     * @return Page
      */
     public function getParent()
     {
@@ -344,13 +354,15 @@ class Page
     }
 
     /**
-     * @param mixed $parent
+     * @param Page $parent
      *
      * @return Page
      */
-    public function setParent(Page $parent)
+    public function setParent(Page $parent = null)
     {
-        if ($parent->getId() == $this->id) {
+        if ($parent && $parent->getId() == $this->id) {
+            // Refuse the page to have itself as parent
+            $this->parent = null;
             return $this;
         }
         $this->parent = $parent;
@@ -366,7 +378,7 @@ class Page
     }
 
     /**
-     * @return mixed
+     * @return Page[]
      */
     public function getChildren()
     {
@@ -381,25 +393,6 @@ class Page
     public function setChildren($children)
     {
         $this->children = $children;
-        return $this;
-    }
-
-    /**
-     * @return \Datetime
-     */
-    public function getDeletedAt()
-    {
-        return $this->deletedAt;
-    }
-
-    /**
-     * @param \Datetime $deletedAt
-     *
-     * @return Page
-     */
-    public function setDeletedAt($deletedAt)
-    {
-        $this->deletedAt = $deletedAt;
         return $this;
     }
 
@@ -439,6 +432,63 @@ class Page
     {
         $this->host = $host;
         return $this;
+    }
+
+    /**
+     * @return PageTranslation[]
+     */
+    public function getTranslations()
+    {
+        return $this->translations;
+    }
+
+    /**
+     * @param PageTranslation $t
+     * @return Page
+     */
+    public function addTranslation(PageTranslation $t)
+    {
+        if (!$this->translations->contains($t)) {
+            $this->translations[] = $t;
+            $t->setObject($this);
+        }
+        return $this;
+    }
+
+    public function getTree($separator = '/')
+    {
+        $tree = '';
+
+        $current = $this;
+        do {
+            $tree = $current->getSlug().$separator.$tree;
+            $current = $current->getParent();
+        } while ($current);
+
+        return trim($tree, $separator);
+    }
+
+    /**
+     * @ORM\PreRemove()
+     * @param LifecycleEventArgs $event
+     */
+    public function onRemove(LifecycleEventArgs $event)
+    {
+        $om = $event->getObjectManager();
+        foreach ($this->translations as $translation) {
+            $om->remove($translation);
+        }
+        $om->flush();
+        foreach ($this->children as $child) {
+            $child->setParent(null);
+            $om->persist($child);
+        }
+        $this->enabled = false;
+        $this->parent = null;
+        $this->title .= '-'.$this->id.'-deleted';
+        $this->slug .= '-'.$this->id.'-deleted';
+        $om->persist($this);
+        $om->flush();
     }
 
 }
