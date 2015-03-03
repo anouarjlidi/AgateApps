@@ -103,21 +103,6 @@ class Events
     protected $zones;
 
     /**
-     * @var \DateTime
-     */
-    private $createdAt;
-
-    /**
-     * @var \DateTime
-     */
-    private $updatedAt;
-
-    /**
-     * @var \DateTime
-     */
-    private $deletedAt;
-
-    /**
      * Constructor
      */
     public function __construct()
@@ -193,85 +178,13 @@ class Events
     }
 
     /**
-     * Set createdAt
-     *
-     * @param \DateTime $createdAt
-     *
-     * @return Events
-     */
-    public function setCreatedAt($createdAt)
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    /**
-     * Get createdAt
-     *
-     * @return \DateTime
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * Set updatedAt
-     *
-     * @param \DateTime $updatedAt
-     *
-     * @return Events
-     */
-    public function setUpdatedAt($updatedAt)
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
-    /**
-     * Get updatedAt
-     *
-     * @return \DateTime
-     */
-    public function getUpdatedAt()
-    {
-        return $this->updatedAt;
-    }
-
-    /**
-     * Set deletedAt
-     *
-     * @param \DateTime $deletedAt
-     *
-     * @return Events
-     */
-    public function setDeletedAt($deletedAt)
-    {
-        $this->deletedAt = $deletedAt;
-
-        return $this;
-    }
-
-    /**
-     * Get deletedAt
-     *
-     * @return \DateTime
-     */
-    public function getDeletedAt()
-    {
-        return $this->deletedAt;
-    }
-
-    /**
      * Add foes
      *
      * @param Foes $foes
      *
      * @return Events
      */
-    public function addFo(Foes $foes)
+    public function addFoe(Foes $foes)
     {
         $this->foes[] = $foes;
 
@@ -283,7 +196,7 @@ class Events
      *
      * @param Foes $foes
      */
-    public function removeFo(Foes $foes)
+    public function removeFoe(Foes $foes)
     {
         $this->foes->removeElement($foes);
     }

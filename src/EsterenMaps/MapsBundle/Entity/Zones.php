@@ -2,7 +2,6 @@
 
 namespace EsterenMaps\MapsBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
@@ -13,7 +12,7 @@ use JMS\Serializer\Annotation as Serializer;
  * Zones
  *
  * @ORM\Table(name="maps_zones")
- * @Gedmo\SoftDeleteable(fieldName="deleted")
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  * @ORM\Entity(repositoryClass="EsterenMaps\MapsBundle\Repository\ZonesRepository")
  * @Serializer\ExclusionPolicy("all")
  */

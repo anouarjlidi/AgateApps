@@ -5,6 +5,8 @@ namespace EsterenMaps\MapsBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 use JMS\Serializer\Annotation\ExclusionPolicy as ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose as Expose;
 
@@ -12,11 +14,15 @@ use JMS\Serializer\Annotation\Expose as Expose;
  * ZonesTypes
  *
  * @ORM\Table(name="maps_zones_types")
- * @Gedmo\SoftDeleteable(fieldName="deleted")
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  * @ORM\Entity()
  * @ExclusionPolicy("all")
  */
-class ZonesTypes {
+class ZonesTypes
+{
+
+    use TimestampableEntity;
+    use SoftDeleteableEntity;
 
     /**
      * @var integer
@@ -31,7 +37,7 @@ class ZonesTypes {
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=255, nullable=false, unique=true)
+     * @ORM\Column(name="name", type="string", length=255, nullable=false, unique=true)
      * @Expose
      */
     protected $name;
@@ -39,7 +45,7 @@ class ZonesTypes {
     /**
      * @var string
      *
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(name="description", type="text", nullable=true)
      * @Expose
      */
     protected $description;
@@ -47,26 +53,10 @@ class ZonesTypes {
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=75, nullable=true)
+     * @ORM\Column(name="color", type="string", length=75, nullable=true)
      * @Expose
      */
     protected $color;
-
-    /**
-     * @var \Datetime
-     *
-     * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(type="datetime", nullable=false)
-     */
-    protected $created;
-
-    /**
-     * @var \Datetime
-     *
-     * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(type="datetime", nullable=false)
-     */
-    protected $updated;
 
     /**
      * @var Resources[]
@@ -88,21 +78,15 @@ class ZonesTypes {
      */
     protected $zones;
 
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="deleted", type="datetime", nullable=true)
-     */
-    protected $deleted = null;
-
     protected $children = array();
 
     /**
      * Constructor
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->resources = new ArrayCollection();
-        $this->zones = new ArrayCollection();
+        $this->zones     = new ArrayCollection();
     }
 
     public function __toString()
@@ -115,17 +99,20 @@ class ZonesTypes {
      *
      * @return integer
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
     /**
      * @param integer $id
+     *
      * @return $this
      */
     public function setId($id)
     {
         $this->id = (int) $id;
+
         return $this;
     }
 
@@ -133,9 +120,11 @@ class ZonesTypes {
      * Set name
      *
      * @param string $name
+     *
      * @return ZonesTypes
      */
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
 
         return $this;
@@ -146,59 +135,20 @@ class ZonesTypes {
      *
      * @return string
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
-    }
-
-    /**
-     * Set created
-     *
-     * @param \DateTime $created
-     * @return ZonesTypes
-     */
-    public function setCreated($created) {
-        $this->created = $created;
-
-        return $this;
-    }
-
-    /**
-     * Get created
-     *
-     * @return \DateTime
-     */
-    public function getCreated() {
-        return $this->created;
-    }
-
-    /**
-     * Set updated
-     *
-     * @param \DateTime $updated
-     * @return ZonesTypes
-     */
-    public function setUpdated($updated) {
-        $this->updated = $updated;
-
-        return $this;
-    }
-
-    /**
-     * Get updated
-     *
-     * @return \DateTime
-     */
-    public function getUpdated() {
-        return $this->updated;
     }
 
     /**
      * Add resources
      *
      * @param Resources $resources
+     *
      * @return ZonesTypes
      */
-    public function addResource(Resources $resources) {
+    public function addResource(Resources $resources)
+    {
         $this->resources[] = $resources;
 
         return $this;
@@ -209,7 +159,8 @@ class ZonesTypes {
      *
      * @param Resources $resources
      */
-    public function removeResource(Resources $resources) {
+    public function removeResource(Resources $resources)
+    {
         $this->resources->removeElement($resources);
     }
 
@@ -218,7 +169,8 @@ class ZonesTypes {
      *
      * @return Resources[]
      */
-    public function getResources() {
+    public function getResources()
+    {
         return $this->resources;
     }
 
@@ -226,9 +178,11 @@ class ZonesTypes {
      * Add zones
      *
      * @param Zones $zones
+     *
      * @return ZonesTypes
      */
-    public function addZone(Zones $zones) {
+    public function addZone(Zones $zones)
+    {
         $this->zones[] = $zones;
 
         return $this;
@@ -239,7 +193,8 @@ class ZonesTypes {
      *
      * @param Zones $zones
      */
-    public function removeZone(Zones $zones) {
+    public function removeZone(Zones $zones)
+    {
         $this->zones->removeElement($zones);
     }
 
@@ -248,38 +203,20 @@ class ZonesTypes {
      *
      * @return Zones[]
      */
-    public function getZones() {
+    public function getZones()
+    {
         return $this->zones;
-    }
-
-    /**
-     * Set deleted
-     *
-     * @param \DateTime $deleted
-     * @return ZonesTypes
-     */
-    public function setDeleted($deleted) {
-        $this->deleted = $deleted;
-
-        return $this;
-    }
-
-    /**
-     * Get deleted
-     *
-     * @return \DateTime
-     */
-    public function getDeleted() {
-        return $this->deleted;
     }
 
     /**
      * Set parent
      *
      * @param ZonesTypes $parent
+     *
      * @return ZonesTypes
      */
-    public function setParent(ZonesTypes $parent = null) {
+    public function setParent(ZonesTypes $parent = null)
+    {
         $this->parent = $parent;
 
         return $this;
@@ -290,45 +227,56 @@ class ZonesTypes {
      *
      * @return ZonesTypes
      */
-    public function getParent() {
+    public function getParent()
+    {
         return $this->parent;
     }
 
     /**
      * @param ZonesTypes $child
+     *
      * @return $this
      */
-    public function addChild($child) {
+    public function addChild($child)
+    {
         $this->children[$child->getId()] = $child;
+
         return $this;
     }
 
     /**
      * @param ZonesTypes[] $children
+     *
      * @return $this
      */
-    public function setChildren($children) {
+    public function setChildren($children)
+    {
         $this->children = $children;
+
         return $this;
     }
 
     /**
      * @return ZonesTypes[]
      */
-    public function getChildren() {
+    public function getChildren()
+    {
         return $this->children;
     }
 
     /**
      * @param ZonesTypes $child
+     *
      * @return $this
      */
-    public function removeChild($child) {
+    public function removeChild($child)
+    {
         if (is_numeric($child)) {
             unset($this->children[$child]);
         } elseif (is_object($child)) {
             unset($this->children[$child->getId()]);
         }
+
         return $this;
 
     }
@@ -351,21 +299,25 @@ class ZonesTypes {
 
     /**
      * @param string $color
+     *
      * @return RoutesTypes
      */
     public function setColor($color)
     {
         $this->color = $color;
+
         return $this;
     }
 
     /**
      * @param string $description
+     *
      * @return $this
      */
     public function setDescription($description)
     {
         $this->description = $description;
+
         return $this;
     }
 
@@ -373,19 +325,23 @@ class ZonesTypes {
      * Retourne le parent à un certain niveau d'héritage
      *
      * @param int $level
+     *
      * @return ZonesTypes|null
      */
-    public function getParentByLevel($level = 0) {
+    public function getParentByLevel($level = 0)
+    {
+        /** @var ZonesTypes $actualParent */
         $actualParent = $this->parent;
         if ($actualParent) {
             while ($level > 0) {
                 $actualParent = $actualParent->getParent();
-                $level--;
+                $level --;
                 if (!$actualParent && $level > 0) {
                     $level = 0;
                 }
             }
         }
+
         return $actualParent;
     }
 
