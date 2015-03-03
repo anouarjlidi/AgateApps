@@ -35,7 +35,7 @@ class TransportTypesFixtures extends AbstractFixture implements OrderedFixtureIn
     {
         $this->manager = $manager;
 
-        $repo = $this->manager->getRepository('EsterenMapsBundle:TransportsTypes');
+        $repo = $this->manager->getRepository('EsterenMapsBundle:TransportTypes');
 
         $this->fixtureObject($repo, 1, 'À pied', 'foot', '', 4.5);
         $this->fixtureObject($repo, 2, 'Chariot', 'chariot', '', 8);
