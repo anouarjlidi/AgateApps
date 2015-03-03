@@ -51,6 +51,7 @@ class FactionsFixtures extends AbstractFixture implements OrderedFixtureInterfac
         $this->fixtureObject($repo, 10, $book1, 'Marchand', 'Les marchands sont essentiellement pragmatiques : partisans de la circulation des biens et des personnes, et de législations qui leur permettent de s\'enrichir. Ils peuvent s\'accommoder d\'un peu de corruption, mais veulent des routes sûres.', '2014-05-10 17:03:14', '2014-05-10 17:03:14', null);
         $this->fixtureObject($repo, 11, $book1, 'Mixte', 'Plusieurs courants se partagent ou se disputent les lieux sans qu\'il soit véritablement possible de discerner la domination de l\'un d\'eux.', '2014-05-10 17:04:14', '2014-05-10 17:04:14', null);
         $this->fixtureObject($repo, 12, $book1, 'Rebelles & Criminels', 'Les individus qui dominent sont en rupture avec la société, pour des raisons d\'intérêt ou d\'opinion. Le territoire est une zone grise, où la violence est endémique.', '2014-05-10 17:05:59', '2014-05-10 17:05:59', null);
+        $this->fixtureObject($repo, 13, $book1, 'Chevaliers Ronce', '', '2014-05-10 17:05:59', '2014-05-10 17:05:59', null);
 
         $this->manager->flush();
     }

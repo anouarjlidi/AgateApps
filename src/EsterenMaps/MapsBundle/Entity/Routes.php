@@ -137,6 +137,11 @@ class Routes {
      */
     protected $events;
 
+    public function __toString()
+    {
+        return $this->id.' - '.$this->name;
+    }
+
     /**
      * Constructor
      */

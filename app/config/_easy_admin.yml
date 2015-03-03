@@ -4,6 +4,12 @@ easy_admin:
     entities:
         ####################
         ## Esteren Maps
+        "Esteren Maps - Factions":
+            class: EsterenMaps\MapsBundle\Entity\Factions
+            list:
+                fields: [ id, name, description, book ]
+            form:
+                fields: [ name, description, book ]
         "Esteren Maps - Cartes":
             class: EsterenMaps\MapsBundle\Entity\Maps
             list:
@@ -27,7 +33,7 @@ easy_admin:
             list:
                 fields: [ id, name, distance, description, markerStart, markerEnd ]
             form:
-                fields: [ name, description, markerStart, markerEnd ]
+                fields: [ name, description, markerStart, markerEnd, faction ]
         "Esteren Maps - Types de routes":
             class: EsterenMaps\MapsBundle\Entity\RoutesTypes
             list:

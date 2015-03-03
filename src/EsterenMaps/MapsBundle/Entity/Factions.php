@@ -40,7 +40,7 @@ class Factions {
     /**
      * @var string
      *
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      * @Expose
      */
     protected $description;
