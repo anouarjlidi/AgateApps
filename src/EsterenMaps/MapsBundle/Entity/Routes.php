@@ -117,13 +117,6 @@ class Routes
      */
     protected $routeType;
 
-    /**
-     * @var EventsRoutes[]
-     *
-     * @ORM\OneToMany(targetEntity="EventsRoutes", mappedBy="route")
-     */
-    protected $events;
-
     public function __toString()
     {
         return $this->id.' - '.$this->name;
@@ -135,7 +128,6 @@ class Routes
     public function __construct()
     {
         $this->resources = new ArrayCollection();
-        $this->events    = new ArrayCollection();
     }
 
     /**
@@ -336,40 +328,6 @@ class Routes
     public function getRouteType()
     {
         return $this->routeType;
-    }
-
-    /**
-     * Add events
-     *
-     * @param EventsRoutes $events
-     *
-     * @return Routes
-     */
-    public function addEvent(EventsRoutes $events)
-    {
-        $this->events[] = $events;
-
-        return $this;
-    }
-
-    /**
-     * Remove events
-     *
-     * @param EventsRoutes $events
-     */
-    public function removeEvent(EventsRoutes $events)
-    {
-        $this->events->removeElement($events);
-    }
-
-    /**
-     * Get events
-     *
-     * @return Events[]
-     */
-    public function getEvents()
-    {
-        return $this->events;
     }
 
     /**

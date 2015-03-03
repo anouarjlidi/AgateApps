@@ -89,12 +89,6 @@ class ZonesTypes {
     protected $zones;
 
     /**
-     * @var EventsZonesTypes[]
-     * @ORM\OneToMany(targetEntity="EventsZonesTypes", mappedBy="zoneType")
-     */
-    protected $events;
-
-    /**
      * @var boolean
      *
      * @ORM\Column(name="deleted", type="datetime", nullable=true)
@@ -109,7 +103,6 @@ class ZonesTypes {
     public function __construct() {
         $this->resources = new ArrayCollection();
         $this->zones = new ArrayCollection();
-        $this->events = new ArrayCollection();
     }
 
     public function __toString()
@@ -257,36 +250,6 @@ class ZonesTypes {
      */
     public function getZones() {
         return $this->zones;
-    }
-
-    /**
-     * Add events
-     *
-     * @param EventsZonesTypes $events
-     * @return ZonesTypes
-     */
-    public function addEvent(EventsZonesTypes $events) {
-        $this->events[] = $events;
-
-        return $this;
-    }
-
-    /**
-     * Remove events
-     *
-     * @param EventsZonesTypes $events
-     */
-    public function removeEvent(EventsZonesTypes $events) {
-        $this->events->removeElement($events);
-    }
-
-    /**
-     * Get events
-     *
-     * @return Events[]
-     */
-    public function getEvents() {
-        return $this->events;
     }
 
     /**

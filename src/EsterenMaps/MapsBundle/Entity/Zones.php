@@ -83,23 +83,9 @@ class Zones
      */
     protected $zoneType;
 
-    /**
-     * @var EventsZones[]
-     * @ORM\OneToMany(targetEntity="EventsZones", mappedBy="zone")
-     */
-    protected $events;
-
     public function __toString()
     {
         return $this->id.' - '.$this->name;
-    }
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->events = new ArrayCollection();
     }
 
     /**
@@ -240,40 +226,6 @@ class Zones
     public function getFaction()
     {
         return $this->faction;
-    }
-
-    /**
-     * Add events
-     *
-     * @param EventsZones $events
-     *
-     * @return Zones
-     */
-    public function addEvent(EventsZones $events)
-    {
-        $this->events[] = $events;
-
-        return $this;
-    }
-
-    /**
-     * Remove events
-     *
-     * @param EventsZones $events
-     */
-    public function removeEvent(EventsZones $events)
-    {
-        $this->events->removeElement($events);
-    }
-
-    /**
-     * Get events
-     *
-     * @return EventsZonesTypes[]
-     */
-    public function getEvents()
-    {
-        return $this->events;
     }
 
     /**

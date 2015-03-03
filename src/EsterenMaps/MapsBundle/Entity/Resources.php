@@ -56,12 +56,6 @@ class Resources
     protected $zonesTypes;
 
     /**
-     * @var EventsResources[]
-     * @ORM\OneToMany(targetEntity="EventsResources", mappedBy="resource")
-     */
-    protected $events;
-
-    /**
      * Constructor
      */
     public function __construct()
@@ -69,7 +63,6 @@ class Resources
         $this->routes      = new ArrayCollection();
         $this->routesTypes = new ArrayCollection();
         $this->zonesTypes  = new ArrayCollection();
-        $this->events      = new ArrayCollection();
     }
 
     /**
@@ -172,40 +165,6 @@ class Resources
     public function getRoutesTypes()
     {
         return $this->routesTypes;
-    }
-
-    /**
-     * Add events
-     *
-     * @param EventsResources $events
-     *
-     * @return Resources
-     */
-    public function addEvent(EventsResources $events)
-    {
-        $this->events[] = $events;
-
-        return $this;
-    }
-
-    /**
-     * Remove events
-     *
-     * @param EventsResources $events
-     */
-    public function removeEvent(EventsResources $events)
-    {
-        $this->events->removeElement($events);
-    }
-
-    /**
-     * Get events
-     *
-     * @return Events[]
-     */
-    public function getEvents()
-    {
-        return $this->events;
     }
 
     /**

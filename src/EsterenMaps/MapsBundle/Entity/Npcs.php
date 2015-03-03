@@ -38,20 +38,6 @@ class Npcs
     protected $name;
 
     /**
-     * @var Events[]
-     * @ORM\ManyToMany(targetEntity="Events", inversedBy="npcs")
-     */
-    protected $events;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->events = new ArrayCollection();
-    }
-
-    /**
      * Get id
      *
      * @return integer
@@ -83,40 +69,6 @@ class Npcs
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * Add events
-     *
-     * @param Events $events
-     *
-     * @return Npcs
-     */
-    public function addEvent(Events $events)
-    {
-        $this->events[] = $events;
-
-        return $this;
-    }
-
-    /**
-     * Remove events
-     *
-     * @param Events $events
-     */
-    public function removeEvent(Events $events)
-    {
-        $this->events->removeElement($events);
-    }
-
-    /**
-     * Get events
-     *
-     * @return Events[]
-     */
-    public function getEvents()
-    {
-        return $this->events;
     }
 
 }

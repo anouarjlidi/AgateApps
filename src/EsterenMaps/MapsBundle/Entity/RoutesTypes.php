@@ -71,12 +71,6 @@ class RoutesTypes
     protected $routes;
 
     /**
-     * @var EventsRoutesTypes[]
-     * @ORM\OneToMany(targetEntity="EventsRoutesTypes", mappedBy="routeType")
-     */
-    protected $events;
-
-    /**
      * @var RoutesTransports
      * @ORM\OneToMany(targetEntity="EsterenMaps\MapsBundle\Entity\RoutesTransports", mappedBy="routeType")
      */
@@ -94,7 +88,6 @@ class RoutesTypes
     {
         $this->resources  = new ArrayCollection();
         $this->routes     = new ArrayCollection();
-        $this->events     = new ArrayCollection();
         $this->transports = new ArrayCollection();
     }
 
@@ -210,40 +203,6 @@ class RoutesTypes
     public function getRoutes()
     {
         return $this->routes;
-    }
-
-    /**
-     * Add events
-     *
-     * @param EventsRoutesTypes $events
-     *
-     * @return RoutesTypes
-     */
-    public function addEvent(EventsRoutesTypes $events)
-    {
-        $this->events[] = $events;
-
-        return $this;
-    }
-
-    /**
-     * Remove events
-     *
-     * @param EventsRoutesTypes $events
-     */
-    public function removeEvent(EventsRoutesTypes $events)
-    {
-        $this->events->removeElement($events);
-    }
-
-    /**
-     * Get events
-     *
-     * @return Events[]
-     */
-    public function getEvents()
-    {
-        return $this->events;
     }
 
     /**

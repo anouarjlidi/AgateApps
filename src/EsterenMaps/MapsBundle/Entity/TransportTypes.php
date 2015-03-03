@@ -64,7 +64,7 @@ class TransportTypes
     /**
      * @var string
      *
-     * @ORM\Column(name="speed", type="decimal", scale=4, precision=8)
+     * @ORM\Column(name="speed", type="decimal", scale=4, precision=8, nullable=false)
      * @Assert\NotNull()
      * @Assert\Range(max="10000", min="-10000")
      * @Expose

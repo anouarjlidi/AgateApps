@@ -103,13 +103,6 @@ class Markers
     protected $markerType;
 
     /**
-     * @var EventsMarkers[]
-     *
-     * @ORM\OneToMany(targetEntity="EventsMarkers", mappedBy="marker")
-     */
-    protected $events;
-
-    /**
      * @var Routes[]
      *
      * @ORM\OneToMany(targetEntity="Routes", mappedBy="markerStart")
@@ -143,7 +136,6 @@ class Markers
         $this->routes      = new ArrayCollection();
         $this->routesStart = new ArrayCollection();
         $this->routesEnd   = new ArrayCollection();
-        $this->events      = new ArrayCollection();
     }
 
     /**
@@ -298,40 +290,6 @@ class Markers
     public function getMarkerType()
     {
         return $this->markerType;
-    }
-
-    /**
-     * Add events
-     *
-     * @param EventsMarkers $events
-     *
-     * @return Markers
-     */
-    public function addEvent(EventsMarkers $events)
-    {
-        $this->events[] = $events;
-
-        return $this;
-    }
-
-    /**
-     * Remove events
-     *
-     * @param EventsMarkers $events
-     */
-    public function removeEvent(EventsMarkers $events)
-    {
-        $this->events->removeElement($events);
-    }
-
-    /**
-     * Get events
-     *
-     * @return Events[]
-     */
-    public function getEvents()
-    {
-        return $this->events;
     }
 
     /**

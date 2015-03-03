@@ -59,13 +59,6 @@ class MarkersTypes
     protected $icon;
 
     /**
-     * @var EventsMarkersTypes[]
-     *
-     * @ORM\OneToMany(targetEntity="EventsMarkersTypes", mappedBy="markerType")
-     */
-    protected $events;
-
-    /**
      * @var Markers[]
      *
      * @ORM\OneToMany(targetEntity="Markers", mappedBy="markerType")
@@ -82,7 +75,6 @@ class MarkersTypes
      */
     public function __construct()
     {
-        $this->events  = new ArrayCollection();
         $this->markers = new ArrayCollection();
     }
 
@@ -130,40 +122,6 @@ class MarkersTypes
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * Add events
-     *
-     * @param EventsMarkersTypes $events
-     *
-     * @return MarkersTypes
-     */
-    public function addEvent(EventsMarkersTypes $events)
-    {
-        $this->events[] = $events;
-
-        return $this;
-    }
-
-    /**
-     * Remove events
-     *
-     * @param EventsMarkersTypes $events
-     */
-    public function removeEvent(EventsMarkersTypes $events)
-    {
-        $this->events->removeElement($events);
-    }
-
-    /**
-     * Get events
-     *
-     * @return EventsMarkersTypes[]
-     */
-    public function getEvents()
-    {
-        return $this->events;
     }
 
     /**

@@ -2,11 +2,11 @@
 
 namespace EsterenMaps\MapsBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Events
@@ -37,64 +37,85 @@ class Events
     protected $name;
 
     /**
+     * @var float
+     * @ORM\Column(name="percentage", type="decimal", scale=6, precision=8, nullable=false)
+     */
+    protected $percentage;
+
+    /**
      * @var Foes[]
-     * @ORM\ManyToMany(targetEntity="Foes", mappedBy="events")
+     * @ORM\ManyToMany(targetEntity="Foes")
      */
     protected $foes;
 
     /**
      * @var Npcs[]
-     * @ORM\ManyToMany(targetEntity="Npcs", mappedBy="events")
+     * @ORM\ManyToMany(targetEntity="Npcs")
      */
     protected $npcs;
 
     /**
      * @var Weather[]
-     * @ORM\ManyToMany(targetEntity="Weather", mappedBy="events")
+     * @ORM\ManyToMany(targetEntity="Weather")
      */
     protected $weather;
 
     /**
-     * @var EventsMarkers[]
-     * @ORM\OneToMany(targetEntity="EventsMarkers", mappedBy="event")
+     * @var Markers[]
+     * @ORM\ManyToMany(targetEntity="Markers")
      */
     protected $markers;
 
     /**
-     * @var EventsMarkersTypes
-     * @ORM\OneToMany(targetEntity="EventsMarkersTypes", mappedBy="event")
+     * @var MarkersTypes
+     * @ORM\ManyToMany(targetEntity="MarkersTypes")
      */
     protected $markersTypes;
 
     /**
-     * @var EventsResources[]
-     * @ORM\OneToMany(targetEntity="EventsResources", mappedBy="event")
+     * @var Resources[]
+     * @ORM\ManyToMany(targetEntity="Resources")
      */
     protected $resources;
 
     /**
-     * @var EventsRoutes[]
-     * @ORM\OneToMany(targetEntity="EventsRoutes", mappedBy="event")
+     * @var Routes[]
+     * @ORM\ManyToMany(targetEntity="Routes")
      */
     protected $routes;
 
     /**
-     * @var EventsRoutesTypes[]
-     * @ORM\OneToMany(targetEntity="EventsRoutesTypes", mappedBy="event")
+     * @var RoutesTypes[]
+     * @ORM\ManyToMany(targetEntity="RoutesTypes")
      */
     protected $routesTypes;
 
     /**
-     * @var EventsZonesTypes[]
-     * @ORM\OneToMany(targetEntity="EventsZonesTypes", mappedBy="event")
+     * @var ZonesTypes[]
+     * @ORM\ManyToMany(targetEntity="ZonesTypes")
      */
     protected $zonesTypes;
 
     /**
-     * @var EventsZones[]
-     * @ORM\OneToMany(targetEntity="EventsZones", mappedBy="event")
+     * @var Zones[]
+     * @ORM\ManyToMany(targetEntity="Zones")
      */
     protected $zones;
+
+    /**
+     * @var \DateTime
+     */
+    private $createdAt;
+
+    /**
+     * @var \DateTime
+     */
+    private $updatedAt;
+
+    /**
+     * @var \DateTime
+     */
+    private $deletedAt;
 
     /**
      * Constructor
@@ -109,8 +130,8 @@ class Events
         $this->resources    = new ArrayCollection();
         $this->routes       = new ArrayCollection();
         $this->routesTypes  = new ArrayCollection();
-        $this->zones        = new ArrayCollection();
         $this->zonesTypes   = new ArrayCollection();
+        $this->zones        = new ArrayCollection();
     }
 
     /**
@@ -148,13 +169,109 @@ class Events
     }
 
     /**
+     * Set percentage
+     *
+     * @param string $percentage
+     *
+     * @return Events
+     */
+    public function setPercentage($percentage)
+    {
+        $this->percentage = $percentage;
+
+        return $this;
+    }
+
+    /**
+     * Get percentage
+     *
+     * @return string
+     */
+    public function getPercentage()
+    {
+        return $this->percentage;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     *
+     * @return Events
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     *
+     * @return Events
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Set deletedAt
+     *
+     * @param \DateTime $deletedAt
+     *
+     * @return Events
+     */
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get deletedAt
+     *
+     * @return \DateTime
+     */
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
+    }
+
+    /**
      * Add foes
      *
      * @param Foes $foes
      *
      * @return Events
      */
-    public function addFoe(Foes $foes)
+    public function addFo(Foes $foes)
     {
         $this->foes[] = $foes;
 
@@ -166,7 +283,7 @@ class Events
      *
      * @param Foes $foes
      */
-    public function removeFoe(Foes $foes)
+    public function removeFo(Foes $foes)
     {
         $this->foes->removeElement($foes);
     }
@@ -174,7 +291,7 @@ class Events
     /**
      * Get foes
      *
-     * @return ArrayCollection
+     * @return Foes[]
      */
     public function getFoes()
     {
@@ -208,7 +325,7 @@ class Events
     /**
      * Get npcs
      *
-     * @return ArrayCollection
+     * @return Npcs[]
      */
     public function getNpcs()
     {
@@ -242,7 +359,7 @@ class Events
     /**
      * Get weather
      *
-     * @return ArrayCollection
+     * @return Weather[]
      */
     public function getWeather()
     {
@@ -252,11 +369,11 @@ class Events
     /**
      * Add markers
      *
-     * @param EventsMarkers $markers
+     * @param Markers $markers
      *
      * @return Events
      */
-    public function addMarker(EventsMarkers $markers)
+    public function addMarker(Markers $markers)
     {
         $this->markers[] = $markers;
 
@@ -266,9 +383,9 @@ class Events
     /**
      * Remove markers
      *
-     * @param EventsMarkers $markers
+     * @param Markers $markers
      */
-    public function removeMarker(EventsMarkers $markers)
+    public function removeMarker(Markers $markers)
     {
         $this->markers->removeElement($markers);
     }
@@ -276,7 +393,7 @@ class Events
     /**
      * Get markers
      *
-     * @return ArrayCollection
+     * @return Markers[]
      */
     public function getMarkers()
     {
@@ -286,11 +403,11 @@ class Events
     /**
      * Add markersTypes
      *
-     * @param EventsMarkersTypes $markersTypes
+     * @param MarkersTypes $markersTypes
      *
      * @return Events
      */
-    public function addMarkerType(EventsMarkersTypes $markersTypes)
+    public function addMarkersType(MarkersTypes $markersTypes)
     {
         $this->markersTypes[] = $markersTypes;
 
@@ -300,9 +417,9 @@ class Events
     /**
      * Remove markersTypes
      *
-     * @param EventsMarkersTypes $markersTypes
+     * @param MarkersTypes $markersTypes
      */
-    public function removeMarkerType(EventsMarkersTypes $markersTypes)
+    public function removeMarkersType(MarkersTypes $markersTypes)
     {
         $this->markersTypes->removeElement($markersTypes);
     }
@@ -310,7 +427,7 @@ class Events
     /**
      * Get markersTypes
      *
-     * @return ArrayCollection
+     * @return MarkersTypes[]
      */
     public function getMarkersTypes()
     {
@@ -320,11 +437,11 @@ class Events
     /**
      * Add resources
      *
-     * @param EventsResources $resources
+     * @param Resources $resources
      *
      * @return Events
      */
-    public function addResource(EventsResources $resources)
+    public function addResource(Resources $resources)
     {
         $this->resources[] = $resources;
 
@@ -334,9 +451,9 @@ class Events
     /**
      * Remove resources
      *
-     * @param EventsResources $resources
+     * @param Resources $resources
      */
-    public function removeResource(EventsResources $resources)
+    public function removeResource(Resources $resources)
     {
         $this->resources->removeElement($resources);
     }
@@ -344,7 +461,7 @@ class Events
     /**
      * Get resources
      *
-     * @return ArrayCollection
+     * @return Resources[]
      */
     public function getResources()
     {
@@ -354,11 +471,11 @@ class Events
     /**
      * Add routes
      *
-     * @param EventsRoutes $routes
+     * @param Routes $routes
      *
      * @return Events
      */
-    public function addRoute(EventsRoutes $routes)
+    public function addRoute(Routes $routes)
     {
         $this->routes[] = $routes;
 
@@ -368,9 +485,9 @@ class Events
     /**
      * Remove routes
      *
-     * @param EventsRoutes $routes
+     * @param Routes $routes
      */
-    public function removeRoute(EventsRoutes $routes)
+    public function removeRoute(Routes $routes)
     {
         $this->routes->removeElement($routes);
     }
@@ -378,7 +495,7 @@ class Events
     /**
      * Get routes
      *
-     * @return ArrayCollection
+     * @return Routes[]
      */
     public function getRoutes()
     {
@@ -388,11 +505,11 @@ class Events
     /**
      * Add routesTypes
      *
-     * @param EventsRoutesTypes $routesTypes
+     * @param RoutesTypes $routesTypes
      *
      * @return Events
      */
-    public function addRouteType(EventsRoutesTypes $routesTypes)
+    public function addRoutesType(RoutesTypes $routesTypes)
     {
         $this->routesTypes[] = $routesTypes;
 
@@ -402,9 +519,9 @@ class Events
     /**
      * Remove routesTypes
      *
-     * @param EventsRoutesTypes $routesTypes
+     * @param RoutesTypes $routesTypes
      */
-    public function removeRouteType(EventsRoutesTypes $routesTypes)
+    public function removeRoutesType(RoutesTypes $routesTypes)
     {
         $this->routesTypes->removeElement($routesTypes);
     }
@@ -412,7 +529,7 @@ class Events
     /**
      * Get routesTypes
      *
-     * @return ArrayCollection
+     * @return RoutesTypes[]
      */
     public function getRoutesTypes()
     {
@@ -422,11 +539,11 @@ class Events
     /**
      * Add zonesTypes
      *
-     * @param EventsZonesTypes $zonesTypes
+     * @param ZonesTypes $zonesTypes
      *
      * @return Events
      */
-    public function addZoneType(EventsZonesTypes $zonesTypes)
+    public function addZonesType(ZonesTypes $zonesTypes)
     {
         $this->zonesTypes[] = $zonesTypes;
 
@@ -436,9 +553,9 @@ class Events
     /**
      * Remove zonesTypes
      *
-     * @param EventsZonesTypes $zonesTypes
+     * @param ZonesTypes $zonesTypes
      */
-    public function removeZoneType(EventsZonesTypes $zonesTypes)
+    public function removeZonesType(ZonesTypes $zonesTypes)
     {
         $this->zonesTypes->removeElement($zonesTypes);
     }
@@ -446,7 +563,7 @@ class Events
     /**
      * Get zonesTypes
      *
-     * @return ArrayCollection
+     * @return ZonesTypes[]
      */
     public function getZonesTypes()
     {
@@ -456,11 +573,11 @@ class Events
     /**
      * Add zones
      *
-     * @param EventsZones $zones
+     * @param Zones $zones
      *
      * @return Events
      */
-    public function addZone(EventsZones $zones)
+    public function addZone(Zones $zones)
     {
         $this->zones[] = $zones;
 
@@ -470,9 +587,9 @@ class Events
     /**
      * Remove zones
      *
-     * @param EventsZones $zones
+     * @param Zones $zones
      */
-    public function removeZone(EventsZones $zones)
+    public function removeZone(Zones $zones)
     {
         $this->zones->removeElement($zones);
     }
@@ -480,11 +597,10 @@ class Events
     /**
      * Get zones
      *
-     * @return ArrayCollection
+     * @return Zones[]
      */
     public function getZones()
     {
         return $this->zones;
     }
-
 }

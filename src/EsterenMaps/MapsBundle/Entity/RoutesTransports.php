@@ -54,7 +54,7 @@ class RoutesTransports
 
     /**
      * @var float
-     * @ORM\Column(name="percentage", type="decimal", scale=6, precision=8)
+     * @ORM\Column(name="percentage", type="decimal", scale=6, precision=8, nullable=false)
      * @Assert\NotNull()
      * @Assert\Range(max="100", min="-100")
      * @Expose
