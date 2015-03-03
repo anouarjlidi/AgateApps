@@ -5,6 +5,8 @@ namespace EsterenMaps\MapsBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 use JMS\Serializer\Annotation as Serializer;
 
 /**
@@ -13,10 +15,14 @@ use JMS\Serializer\Annotation as Serializer;
  * @ORM\Table(name="maps_routes")
  * @ORM\Entity(repositoryClass="EsterenMaps\MapsBundle\Repository\RoutesRepository")
  * @ORM\HasLifecycleCallbacks
- * @Gedmo\SoftDeleteable(fieldName="deleted")
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  * @Serializer\ExclusionPolicy("all")
  */
-class Routes {
+class Routes
+{
+
+    use TimestampableEntity;
+    use SoftDeleteableEntity;
 
     /**
      * @var integer
@@ -61,22 +67,6 @@ class Routes {
     protected $distance;
 
     /**
-     * @var \Datetime
-     *
-     * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(type="datetime", nullable=false)
-     */
-    protected $created;
-
-    /**
-     * @var \Datetime
-     *
-     * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(type="datetime", nullable=false)
-     */
-    protected $updated;
-
-    /**
      * @var Resources
      *
      * @ORM\ManyToMany(targetEntity="Resources", mappedBy="routes")
@@ -84,16 +74,10 @@ class Routes {
     protected $resources;
 
     /**
-     * @var boolean
-     *
-     * @ORM\Column(name="deleted", type="datetime", nullable=true)
-     */
-    protected $deleted = null;
-
-    /**
      * @var Markers
      *
      * @ORM\ManyToOne(targetEntity="Markers", inversedBy="routesStart")
+     * @ORM\JoinColumn(name="marker_start_id", nullable=true)
      * @Serializer\Expose
      */
     protected $markerStart;
@@ -102,6 +86,7 @@ class Routes {
      * @var Markers
      *
      * @ORM\ManyToOne(targetEntity="Markers", inversedBy="routesEnd")
+     * @ORM\JoinColumn(name="marker_end_id", nullable=true)
      * @Serializer\Expose
      */
     protected $markerEnd;
@@ -110,6 +95,7 @@ class Routes {
      * @var Maps
      *
      * @ORM\ManyToOne(targetEntity="Maps", inversedBy="routes")
+     * @ORM\JoinColumn(name="map_id", nullable=false)
      */
     protected $map;
 
@@ -117,7 +103,7 @@ class Routes {
      * @var Factions
      *
      * @ORM\ManyToOne(targetEntity="Factions", inversedBy="routes", fetch="EAGER")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\JoinColumn(name="faction_id", nullable=true)
      * @Serializer\Expose
      */
     protected $faction;
@@ -126,6 +112,7 @@ class Routes {
      * @var RoutesTypes
      *
      * @ORM\ManyToOne(targetEntity="RoutesTypes", inversedBy="routes", fetch="EAGER")
+     * @ORM\JoinColumn(name="route_type_id", nullable=false)
      * @Serializer\Expose
      */
     protected $routeType;
@@ -145,9 +132,10 @@ class Routes {
     /**
      * Constructor
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->resources = new ArrayCollection();
-        $this->events = new ArrayCollection();
+        $this->events    = new ArrayCollection();
     }
 
     /**
@@ -155,7 +143,8 @@ class Routes {
      *
      * @return integer
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
@@ -163,9 +152,11 @@ class Routes {
      * Set id
      *
      * @param string $id
+     *
      * @return Routes
      */
-    public function setId($id) {
+    public function setId($id)
+    {
         $this->id = $id;
 
         return $this;
@@ -175,9 +166,11 @@ class Routes {
      * Set name
      *
      * @param string $name
+     *
      * @return Routes
      */
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
 
         return $this;
@@ -188,7 +181,8 @@ class Routes {
      *
      * @return string
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
 
@@ -202,11 +196,13 @@ class Routes {
 
     /**
      * @param string $description
+     *
      * @return Routes
      */
     public function setDescription($description)
     {
         $this->description = $description;
+
         return $this;
     }
 
@@ -214,9 +210,11 @@ class Routes {
      * Set coordinates
      *
      * @param string $coordinates
+     *
      * @return Routes
      */
-    public function setCoordinates($coordinates) {
+    public function setCoordinates($coordinates)
+    {
         $this->coordinates = $coordinates;
 
         $this->calcDistance();
@@ -229,59 +227,20 @@ class Routes {
      *
      * @return string
      */
-    public function getCoordinates() {
+    public function getCoordinates()
+    {
         return $this->coordinates;
-    }
-
-    /**
-     * Set created
-     *
-     * @param \DateTime $created
-     * @return Routes
-     */
-    public function setCreated($created) {
-        $this->created = $created;
-
-        return $this;
-    }
-
-    /**
-     * Get created
-     *
-     * @return \DateTime
-     */
-    public function getCreated() {
-        return $this->created;
-    }
-
-    /**
-     * Set updated
-     *
-     * @param \DateTime $updated
-     * @return Routes
-     */
-    public function setUpdated($updated) {
-        $this->updated = $updated;
-
-        return $this;
-    }
-
-    /**
-     * Get updated
-     *
-     * @return \DateTime
-     */
-    public function getUpdated() {
-        return $this->updated;
     }
 
     /**
      * Add resources
      *
      * @param Resources $resources
+     *
      * @return Routes
      */
-    public function addResource(Resources $resources) {
+    public function addResource(Resources $resources)
+    {
         $this->resources[] = $resources;
 
         return $this;
@@ -292,16 +251,18 @@ class Routes {
      *
      * @param Resources $resources
      */
-    public function removeResource(Resources $resources) {
+    public function removeResource(Resources $resources)
+    {
         $this->resources->removeElement($resources);
     }
 
     /**
      * Get resources
      *
-     * @return ArrayCollection
+     * @return Resources[]
      */
-    public function getResources() {
+    public function getResources()
+    {
         return $this->resources;
     }
 
@@ -309,9 +270,11 @@ class Routes {
      * Set map
      *
      * @param Maps $map
+     *
      * @return Routes
      */
-    public function setMap(Maps $map = null) {
+    public function setMap(Maps $map = null)
+    {
         $this->map = $map;
 
         return $this;
@@ -322,7 +285,8 @@ class Routes {
      *
      * @return Maps
      */
-    public function getMap() {
+    public function getMap()
+    {
         return $this->map;
     }
 
@@ -330,9 +294,11 @@ class Routes {
      * Set faction
      *
      * @param Factions $faction
+     *
      * @return Routes
      */
-    public function setFaction(Factions $faction = null) {
+    public function setFaction(Factions $faction = null)
+    {
         $this->faction = $faction;
 
         return $this;
@@ -343,7 +309,8 @@ class Routes {
      *
      * @return Factions
      */
-    public function getFaction() {
+    public function getFaction()
+    {
         return $this->faction;
     }
 
@@ -351,9 +318,11 @@ class Routes {
      * Set routeType
      *
      * @param RoutesTypes $routeType
+     *
      * @return Routes
      */
-    public function setRouteType(RoutesTypes $routeType = null) {
+    public function setRouteType(RoutesTypes $routeType = null)
+    {
         $this->routeType = $routeType;
 
         return $this;
@@ -364,7 +333,8 @@ class Routes {
      *
      * @return RoutesTypes
      */
-    public function getRouteType() {
+    public function getRouteType()
+    {
         return $this->routeType;
     }
 
@@ -372,9 +342,11 @@ class Routes {
      * Add events
      *
      * @param EventsRoutes $events
+     *
      * @return Routes
      */
-    public function addEvent(EventsRoutes $events) {
+    public function addEvent(EventsRoutes $events)
+    {
         $this->events[] = $events;
 
         return $this;
@@ -385,16 +357,18 @@ class Routes {
      *
      * @param EventsRoutes $events
      */
-    public function removeEvent(EventsRoutes $events) {
+    public function removeEvent(EventsRoutes $events)
+    {
         $this->events->removeElement($events);
     }
 
     /**
      * Get events
      *
-     * @return ArrayCollection
+     * @return Events[]
      */
-    public function getEvents() {
+    public function getEvents()
+    {
         return $this->events;
     }
 
@@ -402,9 +376,11 @@ class Routes {
      * Set markerStart
      *
      * @param Markers $markerStart
+     *
      * @return Routes
      */
-    public function setMarkerStart(Markers $markerStart = null) {
+    public function setMarkerStart(Markers $markerStart = null)
+    {
         $this->markerStart = $markerStart;
 
         return $this;
@@ -415,7 +391,8 @@ class Routes {
      *
      * @return Markers
      */
-    public function getMarkerStart() {
+    public function getMarkerStart()
+    {
         return $this->markerStart;
     }
 
@@ -423,9 +400,11 @@ class Routes {
      * Set markerEnd
      *
      * @param Markers $markerEnd
+     *
      * @return Routes
      */
-    public function setMarkerEnd(Markers $markerEnd = null) {
+    public function setMarkerEnd(Markers $markerEnd = null)
+    {
         $this->markerEnd = $markerEnd;
 
         return $this;
@@ -436,45 +415,29 @@ class Routes {
      *
      * @return Markers
      */
-    public function getMarkerEnd() {
+    public function getMarkerEnd()
+    {
         return $this->markerEnd;
     }
 
     /**
      * @return integer
      */
-    public function getDistance() {
+    public function getDistance()
+    {
         return $this->distance;
     }
 
     /**
      * @param integer $distance
+     *
      * @return $this
      */
-    public function setDistance($distance) {
+    public function setDistance($distance)
+    {
         $this->distance = $distance;
-        return $this;
-    }
-
-    /**
-     * Set deleted
-     *
-     * @param \DateTime $deleted
-     * @return Routes
-     */
-    public function setDeleted($deleted) {
-        $this->deleted = $deleted;
 
         return $this;
-    }
-
-    /**
-     * Get deleted
-     *
-     * @return \DateTime
-     */
-    public function getDeleted() {
-        return $this->deleted;
     }
 
     /**
@@ -491,7 +454,8 @@ class Routes {
      * @ORM\PreUpdate
      * @return $this
      */
-    public function refresh() {
+    public function refresh()
+    {
         $coords = json_decode($this->coordinates, true);
 
         if ($this->markerStart) {
@@ -517,9 +481,10 @@ class Routes {
     /**
      * @return integer
      */
-    public function calcDistance() {
+    public function calcDistance()
+    {
         $distance = 0;
-        $points = json_decode($this->coordinates, true);
+        $points   = json_decode($this->coordinates, true);
 
         reset($points);
 
@@ -528,16 +493,16 @@ class Routes {
             if (false !== $next) {
                 $currentX = $current['lng'];
                 $currentY = $current['lat'];
-                $nextX = $next['lng'];
-                $nextY = $next['lat'];
+                $nextX    = $next['lng'];
+                $nextY    = $next['lat'];
 
                 $distance += sqrt(
-                    ( $nextX * $nextX )
-                    - ( 2 * $currentX * $nextX )
-                    + ( $currentX * $currentX )
-                    + ( $nextY * $nextY )
-                    - ( 2 * $currentY * $nextY )
-                    + ( $currentY * $currentY )
+                    ($nextX * $nextX)
+                    - (2 * $currentX * $nextX)
+                    + ($currentX * $currentX)
+                    + ($nextY * $nextY)
+                    - (2 * $currentY * $nextY)
+                    + ($currentY * $currentY)
                 );
             }
         }
@@ -546,4 +511,5 @@ class Routes {
 
         return $distance;
     }
+
 }

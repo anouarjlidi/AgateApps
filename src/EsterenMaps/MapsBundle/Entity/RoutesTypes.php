@@ -5,6 +5,8 @@ namespace EsterenMaps\MapsBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 use JMS\Serializer\Annotation\ExclusionPolicy as ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose as Expose;
 
@@ -12,11 +14,15 @@ use JMS\Serializer\Annotation\Expose as Expose;
  * RoutesTypes
  *
  * @ORM\Table(name="maps_routes_types")
- * @Gedmo\SoftDeleteable(fieldName="deleted")
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  * @ORM\Entity()
  * @ExclusionPolicy("all")
  */
-class RoutesTypes {
+class RoutesTypes
+{
+
+    use TimestampableEntity;
+    use SoftDeleteableEntity;
 
     /**
      * @var integer
@@ -31,7 +37,7 @@ class RoutesTypes {
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=255, nullable=false, unique=true)
+     * @ORM\Column(name="name", type="string", length=255, nullable=false, unique=true)
      * @Expose
      */
     protected $name;
@@ -39,7 +45,7 @@ class RoutesTypes {
     /**
      * @var string
      *
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(name="description", type="text", nullable=true)
      * @Expose
      */
     protected $description;
@@ -47,26 +53,10 @@ class RoutesTypes {
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=75, nullable=true)
+     * @ORM\Column(name="color", type="string", length=75, nullable=true)
      * @Expose
      */
     protected $color;
-
-    /**
-     * @var \Datetime
-     *
-     * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(type="datetime", nullable=false)
-     */
-    protected $created;
-
-    /**
-     * @var \Datetime
-     *
-     * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(type="datetime", nullable=false)
-     */
-    protected $updated;
 
     /**
      * @var Resources[]
@@ -92,13 +82,6 @@ class RoutesTypes {
      */
     protected $transports;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="deleted", type="datetime", nullable=true)
-     */
-    protected $deleted = null;
-
     public function __toString()
     {
         return $this->id.' - '.$this->name;
@@ -107,10 +90,11 @@ class RoutesTypes {
     /**
      * Constructor
      */
-    public function __construct() {
-        $this->resources = new ArrayCollection();
-        $this->routes = new ArrayCollection();
-        $this->events = new ArrayCollection();
+    public function __construct()
+    {
+        $this->resources  = new ArrayCollection();
+        $this->routes     = new ArrayCollection();
+        $this->events     = new ArrayCollection();
         $this->transports = new ArrayCollection();
     }
 
@@ -119,17 +103,20 @@ class RoutesTypes {
      *
      * @return integer
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
     /**
      * @param integer $id
+     *
      * @return $this
      */
     public function setId($id)
     {
         $this->id = $id;
+
         return $this;
     }
 
@@ -137,9 +124,11 @@ class RoutesTypes {
      * Set name
      *
      * @param string $name
+     *
      * @return RoutesTypes
      */
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
 
         return $this;
@@ -150,59 +139,20 @@ class RoutesTypes {
      *
      * @return string
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
-    }
-
-    /**
-     * Set created
-     *
-     * @param \DateTime $created
-     * @return RoutesTypes
-     */
-    public function setCreated($created) {
-        $this->created = $created;
-
-        return $this;
-    }
-
-    /**
-     * Get created
-     *
-     * @return \DateTime
-     */
-    public function getCreated() {
-        return $this->created;
-    }
-
-    /**
-     * Set updated
-     *
-     * @param \DateTime $updated
-     * @return RoutesTypes
-     */
-    public function setUpdated($updated) {
-        $this->updated = $updated;
-
-        return $this;
-    }
-
-    /**
-     * Get updated
-     *
-     * @return \DateTime
-     */
-    public function getUpdated() {
-        return $this->updated;
     }
 
     /**
      * Add resources
      *
      * @param Resources $resources
+     *
      * @return RoutesTypes
      */
-    public function addResource(Resources $resources) {
+    public function addResource(Resources $resources)
+    {
         $this->resources[] = $resources;
 
         return $this;
@@ -213,16 +163,18 @@ class RoutesTypes {
      *
      * @param Resources $resources
      */
-    public function removeResource(Resources $resources) {
+    public function removeResource(Resources $resources)
+    {
         $this->resources->removeElement($resources);
     }
 
     /**
      * Get resources
      *
-     * @return ArrayCollection
+     * @return Resources[]
      */
-    public function getResources() {
+    public function getResources()
+    {
         return $this->resources;
     }
 
@@ -230,9 +182,11 @@ class RoutesTypes {
      * Add routes
      *
      * @param Routes $routes
+     *
      * @return RoutesTypes
      */
-    public function addRoute(Routes $routes) {
+    public function addRoute(Routes $routes)
+    {
         $this->routes[] = $routes;
 
         return $this;
@@ -243,16 +197,18 @@ class RoutesTypes {
      *
      * @param Routes $routes
      */
-    public function removeRoute(Routes $routes) {
+    public function removeRoute(Routes $routes)
+    {
         $this->routes->removeElement($routes);
     }
 
     /**
      * Get routes
      *
-     * @return ArrayCollection
+     * @return Routes[]
      */
-    public function getRoutes() {
+    public function getRoutes()
+    {
         return $this->routes;
     }
 
@@ -260,9 +216,11 @@ class RoutesTypes {
      * Add events
      *
      * @param EventsRoutesTypes $events
+     *
      * @return RoutesTypes
      */
-    public function addEvent(EventsRoutesTypes $events) {
+    public function addEvent(EventsRoutesTypes $events)
+    {
         $this->events[] = $events;
 
         return $this;
@@ -273,38 +231,19 @@ class RoutesTypes {
      *
      * @param EventsRoutesTypes $events
      */
-    public function removeEvent(EventsRoutesTypes $events) {
+    public function removeEvent(EventsRoutesTypes $events)
+    {
         $this->events->removeElement($events);
     }
 
     /**
      * Get events
      *
-     * @return ArrayCollection
+     * @return Events[]
      */
-    public function getEvents() {
+    public function getEvents()
+    {
         return $this->events;
-    }
-
-    /**
-     * Set deleted
-     *
-     * @param \DateTime $deleted
-     * @return RoutesTypes
-     */
-    public function setDeleted($deleted) {
-        $this->deleted = $deleted;
-
-        return $this;
-    }
-
-    /**
-     * Get deleted
-     *
-     * @return \DateTime
-     */
-    public function getDeleted() {
-        return $this->deleted;
     }
 
     /**
@@ -317,11 +256,13 @@ class RoutesTypes {
 
     /**
      * @param string $color
+     *
      * @return RoutesTypes
      */
     public function setColor($color)
     {
         $this->color = $color;
+
         return $this;
     }
 
@@ -335,11 +276,13 @@ class RoutesTypes {
 
     /**
      * @param string $description
+     *
      * @return RoutesTypes
      */
     public function setDescription($description)
     {
         $this->description = $description;
+
         return $this;
     }
 
@@ -347,9 +290,11 @@ class RoutesTypes {
      * Add transports
      *
      * @param RoutesTransports $transports
+     *
      * @return RoutesTypes
      */
-    public function addTransport(RoutesTransports $transports) {
+    public function addTransport(RoutesTransports $transports)
+    {
         $this->transports[] = $transports;
 
         return $this;
@@ -360,16 +305,18 @@ class RoutesTypes {
      *
      * @param RoutesTransports $transports
      */
-    public function removeTransport(RoutesTransports $transports) {
+    public function removeTransport(RoutesTransports $transports)
+    {
         $this->transports->removeElement($transports);
     }
 
     /**
      * Get transports
      *
-     * @return ArrayCollection
+     * @return RoutesTransports[]
      */
-    public function getTransports() {
+    public function getTransports()
+    {
         return $this->transports;
     }
 

@@ -5,15 +5,21 @@ namespace EsterenMaps\MapsBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
  * Npcs
  *
  * @ORM\Table(name="maps_npcs")
- * @Gedmo\SoftDeleteable(fieldName="deleted")
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  * @ORM\Entity()
  */
-class Npcs {
+class Npcs
+{
+
+    use TimestampableEntity;
+    use SoftDeleteableEntity;
 
     /**
      * @var integer
@@ -27,25 +33,9 @@ class Npcs {
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=255, nullable=false, unique=true)
+     * @ORM\Column(name="name", type="string", length=255, nullable=false, unique=true)
      */
     protected $name;
-
-    /**
-     * @var \Datetime
-     *
-     * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(type="datetime", nullable=false)
-     */
-    protected $created;
-
-    /**
-     * @var \Datetime
-     *
-     * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(type="datetime", nullable=false)
-     */
-    protected $updated;
 
     /**
      * @var Events[]
@@ -54,16 +44,10 @@ class Npcs {
     protected $events;
 
     /**
-     * @var boolean
-     *
-     * @ORM\Column(name="deleted", type="datetime", nullable=true)
-     */
-    protected $deleted = null;
-
-    /**
      * Constructor
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->events = new ArrayCollection();
     }
 
@@ -72,7 +56,8 @@ class Npcs {
      *
      * @return integer
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
@@ -80,9 +65,11 @@ class Npcs {
      * Set name
      *
      * @param string $name
+     *
      * @return Npcs
      */
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
 
         return $this;
@@ -93,59 +80,20 @@ class Npcs {
      *
      * @return string
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
-    }
-
-    /**
-     * Set created
-     *
-     * @param \DateTime $created
-     * @return Npcs
-     */
-    public function setCreated($created) {
-        $this->created = $created;
-
-        return $this;
-    }
-
-    /**
-     * Get created
-     *
-     * @return \DateTime
-     */
-    public function getCreated() {
-        return $this->created;
-    }
-
-    /**
-     * Set updated
-     *
-     * @param \DateTime $updated
-     * @return Npcs
-     */
-    public function setUpdated($updated) {
-        $this->updated = $updated;
-
-        return $this;
-    }
-
-    /**
-     * Get updated
-     *
-     * @return \DateTime
-     */
-    public function getUpdated() {
-        return $this->updated;
     }
 
     /**
      * Add events
      *
      * @param Events $events
+     *
      * @return Npcs
      */
-    public function addEvent(Events $events) {
+    public function addEvent(Events $events)
+    {
         $this->events[] = $events;
 
         return $this;
@@ -156,37 +104,19 @@ class Npcs {
      *
      * @param Events $events
      */
-    public function removeEvent(Events $events) {
+    public function removeEvent(Events $events)
+    {
         $this->events->removeElement($events);
     }
 
     /**
      * Get events
      *
-     * @return ArrayCollection
+     * @return Events[]
      */
-    public function getEvents() {
+    public function getEvents()
+    {
         return $this->events;
     }
 
-    /**
-     * Set deleted
-     *
-     * @param \DateTime $deleted
-     * @return Npcs
-     */
-    public function setDeleted($deleted) {
-        $this->deleted = $deleted;
-
-        return $this;
-    }
-
-    /**
-     * Get deleted
-     *
-     * @return \DateTime
-     */
-    public function getDeleted() {
-        return $this->deleted;
-    }
 }

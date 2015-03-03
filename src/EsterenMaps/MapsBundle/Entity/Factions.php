@@ -6,6 +6,8 @@ use CorahnRin\ModelsBundle\Entity\Books;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use JMS\Serializer\Annotation\ExclusionPolicy as ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose as Expose;
 
@@ -13,11 +15,15 @@ use JMS\Serializer\Annotation\Expose as Expose;
  * Factions
  *
  * @ORM\Table(name="maps_factions")
- * @Gedmo\SoftDeleteable(fieldName="deleted")
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  * @ORM\Entity()
  * @ExclusionPolicy("all")
  */
-class Factions {
+class Factions
+{
+
+    use TimestampableEntity;
+    use SoftDeleteableEntity;
 
     /**
      * @var integer
@@ -32,7 +38,7 @@ class Factions {
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=255, nullable=false, unique=true)
+     * @ORM\Column(name="name", type="string", length=255, nullable=false, unique=true)
      * @Expose
      */
     protected $name;
@@ -40,26 +46,10 @@ class Factions {
     /**
      * @var string
      *
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(name="description", type="text", nullable=true)
      * @Expose
      */
     protected $description;
-
-    /**
-     * @var \Datetime
-     *
-     * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(type="datetime", nullable=false)
-     */
-    protected $created;
-
-    /**
-     * @var \Datetime
-     *
-     * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(type="datetime", nullable=false)
-     */
-    protected $updated;
 
     /**
      * @var Zones[]
@@ -83,26 +73,22 @@ class Factions {
      * @var Books[]
      *
      * @ORM\ManyToOne(targetEntity="CorahnRin\ModelsBundle\Entity\Books")
+     * @ORM\JoinColumn(name="book_id", nullable=false)
      */
     protected $book;
 
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="deleted", type="datetime", nullable=true)
-     */
-    protected $deleted = null;
-
-    public function __toString() {
+    public function __toString()
+    {
         return $this->id.' - '.$this->name;
     }
 
     /**
      * Constructor
      */
-    public function __construct() {
-        $this->zones = new ArrayCollection();
-        $this->routes = new ArrayCollection();
+    public function __construct()
+    {
+        $this->zones   = new ArrayCollection();
+        $this->routes  = new ArrayCollection();
         $this->markers = new ArrayCollection();
     }
 
@@ -111,17 +97,20 @@ class Factions {
      *
      * @return integer
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
     /**
      * @param integer $id
+     *
      * @return $this
      */
     public function setId($id)
     {
         $this->id = (int) $id;
+
         return $this;
     }
 
@@ -129,9 +118,11 @@ class Factions {
      * Set name
      *
      * @param string $name
+     *
      * @return Factions
      */
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
 
         return $this;
@@ -142,59 +133,20 @@ class Factions {
      *
      * @return string
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
-    }
-
-    /**
-     * Set created
-     *
-     * @param \DateTime $created
-     * @return Factions
-     */
-    public function setCreated($created) {
-        $this->created = $created;
-
-        return $this;
-    }
-
-    /**
-     * Get created
-     *
-     * @return \DateTime
-     */
-    public function getCreated() {
-        return $this->created;
-    }
-
-    /**
-     * Set updated
-     *
-     * @param \DateTime $updated
-     * @return Factions
-     */
-    public function setUpdated($updated) {
-        $this->updated = $updated;
-
-        return $this;
-    }
-
-    /**
-     * Get updated
-     *
-     * @return \DateTime
-     */
-    public function getUpdated() {
-        return $this->updated;
     }
 
     /**
      * Add zones
      *
      * @param Zones $zones
+     *
      * @return Factions
      */
-    public function addZone(Zones $zones) {
+    public function addZone(Zones $zones)
+    {
         $this->zones[] = $zones;
 
         return $this;
@@ -205,16 +157,18 @@ class Factions {
      *
      * @param Zones $zones
      */
-    public function removeZone(Zones $zones) {
+    public function removeZone(Zones $zones)
+    {
         $this->zones->removeElement($zones);
     }
 
     /**
      * Get zones
      *
-     * @return ArrayCollection
+     * @return Zones[]
      */
-    public function getZones() {
+    public function getZones()
+    {
         return $this->zones;
     }
 
@@ -222,9 +176,11 @@ class Factions {
      * Add routes
      *
      * @param Routes $routes
+     *
      * @return Factions
      */
-    public function addRoute(Routes $routes) {
+    public function addRoute(Routes $routes)
+    {
         $this->routes[] = $routes;
 
         return $this;
@@ -235,16 +191,18 @@ class Factions {
      *
      * @param Routes $routes
      */
-    public function removeRoute(Routes $routes) {
+    public function removeRoute(Routes $routes)
+    {
         $this->routes->removeElement($routes);
     }
 
     /**
      * Get routes
      *
-     * @return ArrayCollection
+     * @return Routes[]
      */
-    public function getRoutes() {
+    public function getRoutes()
+    {
         return $this->routes;
     }
 
@@ -252,9 +210,11 @@ class Factions {
      * Add markers
      *
      * @param Markers $markers
+     *
      * @return Factions
      */
-    public function addMarker(Markers $markers) {
+    public function addMarker(Markers $markers)
+    {
         $this->markers[] = $markers;
 
         return $this;
@@ -265,16 +225,18 @@ class Factions {
      *
      * @param Markers $markers
      */
-    public function removeMarker(Markers $markers) {
+    public function removeMarker(Markers $markers)
+    {
         $this->markers->removeElement($markers);
     }
 
     /**
      * Get markers
      *
-     * @return ArrayCollection
+     * @return Markers[]
      */
-    public function getMarkers() {
+    public function getMarkers()
+    {
         return $this->markers;
     }
 
@@ -282,9 +244,11 @@ class Factions {
      * Set description
      *
      * @param string $description
+     *
      * @return Factions
      */
-    public function setDescription($description) {
+    public function setDescription($description)
+    {
         $this->description = $description;
 
         return $this;
@@ -295,38 +259,20 @@ class Factions {
      *
      * @return string
      */
-    public function getDescription() {
+    public function getDescription()
+    {
         return $this->description;
-    }
-
-    /**
-     * Set deleted
-     *
-     * @param \DateTime $deleted
-     * @return Factions
-     */
-    public function setDeleted($deleted) {
-        $this->deleted = $deleted;
-
-        return $this;
-    }
-
-    /**
-     * Get deleted
-     *
-     * @return \DateTime
-     */
-    public function getDeleted() {
-        return $this->deleted;
     }
 
     /**
      * Set book
      *
-     * @param \CorahnRin\ModelsBundle\Entity\Books $book
+     * @param Books $book
+     *
      * @return Factions
      */
-    public function setBook(\CorahnRin\ModelsBundle\Entity\Books $book = null) {
+    public function setBook(Books $book = null)
+    {
         $this->book = $book;
 
         return $this;
@@ -335,9 +281,11 @@ class Factions {
     /**
      * Get book
      *
-     * @return \CorahnRin\ModelsBundle\Entity\Books
+     * @return Books
      */
-    public function getBook() {
+    public function getBook()
+    {
         return $this->book;
     }
+
 }

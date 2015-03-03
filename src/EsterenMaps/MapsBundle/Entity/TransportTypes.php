@@ -5,13 +5,14 @@ namespace EsterenMaps\MapsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use JMS\Serializer\Annotation\ExclusionPolicy as ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose as Expose;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Maps
+ * TransportTypes
  *
  * @ORM\Table(name="maps_transports_types")
  * @Gedmo\SoftDeleteable(fieldName="deleted")
@@ -22,6 +23,7 @@ class TransportTypes
 {
 
     use TimestampableEntity;
+    use SoftDeleteableEntity;
 
     /**
      * @var integer
@@ -68,12 +70,6 @@ class TransportTypes
      * @Expose
      */
     protected $speed;
-    /**
-     * @var \Datetime
-     *
-     * @ORM\Column(name="deleted", type="datetime", nullable=true)
-     */
-    protected $deleted = null;
 
     public function __toString()
     {
@@ -96,6 +92,7 @@ class TransportTypes
     public function setId($id)
     {
         $this->id = $id;
+
         return $this;
     }
 
@@ -115,6 +112,7 @@ class TransportTypes
     public function setName($name)
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -134,6 +132,7 @@ class TransportTypes
     public function setSlug($slug)
     {
         $this->slug = $slug;
+
         return $this;
     }
 
@@ -153,6 +152,7 @@ class TransportTypes
     public function setDescription($description)
     {
         $this->description = $description;
+
         return $this;
     }
 
@@ -172,25 +172,7 @@ class TransportTypes
     public function setSpeed($speed)
     {
         $this->speed = $speed;
-        return $this;
-    }
 
-    /**
-     * @return \Datetime
-     */
-    public function getDeleted()
-    {
-        return $this->deleted;
-    }
-
-    /**
-     * @param \Datetime $deleted
-     *
-     * @return TransportTypes
-     */
-    public function setDeleted(\Datetime $deleted = null)
-    {
-        $this->deleted = $deleted;
         return $this;
     }
 

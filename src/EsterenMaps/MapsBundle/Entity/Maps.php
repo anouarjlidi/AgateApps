@@ -5,6 +5,8 @@ namespace EsterenMaps\MapsBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 use JMS\Serializer\Annotation\ExclusionPolicy as ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose as Expose;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -13,13 +15,16 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Maps
  *
  * @ORM\Table(name="maps")
- * @Gedmo\SoftDeleteable(fieldName="deleted")
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  * @ORM\Entity(repositoryClass="EsterenMaps\MapsBundle\Repository\MapsRepository")
  * @ExclusionPolicy("all")
  * @Gedmo\Uploadable(allowOverwrite=true, filenameGenerator="SHA1")
  */
 class Maps
 {
+
+    use TimestampableEntity;
+    use SoftDeleteableEntity;
 
     /**
      * @var integer
@@ -34,7 +39,7 @@ class Maps
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=255, nullable=false, unique=true)
+     * @ORM\Column(name="name", type="string", length=255, nullable=false, unique=true)
      * @Expose
      */
     protected $name;
@@ -51,7 +56,7 @@ class Maps
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=255, nullable=false)
+     * @ORM\Column(name="image", type="string", length=255, nullable=false)
      * @Gedmo\UploadableFilePath()
      */
     protected $image;
@@ -59,7 +64,7 @@ class Maps
     /**
      * @var string
      *
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(name="description", type="text", nullable=true)
      * @Expose
      */
     protected $description;
@@ -67,7 +72,7 @@ class Maps
     /**
      * @var integer
      *
-     * @ORM\Column(type="smallint", options={"default":1})
+     * @ORM\Column(name="max_zoom", type="smallint", options={"default":1})
      * @Assert\Range(
      *      min = 1,
      *      max = 50
@@ -79,7 +84,7 @@ class Maps
     /**
      * @var integer
      *
-     * @ORM\Column(type="smallint", options={"default":1})
+     * @ORM\Column(name="start_zoom", type="smallint", options={"default":1})
      * @Assert\Range(
      *      min = 1,
      *      max = 10
@@ -92,7 +97,7 @@ class Maps
     /**
      * @var integer
      *
-     * @ORM\Column(type="smallint", options={"default":1})
+     * @ORM\Column(name="start_x", type="smallint", options={"default":1})
      * @Expose
      */
     protected $startX = 0;
@@ -100,26 +105,10 @@ class Maps
     /**
      * @var integer
      *
-     * @ORM\Column(type="smallint", options={"default":1})
+     * @ORM\Column(name="start_y", type="smallint", options={"default":1})
      * @Expose
      */
     protected $startY = 0;
-
-    /**
-     * @var \Datetime
-     *
-     * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(type="datetime", nullable=false)
-     */
-    protected $created;
-
-    /**
-     * @var \Datetime
-     *
-     * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(type="datetime", nullable=false)
-     */
-    protected $updated;
 
     /**
      * @var Routes[]
@@ -145,16 +134,9 @@ class Maps
      */
     protected $zones;
 
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="deleted", type="datetime", nullable=true)
-     */
-    protected $deleted = null;
-
     public function __toString()
     {
-        return $this->id . ' - ' . $this->name;
+        return $this->id.' - '.$this->name;
     }
 
     /**
@@ -162,9 +144,9 @@ class Maps
      */
     public function __construct()
     {
-        $this->routes = new ArrayCollection();
+        $this->routes  = new ArrayCollection();
         $this->markers = new ArrayCollection();
-        $this->zones = new ArrayCollection();
+        $this->zones   = new ArrayCollection();
     }
 
     /**
@@ -179,11 +161,13 @@ class Maps
 
     /**
      * @param $id
+     *
      * @return $this
      */
     public function setId($id)
     {
         $this->id = $id;
+
         return $this;
     }
 
@@ -191,6 +175,7 @@ class Maps
      * Set name
      *
      * @param string $name
+     *
      * @return Maps
      */
     public function setName($name)
@@ -214,6 +199,7 @@ class Maps
      * Set image
      *
      * @param string $image
+     *
      * @return Maps
      */
     public function setImage($image)
@@ -237,6 +223,7 @@ class Maps
      * Set description
      *
      * @param string $description
+     *
      * @return Maps
      */
     public function setDescription($description)
@@ -260,6 +247,7 @@ class Maps
      * Set maxZoom
      *
      * @param boolean $maxZoom
+     *
      * @return Maps
      */
     public function setMaxZoom($maxZoom)
@@ -280,55 +268,10 @@ class Maps
     }
 
     /**
-     * Set created
-     *
-     * @param \DateTime $created
-     * @return Maps
-     */
-    public function setCreated($created)
-    {
-        $this->created = $created;
-
-        return $this;
-    }
-
-    /**
-     * Get created
-     *
-     * @return \DateTime
-     */
-    public function getCreated()
-    {
-        return $this->created;
-    }
-
-    /**
-     * Set updated
-     *
-     * @param \DateTime $updated
-     * @return Maps
-     */
-    public function setUpdated($updated)
-    {
-        $this->updated = $updated;
-
-        return $this;
-    }
-
-    /**
-     * Get updated
-     *
-     * @return \DateTime
-     */
-    public function getUpdated()
-    {
-        return $this->updated;
-    }
-
-    /**
      * Add routes
      *
      * @param Routes $routes
+     *
      * @return Maps
      */
     public function addRoute(Routes $routes)
@@ -351,7 +294,7 @@ class Maps
     /**
      * Get routes
      *
-     * @return ArrayCollection
+     * @return Routes[]
      */
     public function getRoutes()
     {
@@ -362,6 +305,7 @@ class Maps
      * Get zone
      *
      * @param Routes $route
+     *
      * @return Routes
      */
     public function getRoute(Routes $route)
@@ -373,6 +317,7 @@ class Maps
                 return $mapRoute;
             }
         }
+
         return null;
     }
 
@@ -380,6 +325,7 @@ class Maps
      * Get zone
      *
      * @param Routes $route
+     *
      * @return Maps
      */
     public function setRoute(Routes $route)
@@ -391,6 +337,7 @@ class Maps
             $this->routes->removeElement($exists);
             $this->addRoute($route);
         }
+
         return $this;
     }
 
@@ -398,6 +345,7 @@ class Maps
      * Add markers
      *
      * @param Markers $markers
+     *
      * @return Maps
      */
     public function addMarker(Markers $markers)
@@ -420,7 +368,7 @@ class Maps
     /**
      * Get markers
      *
-     * @return ArrayCollection
+     * @return Markers[]
      */
     public function getMarkers()
     {
@@ -431,6 +379,7 @@ class Maps
      * Get zone
      *
      * @param Markers $marker
+     *
      * @return Zones
      */
     public function getMarker(Markers $marker)
@@ -442,13 +391,16 @@ class Maps
                 return $mapMarker;
             }
         }
+
         return null;
     }
 
     /**
      * Contrairement au nom de cette méthode, celle-ci AJOUTE un marqueur,
      *    et uniquement si celui-ci n'est pas déjà ajouté à la map.
+     *
      * @param Markers $marker
+     *
      * @return $this
      */
     public function setMarker(Markers $marker)
@@ -460,6 +412,7 @@ class Maps
             $this->markers->removeElement($exists);
             $this->addMarker($marker);
         }
+
         return $this;
     }
 
@@ -467,6 +420,7 @@ class Maps
      * Add zones
      *
      * @param Zones $zones
+     *
      * @return Maps
      */
     public function addZone(Zones $zones)
@@ -490,6 +444,7 @@ class Maps
      * Get zone
      *
      * @param Zones $zone
+     *
      * @return Zones
      */
     public function getZone(Zones $zone)
@@ -501,6 +456,7 @@ class Maps
                 return $mapZone;
             }
         }
+
         return null;
     }
 
@@ -521,7 +477,7 @@ class Maps
     /**
      * Get zones
      *
-     * @return ArrayCollection
+     * @return Zones[]
      */
     public function getZones()
     {
@@ -532,6 +488,7 @@ class Maps
      * Set nameSlug
      *
      * @param string $nameSlug
+     *
      * @return Maps
      */
     public function setNameSlug($nameSlug)
@@ -559,30 +516,8 @@ class Maps
         foreach ($this->routes as $route) {
             $route->refresh();
         }
-        return $this;
-    }
-
-    /**
-     * Set deleted
-     *
-     * @param \DateTime $deleted
-     * @return Maps
-     */
-    public function setDeleted($deleted)
-    {
-        $this->deleted = $deleted;
 
         return $this;
-    }
-
-    /**
-     * Get deleted
-     *
-     * @return \DateTime
-     */
-    public function getDeleted()
-    {
-        return $this->deleted;
     }
 
     /**
@@ -595,11 +530,13 @@ class Maps
 
     /**
      * @param int $startZoom
+     *
      * @return $this
      */
     public function setStartZoom($startZoom)
     {
         $this->startZoom = $startZoom;
+
         return $this;
     }
 
@@ -613,11 +550,13 @@ class Maps
 
     /**
      * @param int $startX
+     *
      * @return $this
      */
     public function setStartX($startX)
     {
         $this->startX = $startX;
+
         return $this;
     }
 
@@ -631,11 +570,13 @@ class Maps
 
     /**
      * @param int $startY
+     *
      * @return $this
      */
     public function setStartY($startY)
     {
         $this->startY = $startY;
+
         return $this;
     }
 

@@ -6,19 +6,23 @@ use Application\Sonata\MediaBundle\Entity\Media;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 use JMS\Serializer\Annotation as Serializer;
-use Sonata\MediaBundle\Model\MediaInterface;
 
 /**
  * MarkersType
  *
  * @ORM\Table(name="maps_markers_types")
- * @Gedmo\SoftDeleteable(fieldName="deleted")
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  * @ORM\Entity()
  * @Serializer\ExclusionPolicy("all")
  */
 class MarkersTypes
 {
+
+    use TimestampableEntity;
+    use SoftDeleteableEntity;
 
     /**
      * @var integer
@@ -33,7 +37,7 @@ class MarkersTypes
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=255, nullable=false, unique=true)
+     * @ORM\Column(name="name", type="string", length=255, nullable=false, unique=true)
      * @Serializer\Expose
      */
     protected $name;
@@ -41,7 +45,7 @@ class MarkersTypes
     /**
      * @var string
      *
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(name="description", type="text", nullable=true)
      * @Serializer\Expose
      */
     protected $description;
@@ -49,25 +53,10 @@ class MarkersTypes
     /**
      * @var Media
      * @ORM\ManyToOne(targetEntity="Application\Sonata\MediaBundle\Entity\Media", cascade={"persist"}, fetch="EAGER")
+     * @ORM\JoinColumn(name="media_id", nullable=false)
      * @Serializer\Expose
      */
     protected $icon;
-
-    /**
-     * @var \Datetime
-     *
-     * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(type="datetime", nullable=false)
-     */
-    protected $created;
-
-    /**
-     * @var \Datetime
-     *
-     * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(type="datetime", nullable=false)
-     */
-    protected $updated;
 
     /**
      * @var EventsMarkersTypes[]
@@ -83,16 +72,9 @@ class MarkersTypes
      */
     protected $markers;
 
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="deleted", type="datetime", nullable=true)
-     */
-    protected $deleted = null;
-
     public function __toString()
     {
-        return $this->id . ' - ' . $this->name;
+        return $this->id.' - '.$this->name;
     }
 
     /**
@@ -100,7 +82,7 @@ class MarkersTypes
      */
     public function __construct()
     {
-        $this->events = new ArrayCollection();
+        $this->events  = new ArrayCollection();
         $this->markers = new ArrayCollection();
     }
 
@@ -116,11 +98,13 @@ class MarkersTypes
 
     /**
      * @param integer $id
+     *
      * @return $this
      */
     public function setId($id)
     {
         $this->id = $id;
+
         return $this;
     }
 
@@ -128,6 +112,7 @@ class MarkersTypes
      * Set name
      *
      * @param string $name
+     *
      * @return MarkersTypes
      */
     public function setName($name)
@@ -148,55 +133,10 @@ class MarkersTypes
     }
 
     /**
-     * Set created
-     *
-     * @param \DateTime $created
-     * @return MarkersTypes
-     */
-    public function setCreated($created)
-    {
-        $this->created = $created;
-
-        return $this;
-    }
-
-    /**
-     * Get created
-     *
-     * @return \DateTime
-     */
-    public function getCreated()
-    {
-        return $this->created;
-    }
-
-    /**
-     * Set updated
-     *
-     * @param \DateTime $updated
-     * @return MarkersTypes
-     */
-    public function setUpdated($updated)
-    {
-        $this->updated = $updated;
-
-        return $this;
-    }
-
-    /**
-     * Get updated
-     *
-     * @return \DateTime
-     */
-    public function getUpdated()
-    {
-        return $this->updated;
-    }
-
-    /**
      * Add events
      *
      * @param EventsMarkersTypes $events
+     *
      * @return MarkersTypes
      */
     public function addEvent(EventsMarkersTypes $events)
@@ -230,6 +170,7 @@ class MarkersTypes
      * Add markers
      *
      * @param Markers $markers
+     *
      * @return MarkersTypes
      */
     public function addMarker(Markers $markers)
@@ -260,30 +201,6 @@ class MarkersTypes
     }
 
     /**
-     * Set deleted
-     *
-     * @param \DateTime $deleted
-     * @return MarkersTypes
-     */
-    public function setDeleted($deleted)
-    {
-        $this->deleted = $deleted;
-
-        return $this;
-    }
-
-    /**
-     * Get deleted
-     *
-     * @return \DateTime
-     */
-    public function getDeleted()
-    {
-        return $this->deleted;
-    }
-
-
-    /**
      * @return string
      */
     public function getDescription()
@@ -293,11 +210,13 @@ class MarkersTypes
 
     /**
      * @param string $description
+     *
      * @return $this
      */
     public function setDescription($description)
     {
         $this->description = $description;
+
         return $this;
     }
 
@@ -311,11 +230,14 @@ class MarkersTypes
 
     /**
      * @param Media $icon
+     *
      * @return $this
      */
     public function setIcon(Media $icon)
     {
         $this->icon = $icon;
+
         return $this;
     }
+
 }

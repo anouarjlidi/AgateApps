@@ -5,6 +5,8 @@ namespace EsterenMaps\MapsBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 use JMS\Serializer\Annotation as Serializer;
 
 /**
@@ -15,7 +17,11 @@ use JMS\Serializer\Annotation as Serializer;
  * @ORM\Entity(repositoryClass="EsterenMaps\MapsBundle\Repository\ZonesRepository")
  * @Serializer\ExclusionPolicy("all")
  */
-class Zones {
+class Zones
+{
+
+    use TimestampableEntity;
+    use SoftDeleteableEntity;
 
     /**
      * @var integer
@@ -52,25 +58,10 @@ class Zones {
     protected $coordinates;
 
     /**
-     * @var \Datetime
-     *
-     * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(type="datetime", nullable=false)
-     */
-    protected $created;
-
-    /**
-     * @var \Datetime
-     *
-     * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(type="datetime", nullable=false)
-     */
-    protected $updated;
-
-    /**
      * @var Maps
      *
      * @ORM\ManyToOne(targetEntity="Maps", inversedBy="zones", fetch="EAGER")
+     * @ORM\JoinColumn(name="map_id", nullable=false)
      */
     protected $map;
 
@@ -78,6 +69,7 @@ class Zones {
      * @var Factions
      *
      * @ORM\ManyToOne(targetEntity="Factions", inversedBy="zones", fetch="EAGER", fetch="EAGER")
+     * @ORM\JoinColumn(name="faction_id", nullable=true)
      * @Serializer\Expose
      */
     protected $faction;
@@ -86,6 +78,7 @@ class Zones {
      * @var ZonesTypes
      *
      * @ORM\ManyToOne(targetEntity="ZonesTypes", inversedBy="zones", fetch="EAGER", fetch="EAGER")
+     * @ORM\JoinColumn(name="zone_type_id", nullable=false)
      * @Serializer\Expose
      */
     protected $zoneType;
@@ -96,13 +89,6 @@ class Zones {
      */
     protected $events;
 
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="deleted", type="datetime", nullable=true)
-     */
-    protected $deleted = null;
-
     public function __toString()
     {
         return $this->id.' - '.$this->name;
@@ -111,7 +97,8 @@ class Zones {
     /**
      * Constructor
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->events = new ArrayCollection();
     }
 
@@ -120,7 +107,8 @@ class Zones {
      *
      * @return integer
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
@@ -128,9 +116,11 @@ class Zones {
      * Set id
      *
      * @param integer $id
+     *
      * @return Zones
      */
-    public function setId($id) {
+    public function setId($id)
+    {
         $this->id = $id;
 
         return $this;
@@ -140,9 +130,11 @@ class Zones {
      * Set name
      *
      * @param string $name
+     *
      * @return Zones
      */
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
 
         return $this;
@@ -153,7 +145,8 @@ class Zones {
      *
      * @return string
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
 
@@ -167,11 +160,13 @@ class Zones {
 
     /**
      * @param string $description
+     *
      * @return Routes
      */
     public function setDescription($description)
     {
         $this->description = $description;
+
         return $this;
     }
 
@@ -179,9 +174,11 @@ class Zones {
      * Set coordinates
      *
      * @param string $coordinates
+     *
      * @return Zones
      */
-    public function setCoordinates($coordinates) {
+    public function setCoordinates($coordinates)
+    {
         $this->coordinates = $coordinates;
 
         return $this;
@@ -192,59 +189,20 @@ class Zones {
      *
      * @return string
      */
-    public function getCoordinates() {
+    public function getCoordinates()
+    {
         return $this->coordinates;
-    }
-
-    /**
-     * Set created
-     *
-     * @param \DateTime $created
-     * @return Zones
-     */
-    public function setCreated($created) {
-        $this->created = $created;
-
-        return $this;
-    }
-
-    /**
-     * Get created
-     *
-     * @return \DateTime
-     */
-    public function getCreated() {
-        return $this->created;
-    }
-
-    /**
-     * Set updated
-     *
-     * @param \DateTime $updated
-     * @return Zones
-     */
-    public function setUpdated($updated) {
-        $this->updated = $updated;
-
-        return $this;
-    }
-
-    /**
-     * Get updated
-     *
-     * @return \DateTime
-     */
-    public function getUpdated() {
-        return $this->updated;
     }
 
     /**
      * Set map
      *
      * @param Maps $map
+     *
      * @return Zones
      */
-    public function setMap(Maps $map = null) {
+    public function setMap(Maps $map = null)
+    {
         $this->map = $map;
 
         return $this;
@@ -255,7 +213,8 @@ class Zones {
      *
      * @return Maps
      */
-    public function getMap() {
+    public function getMap()
+    {
         return $this->map;
     }
 
@@ -263,9 +222,11 @@ class Zones {
      * Set faction
      *
      * @param Factions $faction
+     *
      * @return Zones
      */
-    public function setFaction(Factions $faction = null) {
+    public function setFaction(Factions $faction = null)
+    {
         $this->faction = $faction;
 
         return $this;
@@ -276,7 +237,8 @@ class Zones {
      *
      * @return Factions
      */
-    public function getFaction() {
+    public function getFaction()
+    {
         return $this->faction;
     }
 
@@ -284,9 +246,11 @@ class Zones {
      * Add events
      *
      * @param EventsZones $events
+     *
      * @return Zones
      */
-    public function addEvent(EventsZones $events) {
+    public function addEvent(EventsZones $events)
+    {
         $this->events[] = $events;
 
         return $this;
@@ -297,7 +261,8 @@ class Zones {
      *
      * @param EventsZones $events
      */
-    public function removeEvent(EventsZones $events) {
+    public function removeEvent(EventsZones $events)
+    {
         $this->events->removeElement($events);
     }
 
@@ -306,7 +271,8 @@ class Zones {
      *
      * @return EventsZonesTypes[]
      */
-    public function getEvents() {
+    public function getEvents()
+    {
         return $this->events;
     }
 
@@ -314,9 +280,11 @@ class Zones {
      * Set zoneType
      *
      * @param ZonesTypes $zoneType
+     *
      * @return Zones
      */
-    public function setZoneType(ZonesTypes $zoneType = null) {
+    public function setZoneType(ZonesTypes $zoneType = null)
+    {
         $this->zoneType = $zoneType;
 
         return $this;
@@ -327,28 +295,9 @@ class Zones {
      *
      * @return ZonesTypes
      */
-    public function getZoneType() {
+    public function getZoneType()
+    {
         return $this->zoneType;
     }
 
-    /**
-     * Set deleted
-     *
-     * @param \DateTime $deleted
-     * @return Zones
-     */
-    public function setDeleted($deleted) {
-        $this->deleted = $deleted;
-
-        return $this;
-    }
-
-    /**
-     * Get deleted
-     *
-     * @return \DateTime
-     */
-    public function getDeleted() {
-        return $this->deleted;
-    }
 }

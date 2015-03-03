@@ -4,16 +4,17 @@ namespace EsterenMaps\MapsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use JMS\Serializer\Annotation\ExclusionPolicy as ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose as Expose;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Maps
+ * RoutesTransports
  *
  * @ORM\Table(name="maps_routes_transports")
- * @Gedmo\SoftDeleteable(fieldName="deleted")
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  * @ORM\Entity(repositoryClass="EsterenMaps\MapsBundle\Repository\MapsRepository")
  * @ExclusionPolicy("all")
  */
@@ -21,8 +22,10 @@ class RoutesTransports
 {
 
     use TimestampableEntity;
+    use SoftDeleteableEntity;
 
     /**
+     *
      * @var integer
      *
      * @ORM\Column(type="integer", nullable=false)
@@ -67,13 +70,6 @@ class RoutesTransports
     protected $positiveRatio = false;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="deleted", type="datetime", nullable=true)
-     */
-    protected $deleted = null;
-
-    /**
      * @return int
      */
     public function getId()
@@ -89,6 +85,7 @@ class RoutesTransports
     public function setId($id)
     {
         $this->id = $id;
+
         return $this;
     }
 
@@ -108,6 +105,7 @@ class RoutesTransports
     public function setRouteType($routeType)
     {
         $this->routeType = $routeType;
+
         return $this;
     }
 
@@ -127,6 +125,7 @@ class RoutesTransports
     public function setTransportType($transportType)
     {
         $this->transportType = $transportType;
+
         return $this;
     }
 
@@ -146,6 +145,7 @@ class RoutesTransports
     public function setPercentage($percentage)
     {
         $this->percentage = $percentage;
+
         return $this;
     }
 
@@ -165,25 +165,7 @@ class RoutesTransports
     public function setPositiveRatio($positiveRatio)
     {
         $this->positiveRatio = $positiveRatio;
-        return $this;
-    }
 
-    /**
-     * @return int
-     */
-    public function getDeleted()
-    {
-        return $this->deleted;
-    }
-
-    /**
-     * @param int $deleted
-     *
-     * @return RoutesTransports
-     */
-    public function setDeleted($deleted)
-    {
-        $this->deleted = $deleted;
         return $this;
     }
 

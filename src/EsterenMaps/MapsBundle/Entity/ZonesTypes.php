@@ -223,7 +223,7 @@ class ZonesTypes {
     /**
      * Get resources
      *
-     * @return ArrayCollection
+     * @return Resources[]
      */
     public function getResources() {
         return $this->resources;
@@ -253,7 +253,7 @@ class ZonesTypes {
     /**
      * Get zones
      *
-     * @return ArrayCollection
+     * @return Zones[]
      */
     public function getZones() {
         return $this->zones;
@@ -283,7 +283,7 @@ class ZonesTypes {
     /**
      * Get events
      *
-     * @return ArrayCollection
+     * @return Events[]
      */
     public function getEvents() {
         return $this->events;
