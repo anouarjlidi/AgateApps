@@ -9,7 +9,8 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use EsterenMaps\MapsBundle\Entity\ZonesTypes;
 
-class ZonesTypesFixtures extends AbstractFixture implements OrderedFixtureInterface {
+class ZonesTypesFixtures extends AbstractFixture implements OrderedFixtureInterface
+{
 
     /**
      * @var ObjectManager
@@ -32,6 +33,7 @@ class ZonesTypesFixtures extends AbstractFixture implements OrderedFixtureInterf
 
     /**
      * Load data fixtures with the passed EntityManager
+     *
      * @param ObjectManager $manager
      */
     function load(ObjectManager $manager)
@@ -40,29 +42,29 @@ class ZonesTypesFixtures extends AbstractFixture implements OrderedFixtureInterf
 
         $repo = $this->manager->getRepository('EsterenMapsBundle:ZonesTypes');
 
-        $this->fixtureObject($repo, 1, null, 'Politique', '', '', '2014-07-06 19:43:13', '2014-07-06 19:43:13', null);
-        $this->fixtureObject($repo, 2, 1, 'Royaume', '', '#E05151', '2014-07-06 19:45:31', '2014-07-06 19:45:31', null);
-        $this->fixtureObject($repo, 3, 1, 'Territoire', '', '#E4AA8E', '2014-07-06 19:45:52', '2014-07-06 19:45:52', null);
-        $this->fixtureObject($repo, 4, 1, 'Domaine', '', '#BBA748', '2014-07-06 19:46:04', '2014-07-06 19:46:04', null);
-        $this->fixtureObject($repo, 5, 1, 'Ville / Village', '', '#F1E091', '2014-07-06 19:46:10', '2014-07-06 19:46:10', null);
-        $this->fixtureObject($repo, 6, 1, 'Terre sacrée', '', '#CCA9D9', '2014-07-06 19:46:29', '2014-07-06 19:46:29', null);
-        $this->fixtureObject($repo, 7, null, 'Terrain', '', '', '2014-07-06 19:47:19', '2014-07-06 19:47:19', null);
-        $this->fixtureObject($repo, 8, 7, 'Forêt', '', '#669D4E', '2014-07-06 19:47:41', '2014-07-06 19:47:41', null);
-        $this->fixtureObject($repo, 9, 7, 'Marais', '', '#748F43', '2014-07-06 19:47:46', '2014-07-06 19:47:46', null);
-        $this->fixtureObject($repo, 10, 7, 'Montagnes', '', '#A6A6A6', '2014-07-06 19:47:54', '2014-07-06 19:47:54', null);
-        $this->fixtureObject($repo, 11, 7, 'Failles / Falaises', '', '#756098', '2014-07-06 19:48:03', '2014-07-06 19:48:03', null);
-        $this->fixtureObject($repo, 12, 7, 'Landes', '', '#9F8F50', '2014-07-06 19:48:08', '2014-07-06 19:48:08', null);
-        $this->fixtureObject($repo, 13, 7, 'Mer, lac', '', '#7099E4', '2014-07-06 19:55:44', '2014-07-06 19:55:44', null);
-        $this->fixtureObject($repo, 14, 7, 'Île(s)', '', '#6367AA', '2014-07-06 19:55:44', '2014-07-06 19:55:44', null);
+        $this->fixtureObject($repo, 1, null, 'Politique', '', '');
+        $this->fixtureObject($repo, 2, 1, 'Royaume', '', '#E05151');
+        $this->fixtureObject($repo, 3, 1, 'Territoire', '', '#E4AA8E');
+        $this->fixtureObject($repo, 4, 1, 'Domaine', '', '#BBA748');
+        $this->fixtureObject($repo, 5, 1, 'Ville / Village', '', '#F1E091');
+        $this->fixtureObject($repo, 6, 1, 'Terre sacrée', '', '#CCA9D9');
+        $this->fixtureObject($repo, 7, null, 'Terrain', '', '');
+        $this->fixtureObject($repo, 8, 7, 'Forêt', '', '#669D4E');
+        $this->fixtureObject($repo, 9, 7, 'Marais', '', '#748F43');
+        $this->fixtureObject($repo, 10, 7, 'Montagnes', '', '#A6A6A6');
+        $this->fixtureObject($repo, 11, 7, 'Failles / Falaises', '', '#756098');
+        $this->fixtureObject($repo, 12, 7, 'Landes', '', '#9F8F50');
+        $this->fixtureObject($repo, 13, 7, 'Mer, lac', '', '#7099E4');
+        $this->fixtureObject($repo, 14, 7, 'Île(s)', '', '#6367AA');
 
         $this->manager->flush();
     }
 
-    public function fixtureObject(EntityRepository $repo, $id, $parent, $name, $description, $color, $created, $updated, $deleted = null)
+    public function fixtureObject(EntityRepository $repo, $id, $parent, $name, $description, $color)
     {
-        $obj = null;
+        $obj       = null;
         $newObject = false;
-        $addRef = false;
+        $addRef    = false;
         if ($id) {
             $obj = $repo->find($id);
             if ($obj) {
@@ -79,9 +81,6 @@ class ZonesTypesFixtures extends AbstractFixture implements OrderedFixtureInterf
                 ->setName($name)
                 ->setDescription($description)
                 ->setColor($color)
-                ->setCreated($created ? new \Datetime($created) : new \Datetime())
-                ->setUpdated($updated ? new \Datetime($updated) : null)
-                ->setDeleted($deleted ? new \Datetime($deleted) : null)
             ;
             if ($parent) {
                 if (!isset($this->zonesTypes[$parent])) {

@@ -9,7 +9,8 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use EsterenMaps\MapsBundle\Entity\RoutesTypes;
 
-class RoutesTypesFixtures extends AbstractFixture implements OrderedFixtureInterface {
+class RoutesTypesFixtures extends AbstractFixture implements OrderedFixtureInterface
+{
 
     /**
      * @var ObjectManager
@@ -27,6 +28,7 @@ class RoutesTypesFixtures extends AbstractFixture implements OrderedFixtureInter
 
     /**
      * Load data fixtures with the passed EntityManager
+     *
      * @param ObjectManager $manager
      */
     function load(ObjectManager $manager)
@@ -35,18 +37,18 @@ class RoutesTypesFixtures extends AbstractFixture implements OrderedFixtureInter
 
         $repo = $this->manager->getRepository('EsterenMapsBundle:RoutesTypes');
 
-        $this->fixtureObject($repo, 1, 'Chemin', '', 'rgba(165,110,52,1)', '2014-04-27 15:28:15', '2014-04-27 15:28:15', null);
-        $this->fixtureObject($repo, 2, 'Route', '', 'rgba(199,191,183,1)', '2014-04-27 15:28:31', '2014-04-27 15:28:31', null);
-        $this->fixtureObject($repo, 3, 'Sentier de loup', '', 'rgba(194,176,76,1)', '2014-05-10 16:49:38', '2014-05-10 16:49:38', null);
+        $this->fixtureObject($repo, 1, 'Chemin', '', 'rgba(165,110,52,1)');
+        $this->fixtureObject($repo, 2, 'Route', '', 'rgba(199,191,183,1)');
+        $this->fixtureObject($repo, 3, 'Sentier de loup', '', 'rgba(194,176,76,1)');
 
         $this->manager->flush();
     }
 
-    public function fixtureObject(EntityRepository $repo, $id, $name, $description, $color, $created, $updated, $deleted = null)
+    public function fixtureObject(EntityRepository $repo, $id, $name, $description, $color)
     {
-        $obj = null;
+        $obj       = null;
         $newObject = false;
-        $addRef = false;
+        $addRef    = false;
         if ($id) {
             $obj = $repo->find($id);
             if ($obj) {
@@ -63,9 +65,6 @@ class RoutesTypesFixtures extends AbstractFixture implements OrderedFixtureInter
                 ->setName($name)
                 ->setDescription($description)
                 ->setColor($color)
-                ->setCreated($created ? new \Datetime($created) : new \Datetime())
-                ->setUpdated($updated ? new \Datetime($updated) : null)
-                ->setDeleted($deleted ? new \Datetime($deleted) : null)
             ;
             if ($id) {
                 /** @var ClassMetadata $metadata */

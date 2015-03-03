@@ -2,7 +2,6 @@
 
 namespace EsterenMaps\MapsBundle\DataFixtures\ORM;
 
-use Application\Sonata\MediaBundle\Entity\Media;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -10,7 +9,8 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use EsterenMaps\MapsBundle\Entity\MarkersTypes;
 
-class MarkersTypesFixtures extends AbstractFixture implements OrderedFixtureInterface {
+class MarkersTypesFixtures extends AbstractFixture implements OrderedFixtureInterface
+{
 
     /**
      * @var ObjectManager
@@ -28,6 +28,7 @@ class MarkersTypesFixtures extends AbstractFixture implements OrderedFixtureInte
 
     /**
      * Load data fixtures with the passed EntityManager
+     *
      * @param ObjectManager $manager
      */
     function load(ObjectManager $manager)
@@ -36,30 +37,30 @@ class MarkersTypesFixtures extends AbstractFixture implements OrderedFixtureInte
 
         $repo = $this->manager->getRepository('EsterenMapsBundle:MarkersTypes');
 
-        $icon5 = $this->getReference('application-media-5');
-        $icon6 = $this->getReference('application-media-6');
-        $icon7 = $this->getReference('application-media-7');
-        $icon8 = $this->getReference('application-media-8');
+        $icon5  = $this->getReference('application-media-5');
+        $icon6  = $this->getReference('application-media-6');
+        $icon7  = $this->getReference('application-media-7');
+        $icon8  = $this->getReference('application-media-8');
         $icon10 = $this->getReference('application-media-10');
-        $icon9 = $this->getReference('application-media-9');
+        $icon9  = $this->getReference('application-media-9');
         $icon11 = $this->getReference('application-media-11');
 
-        $this->fixtureObject($repo, 1, 'Cité', '', $icon5, '2014-04-09 09:20:37', '2014-05-08 16:19:26', null);
-        $this->fixtureObject($repo, 2, 'Port (village côtier, ...)', '', $icon6, '2014-05-08 16:19:19', '2014-05-10 17:20:31', null);
-        $this->fixtureObject($repo, 3, 'Carrefour', '', $icon7, '2014-05-08 16:22:17', '2014-05-08 16:22:17', null);
-        $this->fixtureObject($repo, 4, 'Sanctuaire', '', $icon8, '2014-05-10 16:51:00', '2014-05-10 16:51:00', null);
-        $this->fixtureObject($repo, 5, 'Site d\'intérêt', '', $icon10, '2014-05-10 17:13:47', '2014-05-10 17:13:47', null);
-        $this->fixtureObject($repo, 6, 'Fortifications (châteaux, angardes, rosace)', '', $icon9, '2014-05-10 17:17:38', '2014-05-10 17:18:47', null);
-        $this->fixtureObject($repo, 7, 'Souterrain (mine, cité troglodyte, réseau de cavernes)', '', $icon11, '2014-05-10 17:21:40', '2014-05-10 17:21:40', null);
+        $this->fixtureObject($repo, 1, 'Cité', '', $icon5);
+        $this->fixtureObject($repo, 2, 'Port (village côtier, ...)', '', $icon6);
+        $this->fixtureObject($repo, 3, 'Carrefour', '', $icon7);
+        $this->fixtureObject($repo, 4, 'Sanctuaire', '', $icon8);
+        $this->fixtureObject($repo, 5, 'Site d\'intérêt', '', $icon10);
+        $this->fixtureObject($repo, 6, 'Fortifications (châteaux, angardes, rosace)', '', $icon9);
+        $this->fixtureObject($repo, 7, 'Souterrain (mine, cité troglodyte, réseau de cavernes)', '', $icon11);
 
         $this->manager->flush();
     }
 
-    public function fixtureObject(EntityRepository $repo, $id, $name, $description, $icon, $created, $updated, $deleted = null)
+    public function fixtureObject(EntityRepository $repo, $id, $name, $description, $icon)
     {
-        $obj = null;
+        $obj       = null;
         $newObject = false;
-        $addRef = false;
+        $addRef    = false;
         if ($id) {
             $obj = $repo->find($id);
             if ($obj) {
@@ -76,9 +77,6 @@ class MarkersTypesFixtures extends AbstractFixture implements OrderedFixtureInte
                 ->setName($name)
                 ->setDescription($description)
                 ->setIcon($icon)
-                ->setCreated($created ? new \Datetime($created) : new \Datetime())
-                ->setUpdated($updated ? new \Datetime($updated) : null)
-                ->setDeleted($deleted ? new \Datetime($deleted) : null)
             ;
             if ($id) {
                 /** @var ClassMetadata $metadata */

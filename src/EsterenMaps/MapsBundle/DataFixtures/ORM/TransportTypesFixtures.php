@@ -9,7 +9,8 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use EsterenMaps\MapsBundle\Entity\TransportTypes;
 
-class TransportTypesFixtures extends AbstractFixture implements OrderedFixtureInterface {
+class TransportTypesFixtures extends AbstractFixture implements OrderedFixtureInterface
+{
 
     /**
      * @var ObjectManager
@@ -27,6 +28,7 @@ class TransportTypesFixtures extends AbstractFixture implements OrderedFixtureIn
 
     /**
      * Load data fixtures with the passed EntityManager
+     *
      * @param ObjectManager $manager
      */
     function load(ObjectManager $manager)
@@ -35,10 +37,10 @@ class TransportTypesFixtures extends AbstractFixture implements OrderedFixtureIn
 
         $repo = $this->manager->getRepository('EsterenMapsBundle:TransportsTypes');
 
-        $this->fixtureObject($repo, 1, 'À pied', 'foot', '', 4.5000);
-        $this->fixtureObject($repo, 2, 'Chariot', 'chariot', '', 8.0000);
-        $this->fixtureObject($repo, 3, 'Cheval', 'cheval', '', 12.0000);
-        $this->fixtureObject($repo, 4, 'Caernide', 'caernide', '', 12.0000);
+        $this->fixtureObject($repo, 1, 'À pied', 'foot', '', 4.5);
+        $this->fixtureObject($repo, 2, 'Chariot', 'chariot', '', 8);
+        $this->fixtureObject($repo, 3, 'Cheval', 'cheval', '', 12);
+        $this->fixtureObject($repo, 4, 'Caernide', 'caernide', '', 12);
 
 
         $this->manager->flush();
@@ -46,9 +48,9 @@ class TransportTypesFixtures extends AbstractFixture implements OrderedFixtureIn
 
     public function fixtureObject(EntityRepository $repo, $id, $name, $slug, $description, $speed)
     {
-        $obj = null;
+        $obj       = null;
         $newObject = false;
-        $addRef = false;
+        $addRef    = false;
         if ($id) {
             $obj = $repo->find($id);
             if ($obj) {

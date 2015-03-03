@@ -9,7 +9,8 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use EsterenMaps\MapsBundle\Entity\Maps;
 
-class MapsFixtures extends AbstractFixture implements OrderedFixtureInterface {
+class MapsFixtures extends AbstractFixture implements OrderedFixtureInterface
+{
 
     /**
      * @var ObjectManager
@@ -27,6 +28,7 @@ class MapsFixtures extends AbstractFixture implements OrderedFixtureInterface {
 
     /**
      * Load data fixtures with the passed EntityManager
+     *
      * @param ObjectManager $manager
      */
     function load(ObjectManager $manager)
@@ -35,16 +37,16 @@ class MapsFixtures extends AbstractFixture implements OrderedFixtureInterface {
 
         $repo = $this->manager->getRepository('EsterenMapsBundle:Maps');
 
-        $this->fixtureObject($repo, 1, 'Tri-Kazel', 'tri-kazel', 'uploads/maps/esteren_nouvelle_cartepg_91220092.jpeg', 'Carte de Tri-Kazel officielle, réalisée par Chris', 5, 2, 50, 0, '2014-04-09 08:57:25', '2014-04-09 08:57:25');
+        $this->fixtureObject($repo, 1, 'Tri-Kazel', 'tri-kazel', 'uploads/maps/esteren_nouvelle_cartepg_91220092.jpeg', 'Carte de Tri-Kazel officielle, réalisée par Chris', 5, 2, 50, 0);
 
         $this->manager->flush();
     }
 
-    public function fixtureObject(EntityRepository $repo, $id, $name, $nameSlug, $image, $description, $maxZoom, $startZoom, $startX, $startY, $created, $updated = null)
+    public function fixtureObject(EntityRepository $repo, $id, $name, $nameSlug, $image, $description, $maxZoom, $startZoom, $startX, $startY)
     {
-        $obj = null;
+        $obj       = null;
         $newObject = false;
-        $addRef = false;
+        $addRef    = false;
         if ($id) {
             $obj = $repo->find($id);
             if ($obj) {
@@ -66,9 +68,6 @@ class MapsFixtures extends AbstractFixture implements OrderedFixtureInterface {
                 ->setStartZoom($startZoom)
                 ->setStartX($startX)
                 ->setStartY($startY)
-                ->setCreated($created ? new \Datetime($created) : new \Datetime())
-                ->setUpdated($updated ? new \Datetime($updated) : null)
-                ->setDeleted(null)
             ;
             if ($id) {
                 /** @var ClassMetadata $metadata */

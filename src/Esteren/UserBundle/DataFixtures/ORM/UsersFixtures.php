@@ -2,17 +2,19 @@
 
 namespace Esteren\UserBundle\DataFixtures\ORM;
 
-use Esteren\UserBundle\Entity\User;
-use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Mapping\ClassMetadata;
+use Doctrine\ORM\Mapping\ClassMetadataInfo;
+use Esteren\UserBundle\Entity\User;
 use FOS\UserBundle\Doctrine\UserManager;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class UsersFixtures extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface {
+class UsersFixtures extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
+{
 
     /**
      * @var ObjectManager
@@ -67,9 +69,9 @@ class UsersFixtures extends AbstractFixture implements OrderedFixtureInterface, 
 
     public function fixtureObject(EntityRepository $repo, $id, $name, $email, $password, $superAdmin)
     {
-        $obj = null;
+        $obj       = null;
         $newObject = false;
-        $addRef = false;
+        $addRef    = false;
         if ($id) {
             $obj = $repo->find($id);
             if ($obj) {
@@ -96,6 +98,7 @@ class UsersFixtures extends AbstractFixture implements OrderedFixtureInterface, 
             ;
 
             if ($id) {
+                /** @var ClassMetadataInfo $metadata */
                 $metadata = $this->manager->getClassMetaData(get_class($obj));
                 $metadata->setIdGeneratorType(ClassMetadata::GENERATOR_TYPE_NONE);
             }
