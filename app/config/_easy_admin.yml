@@ -61,9 +61,9 @@ easy_admin:
         "Esteren Maps - Modificateurs de vitesse (transport)":
             class: EsterenMaps\MapsBundle\Entity\RoutesTransports
             list:
-                fields: [ routeType, transportType, { property: percentage, format: %.2f, help: "Modificateur de vitesse (en %)" } ]
+                fields: [ routeType, transportType, { property: percentage, format: %.2f } ]
             form:
-                fields: [ routeType, transportType, percentage ]
+                fields: [ routeType, transportType, { property: percentage, format: %.2f, help: "Modificateur de vitesse (en %)" }, positiveRatio ]
 
         ####################
         ## Pierstoval CMS
