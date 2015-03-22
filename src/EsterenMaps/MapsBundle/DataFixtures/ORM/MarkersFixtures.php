@@ -20,16 +20,6 @@ class MarkersFixtures extends AbstractFixture implements OrderedFixtureInterface
     private $manager;
 
     /**
-     * @var Factions[]
-     */
-    private $factions = array();
-
-    /**
-     * @var Maps[]
-     */
-    private $maps;
-
-    /**
      * Get the order of this fixture
      * @return integer
      */
@@ -65,8 +55,8 @@ class MarkersFixtures extends AbstractFixture implements OrderedFixtureInterface
         $faction4  = $this->getReference('esterenmaps-factions-4');
         $faction5  = $this->getReference('esterenmaps-factions-5');
         $faction6  = $this->getReference('esterenmaps-factions-6');
-        $faction7  = $this->getReference('esterenmaps-factions-7');
-        $faction8  = $this->getReference('esterenmaps-factions-8');
+//        $faction7  = $this->getReference('esterenmaps-factions-7');
+//        $faction8  = $this->getReference('esterenmaps-factions-8');
         $faction9  = $this->getReference('esterenmaps-factions-9');
         $faction10 = $this->getReference('esterenmaps-factions-10');
         $faction11 = $this->getReference('esterenmaps-factions-11');
