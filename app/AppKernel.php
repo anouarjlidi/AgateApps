@@ -60,7 +60,7 @@ class AppKernel extends Kernel
             new Pierstoval\Bundle\CmsBundle\PierstovalCmsBundle(),
             new Pierstoval\Bundle\CorsBundle\PierstovalCorsBundle(),
             new Pierstoval\Bundle\ToolsBundle\PierstovalToolsBundle(),
-            new Pierstoval\Bundle\TranslationBundle\PierstovalTranslationBundle(),
+            new Orbitale\Bundle\TranslationBundle\OrbitaleTranslationBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test', 'dev_fast'))) {

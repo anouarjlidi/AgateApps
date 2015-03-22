@@ -37,9 +37,8 @@ pierstoval_cors:
               - "^%esteren_domains.corahn_rin%$"
               - "^%esteren_domains.esteren_maps%$"
 
-pierstoval_translation:
+orbitale_translation:
     locales: %locales%
-    use_sonata: true
 
 pierstoval_cms:
     layouts:

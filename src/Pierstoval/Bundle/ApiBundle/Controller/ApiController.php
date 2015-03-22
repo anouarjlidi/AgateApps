@@ -2,7 +2,7 @@
 
 namespace Pierstoval\Bundle\ApiBundle\Controller;
 
-use Pierstoval\Component\EntityMerger\EntityMerger;
+use Orbitale\Component\EntityMerger\EntityMerger;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\PersistentCollection;
