@@ -10,6 +10,8 @@
 
     EsterenMap.prototype._refDatas = false;
 
+    EsterenMap.prototype._transports = false;
+
     EsterenMap.prototype._markers = {};
     EsterenMap.prototype._polygons = {};
     EsterenMap.prototype._polylines = {};
@@ -33,7 +35,8 @@
         zones: true,
         zonestypes: true,
         settings: true,
-        "ref-datas": true
+        "ref-datas": true,
+        transports: true
     };
 
     EsterenMap.prototype._mapOptions = {
@@ -50,6 +53,7 @@
             this.loadMarkers();
             this.loadRoutes();
             this.loadZones();
+            this.loadTransports();
         },
         imgUrl: '/bundles/esterenmaps/img',
         apiUrls: {

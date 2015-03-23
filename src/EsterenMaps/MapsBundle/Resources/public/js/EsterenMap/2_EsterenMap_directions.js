@@ -101,7 +101,7 @@
         },
 
         createContent: function(){
-            var map = this._esterenMap;
+            var map = this._esterenMap, _this = this;
 
             if (this._cntSet) {
                 console.error('Content has already been set for this direction panel.');
@@ -112,8 +112,9 @@
                 msgSend = typeof FORM_SUBMIT !== 'undefined' ? FORM_SUBMIT : 'Envoyer',
                 directionsMsgTitle = typeof MSG_CONTROL_DIRECTIONS_TITLE !== 'undefined' ? MSG_CONTROL_DIRECTIONS_TITLE : 'Calculer un itinéraire',
                 directionsMsgStart = typeof MSG_CONTROL_DIRECTIONS_START !== 'undefined' ? MSG_CONTROL_DIRECTIONS_START : 'Départ',
-                directionsMsgEnd = typeof MSG_CONTROL_DIRECTIONS_END !== 'undefined' ? MSG_CONTROL_DIRECTIONS_END : 'Arrivée'
-                ;
+                directionsMsgEnd = typeof MSG_CONTROL_DIRECTIONS_END !== 'undefined' ? MSG_CONTROL_DIRECTIONS_END : 'Arrivée',
+                directionsMsgTransport = typeof MSG_CONTROL_TRANSPORTS !== 'undefined' ? MSG_CONTROL_TRANSPORTS : 'Moyen de transport'
+            ;
 
             // Ajout des différents noeuds à l'objet Content
             // On persiste ici à utiliser le concept objet
@@ -138,6 +139,13 @@
                             '<div class="directions_helper"></div>' +
                         '</div>' +
                     '</div>' +
+                    '<div class="form-group">' +
+                        '<label for="transport" class="col-sm-3 control-label">' + directionsMsgTransport + '</label>' +
+                        '<div class="col-sm-9">' +
+                            '<select name="directions_transport" id="directions_transport" class="form-control"></select>' +
+                            '<div class="directions_helper"></div>' +
+                        '</div>' +
+                    '</div>' +
                     '<button class="btn btn-default" type="submit">' + msgSend + '</button>' +
                     '<div id="directions_message"></div>' +
                 '</div>' +
@@ -153,6 +161,13 @@
                     input.value = li.innerHTML;
                     li.parentElement.innerHTML = '';
                 }
+            });
+            this._esterenMap.loadTransports(function(response){
+                var transportsOptions = '';
+                $.each(response.transports, function(i, e){
+                    transportsOptions += '<option value="' + e.id + '">' + e.name + '</option>';
+                });
+                $(_this._controlContent).find('#directions_transport').html(transportsOptions);
             });
             $(this._controlContent).find('#directions_start,#directions_end').on('keyup', function(){
                 var $this = $(this),
@@ -180,7 +195,8 @@
                     control = map._directionsControl,
                     markerStart, markerEnd,
                     start = datas.filter(function(e){return e.name==='start';})[0].value,
-                    end = datas.filter(function(e){return e.name==='end';})[0].value
+                    end = datas.filter(function(e){return e.name==='end';})[0].value,
+                    transport = datas.filter(function(e){return e.name==='directions_transport';})[0].value
                 ;
                 control.cleanDirections();
                 for (marker in markers) {
@@ -203,7 +219,9 @@
                     console.info('end', markerEnd);
                     map._load({
                         uri: 'maps/directions/'+map.options().id+'/'+markerStart+'/'+markerEnd,
-                        datas: {},
+                        datas: {
+                            'transport': transport
+                        },
                         callback: function(response) {
                             if (response.error && response.message) {
                                 $('#directions_message').text(response.message);

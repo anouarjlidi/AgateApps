@@ -318,6 +318,30 @@
         return this._load(["maps",mapOptions.id,"zones"], null, null, mapOptions.loaderCallbacks.zones);
     };
 
+    EsterenMap.prototype.loadTransports = function(callback){
+        var _this = this;
+        if  (this._transports) {
+            if (callback) {
+                callback({"transports": this._refDatas['transports']});
+            }
+            return this._transports;
+        }
+        return this._load({
+            uri: "transports",
+            type: "GET",
+            callback: function(response){
+                if (response.transports) {
+                    _this._transports = response.transports;
+                } else {
+                    console.warn('No transports could be loaded...');
+                }
+                if (callback) {
+                    callback(response);
+                }
+            }
+        });
+    };
+
     EsterenMap.prototype.loadRefDatas = function(callback){
         var _this = this,
             refDatasService = "ref-datas",
