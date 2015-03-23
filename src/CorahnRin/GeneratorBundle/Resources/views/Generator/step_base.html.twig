@@ -35,7 +35,7 @@
 
 {% block javascripts %}
     {{ parent() }}
-    {% javascripts '@esteren_maps_js' output="js/maps.js" %}<script type="text/javascript" src="{{ asset(asset_url, null, true) }}"></script>{% endjavascripts %}
+    <script type="text/javascript" src="{{ asset('js/maps_lib.js', null, true) }}"></script>
 
     {% javascripts
         '@CorahnRinGeneratorBundle/Resources/public/js/*.js'

@@ -100,9 +100,7 @@
 {% block javascripts %}
     <script type="text/javascript" src="{{ url('pierstoval_tools_assets_jstranslations', {"_locale":app.request.locale}) }}"></script>
     <script type="text/javascript" src="{{ asset('components/jquery/dist/jquery.min.js', null, true) }}"></script>
-    {% javascripts '@esteren_general' %}
-    <script type="text/javascript" src="{{ asset(asset_url, null, true) }}"></script>
-    {% endjavascripts %}
+    <script type="text/javascript" src="{{ asset('js/global.js', null, true) }}"></script>
 {% endblock %}
 
 </body>

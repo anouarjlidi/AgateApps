@@ -43,8 +43,8 @@ filter="less,cssrewrite,?uglifycss"
     {{ parent() }}
 
     <script type="text/javascript" src="{{ asset('components/jquery/dist/jquery.min.js', null, true) }}"></script>
-    {% javascripts '@esteren_general' %}<script type="text/javascript" src="{{ asset(asset_url, null, true) }}"></script>{% endjavascripts %}
-    {% javascripts '@esteren_maps_js' %}<script type="text/javascript" src="{{ asset(asset_url, null, true) }}"></script>{% endjavascripts %}
+    <script type="text/javascript" src="{{ asset('js/global.js', null, true) }}"></script>
+    <script type="text/javascript" src="{{ asset('js/maps_lib.js', null, true) }}"></script>
 
     {% javascripts
     '@EsterenMapsBundle/Resources/public/js/map_edit.js'
