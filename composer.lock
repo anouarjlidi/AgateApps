@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "5e9fe7b361a31367519f097ef2353b0d",
+    "hash": "aa486eb5b1be446a7512f50264db5ea5",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -1156,12 +1156,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/javiereguiluz/EasyAdminBundle.git",
-                "reference": "10c2bdee6e6ffc282567c7cd78e37efef4b6e02e"
+                "reference": "30b8a75cbd4d6a33feb2760069028c38e877fa3c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/javiereguiluz/EasyAdminBundle/zipball/10c2bdee6e6ffc282567c7cd78e37efef4b6e02e",
-                "reference": "10c2bdee6e6ffc282567c7cd78e37efef4b6e02e",
+                "url": "https://api.github.com/repos/javiereguiluz/EasyAdminBundle/zipball/30b8a75cbd4d6a33feb2760069028c38e877fa3c",
+                "reference": "30b8a75cbd4d6a33feb2760069028c38e877fa3c",
                 "shasum": ""
             },
             "require": {
@@ -1207,7 +1207,7 @@
                 "backend",
                 "generator"
             ],
-            "time": "2015-03-22 18:08:04"
+            "time": "2015-03-22 20:44:25"
         },
         {
             "name": "jdorn/sql-formatter",
