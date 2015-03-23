@@ -70,7 +70,7 @@
 
                 {% block cms_breadcrumbs %}{% endblock %}
 
-                {% block fos_user_content %}{% endblock fos_user_content %}
+                {% block fos_user_content %}{% endblock %}
 
                 {% block content_for_layout %}{% endblock %}
 
@@ -99,7 +99,7 @@
 
 {% block javascripts %}
     <script type="text/javascript" src="{{ url('pierstoval_tools_assets_jstranslations', {"_locale":app.request.locale}) }}"></script>
-    <script type="text/javascript" src="{{ asset('components/jquery/dist/jquery.min.js', null, true) }}"></script>
+    <script type="text/javascript" src="{{ asset('components/jquery/dist/jquery.min.js', null, true) }}"></script>script
     <script type="text/javascript" src="{{ asset('js/global.js', null, true) }}"></script>
 {% endblock %}
 
