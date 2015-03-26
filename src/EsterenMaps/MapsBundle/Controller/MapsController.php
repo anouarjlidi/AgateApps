@@ -55,7 +55,7 @@ class MapsController extends Controller
     /**
      * @Route("/admin/edit/{id}")
      * @Template()
-     */
+     *
     public function editAction(Maps $map, Request $request) {
 
         $em = $this->getDoctrine()->getManager();
@@ -98,11 +98,12 @@ class MapsController extends Controller
             'factions' => $factions,
         );
     }
+    //*/
 
     /**
-     * @Route("/admin/edit_params/{id}")
-     * @Template("PierstovalAdminBundle:Form:add.html.twig")
-     */
+     * @-Route("/admin/edit_params/{id}")
+     * @-Template("PierstovalAdminBundle:Form:add.html.twig")
+     *
     public function editParamsAction(Maps $map, Request $request) {
         $image = $map->getImage();
         $pathinfo = null;
@@ -139,7 +140,9 @@ class MapsController extends Controller
             ),
         );
     }
+    //*/
 
+    /*
     private function handleImage(Maps &$map) {
         $file = $map->getImage();
         $basename = preg_replace('~\.[a-zA-Z0-9]+~isUu', '', $file->getClientOriginalName());
@@ -303,4 +306,5 @@ class MapsController extends Controller
         }
 
     }
+    //*/
 }
