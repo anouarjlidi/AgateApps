@@ -5,6 +5,7 @@ namespace EsterenMaps\MapsBundle\Services;
 use Doctrine\ORM\EntityManager;
 use EsterenMaps\MapsBundle\Entity\Maps;
 use EsterenMaps\MapsBundle\Entity\Markers;
+use EsterenMaps\MapsBundle\Entity\TransportTypes;
 use EsterenMaps\MapsBundle\Repository\MarkersRepository;
 use JMS\Serializer\Serializer;
 use Symfony\Component\HttpFoundation\Request;
@@ -41,12 +42,12 @@ class Directions {
      * @param Markers $end
      * @return array
      */
-    public function getDirectionByMarkers(Maps $map, Markers $start, Markers $end) {
+    public function getDirectionByMarkers(Maps $map, Markers $start, Markers $end, TransportTypes $transportType = null) {
 
         /** @var MarkersRepository $repo */
         $repo = $this->entityManager->getRepository('EsterenMapsBundle:Markers');
 
-        $allMarkers = $repo->getAllWithRoutesArray($map);
+        $allMarkers = $repo->getAllWithRoutesArray($map, $transportType);
         $allRoutes = array();
 
         $nodes = array();

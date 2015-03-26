@@ -1,5 +1,6 @@
 <?php
 namespace EsterenMaps\MapsBundle\Repository;
+use EsterenMaps\MapsBundle\Entity\TransportTypes;
 use Pierstoval\Bundle\ToolsBundle\Repository\BaseRepository;
 use EsterenMaps\MapsBundle\Entity\Maps;
 
@@ -13,9 +14,11 @@ class MarkersRepository extends BaseRepository {
      * @param Maps $map
      * @return array
      */
-    public function getAllWithRoutesArray(Maps $map) {
+    public function getAllWithRoutesArray(Maps $map, TransportTypes $transportType = null) {
 
-        $dql = '
+        $parameters = array();
+
+        $dql = "
             SELECT
                 markers,
                 routesStart,
@@ -25,7 +28,7 @@ class MarkersRepository extends BaseRepository {
                     markerStartEnd,
                     markerEndEnd
 
-            FROM '.$this->_entityName.' markers
+            FROM {$this->_entityName} markers
 
             LEFT JOIN markers.routesStart routesStart
                 LEFT JOIN routesStart.markerStart markerStartStart
@@ -34,13 +37,46 @@ class MarkersRepository extends BaseRepository {
             LEFT JOIN markers.routesEnd routesEnd
                 LEFT JOIN routesEnd.markerStart markerStartEnd
                 LEFT JOIN routesEnd.markerEnd markerEndEnd
+        ";
 
+        if ($transportType) {
+            $dql .= "
+            INNER JOIN routesStart.routeType routesStartTypes
+                INNER JOIN routesStartTypes.transports routesStartTypesTransports
+
+            INNER JOIN routesEnd.routeType routesEndTypes
+                INNER JOIN routesEndTypes.transports routesEndTypesTransports
+            ";
+        }
+
+        $dql .= "
             WHERE markers.map = :map
-        ';
+        ";
 
-        $query = $this->getEntityManager()->createQuery($dql)->setParameter('map', $map->getId());
+        if ($transportType) {
+            $dql .= '
+                AND routesStartTypesTransports.transportType = :transport
+                AND routesEndTypesTransports.transportType = :transport
+            ';
+            $parameters['transport'] = $transportType->getId();
+        }
 
-        $results = $query->getArrayResult();
+        $parameters['map'] = $map->getId();
+
+        $results = $this
+            ->getEntityManager()
+            ->createQuery($dql)
+            ->setParameters($parameters)
+            ->getArrayResult()
+        ;
+
+        dump($this
+            ->getEntityManager()
+            ->createQuery($dql)
+            ->setParameters($parameters)->getSQL());
+
+        dump($results);
+        exit;
 
         $markers = array();
 
