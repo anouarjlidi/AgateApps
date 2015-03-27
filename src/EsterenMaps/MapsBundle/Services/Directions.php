@@ -20,34 +20,84 @@ class Directions {
     /**
      * @var EntityManager
      */
-    private $entityManager;
+    protected $entityManager;
 
     /**
      * @var Serializer
      */
-    private $serializer;
+    protected $serializer;
 
     /**
+     * @var string
+     */
+    protected $cacheDir;
+
+    /**
+     * @var integer
+     */
+    protected $cacheTTL;
+
+    /**
+     * @var boolean
+     */
+    protected $debug;
+
+    /**
+     * @param string        $cacheDir
+     * @param integer       $cacheTTL
+     * @param boolean       $debug
      * @param EntityManager $entityManager
      * @param Serializer    $serializer
      */
-    public function __construct(EntityManager $entityManager, Serializer $serializer) {
+    public function __construct($cacheDir, $cacheTTL, $debug, EntityManager $entityManager, Serializer $serializer) {
+        $this->cacheDir = rtrim($cacheDir, '/\\');
+        if (!is_dir($this->cacheDir)) {
+            mkdir($this->cacheDir, 0777, true);
+        }
+        $this->cacheTTL = $cacheTTL;
+        $this->debug = $debug;
         $this->entityManager = $entityManager;
         $this->serializer = $serializer;
     }
 
     /**
-     * @param Maps    $map
-     * @param Markers $start
-     * @param Markers $end
+     * @param Maps           $map
+     * @param Markers        $start
+     * @param Markers        $end
+     * @param TransportTypes $transportType
      * @return array
      */
-    public function getDirectionByMarkers(Maps $map, Markers $start, Markers $end, TransportTypes $transportType = null) {
+    public function getDirections(Maps $map, Markers $start, Markers $end, TransportTypes $transportType = null)
+    {
+        $cacheFile = $this->getCacheFile($map, $start, $end, $transportType);
+        $exists = file_exists($cacheFile) && filemtime($cacheFile) > (time() - $this->cacheTTL);
+
+        if (true === $exists && !$this->debug) {
+            $directions = file_get_contents($cacheFile);
+        } else {
+            $directions = $this->doGetDirections($map, $start, $end, $transportType);
+            file_put_contents($cacheFile, $directions);
+        }
+
+        $data = $this->getDataArray($start, $end, $directions);
+
+        return json_decode($this->serializer->serialize($data, 'json'), true);
+    }
+
+    /**
+     * @param Maps           $map
+     * @param Markers        $start
+     * @param Markers        $end
+     * @param TransportTypes $transportType
+     * @return array
+     */
+    protected function doGetDirections(Maps $map, Markers $start, Markers $end, TransportTypes $transportType = null) {
 
         /** @var MarkersRepository $repo */
         $repo = $this->entityManager->getRepository('EsterenMapsBundle:Markers');
 
         $allMarkers = $repo->getAllWithRoutesArray($map, $transportType);
+
         $allRoutes = array();
 
         $nodes = array();
@@ -107,10 +157,24 @@ class Directions {
 
         $steps = array();
 
+        $allRoutes = $this->entityManager->getRepository('EsterenMapsBundle:Routes')->findByIdsArray(array_keys($allRoutes), true);
+
         foreach ($paths as $step) {
             $marker = $allMarkers[$step['node']['id']];
             $marker['route'] = $allRoutes[$step['route']['id']];
-            unset($marker['routesStart'], $marker['routesEnd']);
+            unset(
+                $marker['routesStart'],
+                $marker['routesEnd'],
+                $marker['createdAt'],
+                $marker['updatedAt'],
+                $marker['deletedAt'],
+                $marker['route']['createdAt'],
+                $marker['route']['updatedAt'],
+                $marker['route']['deletedAt'],
+                $marker['route']['routeType']['createdAt'],
+                $marker['route']['routeType']['updatedAt'],
+                $marker['route']['routeType']['deletedAt']
+            );
             $steps[] = $marker;
         }
 
@@ -126,9 +190,7 @@ class Directions {
             unset($steps[$k]['route']['markerStart'], $steps[$k]['route']['markerEnd']);
         }
 
-        $json = json_encode($steps);
-
-        return $this->serializer->deserialize($json, 'ArrayCollection<EsterenMaps\MapsBundle\Entity\Markers>', 'json');
+        return $this->serializer->deserialize(json_encode($steps, 480), 'ArrayCollection<EsterenMaps\MapsBundle\Entity\Markers>', 'json');
     }
 
     /**
@@ -139,7 +201,7 @@ class Directions {
      * @param $target
      * @return array
      */
-    public function dijkstra($nodes, $edges, $source, $target) {
+    protected function dijkstra($nodes, $edges, $source, $target) {
 
         $distances = array();
         $previous = array();
@@ -196,5 +258,63 @@ class Directions {
 
         return $path;
 
+    }
+
+    /**
+     * @param Maps           $map
+     * @param Markers        $start
+     * @param Markers        $end
+     * @param TransportTypes $transportType
+     * @return array
+     */
+    protected function getCacheFile(Maps $map, Markers $start, Markers $end, TransportTypes $transportType = null)
+    {
+        $hash = md5($map->getId().$start->getId().$end->getId().($transportType?:''));
+        return $this->cacheDir.'/'.$hash.'.json';
+    }
+
+    /**
+     * @param Markers $from
+     * @param Markers $to
+     * @param Markers[] $directions
+     * @return array
+     */
+    protected function getDataArray(Markers $from, Markers $to, array $directions)
+    {
+        $distance = 0;
+        $NE = array();
+        $SW = array();
+
+        foreach ($directions as $step) {
+            $distance += $step->route ? $step->route->getDistance() : 0;
+            if ($step->route) {
+                $coords = $step->route->getDecodedCoordinates();
+                foreach ($coords as $latLng) {
+                    if (!isset($NE['lat']) || ($NE['lat'] < $latLng['lat'])) {
+                        $NE['lat'] = $latLng['lat'];
+                    }
+                    if (!isset($NE['lng']) || ($NE['lng'] < $latLng['lng'])) {
+                        $NE['lng'] = $latLng['lng'];
+                    }
+                    if (!isset($SW['lat']) || ($SW['lat'] > $latLng['lat'])) {
+                        $SW['lat'] = $latLng['lat'];
+                    }
+                    if (!isset($SW['lng']) || ($SW['lng'] > $latLng['lng'])) {
+                        $SW['lng'] = $latLng['lng'];
+                    }
+                }
+            }
+        }
+        return array(
+            'bounds' => array(
+                'northEast' => $NE,
+                'southWest' => $SW,
+            ),
+            'total_distance' => $distance,
+            'number_of_steps' => count($directions) - 2,
+            'start' => $from,
+            'end' => $to,
+            'path' => $directions,
+        );
     }
 }

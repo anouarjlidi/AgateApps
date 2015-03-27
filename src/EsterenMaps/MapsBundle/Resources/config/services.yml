@@ -1,6 +1,8 @@
 parameters:
     esterenmaps.tile_size: 168
     esterenmaps.output_directory: %kernel.root_dir%/../web/maps_tiles/
+    esterenmaps.directions.cache_dir: %kernel.cache_dir%/esterenmaps/directions/
+    esterenmaps.directions.cache_ttl: 3600
 
 services:
     esterenmaps.tiles_manager:
@@ -14,5 +16,8 @@ services:
     esterenmaps.directions:
         class: EsterenMaps\MapsBundle\Services\Directions
         arguments:
+            - %esterenmaps.directions.cache_dir%
+            - %esterenmaps.directions.cache_ttl%
+            - %kernel.debug%
             - @doctrine.orm.default_entity_manager
             - @jms_serializer

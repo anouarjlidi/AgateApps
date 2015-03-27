@@ -11,7 +11,8 @@ class MarkersRepository extends BaseRepository {
 
     /**
      * Get all markers with their routes (start/end) linked to a specific map.
-     * @param Maps $map
+     * @param Maps           $map
+     * @param TransportTypes $transportType
      * @return array
      */
     public function getAllWithRoutesArray(Maps $map, TransportTypes $transportType = null) {
@@ -21,12 +22,15 @@ class MarkersRepository extends BaseRepository {
         $dql = "
             SELECT
                 markers,
+
                 routesStart,
-                    markerStartStart,
-                    markerEndStart,
                 routesEnd,
-                    markerStartEnd,
-                    markerEndEnd
+
+                markerStartStart,
+                markerStartEnd,
+
+                markerEndStart,
+                markerEndEnd
 
             FROM {$this->_entityName} markers
 
@@ -37,46 +41,34 @@ class MarkersRepository extends BaseRepository {
             LEFT JOIN markers.routesEnd routesEnd
                 LEFT JOIN routesEnd.markerStart markerStartEnd
                 LEFT JOIN routesEnd.markerEnd markerEndEnd
-        ";
 
-        if ($transportType) {
-            $dql .= "
-            INNER JOIN routesStart.routeType routesStartTypes
-                INNER JOIN routesStartTypes.transports routesStartTypesTransports
+            ".($transportType?"
+                LEFT JOIN routesStart.routeType routesStartTypes
+                LEFT JOIN routesStartTypes.transports routesStartTypesTransports
+                    WITH routesStartTypesTransports.transportType = :transport
+                    AND routesStartTypesTransports.percentage != 0
 
-            INNER JOIN routesEnd.routeType routesEndTypes
-                INNER JOIN routesEndTypes.transports routesEndTypesTransports
-            ";
-        }
+                LEFT JOIN routesStart.routeType routesEndTypes
+                LEFT JOIN routesEndTypes.transports routesEndTypesTransports
+                    WITH routesEndTypesTransports.transportType = :transport
+                    AND routesEndTypesTransports.percentage != 0
+            ":"")."
 
-        $dql .= "
             WHERE markers.map = :map
         ";
 
         if ($transportType) {
-            $dql .= '
-                AND routesStartTypesTransports.transportType = :transport
-                AND routesEndTypesTransports.transportType = :transport
-            ';
             $parameters['transport'] = $transportType->getId();
         }
 
         $parameters['map'] = $map->getId();
 
-        $results = $this
-            ->getEntityManager()
+        $query = $this->_em
             ->createQuery($dql)
             ->setParameters($parameters)
-            ->getArrayResult()
         ;
 
-        dump($this
-            ->getEntityManager()
-            ->createQuery($dql)
-            ->setParameters($parameters)->getSQL());
-
-        dump($results);
-        exit;
+        $results = $query->getArrayResult();
 
         $markers = array();
 

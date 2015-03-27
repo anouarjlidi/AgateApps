@@ -7,8 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
-use JMS\Serializer\Annotation\ExclusionPolicy as ExclusionPolicy;
-use JMS\Serializer\Annotation\Expose as Expose;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * RoutesTypes
@@ -16,7 +15,7 @@ use JMS\Serializer\Annotation\Expose as Expose;
  * @ORM\Table(name="maps_routes_types")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  * @ORM\Entity()
- * @ExclusionPolicy("all")
+ * @Serializer\ExclusionPolicy("all")
  */
 class RoutesTypes
 {
@@ -30,7 +29,7 @@ class RoutesTypes
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @Expose
+     * @Serializer\Expose
      */
     protected $id;
 
@@ -38,7 +37,7 @@ class RoutesTypes
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=false, unique=true)
-     * @Expose
+     * @Serializer\Expose
      */
     protected $name;
 
@@ -46,7 +45,7 @@ class RoutesTypes
      * @var string
      *
      * @ORM\Column(name="description", type="text", nullable=true)
-     * @Expose
+     * @Serializer\Expose
      */
     protected $description;
 
@@ -54,7 +53,7 @@ class RoutesTypes
      * @var string
      *
      * @ORM\Column(name="color", type="string", length=75, nullable=true)
-     * @Expose
+     * @Serializer\Expose
      */
     protected $color;
 
@@ -73,6 +72,7 @@ class RoutesTypes
     /**
      * @var RoutesTransports
      * @ORM\OneToMany(targetEntity="EsterenMaps\MapsBundle\Entity\RoutesTransports", mappedBy="routeType")
+     * @Serializer\Expose
      */
     protected $transports;
 
