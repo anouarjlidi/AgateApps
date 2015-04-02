@@ -16,7 +16,7 @@ class TilesController extends Controller
     private $img_size = 0;
 
     /**
-     * @Route("/maps/image/{id}", requirements={"id":"\d+"}, host="%esteren_domains.api%")
+     * @-Route("/maps/image/{id}", requirements={"id":"\d+"}, host="%esteren_domains.api%")
      * @param Request $request
      * @param Maps $map
      * @throws \Exception
@@ -76,7 +76,7 @@ class TilesController extends Controller
     }
 
     /**
-     * @Route("/api/maps/tile/{id}/{zoom}/{x}/{y}.jpg", requirements={"id":"\d+"}, host="%esteren_domains.esteren_maps%", name="esterenmaps_api_tiles_tile_local")
+     * @-Route("/api/maps/tile/{id}/{zoom}/{x}/{y}.jpg", requirements={"id":"\d+"}, host="%esteren_domains.esteren_maps%", name="esterenmaps_api_tiles_tile_local")
      * @Route("/maps/tile/{id}/{zoom}/{x}/{y}.jpg", requirements={"id":"\d+"}, host="%esteren_domains.api%", name="esterenmaps_api_tiles_tile_distant")
      * @Cache(maxage="864000", expires="+10 days")
      * @param Maps $map

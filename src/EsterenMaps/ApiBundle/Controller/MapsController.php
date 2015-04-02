@@ -17,7 +17,7 @@ class MapsController extends Controller
     private $img_size = 0;
 
     /**
-     * @Route("/api/maps/settings/{id}", requirements={"id":"\d+"}, host="%esteren_domains.esteren_maps%", name="esterenmaps_api_maps_settings_local")
+     * @-Route("/api/maps/settings/{id}", requirements={"id":"\d+"}, host="%esteren_domains.esteren_maps%", name="esterenmaps_api_maps_settings_local")
      * @Route("/maps/settings/{id}.{_format}", requirements={"id":"\d+","_format":"js|json"}, defaults={"_format":"json"}, host="%esteren_domains.api%", name="esterenmaps_api_maps_settings_distant")
      * @Method("GET")
      */
@@ -63,7 +63,7 @@ class MapsController extends Controller
     }
 
     /**
-     * @Route("/api/maps/ref-datas", host="%esteren_domains.esteren_maps%", name="esterenmaps_api_maps_filters_local")
+     * @-Route("/api/maps/ref-datas", host="%esteren_domains.esteren_maps%", name="esterenmaps_api_maps_filters_local")
      * @Route("/maps/ref-datas", host="%esteren_domains.api%", name="esterenmaps_api_maps_filters_distant")
      * @Method("GET")
      */
