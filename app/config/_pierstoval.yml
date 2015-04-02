@@ -41,6 +41,7 @@ pierstoval_cors:
 orbitale_translation:
     locales: %locales%
 
-pierstoval_cms:
+orbitale_cms:
     layouts:
-        - { resource: ::base.html.twig, type: front }
+        front:
+            resource: "::base.html.twig"

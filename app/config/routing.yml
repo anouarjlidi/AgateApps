@@ -1,61 +1,12 @@
-imports:
-    resource: routing_sonata.yml
-
-#-----------------------------------
-# Corahn-Rin relative routing
-corahn_rin_generator:
-    resource: "@CorahnRinGeneratorBundle/Controller/"
-    type:     annotation
-    host:     %esteren_domains.corahn_rin%
-    prefix:   /{_locale}/
-    defaults:
-         _locale: %locale%
-    requirements:
-        _locale: ^(%locales_regex%)$
-
-corahn_rin_characters:
-    resource: "@CorahnRinCharactersBundle/Controller/"
-    type:     annotation
-    host:     %esteren_domains.corahn_rin%
-    prefix:   /{_locale}/
-    defaults:
-         _locale: %locale%
-    requirements:
-        _locale: ^(%locales_regex%)$
+sonata:      { resource: routing_sonata.yml }
+fos:         { resource: routing_fos.yml }
+orbitale:    { resource: routing_orbitale.yml }
+corahnrin:   { resource: routing_corahnrin.yml }
+esterenmaps: { resource: routing_esterenmaps.yml }
 
 esteren_portal:
     resource: "@EsterenPortalBundle/Controller/"
     type:     annotation
-
-#-----------------------------------
-# Esteren Maps relative routing
-esterenmaps:
-    resource: "@EsterenMapsBundle/Controller/"
-    type:     annotation
-    prefix:   /{_locale}/
-    defaults:
-         _locale: %locale%
-    requirements:
-        _locale: ^(%locales_regex%)$
-
-esterenmaps_api:
-    resource: "@EsterenMapsApiBundle/Controller/"
-    type:     annotation
-    prefix:   /{_locale}/
-    defaults:
-         _locale: %locale%
-    requirements:
-        _locale: ^(%locales_regex%)$
-
-esterenmaps_admin:
-    resource:    "@EsterenMapsAdminBundle/Controller/"
-    type:        annotation
-    prefix:      /{_locale}/
-    defaults:
-         _locale: %locale%
-    requirements:
-        _locale: ^(%locales_regex%)$
-    host:        %esteren_domains.backoffice%
 
 #-----------------------------------
 # Pierstoval relative routing
@@ -78,61 +29,6 @@ pierstoval_api:
          _locale: %locale%
     requirements:
         _locale: ^(%locales_regex%)$
-
-pierstoval_cms_front:
-    resource: "@PierstovalCmsBundle/Controller/FrontController.php"
-    type:     annotation
-    prefix:   /{_locale}/s/
-    defaults:
-         _locale: %locale%
-    requirements:
-        _locale: ^(%locales_regex%)$
-
-#-----------------------------------
-# FOS relative Routing
-fos_user_security:
-    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
-    prefix: /{_locale}/
-    defaults:
-         _locale: %locale%
-    requirements:
-        _locale: ^(%locales_regex%)$
-
-fos_user_profile:
-    resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
-    prefix: /{_locale}/profile
-    defaults:
-         _locale: %locale%
-    requirements:
-        _locale: ^(%locales_regex%)$
-    host: %esteren_domains.portal%
-
-fos_user_register:
-    resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
-    prefix: /{_locale}/register
-    defaults:
-         _locale: %locale%
-    requirements:
-        _locale: ^(%locales_regex%)$
-    host: %esteren_domains.portal%
-
-fos_user_resetting:
-    resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
-    prefix: /{_locale}/resetting
-    defaults:
-         _locale: %locale%
-    requirements:
-        _locale: ^(%locales_regex%)$
-    host: %esteren_domains.portal%
-
-fos_user_change_password:
-    resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
-    prefix: /{_locale}/profile
-    defaults:
-         _locale: %locale%
-    requirements:
-        _locale: ^(%locales_regex%)$
-    host: %esteren_domains.portal%
 
 #-----------------------------------
 # Admin relative Routing
