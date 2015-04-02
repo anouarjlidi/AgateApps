@@ -1,14 +1,14 @@
 
 #-----------------------------------
 # Sonata relative Routing
-gallery:
-    resource: '@SonataMediaBundle/Resources/config/routing/gallery.xml'
-    host:     %esteren_domains.portal%
-    prefix:   /{_locale}/media/gallery/
-    defaults:
-         _locale: %locale%
-    requirements:
-        _locale: ^(%locales_regex%)$
+#gallery:
+#    resource: '@SonataMediaBundle/Resources/config/routing/gallery.xml'
+#    host:     %esteren_domains.portal%
+#    prefix:   /{_locale}/media/gallery/
+#    defaults:
+#         _locale: %locale%
+#    requirements:
+#        _locale: ^(%locales_regex%)$
 
 media:
     resource: '@SonataMediaBundle/Resources/config/routing/media.xml'
