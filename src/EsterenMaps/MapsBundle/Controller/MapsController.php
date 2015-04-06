@@ -24,7 +24,7 @@ class MapsController extends Controller
      */
     public function viewAction(Maps $map) {
 
-        $tilesUrl = $this->generateUrl('esterenmaps_api_tiles_tile_local', array('id'=>0,'x'=>0,'y'=>0,'zoom'=>0), true);
+        $tilesUrl = $this->generateUrl('esterenmaps_api_tiles_tile_distant', array('id'=>0,'x'=>0,'y'=>0,'zoom'=>0), true);
         $tilesUrl = str_replace('0/0/0/0','{id}/{z}/{x}/{y}', $tilesUrl);
         $tilesUrl = preg_replace('~app_dev(_fast)?\.php/~isUu', '', $tilesUrl);
 
