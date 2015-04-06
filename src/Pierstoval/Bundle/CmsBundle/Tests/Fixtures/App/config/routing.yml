@@ -1,9 +1,0 @@
-pierstoval_cms_front:
-    resource: "@PierstovalCmsBundle/Controller/FrontController.php"
-    type:     annotation
-    prefix:   /site/
-
-easy_admin:
-    resource: "@EasyAdminBundle/Controller"
-    type: annotation
-    prefix: /admin/
