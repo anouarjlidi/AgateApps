@@ -5,10 +5,8 @@ use Symfony\Component\Config\Loader\LoaderInterface;
 
 class AppKernel extends Kernel
 {
-
     public function registerBundles()
     {
-
         $bundles = array(
 
             // Symfony
@@ -63,7 +61,7 @@ class AppKernel extends Kernel
             new Orbitale\Bundle\TranslationBundle\OrbitaleTranslationBundle(),
         );
 
-        if (in_array($this->getEnvironment(), array('dev', 'test', 'dev_fast'))) {
+        if (in_array($this->getEnvironment(), array('dev', 'test'))) {
             $bundles[] = new Symfony\Bundle\DebugBundle\DebugBundle();
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();

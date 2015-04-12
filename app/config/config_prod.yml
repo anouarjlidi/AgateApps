@@ -15,7 +15,7 @@ monolog:
     handlers:
         main:
             type:         fingers_crossed
-            action_level: critical
+            action_level: error
             handler:      grouped
         grouped:
             type:    group
@@ -33,4 +33,5 @@ monolog:
             to_email:   pierstoval+esterenprod@gmail.com
             subject:    An Error Occurred!
             level:      warning
-
+        console:
+            type:  console

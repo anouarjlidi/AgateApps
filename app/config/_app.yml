@@ -9,7 +9,7 @@ parameters:
     version_code: 0.1
     version_date: 05/01/2015
     locale: fr
-    locales: fr,en,de,es
+    locales: [ fr, en, de, es ]
     locales_regex: fr|en|de|es
 
 doctrine:
@@ -17,7 +17,7 @@ doctrine:
         path:     "%database_path%" # For eventual sqlite integration
 
 framework:
-    translator:      { fallback: %locale% } # Activate translator
+    translator:      { fallbacks: %locales% } # Activate translator
     session:
         cookie_domain: %esteren_domains.cookieDomain%
         name:   SF2ESTERENSID

@@ -2,7 +2,7 @@
 
 if (in_array(@$_SERVER['HTTP_HOST'], array('127.0.0.1','127.0.0.1:8888','127.0.0.1:8080',))
     || preg_match('~\.esteren\.dev(?::[0-9]+)?$~', $_SERVER['HTTP_HOST'])) {
-    // Permet en local d'utiliser app_dev par défaut dans un environnement de dev
+    // Allows in local to switch to "app_dev" by default
     include 'app_dev.php';
     exit;
 }
