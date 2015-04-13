@@ -38,10 +38,7 @@ class AppKernel extends Kernel
             new Application\Sonata\MediaBundle\ApplicationSonataMediaBundle(),
 
             // Corahn-Rin
-            new CorahnRin\CharactersBundle\CorahnRinCharactersBundle(),
-            new CorahnRin\ModelsBundle\CorahnRinModelsBundle(),
-            new CorahnRin\ToolsBundle\CorahnRinToolsBundle(),
-            new CorahnRin\GeneratorBundle\CorahnRinGeneratorBundle(),
+            new CorahnRin\CorahnRinBundle\CorahnRinBundle(),
 
             // Esteren général
             new Esteren\PortalBundle\EsterenPortalBundle(),

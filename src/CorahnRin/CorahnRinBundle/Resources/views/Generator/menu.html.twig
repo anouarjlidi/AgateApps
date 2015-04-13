@@ -1,0 +1,27 @@
+<nav class="nav">
+    <div class="progress">
+        <div class="progress-bar" role="progressbar" aria-valuenow="{{ bar_width }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ bar_width }}%;">
+            <span class="sr-only">{{ bar_width }}%</span>
+        </div>
+    </div>
+    <ul class="list-unstyled list-sm-inline step_list">
+        {% for step in steps %}
+            {% if session_step >= step.step %}
+
+                <li{% if loaded_step and loaded_step.step == step.step %} class="active"{% endif %}>
+                    <a href="{{ url('corahnrin_generator_generator_step', {'step':step.step,'slug':step.slug}) }}">
+                        {{ step.step }}. {{ step.title | trans }}
+                    </a>
+                </li>
+            {% else %}
+                <li>{{ step.step }}. {{ step.title | trans }}</li>
+            {% endif %}
+        {% endfor %}
+        {% if app.session.get('step') > 1 %}
+            <li>
+                <a href="{{ url('corahnrin_generator_generator_reset') }}">{{ 'Réinitialiser le personnage' | trans }}</a>
+            </li>
+        {% endif %}
+
+    </ul>
+</nav>

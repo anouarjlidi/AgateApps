@@ -1,0 +1,21 @@
+CorahnRin\CorahnRinBundle\Entity\Weapons:
+    properties:
+        name:
+            - NotBlank: ~
+            - Type: string
+        damage:
+            - NotNull: ~
+            - GreaterThanOrEqual: { value: 0 }
+            - Type: integer
+        range:
+            - NotNull: ~
+            - GreaterThanOrEqual: { value: 0 }
+            - Type: integer
+        price:
+            - NotNull: ~
+            - GreaterThanOrEqual: { value: 0 }
+            - Type: integer
+        availability:
+            - NotNull: ~
+            - Choice: { choices: { "CO", "FR", "RA", "EX" } }
+            - Type: string

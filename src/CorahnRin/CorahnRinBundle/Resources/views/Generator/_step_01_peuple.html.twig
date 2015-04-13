@@ -1,0 +1,20 @@
+<input type="hidden" name="gen-div-choice" id="gen-div-choice" value="{{ people_value }}" />
+<div class="row">
+{% for people in peoples %}
+    <div class="col-sm-6 gen-div-choice{% if people_value == people.id %} selected{% endif %}"
+         data-div-choice-value="{{ people.id }}">
+        <article>
+            <header>
+                <h3 class="text-center">{{ people.name | trans }}</h3>
+            </header>
+            <p>{{ people.description | trans | raw }}</p>
+        </article>
+    </div>
+    {% if loop.index % 2 == 0 %}
+</div><!--/.row-->
+<div class="row">
+    {% endif %}
+{% else %}
+    <p class="alert alert-error">{{ 'Une erreur est survenue lors du chargement de la liste des peuples' | trans }}</p>
+{% endfor %}
+</div>

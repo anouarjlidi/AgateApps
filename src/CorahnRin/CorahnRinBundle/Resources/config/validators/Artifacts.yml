@@ -1,0 +1,35 @@
+CorahnRin\CorahnRinBundle\Entity\Artifacts:
+    properties:
+        name:
+            - NotBlank: ~
+            - Type: string
+        protection:
+            - NotNull: ~
+            - GreaterThanOrEqual: { value: 0 }
+            - Type: integer
+        price:
+            - NotNull: ~
+            - GreaterThanOrEqual: { value: 0 }
+            - Type: integer
+        consumption:
+            - NotNull: ~
+            - GreaterThanOrEqual: { value: 0 }
+            - Type: integer
+        consumptionInterval:
+            - NotNull: ~
+            - GreaterThanOrEqual: { value: 0 }
+            - Type: integer
+        tank:
+            - NotNull: ~
+            - GreaterThanOrEqual: { value: 0 }
+            - Type: integer
+        resistance:
+            - NotNull: ~
+            - GreaterThanOrEqual: { value: 0 }
+            - Type: integer
+        damage:
+            - GreaterThanOrEqual: { value: 0 }
+            - Type: integer
+        flux:
+            - NotNull: ~
+            - Type: CorahnRin\CorahnRinBundle\Entity\Flux

@@ -2,7 +2,7 @@
 
 namespace EsterenMaps\MapsBundle\DataFixtures\ORM;
 
-use CorahnRin\ModelsBundle\Entity\Books;
+use CorahnRin\CorahnRinBundle\Entity\Books;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;

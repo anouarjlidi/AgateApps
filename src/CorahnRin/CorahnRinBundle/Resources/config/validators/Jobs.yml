@@ -1,0 +1,11 @@
+CorahnRin\CorahnRinBundle\Entity\Jobs:
+    properties:
+        name:
+            - NotBlank: ~
+            - Type: string
+        book:
+            - NotNull: ~
+            - Type: CorahnRin\CorahnRinBundle\Entity\Books
+        domainPrimary:
+            - NotNull: ~
+            - Type: CorahnRin\CorahnRinBundle\Entity\Domains

@@ -1,8 +1,0 @@
-CorahnRin\ModelsBundle\Entity\Domains:
-    properties:
-        name:
-            - NotBlank: ~
-            - Type: string
-        way:
-            - NotNull: ~
-            - Type: CorahnRin\ModelsBundle\Entity\Ways

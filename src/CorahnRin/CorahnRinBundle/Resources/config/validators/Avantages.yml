@@ -1,0 +1,22 @@
+CorahnRin\CorahnRinBundle\Entity\Avantages:
+    properties:
+        name:
+            - NotBlank: ~
+            - Type: string
+        nameFemale:
+            - NotBlank: ~
+            - Type: string
+        xp:
+            - NotNull: ~
+            - GreaterThanOrEqual: { value: 0 }
+            - Type: integer
+        augmentation:
+            - NotNull: ~
+            - GreaterThanOrEqual: { value: 0 }
+            - Type: integer
+        bonusdisc:
+            - NotBlank: ~
+            - Type: string
+        book:
+            - NotNull: ~
+            - Type: CorahnRin\CorahnRinBundle\Entity\Books

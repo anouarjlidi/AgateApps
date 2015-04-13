@@ -1,0 +1,11 @@
+CorahnRin\CorahnRinBundle\Entity\Disciplines:
+    properties:
+        name:
+            - NotBlank: ~
+            - Type: string
+        rank:
+            - NotBlank: ~
+            - Type: string
+        book:
+            - NotNull: ~
+            - Type: CorahnRin\CorahnRinBundle\Entity\Books

@@ -1,0 +1,5 @@
+CorahnRin\CorahnRinBundle\Entity\OghamTypes:
+    properties:
+        name:
+            - NotBlank: ~
+            - Type: string

@@ -1,8 +1,0 @@
-CorahnRin\ModelsBundle\Entity\Setbacks:
-    properties:
-        name:
-            - NotBlank: ~
-            - Type: string
-        malus:
-            - NotBlank: ~
-            - Type: string

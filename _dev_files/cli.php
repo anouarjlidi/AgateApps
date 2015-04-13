@@ -1,6 +1,6 @@
 <?php
 
-use CorahnRin\CharactersBundle\Classes\Money as Money;
+use CorahnRin\CorahnRinBundle\Classes\Money as Money;
 
 $time = microtime(true);$temp_time = $time;
 
