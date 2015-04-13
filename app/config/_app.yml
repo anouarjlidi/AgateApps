@@ -1,4 +1,5 @@
 imports:
+    - { resource: _assets.yml }
     - { resource: _esterenmaps.yml }
     - { resource: _corahn_rin.yml }
     - { resource: _pierstoval.yml }
@@ -47,7 +48,7 @@ assetic:
     bundles:
         - 'EsterenMapsBundle'
         - 'EsterenPagesBundle'
-        - 'CorahnRinGeneratorBundle'
+        - 'CorahnRinBundle'
         - 'EsterenMapsAdminBundle'
     filters:
         cssrewrite: ~
@@ -60,42 +61,6 @@ assetic:
         uglifycss:
             node: %node_path%
             node_paths: [ %node_modules_path% ]
-    assets:
-        esteren_general_js:
-            inputs:
-                - 'components/jquery-ui/ui/jquery.ui.core.js'
-                - 'components/jquery-ui/ui/jquery.ui.widget.js'
-                - 'components/bootstrap/js/button.js'
-                - 'components/bootstrap/js/collapse.js'
-                - 'components/bootstrap/js/dropdown.js'
-                - 'components/bootstrap/js/modal.js'
-                - 'components/bootstrap/js/tooltip.js'
-                - 'components/bootstrap/js/popover.js'
-                - 'components/bootstrap/js/transition.js'
-                - 'components/bootstrap/js/tab.js'
-                - 'components/jquery.colorpicker/jquery.colorpicker.js'
-                - 'components/jquery.colorpicker/i18n/jquery.ui.colorpicker-de.js'
-                - 'components/jquery.colorpicker/i18n/jquery.ui.colorpicker-en.js'
-                - 'components/jquery.colorpicker/i18n/jquery.ui.colorpicker-fr.js'
-                - '@EsterenPagesBundle/Resources/public/js/corahn_rin.js'
-            filters:
-                - ?uglifyjs
-            output: 'js/global.js'
-        esteren_general_css:
-            inputs:
-                - 'components/leaflet/dist/leaflet.css'
-                - 'components/leaflet-draw/dist/leaflet.draw.css'
-                - 'components/leaflet-sidebar/src/L.Control.Sidebar.css'
-                - 'components/jquery-ui/themes/vader/jquery-ui.min.css'
-                - 'components/jquery-ui/themes/vader/jquery.ui.theme.css'
-                - 'components/jquery.colorpicker/jquery.colorpicker.css'
-                - '@EsterenPagesBundle/Resources/public/less/_main.less'
-                - 'bundles/esterenmaps/css/maps.css'
-            filters:
-                - less
-                - cssrewrite
-                - ?uglifycss
-            output: "css/global.css"
 
 # Doctrine Configuration
 doctrine:
