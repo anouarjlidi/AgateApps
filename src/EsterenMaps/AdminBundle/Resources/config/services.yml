@@ -1,3 +1,0 @@
-services:
-    esteren_maps.controllers.admin:
-        class: EsterenMaps\AdminBundle\Controller\AdminMapsController
