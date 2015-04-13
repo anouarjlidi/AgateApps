@@ -3,17 +3,7 @@
 
 {% block head_stylesheets %}
 {{ parent() }}
-{% stylesheets
-'bundles/esterenpages/less/glyphicons.less'
-'bundles/esterenmaps/css/leaflet.css'
-'bundles/esterenmaps/css/leaflet.draw.css'
-'bundles/esterenmaps/css/leaflet.sidebar.css'
-'bundles/esterenmaps/css/maps.css'
-output="css/global_admin_maps.css"
-filter="less,cssrewrite,?uglifycss"
-%}
-<link rel="stylesheet" href="{{ app.request.getSchemeAndHttpHost() ~ asset_url }}" type="text/css" />
-{% endstylesheets %}
+<link rel="stylesheet" href="{{ asset('css/global.css', null, true) }}" type="text/css" />
 <style type="text/css" id="map_add_style"></style>
 {% endblock %}
 
@@ -28,7 +18,16 @@ filter="less,cssrewrite,?uglifycss"
         <div id="main" class="col-sm-12">
             <div id="map_wrapper">
                 <div id="maps_admin_container">
-                    {% include 'EsterenMapsAdminBundle:AdminMaps:edit_menu.html.twig' %}
+                    <div id="map_edit_menu">
+
+                        <ul class="list-inline">
+                            <li data-toggle="tooltip" title="{{ 'Masquer les zones' | trans }}"><button data-toggle-class="btn-default btn-inverse" id="hide_zones" class="btn btn-default" type="button"><span class="glyphicon icon-vector_path_polygon"></span></button></li>
+                            <li data-toggle="tooltip" title="{{ 'Masquer les routes' | trans }}"><button data-toggle-class="btn-default btn-inverse" id="hide_routes" class="btn btn-default" type="button"><span class="glyphicon icon-vector_path_line"></span></button></li>
+                            <li data-toggle="tooltip" title="{{ 'Masquer les marqueurs' | trans }}"><button data-toggle-class="btn-default btn-inverse" id="hide_markers" class="btn btn-default" type="button"> <span class="glyphicon icon-pin"></span></button></li>
+                            <li id="callback_message"></li>
+                        </ul>
+
+                    </div>
                 </div>
                 <div id="esterenmap_sidebar"></div>
                 <div id="map"></div>

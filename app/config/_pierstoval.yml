@@ -2,6 +2,7 @@
 # Api services
 pierstoval_api:
     allowed_origins:
+        - 127.0.0.1
         - %esteren_domains.corahn_rin%
         - %esteren_domains.esteren_maps%
         - %esteren_domains.portal%

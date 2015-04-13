@@ -13,24 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     {% block stylesheets %}
-        {% stylesheets
-        '@EsterenPagesBundle/Resources/public/less/_main.less'
-
-        'bundles/esterenmaps/css/leaflet.css'
-        'bundles/esterenmaps/css/leaflet.draw.css'
-        'bundles/esterenmaps/css/leaflet.sidebar.css'
-        'bundles/esterenmaps/css/maps.css'
-
-        'components/jquery-ui/themes/vader/jquery-ui.min.css'
-        'components/jquery-ui/themes/vader/jquery.ui.theme.css'
-
-        'components/jquery.colorpicker/jquery.colorpicker.css'
-
-        output="css/global.css"
-        filter="less,cssrewrite,?uglifycss"
-        %}
-        <link rel="stylesheet" href="{{ asset(asset_url, null, true) }}" type="text/css" />
-        {% endstylesheets %}
+        <link rel="stylesheet" href="{{ asset('css/global.css', null, true) }}" type="text/css" />
     {% endblock %}
 
     {% block more_headers %}{% endblock %}

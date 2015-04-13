@@ -61,7 +61,7 @@ assetic:
             node: %node_path%
             node_paths: [ %node_modules_path% ]
     assets:
-        esteren_general:
+        esteren_general_js:
             inputs:
                 - 'components/jquery-ui/ui/jquery.ui.core.js'
                 - 'components/jquery-ui/ui/jquery.ui.widget.js'
@@ -81,6 +81,21 @@ assetic:
             filters:
                 - ?uglifyjs
             output: 'js/global.js'
+        esteren_general_css:
+            inputs:
+                - 'components/leaflet/dist/leaflet.css'
+                - 'components/leaflet-draw/dist/leaflet.draw.css'
+                - 'components/leaflet-sidebar/src/L.Control.Sidebar.css'
+                - 'components/jquery-ui/themes/vader/jquery-ui.min.css'
+                - 'components/jquery-ui/themes/vader/jquery.ui.theme.css'
+                - 'components/jquery.colorpicker/jquery.colorpicker.css'
+                - '@EsterenPagesBundle/Resources/public/less/_main.less'
+                - 'bundles/esterenmaps/css/maps.css'
+            filters:
+                - less
+                - cssrewrite
+                - ?uglifycss
+            output: "css/global.css"
 
 # Doctrine Configuration
 doctrine:
