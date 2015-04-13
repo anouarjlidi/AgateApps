@@ -27,12 +27,12 @@ class GeneralMenu extends ContainerAware {
         ;
 
         /** @var Maps[] $maps */
-        $maps = $this->container->get('doctrine')->getManager()->getRepository('EsterenMapsBundle:Maps')->findAll();
-        foreach ($maps as $id => $map) {
-            $menu['Maps']->addChild($map->getName(), array(
+        $maps = $this->container->get('doctrine')->getManager()->getRepository('EsterenMapsBundle:Maps')->findAllArray();
+        foreach ($maps as $map) {
+            $menu['Maps']->addChild($map['name'], array(
                 'route' => 'esterenmaps_maps_maps_view',
                 'routeParameters' => array(
-                    'nameSlug' => $map->getNameSlug(),
+                    'nameSlug' => $map['nameSlug'],
                 ),
             ));
         }

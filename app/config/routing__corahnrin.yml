@@ -1,0 +1,9 @@
+corahn_rin_characters:
+    resource: "@CorahnRinBundle/Controller/CharacterViewController.php"
+    type:     annotation
+    host:     %esteren_domains.corahn_rin%
+
+corahn_rin_generator:
+    resource: "@CorahnRinBundle/Controller/GeneratorController.php"
+    type:     annotation
+    host:     %esteren_domains.corahn_rin%

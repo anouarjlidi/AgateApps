@@ -13,6 +13,26 @@ abstract class BaseRepository extends EntityRepository
 {
 
     /**
+     * @param string $sortCollection
+     *
+     * @return array
+     */
+    public function findAllRoot($sortCollection = null)
+    {
+        return $this->createQueryBuilder('object', $sortCollection)->getQuery()->getResult();
+    }
+
+    /**
+     * @param string $sortCollection
+     *
+     * @return array
+     */
+    public function findAllArray($sortCollection = null)
+    {
+        return $this->createQueryBuilder('object', $sortCollection)->getQuery()->getArrayResult();
+    }
+
+    /**
      * {@inheritdoc}
      * @param boolean $sortCollection If set to "true", the final collection will have primary keys as array keys
      */

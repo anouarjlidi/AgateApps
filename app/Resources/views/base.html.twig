@@ -13,17 +13,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     {% block stylesheets %}
-        <link rel="stylesheet" href="{{ asset('css/global.css', null, true) }}" type="text/css" />
+        <link rel="stylesheet" href="{{ asset('css/global.css') }}" type="text/css" />
     {% endblock %}
 
     {% block more_headers %}{% endblock %}
 
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ asset('bundles/esterenportal/images/favicon-144.png', null, false) }}">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ asset('bundles/esterenportal/images/favicon-114.png', null, false) }}">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ asset('bundles/esterenportal/images/favicon-72.png', null, false) }}">
-    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="{{ asset('bundles/esterenportal/images/favicon-57.png', null, false) }}">
-    <link rel="icon" type="image/x-icon" href="{{ asset('bundles/esterenportal/images/favicon-57.png', null, false) }}"/>
-    <link rel="shortcut icon" href="{{ asset('bundles/esterenportal/images/favicon-57.png', null, false) }}">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ asset('bundles/esterenportal/images/favicon-144.png') }}">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ asset('bundles/esterenportal/images/favicon-114.png') }}">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ asset('bundles/esterenportal/images/favicon-72.png') }}">
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="{{ asset('bundles/esterenportal/images/favicon-57.png') }}">
+    <link rel="icon" type="image/x-icon" href="{{ asset('bundles/esterenportal/images/favicon-57.png') }}"/>
+    <link rel="shortcut icon" href="{{ asset('bundles/esterenportal/images/favicon-57.png') }}">
 </head>
 
 <body>
@@ -81,9 +81,9 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script type="text/javascript" src="{{ url('pierstoval_tools_assets_jstranslations', {"_locale":app.request.locale}) }}"></script>
-    <script type="text/javascript" src="{{ asset('components/jquery/dist/jquery.min.js', null, true) }}"></script>
-    <script type="text/javascript" src="{{ asset('js/global.js', null, true) }}"></script>
+    <script type="text/javascript" src="{{ path('pierstoval_tools_assets_jstranslations', {"_locale": app.request.locale}) }}"></script>
+    <script type="text/javascript" src="{{ asset('components/jquery/dist/jquery.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/global.js') }}"></script>
 {% endblock %}
 
 </body>

@@ -14,3 +14,11 @@ web_profiler:
 
 swiftmailer:
     disable_delivery: true
+
+parameters:
+    esteren_domains.corahn_rin: corahnrin.esteren.dev
+    esteren_domains.esteren_maps: maps.esteren.dev
+    esteren_domains.portal: www.esteren.dev
+    esteren_domains.backoffice: back.esteren.dev
+    esteren_domains.api: api.esteren.dev
+    esteren_domains.cookieDomain: .esteren.dev

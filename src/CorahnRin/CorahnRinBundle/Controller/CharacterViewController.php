@@ -8,22 +8,19 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 class CharacterViewController extends Controller
 {
     /**
      * @Route("/characters/{id}-{nameSlug}", requirements={"id" = "\d+"})
-     * @Template()
      */
     public function viewAction(Characters $character)
     {
-		return array('character'=>$character);
+		return $this->render('CorahnRinBundle:CharacterView:view.html.twig', array('character' => $character));
     }
 
     /**
-     * @Route("/characters/")
-     * @Template()
+     * @Route("/characters/", name="corahnrin_characters_viewer_list")
      */
     public function listAction(Request $request) {
 
@@ -56,8 +53,7 @@ class CharacterViewController extends Controller
 
     	$characters_list = $repo->findSearch($searchField, $order, $limit, ($page-1)*$limit);
 
-        $orderSwaped = $order === 'desc' ? 'asc' : 'desc';
-		return array(
+		return $this->render('CorahnRinBundle:CharacterView:list.html.twig', array(
             'characters_list' => $characters_list,
             'number_of_chars' => $number_of_chars,
             'pages' => $pages,
@@ -67,9 +63,9 @@ class CharacterViewController extends Controller
                 'page' => $page,
                 'limit' => $limit,
             ),
-            'orderSwaped' => $orderSwaped,
+            'orderSwaped' => $order === 'desc' ? 'asc' : 'desc',
             'page' => $page,
-        );
+        ));
     }
 
     /**
@@ -97,7 +93,8 @@ class CharacterViewController extends Controller
             $manager = $this->get('corahn_rin_generator.sheets_manager');
             $pdf = $manager->getManager('pdf')
                 ->generateSheet($character, $sheet_type, $printer_friendly)
-                ->output($output_dir.$file_name, 'F');
+                ->output($output_dir.$file_name, 'F')
+            ;
         }
 
         $response->setContent(file_get_contents($output_dir.$file_name));
@@ -108,7 +105,6 @@ class CharacterViewController extends Controller
 
     /**
      * @Route("/characters/zip/{id}-{name}.zip")
-     * @Template()
      */
     public function zipAction($id, $name)
     {
@@ -116,7 +112,6 @@ class CharacterViewController extends Controller
 
     /**
      * @Route("/characters/jpg/{id}-{name}.zip")
-     * @Template()
      */
     public function jpgAction($id, $name)
     {

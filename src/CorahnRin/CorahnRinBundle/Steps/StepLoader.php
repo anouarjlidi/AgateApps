@@ -117,8 +117,7 @@ class StepLoader {
         if ($this->initiated) {
             return true;
         } else {
-            throw new \Exception('Le StepLoader doit être initialisé avant toute action supplémentaire.<br />'
-                .'Voir documentation de la classe "'.__CLASS__.'".');
+            throw new \Exception('Le StepLoader doit être initialisé avant toute action supplémentaire.<br />Voir documentation de la classe "'.__CLASS__.'".');
         }
     }
 

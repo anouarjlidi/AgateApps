@@ -5,11 +5,11 @@ services:
   corahn_rin_generator.sheets_manager:
       class: CorahnRin\CorahnRinBundle\Services\Sheets
       arguments:
-          sheets_folder: "%kernel.root_dir%/../src/CorahnRin/GeneratorBundle/SheetsManagers/files"
+          sheets_folder: "%kernel.root_dir%/../src/CorahnRin/CorahnRinBundle/SheetsManagers/files"
           translator: @translator
           kernel: @kernel
   corahn_rin_generator.steps_loader:
       class: CorahnRin\CorahnRinBundle\Steps\StepLoader
       arguments:
-          steps_manager_directory: "%kernel.root_dir%/../src/CorahnRin/GeneratorBundle/Steps"
+          steps_manager_directory: "%kernel.root_dir%/../src/CorahnRin/CorahnRinBundle/Steps"
           steps_views_directory: CorahnRinBundle:Generator

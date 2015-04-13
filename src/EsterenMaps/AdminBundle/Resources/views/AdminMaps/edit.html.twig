@@ -3,7 +3,7 @@
 
 {% block head_stylesheets %}
 {{ parent() }}
-<link rel="stylesheet" href="{{ asset('css/global.css', null, true) }}" type="text/css" />
+<link rel="stylesheet" href="{{ asset('css/global.css') }}" type="text/css" />
 <style type="text/css" id="map_add_style"></style>
 {% endblock %}
 
@@ -41,9 +41,9 @@
 {% block body_javascript %}
     {{ parent() }}
 
-    <script type="text/javascript" src="{{ asset('components/jquery/dist/jquery.min.js', null, true) }}"></script>
-    <script type="text/javascript" src="{{ asset('js/global.js', null, true) }}"></script>
-    <script type="text/javascript" src="{{ asset('js/maps_lib.js', null, true) }}"></script>
+    <script type="text/javascript" src="{{ asset('components/jquery/dist/jquery.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/global.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/maps_lib.js') }}"></script>
 
     {% javascripts
     '@EsterenMapsBundle/Resources/public/js/map_edit.js'

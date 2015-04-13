@@ -4,10 +4,10 @@
 
 {% block content_for_layout %}
 
-    <h2>{{ character.name }}</h2>
+    <h2 class="char-name">{{ character.name }}</h2>
 
     <p>
-        <a href="{{ url('corahnrin_characters_viewer_pdf',{"id":character.id,"nameSlug":character.nameSlug}) }}">{{ 'Voir en PDF' | trans }}</a>
+        <a href="{{ path('corahnrin_characters_viewer_pdf',{"id":character.id,"nameSlug":character.nameSlug}) }}">{{ 'Voir en PDF' | trans }}</a>
     </p>
 
     {{ 'Nom' | trans }} :

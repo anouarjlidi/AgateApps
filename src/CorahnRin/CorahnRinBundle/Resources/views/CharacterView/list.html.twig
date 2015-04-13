@@ -12,7 +12,7 @@
 	<tr>
 		<th>
             {% set order = linkDatas.searchField == 'id' ? orderSwaped : linkDatas.order %}
-            <a href="{{ url('corahnrin_characters_viewer_list',linkDatas|merge({'searchField':'id','order':order})) }}" class="btn btn-link">
+            <a href="{{ path('corahnrin_characters_viewer_list',linkDatas|merge({'searchField':'id','order':order})) }}" class="btn btn-link">
                 {% if linkDatas.searchField == 'id' %}
                     <span class="glyphicon-half icon-chevron-{{ linkDatas.order == 'asc' ? 'up' : 'down' }}"></span>
                     <strong class="text-underline text-black">
@@ -23,7 +23,7 @@
         </th>
 		<th>
             {% set order = linkDatas.searchField == 'name' ? orderSwaped : linkDatas.order %}
-            <a href="{{ url('corahnrin_characters_viewer_list',linkDatas|merge({'searchField':'name','order':order})) }}" class="btn btn-link">
+            <a href="{{ path('corahnrin_characters_viewer_list',linkDatas|merge({'searchField':'name','order':order})) }}" class="btn btn-link">
                 {% if linkDatas.searchField == 'name' %}
                     <span class="glyphicon-half icon-chevron-{{ linkDatas.order == 'asc' ? 'up' : 'down' }}"></span>
                     <strong class="text-underline text-black">
@@ -34,7 +34,7 @@
         </th>
 		<th>
             {% set order = linkDatas.searchField == 'job' ? orderSwaped : linkDatas.order %}
-            <a href="{{ url('corahnrin_characters_viewer_list',linkDatas|merge({'searchField':'job','order':order})) }}" class="btn btn-link">
+            <a href="{{ path('corahnrin_characters_viewer_list',linkDatas|merge({'searchField':'job','order':order})) }}" class="btn btn-link">
                 {% if linkDatas.searchField == 'job' %}
                     <span class="glyphicon-half icon-chevron-{{ linkDatas.order == 'asc' ? 'up' : 'down' }}"></span>
                     <strong class="text-underline text-black">
@@ -45,7 +45,7 @@
         </th>
 		<th>
             {% set order = linkDatas.searchField == 'people' ? orderSwaped : linkDatas.order %}
-            <a href="{{ url('corahnrin_characters_viewer_list',linkDatas|merge({'searchField':'people','order':order})) }}" class="btn btn-link">
+            <a href="{{ path('corahnrin_characters_viewer_list',linkDatas|merge({'searchField':'people','order':order})) }}" class="btn btn-link">
                 {% if linkDatas.searchField == 'people' %}
                     <span class="glyphicon-half icon-chevron-{{ linkDatas.order == 'asc' ? 'up' : 'down' }}"></span>
                     <strong class="text-underline text-black">
@@ -56,7 +56,7 @@
         </th>
 		<th>
             {% set order = linkDatas.searchField == 'region' ? orderSwaped : linkDatas.order %}
-            <a href="{{ url('corahnrin_characters_viewer_list',linkDatas|merge({'searchField':'region','order':order})) }}" class="btn btn-link">
+            <a href="{{ path('corahnrin_characters_viewer_list',linkDatas|merge({'searchField':'region','order':order})) }}" class="btn btn-link">
                 {% if linkDatas.searchField == 'region' %}
                     <span class="glyphicon-half icon-chevron-{{ linkDatas.order == 'asc' ? 'up' : 'down' }}"></span>
                     <strong class="text-underline text-black">
@@ -69,7 +69,7 @@
 	{% for character in characters_list %}
 		<tr>
 			<td>{{ character.id }}</td>
-			<td><a href="{{ url('corahnrin_characters_viewer_view', {'id':character.id,'nameSlug':character.nameSlug}) }}" class="btn btn-link btn-sm" title="{{ 'Voir le personnage %character_name%' | trans({'%character_name%':character.name}) }}">{{ character.name }}</a></td>
+			<td><a href="{{ path('corahnrin_characters_viewer_view', {'id':character.id,'nameSlug':character.nameSlug}) }}" class="btn btn-link btn-sm" title="{{ 'Voir le personnage %character_name%' | trans({'%character_name%':character.name}) }}">{{ character.name }}</a></td>
 			<td>
                 {% if character.job %}
                     {{ character.job.name | trans }}
@@ -86,31 +86,31 @@
 
 <ul class="pagination pagination-sm">
 
-    <li{{ page == 1 ? ' class="disabled"' : '' }}><a href="{{ url('corahnrin_characters_viewer_list',linkDatas|merge({'page':page - 1})) }}">&larr; {{ 'Précédent' | trans }}</a></li>
+    <li{{ page == 1 ? ' class="disabled"' : '' }}><a href="{{ path('corahnrin_characters_viewer_list',linkDatas|merge({'page':page - 1})) }}">&larr; {{ 'Précédent' | trans }}</a></li>
 
     {% if page-5 > 1 %}
-        <li><a href="{{ url('corahnrin_characters_viewer_list',linkDatas|merge({'page':1})) }}">1</a></li>
+        <li><a href="{{ path('corahnrin_characters_viewer_list',linkDatas|merge({'page':1})) }}">1</a></li>
         {% if page-5 > 2 %}
         <li class="disabled"><a>...</a></li>
         {% endif %}
     {% endif %}
     {% for i in page-5..page+5 %}
         {% if i >= 1 and i <= pages %}
-            <li{{ i == page ? ' class="active"' : '' }}><a href="{{ url('corahnrin_characters_viewer_list',linkDatas|merge({'page':i})) }}">{{ i }}{% if i == page %} <span class="sr-only">({{ 'Current page' | trans }})</span>{% endif %}</a></li>
+            <li{{ i == page ? ' class="active"' : '' }}><a href="{{ path('corahnrin_characters_viewer_list',linkDatas|merge({'page':i})) }}">{{ i }}{% if i == page %} <span class="sr-only">({{ 'Current page' | trans }})</span>{% endif %}</a></li>
         {% endif %}
     {% endfor %}
     {% if page+5 < pages %}
         {% if page+5 < pages - 1 %}
             <li class="disabled"><a>...</a></li>
         {% endif %}
-        <li><a href="{{ url('corahnrin_characters_viewer_list',linkDatas|merge({'page':pages})) }}">{{ pages }}</a></li>
+        <li><a href="{{ path('corahnrin_characters_viewer_list',linkDatas|merge({'page':pages})) }}">{{ pages }}</a></li>
     {% endif %}
 
-    <li{{ page == pages ? ' class="disabled"' : '' }}><a href="{{ url('corahnrin_characters_viewer_list',linkDatas|merge({'page':page+1})) }}">{{ 'Suivant' | trans }} &rarr;</a></li>
+    <li{{ page == pages ? ' class="disabled"' : '' }}><a href="{{ path('corahnrin_characters_viewer_list',linkDatas|merge({'page':page+1})) }}">{{ 'Suivant' | trans }} &rarr;</a></li>
 
 </ul>
 
-<form method="post" action="{{ url('corahnrin_characters_viewer_list', linkDatas) }}" class="form-horizontal">
+<form method="post" action="{{ path('corahnrin_characters_viewer_list', linkDatas) }}" class="form-horizontal">
     <fieldset>
         <div class="form-group row">
             <div class="col-lg-2">

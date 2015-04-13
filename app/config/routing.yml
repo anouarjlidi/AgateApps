@@ -1,12 +1,13 @@
-sonata:      { resource: routing_sonata.yml }
-fos:         { resource: routing_fos.yml }
-orbitale:    { resource: routing_orbitale.yml }
-corahnrin:   { resource: routing_corahnrin.yml }
-esterenmaps: { resource: routing_esterenmaps.yml }
+sonata:      { resource: "routing__sonata.yml", prefix: "/{_locale}/", defaults: { _locale: "%locale%" }, requirements: { _locale: "^(%locales_regex%)$" } }
+fos:         { resource: "routing__fos.yml", prefix: "/{_locale}/", defaults: { _locale: "%locale%" }, requirements: { _locale: "^(%locales_regex%)$" }  }
+orbitale:    { resource: "routing__orbitale.yml", prefix: "/{_locale}/", defaults: { _locale: "%locale%" }, requirements: { _locale: "^(%locales_regex%)$" }  }
+corahnrin:   { resource: "routing__corahnrin.yml", prefix: "/{_locale}/", defaults: { _locale: "%locale%" }, requirements: { _locale: "^(%locales_regex%)$" }  }
+esterenmaps: { resource: "routing__esterenmaps.yml", prefix: "/{_locale}/", defaults: { _locale: "%locale%" }, requirements: { _locale: "^(%locales_regex%)$" }  }
 
 esteren_portal:
     resource: "@EsterenPortalBundle/Controller/"
     type:     annotation
+    prefix:   /
 
 #-----------------------------------
 # Pierstoval relative routing
