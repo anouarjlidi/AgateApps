@@ -47,7 +47,7 @@ twig:
 assetic:
     bundles:
         - 'EsterenMapsBundle'
-        - 'EsterenPagesBundle'
+        - 'EsterenPortalBundle'
         - 'CorahnRinBundle'
         - 'EsterenMapsAdminBundle'
     filters:
@@ -115,7 +115,7 @@ assetic:
     use_controller: false
     bundles:
         - 'EsterenMapsBundle'
-        - 'EsterenPagesBundle'
+        - 'EsterenPortalBundle'
         - 'CorahnRinGeneratorBundle'
         - 'EsterenMapsAdminBundle'
         - 'PierstovalTranslationBundle'

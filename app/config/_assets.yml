@@ -17,7 +17,7 @@ assetic:
                 - 'components/jquery.colorpicker/i18n/jquery.ui.colorpicker-de.js'
                 - 'components/jquery.colorpicker/i18n/jquery.ui.colorpicker-en.js'
                 - 'components/jquery.colorpicker/i18n/jquery.ui.colorpicker-fr.js'
-                - '@EsterenPagesBundle/Resources/public/js/corahn_rin.js'
+                - '@EsterenPortalBundle/Resources/public/js/corahn_rin.js'
             filters:
                 - ?uglifyjs
             output: 'js/global.js'
@@ -30,7 +30,7 @@ assetic:
                 - 'components/jquery-ui/themes/vader/jquery-ui.min.css'
                 - 'components/jquery-ui/themes/vader/jquery.ui.theme.css'
                 - 'components/jquery.colorpicker/jquery.colorpicker.css'
-                - '@EsterenPagesBundle/Resources/public/less/_main.less'
+                - '@EsterenPortalBundle/Resources/public/less/_main.less'
                 - 'bundles/esterenmaps/css/maps.css'
             filters:
                 - less

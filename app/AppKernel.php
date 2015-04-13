@@ -42,7 +42,6 @@ class AppKernel extends Kernel
 
             // Esteren général
             new Esteren\PortalBundle\EsterenPortalBundle(),
-            new Esteren\PagesBundle\EsterenPagesBundle(),
             new Esteren\UserBundle\EsterenUserBundle(),
 
             // Esteren Maps

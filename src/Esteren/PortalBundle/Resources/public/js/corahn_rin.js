@@ -80,7 +80,7 @@ function mergeRecursive (targetObject, sourceObject) {
     // Form prototype (sélection multiple, propre au BO)
     if (d.querySelectorAll('[data-prototype]').length) {
 
-        var handler = d.getElementById('esteren_pagesbundle_menus_params'),
+        var handler = d.getElementById('esteren_portalbundle_menus_params'),
             elements = d.querySelectorAll('[data-collection-children]'),
             onclick = function(){
                 $(this).parents('.input-group').remove();
@@ -115,7 +115,7 @@ function mergeRecursive (targetObject, sourceObject) {
         addElementNode.onclick = function(){
             var iterator = !isNaN(d.iteratorValue) ? d.iteratorValue : 0,
                 node = d.createElement('div'),
-                handler = d.getElementById('esteren_pagesbundle_menus_params'),
+                handler = d.getElementById('esteren_portalbundle_menus_params'),
                 container = inputContainer.cloneNode(),
                 spanNodeToAdd = spanNode.cloneNode();
             spanNodeToAdd.onclick = onclick;

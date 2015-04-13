@@ -52,7 +52,7 @@ class PdfManager extends SheetsManager implements SheetsManagerInterface {
             ),
 		);
 		foreach ($p as $key => $v) {
-            $file = $this->getService()->locateResource('@EsterenPagesBundle/Resources/public/fonts/'.$v['file']);
+            $file = $this->getService()->locateResource('@EsterenPortalBundle/Resources/public/fonts/'.$v['file']);
             $p[$key]['file'] = $file;
 			$pdf->AddFont($v['name'], '', $file, true);
 		}
