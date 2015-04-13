@@ -33,7 +33,7 @@ class BooksFixtures extends AbstractFixture implements OrderedFixtureInterface {
     {
         $this->manager = $manager;
 
-        $repo = $this->manager->getRepository('CorahnRinModelsBundle:Books');
+        $repo = $this->manager->getRepository('CorahnRinBundle:Books');
 
         $this->fixtureObject($repo, 1,'Livre 0 - Prologue','','2014-04-09 08:56:43','2014-04-09 08:56:43',null);
         $this->fixtureObject($repo, 2,'Livre 1 - Univers','','2014-04-09 08:56:43','2014-04-09 08:56:43',null);

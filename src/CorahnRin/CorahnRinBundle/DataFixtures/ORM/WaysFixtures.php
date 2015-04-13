@@ -33,7 +33,7 @@ class WaysFixtures extends AbstractFixture implements OrderedFixtureInterface {
     {
         $this->manager = $manager;
 
-        $repo = $this->manager->getRepository('CorahnRinModelsBundle:Ways');
+        $repo = $this->manager->getRepository('CorahnRinBundle:Ways');
 
         $this->fixtureObject($repo, 1, 'com', 'Combativité', 'Passion', 'Cette Voie traduit la pugnacité, l\'énergie qui pousse à agir, la rage de vivre.', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null);
         $this->fixtureObject($repo, 2, 'cre', 'Créativité', 'Subversion', 'La capacité à imaginer, à donner à sa vie un sens original, l\'inventivité, la débrouillardise.', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null);

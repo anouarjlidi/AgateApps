@@ -12,4 +12,4 @@ services:
       class: CorahnRin\CorahnRinBundle\Steps\StepLoader
       arguments:
           steps_manager_directory: "%kernel.root_dir%/../src/CorahnRin/GeneratorBundle/Steps"
-          steps_views_directory: CorahnRinGeneratorBundle:Generator
+          steps_views_directory: CorahnRinBundle:Generator

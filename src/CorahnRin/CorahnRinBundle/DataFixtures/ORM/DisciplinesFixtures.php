@@ -34,7 +34,7 @@ class DisciplinesFixtures extends AbstractFixture implements OrderedFixtureInter
     {
         $this->manager = $manager;
 
-        $repo = $this->manager->getRepository('CorahnRinModelsBundle:Disciplines');
+        $repo = $this->manager->getRepository('CorahnRinBundle:Disciplines');
 
         /** @var Books $book */
         $book = $this->getReference('corahnrin-book-2');

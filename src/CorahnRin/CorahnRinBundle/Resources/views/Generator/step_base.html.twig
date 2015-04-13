@@ -10,7 +10,7 @@
 {% block content_for_layout %}
     <div class="row">
         <div class="col-sm-3 step_menu">
-            {% render(controller("CorahnRinGeneratorBundle:Generator:menu", {"step":loaded_step})) %}
+            {% render(controller("CorahnRinBundle:Generator:menu", {"step":loaded_step})) %}
         </div>
         <div class="col-sm-9 step_module">
             <h1>{{ 'Étape' | trans }} {{ loaded_step.step }} : {{ loaded_step.title | trans }}</h1>

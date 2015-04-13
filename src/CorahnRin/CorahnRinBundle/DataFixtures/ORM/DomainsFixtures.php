@@ -33,7 +33,7 @@ class DomainsFixtures extends AbstractFixture implements OrderedFixtureInterface
     {
         $this->manager = $manager;
 
-        $repo = $this->manager->getRepository('CorahnRinModelsBundle:Domains');
+        $repo = $this->manager->getRepository('CorahnRinBundle:Domains');
 
         $way1 = $this->getReference('corahnrin-way-1');
         $way2 = $this->getReference('corahnrin-way-2');

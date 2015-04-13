@@ -4,7 +4,7 @@
  * @var $this CorahnRin\CorahnRinBundle\Steps\StepLoader
  */
 
-$socialClasses = $this->em->getRepository('CorahnRinModelsBundle:SocialClasses')->findAll(true);
+$socialClasses = $this->em->getRepository('CorahnRinBundle:SocialClasses')->findAll(true);
 
 $socialClassesDomains = (isset($this->character[$this->stepFullName()]['domains']) ? $this->character[$this->stepFullName()]['domains'] : array());
 

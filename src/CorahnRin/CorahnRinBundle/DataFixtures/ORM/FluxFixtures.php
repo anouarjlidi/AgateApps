@@ -33,7 +33,7 @@ class FluxFixtures extends AbstractFixture implements OrderedFixtureInterface {
     {
         $this->manager = $manager;
 
-        $repo = $this->manager->getRepository('CorahnRinModelsBundle:Flux');
+        $repo = $this->manager->getRepository('CorahnRinBundle:Flux');
 
         $this->fixtureObject($repo, 1, 'Végétal', '', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null);
         $this->fixtureObject($repo, 2, 'Minéral', '', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null);

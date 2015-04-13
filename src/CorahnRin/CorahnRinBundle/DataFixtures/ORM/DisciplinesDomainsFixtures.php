@@ -39,8 +39,8 @@ class DisciplinesDomainsFixtures extends AbstractFixture implements OrderedFixtu
     {
         $this->manager = $manager;
 
-        $discRepo = $this->manager->getRepository('CorahnRinModelsBundle:Disciplines');
-        $domRepo = $this->manager->getRepository('CorahnRinModelsBundle:Domains');
+        $discRepo = $this->manager->getRepository('CorahnRinBundle:Disciplines');
+        $domRepo = $this->manager->getRepository('CorahnRinBundle:Domains');
 
         $this->fixtureObject($discRepo, $domRepo, 1, array(10));
         $this->fixtureObject($discRepo, $domRepo, 2, array(5));

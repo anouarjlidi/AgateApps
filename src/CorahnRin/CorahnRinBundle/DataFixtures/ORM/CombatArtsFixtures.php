@@ -34,7 +34,7 @@ class CombatArtsFixtures extends AbstractFixture implements OrderedFixtureInterf
     {
         $this->manager = $manager;
 
-        $repo = $this->manager->getRepository('CorahnRinModelsBundle:CombatArts');
+        $repo = $this->manager->getRepository('CorahnRinBundle:CombatArts');
 
         /** @var Books $book */
         $book = $this->getReference('corahnrin-book-2');

@@ -34,7 +34,7 @@ class SetbacksFixtures extends AbstractFixture implements OrderedFixtureInterfac
     {
         $this->manager = $manager;
 
-        $repo = $this->manager->getRepository('CorahnRinModelsBundle:Setbacks');
+        $repo = $this->manager->getRepository('CorahnRinBundle:Setbacks');
 
         /** @var Books $book */
         $book = $this->getReference('corahnrin-book-2');

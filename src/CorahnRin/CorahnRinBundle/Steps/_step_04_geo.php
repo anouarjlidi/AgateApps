@@ -4,7 +4,7 @@
  * @var $this CorahnRin\CorahnRinBundle\Steps\StepLoader
  */
 
-$geoEnvironments = $this->em->getRepository('CorahnRinModelsBundle:GeoEnvironments')->findAll(true);
+$geoEnvironments = $this->em->getRepository('CorahnRinBundle:GeoEnvironments')->findAll(true);
 
 $datas = array(
     'geoEnvironments' => $geoEnvironments,

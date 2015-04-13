@@ -5,7 +5,7 @@
  * @var $this CorahnRin\CorahnRinBundle\Steps\StepLoader
  */
 
-$global_list = $this->em->getRepository('CorahnRinModelsBundle:Avantages')->findAllDifferenciated();
+$global_list = $this->em->getRepository('CorahnRinBundle:Avantages')->findAllDifferenciated();
 
 $current_xp = 100;
 

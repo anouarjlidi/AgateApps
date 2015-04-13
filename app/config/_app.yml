@@ -116,7 +116,7 @@ assetic:
     bundles:
         - 'EsterenMapsBundle'
         - 'EsterenPortalBundle'
-        - 'CorahnRinGeneratorBundle'
+        - 'CorahnRinBundle'
         - 'EsterenMapsAdminBundle'
         - 'PierstovalTranslationBundle'
     filters:

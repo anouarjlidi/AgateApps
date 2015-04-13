@@ -4,7 +4,7 @@
  * @var $this CorahnRin\CorahnRinBundle\Steps\StepLoader
  */
 
-$setbacks = $this->em->getRepository('CorahnRinModelsBundle:Setbacks')->findAll(true);
+$setbacks = $this->em->getRepository('CorahnRinBundle:Setbacks')->findAll(true);
 
 $setback_value = $this->getStepValue() ?: array();
 

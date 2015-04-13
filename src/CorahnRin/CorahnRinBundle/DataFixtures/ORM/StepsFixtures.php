@@ -34,7 +34,7 @@ class StepsFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $this->manager = $manager;
 
         /** @var EntityRepository $repo */
-        $repo = $this->manager->getRepository('CorahnRinGeneratorBundle:Steps');
+        $repo = $this->manager->getRepository('CorahnRinBundle:Steps');
 
         $this->fixtureObject($repo, 20, 20, 'finalisation', 'Finalisation du personnage', array());
         $this->fixtureObject($repo, 19, 19, 'description_histoire', 'Description et histoire', array());

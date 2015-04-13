@@ -5,10 +5,10 @@ $cmd = array();
 $cmd[] = 'php '.$console_dir.' cache:clear --no-warmup';
 $cmd[] = 'php '.$console_dir.' doctrine:schema:drop --force';
 //$cmd[] = 'php '.$console_dir.' doctrine:database:create';
-//$cmd[] = 'php '.$console_dir.' doctrine:generate:entities CorahnRinCharactersBundle --no-backup';
+//$cmd[] = 'php '.$console_dir.' doctrine:generate:entities CorahnRinBundle --no-backup';
 //$cmd[] = 'php '.$console_dir.' doctrine:generate:entities EsterenMapsBundle --no-backup';
 //$cmd[] = 'php '.$console_dir.' doctrine:generate:entities EsterenPortalBundle --no-backup';
-//$cmd[] = 'php '.$console_dir.' doctrine:generate:entities CorahnRinUsersBundle --no-backup';
+//$cmd[] = 'php '.$console_dir.' doctrine:generate:entities CorahnRinBundle --no-backup';
 $cmd[] = 'php '.$console_dir.' doctrine:schema:update --force';
 $cmd[] = 'php '.$console_dir.' cache:warmup';
 

@@ -34,7 +34,7 @@ class AvantagesFixtures extends AbstractFixture implements OrderedFixtureInterfa
     {
         $this->manager = $manager;
 
-        $repo = $this->manager->getRepository('CorahnRinModelsBundle:Avantages');
+        $repo = $this->manager->getRepository('CorahnRinBundle:Avantages');
 
         /** @var Books $book */
         $book = $this->getReference('corahnrin-book-2');

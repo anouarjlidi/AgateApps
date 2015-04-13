@@ -6,7 +6,7 @@
 
 $ways = $this->getStepValue(8);
 
-$traits = $this->em->getRepository('CorahnRinModelsBundle:Traits')->findAllDependingOnWays($ways);
+$traits = $this->em->getRepository('CorahnRinBundle:Traits')->findAllDependingOnWays($ways);
 
 $quality = isset($this->character[$this->stepFullName()]['quality']) ? (int) $this->character[$this->stepFullName()]['quality'] : null;
 $flaw = isset($this->character[$this->stepFullName()]['flaw']) ? (int) $this->character[$this->stepFullName()]['flaw'] : null;

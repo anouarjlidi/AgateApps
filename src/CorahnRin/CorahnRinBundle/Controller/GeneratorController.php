@@ -14,10 +14,10 @@ class GeneratorController extends Controller {
 
     /**
      * @Route("/characters/generate/", name="corahnrin_generator_generator_index")
-     * @Template("CorahnRinGeneratorBundle:Generator:step_base.html.twig")
+     * @Template("CorahnRinBundle:Generator:step_base.html.twig")
      */
     public function indexAction() {
-        $step = $this->getDoctrine()->getManager()->getRepository('CorahnRinGeneratorBundle:Steps')->findOneBy(array('step' => 1));
+        $step = $this->getDoctrine()->getManager()->getRepository('CorahnRinBundle:Steps')->findOneBy(array('step' => 1));
         return $this->redirect($this->generateUrl('corahnrin_generator_generator_step', array(
             'step' => $step->getStep(),
             'slug' => $step->getSlug()
@@ -37,7 +37,7 @@ class GeneratorController extends Controller {
 
     /**
      * @Route("/characters/generate/{step}-{slug}", requirements={"step" = "\d+"}, name="corahnrin_generator_generator_step")
-     * @Template("CorahnRinGeneratorBundle:Generator:step_base.html.twig")
+     * @Template("CorahnRinBundle:Generator:step_base.html.twig")
      */
     public function stepAction(Request $request, Steps $step) {
 
@@ -51,7 +51,7 @@ class GeneratorController extends Controller {
         $character = $session->get('character');
 
         $this->steps = $this->steps
-            ? : $this->getDoctrine()->getManager()->getRepository('CorahnRinGeneratorBundle:Steps')->findAll(true, 'step');
+            ? : $this->getDoctrine()->getManager()->getRepository('CorahnRinBundle:Steps')->findAll(true, 'step');
 
         for ($i = 1; $i <= $step->getStep(); $i++) {
             $stepName = $this->steps[$i]->getStep() . '.' . $this->steps[$i]->getSlug();
@@ -108,7 +108,7 @@ class GeneratorController extends Controller {
     public function menuAction(Steps $step = null) {
         $actual_step = (int)$this->get('session')->get('step') ? : 1;
         $this->steps = $this->steps
-            ? : $this->getDoctrine()->getManager()->getRepository('CorahnRinGeneratorBundle:Steps')->findAll(true, 'step');
+            ? : $this->getDoctrine()->getManager()->getRepository('CorahnRinBundle:Steps')->findAll(true, 'step');
         $barWidth = count($this->steps) ? ($actual_step / count($this->steps) * 100) : 0;
         return array(
             'steps' => $this->steps,
@@ -132,7 +132,7 @@ class GeneratorController extends Controller {
         $step = $this->steps
             ? $this->steps[$stepNumber]
             : $this->getDoctrine()->getManager()
-                ->getRepository('CorahnRinGeneratorBundle:Steps')
+                ->getRepository('CorahnRinBundle:Steps')
                 ->findOneBy(array('step' => $stepNumber));
 
         if ($step) {

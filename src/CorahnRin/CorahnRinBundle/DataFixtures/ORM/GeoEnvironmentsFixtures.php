@@ -33,7 +33,7 @@ class GeoEnvironmentsFixtures extends AbstractFixture implements OrderedFixtureI
     {
         $this->manager = $manager;
 
-        $repo = $this->manager->getRepository('CorahnRinModelsBundle:GeoEnvironments');
+        $repo = $this->manager->getRepository('CorahnRinBundle:GeoEnvironments');
 
         $book = $this->getReference('corahnrin-book-2');
         $domain5 = $this->getReference('corahnrin-domain-5');

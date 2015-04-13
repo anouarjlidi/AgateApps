@@ -1,15 +1,5 @@
 corahn_rin_generator:
-    resource: "@CorahnRinGeneratorBundle/Controller/"
-    type:     annotation
-    host:     %esteren_domains.corahn_rin%
-    prefix:   /{_locale}/
-    defaults:
-         _locale: %locale%
-    requirements:
-        _locale: ^(%locales_regex%)$
-
-corahn_rin_characters:
-    resource: "@CorahnRinCharactersBundle/Controller/"
+    resource: "@CorahnRinBundle/Controller/CharacterViewController.php"
     type:     annotation
     host:     %esteren_domains.corahn_rin%
     prefix:   /{_locale}/

@@ -1,5 +1,7 @@
 <?php
 
+require_once '../vendor/autoload.php';
+
 use CorahnRin\CorahnRinBundle\Classes\Money as Money;
 
 $time = microtime(true);$temp_time = $time;
@@ -1240,7 +1242,6 @@ if (preg_match('#^o#isUu', $del)) {$del = 'o';} else { $del = 'n'; }
 
 $to_add = array();
 if ($del === 'o') {
-    require __DIR__.'/../src/CorahnRin/CharactersBundle/Classes/Money.php';
 
     showtime($temp_time, 'Suppression du contenu des tables d\'association');
     $table = 'characters';
@@ -1262,8 +1263,6 @@ if ($del === 'o') {
     //pr($struct);
     $charreq = 0;
     $characters = $old->req('SELECT * FROM %est_characters');
-    require __DIR__.'/../src/CorahnRin/ToolsBundle/Resources/libs/functions/remove_accents.func.php';
-
 
     $total_files = count($characters);
     $times = array();
@@ -1279,9 +1278,7 @@ if ($del === 'o') {
             $money = new Money();
             $money->addBraise($cnt->inventaire->argent);
             $money->convert();
-            $nameSlug = \CorahnRinTools\remove_accents($v['char_name']);
-            $nameSlug = preg_replace('~[^a-zA-Z0-9_-]+~isUu', '-', $nameSlug);
-            $nameSlug = preg_replace('~--+~isUu', '-', $nameSlug);
+            $nameSlug = \Gedmo\Sluggable\Util\Urlizer::unaccent($v['char_name']);
 
             $nameSlugBase = $nameSlug;
             $i = '';

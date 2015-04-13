@@ -33,7 +33,7 @@ class JobsFixtures extends AbstractFixture implements OrderedFixtureInterface {
     {
         $this->manager = $manager;
 
-        $repo = $this->manager->getRepository('CorahnRinModelsBundle:Jobs');
+        $repo = $this->manager->getRepository('CorahnRinBundle:Jobs');
 
         $domain1 = $this->getReference('corahnrin-domain-1');
         $domain2 = $this->getReference('corahnrin-domain-2');

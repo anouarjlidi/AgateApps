@@ -35,7 +35,7 @@ class ArmorsFixtures extends AbstractFixture implements OrderedFixtureInterface 
     {
         $this->manager = $manager;
 
-        $repo = $this->manager->getRepository('CorahnRinModelsBundle:Armors');
+        $repo = $this->manager->getRepository('CorahnRinBundle:Armors');
 
         /** @var Books $book */
         $book = $this->getReference('corahnrin-book-2');
