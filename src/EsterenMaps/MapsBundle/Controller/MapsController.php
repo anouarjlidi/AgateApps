@@ -40,7 +40,7 @@ class MapsController extends Controller
      * @Template()
      */
     public function indexAction() {
-        $list = $this->getDoctrine()->getManager()->getRepository('EsterenMapsBundle:Maps')->findAll();
+        $list = $this->getDoctrine()->getManager()->getRepository('EsterenMapsBundle:Maps')->findAllRoot();
         return array('list' => $list);
     }
 

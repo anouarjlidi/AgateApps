@@ -3,9 +3,7 @@
 namespace CorahnRin\CorahnRinBundle\Tests\Controller;
 
 use CorahnRin\CorahnRinBundle\Entity\Characters;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\BrowserKit\Cookie;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use \WebTestCase;
 
 /**
  * @see CorahnRin\CorahnRinBundle\Controller\CharacterViewController
@@ -60,20 +58,4 @@ class CharacterViewControllerTest extends WebTestCase
         $this->assertEquals(1, $crawler->filter('h2.char-name')->count());
     }
 
-    protected function getClient($host = '', array $options = array())
-    {
-        $server = array();
-        if ($host) {
-            $server['HTTP_HOST'] = $host;
-        }
-        $client = parent::createClient($options, $server);
-
-        $session = $client->getContainer()->get('session');
-        $session->set('_security_main', serialize(new UsernamePasswordToken('Pierstoval', 'admin', 'main', array('ROLE_SUPER_ADMIN'))));
-        $session->save();
-        $cookie = new Cookie($session->getName(), $session->getId());
-        $client->getCookieJar()->set($cookie);
-
-        return $client;
-    }
 }

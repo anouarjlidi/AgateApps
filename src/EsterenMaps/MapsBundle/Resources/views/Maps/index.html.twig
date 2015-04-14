@@ -5,16 +5,13 @@
 {% block content_for_layout %}
     <h1>{{ 'Liste des cartes' | trans }}</h1>
 
-    <section class="row">
+    <section class="row maps-list">
     {% for map in list %}
         <article class="col-sm-4">
             <header><h2>{{ map.name | trans }}</h2></header>
             <p>{{ map.description }}</p>
             <footer>
                 <a href="{{ url('esterenmaps_maps_maps_view', {'nameSlug':map.nameSlug}) }}" title="{{ 'Voir la carte' | trans }} : {{ map.name | trans }}" class="btn btn-default"><span class="glyphicon icon-eye_open"></span> {{ 'Voir la carte' | trans }}</a>
-                {% if is_granted('ROLE_ADMIN_MAPS') %}
-                    <a href="{{ url('esterenmaps_maps_maps_edit', {'id':map.id}) }}" title="{{ 'Éditer la carte' | trans }} : {{ map.name | trans }}" class="btn btn-inverse"><span class="glyphicon icon-edit"></span> {{ 'Éditer la carte' | trans }}</a>
-                {% endif %}
             </footer>
         </article>
         {% else %}
