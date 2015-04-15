@@ -113,7 +113,7 @@ class Maps
     /**
      * @var Routes[]
      *
-     * @ORM\OneToMany(targetEntity="Routes", mappedBy="map", fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="Routes", mappedBy="map")
      * @Expose
      */
     protected $routes;
@@ -121,7 +121,7 @@ class Maps
     /**
      * @var Markers[]
      *
-     * @ORM\OneToMany(targetEntity="Markers", mappedBy="map", fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="Markers", mappedBy="map")
      * @Expose
      */
     protected $markers;
@@ -129,7 +129,7 @@ class Maps
     /**
      * @var Zones[]
      *
-     * @ORM\OneToMany(targetEntity="Zones", mappedBy="map", fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="Zones", mappedBy="map")
      * @Expose
      */
     protected $zones;
