@@ -5,8 +5,3 @@ esterenmaps:
 esterenmaps_api:
     resource: "@EsterenMapsApiBundle/Controller/"
     type:     annotation
-
-esterenmaps_admin:
-    resource:    "@EsterenMapsAdminBundle/Controller/"
-    type:        annotation
-    host:        %esteren_domains.backoffice%

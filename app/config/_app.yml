@@ -49,7 +49,6 @@ assetic:
         - 'EsterenMapsBundle'
         - 'EsterenPortalBundle'
         - 'CorahnRinBundle'
-        - 'EsterenMapsAdminBundle'
     filters:
         cssrewrite: ~
         less:
