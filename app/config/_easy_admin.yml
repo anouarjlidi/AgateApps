@@ -32,9 +32,9 @@ easy_admin:
         "Esteren Maps - Routes":
             class: EsterenMaps\MapsBundle\Entity\Routes
             list:
-                fields: [ id, name, distance, description, markerStart, markerEnd ]
+                fields: [ id, name, distance, description, routeType, markerStart, markerEnd ]
             form:
-                fields: [ name, description, markerStart, markerEnd, faction ]
+                fields: [ name, description, routeType, markerStart, markerEnd, faction ]
         "Esteren Maps - Types de routes":
             class: EsterenMaps\MapsBundle\Entity\RoutesTypes
             list:

@@ -42,7 +42,6 @@ class TransportTypesFixtures extends AbstractFixture implements OrderedFixtureIn
         $this->fixtureObject($repo, 3, 'Cheval', 'cheval', '', 12);
         $this->fixtureObject($repo, 4, 'Caernide', 'caernide', '', 12);
 
-
         $this->manager->flush();
     }
 

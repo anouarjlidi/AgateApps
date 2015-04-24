@@ -220,7 +220,7 @@
             for (i in zones) {
                 if (zones.hasOwnProperty(i)) {
                     zone = zones[i];
-                    coords = JSON.parse(zone.coordinates);
+                    coords = (typeof zone.coordinates === 'string') ? JSON.parse(zone.coordinates) : zone.coordinates;
                     finalLeafletOptions = this.cloneObject(leafletOptions, {id:zone.id});
 
                     if (zone.zone_type && zone.zone_type.color) {

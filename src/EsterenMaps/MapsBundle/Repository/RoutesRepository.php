@@ -14,8 +14,7 @@ class RoutesRepository extends BaseRepository {
      *
      * @return array|Routes[]
      */
-    public function findByIdsArray(array $ids,
-$sortByIds = false)
+    public function findByIdsArray(array $ids, $sortByIds = false)
     {
         $result = $this->_em
             ->createQuery("

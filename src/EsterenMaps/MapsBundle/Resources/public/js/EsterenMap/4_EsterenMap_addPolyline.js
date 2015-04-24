@@ -293,7 +293,7 @@
             for (i in routes) {
                 if (routes.hasOwnProperty(i)) {
                     route = routes[i];
-                    coords = JSON.parse(route.coordinates);
+                    coords = (typeof route.coordinates === 'string') ? JSON.parse(route.coordinates) : route.coordinates;
                     finalLeafletOptions = this.cloneObject(leafletOptions, {id:route.id});
 
                     if (route.route_type.color) {

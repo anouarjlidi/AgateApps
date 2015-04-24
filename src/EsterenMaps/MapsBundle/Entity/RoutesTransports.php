@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * RoutesTransports
  *
- * @ORM\Table(name="maps_routes_transports")
+ * @ORM\Table(name="maps_routes_transports", uniqueConstraints={@ORM\UniqueConstraint(name="unique_route_transport",columns={"route_type_id", "transport_type_id"})})
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  * @ORM\Entity(repositoryClass="EsterenMaps\MapsBundle\Repository\MapsRepository")
  * @ExclusionPolicy("all")
