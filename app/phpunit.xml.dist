@@ -16,11 +16,10 @@
         </testsuite>
     </testsuites>
 
-    <!--
     <php>
-        <server name="KERNEL_DIR" value="/path/to/your/app/" />
+        <!--<server name="KERNEL_DIR" value="/path/to/your/app/" />-->
+        <ini name="zend.enable_gc" value="0" />
     </php>
-    -->
 
     <filter>
         <whitelist>
