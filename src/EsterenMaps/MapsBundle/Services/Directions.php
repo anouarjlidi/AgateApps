@@ -15,7 +15,8 @@ use Symfony\Component\HttpFoundation\Request;
  * Utilise l'algorithme de Dijkstra pour calculer le trajet entre deux marqueurs
  * @package EsterenMaps\MapsBundle\Services
  */
-class Directions {
+class Directions
+{
 
     /**
      * @var EntityManager
@@ -49,15 +50,16 @@ class Directions {
      * @param EntityManager $entityManager
      * @param Serializer    $serializer
      */
-    public function __construct($cacheDir, $cacheTTL, $debug, EntityManager $entityManager, Serializer $serializer) {
+    public function __construct($cacheDir, $cacheTTL, $debug, EntityManager $entityManager, Serializer $serializer)
+    {
         $this->cacheDir = rtrim($cacheDir, '/\\');
         if (!is_dir($this->cacheDir)) {
             mkdir($this->cacheDir, 0777, true);
         }
-        $this->cacheTTL = $cacheTTL;
-        $this->debug = $debug;
+        $this->cacheTTL      = $cacheTTL;
+        $this->debug         = $debug;
         $this->entityManager = $entityManager;
-        $this->serializer = $serializer;
+        $this->serializer    = $serializer;
     }
 
     /**
@@ -65,12 +67,13 @@ class Directions {
      * @param Markers        $start
      * @param Markers        $end
      * @param TransportTypes $transportType
+     *
      * @return array
      */
     public function getDirections(Maps $map, Markers $start, Markers $end, TransportTypes $transportType = null)
     {
         $cacheFile = $this->getCacheFile($map, $start, $end, $transportType);
-        $exists = file_exists($cacheFile) && filemtime($cacheFile) > (time() - $this->cacheTTL);
+        $exists    = file_exists($cacheFile) && filemtime($cacheFile) > (time() - $this->cacheTTL);
 
         if (true === $exists && !$this->debug) {
             $directions = file_get_contents($cacheFile);
@@ -89,9 +92,11 @@ class Directions {
      * @param Markers        $start
      * @param Markers        $end
      * @param TransportTypes $transportType
+     *
      * @return array
      */
-    protected function doGetDirections(Maps $map, Markers $start, Markers $end, TransportTypes $transportType = null) {
+    protected function doGetDirections(Maps $map, Markers $start, Markers $end, TransportTypes $transportType = null)
+    {
 
         /** @var MarkersRepository $repo */
         $repo = $this->entityManager->getRepository('EsterenMapsBundle:Markers');
@@ -107,46 +112,46 @@ class Directions {
          * Formatage des noeuds et des arcs pour une exploitation plus simple par l'algo de dijkstra
          */
         foreach ($allMarkers as $marker) {
-            $markerId = (int) $marker['id'];
+            $markerId         = (int) $marker['id'];
             $nodes[$markerId] = array(
-                'id' => $markerId,
-                'name' => $marker['name'],
+                'id'         => $markerId,
+                'name'       => $marker['name'],
                 'neighbours' => array(),
             );
             foreach ($marker['routesStart'] as $route) {
-                $allRoutes[$route['id']] = $route;
-                $routeId = (int) $route['id'];
+                $allRoutes[$route['id']]                  = $route;
+                $routeId                                  = (int) $route['id'];
                 $nodes[$markerId]['neighbours'][$routeId] = array(
                     'distance' => $route['distance'],
-                    'end' => $route['markerEnd']['id'],
+                    'end'      => $route['markerEnd']['id'],
                 );
                 if (!array_key_exists($routeId, $edges)) {
                     $edges[$routeId] = array(
-                        'id' => $routeId,
-                        'name' => $route['name'],
+                        'id'       => $routeId,
+                        'name'     => $route['name'],
                         'distance' => $route['distance'],
                         'vertices' => array(
                             'start' => $markerId,
-                            'end' => $route['markerEnd']['id'],
+                            'end'   => $route['markerEnd']['id'],
                         ),
                     );
                 }
             }
             foreach ($marker['routesEnd'] as $route) {
-                $allRoutes[$route['id']] = $route;
-                $routeId = (int) $route['id'];
+                $allRoutes[$route['id']]                  = $route;
+                $routeId                                  = (int) $route['id'];
                 $nodes[$markerId]['neighbours'][$routeId] = array(
                     'distance' => $route['distance'],
-                    'end' => $route['markerStart']['id'],
+                    'end'      => $route['markerStart']['id'],
                 );
                 if (!array_key_exists($routeId, $edges)) {
                     $edges[$routeId] = array(
-                        'id' => $routeId,
-                        'name' => $route['name'],
+                        'id'       => $routeId,
+                        'name'     => $route['name'],
                         'distance' => $route['distance'],
                         'vertices' => array(
                             'start' => $route['markerStart']['id'],
-                            'end' => $markerId,
+                            'end'   => $markerId,
                         ),
                     );
                 }
@@ -160,7 +165,7 @@ class Directions {
         $allRoutes = $this->entityManager->getRepository('EsterenMapsBundle:Routes')->findByIdsArray(array_keys($allRoutes), true);
 
         foreach ($paths as $step) {
-            $marker = $allMarkers[$step['node']['id']];
+            $marker          = $allMarkers[$step['node']['id']];
             $marker['route'] = $allRoutes[$step['route']['id']];
             unset(
                 $marker['routesStart'],
@@ -195,20 +200,23 @@ class Directions {
 
     /**
      * Applies Dijkstra algorithm to calculate minimal distance between source and target
+     *
      * @param $nodes
      * @param $edges
      * @param $source
      * @param $target
+     *
      * @return array
      */
-    protected function dijkstra($nodes, $edges, $source, $target) {
+    protected function dijkstra($nodes, $edges, $source, $target)
+    {
 
         $distances = array();
-        $previous = array();
+        $previous  = array();
 
         foreach ($nodes as $id => $node) {
             $distances[$id] = INF;
-            $previous[$id] = null;
+            $previous[$id]  = null;
         }
 
         $distances[$source] = 0;
@@ -217,11 +225,11 @@ class Directions {
 
         while (count($Q) > 0) {
 
-            $min = INF;
+            $min     = INF;
             $current = null;
-            foreach ($Q as $id => $node){
+            foreach ($Q as $id => $node) {
                 if ($distances[$id] < $min) {
-                    $min = $distances[$id];
+                    $min     = $distances[$id];
                     $current = $node;
                 }
             }
@@ -234,13 +242,13 @@ class Directions {
             if (!empty($current['neighbours'])) {
                 foreach ($current['neighbours'] as $route => $neighbour) {
                     $distance = $neighbour['distance'];
-                    $end = $neighbour['end'];
-                    $alt = $distances[$current['id']] + $distance;
+                    $end      = $neighbour['end'];
+                    $alt      = $distances[$current['id']] + $distance;
                     if ($alt < $distances[$end]) {
                         $distances[$end] = $alt;
-                        $previous[$end] = array(
-                            'id' => $current['id'],
-                            'node' => $current,
+                        $previous[$end]  = array(
+                            'id'    => $current['id'],
+                            'node'  => $current,
                             'route' => $edges[$route],
                         );
                     }
@@ -250,7 +258,7 @@ class Directions {
         }
 
         $path = array();
-        $u = array('id'=>$target);
+        $u    = array('id' => $target);
         while (isset($previous[$u['id']])) {
             array_unshift($path, $previous[$u['id']]);
             $u = $previous[$u['id']];
@@ -265,25 +273,28 @@ class Directions {
      * @param Markers        $start
      * @param Markers        $end
      * @param TransportTypes $transportType
+     *
      * @return array
      */
     protected function getCacheFile(Maps $map, Markers $start, Markers $end, TransportTypes $transportType = null)
     {
-        $hash = md5($map->getId().$start->getId().$end->getId().($transportType?:''));
+        $hash = md5($map->getId().$start->getId().$end->getId().($transportType ? : ''));
+
         return $this->cacheDir.'/'.$hash.'.json';
     }
 
     /**
-     * @param Markers $from
-     * @param Markers $to
+     * @param Markers   $from
+     * @param Markers   $to
      * @param Markers[] $directions
+     *
      * @return array
      */
     protected function getDataArray(Markers $from, Markers $to, array $directions)
     {
         $distance = 0;
-        $NE = array();
-        $SW = array();
+        $NE       = array();
+        $SW       = array();
 
         foreach ($directions as $step) {
             $distance += $step->route ? $step->route->getDistance() : 0;
@@ -305,16 +316,17 @@ class Directions {
                 }
             }
         }
+
         return array(
-            'bounds' => array(
+            'bounds'          => array(
                 'northEast' => $NE,
                 'southWest' => $SW,
             ),
-            'total_distance' => $distance,
+            'total_distance'  => $distance,
             'number_of_steps' => count($directions) - 2,
-            'start' => $from,
-            'end' => $to,
-            'path' => $directions,
+            'start'           => $from,
+            'end'             => $to,
+            'path'            => $directions,
         );
     }
 }
