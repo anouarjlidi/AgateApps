@@ -244,6 +244,9 @@ class Directions
                     $distance = $neighbour['distance'];
                     $end      = $neighbour['end'];
                     $alt      = $distances[$current['id']] + $distance;
+                    if (!isset($distances[$end])) {
+                        return array();
+                    }
                     if ($alt < $distances[$end]) {
                         $distances[$end] = $alt;
                         $previous[$end]  = array(
@@ -323,7 +326,7 @@ class Directions
                 'southWest' => $SW,
             ),
             'total_distance'  => $distance,
-            'number_of_steps' => count($directions) - 2,
+            'number_of_steps' => count($directions) ? (count($directions) - 2) : 0,
             'start'           => $from,
             'end'             => $to,
             'path'            => $directions,

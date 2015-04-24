@@ -32,6 +32,11 @@ class MarkersRepository extends BaseRepository {
                 markerEndStart,
                 markerEndEnd
 
+                ".($transportType?"
+                    ,routesStartTypesTransports
+                    ,routesEndTypesTransports
+                ":"")."
+
             FROM {$this->_entityName} markers
 
             LEFT JOIN markers.routesStart routesStart
@@ -46,15 +51,19 @@ class MarkersRepository extends BaseRepository {
                 LEFT JOIN routesStart.routeType routesStartTypes
                 LEFT JOIN routesStartTypes.transports routesStartTypesTransports
                     WITH routesStartTypesTransports.transportType = :transport
-                    AND routesStartTypesTransports.percentage != 0
 
                 LEFT JOIN routesStart.routeType routesEndTypes
                 LEFT JOIN routesEndTypes.transports routesEndTypesTransports
                     WITH routesEndTypesTransports.transportType = :transport
-                    AND routesEndTypesTransports.percentage != 0
             ":"")."
 
             WHERE markers.map = :map
+
+            ".($transportType?"
+                HAVING
+                        (routesStartTypesTransports.percentage != 0 OR routesStartTypesTransports.percentage IS NULL)
+                    AND (routesEndTypesTransports.percentage   != 0 OR routesEndTypesTransports.percentage   IS NULL)
+            ":"")."
         ";
 
         if ($transportType) {
