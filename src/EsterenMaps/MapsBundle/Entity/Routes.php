@@ -399,6 +399,14 @@ class Routes
     }
 
     /**
+     * @return bool
+     */
+    public function isLocalized()
+    {
+        return $this->coordinates !== null;
+    }
+
+    /**
      * @return array
      */
     public function getDecodedCoordinates()

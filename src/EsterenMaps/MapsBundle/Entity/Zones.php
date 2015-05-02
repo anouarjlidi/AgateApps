@@ -251,4 +251,11 @@ class Zones
         return $this->zoneType;
     }
 
+    /**
+     * @return bool
+     */
+    public function isLocalized()
+    {
+        return $this->coordinates !== null;
+    }
 }

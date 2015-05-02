@@ -486,4 +486,11 @@ class Markers
         return $this->description;
     }
 
+    /**
+     * @return bool
+     */
+    public function isLocalized()
+    {
+        return $this->latitude !== null && $this->longitude !== null;
+    }
 }
