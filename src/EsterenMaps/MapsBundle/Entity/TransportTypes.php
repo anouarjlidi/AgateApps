@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="maps_transports_types")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
- * @ORM\Entity(repositoryClass="EsterenMaps\MapsBundle\Repository\MapsRepository")
+ * @ORM\Entity()
  * @ExclusionPolicy("all")
  */
 class TransportTypes

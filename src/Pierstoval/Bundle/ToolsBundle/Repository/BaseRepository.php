@@ -19,6 +19,9 @@ class BaseRepository extends EntityRepository
      */
     public function findAllRoot($sortCollection = null)
     {
+        if ($sortCollection && strpos($sortCollection, '.') === false) {
+            $sortCollection = 'object.'.$sortCollection;
+        }
         return $this->createQueryBuilder('object', $sortCollection)->getQuery()->getResult();
     }
 
