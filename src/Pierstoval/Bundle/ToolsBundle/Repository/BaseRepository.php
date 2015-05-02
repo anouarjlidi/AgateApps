@@ -9,7 +9,7 @@ use Doctrine\ORM\Query;
  * BaseRepository
  * Gestionnaire de repositories de Corahn-Rin
  */
-abstract class BaseRepository extends EntityRepository
+class BaseRepository extends EntityRepository
 {
 
     /**

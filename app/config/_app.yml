@@ -14,6 +14,8 @@ parameters:
     locales_regex: fr|en|de|es
 
 doctrine:
+    orm:
+        default_repository_class: Pierstoval\Bundle\ToolsBundle\Repository\BaseRepository
     dbal:
         path:     "%database_path%" # For eventual sqlite integration
 
@@ -37,9 +39,7 @@ twig:
         esteren_domains_backoffice: %esteren_domains.backoffice%
         esteren_domains_api: %esteren_domains.api%
         esteren_domains_cookieDomain: %esteren_domains.cookieDomain%
-    form:
-        # Overrides des formulaires
-        resources:
+    form_themes:
             - 'PierstovalToolsBundle:Form:form_div_layout.html.twig'
             - 'PierstovalToolsBundle:Form:fields.html.twig'
             - 'PierstovalToolsBundle:Form:form_errors.html.twig'
