@@ -1,7 +1,7 @@
 <?php
 namespace EsterenMaps\MapsBundle\Repository;
 use EsterenMaps\MapsBundle\Entity\TransportTypes;
-use Pierstoval\Bundle\ToolsBundle\Repository\BaseRepository;
+use Orbitale\Component\DoctrineTools\BaseEntityRepository as BaseRepository;
 use EsterenMaps\MapsBundle\Entity\Maps;
 
 /**

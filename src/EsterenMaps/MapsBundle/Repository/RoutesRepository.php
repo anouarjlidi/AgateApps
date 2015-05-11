@@ -3,7 +3,7 @@
 namespace EsterenMaps\MapsBundle\Repository;
 
 use EsterenMaps\MapsBundle\Entity\Routes;
-use Pierstoval\Bundle\ToolsBundle\Repository\BaseRepository;
+use Orbitale\Component\DoctrineTools\BaseEntityRepository as BaseRepository;
 
 class RoutesRepository extends BaseRepository {
 

@@ -1,7 +1,7 @@
 <?php
 namespace CorahnRin\CorahnRinBundle\Repository;
 
-use Pierstoval\Bundle\ToolsBundle\Repository\BaseRepository;
+use Orbitale\Component\DoctrineTools\BaseEntityRepository as BaseRepository;
 
 /**
  * JobsRepository

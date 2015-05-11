@@ -3,7 +3,7 @@ namespace CorahnRin\CorahnRinBundle\Repository;
 
 use CorahnRin\CorahnRinBundle\Entity\Traits;
 use CorahnRin\CorahnRinBundle\Entity\Ways;
-use Pierstoval\Bundle\ToolsBundle\Repository\BaseRepository;
+use Orbitale\Component\DoctrineTools\BaseEntityRepository as BaseRepository;
 
 /**
  * TraitsRepository

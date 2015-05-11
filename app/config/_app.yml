@@ -15,7 +15,7 @@ parameters:
 
 doctrine:
     orm:
-        default_repository_class: Pierstoval\Bundle\ToolsBundle\Repository\BaseRepository
+        default_repository_class: Orbitale\Component\DoctrineTools\BaseEntityRepository
     dbal:
         path:     "%database_path%" # For eventual sqlite integration
 

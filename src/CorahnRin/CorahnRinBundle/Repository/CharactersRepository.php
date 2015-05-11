@@ -2,7 +2,7 @@
 namespace CorahnRin\CorahnRinBundle\Repository;
 
 use CorahnRin\CorahnRinBundle\Entity\Characters;
-use Pierstoval\Bundle\ToolsBundle\Repository\BaseRepository;
+use Orbitale\Component\DoctrineTools\BaseEntityRepository as BaseRepository;
 
 /**
  * CharactersRepository

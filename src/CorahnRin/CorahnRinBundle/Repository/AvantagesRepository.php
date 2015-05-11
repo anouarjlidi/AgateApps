@@ -2,7 +2,7 @@
 namespace CorahnRin\CorahnRinBundle\Repository;
 
 use CorahnRin\CorahnRinBundle\Entity\Avantages;
-use Pierstoval\Bundle\ToolsBundle\Repository\BaseRepository;
+use Orbitale\Component\DoctrineTools\BaseEntityRepository as BaseRepository;
 
 /**
  * AvantagesRepository
