@@ -2,22 +2,13 @@
 
 namespace EsterenMaps\MapsBundle\DataFixtures\ORM;
 
-use Doctrine\Common\DataFixtures\AbstractFixture;
-use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Mapping\ClassMetadata;
-use EsterenMaps\MapsBundle\Entity\RoutesTransports;
+use Doctrine\Common\Collections\ArrayCollection;
 use EsterenMaps\MapsBundle\Entity\RoutesTypes;
 use EsterenMaps\MapsBundle\Entity\TransportTypes;
+use Orbitale\Component\DoctrineTools\AbstractFixture;
 
-class RoutesTransportsFixtures extends AbstractFixture implements OrderedFixtureInterface
+class RoutesTransportsFixtures extends AbstractFixture
 {
-
-    /**
-     * @var ObjectManager
-     */
-    private $manager;
 
     /**
      * Get the order of this fixture
@@ -29,16 +20,22 @@ class RoutesTransportsFixtures extends AbstractFixture implements OrderedFixture
     }
 
     /**
-     * Load data fixtures with the passed EntityManager
+     * Returns the class of the entity you're managing
      *
-     * @param ObjectManager $manager
+     * @return string
      */
-    function load(ObjectManager $manager)
+    protected function getEntityClass()
     {
-        $this->manager = $manager;
+        return 'EsterenMaps\MapsBundle\Entity\RoutesTransports';
+    }
 
-        $repo = $this->manager->getRepository('EsterenMapsBundle:RoutesTransports');
-
+    /**
+     * Returns a list of objects to
+     *
+     * @return ArrayCollection|object[]
+     */
+    protected function getObjects()
+    {
         /** @var RoutesTypes $routeType1 */
         /** @var RoutesTypes $routeType2 */
         /** @var RoutesTypes $routeType3 */
@@ -55,56 +52,19 @@ class RoutesTransportsFixtures extends AbstractFixture implements OrderedFixture
         $transportType3 = $this->getReference('esterenmaps-transports-3');
         $transportType4 = $this->getReference('esterenmaps-transports-4');
 
-        $this->fixtureObject($repo, 1,  $routeType3, $transportType4, 100);
-        $this->fixtureObject($repo, 2,  $routeType3, $transportType3, 100);
-        $this->fixtureObject($repo, 3,  $routeType3, $transportType2, 100);
-        $this->fixtureObject($repo, 4,  $routeType3, $transportType1, 100);
-        $this->fixtureObject($repo, 5,  $routeType2, $transportType4, 100);
-        $this->fixtureObject($repo, 6,  $routeType2, $transportType3, 100);
-        $this->fixtureObject($repo, 7,  $routeType2, $transportType2, 100);
-        $this->fixtureObject($repo, 8,  $routeType2, $transportType1, 100);
-        $this->fixtureObject($repo, 9,  $routeType1, $transportType4, 100);
-        $this->fixtureObject($repo, 10, $routeType1, $transportType3, 100);
-        $this->fixtureObject($repo, 11, $routeType1, $transportType2, 100);
-        $this->fixtureObject($repo, 12, $routeType1, $transportType1, 100);
-
-        $this->manager->flush();
+        return array(
+            array('id' => 1, 'routeType' =>  $routeType3, 'transportType' => $transportType4, 'percentage' => 100, 'positiveRatio' => true),
+            array('id' => 2, 'routeType' =>  $routeType3, 'transportType' => $transportType3, 'percentage' => 100, 'positiveRatio' => true),
+            array('id' => 3, 'routeType' =>  $routeType3, 'transportType' => $transportType2, 'percentage' => 100, 'positiveRatio' => true),
+            array('id' => 4, 'routeType' =>  $routeType3, 'transportType' => $transportType1, 'percentage' => 100, 'positiveRatio' => true),
+            array('id' => 5, 'routeType' =>  $routeType2, 'transportType' => $transportType4, 'percentage' => 100, 'positiveRatio' => true),
+            array('id' => 6, 'routeType' =>  $routeType2, 'transportType' => $transportType3, 'percentage' => 100, 'positiveRatio' => true),
+            array('id' => 7, 'routeType' =>  $routeType2, 'transportType' => $transportType2, 'percentage' => 100, 'positiveRatio' => true),
+            array('id' => 8, 'routeType' =>  $routeType2, 'transportType' => $transportType1, 'percentage' => 100, 'positiveRatio' => true),
+            array('id' => 9, 'routeType' =>  $routeType1, 'transportType' => $transportType4, 'percentage' => 100, 'positiveRatio' => true),
+            array('id' => 10, 'routeType' => $routeType1, 'transportType' => $transportType3, 'percentage' => 100, 'positiveRatio' => true),
+            array('id' => 11, 'routeType' => $routeType1, 'transportType' => $transportType2, 'percentage' => 100, 'positiveRatio' => true),
+            array('id' => 12, 'routeType' => $routeType1, 'transportType' => $transportType1, 'percentage' => 100, 'positiveRatio' => true),
+        );
     }
-
-    public function fixtureObject(EntityRepository $repo, $id, RoutesTypes $routeType, TransportTypes $transportType, $ratio, $positive = false)
-    {
-        $obj       = null;
-        $newObject = false;
-        $addRef    = false;
-        if ($id) {
-            $obj = $repo->find($id);
-            if ($obj) {
-                $addRef = true;
-            } else {
-                $newObject = true;
-            }
-        } else {
-            $newObject = true;
-        }
-        if ($newObject === true) {
-            $obj = new RoutesTransports();
-            $obj->setId($id)
-                ->setRouteType($routeType)
-                ->setTransportType($transportType)
-                ->setPercentage($ratio)
-                ->setPositiveRatio($positive)
-            ;
-            if ($id) {
-                /** @var ClassMetadata $metadata */
-                $metadata = $this->manager->getClassMetaData(get_class($obj));
-                $metadata->setIdGeneratorType(ClassMetadata::GENERATOR_TYPE_NONE);
-            }
-            $this->manager->persist($obj);
-            $addRef = true;
-        }
-        if ($addRef === true && $obj) {
-            $this->addReference('esterenmaps-routestransports-'.$id, $obj);
-        }
-    }
-
 }
