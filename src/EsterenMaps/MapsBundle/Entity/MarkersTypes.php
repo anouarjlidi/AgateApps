@@ -53,7 +53,7 @@ class MarkersTypes
     /**
      * @var Media
      * @ORM\ManyToOne(targetEntity="Application\Sonata\MediaBundle\Entity\Media", cascade={"persist"}, fetch="EAGER")
-     * @ORM\JoinColumn(name="media_id", nullable=false)
+     * @ORM\JoinColumn(name="media_id", nullable=true)
      * @Serializer\Expose
      */
     protected $icon;
