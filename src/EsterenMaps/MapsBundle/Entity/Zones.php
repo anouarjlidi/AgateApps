@@ -54,7 +54,7 @@ class Zones
      * @ORM\Column(name="coordinates", type="text")
      * @Serializer\Expose
      */
-    protected $coordinates;
+    protected $coordinates = '';
 
     /**
      * @var Maps

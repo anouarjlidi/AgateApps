@@ -56,7 +56,7 @@ class Routes
      * @ORM\Column(name="coordinates", type="text")
      * @Serializer\Expose
      */
-    protected $coordinates;
+    protected $coordinates = '';
 
     /**
      * @var integer
@@ -403,7 +403,7 @@ class Routes
      */
     public function isLocalized()
     {
-        return $this->coordinates !== null;
+        return $this->coordinates !== null && count($this->coordinates);
     }
 
     /**
@@ -422,6 +422,9 @@ class Routes
      */
     public function refresh()
     {
+        if (!$this->coordinates) {
+            $this->coordinates = '[]';
+        }
         $coords = json_decode($this->coordinates, true);
 
         if ($this->markerStart) {
