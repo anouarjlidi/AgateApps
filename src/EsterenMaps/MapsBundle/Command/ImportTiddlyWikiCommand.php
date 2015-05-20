@@ -2,6 +2,7 @@
 namespace EsterenMaps\MapsBundle\Command;
 
 use DateTime;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\EntityManager;
 use EsterenMaps\MapsBundle\Entity\Factions;
@@ -13,7 +14,6 @@ use EsterenMaps\MapsBundle\Entity\Zones;
 use EsterenMaps\MapsBundle\Entity\Routes;
 use EsterenMaps\MapsBundle\Entity\ZonesTypes;
 use Orbitale\Component\DoctrineTools\BaseEntityRepository;
-use Orbitale\Component\EntityMerger\EntityMerger;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -26,47 +26,67 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
     /**
      * @var array
      */
-    protected $datas = array();
+    private $datas = array();
 
     /**
      * @var EntityManager
      */
-    protected $em;
+    private $em;
 
     /**
      * @var OutputInterface
      */
-    protected $output;
+    private $output;
 
     /**
      * @var boolean
      */
-    protected $dryRun = true;
+    private $dryRun = true;
 
     /**
      * @var Maps[]
      */
-    protected $maps = array();
+    private $maps = array();
 
     /**
      * @var Factions[]
      */
-    protected $factions = array();
+    private $factions = array();
 
     /**
      * @var MarkersTypes[]
      */
-    protected $markersTypes = array();
+    private $markersTypes = array();
 
     /**
      * @var ZonesTypes[]
      */
-    protected $zonesTypes = array();
+    private $zonesTypes = array();
 
     /**
      * @var RoutesTypes[]
      */
-    protected $routesTypes = array();
+    private $routesTypes = array();
+
+    /**
+     * @var Routes[]
+     */
+    private $routes = array();
+
+    /**
+     * @var Zones[]
+     */
+    private $zones = array();
+
+    /**
+     * @var Markers[]
+     */
+    private $markers = array();
+
+    /**
+     * @var array
+     */
+    private $repos = array();
 
     /**
      * {@inheritdoc}
@@ -78,7 +98,7 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
             ->setDescription('Generate all tiles for a specific map.')
             ->setHelp('This command imports datas from a tiddly wiki file or url into the database.')
             ->addArgument('file', InputArgument::REQUIRED, 'The file or the url to check.')
-            ->addOption('force', 'f', InputOption::VALUE_OPTIONAL, 'Executes the command instead of just showing modified elements.')
+            ->addOption('force', 'f', InputOption::VALUE_NONE, 'Executes the command instead of just showing modified elements.')
         ;
     }
 
@@ -115,34 +135,34 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
 
         $output->writeln('Processing...');
 
-        $this->maps         = $this->em->getRepository('EsterenMapsBundle:Maps')->findAllRoot('id');
-        $this->factions     = $this->getReferenceObjects('factions', 'EsterenMapsBundle:Factions', 'id_faction');
-        $this->markersTypes = $this->getReferenceObjects('markertype', 'EsterenMapsBundle:MarkersTypes', 'id_marker');
-        $this->zonesTypes   = $this->getReferenceObjects('zonetype', 'EsterenMapsBundle:ZonesTypes', 'id_zonetype');
-        $this->routesTypes  = $this->getReferenceObjects('routetype', 'EsterenMapsBundle:RoutesTypes', 'id_route');
+        $this->maps         = $this->getRepository('EsterenMapsBundle:Maps')->findAllRoot('id');
+        $this->factions     = $this->getReferenceObjects('factions', Factions::class, 'id_');
+        $this->markersTypes = $this->getReferenceObjects('markertype', MarkersTypes::class, 'id_marker');
+        $this->zonesTypes   = $this->getReferenceObjects('zonetype', ZonesTypes::class, 'id_zone');
+        $this->routesTypes  = $this->getReferenceObjects('routetype', RoutesTypes::class, 'id_route');
 
-        $this->processObjects('routes', 'EsterenMapsBundle:Routes', 'id_');
-        $this->processObjects('zones', 'EsterenMapsBundle:Zones', 'id_');
-        $this->processObjects('marqueurs', 'EsterenMapsBundle:Markers', 'id_');
+        $this->processObjects('marqueurs', Markers::class, 'id_');
+        $this->processObjects('zones', Zones::class, 'id_');
+        $this->processObjects('routes', Routes::class, 'id_');
 
+        // Edit ALL entities before processing flush
         $this->em->getUnitOfWork()->computeChangeSets();
 
-        if ($output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE) {
-            $updates = $this->em->getUnitOfWork()->getScheduledEntityUpdates();
-            $updatesCollec = $this->em->getUnitOfWork()->getScheduledCollectionUpdates();
-            $this->showProcessed('Update', array_merge($updates, $updatesCollec));
-            $inserts = $this->em->getUnitOfWork()->getScheduledEntityInsertions();
-            $this->showProcessed('Add', $inserts);
-        }
+        $updates = $this->em->getUnitOfWork()->getScheduledEntityUpdates();
+        $updatesCollec = $this->em->getUnitOfWork()->getScheduledCollectionUpdates();
+        $this->showProcessed('Update', array_merge($updates, $updatesCollec));
+        $inserts = $this->em->getUnitOfWork()->getScheduledEntityInsertions();
+        $this->showProcessed('Add', $inserts);
 
         if ($this->dryRun) {
             $output->writeln('Finished processing dry run.');
-        } else {
-            try {
-                $this->em->flush();
-            } catch (\Exception $e) {
-                throw new \RuntimeException('An error occured when trying to update the database.', null, $e);
-            }
+            return 1;
+        }
+
+        try {
+            $this->em->flush();
+        } catch (\Exception $e) {
+            throw new \RuntimeException('An error occured when trying to update the database.', null, $e);
         }
 
         //TODO: Update the whole TiddlyWiki file to manage updates
@@ -157,34 +177,39 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
      *
      * @return object[]
      */
-    protected function getReferenceObjects($tag, $entity, $idToReplace, $nameProperty = 'name')
+    private function getReferenceObjects($tag, $entity, $idToReplace, $nameProperty = 'name')
     {
         $datas = array_filter($this->datas, function ($element) use ($tag) {
             return isset($element['tags']) && $element['tags'] === $tag;
         });
 
-        /** @var BaseEntityRepository $repo */
-        $repo = $this->em->getRepository($entity);
+        $repo = $this->getRepository($entity);
 
         $objects = $repo->findAllRoot('id');
 
         foreach ($datas as $data) {
 
-            if (strpos($data['id'], $idToReplace) === 0) {
+            $id = $data['id'];
+
+            if (strpos($id, $idToReplace) === 0) {
                 $exists = $repo->findOneBy(array($nameProperty => $data['title']));
                 if (!$exists) {
-                    $object = new MarkersTypes();
-                    $object->{'set'.ucfirst($nameProperty)}($data['title']);
-                    $this->em->persist($object);
-
-                    if ($this->dryRun) {
-                        $object->setId($data['id']);
-                    } else {
-                        $this->em->flush($object);
-                    }
-                    $objects[$object->getId()] = $object;
+                    $object = new $entity();
+                } else {
+                    $object = $exists;
                 }
+            } elseif (isset($objects[$id])) {
+                $object = $objects[$id];
+            } else {
+                throw new \RuntimeException('Could not retrieve reference of type "'.$tag.'" with id "'.$id.'".');
             }
+
+            $object->{'set'.ucfirst($nameProperty)}($data['title']);
+            $object->setId($id);
+
+            $this->em->persist($object);
+
+            $objects[$object->getId()] = $object;
         }
 
         return $objects;
@@ -194,65 +219,77 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
      * @param string $tag
      * @param string $entity
      * @param string $idToReplace
-     *
-     * @return object[]
      */
-    protected function processObjects($tag, $entity, $idToReplace)
+    private function processObjects($tag, $entity, $idToReplace)
     {
         $datas = array_filter($this->datas, function ($element) use ($tag) {
             return isset($element['tags']) && $element['tags'] === $tag;
         });
 
-        /** @var BaseEntityRepository $repo */
-        $repo = $this->em->getRepository($entity);
+        $repo = $this->getRepository($entity);
 
+        // Fetch base objects
         $objects = $repo->findAllRoot('id');
-
-        $merger = new EntityMerger($this->em, $this->getContainer()->get('jms_serializer'));
+        $finalObjects = array();
 
         foreach ($datas as $data) {
 
-            $type             = $data['tags'];
-            $id               = isset($data['id']) ? $data['id'] : null;
-            $data['created']  = DateTime::createFromFormat('YmdHisu', isset($data['created']) ? $data['created'] : date('YmdHisu'));
-            $data['modified'] = DateTime::createFromFormat('YmdHisu', isset($data['modified']) ? $data['modified'] : date('YmdHisu'));
+            /** @var Routes|Markers|Zones $object */
+            $object = null;
+
+            $type = $data['tags'];
+            $id   = isset($data['id']) ? $data['id'] : null;
 
             if (strpos($data['id'], $idToReplace) === 0) {
                 $object = $repo->findOneBy(array('name' => $data['title']));
                 if (!$object) {
-                    $object = new Routes();
-
-                    if ($this->dryRun) {
-                        $object->setId($data['id']);
-                    }
+                    $object = new $entity();
                 }
             } else {
-                $object = $repo->find($id);
-                if (!$object) {
+                if (isset($objects[$id])) {
+                    $object = $objects[$id];
+                } else {
                     $this->output->writeln('<error>Did not find "'.$tag.'" object with id "'.$id.'".</error>');
                     continue;
                 }
             }
 
+            if ($this->dryRun && !$object->getId()) {
+                $object->setId($id);
+            }
+
+            $data = $this->normalizeData($data);
+
             switch ($type) {
                 case 'marqueurs':
-                    $object = $merger->merge($object, $data, array(
-                        'id' => true,
-                        'title' => array('objectField' => 'description'),
-                        'created' => array('objectField' => 'createdAt'),
-                        'modified' => array('objectField' => 'updatedAt'),
-                    ));
+                    $object
+                        ->setId($data['id'])
+                        ->setName($data['title'])
+                        ->setDescription($data['text'])
+                        ->setMap($data['map_id'])
+                        ->setFaction($data['faction_id'] ?: null)
+                        ->setMarkerType($data['markertype_id'])
+                    ;
+                    $object->setCreatedAt($data['created']);
+                    $object->setUpdatedAt($data['modified']);
                     if (!$object->isLocalized()) {
                         $object->setLatitude(0)->setLongitude(0);
                     }
                     break;
                 case 'routes':
-                    $object = $merger->merge($object, $data, array(
-                        'id' => true,
-                        'title' => array('objectField' => 'description'),
-                        'created' => array('objectField' => 'createdAt'),
-                        'modified' => array('objectField' => 'updatedAt'),
-                    ));
+                    dump($data);
+                    $object
+                        ->setId($data['id'])
+                        ->setName($data['title'])
+                        ->setDescription($data['text'])
+                        ->setMap($data['map_id'])
+                        ->setFaction($data['faction_id'] ?: null)
+                        ->setRouteType($data['routetype_id'])
+                        ->setMarkerStart($data['markerstart_id'] ?: null)
+                        ->setMarkerEnd($data['markerend_id'] ?: null)
+                    ;
+                    $object->setCreatedAt($data['created']);
+                    $object->setUpdatedAt($data['modified']);
                     if (!$object->isLocalized()) {
                         $object->setCoordinates(array(
                             array('lat' => 0, 'lng' => 0),
@@ -261,12 +298,16 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
                     }
                     break;
                 case 'zones':
-                    $object = $merger->merge($object, $data, array(
-                        'id' => true,
-                        'title' => array('objectField' => 'description'),
-                        'created' => array('objectField' => 'createdAt'),
-                        'modified' => array('objectField' => 'updatedAt'),
-                    ));
+                    $object
+                        ->setId($data['id'])
+                        ->setName($data['title'])
+                        ->setDescription($data['text'])
+                        ->setMap($data['map_id'])
+                        ->setFaction($data['faction_id'] ?: null)
+                        ->setZoneType($data['zonetype_id'])
+                    ;
+                    $object->setCreatedAt($data['created']);
+                    $object->setUpdatedAt($data['modified']);
                     if (!$object->isLocalized()) {
                         $object->setCoordinates(array(
                             array('lat' => 0, 'lng' => 0),
@@ -279,23 +320,46 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
                     throw new \RuntimeException('Unknown type "'.$type.'".');
             }
 
-            $metadata = $this->em->getClassMetaData(get_class($object));
-            $metadata->setIdGeneratorType(ClassMetadata::GENERATOR_TYPE_NONE);
-
             if (method_exists($object, 'setUpdatedAt')) {
                 $object->setUpdatedAt(new DateTime());
             }
+
+            $finalObjects[$object->getId()] = $object;
+
+            switch ($tag) {
+                case 'zones':
+                    $this->zones = $finalObjects;
+                    break;
+                case 'marqueurs':
+                    $this->markers = $finalObjects;
+                    break;
+                case 'routes':
+                    $this->routes = $finalObjects;
+                    break;
+            }
+
             $this->em->persist($object);
+            usleep(31250*3);
         }
 
-        return $objects;
+        switch ($tag) {
+            case 'zones':
+                $this->zones = $finalObjects;
+                break;
+            case 'marqueurs':
+                $this->markers = $finalObjects;
+                break;
+            case 'routes':
+                $this->routes = $finalObjects;
+                break;
+        }
     }
 
     /**
      * @param string   $processType
      * @param object[] $objects
      */
-    private function showProcessed($processType, $objects)
+    private function showProcessed($processType, array $objects = array())
     {
         foreach ($objects as $object) {
             $class = explode('\\', get_class($object));
@@ -314,7 +378,64 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
                 $ref = $object->getName();
             }
             $this->output->writeln(' > <comment>'.$processType.'</comment> '.$type.' of type <comment>'.$class.'</comment> with '.$refType.' <info>'.$ref.'</info>');
+            usleep(31250);
         }
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return array
+     */
+    private function normalizeData(array $data)
+    {
+        $data['created']  = DateTime::createFromFormat('YmdHisu', isset($data['created']) ? $data['created'] : date('YmdHisu'));
+        $data['modified'] = DateTime::createFromFormat('YmdHisu', isset($data['modified']) ? $data['modified'] : date('YmdHisu'));
+
+        $fieldsToNormalize = array(
+            'map_id'         => array('property' => 'maps'),
+            'markertype_id'  => array('property' => 'markersTypes'),
+            'routetype_id'   => array('property' => 'routesTypes'),
+            'zonetype_id'    => array('property' => 'zonesTypes'),
+            'markerend_id'   => array('property' => 'markers'),
+            'markerstart_id' => array('property' => 'markers'),
+            'faction_id'     => array('property' => 'factions'),
+        );
+
+        foreach ($fieldsToNormalize as $field => $attr) {
+            $property = $attr['property'];
+            if (!isset($this->$property)) {
+                throw new \InvalidArgumentException('Property '.$property.' does not exist as reference.');
+            }
+            $list = $this->$property;
+            if (isset($data[$field]) && isset($list[$data[$field]])) {
+                $data[$field] = $list[$data[$field]];
+            } elseif (
+                isset($data[$field])
+                && !in_array($field, array('faction_id', 'markerend_id', 'markerstart_id')) // Some nullable fields
+            ) {
+                if (in_array($field, array('faction_id', 'markerend_id', 'markerstart_id'))) {
+                    dump($data[$field]);exit;
+                    //TODO
+                }
+                throw new \RuntimeException('<error>Could not find "'.$property.'" reference object with id "'.$data[$field].'".</error>');
+            }
+        }
+
+        return $data;
+    }
+
+    /**
+     * @param string $entityName
+     *
+     * @return EntityRepository|BaseEntityRepository
+     */
+    private function getRepository($entityName)
+    {
+        if (!isset($this->repos[$entityName])) {
+            $this->repos[$entityName] = $this->em->getRepository($entityName);
+        }
+        return $this->repos[$entityName];
     }
 
 }
