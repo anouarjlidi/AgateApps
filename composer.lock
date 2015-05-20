@@ -1,7 +1,7 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
     "hash": "3976ccc1077360b27b79ce3aed807534",
@@ -2172,16 +2172,16 @@
         },
         {
             "name": "orbitale/entity-merger",
-            "version": "v0.3",
+            "version": "v0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Orbitale/EntityMerger.git",
-                "reference": "7712f9f246cbaa0be3121de78aba5b48980a813d"
+                "reference": "faf07c8612583c9afba22f287a2a657fd5ce49e2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Orbitale/EntityMerger/zipball/7712f9f246cbaa0be3121de78aba5b48980a813d",
-                "reference": "7712f9f246cbaa0be3121de78aba5b48980a813d",
+                "url": "https://api.github.com/repos/Orbitale/EntityMerger/zipball/faf07c8612583c9afba22f287a2a657fd5ce49e2",
+                "reference": "faf07c8612583c9afba22f287a2a657fd5ce49e2",
                 "shasum": ""
             },
             "require": {
@@ -2190,6 +2190,7 @@
                 "symfony/symfony": ">=2.3.21"
             },
             "require-dev": {
+                "jms/serializer": "~0.16",
                 "phpunit/phpunit": "4.3.*",
                 "satooshi/php-coveralls": "~0.6"
             },
@@ -2219,7 +2220,7 @@
                 "orm",
                 "symfony"
             ],
-            "time": "2015-03-14 15:39:23"
+            "time": "2015-03-30 16:37:36"
         },
         {
             "name": "orbitale/imagemagick-php",
