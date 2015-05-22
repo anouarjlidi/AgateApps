@@ -3,7 +3,6 @@ namespace EsterenMaps\MapsBundle\Command;
 
 use DateTime;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\EntityManager;
 use EsterenMaps\MapsBundle\Entity\Factions;
 use EsterenMaps\MapsBundle\Entity\Maps;
@@ -259,6 +258,7 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
             }
 
             $data = $this->normalizeData($data);
+            continue;
 
             switch ($type) {
                 case 'marqueurs':
@@ -277,7 +277,6 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
                     }
                     break;
                 case 'routes':
-                    dump($data);
                     $object
                         ->setId($data['id'])
                         ->setName($data['title'])
@@ -342,6 +341,7 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
             usleep(31250*3);
         }
 
+        return;
         switch ($tag) {
             case 'zones':
                 $this->zones = $finalObjects;
@@ -410,14 +410,7 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
             $list = $this->$property;
             if (isset($data[$field]) && isset($list[$data[$field]])) {
                 $data[$field] = $list[$data[$field]];
-            } elseif (
-                isset($data[$field])
-                && !in_array($field, array('faction_id', 'markerend_id', 'markerstart_id')) // Some nullable fields
-            ) {
-                if (in_array($field, array('faction_id', 'markerend_id', 'markerstart_id'))) {
-                    dump($data[$field]);exit;
-                    //TODO
-                }
+            } elseif (isset($data[$field]) && !isset($list[$data[$field]]) && !in_array($field, array('faction_id', 'markerend_id', 'markerstart_id'))) {
                 throw new \RuntimeException('<error>Could not find "'.$property.'" reference object with id "'.$data[$field].'".</error>');
             }
         }
