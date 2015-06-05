@@ -13,6 +13,7 @@ use EsterenMaps\MapsBundle\Entity\Zones;
 use EsterenMaps\MapsBundle\Entity\Routes;
 use EsterenMaps\MapsBundle\Entity\ZonesTypes;
 use Orbitale\Component\DoctrineTools\BaseEntityRepository;
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -133,6 +134,18 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
         $output->writeln('Found <info>'.$total.'</info> items to check for import.');
 
         $output->writeln('Processing...');
+
+        $tags = array_reduce($datas, function($carry, $object) {
+            $carry[$object['tags']] = array(
+                'tag' => $object['tags'],
+                'nb_occurrences' => isset($carry[$object['tags']]['nb_occurrences']) ? $carry[$object['tags']]['nb_occurrences']+1 : 1,
+            );
+            return $carry;
+        });
+        $table = new Table($output);
+        $table->setHeaders(array('Tag found', 'Count'));
+        $table->setRows($tags);
+        $table->render();
 
         $this->maps         = $this->getRepository('EsterenMapsBundle:Maps')->findAllRoot('id');
         $this->factions     = $this->getReferenceObjects('factions', Factions::class, 'id_');
