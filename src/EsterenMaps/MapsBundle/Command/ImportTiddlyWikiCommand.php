@@ -154,21 +154,17 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
         $this->routesTypes  = $this->getReferenceObjects('routetype', RoutesTypes::class, 'id_route');
 
         $this->processObjects('marqueurs', Markers::class, 'id_');
-        dump(array(
-            'new' => array_map('strval', $this->routesTypes['new']),
-            'existing' => array_map('strval', $this->routesTypes['existing']),
-        ));exit;
         $this->processObjects('zones', Zones::class, 'id_');
         $this->processObjects('routes', Routes::class, 'id_');
-
-        // Edit ALL entities before processing flush
-        $this->em->getUnitOfWork()->computeChangeSets();
-
-        $updates = $this->em->getUnitOfWork()->getScheduledEntityUpdates();
-        $updatesCollec = $this->em->getUnitOfWork()->getScheduledCollectionUpdates();
-        $this->showProcessed('Update', array_merge($updates, $updatesCollec));
-        $inserts = $this->em->getUnitOfWork()->getScheduledEntityInsertions();
-        $this->showProcessed('Add', $inserts);
+//
+//        // Edit ALL entities before processing flush
+//        $this->em->getUnitOfWork()->computeChangeSets();
+//
+//        $updates = $this->em->getUnitOfWork()->getScheduledEntityUpdates();
+//        $updatesCollec = $this->em->getUnitOfWork()->getScheduledCollectionUpdates();
+//        $this->showProcessed('Update', array_merge($updates, $updatesCollec));
+//        $inserts = $this->em->getUnitOfWork()->getScheduledEntityInsertions();
+//        $this->showProcessed('Add', $inserts);
 
         if ($this->dryRun) {
             $output->writeln('Finished processing dry run.');
@@ -260,6 +256,55 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
 
         $repo = $this->getRepository($entity);
 
+        $new = array();
+        $existing = array();
+
+        $objects = $repo->findAllRoot('id');
+
+        foreach ($datas as $data) {
+
+            $object = null;
+
+            $id = $data['id'];
+
+            // Checks automatically if the objects exists from its ID.
+            // If not, we get the object by title
+            if (isset($objects[$id])) {
+                $object = $objects[$id];
+            } elseif ($object = $repo->findOneBy(array('name' => $data['title']))) {}
+
+            if ($object) {
+                $existing[$object->getId()] = $object;
+                $type = 'Update';
+            } else {
+                $object = new $entity();
+                $type = 'Add   ';
+                $new[$id] = $object;
+            }
+
+            $object->{'set'.ucfirst('name')}($data['title']);
+
+            $this->showOneProcessed('object', $type, $object);
+
+            $this->em->persist($object);
+        }
+
+        foreach ($objects as $object) {
+            if (!isset($existing[$object->getId()])) {
+                $existing[$object->getId()] = $object;
+                $this->showOneProcessed('Nothing done on object', '', $object);
+            }
+        }
+
+
+
+        return;
+        $datas = array_filter($this->datas, function ($element) use ($tag) {
+            return isset($element['tags']) && $element['tags'] === $tag;
+        });
+
+        $repo = $this->getRepository($entity);
+
         // Fetch base objects
         $objects = $repo->findAllRoot('id');
         $finalObjects = array();
@@ -290,7 +335,8 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
                 $object->setId($id);
             }
 
-            $data = $this->normalizeData($data);
+            dump($object);
+//            $data = $this->normalizeData($data);
             continue;
 
             switch ($type) {
@@ -398,7 +444,9 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
         $class = explode('\\', get_class($object));
         $class = array_pop($class);
         $ref = (string) $object;
-        $this->output->writeln(' > <comment>'.$processType.'</comment> '.$objectType.' of type <comment>'.$class.'</comment>: <info>'.$ref.'</info>');
+        $processType = $processType ? '<comment>'.$processType.'</comment>' : '';
+        $this->output->writeln(' > '.$processType.'</comment> '.$objectType.' of type <comment>'.$class.'</comment>: <info>'.$ref.'</info>');
+        usleep(31250);
     }
 
     /**
