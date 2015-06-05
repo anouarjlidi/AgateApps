@@ -154,6 +154,10 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
         $this->routesTypes  = $this->getReferenceObjects('routetype', RoutesTypes::class, 'id_route');
 
         $this->processObjects('marqueurs', Markers::class, 'id_');
+        dump(array(
+            'new' => array_map('strval', $this->routesTypes['new']),
+            'existing' => array_map('strval', $this->routesTypes['existing']),
+        ));exit;
         $this->processObjects('zones', Zones::class, 'id_');
         $this->processObjects('routes', Routes::class, 'id_');
 
@@ -197,34 +201,50 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
 
         $repo = $this->getRepository($entity);
 
+        $new = array();
+        $existing = array();
+
         $objects = $repo->findAllRoot('id');
 
         foreach ($datas as $data) {
 
+            $object = null;
+
             $id = $data['id'];
 
-            if (strpos($id, $idToReplace) === 0) {
-                $exists = $repo->findOneBy(array($nameProperty => $data['title']));
-                if (!$exists) {
-                    $object = new $entity();
-                } else {
-                    $object = $exists;
-                }
-            } elseif (isset($objects[$id])) {
+            // Checks automatically if the objects exists from its ID.
+            // If not, we get the object by title
+            if (isset($objects[$id])) {
                 $object = $objects[$id];
+            } elseif ($object = $repo->findOneBy(array($nameProperty => $data['title']))) {}
+
+            if ($object) {
+                $existing[$object->getId()] = $object;
+                $type = 'Update';
             } else {
-                throw new \RuntimeException('Could not retrieve reference of type "'.$tag.'" with id "'.$id.'".');
+                $object = new $entity();
+                $type = 'Add   ';
+                $new[$id] = $object;
             }
 
             $object->{'set'.ucfirst($nameProperty)}($data['title']);
-            $object->setId($id);
+
+            $this->showOneProcessed('reference', $type, $object);
 
             $this->em->persist($object);
-
-            $objects[$object->getId()] = $object;
         }
 
-        return $objects;
+        foreach ($objects as $object) {
+            if (!isset($existing[$object->getId()])) {
+                $existing[$object->getId()] = $object;
+                $this->showOneProcessed('reference', 'Don\'t touch', $object);
+            }
+        }
+
+        return array(
+            'new' => $new,
+            'existing' => $existing,
+        );
     }
 
     /**
@@ -366,6 +386,19 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
                 $this->routes = $finalObjects;
                 break;
         }
+    }
+
+    /**
+     * @param string $objectType
+     * @param string $processType
+     * @param object $object
+     */
+    private function showOneProcessed($objectType, $processType, $object)
+    {
+        $class = explode('\\', get_class($object));
+        $class = array_pop($class);
+        $ref = (string) $object;
+        $this->output->writeln(' > <comment>'.$processType.'</comment> '.$objectType.' of type <comment>'.$class.'</comment>: <info>'.$ref.'</info>');
     }
 
     /**
