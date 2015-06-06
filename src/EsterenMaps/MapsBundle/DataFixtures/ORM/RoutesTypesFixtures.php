@@ -40,6 +40,8 @@ class RoutesTypesFixtures extends AbstractFixture implements OrderedFixtureInter
         $this->fixtureObject($repo, 1, 'Chemin', '', 'rgba(165,110,52,1)');
         $this->fixtureObject($repo, 2, 'Route', '', 'rgba(199,191,183,1)');
         $this->fixtureObject($repo, 3, 'Sentier de loup', '', 'rgba(194,176,76,1)');
+        $this->fixtureObject($repo, 4, 'Liaison maritime', '', '');
+        $this->fixtureObject($repo, 5, 'Voie fluviale', '', '');
 
         $this->manager->flush();
     }

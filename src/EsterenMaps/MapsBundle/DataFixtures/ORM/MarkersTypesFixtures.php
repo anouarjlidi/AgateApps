@@ -52,6 +52,10 @@ class MarkersTypesFixtures extends AbstractFixture implements OrderedFixtureInte
         $this->fixtureObject($repo, 5, 'Site d\'intérêt', '', $icon10);
         $this->fixtureObject($repo, 6, 'Fortifications (châteaux, angardes, rosace)', '', $icon9);
         $this->fixtureObject($repo, 7, 'Souterrain (mine, cité troglodyte, réseau de cavernes)', '', $icon11);
+        $this->fixtureObject($repo, 8, 'Établissement', '', null);
+        $this->fixtureObject($repo, 9, 'Lieu hanté ou maudit', '', null);
+        $this->fixtureObject($repo, 10, 'Marqueur invisible', '', null);
+        $this->fixtureObject($repo, 11, 'Village', '', null);
 
         $this->manager->flush();
     }

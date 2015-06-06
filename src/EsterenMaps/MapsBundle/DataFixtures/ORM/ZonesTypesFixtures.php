@@ -56,6 +56,10 @@ class ZonesTypesFixtures extends AbstractFixture implements OrderedFixtureInterf
         $this->fixtureObject($repo, 12, 7, 'Landes', '', '#9F8F50');
         $this->fixtureObject($repo, 13, 7, 'Mer, lac', '', '#7099E4');
         $this->fixtureObject($repo, 14, 7, 'Île(s)', '', '#6367AA');
+        $this->fixtureObject($repo, 15, 7, 'Collines', '', '');
+        $this->fixtureObject($repo, 16, 7, 'Plage(s)', '', '');
+        $this->fixtureObject($repo, 17, 7, 'Plaine(s)', '', '');
+        $this->fixtureObject($repo, 18, 7, 'Plateau', '', '');
 
         $this->manager->flush();
     }

@@ -191,7 +191,7 @@ class MarkersTypes
      *
      * @return $this
      */
-    public function setIcon(Media $icon)
+    public function setIcon(Media $icon = null)
     {
         $this->icon = $icon;
 
