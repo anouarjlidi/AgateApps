@@ -28,8 +28,8 @@ echo "Welcome to Symfony's application resetter!"
 
 echo $NL
 echo "================"
-echo "Remove cache and assets"
-rm -rf app/cache/* web/bundles/*
+echo "Remove cache"
+rm -rf app/cache/*
 
 echo $NL
 echo "================"
@@ -57,7 +57,7 @@ fi
 echo $NL
 echo "================"
 echo "> Force recreation of the assets in relative mode"
-${CONSOLECMD} assets:i --symlink --relative
+${CONSOLECMD} assets:i --symlink
 
 echo $NL
 echo "================"
