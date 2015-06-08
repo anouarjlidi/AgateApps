@@ -16,9 +16,9 @@ if echo "$SFENV" | grep -E '^dev|prod|test$' > /dev/null
 then
         echo "Check env $SFENV"
 else
-        echo "First argument must be a valid environment: dev, prod or test"
-        echo "Given: $SFENV"
-        exit 1
+    echo "First argument must be a valid environment: dev, prod or test"
+    echo "Given: $SFENV"
+    exit 1
 fi
 
 CONSOLECMD="php app/console --env=$SFENV "
@@ -48,11 +48,11 @@ then
 fi
 
 checkFosUserEnabled=`${CONSOLECMD} list -n --no-ansi | grep "fos:user:create"`
-if [ -n "checkFosUserEnabled" ]
-then
-    echo "> Create a basic superadmin user"
-    ${CONSOLECMD} fos:user:create --super-admin admin admin@localhost admin
-fi
+#if [ -n "checkFosUserEnabled" ]
+#then
+#    echo "> Create a basic superadmin user"
+#    ${CONSOLECMD} fos:user:create --super-admin admin admin@localhost admin
+#fi
 
 echo $NL
 echo "================"
