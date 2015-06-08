@@ -170,46 +170,46 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
                 $this->em->flush();
                 $output->writeln(' <info>Ok!</info>');
                 $code = 0;
+
+                $idsUpdated = 0;
+
+                foreach ($this->datas as $k => $data) {
+                    $id = $data['id'];
+
+                    if (is_numeric($id)) {
+                        continue;
+                    }
+
+                    $newId = null;
+
+                    switch ($data['tags']) {
+                        case 'marqueurs':
+                            $newId = $this->markers['new'][$id]->getId();
+                            break;
+                        case 'zones':
+                            $newId = $this->zones['new'][$id]->getId();
+                            break;
+                        case 'routes':
+                            $newId = $this->routes['new'][$id]->getId();
+                            break;
+                        case 'factions':
+                            $newId = $this->factions['new'][$id]->getId();
+                            break;
+                    }
+
+                    if ($newId) {
+                        $this->datas[$k]['id'] = $newId;
+                        $idsUpdated++;
+                    }
+                }
+
+                $json = json_encode($this->datas, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_BIGINT_AS_STRING);
+                file_put_contents($file, $json);
+                $output->writeln('Updated <info>'.$idsUpdated.'</info> identifiers in the JSON file.');
             } catch (\Exception $e) {
                 throw new \RuntimeException('An error occured when trying to update the database.', null, $e);
             }
         }
-
-        $idsUpdated = 0;
-
-        foreach ($this->datas as $k => $data) {
-            $id = $data['id'];
-
-            if (is_numeric($id)) {
-                continue;
-            }
-
-            $newId = null;
-
-            switch ($data['tags']) {
-                case 'marqueurs':
-                    $newId = $this->markers['new'][$id]->getId();
-                    break;
-                case 'zones':
-                    $newId = $this->zones['new'][$id]->getId();
-                    break;
-                case 'routes':
-                    $newId = $this->routes['new'][$id]->getId();
-                    break;
-                case 'factions':
-                    $newId = $this->factions['new'][$id]->getId();
-                    break;
-            }
-
-            if ($newId) {
-                $this->datas[$k]['id'] = $newId;
-                $idsUpdated++;
-            }
-        }
-
-        $json = json_encode($this->datas, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_BIGINT_AS_STRING);
-        file_put_contents($file, $json);
-        $output->writeln('Updated <info>'.$idsUpdated.'</info> identifiers in the JSON file.');
 
         $output->writeln('Executed in '.number_format(microtime(true) - $time, 4).' seconds');
         return $code;
