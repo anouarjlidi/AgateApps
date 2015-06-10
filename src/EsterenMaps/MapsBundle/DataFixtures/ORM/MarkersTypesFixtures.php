@@ -2,96 +2,54 @@
 
 namespace EsterenMaps\MapsBundle\DataFixtures\ORM;
 
-use Doctrine\Common\DataFixtures\AbstractFixture;
-use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Mapping\ClassMetadata;
-use EsterenMaps\MapsBundle\Entity\MarkersTypes;
+use Doctrine\Common\Collections\ArrayCollection;
+use Orbitale\Component\DoctrineTools\AbstractFixture;
 
-class MarkersTypesFixtures extends AbstractFixture implements OrderedFixtureInterface
+class MarkersTypesFixtures extends AbstractFixture
 {
-
     /**
-     * @var ObjectManager
+     * {@inheritdoc}
      */
-    private $manager;
-
-    /**
-     * Get the order of this fixture
-     * @return integer
-     */
-    function getOrder()
+    public function getOrder()
     {
         return 1;
     }
 
     /**
-     * Load data fixtures with the passed EntityManager
-     *
-     * @param ObjectManager $manager
+     * {@inheritdoc}
      */
-    function load(ObjectManager $manager)
+    protected function getEntityClass()
     {
-        $this->manager = $manager;
-
-        $repo = $this->manager->getRepository('EsterenMapsBundle:MarkersTypes');
-
-        $icon5  = $this->getReference('application-media-5');
-        $icon6  = $this->getReference('application-media-6');
-        $icon7  = $this->getReference('application-media-7');
-        $icon8  = $this->getReference('application-media-8');
-        $icon10 = $this->getReference('application-media-10');
-        $icon9  = $this->getReference('application-media-9');
-        $icon11 = $this->getReference('application-media-11');
-
-        $this->fixtureObject($repo, 1, 'Cité', '', $icon5);
-        $this->fixtureObject($repo, 2, 'Port (village côtier, ...)', '', $icon6);
-        $this->fixtureObject($repo, 3, 'Carrefour', '', $icon7);
-        $this->fixtureObject($repo, 4, 'Sanctuaire', '', $icon8);
-        $this->fixtureObject($repo, 5, 'Site d\'intérêt', '', $icon10);
-        $this->fixtureObject($repo, 6, 'Fortifications (châteaux, angardes, rosace)', '', $icon9);
-        $this->fixtureObject($repo, 7, 'Souterrain (mine, cité troglodyte, réseau de cavernes)', '', $icon11);
-        $this->fixtureObject($repo, 8, 'Établissement', '', null);
-        $this->fixtureObject($repo, 9, 'Lieu hanté ou maudit', '', null);
-        $this->fixtureObject($repo, 10, 'Marqueur invisible', '', null);
-        $this->fixtureObject($repo, 11, 'Village', '', null);
-
-        $this->manager->flush();
+        return 'EsterenMaps\MapsBundle\Entity\MarkersTypes';
     }
 
-    public function fixtureObject(EntityRepository $repo, $id, $name, $description, $icon)
+    /**
+     * {@inheritdoc}
+     */
+    protected function getReferencePrefix()
     {
-        $obj       = null;
-        $newObject = false;
-        $addRef    = false;
-        if ($id) {
-            $obj = $repo->find($id);
-            if ($obj) {
-                $addRef = true;
-            } else {
-                $newObject = true;
-            }
-        } else {
-            $newObject = true;
-        }
-        if ($newObject === true) {
-            $obj = new MarkersTypes();
-            $obj->setId($id)
-                ->setName($name)
-                ->setDescription($description)
-                ->setIcon($icon)
-            ;
-            if ($id) {
-                /** @var ClassMetadata $metadata */
-                $metadata = $this->manager->getClassMetaData(get_class($obj));
-                $metadata->setIdGeneratorType(ClassMetadata::GENERATOR_TYPE_NONE);
-            }
-            $this->manager->persist($obj);
-            $addRef = true;
-        }
-        if ($addRef === true && $obj) {
-            $this->addReference('esterenmaps-markerstypes-'.$id, $obj);
-        }
+        return 'esterenmaps-markerstypes-';
+    }
+
+    /**
+     * Returns a list of objects to
+     *
+     * @return ArrayCollection|object[]
+     */
+    protected function getObjects()
+    {
+        return array(
+            array('id' => 1,  'iconWidth' => 16, 'iconHeight' => 16, 'icon' => 'pastille_brune.png',  'name' => 'Cité',                        'description' => ''),
+            array('id' => 2,  'iconWidth' => 16, 'iconHeight' => 16, 'icon' => 'pastille_bleue.png',  'name' => 'Port (village côtier, ...)',  'description' => ''),
+            array('id' => 3,  'iconWidth' => 16, 'iconHeight' => 16, 'icon' => 'pastille2_brune.png', 'name' => 'Carrefour',                   'description' => ''),
+            array('id' => 4,  'iconWidth' => 16, 'iconHeight' => 16, 'icon' => 'pastille2_verte.png', 'name' => 'Sanctuaire',                  'description' => ''),
+            array('id' => 5,  'iconWidth' => 16, 'iconHeight' => 16, 'icon' => 'pastille_verte.png',  'name' => 'Site d\'intérêt',             'description' => ''),
+            array('id' => 6,  'iconWidth' => 16, 'iconHeight' => 16, 'icon' => 'pastille_grise.png',  'name' => 'Fortifications (châteaux, angardes, rosace)', 'description' => ''),
+            array('id' => 7,  'iconWidth' => 16, 'iconHeight' => 16, 'icon' => 'pastille2_grise.png', 'name' => 'Souterrain (mine, cité troglodyte, réseau de cavernes)', 'description' => ''),
+            array('id' => 8,  'iconWidth' => 16, 'iconHeight' => 16, 'icon' => 'pastille2_bleue.png', 'name' => 'Établissement',               'description' => ''),
+            array('id' => 9,  'iconWidth' => 16, 'iconHeight' => 16, 'icon' => 'pastille2_bleue.png', 'name' => 'Lieu hanté ou maudit',        'description' => ''),
+            array('id' => 10, 'iconWidth' => 16, 'iconHeight' => 16, 'icon' => 'invisible.png',       'name' => 'Marqueur invisible',          'description' => ''),
+            array('id' => 11, 'iconWidth' => 16, 'iconHeight' => 16, 'icon' => 'pastille2_bleue.png', 'name' => 'Village',                     'description' => ''),
+        );
     }
 }

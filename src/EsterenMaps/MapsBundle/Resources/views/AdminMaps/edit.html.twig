@@ -1,5 +1,7 @@
-{% extends "EasyAdminBundle::layout.html.twig" %}
+{% extends "@EasyAdmin/default/layout.html.twig" %}
 {% trans_default_domain 'admin.maps.edit' %}
+
+{% block body_id 'esterenmap_edit' %}
 
 {% block head_stylesheets %}
 {{ parent() }}
@@ -7,7 +9,7 @@
 <style type="text/css" id="map_add_style"></style>
 {% endblock %}
 
-{% block title %}{{ 'Modifier une carte' | trans({},'pages.titles') }} {{ map.name | trans }} - {{ parent() }}{% endblock %}
+{% block page_title %}{{ 'Modifier une carte' | trans({},'pages.titles') }} {{ map.name | trans }} - {{ parent() }}{% endblock %}
 
 {% block content %}
     <div class="row">
@@ -40,10 +42,13 @@
 
 {% block body_javascript %}
     {{ parent() }}
-
-    <script type="text/javascript" src="{{ asset('components/jquery/dist/jquery.min.js') }}"></script>
+    {#<script type="text/javascript" src="{{ asset('components/jquery/dist/jquery.min.js') }}"></script>#}
+    {#<script src="{{ asset('bundles/easyadmin/javascript/jquery-flexmenu.min.js') }}"></script>#}
     <script type="text/javascript" src="{{ asset('js/global.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/maps_lib.js') }}"></script>
+    {#<script src="{{ asset('bundles/easyadmin/javascript/admin.js') }}"></script>#}
+
+    <script src="{{ path('pierstoval_tools_assets_jstranslations') }}"></script>
 
     {% javascripts
     '@EsterenMapsBundle/Resources/public/js/map_edit.js'
@@ -67,14 +72,14 @@
                         },
                         LeafletMapBaseOptions: {
                             maxZoom: {{ map.maxZoom }},
-                            maxBounds: [[85.23,-183], [11,41]]
+                            maxBounds: [[87,-183], [11,41]]
                         },
                         LeafletLayerBaseOptions: {
                             maxZoom: {{ map.maxZoom }},
                             maxNativeZoom: {{ map.maxZoom }},
                             tileSize: {{ tile_size }},
                             noWrap: false,
-                            bounds: [[85.23,-183], [11,41]]
+                            bounds: [[87,-183], [11,41]]
                         },
                         autoResize: true,
                         containerHeight: '100%'

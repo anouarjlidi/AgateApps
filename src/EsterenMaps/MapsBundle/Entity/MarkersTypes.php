@@ -4,6 +4,7 @@ namespace EsterenMaps\MapsBundle\Entity;
 
 use Application\Sonata\MediaBundle\Entity\Media;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
@@ -52,11 +53,21 @@ class MarkersTypes
 
     /**
      * @var Media
-     * @ORM\ManyToOne(targetEntity="Application\Sonata\MediaBundle\Entity\Media", cascade={"persist"}, fetch="EAGER")
-     * @ORM\JoinColumn(name="media_id", nullable=true)
-     * @Serializer\Expose
+     * @ORM\Column(name="icon", type="string", length=255, nullable=false)
      */
-    protected $icon;
+    protected $icon = '';
+
+    /**
+     * @var int
+     * @ORM\Column(name="icon_width", type="integer")
+     */
+    protected $iconWidth = 0;
+
+    /**
+     * @var int
+     * @ORM\Column(name="icon_height", type="integer")
+     */
+    protected $iconHeight = 0;
 
     /**
      * @var Markers[]
@@ -187,15 +198,72 @@ class MarkersTypes
     }
 
     /**
-     * @param Media $icon
+     * @param string $icon
      *
      * @return $this
      */
-    public function setIcon(Media $icon = null)
+    public function setIcon($icon = null)
     {
         $this->icon = $icon;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     * @Serializer\VirtualProperty()
+     */
+    public function getWebIcon()
+    {
+        return '/img/markerstypes/'.$this->icon;
+    }
+
+    /**
+     * @return int
+     */
+    public function getIconWidth()
+    {
+        return $this->iconWidth;
+    }
+
+    /**
+     * @param int $iconWidth
+     *
+     * @return MarkersTypes
+     */
+    public function setIconWidth($iconWidth)
+    {
+        $this->iconWidth = $iconWidth;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getIconHeight()
+    {
+        return $this->iconHeight;
+    }
+
+    /**
+     * @param int $iconHeight
+     *
+     * @return MarkersTypes
+     */
+    public function setIconHeight($iconHeight)
+    {
+        $this->iconHeight = $iconHeight;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getImageTag()
+    {
+        return '<img src="'.$this->getWebIcon().'">';
     }
 
 }

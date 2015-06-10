@@ -493,4 +493,9 @@ class Markers
     {
         return $this->latitude !== null && $this->longitude !== null;
     }
+
+    public function getImageTag()
+    {
+        return $this->markerType->getImageTag();
+    }
 }

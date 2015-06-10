@@ -31,7 +31,7 @@
 
     L.Marker.prototype.updateIcon = function(){
         // Change l'image de l'icône
-        this._icon.src = this._esterenMarker.marker_type.icon.formats.icon.url;
+        this._icon.src = this._esterenMarker.marker_type.icon;
 
         // Met à jour l'attribut "data" pour les filtres
         $(this._icon).attr('data-leaflet-object-type', 'markerType'+this._esterenMarker.marker_type.id);
@@ -345,20 +345,20 @@
 
         // Ajout de l'icône au cas où
         if (marker._esterenMarker.marker_type && marker._esterenMarker.marker_type.icon) {
-            iconOptions.iconUrl = marker._esterenMarker.marker_type.icon.formats.icon.url;
+            iconOptions.iconUrl = marker._esterenMarker.marker_type.web_icon;
 
-            iconWidth = marker._esterenMarker.marker_type.icon.formats.icon.width;
-            iconHeight = marker._esterenMarker.marker_type.icon.formats.icon.height;
+            iconWidth = marker._esterenMarker.marker_type.web_icon;
+            iconHeight = marker._esterenMarker.marker_type.web_icon;
             if (iconWidth || iconHeight) {
                 // N'applique une icône QUE si la hauteur ou la largeur sont définies
 
                 if (!iconWidth) {
                     // Calcule la largeur de l'icône à partir du ratio largeur/largeur_icone si celle-ci n'est pas définie
-                    iconWidth = parseInt(marker._esterenMarker.marker_type.icon.width / (marker._esterenMarker.marker_type.icon.height / iconHeight));
+                    iconWidth = parseInt(marker._esterenMarker.marker_type.icon_width / (marker._esterenMarker.marker_type.icon_height / iconHeight));
                 }
                 if (!iconHeight) {
                     // Calcule la hauteur de l'icône à partir du ratio largeur/largeur_icone si celle-ci n'est pas définie
-                    iconHeight = parseInt(marker._esterenMarker.marker_type.icon.height / (marker._esterenMarker.marker_type.icon.width / iconWidth));
+                    iconHeight = parseInt(marker._esterenMarker.marker_type.icon_height / (marker._esterenMarker.marker_type.icon_width / iconWidth));
                 }
 
                 iconOptions.iconSize = [iconWidth, iconHeight];
