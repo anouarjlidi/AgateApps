@@ -107,6 +107,7 @@ class ApiController extends FOSRestController
      */
     public function putAction($serviceName, Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_MANAGER');
         $this->checkAsker($request);
 
         $service    = $this->getService($serviceName);
@@ -148,6 +149,7 @@ class ApiController extends FOSRestController
      */
     public function postAction($serviceName, $id, Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_MANAGER');
         $this->checkAsker($request);
         $service = $this->getService($serviceName);
 
@@ -187,6 +189,7 @@ class ApiController extends FOSRestController
      */
     public function deleteAction($serviceName, $id, Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_MANAGER');
         $this->checkAsker($request);
 
         $service = $this->getService($serviceName);
