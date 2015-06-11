@@ -4,7 +4,6 @@ namespace EsterenMaps\MapsBundle\Entity;
 
 use Application\Sonata\MediaBundle\Entity\Media;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
@@ -60,14 +59,30 @@ class MarkersTypes
     /**
      * @var int
      * @ORM\Column(name="icon_width", type="integer")
+     * @Serializer\Expose
      */
     protected $iconWidth = 0;
 
     /**
      * @var int
      * @ORM\Column(name="icon_height", type="integer")
+     * @Serializer\Expose
      */
     protected $iconHeight = 0;
+
+    /**
+     * @var int
+     * @ORM\Column(name="icon_center_x", type="integer", nullable=true)
+     * @Serializer\Expose
+     */
+    protected $iconCenterX;
+
+    /**
+     * @var int
+     * @ORM\Column(name="icon_center_y", type="integer", nullable=true)
+     * @Serializer\Expose
+     */
+    protected $iconCenterY;
 
     /**
      * @var Markers[]
@@ -100,7 +115,7 @@ class MarkersTypes
     }
 
     /**
-     * @param integer $id
+     * @param int $id
      *
      * @return $this
      */
@@ -259,11 +274,43 @@ class MarkersTypes
     }
 
     /**
-     * @return string
+     * @return integer
      */
-    public function getImageTag()
+    public function getIconCenterX()
     {
-        return '<img src="'.$this->getWebIcon().'">';
+        return $this->iconCenterX;
+    }
+
+    /**
+     * @param int $iconCenterX
+     *
+     * @return MarkersTypes
+     */
+    public function setIconCenterX($iconCenterX)
+    {
+        $this->iconCenterX = $iconCenterX;
+
+        return $this;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getIconCenterY()
+    {
+        return $this->iconCenterY;
+    }
+
+    /**
+     * @param int $iconCenterY
+     *
+     * @return MarkersTypes
+     */
+    public function setIconCenterY($iconCenterY)
+    {
+        $this->iconCenterY = $iconCenterY;
+
+        return $this;
     }
 
 }

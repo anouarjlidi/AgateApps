@@ -101,7 +101,7 @@
         },
 
         createContent: function(){
-            var map = this._esterenMap, _this = this;
+            var map = this._esterenMap, _this = this, message = '';;
 
             if (this._cntSet) {
                 console.error('Content has already been set for this direction panel.');
@@ -113,7 +113,8 @@
                 directionsMsgTitle = typeof MSG_CONTROL_DIRECTIONS_TITLE !== 'undefined' ? MSG_CONTROL_DIRECTIONS_TITLE : 'Calculer un itinéraire',
                 directionsMsgStart = typeof MSG_CONTROL_DIRECTIONS_START !== 'undefined' ? MSG_CONTROL_DIRECTIONS_START : 'Départ',
                 directionsMsgEnd = typeof MSG_CONTROL_DIRECTIONS_END !== 'undefined' ? MSG_CONTROL_DIRECTIONS_END : 'Arrivée',
-                directionsMsgTransport = typeof MSG_CONTROL_TRANSPORTS !== 'undefined' ? MSG_CONTROL_TRANSPORTS : 'Moyen de transport'
+                directionsMsgTransport = typeof MSG_CONTROL_TRANSPORTS !== 'undefined' ? MSG_CONTROL_TRANSPORTS : 'Moyen de transport',
+                directionsMsgNotFound = typeof MSG_CONTROL_DIRECTIONS_MARKER_NOT_FONUD !== 'undefined' ? MSG_CONTROL_DIRECTIONS_MARKER_NOT_FONUD : 'Marqueur(s) non trouvé(s) :'
             ;
 
             // Ajout des différents noeuds à l'objet Content
@@ -215,10 +216,9 @@
                 }
                 if (markerStart && markerEnd) {
                     d.getElementById('directions_wait_overlay').style.display = "block";
-                    console.info('start', markerStart);
-                    console.info('end', markerEnd);
                     map._load({
                         uri: 'maps/directions/'+map.options().id+'/'+markerStart+'/'+markerEnd,
+                        xhr_name: 'directions_calculate',
                         datas: {
                             'transport': transport
                         },
@@ -233,6 +233,15 @@
                             }
                         }
                     });
+                } else if (markerStart || markerEnd || start || end) {
+                    message = '';
+                    if (!markerStart && start) {
+                        message += start;
+                    }
+                    if (!markerEnd && end) {
+                        message += (message?', ':'') + end;
+                    }
+                    d.getElementById('directions_message').innerHTML = directionsMsgNotFound + ' ' + message;
                 }
                 return false;
             });

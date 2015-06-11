@@ -3,19 +3,28 @@
     // Rajoute qqs attributs à des éléments de Leaflet et LeafletSidebar
     L.Marker.prototype._esterenMap = {};
     L.Marker.prototype._esterenMarker = {};
-    L.Marker.prototype._sidebar = {};
+    L.Marker.prototype._sidebar = null;
     L.Marker.prototype._sidebarContent = '';
     L.Marker.prototype.showSidebar = function(){
+        if (!this._sidebar) {
+            return;
+        }
         this._sidebar.setContent(this._sidebarContent);
         this._sidebar.show();
         return this;
     };
     L.Marker.prototype.hideSidebar = function(){
+        if (!this._sidebar) {
+            return;
+        }
         this._sidebar.hide();
         this._sidebar.setContent('');
         return this;
     };
     L.Marker.prototype.toggleSidebar = function(){
+        if (!this._sidebar) {
+            return;
+        }
         if (this._sidebar.isVisible()) {
             this.hideSidebar();
         } else {
@@ -31,7 +40,7 @@
 
     L.Marker.prototype.updateIcon = function(){
         // Change l'image de l'icône
-        this._icon.src = this._esterenMarker.marker_type.icon;
+        this._icon.src = this._esterenMarker.marker_type.icon_url;
 
         // Met à jour l'attribut "data" pour les filtres
         $(this._icon).attr('data-leaflet-object-type', 'markerType'+this._esterenMarker.marker_type.id);
@@ -176,15 +185,22 @@
     };
 
     EsterenMap.prototype._mapOptions.CustomMarkerBaseOptions = {
-        popupIsSidebar: true,
+        popupIsSidebar: false,
         clickCallback: function(e){
             var marker = e.target,
+                changePopupContent = false,
                 esterenMarker = marker._esterenMarker
             ;
 
-            marker.showSidebar();
+            if (marker._sidebar) {
+                marker.showSidebar();
+                changePopupContent =  marker._sidebar.isVisible();
+            } else {
+                //marker.togglePopup();
+                changePopupContent = marker.getPopup()._isOpen;
+            }
 
-            if (marker._sidebar.isVisible()) {
+            if (changePopupContent) {
                 d.getElementById('marker_popup_name').innerHTML = esterenMarker.name;
                 d.getElementById('marker_popup_type').innerHTML = esterenMarker.marker_type.name;
                 d.getElementById('marker_popup_faction').innerHTML = esterenMarker.faction ? esterenMarker.faction.name : '';
@@ -193,6 +209,7 @@
     };
 
     EsterenMap.prototype._mapOptions.CustomMarkerBaseOptionsEditMode = {
+        popupIsSidebar: true,
         clickCallback: function(e){
             var marker = e.target,
                 map = marker._esterenMap,
@@ -280,8 +297,8 @@
             mapOptions = this.options(),
             leafletOptions = this.cloneObject(mapOptions.LeafletMarkerBaseOptions),
             iconOptions = this.cloneObject(mapOptions.LeafletIconBaseOptions),
-            id,option,optionTag,icon,iconHeight,iconWidth,
-            marker,popup,popupContent,popupOptions;
+            id,option,optionTag,icon,iconHeight,iconWidth,initialIconHeight,initialIconWidth,
+            marker,popup,popupContent,popupOptions, markerType;
 
         if (leafletUserOptions) {
             leafletOptions = this.cloneObject(leafletOptions, leafletUserOptions);
@@ -315,6 +332,8 @@
             marker._esterenMarker.marker_type = this.refDatas('markersTypes', 1);
         }
 
+        markerType = marker._esterenMarker.marker_type;
+
         // Création d'une popup
         popupContent = customUserOptions.popupContent;
         if (!popupContent) {
@@ -344,25 +363,37 @@
         }
 
         // Ajout de l'icône au cas où
-        if (marker._esterenMarker.marker_type && marker._esterenMarker.marker_type.icon) {
-            iconOptions.iconUrl = marker._esterenMarker.marker_type.web_icon;
+        if (markerType && markerType.web_icon) {
+            iconOptions.iconUrl = markerType.web_icon;
 
-            iconWidth = marker._esterenMarker.marker_type.web_icon;
-            iconHeight = marker._esterenMarker.marker_type.web_icon;
+            initialIconWidth = markerType.icon_width;
+            initialIconHeight = markerType.icon_height;
+            iconWidth = initialIconWidth;
+            iconHeight = initialIconHeight;
             if (iconWidth || iconHeight) {
                 // N'applique une icône QUE si la hauteur ou la largeur sont définies
 
                 if (!iconWidth) {
                     // Calcule la largeur de l'icône à partir du ratio largeur/largeur_icone si celle-ci n'est pas définie
-                    iconWidth = parseInt(marker._esterenMarker.marker_type.icon_width / (marker._esterenMarker.marker_type.icon_height / iconHeight));
+                    iconWidth = parseInt(initialIconWidth / (initialIconHeight / iconHeight));
                 }
                 if (!iconHeight) {
                     // Calcule la hauteur de l'icône à partir du ratio largeur/largeur_icone si celle-ci n'est pas définie
-                    iconHeight = parseInt(marker._esterenMarker.marker_type.icon_height / (marker._esterenMarker.marker_type.icon_width / iconWidth));
+                    iconHeight = parseInt(initialIconHeight / (initialIconWidth / iconWidth));
                 }
 
                 iconOptions.iconSize = [iconWidth, iconHeight];
-                iconOptions.iconAnchor = [parseInt(iconWidth / 2), parseInt(iconHeight / 2)];
+
+                iconOptions.iconAnchor = [
+                    parseInt(markerType.icon_center_x ? markerType.icon_center_x : (iconWidth / 2) ),
+                    parseInt(markerType.icon_center_y ? markerType.icon_center_y : (iconHeight / 2) )
+                ];
+
+                //TODO
+                iconOptions.popupAnchor = [
+                    0,
+                    (iconWidth / 2)
+                ];
 
                 icon = L.icon(iconOptions);
                 marker.setIcon(icon);

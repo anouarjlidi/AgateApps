@@ -195,7 +195,7 @@ class Directions
             unset($steps[$k]['route']['markerStart'], $steps[$k]['route']['markerEnd']);
         }
 
-        return $this->serializer->deserialize(json_encode($steps, 480), 'ArrayCollection<EsterenMaps\MapsBundle\Entity\Markers>', 'json');
+        return $this->serializer->deserialize(json_encode($steps, 480), 'ArrayCollection<EsterenMaps\MapsBundle\Entity\Markers>', 'json') ?: array();
     }
 
     /**

@@ -186,7 +186,7 @@
      * @returns {*}
      */
     EsterenMap.prototype._load = function(name, datas, method, callback, callbackComplete, callbackError) {
-        var url, ajaxObject, i, c,
+        var url, ajaxObject, i, c, xhr_name, xhr_object,
             otherParams = {},
             _this = this,
             mapOptions = this.options(),
@@ -194,6 +194,7 @@
         ;
 
         if ($.isPlainObject(name)) {
+            xhr_name = name.xhr_name || null;
             datas = name.datas || name.data || datas;
             method = name.method || method;
             callback = name.callback || callback;
@@ -269,7 +270,15 @@
             }
         }
 
-        $.ajax(ajaxObject);
+        if (xhr_name && this._xhr_saves[xhr_name]) {
+            this._xhr_saves.abort();
+        }
+
+        xhr_object = $.ajax(ajaxObject);
+
+        if (xhr_name) {
+            this._xhr_saves[xhr_name] = xhr_object;
+        }
 
         return this;
     };

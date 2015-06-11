@@ -25,14 +25,14 @@ easy_admin:
             label: "Esteren Maps - Marqueurs"
             class: EsterenMaps\MapsBundle\Entity\Markers
             list:
-                fields: [ id, name, latitude, longitude, markerType, imageTag ]
+                fields: [ id, name, latitude, longitude, markerType, { property: webIcon, type: image } ]
             form:
                 fields: [ name, description, map, markerType, faction ]
         "MarkersTypes":
             label: "Esteren Maps - Types de marqueurs"
             class: EsterenMaps\MapsBundle\Entity\MarkersTypes
             list:
-                fields: [ id, name, icon, markers ]
+                fields: [ id, name, { property: webIcon, type: image }, markers ]
             form:
                 fields: [ name, icon, markers ]
         "Routes":

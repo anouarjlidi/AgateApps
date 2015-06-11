@@ -494,8 +494,8 @@ class Markers
         return $this->latitude !== null && $this->longitude !== null;
     }
 
-    public function getImageTag()
+    public function getWebIcon()
     {
-        return $this->markerType->getImageTag();
+        return $this->markerType->getWebIcon();
     }
 }

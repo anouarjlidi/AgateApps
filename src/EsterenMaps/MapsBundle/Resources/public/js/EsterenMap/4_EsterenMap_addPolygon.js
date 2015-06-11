@@ -109,11 +109,12 @@
         fillColor: '#eee',
         fillOpacity: 0.1,
         weight: 2,
-        clickable: true
+        clickable: false
     };
 
     EsterenMap.prototype._mapOptions.LeafletPolygonBaseOptionsEditMode = {
-        opacity: 0.5
+        opacity: 0.5,
+        clickable: true
     };
 
     EsterenMap.prototype._mapOptions.CustomPolygonBaseOptions = {

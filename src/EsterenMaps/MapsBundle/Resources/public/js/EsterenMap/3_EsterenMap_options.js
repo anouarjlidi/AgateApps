@@ -4,6 +4,7 @@
     EsterenMap.prototype._drawControl = {};
     EsterenMap.prototype._drawnItems = {};
     EsterenMap.prototype._tileLayer = {};
+    EsterenMap.prototype._xhr_saves = {};
     EsterenMap.prototype._editedMarker = null;
     EsterenMap.prototype._editedPolyline = null;
     EsterenMap.prototype._editedPolygon = null;
@@ -23,7 +24,6 @@
     EsterenMap.prototype._directionsOptions = {
         position: 'topleft'
     };
-
 
     EsterenMap.prototype.mapAllowedElements = {
         maps: true,
