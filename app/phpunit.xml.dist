@@ -6,13 +6,11 @@
          backupGlobals="false"
          colors="true"
          verbose="true"
-         bootstrap="bootstrap.php.cache"
+         bootstrap="../src/Tests/bootstrap.php"
 >
     <testsuites>
         <testsuite name="Project Test Suite">
-            <directory>../src/*/*Bundle/Tests</directory>
-            <directory>../src/*/Bundle/*Bundle/Tests</directory>
-            <directory>../src/*Bundle/Tests</directory>
+            <directory>../src/Tests/*</directory>
         </testsuite>
     </testsuites>
 

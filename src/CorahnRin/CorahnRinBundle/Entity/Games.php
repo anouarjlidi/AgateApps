@@ -2,7 +2,7 @@
 
 namespace CorahnRin\CorahnRinBundle\Entity;
 
-use Esteren\UserBundle\Entity\User;
+use UserBundle\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -12,7 +12,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity()
- * @ORM\Table(name="games", uniqueConstraints={@ORM\UniqueConstraint(name="idgUnique", columns={"name", "gameMaster_id"})})
+ * @ORM\Table(name="games", uniqueConstraints={@ORM\UniqueConstraint(name="idgUnique", columns={"name", "game_master_id"})})
  */
 class Games {
 
@@ -63,7 +63,8 @@ class Games {
     /**
      * @var User
      *
-     * @ORM\ManyToOne(targetEntity="Esteren\UserBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
+     * @ORM\JoinColumn(name="game_master_id", nullable=false)
      */
     protected $gameMaster;
 

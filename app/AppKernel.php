@@ -8,8 +8,6 @@ class AppKernel extends Kernel
     public function registerBundles()
     {
         $bundles = array(
-
-            // Symfony
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new Symfony\Bundle\SecurityBundle\SecurityBundle(),
             new Symfony\Bundle\TwigBundle\TwigBundle(),
@@ -19,30 +17,22 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
 
-            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
-            new JMS\SerializerBundle\JMSSerializerBundle($this),
             new FOS\UserBundle\FOSUserBundle(),
             new FOS\RestBundle\FOSRestBundle(),
-            new JavierEguiluz\Bundle\EasyAdminBundle\EasyAdminBundle(),
-
-            // Sonata et dépendances
-            new Sonata\CoreBundle\SonataCoreBundle(),
-            new Sonata\IntlBundle\SonataIntlBundle(),
-            new Sonata\MediaBundle\SonataMediaBundle(),
-            new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
-            new Sonata\NotificationBundle\SonataNotificationBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+            new JMS\SerializerBundle\JMSSerializerBundle(),
+            new JavierEguiluz\Bundle\EasyAdminBundle\EasyAdminBundle(),
+            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
 
             // Application global
-            new Application\AdminBundle\ApplicationAdminBundle(),
-            new Application\Sonata\MediaBundle\ApplicationSonataMediaBundle(),
+            new UserBundle\UserBundle(),
+            new AdminBundle\AdminBundle(),
 
             // Corahn-Rin
             new CorahnRin\CorahnRinBundle\CorahnRinBundle(),
 
-            // Esteren général
+            // Esteren
             new Esteren\PortalBundle\EsterenPortalBundle(),
-            new Esteren\UserBundle\EsterenUserBundle(),
 
             // Esteren Maps
             new EsterenMaps\MapsBundle\EsterenMapsBundle(),

@@ -3,7 +3,9 @@ imports:
 
 #framework:
 #    validation:
-#        cache: apc
+#        cache: validator.mapping.cache.apc
+#    serializer:
+#        cache: serializer.mapping.cache.apc
 
 #doctrine:
 #    orm:
@@ -19,8 +21,8 @@ monolog:
             handler:      grouped
         grouped:
             type:    group
-            members: [streamed, buffered]
-        streamed:
+            members: [nested, buffered]
+        nested:
             type:  stream
             path:  "%kernel.logs_dir%/%kernel.environment%.log"
             level: debug

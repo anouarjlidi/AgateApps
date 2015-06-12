@@ -3,7 +3,6 @@ imports:
     - { resource: _esterenmaps.yml }
     - { resource: _corahn_rin.yml }
     - { resource: _pierstoval.yml }
-    - { resource: _sonata.yml }
     - { resource: _easy_admin.yml }
 
 parameters:
@@ -17,13 +16,15 @@ doctrine:
     orm:
         default_repository_class: Orbitale\Component\DoctrineTools\BaseEntityRepository
     dbal:
-        path:     "%database_path%" # For eventual sqlite integration
+        path: "%database_path%" # For eventual sqlite integration
 
 framework:
     translator:      { fallbacks: %locales% } # Activate translator
     session:
         cookie_domain: %esteren_domains.cookieDomain%
-        name:   SF2ESTERENSID
+        name:   EsterenPortal
+    templating:
+        assets_version: %version_code%
 
 # Twig Configuration
 twig:
@@ -72,7 +73,7 @@ doctrine:
 fos_user:
     db_driver:     orm
     firewall_name: main
-    user_class:    Esteren\UserBundle\Entity\User
+    user_class:    UserBundle\Entity\User
 
 fos_rest:
     param_fetcher_listener: true

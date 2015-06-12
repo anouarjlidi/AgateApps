@@ -18,6 +18,9 @@ class GeneratorController extends Controller {
      */
     public function indexAction() {
         $step = $this->getDoctrine()->getManager()->getRepository('CorahnRinBundle:Steps')->findOneBy(array('step' => 1));
+        if (!$step) {
+            throw $this->createNotFoundException('Step not found');
+        }
         return $this->redirect($this->generateUrl('corahnrin_generator_generator_step', array(
             'step' => $step->getStep(),
             'slug' => $step->getSlug()

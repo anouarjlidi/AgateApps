@@ -2,7 +2,7 @@
 
 namespace CorahnRin\CorahnRinBundle\Entity;
 
-use Esteren\UserBundle\Entity\User;
+use UserBundle\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -42,7 +42,7 @@ class CharModifications {
     /**
      * @var User
      *
-     * @ORM\ManyToOne(targetEntity="Esteren\UserBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
      */
     protected $user;
 

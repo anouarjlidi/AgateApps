@@ -3,7 +3,9 @@ easy_admin:
     design:
         brand_color: "rgb(88, 88, 216)"
     site_name: Esteren
+
     entities:
+
         ####################
         ## Esteren Maps
         "Factions":
