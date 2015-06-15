@@ -1,0 +1,21 @@
+{% set messages = (messages is defined ? messages : null) %}
+{% for key, messageList in messages %}
+
+    {% set translation_domain = 'messages.flash' %}
+
+    {% set class = key %}
+    {% if 'fos_user_' in class %}
+        {% set class = (class | replace('fos_user_', '')) %}
+        {% set translation_domain = 'FOSUserBundle' %}
+    {% endif %}
+    {% if 'error' == class %}
+        {% set class = 'danger' %}
+    {% endif %}
+
+    <div class="alert alert-{{ class }} {{ key }}">
+        {% for message in messageList %}
+            {{ message | trans({}, translation_domain) | raw }}
+            {% if not loop.last %}<br />{% endif %}
+        {% endfor %}
+    </div>
+{% endfor %}

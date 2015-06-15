@@ -1,6 +1,7 @@
 <?php
 
 use Doctrine\Common\Annotations\AnnotationRegistry;
+use Symfony\Component\Console\Input\ArgvInput;
 
 $rootDir = realpath(__DIR__.'/../..');
 
@@ -9,7 +10,15 @@ if (!file_exists($file)) {
     throw new RuntimeException('Install dependencies to run test suite.');
 }
 
+define('TESTS_DEST_PATH', __DIR__.'/../../build');
+
 $autoload = require_once $file;
+
+$input = new ArgvInput();
+
+if (true === $input->hasParameterOption('--no-db')) {
+    return;
+}
 
 // Remove build dir files
 if (is_dir($rootDir.'/build')) {
@@ -23,11 +32,6 @@ if (is_dir($rootDir.'/build')) {
         $todo($fileinfo->getRealPath());
     }
 }
-
-AnnotationRegistry::registerLoader(function($class) use ($autoload) {
-    $autoload->loadClass($class);
-    return class_exists($class, false);
-});
 
 if (file_exists($rootDir.'/build/database_test.db')) {
     unlink($rootDir.'/build/database_test.db');

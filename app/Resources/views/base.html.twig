@@ -34,22 +34,15 @@
 
     {% block layout %}
 
-        {% block menus %}{# MENUS #}
+        {% block menus %}
             {% include 'EsterenPortalBundle:Menu:general_menu.html.twig' %}
         {% endblock %}
 
         <div id="layout" class="container">
-            {# FLASH MESSAGES
-            #}{% for key, messageList in app.session.flashbag.all() %}
-                <div class="alert alert-{{ key == 'error' ? 'danger' : key }}">
-                    {% for message in messageList %}
-                        {{ message | trans({}, 'messages.flash') | raw }}
-                        {% if not loop.last %}<br />{% endif %}
-                    {% endfor %}
-                </div>
-            {% endfor %}
 
-            <div id="content">{# DYNAMIC CONTENT FOR LAYOUT #}
+            {% include '_flash_messages.html.twig' with {'messages': app.session.flashbag.all()} %}
+
+            <div id="content">
 
                 {% block cms_breadcrumbs %}{% endblock %}
 
