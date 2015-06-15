@@ -14,7 +14,7 @@ class GeneratorControllerTest extends WebTestCase
      */
     public function testIndex()
     {
-        $client = static::getClient('corahnrin.esteren.dev');
+        $client = static::getClient('corahnrin.esteren.dev', array(), array('ROLE_MANAGER'));
 
         $client->request('GET', '/fr/characters/generate/');
 
@@ -26,7 +26,7 @@ class GeneratorControllerTest extends WebTestCase
      */
     public function testStep1()
     {
-        $client = static::getClient('corahnrin.esteren.dev');
+        $client = static::getClient('corahnrin.esteren.dev', array(), array('ROLE_MANAGER'));
 
         $crawler = $client->request('GET', '/fr/characters/generate/1-peuple');
 

@@ -16,7 +16,7 @@ class CharacterViewControllerTest extends WebTestCase
      */
     public function testList()
     {
-        $client = static::getClient('corahnrin.esteren.dev');
+        $client = static::getClient('corahnrin.esteren.dev', array(), array('ROLE_MANAGER'));
 
         $crawler = $client->request('GET', '/fr/characters/');
 
@@ -29,7 +29,7 @@ class CharacterViewControllerTest extends WebTestCase
      */
     public function testView404()
     {
-        $client = static::getClient('corahnrin.esteren.dev');
+        $client = static::getClient('corahnrin.esteren.dev', array(), array('ROLE_MANAGER'));
 
         $client->request('GET', '/fr/characters/9999999-aaaaaaaa');
 
@@ -41,7 +41,7 @@ class CharacterViewControllerTest extends WebTestCase
      */
     public function testView()
     {
-        $client = static::getClient('corahnrin.esteren.dev');
+        $client = static::getClient('corahnrin.esteren.dev', array(), array('ROLE_MANAGER'));
 
         /**
          * @var Characters|null $char
