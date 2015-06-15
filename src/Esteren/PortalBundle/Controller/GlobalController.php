@@ -31,7 +31,7 @@ class GlobalController extends Controller
             return $this->redirect($url);
         }
 
-        throw $this->createNotFoundException();
+        throw $this->createNotFoundException('Route not found. #1');
     }
 
 }
