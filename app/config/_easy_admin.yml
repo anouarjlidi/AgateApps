@@ -84,7 +84,7 @@ easy_admin:
         ## Pierstoval CMS
         "Pages":
             label: "CMS - Pages"
-            class: Pierstoval\Bundle\CmsBundle\Entity\Page
+            class: Orbitale\Bundle\CmsBundle\Entity\Page
             show:
                 fields: [ title, slug, tree, content, metaDescription, metaTitle, metaKeywords, css, js, enabled, homepage, host, createdAt, updatedAt, createdBy, category, parent ]
             list:
