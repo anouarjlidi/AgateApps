@@ -23,6 +23,7 @@ pierstoval_api:
 pierstoval_cors:
     paths:
       "^/":
+          allow_credentials: true
           allow_origin:
               - %esteren_domains.api%
               - %esteren_domains.portal%
