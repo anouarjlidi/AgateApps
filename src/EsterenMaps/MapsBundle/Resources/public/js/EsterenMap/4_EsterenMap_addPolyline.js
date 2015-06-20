@@ -39,12 +39,24 @@
     };
 
     L.Polyline.prototype.updateStyle = function(){
-        // Change l'image de l'icône
-        this._path.setAttribute('stroke', this._esterenRoute.route_type.color);
+
+        if (this._esterenRoute.route_type.color) { 
+            // Change l'image de l'icône
+            this._path.setAttribute('stroke', this._esterenRoute.route_type.color);
+        }
 
         // Met à jour l'attribut "data" pour les filtres
         $(this._path).attr('data-leaflet-object-type', 'routeType'+this._esterenRoute.route_type.id);
 
+        latlngs = this.getLatLngs();
+        if (this._esterenRoute.markerStart) {
+            latlngs[0] = L.latLng(this._esterenRoute.markerStart.coordinates);
+        }
+        if (this._esterenRoute.markerEnd) {
+            latlngs[this._latlngs.length-1] = L.latLng(this._esterenRoute.markerStart.coordinates);
+        }
+
+        this.setLatLngs(latlngs);
     };
 
     L.Polyline.prototype.calcDistance = function() {
@@ -80,11 +92,15 @@
 
     L.Polyline.prototype._updateEM = function() {
         var baseRoute = this,
-            esterenRoute = this._esterenRoute || null,
+            esterenRoute = EsterenMap.prototype.cloneObject.call(null, this._esterenRoute || null),
+            _this = this,
             id = esterenRoute.id || null;
         if (esterenRoute && this._map && !this.launched && esterenRoute.marker_start && esterenRoute.marker_end) {
             esterenRoute.map = esterenRoute.map || {id: this._esterenMap.options().id };
             esterenRoute.coordinates = JSON.stringify(this._latlngs);
+            esterenRoute.route_type = { id: esterenRoute.route_type.id };
+            esterenRoute.marker_start = { id: esterenRoute.marker_start.id };
+            esterenRoute.marker_end = { id: esterenRoute.marker_end.id };
             esterenRoute.faction = esterenRoute.faction || null;
             this.calcDistance();
             this.launched = true;
@@ -129,7 +145,7 @@
                     console.error('Could not make a request to '+(id?'update':'insert')+' a route.');
                 },
                 callbackComplete: function(){
-                    baseRoute.launched = false;
+                    _this.launched = false;
                 }
             });
         } else if (!this.launched && esterenRoute.marker_start && esterenRoute.marker_end) {
@@ -412,3 +428,4 @@
 
 
 })(jQuery, L, document, window);
+

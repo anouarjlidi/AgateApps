@@ -251,6 +251,9 @@
             url: url,
             type: method,
             dataType: 'json',
+            xhrFields: {
+                 withCredentials: true
+            },
             crossDomain: true,
             data: datas
         };

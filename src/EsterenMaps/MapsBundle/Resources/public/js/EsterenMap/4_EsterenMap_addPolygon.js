@@ -45,13 +45,15 @@
     };
 
     L.Polygon.prototype._updateEM = function() {
-        var baseZone = this,
+        var baseZone = EsterenMap.prototype.cloneObject.call(null, this),
+            _this = this,
             esterenZone = this._esterenZone || null,
             id = esterenZone.id || null;
         if (esterenZone && this._map && !this.launched) {
             esterenZone.map = esterenZone.map || {id: this._esterenMap.options().id };
             esterenZone.coordinates = JSON.stringify(this._latlngs);
             esterenZone.faction = esterenZone.faction || null;
+            esterenZone.zone_type = { id: esterenZone.zone_type.id };
             this.launched = true;
             this._esterenMap._load({
                 uri: "zones" + (id ? '/'+id : ''),
@@ -87,7 +89,7 @@
                     console.error('Could not make a request to '+(id?'update':'insert')+' a zone.');
                 },
                 callbackComplete: function(){
-                    baseZone.launched = false;
+                    _this.launched = false;
                 }
             });
         } else if (!this.launched) {

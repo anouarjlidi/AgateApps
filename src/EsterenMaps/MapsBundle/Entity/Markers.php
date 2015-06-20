@@ -14,6 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Markers
  *
  * @ORM\Table(name="maps_markers")
+ * @ORM\HasLifecycleCallbacks()
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  * @ORM\Entity(repositoryClass="EsterenMaps\MapsBundle\Repository\MarkersRepository")
  * @Serializer\ExclusionPolicy("all")
@@ -498,4 +499,22 @@ class Markers
     {
         return $this->markerType->getWebIcon();
     }
+
+    /**
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function updateRoutesCoordinates()
+    {
+
+        foreach ($this->routesStart as $route) {
+            $route->refresh();
+        }
+        foreach ($this->routesEnd as $route) {
+            $route->refresh();
+        }
+
+
+    }
 }
+

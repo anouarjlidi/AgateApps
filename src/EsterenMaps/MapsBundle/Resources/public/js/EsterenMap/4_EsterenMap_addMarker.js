@@ -40,7 +40,7 @@
 
     L.Marker.prototype.updateIcon = function(){
         // Change l'image de l'icône
-        this._icon.src = this._esterenMarker.marker_type.icon_url;
+        this._icon.src = this._esterenMarker.marker_type.web_icon;
 
         // Met à jour l'attribut "data" pour les filtres
         $(this._icon).attr('data-leaflet-object-type', 'markerType'+this._esterenMarker.marker_type.id);
@@ -52,8 +52,9 @@
     };
 
     L.Marker.prototype._updateEM = function() {
-        var baseMarker = this,
+        var baseMarker = EsterenMap.prototype.cloneObject.call(null, this),
             esterenMarker = this._esterenMarker || null,
+            _this = this,
             id = esterenMarker.id || null;
         if (esterenMarker && this._map && !this.launched) {
             this.launched = true;
@@ -62,6 +63,7 @@
             esterenMarker.longitude = this._latlng.lng;
             esterenMarker.altitude = this._latlng.alt;
             esterenMarker.faction = esterenMarker.faction || null;
+            esterenMarker.marker_type = { id: esterenMarker.marker_type.id };
             this._esterenMap._load({
                 uri: "markers" + (id ? '/'+id : ''),
                 method: id ? "POST" : "PUT", // Si on n'a pas d'ID, c'est qu'on crée un nouveau marqueur
@@ -98,7 +100,7 @@
                     console.error('Could not make a request to '+(id?'update':'insert')+' a marker.');
                 },
                 callbackComplete: function(){
-                    baseMarker.launched = false;
+                    _this.launched = false;
                 }
             });
         } else if (!this.launched) {
