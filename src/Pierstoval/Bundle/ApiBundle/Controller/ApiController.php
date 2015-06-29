@@ -15,6 +15,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Exception\RuntimeException;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
@@ -244,15 +245,18 @@ class ApiController extends FOSRestController
             return $this->services[$serviceName];
         }
         if ($throwException) {
-            if ($this->container->get('kernel')->getEnvironment() === 'prod') {
-                throw new \InvalidArgumentException($this->get('translator')->trans('Unrecognized service %service%', array('%service%' => $serviceName,)), 1);
-            } else {
+            if (!$serviceName) {
+                throw new RuntimeException('You must specify a service.', 400);
+            }
+            if ($this->container->get('kernel')->isDebug()) {
                 throw new \InvalidArgumentException($this->get('translator')->trans(
                     "Service \"%service%\" not found in the API.\n".
                     "Did you forget to specify it in your configuration ?\n".
                     "Available services : %services%",
                     array('%service%' => $serviceName, '%services%' => implode(', ', array_keys($this->services)),)
                 ), 1);
+            } else {
+                throw new \InvalidArgumentException($this->get('translator')->trans('Unrecognized service %service%', array('%service%' => $serviceName,)), 1);
             }
         }
         return null;

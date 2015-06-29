@@ -4,6 +4,7 @@ namespace Pierstoval\Bundle\ApiBundle\Listeners;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -51,11 +52,13 @@ class JsonResponseListener implements EventSubscriberInterface {
 
             $e = $event->getException();
 
+            $code = $e->getCode();
+
             $data = array(
                 'error' => true,
                 'message' => $e->getMessage(),
                 'exception' => array(
-                    'code' => $e->getCode(),
+                    'code' => $code,
                 ),
             );
 
@@ -66,8 +69,11 @@ class JsonResponseListener implements EventSubscriberInterface {
                 $data['exception']['trace'] = $e->getTrace();
             }
 
+            // Checks that the exception code corresponds to any HTTP code
+            $responseCode = isset(Response::$statusTexts[$code]) ? $code : 500;
+
             // Set a proper new response which will be JSON automatically
-            $event->setResponse(new JsonResponse($data, 500));
+            $event->setResponse(new JsonResponse($data, $responseCode));
         }
     }
 
