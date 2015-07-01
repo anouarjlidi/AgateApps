@@ -255,7 +255,9 @@
                  withCredentials: true
             },
             crossDomain: true,
-            data: datas
+            contentType: method === 'GET' ? "application/x-www-form-urlencoded" : "application/json",
+            jsonp: false,
+            data: method === 'GET' ? datas : JSON.stringify(datas)
         };
         if (typeof(callback) === 'function') {
             ajaxObject.success = function(response) {

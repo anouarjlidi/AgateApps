@@ -2,7 +2,6 @@
 # Api services
 pierstoval_api:
     allowed_origins:
-        - 127.0.0.1
         - %esteren_domains.corahn_rin%
         - %esteren_domains.esteren_maps%
         - %esteren_domains.portal%
@@ -17,28 +16,6 @@ pierstoval_api:
         zones:          { entity: EsterenMaps\MapsBundle\Entity\Zones }
         zonestypes:     { entity: EsterenMaps\MapsBundle\Entity\ZonesTypes }
         transports:     { entity: EsterenMaps\MapsBundle\Entity\TransportTypes }
-
-# Gestion de CORS
-# Fork de NelmioCorsBundle
-pierstoval_cors:
-    paths:
-      "^/":
-          allow_credentials: true
-          allow_origin:
-              - %esteren_domains.api%
-              - %esteren_domains.portal%
-              - %esteren_domains.backoffice%
-              - %esteren_domains.corahn_rin%
-              - %esteren_domains.esteren_maps%
-          allow_headers: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Access-Control-Allow-Origin']
-          allow_methods: ['POST','GET','DELETE','PUT','OPTIONS']
-          max_age: 1
-          hosts:
-              - "^%esteren_domains.api%$"
-              - "^%esteren_domains.portal%$"
-              - "^%esteren_domains.backoffice%$"
-              - "^%esteren_domains.corahn_rin%$"
-              - "^%esteren_domains.esteren_maps%$"
 
 orbitale_translation:
     locales: %locales%

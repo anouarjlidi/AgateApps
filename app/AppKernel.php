@@ -19,6 +19,7 @@ class AppKernel extends Kernel
 
             new FOS\UserBundle\FOSUserBundle(),
             new FOS\RestBundle\FOSRestBundle(),
+            new Nelmio\CorsBundle\NelmioCorsBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new JavierEguiluz\Bundle\EasyAdminBundle\EasyAdminBundle(),
@@ -40,7 +41,6 @@ class AppKernel extends Kernel
 
             // Pierstoval's tools
             new Pierstoval\Bundle\ApiBundle\PierstovalApiBundle(),
-            new Pierstoval\Bundle\CorsBundle\PierstovalCorsBundle(),
             new Pierstoval\Bundle\ToolsBundle\PierstovalToolsBundle(),
             new Orbitale\Bundle\CmsBundle\OrbitaleCmsBundle(),
             new Orbitale\Bundle\TranslationBundle\OrbitaleTranslationBundle(),

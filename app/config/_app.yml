@@ -20,6 +20,8 @@ doctrine:
 
 framework:
     translator:      { fallbacks: %locales% } # Activate translator
+    trusted_hosts:
+        - "^[a-z]+\%esteren_domains.cookiedomain%$"
     session:
         cookie_domain: %esteren_domains.cookieDomain%
         name:   EsterenPortal
@@ -130,3 +132,25 @@ assetic:
         uglifycss:
             node: %node_path%
             node_paths: [ %node_modules_path% ]
+
+# CORS management
+nelmio_cors:
+    paths:
+      "^/":
+          allow_credentials: true
+          origin_regex: true
+          allow_origin:
+              - ^https?://%esteren_domains.api%
+              - ^https?://%esteren_domains.portal%
+              - ^https?://%esteren_domains.backoffice%
+              - ^https?://%esteren_domains.corahn_rin%
+              - ^https?://%esteren_domains.esteren_maps%
+          allow_headers: ['Origin','Accept','Content-Type']
+          allow_methods: ['POST','GET','DELETE','PUT','OPTIONS']
+          max_age: 3600
+          hosts:
+              - "^%esteren_domains.api%$"
+              - "^%esteren_domains.portal%$"
+              - "^%esteren_domains.backoffice%$"
+              - "^%esteren_domains.corahn_rin%$"
+              - "^%esteren_domains.esteren_maps%$"

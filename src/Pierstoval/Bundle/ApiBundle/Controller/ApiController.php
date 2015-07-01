@@ -363,7 +363,8 @@ class ApiController extends FOSRestController
         } else {
             // Transform the full item recursively into an array
             $object        = $serializer->deserialize($serializer->serialize($object, 'json'), 'array', 'json');
-            $requestObject = json_decode($post->get('json'), true);
+            $json          = $post->get('json');
+            $requestObject = (is_string($json) ? json_decode($post->get('json'), true) : $json) ?: array();
 
             // Merge the two arrays with request parameters
             $userObject = array_merge($object, $requestObject);
