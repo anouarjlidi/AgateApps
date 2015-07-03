@@ -3,6 +3,8 @@
     // Rajoute qqs attributs à des éléments de Leaflet et LeafletSidebar
     L.Marker.prototype._esterenMap = {};
     L.Marker.prototype._esterenMarker = {};
+    L.Marker.prototype._esterenRoutesStart = [];
+    L.Marker.prototype._esterenRoutesEnd = [];
     L.Marker.prototype._sidebar = null;
     L.Marker.prototype._sidebarContent = '';
     L.Marker.prototype.showSidebar = function(){
@@ -51,9 +53,57 @@
         this._icon.classList.remove('selected');
     };
 
+    L.Marker.prototype.refreshRoutesStart = function() {
+        var routes = this._esterenMap._polylines,
+            i, route;
+        for (i in routes) {
+            if (routes.hasOwnProperty(i)) {
+                route = routes[i];
+                if (route._esterenRoute.marker_start && route._esterenRoute.marker_start.id == this._esterenMarker.id) {
+                    this._esterenRoutesStart[route._esterenRoute.id] = route;
+                }
+            }
+        }
+        return this._esterenRoutesStart;
+    };
+
+    L.Marker.prototype.refreshRoutesEnd = function() {
+        var routes = this._esterenMap._polylines,
+            i, route;
+        for (i in routes) {
+            if (routes.hasOwnProperty(i)) {
+                route = routes[i];
+                if (route._esterenRoute.marker_end && route._esterenRoute.marker_end.id == this._esterenMarker.id) {
+                    this._esterenRoutesEnd[route._esterenRoute.id] = route;
+                }
+            }
+        }
+        return this._esterenRoutesStart;
+    };
+
+    L.Marker.prototype.refreshRoutes = function() {
+        var routesStart, routesEnd, i, route;
+        if (routesStart = this.refreshRoutesStart()) {
+            for (i in routesStart) {
+                if (routesStart.hasOwnProperty(i)) {
+                    route = routesStart[i];
+                    route.updateMarkerDetails(this, true);
+                }
+            }
+        }
+        if (routesEnd = this.refreshRoutesEnd()) {
+            for (i in routesEnd) {
+                if (routesEnd.hasOwnProperty(i)) {
+                    route = routesEnd[i];
+                    route.updateMarkerDetails(this, false);
+                }
+            }
+        }
+    };
+
     L.Marker.prototype._updateEM = function() {
-        var baseMarker = EsterenMap.prototype.cloneObject.call(null, this),
-            esterenMarker = this._esterenMarker || null,
+        var baseMarker = this,
+            esterenMarker = EsterenMap.prototype.cloneObject.call(null, this._esterenMarker),
             _this = this,
             id = esterenMarker.id || null;
         if (esterenMarker && this._map && !this.launched) {
@@ -62,7 +112,7 @@
             esterenMarker.latitude = this._latlng.lat;
             esterenMarker.longitude = this._latlng.lng;
             esterenMarker.altitude = this._latlng.alt;
-            esterenMarker.faction = esterenMarker.faction || null;
+            esterenMarker.faction = esterenMarker.faction || {};
             esterenMarker.marker_type = { id: esterenMarker.marker_type.id };
             this._esterenMap._load({
                 uri: "markers" + (id ? '/'+id : ''),
@@ -261,6 +311,10 @@
             }
             return false;
         },
+        dragCallback: function(e) {
+            var marker = e.target;
+            marker.refreshRoutes();
+        },
         dragendCallback: function(e) {
             var marker = e.target,
                 latlng = marker.getLatLng();
@@ -387,14 +441,13 @@
                 iconOptions.iconSize = [iconWidth, iconHeight];
 
                 iconOptions.iconAnchor = [
-                    parseInt(markerType.icon_center_x ? markerType.icon_center_x : (iconWidth / 2) ),
-                    parseInt(markerType.icon_center_y ? markerType.icon_center_y : (iconHeight / 2) )
+                    markerType.icon_center_x ? markerType.icon_center_x : (iconWidth / 2),
+                    markerType.icon_center_y ? markerType.icon_center_y : (iconHeight / 2)
                 ];
 
-                //TODO
                 iconOptions.popupAnchor = [
                     0,
-                    (iconWidth / 2)
+                    - (iconHeight / 2)
                 ];
 
                 icon = L.icon(iconOptions);

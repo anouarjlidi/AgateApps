@@ -1,5 +1,6 @@
     EsterenMap.prototype._map = null;
     EsterenMap.prototype._sidebar = {};
+    EsterenMap.prototype.showFilters = true;
     EsterenMap.prototype._filtersControl = {};
     EsterenMap.prototype._drawControl = {};
     EsterenMap.prototype._drawnItems = {};
@@ -90,4 +91,3 @@
             continuousWorld: true
         }
     };
-

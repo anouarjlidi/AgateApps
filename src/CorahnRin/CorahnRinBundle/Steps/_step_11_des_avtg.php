@@ -51,10 +51,6 @@ if ($this->request->isMethod('POST')) {
 
     $error = false;
 
-    if (count($this->request->request->all())) {
-        \CorahnRinTools\pr($this->request->request->all());exit;
-    }
-
     foreach ($advantages_selected as $id => $value) {
         if (
             !isset($advantages[$id])

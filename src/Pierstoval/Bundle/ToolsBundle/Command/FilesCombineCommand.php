@@ -118,7 +118,6 @@ class FilesCombineCommand extends ContainerAwareCommand {
             } while (!!$additionalFile);
         } else {
             throw new \RunTimeException('You must specify at least one existing file to combine.');
-            exit;
         }
         if ($addedFiles) {
             $output->writeln("\n".'Files list :');
@@ -165,7 +164,6 @@ class FilesCombineCommand extends ContainerAwareCommand {
                             );
                         } else {
                             throw new \RunTimeException('You must specify an output file name.');
-                            exit;
                         }
                     }
                     if (!$replace) {

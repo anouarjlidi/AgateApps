@@ -38,25 +38,45 @@
         this.editing.disable();
     };
 
-    L.Polyline.prototype.updateStyle = function(){
+    L.Polyline.prototype.updateDetails = function() {
+        var latlngs,
+            esterenRoute = this._esterenRoute,
+            markerStart = esterenRoute.marker_start,
+            markerEnd = esterenRoute.marker_end
+        ;
 
-        if (this._esterenRoute.route_type.color) { 
+        if (esterenRoute.route_type.color) {
             // Change l'image de l'icône
-            this._path.setAttribute('stroke', this._esterenRoute.route_type.color);
+            this._path.setAttribute('stroke', esterenRoute.route_type.color);
         }
 
         // Met à jour l'attribut "data" pour les filtres
-        $(this._path).attr('data-leaflet-object-type', 'routeType'+this._esterenRoute.route_type.id);
+        $(this._path).attr('data-leaflet-object-type', 'routeType'+esterenRoute.route_type.id);
 
         latlngs = this.getLatLngs();
-        if (this._esterenRoute.markerStart) {
-            latlngs[0] = L.latLng(this._esterenRoute.markerStart.coordinates);
+        if (markerStart) {
+            latlngs[0] = L.latLng([markerStart.latitude, markerStart.longitude]);
+            this._esterenMap._markers[markerStart.id]._esterenRoutesStart[esterenRoute.id] = this;
         }
-        if (this._esterenRoute.markerEnd) {
-            latlngs[this._latlngs.length-1] = L.latLng(this._esterenRoute.markerStart.coordinates);
+        if (markerEnd) {
+            latlngs[this._latlngs.length-1] = L.latLng([markerEnd.latitude, markerEnd.longitude]);
+            this._esterenMap._markers[markerEnd.id]._esterenRoutesEnd[esterenRoute.id] = this;
         }
 
         this.setLatLngs(latlngs);
+    };
+
+    L.Polyline.prototype.updateMarkerDetails = function(marker, isMarkerStart) {
+        var latlngs;
+
+        isMarkerStart = !!isMarkerStart;
+
+        if (marker) {
+            latlngs = this.getLatLngs();
+            latlngs[isMarkerStart ? 0 : (this._latlngs.length-1)] = L.latLng([marker.getLatLng().lat, marker.getLatLng().lng]);
+            marker._esterenRoutesEnd[this._esterenRoute.id] = this;
+            this.setLatLngs(latlngs);
+        }
     };
 
     L.Polyline.prototype.calcDistance = function() {
@@ -133,7 +153,7 @@
                         if (route && route.id) {
                             map._polylines[route.id] = baseRoute;
                             map._polylines[route.id]._esterenRoute = route;
-                            map._polylines[route.id].updateStyle();
+                            map._polylines[route.id].updateDetails();
                         } else {
                             console.warn('Route retrieved by API does not have ID.');
                         }
@@ -428,4 +448,3 @@
 
 
 })(jQuery, L, document, window);
-
