@@ -79,12 +79,11 @@ class Directions
             $directions = file_get_contents($cacheFile);
         } else {
             $directions = $this->doGetDirections($map, $start, $end, $transportType);
-            file_put_contents($cacheFile, $directions);
+            $datas = json_encode(json_decode($this->serializer->serialize($directions, 'json')), $this->debug ? 480 : 0);
+            file_put_contents($cacheFile, $datas);
         }
 
-        $data = $this->getDataArray($start, $end, $directions);
-
-        return json_decode($this->serializer->serialize($data, 'json'), true);
+        return json_decode($this->serializer->serialize($directions, 'json'), true);
     }
 
     /**
@@ -195,7 +194,9 @@ class Directions
             unset($steps[$k]['route']['markerStart'], $steps[$k]['route']['markerEnd']);
         }
 
-        return $this->serializer->deserialize(json_encode($steps, 480), 'ArrayCollection<EsterenMaps\MapsBundle\Entity\Markers>', 'json') ?: array();
+        $directions = $this->serializer->deserialize(json_encode($steps, 480), 'ArrayCollection<EsterenMaps\MapsBundle\Entity\Markers>', 'json') ?: array();
+
+        return $this->getDataArray($start, $end, $directions);
     }
 
     /**
