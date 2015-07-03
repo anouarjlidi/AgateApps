@@ -7,7 +7,7 @@
     EsterenMap.prototype.activateLeafletDraw = function(){
         var _this = this,
             mapOptions = this.options(),
-            drawControl,drawnItems
+            drawControl, drawnItems, styleTag
         ;
 
         if (mapOptions.editMode !== true) {
@@ -74,7 +74,6 @@
                 );
             } else if (type === 'polyline') {
                 options = mapOptions.CustomPolylineBaseOptionsEditMode;
-                popupContent = mapOptions.LeafletPopupPolylineBaseContent;
                 editOptions = mapOptions.LeafletPolylineBaseOptionsEditMode;
 
                 latlng = layer._latlngs;
@@ -85,7 +84,6 @@
                 );
             } else if (type === 'polygon') {
                 options = mapOptions.CustomPolygonBaseOptionsEditMode;
-                //popupContent = mapOptions.LeafletPopupPolygonBaseContent;
                 editOptions = mapOptions.LeafletPolygonBaseOptionsEditMode;
 
                 latlng = layer._latlngs;
@@ -100,11 +98,7 @@
         });
 
         this._map.on('draw:edited', function(event) {
-            var type = event.type,
-                layers = event.layers,
-                id,
-                inputId
-            ;
+            var layers = event.layers;
 
             console.info('edited layer', layers);
 
@@ -122,11 +116,7 @@
         });
 
         this._map.on('draw:deleted', function(event) {
-            var type = event.type,
-                layers = event.layers,
-                id,
-                inputId
-                ;
+            var layers = event.layers;
 
             layers.eachLayer(function (layer) {
                 if (layer._esterenMarker && layer._esterenMarker.id) {
@@ -153,6 +143,10 @@
             return true;
         });
 
+        // Invisible markers for edit mode
+        styleTag = d.createElement('style');
+        styleTag.innerHTML = '[data-leaflet-object-type="markerType10"] { border: solid 1px rgb(194, 194, 194);background-color: rgba(0, 0, 0, 0.5);}';
+        d.head.appendChild(styleTag);
     };
 
 })(jQuery, L, document, window);

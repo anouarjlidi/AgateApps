@@ -21,8 +21,9 @@
 }
 
 #map_container,
-#map_container *{
+#map_container * {
     position: absolute;
+    color: black;
 }
 
 /** Conteneurs de points, lignes et polygones **/
