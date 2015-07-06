@@ -22,8 +22,9 @@ $t = [];
 
         .a img {
             /*position: relative;*/
-            /*top: -100px;*/
-            margin-top: 150px;
+            /*top: -50px;*/
+            /*margin: 150px 25px 0;*/
+            margin: 150px 0 0 0;
         }
 
         section {
@@ -32,7 +33,7 @@ $t = [];
         }
 
         img {
-            display: inline-block !important;
+            display: inline-block;
         }
 
         div {
@@ -50,16 +51,16 @@ $t = [];
 /*
 COMMANDES FINALES:
 
-convert icones_filled.png +level-colors "#473637", -gamma 0.7 -resize 20x20 pastille-red-darker.png
-convert icones_filled.png +level-colors "#61494b", -gamma 0.8 -resize 20x20 pastille-red-dark.png
-convert icones_filled.png +level-colors "#b3a196", -gamma 0.7 -resize 20x20 pastille-gray.png
-convert icones_filled.png +level-colors "#dbd4ca", -gamma 0.8 -resize 20x20 pastille-gray-light.png
-convert icones_filled.png +level-colors "#4A724A", -gamma 0.8 -resize 20x20 pastille-green-dark.png
-convert icones_filled.png +level-colors "#74B274", -gamma 0.8 -resize 20x20 pastille-green.png
-convert icones_filled.png +level-colors "#c4a764", -gamma 0.8 -resize 20x20 pastille-beige.png
-convert icones_filled.png +level-colors "#dbc199", -gamma 0.8 -resize 20x20 pastille-beige-light.png
-convert icones_filled.png -gamma 0.6 +level-colors "#b5c7c3", -gamma 0.6 -resize 20x20 pastille-blue.png
-convert icones_filled.png -gamma 0.6 +level-colors "#2C4741", -gamma 0.8 -resize 20x20 pastille-blue-dark.png
+convert icones_filled.png +level-colors "#473637", -gamma 0.6 -resize 16x16 pastille-red-darker.png
+convert icones_filled.png +level-colors "#61494b", -gamma 0.8 -resize 16x16 pastille-red-dark.png
+convert icones_filled.png +level-colors "#b3a196", -gamma 0.7 -resize 16x16 pastille-gray.png
+convert icones_filled.png +level-colors "#dbd4ca", -gamma 0.8 -resize 16x16 pastille-gray-light.png
+convert icones_filled.png +level-colors "#4A824A", -gamma 0.75 -resize 16x16 pastille-green-dark.png
+convert icones_filled.png +level-colors "#74B274", -gamma 0.8 -resize 16x16 pastille-green.png
+convert icones_filled.png +level-colors "#c4a764", -gamma 0.7 -resize 16x16 pastille-beige.png
+convert icones_filled.png +level-colors "#dbc199", -gamma 0.8 -resize 16x16 pastille-beige-light.png
+convert icones_filled.png -gamma 0.6 +level-colors "#b5c7da", -gamma 0.7 -resize 16x16 pastille-blue.png
+convert icones_filled.png -gamma 3 +level-colors "#b5c7e3", -gamma 0.13 -resize 16x16 pastille-blue-dark.png
 
  */
 
@@ -74,7 +75,6 @@ $t['beige-light'] = '#dbc199';//brunclair
 $t['blue'] = '#b5c7c3';//bleu
 $t['blue-dark'] = '#2C4741';//bleu foncé
 
-
 //echo '<div>Codes: '.implode(', ',$t).'</div>';
 
 ?>
@@ -83,22 +83,22 @@ $t['blue-dark'] = '#2C4741';//bleu foncé
 
 <div style="" class="a">
 
-<?php $t=[];foreach($t as$k=>$c):?><div style="width: 80px; position: relative;top: 0; height: 250px; padding-top: 65px; font-size: 9px; display: inline-block; background: <?= $c ?>;"><?=$k?><br><?=$c?></div><?php endforeach ?>
+<?php $t=[];foreach($t as$k=>$c):?><div style="width: 80px; position: relative;top: 0; height: 150px; padding-top: 65px; font-size: 9px; display: inline-block; background: <?= $c ?>;"><?=$k?><br><?=$c?></div><?php endforeach ?>
 
 <!--<img src="../web/img/markerstypes/icones.png" class="../web/img-responsive img">-->
 <!--<img src="../web/img/markerstypes/test.png" class="../web/img-responsive img">-->
 
 
-<img src="../web/img/markerstypes/pastille-red-darker.png" style="margin: 0 30px"><?php
-?><img src="../web/img/markerstypes/pastille-red-dark.png" style="margin: 0 30px"><?php
-?><img src="../web/img/markerstypes/pastille-gray.png" style="margin: 0 30px"><?php
-?><img src="../web/img/markerstypes/pastille-gray-light.png" style="margin: 0 30px"><?php
-?><img src="../web/img/markerstypes/pastille-green-dark.png" style="margin: 0 30px"><?php
-?><img src="../web/img/markerstypes/pastille-green.png" style="margin: 0 30px"><?php
-?><img src="../web/img/markerstypes/pastille-beige.png" style="margin: 0 30px"><?php
-?><img src="../web/img/markerstypes/pastille-beige-light.png" style="margin: 0 30px"><?php
-?><img src="../web/img/markerstypes/pastille-blue.png" style="margin: 0 30px"><?php
-?><img src="../web/img/markerstypes/pastille-blue-dark.png" style="margin: 0 30px">
+<img src="../web/img/markerstypes/pastille-red-darker.png"><?php
+?><img src="../web/img/markerstypes/pastille-red-dark.png"><?php
+?><img src="../web/img/markerstypes/pastille-gray.png"><?php
+?><img src="../web/img/markerstypes/pastille-gray-light.png"><?php
+?><img src="../web/img/markerstypes/pastille-green-dark.png"><?php
+?><img src="../web/img/markerstypes/pastille-green.png"><?php
+?><img src="../web/img/markerstypes/pastille-beige.png"><?php
+?><img src="../web/img/markerstypes/pastille-beige-light.png"><?php
+?><img src="../web/img/markerstypes/pastille-blue.png"><?php
+?><img src="../web/img/markerstypes/pastille-blue-dark.png">
 
 </div>
 
