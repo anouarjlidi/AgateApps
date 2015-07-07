@@ -21,7 +21,7 @@
             try {
                 d.map = new EsterenMap({
                     id: {{ map.id }},
-                    imgUrl: "{{ asset('bundles/esterenmaps/img') }}",
+                    imgUrl: "",
                     apiUrls: {
                         base: "http://{{ esteren_domains_api }}/{{ app.request.locale }}",
                         settings: "{{ url('esterenmaps_api_maps_settings_distant', {"id":map.id}) }}",
@@ -29,15 +29,19 @@
                     },
                     LeafletMapBaseOptions: {
                         zoom: {{ map.startZoom }},
-                        maxZoom: {{ map.maxZoom }},
-                        maxBounds: [[85.23,-183], [11,41]]
+                        maxZoom: {{ map.maxZoom }}
+                        {% if map.jsonBounds|length %},
+                        maxBounds: {{ map.bounds|raw }}
+                        {% endif %}
                     },
                     LeafletLayerBaseOptions: {
                         maxZoom: {{ map.maxZoom }},
                         maxNativeZoom: {{ map.maxZoom }},
                         tileSize: {{ tile_size }},
-                        noWrap: false,
-                        bounds: [[85.23,-183], [11,41]]
+                        noWrap: false
+                        {% if map.jsonBounds|length %},
+                        bounds: {{ map.bounds|raw }}
+                        {% endif %}
                     }
                 });
             } catch (e) {

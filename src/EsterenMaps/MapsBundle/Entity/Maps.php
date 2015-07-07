@@ -9,6 +9,7 @@ use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use JMS\Serializer\Annotation\ExclusionPolicy as ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose as Expose;
+use JMS\Serializer\Annotation\VirtualProperty;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -109,6 +110,12 @@ class Maps
      * @Expose
      */
     protected $startY = 0;
+
+    /**
+     * @var string
+     * @ORM\Column(name="bounds", type="string", options={"default": "[]"})
+     */
+    protected $bounds = '[]';
 
     /**
      * @var Routes[]
@@ -509,18 +516,6 @@ class Maps
     }
 
     /**
-     * Réinitialise correctement les informations de la map
-     */
-    public function refresh()
-    {
-        foreach ($this->routes as $route) {
-            $route->refresh();
-        }
-
-        return $this;
-    }
-
-    /**
      * @return int
      */
     public function getStartZoom()
@@ -577,6 +572,58 @@ class Maps
     {
         $this->startY = $startY;
 
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBounds()
+    {
+        return $this->bounds;
+    }
+
+    /**
+     * @param string $bounds
+     *
+     * @return Maps
+     */
+    public function setBounds($bounds)
+    {
+        $this->bounds = $bounds;
+
+        return $this;
+    }
+
+    /**
+     * Réinitialise correctement les informations de la map
+     */
+    public function refresh()
+    {
+        foreach ($this->routes as $route) {
+            $route->refresh();
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     * @Expose
+     * @VirtualProperty()
+     */
+    public function getJsonBounds()
+    {
+        return json_decode($this->bounds, true);
+    }
+
+    /**
+     * @param array $bounds
+     * @return $this
+     */
+    public function setJsonBounds(array $bounds = array())
+    {
+        $this->bounds = json_encode($bounds);
         return $this;
     }
 
