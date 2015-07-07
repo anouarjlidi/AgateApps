@@ -2,12 +2,9 @@
 
 namespace EsterenMaps\MapsBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-
 use EsterenMaps\MapsBundle\Entity\Maps;
 
 /**
@@ -20,7 +17,7 @@ class MapsController extends Controller
 
     /**
      * @Route("/map-{nameSlug}")
-     * @Template()
+     * @Method("GET")
      */
     public function viewAction(Maps $map) {
 
@@ -28,20 +25,20 @@ class MapsController extends Controller
         $tilesUrl = str_replace('0/0/0/0','{id}/{z}/{x}/{y}', $tilesUrl);
         $tilesUrl = preg_replace('~app_dev(_fast)?\.php/~isUu', '', $tilesUrl);
 
-        return array(
+        return $this->render('@EsterenMaps/Maps/view.html.twig', array(
             'map' => $map,
             'tilesUrl' => $tilesUrl,
             'tile_size' => $this->container->getParameter('esterenmaps.tile_size'),
-        );
+        ));
     }
 
     /**
      * @Route("/")
-     * @Template()
+     * @Method("GET")
      */
     public function indexAction() {
         $list = $this->getDoctrine()->getManager()->getRepository('EsterenMapsBundle:Maps')->findAllRoot();
-        return array('list' => $list);
+        return $this->render('@EsterenMaps/Maps/index.html.twig', array('list' => $list));
     }
 
 }

@@ -6,6 +6,7 @@ use EsterenMaps\MapsBundle\Entity\Maps;
 use EsterenMaps\MapsBundle\Entity\Markers;
 use EsterenMaps\MapsBundle\Entity\TransportTypes;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -16,6 +17,7 @@ class DirectionsController extends Controller {
 
     /**
      * @Route("/maps/directions/{id}/{from}/{to}", name="esterenmaps_directions", requirements={"id":"\d+", "from":"\d+", "to":"\d+"}, host="%esteren_domains.api%")
+     * @Method("GET")
      * @ParamConverter(name="from", class="EsterenMapsBundle:Markers", options={"id": "from"})
      * @ParamConverter(name="to", class="EsterenMapsBundle:Markers", options={"id": "to"})
      * @-Cache(public=true, maxage=3600)
@@ -45,7 +47,9 @@ class DirectionsController extends Controller {
     /**
      * @param Markers $from
      * @param Markers $to
-     * @param string $message
+     * @param integer $transportId
+     * @param string  $message
+     *
      * @return array
      */
     private function getError(Markers $from, Markers $to, $transportId = null, $message = 'No path found for this query.')

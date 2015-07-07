@@ -14,21 +14,20 @@ use EsterenMaps\MapsBundle\Entity\Maps;
 class MapsController extends Controller
 {
 
-    private $img_size = 0;
-
     /**
-     * @-Route("/api/maps/settings/{id}", requirements={"id":"\d+"}, host="%esteren_domains.esteren_maps%", name="esterenmaps_api_maps_settings_local")
-     * @Route("/maps/settings/{id}.{_format}", requirements={"id":"\d+","_format":"js|json"}, defaults={"_format":"json"}, host="%esteren_domains.api%", name="esterenmaps_api_maps_settings_distant")
+     * @Route("/maps/settings/{id}.{_format}",
+     *      requirements={"id":"\d+","_format":"json"},
+     *      defaults={"_format":"json"}, host="%esteren_domains.api%",
+     *      name="esterenmaps_api_maps_settings_distant"
+     * )
      * @Method("GET")
      */
-    public function settingsAction(Maps $map, Request $request, $_format) {
+    public function settingsAction(Maps $map, Request $request) {
         if ($check = $this->checkAsker($request)) {
             return $check;
         }
 
         $datas = array();
-
-        $get = $request->query;
 
         $em = $this->getDoctrine()->getManager();
 
@@ -37,7 +36,7 @@ class MapsController extends Controller
         $routesTypes = $em->getRepository('EsterenMapsBundle:RoutesTypes')->findAll();
         $factions = $em->getRepository('EsterenMapsBundle:Factions')->findAll();
 
-        if ($get->get('editMode') === 'true') {
+        if ($request->query->get('editMode') === 'true') {
             $datas['LeafletPopupMarkerBaseContent'] = $this->renderView('EsterenMapsApiBundle:Maps:popupContentMarkerEditMode.html.twig',array('markersTypes'=>$markersTypes,'factions'=>$factions));
             $datas['LeafletPopupPolylineBaseContent'] = $this->renderView('EsterenMapsApiBundle:Maps:popupContentPolylineEditMode.html.twig', array('markers'=>$map->getMarkers(),'routesTypes'=>$routesTypes,'factions'=>$factions));
             $datas['LeafletPopupPolygonBaseContent'] = $this->renderView('EsterenMapsApiBundle:Maps:popupContentPolygonEditMode.html.twig',array('factions'=>$factions, 'zonesTypes'=>$zonesTypes));
@@ -50,12 +49,7 @@ class MapsController extends Controller
         $response = new Response();
         $datas = json_encode(array('settings'=>$datas), 335);
 
-        if ($_format === 'json') {
-            $response->headers->add(array('Content-type' => 'application/json; charset=utf-8',));
-        } elseif ($_format === 'js') {
-            $response->headers->add(array('Content-type' => 'text/javascript; charset=utf-8',));
-            $datas = 'EsterenMap.prototype.settings = '.$datas.';';
-        }
+        $response->headers->add(array('Content-type' => 'application/json; charset=utf-8',));
 
         $response->setContent($datas);
 
@@ -63,7 +57,6 @@ class MapsController extends Controller
     }
 
     /**
-     * @-Route("/api/maps/ref-datas", host="%esteren_domains.esteren_maps%", name="esterenmaps_api_maps_filters_local")
      * @Route("/maps/ref-datas", host="%esteren_domains.api%", name="esterenmaps_api_maps_filters_distant")
      * @Method("GET")
      */
@@ -73,30 +66,21 @@ class MapsController extends Controller
             return $check;
         }
 
-        $serializer = $this->get('jms_serializer');
-
         $em = $this->getDoctrine()->getManager();
 
-        $datas = array(
-            'markersTypes' => $em->getRepository('EsterenMapsBundle:MarkersTypes')->findAll(true),
-            'routesTypes' => $em->getRepository('EsterenMapsBundle:RoutesTypes')->findAll(true),
-            'zonesTypes' => $em->getRepository('EsterenMapsBundle:ZonesTypes')->findAll(true),
-            'factions' => $em->getRepository('EsterenMapsBundle:Factions')->findAll(true),
-        );
+        $datas = $this->get('jms_serializer')->serialize(array(
+            'ref-datas' => array(
+                'markersTypes' => $em->getRepository('EsterenMapsBundle:MarkersTypes')->findAll(true),
+                'routesTypes' => $em->getRepository('EsterenMapsBundle:RoutesTypes')->findAll(true),
+                'zonesTypes' => $em->getRepository('EsterenMapsBundle:ZonesTypes')->findAll(true),
+                'factions' => $em->getRepository('EsterenMapsBundle:Factions')->findAll(true),
+            )
+        ), 'json');
 
-        $response = new Response();
-        $datas = $serializer->serialize(array('ref-datas' => $datas), 'json');
-
-        $response->headers->add(array('Content-type' => 'application/json; charset=utf-8',));
-
-        $response->setContent($datas);
+        $response = new Response($datas, 200, array('Content-type' => 'application/json; charset=utf-8'));
 
         return $response;
     }
-
-    /*--------------------------------------------------
-    ----------------- MÉTHODES PRIVÉES -----------------
-    --------------------------------------------------*/
 
     /**
      * @param Request $request

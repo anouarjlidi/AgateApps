@@ -100,7 +100,7 @@
             this.initFilters();
         }
 
-        // Initialisation des filtres si demandé
+        // Initialisation du calcul d'itinéraire si demandé
         if (mapOptions.showDirections === true) {
             this.initDirections();
         }

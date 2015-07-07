@@ -3,6 +3,7 @@
 namespace Pierstoval\Bundle\ToolsBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,6 +13,7 @@ class AssetsController extends Controller
 
     /**
      * @Route("/js/translations.js")
+     * @Method("GET")
      * @Cache(maxage=86400, expires="+1 day")
      * @param string $_locale
      * @return Response
