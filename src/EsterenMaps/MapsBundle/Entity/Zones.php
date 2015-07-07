@@ -258,4 +258,12 @@ class Zones
     {
         return $this->coordinates !== null;
     }
+
+    /**
+     * @return array
+     */
+    public function getDecodedCoordinates()
+    {
+        return json_decode($this->coordinates, true) ?: array();
+    }
 }
