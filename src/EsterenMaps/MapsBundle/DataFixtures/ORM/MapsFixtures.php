@@ -12,7 +12,7 @@ class MapsFixtures extends AbstractFixture
      */
     function getOrder()
     {
-        return 1;
+        return 0;
     }
 
     /**
@@ -23,7 +23,11 @@ class MapsFixtures extends AbstractFixture
         return 'EsterenMaps\MapsBundle\Entity\Maps';
     }
 
-//    public function fixtureObject(EntityRepository $repo, $id, $name, $nameSlug, $image, $description, $maxZoom, $startZoom, $startX, $startY)
+    protected function getReferencePrefix()
+    {
+        return 'esterenmaps-maps-';
+    }
+
     /**
      * {@inheritdoc}
      */

@@ -20,7 +20,7 @@ update maps_routes set
             '}',
         "]"
     )
-    where coordinates = '[{"lat":"0","lng":"0"}]'
+    where coordinates = '[{"lat":"0","lng":"0"}]' or distance = '0'
 ;
 
 update maps_zones set
@@ -44,5 +44,5 @@ update maps_zones set
             '}',
         "]"
     )
-    where coordinates = ''
+    where coordinates = '' or coordinates = '[]'
 ;
