@@ -12,8 +12,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 class RefreshDatasCommand extends ContainerAwareCommand {
 
 	protected function configure() {
-
-		//public function addArgument($name, $mode = null, $description = '', $default = null)
 		$this
             ->setName('esterenmaps:refresh-datas')
             ->setDescription('Refresh all dynamic datas (routes distances, etc.)')

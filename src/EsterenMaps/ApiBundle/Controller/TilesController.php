@@ -7,6 +7,7 @@ use EsterenMaps\MapsBundle\Services\MapsTilesManager;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -83,6 +84,33 @@ class TilesController extends Controller
 
         $response->headers->set('Content-type', 'image/jpeg');
         return $response;
+    }
+
+    /**
+     * @Route("/maps/tile/{id}/{zoom}/{x}/{y}.jpg", requirements={"id":"\d+"}, host="%esteren_domains.api%", name="esterenmaps_api_tiles")
+     * @Cache(maxage="864000", expires="+10 days")
+     * @param Maps $map
+     * @param integer $zoom
+     * @param integer $x
+     * @param integer $y
+     * @throws \Exception
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function tileAction(Maps $map, $zoom, $x, $y) {
+
+        $zoom = (int) $zoom;
+        $x = (int) $x;
+        $y = (int) $y;
+
+        $directory = $this->container->getParameter('esterenmaps.output_directory');
+
+        $file = $directory.$map->getId().'/'.$zoom.'/'.$x.'/'.$y.'.jpg';
+
+        if (!file_exists($file)) {
+            $file = $directory.'/empty.jpg';
+        }
+
+        return new BinaryFileResponse($file, 200, array('Content-Type' => 'image/jpeg'));
     }
 
 }
