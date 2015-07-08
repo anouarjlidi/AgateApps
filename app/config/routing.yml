@@ -3,10 +3,12 @@ orbitale:    { resource: "routing__orbitale.yml",    prefix: "/{_locale}/", defa
 corahnrin:   { resource: "routing__corahnrin.yml",   prefix: "/{_locale}/", defaults: { _locale: "%locale%" }, requirements: { _locale: "^(%locales_regex%)$" }  }
 esterenmaps: { resource: "routing__esterenmaps.yml", prefix: "/{_locale}/", defaults: { _locale: "%locale%" }, requirements: { _locale: "^(%locales_regex%)$" }  }
 
-esteren_portal:
-    resource: "@EsterenPortalBundle/Controller/"
-    type:     annotation
-    prefix:   /
+root:
+    path: /
+    defaults:
+        _controller: FrameworkBundle:Redirect:urlRedirect
+        path: /%locale%/
+        permanent: true
 
 #-----------------------------------
 # Pierstoval relative routing
