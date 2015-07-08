@@ -3,6 +3,8 @@
     // Rajoute qqs attributs à des éléments de Leaflet et LeafletSidebar
     L.Polyline.prototype._esterenMap = {};
     L.Polyline.prototype._esterenRoute = {};
+    L.Polyline.prototype._markerStart = null;
+    L.Polyline.prototype._markerEnd = null;
     L.Polyline.prototype._sidebar = {};
     L.Polyline.prototype._sidebarContent = '';
     L.Polyline.prototype._oldColor = '';
@@ -41,8 +43,10 @@
     L.Polyline.prototype.updateDetails = function() {
         var latlngs,
             esterenRoute = this._esterenRoute,
-            markerStart = esterenRoute.marker_start,
-            markerEnd = esterenRoute.marker_end
+            esterenMarkerStart = esterenRoute.marker_start,
+            esterenMarkerEnd = esterenRoute.marker_end,
+            markerStart = this._markerStart ? this._markerStart : (esterenMarkerStart ? this._esterenMap._markers[esterenMarkerStart.id] : null),
+            markerEnd = this._markerEnd ? this._markerEnd : (esterenMarkerEnd ? this._esterenMap._markers[esterenMarkerEnd.id] : null)
         ;
 
         if (esterenRoute.route_type.color) {
@@ -55,12 +59,12 @@
 
         latlngs = this.getLatLngs();
         if (markerStart) {
-            latlngs[0] = L.latLng([markerStart.latitude, markerStart.longitude]);
-            this._esterenMap._markers[markerStart.id]._esterenRoutesStart[esterenRoute.id] = this;
+            latlngs[0] = L.latLng(markerStart.getLatLng());
+            markerStart._esterenRoutesStart[esterenRoute.id] = this;
         }
         if (markerEnd) {
-            latlngs[this._latlngs.length-1] = L.latLng([markerEnd.latitude, markerEnd.longitude]);
-            this._esterenMap._markers[markerEnd.id]._esterenRoutesEnd[esterenRoute.id] = this;
+            latlngs[this._latlngs.length-1] = L.latLng(markerEnd.getLatLng());
+            markerEnd._esterenRoutesEnd[esterenRoute.id] = this;
         }
 
         this.setLatLngs(latlngs);
@@ -72,10 +76,16 @@
         isMarkerStart = !!isMarkerStart;
 
         if (marker) {
+            if (isMarkerStart) {
+                this._markerStart = marker;
+            } else {
+                this._markerEnd = marker;
+            }
             latlngs = this.getLatLngs();
             latlngs[isMarkerStart ? 0 : (this._latlngs.length-1)] = L.latLng([marker.getLatLng().lat, marker.getLatLng().lng]);
             marker._esterenRoutesEnd[this._esterenRoute.id] = this;
             this.setLatLngs(latlngs);
+            this.updateDetails();
         }
     };
 

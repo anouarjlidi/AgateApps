@@ -272,7 +272,7 @@
             var controlDiv, link, textTitle, controlContent, _this = this;
 
             if (!(this._esterenMap instanceof EsterenMap)) {
-                console.error('Fitlers control can only be added to a LeafletMap with an EsterenMap. Have you forgotten the second argument to the constructor ?');
+                console.error('Directions control can only be added to a LeafletMap with an EsterenMap. Have you forgotten the second argument to the constructor ?');
                 return false;
             }
 

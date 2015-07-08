@@ -3,10 +3,11 @@
     // Rajoute qqs attributs à des éléments de Leaflet et LeafletSidebar
     L.Marker.prototype._esterenMap = {};
     L.Marker.prototype._esterenMarker = {};
-    L.Marker.prototype._esterenRoutesStart = [];
-    L.Marker.prototype._esterenRoutesEnd = [];
+    L.Marker.prototype._esterenRoutesStart = {};
+    L.Marker.prototype._esterenRoutesEnd = {};
     L.Marker.prototype._sidebar = null;
     L.Marker.prototype._sidebarContent = '';
+    L.Marker.prototype._clickedTime = 0;
     L.Marker.prototype.showSidebar = function(){
         if (!this._sidebar) {
             return;
@@ -61,6 +62,7 @@
                 route = routes[i];
                 if (route._esterenRoute.marker_start && route._esterenRoute.marker_start.id == this._esterenMarker.id) {
                     this._esterenRoutesStart[route._esterenRoute.id] = route;
+                    route._esterenMarkerStart = this;
                 }
             }
         }
@@ -75,30 +77,44 @@
                 route = routes[i];
                 if (route._esterenRoute.marker_end && route._esterenRoute.marker_end.id == this._esterenMarker.id) {
                     this._esterenRoutesEnd[route._esterenRoute.id] = route;
+                    route._esterenMarkerEnd = this;
                 }
             }
         }
-        return this._esterenRoutesStart;
+        return this._esterenRoutesEnd;
     };
 
     L.Marker.prototype.refreshRoutes = function() {
         var routesStart, routesEnd, i, route;
         if (routesStart = this.refreshRoutesStart()) {
             for (i in routesStart) {
-                if (routesStart.hasOwnProperty(i)) {
+                if (routesStart.hasOwnProperty(i) && routesStart[i]) {
                     route = routesStart[i];
-                    route.updateMarkerDetails(this, true);
+                    route.updateDetails();
                 }
             }
         }
         if (routesEnd = this.refreshRoutesEnd()) {
             for (i in routesEnd) {
-                if (routesEnd.hasOwnProperty(i)) {
+                if (routesEnd.hasOwnProperty(i) && routesEnd[i]) {
                     route = routesEnd[i];
-                    route.updateMarkerDetails(this, false);
+                    route.updateDetails();
                 }
             }
         }
+    };
+
+    L.Marker.prototype._delete = function () {
+        var marker = this,
+            msg = CONFIRM_DELETE || 'Supprimer ?',
+            id = marker._esterenMarker ? marker._esterenMarker.id : null;
+        if (marker._esterenMap.options().editMode == true && id) {
+            if (confirm(msg)) {
+                marker._map.removeLayer(marker);
+                marker.fire('remove');
+            }
+        }
+        return false;
     };
 
     L.Marker.prototype._updateEM = function() {
@@ -266,8 +282,15 @@
             var marker = e.target,
                 map = marker._esterenMap,
                 esterenMarker = marker._esterenMarker,
-                id = esterenMarker.id || marker.options.alt
+                id = esterenMarker.id || marker.options.alt, clickedTime
             ;
+
+            clickedTime = Date.now();
+            if (this._clickedTime && clickedTime - this._clickedTime < 500) {
+                marker._delete();
+                e.stopPropagation();
+            }
+            this._clickedTime = clickedTime;
 
             map.disableEditedElements();
             marker.dragging.enable();
@@ -300,16 +323,6 @@
 
         },
         dblclickCallback: function(e){
-            var marker = e.target,
-                msg = CONFIRM_DELETE || 'Supprimer ?',
-                id = marker._esterenMarker ? marker._esterenMarker.id : null;
-            if (marker._esterenMap.options().editMode == true && id) {
-                if (confirm(msg)) {
-                    marker._map.removeLayer(marker);
-                    marker.fire('remove');
-                }
-            }
-            return false;
         },
         dragCallback: function(e) {
             var marker = e.target;
