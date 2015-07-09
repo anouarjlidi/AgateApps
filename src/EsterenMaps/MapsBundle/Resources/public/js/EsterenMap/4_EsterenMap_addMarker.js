@@ -3,8 +3,8 @@
     // Rajoute qqs attributs à des éléments de Leaflet et LeafletSidebar
     L.Marker.prototype._esterenMap = {};
     L.Marker.prototype._esterenMarker = {};
-    L.Marker.prototype._esterenRoutesStart = {};
-    L.Marker.prototype._esterenRoutesEnd = {};
+    L.Marker.prototype._esterenRoutesStart = null;
+    L.Marker.prototype._esterenRoutesEnd = null;
     L.Marker.prototype._sidebar = null;
     L.Marker.prototype._sidebarContent = '';
     L.Marker.prototype._clickedTime = 0;
@@ -475,6 +475,9 @@
             marker._icon.dataset.leafletObjectType = option;
         }
         marker._icon.setAttribute('data-leaflet-object-type', option);
+
+        marker._esterenRoutesStart = {};
+        marker._esterenRoutesEnd = {};
 
         this._markers[id] = marker;
 
