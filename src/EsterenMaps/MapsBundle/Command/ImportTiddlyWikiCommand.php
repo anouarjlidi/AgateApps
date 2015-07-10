@@ -4,6 +4,7 @@ namespace EsterenMaps\MapsBundle\Command;
 use DateTime;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\UnitOfWork;
 use EsterenMaps\MapsBundle\Entity\Factions;
 use EsterenMaps\MapsBundle\Entity\Maps;
 use EsterenMaps\MapsBundle\Entity\Markers;
@@ -14,11 +15,14 @@ use EsterenMaps\MapsBundle\Entity\Routes;
 use EsterenMaps\MapsBundle\Entity\ZonesTypes;
 use Orbitale\Component\DoctrineTools\BaseEntityRepository;
 use Symfony\Component\Console\Helper\Table;
+use Symfony\Component\Console\Helper\TableCell;
+use Symfony\Component\Console\Helper\TableHelper;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\PropertyAccess\PropertyAccess;
 
 class ImportTiddlyWikiCommand extends ContainerAwareCommand
 {
@@ -32,6 +36,11 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
      * @var EntityManager
      */
     private $em;
+
+    /**
+     * @var UnitOfWork
+     */
+    private $uow;
 
     /**
      * @var OutputInterface
@@ -107,8 +116,6 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $code = 100;
-
         $time = microtime(true);
 
         $this->output = $output;
@@ -117,7 +124,8 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
 
         $file = $input->getArgument('file');
 
-        $datas = file_get_contents($file);
+        // Force UTF8 conversion to avoid reinserting datas
+        $datas = mb_convert_encoding(file_get_contents($file), 'UTF-8');
 
         if (!$datas) {
             throw new \Exception('Tiddly wiki content could not be retrieved.');
@@ -130,6 +138,7 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
         }
 
         $this->em = $this->getContainer()->get('doctrine')->getManager();
+        $this->uow = $this->em->getUnitOfWork();
 
         // Setting all datas in the class for we can use it in the other methods
         $this->datas = $datas;
@@ -151,11 +160,12 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
         $table->setRows($tags);
         $table->render();
 
-        $this->maps         = $this->getRepository('EsterenMapsBundle:Maps')->findAllRoot('id');
-        $this->factions     = $this->getReferenceObjects('factions', Factions::class, 'id_');
-        $this->markersTypes = $this->getReferenceObjects('markertype', MarkersTypes::class, 'id_marker');
-        $this->zonesTypes   = $this->getReferenceObjects('zonetype', ZonesTypes::class, 'id_zone');
-        $this->routesTypes  = $this->getReferenceObjects('routetype', RoutesTypes::class, 'id_route');
+        $this->maps         = $this->getRepository('EsterenMapsBundle:Maps')->findAllRoot(true);
+
+        $this->factions     = $this->getReferenceObjects('factions', Factions::class);
+        $this->markersTypes = $this->getReferenceObjects('markertype', MarkersTypes::class);
+        $this->zonesTypes   = $this->getReferenceObjects('zonetype', ZonesTypes::class);
+        $this->routesTypes  = $this->getReferenceObjects('routetype', RoutesTypes::class);
 
         $this->markers = $this->processObjects('marqueurs', Markers::class, 'id_');
         $this->zones   = $this->processObjects('zones', Zones::class, 'id_');
@@ -169,7 +179,6 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
                 $output->write('Attempting to flush all datas...');
                 $this->em->flush();
                 $output->writeln(' <info>Ok!</info>');
-                $code = 0;
 
                 $idsUpdated = 0;
 
@@ -206,6 +215,8 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
                 $json = json_encode($this->datas, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_BIGINT_AS_STRING);
                 file_put_contents($file, $json);
                 $output->writeln('Updated <info>'.$idsUpdated.'</info> identifiers in the JSON file.');
+
+                $code = 0;
             } catch (\Exception $e) {
                 throw new \RuntimeException('An error occured when trying to update the database.', null, $e);
             }
@@ -218,12 +229,11 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
     /**
      * @param string $tag
      * @param string $entity
-     * @param string $idToReplace
      * @param string $nameProperty
      *
      * @return array
      */
-    private function getReferenceObjects($tag, $entity, $idToReplace, $nameProperty = 'name')
+    private function getReferenceObjects($tag, $entity, $nameProperty = 'name')
     {
         $datas = array_filter($this->datas, function ($element) use ($tag) {
             return isset($element['tags']) && $element['tags'] === $tag;
@@ -235,6 +245,8 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
         $existing = array();
 
         $objects = $repo->findAllRoot('id');
+
+        $accessor = PropertyAccess::createPropertyAccessor();
 
         foreach ($datas as $data) {
 
@@ -257,11 +269,11 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
                 $new[$id] = $object;
             }
 
-            $object->{'set'.ucfirst($nameProperty)}($data['title']);
-
-            $this->showOneProcessed('reference', $type, $object);
+            $accessor->setValue($object, $nameProperty, $data['title']);
 
             $this->em->persist($object);
+
+            $this->showOneProcessed('reference', $type, $object);
         }
 
         foreach ($objects as $object) {
@@ -294,7 +306,9 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
         $new = array();
         $existing = array();
 
-        $objects = $repo->findAllRoot('id');
+        $objects = $repo->findAllRoot(true);
+
+        $accessor = PropertyAccess::createPropertyAccessor();
 
         foreach ($datas as $data) {
 
@@ -317,7 +331,7 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
                 $new[$id] = $object;
             }
 
-            $object->{'set'.ucfirst('name')}($data['title']);
+            $accessor->setValue($object, 'name', $data['title']);
 
             $this->showOneProcessed('object', $type, $object);
 
@@ -346,11 +360,63 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
      */
     private function showOneProcessed($objectType, $processType, $object)
     {
-        $class = explode('\\', get_class($object));
+        $fqcn = get_class($object);
+        $class = explode('\\', $fqcn);
         $class = array_pop($class);
         $ref = (string) $object;
         $processType = $processType ? '<comment>'.$processType.'</comment>' : '';
-        $this->output->writeln(' '.$processType.'</comment> '.$objectType.' of type <comment>'.$class.'</comment>: <info>'.$ref.'</info>');
+
+        $msg = ' '.$processType.'</comment> '.$objectType.' of type <comment>'.$class.'</comment>: <info>'.$ref.'</info>';
+
+        if ($this->output->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
+            $table = new Table($this->output);
+            $table->setStyle('compact');
+
+            $table->addRow(array(
+                "<comment>$processType</comment>",
+                '<info>'.ucfirst($objectType).' of type '.$class.'</info>',
+                "<info>$ref</info>",
+            ));
+
+            if (UnitOfWork::STATE_MANAGED === $this->uow->getEntityState($object)) {
+                $this->uow->recomputeSingleEntityChangeSet($this->em->getClassMetadata(get_class($object)), $object);
+                $changesets = $this->uow->getEntityChangeSet($object);
+                if (count($changesets)) {
+                    foreach ($changesets as $property => $changeset) {
+                        $before = $changeset[0];
+                        if ($before instanceof DateTime) {
+                            $before = $before->format(DATE_RSS);
+                        }
+
+                        $after = $changeset[1];
+                        if ($after instanceof DateTime) {
+                            $after = $after->format(DATE_RSS);
+                        }
+
+                        $table->addRow(array(
+                            '<info>'.$property.'</info>',
+                            'before',
+                            $before,
+                        ));
+                        $table->addRow(array(
+                            '<info>'.$property.'</info>',
+                            'after',
+                            $after,
+                        ));
+                    }
+                } elseif (strpos($processType, 'Nothing') === false) {
+                    $table->addRow(array(new TableCell('Nothing to do, the object is already synchronized.', array('colspan' => 3))));
+                }
+            } elseif (UnitOfWork::STATE_NEW === $this->uow->getEntityState($object)) {
+                $table->addRow(array(new TableCell('<info>New</info>', array('colspan' => 4))));
+            }
+
+            $table->render();
+
+        } else {
+            $this->output->writeln($msg);
+        }
+
     }
 
     /**
