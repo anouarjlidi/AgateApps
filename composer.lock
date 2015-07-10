@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "30bbfb13a9b552aa0020a54b4d0cb7fa",
+    "hash": "17989e7183f6e2e5599efacd3c2dd05d",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -1735,16 +1735,16 @@
         },
         {
             "name": "orbitale/doctrine-tools",
-            "version": "0.1",
+            "version": "v0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Orbitale/DoctrineTools.git",
-                "reference": "65bfa0ed479aac5acc30478e1a73888e22d316b4"
+                "reference": "cc09a6ef8e12014545c479262151ee81690c0ff3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Orbitale/DoctrineTools/zipball/65bfa0ed479aac5acc30478e1a73888e22d316b4",
-                "reference": "65bfa0ed479aac5acc30478e1a73888e22d316b4",
+                "url": "https://api.github.com/repos/Orbitale/DoctrineTools/zipball/cc09a6ef8e12014545c479262151ee81690c0ff3",
+                "reference": "cc09a6ef8e12014545c479262151ee81690c0ff3",
                 "shasum": ""
             },
             "require": {
@@ -1757,7 +1757,8 @@
                 "satooshi/php-coveralls": "~0.6"
             },
             "suggest": {
-                "doctrine/data-fixtures": "To use the nice AbstractFixture class"
+                "doctrine/data-fixtures": "To use the nice AbstractFixture class",
+                "doctrine/doctrine-fixtures-bundle": "To use the AbstractFixture class inside a Symfony app"
             },
             "type": "library",
             "autoload": {
@@ -1785,7 +1786,7 @@
                 "repository",
                 "tools"
             ],
-            "time": "2015-05-05 07:30:40"
+            "time": "2015-07-10 12:00:25"
         },
         {
             "name": "orbitale/entity-merger",
