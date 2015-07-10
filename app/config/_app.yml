@@ -107,6 +107,10 @@ stof_doctrine_extensions:
 
 # Services declaration
 services:
+    framework_controller:
+        class: Symfony\Bundle\FrameworkBundle\Controller\Controller
+        calls:
+            - [ 'setContainer', [ @service_container ] ]
     twig.text_extension:
         class: Twig_Extensions_Extension_Text
         tags:

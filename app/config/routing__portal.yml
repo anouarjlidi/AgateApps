@@ -1,0 +1,16 @@
+
+portal:
+    host: %esteren_domains.portal%
+    path: /
+    defaults:
+        _controller: framework_controller:forward
+        controller: OrbitaleCmsBundle:Page:index
+        path: [ "/page/", "/" ]
+
+portal_games:
+    host: %esteren_domains.games%
+    path: /
+    defaults:
+        _controller: framework_controller:forward
+        controller: OrbitaleCmsBundle:Page:index
+        path: [ "/page/", "/" ]
