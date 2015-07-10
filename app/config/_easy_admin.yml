@@ -7,6 +7,31 @@ easy_admin:
     entities:
 
         ####################
+        ## Orbitale CMS
+        "Pages":
+            label: "CMS - Pages"
+            class: Orbitale\Bundle\CmsBundle\Entity\Page
+            show:
+                fields: [ title, slug, tree, content, metaDescription, metaTitle, metaKeywords, css, js, enabled, homepage, host, createdAt, updatedAt, createdBy, category, parent ]
+            list:
+                fields: [ id, parent, title, slug, content, category, homepage, host, enabled ]
+            form:
+                fields:
+                    - title
+                    - slug
+                    - content
+                    - metaDescription
+                    - metaTitle
+                    - metaKeywords
+                    - css
+                    - js
+                    - category
+                    - parent
+                    - { property: host, type: choice, choices: [ "%esteren_domains.games%", "%esteren_domains.portal%" ] }
+                    - homepage
+                    - enabled
+
+        ####################
         ## Esteren Maps
         "Factions":
             label: "Esteren Maps - Factions"
@@ -23,13 +48,13 @@ easy_admin:
                 fields: [ id, name, nameSlug, maxZoom, startZoom, startX, startY ]
             form:
                 fields: [ name, nameSlug, image, description, maxZoom, startZoom, startX, startY ]
-        "Markers":
-            label: "Esteren Maps - Marqueurs"
-            class: EsterenMaps\MapsBundle\Entity\Markers
-            list:
-                fields: [ id, name, latitude, longitude, markerType, { property: webIcon, type: image } ]
-            form:
-                fields: [ name, description, map, markerType, faction ]
+#        "Markers":
+#            label: "Esteren Maps - Marqueurs"
+#            class: EsterenMaps\MapsBundle\Entity\Markers
+#            list:
+#                fields: [ id, name, latitude, longitude, markerType, { property: webIcon, type: image } ]
+#            form:
+#                fields: [ name, description, map, markerType, faction ]
         "MarkersTypes":
             label: "Esteren Maps - Types de marqueurs"
             class: EsterenMaps\MapsBundle\Entity\MarkersTypes
@@ -37,13 +62,13 @@ easy_admin:
                 fields: [ id, name, { property: webIcon, type: image }, markers ]
             form:
                 fields: [ name, icon, markers ]
-        "Routes":
-            label: "Esteren Maps - Routes"
-            class: EsterenMaps\MapsBundle\Entity\Routes
-            list:
-                fields: [ id, name, distance, description, routeType, markerStart, markerEnd ]
-            form:
-                fields: [ name, description, routeType, markerStart, markerEnd, faction ]
+#        "Routes":
+#            label: "Esteren Maps - Routes"
+#            class: EsterenMaps\MapsBundle\Entity\Routes
+#            list:
+#                fields: [ id, name, distance, description, routeType, markerStart, markerEnd ]
+#            form:
+#                fields: [ name, description, routeType, markerStart, markerEnd, faction ]
         "RoutesTypes":
             label: "Esteren Maps - Types de routes"
             class: EsterenMaps\MapsBundle\Entity\RoutesTypes
@@ -51,13 +76,13 @@ easy_admin:
                 fields: [ id, name, color, routes ]
             form:
                 fields: [ name, color ]
-        "Zones":
-            label: "Esteren Maps - Zones"
-            class: EsterenMaps\MapsBundle\Entity\Zones
-            list:
-                fields: [ id, name, description, zoneType, map, faction ]
-            form:
-                fields: [ name, description, map, faction, zoneType ]
+#        "Zones":
+#            label: "Esteren Maps - Zones"
+#            class: EsterenMaps\MapsBundle\Entity\Zones
+#            list:
+#                fields: [ id, name, description, zoneType, map, faction ]
+#            form:
+#                fields: [ name, description, map, faction, zoneType ]
         "ZonesTypes":
             label: "Esteren Maps - Types de zones"
             class: EsterenMaps\MapsBundle\Entity\ZonesTypes
@@ -79,18 +104,6 @@ easy_admin:
                 fields: [ routeType, transportType, { property: percentage, format: %.2f } ]
             form:
                 fields: [ routeType, transportType, { property: percentage, format: %.2f, help: "Modificateur de vitesse (en %)" }, positiveRatio ]
-
-        ####################
-        ## Pierstoval CMS
-        "Pages":
-            label: "CMS - Pages"
-            class: Orbitale\Bundle\CmsBundle\Entity\Page
-            show:
-                fields: [ title, slug, tree, content, metaDescription, metaTitle, metaKeywords, css, js, enabled, homepage, host, createdAt, updatedAt, createdBy, category, parent ]
-            list:
-                fields: [ id, parent, title, slug, content, category, homepage, host, enabled ]
-            form:
-                fields: [ title, slug, content, metaDescription, metaTitle, metaKeywords, css, js, category, parent, host, homepage, enabled ]
 
 parameters:
     override: |
