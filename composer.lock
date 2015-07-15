@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "17989e7183f6e2e5599efacd3c2dd05d",
+    "hash": "af2f53e1e742e2e63f19a0184e4abba4",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -1790,16 +1790,16 @@
         },
         {
             "name": "orbitale/entity-merger",
-            "version": "v0.4",
+            "version": "v0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Orbitale/EntityMerger.git",
-                "reference": "faf07c8612583c9afba22f287a2a657fd5ce49e2"
+                "reference": "45dfab83c129c96460f50df99c3b2394ddf52c33"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Orbitale/EntityMerger/zipball/faf07c8612583c9afba22f287a2a657fd5ce49e2",
-                "reference": "faf07c8612583c9afba22f287a2a657fd5ce49e2",
+                "url": "https://api.github.com/repos/Orbitale/EntityMerger/zipball/45dfab83c129c96460f50df99c3b2394ddf52c33",
+                "reference": "45dfab83c129c96460f50df99c3b2394ddf52c33",
                 "shasum": ""
             },
             "require": {
@@ -1838,7 +1838,7 @@
                 "orm",
                 "symfony"
             ],
-            "time": "2015-03-30 16:37:36"
+            "time": "2015-07-15 13:35:52"
         },
         {
             "name": "orbitale/imagemagick-php",
