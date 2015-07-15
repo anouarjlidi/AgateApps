@@ -43,8 +43,18 @@
 
 .alert {
     min-height: 30px;
-    padding-left: 40px;
+//    padding-left: 40px;
     position: relative;
+}
+.alert.ib {
+    margin-right: 3px;
+}
+
+.alert.alert-sm {
+    min-height: 15px;
+    padding: 8px 15px;
+    font-size: 12px;
+    line-height: 18px;
 }
 
 .alert:before {
@@ -52,12 +62,19 @@
     font-size: 16px;
     font-style: normal;
     font-weight: normal;
-    left: 15px;
-    margin-top: -1%;
-    position: absolute;
-    top: 50%;
+//    left: 15px;
+//    margin-top: -1%;
+//    position: absolute;
+//    top: 50%;
+    margin-right: 5px;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
+}
+
+.alert.alert-sm:before {
+    font-size: 12px;
+    line-height: 13px;
+    margin-right: 8px;
 }
 
 .alert:before { content: "\E346"; }
