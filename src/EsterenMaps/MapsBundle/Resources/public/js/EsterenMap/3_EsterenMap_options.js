@@ -10,6 +10,8 @@
     EsterenMap.prototype._editedPolyline = null;
     EsterenMap.prototype._editedPolygon = null;
 
+    EsterenMap.prototype._messageElement = null;
+
     EsterenMap.prototype._refDatas = false;
 
     EsterenMap.prototype._transports = false;
@@ -56,6 +58,7 @@
             this.loadZones();
             this.loadTransports();
         },
+        messageElementId: 'esterenmap_message_element',
         imgUrl: '/bundles/esterenmaps/img',
         apiUrls: {
             base: '/api/',

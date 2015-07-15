@@ -47,12 +47,14 @@
     L.Polygon.prototype._updateEM = function() {
         var baseZone = EsterenMap.prototype.cloneObject.call(null, this),
             _this = this,
+            callbackMessage = '',
+            callbackMessageType = 'success',
             esterenZone = this._esterenZone || null,
             id = esterenZone.id || null;
         if (esterenZone && this._map && !this.launched) {
             esterenZone.map = esterenZone.map || {id: this._esterenMap.options().id };
-            esterenZone.coordinates = JSON.stringify(this._latlngs);
-            esterenZone.faction = esterenZone.faction || null;
+            esterenZone.coordinates = JSON.stringify(this._latlngs ? this._latlngs : {});
+            esterenZone.faction = esterenZone.faction || {};
             esterenZone.zone_type = { id: esterenZone.zone_type.id };
             this.launched = true;
             this._esterenMap._load({
@@ -72,24 +74,38 @@
                 },
                 callback: function(response) {
                     var map = this,
+                        msg,
                         zone = response.newObject;
                     if (!response.error) {
                         if (zone && zone.id) {
                             map._polygons[zone.id] = baseZone;
                             map._polygons[zone.id]._esterenZone = zone;
                             map._polygons[zone.id].updateStyle();
+                            callbackMessage = 'Zone: ' + zone.id + ' - ' + zone.name;
                         } else {
-                            console.warn('Zone retrieved by API does not have ID.');
+                            msg = 'Zone retrieved by API does not have ID.';
+                            console.warn(msg);
+                            callbackMessage = response.message ? response.message : msg;
+                            callbackMessageType = 'warning';
                         }
                     } else {
-                        console.error('Api sent back an error while attempting to '+(id?'update':'insert')+' a zone.');
+                        msg = 'Api returned an error while attempting to '+(id?'update':'insert')+' a zone.';
+                        console.error(msg);
+                        callbackMessage = msg + '<br>' + (response.message ? response.message : 'Unknown error...');
+                        callbackMessageType = 'danger';
                     }
                 },
                 callbackError: function() {
-                    console.error('Could not make a request to '+(id?'update':'insert')+' a zone.');
+                    var msg = 'Could not make a request to '+(id?'update':'insert')+' a zone.';
+                    console.error(msg);
+                    callbackMessage = msg;
+                    callbackMessageType = 'danger';
                 },
                 callbackComplete: function(){
                     _this.launched = false;
+                    if (callbackMessage) {
+                        _this._esterenMap.message(callbackMessage, callbackMessageType);
+                    }
                 }
             });
         } else if (!this.launched) {
@@ -166,7 +182,7 @@
                         return false;
                     });
                     $('#polygon_popup_faction').off('change').on('change', function(){
-                        map._polygons[id]._esterenZone.faction = map.refDatas('factions', this.value);
+                        map._polygons[id]._esterenZone.faction = this.value ? map.refDatas('factions', this.value) : null;
                         this._timeout = setTimeout(function(){ map._polygons[id]._updateEM(); }, 1000);
                         return false;
                     });
@@ -223,7 +239,7 @@
             for (i in zones) {
                 if (zones.hasOwnProperty(i)) {
                     zone = zones[i];
-                    coords = (typeof zone.coordinates === 'string') ? JSON.parse(zone.coordinates) : zone.coordinates;
+                    coords = (typeof zone.coordinates === 'string') ? JSON.parse(zone.coordinates ? zone.coordinates : "{}") : zone.coordinates;
                     finalLeafletOptions = this.cloneObject(leafletOptions, {id:zone.id});
 
                     if (zone.zone_type && zone.zone_type.color) {

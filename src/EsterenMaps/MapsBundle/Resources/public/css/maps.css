@@ -105,14 +105,41 @@
 #map_edit_menu {
     z-index:  25000;
     padding: 10px 10px 0 10px;
+    max-height: 100px;
+    overflow: visible;
 }
 
-#map_container .zoom-container {
-/*    -webkit-transition: 0.5s -webkit-transform ease-in-out;
-      -moz-transition:  0.5s    -moz-transform ease-in-out;
-       -ms-transition:  0.5s     -ms-transform ease-in-out;
-        -o-transition:  0.5s      -o-transform ease-in-out;
-           transition:  0.5s         transform ease-in-out;*/
+#map_edit_menu > ul {
+    display: flex;
+}
+
+#map_edit_menu > ul > li[data-toggle] {
+    width: 50px;
+    min-width: 50px;
+    max-width: 50px;
+}
+#map_edit_menu > ul > li {
+    margin-bottom: 0;
+}
+
+#esterenmap_message_element {
+    display: flex;
+}
+#esterenmap_message_element .alert {
+    max-height: 75px;
+    max-width: 250px;
+    margin-bottom: 0;
+    -webkit-transition-property: max-width, max-height, padding, margin;
+    -webkit-transition-duration: 1s;
+    transition-property: max-width, max-height, padding, margin;
+    transition-duration: 1s;
+    overflow: hidden;
+}
+#esterenmap_message_element .alert.h {
+    max-width: 0;
+    max-height: 0;
+    padding: 0;
+    margin: 0;
 }
 
 .map-icon-target {

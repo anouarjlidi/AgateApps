@@ -46,7 +46,6 @@
         return this;
     };
 
-
     EsterenMap.prototype._initiate = function() {
 
         var drawnItems,sidebar, _this, mapOptions;
@@ -71,6 +70,10 @@
         }
 
         this.initLeafletDraw();
+
+        if (mapOptions.messageElementId) {
+            this._messageElement = d.getElementById(mapOptions.messageElementId);
+        }
 
         // Création de la map
         this._map = L.map(mapOptions.container, mapOptions.LeafletMapBaseOptions);
@@ -131,6 +134,42 @@
             mapOptions.loadedCallback.call(this);
         }
 
+    };
+
+    EsterenMap.prototype.message = function(message, type, messageElement) {
+        var element;
+
+        if (!messageElement) {
+            if (this._messageElement) {
+                messageElement = this._messageElement;
+            } else {
+                console.error('No correct element could be used to show a message.');
+                return;
+            }
+        }
+
+        element = d.createElement('div');
+        element.className = 'alert alert-sm ib h';
+        if (type) {
+            element.className += ' alert-'+type;
+        }
+
+        element.innerHTML = message;
+
+        messageElement.appendChild(element);
+
+        setTimeout(function(){
+            // Remove the "hiding" class so the element appears smoothly with css
+            element.classList.remove('h');
+        }, 10);
+        setTimeout(function() {
+            // Hide smoothly the element with css transitions
+            element.className += ' h';
+        }, 4000);
+        setTimeout(function() {
+            // Definitely remove the element from the flow
+            messageElement.removeChild(element);
+        }, 5000);
     };
 
     EsterenMap.prototype.disableEditedElements = function(){
@@ -257,7 +296,7 @@
             crossDomain: true,
             contentType: method === 'GET' ? "application/x-www-form-urlencoded" : "application/json",
             jsonp: false,
-            data: method === 'GET' ? datas : JSON.stringify(datas)
+            data: method === 'GET' ? datas : JSON.stringify(datas ? datas : {})
         };
         if (typeof(callback) === 'function') {
             ajaxObject.success = function(response) {

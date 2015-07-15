@@ -124,14 +124,16 @@
         var baseRoute = this,
             esterenRoute = EsterenMap.prototype.cloneObject.call(null, this._esterenRoute || null),
             _this = this,
+            callbackMessage = '',
+            callbackMessageType = 'success',
             id = esterenRoute.id || null;
         if (esterenRoute && this._map && !this.launched && esterenRoute.marker_start && esterenRoute.marker_end) {
             esterenRoute.map = esterenRoute.map || {id: this._esterenMap.options().id };
-            esterenRoute.coordinates = JSON.stringify(this._latlngs);
+            esterenRoute.coordinates = JSON.stringify(this._latlngs ? this._latlngs : {});
             esterenRoute.route_type = { id: esterenRoute.route_type.id };
             esterenRoute.marker_start = { id: esterenRoute.marker_start.id };
             esterenRoute.marker_end = { id: esterenRoute.marker_end.id };
-            esterenRoute.faction = esterenRoute.faction || null;
+            esterenRoute.faction = esterenRoute.faction || {};
             this.calcDistance();
             this.launched = true;
             this._esterenMap._load({
@@ -158,24 +160,38 @@
                 },
                 callback: function(response) {
                     var map = this,
+                        msg,
                         route = response.newObject;
                     if (!response.error) {
                         if (route && route.id) {
                             map._polylines[route.id] = baseRoute;
                             map._polylines[route.id]._esterenRoute = route;
                             map._polylines[route.id].updateDetails();
+                            callbackMessage = 'Route: ' + route.id + ' - ' + route.name;
                         } else {
-                            console.warn('Route retrieved by API does not have ID.');
+                            msg = 'Zone retrieved by API does not have ID.';
+                            console.warn(msg);
+                            callbackMessage = response.message ? response.message : msg;
+                            callbackMessageType = 'warning';
                         }
                     } else {
-                        console.error('Api sent back an error while attempting to '+(id?'update':'insert')+' a route.');
+                        msg = 'Api returned an error while attempting to '+(id?'update':'insert')+' a route.';
+                        console.error(msg);
+                        callbackMessage = msg + '<br>' + (response.message ? response.message : 'Unknown error...');
+                        callbackMessageType = 'danger';
                     }
                 },
                 callbackError: function() {
-                    console.error('Could not make a request to '+(id?'update':'insert')+' a route.');
+                    var msg = 'Could not make a request to '+(id?'update':'insert')+' a route.';
+                    console.error(msg);
+                    callbackMessage = msg;
+                    callbackMessageType = 'danger';
                 },
                 callbackComplete: function(){
                     _this.launched = false;
+                    if (callbackMessage) {
+                        _this._esterenMap.message(callbackMessage, callbackMessageType);
+                    }
                 }
             });
         } else if (!this.launched && esterenRoute.marker_start && esterenRoute.marker_end) {
@@ -241,7 +257,6 @@
             setTimeout(function(){
                 var collectionStart, collectionEnd, markers;
                 if (polyline._sidebar.isVisible()) {
-                    console.info('updating a route');
                     markers = map._markers;
                     collectionStart = $('#polyline_popup_markerStart option[value!=""]');
                     collectionEnd = $('#polyline_popup_markerEnd option[value!=""]');
@@ -339,7 +354,7 @@
             for (i in routes) {
                 if (routes.hasOwnProperty(i)) {
                     route = routes[i];
-                    coords = (typeof route.coordinates === 'string') ? JSON.parse(route.coordinates) : route.coordinates;
+                    coords = (typeof route.coordinates === 'string') ? JSON.parse(route.coordinates ? route.coordinates : "{}") : route.coordinates;
                     finalLeafletOptions = this.cloneObject(leafletOptions, {id:route.id});
 
                     if (route.route_type.color) {

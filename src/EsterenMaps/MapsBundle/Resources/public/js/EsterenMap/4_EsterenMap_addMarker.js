@@ -121,6 +121,8 @@
         var baseMarker = this,
             esterenMarker = EsterenMap.prototype.cloneObject.call(null, this._esterenMarker),
             _this = this,
+            callbackMessage = '',
+            callbackMessageType = 'success',
             id = esterenMarker.id || null;
         if (esterenMarker && this._map && !this.launched) {
             this.launched = true;
@@ -149,24 +151,38 @@
                 },
                 callback: function(response) {
                     var map = this,
+                        msg,
                         marker = response.newObject;
                     if (!response.error) {
                         if (marker && marker.id) {
                             map._markers[marker.id] = baseMarker;
                             map._markers[marker.id]._esterenMarker = marker;
                             map._markers[marker.id].updateIcon();
+                            callbackMessage = 'Marker: ' + marker.id + ' - ' + marker.name;
                         } else {
-                            console.warn('Marker retrieved by API does not have ID.');
+                            msg = 'Marker retrieved by API does not have ID.';
+                            console.warn(msg);
+                            callbackMessage = response.message ? response.message : msg;
+                            callbackMessageType = 'warning';
                         }
                     } else {
-                        console.error('Api sent back an error while attempting to '+(id?'update':'insert')+' a marker.');
+                        msg = 'Api returned an error while attempting to '+(id?'update':'insert')+' a marker.';
+                        console.error(msg);
+                        callbackMessage = msg + '<br>' + (response.message ? response.message : 'Unknown error...');
+                        callbackMessageType = 'danger';
                     }
                 },
                 callbackError: function() {
-                    console.error('Could not make a request to '+(id?'update':'insert')+' a marker.');
+                    var msg = 'Could not make a request to '+(id?'update':'insert')+' a marker.';
+                    console.error(msg);
+                    callbackMessage = msg;
+                    callbackMessageType = 'danger';
                 },
                 callbackComplete: function(){
                     _this.launched = false;
+                    if (callbackMessage) {
+                        _this._esterenMap.message(callbackMessage, callbackMessageType);
+                    }
                 }
             });
         } else if (!this.launched) {
