@@ -124,8 +124,12 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
 
         $file = $input->getArgument('file');
 
-        // Force UTF8 conversion to avoid reinserting datas
-        $datas = mb_convert_encoding(file_get_contents($file), 'UTF-8');
+        $datas = file_get_contents($file);
+        $encoding = mb_detect_encoding($datas);
+        if ($encoding !== 'UTF-8') {
+            // Force UTF8 conversion to avoid reinserting datas
+            $datas = mb_convert_encoding($datas, 'UTF-8');
+        }
 
         if (!$datas) {
             throw new \Exception('Tiddly wiki content could not be retrieved.');
