@@ -52,18 +52,13 @@ class MarkersRepository extends BaseRepository {
                 LEFT JOIN routesStartTypes.transports routesStartTypesTransports
                     WITH routesStartTypesTransports.transportType = :transport
 
-                LEFT JOIN routesStart.routeType routesEndTypes
+                LEFT JOIN routesEnd.routeType routesEndTypes
                 LEFT JOIN routesEndTypes.transports routesEndTypesTransports
                     WITH routesEndTypesTransports.transportType = :transport
             ":"")."
 
             WHERE markers.map = :map
 
-            ".($transportType?"
-                HAVING
-                        (routesStartTypesTransports.percentage != 0 OR routesStartTypesTransports.percentage IS NULL)
-                    AND (routesEndTypesTransports.percentage   != 0 OR routesEndTypesTransports.percentage   IS NULL)
-            ":"")."
         ";
 
         if ($transportType) {

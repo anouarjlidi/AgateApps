@@ -162,15 +162,11 @@
             controlDiv.classList.add('expanded');
             link.children[0].classList.remove('icon-resize_full');
             link.children[0].classList.add('icon-resize_small');
-            setTimeout(function(){
-                controlDiv.classList.add('expanded-full');
-            }, 400);
         },
 
         hide: function(){
             var controlDiv = this._controlDiv,
                 link = this._controlLink;
-            controlDiv.classList.remove('expanded-full');
             controlDiv.classList.remove('expanded');
             link.children[0].classList.add('icon-resize_full');
             link.children[0].classList.remove('icon-resize_small');
@@ -195,7 +191,7 @@
             link.id = 'leaflet-filters-toggle';
             link.style.backgroundImage = 'none';
             link.href = "#";
-            link.innerHTML = '<span class="glyphicon icon-resize_full"></span>';
+            link.innerHTML = '<span class="glyphicon icon-filter"></span>';
             link.title = textTitle;
             $(link).tooltip({
                 "placement" : "right",

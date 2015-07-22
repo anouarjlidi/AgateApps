@@ -30,11 +30,14 @@ class DirectionsController extends Controller {
 
         $transportId = $request->query->get('transport');
         $transport = $this->getDoctrine()->getRepository('EsterenMapsBundle:TransportTypes')->findOneBy(array('id' => $transportId));
+
+        $hoursPerDay = $request->query->get('hours_per_day', 7);
+
         if (!$transport && $transportId) {
             $directions = $this->getError($from, $to, $transportId, 'Transport not found.');
             $code = 404;
         } else {
-            $directions = $this->container->get('esterenmaps.directions')->getDirections($map, $from, $to, $transport);
+            $directions = $this->container->get('esterenmaps.directions')->getDirections($map, $from, $to, $hoursPerDay, $transport);
             if (!count($directions)) {
                 $directions = $this->getError($from, $to);
                 $code = 404;

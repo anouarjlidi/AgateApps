@@ -127,22 +127,22 @@
                 '<h3>' + directionsMsgTitle + '</h3>' +
                 '<form action="#" id="directions_form" class="form-horizontal">' +
                     '<div class="form-group">' +
-                        '<label for="directions_start" class="col-sm-3 control-label">' + directionsMsgStart + '</label>' +
-                        '<div class="col-sm-9">' +
+                        '<label for="directions_start" class="col-xs-3 control-label">' + directionsMsgStart + '</label>' +
+                        '<div class="col-xs-9">' +
                             '<input type="text" name="start" id="directions_start" placeholder="' + directionsMsgStart + '" class="form-control" />' +
                             '<div class="directions_helper"></div>' +
                         '</div>' +
                     '</div>' +
                     '<div class="form-group">' +
-                        '<label for="directions_end" class="col-sm-3 control-label">' + directionsMsgEnd + '</label>' +
-                        '<div class="col-sm-9">' +
+                        '<label for="directions_end" class="col-xs-3 control-label">' + directionsMsgEnd + '</label>' +
+                        '<div class="col-xs-9">' +
                             '<input type="text" name="end" id="directions_end" placeholder="' + directionsMsgEnd + '" class="form-control" />' +
                             '<div class="directions_helper"></div>' +
                         '</div>' +
                     '</div>' +
                     '<div class="form-group">' +
-                        '<label for="transport" class="col-sm-3 control-label">' + directionsMsgTransport + '</label>' +
-                        '<div class="col-sm-9">' +
+                        '<label for="transport" class="col-xs-3 control-label">' + directionsMsgTransport + '</label>' +
+                        '<div class="col-xs-9">' +
                             '<select name="directions_transport" id="directions_transport" class="form-control"></select>' +
                             '<div class="directions_helper"></div>' +
                         '</div>' +
@@ -194,11 +194,17 @@
                 var datas = $(this).serializeArray(),
                     markers = map._markers,
                     control = map._directionsControl,
+                    submitButton = this.querySelector('[type="submit"]'),
+                    messageBox = d.getElementById('directions_message'),
                     markerStart, markerEnd,
                     start = datas.filter(function(e){return e.name==='start';})[0].value,
                     end = datas.filter(function(e){return e.name==='end';})[0].value,
                     transport = datas.filter(function(e){return e.name==='directions_transport';})[0].value
                 ;
+                if (submitButton.hasAttribute('disabled')) {
+                    return false;
+                }
+                submitButton.setAttribute('disabled', 'disabled');
                 control.cleanDirections();
                 for (marker in markers) {
                     if (markers.hasOwnProperty(marker)) {
@@ -224,13 +230,19 @@
                         },
                         callback: function(response) {
                             if (response.error && response.message) {
-                                $('#directions_message').text(response.message);
+                                messageBox.innerHTML = response.message;
                                 setTimeout(function(){$('#directions_message').text('');}, 3000);
                             } else if (response.path && response.path.length) {
                                 control._steps = response.path;
                                 control.highlightPath();
                                 map._map.fitBounds(L.latLngBounds(response.bounds.northEast, response.bounds.southWest));
+                                messageBox.innerHTML = response.path_view;
+                            } else if (response.path_view) {
+                                messageBox.innerHTML = response.path_view;
                             }
+                        },
+                        completeCallback: function() {
+                            submitButton.removeAttribute('disabled');
                         }
                     });
                 } else if (markerStart || markerEnd || start || end) {
@@ -241,7 +253,7 @@
                     if (!markerEnd && end) {
                         message += (message?', ':'') + end;
                     }
-                    d.getElementById('directions_message').innerHTML = directionsMsgNotFound + ' ' + message;
+                    messageBox.innerHTML = directionsMsgNotFound + ' ' + message;
                 }
                 return false;
             });
@@ -252,11 +264,13 @@
         },
 
         show: function(){
-            $(this._controlContent).stop().slideDown(400);
+            this._controlContent.style.display = 'block';
+            this._controlContent.parentElement.classList.add('expanded');
         },
 
         hide: function(){
-            $(this._controlContent).stop().slideUp(400);
+            this._controlContent.style.display = 'none';
+            this._controlContent.parentElement.classList.remove('expanded');
         },
 
         toggle: function(){

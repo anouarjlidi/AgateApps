@@ -1,0 +1,26 @@
+
+{% if path|length %}
+    <h3>{{ 'Itinéraire' }} :</h3>
+    <ul style="color: black;">
+        {% for i, marker in path if marker.route %}
+            <li>
+                {% if marker.id == start.id %}
+                    <strong>{{ 'Départ' | trans }} :</strong>
+                {% else %}
+                    <strong>{{ 'Escale' | trans }} :</strong>
+                {% endif %}
+                {{ marker.name }}<br>
+                <strong>{{ 'Route' | trans }} :</strong> {{ marker.route.name }}
+            </li>
+        {% endfor %}
+
+        <li>
+            <strong>{{ 'Arrivée' | trans }} :</strong>
+            {{ end.name }}
+        </li>
+    </ul>
+{% else %}
+    <p class="alert alert-warning" style="color: darkred;">{{ 'Aucun itinéraire trouvé' | trans }}</p>
+    <p><strong>{{ 'Départ' | trans }} :</strong> {{ start.name }}</p>
+    <p><strong>{{ 'Arrivée' | trans }} :</strong> {{ end.name }}</p>
+{% endif %}

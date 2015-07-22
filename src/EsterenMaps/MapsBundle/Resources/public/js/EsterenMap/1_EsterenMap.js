@@ -471,7 +471,7 @@
                 - $('#footer').outerHeight(true)
                 - $('#navigation').outerHeight(true)
                 - $('#map_edit_menu').outerHeight(true)
-                - 40
+                //- 40
             );
         }
         return this;

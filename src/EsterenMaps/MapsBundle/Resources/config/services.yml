@@ -21,3 +21,4 @@ services:
             - %kernel.debug%
             - @doctrine.orm.default_entity_manager
             - @jms_serializer
+            - @templating
