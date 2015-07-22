@@ -315,7 +315,7 @@
         }
 
         if (xhr_name && this._xhr_saves[xhr_name]) {
-            this._xhr_saves.abort();
+            this._xhr_saves[xhr_name].abort();
         }
 
         xhr_object = $.ajax(ajaxObject);
