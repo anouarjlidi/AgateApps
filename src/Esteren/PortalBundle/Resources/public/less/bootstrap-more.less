@@ -1,84 +1,44 @@
-/*.btn.btn-inverse{
-    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
-    .box-shadow(inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px rgba(0, 0, 0, 0.075));
-}
 
-.btn.btn-inverse:active {
-    .box-shadow(inset 0 3px 5px rgba(0, 0, 0, 0.125));
-}
-
-.btn.btn-inverse {
-    color: #eeeeee;
-    text-shadow: 0 1px 0 #000;
-    background-color: #222;
-    background-image: -webkit-gradient(linear, left 0%, left 100%, from(#444444), to(#222222));
-    background-image: -webkit-linear-gradient(top, #444444 0%, #222222 100%);
-    background-image: -moz-linear-gradient(top, #444444 0%, #222222 100%);
-    background-image: linear-gradient(to bottom, #444444 0%, #222222 100%);
-    background-repeat: repeat-x;
-    border-color: #000;
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff444444', endColorstr='#ff222222', GradientType=0);
-    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
-}
-
-.btn.btn-inverse:hover,
-.btn.btn-inverse:focus {
-    background-color: #222222;
-    background-position: 0 -15px;
-}
-
-.btn.btn-inverse:active,
-.btn.btn-inverse.active {
-    background-color: #222222;
-    border-color: #303030;
-}*/
-// Danger and error appear as red
 .btn-inverse {
   .button-variant(#ddd; #181818; #333);
 }
 
 .btn.active,.btn:active {
-    background-image:none;
+    background-image: none;
 }
 
 .alert {
     min-height: 30px;
 //    padding-left: 40px;
     position: relative;
+    .ib {
+        margin-right: 3px;
+    }
+    &:before {
+        font-family: "Glyphicons Regular";
+        font-size: 16px;
+        font-style: normal;
+        font-weight: normal;
+        //    left: 15px;
+        //    margin-top: -1%;
+        //    position: absolute;
+        //    top: 50%;
+        margin-right: 5px;
+        content: "\E346";
+    }
+    &.alert-success:before { content: "\E194"; }
+    &.alert-info:before { content: "\E196"; }
+    &.alert-warning:before { content: "\E197"; }
+    &.alert-danger:before { content: "\E193"; }
+    &.alert-sm {
+        min-height: 15px;
+        padding: 8px 15px;
+        font-size: 12px;
+        line-height: 18px;
+        &:before {
+            font-size: 12px;
+            line-height: 13px;
+            margin-right: 8px;
+        }
+    }
 }
-.alert.ib {
-    margin-right: 3px;
-}
-
-.alert.alert-sm {
-    min-height: 15px;
-    padding: 8px 15px;
-    font-size: 12px;
-    line-height: 18px;
-}
-
-.alert:before {
-    font-family: "Glyphicons Regular";
-    font-size: 16px;
-    font-style: normal;
-    font-weight: normal;
-//    left: 15px;
-//    margin-top: -1%;
-//    position: absolute;
-//    top: 50%;
-    margin-right: 5px;
-    -moz-osx-font-smoothing: grayscale;
-    -webkit-font-smoothing: antialiased;
-}
-
-.alert.alert-sm:before {
-    font-size: 12px;
-    line-height: 13px;
-    margin-right: 8px;
-}
-
-.alert:before { content: "\E346"; }
-.alert.alert-success:before { content: "\E194"; }
-.alert.alert-info:before { content: "\E196"; }
-.alert.alert-warning:before { content: "\E197"; }
-.alert.alert-danger:before { content: "\E193"; }
