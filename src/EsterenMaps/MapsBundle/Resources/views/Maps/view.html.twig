@@ -2,14 +2,15 @@
 
 {% block title %}{{ 'Carte' | trans }} {{ map.name | trans }} - {{ parent() }}{% endblock %}
 
-{% block content_for_layout %}
+{% block footer '' %}
 
-<div id="map_wrapper">
-    <div id="esterenmap_sidebar"></div>
-    <div id="map"></div>
-    <div id="inputs_container"></div>
-</div>
-
+{% block layout %}
+    {% block menus %}{{ parent() }}{% endblock %}
+    <div id="map_wrapper">
+        <div id="esterenmap_sidebar"></div>
+        <div id="map"></div>
+        <div id="inputs_container"></div>
+    </div>
 {% endblock %}
 
 {% block javascripts %}

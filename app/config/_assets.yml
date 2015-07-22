@@ -31,13 +31,12 @@ assetic:
                 - 'components/jquery-ui/themes/vader/jquery.ui.theme.css'
                 - 'components/jquery.colorpicker/jquery.colorpicker.css'
                 - '@EsterenPortalBundle/Resources/public/less/_main.less'
-                - 'bundles/esterenmaps/css/maps.css'
+                - 'bundles/esterenmaps/css/maps.less'
             filters:
                 - less
                 - cssrewrite
                 - ?uglifycss
             output: "css/global.css"
-
 
         generator_js:
             inputs:
