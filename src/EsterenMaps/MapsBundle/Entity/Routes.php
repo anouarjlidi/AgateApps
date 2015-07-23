@@ -427,14 +427,14 @@ class Routes
         }
         $coords = json_decode($this->coordinates, true);
 
-        if ($this->markerStart) {
+        if ($this->markerStart && isset($coords[0])) {
             $coords[0] = array(
                 'lat' => $this->markerStart->getLatitude(),
                 'lng' => $this->markerStart->getLongitude(),
             );
         }
         if ($this->markerEnd) {
-            $coords[count($coords) - 1] = array(
+            $coords[count($coords) - ((int) (count($coords) > 1))] = array(
                 'lat' => $this->markerEnd->getLatitude(),
                 'lng' => $this->markerEnd->getLongitude(),
             );
@@ -452,6 +452,8 @@ class Routes
      */
     public function calcDistance()
     {
+        $baseDistance = $this->distance;
+
         $distance = 0;
         $points   = json_decode($this->coordinates, true);
 
@@ -476,7 +478,13 @@ class Routes
             }
         }
 
-        $this->distance = $distance;
+        // This silly tricks makes sure that the floats are different
+        $checkBaseDistance = number_format(((floor($baseDistance * pow(10, 10))) / pow(10, 10)), 11, '.', '');
+        $checkNewDistance = number_format(((floor($distance * pow(10, 10))) / pow(10, 10)), 11, '.', '');
+
+        if ($checkBaseDistance !== $checkNewDistance) {
+            $this->distance = $distance;
+        }
 
         return $distance;
     }
