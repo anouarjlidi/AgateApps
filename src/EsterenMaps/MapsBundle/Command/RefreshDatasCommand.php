@@ -28,10 +28,10 @@ class RefreshDatasCommand extends ContainerAwareCommand {
 
         /** @var EntityManager $em */
         $em = $this->getContainer()->get('doctrine')->getManager();
-
         $maps = $em->getRepository('EsterenMapsBundle:Maps')->findAll();
 
         $numberTotal = 0;
+        $numberModified = 0;
 
         foreach ($maps as $map) {
 
@@ -40,34 +40,34 @@ class RefreshDatasCommand extends ContainerAwareCommand {
                 $em->persist($route);
                 $numberTotal++;
             }
-
         }
 
         $uow = $em->getUnitOfWork();
-
         $uow->computeChangeSets();
 
-        $updates = $uow->getScheduledEntityUpdates();
+        foreach ($maps as $map) {
+            foreach ($map->getRoutes() as $route) {
+                $changesets = $uow->getEntityChangeSet($route);
 
-        $numberModified = 0;
+                if (isset($changesets['distance'])) {
+                    $changesets['distance'] = array_map(function($e) {
+                        // This trick truncates the number
+                        // Else, a number like 219.664402090055 would have been treated as 219.664402090060
+                        $shift = pow(10, 10);
+                        $e = ((floor($e * $shift)) / $shift);
+                        return number_format($e, 11, '.', '');
+                    }, $changesets['distance']);
+                    if ($changesets['distance'][0] === $changesets['distance'][1]) {
+                        unset($changesets['distance']);
+                    }
+                }
 
-        foreach ($updates as $entity) {
-            $changesets = $uow->getEntityChangeSet($entity);;
-
-            if (isset($changesets['distance'])) {
-                $changesets['distance'] = array_map(function($e) {
-                    // This trick truncates the number
-                    // Else, a number like 219.664402090055 would have been treated as 219.664402090060
-                    $shift = pow(10, 10);
-                    $e = ((floor($e * $shift)) / $shift);
-                    return number_format($e, 11, '.', '');
-                }, $changesets['distance']);
-                if ($changesets['distance'][0] === $changesets['distance'][1]) {
+                if (!count($changesets)) {
                     continue;
                 }
-            }
 
-            $numberModified++;
+                $numberModified++;
+            }
         }
 
         if ($numberModified === 0) {
