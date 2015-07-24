@@ -6,8 +6,8 @@ imports:
     - { resource: _easy_admin.yml }
 
 parameters:
-    version_code: 0.2.0
-    version_date: 15/07/2015
+    version_code: 0.2.1
+    version_date: 24/07/2015
     locale: fr
     locales: [ fr, en, de, es ]
     locales_regex: fr|en|de|es

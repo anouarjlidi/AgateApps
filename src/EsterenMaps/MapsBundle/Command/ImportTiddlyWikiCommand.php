@@ -211,7 +211,7 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
                     }
 
                     if ($newId) {
-                        $this->datas[$k]['id'] = $newId;
+                        $this->datas[$k]['id'] = (string) $newId;
                         $idsUpdated++;
                     }
                 }
@@ -472,6 +472,7 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
                     array('lat' => 1, 'lng' => 1),
                 ));
             }
+            $object->refresh();
         } elseif ($object instanceof Zones) {
             $object
                 ->setZoneType($this->getOneReferencedObject('zonesTypes', $data['zonetype_id']))

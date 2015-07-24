@@ -61,10 +61,10 @@ class Routes
     /**
      * @var integer
      *
-     * @ORM\Column(name="distance", type="float", precision=12, scale=6)
+     * @ORM\Column(name="distance", type="float", precision=12, scale=6, options={"default":0})
      * @Serializer\Expose
      */
-    protected $distance;
+    protected $distance = 0;
 
     /**
      * @var Resources
