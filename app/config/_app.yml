@@ -1,7 +1,6 @@
 imports:
     - { resource: config.yml }
     - { resource: _assets.yml }
-    - { resource: _esterenmaps.yml }
 
 parameters:
     version_code: 0.2.1
