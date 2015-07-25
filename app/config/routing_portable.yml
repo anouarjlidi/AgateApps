@@ -6,11 +6,6 @@ root:
         path: /%locale%/
         permanent: true
 
-root_maps:
-    path: /{_locale}/
-    defaults:
-        _controller: EsterenMapsBundle:Maps:index
-
 esterenmaps:
     resource: "@EsterenMapsBundle/Controller/"
     type:     annotation
