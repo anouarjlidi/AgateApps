@@ -2,9 +2,28 @@
 root:
     path: /
     defaults:
+        _controller: FrameworkBundle:Redirect:urlRedirect
+        path: /%locale%/
+        permanent: true
+
+root_maps:
+    path: /{_locale}/
+    defaults:
         _controller: EsterenMapsBundle:Maps:index
 
-esterenmaps: { resource: "routing__esterenmaps.yml", prefix: "/{_locale}/", defaults: { _locale: "%locale%" }, requirements: { _locale: "^(%locales_regex%)$" }  }
+esterenmaps:
+    resource: "@EsterenMapsBundle/Controller/"
+    type:     annotation
+    prefix: "/{_locale}/"
+    defaults: { _locale: "%locale%" }
+    requirements: { _locale: "^(%locales_regex%)$" }
+
+esterenmaps_api:
+    resource: "@EsterenMapsApiBundle/Controller/"
+    type:     annotation
+    prefix: "/{_locale}/api/"
+    defaults: { _locale: "%locale%" }
+    requirements: { _locale: "^(%locales_regex%)$" }
 
 #-----------------------------------
 # Pierstoval relative routing
