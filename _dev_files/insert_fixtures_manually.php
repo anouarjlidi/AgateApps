@@ -44,9 +44,8 @@ foreach ($fixtures as $table => $lines) {
     $sqls = array();
 
     foreach ($lines as $line) {
-        $line = array_map(function ($e) { return !is_numeric($e) ? '"'.str_replace('"', '\\"', $e).'"' : $e; }, $line);
         $dbal->insert($table, $line);
-        echo "Inserted into $table values with id $id.\n";
+        echo "Inserted into $table values with id {$line['id']}.\n";
     }
 }
 

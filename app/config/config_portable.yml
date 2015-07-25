@@ -4,7 +4,8 @@ imports:
 parameters:
     esteren_domains.backoffice: no_domain
     esteren_domains.corahn_rin: no_domain
-    esteren_domains.portal: no_domain
+    esteren_domains.game: no_domain
+    esteren_domains.portal: 127.0.0.1
     esteren_domains.esteren_maps: 127.0.0.1
     esteren_domains.api: 127.0.0.1
     esteren_domains.cookieDomain: 127.0.0.1

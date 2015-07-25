@@ -16,9 +16,17 @@ esterenmaps:
 esterenmaps_api:
     resource: "@EsterenMapsApiBundle/Controller/"
     type:     annotation
-    prefix: "/{_locale}/api/"
+    prefix: "/{_locale}/"
     defaults: { _locale: "%locale%" }
     requirements: { _locale: "^(%locales_regex%)$" }
+
+# Hack to simulate FOSUserBundle in some parts of the app
+fos_user_security_login:
+    path: /login
+    defaults:
+        _controller: FrameworkBundle:Redirect:urlRedirect
+        path: /
+        permanent: true
 
 #-----------------------------------
 # Pierstoval relative routing
@@ -36,7 +44,7 @@ pierstoval_api:
     resource: "@PierstovalApiBundle/Controller/"
     type:     annotation
     host:     %esteren_domains.api%
-    prefix:   /{_locale}/api/
+    prefix:   /{_locale}/
     defaults:
          _locale: %locale%
     requirements:

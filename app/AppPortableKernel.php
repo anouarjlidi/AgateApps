@@ -30,7 +30,7 @@ class AppPortableKernel extends Kernel
             //new AdminBundle\AdminBundle(),
 
             // Corahn-Rin
-//            new CorahnRin\CorahnRinBundle\CorahnRinBundle(),
+            new CorahnRin\CorahnRinBundle\CorahnRinBundle(),
 
             // Esteren
             new Esteren\PortalBundle\EsterenPortalBundle(),
