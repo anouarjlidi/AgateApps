@@ -1,0 +1,28 @@
+imports:
+    - { resource: _app.yml }
+
+parameters:
+    esteren_domains.backoffice: no_domain
+    esteren_domains.corahn_rin: no_domain
+    esteren_domains.portal: no_domain
+    esteren_domains.esteren_maps: 127.0.0.1
+    esteren_domains.api: 127.0.0.1
+    esteren_domains.cookieDomain: 127.0.0.1
+
+framework:
+    trusted_hosts:
+        - 127.0.0.1
+    router:
+        resource: "%kernel.root_dir%/config/routing_portable.yml"
+
+assetic:
+    bundles:
+        - 'EsterenMapsBundle'
+        - 'EsterenPortalBundle'
+
+monolog:
+    handlers:
+        main:
+            type:   stream
+            path:   "%kernel.logs_dir%/%kernel.environment%.log"
+            level:  warning

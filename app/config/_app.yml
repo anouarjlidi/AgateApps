@@ -1,9 +1,7 @@
 imports:
+    - { resource: config.yml }
     - { resource: _assets.yml }
     - { resource: _esterenmaps.yml }
-    - { resource: _corahn_rin.yml }
-    - { resource: _pierstoval.yml }
-    - { resource: _easy_admin.yml }
 
 parameters:
     version_code: 0.2.1
@@ -43,15 +41,13 @@ twig:
         esteren_domains_api: %esteren_domains.api%
         esteren_domains_cookieDomain: %esteren_domains.cookieDomain%
     form_themes:
-            - 'PierstovalToolsBundle:Form:form_div_layout.html.twig'
-            - 'PierstovalToolsBundle:Form:fields.html.twig'
-            - 'PierstovalToolsBundle:Form:form_errors.html.twig'
+        - 'PierstovalToolsBundle:Form:form_div_layout.html.twig'
+        - 'PierstovalToolsBundle:Form:fields.html.twig'
+        - 'PierstovalToolsBundle:Form:form_errors.html.twig'
 
 assetic:
-    bundles:
-        - 'EsterenMapsBundle'
-        - 'EsterenPortalBundle'
-        - 'CorahnRinBundle'
+    node: %node_path%
+    node_paths: [ %node_modules_path% ]
     filters:
         cssrewrite: ~
         less:
@@ -137,24 +133,23 @@ assetic:
             node: %node_path%
             node_paths: [ %node_modules_path% ]
 
-# CORS management
-nelmio_cors:
-    paths:
-      "^/":
-          allow_credentials: true
-          origin_regex: true
-          allow_origin:
-              - ^https?://%esteren_domains.api%
-              - ^https?://%esteren_domains.portal%
-              - ^https?://%esteren_domains.backoffice%
-              - ^https?://%esteren_domains.corahn_rin%
-              - ^https?://%esteren_domains.esteren_maps%
-          allow_headers: ['Origin','Accept','Content-Type']
-          allow_methods: ['POST','GET','DELETE','PUT','OPTIONS']
-          max_age: 3600
-          hosts:
-              - "^%esteren_domains.api%$"
-              - "^%esteren_domains.portal%$"
-              - "^%esteren_domains.backoffice%$"
-              - "^%esteren_domains.corahn_rin%$"
-              - "^%esteren_domains.esteren_maps%$"
+# Api services
+pierstoval_api:
+    allowed_origins:
+        - %esteren_domains.corahn_rin%
+        - %esteren_domains.esteren_maps%
+        - %esteren_domains.portal%
+        - %esteren_domains.backoffice%
+        - %esteren_domains.api%
+    services:
+        maps:           { entity: EsterenMaps\MapsBundle\Entity\Maps }
+        markers:        { entity: EsterenMaps\MapsBundle\Entity\Markers }
+        markerstypes:   { entity: EsterenMaps\MapsBundle\Entity\MarkersTypes }
+        routes:         { entity: EsterenMaps\MapsBundle\Entity\Routes }
+        routestypes:    { entity: EsterenMaps\MapsBundle\Entity\RoutesTypes }
+        zones:          { entity: EsterenMaps\MapsBundle\Entity\Zones }
+        zonestypes:     { entity: EsterenMaps\MapsBundle\Entity\ZonesTypes }
+        transports:     { entity: EsterenMaps\MapsBundle\Entity\TransportTypes }
+
+orbitale_translation:
+    locales: %locales%

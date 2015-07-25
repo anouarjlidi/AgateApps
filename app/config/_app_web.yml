@@ -1,0 +1,56 @@
+imports:
+    - { resource: _app.yml }
+    - { resource: _easy_admin.yml }
+
+parameters:
+    # Map used for step 3 of the character generator
+    step_3_map_id: 1
+
+orbitale_cms:
+    layouts:
+        front:
+            resource: "::base.html.twig"
+
+assetic:
+    bundles:
+        - 'EsterenMapsBundle'
+        - 'EsterenPortalBundle'
+        - 'CorahnRinBundle'
+    assets:
+
+        generator_js:
+            inputs:
+                - '@CorahnRinBundle/Resources/public/generator/js/*.js'
+            filters:
+                - ?uglifyjs
+            output: 'js/generator.js'
+
+        generator_css:
+            inputs:
+                - '@CorahnRinBundle/Resources/public/generator/css/*.css'
+            filters:
+                - cssrewrite
+                - ?uglifycss
+            output: "css/generator.css"
+
+# CORS management
+nelmio_cors:
+    paths:
+      "^/":
+          allow_credentials: true
+          origin_regex: true
+          allow_origin:
+              - ^https?://%esteren_domains.api%
+              - ^https?://%esteren_domains.portal%
+              - ^https?://%esteren_domains.backoffice%
+              - ^https?://%esteren_domains.corahn_rin%
+              - ^https?://%esteren_domains.esteren_maps%
+          allow_headers: ['Origin','Accept','Content-Type']
+          allow_methods: ['POST','GET','DELETE','PUT','OPTIONS']
+          max_age: 3600
+          hosts:
+              - "^%esteren_domains.api%$"
+              - "^%esteren_domains.portal%$"
+              - "^%esteren_domains.backoffice%$"
+              - "^%esteren_domains.corahn_rin%$"
+              - "^%esteren_domains.esteren_maps%$"

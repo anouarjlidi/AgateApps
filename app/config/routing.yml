@@ -1,3 +1,4 @@
+
 portal:      { resource: "routing__portal.yml",      prefix: "/{_locale}/", defaults: { _locale: "%locale%" }, requirements: { _locale: "^(%locales_regex%)$" }  }
 fos:         { resource: "routing__fos.yml",         prefix: "/{_locale}/", defaults: { _locale: "%locale%" }, requirements: { _locale: "^(%locales_regex%)$" }  }
 orbitale:    { resource: "routing__orbitale.yml",    prefix: "/{_locale}/", defaults: { _locale: "%locale%" }, requirements: { _locale: "^(%locales_regex%)$" }  }

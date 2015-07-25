@@ -1,0 +1,29 @@
+
+root:
+    path: /
+    defaults:
+        _controller: EsterenMapsBundle:Maps:index
+
+esterenmaps: { resource: "routing__esterenmaps.yml", prefix: "/{_locale}/", defaults: { _locale: "%locale%" }, requirements: { _locale: "^(%locales_regex%)$" }  }
+
+#-----------------------------------
+# Pierstoval relative routing
+pierstoval_tools:
+    resource: "@PierstovalToolsBundle/Controller/"
+    type:     annotation
+    prefix:   /{_locale}/
+    host:     %esteren_domains.portal%
+    defaults:
+         _locale: %locale%
+    requirements:
+        _locale: ^(%locales_regex%)$
+
+pierstoval_api:
+    resource: "@PierstovalApiBundle/Controller/"
+    type:     annotation
+    host:     %esteren_domains.api%
+    prefix:   /{_locale}/api/
+    defaults:
+         _locale: %locale%
+    requirements:
+        _locale: ^(%locales_regex%)$

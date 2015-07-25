@@ -1,5 +1,5 @@
 imports:
-    - { resource: config.yml }
+    - { resource: _app_web.yml }
 
 #framework:
 #    validation:

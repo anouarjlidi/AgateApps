@@ -38,20 +38,6 @@ assetic:
                 - ?uglifycss
             output: "css/global.css"
 
-        generator_js:
-            inputs:
-                - '@CorahnRinBundle/Resources/public/generator/js/*.js'
-            filters:
-                - ?uglifyjs
-            output: 'js/generator.js'
-        generator_css:
-            inputs:
-                - '@CorahnRinBundle/Resources/public/generator/css/*.css'
-            filters:
-                - cssrewrite
-                - ?uglifycss
-            output: "css/generator.css"
-
         esteren_maps_js:
             inputs:
                 - '@EsterenMapsBundle/Resources/public/js/leaflet-src.js'
