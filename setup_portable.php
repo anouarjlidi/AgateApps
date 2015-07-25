@@ -1,7 +1,5 @@
 <?php
 
-use Symfony\Component\Finder\Finder;
-
 define('DS', DIRECTORY_SEPARATOR);
 
 $loader = include __DIR__.DS.'app'.DS.'bootstrap.php.cache';
