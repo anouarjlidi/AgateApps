@@ -44,6 +44,8 @@ $remove = array(
     'src/AdminBundle',
     'src/Tests',
     'src/CorahnRin',
+    'src/UserBundle/DataFixtures',
+    'src/EsterenMaps/MapsBundle/DataFixtures',
     'vendor/javiereguiluz/easyadmin-bundle',
     'vendor/orbitale/cms-bundle',
     'vendor/nelmio/cors-bundle',
