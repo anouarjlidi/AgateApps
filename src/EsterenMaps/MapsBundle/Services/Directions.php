@@ -174,13 +174,8 @@ class Directions
 
         $paths = $this->dijkstra($nodes, $edges, (int) $start->getId(), (int) $end->getId());
 
-        $routesIds = array_reduce($paths, function($carry, $path) {
-            if (isset($path['route']['id'])) {
-                $carry[] = $path['route']['id'];
-            }
-            return $carry;
-        }, array());
-
+        $routesIds = array_values($paths);
+        $markersArray  = $this->entityManager->getRepository('EsterenMapsBundle:Markers')->findByIds(array_keys($paths));
         $routesArray   = $this->entityManager->getRepository('EsterenMapsBundle:Routes')->findByIds($routesIds, true, true);
         $routesObjects = $this->entityManager->getRepository('EsterenMapsBundle:Routes')->findByIds($routesIds, false, false);
 
@@ -188,45 +183,42 @@ class Directions
 
         $steps = array();
 
-        foreach ($paths as $step) {
-            $marker          = $allMarkers[$step['node']['id']];
-            $marker['route'] = $routesArray[$step['route']['id']];
+        foreach ($paths as $markerId => $routeId) {
+            $marker = $markersArray[$markerId];
+            $marker['route'] = $routeId ? $routesArray[$routeId] : null;
             unset(
                 $marker['routesStart'],
                 $marker['routesEnd'],
                 $marker['createdAt'],
                 $marker['updatedAt'],
                 $marker['deletedAt'],
+                $marker['faction']['createdAt'],
+                $marker['faction']['updatedAt'],
+                $marker['faction']['deletedAt'],
+                $marker['markerType']['createdAt'],
+                $marker['markerType']['updatedAt'],
+                $marker['markerType']['deletedAt'],
                 $marker['route']['createdAt'],
                 $marker['route']['updatedAt'],
                 $marker['route']['deletedAt'],
                 $marker['route']['routeType']['createdAt'],
                 $marker['route']['routeType']['updatedAt'],
                 $marker['route']['routeType']['deletedAt'],
-                $marker['route']['routeType']['transports']
+                $marker['route']['routeType']['transports'],
+                $marker['route']['markerStart'],
+                $marker['route']['markerEnd']
             );
             $steps[] = $marker;
         }
 
-        if (count($steps)) {
-            // Add the last marker
-            /** @var Markers $end */
-            $endMarker = $allMarkers[$end->getId()];
-            unset($endMarker['routesStart'], $endMarker['routesEnd'], $endMarker['route']);
-            $steps[] = $endMarker;
-        }
-
-        foreach ($steps as $k => $step) {
-            unset($steps[$k]['route']['markerStart'], $steps[$k]['route']['markerEnd']);
-        }
-
-        $directions = $this->serializer->deserialize(json_encode($steps, 480), 'ArrayCollection<EsterenMaps\MapsBundle\Entity\Markers>', 'json') ?: array();
-
-        return $this->getDataArray($start, $end, $directions, $routesObjects, $hoursPerDay, $transportType);
+        return $this->getDataArray($start, $end, $steps, $routesObjects, $hoursPerDay, $transportType);
     }
 
     /**
-     * Applies Dijkstra algorithm to calculate minimal distance between source and target
+     * Applies Dijkstra algorithm to calculate minimal distance between source and target.
+     *
+     * Implementation of http://codereview.stackexchange.com/questions/75641/dijkstras-algorithm-in-php
+     * @link http://codereview.stackexchange.com/questions/75641/dijkstras-algorithm-in-php
      *
      * @param array $nodes
      * @param array $edges
@@ -242,58 +234,83 @@ class Directions
         $previous  = array();
 
         foreach ($nodes as $id => $node) {
-            $distances[$id] = INF;
-            $previous[$id]  = null;
+            foreach ($node['neighbours'] as $nid => $neighbour) {
+                $distances[$id][$neighbour['end']] = array(
+                    'edge' => $edges[$nid],
+                    'distance' => $neighbour['distance'],
+                );
+            }
         }
 
-        $distances[$start] = 0;
 
-        $Q = $nodes;
 
-        while (count($Q) > 0) {
+        //initialize the array for storing
+        $S = array();//the nearest path with its parent and weight
+        $Q = array();//the left nodes without the nearest path
+        foreach(array_keys($distances) as $val) {
+            $Q[$val] = INF;
+        }
+        $Q[$start] = 0;
 
-            $min     = INF;
-            $current = null;
-            foreach ($Q as $id => $node) {
-                if ($distances[$id] < $min) {
-                    $min     = $distances[$id];
-                    $current = $node;
-                }
-            }
-
-            unset($Q[$current['id']]);
-            if ($current['id'] === $end || !isset($distances[$current['id']]) || (isset($distances[$current['id']]) && $distances[$current['id']] === INF)) {
+        //start calculating
+        while(!empty($Q)){
+            $min = array_search(min($Q), $Q);//the most min weight
+            if($min == $end) {
                 break;
             }
+            foreach($distances[$min] as $key => $val) {
 
-            if (!empty($current['neighbours'])) {
-                foreach ($current['neighbours'] as $route => $neighbour) {
-                    $distance = $neighbour['distance'];
-                    $end      = $neighbour['end'];
-                    $alt      = $distances[$current['id']] + $distance;
-                    if (!isset($distances[$end])) {
-                        return array();
-                    }
-                    if ($alt < $distances[$end]) {
-                        $distances[$end] = $alt;
-                        $previous[$end]  = array(
-                            'id'    => $current['id'],
-                            'node'  => $current,
-                            'route' => $edges[$route],
-                        );
-                    }
+                $dist = $val['distance'];
+
+                if(!empty($Q[$key]) && $Q[$min] + $dist < $Q[$key]) {
+                    $Q[$key] = $Q[$min] + $dist;
+                    $S[$key] = array($min, $Q[$key]);
                 }
             }
+            unset($Q[$min]);
+        }
+
+        if (!array_key_exists($end, $S)) {
+            return array();
         }
 
         $path = array();
-        $u    = array('id' => $end);
-        while (isset($previous[$u['id']])) {
-            array_unshift($path, $previous[$u['id']]);
-            $u = $previous[$u['id']];
+        $pos = $end;
+        while ($pos != $start) {
+            $path[] = $pos;
+            $pos = $S[$pos][0];
+        }
+        $path[] = $start;
+        $path = array_reverse($path);
+
+        $realPath = array();
+
+        foreach ($path as $k => $nodeId) {
+
+            $next = isset($path[$k+1]) ? $path[$k+1] : null;
+
+            $realPath[$nodeId] = null;
+
+            if ($next) {
+
+                $dist = INF;
+                $realEdge = null;
+
+                foreach ($nodes[$nodeId]['neighbours'] as $edgeId => $edge) {
+                    if ($edge['distance'] < $dist && $edge['end'] === $next) {
+                        $realEdge = $edges[$edgeId];
+                        $dist = $edge['distance'];
+                    }
+                }
+
+                if ($realEdge) {
+                    $realPath[$nodeId] = $realEdge['id'];
+                }
+            }
+
         }
 
-        return $path;
+        return $realPath;
 
     }
 
@@ -315,7 +332,7 @@ class Directions
     /**
      * @param Markers        $from
      * @param Markers        $to
-     * @param Markers[]      $directions
+     * @param array[]        $directions
      * @param Routes[]       $routes
      * @param int            $hoursPerDay
      * @param TransportTypes $transport
@@ -331,9 +348,9 @@ class Directions
         $SW       = array();
 
         foreach ($directions as $step) {
-            $distance += ($step->route ? $step->route->getDistance() : 0);
-            if ($step->route) {
-                $coords = $step->route->getDecodedCoordinates();
+            $distance += ($step['route'] ? $step['route']['distance'] : 0);
+            if ($step['route']) {
+                $coords = json_decode($step['route']['coordinates'], true);
                 foreach ($coords as $latLng) {
                     if (!isset($NE['lat']) || ($NE['lat'] < $latLng['lat'])) {
                         $NE['lat'] = $latLng['lat'];

@@ -6,7 +6,8 @@ use Doctrine\ORM\Query;
 use EsterenMaps\MapsBundle\Entity\Routes;
 use Orbitale\Component\DoctrineTools\BaseEntityRepository as BaseRepository;
 
-class RoutesRepository extends BaseRepository {
+class RoutesRepository extends BaseRepository
+{
 
     /**
      * @param array $ids

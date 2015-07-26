@@ -1,5 +1,6 @@
 <?php
 namespace EsterenMaps\MapsBundle\Repository;
+use EsterenMaps\MapsBundle\Entity\Markers;
 use EsterenMaps\MapsBundle\Entity\TransportTypes;
 use Orbitale\Component\DoctrineTools\BaseEntityRepository as BaseRepository;
 use EsterenMaps\MapsBundle\Entity\Maps;
@@ -15,7 +16,8 @@ class MarkersRepository extends BaseRepository {
      * @param TransportTypes $transportType
      * @return array
      */
-    public function getAllWithRoutesArray(Maps $map, TransportTypes $transportType = null) {
+    public function getAllWithRoutesArray(Maps $map, TransportTypes $transportType = null)
+    {
 
         $parameters = array();
 
@@ -81,5 +83,33 @@ class MarkersRepository extends BaseRepository {
         }
 
         return $markers;
+    }
+
+    /**
+     * @param array $ids
+     *
+     * @return array[]|Markers[]
+     */
+    public function findByIds(array $ids)
+    {
+        /** @var array[]|Markers[] $result */
+        $result = $this->_em
+            ->createQuery("
+                SELECT
+                marker, markerType, faction
+                FROM {$this->_entityName} marker
+                LEFT JOIN marker.markerType markerType
+                LEFT JOIN marker.faction faction
+                WHERE marker.id IN (:ids)
+            ")
+            ->setParameter(':ids', $ids)
+            ->getArrayResult()
+        ;
+
+        $a = array();
+        foreach ($result as $marker) {
+            $a[$marker['id']] = $marker;
+        }
+        return $a;
     }
 }
