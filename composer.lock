@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "af2f53e1e742e2e63f19a0184e4abba4",
+    "hash": "c5002f6afca89cdabf187e31407a63b8",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -1682,16 +1682,16 @@
         },
         {
             "name": "orbitale/cms-bundle",
-            "version": "v1.2.0",
+            "version": "v1.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Orbitale/CmsBundle.git",
-                "reference": "bbdd7af340c66d4f3e57f18d1ff16970a168580b"
+                "reference": "73b03558de313f5def8cbcb157429162497c33c3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Orbitale/CmsBundle/zipball/bbdd7af340c66d4f3e57f18d1ff16970a168580b",
-                "reference": "bbdd7af340c66d4f3e57f18d1ff16970a168580b",
+                "url": "https://api.github.com/repos/Orbitale/CmsBundle/zipball/73b03558de313f5def8cbcb157429162497c33c3",
+                "reference": "73b03558de313f5def8cbcb157429162497c33c3",
                 "shasum": ""
             },
             "require": {
@@ -1733,7 +1733,7 @@
                 "cms",
                 "symfony"
             ],
-            "time": "2015-07-17 13:47:24"
+            "time": "2015-07-21 13:03:45"
         },
         {
             "name": "orbitale/doctrine-tools",

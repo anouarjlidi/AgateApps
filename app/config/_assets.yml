@@ -3,55 +3,62 @@ assetic:
     assets:
         esteren_general_js:
             inputs:
-                - 'components/jquery-ui/ui/jquery.ui.core.js'
-                - 'components/jquery-ui/ui/jquery.ui.widget.js'
-                - 'components/bootstrap/js/button.js'
-                - 'components/bootstrap/js/collapse.js'
-                - 'components/bootstrap/js/dropdown.js'
-                - 'components/bootstrap/js/modal.js'
-                - 'components/bootstrap/js/tooltip.js'
-                - 'components/bootstrap/js/popover.js'
-                - 'components/bootstrap/js/transition.js'
-                - 'components/bootstrap/js/tab.js'
-                - 'components/jquery.colorpicker/jquery.colorpicker.js'
-                - 'components/jquery.colorpicker/i18n/jquery.ui.colorpicker-de.js'
-                - 'components/jquery.colorpicker/i18n/jquery.ui.colorpicker-en.js'
-                - 'components/jquery.colorpicker/i18n/jquery.ui.colorpicker-fr.js'
-                - '@EsterenPortalBundle/Resources/public/js/corahn_rin.js'
+                - components/jquery-ui/ui/jquery.ui.core.js
+                - components/jquery-ui/ui/jquery.ui.widget.js
+                - components/bootstrap/js/button.js
+                - components/bootstrap/js/collapse.js
+                - components/bootstrap/js/dropdown.js
+                - components/bootstrap/js/modal.js
+                - components/bootstrap/js/tooltip.js
+                - components/bootstrap/js/popover.js
+                - components/bootstrap/js/transition.js
+                - components/bootstrap/js/tab.js
+                - components/jquery.colorpicker/jquery.colorpicker.js
+                - components/jquery.colorpicker/i18n/jquery.ui.colorpicker-de.js
+                - components/jquery.colorpicker/i18n/jquery.ui.colorpicker-en.js
+                - components/jquery.colorpicker/i18n/jquery.ui.colorpicker-fr.js
+                - @EsterenPortalBundle/Resources/public/js/corahn_rin.js
             filters:
                 - ?uglifyjs
-            output: 'js/global.js'
+            output: js/global.js
 
         esteren_general_css:
             inputs:
-                - 'components/leaflet/dist/leaflet.css'
-                - 'components/leaflet-draw/dist/leaflet.draw.css'
-                - 'components/leaflet-sidebar/src/L.Control.Sidebar.css'
-                - 'components/jquery-ui/themes/vader/jquery-ui.min.css'
-                - 'components/jquery-ui/themes/vader/jquery.ui.theme.css'
-                - 'components/jquery.colorpicker/jquery.colorpicker.css'
-                - '@EsterenPortalBundle/Resources/public/less/_main.less'
-                - 'bundles/esterenmaps/css/maps.less'
+                - components/leaflet/dist/leaflet.css
+                - components/leaflet-draw/dist/leaflet.draw.css
+                - components/leaflet-sidebar/src/L.Control.Sidebar.css
+                - components/jquery-ui/themes/vader/jquery-ui.min.css
+                - components/jquery-ui/themes/vader/jquery.ui.theme.css
+                - components/jquery.colorpicker/jquery.colorpicker.css
+                - @EsterenPortalBundle/Resources/public/less/_main.less
+                - bundles/esterenmaps/css/maps.less
             filters:
                 - less
                 - cssrewrite
                 - ?uglifycss
-            output: "css/global.css"
+            output: css/global.css
 
         esteren_maps_js:
             inputs:
-                - '@EsterenMapsBundle/Resources/public/js/leaflet-src.js'
-                - '@EsterenMapsBundle/Resources/public/js/leaflet.sidebar-src.js'
-                - '@EsterenMapsBundle/Resources/public/js/leaflet.draw-src.js'
-                - '@EsterenMapsBundle/Resources/public/js/EsterenMap/1_EsterenMap.js'
-                - '@EsterenMapsBundle/Resources/public/js/EsterenMap/2_LeafletDrawOverrides.js'
-                - '@EsterenMapsBundle/Resources/public/js/EsterenMap/2_EsterenMap_directions.js'
-                - '@EsterenMapsBundle/Resources/public/js/EsterenMap/3_EsterenMap_options.js'
-                - '@EsterenMapsBundle/Resources/public/js/EsterenMap/3_EsterenMap_ActivateLeafletDraw.js'
-                - '@EsterenMapsBundle/Resources/public/js/EsterenMap/4_EsterenMap_addMarker.js'
-                - '@EsterenMapsBundle/Resources/public/js/EsterenMap/4_EsterenMap_addPolyline.js'
-                - '@EsterenMapsBundle/Resources/public/js/EsterenMap/4_EsterenMap_addPolygon.js'
-                - '@EsterenMapsBundle/Resources/public/js/EsterenMap/4_EsterenMap_filters.js'
+                - @EsterenMapsBundle/Resources/public/js/leaflet-src.js
+                - @EsterenMapsBundle/Resources/public/js/leaflet.sidebar-src.js
+                - @EsterenMapsBundle/Resources/public/js/leaflet.draw-src.js
+                - @EsterenMapsBundle/Resources/public/js/EsterenMap/1_EsterenMap.js
+                - @EsterenMapsBundle/Resources/public/js/EsterenMap/2_LeafletDrawOverrides.js
+                - @EsterenMapsBundle/Resources/public/js/EsterenMap/2_EsterenMap_directions.js
+                - @EsterenMapsBundle/Resources/public/js/EsterenMap/3_EsterenMap_options.js
+                - @EsterenMapsBundle/Resources/public/js/EsterenMap/3_EsterenMap_ActivateLeafletDraw.js
+                - @EsterenMapsBundle/Resources/public/js/EsterenMap/4_EsterenMap_addMarker.js
+                - @EsterenMapsBundle/Resources/public/js/EsterenMap/4_EsterenMap_addPolyline.js
+                - @EsterenMapsBundle/Resources/public/js/EsterenMap/4_EsterenMap_addPolygon.js
+                - @EsterenMapsBundle/Resources/public/js/EsterenMap/4_EsterenMap_filters.js
             filters:
                 - ?uglifyjs
-            output: 'js/maps_lib.js'
+            output: js/maps_lib.js
+
+        esterenmaps_edit_js:
+            inputs:
+                - @EsterenMapsBundle/Resources/public/js/map_edit.js
+            filters:
+                - ?uglifyjs
+            output: js/map_edit_more.js

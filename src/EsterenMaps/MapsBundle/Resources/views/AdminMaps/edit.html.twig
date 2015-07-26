@@ -50,11 +50,7 @@
 
     <script src="{{ path('pierstoval_tools_assets_jstranslations') }}"></script>
 
-    {% javascripts
-    '@EsterenMapsBundle/Resources/public/js/map_edit.js'
-    output="js/map_edit_more.js"
-    filter="?uglifyjs"
-    %}<script type="text/javascript" src="{{ app.request.getSchemeAndHttpHost() ~ asset_url }}"></script>{% endjavascripts %}
+    <script type="text/javascript" src="{{ asset('js/map_edit_more.js') }}"></script>
 
     <script type="text/javascript">
         (function($, d){
