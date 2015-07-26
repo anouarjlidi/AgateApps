@@ -241,7 +241,7 @@
                                 messageBox.innerHTML = response.path_view;
                             }
                         },
-                        completeCallback: function() {
+                        callbackComplete: function() {
                             submitButton.removeAttribute('disabled');
                         }
                     });
