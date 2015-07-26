@@ -29,6 +29,11 @@ $remove = array(
     'web/config.php',
     'web/robots.txt',
     'web/uploads/maps',
+    'web/bundles/corahnrin',
+    'web/bundles/easyadmin',
+    'web/bundles/framework',
+    'web/bundles/orbitaletranslation',
+    'web/bundles/sensiodistribution',
     'web/components/bootstrap',
     'web/components/jquery/src',
     'web/components/jquery/bower.json',
@@ -47,7 +52,6 @@ $remove = array(
     'src/CorahnRin/PDF',
     'src/CorahnRin/Steps',
     'src/CorahnRin/SheetsManagers/files',
-    'src/CorahnRin/Resources/public',
     'src/CorahnRin/Resources/views',
     'src/UserBundle/DataFixtures',
     'src/EsterenMaps/MapsBundle/DataFixtures',
@@ -75,4 +79,34 @@ foreach ($remove as $path) {
     $fs->remove(__DIR__.DS.$path);
 }
 
-
+// Delete with wildcards
+$remove = array(
+    'src/*/*Bundle/Resources/public',
+    'vendor/*/*/*.dist',
+    'vendor/*/*/*.json',
+    'vendor/*/*/*.md',
+    'vendor/*/*/LICENSE',
+    'vendor/*/*/.git*',
+    'vendor/*/*/.travis*',
+    'vendor/*/*/.coveralls*',
+    'vendor/*/*/Tests',
+    'vendor/*/*/src/*/*/*.dist',
+    'vendor/*/*/src/*/*/*.json',
+    'vendor/*/*/src/*/*/*.md',
+    'vendor/*/*/src/*/*/LICENSE',
+    'vendor/*/*/src/*/*/.git*',
+    'vendor/*/*/src/*/*/.travis*',
+    'vendor/*/*/src/*/*/.coveralls*',
+    'vendor/*/*/src/*/*/Tests',
+    'vendor/symfony/symfony/src/Symfony/*/*/*.dist',
+    'vendor/symfony/symfony/src/Symfony/*/*/*.md',
+    'vendor/symfony/symfony/src/Symfony/*/*/*.json',
+    'vendor/symfony/symfony/src/Symfony/*/*/LICENSE',
+    'vendor/symfony/symfony/src/Symfony/*/*/.git*',
+    'vendor/symfony/symfony/src/Symfony/*/*/.travis*',
+    'vendor/symfony/symfony/src/Symfony/*/*/.coveralls*',
+    'vendor/symfony/symfony/src/Symfony/*/*/Tests',
+);
+foreach ($remove as $path) {
+    exec('rm -rf '.__DIR__.'/'.$path);
+}
