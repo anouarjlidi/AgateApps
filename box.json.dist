@@ -1,7 +1,20 @@
 {
-    "files": [
+    "directories-bin": [
+        "bin",
+        "src",
+        "vendor"
     ],
-    "main": "app/console_portable",
+    "main": "web/app_portable.php",
     "output": "esteren.phar",
-    "stub": true
+    "stub": true,
+    "annotations": {
+        "ignore": [
+            "author",
+            "package",
+            "see",
+            "deprecated",
+            "version"
+        ]
+    },
+    "web": true
 }

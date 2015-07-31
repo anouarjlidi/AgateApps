@@ -61,4 +61,24 @@ class AppPortableKernel extends Kernel
     {
         $loader->load(__DIR__.'/config/config_'.$this->getEnvironment().'.yml');
     }
+
+    /**
+     * This trick allows using an external directory when compiled as a phar
+     *
+     * {@inheritdoc}
+     */
+    public function getCacheDir()
+    {
+        return str_replace(array('phar://', 'esteren.phar/'), '', __DIR__).'/cache/'.$this->environment;
+    }
+
+    /**
+     * This trick allows using an external directory when compiled as a phar
+     *
+     * {@inheritdoc}
+     */
+    public function getLogDir()
+    {
+        return str_replace(array('phar://', 'esteren.phar/'), '', __DIR__).'/logs/'.$this->environment;
+    }
 }

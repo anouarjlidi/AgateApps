@@ -262,28 +262,28 @@ $boxJson = array_merge(array(
 
 $filesToAdd = array();
 
-$dirsToAdd = array(
-    'app',
-    'bin',
-    'src',
-    'vendor',
-);
-foreach ($dirsToAdd as $dir) {
-    foreach (getFinder()->files()->in(__DIR__.'/'.$dir) as $file) {
-        /** @var Symfony\Component\Finder\SplFileInfo $file */
-        $boxJson['files'][] = $dir.'/'.$file->getRelativePathName();
-    }
-}
-
-$json = json_encode($boxJson, 480);
-
-if (!$dryRun) {
-    echo "Update box.json file\n";
-    file_put_contents($boxFile, $json);
-}
-
-if ($dryRun) {
-    echo "Finished dry run\n";
-}
-
-echo "Done!\n";
+//$dirsToAdd = array(
+//    'app',
+//    'bin',
+//    'src',
+//    'vendor',
+//);
+//foreach ($dirsToAdd as $dir) {
+//    foreach (getFinder()->files()->in(__DIR__.'/'.$dir) as $file) {
+//        /** @var Symfony\Component\Finder\SplFileInfo $file */
+//        $boxJson['files'][] = $dir.'/'.$file->getRelativePathName();
+//    }
+//}
+//
+//$json = json_encode($boxJson, 480);
+//
+//if (!$dryRun) {
+//    echo "Update box.json file\n";
+//    file_put_contents($boxFile, $json);
+//}
+//
+//if ($dryRun) {
+//    echo "Finished dry run\n";
+//}
+//
+//echo "Done!\n";
