@@ -235,10 +235,6 @@ foreach ($r as $path) {
 }
 unset($path);
 
-if ($dryRun) {
-    echo "Finished dry run\n";
-}
-
 echo "Deleted $filesDeleted files\n";
 
 $bytes = $bytesDeleted;
@@ -279,4 +275,15 @@ foreach ($dirsToAdd as $dir) {
     }
 }
 
-dump($boxJson['files']);
+$json = json_encode($boxJson, 480);
+
+if (!$dryRun) {
+    echo "Update box.json file\n";
+    file_put_contents($boxFile, $json);
+}
+
+if ($dryRun) {
+    echo "Finished dry run\n";
+}
+
+echo "Done!\n";
