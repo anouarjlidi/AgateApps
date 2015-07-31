@@ -1,13 +1,18 @@
 <?php
 
-define('DS', DIRECTORY_SEPARATOR);
+$bytesDeleted = 0;
+$filesDeleted = 0;
 
-$loader = include __DIR__.DS.'app'.DS.'bootstrap.php.cache';
+$dryRun = !in_array('-f', $argv);
+
+$loader = include __DIR__.'/app/bootstrap.php.cache';
 
 $fs = new Symfony\Component\Filesystem\Filesystem();
 
+// Delete unused app files
 $remove = array(
     '_dev_files',
+    'build',
     'app/config/_app_web.yml',
     'app/config/config_prod.yml',
     'app/config/config_dev.yml',
@@ -29,6 +34,7 @@ $remove = array(
     'web/config.php',
     'web/robots.txt',
     'web/uploads/maps',
+    'web/uploads/media',
     'web/bundles/corahnrin',
     'web/bundles/easyadmin',
     'web/bundles/framework',
@@ -58,6 +64,24 @@ $remove = array(
     'vendor/javiereguiluz/easyadmin-bundle',
     'vendor/orbitale/cms-bundle',
     'vendor/nelmio/cors-bundle',
+    'vendor/twig/twig/doc',
+    'vendor/stof/doctrine-extensions-bundle/Stof/DoctrineExtensionsBundle/Resources/doc',
+    'vendor/swiftmailer/swiftmailer/doc',
+    'vendor/twig/extensions/doc',
+    'vendor/sensio/generator-bundle/Sensio/Bundle/GeneratorBundle/Resources/doc',
+    'vendor/sensio/framework-extra-bundle/Resources/doc',
+    'vendor/phpcollection/phpcollection/doc',
+    'vendor/knplabs/knp-menu/doc',
+    'vendor/jms/serializer/doc',
+    'vendor/jms/parser-lib/doc',
+    'vendor/sensio/framework-extra-bundle/Resources/doc',
+    'vendor/gedmo/doctrine-extensions/doc',
+    'vendor/friendsofsymfony/user-bundle/FOS/UserBundle/Resources/doc',
+    'vendor/doctrine/orm/docs',
+    'vendor/doctrine/doctrine-fixtures-bundle/Doctrine/Bundle/FixturesBundle/Resources/doc',
+    'vendor/doctrine/doctrine-bundle/Resources/doc',
+    'vendor/sensio/distribution-bundle/Sensio/Bundle/DistributionBundle/Resources/skeleton',
+    'vendor/sensio/generator-bundle/Sensio/Bundle/GeneratorBundle/Resources/skeleton',
     '.bowerrc',
     '.gitattributes',
     '.gitignore',
@@ -75,38 +99,85 @@ $remove = array(
 );
 
 foreach ($remove as $path) {
-    $path = str_replace('/', DS, $path);
-    $fs->remove(__DIR__.DS.$path);
+    $path = __DIR__.'/'.$path;
+    if (!file_exists($path)) {
+        continue;
+    }
+    if (is_dir($path)) {
+        $finder = new Symfony\Component\Finder\Finder();
+        $finder->ignoreDotFiles(false);
+        $finder->ignoreUnreadableDirs(false);
+        $finder->ignoreVCS(false);
+        foreach ($finder->files()->in($path) as $file) {
+            /** @var Symfony\Component\Finder\SplFileInfo $file */
+            echo "[file-] {$file->getRealPath()}\n";
+            $filesDeleted ++;
+            $bytesDeleted += $file->getSize();
+        }
+        unset($finder);
+    } else {
+        echo "[file-] $path\n";
+        $filesDeleted ++;
+        $bytesDeleted += filesize($path);
+    }
+    $filesDeleted ++;
+    if (!$dryRun) {
+        $fs->remove($path);
+    }
+}
+unset($path);
+
+// Delete with wildcards, mostly for vendors
+$remove = array(
+    'LICENSE',
+    'composer.lock',
+    'composer.json',
+    '*.md',
+    '*.rst',
+    'README',
+    'CONTRIBUT*',
+    '.gitignore',
+    '.gitconfig',
+    '.editorconfig',
+    '.travis*',
+    '.coveralls*',
+    'phpunit.xml*',
+    '*.sh',
+);
+
+$findCommand = 'find '.__DIR__.' ';
+
+$remove = array_map(function ($e) {
+    return ' -iname "'.$e.'" ';
+}, $remove);
+
+$findCommand .= implode(' -o ', $remove);
+
+exec($findCommand, $r, $c);
+
+$str = '';
+
+foreach ($r as $file) {
+    if (file_exists($file)) {
+        echo "[file-] $file\n";
+        $filesDeleted ++;
+        $bytesDeleted += filesize($file);
+        if (!$dryRun) {
+            $fs->remove($file);
+        }
+    }
 }
 
-// Delete with wildcards
-$remove = array(
-    'src/*/*Bundle/Resources/public',
-    'vendor/*/*/*.dist',
-    'vendor/*/*/*.json',
-    'vendor/*/*/*.md',
-    'vendor/*/*/LICENSE',
-    'vendor/*/*/.git*',
-    'vendor/*/*/.travis*',
-    'vendor/*/*/.coveralls*',
-    'vendor/*/*/Tests',
-    'vendor/*/*/src/*/*/*.dist',
-    'vendor/*/*/src/*/*/*.json',
-    'vendor/*/*/src/*/*/*.md',
-    'vendor/*/*/src/*/*/LICENSE',
-    'vendor/*/*/src/*/*/.git*',
-    'vendor/*/*/src/*/*/.travis*',
-    'vendor/*/*/src/*/*/.coveralls*',
-    'vendor/*/*/src/*/*/Tests',
-    'vendor/symfony/symfony/src/Symfony/*/*/*.dist',
-    'vendor/symfony/symfony/src/Symfony/*/*/*.md',
-    'vendor/symfony/symfony/src/Symfony/*/*/*.json',
-    'vendor/symfony/symfony/src/Symfony/*/*/LICENSE',
-    'vendor/symfony/symfony/src/Symfony/*/*/.git*',
-    'vendor/symfony/symfony/src/Symfony/*/*/.travis*',
-    'vendor/symfony/symfony/src/Symfony/*/*/.coveralls*',
-    'vendor/symfony/symfony/src/Symfony/*/*/Tests',
-);
-foreach ($remove as $path) {
-    exec('rm -rf '.__DIR__.'/'.$path);
+if ($dryRun) {
+    echo "Finished dry run\n";
 }
+
+echo "Deleted $filesDeleted files\n";
+
+$bytes = $bytesDeleted;
+
+$units = array('B', 'KB', 'MB', 'GB', 'TB');
+$pow = min(floor(($bytes ? log($bytes) : 0) / log(1024)), count($units) - 1);
+$bytes /= (1 << (10 * $pow));
+
+echo "Saved $bytesDeleted bytes ( ".round($bytes, 2).' '.$units[$pow]." )\n";
