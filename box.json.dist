@@ -1,0 +1,7 @@
+{
+    "files": [
+    ],
+    "main": "app/console_portable",
+    "output": "esteren.phar",
+    "stub": true
+}
