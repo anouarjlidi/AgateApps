@@ -7,6 +7,9 @@ $dryRun = !in_array('-f', $argv);
 
 $loader = include __DIR__.'/app/bootstrap.php.cache';
 
+system('rm -rf app/cache/*');
+system('rm -rf app/log/*');
+
 if (!$dryRun) {
     system('npm install');
     system('rm -rf vendor');
