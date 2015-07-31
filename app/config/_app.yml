@@ -8,6 +8,8 @@ parameters:
     locale: fr
     locales: [ fr, en, de, es ]
     locales_regex: fr|en|de|es
+    assetic.filter.uglifyjs.bin: %node_modules_path%uglify-js/bin/uglifyjs
+    assetic.filter.uglifycss.bin: %node_modules_path%uglifycss/uglifycss
 
 doctrine:
     orm:
