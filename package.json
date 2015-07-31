@@ -10,7 +10,7 @@
     "dependencies": {
         "less" : "~1",
         "bower" : "~1",
-        "uglify-js": "~2",
+        "uglify-js": "2.3.*",
         "uglifycss": "~0"
     },
     "contributors": [
