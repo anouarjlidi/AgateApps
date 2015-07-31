@@ -5,8 +5,6 @@ $filesDeleted = 0;
 
 $dryRun = !in_array('-f', $argv);
 
-$loader = include __DIR__.'/app/bootstrap.php.cache';
-
 system('rm -rf app/cache/*');
 system('rm -rf app/log/*');
 
@@ -21,6 +19,8 @@ if (!$dryRun) {
     system('php app/console_portable assets:install');
     system('php app/console_portable assetic:dump --no-debug');
 }
+
+$loader = include __DIR__.'/app/bootstrap.php.cache';
 
 $fs = new Symfony\Component\Filesystem\Filesystem();
 
