@@ -287,7 +287,7 @@ unset($path);
 if (!$dryRun) {
     echo "Now building phar archive\n";
 
-    system('box build');
+    system('box build -v');
 
     echo "Finished setting up portable app!\n";
 } else {
