@@ -1,8 +1,16 @@
 {
     "directories-bin": [
+        "app/config",
+        "app/Resources",
         "bin",
         "src",
         "vendor"
+    ],
+    "files-bin": [
+        "app/AppCache.php",
+        "app/AppPortableKernel.php",
+        "app/autoload.php",
+        "app/console_portable"
     ],
     "main": "web/app_portable.php",
     "output": "esteren.phar",
