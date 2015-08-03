@@ -10,6 +10,7 @@
         "app/AppCache.php",
         "app/AppPortableKernel.php",
         "app/autoload.php",
+        "app/bootstrap.php.cache",
         "app/console_portable"
     ],
     "main": "web/app_portable.php",
