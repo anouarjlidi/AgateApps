@@ -282,12 +282,20 @@ foreach ($r as $path) {
     }
 }
 echo "\n";
-unset($path);
+
+// Free the memory for potential box build
+unset($path, $filesDeleted, $bytesDeleted, $path, $fs, $verbose, $file, $findCommand, $remove, $loader, $paramsFile, $params);
 
 if (!$dryRun) {
     echo "Now building phar archive\n";
 
+    $time = new \DateTime();
+
     system('box build -v');
+
+    $time = $time->diff(new \DateTime());
+
+    echo "Build took ", $time->d, "d ", $time->h, ":", str_pad($time->m, 2, '0', STR_PAD_LEFT), ":", str_pad($time->s, 2, '0', STR_PAD_LEFT);
 
     echo "Finished setting up portable app!\n";
 } else {
