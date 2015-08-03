@@ -16,11 +16,11 @@ $apcLoader->register(true);
 */
 
 require_once __DIR__.'/../app/AppPortableKernel.php';
-require_once __DIR__.'/../app/AppCache.php';
+require_once __DIR__.'/../app/AppPortableCache.php';
 
 $kernel = new AppPortableKernel('portable', false);
 $kernel->loadClassCache();
-$kernel = new AppCache($kernel);
+$kernel = new AppPortableCache($kernel);
 
 // When using the HttpCache, you need to call the method in your front controller instead of relying on the configuration parameter
 Request::enableHttpMethodParameterOverride();
