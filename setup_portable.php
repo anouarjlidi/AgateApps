@@ -32,7 +32,12 @@ $params = array(
         'node_modules_path' => $params['parameters']['node_modules_path'],
     ),
 );
-file_put_contents($paramsFile, Symfony\Component\Yaml\Yaml::dump($params));
+
+echo "New parameters file:\n", print_r($params, true);
+
+if (!$dryRun) {
+    file_put_contents($paramsFile, Symfony\Component\Yaml\Yaml::dump($params));
+}
 
 $loader = include __DIR__.'/app/bootstrap.php.cache';
 
@@ -46,16 +51,14 @@ function getFinder() {
     return $finder;
 }
 
-function showProgress($bytesDeleted, $filesDeleted) {
-    echo "Deleted $filesDeleted files ;";
-
+function showProgress($dryRun, $bytesDeleted, $filesDeleted, $verbose) {
     $bytes = $bytesDeleted;
 
     $units = array('B', 'KB', 'MB', 'GB', 'TB');
     $pow   = min(floor(($bytes ? log($bytes) : 0) / log(1024)), count($units) - 1);
     $bytes /= (1 << (10 * $pow));
 
-    echo "Saved $bytesDeleted bytes ( ".round($bytes, 2).' '.$units[$pow]." )       \r";
+    echo 'Files ', $dryRun?'to delete':'deleted', ": $filesDeleted ; Saved $bytesDeleted bytes ( ".round($bytes, 2).' '.$units[$pow]." )       \r", $verbose?"\n":'';
 }
 
 // Delete unused app files
@@ -178,18 +181,16 @@ foreach ($remove as $path) {
             /** @var Symfony\Component\Finder\SplFileInfo $file */
             if ($verbose) {
                 echo "[file-] {$file->getRealPath()}\n";
-            } else {
-                showProgress($bytesDeleted, $filesDeleted);
             }
+            showProgress($dryRun, $bytesDeleted, $filesDeleted, $verbose);
             $filesDeleted ++;
             $bytesDeleted += $file->getSize();
         }
     } else {
         if ($verbose) {
             echo "[file-] $path\n";
-        } else {
-            showProgress($bytesDeleted, $filesDeleted);
         }
+        showProgress($dryRun, $bytesDeleted, $filesDeleted, $verbose);
         $filesDeleted ++;
         $bytesDeleted += filesize($path);
     }
@@ -197,7 +198,6 @@ foreach ($remove as $path) {
         $fs->remove($path);
     }
 }
-echo "\n";
 unset($path);
 
 // Delete with wildcards, mostly for vendors
@@ -257,18 +257,16 @@ foreach ($r as $path) {
             /** @var Symfony\Component\Finder\SplFileInfo $file */
             if ($verbose) {
                 echo "[file-] {$file->getRealPath()}\n";
-            } else {
-                showProgress($bytesDeleted, $filesDeleted);
             }
+            showProgress($dryRun, $bytesDeleted, $filesDeleted, $verbose);
             $filesDeleted ++;
             $bytesDeleted += $file->getSize();
         }
     } else {
         if ($verbose) {
             echo "[file-] $path\n";
-        } else {
-            showProgress($bytesDeleted, $filesDeleted);
         }
+        showProgress($dryRun, $bytesDeleted, $filesDeleted, $verbose);
         $filesDeleted ++;
         $bytesDeleted += filesize($path);
     }
@@ -279,18 +277,12 @@ foreach ($r as $path) {
 echo "\n";
 unset($path);
 
-echo "Deleted $filesDeleted files\n";
+if (!$dryRun) {
+    echo "Now building phar archive\n";
 
-$bytes = $bytesDeleted;
+    system('box build');
 
-$units = array('B', 'KB', 'MB', 'GB', 'TB');
-$pow   = min(floor(($bytes ? log($bytes) : 0) / log(1024)), count($units) - 1);
-$bytes /= (1 << (10 * $pow));
-
-echo "Saved $bytesDeleted bytes ( ".round($bytes, 2).' '.$units[$pow]." )\n";
-
-echo "Now building phar archive\n";
-
-system('box build');
-
-echo "Finished setting up portable app!\n";
+    echo "Finished setting up portable app!\n";
+} else {
+    echo "Finished dry run (not building)\n";
+}
