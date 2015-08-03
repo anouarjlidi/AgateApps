@@ -20,10 +20,6 @@ parameters:
     mailer_host: 127.0.0.1
     mailer_user: null
     mailer_password: null
-    secret: 44fcebd2313e282578ab1bb53a95e55e
-    magick_binaries_path: /usr/local/bin/
-    node_path: /usr/local/bin/node
-    node_modules_path: '%kernel.root_dir%/../node_modules/'
 
 framework:
     trusted_hosts:

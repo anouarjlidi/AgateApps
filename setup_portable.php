@@ -22,7 +22,17 @@ if (!$dryRun) {
 }
 
 // Clean the parameters file. The config should be kept in the portable file.
-file_put_contents(__DIR__.'/app/config/parameters.yml', '');
+$paramsFile = __DIR__.'/app/config/parameters.yml';
+$params = Symfony\Component\Yaml\Yaml::parse(file_get_contents($paramsFile));
+$params = array(
+    'parameters' => array(
+        'secret' => hash('sha1', uniqid(mt_rand(), true)),
+        'magick_binaries_path' => $params['parameters']['magick_binaries_path'],
+        'node_path' => $params['parameters']['node_path'],
+        'node_modules_path' => $params['parameters']['node_modules_path'],
+    ),
+);
+file_put_contents($paramsFile, Symfony\Component\Yaml\Yaml::dump($params));
 
 $loader = include __DIR__.'/app/bootstrap.php.cache';
 
@@ -187,6 +197,7 @@ foreach ($remove as $path) {
         $fs->remove($path);
     }
 }
+echo "\n";
 unset($path);
 
 // Delete with wildcards, mostly for vendors
@@ -265,6 +276,7 @@ foreach ($r as $path) {
         $fs->remove($path);
     }
 }
+echo "\n";
 unset($path);
 
 echo "Deleted $filesDeleted files\n";
