@@ -10,11 +10,17 @@ system('rm -rf app/cache/*');
 system('rm -rf app/log/*');
 
 if (!$dryRun) {
+    echo "Install node modules.\n";
     system('npm install');
+
+    echo "Clean vendor dir.\n";
     system('rm -rf vendor');
+
+    echo "Reinstall vendors.\n";
     system('composer install --no-scripts --no-dev');
 
     // First, create all the assets
+    echo "Refresh and recreate assets.\n";
     system('rm -rf '.__DIR__.'/js/*');
     system('rm -rf '.__DIR__.'/css/*');
     system('php app/console_portable assets:install');
