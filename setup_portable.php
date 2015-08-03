@@ -4,6 +4,7 @@ $bytesDeleted = 0;
 $filesDeleted = 0;
 
 $dryRun = !in_array('-f', $argv);
+$verbose = in_array('-v', $argv);
 
 system('rm -rf app/cache/*');
 system('rm -rf app/log/*');
@@ -20,6 +21,9 @@ if (!$dryRun) {
     system('php app/console_portable assetic:dump --no-debug');
 }
 
+// Clean the parameters file. The config should be kept in the portable file.
+file_put_contents(__DIR__.'/app/config/parameters.yml', '');
+
 $loader = include __DIR__.'/app/bootstrap.php.cache';
 
 $fs = new Symfony\Component\Filesystem\Filesystem();
@@ -30,6 +34,18 @@ function getFinder() {
     $finder->ignoreUnreadableDirs(false);
     $finder->ignoreVCS(false);
     return $finder;
+}
+
+function showProgress($bytesDeleted, $filesDeleted) {
+    echo "Deleted $filesDeleted files ;";
+
+    $bytes = $bytesDeleted;
+
+    $units = array('B', 'KB', 'MB', 'GB', 'TB');
+    $pow   = min(floor(($bytes ? log($bytes) : 0) / log(1024)), count($units) - 1);
+    $bytes /= (1 << (10 * $pow));
+
+    echo "Saved $bytesDeleted bytes ( ".round($bytes, 2).' '.$units[$pow]." )       \r";
 }
 
 // Delete unused app files
@@ -150,12 +166,20 @@ foreach ($remove as $path) {
     if (is_dir($path)) {
         foreach (getFinder()->files()->in($path) as $file) {
             /** @var Symfony\Component\Finder\SplFileInfo $file */
-            echo "[file-] {$file->getRealPath()}\n";
+            if ($verbose) {
+                echo "[file-] {$file->getRealPath()}\n";
+            } else {
+                showProgress($bytesDeleted, $filesDeleted);
+            }
             $filesDeleted ++;
             $bytesDeleted += $file->getSize();
         }
     } else {
-        echo "[file-] $path\n";
+        if ($verbose) {
+            echo "[file-] $path\n";
+        } else {
+            showProgress($bytesDeleted, $filesDeleted);
+        }
         $filesDeleted ++;
         $bytesDeleted += filesize($path);
     }
@@ -220,12 +244,20 @@ foreach ($r as $path) {
     if (is_dir($path)) {
         foreach (getFinder()->files()->in($path) as $file) {
             /** @var Symfony\Component\Finder\SplFileInfo $file */
-            echo "[file-] {$file->getRealPath()}\n";
+            if ($verbose) {
+                echo "[file-] {$file->getRealPath()}\n";
+            } else {
+                showProgress($bytesDeleted, $filesDeleted);
+            }
             $filesDeleted ++;
             $bytesDeleted += $file->getSize();
         }
     } else {
-        echo "[file-] $path\n";
+        if ($verbose) {
+            echo "[file-] $path\n";
+        } else {
+            showProgress($bytesDeleted, $filesDeleted);
+        }
         $filesDeleted ++;
         $bytesDeleted += filesize($path);
     }
@@ -245,45 +277,8 @@ $bytes /= (1 << (10 * $pow));
 
 echo "Saved $bytesDeleted bytes ( ".round($bytes, 2).' '.$units[$pow]." )\n";
 
-$boxFile = __DIR__.'/box.json';
+echo "Now building phar archive\n";
 
-if (file_exists($boxFile)) {
-    $boxJson = json_decode(file_get_contents($boxFile), true);
-} else {
-    $boxJson = array();
-}
+system('box build');
 
-$boxJson = array_merge(array(
-    'files'  => array(),
-    'main'   => 'app/console',
-    'output' => 'app.phar',
-    'stub'   => true,
-), $boxJson);
-
-$filesToAdd = array();
-
-//$dirsToAdd = array(
-//    'app',
-//    'bin',
-//    'src',
-//    'vendor',
-//);
-//foreach ($dirsToAdd as $dir) {
-//    foreach (getFinder()->files()->in(__DIR__.'/'.$dir) as $file) {
-//        /** @var Symfony\Component\Finder\SplFileInfo $file */
-//        $boxJson['files'][] = $dir.'/'.$file->getRelativePathName();
-//    }
-//}
-//
-//$json = json_encode($boxJson, 480);
-//
-//if (!$dryRun) {
-//    echo "Update box.json file\n";
-//    file_put_contents($boxFile, $json);
-//}
-//
-//if ($dryRun) {
-//    echo "Finished dry run\n";
-//}
-//
-//echo "Done!\n";
+echo "Finished setting up portable app!\n";
