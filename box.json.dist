@@ -15,14 +15,5 @@
     "main": "web/app_portable.php",
     "output": "esteren.phar",
     "stub": true,
-    "annotations": {
-        "ignore": [
-            "author",
-            "package",
-            "see",
-            "deprecated",
-            "version"
-        ]
-    },
     "web": true
 }
