@@ -13,7 +13,6 @@
         "app/bootstrap.php.cache",
         "app/console_portable"
     ],
-    "main": "web/app_portable.php",
     "output": "esteren.phar",
     "stub": true,
     "web": true
