@@ -85,6 +85,7 @@ $remove = array(
     'app/cache/portable',
     'app/check.php',
     'app/AppKernel.php',
+    'app/AppCache.php',
     'app/SymfonyRequirements.php',
     'app/phpunit.xml.dist',
     'app/console',
