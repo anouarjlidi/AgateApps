@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a771081dc3d1721b76640abff81e8cc8",
+    "hash": "7d40aed09e2b47b70ff11163483e2e3f",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -1551,31 +1551,41 @@
         },
         {
             "name": "lexik/translation-bundle",
-            "version": "v1.4.5",
+            "version": "v2.1.5",
             "target-dir": "Lexik/Bundle/TranslationBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lexik/LexikTranslationBundle.git",
-                "reference": "e1c82369223dd8fddbc9154c566bd961faf0a443"
+                "reference": "44f8c8357fc7ae470eefc05c6ae61ebcbcdecaee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lexik/LexikTranslationBundle/zipball/e1c82369223dd8fddbc9154c566bd961faf0a443",
-                "reference": "e1c82369223dd8fddbc9154c566bd961faf0a443",
+                "url": "https://api.github.com/repos/lexik/LexikTranslationBundle/zipball/44f8c8357fc7ae470eefc05c6ae61ebcbcdecaee",
+                "reference": "44f8c8357fc7ae470eefc05c6ae61ebcbcdecaee",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.2",
-                "symfony/framework-bundle": "~2.1"
+                "symfony/framework-bundle": "~2.3"
+            },
+            "require-dev": {
+                "doctrine/data-fixtures": "1.0.*",
+                "doctrine/doctrine-bundle": "~1.3",
+                "doctrine/mongodb-odm": "dev-master",
+                "doctrine/mongodb-odm-bundle": "dev-master",
+                "doctrine/orm": "2.4.*",
+                "phpunit/phpunit": "~4.3",
+                "propel/propel-bundle": "~1.2"
             },
             "suggest": {
                 "doctrine/mongodb-odm": "1.0.*@dev",
-                "doctrine/orm": ">=2.1"
+                "doctrine/orm": ">=2.4",
+                "propel/propel-bundle": "~1.2"
             },
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-jqgrid_ui": "1.4.x-dev"
+                    "dev-master": "2.x.x-dev"
                 }
             },
             "autoload": {
@@ -1605,7 +1615,7 @@
                 "i18n",
                 "translation"
             ],
-            "time": "2014-03-20 16:49:42"
+            "time": "2015-05-28 12:34:54"
         },
         {
             "name": "monolog/monolog",
