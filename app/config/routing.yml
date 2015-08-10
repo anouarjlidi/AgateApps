@@ -1,9 +1,7 @@
 
-portal:      { resource: "routing__portal.yml",      prefix: "/{_locale}/", defaults: { _locale: "%locale%" }, requirements: { _locale: "^(%locales_regex%)$" }  }
-fos:         { resource: "routing__fos.yml",         prefix: "/{_locale}/", defaults: { _locale: "%locale%" }, requirements: { _locale: "^(%locales_regex%)$" }  }
-orbitale:    { resource: "routing__orbitale.yml",    prefix: "/{_locale}/", defaults: { _locale: "%locale%" }, requirements: { _locale: "^(%locales_regex%)$" }  }
-corahnrin:   { resource: "routing__corahnrin.yml",   prefix: "/{_locale}/", defaults: { _locale: "%locale%" }, requirements: { _locale: "^(%locales_regex%)$" }  }
-esterenmaps: { resource: "routing__esterenmaps.yml", prefix: "/{_locale}/", defaults: { _locale: "%locale%" }, requirements: { _locale: "^(%locales_regex%)$" }  }
+fos:         { resource: "routing__fos.yml",         prefix: "/{_locale}/", defaults: { _locale: "%locale%" }, requirements: { _locale: "^(?:%locales_regex%)$" } }
+corahnrin:   { resource: "routing__corahnrin.yml",   prefix: "/{_locale}/", defaults: { _locale: "%locale%" }, requirements: { _locale: "^(?:%locales_regex%)$" } }
+esterenmaps: { resource: "routing__esterenmaps.yml", prefix: "/{_locale}/", defaults: { _locale: "%locale%" }, requirements: { _locale: "^(?:%locales_regex%)$" } }
 
 # Root comes after all portals
 root:
@@ -55,3 +53,8 @@ lexik_translation_admin:
     requirements:
         _locale: ^(%locales_regex%)$
     host: %esteren_domains.backoffice%
+
+#-----------------------------------
+# Portal routing. MUST be at the end,
+# because it's an OrbitaleCms routing
+portal: { resource: "routing__portal.yml", prefix: "/{_locale}/", defaults: { _locale: "%locale%" }, requirements: { _locale: "^(?:%locales_regex%)$" } }

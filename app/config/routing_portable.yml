@@ -11,14 +11,14 @@ esterenmaps:
     type:     annotation
     prefix: "/{_locale}/"
     defaults: { _locale: "%locale%" }
-    requirements: { _locale: "^(%locales_regex%)$" }
+    requirements: { _locale: "^(?:%locales_regex%)$" }
 
 esterenmaps_api:
     resource: "@EsterenMapsApiBundle/Controller/"
     type:     annotation
     prefix: "/{_locale}/"
     defaults: { _locale: "%locale%" }
-    requirements: { _locale: "^(%locales_regex%)$" }
+    requirements: { _locale: "^(?:%locales_regex%)$" }
 
 # Hack to simulate FOSUserBundle in some parts of the app
 fos_user_security_login:

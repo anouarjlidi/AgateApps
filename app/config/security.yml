@@ -71,7 +71,7 @@ security:
     # of your application based on roles, ip, host or methods
     # http://symfony.com/doc/current/book/security.html#security-book-access-control-matching-options
     access_control:
-        - { path: ^/(%locales_regex%)/profile,                  roles: [ROLE_USER] }
-        - { path: ^/(%locales_regex%)/characters,               roles: [ROLE_USER] }
-        - { path: ^/,                                           host: %esteren_domains.backoffice%, roles: ROLE_MANAGER }
-        - { path: ^/,                                           host: %esteren_domains.api%,        roles: ROLE_MANAGER, methods: [POST, PUT, DELETE] }
+        - { path: ^/(?:%locales_regex%)/profile,    roles: [ROLE_USER] }
+        - { path: ^/(?:%locales_regex%)/characters, roles: [ROLE_USER] }
+        - { path: ^/,                               host: %esteren_domains.backoffice%, roles: ROLE_MANAGER }
+        - { path: ^/,                               host: %esteren_domains.api%,        roles: ROLE_MANAGER, methods: [POST, PUT, DELETE] }
