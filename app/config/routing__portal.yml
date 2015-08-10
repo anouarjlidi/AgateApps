@@ -1,12 +1,10 @@
 
 portal:
-    host: %esteren_domains.portal%
+    host: "{domainName}"
     path: /
     defaults:
         _controller: OrbitaleCmsBundle:Page:index
+        domainName: %esteren_domains.portal%
+    requirements:
+        domainName: "^(?:%esteren_domains.portal%|%esteren_domains.games%|%esteren_domains.corahn_rin%)$"
 
-portal_games:
-    host: %esteren_domains.games%
-    path: /
-    defaults:
-        _controller: OrbitaleCmsBundle:Page:index
