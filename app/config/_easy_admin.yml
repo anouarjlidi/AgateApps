@@ -19,7 +19,7 @@ easy_admin:
                 fields:
                     - title
                     - slug
-                    - content
+                    - { property: content, type: ckeditor }
                     - metaDescription
                     - metaTitle
                     - metaKeywords
