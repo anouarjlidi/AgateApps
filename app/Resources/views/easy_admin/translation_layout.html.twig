@@ -1,0 +1,27 @@
+{% extends '@EasyAdmin/default/layout.html.twig' %}
+
+
+{% block content %}
+    {% set contentblock = parent() %}
+    <div class="row">
+        <div id="content-header" class="col-sm-12">
+            {% block content_header %}
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h1 class="title">{% block content_title %}{% endblock %}</h1>
+                    </div>
+                </div>
+            {% endblock content_header %}
+        </div>
+
+        <div id="main" class="col-sm-9">
+            {% block main %}
+                {{ contentblock }}
+            {% endblock %}
+        </div>
+
+        <div id="sidebar" class="col-sm-3">
+            {% block sidebar %}{% endblock %}
+        </div>
+    </div>
+{% endblock content %}
