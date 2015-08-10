@@ -6,8 +6,8 @@ parameters:
     version_code: 0.2.2
     version_date: 24/07/2015
     locale: fr
-    locales: [ fr, en, de, es ]
-    locales_regex: fr|en|de|es
+    locales: [ fr, en ]
+    locales_regex: fr|en
     assetic.filter.uglifyjs.bin: %node_modules_path%uglify-js/bin/uglifyjs
     assetic.filter.uglifycss.bin: %node_modules_path%uglifycss/uglifycss
 
@@ -152,5 +152,7 @@ pierstoval_api:
         zonestypes:     { entity: EsterenMaps\MapsBundle\Entity\ZonesTypes }
         transports:     { entity: EsterenMaps\MapsBundle\Entity\TransportTypes }
 
-orbitale_translation:
-    locales: %locales%
+lexik_translation:
+    fallback_locale: %locale%
+    managed_locales: %locales%
+    base_layout: easy_admin/translation_layout.html.twig

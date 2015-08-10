@@ -23,6 +23,7 @@ class AppKernel extends Kernel
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new JavierEguiluz\Bundle\EasyAdminBundle\EasyAdminBundle(),
+            new Lexik\Bundle\TranslationBundle\LexikTranslationBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
 
             // Application global
@@ -40,10 +41,9 @@ class AppKernel extends Kernel
             new EsterenMaps\ApiBundle\EsterenMapsApiBundle(),
 
             // Pierstoval's tools
+            new Orbitale\Bundle\CmsBundle\OrbitaleCmsBundle(),
             new Pierstoval\Bundle\ApiBundle\PierstovalApiBundle(),
             new Pierstoval\Bundle\ToolsBundle\PierstovalToolsBundle(),
-            new Orbitale\Bundle\CmsBundle\OrbitaleCmsBundle(),
-            new Orbitale\Bundle\TranslationBundle\OrbitaleTranslationBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
