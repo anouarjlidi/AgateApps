@@ -2,10 +2,12 @@
 
 namespace EsterenMaps\ApiBundle\Controller;
 
+use EsterenMaps\ApiBundle\Form\MapImageType;
 use EsterenMaps\MapsBundle\Entity\Maps;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -25,19 +27,40 @@ class TilesController extends Controller
      */
     public function generateMapImageAction(Request $request, Maps $map)
     {
-        return new BinaryFileResponse(
-            $this->get('esterenmaps.tiles_manager')
-                ->setMap($map)
-                ->createImage(
-                    (int) $request->query->get('zoom'),
-                    (int) $request->query->get('x'),
-                    (int) $request->query->get('y'),
-                    (int) $request->query->get('width'),
-                    (int) $request->query->get('height')
-                ),
-            200,
-            array('Content-Type' => 'image/jpeg')
-        );
+        $form = $this->createForm(new MapImageType());
+
+        $form->handleRequest($request);
+        $form->submit($request->query->all());
+        if ($form->isValid()) {
+            $data = $form->getData();
+            try {
+                return new BinaryFileResponse(
+                    $this->get('esterenmaps.tiles_manager')->setMap($map)->createImage($data['ratio'], $data['x'], $data['y'], $data['width'], $data['height']),
+                    200,
+                    array('Content-Type' => 'image/jpeg')
+                );
+            } catch (\Exception $e) {
+                $message = '';
+                do {
+                    if ($message) { $message .= "\n"; }
+                    $message .= $e->getMessage();
+                } while ($e = $e->getPrevious());
+                return new JsonResponse(array(
+                    'error' => true,
+                    'message' => $message,
+                ), 400);
+            }
+        } else {
+            $messages = [];
+            foreach ($form->getErrors(true, true) as $error) {
+                $field = $error->getOrigin()->getName();
+                $messages[] = $this->get('translator')->trans('field_error', ['%field%' => $field], 'validators').': '.$error->getMessage();
+            }
+            return new JsonResponse(array(
+                'error' => true,
+                'message' => $messages,
+            ), 400);
+        }
     }
 
     /**

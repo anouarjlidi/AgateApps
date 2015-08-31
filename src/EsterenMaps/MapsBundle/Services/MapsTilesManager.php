@@ -3,6 +3,9 @@
 namespace EsterenMaps\MapsBundle\Services;
 
 use EsterenMaps\MapsBundle\Entity\Maps;
+use EsterenMaps\MapsBundle\ImageManagement\ImageIdentification;
+use Orbitale\Component\ImageMagick\Command;
+use Orbitale\Component\ImageMagick\ReferenceClasses\Geometry;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
@@ -10,30 +13,75 @@ use Symfony\Component\HttpKernel\KernelInterface;
  *
  * @package EsterenMaps\MapsBundle\Services
  */
-class MapsTilesManager {
+class MapsTilesManager
+{
+
+    /**
+     * @var string
+     */
+    private $outputDirectory;
+
+    /**
+     * @var string
+     */
+    private $webDir;
 
     /**
      * @var Maps
      */
     private $map;
-    private $tile_size;
-    private $img_width;
-    private $img_height;
+
+    /**
+     * @var ImageIdentification[]
+     */
     private $identifications = array();
-    private $imgname = '';
+
+    /**
+     * @var int
+     */
+    private $tile_size;
+
+    /**
+     * @var int
+     */
+    private $img_width;
+
+    /**
+     * @var int
+     */
+    private $img_height;
+
+    /**
+     * @var string
+     */
     private $magickPath = '';
 
-    function __construct ($output_directory, $tile_size, $magick_binaries_path, KernelInterface $kernel) {
+    function __construct ($outputDirectory, $tile_size, $magick_binaries_path, KernelInterface $kernel) {
         $this->tile_size = $tile_size;
-        $output_directory = rtrim($output_directory, '\\/');
+        $outputDirectory = rtrim($outputDirectory, '\\/');
         $this->magickPath = rtrim($magick_binaries_path, '\\/').DIRECTORY_SEPARATOR;
-        if (strpos($output_directory, '@') === 0) {
-            $this->output_directory = $kernel->locateResource($output_directory);
+        if (strpos($outputDirectory, '@') === 0) {
+            $this->outputDirectory = $kernel->locateResource($outputDirectory);
         } else {
-            $this->output_directory = $output_directory;
+            $this->outputDirectory = $outputDirectory;
         }
+        $this->webDir = $kernel->getRootDir().'/../web';
     }
 
+    /**
+     * @return string
+     */
+    public function getOutputDirectory()
+    {
+        return $this->outputDirectory;
+    }
+
+    /**
+     * @param Maps $map
+     *
+     * @return $this
+     * @throws \Exception
+     */
     public function setMap (Maps $map) {
         $this->map = $map;
         if (!file_exists($this->map->getImage())) {
@@ -47,29 +95,23 @@ class MapsTilesManager {
      * Renvoie l'identification demandée en fonction du zoom
      * Renvoie une exception si l'identification par ImageMagick ne fonctionne pas
      * @param integer $zoom
-     * @return array
+     * @return ImageIdentification
      * @throws \RunTimeException
      */
-    public function identifyImage($zoom) {
-        if (!isset($this->identifications[$zoom])) {
-
-            if (!$this->img_width || !$this->img_height) {
-                // Détermine la taille de l'image initiale une fois et place les attributs dans l'objet
-                $cmd = $this->magickPath.'identify -format "%wx%h" "'.$this->map->getImage().'" 2>&1';
-                $size = shell_exec($cmd);
-                if (!$size || !preg_match('#^[0-9]+x[0-9]+$#', $size)) {
-                    $size = trim($size);
-                    $msg = 'Error while retrieving map dimensions. Command returned error:'."\n\t".str_replace("\n","\n\t", $size);
-                    $msg = trim($msg);
-                    if (strpos($msg, 'no decode delegate') !== false) {
-                        $msg .= "\n".'Do you have installed necessary delegates for ImageMagick ?';
-                    }
-                    throw new \RunTimeException($msg);
-                }
-                list($w, $h) = explode('x',$size);
-                $this->img_width = $w;
-                $this->img_height = $h;
+    public function identifyImage($zoom = null)
+    {
+        if (!$this->img_width || !$this->img_height) {
+            // Détermine la taille de l'image initiale une fois et place les attributs dans l'objet
+            $size = getimagesize($this->webDir.'/'.$this->map->getImage());
+            if (!$size || !isset($size[0]) || !isset($size[1])) {
+                throw new \RunTimeException('Error while retrieving map dimensions');
             }
+            list($w, $h) = $size;
+            $this->img_width = $w;
+            $this->img_height = $h;
+        }
+
+        if (!isset($this->identifications[$zoom])) {
 
             // Calcul des ratios et du nombre maximum de vignettes
             $crop_unit = pow(2, $this->map->getMaxZoom() - $zoom) * $this->tile_size;
@@ -83,7 +125,7 @@ class MapsTilesManager {
             $max_width_global = $crop_unit * ( $max_tiles_x + 1 );
             $max_height_global = $crop_unit * ( $max_tiles_y + 1 );
 
-            $this->identifications[$zoom] = array(
+            $this->identifications[$zoom] = new ImageIdentification(array(
                 'xmax' => $max_tiles_x,
                 'ymax' => $max_tiles_y,
                 'tiles_max' => $max_tiles_x * $max_tiles_y,
@@ -91,7 +133,7 @@ class MapsTilesManager {
                 'hmax' => $max_height,
                 'wmax_global' => $max_width_global,
                 'hmax_global' => $max_height_global,
-            );
+            ));
         }
 
         return $this->identifications[$zoom];
@@ -106,8 +148,8 @@ class MapsTilesManager {
 
         $ratio = 1 / ( pow(2, $max - $zoom) ) * 100;
 
-        $output_scheme = $this->output_directory.'/temp_tiles/'.$this->map->getId().'/'.$zoom.'.jpg';
-        $output_final = $this->output_directory.'/'.$this->map->getId().'/'.$zoom.'/{x}/{y}.jpg';
+        $output_scheme = $this->outputDirectory.'/temp_tiles/'.$this->map->getId().'/'.$zoom.'.jpg';
+        $output_final = $this->outputDirectory.'/'.$this->map->getId().'/'.$zoom.'/{x}/{y}.jpg';
 
         if (!is_dir(dirname($output_scheme))) {
             mkdir(dirname($output_scheme), 0775, true);
@@ -184,111 +226,70 @@ class MapsTilesManager {
     }
 
     /**
-     * Crée une commande de découpage de l'image de la carte en utilisant ImageMagick
-     * Si "dry_run" est passé à "true", renvoie uniquement la commande
-     * Sinon, exécute la commande via shell_exec() et retourne le résultat
-     * @param integer $x
-     * @param integer $y
-     * @param integer $zoom
-     * @param bool|int $dry_run
-     * @param bool $throw_error
-     * @throws \RunTimeException
-     * @return string
-     */
-    public function createTile($x, $y, $zoom, $dry_run = false, $throw_error = true) {
-
-        if ($zoom > $this->map->getMaxZoom() || $zoom < 0) { throw new \RunTimeException('"zoom" value must be between 0 and '.$this->map->getMaxZoom().'.'); }
-
-        $identification = $this->identifyImage($zoom);
-
-        if ($x < 0 || $x > $identification['xmax']) {
-            if ($throw_error) {
-                throw new \RunTimeException('"x" value must be between 0 and '.$identification['xmax'].'.');
-            } else {
-                return null;
-            }
-        }
-        if ($y < 0 || $y > $identification['ymax']) {
-            if ($throw_error) {
-                throw new \RunTimeException('"y" value must be between 0 and '.$identification['ymax'].'.');
-            } else {
-                return null;
-            }
-        }
-
-        $imgname = $this->mapDestinationName($zoom, $x, $y);
-        $this->imgname = $imgname;
-        if (!is_dir(dirname($imgname))) {
-            mkdir(dirname($imgname), 0777, true);
-        }
-
-        $crop_unit = pow(2, $this->map->getMaxZoom() - $zoom) * $this->tile_size;
-
-        $_x = $x * $crop_unit;
-        $_y = $y * $crop_unit;
-
-        $cmd = $this->magickPath.'convert'.
-            ' "'.$this->mapSourceName().'"'.
-            ' -background black'.//Le "surplus" sera noir
-            ' -extent '.$identification['wmax_global'].'x'.$identification['hmax_global'].
-            ' -crop '.$crop_unit.'x'.$crop_unit.'+'.$_x.'+'.$_y.//Découpe l'image selon la taille demandée dans les paramètres
-            ' -resize '.$this->tile_size.'x'.$this->tile_size.'^'.//Redimensionne à la taille paramétrée
-            ' -extent '.$this->tile_size.'x'.$this->tile_size.//Et étend les éventuels pixels manquants, pour les bordures
-            ' -thumbnail '.$this->tile_size.'x'.$this->tile_size.//Crée un thumbnail en métadonnée, pour alléger le poids
-            ' -quality 95'.//Une faible qualité réduira le poids des images
-            ' "'.$this->mapDestinationName($zoom, $x, $y).'"'
-        ;
-//echo"\r\n".$cmd."\r\n";
-        if ($dry_run === false) {
-            return shell_exec($cmd);
-        }
-        return $cmd;
-    }
-
-    /**
      * Crée une image à partir de l'image principale et renvoie le nom du fichier temporaire
      * TOUTES LES DIMENSIONS DOIVENT ÊTRE EN PIXELS !
-     * @param integer $zoom
+     *
+     * @param integer $ratio
      * @param integer $x
      * @param integer $y
      * @param integer $width
      * @param integer $height
-     * @param bool $dry_run
-     * @return string
+     * @param bool    $dry_run
+     *
+     * @return string The output file name
+     * @throws \Exception
      */
-    public function createImage($zoom, $x, $y, $width, $height, $dry_run = false) {
-        $identification = $this->identifyImage($zoom);
-        $ratio = ( $zoom / $this->map->getMaxZoom() ) * 100;
-        $imgname = $this->mapDestinationName($zoom, $x, $y, $width, $height);
-        $this->imgname = $imgname;
-        if (!is_dir(dirname($imgname))) {
-            mkdir(dirname($imgname), 0777, true);
+    public function createImage($ratio, $x, $y, $width, $height, $dry_run = false)
+    {
+        if ($ratio <= 0 || null === $ratio) {
+            $ratio = 100;
         }
-        $cmd = $this->magickPath.'convert'.
-            ' "'.$this->mapSourceName().'"'.
-            ' -background black'.//Le "surplus" sera noir
-            ' -crop '.$crop_unit.'x'.$crop_unit.'+'.$_x.'+'.$_y.//Découpe l'image selon la taille demandée dans les paramètres
-            ' -resize '.$width.'x'.$height.'^'.//Redimensionne à la taille paramétrée
-            ' -extent '.$width.'x'.$height.''.//Et étend les éventuels pixels manquants, pour les bordures
-            ' -thumbnail '.$width.'x'.$width.//Crée un thumbnail en métadonnée, pour alléger le poids
-            ' -quality 100'.//Une faible qualité réduira le poids des images
-            ' "'.$imgname.'"'
-        ;
-        $cmd = $this->magickPath.'convert'.
-            ' "'.$this->mapSourceName().'"'.
-            ($ratio < 100 ? ' -resize '.$ratio.'%' : '').
-            ' -background black'.//Le "surplus" sera noir
-            ' -extent '.$identification['wmax'].'x'.$identification['hmax'].'^'.//Redimensionne aux valeurs "width" et "height" maximales dépendant du zoom
-            ' -crop '.$width.'x'.$height.'+'.$x.'+'.$y.//Découpe l'image selon la taille demandée dans les paramètres
-            ' -extent '.$width.'x'.$height.'^'.//Et étend les éventuels pixels en trop ou en moins
-            ' -quality 95'.//Une faible qualité réduira le poids des images
-            ' -thumbnail '.$width.'x'.$height.
-            ' "'.$imgname.'"'
+        $this->identifyImage();
+
+        $maxWidth = $this->img_width;
+        $maxHeight = $this->img_height;
+        $errMsg = '"%s" + "%s" values exceed image size which is %dx%d';
+
+        if (($ratio*$width/100) + $x >= $maxWidth) {
+            throw new \Exception(sprintf($errMsg, 'width', 'x', $maxWidth, $maxHeight));
+        }
+        if (($ratio*$height/100) + $y >= $maxHeight) {
+            throw new \Exception(sprintf($errMsg, 'height', 'y', $maxWidth, $maxHeight));
+        }
+
+        $imgOutput = $this->mapDestinationName($ratio, $x, $y, $width, $height);
+
+        if (!is_dir(dirname($imgOutput))) {
+            mkdir(dirname($imgOutput), 0777, true);
+        }
+
+        $command = new Command($this->magickPath);
+
+        $imgSource = $this->webDir.'/'.$this->map->getImage();
+
+        $command
+            ->convert($imgSource)
+            ->background('black')
+            ->crop(new Geometry(null, null, $x, $y))
+            ->resize($ratio.'%')
+            ->extent(new Geometry($width, $height, null, null, Geometry::RATIO_MIN))
+            ->thumbnail(new Geometry($width, $height))
+            ->quality(95)
+            ->file($imgOutput, false)
         ;
 
         if ($dry_run === false) {
-            return shell_exec($cmd);
+            $response = $command->run(true);
+            if ($response->hasFailed() || !file_exists($imgOutput)) {
+                throw new \RuntimeException("ImageMagick error.\n".$response->getContent(true));
+            }
+            return $imgOutput;
         }
-        return $cmd;
+        return $command->getCommand();
+    }
+
+    private function mapDestinationName($ratio, $x, $y, $width, $height)
+    {
+        return $this->outputDirectory.'/'.$this->map->getNameSlug().'/custom/'.$this->map->getNameSlug().'_'.$ratio.'_'.$x.'_'.$y.'_'.$width.'_'.$height.'.jpg';
     }
 }
