@@ -370,23 +370,29 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
         $ref = (string) $object;
         $processType = $processType ? '<comment>'.$processType.'</comment>' : '';
 
-        $msg = ' '.$processType.'</comment> '.$objectType.' of type <comment>'.$class.'</comment>: <info>'.$ref.'</info>';
+        $msg = ' '.$processType.' '.$objectType.' of type <comment>'.$class.'</comment>: <info>'.$ref.'</info>';
+
+        $addRow = true;
+        $rowsToAdd = [];
 
         if ($this->output->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
             $table = new Table($this->output);
             $table->setStyle('compact');
 
-            $table->addRow(array(
+            $rowsToAdd[] = array(
                 "<comment>$processType</comment>",
                 '<info>'.ucfirst($objectType).' of type '.$class.'</info>',
                 "<info>$ref</info>",
-            ));
+            );
 
             if (UnitOfWork::STATE_MANAGED === $this->uow->getEntityState($object)) {
                 $this->uow->recomputeSingleEntityChangeSet($this->em->getClassMetadata(get_class($object)), $object);
                 $changesets = $this->uow->getEntityChangeSet($object);
                 if (count($changesets)) {
                     foreach ($changesets as $property => $changeset) {
+                        if (in_array($property, array('createdAt', 'updatedAt'))) {
+                            continue;
+                        }
                         $before = $changeset[0];
                         if ($before instanceof DateTime) {
                             $before = $before->format(DATE_RSS);
@@ -397,22 +403,24 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
                             $after = $after->format(DATE_RSS);
                         }
 
-                        $table->addRow(array(
+                        $rowsToAdd[] = array(
                             '<info>'.$property.'</info>',
                             'before',
                             $before,
-                        ));
-                        $table->addRow(array(
+                        );
+                        $rowsToAdd[] = array(
                             '<info>'.$property.'</info>',
                             'after',
                             $after,
-                        ));
+                        );
                     }
                 } elseif (strpos($processType, 'Nothing') === false) {
-                    $table->addRow(array(new TableCell('Nothing to do, the object is already synchronized.', array('colspan' => 3))));
+                    $addRow = false;
                 }
-            } elseif (UnitOfWork::STATE_NEW === $this->uow->getEntityState($object)) {
-                $table->addRow(array(new TableCell('<info>New</info>', array('colspan' => 4))));
+            }
+
+            if ($addRow && count($rowsToAdd)) {
+                $table->addRows($rowsToAdd);
             }
 
             $table->render();
