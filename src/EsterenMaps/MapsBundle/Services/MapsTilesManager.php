@@ -56,6 +56,11 @@ class MapsTilesManager
      */
     private $magickPath = '';
 
+    /**
+     * @var bool
+     */
+    private $debug;
+
     function __construct ($outputDirectory, $tile_size, $magick_binaries_path, KernelInterface $kernel) {
         $this->tile_size = $tile_size;
         $outputDirectory = rtrim($outputDirectory, '\\/');
@@ -66,6 +71,7 @@ class MapsTilesManager
             $this->outputDirectory = $outputDirectory;
         }
         $this->webDir = $kernel->getRootDir().'/../web';
+        $this->debug = $kernel->isDebug();
     }
 
     /**
@@ -95,7 +101,7 @@ class MapsTilesManager
      * Renvoie l'identification demandée en fonction du zoom
      * Renvoie une exception si l'identification par ImageMagick ne fonctionne pas
      * @param integer $zoom
-     * @return ImageIdentification
+     * @return ImageIdentification|ImageIdentification[]
      * @throws \RunTimeException
      */
     public function identifyImage($zoom = null)
@@ -109,6 +115,10 @@ class MapsTilesManager
             list($w, $h) = $size;
             $this->img_width = $w;
             $this->img_height = $h;
+        }
+
+        if (null === $zoom) {
+            return $this->identifications;
         }
 
         if (!isset($this->identifications[$zoom])) {
@@ -259,6 +269,10 @@ class MapsTilesManager
 
         $imgOutput = $this->mapDestinationName($ratio, $x, $y, $width, $height);
 
+        if (file_exists($imgOutput) && !$this->debug) {
+            return $imgOutput;
+        }
+
         if (!is_dir(dirname($imgOutput))) {
             mkdir(dirname($imgOutput), 0777, true);
         }
@@ -279,7 +293,7 @@ class MapsTilesManager
         ;
 
         if ($dry_run === false) {
-            $response = $command->run(true);
+            $response = $command->run($this->debug ? Command::RUN_DEBUG : Command::RUN_NORMAL);
             if ($response->hasFailed() || !file_exists($imgOutput)) {
                 throw new \RuntimeException("ImageMagick error.\n".$response->getContent(true));
             }
@@ -290,6 +304,6 @@ class MapsTilesManager
 
     private function mapDestinationName($ratio, $x, $y, $width, $height)
     {
-        return $this->outputDirectory.'/'.$this->map->getNameSlug().'/custom/'.$this->map->getNameSlug().'_'.$ratio.'_'.$x.'_'.$y.'_'.$width.'_'.$height.'.jpg';
+        return $this->outputDirectory.'/'.$this->map->getId().'/custom/'.$this->map->getNameSlug().'_'.$ratio.'_'.$x.'_'.$y.'_'.$width.'_'.$height.'.jpg';
     }
 }
