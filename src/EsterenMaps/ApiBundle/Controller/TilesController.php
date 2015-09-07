@@ -35,7 +35,7 @@ class TilesController extends Controller
             $data = $form->getData();
             try {
                 return new BinaryFileResponse(
-                    $this->get('esterenmaps.tiles_manager')->setMap($map)->createImage($data['ratio'], $data['x'], $data['y'], $data['width'], $data['height']),
+                    $this->get('esterenmaps.tiles_manager')->setMap($map)->createImage($data['ratio'], $data['x'], $data['y'], $data['width'], $data['height'], $data['withImages']),
                     200,
                     array('Content-Type' => 'image/jpeg')
                 );

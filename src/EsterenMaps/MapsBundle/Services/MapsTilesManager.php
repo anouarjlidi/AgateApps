@@ -2,6 +2,7 @@
 
 namespace EsterenMaps\MapsBundle\Services;
 
+use Exception;
 use EsterenMaps\MapsBundle\Entity\Maps;
 use EsterenMaps\MapsBundle\ImageManagement\ImageIdentification;
 use Orbitale\Component\ImageMagick\Command;
@@ -30,6 +31,11 @@ class MapsTilesManager
      * @var Maps
      */
     private $map;
+
+    /**
+     * @var MapImageManager
+     */
+    private $mapImageManager;
 
     /**
      * @var ImageIdentification[]
@@ -61,7 +67,7 @@ class MapsTilesManager
      */
     private $debug;
 
-    function __construct ($outputDirectory, $tile_size, $magick_binaries_path, KernelInterface $kernel) {
+    function __construct ($outputDirectory, $tile_size, $magick_binaries_path, MapImageManager $mapImageManager, KernelInterface $kernel) {
         $this->tile_size = $tile_size;
         $outputDirectory = rtrim($outputDirectory, '\\/');
         $this->magickPath = rtrim($magick_binaries_path, '\\/').DIRECTORY_SEPARATOR;
@@ -72,6 +78,7 @@ class MapsTilesManager
         }
         $this->webDir = $kernel->getRootDir().'/../web';
         $this->debug = $kernel->isDebug();
+        $this->mapImageManager = $mapImageManager;
     }
 
     /**
@@ -86,12 +93,12 @@ class MapsTilesManager
      * @param Maps $map
      *
      * @return $this
-     * @throws \Exception
+     * @throws Exception
      */
-    public function setMap (Maps $map) {
+    public function setMap(Maps $map) {
         $this->map = $map;
         if (!file_exists($this->map->getImage())) {
-            throw new \Exception('Map image could not be found : '.$map->getImage());
+            throw new Exception('Map image could not be found: '.$map->getImage());
         }
         return $this;
     }
@@ -247,9 +254,9 @@ class MapsTilesManager
      * @param bool    $dry_run
      *
      * @return string The output file name
-     * @throws \Exception
+     * @throws Exception
      */
-    public function createImage($ratio, $x, $y, $width, $height, $dry_run = false)
+    public function createImage($ratio, $x, $y, $width, $height, $withImages = false, $dry_run = false)
     {
         if ($ratio <= 0 || null === $ratio) {
             $ratio = 100;
@@ -261,13 +268,13 @@ class MapsTilesManager
         $errMsg = '"%s" + "%s" values exceed image size which is %dx%d';
 
         if (($ratio*$width/100) + $x >= $maxWidth) {
-            throw new \Exception(sprintf($errMsg, 'width', 'x', $maxWidth, $maxHeight));
+            throw new Exception(sprintf($errMsg, 'width', 'x', $maxWidth, $maxHeight));
         }
         if (($ratio*$height/100) + $y >= $maxHeight) {
-            throw new \Exception(sprintf($errMsg, 'height', 'y', $maxWidth, $maxHeight));
+            throw new Exception(sprintf($errMsg, 'height', 'y', $maxWidth, $maxHeight));
         }
 
-        $imgOutput = $this->mapDestinationName($ratio, $x, $y, $width, $height);
+        $imgOutput = $this->mapDestinationName($ratio, $x, $y, $width, $height, $withImages);
 
         if (file_exists($imgOutput) && !$this->debug) {
             return $imgOutput;
@@ -279,12 +286,23 @@ class MapsTilesManager
 
         $command = new Command($this->magickPath);
 
-        $imgSource = $this->webDir.'/'.$this->map->getImage();
+        if ($withImages) {
+            $imgSource = $this->mapImageManager->getImagePath($this->map);
+            if (!file_exists($imgSource)) {
+                $this->mapImageManager->generateImage($this->map);
+            }
+        } else {
+            $imgSource = $this->webDir.'/'.$this->map->getImage();
+        }
 
         $command
             ->convert($imgSource)
             ->background('black')
-            ->crop(new Geometry(null, null, $x, $y))
+        ;
+        if ($x && $y) {
+            $command->crop(new Geometry(null, null, $x, $y));
+        }
+        $command
             ->resize($ratio.'%')
             ->extent(new Geometry($width, $height, null, null, Geometry::RATIO_MIN))
             ->thumbnail(new Geometry($width, $height))
@@ -302,8 +320,8 @@ class MapsTilesManager
         return $command->getCommand();
     }
 
-    private function mapDestinationName($ratio, $x, $y, $width, $height)
+    private function mapDestinationName($ratio, $x, $y, $width, $height, $withImages = false)
     {
-        return $this->outputDirectory.'/'.$this->map->getId().'/custom/'.$this->map->getNameSlug().'_'.$ratio.'_'.$x.'_'.$y.'_'.$width.'_'.$height.'.jpg';
+        return $this->outputDirectory.'/'.$this->map->getId().'/custom/'.$this->map->getNameSlug().'_'.$ratio.'_'.$x.'_'.$y.'_'.$width.'_'.$height.($withImages ? '_IM' : '').'.jpg';
     }
 }

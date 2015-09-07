@@ -47,7 +47,9 @@ class MapImageType extends AbstractType
                 ]
             )
             ->add('x', 'integer', ['constraints' => [new Type(['type' => 'integer'])]])
-            ->add('y', 'integer', ['constraints' => [new Type(['type' => 'integer'])]]);
+            ->add('y', 'integer', ['constraints' => [new Type(['type' => 'integer'])]])
+            ->add('withImages', 'checkbox', ['constraints' => [new Type(['type' => 'boolean'])]])
+        ;
     }
 
     /**
@@ -57,6 +59,12 @@ class MapImageType extends AbstractType
     {
         $resolver->setDefaults([
             'csrf_protection' => false,
+            'data' => [
+                'withImages' => false,
+                'ratio' => 100,
+                'width' => 100,
+                'height' => 100,
+            ],
         ]);
     }
 

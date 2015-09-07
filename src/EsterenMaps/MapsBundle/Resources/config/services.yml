@@ -8,10 +8,19 @@ services:
     esterenmaps.tiles_manager:
         class: EsterenMaps\MapsBundle\Services\MapsTilesManager
         arguments:
-            output_directory: %esterenmaps.output_directory%
-            tile_size: %esterenmaps.tile_size%
-            magick_binaries_path: %magick_binaries_path%
-            kernel: @kernel
+            - %esterenmaps.output_directory%
+            - %esterenmaps.tile_size%
+            - %magick_binaries_path%
+            - @esterenmaps.map_image_manager
+            - @kernel
+
+    esterenmaps.map_image_manager:
+        class: EsterenMaps\MapsBundle\Services\MapImageManager
+        arguments:
+            - %esterenmaps.output_directory%
+            - %magick_binaries_path%
+            - @doctrine.orm.entity_manager
+            - @kernel
 
     esterenmaps.directions:
         class: EsterenMaps\MapsBundle\Services\Directions
