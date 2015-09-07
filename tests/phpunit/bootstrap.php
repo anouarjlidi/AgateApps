@@ -1,6 +1,5 @@
 <?php
 
-use Doctrine\Common\Annotations\AnnotationRegistry;
 use Symfony\Component\Console\Input\ArgvInput;
 
 $rootDir = realpath(__DIR__.'/../..');
@@ -12,6 +11,7 @@ if (!file_exists($file)) {
 
 define('TESTS_DEST_PATH', __DIR__.'/../../build');
 
+/** @var Composer\Autoload\ClassLoader $autoload */
 $autoload = require_once $file;
 
 $input = new ArgvInput();

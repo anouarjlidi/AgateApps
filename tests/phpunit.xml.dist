@@ -6,16 +6,16 @@
          backupGlobals="false"
          colors="true"
          verbose="true"
-         bootstrap="../src/Tests/bootstrap.php"
+         bootstrap="../tests/phpunit/bootstrap.php"
 >
     <testsuites>
         <testsuite name="Project Test Suite">
-            <directory>../src/Tests/*</directory>
+            <directory>./phpunit/*</directory>
         </testsuite>
     </testsuites>
 
     <php>
-        <!--<server name="KERNEL_DIR" value="/path/to/your/app/" />-->
+        <server name="KERNEL_DIR" value="../app/" />
         <ini name="zend.enable_gc" value="0" />
     </php>
 
