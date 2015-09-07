@@ -5,7 +5,12 @@
     "description": "Global Esteren project",
     "autoload": {
         "psr-0": { "": "src/", "SymfonyStandard": "app/" },
-        "psr-4": { "": "app/" }
+        "psr-4": {
+            "": "app/",
+            "Tests\\": [
+                "tests/phpunit/"
+            ]
+        }
     },
     "require": {
         "php": ">=5.3.9",
