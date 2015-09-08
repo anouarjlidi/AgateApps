@@ -5,12 +5,14 @@
      * @returns {EsterenMap}
      * @this {EsterenMap}
      * @constructor
-     * @version 1.0
      */
     var EsterenMap = function (user_mapOptions) {
 
         // Données utilisées dans le scope de la classe
         var _this = this, ajaxD;
+
+        // Force CANVAS
+        w.L_PREFER_CANVAS = true;
 
         if (!user_mapOptions.id) {
             console.error('Map id must be defined');
@@ -48,7 +50,7 @@
 
     EsterenMap.prototype._initiate = function() {
 
-        var drawnItems,sidebar, _this, mapOptions;
+        var drawnItems,sidebar, _this = this, mapOptions;
 
         if (this.initiated === true || d.initiatedEsterenMap === true) {
             console.error('Map already set.');
@@ -79,7 +81,26 @@
         this._map = L.map(mapOptions.container, mapOptions.LeafletMapBaseOptions);
 
         // Création du calque des tuiles
-        this._tileLayer = L.tileLayer(mapOptions.apiUrls.tiles, mapOptions.LeafletLayerBaseOptions);
+        //this._tileLayer = L.tileLayer(mapOptions.apiUrls.tiles, mapOptions.LeafletLayerBaseOptions);
+        //this._map.addLayer(this._tileLayer);
+        this._tileLayer = L.tileLayer.canvas(mapOptions.LeafletLayerBaseOptions);
+        this._tileLayer.drawTile = function(canvas, tilePoint, zoom) {
+            var context = canvas.getContext('2d'),
+                img = document.createElement('img'),
+                imgUrl = mapOptions.apiUrls.tiles,
+                tileSize = mapOptions.LeafletLayerBaseOptions.tileSize,
+                x = tilePoint.x,
+                y = tilePoint.y
+            ;
+            imgUrl = imgUrl.replace('{x}', x);
+            imgUrl = imgUrl.replace('{y}', y);
+            imgUrl = imgUrl.replace('{z}', _this._map.getZoom());
+            img.src = imgUrl;
+            img.onload = function() {
+                context.drawImage(img, 0, 0, tileSize, tileSize, 0, 0, tileSize, tileSize);
+                console.info('imageDrawn', img.src);
+            };
+        };
         this._map.addLayer(this._tileLayer);
 
         L.Icon.Default.imagePath = mapOptions.imgUrl.replace(/\/$/gi, '');
@@ -122,8 +143,6 @@
             this._map.addLayer(drawnItems);
             this._drawnItems = drawnItems;
         }
-
-        _this = this;
 
         // Force le resize à chaque redimension de la page
         if (mapOptions.autoResize) {
