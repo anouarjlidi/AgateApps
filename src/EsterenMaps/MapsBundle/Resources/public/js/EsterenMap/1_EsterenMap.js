@@ -98,7 +98,6 @@
             img.src = imgUrl;
             img.onload = function() {
                 context.drawImage(img, 0, 0, tileSize, tileSize, 0, 0, tileSize, tileSize);
-                console.info('imageDrawn', img.src);
             };
         };
         this._map.addLayer(this._tileLayer);
