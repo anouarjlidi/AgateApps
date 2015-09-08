@@ -18,7 +18,7 @@
     <script type="text/javascript" src="{{ asset('js/maps_lib.js') }}"></script>
 
     <script type="text/javascript">
-        (function(d){
+        (function(w, d){
             try {
                 d.map = new EsterenMap({
                     id: {{ map.id }},
@@ -40,14 +40,15 @@
                         maxNativeZoom: {{ map.maxZoom }},
                         tileSize: {{ tile_size }},
                         noWrap: false
-                        {% if map.jsonBounds|length %},
+                        {# Have to wait until bounds are supported in CANVAS mode #}
+                        {#% if map.jsonBounds|length %},
                         bounds: {{ map.bounds|raw }}
-                        {% endif %}
+                        {% endif %#}
                     }
                 });
             } catch (e) {
                 console.error(e);
             }
-        })(document);
+        })(window, document);
     </script>
 {% endblock %}

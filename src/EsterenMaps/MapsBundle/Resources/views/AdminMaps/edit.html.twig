@@ -67,15 +67,20 @@
                             tiles: "http://{{ esteren_domains_api }}{{ asset('maps_tiles/'~map.id~'/{z}/{y}/{x}.jpg') }}"
                         },
                         LeafletMapBaseOptions: {
-                            maxZoom: {{ map.maxZoom }},
-                            maxBounds: [[87,-183], [11,41]]
+                            maxZoom: {{ map.maxZoom }}
+                            {% if map.jsonBounds|length %},
+                            maxBounds: {{ map.bounds|raw }}
+                            {% endif %}
                         },
                         LeafletLayerBaseOptions: {
                             maxZoom: {{ map.maxZoom }},
                             maxNativeZoom: {{ map.maxZoom }},
                             tileSize: {{ tile_size }},
                             noWrap: false,
-                            bounds: [[87,-183], [11,41]]
+                            {# Have to wait until bounds are supported in CANVAS mode #}
+                            {#% if map.jsonBounds|length %},
+                            bounds: {{ map.bounds|raw }}
+                            {% endif %#}
                         },
                         autoResize: true,
                         containerHeight: '100%'
