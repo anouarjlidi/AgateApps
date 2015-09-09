@@ -3,8 +3,6 @@ assetic:
     assets:
         esteren_general_js:
             inputs:
-                - components/jquery-ui/ui/jquery.ui.core.js
-                - components/jquery-ui/ui/jquery.ui.widget.js
                 - components/bootstrap/js/button.js
                 - components/bootstrap/js/collapse.js
                 - components/bootstrap/js/dropdown.js
@@ -13,10 +11,6 @@ assetic:
                 - components/bootstrap/js/popover.js
                 - components/bootstrap/js/transition.js
                 - components/bootstrap/js/tab.js
-                - components/jquery.colorpicker/jquery.colorpicker.js
-                - components/jquery.colorpicker/i18n/jquery.ui.colorpicker-de.js
-                - components/jquery.colorpicker/i18n/jquery.ui.colorpicker-en.js
-                - components/jquery.colorpicker/i18n/jquery.ui.colorpicker-fr.js
                 - @EsterenPortalBundle/Resources/public/js/corahn_rin.js
             filters:
                 - ?uglifyjs
@@ -27,9 +21,6 @@ assetic:
                 - components/leaflet/dist/leaflet.css
                 - components/leaflet-draw/dist/leaflet.draw.css
                 - components/leaflet-sidebar/src/L.Control.Sidebar.css
-                - components/jquery-ui/themes/vader/jquery-ui.min.css
-                - components/jquery-ui/themes/vader/jquery.ui.theme.css
-                - components/jquery.colorpicker/jquery.colorpicker.css
                 - @EsterenPortalBundle/Resources/public/less/_main.less
                 - bundles/esterenmaps/css/maps.less
             filters:
@@ -40,9 +31,9 @@ assetic:
 
         esteren_maps_js:
             inputs:
-                - @EsterenMapsBundle/Resources/public/js/leaflet-src.js
-                - @EsterenMapsBundle/Resources/public/js/leaflet.sidebar-src.js
-                - @EsterenMapsBundle/Resources/public/js/leaflet.draw-src.js
+                - components/leaflet/dist/leaflet-src.js
+                - components/leaflet-sidebar/leaflet.sidebar-src.js
+                - components/leaflet-draw/leaflet.draw-src.js
                 - @EsterenMapsBundle/Resources/public/js/EsterenMap/1_EsterenMap.js
                 - @EsterenMapsBundle/Resources/public/js/EsterenMap/2_LeafletDrawOverrides.js
                 - @EsterenMapsBundle/Resources/public/js/EsterenMap/2_EsterenMap_directions.js
