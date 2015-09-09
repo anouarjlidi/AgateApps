@@ -32,8 +32,8 @@ assetic:
         esteren_maps_js:
             inputs:
                 - components/leaflet/dist/leaflet-src.js
-                - components/leaflet-sidebar/leaflet.sidebar-src.js
-                - components/leaflet-draw/leaflet.draw-src.js
+                - components/leaflet-sidebar/src/L.Control.Sidebar.js
+                - components/leaflet-draw/dist/leaflet.draw-src.js
                 - @EsterenMapsBundle/Resources/public/js/EsterenMap/1_EsterenMap.js
                 - @EsterenMapsBundle/Resources/public/js/EsterenMap/2_LeafletDrawOverrides.js
                 - @EsterenMapsBundle/Resources/public/js/EsterenMap/2_EsterenMap_directions.js
