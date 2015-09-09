@@ -3,11 +3,12 @@
 
 <head>
 
-    <title>{% if title is defined and title != 'Esteren'%}
-        {{ title }} - Esteren
-    {% else %}
-        Esteren
-    {% endif %}</title>
+    <title>
+        {{ title ~ ' ' -}}
+        {%- if title is defined and title != 'Esteren' -%}
+             - Esteren
+        {% endif %}
+    </title>
 
     <meta name="generator" content="Pierstoval"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
