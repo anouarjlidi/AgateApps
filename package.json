@@ -8,6 +8,7 @@
         "url": "https://github.com/Pierstoval/corahn_rin"
     },
     "dependencies": {
+        "yamljs": "^0.2.3",
         "glob": "^5.0.14",
         "gulp": "^3.9.0",
         "gulp-rev": "^6.0.1",
@@ -23,16 +24,16 @@
     },
     "contributors": [
         {
-            "name":     "Nelyhann",
-            "email":    "nelyhann@gmail.com"
+            "name": "Nelyhann",
+            "email": "nelyhann@gmail.com"
         },
         {
-            "name":     "Joelle \"Iris\" Deschamp",
-            "email":    "iris.d.automne@gmail.com"
+            "name": "Joelle \"Iris\" Deschamp",
+            "email": "iris.d.automne@gmail.com"
         }
     ],
     "private": true,
     "engines": {
-        "node" : ">=0.4.0"
+        "node": ">=0.4.0"
     }
 }

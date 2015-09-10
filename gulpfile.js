@@ -3,6 +3,7 @@
  */
 var fs           = require('fs'),
     glob         = require('glob'),
+    yaml         = require('yamljs'),
     gulp         = require('gulp'),
     rev          = require('gulp-rev'),
     less         = require('gulp-less'),
@@ -16,8 +17,7 @@ var fs           = require('fs'),
     handlebars   = require('gulp-compile-handlebars')
 ;
 
-var assets = {
-
+var assetsManager = {
     "get": function(type) {
         var toReturn = [], i, asset;
         if (!type) {
@@ -35,101 +35,44 @@ var assets = {
         }
         return toReturn;
     },
-
     "sources": function() {
         var toReturn = [], i, asset;
         for (i in this) {
             if (this.hasOwnProperty(i) && i !== 'get') {
                 asset = this[i];
-                for (j in asset.assets) {
-                    toReturn.push(asset.assets[j]);
+                for (j in asset.sources) {
+                    toReturn.push(asset.sources[j]);
                 }
             }
         }
         return toReturn;
     },
-
-    // CSS
-    "esteren_general_less": {
-        "type": "less",
-        "assets": [
-            "src/Esteren/PortalBundle/Resources/public/less/_main.less"
-        ],
-        "output": "main_less.css"
-    },
-    "esteren_maps_less": {
-        "type": "less",
-        "assets": [
-            "src/EsterenMaps/MapsBundle/Resources/public/css/maps.less"
-        ],
-        "output": "maps_lib.css"
-    },
-    "esteren_general_css": {
-        "type": "css",
-        "assets": [
-            "web/components/leaflet/dist/leaflet.css",
-            "web/components/leaflet-draw/dist/leaflet.draw.css",
-            "web/components/leaflet-sidebar/src/L.Control.Sidebar.css",
-            "web/css/main_less.css"
-        ],
-        "output": "global.css"
-    },
-
-    // JS
-    "esteren_general_js": {
-        "type": "js",
-        "assets": [
-            "web/components/bootstrap/js/button.js",
-            "web/components/bootstrap/js/collapse.js",
-            "web/components/bootstrap/js/dropdown.js",
-            "web/components/bootstrap/js/modal.js",
-            "web/components/bootstrap/js/tooltip.js",
-            "web/components/bootstrap/js/popover.js",
-            "web/components/bootstrap/js/transition.js",
-            "web/components/bootstrap/js/tab.js",
-            "src/Esteren/PortalBundle/Resources/public/js/corahn_rin.js"
-        ],
-        "output": "global.js"
-    },
-    "esteren_maps_js": {
-        "type": "js",
-        "assets": [
-            "web/components/leaflet/dist/leaflet-src.js",
-            "web/components/leaflet-sidebar/src/L.Control.Sidebar.js",
-            "web/components/leaflet-draw/dist/leaflet.draw-src.js",
-            "src/EsterenMaps/MapsBundle/Resources/public/js/EsterenMap/1_EsterenMap.js",
-            "src/EsterenMaps/MapsBundle/Resources/public/js/EsterenMap/2_LeafletDrawOverrides.js",
-            "src/EsterenMaps/MapsBundle/Resources/public/js/EsterenMap/2_EsterenMap_directions.js",
-            "src/EsterenMaps/MapsBundle/Resources/public/js/EsterenMap/3_EsterenMap_options.js",
-            "src/EsterenMaps/MapsBundle/Resources/public/js/EsterenMap/3_EsterenMap_ActivateLeafletDraw.js",
-            "src/EsterenMaps/MapsBundle/Resources/public/js/EsterenMap/4_EsterenMap_addMarker.js",
-            "src/EsterenMaps/MapsBundle/Resources/public/js/EsterenMap/4_EsterenMap_addPolyline.js",
-            "src/EsterenMaps/MapsBundle/Resources/public/js/EsterenMap/4_EsterenMap_addPolygon.js",
-            "src/EsterenMaps/MapsBundle/Resources/public/js/EsterenMap/4_EsterenMap_filters.js"
-        ],
-        "output": "maps_lib.js"
-    },
-    "esterenmaps_edit_js": {
-        "type": "js",
-        "assets": [
-            "src/EsterenMaps/MapsBundle/Resources/public/js/map_edit.js"
-        ],
-        "output": "map_edit_more.js"
-    }
+    assets: []
 };
+
+var assetsFile = './.assets.yml', datas;
+
+try {
+    datas = yaml.load(assetsFile);
+    console.info(datas);
+} catch (e) {
+    if (e.message && e.message.match(/no such file or directory/gi)) {
+        throw 'Your assets file does not exist. You must create one in order to use this tool.';
+    }
+}
 
 /**
  * Dumps the LESS assets
  */
 gulp.task('less', function() {
     var type = 'less',
-        list = assets.get(type),
+        list = assetsManager.get(type),
         i, asset
     ;
     for (i in list) {
         asset = list[i];
         gulp
-            .src(asset.assets)
+            .src(asset.sources)
             .pipe(less())
             .pipe(autoprefixer())
             .pipe(minifycss({
@@ -144,18 +87,20 @@ gulp.task('less', function() {
 });
 
 /**
- * Dumps the CSS assets
+ * Dumps the CSS assets.
+ * This command depends on the "less" automatically because sometimes you need
+ *   to compile less files and use the generated css to compile a "global" css.
  */
-gulp.task('css', function() {
+gulp.task('css', ['less'], function() {
     var type = 'css',
-        list = assets.get(type),
+        list = assetsManager.get(type),
         i, asset
     ;
     for (i in list) {
         if (!list.hasOwnProperty(i)) { continue; }
         asset = list[i];
         gulp
-            .src(asset.assets)
+            .src(asset.sources)
             .pipe(concat(asset.output))
             .pipe(autoprefixer())
             .pipe(minifycss({
@@ -176,14 +121,14 @@ gulp.task('css', function() {
  */
 gulp.task('js', function() {
     var type = 'js',
-        list = assets.get(type),
+        list = assetsManager.get(type),
         i, asset
     ;
     for (i in list) {
         if (!list.hasOwnProperty(i)) { continue; }
         asset = list[i];
         gulp
-            .src(asset.assets)
+            .src(asset.sources)
             .pipe(sourcemaps.init())
             .pipe(concat({path: asset.output, cwd: ''}))
             .pipe(uglyfly())
@@ -228,7 +173,7 @@ gulp.task('manifests', function() {
 // Watcher
 gulp.task('watch', function() {
 
-    gulp.watch(assets.sources(), ['dump']).on('change', function(event) {
+    gulp.watch(assetsManager.sources(), ['dump']).on('change', function(event) {
         console.log('File "'+event.path+'" updated, dump all assets.');
     });
 
