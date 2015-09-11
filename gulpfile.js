@@ -24,9 +24,9 @@ var assetsManager = {
             console.error('Must specify a type when retrieving assets.');
             return;
         }
-        for (i in this) {
-            if (this.hasOwnProperty(i) && i !== 'get' && this[i].type === type) {
-                asset = this[i];
+        for (i in this.assets) {
+            if (this.assets[i].type === type) {
+                asset = this.assets[i];
                 if (!asset.name) {
                     asset.name = i;
                 }
@@ -37,24 +37,35 @@ var assetsManager = {
     },
     "sources": function() {
         var toReturn = [], i, asset;
-        for (i in this) {
-            if (this.hasOwnProperty(i) && i !== 'get') {
-                asset = this[i];
-                for (j in asset.sources) {
-                    toReturn.push(asset.sources[j]);
-                }
+        for (i in this.assets) {
+            asset = this.assets[i];
+            for (j in asset.sources) {
+                toReturn.push(asset.sources[j]);
             }
         }
         return toReturn;
     },
+    output_directory: 'web',
     assets: []
 };
 
-var assetsFile = './.assets.yml', datas;
+var assetsFile = './.assets.yml', config;
 
 try {
-    datas = yaml.load(assetsFile);
-    console.info(datas);
+    config = yaml.load(assetsFile);
+    assetsManager.assets = config.assets || [];
+    assetsManager.output_directory = config.output_directory || 'web';
+    assetsManager.rev_directory = config.rev_directory || 'app/cache';
+    try {
+        fs.accessSync(assetsManager.output_directory, fs.W_OK);
+    } catch (e) {
+        throw 'The output directory "'+assetsManager.output_directory+'" must be valid. Did you forgot to create it?'+"\n"+e.message;
+    }
+    try {
+        fs.accessSync(assetsManager.rev_directory, fs.W_OK);
+    } catch (e) {
+        throw 'The output directory "'+assetsManager.rev_directory+'" must be valid. Did you forgot to create it?'+"\n"+e.message;
+    }
 } catch (e) {
     if (e.message && e.message.match(/no such file or directory/gi)) {
         throw 'Your assets file does not exist. You must create one in order to use this tool.';
@@ -82,7 +93,7 @@ gulp.task('less', function() {
             .pipe(concat(asset.output))
             .pipe(gulp.dest('web/css'))
         ;
-        console.info('Processed '+type.toUpperCase()+' "'+asset.name+'" to output "web/css/'+asset.output+'"');
+        console.info('Processed '+type.toUpperCase()+' "'+asset.name+'" to output "'+assetsManager.output_directory+'/css/'+asset.output+'"');
     }
 });
 
@@ -108,11 +119,11 @@ gulp.task('css', ['less'], function() {
                 keepSpecialComments: 0
             }))
             .pipe(rev())
-            .pipe(gulp.dest('web/'+type))
+            .pipe(gulp.dest(assetsManager.output_directory+'/'+type))
             .pipe(rev.manifest('rev-manifest-'+type+'-'+asset.name+'.json'))
             .pipe(gulp.dest('app/cache/'))
         ;
-        console.info('Processed '+type.toUpperCase()+' "'+asset.name+'" to output "web/'+type+'/'+asset.output+'"');
+        console.info('Processed '+type.toUpperCase()+' "'+asset.name+'" to output "'+assetsManager.output_directory+'/'+type+'/'+asset.output+'"');
     }
 });
 
@@ -134,11 +145,11 @@ gulp.task('js', function() {
             .pipe(uglyfly())
             .pipe(rev())
             .pipe(sourcemaps.write('.'))
-            .pipe(gulp.dest('web/'+type))
+            .pipe(gulp.dest(assetsManager.output_directory+'/'+type))
             .pipe(rev.manifest('rev-manifest-'+type+'-'+asset.name+'.json'))
             .pipe(gulp.dest('app/cache/'))
         ;
-        console.info('Processed '+type.toUpperCase()+' "'+asset.name+'" to output "web/'+type+'/'+asset.output+'"');
+        console.info('Processed '+type.toUpperCase()+' "'+asset.name+'" to output "'+assetsManager.output_directory+'/'+type+'/'+asset.output+'"');
     }
 
 });
