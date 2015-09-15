@@ -1,3 +1,4 @@
+rev_directory: app/cache
 assets:
     esteren_general_less:
         type: less
