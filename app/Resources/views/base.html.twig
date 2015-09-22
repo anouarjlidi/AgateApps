@@ -4,10 +4,14 @@
 <head>
 
     <title>
-        {{ title ~ ' ' -}}
-        {%- if title is defined and title != 'Esteren' -%}
-             - Esteren
-        {% endif %}
+        {%- if title is defined -%}
+            {{- title ~ ' ' -}}
+            {%- if title != 'Esteren' -%}
+                - Esteren
+            {%- endif -%}
+        {%- else -%}
+            Esteren
+        {%- endif -%}
     </title>
 
     <meta name="generator" content="Pierstoval"/>
