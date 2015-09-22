@@ -13,16 +13,12 @@ orbitale_cms:
 
 assetic:
     bundles:
-        - 'EsterenMapsBundle'
-        - 'EsterenPortalBundle'
         - 'CorahnRinBundle'
     assets:
 
         generator_js:
             inputs:
                 - '@CorahnRinBundle/Resources/public/generator/js/*.js'
-            filters:
-                - ?uglifyjs
             output: 'js/generator.js'
 
         generator_css:
@@ -30,7 +26,6 @@ assetic:
                 - '@CorahnRinBundle/Resources/public/generator/css/*.css'
             filters:
                 - cssrewrite
-                - ?uglifycss
             output: "css/generator.css"
 
 # CORS management

@@ -7,8 +7,8 @@ parameters:
     database_name:     esteren_portal
     database_user:     esteren_portal
     database_password: ~
-    database_path: "%kernel.root_dir%/data.db3"
-    database_driver: pdo_mysql
+    database_path:     "%kernel.root_dir%/data.db3"
+    database_driver:   pdo_mysql
 
     mailer_transport:  smtp
     mailer_host:       127.0.0.1
@@ -19,9 +19,6 @@ parameters:
     secret:            ThisTokenIsNotSoSecretChangeIt
 
     magick_binaries_path: /usr/bin
-
-    node_path: /usr/local/bin/node
-    node_modules_path: %kernel.root_dir%/../node_modules/
 
     esteren_domains.corahn_rin:     corahnrin.esteren.org
     esteren_domains.esteren_maps:   maps.esteren.org

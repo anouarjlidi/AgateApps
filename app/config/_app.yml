@@ -3,13 +3,11 @@ imports:
     - { resource: _assets.yml }
 
 parameters:
-    version_code: 0.3.1
-    version_date: 10/08/2015
+    version_code: 0.4.0
+    version_date: 22/09/2015
     locale: fr
     locales: [ fr, en ]
     locales_regex: fr|en
-    assetic.filter.uglifyjs.bin: %node_modules_path%uglify-js/bin/uglifyjs
-    assetic.filter.uglifycss.bin: %node_modules_path%uglifycss/uglifycss
 
 doctrine:
     orm:
@@ -45,21 +43,6 @@ twig:
         - 'PierstovalToolsBundle:Form:form_div_layout.html.twig'
         - 'PierstovalToolsBundle:Form:fields.html.twig'
         - 'PierstovalToolsBundle:Form:form_errors.html.twig'
-
-assetic:
-    node: %node_path%
-    node_paths: [ %node_modules_path% ]
-    filters:
-        cssrewrite: ~
-        less:
-            node: %node_path%
-            node_paths: [ %node_modules_path% ]
-        uglifyjs:
-            node: %node_path%
-            node_paths: [ %node_modules_path% ]
-        uglifycss:
-            node: %node_path%
-            node_paths: [ %node_modules_path% ]
 
 # Doctrine Configuration
 doctrine:
@@ -112,27 +95,6 @@ services:
         class: Twig_Extensions_Extension_Text
         tags:
             - name: twig.extension
-
-assetic:
-    debug:          %kernel.debug%
-    use_controller: false
-    bundles:
-        - 'EsterenMapsBundle'
-        - 'EsterenPortalBundle'
-        - 'CorahnRinBundle'
-        - 'EsterenMapsAdminBundle'
-        - 'PierstovalTranslationBundle'
-    filters:
-        cssrewrite: ~
-        less:
-            node: %node_path%
-            node_paths: [ %node_modules_path% ]
-        uglifyjs:
-            node: %node_path%
-            node_paths: [ %node_modules_path% ]
-        uglifycss:
-            node: %node_path%
-            node_paths: [ %node_modules_path% ]
 
 # Api services
 pierstoval_api:
