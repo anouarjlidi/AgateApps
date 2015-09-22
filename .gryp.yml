@@ -1,23 +1,33 @@
-rev_directory: app/cache
+revisions_temp_directory: app/cache
+manifest_file: app/cache/rev-manifest.yml
 assets:
     esteren_general_less:
         type: less
         sources:
             - src/Esteren/PortalBundle/Resources/public/less/_main.less
-        output: main_less.css
+        output: css/main_less.css
+
     esteren_maps_less:
         type: less
         sources:
             - src/EsterenMaps/MapsBundle/Resources/public/css/maps.less
-        output: maps_lib.css
-    esteren_general_css:
+        output: css/maps_less.css
+
+    esteren_maps_css:
         type: css
         sources:
             - web/components/leaflet/dist/leaflet.css
             - web/components/leaflet-draw/dist/leaflet.draw.css
             - web/components/leaflet-sidebar/src/L.Control.Sidebar.css
+            - web/css/maps_less.css
+        output: css/maps_lib.css
+
+    esteren_general_css:
+        type: css
+        sources:
             - web/css/main_less.css
-        output: global.css
+        output: css/global.css
+
     esteren_general_js:
         type: js
         sources:
@@ -30,7 +40,8 @@ assets:
             - web/components/bootstrap/js/transition.js
             - web/components/bootstrap/js/tab.js
             - src/Esteren/PortalBundle/Resources/public/js/corahn_rin.js
-        output: global.js
+        output: js/global.js
+
     esteren_maps_js:
         type: js
         sources:
@@ -46,9 +57,10 @@ assets:
             - src/EsterenMaps/MapsBundle/Resources/public/js/EsterenMap/4_EsterenMap_addPolyline.js
             - src/EsterenMaps/MapsBundle/Resources/public/js/EsterenMap/4_EsterenMap_addPolygon.js
             - src/EsterenMaps/MapsBundle/Resources/public/js/EsterenMap/4_EsterenMap_filters.js
-        output: maps_lib.js
+        output: js/maps_lib.js
+
     esterenmaps_edit_js:
         type: js
         sources:
             - src/EsterenMaps/MapsBundle/Resources/public/js/map_edit.js
-        output: map_edit_more.js
+        output: js/map_edit_more.js
