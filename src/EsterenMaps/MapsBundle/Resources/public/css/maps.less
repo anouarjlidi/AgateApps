@@ -259,13 +259,6 @@ Edit mode
         width: 0;
         height: 0;
         overflow: hidden;
-        .expanded & {
-            overflow-y: auto;
-            width: 100%;
-            height: 200px;
-            opacity: 1;
-            margin-bottom: 25px;
-        }
         ul li {
             display: inline-block;
             margin: 0 20px 0 0;
@@ -285,6 +278,13 @@ Edit mode
     }
     &.expanded {
         max-width: ~"calc(100% - 20px)";
+        .leaflet-filters-control-content {
+            overflow-y: auto;
+            width: 100%;
+            height: 200px;
+            opacity: 1;
+            margin-bottom: 25px;
+        }
     }
 }
 #leaflet-filters-toggle {
