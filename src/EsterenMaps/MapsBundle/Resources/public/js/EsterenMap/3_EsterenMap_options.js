@@ -82,6 +82,7 @@
             zoom: 1,
             minZoom: 1,
             maxZoom: 1,
+            crs: L.CRS.Simple,
             attributionControl: false
         },
         LeafletLayerBaseOptions: {

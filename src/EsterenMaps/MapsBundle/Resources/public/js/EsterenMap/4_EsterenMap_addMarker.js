@@ -117,6 +117,11 @@
         return false;
     };
 
+    L.Marker.prototype._updatePoint = function() {
+        this._point = this._map.project(this._latlng);
+        console.info(this._point);
+    };
+
     L.Marker.prototype._updateEM = function() {
         var baseMarker = this,
             esterenMarker = EsterenMap.prototype.cloneObject.call(null, this._esterenMarker),
@@ -127,8 +132,8 @@
         if (esterenMarker && this._map && !this.launched) {
             this.launched = true;
             esterenMarker.map = esterenMarker.map || {id: this._esterenMap.options().id };
-            esterenMarker.latitude = this._latlng.lat;
-            esterenMarker.longitude = this._latlng.lng;
+            esterenMarker.latitude = typeof this._point.x === 'undefined' ? this._latlng.lat : this._point.x;
+            esterenMarker.longitude = typeof this._point.y === 'undefined' ? this._latlng.lng : this._point.y;
             esterenMarker.altitude = this._latlng.alt;
             esterenMarker.faction = esterenMarker.faction || {};
             esterenMarker.marker_type = { id: esterenMarker.marker_type.id };
@@ -235,6 +240,7 @@
                         lng: marker.longitude,
                         altitude: marker.altitude
                     };
+                    coords = this._map.unproject(coords, this._map.options.maxZoom);
 
                     options.popupContent = popupContent;
                     options.esterenMarker = marker;

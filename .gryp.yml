@@ -1,6 +1,10 @@
+
 revisions_temp_directory: app/cache
+
 manifest_file: app/cache/rev-manifest.yml
+
 assets:
+
     esteren_general_less:
         type: less
         sources:
@@ -64,3 +68,15 @@ assets:
         sources:
             - src/EsterenMaps/MapsBundle/Resources/public/js/map_edit.js
         output: js/map_edit_more.js
+
+    generator_js:
+        type: js
+        sources:
+            - '@CorahnRinBundle/Resources/public/generator/js/*.js'
+        output: 'js/generator.js'
+
+    generator_css:
+        type: css
+        sources:
+            - '@CorahnRinBundle/Resources/public/generator/css/*.css'
+        output: "css/generator.css"
