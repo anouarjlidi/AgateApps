@@ -11,9 +11,8 @@
         // Données utilisées dans le scope de la classe
         var _this = this, ajaxD;
 
-        // Override some parameters
-        w.L_PREFER_CANVAS = true; // Force the use of canvas when possible
-        w.L_DISABLE_3D = true; // Disable "transform3d"
+        // Force CANVAS
+        w.L_PREFER_CANVAS = true;
 
         if (!user_mapOptions.id) {
             console.error('Map id must be defined');
