@@ -11,23 +11,6 @@ orbitale_cms:
         front:
             resource: "::base.html.twig"
 
-assetic:
-    bundles:
-        - 'CorahnRinBundle'
-    assets:
-
-        generator_js:
-            inputs:
-                - '@CorahnRinBundle/Resources/public/generator/js/*.js'
-            output: 'js/generator.js'
-
-        generator_css:
-            inputs:
-                - '@CorahnRinBundle/Resources/public/generator/css/*.css'
-            filters:
-                - cssrewrite
-            output: "css/generator.css"
-
 # CORS management
 nelmio_cors:
     paths:

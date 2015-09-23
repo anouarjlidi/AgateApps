@@ -27,11 +27,6 @@ framework:
     router:
         resource: "%kernel.root_dir%/config/routing_portable.yml"
 
-assetic:
-    bundles:
-        - 'EsterenMapsBundle'
-        - 'EsterenPortalBundle'
-
 monolog:
     handlers:
         main:
