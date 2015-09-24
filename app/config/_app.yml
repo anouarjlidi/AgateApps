@@ -2,7 +2,7 @@ imports:
     - { resource: config.yml }
 
 parameters:
-    version_code: 0.4.0
+    version_code: 0.4.1
     version_date: 22/09/2015
     locale: fr
     locales: [ fr, en ]

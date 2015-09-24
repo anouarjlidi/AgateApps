@@ -2,8 +2,8 @@
 
 namespace Pierstoval\Bundle\ToolsBundle\Twig;
 
-
-class JsonExtension extends \Twig_Extension {
+class JsonExtension extends \Twig_Extension
+{
 
     /**
      * Returns the name of the extension.
@@ -14,28 +14,33 @@ class JsonExtension extends \Twig_Extension {
         return 'pierstoval_tools_twig_json';
     }
 
-    public function getFilters() {
+    public function getFilters()
+    {
         return array(
-            'json_decode'   => new \Twig_Filter_Method($this, 'jsonDecode'),
-            'json_encode'   => new \Twig_Filter_Method($this, 'jsonEncode'),
+            'json_decode' => new \Twig_Filter_Method($this, 'jsonDecode'),
+            'json_encode' => new \Twig_Filter_Method($this, 'jsonEncode'),
         );
     }
 
     /**
      * @param string $str
-     * @param bool $object
+     * @param bool   $object
+     *
      * @return mixed
      */
-    public function jsonDecode($str, $object = false) {
+    public function jsonDecode($str, $object = false)
+    {
         return json_decode($str, $object);
     }
 
     /**
      * @param array $array
-     * @param int $flags
+     * @param int   $flags
+     *
      * @return string
      */
-    public function jsonEncode($array, $flags = 480) {
+    public function jsonEncode($array, $flags = 480)
+    {
         return json_encode($array, $flags);
     }
 }
