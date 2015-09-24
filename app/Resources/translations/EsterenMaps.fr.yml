@@ -1,0 +1,11 @@
+
+entities:
+    markers:
+        title: Marqueurs
+    routes:
+        title: Routes
+    zones:
+        title: Zones
+
+admin:
+    edit_map: Modifier la carte
