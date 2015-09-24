@@ -5,11 +5,11 @@
 
 {% block head_stylesheets %}
 {{ parent() }}
-<link rel="stylesheet" href="{{ asset('css/global.css') }}" type="text/css" />
+<link rel="stylesheet" href="{{ asset('css/maps_lib.css') }}" type="text/css" />
 <style type="text/css" id="map_add_style"></style>
 {% endblock %}
 
-{% block page_title %}{{ 'Modifier une carte' | trans({},'pages.titles') }} {{ map.name | trans }} - {{ parent() }}{% endblock %}
+{% block page_title %}{{ 'admin.edit_map' | trans({},'EsterenMaps') }} {{ map.name | trans }} - {{ parent() }}{% endblock %}
 
 {% block content %}
     <div class="row">
@@ -23,9 +23,24 @@
                     <div id="map_edit_menu">
 
                         <ul class="list-inline">
-                            <li data-toggle="tooltip" title="{{ 'Masquer les zones' | trans }}"><button data-toggle-class="btn-default btn-inverse" id="hide_zones" class="btn btn-default" type="button"><span class="glyphicon icon-vector_path_polygon"></span></button></li>
-                            <li data-toggle="tooltip" title="{{ 'Masquer les routes' | trans }}"><button data-toggle-class="btn-default btn-inverse" id="hide_routes" class="btn btn-default" type="button"><span class="glyphicon icon-vector_path_line"></span></button></li>
-                            <li data-toggle="tooltip" title="{{ 'Masquer les marqueurs' | trans }}"><button data-toggle-class="btn-default btn-inverse" id="hide_markers" class="btn btn-default" type="button"> <span class="glyphicon icon-pin"></span></button></li>
+                            <li data-toggle="tooltip">
+                                <button data-toggle-class="btn-default btn-inverse" id="hide_zones" class="btn btn-default" type="button">
+                                    <span class="fa fa-eye"></span>
+                                    {{ 'entities.zones.title' | trans({}, 'EsterenMaps') }}
+                                </button>
+                            </li>
+                            <li data-toggle="tooltip">
+                                <button data-toggle-class="btn-default btn-inverse" id="hide_routes" class="btn btn-default" type="button">
+                                    <span class="fa fa-eye"></span>
+                                    {{ 'entities.routes.title' | trans({}, 'EsterenMaps') }}
+                                </button>
+                            </li>
+                            <li data-toggle="tooltip">
+                                <button data-toggle-class="btn-default btn-inverse" id="hide_markers" class="btn btn-default" type="button">
+                                    <span class="fa fa-eye"></span>
+                                    {{ 'entities.markers.title' | trans({}, 'EsterenMaps') }}
+                                </button>
+                            </li>
                             <li id="esterenmap_message_element"></li>
                         </ul>
 
@@ -42,14 +57,10 @@
 
 {% block body_javascript %}
     {{ parent() }}
-    {#<script type="text/javascript" src="{{ asset('components/jquery/dist/jquery.min.js') }}"></script>#}
-    {#<script src="{{ asset('bundles/easyadmin/javascript/jquery-flexmenu.min.js') }}"></script>#}
     <script type="text/javascript" src="{{ asset('js/global.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/maps_lib.js') }}"></script>
-    {#<script src="{{ asset('bundles/easyadmin/javascript/admin.js') }}"></script>#}
 
-    <script src="{{ path('pierstoval_tools_assets_jstranslations') }}"></script>
-
+    <script type="text/javascript" src="{{ path('pierstoval_tools_assets_jstranslations', {"_locale": app.request.locale}) }}"></script>
     <script type="text/javascript" src="{{ asset('js/map_edit_more.js') }}"></script>
 
     <script type="text/javascript">
