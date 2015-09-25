@@ -68,7 +68,7 @@ easy_admin:
 #            list:
 #                fields: [ id, name, distance, description, routeType, markerStart, markerEnd ]
 #            form:
-#                fields: [ name, description, routeType, markerStart, markerEnd, faction ]
+#                fields: [ name, description, routeType, guarded, markerStart, markerEnd, faction ]
         "RoutesTypes":
             label: "Esteren Maps - Types de routes"
             class: EsterenMaps\MapsBundle\Entity\RoutesTypes

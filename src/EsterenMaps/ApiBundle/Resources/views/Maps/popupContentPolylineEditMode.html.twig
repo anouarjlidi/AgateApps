@@ -7,6 +7,12 @@
         </div>
     </div>
     <div class="row">
+        <label for="polyline_popup_guarded" class="col-sm-2 control-label">{{ 'Garde / Patrouille régulière' | trans | replace("'","&#130;") }}</label>
+        <div class="col-sm-10">
+            <input type="checkbox" id="polyline_popup_guarded" name="polyline_popup_guarded" class="form-control" />
+        </div>
+    </div>
+    <div class="row">
         <label for="polyline_popup_type" class="col-sm-2 control-label">{{ 'Type' | trans }}</label>
         <div class="col-sm-10">
             <select required="required" id="polyline_popup_type" name="polyline_popup_type" class="form-control">

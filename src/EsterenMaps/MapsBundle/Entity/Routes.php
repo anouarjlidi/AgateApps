@@ -67,6 +67,14 @@ class Routes
     protected $distance = 0;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="guarded", type="boolean")
+     * @Serializer\Expose
+     */
+    protected $guarded = false;
+
+    /**
      * @var Resources
      *
      * @ORM\ManyToMany(targetEntity="Resources", mappedBy="routes")
@@ -394,6 +402,26 @@ class Routes
     public function setDistance($distance)
     {
         $this->distance = $distance;
+
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isGuarded()
+    {
+        return $this->guarded;
+    }
+
+    /**
+     * @param boolean $guarded
+     *
+     * @return Routes
+     */
+    public function setGuarded($guarded)
+    {
+        $this->guarded = $guarded;
 
         return $this;
     }

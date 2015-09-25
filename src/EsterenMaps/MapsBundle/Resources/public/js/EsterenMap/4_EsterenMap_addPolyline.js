@@ -134,6 +134,7 @@
             esterenRoute.marker_start = { id: esterenRoute.marker_start.id };
             esterenRoute.marker_end = { id: esterenRoute.marker_end.id };
             esterenRoute.faction = esterenRoute.faction || {};
+            esterenRoute.guarded = !!esterenRoute.guarded;
             this.calcDistance();
             this.launched = true;
             this._esterenMap._load({
@@ -146,16 +147,11 @@
                         coordinates: true,
                         map: true,
                         distance: true,
-                        route_type: {
-                            objectField: 'routeType'
-                        },
-                        marker_start: {
-                            objectField: 'markerStart'
-                        },
-                        marker_end: {
-                            objectField: 'markerEnd'
-                        },
-                        faction: true
+                        route_type: { objectField: 'routeType' },
+                        marker_start: { objectField: 'markerStart' },
+                        marker_end: { objectField: 'markerEnd' },
+                        faction: true,
+                        guarded: true
                     }
                 },
                 callback: function(response) {
@@ -275,9 +271,16 @@
                     d.getElementById('polyline_popup_type').value = polyline._esterenRoute.route_type ? polyline._esterenRoute.route_type.id : '';
                     d.getElementById('polyline_popup_markerStart').value = polyline._esterenRoute.marker_start ? polyline._esterenRoute.marker_start.id : '';
                     d.getElementById('polyline_popup_markerEnd').value = polyline._esterenRoute.marker_end ? polyline._esterenRoute.marker_end.id : '';
+                    d.getElementById('polyline_popup_guarded').checked = !!polyline._esterenRoute.guarded;
 
                     $('#polyline_popup_name').off('keyup').on('keyup', function(){
                         map._polylines[id]._esterenRoute.name = this.value;
+                        if (this._timeout) { clearTimeout(this._timeout); }
+                        this._timeout = setTimeout(function(){ map._polylines[id]._updateEM(); }, 1000);
+                        return false;
+                    });
+                    $('#polyline_popup_guarded').off('change').on('change', function(){
+                        map._polylines[id]._esterenRoute.guarded = $(this).is(':checked');
                         if (this._timeout) { clearTimeout(this._timeout); }
                         this._timeout = setTimeout(function(){ map._polylines[id]._updateEM(); }, 1000);
                         return false;
