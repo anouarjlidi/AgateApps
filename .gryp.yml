@@ -5,6 +5,12 @@ manifest_file: app/cache/rev-manifest.yml
 
 assets:
 
+    fontawesome:
+        type: less
+        sources:
+            - src/Esteren/PortalBundle/Resources/public/less/_fontawesome.less
+        output: css/fontawesome.css
+
     esteren_general_less:
         type: less
         sources:
