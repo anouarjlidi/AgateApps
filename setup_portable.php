@@ -197,12 +197,10 @@ foreach ($remove as $path) {
             try {
                 $size = $file->getSize();
             } catch (Exception $e) {
-                if ($verbose) {
-                    echo "Error:\n";
-                    echo $e->getMessage()."\n";
-                    echo $e->getFile().':'.$e->getLine()."\n";
-                    echo $e->getTraceAsString()."\n";
-                }
+                echo "\nError:\n";
+                echo $e->getMessage()."\n";
+                echo $e->getFile().':'.$e->getLine()."\n";
+                echo $e->getTraceAsString()."\n";
                 $size = 0;
             }
             $bytesDeleted += $size;
