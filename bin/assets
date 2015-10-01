@@ -3,7 +3,7 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 DIR=`dirname ${DIR}`
 
-rm -rf ${DIR}/app/cache/* ${DIR}/web/css/* ${DIR}/web/js/*
+rm -rf ${DIR}/app/cache/*.json ${DIR}/app/cache/*.yml ${DIR}/web/css/* ${DIR}/web/js/*
 ${DIR}/node_modules/.bin/gryp less
 ${DIR}/node_modules/.bin/gryp css
 ${DIR}/node_modules/.bin/gryp js
