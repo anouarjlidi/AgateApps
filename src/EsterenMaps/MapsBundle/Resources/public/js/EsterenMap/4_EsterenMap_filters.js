@@ -70,6 +70,7 @@
                 filtersMsgMarkersTypes = typeof MSG_MARKERS_TYPES !== 'undefined' ? MSG_MARKERS_TYPES : 'Types de marqueurs',
                 listsClasses = 'list-unstyled',
                 listsElementsClasses = '',
+                listsElementsStyles = 'display: block;',
                 nodesList = {
                     "markersTypes": [],
                     "routesTypes": [],
@@ -78,6 +79,7 @@
                     "routesTypesUL": [],
                     "zonesTypesUL": []
                 },
+                captionStyle = 'width: 12px; height: 12px; vertical-align: text-top; margin-right: 3px; margin-left: 3px;',
                 list
             ;
 
@@ -86,13 +88,13 @@
             if (this._esterenMap._markersTypes) {
                 $.each(this._esterenMap._markersTypes, function(index, markerType) {
                     var node = L.DomUtil.create('li', listsElementsClasses, list);
+                    node.setAttribute('style', listsElementsStyles);
                     node.innerHTML =
-                        '<div class="checkbox-inline">'
-                        +'<label for="markerType'+markerType.id+'">'
+                        '<label for="markerType'+markerType.id+'">'
                         +'<input id="markerType'+markerType.id+'" type="checkbox" class="leaflet-filter-checkbox" checked="checked" />'
+                        +'<img src="'+markerType.web_icon+'" class="ib" style="'+captionStyle+'">'
                         +markerType.name
                         +'</label>'
-                        +'</div>'
                     ;
                     nodesList.markersTypes.push(node);
                 });
@@ -104,13 +106,13 @@
             if (this._esterenMap._routesTypes) {
                 $.each(this._esterenMap._routesTypes, function(index, routeType) {
                     var node = L.DomUtil.create('li', listsElementsClasses, list);
+                    node.setAttribute('style', listsElementsStyles);
                     node.innerHTML =
-                        '<div class="checkbox-inline">'
-                        +'<label for="routeType'+routeType.id+'">'
+                        '<label for="routeType'+routeType.id+'">'
                         +'<input id="routeType'+routeType.id+'" type="checkbox" class="leaflet-filter-checkbox" checked="checked" />'
+                        +'<span class="ib" style="'+captionStyle+' background: '+routeType.color+'"></span>'
                         +routeType.name
                         +'</label>'
-                        +'</div>'
                     ;
                     nodesList.routesTypes.push(node);
                 });
@@ -122,13 +124,13 @@
             if (this._esterenMap._zonesTypes) {
                 $.each(this._esterenMap._zonesTypes, function(index, zoneType) {
                     var node = L.DomUtil.create('li', listsElementsClasses, list);
+                    node.setAttribute('style', listsElementsStyles);
                     node.innerHTML =
-                        '<div class="checkbox-inline">'
-                        +'<label for="zoneType'+zoneType.id+'">'
+                        '<label for="zoneType'+zoneType.id+'">'
                         +'<input id="zoneType'+zoneType.id+'" type="checkbox" class="leaflet-filter-checkbox" checked="checked" />'
+                        +'<span class="ib" style="'+captionStyle+' background: '+zoneType.color+'"></span>'
                         +zoneType.name
                         +'</label>'
-                        +'</div>'
                     ;
                     nodesList.zonesTypes.push(node);
                 });
@@ -141,12 +143,20 @@
 
             content = $('<div />')
                 .append($('<h3 />').text(filtersMsgTitle))
-                .append($('<h4 />').text(filtersMsgMarkersTypes))
-                .append(nodesList.markersTypesUL)
-                .append($('<h4 />').text(filtersMsgRoutesTypes))
-                .append(nodesList.routesTypesUL)
-                .append($('<h4 />').text(filtersMsgZonesTypes))
-                .append(nodesList.zonesTypesUL)
+                .append($('<div class="row" />')
+                    .append($('<div class="col-sm-4" />')
+                        .append($('<h4 />').text(filtersMsgMarkersTypes))
+                        .append(nodesList.markersTypesUL)
+                    )
+                    .append($('<div class="col-sm-4" />')
+                        .append($('<h4 />').text(filtersMsgRoutesTypes))
+                        .append(nodesList.routesTypesUL)
+                    )
+                    .append($('<div class="col-sm-4" />')
+                        .append($('<h4 />').text(filtersMsgZonesTypes))
+                        .append(nodesList.zonesTypesUL)
+                    )
+                )
             ;
 
             $(this._controlContent).html('').append(content);
@@ -191,7 +201,7 @@
             link.id = 'leaflet-filters-toggle';
             link.style.backgroundImage = 'none';
             link.href = "#";
-            link.innerHTML = '<span class="glyphicon icon-filter"></span>';
+            link.innerHTML = '<i class="fa fa-filter" style="font-size: 14px;"></i>';
             link.title = textTitle;
             $(link).tooltip({
                 "placement" : "right",
