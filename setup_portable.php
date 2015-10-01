@@ -15,6 +15,7 @@ if (!$dryRun) {
 
     echo "Clean vendor dir.\n";
     system('rm -rf vendor');
+    system('rm -rf web/bundles/*');
 
     echo "Reinstall vendors.\n";
     system('composer install --no-scripts --no-dev');
@@ -24,7 +25,7 @@ if (!$dryRun) {
     system('rm -rf '.__DIR__.'/js/*');
     system('rm -rf '.__DIR__.'/css/*');
     system('php app/console_portable assets:install');
-    system('php app/console_portable assetic:dump --no-debug');
+    system('bash bin/assets');
 }
 
 // Clean the parameters file. The config should be kept in the portable file.
@@ -34,8 +35,6 @@ $params = array(
     'parameters' => array(
         'secret' => hash('sha1', uniqid(mt_rand(), true)),
         'magick_binaries_path' => $params['parameters']['magick_binaries_path'],
-        'node_path' => $params['parameters']['node_path'],
-        'node_modules_path' => $params['parameters']['node_modules_path'],
     ),
 );
 
@@ -71,6 +70,7 @@ function showProgress($dryRun, $bytesDeleted, $filesDeleted, $verbose) {
 $remove = array(
     '_dev_files',
     'build',
+    'bin',
     'app/config/_app_web.yml',
     'app/config/config_prod.yml',
     'app/config/config_dev.yml',
@@ -288,15 +288,35 @@ echo "\n";
 unset($path, $filesDeleted, $bytesDeleted, $path, $fs, $verbose, $file, $findCommand, $remove, $loader, $paramsFile, $params);
 
 if (!$dryRun) {
-    echo "Now building phar archive\n";
 
-    $time = new \DateTime();
+    echo "Build phar? [y/N]\n> ";
+    do {
+        if (isset($line) && trim($line) || !isset($line)) {
+            if (isset($line)) {
+                echo "Please say [y]es or [n]o.\n> ";
+            }
+            $line = fgets(STDIN);
+        } elseif (isset($line) && $line === "\n") {
+            $line = 'n';
+        } else {
+            $line = fgets(STDIN);
+        }
+    } while (!preg_match('~^[yn]~isUu', $line));
 
-    system('box build -v');
+    if(substr(strtolower(trim($line)), 0, 1) === 'y'){
+        echo "\nNow building phar archive\n";
 
-    $time = $time->diff(new \DateTime());
+        $time = new \DateTime();
 
-    echo "Build took ", $time->d, "d ", $time->h, ":", str_pad($time->m, 2, '0', STR_PAD_LEFT), ":", str_pad($time->s, 2, '0', STR_PAD_LEFT);
+        system('box build -v');
+
+        $time = $time->diff(new \DateTime());
+
+        echo "Build took ", $time->d, "d ", $time->h, ":", str_pad($time->m, 2, '0', STR_PAD_LEFT), ":", str_pad($time->s, 2, '0', STR_PAD_LEFT);
+
+    }
+
+    echo "\n";
 
     echo "Finished setting up portable app!\n";
 } else {
