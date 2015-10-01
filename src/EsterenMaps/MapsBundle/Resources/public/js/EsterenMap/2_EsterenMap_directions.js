@@ -302,7 +302,7 @@
             link.id = 'leaflet-directions-toggle';
             link.style.backgroundImage = 'none';
             link.href = "#";
-            link.innerHTML = '<span class="glyphicon icon-direction"></span>';
+            link.innerHTML = '<i class="fa fa-location-arrow" style="font-size: 16px;"></i>';
             link.title = textTitle;
             $(link).tooltip({
                 "placement" : "right",

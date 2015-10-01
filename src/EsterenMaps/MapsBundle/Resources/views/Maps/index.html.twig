@@ -11,7 +11,7 @@
             <header><h2>{{ map.name | trans }}</h2></header>
             <p>{{ map.description }}</p>
             <footer>
-                <a href="{{ url('esterenmaps_maps_maps_view', {'nameSlug':map.nameSlug}) }}" title="{{ 'Voir la carte' | trans }} : {{ map.name | trans }}" class="btn btn-default"><span class="glyphicon icon-eye_open"></span> {{ 'Voir la carte' | trans }}</a>
+                <a href="{{ url('esterenmaps_maps_maps_view', {'nameSlug':map.nameSlug}) }}" title="{{ 'Voir la carte' | trans }} : {{ map.name | trans }}" class="btn btn-default"><i class="fa fa-eye"></i> {{ 'Voir la carte' | trans }}</a>
             </footer>
         </article>
         {% else %}
