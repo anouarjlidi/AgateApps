@@ -194,7 +194,18 @@ foreach ($remove as $path) {
             }
             showProgress($dryRun, $bytesDeleted, $filesDeleted, $verbose);
             $filesDeleted ++;
-            $bytesDeleted += $file->getSize();
+            try {
+                $size = $file->getSize();
+            } catch (Exception $e) {
+                if ($verbose) {
+                    echo "Error:\n";
+                    echo $e->getMessage()."\n";
+                    echo $e->getFile().':'.$e->getLine()."\n";
+                    echo $e->getTraceAsString()."\n";
+                }
+                $size = 0;
+            }
+            $bytesDeleted += $size;
         }
     } else {
         if ($verbose) {
