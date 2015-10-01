@@ -1,7 +1,7 @@
 <?php
 
-use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
+use Symfony\Component\HttpKernel\Kernel;
 
 class AppPortableKernel extends Kernel
 {
@@ -13,21 +13,17 @@ class AppPortableKernel extends Kernel
             new Symfony\Bundle\TwigBundle\TwigBundle(),
             new Symfony\Bundle\MonologBundle\MonologBundle(),
             new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
-            new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
 
             new FOS\UserBundle\FOSUserBundle(),
             new FOS\RestBundle\FOSRestBundle(),
-//            new Nelmio\CorsBundle\NelmioCorsBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
-            //new JavierEguiluz\Bundle\EasyAdminBundle\EasyAdminBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
 
             // Application global
             new UserBundle\UserBundle(),
-            //new AdminBundle\AdminBundle(),
 
             // Corahn-Rin
             new CorahnRin\CorahnRinBundle\CorahnRinBundle(),
@@ -42,8 +38,6 @@ class AppPortableKernel extends Kernel
             // Pierstoval's tools
             new Pierstoval\Bundle\ApiBundle\PierstovalApiBundle(),
             new Pierstoval\Bundle\ToolsBundle\PierstovalToolsBundle(),
-//            new Orbitale\Bundle\CmsBundle\OrbitaleCmsBundle(),
-            new Orbitale\Bundle\TranslationBundle\OrbitaleTranslationBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
