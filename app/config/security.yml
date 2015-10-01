@@ -9,6 +9,14 @@ security:
 
     # http://symfony.com/doc/current/book/security.html#hierarchical-roles
     role_hierarchy:
+
+        ROLE_BACKER: ROLE_USER
+
+        # Backers "Travels" reedition
+        ROLE_BACKER_TRAVELS:
+            - ROLE_BACKER
+            - ROLE_MAPS_VIEW
+
         # Managers de contenu (accès à l'administration)
         ROLE_MANAGER:                   ROLE_USER
 
@@ -35,6 +43,7 @@ security:
             - ROLE_ADMIN_MANAGE_SITE
             - ROLE_ADMIN_TRANSLATOR
         ROLE_SUPER_ADMIN:
+            - ROLE_BACKER_TRAVELS
             - ROLE_ADMIN
             - ROLE_ADMIN_GENERATOR_SUPER
             - ROLE_ADMIN_MAPS_SUPER
@@ -75,3 +84,5 @@ security:
         - { path: ^/(?:%locales_regex%)/characters, roles: [ROLE_USER] }
         - { path: ^/,                               host: %esteren_domains.backoffice%, roles: ROLE_MANAGER }
         - { path: ^/,                               host: %esteren_domains.api%,        roles: ROLE_MANAGER, methods: [POST, PUT, DELETE] }
+        - { path: ^/,                               host: %esteren_domains.esteren_maps%, roles: ROLE_MAPS_VIEW }
+
