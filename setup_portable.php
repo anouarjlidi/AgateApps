@@ -6,7 +6,10 @@ $filesDeleted = 0;
 $dryRun = !in_array('-f', $argv);
 $verbose = in_array('-v', $argv);
 
+echo "Remove cache\n";
 system('rm -rf app/cache/*');
+
+echo "Remove logs\n";
 system('rm -rf app/log/*');
 
 if (!$dryRun) {
