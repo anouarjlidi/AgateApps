@@ -32,3 +32,25 @@ nelmio_cors:
               - "^%esteren_domains.backoffice%$"
               - "^%esteren_domains.corahn_rin%$"
               - "^%esteren_domains.esteren_maps%$"
+
+lexik_translation:
+    fallback_locale: %locale%
+    managed_locales: %locales%
+    base_layout: easy_admin/translation_layout.html.twig
+
+ivory_ck_editor:
+    input_sync: true
+    default_config: base_config
+    configs:
+        base_config:
+            toolbar:
+                - { name: "basicstyles", items: [ "Bold", "Italic", "Underline", "Strike", "Subscript", "Superscript", "-", "RemoveFormat" ] }
+                - { name: "links", items: [ "Link", "Unlink", "Anchor" ] }
+                - { name: "insert", items: [ "Image", "Table", "HorizontalRule", "SpecialChar" ] }
+                - { name: "tools", items: [ "Maximize" ] }
+                - '/'
+                - { name: "paragraph", items: [ "NumberedList", "BulletedList", "-", "Outdent", "Indent", "-", "Blockquote" ] }
+                - { name: "styles", items: [ "Styles", "Format" ] }
+                - { name: "document", items: [ "Source", "-" ] }
+                - { name: "about", items: [ "About" ] }
+
