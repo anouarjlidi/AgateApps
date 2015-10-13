@@ -609,7 +609,6 @@ class Maps
 
     /**
      * @return array
-     * @Expose
      * @VirtualProperty()
      */
     public function getJsonBounds()
