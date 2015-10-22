@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html id="corahnrin">
-
+<html id="corahnrin" lang="{{ app.request.locale|default(app.request.defaultLocale)|default('fr') }}">
 <head>
+    <meta charset="utf-8">
 
     <title>
         {%- if title is defined -%}
@@ -17,12 +17,15 @@
     <meta name="generator" content="Pierstoval"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    {% block more_headers %}{% endblock %}
+
     {% block stylesheets %}
         <link rel="stylesheet" href="{{ asset('css/global.css') }}" type="text/css" />
         <link rel="stylesheet" href="{{ asset('css/fontawesome.css') }}" type="text/css" />
     {% endblock %}
-
-    {% block more_headers %}{% endblock %}
 
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ asset('bundles/esterenportal/images/favicon-144.png') }}">
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ asset('bundles/esterenportal/images/favicon-114.png') }}">

@@ -9,23 +9,22 @@
 
 .alert {
     min-height: 30px;
-//    padding-left: 40px;
     position: relative;
     .ib {
         margin-right: 3px;
     }
     &:before {
-        font-family: "Glyphicons Halflings";
+        font-family: "FontAwesome";
         font-size: 16px;
         font-style: normal;
         font-weight: normal;
         margin-right: 5px;
-        content: "\E346";
+        content: @fa-var-hand-o-right;
     }
-    &.alert-success:before { content: "\E194"; }
-    &.alert-info:before { content: "\E196"; }
-    &.alert-warning:before { content: "\E197"; }
-    &.alert-danger:before { content: "\E193"; }
+    &.alert-success:before { content: @fa-var-check; }
+    &.alert-info:before { content: @fa-var-info; }
+    &.alert-warning:before { content: @fa-var-exclamation; }
+    &.alert-danger:before { content: @fa-var-minus-circle; }
     &.alert-sm {
         min-height: 15px;
         padding: 8px 15px;
