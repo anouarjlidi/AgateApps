@@ -42,10 +42,6 @@
             return this;
         },
 
-        setEvents: function(){
-            var map = this._esterenMap;
-        },
-
         map: function(map){
             if (map) {
                 if (!(map instanceof EsterenMap)) {
@@ -101,7 +97,7 @@
         },
 
         createContent: function(){
-            var map = this._esterenMap, _this = this, message = '';;
+            var map = this._esterenMap, _this = this, message = '';
 
             if (this._cntSet) {
                 console.error('Content has already been set for this direction panel.');
