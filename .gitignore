@@ -25,11 +25,6 @@
 !/web/js/.gitkeep
 /web/css/
 !/web/css/.gitkeep
-/web/img/
-!/web/img/.gitkeep
-!/web/img/markerstypes/
 /web/uploads/
-!/web/uploads/.gitkeep
-!/web/uploads/media/.gitkeep
 
 /node_modules/
