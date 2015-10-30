@@ -175,6 +175,52 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
         $this->zones   = $this->processObjects('zones', Zones::class, 'id_');
         $this->routes  = $this->processObjects('routes', Routes::class, 'id_');
 
+        $allDatas = array_merge(
+            $this->factions['new'],
+            $this->factions['existing'],
+            $this->markersTypes['new'],
+            $this->markersTypes['existing'],
+            $this->zonesTypes['new'],
+            $this->zonesTypes['existing'],
+            $this->routesTypes['new'],
+            $this->routesTypes['existing'],
+            $this->markers['new'],
+            $this->markers['existing'],
+            $this->zones['new'],
+            $this->zones['existing'],
+            $this->routes['new'],
+            $this->routes['existing']
+        );
+
+        $uow = $this->em->getUnitOfWork();
+
+        $uow->computeChangeSets();
+
+        foreach ($allDatas as $object) {
+            $changesets = $uow->getEntityChangeset($object);
+            $changesetsNb = 0;
+            $class = get_class($object);
+
+
+            $table = new Table($this->output);
+            $table->setHeaders(array('Class', 'Property', 'Before', 'After'));
+
+            foreach ($changesets as $field => $changeset) {
+                if ($field === 'createdAt' || $field === 'updatedAt') {
+                    continue;
+                }
+                $changesetsNb++;
+                $before = $changeset[0];
+                $after = $changeset[1];
+                $table->addRow(array($class, $field, $before, $after));
+            }
+
+            if ($changesetsNb) {
+                $table->render();
+            }
+
+        }
+
         if ($this->dryRun) {
             $output->writeln('Finished processing dry run.');
             $code = 1;
@@ -248,6 +294,7 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
         $new = array();
         $existing = array();
 
+        /** @var Markers[]|Zones[]|Routes[] $objects */
         $objects = $repo->findAllRoot('id');
 
         $accessor = PropertyAccess::createPropertyAccessor();
@@ -266,24 +313,19 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
 
             if ($object) {
                 $existing[$object->getId()] = $object;
-                $type = '~ Update ';
             } else {
                 $object = new $entity();
-                $type = '+ Add    ';
                 $new[$id] = $object;
             }
 
             $accessor->setValue($object, $nameProperty, $data['title']);
 
             $this->em->persist($object);
-
-            $this->showOneProcessed('reference', $type, $object);
         }
 
         foreach ($objects as $object) {
             if (!isset($existing[$object->getId()])) {
                 $existing[$object->getId()] = $object;
-                $this->showOneProcessed('reference', 'Don\'t touch', $object);
             }
         }
 
@@ -310,6 +352,7 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
         $new = array();
         $existing = array();
 
+        /** @var Markers[]|Zones[]|Routes[] $objects */
         $objects = $repo->findAllRoot(true);
 
         $accessor = PropertyAccess::createPropertyAccessor();
@@ -328,16 +371,12 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
 
             if ($object) {
                 $existing[$object->getId()] = $object;
-                $type = '~ Update ';
             } else {
                 $object = new $entity();
-                $type = '+ Add    ';
                 $new[$id] = $object;
             }
 
             $accessor->setValue($object, 'name', $data['title']);
-
-            $this->showOneProcessed('object', $type, $object);
 
             $this->updateOneObject($object, $data);
 
@@ -347,7 +386,6 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
         foreach ($objects as $object) {
             if (!isset($existing[$object->getId()])) {
                 $existing[$object->getId()] = $object;
-                $this->showOneProcessed('object', '= Nothing', $object);
             }
         }
 
@@ -355,80 +393,6 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
             'new' => $new,
             'existing' => $existing,
         );
-    }
-
-    /**
-     * @param string $objectType
-     * @param string $processType
-     * @param object $object
-     */
-    private function showOneProcessed($objectType, $processType, $object)
-    {
-        $fqcn = get_class($object);
-        $class = explode('\\', $fqcn);
-        $class = array_pop($class);
-        $ref = (string) $object;
-        $processType = $processType ? '<comment>'.$processType.'</comment>' : '';
-
-        $msg = ' '.$processType.' '.$objectType.' of type <comment>'.$class.'</comment>: <info>'.$ref.'</info>';
-
-        $addRow = true;
-        $rowsToAdd = [];
-
-        if ($this->output->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
-            $table = new Table($this->output);
-            $table->setStyle('compact');
-
-            $rowsToAdd[] = array(
-                "<comment>$processType</comment>",
-                '<info>'.ucfirst($objectType).' of type '.$class.'</info>',
-                "<info>$ref</info>",
-            );
-
-            if (UnitOfWork::STATE_MANAGED === $this->uow->getEntityState($object)) {
-                $this->uow->recomputeSingleEntityChangeSet($this->em->getClassMetadata(get_class($object)), $object);
-                $changesets = $this->uow->getEntityChangeSet($object);
-                if (count($changesets)) {
-                    foreach ($changesets as $property => $changeset) {
-                        if (in_array($property, array('createdAt', 'updatedAt'))) {
-                            continue;
-                        }
-                        $before = $changeset[0];
-                        if ($before instanceof DateTime) {
-                            $before = $before->format(DATE_RSS);
-                        }
-
-                        $after = $changeset[1];
-                        if ($after instanceof DateTime) {
-                            $after = $after->format(DATE_RSS);
-                        }
-
-                        $rowsToAdd[] = array(
-                            '<info>'.$property.'</info>',
-                            'before',
-                            $before,
-                        );
-                        $rowsToAdd[] = array(
-                            '<info>'.$property.'</info>',
-                            'after',
-                            $after,
-                        );
-                    }
-                } elseif (strpos($processType, 'Nothing') === false) {
-                    $addRow = false;
-                }
-            }
-
-            if ($addRow && count($rowsToAdd)) {
-                $table->addRows($rowsToAdd);
-            }
-
-            $table->render();
-
-        } else {
-            $this->output->writeln($msg);
-        }
-
     }
 
     /**
@@ -444,6 +408,10 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
         return $this->repos[$entityName];
     }
 
+    /**
+     * @param Markers|Zones|Routes $object
+     * @param array $data
+     */
     private function updateOneObject($object, $data)
     {
         $data['created']  = DateTime::createFromFormat('YmdHisu', isset($data['created']) ? $data['created'] : date('YmdHisu'));
