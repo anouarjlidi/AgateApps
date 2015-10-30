@@ -138,8 +138,7 @@
                 '<div id="search_wait_overlay"></div>' +
                 '<form action="#" id="search_form" class="form-horizontal">' +
                     '<div class="form-group">' +
-                        '<label for="search_query" class="col-xs-3 control-label">' + searchMsgTitle + '</label>' +
-                        '<div class="col-xs-9">' +
+                        '<div class="col-xs-12">' +
                             '<input type="text" name="search_query" id="search_query" placeholder="' + searchMsgTitle + '" class="form-control" />' +
                             '<div class="search_helper"></div>' +
                         '</div>' +
@@ -214,8 +213,8 @@
                     // Search in zones
                     for (polygon in map._polygons) {
                         if (map._polygons.hasOwnProperty(polygon)) {
-                            zone = map._polygons[polygon]._esterenRoute;
-                            if (polygon.name.match(searchRegexp)) {
+                            zone = map._polygons[polygon]._esterenZone;
+                            if (zone.name.match(searchRegexp)) {
                                 html += '<li data-polygon-id="'+zone.id+'">'+zone.name+'</li>';
                             }
                         }
@@ -345,7 +344,7 @@
             link.id = 'leaflet-search-toggle';
             link.style.backgroundImage = 'none';
             link.href = "#";
-            link.innerHTML = '<i class="fa fa-location-arrow" style="font-size: 16px;"></i>';
+            link.innerHTML = '<i class="fa fa-search" style="font-size: 16px;"></i>';
             link.title = textTitle;
             $(link).tooltip({
                 "placement" : "right",

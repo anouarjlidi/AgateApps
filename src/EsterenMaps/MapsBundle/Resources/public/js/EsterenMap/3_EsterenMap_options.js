@@ -1,7 +1,5 @@
     EsterenMap.prototype._map = null;
     EsterenMap.prototype._sidebar = {};
-    EsterenMap.prototype.showFilters = true;
-    EsterenMap.prototype.showSearchEngine = true;
     EsterenMap.prototype._filtersControl = {};
     EsterenMap.prototype._drawControl = {};
     EsterenMap.prototype._drawnItems = {};
@@ -48,6 +46,7 @@
         editMode: false,
         showFilters: true,
         showDirections: true,
+        showSearchEngine: true,
         autoResize: true,
         containerHeight: 400,
         sidebarContainer: 'esterenmap_sidebar',

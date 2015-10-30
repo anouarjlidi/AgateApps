@@ -188,7 +188,9 @@
     background-color: rgba(255, 255, 255, 0.7);
 }
 
-#leaflet-directions-control {
+#leaflet-directions-control,
+#leaflet-search-control
+{
     background: white;
     color: black;
     -webkit-border-radius: 4px;
@@ -201,17 +203,27 @@
     max-height: 300px;
     overflow: hidden;
     overflow-y: auto;
-    #directions_control_content {
+    #directions_control_content,
+    #search_control_content
+    {
         display: none;
+    }
+    #search_control_content {
+        padding-top: 25px;
     }
     &.expanded {
         min-width: 350px;
-        #directions_control_content {
+        overflow: visible;
+        #directions_control_content,
+        #directions_search_content
+        {
             display: block;
         }
     }
 }
-#leaflet-directions-toggle {
+#leaflet-directions-toggle,
+#leaflet-search-toggle
+{
     position: absolute;
     top: 0;
     left: 0;
@@ -219,7 +231,9 @@
     display: block;
     font-size: 14px;
 }
-.directions_helper ul {
+.directions_helper ul,
+.search_helper ul
+{
     position: absolute;
     z-index: 1;
     right: 0;
