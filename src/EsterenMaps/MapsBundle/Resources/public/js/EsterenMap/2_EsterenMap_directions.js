@@ -9,8 +9,6 @@
 
         control.addTo(this._map);
 
-        control.setEvents();
-
         return this;
     };
 
