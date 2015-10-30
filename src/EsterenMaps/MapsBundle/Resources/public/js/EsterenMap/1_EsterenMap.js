@@ -48,6 +48,12 @@
         return this;
     };
 
+    /**
+     * To be called ONLY after having loaded the settings.
+     *
+     * @returns {boolean}
+     * @private
+     */
     EsterenMap.prototype._initiate = function() {
 
         var drawnItems,sidebar, _this = this, mapOptions;
@@ -126,6 +132,11 @@
         // Initialisation du calcul d'itinéraire si demandé
         if (mapOptions.showDirections === true) {
             this.initDirections();
+        }
+
+        // Initialize search engine
+        if (mapOptions.showSearchEngine === true) {
+            this.initSearch();
         }
 
         ////////////////////////////////
