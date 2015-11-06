@@ -40,12 +40,12 @@ class MapsController extends Controller
     {
         $list = $this->getDoctrine()->getManager()->getRepository('EsterenMapsBundle:Maps')->findAllRoot();
         /** @var Maps $map */
+/*
         $map = $list[0];
 
         $marker = $map->getMarkers()[0];
 
         $latlng = array((float) $marker->getLatitude(), (float) $marker->getLongitude());
-/*
         dump($latlng);
 
         $s = <<<JS
