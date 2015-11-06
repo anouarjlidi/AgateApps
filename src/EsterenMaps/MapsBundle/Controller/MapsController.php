@@ -2,10 +2,10 @@
 
 namespace EsterenMaps\MapsBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use EsterenMaps\MapsBundle\Entity\Maps;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
  * Class MapsController
@@ -45,7 +45,7 @@ class MapsController extends Controller
         $marker = $map->getMarkers()[0];
 
         $latlng = array((float) $marker->getLatitude(), (float) $marker->getLongitude());
-
+/*
         dump($latlng);
 
         $s = <<<JS
@@ -137,7 +137,7 @@ var a = {
 JS;
 
         exit;
-
+*/
         return $this->render('@EsterenMaps/Maps/index.html.twig', array('list' => $list));
     }
 }
