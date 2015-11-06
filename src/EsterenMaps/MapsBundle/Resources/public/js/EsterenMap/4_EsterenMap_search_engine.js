@@ -125,7 +125,8 @@
 
             var content,
                 msgSend = typeof FORM_SUBMIT !== 'undefined' ? FORM_SUBMIT : 'Envoyer',
-                searchMsgTitle = typeof MSG_CONTROL_SEARCH_TITLE !== 'undefined' ? MSG_CONTROL_SEARCH_TITLE : 'Rechercher',
+                searchMsgTitle = typeof MSG_CONTROL_SEARCH_TITLE !== 'undefined' ? MSG_CONTROL_SEARCH_TITLE : 'Rechercher un élément sur la carte',
+                searchMsgPlaceholder = typeof MSG_CONTROL_SEARCH_PLACEHOLDER !== 'undefined' ? MSG_CONTROL_SEARCH_PLACEHOLDER : 'Rechercher',
                 searchMsgNotFound = typeof MSG_CONTROL_SEARCH_NOT_FOUND !== 'undefined' ? MSG_CONTROL_SEARCH_NOT_FOUND : 'Aucun élément trouvé.'
             ;
 
@@ -139,7 +140,8 @@
                 '<form action="#" id="search_form" class="form-horizontal">' +
                     '<div class="form-group">' +
                         '<div class="col-xs-12">' +
-                            '<input type="text" name="search_query" id="search_query" placeholder="' + searchMsgTitle + '" class="form-control" />' +
+                            '<label for="">' + searchMsgTitle + '</label>' +
+                            '<input type="text" name="search_query" id="search_query" placeholder="' + searchMsgPlaceholder + '" class="form-control" />' +
                             '<div class="search_helper"></div>' +
                         '</div>' +
                     '</div>' +
@@ -150,6 +152,7 @@
             '</div>'
             ;
 
+            // Reset the element
             $(this._controlContent).html('').append(content);
 
             /**
@@ -184,7 +187,7 @@
              * The engine works simply with a regexp.
              * @todo Check if we perform something else than a regexp.
              */
-            $(this._controlContent).find('#search_query').on('keyup', function(){
+            $(this._controlContent).find('#search_query').on('keyup', function(event){
                 var $this = $(this),
                     html = '',
                     marker, polyline, polygon, route, zone,
@@ -227,6 +230,7 @@
                 }
 
                 $this.next('.search_helper').html(html);
+                event.preventDefault();
                 return false;
             });
 
@@ -243,10 +247,6 @@
                     searchRegexp = new RegExp(search_query, 'gi'),
                     type, id
                 ;
-
-                if (!this.getAttribute('data-element-type')) {
-                    this.onkeyup();
-                }
 
                 type = this.getAttribute('data-element-type');
                 id = this.getAttribute('data-element-id');
