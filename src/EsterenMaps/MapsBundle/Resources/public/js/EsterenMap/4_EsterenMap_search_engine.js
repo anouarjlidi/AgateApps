@@ -19,6 +19,7 @@
             position: 'topleft'
         },
 
+        /** @var _esterenMap EsterenMap */
         _esterenMap: null,
         _controlDiv: null,
         _controlContent: null,
@@ -37,129 +38,20 @@
             L.setOptions(this, options);
             L.Control.prototype.initialize.call(this, options);
             this.map(map);
+            this.setEvents();
             return this;
         },
 
         setEvents: function(){
-            var map = this._esterenMap;
-        },
-
-        map: function(map){
-            if (map) {
-                if (!(map instanceof EsterenMap)) {
-                    console.error('You can only set an "EsterenMap" as map for search control.');
-                    return false;
-                }
-                this._esterenMap = map;
-                return this;
-            }
-            return this._esterenMap;
-        },
-
-        highlightElement: function(){
-            var path = this._steps,
-                map = this._esterenMap,
-                i, l, step, marker, route;
-
-            // TODO: refactor this function
-
-            /*
-            for (i = 0, l = path.length; i < l; i++) {
-                step = path[i];
-                marker = markers[step.id];
-                route = step.route ? routes[step.route.id] : null;
-                marker._icon.classList.add('selected');
-                if (route && !route._path.classList.contains('highlighted')) {
-                    route._path.setAttribute('stroke-width', parseInt(route._path.getAttribute('stroke-width')) * 2);
-                    route._oldColor = route._path.getAttribute('stroke');
-                    route._path.setAttribute('stroke', this._pathColor);
-                    route._path.classList.add('highlighted');
-                }
-            }
-            */
-        },
-
-        /**
-         * Should disable selection for the selected element.
-         */
-        cleanSearch: function(){
-            var path = this._steps,
-                map = this._esterenMap,
-                markers = map._markers,
-                routes = map._polylines,
-                i, l, step, marker, route;
-
-            // TODO: refactor this function
-
-            /*
-            if (path && path.length) {
-                for (i = 0, l = path.length; i < l; i++) {
-                    step = path[i];
-                    marker = markers[step.id];
-                    route = step.route ? routes[step.route.id] : null;
-                    marker._icon.classList.remove('selected');
-                    if (route && route._path.classList.contains('highlighted')) {
-                        route._path.setAttribute('stroke-width', parseInt(route._path.getAttribute('stroke-width')) / 2);
-                        route._path.setAttribute('stroke', route._oldColor);
-                        route._path.classList.remove('highlighted');
-                    }
-                }
-            }
-            */
-            this._steps = [];
-        },
-
-        /**
-         * Initializes the content of the control container,
-         * and also all the callbacks and events.
-         *
-         * @returns {*}
-         */
-        createContent: function(){
-            var map = this._esterenMap, _this = this, message = '';
-
-            if (this._cntSet) {
-                console.error('Content has already been set for this direction panel.');
-                return false;
-            }
-
-            var content,
-                msgSend = typeof FORM_SUBMIT !== 'undefined' ? FORM_SUBMIT : 'Envoyer',
-                searchMsgTitle = typeof MSG_CONTROL_SEARCH_TITLE !== 'undefined' ? MSG_CONTROL_SEARCH_TITLE : 'Rechercher un élément sur la carte',
-                searchMsgPlaceholder = typeof MSG_CONTROL_SEARCH_PLACEHOLDER !== 'undefined' ? MSG_CONTROL_SEARCH_PLACEHOLDER : 'Rechercher',
+            var map = this._esterenMap,
                 searchMsgNotFound = typeof MSG_CONTROL_SEARCH_NOT_FOUND !== 'undefined' ? MSG_CONTROL_SEARCH_NOT_FOUND : 'Aucun élément trouvé.'
             ;
-
-            // Ajout des différents noeuds à l'objet Content
-            // On persiste ici à utiliser le concept objet
-            // pour être sûr que des listeners ne sont pas "perdus" en route
-
-            content =
-            '<div>' +
-                '<div id="search_wait_overlay"></div>' +
-                '<form action="#" id="search_form" class="form-horizontal">' +
-                    '<div class="form-group">' +
-                        '<div class="col-xs-12">' +
-                            '<label for="">' + searchMsgTitle + '</label>' +
-                            '<input type="text" name="search_query" id="search_query" placeholder="' + searchMsgPlaceholder + '" class="form-control" />' +
-                            '<div class="search_helper"></div>' +
-                        '</div>' +
-                    '</div>' +
-                    '<button class="btn btn-default" type="submit">' + msgSend + '</button>' +
-                    '<div id="search_message"></div>' +
-                '</div>' +
-                '</form>' +
-            '</div>'
-            ;
-
-            // Reset the element
-            $(this._controlContent).html('').append(content);
 
             /**
              * When clicking an element from the generated list, the input gets its value
              */
-            $(this._controlContent).find('.directions_helper').on('click', function(e){
-                var input, li = e.target, type = '', id = '';
+            $(this._controlContent).find('.search_helper').on('click', function(event){
+                var input, li = event.target, type = '', id = '';
                 if (li.tagName.toLowerCase() === 'li') {
 
                     if (li.hasAttribute('data-polygon-id')) {
@@ -179,7 +71,12 @@
                     input.setAttribute('data-element-id', id);
 
                     li.parentElement.innerHTML = '';
+
+                    input.form.submit();
                 }
+
+                event.preventDefault();
+                return false;
             });
 
             /**
@@ -237,16 +134,16 @@
             /**
              * When submitting the form we need to show the element.
              */
-            $(this._controlContent).find('#search_form').on('submit', function(e){
+            $(this._controlContent).find('#search_form').on('submit', function(event){
                 var datas = $(this).serializeArray(),
                     control = map._searchControl,
                     submitButton = this.querySelector('[type="submit"]'),
                     messageBox = d.getElementById('search_message'),
                     element = null,
-                    search_query = datas.filter(function(e){return e.name==='search_query';})[0].value, // Gets the query
+                    search_query = datas.filter(function(element){return element.name==='search_query';})[0].value, // Gets the query
                     searchRegexp = new RegExp(search_query, 'gi'),
                     type, id
-                ;
+                    ;
 
                 type = this.getAttribute('data-element-type');
                 id = this.getAttribute('data-element-id');
@@ -291,14 +188,172 @@
                 }
 
                 if (!element) {
-                    message = '';
                     messageBox.innerHTML = searchMsgNotFound;
                 }
 
                 // TODO: Focus on element
 
+                event.preventDefault();
                 return false;
             });
+        },
+
+        map: function(map){
+            if (map) {
+                if (!(map instanceof EsterenMap)) {
+                    console.error('You can only set an "EsterenMap" as map for search control.');
+                    return false;
+                }
+                this._esterenMap = map;
+                return this;
+            }
+            return this._esterenMap;
+        },
+
+        highlightElement: function(){
+            var path = this._steps,
+                map = this._esterenMap,
+                i, l, step, marker, route;
+
+            // TODO: refactor this function
+
+            /*
+            for (i = 0, l = path.length; i < l; i++) {
+                step = path[i];
+                marker = markers[step.id];
+                route = step.route ? routes[step.route.id] : null;
+                marker._icon.classList.add('selected');
+                if (route && !route._path.classList.contains('highlighted')) {
+                    route._path.setAttribute('stroke-width', parseInt(route._path.getAttribute('stroke-width')) * 2);
+                    route._oldColor = route._path.getAttribute('stroke');
+                    route._path.setAttribute('stroke', this._pathColor);
+                    route._path.classList.add('highlighted');
+                }
+            }
+            */
+        },
+
+        findByQuery: function(search_query) {
+
+            search_query = search_query.trim();
+
+            var searchRegexp = new RegExp(search_query, 'gi'),
+                map = this._esterenMap,
+                marker, polyline, polygon,
+                results = {
+                    total: 0,
+                    markers: [],
+                    routes: [],
+                    zones: []
+                };
+
+            if (search_query && search_query.length) {
+                // Search in markers
+                for (marker in map._markers) {
+                    if (map._markers.hasOwnProperty(marker) && map._markers[marker]._esterenMarker.name.match(searchRegexp)) {
+                        results.total ++;
+                        results.markers.push(map._markers[marker]);
+                    }
+                }
+                // Search in routes
+                for (polyline in map._polylines) {
+                    if (map._polylines.hasOwnProperty(polyline) && map._polylines[polyline]._esterenRoute.name.match(searchRegexp)) {
+                        results.total ++;
+                        results.routes.push(map._polylines[polyline]);
+                    }
+                }
+                // Search in zones
+                for (polygon in map._polygons) {
+                    if (map._polygons.hasOwnProperty(polygon) && map._polygons[polygon]._esterenZone.name.match(searchRegexp)) {
+                        results.total ++;
+                        results.zones.push(map._polygons[polygon]);
+                    }
+                }
+            }
+
+            return results;
+        },
+
+        findOne: function(type, id) {
+
+            // TODO
+
+        },
+
+        /**
+         * Should disable selection for the selected element.
+         */
+        cleanSearch: function(){
+            var path = this._steps,
+                map = this._esterenMap,
+                markers = map._markers,
+                routes = map._polylines,
+                i, l, step, marker, route;
+
+            // TODO: refactor this function
+
+            /*
+            if (path && path.length) {
+                for (i = 0, l = path.length; i < l; i++) {
+                    step = path[i];
+                    marker = markers[step.id];
+                    route = step.route ? routes[step.route.id] : null;
+                    marker._icon.classList.remove('selected');
+                    if (route && route._path.classList.contains('highlighted')) {
+                        route._path.setAttribute('stroke-width', parseInt(route._path.getAttribute('stroke-width')) / 2);
+                        route._path.setAttribute('stroke', route._oldColor);
+                        route._path.classList.remove('highlighted');
+                    }
+                }
+            }
+            */
+            this._steps = [];
+        },
+
+        /**
+         * Initializes the content of the control container,
+         * and also all the callbacks and events.
+         *
+         * @returns {*}
+         */
+        createContent: function(){
+            var map = this._esterenMap, _this = this, message = '';
+
+            if (this._cntSet) {
+                console.error('Content has already been set for this search panel.');
+                return false;
+            }
+
+            var content,
+                msgSend = typeof FORM_SUBMIT !== 'undefined' ? FORM_SUBMIT : 'Envoyer',
+                searchMsgTitle = typeof MSG_CONTROL_SEARCH_TITLE !== 'undefined' ? MSG_CONTROL_SEARCH_TITLE : 'Rechercher un élément sur la carte',
+                searchMsgPlaceholder = typeof MSG_CONTROL_SEARCH_PLACEHOLDER !== 'undefined' ? MSG_CONTROL_SEARCH_PLACEHOLDER : 'Rechercher'
+            ;
+
+            // Ajout des différents noeuds à l'objet Content
+            // On persiste ici à utiliser le concept objet
+            // pour être sûr que des listeners ne sont pas "perdus" en route
+
+            content =
+            '<div>' +
+                '<div id="search_wait_overlay"></div>' +
+                '<form action="#" id="search_form" class="form-horizontal">' +
+                    '<div class="form-group">' +
+                        '<div class="col-xs-12">' +
+                            '<label for="">' + searchMsgTitle + '</label>' +
+                            '<input type="text" name="search_query" id="search_query" placeholder="' + searchMsgPlaceholder + '" class="form-control" />' +
+                            '<div class="search_helper"></div>' +
+                        '</div>' +
+                    '</div>' +
+                    '<button class="btn btn-default" type="submit">' + msgSend + '</button>' +
+                    '<div id="search_message"></div>' +
+                '</div>' +
+                '</form>' +
+            '</div>'
+            ;
+
+            // Reset the element
+            $(this._controlContent).html('').append(content);
 
             this._cntSet= true;
 
