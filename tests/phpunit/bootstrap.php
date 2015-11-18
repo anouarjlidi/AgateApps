@@ -9,8 +9,6 @@ if (!file_exists($file)) {
     throw new RuntimeException('Install dependencies to run test suite.');
 }
 
-define('TESTS_DEST_PATH', __DIR__.'/../../build');
-
 /** @var Composer\Autoload\ClassLoader $autoload */
 $autoload = require_once $file;
 
@@ -18,6 +16,10 @@ $input = new ArgvInput();
 
 if (true === $input->hasParameterOption('--no-db')) {
     return;
+}
+
+if (!is_dir($rootDir.'/build')) {
+    mkdir($rootDir.'/build');
 }
 
 // Remove build dir files
