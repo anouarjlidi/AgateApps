@@ -201,7 +201,7 @@
             link.id = 'leaflet-filters-toggle';
             link.style.backgroundImage = 'none';
             link.href = "#";
-            link.innerHTML = '<i class="fa fa-filter" style="font-size: 14px;"></i>';
+            link.innerHTML = '<i class="fa fa-filter" style="font-size: 15px;"></i>';
             link.title = textTitle;
             $(link).tooltip({
                 "placement" : "right",

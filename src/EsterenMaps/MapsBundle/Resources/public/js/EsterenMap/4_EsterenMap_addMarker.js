@@ -8,6 +8,7 @@
     L.Marker.prototype._sidebar = null;
     L.Marker.prototype._sidebarContent = '';
     L.Marker.prototype._clickedTime = 0;
+
     L.Marker.prototype.showSidebar = function(){
         if (!this._sidebar) {
             return;
@@ -16,6 +17,7 @@
         this._sidebar.show();
         return this;
     };
+
     L.Marker.prototype.hideSidebar = function(){
         if (!this._sidebar) {
             return;
@@ -24,6 +26,7 @@
         this._sidebar.setContent('');
         return this;
     };
+
     L.Marker.prototype.toggleSidebar = function(){
         if (!this._sidebar) {
             return;
@@ -35,6 +38,7 @@
         }
         return this;
     };
+
     L.Marker.prototype.bindSidebar = function(sidebar, content){
         this._sidebar = sidebar;
         this._sidebarContent = content;
@@ -499,6 +503,5 @@
 
         return this;
     };
-
 
 })(jQuery, L, document, window);
