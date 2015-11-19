@@ -1,0 +1,5 @@
+services:
+    pierstoval_tools.twig.json:
+        class: Pierstoval\Bundle\ToolsBundle\Twig\JsonExtension
+        tags:
+            - { name: twig.extension }
