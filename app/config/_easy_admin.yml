@@ -27,7 +27,7 @@ easy_admin:
                     - js
                     - category
                     - parent
-                    - { property: host, type: choice, choices: [ "%esteren_domains.games%", "%esteren_domains.portal%", "%esteren_domains.corahn_rin%" ] }
+                    - { property: host, type: choice, type_options: { choices: [ "%esteren_domains.games%", "%esteren_domains.portal%", "%esteren_domains.corahn_rin%" ] } }
                     - homepage
                     - enabled
 
