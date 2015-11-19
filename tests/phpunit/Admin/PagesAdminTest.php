@@ -1,24 +1,31 @@
 <?php
 
-
 namespace Tests\Admin;
 
 use Orbitale\Bundle\CmsBundle\Entity\Page;
 
-class PageAdminTest extends AbstractEasyAdminTest
+class PagesAdminTest extends AbstractEasyAdminTest
 {
 
-    //TODO: Test page creation
-
-    //TODO: Test page edition
-
-    //TODO: Test page deletion
-
+    /**
+     * {@inheritdoc}
+     */
     public function getEntityName()
     {
-        return 'Page';
+        return 'Pages';
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function getEntityClass()
+    {
+        return Page::class;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function provideListingFields()
     {
         return array(

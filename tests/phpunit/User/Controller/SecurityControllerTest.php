@@ -10,7 +10,7 @@ class SecurityControllerTest extends WebTestCase
 
     public function testForceLogin()
     {
-        $client = $this->getClient('www.esteren.dev', array(), 'ROLE_USER');
+        $client = static::getClient('www.esteren.dev', array(), 'ROLE_USER');
 
         $crawler = $client->request('GET', '/fr/profile/');
 
@@ -27,32 +27,28 @@ class SecurityControllerTest extends WebTestCase
 
     public function testForbiddenAdmin()
     {
-        $client = $this->getClient('back.esteren.dev');
-
-        $this->setToken($client, 'user', array('ROLE_USER'));
+        $client = static::getClient('back.esteren.dev', array(), 'ROLE_USER');
 
         $client->request('GET', '/fr/');
 
         $this->assertEquals(403, $client->getResponse()->getStatusCode());
     }
 
-    public function atestAllowedAdmin()
+    public function testAllowedAdmin()
     {
-        $client = $this->getClient('back.esteren.fr');
-
-        $this->setToken($client, 'admin', array('ROLE_ADMIN'));
+        $client = static::getClient('back.esteren.dev', array(), 'ROLE_ADMIN');
 
         $client->request('GET', '/fr/');
 
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
-        $this->assertContains('/fr/admin/?action=list&entity=', $client->getResponse()->headers->get('Location'));
+        $this->assertContains('/fr/?action=list&entity=Page', $client->getResponse()->headers->get('Location'));
         $client->followRedirect();
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
 
     public function testAllProfileProcesses()
     {
-        $client = $this->getClient('www.esteren.dev');
+        $client = static::getClient('www.esteren.dev');
 
         $container = static::$kernel->getContainer();
 

@@ -17,7 +17,7 @@ class WebTestCase extends BaseWebTestCase
      *
      * @return Client
      */
-    protected function getClient($host = '', array $options = array(), $tokenRoles = array())
+    protected function getClient($host = null, array $options = array(), $tokenRoles = array())
     {
         $server = array();
         if ($host) {
@@ -26,14 +26,7 @@ class WebTestCase extends BaseWebTestCase
         $client = static::createClient($options, $server);
 
         if ($tokenRoles) {
-            if (is_string($tokenRoles)) {
-                $tokenRoles = explode(',', $tokenRoles);
-            }
-            $session = $client->getContainer()->get('session');
-            $session->set('_security_main', serialize(new UsernamePasswordToken('Pierstoval', 'admin', 'main', $tokenRoles)));
-            $session->save();
-            $cookie = new Cookie($session->getName(), $session->getId());
-            $client->getCookieJar()->set($cookie);
+            static::setToken($client, 'user', $tokenRoles);
         }
 
         return $client;
@@ -44,9 +37,13 @@ class WebTestCase extends BaseWebTestCase
      * @param string       $userName
      * @param array|string $roles
      */
-    protected function setToken(Client $client, $userName = "user", array $roles = array('ROLE_USER'))
+    protected static function setToken(Client $client, $userName = "user", $roles = array('ROLE_USER'))
     {
         $session = $client->getContainer()->get('session');
+
+        if (is_string($roles)) {
+            $roles = array($roles);
+        }
 
         $firewall = 'main';
         $token = new UsernamePasswordToken($userName, null, $firewall, $roles);
