@@ -1,5 +1,15 @@
+# Why use this file instead of config.yml?
+# Well, it's to be sure that we can keep consistency when the Standard Sdition
+#  evolves.
+# With this structure, we ensure that few modifications made to the new versions
+#  of the SE can be reported back to this app without having to make checks
+#  through all the config files to seek for "diffs".
+# Also, it's better because it keeps "application" config in another file than
+#  the "default symfony" config.
+
 imports:
     - { resource: config.yml }
+    - { resource: _easy_admin.yml }
 
 parameters:
     version_code: 0.4.3
@@ -8,19 +18,29 @@ parameters:
     locales: [ fr, en ]
     locales_regex: fr|en
 
+    # Map used for step 3 of the character generator
+    step_3_map_id: 1
+
 doctrine:
     orm:
+        # Override the default repository to get some more good tools
         default_repository_class: Orbitale\Component\DoctrineTools\BaseEntityRepository
     dbal:
-        path: "%database_path%" # For eventual sqlite integration
+        # For eventual sqlite integration, in case of
+        driver: %database_driver%
+        path: "%database_path%"
 
 framework:
     translator:      { fallbacks: %locales% } # Activate translator
+    # Add cookie domain as trusted host because requests are made with CORS
     trusted_hosts:
         - "^[a-z]+\%esteren_domains.cookiedomain%$"
+
     session:
         cookie_domain: %esteren_domains.cookieDomain%
-        name:   EsterenPortal
+        name:          EsterenPortal
+
+    # Use version code in assets
     templating:
         assets_version: %version_code%
 
@@ -56,6 +76,7 @@ fos_user:
     firewall_name: main
     user_class:    UserBundle\Entity\User
 
+# TODO: remove FOSRest integration
 fos_rest:
     param_fetcher_listener: true
     body_listener: true
@@ -68,9 +89,12 @@ fos_rest:
 jms_serializer:
     visitors:
         json:
+            # Corresponds to these constants:
+            # JSON_NUMERIC_CHECK | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE
             options: 480
 
 # Doctrine extensions
+# TODO: Implement Translatable
 stof_doctrine_extensions:
     default_locale: %locale%
     uploadable:
@@ -84,20 +108,11 @@ stof_doctrine_extensions:
             timestampable: true
             softdeleteable: true
 
-# Services declaration
-services:
-    framework_controller:
-        class: Symfony\Bundle\FrameworkBundle\Controller\Controller
-        calls:
-            - [ 'setContainer', [ @service_container ] ]
-    twig.text_extension:
-        class: Twig_Extensions_Extension_Text
-        tags:
-            - name: twig.extension
-
 # Api services
+# TODO: Refactor this and use a better method to generate WS based on entities
 pierstoval_api:
     allowed_origins:
+#        - 127.0.0.1 # Use this in local/dev
         - %esteren_domains.corahn_rin%
         - %esteren_domains.esteren_maps%
         - %esteren_domains.portal%
@@ -113,3 +128,68 @@ pierstoval_api:
         zonestypes:     { entity: EsterenMaps\MapsBundle\Entity\ZonesTypes }
         transports:     { entity: EsterenMaps\MapsBundle\Entity\TransportTypes }
 
+orbitale_cms:
+    layouts:
+        front:
+            resource: "::base.html.twig"
+
+# CORS management
+nelmio_cors:
+    paths:
+      "^/":
+          allow_credentials: true
+          origin_regex: true
+          allow_origin:
+#              - 127.0.0.1 # Use this in local/dev
+              - ^https?://%esteren_domains.api%
+              - ^https?://%esteren_domains.portal%
+              - ^https?://%esteren_domains.backoffice%
+              - ^https?://%esteren_domains.corahn_rin%
+              - ^https?://%esteren_domains.esteren_maps%
+          allow_headers: ['Origin','Accept','Content-Type']
+          allow_methods: ['POST','GET','DELETE','PUT','OPTIONS']
+          max_age: 3600
+          hosts:
+              - 127.0.0.1
+              - "^%esteren_domains.api%$"
+              - "^%esteren_domains.portal%$"
+              - "^%esteren_domains.backoffice%$"
+              - "^%esteren_domains.corahn_rin%$"
+              - "^%esteren_domains.esteren_maps%$"
+
+# TODO: Remove this and find a better way to handle translations
+lexik_translation:
+    fallback_locale: %locale%
+    managed_locales: %locales%
+    base_layout: easy_admin/translation_layout.html.twig
+
+# Used in EasyAdmin's ckeditor fields
+ivory_ck_editor:
+    input_sync: true
+    default_config: base_config
+    configs:
+        base_config:
+            toolbar:
+                - { name: "basicstyles", items: [ "Bold", "Italic", "Underline", "Strike", "Subscript", "Superscript", "-", "RemoveFormat" ] }
+                - { name: "links", items: [ "Link", "Unlink", "Anchor" ] }
+                - { name: "insert", items: [ "Image", "Table", "HorizontalRule", "SpecialChar" ] }
+                - { name: "tools", items: [ "Maximize" ] }
+                - '/'
+                - { name: "paragraph", items: [ "NumberedList", "BulletedList", "-", "Outdent", "Indent", "-", "Blockquote" ] }
+                - { name: "styles", items: [ "Styles", "Format" ] }
+                - { name: "document", items: [ "Source", "-" ] }
+                - { name: "about", items: [ "About" ] }
+
+# Services declaration
+# TODO: Check if these can be removed safely
+services:
+
+    framework_controller:
+        class: Symfony\Bundle\FrameworkBundle\Controller\Controller
+        calls:
+            - [ 'setContainer', [ @service_container ] ]
+
+    twig.text_extension:
+        class: Twig_Extensions_Extension_Text
+        tags:
+            - name: twig.extension

@@ -1,5 +1,5 @@
 imports:
-    - { resource: _app_web.yml }
+    - { resource: _app.yml }
 
 framework:
     router:
