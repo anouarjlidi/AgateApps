@@ -1,2 +1,4 @@
 actions:
     interactive: 'Interactive edit'
+
+"label.null": "Empty"
