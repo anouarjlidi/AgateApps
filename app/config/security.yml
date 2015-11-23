@@ -4,7 +4,6 @@ security:
 
     # http://symfony.com/doc/current/book/security.html#encoding-the-user-s-password
     encoders:
-        Symfony\Component\Security\Core\User\User: plaintext
         FOS\UserBundle\Model\UserInterface: sha512
 
     # http://symfony.com/doc/current/book/security.html#hierarchical-roles
@@ -63,8 +62,10 @@ security:
             pattern:            ^/
             anonymous:          ~
             remember_me:
-                key:            %secret%
+                key:            "%secret%"
                 path:           /
+                name:           EsterenRememberMe
+                domain:         "%%esteren_domains.cookiedomain%"
             form_login:
                 provider:       fos_user
                 login_path:     fos_user_security_login
@@ -80,9 +81,8 @@ security:
     # of your application based on roles, ip, host or methods
     # http://symfony.com/doc/current/book/security.html#security-book-access-control-matching-options
     access_control:
-        - { path: ^/(?:%locales_regex%)/profile,    roles: [ROLE_USER] }
-        - { path: ^/(?:%locales_regex%)/characters, roles: [ROLE_USER] }
-        - { path: ^/,                               host: %esteren_domains.backoffice%, roles: ROLE_MANAGER }
-        - { path: ^/,                               host: %esteren_domains.api%,        roles: ROLE_MANAGER, methods: [POST, PUT, DELETE] }
-        - { path: ^/,                               host: %esteren_domains.esteren_maps%, roles: ROLE_MAPS_VIEW }
-
+        - { path: "^/(?:%locales_regex%)/profile",    roles: [ROLE_USER] }
+        - { path: "^/(?:%locales_regex%)/characters", roles: [ROLE_USER] }
+        - { path: "^/",                               host: "%esteren_domains.backoffice%",   roles: ROLE_MANAGER }
+        - { path: "^/",                               host: "%esteren_domains.api%",          roles: ROLE_MANAGER, methods: [POST, PUT, DELETE] }
+        - { path: "^/",                               host: "%esteren_domains.esteren_maps%", roles: ROLE_MAPS_VIEW }

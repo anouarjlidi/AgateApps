@@ -1,9 +1,11 @@
+# Be careful to manually prefix the local to all your new routes.
 
+# First we load the different other config files with the same configuration
 fos:         { resource: "routing__fos.yml",         prefix: "/{_locale}/", defaults: { _locale: "%locale%" }, requirements: { _locale: "^(?:%locales_regex%)$" } }
 corahnrin:   { resource: "routing__corahnrin.yml",   prefix: "/{_locale}/", defaults: { _locale: "%locale%" }, requirements: { _locale: "^(?:%locales_regex%)$" } }
 esterenmaps: { resource: "routing__esterenmaps.yml", prefix: "/{_locale}/", defaults: { _locale: "%locale%" }, requirements: { _locale: "^(?:%locales_regex%)$" } }
 
-# Root comes after all portals
+# Root comes after all portals and redirects to default locale permanently
 root:
     path: /
     defaults:
@@ -12,7 +14,7 @@ root:
         permanent: true
 
 #-----------------------------------
-# Pierstoval relative routing
+# Pierstoval bundles relative routing
 pierstoval_tools:
     resource: "@PierstovalToolsBundle/Controller/"
     type:     annotation
@@ -55,6 +57,7 @@ lexik_translation_admin:
     host: %esteren_domains.backoffice%
 
 #-----------------------------------
-# Portal routing. MUST be at the end,
-# because it's an OrbitaleCms routing
+# Portal routing. MUST be at the end, because it's an OrbitaleCms routing,
+#   and therefore has many dynamic urls that will come as "fallback" to any other
+#   application routing.
 portal: { resource: "routing__portal.yml", prefix: "/{_locale}/", defaults: { _locale: "%locale%" }, requirements: { _locale: "^(?:%locales_regex%)$" } }

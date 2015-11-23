@@ -15,6 +15,7 @@ web_profiler:
 swiftmailer:
     disable_delivery: true
 
+# Doctrine config for Esteren app: we need a Sqlite database
 doctrine:
     dbal:
         driver:   pdo_sqlite
@@ -22,6 +23,7 @@ doctrine:
         charset:  UTF8
         path:     %kernel.root_dir%/../build/database_test.db
 
+# Force these domain names to be used in the tests
 parameters:
     esteren_domains.corahn_rin: corahnrin.esteren.dev
     esteren_domains.esteren_maps: maps.esteren.dev
