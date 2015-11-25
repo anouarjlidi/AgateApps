@@ -1,18 +1,21 @@
+Pages: Pages
+admin:
+    cms:
+        pages: 'CMS - Pages'
+admin:
+    maps:
+        factions: 'Esteren Maps - Factions'
+        maps: 'Esteren Maps - Maps'
+        markersTypes: 'Esteren Maps - Markers types'
+        routesTypes: 'Esteren Maps - Routes types'
+        zonesTypes: 'Esteren Maps - Zones types'
+        transportsTypes: 'Esteren Maps - Transports'
+        transportsModifiers: 'Esteren Maps - Transports speed modifiers'
+ID: ID
+tree: Tree
 links:
     admin: 'Admin panel'
-
 footer:
-    rights: Agate RPG, All rights reserved.
-    brand: Agate RPG is a brand of Agate Éditions.
-
-Pages: Pages
-"CMS - Pages": "CMS - Pages"
-"Esteren Maps - Factions": "Esteren Maps - Factions"
-"Esteren Maps - Cartes": "Esteren Maps - Maps"
-"Esteren Maps - Types de marqueurs": "Esteren Maps - Markers types"
-"Esteren Maps - Types de routes": "Esteren Maps - Routes types"
-"Esteren Maps - Types de zones": "Esteren Maps - Zones types"
-"Esteren Maps - Moyens de transport": "Esteren Maps - Transports"
-"Esteren Maps - Modificateurs de vitesse (transport)": "Esteren Maps - Transports speed modifiers"
-"ID": "ID"
-"tree": "Tree"
+    rights: 'Agate RPG, All rights reserved'
+    brand: 'Agate RPG is a brand of Agate Éditions'
+    version: Version

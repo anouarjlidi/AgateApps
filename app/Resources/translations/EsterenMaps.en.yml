@@ -1,4 +1,3 @@
-
 entities:
     markers:
         title: Markers
@@ -8,4 +7,4 @@ entities:
         title: Zones
 
 admin:
-    edit_map: Edit the map
+    edit_map: 'Edit the map'
