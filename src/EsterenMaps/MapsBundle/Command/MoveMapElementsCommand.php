@@ -29,7 +29,7 @@ class MoveMapElementsCommand extends ContainerAwareCommand
     public function configure()
     {
         $this
-            ->setName('esterenmaps:move-map-elements')
+            ->setName('esterenmaps:map:move-elements')
             ->setDescription('Moves all maps elements depending on coordinates.')
             ->setHelp(
                 'This command moves all elements of the map, including routes, markers and zones,'."\n".

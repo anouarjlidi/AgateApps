@@ -13,7 +13,7 @@ class RefreshDatasCommand extends ContainerAwareCommand {
 
 	protected function configure() {
 		$this
-            ->setName('esterenmaps:refresh-datas')
+            ->setName('esterenmaps:map:refresh')
             ->setDescription('Refresh all dynamic datas (routes distances, etc.)')
             ->setHelp('This command is here to update all datas that may be dynamic.'."\n"
               .'For example, the start and end marker of each route may change its coordinates,'."\n"
