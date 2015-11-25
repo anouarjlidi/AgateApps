@@ -7,62 +7,69 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-use EsterenMaps\MapsBundle\Classes\MapsTileManager;
-
-class MapTileCommand extends ContainerAwareCommand {
+class MapTileCommand extends ContainerAwareCommand
+{
 
     /**
      * Static var to use in validators
-     * @var type int
+     * @var int
      */
     public static $xmax;
 
     /**
      * Static var to use in validators
-     * @var type int
+     * @var int
      */
     public static $ymax;
 
     /**
      * Static var to use in validators
-     * @var type int
+     * @var int
      */
     public static $zoom;
 
-	protected function configure() {
+    protected function configure()
+    {
 
-		$this
-		->setName('esterenmaps:generate:map-tile')
-		->setDescription('Generate one tile for a specific map.')
-        ->setHelp('This command is used to generate a tile image for one of your maps.'."\n"
-            .'You can specify the id of the map by adding it as an argument, or as an option with "-i x" where "x" is the map id'."\n"
-            ."\n".'The command will generate a tile with three mandatory options:'
-            ."\n".'x => the "x" value of the tile, from left to right, starting at 0'
-            ."\n".'y => the "y" value of the tile, from top to bottom, starting at 0'
-            ."\n".'zoom (or -z) => the zoom value used to generate the tile, starting at 0'
-            ."\n\n".'You can also use the --replace command to overwrite any existing tile.')
-		->addArgument('id', InputArgument::OPTIONAL, 'Enter the id of the map you want to generate')
-        ->addOption('id', 'i', InputOption::VALUE_OPTIONAL, 'Enter the id of the map you want to generate', null)
-        ->addOption('x', 'x', InputOption::VALUE_OPTIONAL, 'Determines the "x" value of the tile', null)
-        ->addOption('y', 'y', InputOption::VALUE_OPTIONAL, 'Determines the "y" value of the tile', null)
-        ->addOption('zoom', 'z', InputOption::VALUE_OPTIONAL, 'Determines the "zoom" value of the tile', null)
-        ->addOption('replace', 'r', InputOption::VALUE_NONE, 'Replaces the tile if it already exists')
-        ->addOption('no-interaction', 'n', InputOption::VALUE_NONE, 'No interaction (used by controllers)')
-        ;
-	}
+        $this
+            ->setName('esterenmaps:map:generate-tile')
+            ->setDescription('Generate one tile for a specific map.')
+            ->setHelp('This command is used to generate a tile image for one of your maps.'."\n"
+                      .'You can specify the id of the map by adding it as an argument, or as an option with "-i x" where "x" is the map id'."\n"
+                      ."\n".'The command will generate a tile with three mandatory options:'
+                      ."\n".'x => the "x" value of the tile, from left to right, starting at 0'
+                      ."\n".'y => the "y" value of the tile, from top to bottom, starting at 0'
+                      ."\n".'zoom (or -z) => the zoom value used to generate the tile, starting at 0'
+                      ."\n\n".'You can also use the --replace command to overwrite any existing tile.')
+            ->addArgument('id', InputArgument::OPTIONAL, 'Enter the id of the map you want to generate')
+            ->addOption('id', 'i', InputOption::VALUE_OPTIONAL, 'Enter the id of the map you want to generate', null)
+            ->addOption('x', 'x', InputOption::VALUE_OPTIONAL, 'Determines the "x" value of the tile', null)
+            ->addOption('y', 'y', InputOption::VALUE_OPTIONAL, 'Determines the "y" value of the tile', null)
+            ->addOption('zoom', 'z', InputOption::VALUE_OPTIONAL, 'Determines the "zoom" value of the tile', null)
+            ->addOption('replace', 'r', InputOption::VALUE_NONE, 'Replaces the tile if it already exists')
+            ->addOption('no-interaction', 'n', InputOption::VALUE_NONE, 'No interaction (used by controllers)');
+    }
 
-	protected function execute(InputInterface $input, OutputInterface $output) {
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
 
-        $id = $input->getArgument('id') ?: ($input->getOption('id') ?: null);
-        $x = $input->getOption('x');
-        $y = $input->getOption('y');
+        $output->writeln('<error>Not implemented anymore, needs refactoring...</error>');
+        return 2;
+
+        /*
+
+        $id   = $input->getArgument('id') ? : ($input->getOption('id') ? : null);
+        $x    = $input->getOption('x');
+        $y    = $input->getOption('y');
         $zoom = $input->getOption('zoom');
 
         $interaction = $input->getOption('no-interaction');
 
-		//Récupération du service "dialog" pour les demandes à l'utilisateur
+        //Récupération du service "dialog" pour les demandes à l'utilisateur
         $interaction = !!$this->getHelperSet();
-        if ($interaction) { $dialog = $this->getHelperSet()->get('dialog');}
+        if ($interaction) {
+            $dialog = $this->getHelperSet()->get('dialog');
+        }
 
         $repo = $this->getContainer()->get('doctrine')->getManager()->getRepository('EsterenMapsBundle:Maps');
 
@@ -77,15 +84,15 @@ class MapTileCommand extends ContainerAwareCommand {
         $output->writeln('\\____/ \\____//_/    \\__,_//_/ /_//_/ /_/       /_/ |_|/_//_/ /_/ ');
         $output->writeln('');
 
-		$output->writeln('Welcome to Corahn-Rin map tile generator !');
-		$output->writeln('With this command, you will be able to generate tiles one by one for a specific map.');
-		$output->writeln('');
+        $output->writeln('Welcome to Corahn-Rin map tile generator !');
+        $output->writeln('With this command, you will be able to generate tiles one by one for a specific map.');
+        $output->writeln('');
 
         $map = null;
 
         // Recherche de la carte
         do {
-            $map = $repo->findOneBy(array('id'=>$id));
+            $map = $repo->findOneBy(array('id' => $id));
             if (!$map) {
                 if ($list === null) {//Création de la liste si jamais un mauvais id est entré
                     $list = $repo->findAll();
@@ -108,7 +115,7 @@ class MapTileCommand extends ContainerAwareCommand {
             }
         } while (!$map);
 
-		$output->writeln('Generating map tile for "'.$map->getName().'"');
+        $output->writeln('Generating map tile for "'.$map->getName().'"');
 
         // Récupération du paramètre "tile_size" du bundle
         $img_size = (int) $this->getContainer()->getParameter('esterenmaps.tile_size');
@@ -124,29 +131,45 @@ class MapTileCommand extends ContainerAwareCommand {
                 'Enter a correct zoom value between 0 and '.$map->getMaxZoom().":\n>",
                 function ($z) {
                     $z = (int) $z;
-                    if ($z >= 1 && $z <= MapTileCommand::$zoom) { return $z;}
-                    else { throw new \RunTimeException('Value must be between 0 and '.MapTileCommand::$zoom); }
+                    if ($z >= 1 && $z <= MapTileCommand::$zoom) {
+                        return $z;
+                    } else {
+                        throw new \RunTimeException('Value must be between 0 and '.MapTileCommand::$zoom);
+                    }
                 });
         }
-        if (3 <= $output->getVerbosity()) { $output->writeln('Zoom value of '.$zoom);  }
+        if (3 <= $output->getVerbosity()) {
+            $output->writeln('Zoom value of '.$zoom);
+        }
 
         $identification = $tilesManager->identifyImage($zoom);
 
-        if (2 <= $output->getVerbosity()) { $output->writeln('Maximum size of '.$identification['xmax'].'x'.$identification['ymax'].' tiles');  }
-        if (2 <= $output->getVerbosity()) { $output->writeln('Crop unit : '.(1+($map->getMaxZoom() - $zoom))*$img_size);  }
-        if (3 <= $output->getVerbosity()) { $output->writeln('Maximum size of '.$identification['wmax'].'x'.$identification['hmax'].' pixels');  }
+        if (2 <= $output->getVerbosity()) {
+            $output->writeln('Maximum size of '.$identification['xmax'].'x'.$identification['ymax'].' tiles');
+        }
+        if (2 <= $output->getVerbosity()) {
+            $output->writeln('Crop unit : '.(1 + ($map->getMaxZoom() - $zoom)) * $img_size);
+        }
+        if (3 <= $output->getVerbosity()) {
+            $output->writeln('Maximum size of '.$identification['wmax'].'x'.$identification['hmax'].' pixels');
+        }
 
         //Récupération de la valeur correcte de X et Y
         self::$xmax = $identification['xmax'];
         self::$ymax = $identification['ymax'];
-        if (2 <= $output->getVerbosity()) { $output->writeln('Retrieving correct X and Y values');  }
+        if (2 <= $output->getVerbosity()) {
+            $output->writeln('Retrieving correct X and Y values');
+        }
         if (!is_numeric($x) || $x < 0 || $x > $identification['xmax']) {
             $x = $dialog->askAndValidate($output,
                 'Enter a correct "x" value between 0 and '.$identification['xmax'].":\n>",
                 function ($z) {
                     $z = (int) $z;
-                    if ($z >= 0 && $z <= MapTileCommand::$xmax) { return $z; }
-                    else { throw new \RunTimeException('Value must be between 0 and '.MapTileCommand::$xmax); }
+                    if ($z >= 0 && $z <= MapTileCommand::$xmax) {
+                        return $z;
+                    } else {
+                        throw new \RunTimeException('Value must be between 0 and '.MapTileCommand::$xmax);
+                    }
                 });
         }
         if (!is_numeric($y) || $y < 0 || $y > $identification['ymax']) {
@@ -154,22 +177,29 @@ class MapTileCommand extends ContainerAwareCommand {
                 'Enter a correct "y" value between 0 and '.$identification['ymax'].":\n>",
                 function ($z) {
                     $z = (int) $z;
-                    if ($z >= 0 && $z <= MapTileCommand::$ymax) { return $z; }
-                    else { throw new \RunTimeException('Value must be between 0 and '.MapTileCommand::$ymax); }
+                    if ($z >= 0 && $z <= MapTileCommand::$ymax) {
+                        return $z;
+                    } else {
+                        throw new \RunTimeException('Value must be between 0 and '.MapTileCommand::$ymax);
+                    }
                 });
         }
-        if (2 <= $output->getVerbosity()) { $output->writeln('Coordinates of the tile : ('.$x.', '.$y.')');  }
-        if (2 <= $output->getVerbosity()) { $output->writeln('Filename: '.$tilesManager->mapDestinationName($zoom, $x, $y));  }
+        if (2 <= $output->getVerbosity()) {
+            $output->writeln('Coordinates of the tile : ('.$x.', '.$y.')');
+        }
+        if (2 <= $output->getVerbosity()) {
+            $output->writeln('Filename: '.$tilesManager->mapDestinationName($zoom, $x, $y));
+        }
 
         $overwrite = $input->getOption('replace');
-        $exists = file_exists($tilesManager->mapDestinationName($zoom, $x, $y));
+        $exists    = file_exists($tilesManager->mapDestinationName($zoom, $x, $y));
         if ($exists && !$overwrite) {
-            $choices = array('yes','no');
-            $answer = $dialog->select(
+            $choices  = array('yes', 'no');
+            $answer   = $dialog->select(
                 $output,
                 'Following file already exists: '."\n".'> '.
                 str_replace(ROOT.DS, '', $tilesManager->mapDestinationName($zoom, $x, $y)).
-                "\n". 'Overwrite ? [yes]',
+                "\n".'Overwrite ? [yes]',
                 $choices,
                 0,
                 false,
@@ -203,7 +233,7 @@ class MapTileCommand extends ContainerAwareCommand {
             $cmd_output = shell_exec($cmd_output);
             if (2 <= $output->getVerbosity()) {
                 $time = microtime(true) - $time;
-                $time = number_format($time*1000, 2, '.', ',');
+                $time = number_format($time * 1000, 2, '.', ',');
                 $output->writeln('Execution time of '.$time.' milliseconds');
             }
             if ($cmd_output) {
@@ -217,6 +247,6 @@ class MapTileCommand extends ContainerAwareCommand {
 
         $output->writeln('End of function');
         $output->writeln('Thanks for using CorahnRin, and see you soon !');
-
+        */
     }
 }
