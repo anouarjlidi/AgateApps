@@ -5,7 +5,7 @@
 
     {% set class = key %}
     {% if 'fos_user_' in class %}
-        {% set class = (class | replace('fos_user_', '')) %}
+        {% set class = (class | replace({'fos_user_': ''})) %}
         {% set translation_domain = 'FOSUserBundle' %}
     {% endif %}
     {% if 'error' == class %}
