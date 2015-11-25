@@ -6,7 +6,6 @@ use Doctrine\ORM\EntityManager;
 use EsterenMaps\MapsBundle\Entity\Maps;
 use EsterenMaps\MapsBundle\Entity\Markers;
 use EsterenMaps\MapsBundle\Entity\Routes;
-use EsterenMaps\MapsBundle\Entity\RoutesTransports;
 use EsterenMaps\MapsBundle\Entity\TransportTypes;
 use EsterenMaps\MapsBundle\Repository\MarkersRepository;
 use JMS\Serializer\SerializationContext;
@@ -14,11 +13,9 @@ use JMS\Serializer\Serializer;
 use Symfony\Bundle\TwigBundle\TwigEngine;
 
 /**
- * Class Directions
- * Utilise l'algorithme de Dijkstra pour calculer le trajet entre deux marqueurs
- * @package EsterenMaps\MapsBundle\Services
+ * Uses Dijkstra algorithm to calculate a path between two markers.
  */
-class Directions
+class DirectionsManager
 {
 
     /**

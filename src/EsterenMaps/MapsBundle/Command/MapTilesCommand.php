@@ -76,7 +76,7 @@ class MapTilesCommand extends ContainerAwareCommand {
 
 		$output->writeln('Generating map tiles for "'.$map->getName().'"');
 
-        $tilesManager = $this->getContainer()->get('esterenmaps.tiles_manager');
+        $tilesManager = $this->getContainer()->get('esteren_maps')->getTilesManager();
 
         if (!file_exists($map->getImage())) {
             $img = $this->getContainer()->getParameter('kernel.root_dir').'/../web/'.$map->getImage();
