@@ -1,5 +1,4 @@
-label:
-    null: Vide
+label.null: Vide
 
 actions:
     interactive: 'Édition interactive'

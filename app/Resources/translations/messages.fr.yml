@@ -2,7 +2,6 @@ Pages: Pages
 admin:
     cms:
         pages: 'CMS - Pages'
-admin:
     maps:
         factions: 'Esteren Maps - Factions'
         maps: 'Esteren Maps - Cartes'

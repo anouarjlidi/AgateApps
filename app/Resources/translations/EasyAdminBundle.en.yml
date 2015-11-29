@@ -1,5 +1,4 @@
-label:
-    null: Empty
+label.null: Empty
 
 actions:
     interactive: 'Interactive edit'
