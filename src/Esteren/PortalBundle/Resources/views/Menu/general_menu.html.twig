@@ -35,7 +35,7 @@
                 {% else %}
                     <li><a href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout' | trans({},'FOSUserBundle') }} [ {{ app.user.username }} ]</a></li>
                     {% if is_granted('ROLE_MANAGER') %}
-                        <li><a href="{{ path('admin') }}">{{ 'links.admin' | trans }}</a></li>
+                        <li><a href="{{ path('easyadmin') }}">{{ 'links.admin' | trans }}</a></li>
                     {% endif %}
                 {% endif %}
 
