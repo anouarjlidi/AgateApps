@@ -389,6 +389,11 @@
             id,option,optionTag,icon,iconHeight,iconWidth,initialIconHeight,initialIconWidth,
             marker,popup,popupContent,popupOptions, markerType;
 
+        // Safety to be sure arguments are at least plain objects
+        //   to avoid "cannot read property ... of undefined" errors.
+        leafletUserOptions = leafletUserOptions || {};
+        customUserOptions = customUserOptions || {};
+
         if (leafletUserOptions) {
             leafletOptions = this.cloneObject(leafletOptions, leafletUserOptions);
         }
