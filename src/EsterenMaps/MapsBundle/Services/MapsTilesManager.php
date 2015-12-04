@@ -35,7 +35,7 @@ class MapsTilesManager
     /**
      * @var ImageIdentification[]
      */
-    private $identifications = array();
+    private $identifications = [];
 
     /**
      * @var int
@@ -94,8 +94,12 @@ class MapsTilesManager
     public function setMap(Maps $map)
     {
         $this->map = $map;
-        if (!file_exists($this->map->getImage())) {
-            throw new Exception('Map image could not be found: '.$map->getImage());
+        $path = null;
+        if (
+            !file_exists($path = $this->map->getImage())
+         && !file_exists($path = $this->webDir.'/'.$this->map->getImage())
+        ) {
+            throw new Exception('Map image could not be found: '.$path);
         }
 
         return $this;
@@ -143,7 +147,7 @@ class MapsTilesManager
             $max_width_global  = $crop_unit * ($max_tiles_x + 1);
             $max_height_global = $crop_unit * ($max_tiles_y + 1);
 
-            $this->identifications[$zoom] = new ImageIdentification(array(
+            $this->identifications[$zoom] = new ImageIdentification([
                 'xmax'        => $max_tiles_x,
                 'ymax'        => $max_tiles_y,
                 'tiles_max'   => $max_tiles_x * $max_tiles_y,
@@ -151,7 +155,7 @@ class MapsTilesManager
                 'hmax'        => $max_height,
                 'wmax_global' => $max_width_global,
                 'hmax_global' => $max_height_global,
-            ));
+            ]);
         }
 
         return $this->identifications[$zoom];
