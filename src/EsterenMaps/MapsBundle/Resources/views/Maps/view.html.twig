@@ -29,6 +29,7 @@
             try {
                 d.map = new EsterenMap({
                     id: {{ map.id }},
+                    crs: 'Simple',
                     imgUrl: "",
                     apiUrls: {
                         base: "http://{{ esteren_domains_api }}/{{ app.request.locale }}",

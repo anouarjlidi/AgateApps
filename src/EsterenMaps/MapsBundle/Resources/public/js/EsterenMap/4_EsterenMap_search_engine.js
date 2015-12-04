@@ -31,7 +31,7 @@
 
         _pathColor: '#4444dd',
 
-        /** @var _esterenMap EsterenMap */
+        /** @var EsterenMap _esterenMap */
         _esterenMap: null,
         _controlDiv: null,
         _controlContent: null,

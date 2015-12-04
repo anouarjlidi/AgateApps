@@ -402,6 +402,13 @@
             iconOptions = this.cloneObject(iconOptions, customUserOptions.icon);
         }
 
+        if (latLng && mapOptions.crs === 'Simple' || this._map.options.crs === L.CRS.Simple) {
+            if (!latLng.lat && !latLng.lng && typeof (latLng[0]) !== undefined) {
+                latLng = L.latLng(latLng);
+            }
+            latLng = L.CRS.Simple.latLngToPoint(latLng);
+        }
+
         while (d.getElementById('marker_'+this._mapOptions.maxMarkerId+'_name')) {
             this._mapOptions.maxMarkerId ++;
         }

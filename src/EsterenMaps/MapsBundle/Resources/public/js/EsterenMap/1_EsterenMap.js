@@ -83,6 +83,10 @@
             this._messageElement = d.getElementById(mapOptions.messageElementId);
         }
 
+        if (mapOptions.crs && !mapOptions.LeafletMapBaseOptions.crs && L.CRS[mapOptions.crs]) {
+            mapOptions.LeafletMapBaseOptions.crs = L.CRS[mapOptions.crs];
+        }
+
         // Création de la map
         this._map = L.map(mapOptions.container, mapOptions.LeafletMapBaseOptions);
 
