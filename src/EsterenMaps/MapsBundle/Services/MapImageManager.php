@@ -65,7 +65,7 @@ class MapImageManager
      */
     public function generateImage(Maps $map)
     {
-        //
+        // TODO
         throw new Exception($map);
     }
 }

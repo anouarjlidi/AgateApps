@@ -51,7 +51,7 @@ class ImageIdentification implements \ArrayAccess
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getTiles()
     {
@@ -59,7 +59,7 @@ class ImageIdentification implements \ArrayAccess
     }
 
     /**
-     * @return mixed
+     * @return float
      */
     public function getWidth()
     {
@@ -67,7 +67,7 @@ class ImageIdentification implements \ArrayAccess
     }
 
     /**
-     * @return mixed
+     * @return float
      */
     public function getHeight()
     {
@@ -75,7 +75,7 @@ class ImageIdentification implements \ArrayAccess
     }
 
     /**
-     * @return mixed
+     * @return float
      */
     public function getGlobalWidth()
     {
@@ -83,7 +83,7 @@ class ImageIdentification implements \ArrayAccess
     }
 
     /**
-     * @return mixed
+     * @return float
      */
     public function getGlobalHeight()
     {
