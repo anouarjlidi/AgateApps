@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "f0d12ff429fce36ff1200d2a0de96ca3",
-    "content-hash": "65619a01cef58af6e886775a9672ecaa",
+    "hash": "af50550826112dcd50557a2815572bf6",
+    "content-hash": "a95a9948ea6450bfb8e4be3b90c8db28",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -2038,61 +2038,6 @@
                 "symfony"
             ],
             "time": "2015-07-15 13:35:52"
-        },
-        {
-            "name": "orbitale/gryp-bundle",
-            "version": "v0.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Orbitale/GrypBundle.git",
-                "reference": "c80fb1017c508820d67ae963b8d1cf6a3c8b6d99"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Orbitale/GrypBundle/zipball/c80fb1017c508820d67ae963b8d1cf6a3c8b6d99",
-                "reference": "c80fb1017c508820d67ae963b8d1cf6a3c8b6d99",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0",
-                "symfony/config": "~2.3",
-                "symfony/dependency-injection": "~2.3",
-                "symfony/http-kernel": "~2.3",
-                "symfony/twig-bundle": "~2.3",
-                "symfony/yaml": "~2.3",
-                "twig/twig": "~1.18"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~4.4",
-                "symfony/symfony": "~2.3"
-            },
-            "type": "symfony-bundle",
-            "autoload": {
-                "psr-4": {
-                    "Orbitale\\Bundle\\GrypBundle\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Alexandre \"Orbitale\" Ancelet",
-                    "email": "alex@orbitale.io",
-                    "homepage": "http://www.orbitale.io/"
-                }
-            ],
-            "description": "A bundle to manage assets generated with Gryp.js",
-            "homepage": "https://github.com/Orbitale/GrypBundle",
-            "keywords": [
-                "assets",
-                "bundle",
-                "gryp",
-                "gulp",
-                "symfony"
-            ],
-            "time": "2015-09-16 09:17:58"
         },
         {
             "name": "orbitale/imagemagick-php",

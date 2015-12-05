@@ -42,7 +42,6 @@ class AppKernel extends Kernel
 
             // Pierstoval's tools
             new Orbitale\Bundle\CmsBundle\OrbitaleCmsBundle(),
-            new Orbitale\Bundle\GrypBundle\OrbitaleGrypBundle(),
             new Pierstoval\Bundle\ApiBundle\PierstovalApiBundle(),
             new Pierstoval\Bundle\ToolsBundle\PierstovalToolsBundle(),
         );
