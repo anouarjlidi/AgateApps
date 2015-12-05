@@ -1,106 +1,58 @@
-Projet Corahn-Rin & Esteren Maps
+Esteren full portal
 ========================
 
-1) Pré-requis
-----------------------------------
+## Pre-requisites
 
- - Avoir des droits pour exécuter des scripts dans la racine de l'application, et faire en sorte que ces droits soient les mêmes que ceux du serveur qui exécutera Symfony2.
- - PHP5.3 minimum, idéalement PHP5. Il doit être disponible dans l'environnement (exécuter `php -v` dans une ligne de commande pour vérifier sa présence)
- - [Composer](https://getcomposer.org/download/) :
+* PHP 5.5+
+* NodeJS 4.0+ and `npm` accessible globally.
+* Imagemagick accessible globally or at least from the app, mostly `convert` and `identify` binaries.
 
-     `curl -sS https://getcomposer.org/installer | php`
+## Install
 
-     `php composer.phar install`
+```bash
+$ composer install
+$ app/console doctrine:database:create
+$ app/console doctrine:schema:create
+```
 
- - [NodeJS](http://nodejs.org/download/) :
-     - NPM (par défaut dans NodeJS normalement)
-     - Bower : `npm install -g bower`
-     - Less : `npm install -g less`
+That's all!
 
+Composer is configured to install npm dependencies and dump assets. See [composer.json](composer.json) scripts
+ configuration for more informations.
 
-2) Installation
-----------------------------------
+## Setup
 
-Un script de déploiement existe à la racine et nécessite **sh** pour s'exécuter.
+### Setup domains
 
-`sh deploy_dev.sh`
+You need to be sure that your webserver points to every domain name set up in the parameters,
+ see [the default app/config/parameters.yml.dist file](app/config/parameters.yml) to know what domains are used.
 
-Il exécutera toutes les commandes nécessaires pour déployer la configuration, les dépendances et les assets.
+If all your domains end with `esteren.dev` (which is the best "domain mirroring" to setup your dev environment), the
+ web entry point will be automatically set up to `app_dev.php`.
 
-Le même script existe pour l'environnement de **prod**.
+### Setup fixtures (if you don't have a proper database)
 
-Respecte les standards de Symfony.
+If you don't have a prod database export, load the fixtures in your database:
 
-----------------------------------
+```bash
+$ ./app/console doctrine:fixtures:load --append
+```
 
-----------------------------------
+## Tests
 
-Symfony Standard Edition
-========================
+To run the tests, execute them from the `tests` directory:
 
-Welcome to the Symfony Standard Edition - a fully-functional Symfony2
-application that you can use as the skeleton for your new applications.
+```bash
+$ phpunit -c tests/
+```
 
-For details on how to download and get started with Symfony, see the
-[Installation][1] chapter of the Symfony Documentation.
+## Issues tracking
 
-What's inside?
---------------
+For any question or problem, please open a new issue on Redmine depending on the subject:
 
-The Symfony Standard Edition is configured with the following defaults:
-
-  * An AppBundle you can use to start coding;
-
-  * Twig as the only configured template engine;
-
-  * Doctrine ORM/DBAL;
-
-  * Swiftmailer;
-
-  * Annotations enabled for everything.
-
-It comes pre-configured with the following bundles:
-
-  * **FrameworkBundle** - The core Symfony framework bundle
-
-  * [**SensioFrameworkExtraBundle**][6] - Adds several enhancements, including
-    template and routing annotation capability
-
-  * [**DoctrineBundle**][7] - Adds support for the Doctrine ORM
-
-  * [**TwigBundle**][8] - Adds support for the Twig templating engine
-
-  * [**SecurityBundle**][9] - Adds security by integrating Symfony's security
-    component
-
-  * [**SwiftmailerBundle**][10] - Adds support for Swiftmailer, a library for
-    sending emails
-
-  * [**MonologBundle**][11] - Adds support for Monolog, a logging library
-
-  * [**AsseticBundle**][12] - Adds support for Assetic, an asset processing
-    library
-
-  * **WebProfilerBundle** (in dev/test env) - Adds profiling functionality and
-    the web debug toolbar
-
-  * **SensioDistributionBundle** (in dev/test env) - Adds functionality for
-    configuring and working with Symfony distributions
-
-  * [**SensioGeneratorBundle**][13] (in dev/test env) - Adds code generation
-    capabilities
-
-All libraries and bundles included in the Symfony Standard Edition are
-released under the MIT or BSD license.
-
-Enjoy!
-
-[1]:  http://symfony.com/doc/2.7/book/installation.html
-[6]:  http://symfony.com/doc/2.7/bundles/SensioFrameworkExtraBundle/index.html
-[7]:  http://symfony.com/doc/2.7/book/doctrine.html
-[8]:  http://symfony.com/doc/2.7/book/templating.html
-[9]:  http://symfony.com/doc/2.7/book/security.html
-[10]: http://symfony.com/doc/2.7/cookbook/email.html
-[11]: http://symfony.com/doc/2.7/cookbook/logging/monolog.html
-[12]: http://symfony.com/doc/2.7/cookbook/assetic/asset_management.html
-[13]: http://symfony.com/doc/2.7/bundles/SensioGeneratorBundle/index.html
+| Subject                        | Redmine project
+| ------------------------------ | -----------
+| Corahn-Rin (character manager) | [corahn-rin-dev](http://redmine.pierstoval.com/projects/corahn-rin-dev/issues)
+| Esteren Maps                   | [esteren-maps](http://redmine.pierstoval.com/projects/esteren-maps/issues)
+| Portal (normal or games)       | [portail-esteren](http://redmine.pierstoval.com/projects/portail-esteren/issues)
+| Other                          | [apps](http://redmine.pierstoval.com/projects/apps/issues)
