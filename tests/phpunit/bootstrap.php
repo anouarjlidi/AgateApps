@@ -4,7 +4,7 @@ use Symfony\Component\Console\Input\ArgvInput;
 
 $rootDir = realpath(__DIR__.'/../..');
 
-$file = $rootDir.'/app/bootstrap.php.cache';
+$file = $rootDir.'/app/autoload.php';
 if (!file_exists($file)) {
     throw new RuntimeException('Install dependencies to run test suite.');
 }
