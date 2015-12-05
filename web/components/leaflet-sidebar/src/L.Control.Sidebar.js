@@ -60,11 +60,13 @@ L.Control.Sidebar = L.Control.extend({
 
         // Make sure we don't drag the map when we interact with the content
         var stop = L.DomEvent.stopPropagation;
+        var fakeStop = L.DomEvent._fakeStop || stop;
         L.DomEvent
-            .on(content, 'click', stop)
+            .on(content, 'contextmenu', stop)
+            .on(content, 'click', fakeStop)
             .on(content, 'mousedown', stop)
             .on(content, 'touchstart', stop)
-            .on(content, 'dblclick', stop)
+            .on(content, 'dblclick', fakeStop)
             .on(content, 'mousewheel', stop)
             .on(content, 'MozMousePixelScroll', stop);
 
@@ -86,11 +88,13 @@ L.Control.Sidebar = L.Control.extend({
 
         // Unregister events to prevent memory leak
         var stop = L.DomEvent.stopPropagation;
+        var fakeStop = L.DomEvent._fakeStop || stop;
         L.DomEvent
-            .off(content, 'click', stop)
+            .off(content, 'contextmenu', stop)
+            .off(content, 'click', fakeStop)
             .off(content, 'mousedown', stop)
             .off(content, 'touchstart', stop)
-            .off(content, 'dblclick', stop)
+            .off(content, 'dblclick', fakeStop)
             .off(content, 'mousewheel', stop)
             .off(content, 'MozMousePixelScroll', stop);
 
