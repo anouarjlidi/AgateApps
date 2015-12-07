@@ -17,7 +17,7 @@ All the JS files must be concatenated together for the library to work.
 
 ## Services
 
-To use the different services provided by the `EsterenMapsBundle`, you must load the decorator like this:
+To use the different services provided by the `EsterenMapsBundle`, you must load the registry like this:
 
 ```php
 /**

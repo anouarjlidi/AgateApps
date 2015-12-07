@@ -23,7 +23,7 @@ With [OrbitaleCmsBundle](https://github.com/Orbitale/CmsBundle), a very simple C
 ## Backoffice
 
 The backoffice is powered by [EasyAdminBundle](https://github.com/javiereguiluz/EasyAdminBundle).
-Its configuration resides in [app/config/_easyadmin.yml](app/config/_easyadmin.yml).
+Its configuration resides in [app/config/_easyadmin.yml](../app/config/_easyadmin.yml).
 An `AdminBundle` exists only to store the `AdminController` which allows complete override of any of EasyAdmin's feature.
 
 [IvoryCKEditorBundle](https://github.com/egeloen/IvoryCKEditorBundle) is installed and configured in the `Page` entity
@@ -32,7 +32,7 @@ An `AdminBundle` exists only to store the `AdminController` which allows complet
 ## Maximal configuration evolutivity (a bit exaggerating, though)
 
 You may notice that the classic `app/config/config.yml` is left **unchanged** compared to Symfony standard edition.
-All application-related config is written in [app/config/_app.yml](app/config/_app.yml).
+All application-related config is written in [app/config/_app.yml](../app/config/_app.yml).
 
 Why?
 
@@ -48,7 +48,7 @@ Some pretty spaces are also added in `AppKernel.php` and `composer.json` to sepa
 ## Menus
 
 Menus are managed with [KnpMenuBundle](https://github.com/KnpLabs/KnpMenuBundle).
-A single menu is present in the top-menu and is configured in [GeneralMenu.php](../Esteren/PortalBundle/Menu/GeneralMenu.php)
+A single menu is present in the top-menu and is configured in [GeneralMenu.php](../src/Esteren/PortalBundle/Menu/GeneralMenu.php)
 
 ## Tests
 
