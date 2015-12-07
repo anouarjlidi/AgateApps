@@ -56,7 +56,7 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::removeSymfonyStandardFiles",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget",
             "npm install",
-            "bash ./node_modules/.bin/gulp dump"
+            "./node_modules/.bin/gulp dump"
         ],
         "post-update-cmd": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
@@ -67,7 +67,7 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::removeSymfonyStandardFiles",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget",
             "npm update && npm shrinkwrap",
-            "bash ./node_modules/.bin/gulp dump"
+            "./node_modules/.bin/gulp dump"
         ]
     },
     "config": {
