@@ -83,8 +83,33 @@ class ChangeCoordinatesSystemCommand extends ContainerAwareCommand
 
         dump($xy);
 
-/*
         $s = <<<JS
+
+
+// Successful attempts:
+m = document.map._markers[68]; // Le Roc
+m.setLatLng([81.28171699935, -130.25390625]); // Before
+m.setLatLng([-23.125, 35.4]); // After
+
+m = document.map._markers[8]; // Osta-Baille
+m.setLatLng([54.876606654109, -72.24609375]);
+m.setLatLng([-81.12, 76.6]);
+
+
+ratio1_lat = "2.196355146474609 * x + b";
+
+// Test script
+var map = document.map;
+var leafletMap = map._map;
+var crs = leafletMap.options.crs;
+var markers = map._markers;
+var i, marker;
+
+for (i in markers) {
+    if (!markers.hasOwnProperty(i)) { continue; }
+    marker = markers[i];
+    crs.latLngToPoint(marker.getLatLng());
+}
 
 var p = document.map._map.project(document.map._markers[68].getLatLng());
 document.map.addMarker(p);
@@ -179,7 +204,6 @@ var a = {
     z:0
 };
 JS;
-*/
         exit;
 
     }

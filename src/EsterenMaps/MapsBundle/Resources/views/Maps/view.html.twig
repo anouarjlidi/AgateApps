@@ -29,8 +29,6 @@
             try {
                 d.map = new EsterenMap({
                     id: {{ map.id }},
-                    crs: 'Simple',
-                    imgUrl: "",
                     apiUrls: {
                         base: "http://{{ esteren_domains_api }}/{{ app.request.locale }}",
                         settings: "{{ url('esterenmaps_api_maps_settings_distant', {"id":map.id}) }}",
@@ -39,9 +37,10 @@
                     LeafletMapBaseOptions: {
                         zoom: {{ map.startZoom }},
                         maxZoom: {{ map.maxZoom }}
-                        {% if map.jsonBounds|length %},
+                        {#TODO: fix this. Disabled for dev purposes, to be changed.#}
+                        {#% if map.jsonBounds|length %},
                         maxBounds: {{ map.bounds|raw }}
-                        {% endif %}
+                        {% endif %#}
                     },
                     LeafletLayerBaseOptions: {
                         maxZoom: {{ map.maxZoom }},

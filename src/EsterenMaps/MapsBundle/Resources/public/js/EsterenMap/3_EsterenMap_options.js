@@ -1,3 +1,4 @@
+
     EsterenMap.prototype._map = null;
     EsterenMap.prototype._sidebar = {};
     EsterenMap.prototype._filtersControl = {};
@@ -43,7 +44,7 @@
 
     EsterenMap.prototype._mapOptions = {
         id: 0,
-        crs: null,
+        crs: 'Direct',
         editMode: false,
         showFilters: true,
         showDirections: true,
@@ -53,7 +54,7 @@
         sidebarContainer: 'esterenmap_sidebar',
         container: 'map',
         wrapper: 'map_wrapper',
-        loadedCallback: function(){
+        loadedCallback: function () {
             this.loadMarkers();
             this.loadRoutes();
             this.loadZones();
@@ -67,7 +68,7 @@
             tiles: '/api/maps/tile/{id}/{z}/{x}/{y}.jpg'
         },
         loaderCallbacks: {},
-        center: [0,0],
+        center: [0, 0],
         maxMarkerId: 1,
         maxPolylineId: 1,
         maxPolygonId: 1,
@@ -79,10 +80,11 @@
             minWidth: 280
         },
         LeafletMapBaseOptions: {
-            center: [0,0],
+            center: [0, 0],
             zoom: 1,
             minZoom: 1,
             maxZoom: 1,
+            worldCopyJump: false,
             attributionControl: false
         },
         LeafletLayerBaseOptions: {

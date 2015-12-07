@@ -393,26 +393,23 @@
         //   to avoid "cannot read property ... of undefined" errors.
         leafletUserOptions = leafletUserOptions || {};
         customUserOptions = customUserOptions || {};
+        latLng = latLng || L.latLng(0, 0); // Default latlng to avoid problems
 
+        // Merge Leaflet options
         if (leafletUserOptions) {
             leafletOptions = this.cloneObject(leafletOptions, leafletUserOptions);
         }
 
+        // Merge EsterenMaps options
         if (customUserOptions.icon) {
             iconOptions = this.cloneObject(iconOptions, customUserOptions.icon);
-        }
-
-        if (latLng && mapOptions.crs === 'Simple' || this._map.options.crs === L.CRS.Simple) {
-            if (!latLng.lat && !latLng.lng && typeof (latLng[0]) !== undefined) {
-                latLng = L.latLng(latLng);
-            }
-            latLng = L.CRS.Simple.latLngToPoint(latLng);
         }
 
         while (d.getElementById('marker_'+this._mapOptions.maxMarkerId+'_name')) {
             this._mapOptions.maxMarkerId ++;
         }
 
+        // Alt should contain the markers' ID
         if (!leafletOptions.alt) {
             id = this._mapOptions.maxMarkerId;
         } else {

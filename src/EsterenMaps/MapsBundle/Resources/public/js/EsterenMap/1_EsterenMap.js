@@ -77,7 +77,6 @@
             this.resetHeight(mapOptions.containerHeight);
         }
 
-        this.initLeafletDraw();
 
         if (mapOptions.messageElementId) {
             this._messageElement = d.getElementById(mapOptions.messageElementId);
