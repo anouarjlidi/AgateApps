@@ -2,6 +2,7 @@
 #### Documentation index
 
 * [Documentation](../README.md)
+* [Routing](routing.md)
 * [General technical informations](technical.md)
 * [API / webservices](api.md)
 * [Esteren Maps library](maps.md)
