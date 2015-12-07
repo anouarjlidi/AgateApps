@@ -20,6 +20,7 @@ It contains multiple apps:
 ## Documentation index
 
 * [General technical informations](docs/technical.md)
+* [Routing](docs/routing.md)
 * [API / webservices](docs/api.md)
 * [Esteren Maps library](docs/maps.md)
 
