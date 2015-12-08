@@ -7,6 +7,11 @@
          colors="true"
          verbose="true"
          bootstrap="../tests/phpunit/bootstrap.php"
+         beScritAboutTestsThatDoNotTestAnything="true"
+         beScritAboutOutputDuringTests="true"
+         beScritAboutTestSize="true"
+         beScritAboutChangestoGlobalState="true"
+         checkForUnintentionallyCoveredCode="true"
 >
     <testsuites>
         <testsuite name="Project Test Suite">

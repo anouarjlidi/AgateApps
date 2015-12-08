@@ -39,6 +39,7 @@ if (file_exists($rootDir.'/build/database_test.db')) {
     unlink($rootDir.'/build/database_test.db');
 }
 
+system('php '.$rootDir.'/app/console --env=test cache:clear --no-warmup');
 system('php '.$rootDir.'/app/console --env=test doctrine:database:create');
 system('php '.$rootDir.'/app/console --env=test doctrine:schema:create');
 system('php '.$rootDir.'/app/console --env=test doctrine:fixtures:load --append');
