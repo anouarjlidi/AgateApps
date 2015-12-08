@@ -1,4 +1,7 @@
+actions:
+    interactive: 'Interactive edit'
 Pages: Pages
+Maps: Maps
 admin:
     cms:
         pages: 'CMS - Pages'

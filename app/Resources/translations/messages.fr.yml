@@ -1,4 +1,7 @@
+actions:
+    interactive: 'Édition interactive'
 Pages: Pages
+Maps: Cartes
 admin:
     cms:
         pages: 'CMS - Pages'
@@ -11,7 +14,7 @@ admin:
         transportsTypes: 'Esteren Maps - Moyens de transport'
         transportsModifiers: 'Esteren Maps - Modificateurs de vitesse (transport)'
 ID: ID
-tree: 'Chemin d''URL'
+tree: "Chemin d'URL"
 links:
     admin: Administration
 footer:
