@@ -1,5 +1,10 @@
 <?php
 
+// Care, this file is ugly.
+// Oh, you might have noticed it already...
+// This is the very first import script made to retrieve datas from old-corahnrin to new-corahnrin.
+// This migration will be made entirely differently in the future.
+
 require_once '../vendor/autoload.php';
 
 use CorahnRin\CorahnRinBundle\Classes\Money as Money;
@@ -48,10 +53,10 @@ function showtime(&$temp_time,$b){
 }
 
 define('P_DUMP_INTCOLOR','blue');define('P_DUMP_FLOATCOLOR','darkblue');define('P_DUMP_NUMSTRINGCOLOR','#c0c');define('P_DUMP_STRINGCOLOR','darkgreen');define('P_DUMP_RESSCOLOR','#aa0');define('P_DUMP_NULLCOLOR','#aaa');define('P_DUMP_BOOLTRUECOLOR','#0c0');define('P_DUMP_BOOLFALSECOLOR','red');define('P_DUMP_OBJECTCOLOR','auto');define('P_DUMP_PADDINGLEFT','25px');define('P_DUMP_WIDTH','');function pr($a,$b=false){if($b===true){return print_r($a,true);}else{echo print_r($a,true);return '';}}function pDumpTxt($a=null){$d='';if(is_int($a)){$d.='<small><em>entier</em></small> <span style="color:'.P_DUMP_INTCOLOR.';">'.$a.'</span>';}elseif(is_float($a)){$d.='<small><em>décimal</em></small> <span style="color:'.P_DUMP_FLOATCOLOR.';">'.$a.'</span>';}elseif(is_numeric($a)){$d.='<small><em>chaîne numÃ©rique</em> ('.strlen($a).')</small> <span style="color:'.P_DUMP_NUMSTRINGCOLOR.';">\''.$a.'\'</span>';}elseif(is_string($a)){$d.='<small><em>chaîne</em> ('.strlen($a).')</small> <span style="color:'.P_DUMP_STRINGCOLOR.';">\''.htmlspecialchars($a).'\'</span>';}elseif(is_resource($a)){$d.='<small><em>ressource</em></small> <span style="color:'.P_DUMP_RESSCOLOR.';">'.get_resource_type($a).'</span>';}elseif(is_null($a)){$d.='<span style="color: '.P_DUMP_NULLCOLOR.';">null</span>';}elseif(is_bool($a)){$d.='<span style="color: '.($a===true?P_DUMP_BOOLTRUECOLOR:P_DUMP_BOOLFALSECOLOR).';">'.($a===true?'true':'false').'</span>';}elseif(is_object($a)){$d.='<div style="color:'.P_DUMP_OBJECTCOLOR.';"><small>';ob_start();var_dump($a);$e=ob_get_clean();$d.=$e.'</small></div>';}elseif(is_array($a)){$d.='<em>tableau</em> {'.p_dump($a).'}';}else{$d.=$a;}return $d;}function p_dump($f){$d='<div class="p_dump" style="height:auto;min-height:0;margin: 0 auto;'.(P_DUMP_WIDTH?'max-width: '.P_DUMP_WIDTH.';':'').' min-height: 20px;">';$d.='<pre style="height:auto;min-height:0;">';if(!is_array($f)){$d.='<div style="margin-left: 0;">';$d.=pDumpTxt($f);$d.='</div>';}else{$d.='<div style="height:auto;min-height:0;padding-left: '.P_DUMP_PADDINGLEFT.';">';foreach($f as $g=>$a){$d.='<div style="height:auto;min-height:0;">';if(is_int($g)){$d.='<span style="color:'.P_DUMP_INTCOLOR.';">'.$g.'</span>';}else{$d.='<span style="color:'.P_DUMP_STRINGCOLOR.';">\''.$g.'\'</span>';}$d.=' => ';$d.=pDumpTxt($a);$d.='</div>';}$d.='</div>';}$d.='</pre></div>';return $d;}
-//function remove_comments(&$a){$b=explode("\n",$a);$a="";$c=count($b);$d=false;for($e=0;$e<$c;$e++){if(preg_match("/^\/\*/",preg_quote($b[$e]))){$d=true;}if(!$d){$a.=$b[$e]."\n";}if(preg_match("/\*\/$/",preg_quote($b[$e]))){$d=false;}}unset($b);return $a;}
-//function remove_remarks($f){$b=explode("\n",$f);$f="";$c=count($b);$a="";for($e=0;$e<$c;$e++){if(($e!=($c-1))||(strlen($b[$e])>0)){if(isset($b[$e][0])&&$b[$e][0]!="#"){$a.=$b[$e]."\n";}else{$a.="\n";}$b[$e]="";}}return $a;}
-//function split_sql_file($f,$g){$h=explode($g,$f);$f="";$a=array();$k=array();$l=count($h);for($e=0;$e<$l;$e++){if(($e!=($l-1))||(strlen($h[$e]>0))){$m=preg_match_all("/'/",$h[$e],$k);$n=preg_match_all("/(?<!\\\\)(\\\\\\\\)*\\\\'/",$h[$e],$k);$o=$m-$n;if(($o%2)==0){$a[]=$h[$e];$h[$e]="";}else{$p=$h[$e].$g;$h[$e]="";$q=false;for($r=$e+1;(!$q&&($r<$l));$r++){$m=preg_match_all("/'/",$h[$r],$k);$n=preg_match_all("/(?<!\\\\)(\\\\\\\\)*\\\\'/",$h[$r],$k);$o=$m-$n;if(($o%2)==1){$a[]=$p.$h[$r];$h[$r]="";$p="";$q=true;$e=$r;}else{$p.=$h[$r].$g;$h[$r]="";}}}}}return $a;}
-//function get_query_from_file($a){$b=@fread(@fopen($a,'r'),@filesize($a))or die('problem ');$b=remove_remarks($b);$b=split_sql_file($b,';');$b=array_map('trim',$b);return $b;}
+
+
+
+
 
 class Colors{private $a=array();private $b=array();public function __construct(){$this->a['black']='0;30';$this->a['dark_gray']='1;30';$this->a['blue']='0;34';$this->a['light_blue']='1;34';$this->a['green']='0;32';$this->a['light_green']='1;32';$this->a['cyan']='0;36';$this->a['light_cyan']='1;36';$this->a['red']='0;31';$this->a['light_red']='1;31';$this->a['purple']='0;35';$this->a['light_purple']='1;35';$this->a['brown']='0;33';$this->a['yellow']='1;33';$this->a['light_gray']='0;37';$this->a['white']='1;37';$this->b['black']='40';$this->b['red']='41';$this->b['green']='42';$this->b['yellow']='43';$this->b['blue']='44';$this->b['magenta']='45';$this->b['cyan']='46';$this->b['light_gray']='47';}public function getColoredString($d){return $d;/*$g="";if(isset($this->a[$e])){$g.="\033[".$this->a[$e]."m";}if(isset($this->b[$f])){$g.="\033[".$this->b[$f]."m";}$g.=$d."\033[0m";return $g;*/}public function getForegroundColors(){return array_keys($this->a);}public function getBackgroundColors(){return array_keys($this->b);}}
 
@@ -90,55 +95,6 @@ $datetime = (object) array('date'=>$date);
 $nbreq = 0;
 
 
-/****************************/
-/****************************/
-/** RESAUVEGARDE DE LA BDD **/
-/****************************/
-/****************************/
-// $newreq = get_query_from_file('new.sql');
-// foreach ($newreq as $v) { $new->noRes($v); $nbreq++; }
-/****************************/
-/****************************/
-/****************************/
-/****************************/
-
-
-/*
-$line = ReadStdin('Faire un dump de la base de données ? [oui] ', array('','o','oui','n','non'), '1');
-$line = ($line === 'oui'
-		? 'o'
-		: ($line === 'non'
-			? 'n'
-			: $line));
-$line = (int) ($line === 'o');
-//$line = stream_get_line(STDIN, 1, "\n");
-showtime($temp_time, '');
-//$line = 1;
-if ((int)$line) {
-	showtime($temp_time, 'Exécution de la commande Symfony2 pour refaire le schéma à partir des entités...');
-	$r = shell_exec('php ../bin/console doctrine:schema:update --force');
-	if ($r) {
-		$r = str_replace(array("\r","\n"),array('',''),$r);
-		$r = trim($r);
-		showtime($temp_time, 'Terminé : '.$r.'');
-	} else {
-		showtime($temp_time, 'Terminé ');
-	}
-	showtime($temp_time, 'Exécution de la commande mysqldump pour sauvegarder le schéma dans "new.sql"...');
-	$r = shell_exec('mysqldump -u root --database corahn_rin --skip-comments -d -q -Q --result-file=new.sql');
-	if ($r) {
-		$r = str_replace(array("\r","\n"),array('',''),$r);
-		$r = trim($r);
-		showtime($temp_time, 'Terminé : '.$r.'');
-	} else {
-		showtime($temp_time, 'Terminé ');
-	}
-	unset($r);
-}
-// $new->noRes(file_get_contents('new.sql'));
-
-
-*/
 $del = ReadStdin('Supprimer la bdd ? [o/N]', array('o','n'), 'n');
 if (preg_match('#^o#isUu', $del)) {$del = 'o';} else { $del = 'n'; }
 if ($del === 'o') {

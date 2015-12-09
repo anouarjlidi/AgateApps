@@ -19,5 +19,5 @@ L.CRS.Direct = L.Util.extend({}, L.CRS.Simple, {
     code: 'Direct',
 
     projection: L.Projection.NoWrap,
-    transformation: new L.Transformation(1, 0, -1, 0)
+    transformation: new L.Transformation(1, 0, 1, 0)
 });
