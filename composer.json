@@ -56,7 +56,7 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::removeSymfonyStandardFiles",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget",
             "npm install",
-            "./node_modules/.bin/gulp dump"
+            "node_modules/.bin/gulp dump --prod"
         ],
         "post-update-cmd": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
@@ -67,12 +67,12 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::removeSymfonyStandardFiles",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget",
             "npm update && npm shrinkwrap",
-            "./node_modules/.bin/gulp dump"
+            "node_modules/.bin/gulp dump"
         ]
     },
     "config": {
         "bin-dir": "bin",
-        "autoloader-suffix": "EsterenSf2"
+        "autoloader-suffix": "EsterenPortal"
     },
     "extra": {
         "symfony-app-dir": "app",
