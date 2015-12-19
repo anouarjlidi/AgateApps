@@ -84,3 +84,12 @@ For this, you will have to allow `127.0.0.1` as a valid origin.
 
 The same kind of requirement is also added to `PierstovalApiBundle` so be sure you don't face any issue in debugging
  the webservices results.
+
+## Problems that you may encounter
+
+If CORS requests fail, be sure that all domains are set.
+
+Also, make sure that `always_populate_raw_post_data` is set to `-1` because Ajax requests are made with a raw payload
+encoded in JSON, and some PHP configurations need this to avoid populating the `$HTTP_RAW_POST_DATA` var, which is
+deprecated, and the deprecation may trigger an error that would send text to the browser before sending the response,
+and not allow the application to send the correct CORS headers.
