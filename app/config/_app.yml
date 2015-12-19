@@ -157,12 +157,6 @@ nelmio_cors:
                 - "^%esteren_domains.corahn_rin%$"
                 - "^%esteren_domains.esteren_maps%$"
 
-# TODO: Remove this and find a better way to handle translations
-lexik_translation:
-    fallback_locale: "%locale%"
-    managed_locales: "%locales%"
-    base_layout: easy_admin/translation_layout.html.twig
-
 # Used in EasyAdmin's ckeditor fields
 ivory_ck_editor:
     input_sync: true

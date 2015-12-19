@@ -1,5 +1,4 @@
 {#
-
 This theme is imported from Bootstrap's code.
 
 It's supposed to show every component from bootstrap,
@@ -69,7 +68,7 @@ It's supposed to show every component from bootstrap,
 </nav>
 
 
-{% include '_theme/_bootstrap_whole_theme.html.twig' %}
+{{ include('_theme/_bootstrap_whole_theme.html.twig') }}
 
 <script type="text/javascript" src="{{ path('pierstoval_tools_assets_jstranslations', {"_locale": app.request.locale}) }}"></script>
 <script type="text/javascript" src="{{ asset('js/jquery.js') }}"></script>

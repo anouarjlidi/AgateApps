@@ -23,7 +23,6 @@ class AppKernel extends Kernel
             new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new JavierEguiluz\Bundle\EasyAdminBundle\EasyAdminBundle(),
-            new Lexik\Bundle\TranslationBundle\LexikTranslationBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
 
             // Application global

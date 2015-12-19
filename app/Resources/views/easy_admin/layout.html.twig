@@ -1,6 +1,1 @@
 {% extends '@EasyAdmin/default/layout.html.twig' %}
-
-{% block navigation_items %}
-    {{ parent() }}
-    <li><a href="{{ path('lexik_translation_grid') }}">{{ 'translations.page_title'|trans({}, 'LexikTranslationBundle') }}</a></li>
-{% endblock %}

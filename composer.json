@@ -32,7 +32,6 @@
         "nelmio/cors-bundle": "~1.4",
         "egeloen/ckeditor-bundle": "~3.0",
         "knplabs/knp-menu-bundle": "~2.0",
-        "lexik/translation-bundle": "~2.1",
         "javiereguiluz/easyadmin-bundle": "~1.5",
         "stof/doctrine-extensions-bundle": "~1.1",
 
