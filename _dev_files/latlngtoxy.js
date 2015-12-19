@@ -13,15 +13,15 @@ for (i in markers) {
     if (!markers.hasOwnProperty(i)) { continue; }
     marker = markers[i];
     point = leafletMap.project(marker.getLatLng(), leafletMap.getMaxZoom());// TODO: test with 0 or 1
-    marker._latlng = L.latLng(point.x, point.y);
+    marker._latlng = L.latLng(point.y, point.x);
     //marker._updateEM();
 }
 
 
 // Single test
-//marker = markers[68];
-//latlng = L.latLng([81.28171699935, -130.25390625]);
-//point = leafletMap.project(latlng);
-//latlng = L.latLng(point.x, point.y);
-//marker.setLatLng(latlng);
+marker = markers[68];
+latlng = L.latLng([81.28171699935, -130.25390625]);
+point = leafletMap.project(latlng);
+latlng = L.latLng(point.y, point.x);
+marker._latlng = latlng;
 //marker._updateEM();
