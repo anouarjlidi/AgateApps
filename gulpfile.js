@@ -165,7 +165,8 @@ gulp.task('watch', function() {
             console.log('File "' + event.path + '" updated');
         },
         i;
-    console.info('Watch start at ' + (new Date));
+
+    console.info('Night gathers, and now my watch begins...');
 
     for (i in config.less) {
         if (!config.less.hasOwnProperty(i)) { continue; }
