@@ -138,12 +138,14 @@ nelmio_cors:
             origin_regex: true
             allow_origin:
                 - "^(https?://)?%esteren_domains.api%"
+                - "^(https?://)?%esteren_domains.esteren_maps%"
                 - "^(https?://)?%esteren_domains.backoffice%"
             allow_headers: ["Origin","Accept","Content-Type"]
             allow_methods: ["POST","GET","DELETE","PUT","OPTIONS"]
             max_age: 3600
             hosts:
                 - "%esteren_domains.api%"
+                - "%esteren_domains.esteren_maps%"
                 - "%esteren_domains.backoffice%"
 
 # Used in EasyAdmin's ckeditor fields
