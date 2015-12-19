@@ -34,7 +34,7 @@ framework:
     translator:      { fallbacks: %locales% } # Activate translator
     # Add cookie domain as trusted host because requests are made with CORS
     trusted_hosts:
-        - "^[a-z]+\%esteren_domains.cookiedomain%$"
+        - "^[a-z]+\\%esteren_domains.cookiedomain%$"
 
     session:
         cookie_domain: "%esteren_domains.cookieDomain%"
@@ -59,9 +59,9 @@ twig:
         esteren_domains_api: "%esteren_domains.api%"
         esteren_domains_cookieDomain: "%esteren_domains.cookieDomain%"
     form_themes:
-        - "PierstovalToolsBundle:Form:form_div_layout.html.twig"
-        - "PierstovalToolsBundle:Form:fields.html.twig"
-        - "PierstovalToolsBundle:Form:form_errors.html.twig"
+        - "@PierstovalTools/Form/form_div_layout.html.twig"
+        - "@PierstovalTools/Form/fields.html.twig"
+        - "@PierstovalTools/Form/form_errors.html.twig"
 
 # Doctrine Configuration
 doctrine:
@@ -112,10 +112,7 @@ stof_doctrine_extensions:
 # TODO: Refactor this and use a better method to generate WS based on entities
 pierstoval_api:
     allowed_origins:
-#        - "127.0.0.1" # Use this in local/dev
-        - "%esteren_domains.corahn_rin%"
         - "%esteren_domains.esteren_maps%"
-        - "%esteren_domains.portal%"
         - "%esteren_domains.backoffice%"
         - "%esteren_domains.api%"
     services:
@@ -131,7 +128,7 @@ pierstoval_api:
 orbitale_cms:
     layouts:
         front:
-            resource: "::base.html.twig"
+            resource: "base.html.twig"
 
 # CORS management
 nelmio_cors:
@@ -140,22 +137,14 @@ nelmio_cors:
             allow_credentials: true
             origin_regex: true
             allow_origin:
-#                - "127.0.0.1 # Use this in local/dev
-                - "^https?://%esteren_domains.api%"
-                - "^https?://%esteren_domains.portal%"
-                - "^https?://%esteren_domains.backoffice%"
-                - "^https?://%esteren_domains.corahn_rin%"
-                - "^https?://%esteren_domains.esteren_maps%"
+                - "^(https?://)?%esteren_domains.api%"
+                - "^(https?://)?%esteren_domains.backoffice%"
             allow_headers: ["Origin","Accept","Content-Type"]
             allow_methods: ["POST","GET","DELETE","PUT","OPTIONS"]
             max_age: 3600
             hosts:
-#                - "127.0.0.1" # Use this in local/dev
-                - "^%esteren_domains.api%$"
-                - "^%esteren_domains.portal%$"
-                - "^%esteren_domains.backoffice%$"
-                - "^%esteren_domains.corahn_rin%$"
-                - "^%esteren_domains.esteren_maps%$"
+                - "%esteren_domains.api%"
+                - "%esteren_domains.backoffice%"
 
 # Used in EasyAdmin's ckeditor fields
 ivory_ck_editor:
@@ -181,7 +170,7 @@ services:
     framework_controller:
         class: Symfony\Bundle\FrameworkBundle\Controller\Controller
         calls:
-            - [ "setContainer", [ @service_container ] ]
+            - [ "setContainer", [ "@service_container" ] ]
 
     twig.text_extension:
         class: Twig_Extensions_Extension_Text
