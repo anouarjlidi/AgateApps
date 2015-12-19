@@ -44,7 +44,7 @@
 
     EsterenMap.prototype._mapOptions = {
         id: 0,
-        //crs: 'Direct',
+        crs: 'Direct',
         editMode: false,
         showFilters: true,
         showDirections: true,
