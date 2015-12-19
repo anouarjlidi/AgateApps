@@ -6,8 +6,9 @@ services:
       class: CorahnRin\CorahnRinBundle\Services\Sheets
       arguments:
           sheets_folder: "%kernel.root_dir%/../src/CorahnRin/CorahnRinBundle/SheetsManagers/files"
-          translator: @translator
-          kernel: @kernel
+          translator: "@translator"
+          kernel: "@kernel"
+
   corahn_rin_generator.steps_loader:
       class: CorahnRin\CorahnRinBundle\Steps\StepLoader
       arguments:

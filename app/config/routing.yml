@@ -47,15 +47,6 @@ application_admin:
         _locale: ^(%locales_regex%)$
     host: %esteren_domains.backoffice%
 
-lexik_translation_admin:
-    resource: "@LexikTranslationBundle/Resources/config/routing.yml"
-    prefix:   /{_locale}/translations
-    defaults:
-         _locale: %locale%
-    requirements:
-        _locale: ^(%locales_regex%)$
-    host: %esteren_domains.backoffice%
-
 #-----------------------------------
 # Portal routing. MUST be at the end, because it's an OrbitaleCms routing,
 #   and therefore has many dynamic urls that will come as "fallback" to any other

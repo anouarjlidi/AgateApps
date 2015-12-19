@@ -1,3 +1,4 @@
+
 /**
  * Here we absolutely need the canvas to be infinite.
  * This is why we create a specific CRS to handle latitudes and longitudes beyond -90/+90 and -180/+180 limits.
@@ -17,7 +18,6 @@ L.Projection.NoWrap = {
 
 L.CRS.Direct = L.Util.extend({}, L.CRS.Simple, {
     code: 'Direct',
-
     projection: L.Projection.NoWrap,
     transformation: new L.Transformation(1, 0, 1, 0)
 });

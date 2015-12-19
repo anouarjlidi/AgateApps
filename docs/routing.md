@@ -24,8 +24,7 @@ The routing load order is the following:
 * PierstovalTools' `AssetsController`, which allows loading a javascript file containing translations (and caching it).
  Also available for all subdomains.
 * PierstovalApi's webservices, all loaded under the `%esteren_domains.api%` host.
-* Admin routes, under `%esteren_domains.backoffice%` host. Also LexikTranslation's routes that are under EasyAdmin's
- layout to have it accessible in the backend more easily.
+* Admin routes, under `%esteren_domains.backoffice%` host.
 * All other portals, they lie under all subdomains to be handled by OrbitaleCmsBundle ([view below](#cms)).
 
 
