@@ -37,6 +37,9 @@ var config = {
         ]
     },
     "js": {
+        "js/jquery.js": [
+            "web/components/jquery/jquery.js"
+        ],
         "js/global.js": [
             "web/components/bootstrap/js/button.js",
             "web/components/bootstrap/js/collapse.js",
