@@ -1,3 +1,17 @@
+
+// Webserver dir is used by Less to import files, mostly.
+// You should duplicate these parameters when creating new LESS resources in another bundle.
+@webserver-dir: "../../../../../../web";
+@components-dir: "@{webserver-dir}/components";
+
+// Path to the ./web/ directory used for computed resources paths only.
+// Default is "../" because the css is outputted to web/css/
+@web-dir: "../";
+
+@import (inline) "@{components-dir}/leaflet/dist/leaflet.css";
+@import (inline) "@{components-dir}/leaflet-draw/dist/leaflet.draw.css";
+@import (inline) "@{components-dir}/leaflet-sidebar/src/L.Control.Sidebar.css";
+
 #map {
     background-color: black;
 }

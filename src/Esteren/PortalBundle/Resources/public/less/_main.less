@@ -1,13 +1,18 @@
+
+// Webserver dir is used by Less to import files, mostly.
+// You should duplicate these parameters when creating new LESS resources in another bundle.
+@webserver-dir: "../../../../../../web";
+@components-dir: "@{webserver-dir}/components";
+
+// Path to the ./web/ directory used for computed resources paths only.
+// Default is "../" because the css is outputted to web/css/
+@web-dir: "../";
+
 // Loads the whole bootstrap
 @import "bootstrap.less";
 
-// Load fontawesome variables so that we can also
-// use icons for custom use
-@import "../../../../../../web/components/fontawesome/less/variables.less";
-
-// Variables & mixins customs
-@import "variables.less";
-@import "mixins.less";
+// Load fontawesome variables so that we can also use icons for custom use
+@import "@{components-dir}/fontawesome/less/variables.less";
 
 // Extending bootstrap
 @import "bootstrap-more.less";

@@ -1,19 +1,27 @@
+// This file is mostly as standalone so we can use it in inherited templates.
 
-@import "variables.less";
+// Webserver dir is used by Less to import files, mostly.
+// You should duplicate these parameters when creating new LESS resources in another bundle.
+@webserver-dir: "../../../../../../web";
+@components-dir: "@{webserver-dir}/components";
 
-@import "../../../../../../web/components/fontawesome/less/variables.less";
+// Path to the ./web/ directory used for computed resources paths only.
+// Default is "../" because the css is outputted to web/css/
+@web-dir: "../";
 
-// Override fonts directory
+@import "@{components-dir}/fontawesome/less/variables.less";
+
+// Override fonts computed directory to fit our needs
 @fa-font-path: "@{web-dir}/components/fontawesome/fonts/";
 
-@import "../../../../../../web/components/fontawesome/less/mixins.less";
-@import "../../../../../../web/components/fontawesome/less/path.less";
-@import "../../../../../../web/components/fontawesome/less/core.less";
-@import "../../../../../../web/components/fontawesome/less/larger.less";
-@import "../../../../../../web/components/fontawesome/less/fixed-width.less";
-@import "../../../../../../web/components/fontawesome/less/list.less";
-@import "../../../../../../web/components/fontawesome/less/bordered-pulled.less";
-@import "../../../../../../web/components/fontawesome/less/animated.less";
-@import "../../../../../../web/components/fontawesome/less/rotated-flipped.less";
-@import "../../../../../../web/components/fontawesome/less/stacked.less";
-@import "../../../../../../web/components/fontawesome/less/icons.less";
+@import "@{components-dir}/fontawesome/less/mixins.less";
+@import "@{components-dir}/fontawesome/less/path.less";
+@import "@{components-dir}/fontawesome/less/core.less";
+@import "@{components-dir}/fontawesome/less/larger.less";
+@import "@{components-dir}/fontawesome/less/fixed-width.less";
+@import "@{components-dir}/fontawesome/less/list.less";
+@import "@{components-dir}/fontawesome/less/bordered-pulled.less";
+@import "@{components-dir}/fontawesome/less/animated.less";
+@import "@{components-dir}/fontawesome/less/rotated-flipped.less";
+@import "@{components-dir}/fontawesome/less/stacked.less";
+@import "@{components-dir}/fontawesome/less/icons.less";

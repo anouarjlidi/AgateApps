@@ -21,17 +21,11 @@ var config = {
         "css/global.css": [
             "src/Esteren/PortalBundle/Resources/public/less/_main.less"
         ],
-        "css/maps_less.css": [
-            "src/EsterenMaps/MapsBundle/Resources/public/css/maps.less"
+        "css/maps_lib.css": [
+            "src/EsterenMaps/MapsBundle/Resources/public/less/maps.less"
         ]
     },
     "css": {
-        "css/maps_lib.css": [
-            "web/components/leaflet/dist/leaflet.css",
-            "web/components/leaflet-draw/dist/leaflet.draw.css",
-            "web/components/leaflet-sidebar/src/L.Control.Sidebar.css",
-            "web/css/maps_less.css"
-        ],
         "css/generator.css": [
             "src/CorahnRin/CorahnRinBundle/Resources/public/generator/css/*.css"
         ]
