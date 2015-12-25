@@ -8,7 +8,7 @@
 <style type="text/css" id="map_add_style"></style>
 {% endblock %}
 
-{% block page_title %}{{ 'admin.edit_map' | trans({},'EsterenMaps') }} {{ map.name | trans }} - {{ parent() }}{% endblock %}
+{% block page_title %}{{ 'admin.edit_map' | trans({},'EsterenMaps') }} {{ map.name }} - {{ parent() }}{% endblock %}
 
 {% block content %}
     <div class="row">
@@ -68,6 +68,7 @@
                 try {
                     d.map = new EsterenMap({
                         id: {{ map.id }},
+                        //crs: 'Direct',
                         editMode: true,
                         showDirections: false,
                         imgUrl: "{{ asset('bundles/esterenmaps/img') }}",
@@ -93,7 +94,7 @@
                             {% endif %#}
                         },
                         autoResize: true,
-                        containerHeight: '100%'
+                        containerHeight: 'calc(100% - 80px)'
                     });
                 } catch (e) {
                     console.error(e);

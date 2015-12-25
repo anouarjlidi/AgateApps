@@ -1,6 +1,6 @@
 {% extends "::base.html.twig" %}
 
-{% block title %}{{ 'Carte' | trans }} {{ map.name | trans }} - {{ parent() }}{% endblock %}
+{% block title %}{{ 'Carte' | trans }} {{ map.name }} - {{ parent() }}{% endblock %}
 
 {% block footer '' %}
 
@@ -29,6 +29,7 @@
             try {
                 d.map = new EsterenMap({
                     id: {{ map.id }},
+                    crs: 'Direct',
                     apiUrls: {
                         base: "http://{{ esteren_domains_api }}/{{ app.request.locale }}",
                         settings: "{{ url('esterenmaps_api_maps_settings_distant', {"id":map.id}) }}",

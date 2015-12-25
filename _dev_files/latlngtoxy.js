@@ -31,7 +31,6 @@ for (i in polylines) {
         point = transformation._transform(point);
         list[i] = L.latLng(point.x, point.y);
     }
-    polyline.setLatLngs(list);
     polyline._latlngs = list;
     //polyline._updateEM();
 }
