@@ -44,6 +44,7 @@
 
     EsterenMap.prototype._mapOptions = {
         id: 0,
+        crs: 'XY',
         editMode: false,
         showFilters: true,
         showDirections: true,
@@ -92,7 +93,7 @@
             maxZoom: 1,
             maxNativeZoom: 1,
             tileSize: 168,
-            noWrap: true,
+            noWrap: false,
             continuousWorld: true
         }
     };

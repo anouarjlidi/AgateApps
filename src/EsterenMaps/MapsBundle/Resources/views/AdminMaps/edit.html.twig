@@ -1,4 +1,4 @@
-{% extends "@EasyAdmin/default/layout.html.twig" %}
+{% extends "easy_admin/layout.html.twig" %}
 
 {% block body_id 'esterenmap_edit' %}
 
@@ -23,19 +23,19 @@
 
                         <ul class="list-inline">
                             <li data-toggle="tooltip">
-                                <button data-toggle-class="btn-default btn-inverse" id="hide_zones" class="btn btn-default" type="button">
+                                <button data-toggle-class="btn-info btn-inverse" id="hide_zones" class="btn btn-info" type="button">
                                     <span class="fa fa-eye"></span>
                                     {{ 'entities.zones.title' | trans({}, 'EsterenMaps') }}
                                 </button>
                             </li>
                             <li data-toggle="tooltip">
-                                <button data-toggle-class="btn-default btn-inverse" id="hide_routes" class="btn btn-default" type="button">
+                                <button data-toggle-class="btn-info btn-inverse" id="hide_routes" class="btn btn-info" type="button">
                                     <span class="fa fa-eye"></span>
                                     {{ 'entities.routes.title' | trans({}, 'EsterenMaps') }}
                                 </button>
                             </li>
                             <li data-toggle="tooltip">
-                                <button data-toggle-class="btn-default btn-inverse" id="hide_markers" class="btn btn-default" type="button">
+                                <button data-toggle-class="btn-info btn-inverse" id="hide_markers" class="btn btn-info" type="button">
                                     <span class="fa fa-eye"></span>
                                     {{ 'entities.markers.title' | trans({}, 'EsterenMaps') }}
                                 </button>
@@ -68,7 +68,6 @@
                 try {
                     d.map = new EsterenMap({
                         id: {{ map.id }},
-                        //crs: 'Direct',
                         editMode: true,
                         showDirections: false,
                         imgUrl: "{{ asset('bundles/esterenmaps/img') }}",
@@ -86,8 +85,7 @@
                         LeafletLayerBaseOptions: {
                             maxZoom: {{ map.maxZoom }},
                             maxNativeZoom: {{ map.maxZoom }},
-                            tileSize: {{ tile_size }},
-                            noWrap: false,
+                            tileSize: {{ tile_size }}
                             {# Have to wait until bounds are supported in CANVAS mode #}
                             {#% if map.jsonBounds|length %},
                             bounds: {{ map.bounds|raw }}

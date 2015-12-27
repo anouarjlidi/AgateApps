@@ -7,22 +7,13 @@
  * @see http://leafletjs.com/reference.html#transformation
  */
 
-L.Projection.NoWrap = {
-    project: function (latlng) {
-        return new L.Point(latlng.lng, latlng.lat);
-    },
-    unproject: function (point, unbounded) {
-        return new L.LatLng(point.x, point.y, true);
-    }
-};
-
 /**
  * Transformation: Represents an affine transformation: a set of coefficients a, b, c, d for transforming a point of a
  * form (x, y) into (a*x + b, c*y + d) and doing the reverse.
  * (copy/paste from Leaflet documentation)
  */
-L.CRS.Direct = L.Util.extend({}, L.CRS.Simple, {
-    code: 'Direct',
-    projection: L.Projection.NoWrap,
+L.CRS.XY = L.Util.extend({}, L.CRS.Simple, {
+    code: 'XY',
+    projection: L.Projection.LonLat,
     transformation: new L.Transformation(1, 0, 1, 0)
 });

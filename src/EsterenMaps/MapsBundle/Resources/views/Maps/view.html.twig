@@ -29,7 +29,6 @@
             try {
                 d.map = new EsterenMap({
                     id: {{ map.id }},
-                    crs: 'Direct',
                     apiUrls: {
                         base: "http://{{ esteren_domains_api }}/{{ app.request.locale }}",
                         settings: "{{ url('esterenmaps_api_maps_settings_distant', {"id":map.id}) }}",
@@ -38,16 +37,14 @@
                     LeafletMapBaseOptions: {
                         zoom: {{ map.startZoom }},
                         maxZoom: {{ map.maxZoom }}
-                        {#TODO: fix this. Disabled for dev purposes, to be changed.#}
-                        {#% if map.jsonBounds|length %},
+                        {% if map.jsonBounds|length %},
                         maxBounds: {{ map.bounds|raw }}
-                        {% endif %#}
+                        {% endif %}
                     },
                     LeafletLayerBaseOptions: {
                         maxZoom: {{ map.maxZoom }},
                         maxNativeZoom: {{ map.maxZoom }},
-                        tileSize: {{ tile_size }},
-                        noWrap: false
+                        tileSize: {{ tile_size }}
                         {# Have to wait until bounds are supported in CANVAS mode #}
                         {#% if map.jsonBounds|length %},
                         bounds: {{ map.bounds|raw }}
