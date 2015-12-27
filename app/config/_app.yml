@@ -12,7 +12,7 @@ imports:
     - { resource: _easy_admin.yml }
 
 parameters:
-    version_code: 0.6.0
+    version_code: 0.6.0-dev
     version_date: 27/12/2015
     locale: fr
     locales: [ fr, en ]
