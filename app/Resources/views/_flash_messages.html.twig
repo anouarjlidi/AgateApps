@@ -1,3 +1,4 @@
+{% spaceless %}
 {% set messages = (messages is defined ? messages : null) %}
 {% for key, messageList in messages %}
 
@@ -19,3 +20,4 @@
         {% endfor %}
     </div>
 {% endfor %}
+{% endspaceless %}

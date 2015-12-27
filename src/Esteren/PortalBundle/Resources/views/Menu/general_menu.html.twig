@@ -1,3 +1,4 @@
+{% spaceless %}
 {% if locale is not defined %}
     {% set locale = app.request.attributes.get('_locale') %}
 {% endif %}
@@ -44,3 +45,4 @@
         <!--/.nav-collapse -->
     </div>
 </div><!--/.navbar.navbar-default-->
+{% endspaceless %}
