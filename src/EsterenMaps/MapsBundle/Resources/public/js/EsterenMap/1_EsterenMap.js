@@ -84,6 +84,8 @@
 
         if (mapOptions.crs && !mapOptions.LeafletMapBaseOptions.crs && L.CRS[mapOptions.crs]) {
             mapOptions.LeafletMapBaseOptions.crs = L.CRS[mapOptions.crs];
+        } else if (mapOptions.crs && !L.CRS[mapOptions.crs]) {
+            console.warn('Could not find CRS "'+mapOptions.crs+'".');
         }
 
         // Création de la map
@@ -168,8 +170,10 @@
 
     };
 
-    EsterenMap.prototype.message = function(message, type, messageElement) {
+    EsterenMap.prototype.message = function(message, type, messageElement, disappearTimeout) {
         var element;
+
+        disappearTimeout = disappearTimeout || 4000;
 
         if (!messageElement) {
             if (this._messageElement) {
@@ -197,11 +201,11 @@
         setTimeout(function() {
             // Hide smoothly the element with css transitions
             element.className += ' h';
-        }, 4000);
+        }, disappearTimeout);
         setTimeout(function() {
             // Definitely remove the element from the flow
             messageElement.removeChild(element);
-        }, 5000);
+        }, disappearTimeout + 1000);
     };
 
     EsterenMap.prototype.disableEditedElements = function(){
