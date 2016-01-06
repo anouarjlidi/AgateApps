@@ -118,6 +118,14 @@ class Maps
     protected $bounds = '[]';
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="coordinates_ratio", type="smallint", options={"default":1})
+     * @Expose
+     */
+    protected $coordinatesRatio = 1;
+
+    /**
      * @var Routes[]
      *
      * @ORM\OneToMany(targetEntity="Routes", mappedBy="map")
@@ -592,6 +600,24 @@ class Maps
     {
         $this->bounds = $bounds;
 
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCoordinatesRatio()
+    {
+        return $this->coordinatesRatio;
+    }
+
+    /**
+     * @param int $coordinatesRatio
+     * @return Maps
+     */
+    public function setCoordinatesRatio($coordinatesRatio)
+    {
+        $this->coordinatesRatio = $coordinatesRatio;
         return $this;
     }
 
