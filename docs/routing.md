@@ -4,6 +4,7 @@
 * [Documentation](../README.md)
 * [Routing](routing.md)
 * [General technical informations](technical.md)
+* [Set up a vhost](vhosts.md)
 * [API / webservices](api.md)
 * [Esteren Maps library](maps.md)
 
