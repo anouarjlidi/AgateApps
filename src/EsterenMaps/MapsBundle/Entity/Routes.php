@@ -480,8 +480,6 @@ class Routes
      */
     public function calcDistance()
     {
-        $baseDistance = $this->distance;
-
         $distance = 0;
         $points   = json_decode($this->coordinates, true);
 
@@ -511,16 +509,15 @@ class Routes
         $distance = $this->map->getCoordinatesRatio() * $distance;
 
         /**
-         * This trick truncates the numbers, else mysql 5.7 would throw a warning.
+         * The "substr" trick truncates the numbers, else mysql 5.7 would throw a warning.
          * This parameter should depend on the "precision" specified in the $distance property.
          * @see Routes::$distance
          */
-        $checkBaseDistance = (float) substr($baseDistance, 12);
-        $checkNewDistance = (float) substr($distance, 12);
+        $floatPrecision = 12;
 
-        $distance = (float) substr($distance, 12);
+        $distance = (float) substr($distance, 0, $floatPrecision);
 
-        if ($checkBaseDistance !== $checkNewDistance) {
+        if ($distance !== (float) substr($this->distance, 0, $floatPrecision)) {
             $this->distance = $distance;
         }
 
