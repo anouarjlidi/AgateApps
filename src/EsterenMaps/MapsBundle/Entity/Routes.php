@@ -487,6 +487,7 @@ class Routes
 
         reset($points);
 
+        // Use classic Pythagore's theorem to calculate distances.
         while ($current = current($points)) {
             $next = next($points);
             if (false !== $next) {
@@ -506,9 +507,18 @@ class Routes
             }
         }
 
-        // This silly tricks makes sure that the floats are different
-        $checkBaseDistance = number_format(((floor($baseDistance * pow(10, 10))) / pow(10, 10)), 11, '.', '');
-        $checkNewDistance = number_format(((floor($distance * pow(10, 10))) / pow(10, 10)), 11, '.', '');
+        // Apply map ratio to distance.
+        $distance = $this->map->getCoordinatesRatio() * $distance;
+
+        /**
+         * This trick truncates the numbers, else mysql 5.7 would throw a warning.
+         * This parameter should depend on the "precision" specified in the $distance property.
+         * @see Routes::$distance
+         */
+        $checkBaseDistance = (float) substr($baseDistance, 12);
+        $checkNewDistance = (float) substr($distance, 12);
+
+        $distance = (float) substr($distance, 12);
 
         if ($checkBaseDistance !== $checkNewDistance) {
             $this->distance = $distance;
