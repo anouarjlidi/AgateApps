@@ -1,6 +1,9 @@
 
 {% if path|length %}
     <h3>{{ 'Itinéraire' }} :</h3>
+    <p>
+        <strong>{{ 'Distance' | trans }} :</strong> {{ total_distance }}
+    </p>
     <ul style="color: black;">
         {% for i, marker in path if marker.route %}
             <li>
@@ -10,7 +13,8 @@
                     <strong>{{ 'Escale' | trans }} :</strong>
                 {% endif %}
                 {{ marker.name }}<br>
-                <strong>{{ 'Route' | trans }} :</strong> {{ marker.route.name }}
+                <strong>{{ 'Route' | trans }} :</strong> {{ marker.route.name }}<br>
+                <strong>{{ 'Distance' | trans }} :</strong> {{ marker.route.distance }}
             </li>
         {% endfor %}
 
