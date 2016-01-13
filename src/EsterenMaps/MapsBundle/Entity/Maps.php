@@ -7,8 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
-use JMS\Serializer\Annotation\ExclusionPolicy as ExclusionPolicy;
-use JMS\Serializer\Annotation\Expose as Expose;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
 use JMS\Serializer\Annotation\VirtualProperty;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="maps")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="EsterenMaps\MapsBundle\Repository\MapsRepository")
  * @ExclusionPolicy("all")
  * @Gedmo\Uploadable(allowOverwrite=true, filenameGenerator="SHA1")
  */
@@ -126,7 +126,7 @@ class Maps
     protected $coordinatesRatio = 1;
 
     /**
-     * @var Routes[]
+     * @var Routes[]|ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="Routes", mappedBy="map")
      * @Expose
@@ -134,7 +134,7 @@ class Maps
     protected $routes;
 
     /**
-     * @var Markers[]
+     * @var Markers[]|ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="Markers", mappedBy="map")
      * @Expose
@@ -142,7 +142,7 @@ class Maps
     protected $markers;
 
     /**
-     * @var Zones[]
+     * @var Zones[]|ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="Zones", mappedBy="map")
      * @Expose
@@ -309,7 +309,7 @@ class Maps
     /**
      * Get routes
      *
-     * @return Routes[]
+     * @return Routes[]|ArrayCollection
      */
     public function getRoutes()
     {
@@ -383,7 +383,7 @@ class Maps
     /**
      * Get markers
      *
-     * @return Markers[]
+     * @return Markers[]|ArrayCollection
      */
     public function getMarkers()
     {
@@ -492,7 +492,7 @@ class Maps
     /**
      * Get zones
      *
-     * @return Zones[]
+     * @return Zones[]|ArrayCollection
      */
     public function getZones()
     {
