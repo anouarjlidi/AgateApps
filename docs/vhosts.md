@@ -33,7 +33,7 @@ The dist file contains comments about what it does, whereas the vhost does not, 
     ServerAlias back.esteren.dev
     ServerAlias games.esteren.dev
 
-	DocumentRoot /var/www/corahn_rin/web
+    DocumentRoot /var/www/corahn_rin/web
 
     <Directory /var/www/corahn_rin/web>
 
@@ -41,9 +41,9 @@ The dist file contains comments about what it does, whereas the vhost does not, 
         #AddHandler php-cgi .php
         #Action php-cgi /php-fcgi/php56
 
-		AllowOverride all
-		Options Indexes FollowSymLinks MultiViews
-		Require all granted
+        AllowOverride all
+        Options Indexes FollowSymLinks MultiViews
+        Require all granted
 
         ########################
         ##### start symfony conf
@@ -86,11 +86,11 @@ The dist file contains comments about what it does, whereas the vhost does not, 
         ##### end symfony conf
         ########################
 
-	</Directory>
+    </Directory>
 
     # Logs are added automatically to Symfony's log dir
-	ErrorLog /var/www/corahn_rin/app/logs/apache_error.log
-	CustomLog /var/www/corahn_rin/app/logs/apache_access.log combined
+    ErrorLog /var/www/corahn_rin/app/logs/apache_error.log
+    CustomLog /var/www/corahn_rin/app/logs/apache_access.log combined
 
 </VirtualHost>
 ```
@@ -162,3 +162,4 @@ server {
     access_log /var/www/corahn_rin/app/logs/nginx_access.log;
 }
 ```
+
