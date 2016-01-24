@@ -120,7 +120,7 @@ class MapsTilesManager
     {
         if (!$this->img_width || !$this->img_height) {
             // Détermine la taille de l'image initiale une fois et place les attributs dans l'objet
-            $size = getimagesize($this->webDir.'/'.$this->map->getImage());
+            $size = getimagesize($this->map->getImage());
             if (!$size || !isset($size[0]) || !isset($size[1])) {
                 throw new \RunTimeException('Error while retrieving map dimensions');
             }
