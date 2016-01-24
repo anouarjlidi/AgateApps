@@ -66,14 +66,14 @@ The dist file contains comments about what it does, whereas the vhost does not, 
             RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 
             RewriteCond %{ENV:REDIRECT_STATUS} ^$
-            RewriteRule ^app\.php(/(.*)|$) %{ENV:BASE}/$2 [R=301,L]
+            RewriteRule ^app\.php(/(.*)|$) %{ENV:BASE}/$2 [R=302,L]
 
             RewriteCond %{REQUEST_FILENAME} -f
             RewriteRule .? - [L]
 
             RewriteCond %{REQUEST_URI} maps_tiles/ [NC]
             RewriteCond %{REQUEST_FILENAME} !-f
-            RewriteRule .? %{ENV:BASE}/maps_tiles/empty.jpg [L,R=301]
+            RewriteRule .? %{ENV:BASE}/maps_tiles/empty.jpg [L,R=302]
 
             RewriteRule .? %{ENV:BASE}/app.php [L]
         </IfModule>
