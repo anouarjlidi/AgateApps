@@ -66,13 +66,16 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::removeSymfonyStandardFiles",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget",
-            "npm update && npm shrinkwrap",
-            "node node_modules/gulp/bin/gulp.js dump"
+            "npm install",
+            "node node_modules/gulp/bin/gulp.js dump --prod"
         ]
     },
     "config": {
         "bin-dir": "bin",
-        "autoloader-suffix": "EsterenPortal"
+        "autoloader-suffix": "EsterenPortal",
+        "platform": {
+            "php": "5.6"
+        }
     },
     "extra": {
         "symfony-app-dir": "app",
