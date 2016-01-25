@@ -4,15 +4,20 @@ Pages: Pages
 Maps: Cartes
 admin:
     cms:
-        pages: 'CMS - Pages'
+        pages: 'Pages'
+    menu:
+        site: 'Site'
+        esteren_maps: 'Esteren Maps'
+        types: 'Types de référence'
+        transports: 'Transport'
     maps:
-        factions: 'Esteren Maps - Factions'
-        maps: 'Esteren Maps - Cartes'
-        markersTypes: 'Esteren Maps - Types de marqueurs'
-        routesTypes: 'Esteren Maps - Types de routes'
-        zonesTypes: 'Esteren Maps - Types de zones'
-        transportsTypes: 'Esteren Maps - Moyens de transport'
-        transportsModifiers: 'Esteren Maps - Modificateurs de vitesse (transport)'
+        factions: 'Factions'
+        maps: 'Cartes'
+        markersTypes: 'Types de marqueurs'
+        routesTypes: 'Types de routes'
+        zonesTypes: 'Types de zones'
+        transportsTypes: 'Moyens de transport'
+        transportsModifiers: 'Modificateurs de vitesse'
 ID: ID
 tree: "Chemin d'URL"
 links:
