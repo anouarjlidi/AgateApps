@@ -122,16 +122,16 @@ server {
 
     root /var/www/corahn_rin/web;
 
+    # DEV
     location / {
         # try to serve file directly, fallback to app.php
-        try_files $uri /app.php$is_args$args;
+        try_files $uri /app_dev.php$is_args$args;
     }
-
-    # DEV
     location ~ ^/(app_dev|config)\.php(/|$) {
 
         # Check your fastcgi path depending on your environment
-        fastcgi_pass unix:/var/run/php5-fpm.sock;
+        fastcgi_pass unix:/var/run/php5-fpm.sock; # With FPM socket
+        #fastcgi_pass 127.0.0.1:9000;             # With FastCGI / FPM classic
 
         fastcgi_split_path_info ^(.+\.php)(/.*)$;
         include fastcgi_params;
@@ -141,10 +141,15 @@ server {
     }
 
     # PROD
+    location / {
+        # try to serve file directly, fallback to app.php
+        try_files $uri /app.php$is_args$args;
+    }
     location ~ ^/app\.php(/|$) {
 
         # Check your fastcgi path depending on your environment
-        fastcgi_pass unix:/var/run/php5-fpm.sock;
+        fastcgi_pass unix:/var/run/php5-fpm.sock; # With FPM socket
+        #fastcgi_pass 127.0.0.1:9000;             # With FastCGI / FPM classic
 
         fastcgi_split_path_info ^(.+\.php)(/.*)$;
         include fastcgi_params;
