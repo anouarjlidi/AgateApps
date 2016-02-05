@@ -62,7 +62,7 @@ security:
             pattern:            ^/
             anonymous:          ~
             remember_me:
-                key:            "%secret%"
+                secret:         "%secret%"
                 path:           /
                 name:           EsterenRememberMe
                 domain:         "%%esteren_domains.cookiedomain%"
