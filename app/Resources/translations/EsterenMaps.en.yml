@@ -8,3 +8,16 @@ entities:
 
 admin:
     edit_map: 'Edit the map'
+
+travel:
+    duration: '%days% days and %hours% hours'
+    duration_estimated: 'Estimated travel duration'
+    distance: 'Distance'
+    path:
+        start: 'Start'
+        stop: 'Stop'
+        route: 'Route'
+        arrival: 'Arrival'
+    error:
+        no_itinerary: 'No itinerary found...'
+    itinerary: 'Itinerary'

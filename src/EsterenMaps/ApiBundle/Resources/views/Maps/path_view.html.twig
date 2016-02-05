@@ -1,30 +1,33 @@
+{% trans_default_domain 'EsterenMaps' %}
 
 {% if path|length %}
-    <h3>{{ 'Itinéraire' }} :</h3>
+    <h3>{{ 'travel.itinerary' | trans }} :</h3>
     <p>
-        <strong>{{ 'Distance' | trans }} :</strong> {{ total_distance }}
+        <strong>{{ 'travel.distance' | trans }} :</strong> {{ total_distance | localizednumber }}km
+        <br>
+        <strong>{{ 'travel.duration_estimated' | trans }} :</strong> {{ 'travel.duration' | trans({'%days%': duration_real.days, '%hours%': duration_real.hours}) }}
     </p>
     <ul style="color: black;">
         {% for i, marker in path if marker.route %}
             <li>
                 {% if marker.id == start.id %}
-                    <strong>{{ 'Départ' | trans }} :</strong>
+                    <strong>{{ 'travel.path.start' | trans }} :</strong>
                 {% else %}
-                    <strong>{{ 'Escale' | trans }} :</strong>
+                    <strong>{{ 'travel.path.stop' | trans }} :</strong>
                 {% endif %}
                 {{ marker.name }}<br>
-                <strong>{{ 'Route' | trans }} :</strong> {{ marker.route.name }}<br>
-                <strong>{{ 'Distance' | trans }} :</strong> {{ marker.route.distance }}
+                <strong>{{ 'travel.path.route' | trans }} :</strong> {{ marker.route.name }}<br>
+                <strong>{{ 'travel.distance' | trans }} :</strong> {{ marker.route.distance | localizednumber }}km
             </li>
         {% endfor %}
 
         <li>
-            <strong>{{ 'Arrivée' | trans }} :</strong>
+            <strong>{{ 'travel.path.arrival' | trans }} :</strong>
             {{ end.name }}
         </li>
     </ul>
 {% else %}
-    <p class="alert alert-warning" style="color: darkred;">{{ 'Aucun itinéraire trouvé' | trans }}</p>
-    <p><strong>{{ 'Départ' | trans }} :</strong> {{ start.name }}</p>
-    <p><strong>{{ 'Arrivée' | trans }} :</strong> {{ end.name }}</p>
+    <p class="alert alert-warning" style="color: darkred;">{{ 'travel.error.no_itinerary' | trans }}</p>
+    <p><strong>{{ 'travel.path.start' | trans }} :</strong> {{ start.name }}</p>
+    <p><strong>{{ 'travel.path.arrival' | trans }} :</strong> {{ end.name }}</p>
 {% endif %}

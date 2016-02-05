@@ -54,12 +54,17 @@ class DirectionsManager
      * @param boolean       $debug
      * @param EntityManager $entityManager
      * @param Serializer    $serializer
+     *
+     * @throws \RuntimeException If the cache directory cannot be created.
      */
     public function __construct($cacheDir, $cacheTTL, $debug, EntityManager $entityManager, Serializer $serializer, TwigEngine $templating)
     {
         $this->cacheDir = rtrim($cacheDir, '/\\');
         if (!is_dir($this->cacheDir)) {
-            mkdir($this->cacheDir, 0777, true);
+            if (!@mkdir($this->cacheDir, 0777, true) && !is_dir($this->cacheDir)) {
+                // This trick allows checking the directory first, then create it, and then re-check it if an error occured.
+                throw new \RuntimeException('Could not create cache directory for directions.');
+            }
         }
         $this->cacheTTL      = $cacheTTL;
         $this->debug         = $debug;
@@ -335,8 +340,6 @@ class DirectionsManager
      * @param TransportTypes $transport
      *
      * @return array
-     * @throws \Exception
-     * @throws \Twig_Error
      */
     protected function getDataArray(Markers $from, Markers $to, array $directions, array $routes, $hoursPerDay = 7, TransportTypes $transport = null)
     {
@@ -365,7 +368,7 @@ class DirectionsManager
             }
         }
 
-        $datas = array(
+        $data = array(
             'found'           => count($directions) > 0,
             'path_view'       => null,
             'duration_raw'    => null,
@@ -379,11 +382,11 @@ class DirectionsManager
             'path'            => $directions,
         );
 
-        $datas['path_view']     = $this->templating->render('@EsterenMapsApi/Maps/path_view.html.twig', $datas);
-        $datas['duration_raw']  = $this->getTravelDuration($routes, $transport, $hoursPerDay, true);
-        $datas['duration_real'] = $this->getTravelDuration($routes, $transport, $hoursPerDay, false);
+        $data['duration_raw']  = $this->getTravelDuration($routes, $transport, $hoursPerDay, true);
+        $data['duration_real'] = $this->getTravelDuration($routes, $transport, $hoursPerDay, false);
+        $data['path_view']     = $this->templating->render('@EsterenMapsApi/Maps/path_view.html.twig', $data);
 
-        return $datas;
+        return $data;
     }
 
     /**
