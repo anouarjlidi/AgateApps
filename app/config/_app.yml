@@ -169,12 +169,12 @@ ivory_ck_editor:
 # TODO: Check if these can be removed safely
 services:
 
-    framework_controller:
-        class: Symfony\Bundle\FrameworkBundle\Controller\Controller
-        calls:
-            - [ "setContainer", [ "@service_container" ] ]
-
     twig.text_extension:
         class: Twig_Extensions_Extension_Text
+        tags:
+            - name: twig.extension
+
+    twig.intl_extension:
+        class: Twig_Extensions_Extension_Intl
         tags:
             - name: twig.extension
