@@ -1,6 +1,7 @@
 
 easy_admin:
     site_name: Esteren
+
     design:
         brand_color: "rgb(88, 88, 216)"
         menu:
@@ -11,13 +12,19 @@ easy_admin:
             - { entity: "Maps", icon: "map" }
             - { entity: "Factions", icon: "flag" }
 
+            - label: "admin.menu.esteren_maps_data"
+              children:
+                  - { entity: "Markers" }
+                  - { entity: "Routes" }
+                  - { entity: "Zones" }
+
             - label: "admin.menu.types"
               children:
                   - { entity: "MarkersTypes" }
                   - { entity: "RoutesTypes" }
                   - { entity: "ZonesTypes" }
-            - label: "admin.menu.transports"
 
+            - label: "admin.menu.transports"
               children:
                   - { entity: "TransportTypes" }
                   - { entity: "RoutesTransports" }
@@ -58,63 +65,97 @@ easy_admin:
                 fields: [ id, name, description, book ]
             form:
                 fields: [ name, description, book ]
+
         "Maps":
             label: admin.maps.maps
             class: EsterenMaps\MapsBundle\Entity\Maps
             list:
-                actions: [ edit, { name: admin_esterenmaps_maps_maps_editInteractive, type: route, label: actions.interactive  } ]
+                actions:
+                    - edit
+                    - { name: admin_esterenmaps_maps_maps_editInteractive, type: route, label: actions.interactive  }
                 fields: [ id, name, nameSlug, maxZoom, startZoom, startX, startY ]
             form:
                 fields: [ name, nameSlug, image, description, maxZoom, startZoom, startX, startY, coordinatesRatio ]
-#        "Markers":
-#            label: admin.maps.markers
-#            class: EsterenMaps\MapsBundle\Entity\Markers
-#            list:
-#                fields: [ id, name, latitude, longitude, markerType, { property: webIcon, type: image } ]
-#            form:
-#                fields: [ name, description, map, markerType, faction ]
+
+        "Markers":
+            label: admin.maps.markers
+            class: EsterenMaps\MapsBundle\Entity\Markers
+            list:
+                fields: [ id, name, latitude, longitude, markerType, { property: webIcon, type: image } ]
+            form:
+                fields:
+                    - { property: name, type_options: { required: true } }
+                    - description
+                    - markerType
+                    - faction
+                    - { property: latitude,  type_options: { disabled: true, required: false } }
+                    - { property: longitude, type_options: { disabled: true, required: false } }
+                    - { property: altitude,  type_options: { disabled: true, required: false } }
+                    - { property: map,  type_options: { disabled: true, required: false } }
+
         "MarkersTypes":
-            label: admin.maps.markersTypes
+            label: admin.maps.markers_types
             class: EsterenMaps\MapsBundle\Entity\MarkersTypes
             list:
                 fields: [ id, name, { property: webIcon, type: image }, markers ]
             form:
                 fields: [ name, icon, markers ]
-#        "Routes":
-#            label: admin.maps.routes
-#            class: EsterenMaps\MapsBundle\Entity\Routes
-#            list:
-#                fields: [ id, name, distance, description, routeType, markerStart, markerEnd ]
-#            form:
-#                fields: [ name, description, routeType, guarded, markerStart, markerEnd, faction ]
+
+        "Routes":
+            label: admin.maps.routes
+            class: EsterenMaps\MapsBundle\Entity\Routes
+            list:
+                fields: [ id, name, distance, description, routeType, markerStart, markerEnd ]
+            form:
+                fields:
+                    - { property: name, type_options: { required: true } }
+                    - description
+                    - markerStart
+                    - markerEnd
+                    - routeType
+                    - faction
+                    - guarded
+                    - { property: coordinates, type_options: { disabled: true, required: false } }
+                    - { property: map,  type_options: { disabled: true, required: false } }
+
         "RoutesTypes":
-            label: admin.maps.routesTypes
+            label: admin.maps.routes_types
             class: EsterenMaps\MapsBundle\Entity\RoutesTypes
             list:
                 fields: [ id, name, color, routes ]
             form:
                 fields: [ name, color ]
-#        "Zones":
-#            label: admin.maps.zones
-#            class: EsterenMaps\MapsBundle\Entity\Zones
-#            list:
-#                fields: [ id, name, description, zoneType, map, faction ]
-#            form:
-#                fields: [ name, description, map, faction, zoneType ]
+
+        "Zones":
+            label: admin.maps.zones
+            class: EsterenMaps\MapsBundle\Entity\Zones
+            list:
+                fields: [ id, name, description, zoneType, map, faction ]
+            form:
+                fields:
+                    - { property: name, type_options: { required: true } }
+                    - description
+                    - zoneType
+                    - faction
+                    - { property: coordinates, type_options: { disabled: true, required: false } }
+                    - { property: map,  type_options: { disabled: true, required: false } }
+
         "ZonesTypes":
-            label: admin.maps.zonesTypes
+            label: admin.maps.zones_types
             class: EsterenMaps\MapsBundle\Entity\ZonesTypes
             list:
                 fields: [ id, name, color, parent, zones ]
             form:
                 fields: [ name, color, parent ]
+
         "TransportTypes":
-            label: admin.maps.transportsTypes
+            label: admin.maps.transports_types
             class: EsterenMaps\MapsBundle\Entity\TransportTypes
             list:
                 fields: [ id, name, slug, { property: speed, format: "%.2f" }, description ]
             form:
                 fields: [ name, slug, { property: speed, help: "(Km/h)" }, description ]
+
         "RoutesTransports":
             label: admin.maps.transportsModifiers
             class: EsterenMaps\MapsBundle\Entity\RoutesTransports

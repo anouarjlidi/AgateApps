@@ -4,15 +4,24 @@ Pages: Pages
 Maps: Maps
 admin:
     cms:
-        pages: 'CMS - Pages'
+        pages: 'Pages'
+    menu:
+        site: 'Site'
+        esteren_maps: 'Esteren Maps'
+        esteren_maps_data: 'Données'
+        types: 'Reference types'
+        transports: 'Transports'
     maps:
-        factions: 'Esteren Maps - Factions'
-        maps: 'Esteren Maps - Maps'
-        markersTypes: 'Esteren Maps - Markers types'
-        routesTypes: 'Esteren Maps - Routes types'
-        zonesTypes: 'Esteren Maps - Zones types'
-        transportsTypes: 'Esteren Maps - Transports'
-        transportsModifiers: 'Esteren Maps - Transports speed modifiers'
+        markers: 'Markers'
+        routes: 'Routes'
+        zones: 'Zones'
+        factions: 'Factions'
+        maps: 'Maps'
+        markers_types: 'Markers types'
+        routes_types: 'Routes types'
+        zones_types: 'Zones types'
+        transports_types: 'Transports'
+        transportsModifiers: 'Transports speed modifiers'
 ID: ID
 tree: Tree
 links:
