@@ -65,7 +65,7 @@ easy_admin:
                 actions: [ edit, { name: admin_esterenmaps_maps_maps_editInteractive, type: route, label: actions.interactive  } ]
                 fields: [ id, name, nameSlug, maxZoom, startZoom, startX, startY ]
             form:
-                fields: [ name, nameSlug, image, description, maxZoom, startZoom, startX, startY ]
+                fields: [ name, nameSlug, image, description, maxZoom, startZoom, startX, startY, ratio ]
 #        "Markers":
 #            label: admin.maps.markers
 #            class: EsterenMaps\MapsBundle\Entity\Markers
