@@ -35,6 +35,6 @@ monolog:
             from_email: no-reply@pierstoval.com
             to_email:   pierstoval+esterenprod@gmail.com
             subject:    An Error Occurred!
-            level:      warning
+            level:      debug
         console:
             type:  console

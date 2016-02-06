@@ -13,8 +13,8 @@ imports:
 
 parameters:
     # The version code is always the last version that was put in production
-    version_code: 0.6.2
-    version_date: 05/02/2015
+    version_code: 0.6.3
+    version_date: 06/02/2015
     locale: fr
     locales: [ fr, en ]
     locales_regex: "fr|en"
