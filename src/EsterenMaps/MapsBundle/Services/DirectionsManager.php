@@ -233,7 +233,6 @@ class DirectionsManager
     {
 
         $distances = array();
-        $previous  = array();
 
         foreach ($nodes as $id => $node) {
             foreach ($node['neighbours'] as $nid => $neighbour) {
@@ -255,9 +254,9 @@ class DirectionsManager
         $Q[$start] = 0;
 
         //start calculating
-        while(!empty($Q)){
-            $min = array_search(min($Q), $Q);//the most min weight
-            if($min == $end) {
+        while(0 !== count($Q)){
+            $min = array_search(min($Q), $Q, true);//the most min weight
+            if($min === $end) {
                 break;
             }
             foreach($distances[$min] as $key => $val) {
@@ -278,7 +277,7 @@ class DirectionsManager
 
         $path = array();
         $pos = $end;
-        while ($pos != $start) {
+        while ($pos !== $start) {
             $path[] = $pos;
             $pos = $S[$pos][0];
         }
@@ -414,11 +413,9 @@ class DirectionsManager
 
         foreach ($routes as $route) {
             foreach ($route['routeType']['transports'] as $transport) {
-                if ((float) $transport['percentage'] > 0) {
-                    continue;
+                if (((float) $transport['percentage']) <= 0) {
+                    return array();
                 }
-
-                return array();
             }
         }
 
@@ -442,17 +439,20 @@ class DirectionsManager
         $total = 0;
 
         foreach ($routes as $route) {
-            $distance = $route->calcDistance();
-            $modifier = null;
+            $distance = $route->getDistance();
+            $transportModifier = null;
             foreach ($route->getRouteType()->getTransports() as $routeTransport) {
                 if ($routeTransport->getTransportType()->getId() === $transport->getId()) {
-                    $modifier = $routeTransport;
+                    $transportModifier = $routeTransport;
                 }
             }
-            if ($modifier) {
-                $percentage = (float) $modifier->getPercentage();
-                $positive = $modifier->isPositiveRatio();
-                $speed = ($positive ? 1 : -1) * ($transport->getSpeed() * ($percentage / 100));
+            if ($transportModifier) {
+                $percentage = (float) $transportModifier->getPercentage();
+                if ($transportModifier->isPositiveRatio()) {
+                    $speed = $transport->getSpeed() * ($percentage / 100);
+                } else {
+                    $speed = $transport->getSpeed() * ((100 - $percentage) / 100);
+                }
                 $hours = $distance / $speed;
                 $total += $hours;
             } else {
