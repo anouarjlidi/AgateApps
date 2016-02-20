@@ -181,7 +181,7 @@ class DirectionsManager
         $routesArray   = $this->entityManager->getRepository('EsterenMapsBundle:Routes')->findByIds($routesIds, true, true);
         $routesObjects = $this->entityManager->getRepository('EsterenMapsBundle:Routes')->findByIds($routesIds, false, false);
 
-        $paths = $this->checkTransportType($paths, $routesArray, $transportType);
+        $paths = $this->checkTransportType($paths, $routesObjects, $transportType);
 
         $steps = [];
 
@@ -409,11 +409,10 @@ class DirectionsManager
             return $paths;
         }
 
+        // Check that the transport have a good value here
         foreach ($routes as $route) {
-            foreach ($route['routeType']['transports'] as $transport) {
-                if (((float)$transport['percentage']) <= 0) {
-                    return [];
-                }
+            if ($route->getRouteType()->getTransport($transportType)->getPercentage() <= 0) {
+                return [];
             }
         }
 

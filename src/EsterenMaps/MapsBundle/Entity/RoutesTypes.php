@@ -70,7 +70,7 @@ class RoutesTypes
     protected $routes;
 
     /**
-     * @var RoutesTransports
+     * @var RoutesTransports[]
      * @ORM\OneToMany(targetEntity="EsterenMaps\MapsBundle\Entity\RoutesTransports", mappedBy="routeType")
      * @Serializer\Expose
      */
@@ -263,10 +263,14 @@ class RoutesTypes
      * Remove transports
      *
      * @param RoutesTransports $transports
+     *
+     * @return RoutesTypes
      */
     public function removeTransport(RoutesTransports $transports)
     {
         $this->transports->removeElement($transports);
+
+        return $this;
     }
 
     /**
@@ -277,6 +281,23 @@ class RoutesTypes
     public function getTransports()
     {
         return $this->transports;
+    }
+
+    /**
+     * @param TransportTypes $transportType
+     * @return RoutesTransports
+     */
+    public function getTransport(TransportTypes $transportType)
+    {
+        $transports = $this->transports->filter(function(RoutesTransports $element) use ($transportType){
+            return $element->getTransportType()->getId() === $transportType->getId();
+        });
+
+        if (!$transports->count()) {
+            throw new \InvalidArgumentException('RouteType object should have all types of transports bound to it. Could not find: "'.$transportType.'".');
+        }
+
+        return $transports->first();
     }
 
 }
