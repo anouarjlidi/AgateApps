@@ -13,6 +13,9 @@ var config = {
         ],
         "css/maps_lib.css": [
             "src/EsterenMaps/MapsBundle/Resources/public/less/maps.less"
+        ],
+        "css/admin.css": [
+            "src/AdminBundle/Resources/public/less/admin.less"
         ]
     },
     "css": {

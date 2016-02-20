@@ -1,8 +1,8 @@
 <?php
 
-
 namespace EsterenMaps\MapsBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
@@ -70,6 +70,18 @@ class TransportTypes
      * @Expose
      */
     protected $speed;
+
+    /**
+     * @var ArrayCollection|RoutesTransports[]
+     *
+     * @ORM\OneToMany(targetEntity="EsterenMaps\MapsBundle\Entity\RoutesTransports", mappedBy="transportType", cascade={"persist", "remove"})
+     */
+    protected $transportsModifiers;
+
+    public function __construct()
+    {
+        $this->transportsModifiers = new ArrayCollection();
+    }
 
     public function __toString()
     {
@@ -176,4 +188,40 @@ class TransportTypes
         return $this;
     }
 
+    /**
+     * Add transportsModifier
+     *
+     * @param RoutesTransports $transportsModifier
+     *
+     * @return TransportTypes
+     */
+    public function addTransportsModifier(RoutesTransports $transportsModifier)
+    {
+        $this->transportsModifiers[] = $transportsModifier;
+
+        return $this;
+    }
+
+    /**
+     * Remove transportsModifier
+     *
+     * @param RoutesTransports $transportsModifier
+     * @return $this
+     */
+    public function removeTransportsModifier(RoutesTransports $transportsModifier)
+    {
+        $this->transportsModifiers->removeElement($transportsModifier);
+
+        return $this;
+    }
+
+    /**
+     * Get transportsModifiers
+     *
+     * @return ArrayCollection|RoutesTransports[]
+     */
+    public function getTransportsModifiers()
+    {
+        return $this->transportsModifiers;
+    }
 }

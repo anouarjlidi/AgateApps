@@ -4,6 +4,14 @@ easy_admin:
 
     design:
         brand_color: "rgb(88, 88, 216)"
+
+        assets:
+            css:
+                - 'css/admin.css'
+
+        form_theme:
+            - "form/easyadmin_form_theme.html.twig"
+
         menu:
             - { label: "admin.menu.site" }
             - { entity: "Pages", icon: "file-text" }
@@ -23,11 +31,10 @@ easy_admin:
                   - { entity: "MarkersTypes" }
                   - { entity: "RoutesTypes" }
                   - { entity: "ZonesTypes" }
-
-            - label: "admin.menu.transports"
-              children:
                   - { entity: "TransportTypes" }
-                  - { entity: "RoutesTransports" }
+
+    list:
+        max_results: 50
 
     entities:
 
@@ -154,15 +161,14 @@ easy_admin:
             list:
                 fields: [ id, name, slug, { property: speed, format: "%.2f" }, description ]
             form:
-                fields: [ name, slug, { property: speed, help: "(Km/h)" }, description ]
-
-        "RoutesTransports":
-            label: admin.maps.transportsModifiers
-            class: EsterenMaps\MapsBundle\Entity\RoutesTransports
-            list:
-                fields: [ routeType, transportType, { property: percentage, format: %.2f } ]
-            form:
-                fields: [ routeType, transportType, { property: percentage, format: %.2f, help: "Modificateur de vitesse (en %)" }, positiveRatio ]
+                fields:
+                  - name
+                  - slug
+                  - { property: speed, help: "(Km/h)" }
+                  - description
+                  - property: transportsModifiers
+                    type: 'Symfony\Component\Form\Extension\Core\Type\CollectionType'
+                    type_options: { entry_type: 'EsterenMaps\MapsBundle\Form\RoutesTransportsType' }
 
 parameters:
     override: |

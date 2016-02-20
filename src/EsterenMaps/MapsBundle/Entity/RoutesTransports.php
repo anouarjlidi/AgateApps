@@ -6,8 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
-use JMS\Serializer\Annotation\ExclusionPolicy as ExclusionPolicy;
-use JMS\Serializer\Annotation\Expose as Expose;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -45,7 +45,7 @@ class RoutesTransports
 
     /**
      * @var TransportTypes
-     * @ORM\ManyToOne(targetEntity="EsterenMaps\MapsBundle\Entity\TransportTypes")
+     * @ORM\ManyToOne(targetEntity="EsterenMaps\MapsBundle\Entity\TransportTypes", inversedBy="transportsModifiers")
      * @ORM\JoinColumn(name="transport_type_id", nullable=false)
      * @Assert\NotNull()
      * @Expose
@@ -54,20 +54,20 @@ class RoutesTransports
 
     /**
      * @var float
-     * @ORM\Column(name="percentage", type="decimal", scale=6, precision=9, nullable=false)
+     * @ORM\Column(name="percentage", type="decimal", scale=6, precision=9, nullable=false, options={"default": "100"})
      * @Assert\NotNull()
      * @Assert\Range(max="100", min="0")
      * @Expose
      */
-    protected $percentage;
+    protected $percentage = 100;
 
     /**
      * @var boolean
-     * @ORM\Column(name="positive_ratio", type="boolean", nullable=false)
+     * @ORM\Column(name="positive_ratio", type="boolean", nullable=false, options={"default": "1"})
      * @Assert\Type(type="boolean")
      * @Assert\NotNull()
      */
-    protected $positiveRatio = false;
+    protected $positiveRatio = true;
 
     /**
      * @return int
@@ -168,6 +168,4 @@ class RoutesTransports
 
         return $this;
     }
-
 }
-
