@@ -81,8 +81,30 @@ easy_admin:
                     - edit
                     - { name: admin_esterenmaps_maps_maps_editInteractive, type: route, label: actions.interactive  }
                 fields: [ id, name, nameSlug, maxZoom, startZoom, startX, startY ]
-            form:
-                fields: [ name, nameSlug, image, description, maxZoom, startZoom, startX, startY, coordinatesRatio ]
+            new:
+                fields:
+                    - name
+                    - nameSlug
+                    - image
+                    - description
+                    - maxZoom
+                    - bounds
+                    - startZoom
+                    - startX
+                    - startY
+                    - coordinatesRatio
+            edit:
+                fields:
+                    - name
+                    - { property: nameSlug, type_options: { disabled: true, read_only: true } }
+                    - { property: image, type_options: { disabled: true, read_only: true } }
+                    - description
+                    - maxZoom
+                    - bounds
+                    - startZoom
+                    - startX
+                    - startY
+                    - coordinatesRatio
 
         "Markers":
             label: admin.maps.markers
