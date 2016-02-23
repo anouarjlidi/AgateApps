@@ -57,7 +57,8 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::removeSymfonyStandardFiles",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget",
             "npm install",
-            "node node_modules/gulp/bin/gulp.js dump --prod"
+            "node node_modules/gulp/bin/gulp.js dump --prod",
+            "app/console cache:clear --env=prod"
         ],
         "post-update-cmd": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
