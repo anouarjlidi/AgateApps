@@ -71,6 +71,7 @@ The dist file contains comments about what it does, whereas the vhost does not, 
             RewriteCond %{REQUEST_FILENAME} -f
             RewriteRule .? - [L]
 
+            # Avoids getting 404 errors for missing map tiles.
             RewriteCond %{REQUEST_URI} maps_tiles/ [NC]
             RewriteCond %{REQUEST_FILENAME} !-f
             RewriteRule .? %{ENV:BASE}/maps_tiles/empty.jpg [L,R=302]
@@ -121,6 +122,11 @@ server {
     ;
 
     root /var/www/corahn_rin/web;
+
+    # Avoids getting 404 errors for missing map tiles.
+    location ~ ^/maps_tiles {
+        try_files $uri /maps_tiles/empty.jpg;
+    }
 
     # DEV
     location / {
