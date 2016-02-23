@@ -2,6 +2,7 @@
 
 namespace EsterenMaps\MapsBundle\DataFixtures\ORM;
 
+use EsterenMaps\MapsBundle\Entity\Maps;
 use Orbitale\Component\DoctrineTools\AbstractFixture;
 
 class MapsFixtures extends AbstractFixture
@@ -10,7 +11,7 @@ class MapsFixtures extends AbstractFixture
     /**
      * {@inheritdoc}
      */
-    function getOrder()
+    public function getOrder()
     {
         return 0;
     }
@@ -20,7 +21,7 @@ class MapsFixtures extends AbstractFixture
      */
     protected function getEntityClass()
     {
-        return 'EsterenMaps\MapsBundle\Entity\Maps';
+        return Maps::class;
     }
 
     protected function getReferencePrefix()
@@ -33,19 +34,23 @@ class MapsFixtures extends AbstractFixture
      */
     protected function getObjects()
     {
-        return array(
-            array(
-                'id' => 1,
-                'name' => 'Tri-Kazel',
-                'nameSlug' => 'tri-kazel',
-                'image' => 'uploads/maps/esteren_map.jpg',
-                'description' => 'Carte de Tri-Kazel officielle, réalisée par Chris',
-                'maxZoom' => 5,
-                'startZoom' => 2,
-                'startX' => 50,
-                'startY' => 0,
-                'bounds' => '[[85.3,-183.7],[-12.8,64.3]]'
-            ),
-        );
+        return [
+            [
+                'id'               => 1,
+                'name'             => 'Tri-Kazel',
+                'nameSlug'         => 'tri-kazel',
+                'image'            => 'uploads/maps/esteren_map.jpg',
+                'description'      => 'Carte de Tri-Kazel officielle, réalisée par Chris.',
+                'maxZoom'          => 5,
+                'startZoom'        => 2,
+                'startX'           => 65,
+                'startY'           => 85,
+                'coordinatesRatio' => 5,
+                'bounds'           => '[[134,-1],[-1,169]]',
+                'createdAt'        => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'updatedAt'        => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-23 14:46:09'),
+                'deletedAt'        => null,
+            ],
+        ];
     }
 }
