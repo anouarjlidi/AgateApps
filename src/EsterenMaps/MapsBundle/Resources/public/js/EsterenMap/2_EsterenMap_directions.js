@@ -164,10 +164,13 @@
                 });
                 $(_this._controlContent).find('#directions_transport').html(transportsOptions);
             });
-            $(this._controlContent).find('#directions_start,#directions_end').on('keyup', function(){
+            $(this._controlContent).find('#directions_start,#directions_end').on('keyup', function(event){
                 var $this = $(this),
-                    html = '', marker,
-                    value = $this.val().trim();
+                    html = '',
+                    value = $this.val().trim(),
+                    keyCode = event.keyCode ? event.keyCode : event.which,
+                    directionsHelper = $this.next('.directions_helper'),
+                    firstFoundElement, marker;
                 if (value) {
                     for (marker in map._markers) {
                         if (map._markers.hasOwnProperty(marker)) {
@@ -181,7 +184,11 @@
                 if (html) {
                     html = '<ul class="list-unstyled">'+html+'</ul>';
                 }
-                $this.next('.directions_helper').html(html);
+                directionsHelper.html(html);
+                if (keyCode == 13) {
+                    // Pressed "Enter"
+                    directionsHelper.find('ul > li').first().click();
+                }
                 return false;
             });
             $(this._controlContent).find('#directions_form').on('submit', function(e){
