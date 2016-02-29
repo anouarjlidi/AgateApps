@@ -7,6 +7,7 @@
 * [Set up a vhost](vhosts.md)
 * [API / webservices](api.md)
 * [Esteren Maps library](maps.md)
+* [Deploy](deploy.md)
 
 # Esteren Maps library
 

@@ -7,10 +7,11 @@
 * [Set up a vhost](vhosts.md)
 * [API / webservices](api.md)
 * [Esteren Maps library](maps.md)
+* [Deploy](deploy.md)
 
 # Routing
 
-> ## Note 
+> ## Note
 > As said in the [Readme](../README.md#subdomains), domains **must** be configured.
 > To be able to debug APIs, don't forget to set up your `allowed_origins` configuration options in `app/config/_app.yml`.
 

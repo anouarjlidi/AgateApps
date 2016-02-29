@@ -7,6 +7,7 @@
 * [Set up a vhost](vhosts.md)
 * [API / webservices](api.md)
 * [Esteren Maps library](maps.md)
+* [Deploy](deploy.md)
 
 You can set up vhosts in different configuration.
 Mostly it can run on Apache without any issue, but can also work on Nginx.
@@ -100,12 +101,12 @@ The dist file contains comments about what it does, whereas the vhost does not, 
 
 First you need to set up your php-fpm configuration and make it work.
 
-[Check the reference](http://symfony.com/doc/current/cookbook/configuration/web_server_configuration.html#nginx) on 
+[Check the reference](http://symfony.com/doc/current/cookbook/configuration/web_server_configuration.html#nginx) on
 Symfony documentation if you need.
 
 **Note:** be sure that the `fastcgi_pass` points to the right socket.
 
-**Important:** You must remove one `location` block of `DEV` or `PROD` depending on your environment. 
+**Important:** You must remove one `location` block of `DEV` or `PROD` depending on your environment.
 
 ```nginx
 server {
@@ -173,4 +174,3 @@ server {
     access_log /var/www/corahn_rin/app/logs/nginx_access.log;
 }
 ```
-

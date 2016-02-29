@@ -24,6 +24,7 @@ It contains multiple apps:
 * [Set up a vhost](docs/vhosts.md)
 * [API / webservices](docs/api.md)
 * [Esteren Maps library](docs/maps.md)
+* [Deploy](docs/deploy.md)
 
 ## Pre-requisites
 
@@ -41,8 +42,8 @@ $ app/console doctrine:schema:create
 
 That's all!
 
-Composer is configured to install npm dependencies and dump assets. See [composer.json](composer.json) scripts
- configuration for more informations.
+Composer is configured to install npm dependencies and dump assets. See
+[composer.json](composer.json) scripts configuration for more informations.
 
 ## Setup
 
@@ -51,10 +52,9 @@ Composer is configured to install npm dependencies and dump assets. See [compose
 You need to be sure that your webserver points to every domain name set up in the parameters,
  see [the default app/config/parameters.yml.dist file](app/config/parameters.yml) to know what domains are used.
 
-If all your domains end with `esteren.dev` (which is the best "domain mirroring" to setup your dev environment), the
- web entry point will be automatically set up to `app_dev.php`.
+You can set up the app on both Nginx and Apache, thanks to the [vhosts](docs/vhosts.md) provided by the docs.
 
-### Fixtures (if you don't have a proper database)
+### Fixtures (if you don't have a proper database export to be imported)
 
 If you don't have a prod database export, load the fixtures in your database:
 
