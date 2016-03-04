@@ -38,7 +38,7 @@ framework:
         - "^[a-z]+\\%esteren_domains.cookiedomain%$"
 
     session:
-        cookie_domain: "%esteren_domains.cookieDomain%"
+        cookie_domain: "%esteren_domains.cookie_domain%"
         name:          EsterenPortal
 
     # Use version code in assets
@@ -58,7 +58,7 @@ twig:
         esteren_domains_portal: "%esteren_domains.portal%"
         esteren_domains_backoffice: "%esteren_domains.backoffice%"
         esteren_domains_api: "%esteren_domains.api%"
-        esteren_domains_cookieDomain: "%esteren_domains.cookieDomain%"
+        esteren_domains_cookie_domain: "%esteren_domains.cookie_domain%"
     form_themes:
         - "@PierstovalTools/Form/form_div_layout.html.twig"
         - "@PierstovalTools/Form/fields.html.twig"

@@ -26,4 +26,4 @@ parameters:
     esteren_domains.backoffice:     back.esteren.org
     esteren_domains.api:            api.esteren.org
     esteren_domains.games:          games.esteren.org
-    esteren_domains.cookieDomain:   .esteren.org
+    esteren_domains.cookie_domain:  .esteren.org

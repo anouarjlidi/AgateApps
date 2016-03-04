@@ -30,4 +30,4 @@ parameters:
     esteren_domains.portal: www.esteren.dev
     esteren_domains.backoffice: back.esteren.dev
     esteren_domains.api: api.esteren.dev
-    esteren_domains.cookieDomain: .esteren.dev
+    esteren_domains.cookie_domain: .esteren.dev
