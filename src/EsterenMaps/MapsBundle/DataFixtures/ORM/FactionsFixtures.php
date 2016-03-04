@@ -22,17 +22,17 @@ class FactionsFixtures extends AbstractFixture
     /**
      * {@inheritdoc}
      */
-    protected function getReferencePrefix()
+    protected function getEntityClass()
     {
-        return 'esterenmaps-factions';
+        return Factions::class;
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function getEntityClass()
+    protected function getReferencePrefix()
     {
-        return Factions::class;
+        return 'esterenmaps-factions';
     }
 
     /**
