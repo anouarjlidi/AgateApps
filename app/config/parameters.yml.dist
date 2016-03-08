@@ -7,8 +7,9 @@ parameters:
     database_name:     esteren_portal
     database_user:     esteren_portal
     database_password: ~
-    database_path:     "%kernel.root_dir%/data.db3"
+    # You may change these values if you are using sqlite
     database_driver:   pdo_mysql
+    database_path:     "%kernel.root_dir%/data.db3"
 
     mailer_transport:  smtp
     mailer_host:       127.0.0.1
