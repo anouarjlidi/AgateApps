@@ -17,6 +17,18 @@ The map frontend is managed with a Javascript library developed around [LeafletJ
 
 All the JS files must be concatenated together for the library to work.
 
+### AJAX load
+
+The map settings and data are loaded by different calls to the `EsterenMap._load()` method.
+
+The stack is the following:
+
+1. `new EsterenMap(options)`: New object creation, setup base and some static options.
+2. `EsterenMap.loadSettings()`: Load the settings with Ajax by loading the `maps/settings/{id}` route.
+3. `EsterenMap.initialize()`: This function sets up the different Leaflet layers and components.
+4. `EsterenMap._mapOptions.loadedCallback()`: By default, this function loads **markers**, **routes**, **zones** and
+ **transports**.
+
 ## Services
 
 To use the different services provided by the `EsterenMapsBundle`, you must load the registry like this:
