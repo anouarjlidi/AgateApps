@@ -53,7 +53,7 @@ abstract class AbstractEasyAdminTest extends WebTestCase
         /** @var Crawler $nodeHeaders */
         $nodeHeaders = $crawler->filter('#main table thead tr th[data-property-name]');
 
-        $this->assertEquals(count($wishedColumns), $nodeHeaders->count());
+        $this->assertCount(count($wishedColumns), $nodeHeaders);
 
         foreach ($nodeHeaders as $k => $node) {
             $this->assertArrayHasKey($k, $wishedColumns);
@@ -90,7 +90,7 @@ abstract class AbstractEasyAdminTest extends WebTestCase
         if (null === $host) {
             $host = 'back.esteren.dev';
         }
-        if (empty($tokenRoles)) {
+        if (0 === count($tokenRoles)) {
             $tokenRoles[] = 'ROLE_ADMIN';
         }
         return parent::getClient($host, $options, $tokenRoles);
