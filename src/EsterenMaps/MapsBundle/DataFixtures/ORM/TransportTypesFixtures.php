@@ -2,82 +2,92 @@
 
 namespace EsterenMaps\MapsBundle\DataFixtures\ORM;
 
-use Doctrine\Common\DataFixtures\AbstractFixture;
-use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Mapping\ClassMetadata;
-use EsterenMaps\MapsBundle\Entity\TransportTypes;
+use Orbitale\Component\DoctrineTools\AbstractFixture;
 
-class TransportTypesFixtures extends AbstractFixture implements OrderedFixtureInterface
+class TransportTypesFixtures extends AbstractFixture
 {
-
     /**
-     * @var ObjectManager
+     * {@inheritdoc}
      */
-    private $manager;
-
-    /**
-     * Get the order of this fixture
-     * @return integer
-     */
-    function getOrder()
+    public function getOrder()
     {
         return 0;
     }
 
     /**
-     * Load data fixtures with the passed EntityManager
-     *
-     * @param ObjectManager $manager
+     * {@inheritdoc}
      */
-    function load(ObjectManager $manager)
+    protected function getEntityClass()
     {
-        $this->manager = $manager;
-
-        $repo = $this->manager->getRepository('EsterenMapsBundle:TransportTypes');
-
-        $this->fixtureObject($repo, 1, 'À pied', 'foot', '', 4.5);
-        $this->fixtureObject($repo, 2, 'Chariot', 'chariot', '', 8);
-        $this->fixtureObject($repo, 3, 'Cheval', 'cheval', '', 12);
-        $this->fixtureObject($repo, 4, 'Caernide', 'caernide', '', 12);
-
-        $this->manager->flush();
+        return 'EsterenMaps\MapsBundle\Entity\TransportTypes';
     }
 
-    public function fixtureObject(EntityRepository $repo, $id, $name, $slug, $description, $speed)
+    /**
+     * {@inheritdoc}
+     */
+    protected function getObjects()
     {
-        $obj       = null;
-        $newObject = false;
-        $addRef    = false;
-        if ($id) {
-            $obj = $repo->find($id);
-            if ($obj) {
-                $addRef = true;
-            } else {
-                $newObject = true;
-            }
-        } else {
-            $newObject = true;
-        }
-        if ($newObject === true) {
-            $obj = new TransportTypes();
-            $obj->setId($id)
-                ->setName($name)
-                ->setSlug($slug)
-                ->setDescription($description)
-                ->setSpeed($speed)
-            ;
-            if ($id) {
-                /** @var ClassMetadata $metadata */
-                $metadata = $this->manager->getClassMetaData(get_class($obj));
-                $metadata->setIdGeneratorType(ClassMetadata::GENERATOR_TYPE_NONE);
-            }
-            $this->manager->persist($obj);
-            $addRef = true;
-        }
-        if ($addRef === true && $obj) {
-            $this->addReference('esterenmaps-transports-'.$id, $obj);
-        }
+        return [
+            [
+                'id'          => 1,
+                'name'        => 'Transport par défaut',
+                'slug'        => 'transport-par-defaut',
+                'description' => 'A pied + traversée maritime/fluviale',
+                'speed'       => 4.5,
+                'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-20 17:22:25'),
+                'deleted_at'  => null,
+            ],
+            [
+                'id'          => 2,
+                'name'        => 'Chariot',
+                'slug'        => 'chariot',
+                'description' => '',
+                'speed'       => 8,
+                'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'deleted_at'  => null,
+            ],
+            [
+                'id'          => 3,
+                'name'        => 'Cheval',
+                'slug'        => 'cheval',
+                'description' => '',
+                'speed'       => 12,
+                'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'deleted_at'  => null,
+            ],
+            [
+                'id'          => 4,
+                'name'        => 'Caernide',
+                'slug'        => 'caernide',
+                'description' => '',
+                'speed'       => 12,
+                'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'deleted_at'  => null,
+            ],
+            [
+                'id'          => 5,
+                'name'        => 'Coracle (barque)',
+                'slug'        => 'coracle',
+                'description' => 'Moyen de transport fluvial/maritime',
+                'speed'       => 4,
+                'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-08 12:24:05'),
+                'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-20 17:22:15'),
+                'deleted_at'  => null,
+            ],
+            [
+                'id'          => 6,
+                'name'        => 'Koggen (bateau)',
+                'slug'        => 'koggen',
+                'description' => 'Moyen de transport fluvial/maritime',
+                'speed'       => 16,
+                'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-08 12:25:11'),
+                'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-20 17:22:09'),
+                'deleted_at'  => null,
+            ],
+        ];
     }
 }
