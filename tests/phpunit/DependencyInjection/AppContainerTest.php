@@ -140,7 +140,6 @@ class AppContainerTest extends WebTestCase
             'fragment.renderer.hinclude' => ['fragment.renderer.hinclude'],
             'fragment.renderer.inline' => ['fragment.renderer.inline'],
             'fragment.renderer.ssi' => ['fragment.renderer.ssi'],
-            'framework_controller' => ['framework_controller'],
             'gedmo.listener.sluggable' => ['gedmo.listener.sluggable'],
             'gedmo.listener.timestampable' => ['gedmo.listener.timestampable'],
             'http_kernel' => ['http_kernel'],
@@ -182,7 +181,6 @@ class AppContainerTest extends WebTestCase
             'locale_listener' => ['locale_listener'],
             'logger' => ['logger'],
             'monolog.handler.console' => ['monolog.handler.console'],
-            'monolog.handler.console_very_verbose' => ['monolog.handler.console_very_verbose'],
             'monolog.handler.debug' => ['monolog.handler.debug'],
             'monolog.handler.main' => ['monolog.handler.main'],
             'monolog.logger.doctrine' => ['monolog.logger.doctrine'],
@@ -329,7 +327,6 @@ class AppContainerTest extends WebTestCase
             'stof_doctrine_extensions.listener.uploadable' => ['stof_doctrine_extensions.listener.uploadable'],
             'swiftmailer.mailer.default.transport.eventdispatcher' => ['swiftmailer.mailer.default.transport.eventdispatcher'],
             'templating.locator' => ['templating.locator'],
-            'translator.selector' => ['translator.selector'],
         ];
     }
 
@@ -341,10 +338,15 @@ class AppContainerTest extends WebTestCase
     public function testContainer($serviceId)
     {
         $container = $this->getClient()->getContainer();
+
+        // We "fail" manually to avoid phpunit to say there's an error.
+        if (!$container->has($serviceId)) {
+            $this->fail('Service '.$serviceId.' does not exist.');
+            return;
+        }
+
         try {
-            $startedAt = microtime(true);
             $service = $container->get($serviceId);
-            $elapsed = (microtime(true) - $startedAt) * 1000;
             $this->assertNotNull($service);
         } catch (InactiveScopeException $e) {
             $this->markTestSkipped('Skipped request-scope service "'.$serviceId.'".');
