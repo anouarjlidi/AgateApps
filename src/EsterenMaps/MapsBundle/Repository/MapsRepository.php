@@ -27,4 +27,16 @@ class MapsRepository extends BaseEntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    /**
+     * @return array
+     */
+    public function findForMenu()
+    {
+        return $this->_em->createQueryBuilder()
+            ->select('map.name, map.nameSlug')
+            ->from($this->_entityName, 'map')
+            ->getQuery()->getArrayResult()
+        ;
+    }
+
 }

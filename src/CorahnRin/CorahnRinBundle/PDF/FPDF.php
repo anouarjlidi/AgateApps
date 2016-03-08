@@ -425,16 +425,15 @@ class FPDF {
     function GetStringWidth($s) {
         // Get width of a string in the current font
         $s = (string) $s;
-        $cw = & $this->CurrentFont['cw'];
         $w = 0;
         if ($this->unifontSubset) {
             $unicode = $this->UTF8StringToArray($s);
             foreach ($unicode as $char) {
-                if (isset($cw[$char])) {
-                    $w += (ord($cw[2 * $char]) << 8) + ord($cw[2 * $char + 1]);
+                if (isset($this->CurrentFont['cw'][$char])) {
+                    $w += (ord($this->CurrentFont['cw'][2 * $char]) << 8) + ord($this->CurrentFont['cw'][2 * $char + 1]);
                 } else {
-                    if ($char > 0 && $char < 128 && isset($cw[chr($char)])) {
-                        $w += $cw[chr($char)];
+                    if ($char > 0 && $char < 128 && isset($this->CurrentFont['cw'][chr($char)])) {
+                        $w += $this->CurrentFont['cw'][chr($char)];
                     } else {
                         if (isset($this->CurrentFont['desc']['MissingWidth'])) {
                             $w += $this->CurrentFont['desc']['MissingWidth'];
@@ -451,7 +450,7 @@ class FPDF {
         } else {
             $l = strlen($s);
             for ($i = 0; $i < $l; $i++) {
-                $w += $cw[$s[$i]];
+                $w += $this->CurrentFont['cw'][$s[$i]];
             }
         }
         return $w * $this->FontSize / 1000;
@@ -856,7 +855,6 @@ class FPDF {
 
     function MultiCell($w, $h, $txt, $border = 0, $align = 'J', $fill = false) {
         // Output text with automatic or explicit line breaks
-        $cw = & $this->CurrentFont['cw'];
         if ($w == 0) {
             $w = $this->w - $this->rMargin - $this->x;
         }
@@ -938,7 +936,7 @@ class FPDF {
             if ($this->unifontSubset) {
                 $l += $this->GetStringWidth($c);
             } else {
-                $l += $cw[$c] * $this->FontSize / 1000;
+                $l += $this->CurrentFont['cw'][$c] * $this->FontSize / 1000;
             }
 
             if ($l > $wmax) {
@@ -998,7 +996,6 @@ class FPDF {
 
     function Write($h, $txt, $link = '') {
         // Output text in flowing mode
-        $cw = & $this->CurrentFont['cw'];
         $w = $this->w - $this->rMargin - $this->x;
 
         $wmax = ($w - 2 * $this->cMargin);
@@ -1050,7 +1047,7 @@ class FPDF {
             if ($this->unifontSubset) {
                 $l += $this->GetStringWidth($c);
             } else {
-                $l += $cw[$c] * $this->FontSize / 1000;
+                $l += $this->CurrentFont['cw'][$c] * $this->FontSize / 1000;
             }
 
             if ($l > $wmax) {
@@ -1844,10 +1841,9 @@ class FPDF {
                 $this->_out('endobj');
                 // Widths
                 $this->_newobj();
-                $cw =& $font['cw'];
                 $s = '[';
                 for ($i = 32; $i <= 255; $i++) {
-                    $s .= $cw[chr($i)].' ';
+                    $s .= $font['cw'][chr($i)].' ';
                 }
                 $this->_out($s.']');
                 $this->_out('endobj');
