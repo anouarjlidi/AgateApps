@@ -25,6 +25,14 @@ class RoutesTypesFixtures extends AbstractFixture
     /**
      * {@inheritdoc}
      */
+    protected function getReferencePrefix()
+    {
+        return 'esterenmaps-routestypes-';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     protected function getObjects()
     {
         return [

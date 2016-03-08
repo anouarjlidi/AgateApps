@@ -49,12 +49,12 @@ class MarkersFixtures extends AbstractFixture
         $markerType10 = $this->getReference('esterenmaps-markerstypes-10');
         $markerType11 = $this->getReference('esterenmaps-markerstypes-11');
 
-        $faction1 = $this->getReference('esterenmaps-factions-1');
-        $faction2 = $this->getReference('esterenmaps-factions-2');
-        $faction3 = $this->getReference('esterenmaps-factions-3');
-        $faction4 = $this->getReference('esterenmaps-factions-4');
-        $faction5 = $this->getReference('esterenmaps-factions-5');
-        $faction6 = $this->getReference('esterenmaps-factions-6');
+        $faction1  = $this->getReference('esterenmaps-factions-1');
+        $faction2  = $this->getReference('esterenmaps-factions-2');
+        $faction3  = $this->getReference('esterenmaps-factions-3');
+        $faction4  = $this->getReference('esterenmaps-factions-4');
+        $faction5  = $this->getReference('esterenmaps-factions-5');
+        $faction6  = $this->getReference('esterenmaps-factions-6');
         $faction9  = $this->getReference('esterenmaps-factions-9');
         $faction10 = $this->getReference('esterenmaps-factions-10');
         $faction11 = $this->getReference('esterenmaps-factions-11');

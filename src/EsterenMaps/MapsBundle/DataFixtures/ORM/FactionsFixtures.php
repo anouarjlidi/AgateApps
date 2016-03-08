@@ -32,7 +32,7 @@ class FactionsFixtures extends AbstractFixture
      */
     protected function getReferencePrefix()
     {
-        return 'esterenmaps-factions';
+        return 'esterenmaps-factions-';
     }
 
     /**

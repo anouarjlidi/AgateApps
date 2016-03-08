@@ -33,16 +33,6 @@ class ZonesTypesFixtures extends AbstractFixture
     }
 
     /**
-     * Flush everytime to be sure that the references exist
-     *
-     * @return int
-     */
-    protected function flushEveryXIterations()
-    {
-        return 1;
-    }
-
-    /**
      * {@inheritdoc}
      */
     protected function getObjects()
@@ -56,7 +46,7 @@ class ZonesTypesFixtures extends AbstractFixture
                 'color'       => '',
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
-                'deleted_at'  => null,
+                'deletedAt'   => null,
             ],
             [
                 'id'          => 2,
@@ -71,7 +61,7 @@ class ZonesTypesFixtures extends AbstractFixture
                 'color'       => '#E05151',
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
-                'deleted_at'  => null,
+                'deletedAt'   => null,
             ],
             [
                 'id'          => 3,
@@ -86,7 +76,7 @@ class ZonesTypesFixtures extends AbstractFixture
                 'color'       => '#E4AA8E',
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
-                'deleted_at'  => null,
+                'deletedAt'   => null,
             ],
             [
                 'id'          => 4,
@@ -101,7 +91,7 @@ class ZonesTypesFixtures extends AbstractFixture
                 'color'       => '#BBA748',
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
-                'deleted_at'  => null,
+                'deletedAt'   => null,
             ],
             [
                 'id'          => 5,
@@ -116,7 +106,7 @@ class ZonesTypesFixtures extends AbstractFixture
                 'color'       => '#F1E091',
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
-                'deleted_at'  => null,
+                'deletedAt'   => null,
             ],
             [
                 'id'          => 6,
@@ -131,7 +121,7 @@ class ZonesTypesFixtures extends AbstractFixture
                 'color'       => '#CCA9D9',
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-17 22:51:49'),
-                'deleted_at'  => null,
+                'deletedAt'   => null,
             ],
             [
                 'id'          => 7,
@@ -141,7 +131,7 @@ class ZonesTypesFixtures extends AbstractFixture
                 'color'       => '',
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
-                'deleted_at'  => null,
+                'deletedAt'   => null,
             ],
             [
                 'id'          => 8,
@@ -156,7 +146,7 @@ class ZonesTypesFixtures extends AbstractFixture
                 'color'       => '#669D4E',
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-17 22:51:49'),
-                'deleted_at'  => null,
+                'deletedAt'   => null,
             ],
             [
                 'id'          => 9,
@@ -171,7 +161,7 @@ class ZonesTypesFixtures extends AbstractFixture
                 'color'       => '#748F43',
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
-                'deleted_at'  => null,
+                'deletedAt'   => null,
             ],
             [
                 'id'          => 10,
@@ -186,7 +176,7 @@ class ZonesTypesFixtures extends AbstractFixture
                 'color'       => '#A6A6A6',
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
-                'deleted_at'  => null,
+                'deletedAt'   => null,
             ],
             [
                 'id'          => 11,
@@ -201,7 +191,7 @@ class ZonesTypesFixtures extends AbstractFixture
                 'color'       => '#756098',
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
-                'deleted_at'  => null,
+                'deletedAt'   => null,
             ],
             [
                 'id'          => 12,
@@ -216,7 +206,7 @@ class ZonesTypesFixtures extends AbstractFixture
                 'color'       => '#9F8F50',
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
-                'deleted_at'  => null,
+                'deletedAt'   => null,
             ],
             [
                 'id'          => 13,
@@ -231,7 +221,7 @@ class ZonesTypesFixtures extends AbstractFixture
                 'color'       => '#7099E4',
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
-                'deleted_at'  => null,
+                'deletedAt'   => null,
             ],
             [
                 'id'          => 14,
@@ -246,7 +236,7 @@ class ZonesTypesFixtures extends AbstractFixture
                 'color'       => '#6367AA',
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-17 22:51:49'),
-                'deleted_at'  => null,
+                'deletedAt'   => null,
             ],
             [
                 'id'          => 15,
@@ -261,7 +251,7 @@ class ZonesTypesFixtures extends AbstractFixture
                 'color'       => '',
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
-                'deleted_at'  => null,
+                'deletedAt'   => null,
             ],
             [
                 'id'          => 16,
@@ -276,7 +266,7 @@ class ZonesTypesFixtures extends AbstractFixture
                 'color'       => '',
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
-                'deleted_at'  => null,
+                'deletedAt'   => null,
             ],
             [
                 'id'          => 17,
@@ -291,7 +281,7 @@ class ZonesTypesFixtures extends AbstractFixture
                 'color'       => '',
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
-                'deleted_at'  => null,
+                'deletedAt'   => null,
             ],
             [
                 'id'          => 18,
@@ -306,7 +296,7 @@ class ZonesTypesFixtures extends AbstractFixture
                 'color'       => '',
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
-                'deleted_at'  => null,
+                'deletedAt'   => null,
             ],
         ];
     }
