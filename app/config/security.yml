@@ -65,7 +65,7 @@ security:
                 secret:         "%secret%"
                 path:           /
                 name:           EsterenRememberMe
-                domain:         "%%esteren_domains.cookiedomain%"
+                domain:         "%%esteren_domains.cookie_domain%"
             form_login:
                 provider:       fos_user
                 login_path:     fos_user_security_login
