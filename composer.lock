@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e36d2d715c7dd11206524ca847be134e",
-    "content-hash": "a7e0f1c64d82d2707cfbc94bfc034fd2",
+    "hash": "78b00b63a288f7a820c2b036a8088ff6",
+    "content-hash": "eada2ac1adbb04170aa3bba178db0b7c",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -1920,16 +1920,16 @@
         },
         {
             "name": "orbitale/doctrine-tools",
-            "version": "v0.4.2",
+            "version": "v0.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Orbitale/DoctrineTools.git",
-                "reference": "193fee820642668065f7eb8ad958c3c6702af3c5"
+                "reference": "2affc303977da8a307b78c6fceb85d43650680be"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Orbitale/DoctrineTools/zipball/193fee820642668065f7eb8ad958c3c6702af3c5",
-                "reference": "193fee820642668065f7eb8ad958c3c6702af3c5",
+                "url": "https://api.github.com/repos/Orbitale/DoctrineTools/zipball/2affc303977da8a307b78c6fceb85d43650680be",
+                "reference": "2affc303977da8a307b78c6fceb85d43650680be",
                 "shasum": ""
             },
             "require": {
@@ -1971,7 +1971,7 @@
                 "repository",
                 "tools"
             ],
-            "time": "2016-01-26 13:46:10"
+            "time": "2016-03-08 10:04:20"
         },
         {
             "name": "orbitale/entity-merger",
@@ -3621,23 +3621,23 @@
         },
         {
             "name": "doctrine/doctrine-fixtures-bundle",
-            "version": "v2.2.1",
+            "version": "2.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/DoctrineFixturesBundle.git",
-                "reference": "817c2d233fde0fe85cb7e4d25d43fbfcd028aef8"
+                "reference": "0f1a2f91b349e10f5c343f75ab71d23aace5b029"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineFixturesBundle/zipball/817c2d233fde0fe85cb7e4d25d43fbfcd028aef8",
-                "reference": "817c2d233fde0fe85cb7e4d25d43fbfcd028aef8",
+                "url": "https://api.github.com/repos/doctrine/DoctrineFixturesBundle/zipball/0f1a2f91b349e10f5c343f75ab71d23aace5b029",
+                "reference": "0f1a2f91b349e10f5c343f75ab71d23aace5b029",
                 "shasum": ""
             },
             "require": {
                 "doctrine/data-fixtures": "~1.0",
                 "doctrine/doctrine-bundle": "~1.0",
                 "php": ">=5.3.2",
-                "symfony/doctrine-bridge": "~2.1"
+                "symfony/doctrine-bridge": "~2.3|~3.0"
             },
             "type": "symfony-bundle",
             "extra": {
@@ -3674,7 +3674,7 @@
                 "Fixture",
                 "persistence"
             ],
-            "time": "2015-08-04 22:43:14"
+            "time": "2015-11-04 21:23:23"
         },
         {
             "name": "sensio/generator-bundle",
