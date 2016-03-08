@@ -72,7 +72,7 @@ class GeneratorController extends Controller {
          */
         $stepLoader = $this->container->get('corahn_rin_generator.steps_loader');
 
-        $stepLoader->initiate($this, $session, $request, $step, $this->steps);
+        $stepLoader->initialize($this, $session, $request, $step, $this->steps);
 
         if ($stepLoader->exists()) {
             //Si la méthode existe on l'exécute pour lancer l'analyse de l'étape

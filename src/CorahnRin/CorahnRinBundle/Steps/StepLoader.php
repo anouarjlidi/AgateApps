@@ -70,7 +70,7 @@ class StepLoader {
     /**
      * @var bool
      */
-    private $initiated = false;
+    private $initialized = false;
 
     /**
      * @var Steps
@@ -94,7 +94,7 @@ class StepLoader {
      * @param Steps            $step       L'étape en cours
      * @param array            $steps      La liste des étapes (pour éviter une nouvelle injection
      */
-    function initiate(Controller $controller, SessionInterface $session, Request $request, Steps $step, $steps) {
+    function initialize(Controller $controller, SessionInterface $session, Request $request, Steps $step, $steps) {
         $this->controller = $controller;
         $this->em = $controller->getDoctrine()->getManager();
         $this->session = $session;
@@ -104,7 +104,7 @@ class StepLoader {
         $this->steps = $steps;
         $this->filename = $this->steps_managers_directory.'/'.'_step_'.str_pad($step->getId(), 2, 0, STR_PAD_LEFT).'_'.$step->getSlug().'.php';
         $this->character = $session->get('character');
-        $this->initiated = true;
+        $this->initialized = true;
     }
 
     /**
@@ -113,8 +113,8 @@ class StepLoader {
      * @return bool
      * @throws \Exception
      */
-    function checkInitiated() {
-        if ($this->initiated) {
+    function checkInitialized() {
+        if ($this->initialized) {
             return true;
         } else {
             throw new \Exception('Le StepLoader doit être initialisé avant toute action supplémentaire.<br />Voir documentation de la classe "'.__CLASS__.'".');

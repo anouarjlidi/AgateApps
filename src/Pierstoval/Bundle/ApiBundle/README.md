@@ -22,7 +22,7 @@ You can easily download Composer by checking [the official Composer website](htt
 Initialization
 -------------------------
 
-You need to initiate some settings to make sure the bundle is configured properly. 
+You need to initialize some settings to make sure the bundle is configured properly. 
 
 1. First, register the required bundles in the kernel:
 

@@ -54,16 +54,16 @@
      * @returns {boolean}
      * @private
      */
-    EsterenMap.prototype._initiate = function() {
+    EsterenMap.prototype._initialize = function() {
 
         var drawnItems,sidebar, _this = this, mapOptions;
 
-        if (this.initiated === true || d.initiatedEsterenMap === true) {
+        if (this.initialized === true || d.initializedEsterenMap === true) {
             console.error('Map already set.');
             return false;
         }
-        this.initiated = true;
-        d.initiatedEsterenMap = true;
+        this.initialized = true;
+        d.initializedEsterenMap = true;
 
         // Formatage de l'url d'API qui doit utiliser l'ID de la map
         this._mapOptions.apiUrls.tiles = this.options().apiUrls.tiles.replace('{id}', ''+this.options().id);
@@ -379,9 +379,9 @@
                 _this.mapAllowedElements.settings = false;// Désactive les settings une fois chargés
                 if (response.settings) {
                     _this._mapOptions = mergeRecursive(_this._mapOptions, response.settings);
-                    _this._initiate();
+                    _this._initialize();
                 } else {
-                    console.error('Map couldn\'t initiate because settings response was not correct.');
+                    console.error('Map couldn\'t initialize because settings response was not correct.');
                 }
             },
             null, //callback "Complete"
