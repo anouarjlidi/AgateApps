@@ -2,7 +2,6 @@
 
 namespace EsterenMaps\MapsBundle\DataFixtures\ORM;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Orbitale\Component\DoctrineTools\AbstractFixture;
 
 class MarkersTypesFixtures extends AbstractFixture
@@ -32,24 +31,155 @@ class MarkersTypesFixtures extends AbstractFixture
     }
 
     /**
-     * Returns a list of objects to
-     *
-     * @return ArrayCollection|object[]
+     * {@inheritdoc}
      */
     protected function getObjects()
     {
-        return array(
-            array('id' => 1,  'iconWidth' => 16, 'iconHeight' => 16, 'icon' => 'pastille-beige.png',  'name' => 'Cité',                        'description' => ''),
-            array('id' => 2,  'iconWidth' => 16, 'iconHeight' => 16, 'icon' => 'pastille-blue.png',  'name' => 'Port (village côtier, ...)',  'description' => ''),
-            array('id' => 3,  'iconWidth' => 16, 'iconHeight' => 16, 'icon' => 'pastille-green.png', 'name' => 'Carrefour',                   'description' => ''),
-            array('id' => 4,  'iconWidth' => 16, 'iconHeight' => 16, 'icon' => 'pastille-green-dark.png', 'name' => 'Sanctuaire',                  'description' => ''),
-            array('id' => 5,  'iconWidth' => 16, 'iconHeight' => 16, 'icon' => 'pastille-red-dark.png',  'name' => 'Site d\'intérêt',             'description' => ''),
-            array('id' => 6,  'iconWidth' => 16, 'iconHeight' => 16, 'icon' => 'pastille-gray.png',  'name' => 'Fortifications (châteaux, angardes, rosace)', 'description' => ''),
-            array('id' => 7,  'iconWidth' => 16, 'iconHeight' => 16, 'icon' => 'pastille-red-darker.png', 'name' => 'Souterrain (mine, cité troglodyte, réseau de cavernes)', 'description' => ''),
-            array('id' => 8,  'iconWidth' => 16, 'iconHeight' => 16, 'icon' => 'pastille-gray-light.png', 'name' => 'Établissement',               'description' => ''),
-            array('id' => 9,  'iconWidth' => 16, 'iconHeight' => 16, 'icon' => 'pastille-blue-dark.png', 'name' => 'Lieu hanté ou maudit',        'description' => ''),
-            array('id' => 10, 'iconWidth' => 16, 'iconHeight' => 16, 'icon' => 'invisible.png',       'name' => 'Marqueur invisible',          'description' => ''),
-            array('id' => 11, 'iconWidth' => 16, 'iconHeight' => 16, 'icon' => 'pastille-beige-light.png', 'name' => 'Village',                     'description' => ''),
-        );
+        return [
+
+            [
+                'id'          => 1,
+                'name'        => 'Cité',
+                'description' => '',
+                'icon'        => 'pastille-beige.png',
+                'iconWidth'   => 16,
+                'iconHeight'  => 16,
+                'iconCenterX' => null,
+                'iconCenterY' => null,
+                'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-17 22:51:49'),
+                'deletedAt'   => null,
+            ],
+            [
+                'id'          => 2,
+                'name'        => 'Port (village côtier, ...)',
+                'description' => '',
+                'icon'        => 'pastille-blue.png',
+                'iconWidth'   => 16,
+                'iconHeight'  => 16,
+                'iconCenterX' => null,
+                'iconCenterY' => null,
+                'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-17 22:51:49'),
+                'deletedAt'   => null,
+            ],
+            [
+                'id'          => 3,
+                'name'        => 'Passage',
+                'description' => '',
+                'icon'        => 'pastille-green.png',
+                'iconWidth'   => 16,
+                'iconHeight'  => 16,
+                'iconCenterX' => null,
+                'iconCenterY' => null,
+                'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:22'),
+                'deletedAt'   => null,
+            ],
+            [
+                'id'          => 4,
+                'name'        => 'Sanctuaire',
+                'description' => '',
+                'icon'        => 'pastille-green-dark.png',
+                'iconWidth'   => 16,
+                'iconHeight'  => 16,
+                'iconCenterX' => null,
+                'iconCenterY' => null,
+                'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'deletedAt'   => null,
+            ],
+            [
+                'id'          => 5,
+                'name'        => 'Site d\'intérêt',
+                'description' => '',
+                'icon'        => 'pastille-red-dark.png',
+                'iconWidth'   => 16,
+                'iconHeight'  => 16,
+                'iconCenterX' => null,
+                'iconCenterY' => null,
+                'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-17 22:51:49'),
+                'deletedAt'   => null,
+            ],
+            [
+                'id'          => 6,
+                'name'        => 'Fortifications (châteaux, angardes, rosace)',
+                'description' => '',
+                'icon'        => 'pastille-gray.png',
+                'iconWidth'   => 16,
+                'iconHeight'  => 16,
+                'iconCenterX' => null,
+                'iconCenterY' => null,
+                'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-17 22:51:49'),
+                'deletedAt'   => null,
+            ],
+            [
+                'id'          => 7,
+                'name'        => 'Souterrain (mine, cité troglodyte, réseau de cavernes)',
+                'description' => '',
+                'icon'        => 'pastille-red-darker.png',
+                'iconWidth'   => 16,
+                'iconHeight'  => 16,
+                'iconCenterX' => null,
+                'iconCenterY' => null,
+                'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-17 22:51:49'),
+                'deletedAt'   => null,
+            ],
+            [
+                'id'          => 8,
+                'name'        => 'Établissement',
+                'description' => '',
+                'icon'        => 'pastille-gray-light.png',
+                'iconWidth'   => 16,
+                'iconHeight'  => 16,
+                'iconCenterX' => null,
+                'iconCenterY' => null,
+                'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-17 22:51:49'),
+                'deletedAt'   => null,
+            ],
+            [
+                'id'          => 9,
+                'name'        => 'Lieu hanté ou maudit',
+                'description' => '',
+                'icon'        => 'pastille-blue-dark.png',
+                'iconWidth'   => 16,
+                'iconHeight'  => 16,
+                'iconCenterX' => null,
+                'iconCenterY' => null,
+                'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-17 22:51:49'),
+                'deletedAt'   => null,
+            ],
+            [
+                'id'          => 10,
+                'name'        => 'Marqueur invisible',
+                'description' => '',
+                'icon'        => 'invisible.png',
+                'iconWidth'   => 16,
+                'iconHeight'  => 16,
+                'iconCenterX' => null,
+                'iconCenterY' => null,
+                'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'deletedAt'   => null,
+            ],
+            [
+                'id'          => 11,
+                'name'        => 'Village',
+                'description' => '',
+                'icon'        => 'pastille-beige-light.png',
+                'iconWidth'   => 16,
+                'iconHeight'  => 16,
+                'iconCenterX' => null,
+                'iconCenterY' => null,
+                'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'deletedAt'   => null,
+            ],
+        ];
     }
 }
