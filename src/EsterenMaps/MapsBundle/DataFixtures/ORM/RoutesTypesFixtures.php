@@ -2,82 +2,77 @@
 
 namespace EsterenMaps\MapsBundle\DataFixtures\ORM;
 
-use Doctrine\Common\DataFixtures\AbstractFixture;
-use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Mapping\ClassMetadata;
-use EsterenMaps\MapsBundle\Entity\RoutesTypes;
+use Orbitale\Component\DoctrineTools\AbstractFixture;
 
-class RoutesTypesFixtures extends AbstractFixture implements OrderedFixtureInterface
+class RoutesTypesFixtures extends AbstractFixture
 {
-
     /**
-     * @var ObjectManager
+     * {@inheritdoc}
      */
-    private $manager;
-
-    /**
-     * Get the order of this fixture
-     * @return integer
-     */
-    function getOrder()
+    public function getOrder()
     {
         return 0;
     }
 
     /**
-     * Load data fixtures with the passed EntityManager
-     *
-     * @param ObjectManager $manager
+     * {@inheritdoc}
      */
-    function load(ObjectManager $manager)
+    protected function getEntityClass()
     {
-        $this->manager = $manager;
-
-        $repo = $this->manager->getRepository('EsterenMapsBundle:RoutesTypes');
-
-        $this->fixtureObject($repo, 1, 'Chemin', '', 'rgba(165,110,52,1)');
-        $this->fixtureObject($repo, 2, 'Route', '', 'rgba(199,191,183,1)');
-        $this->fixtureObject($repo, 3, 'Sentier de loup', '', 'rgba(194,176,76,1)');
-        $this->fixtureObject($repo, 4, 'Liaison maritime', '', '');
-        $this->fixtureObject($repo, 5, 'Voie fluviale', '', '');
-
-        $this->manager->flush();
+        return 'EsterenMaps\MapsBundle\Entity\RoutesTypes';
     }
 
-    public function fixtureObject(EntityRepository $repo, $id, $name, $description, $color)
+    /**
+     * {@inheritdoc}
+     */
+    protected function getObjects()
     {
-        $obj       = null;
-        $newObject = false;
-        $addRef    = false;
-        if ($id) {
-            $obj = $repo->find($id);
-            if ($obj) {
-                $addRef = true;
-            } else {
-                $newObject = true;
-            }
-        } else {
-            $newObject = true;
-        }
-        if ($newObject === true) {
-            $obj = new RoutesTypes();
-            $obj->setId($id)
-                ->setName($name)
-                ->setDescription($description)
-                ->setColor($color)
-            ;
-            if ($id) {
-                /** @var ClassMetadata $metadata */
-                $metadata = $this->manager->getClassMetaData(get_class($obj));
-                $metadata->setIdGeneratorType(ClassMetadata::GENERATOR_TYPE_NONE);
-            }
-            $this->manager->persist($obj);
-            $addRef = true;
-        }
-        if ($addRef === true && $obj) {
-            $this->addReference('esterenmaps-routestypes-'.$id, $obj);
-        }
+        return [
+            [
+                'id'          => 1,
+                'name'        => 'Chemin',
+                'description' => '',
+                'color'       => 'rgba(165,110,52,1)',
+                'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'deletedAt'   => null,
+            ],
+            [
+                'id'          => 2,
+                'name'        => 'Route',
+                'description' => '',
+                'color'       => 'rgba(199,191,183,1)',
+                'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'deletedAt'   => null,
+            ],
+            [
+                'id'          => 3,
+                'name'        => 'Sentier de loup',
+                'description' => '',
+                'color'       => 'rgba(194,176,76,1)',
+                'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'deletedAt'   => null,
+            ],
+            [
+                'id'          => 4,
+                'name'        => 'Liaison maritime',
+                'description' => '',
+                'color'       => 'rgba(64,148,220,0.4)',
+                'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-09-24 10:52:59'),
+                'deletedAt'   => null,
+            ],
+            [
+                'id'          => 5,
+                'name'        => 'Voie fluviale',
+                'description' => '',
+                'color'       => 'rgba(64,220,191,0.4)',
+                'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-09-24 10:52:41'),
+                'deletedAt'   => null,
+            ],
+        ];
     }
 }
