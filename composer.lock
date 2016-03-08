@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "78b00b63a288f7a820c2b036a8088ff6",
-    "content-hash": "eada2ac1adbb04170aa3bba178db0b7c",
+    "hash": "e126c8a7a3edc013c0d602aca607d2c5",
+    "content-hash": "fd8f934be7b1452fd9503a3208a42881",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -1920,16 +1920,16 @@
         },
         {
             "name": "orbitale/doctrine-tools",
-            "version": "v0.4.3",
+            "version": "v0.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Orbitale/DoctrineTools.git",
-                "reference": "2affc303977da8a307b78c6fceb85d43650680be"
+                "reference": "5e4326dcf1aea405795a85f4477ca0f445070e89"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Orbitale/DoctrineTools/zipball/2affc303977da8a307b78c6fceb85d43650680be",
-                "reference": "2affc303977da8a307b78c6fceb85d43650680be",
+                "url": "https://api.github.com/repos/Orbitale/DoctrineTools/zipball/5e4326dcf1aea405795a85f4477ca0f445070e89",
+                "reference": "5e4326dcf1aea405795a85f4477ca0f445070e89",
                 "shasum": ""
             },
             "require": {
@@ -1971,7 +1971,7 @@
                 "repository",
                 "tools"
             ],
-            "time": "2016-03-08 10:04:20"
+            "time": "2016-03-08 10:20:14"
         },
         {
             "name": "orbitale/entity-merger",

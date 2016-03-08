@@ -2,6 +2,8 @@
 
 namespace EsterenMaps\MapsBundle\DataFixtures\ORM;
 
+use Doctrine\Common\Persistence\ObjectManager;
+use EsterenMaps\MapsBundle\Entity\ZonesTypes;
 use Orbitale\Component\DoctrineTools\AbstractFixture;
 
 class ZonesTypesFixtures extends AbstractFixture
@@ -31,6 +33,16 @@ class ZonesTypesFixtures extends AbstractFixture
     }
 
     /**
+     * Flush everytime to be sure that the references exist
+     *
+     * @return int
+     */
+    protected function flushEveryXIterations()
+    {
+        return 1;
+    }
+
+    /**
      * {@inheritdoc}
      */
     protected function getObjects()
@@ -38,7 +50,7 @@ class ZonesTypesFixtures extends AbstractFixture
         return [
             [
                 'id'          => 1,
-                'parent_id'   => null,
+                'parent'      => null,
                 'name'        => 'Politique',
                 'description' => '',
                 'color'       => '',
@@ -48,7 +60,12 @@ class ZonesTypesFixtures extends AbstractFixture
             ],
             [
                 'id'          => 2,
-                'parent'      => $this->getReference('esterenmaps-zonestypes-1'),
+                'parent'      => function (ZonesTypes $obj, AbstractFixture $f, ObjectManager $manager) {
+                    $ref = $manager->merge($f->getReference('esterenmaps-zonestypes-1'));
+                    $obj->setParent($ref);
+
+                    return $ref;
+                },
                 'name'        => 'Royaume',
                 'description' => '',
                 'color'       => '#E05151',
@@ -58,7 +75,12 @@ class ZonesTypesFixtures extends AbstractFixture
             ],
             [
                 'id'          => 3,
-                'parent'      => $this->getReference('esterenmaps-zonestypes-1'),
+                'parent'      => function (ZonesTypes $obj, AbstractFixture $f, ObjectManager $manager) {
+                    $ref = $manager->merge($f->getReference('esterenmaps-zonestypes-1'));
+                    $obj->setParent($ref);
+
+                    return $ref;
+                },
                 'name'        => 'Territoire',
                 'description' => '',
                 'color'       => '#E4AA8E',
@@ -68,7 +90,12 @@ class ZonesTypesFixtures extends AbstractFixture
             ],
             [
                 'id'          => 4,
-                'parent'      => $this->getReference('esterenmaps-zonestypes-1'),
+                'parent'      => function (ZonesTypes $obj, AbstractFixture $f, ObjectManager $manager) {
+                    $ref = $manager->merge($f->getReference('esterenmaps-zonestypes-1'));
+                    $obj->setParent($ref);
+
+                    return $ref;
+                },
                 'name'        => 'Domaine',
                 'description' => '',
                 'color'       => '#BBA748',
@@ -78,7 +105,12 @@ class ZonesTypesFixtures extends AbstractFixture
             ],
             [
                 'id'          => 5,
-                'parent'      => $this->getReference('esterenmaps-zonestypes-1'),
+                'parent'      => function (ZonesTypes $obj, AbstractFixture $f, ObjectManager $manager) {
+                    $ref = $manager->merge($f->getReference('esterenmaps-zonestypes-1'));
+                    $obj->setParent($ref);
+
+                    return $ref;
+                },
                 'name'        => 'Ville / Village',
                 'description' => '',
                 'color'       => '#F1E091',
@@ -88,7 +120,12 @@ class ZonesTypesFixtures extends AbstractFixture
             ],
             [
                 'id'          => 6,
-                'parent'      => $this->getReference('esterenmaps-zonestypes-1'),
+                'parent'      => function (ZonesTypes $obj, AbstractFixture $f, ObjectManager $manager) {
+                    $ref = $manager->merge($f->getReference('esterenmaps-zonestypes-1'));
+                    $obj->setParent($ref);
+
+                    return $ref;
+                },
                 'name'        => 'Terre sacrée',
                 'description' => '',
                 'color'       => '#CCA9D9',
@@ -98,7 +135,7 @@ class ZonesTypesFixtures extends AbstractFixture
             ],
             [
                 'id'          => 7,
-                'parent_id'   => null,
+                'parent'      => null,
                 'name'        => 'Terrain',
                 'description' => '',
                 'color'       => '',
@@ -108,7 +145,12 @@ class ZonesTypesFixtures extends AbstractFixture
             ],
             [
                 'id'          => 8,
-                'parent'      => $this->getReference('esterenmaps-zonestypes-7'),
+                'parent'      => function (ZonesTypes $obj, AbstractFixture $f, ObjectManager $manager) {
+                    $ref = $manager->merge($f->getReference('esterenmaps-zonestypes-7'));
+                    $obj->setParent($ref);
+
+                    return $ref;
+                },
                 'name'        => 'Forêt',
                 'description' => '',
                 'color'       => '#669D4E',
@@ -118,7 +160,12 @@ class ZonesTypesFixtures extends AbstractFixture
             ],
             [
                 'id'          => 9,
-                'parent'      => $this->getReference('esterenmaps-zonestypes-7'),
+                'parent'      => function (ZonesTypes $obj, AbstractFixture $f, ObjectManager $manager) {
+                    $ref = $manager->merge($f->getReference('esterenmaps-zonestypes-7'));
+                    $obj->setParent($ref);
+
+                    return $ref;
+                },
                 'name'        => 'Marais',
                 'description' => '',
                 'color'       => '#748F43',
@@ -128,7 +175,12 @@ class ZonesTypesFixtures extends AbstractFixture
             ],
             [
                 'id'          => 10,
-                'parent'      => $this->getReference('esterenmaps-zonestypes-7'),
+                'parent'      => function (ZonesTypes $obj, AbstractFixture $f, ObjectManager $manager) {
+                    $ref = $manager->merge($f->getReference('esterenmaps-zonestypes-7'));
+                    $obj->setParent($ref);
+
+                    return $ref;
+                },
                 'name'        => 'Montagnes',
                 'description' => '',
                 'color'       => '#A6A6A6',
@@ -138,7 +190,12 @@ class ZonesTypesFixtures extends AbstractFixture
             ],
             [
                 'id'          => 11,
-                'parent'      => $this->getReference('esterenmaps-zonestypes-7'),
+                'parent'      => function (ZonesTypes $obj, AbstractFixture $f, ObjectManager $manager) {
+                    $ref = $manager->merge($f->getReference('esterenmaps-zonestypes-7'));
+                    $obj->setParent($ref);
+
+                    return $ref;
+                },
                 'name'        => 'Failles / Falaises',
                 'description' => '',
                 'color'       => '#756098',
@@ -148,7 +205,12 @@ class ZonesTypesFixtures extends AbstractFixture
             ],
             [
                 'id'          => 12,
-                'parent'      => $this->getReference('esterenmaps-zonestypes-7'),
+                'parent'      => function (ZonesTypes $obj, AbstractFixture $f, ObjectManager $manager) {
+                    $ref = $manager->merge($f->getReference('esterenmaps-zonestypes-7'));
+                    $obj->setParent($ref);
+
+                    return $ref;
+                },
                 'name'        => 'Landes',
                 'description' => '',
                 'color'       => '#9F8F50',
@@ -158,7 +220,12 @@ class ZonesTypesFixtures extends AbstractFixture
             ],
             [
                 'id'          => 13,
-                'parent'      => $this->getReference('esterenmaps-zonestypes-7'),
+                'parent'      => function (ZonesTypes $obj, AbstractFixture $f, ObjectManager $manager) {
+                    $ref = $manager->merge($f->getReference('esterenmaps-zonestypes-7'));
+                    $obj->setParent($ref);
+
+                    return $ref;
+                },
                 'name'        => 'Mer, lac',
                 'description' => '',
                 'color'       => '#7099E4',
@@ -168,7 +235,12 @@ class ZonesTypesFixtures extends AbstractFixture
             ],
             [
                 'id'          => 14,
-                'parent'      => $this->getReference('esterenmaps-zonestypes-7'),
+                'parent'      => function (ZonesTypes $obj, AbstractFixture $f, ObjectManager $manager) {
+                    $ref = $manager->merge($f->getReference('esterenmaps-zonestypes-7'));
+                    $obj->setParent($ref);
+
+                    return $ref;
+                },
                 'name'        => 'Île(s)',
                 'description' => '',
                 'color'       => '#6367AA',
@@ -178,7 +250,12 @@ class ZonesTypesFixtures extends AbstractFixture
             ],
             [
                 'id'          => 15,
-                'parent'      => $this->getReference('esterenmaps-zonestypes-7'),
+                'parent'      => function (ZonesTypes $obj, AbstractFixture $f, ObjectManager $manager) {
+                    $ref = $manager->merge($f->getReference('esterenmaps-zonestypes-7'));
+                    $obj->setParent($ref);
+
+                    return $ref;
+                },
                 'name'        => 'Collines',
                 'description' => '',
                 'color'       => '',
@@ -188,7 +265,12 @@ class ZonesTypesFixtures extends AbstractFixture
             ],
             [
                 'id'          => 16,
-                'parent'      => $this->getReference('esterenmaps-zonestypes-7'),
+                'parent'      => function (ZonesTypes $obj, AbstractFixture $f, ObjectManager $manager) {
+                    $ref = $manager->merge($f->getReference('esterenmaps-zonestypes-7'));
+                    $obj->setParent($ref);
+
+                    return $ref;
+                },
                 'name'        => 'Plage(s)',
                 'description' => '',
                 'color'       => '',
@@ -198,7 +280,12 @@ class ZonesTypesFixtures extends AbstractFixture
             ],
             [
                 'id'          => 17,
-                'parent'      => $this->getReference('esterenmaps-zonestypes-7'),
+                'parent'      => function (ZonesTypes $obj, AbstractFixture $f, ObjectManager $manager) {
+                    $ref = $manager->merge($f->getReference('esterenmaps-zonestypes-7'));
+                    $obj->setParent($ref);
+
+                    return $ref;
+                },
                 'name'        => 'Plaine(s)',
                 'description' => '',
                 'color'       => '',
@@ -208,7 +295,12 @@ class ZonesTypesFixtures extends AbstractFixture
             ],
             [
                 'id'          => 18,
-                'parent'      => $this->getReference('esterenmaps-zonestypes-7'),
+                'parent'      => function (ZonesTypes $obj, AbstractFixture $f, ObjectManager $manager) {
+                    $ref = $manager->merge($f->getReference('esterenmaps-zonestypes-7'));
+                    $obj->setParent($ref);
+
+                    return $ref;
+                },
                 'name'        => 'Plateau',
                 'description' => '',
                 'color'       => '',
