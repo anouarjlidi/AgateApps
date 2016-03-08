@@ -2,106 +2,220 @@
 
 namespace EsterenMaps\MapsBundle\DataFixtures\ORM;
 
-use Doctrine\Common\DataFixtures\AbstractFixture;
-use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Mapping\ClassMetadata;
-use EsterenMaps\MapsBundle\Entity\ZonesTypes;
+use Orbitale\Component\DoctrineTools\AbstractFixture;
 
-class ZonesTypesFixtures extends AbstractFixture implements OrderedFixtureInterface
+class ZonesTypesFixtures extends AbstractFixture
 {
-
     /**
-     * @var ObjectManager
+     * {@inheritdoc}
      */
-    private $manager;
-
-    /**
-     * @var ZonesTypes[]
-     */
-    private $zonesTypes = array();
-
-    /**
-     * Get the order of this fixture
-     * @return integer
-     */
-    function getOrder()
+    public function getOrder()
     {
         return 0;
     }
 
     /**
-     * Load data fixtures with the passed EntityManager
-     *
-     * @param ObjectManager $manager
+     * {@inheritdoc}
      */
-    function load(ObjectManager $manager)
+    protected function getEntityClass()
     {
-        $this->manager = $manager;
-
-        $repo = $this->manager->getRepository('EsterenMapsBundle:ZonesTypes');
-
-        $this->fixtureObject($repo, 1, null, 'Politique', '', '');
-        $this->fixtureObject($repo, 2, 1, 'Royaume', '', '#E05151');
-        $this->fixtureObject($repo, 3, 1, 'Territoire', '', '#E4AA8E');
-        $this->fixtureObject($repo, 4, 1, 'Domaine', '', '#BBA748');
-        $this->fixtureObject($repo, 5, 1, 'Ville / Village', '', '#F1E091');
-        $this->fixtureObject($repo, 6, 1, 'Terre sacrée', '', '#CCA9D9');
-        $this->fixtureObject($repo, 7, null, 'Terrain', '', '');
-        $this->fixtureObject($repo, 8, 7, 'Forêt', '', '#669D4E');
-        $this->fixtureObject($repo, 9, 7, 'Marais', '', '#748F43');
-        $this->fixtureObject($repo, 10, 7, 'Montagnes', '', '#A6A6A6');
-        $this->fixtureObject($repo, 11, 7, 'Failles / Falaises', '', '#756098');
-        $this->fixtureObject($repo, 12, 7, 'Landes', '', '#9F8F50');
-        $this->fixtureObject($repo, 13, 7, 'Mer, lac', '', '#7099E4');
-        $this->fixtureObject($repo, 14, 7, 'Île(s)', '', '#6367AA');
-        $this->fixtureObject($repo, 15, 7, 'Collines', '', '');
-        $this->fixtureObject($repo, 16, 7, 'Plage(s)', '', '');
-        $this->fixtureObject($repo, 17, 7, 'Plaine(s)', '', '');
-        $this->fixtureObject($repo, 18, 7, 'Plateau', '', '');
-
-        $this->manager->flush();
+        return 'EsterenMaps\MapsBundle\Entity\ZonesTypes';
     }
 
-    public function fixtureObject(EntityRepository $repo, $id, $parent, $name, $description, $color)
+    /**
+     * {@inheritdoc}
+     */
+    protected function getReferencePrefix()
     {
-        $obj       = null;
-        $newObject = false;
-        $addRef    = false;
-        if ($id) {
-            $obj = $repo->find($id);
-            if ($obj) {
-                $addRef = true;
-            } else {
-                $newObject = true;
-            }
-        } else {
-            $newObject = true;
-        }
-        if ($newObject === true) {
-            $obj = new ZonesTypes();
-            $obj->setId($id)
-                ->setName($name)
-                ->setDescription($description)
-                ->setColor($color)
-            ;
-            if ($parent) {
-                if (!isset($this->zonesTypes[$parent])) {
-                    $this->zonesTypes[$parent] = $this->getReference('esterenmaps-zonestypes-'.$parent);
-                }
-                $obj->setParent($this->zonesTypes[$parent]);
-            }
-            if ($id) {
-                /** @var ClassMetadata $metadata */
-                $metadata = $this->manager->getClassMetaData(get_class($obj));
-                $metadata->setIdGeneratorType(ClassMetadata::GENERATOR_TYPE_NONE);
-            }
-            $this->manager->persist($obj);
-            $addRef = true;
-        }
-        if ($addRef === true && $obj) {
-            $this->addReference('esterenmaps-zonestypes-'.$id, $obj);
-        }
+        return 'esterenmaps-zonestypes-';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getObjects()
+    {
+        return [
+            [
+                'id'          => 1,
+                'parent_id'   => null,
+                'name'        => 'Politique',
+                'description' => '',
+                'color'       => '',
+                'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'deleted_at'  => null,
+            ],
+            [
+                'id'          => 2,
+                'parent'      => $this->getReference('esterenmaps-zonestypes-1'),
+                'name'        => 'Royaume',
+                'description' => '',
+                'color'       => '#E05151',
+                'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'deleted_at'  => null,
+            ],
+            [
+                'id'          => 3,
+                'parent'      => $this->getReference('esterenmaps-zonestypes-1'),
+                'name'        => 'Territoire',
+                'description' => '',
+                'color'       => '#E4AA8E',
+                'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'deleted_at'  => null,
+            ],
+            [
+                'id'          => 4,
+                'parent'      => $this->getReference('esterenmaps-zonestypes-1'),
+                'name'        => 'Domaine',
+                'description' => '',
+                'color'       => '#BBA748',
+                'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'deleted_at'  => null,
+            ],
+            [
+                'id'          => 5,
+                'parent'      => $this->getReference('esterenmaps-zonestypes-1'),
+                'name'        => 'Ville / Village',
+                'description' => '',
+                'color'       => '#F1E091',
+                'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'deleted_at'  => null,
+            ],
+            [
+                'id'          => 6,
+                'parent'      => $this->getReference('esterenmaps-zonestypes-1'),
+                'name'        => 'Terre sacrée',
+                'description' => '',
+                'color'       => '#CCA9D9',
+                'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-17 22:51:49'),
+                'deleted_at'  => null,
+            ],
+            [
+                'id'          => 7,
+                'parent_id'   => null,
+                'name'        => 'Terrain',
+                'description' => '',
+                'color'       => '',
+                'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'deleted_at'  => null,
+            ],
+            [
+                'id'          => 8,
+                'parent'      => $this->getReference('esterenmaps-zonestypes-7'),
+                'name'        => 'Forêt',
+                'description' => '',
+                'color'       => '#669D4E',
+                'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-17 22:51:49'),
+                'deleted_at'  => null,
+            ],
+            [
+                'id'          => 9,
+                'parent'      => $this->getReference('esterenmaps-zonestypes-7'),
+                'name'        => 'Marais',
+                'description' => '',
+                'color'       => '#748F43',
+                'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'deleted_at'  => null,
+            ],
+            [
+                'id'          => 10,
+                'parent'      => $this->getReference('esterenmaps-zonestypes-7'),
+                'name'        => 'Montagnes',
+                'description' => '',
+                'color'       => '#A6A6A6',
+                'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'deleted_at'  => null,
+            ],
+            [
+                'id'          => 11,
+                'parent'      => $this->getReference('esterenmaps-zonestypes-7'),
+                'name'        => 'Failles / Falaises',
+                'description' => '',
+                'color'       => '#756098',
+                'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'deleted_at'  => null,
+            ],
+            [
+                'id'          => 12,
+                'parent'      => $this->getReference('esterenmaps-zonestypes-7'),
+                'name'        => 'Landes',
+                'description' => '',
+                'color'       => '#9F8F50',
+                'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'deleted_at'  => null,
+            ],
+            [
+                'id'          => 13,
+                'parent'      => $this->getReference('esterenmaps-zonestypes-7'),
+                'name'        => 'Mer, lac',
+                'description' => '',
+                'color'       => '#7099E4',
+                'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'deleted_at'  => null,
+            ],
+            [
+                'id'          => 14,
+                'parent'      => $this->getReference('esterenmaps-zonestypes-7'),
+                'name'        => 'Île(s)',
+                'description' => '',
+                'color'       => '#6367AA',
+                'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-17 22:51:49'),
+                'deleted_at'  => null,
+            ],
+            [
+                'id'          => 15,
+                'parent'      => $this->getReference('esterenmaps-zonestypes-7'),
+                'name'        => 'Collines',
+                'description' => '',
+                'color'       => '',
+                'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'deleted_at'  => null,
+            ],
+            [
+                'id'          => 16,
+                'parent'      => $this->getReference('esterenmaps-zonestypes-7'),
+                'name'        => 'Plage(s)',
+                'description' => '',
+                'color'       => '',
+                'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'deleted_at'  => null,
+            ],
+            [
+                'id'          => 17,
+                'parent'      => $this->getReference('esterenmaps-zonestypes-7'),
+                'name'        => 'Plaine(s)',
+                'description' => '',
+                'color'       => '',
+                'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'deleted_at'  => null,
+            ],
+            [
+                'id'          => 18,
+                'parent'      => $this->getReference('esterenmaps-zonestypes-7'),
+                'name'        => 'Plateau',
+                'description' => '',
+                'color'       => '',
+                'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'deleted_at'  => null,
+            ],
+        ];
     }
 }
