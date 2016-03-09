@@ -1,6 +1,6 @@
 <input type="hidden" name="job_value" id="job_value" value="{{ job_value }}" />
 {% for jobs in jobs_list %}
-	<h3>{{ jobs.0.book.name | trans }}</h3>
+	<h3>{{ jobs[0].book.name | trans }}</h3>
 		{% for job in jobs %}
 			{% if loop.first %}
 				<div class="row">
@@ -9,7 +9,7 @@
 			<div class="col-sm-4">
 				<div class="btn-group">
 					<button type="button" data-toggle="modal" data-target="#modal_job_{{ job.id }}" class="btn btn-inverse {{ job_value == job.id ? 'active' : '' }}">
-						<span class="glyphicon icon-search"></span>
+						<span class="fa fa-search"></span>
 					</button>
 					<button type="button" id="btn-gen-choice-{{ job.id }}" data-toggle="btn-gen-choice" data-input-value="{{ job.id }}" data-target-node="job_value" class="btn btn-inverse {{ job_value == job.id ? 'active' : '' }}">{{ job.name | trans }}</button>
 				</div>

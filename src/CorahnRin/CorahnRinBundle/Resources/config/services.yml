@@ -14,3 +14,5 @@ services:
       arguments:
           steps_manager_directory: "%kernel.root_dir%/../src/CorahnRin/CorahnRinBundle/Steps"
           steps_views_directory: CorahnRinBundle:Generator
+      calls:
+          - [ 'setContainer', ['@service_container']]

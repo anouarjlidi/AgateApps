@@ -50,7 +50,6 @@ class AppContainerTest extends WebTestCase
             'esteren_maps' => ['esteren_maps'],
             'file_locator' => ['file_locator'],
             'filesystem' => ['filesystem'],
-            'form.csrf_provider' => ['form.csrf_provider'],
             'form.factory' => ['form.factory'],
             'form.registry' => ['form.registry'],
             'form.resolved_type_factory' => ['form.resolved_type_factory'],
@@ -118,7 +117,6 @@ class AppContainerTest extends WebTestCase
             'fos_rest.view.exception_wrapper_handler' => ['fos_rest.view.exception_wrapper_handler'],
             'fos_rest.view_handler' => ['fos_rest.view_handler'],
             'fos_rest.violation_formatter' => ['fos_rest.violation_formatter'],
-            'fos_user.change_password.form' => ['fos_user.change_password.form'],
             'fos_user.change_password.form.type' => ['fos_user.change_password.form.type'],
             'fos_user.mailer' => ['fos_user.mailer'],
             'fos_user.profile.form' => ['fos_user.profile.form'],
@@ -345,12 +343,8 @@ class AppContainerTest extends WebTestCase
             return;
         }
 
-        try {
-            $service = $container->get($serviceId);
-            $this->assertNotNull($service);
-        } catch (InactiveScopeException $e) {
-            $this->markTestSkipped('Skipped request-scope service "'.$serviceId.'".');
-        }
+        $service = $container->get($serviceId);
+        $this->assertNotNull($service);
     }
 
 }

@@ -18,9 +18,13 @@ class JobsRepository extends BaseRepository
         /** @var Jobs[] $jobs */
         $jobs = $this->findAll();
 
+        $books = [];
+
         foreach ($jobs as $job) {
-            yield $job->getBook()->getId() => $job;
+            $books[$job->getBook()->getId()][] = $job;
         }
+
+        return $books;
     }
 
 }

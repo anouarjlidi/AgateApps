@@ -49,7 +49,7 @@ When you have a Map and its background saved in your app, you must generate map 
 For this, run this command:
 
 ```bash
-$ app/console esterenmaps:map:generate-tiles
+$ bin/console esterenmaps:map:generate-tiles
 ```
 
 It will use [ImageMagick](http://www.imagemagick.org) and the [Orbitale ImageMagickPHP](https://github.com/Orbitale/ImageMagickPHP)

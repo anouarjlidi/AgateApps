@@ -4,18 +4,22 @@ namespace CorahnRin\CorahnRinBundle\Steps;
 use CorahnRin\CorahnRinBundle\Controller\GeneratorController as Controller;
 use CorahnRin\CorahnRinBundle\Entity\Steps;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Translation\Translator;
 
 /**
  * Charge les étapes pour le contrôleur, d'après un nom de fichier dépendant de l'étape injectée
  *
  * @author  Alex "Pierstoval" <pierstoval@gmail.com>
- * @version 1.0 27/12/2013
- * @version 1.1 16/03/2014 Injection de la liste des étapes dans le loader. Ajout de quelques méthodes pour faciliter la gestion des étapes et de la session.
  */
-class StepLoader {
+class StepLoader implements ContainerAwareInterface
+{
+    use ContainerAwareTrait;
 
     /**
      * @var Controller
@@ -77,10 +81,11 @@ class StepLoader {
      */
     public $stepEntity;
 
-    function __construct($steps_managers_directory, $steps_views_directory) {
+    public function __construct($steps_managers_directory, $steps_views_directory)
+    {
 
         $this->steps_managers_directory = $steps_managers_directory;
-        $this->steps_views_directory = $steps_views_directory;
+        $this->steps_views_directory    = $steps_views_directory;
     }
 
     /**
@@ -94,16 +99,17 @@ class StepLoader {
      * @param Steps            $step       L'étape en cours
      * @param array            $steps      La liste des étapes (pour éviter une nouvelle injection
      */
-    function initialize(Controller $controller, SessionInterface $session, Request $request, Steps $step, $steps) {
-        $this->controller = $controller;
-        $this->em = $controller->getDoctrine()->getManager();
-        $this->session = $session;
-        $this->request = $request;
-        $this->stepEntity = $step;
-        $this->step = $step->getStep();
-        $this->steps = $steps;
-        $this->filename = $this->steps_managers_directory.'/'.'_step_'.str_pad($step->getId(), 2, 0, STR_PAD_LEFT).'_'.$step->getSlug().'.php';
-        $this->character = $session->get('character');
+    public function initialize(Controller $controller, SessionInterface $session, Request $request, Steps $step, $steps)
+    {
+        $this->em          = $this->container->get('doctrine')->getManager();
+        $this->controller  = $controller;
+        $this->session     = $session;
+        $this->request     = $request;
+        $this->stepEntity  = $step;
+        $this->step        = $step->getStep();
+        $this->steps       = $steps;
+        $this->filename    = $this->steps_managers_directory.'/_step_'.str_pad($step->getId(), 2, 0, STR_PAD_LEFT).'_'.$step->getSlug().'.php';
+        $this->character   = $session->get('character');
         $this->initialized = true;
     }
 
@@ -113,11 +119,12 @@ class StepLoader {
      * @return bool
      * @throws \Exception
      */
-    function checkInitialized() {
+    public function checkInitialized()
+    {
         if ($this->initialized) {
             return true;
         } else {
-            throw new \Exception('Le StepLoader doit être initialisé avant toute action supplémentaire.<br />Voir documentation de la classe "'.__CLASS__.'".');
+            throw new \RuntimeException('Le StepLoader doit être initialisé avant toute action supplémentaire.<br />Voir documentation de la classe "'.__CLASS__.'".');
         }
     }
 
@@ -126,18 +133,21 @@ class StepLoader {
      *
      * @return boolean
      */
-    public function exists() {
+    public function exists()
+    {
         return file_exists($this->filename);
     }
 
     /**
      * Récupère une étape à partir du numéro de l'étape demandée
      *
-     * @param object|int $step
+     * @param Steps|int $step
+     *
      * @return Steps
      * @throws \Exception
      */
-    public function getStep($step = null) {
+    public function getStep($step = null)
+    {
         if (null === $step) {
             return $this->stepEntity;
         }
@@ -148,9 +158,10 @@ class StepLoader {
             if (array_key_exists($step, $this->steps)) {
                 return $this->steps[$step];
             } else {
-                throw new \Exception('Step not found in StepLoader\'s steps list.');
+                throw new \InvalidArgumentException('Step not found in StepLoader\'s steps list.');
             }
         }
+
         return false;
     }
 
@@ -158,12 +169,15 @@ class StepLoader {
      * Renvoie la valeur de l'étape demandée dans le personnage en session.
      * Renvoie null si la clé n'existe pas
      *
-     * @param object|int $step
+     * @param Steps|int $step
+     *
      * @return mixed
      */
-    public function getStepValue($step = null) {
-        $step = $this->getStep($step);
+    public function getStepValue($step = null)
+    {
+        $step         = $this->getStep($step);
         $stepFullName = $this->stepFullName($step);
+
         return array_key_exists($stepFullName, $this->character)
             ? $this->character[$stepFullName]
             : null;
@@ -174,8 +188,9 @@ class StepLoader {
      *
      * @return string
      */
-    public function getViewsDirectory() {
-        return preg_replace('~:$~isUu', '', $this->steps_views_directory);
+    public function getViewsDirectory()
+    {
+        return preg_replace('~:$~Uu', '', $this->steps_views_directory);
     }
 
     /**
@@ -183,44 +198,52 @@ class StepLoader {
      * Utilisé majoritairement en session pour définir les différentes clés
      *
      * @param Steps $step L'étape à parser. Si aucune étape n'est parsée, l'étape en cours est renvoyée
+     *
      * @return string
      */
-    public function stepFullName(Steps $step = null) {
+    public function stepFullName(Steps $step = null)
+    {
         $step = $this->getStep($step);
+
         return $step->getStep().'.'.$step->getSlug();
     }
 
     /**
      * Affecte les données $datas au personnage à l'étape en cours, ou à l'étape demandée
      *
-     * @param mixed      $datas
-     * @param object|int $step
+     * @param mixed     $datas
+     * @param Steps|int $step
      */
-    public function characterSet($datas, $step = null) {
-        $step = $this->stepFullName($step);
+    public function characterSet($datas, $step = null)
+    {
+        $step                   = $this->stepFullName($step);
         $this->character[$step] = $datas;
         $this->session->set('character', $this->character);
     }
 
     /**
      * @param null $step
+     *
      * @return $this
      */
-    function clearStep($step = null) {
+    public function clearStep($step = null)
+    {
         $step = $this->stepFullName($step);
         if (isset($this->character[$step])) {
             unset($this->character[$step]);
         }
         $this->session->set('character', $this->character);
+
         return $this;
     }
 
     /**
      * Redirige à l'étape suivante
      *
-     * @return array|object
+     * @return Steps|array
      */
-    public function nextStep() {
+    public function nextStep()
+    {
         return $this->controller->_goToStep($this->step + 1);
     }
 
@@ -229,10 +252,12 @@ class StepLoader {
      *
      * @return $this
      */
-    public function resetSteps() {
+    public function resetSteps()
+    {
         foreach ($this->stepEntity->getStepsToDisableOnChange() as $s) {
             unset($this->character[$this->stepFullName($s)]);
         }
+
         return $this;
     }
 
@@ -244,21 +269,27 @@ class StepLoader {
      * Si la réponse est un objet, c'est un objet RedirectResponse<br />
      *  Dans ce cas, on redirige, soit vers l'étape suivante, soit vers une autre page
      *
-     * @throws \Exception
-     * @return mixed
+     * @throws \InvalidArgumentException If steps the file does not exist.
+     * @return array|RedirectResponse
      */
-    public function load() {
+    public function load()
+    {
         if (file_exists($this->filename)) {
             $returnValue = include $this->filename;
-            if (is_array($returnValue) && $this->request->isMethod('POST')) {
-                $this->clearStep()
-                     ->resetSteps();
-            } elseif (is_object($returnValue) && $this->request->isMethod('POST')) {
-                $this->resetSteps();
+            if ($this->request->isMethod('POST')) {
+                if (is_array($returnValue)) {
+                    $this
+                        ->clearStep()
+                        ->resetSteps()
+                    ;
+                } elseif (is_object($returnValue)) {
+                    $this->resetSteps();
+                }
             }
+
             return $returnValue;
         } else {
-            throw new \Exception('File calculated by StepLoader does not exist : "'.$this->filename.'"');
+            throw new \InvalidArgumentException('File calculated by StepLoader does not exist : "'.$this->filename.'"');
         }
     }
 
@@ -268,11 +299,14 @@ class StepLoader {
      * @param string $msg
      * @param string $type
      * @param array  $msgParams
+     *
      * @return $this
      */
-    public function flashMessage($msg, $type = 'error', $msgParams = array()) {
-        $msg = $this->controller->get('translator')->trans($msg, $msgParams, 'error.steps');
+    public function flashMessage($msg, $type = 'error', array $msgParams = [])
+    {
+        $msg = $this->container->get('translator')->trans($msg, $msgParams, 'error.steps');
         $this->session->getFlashBag()->add($type, $msg);
+
         return $this;
     }
 }

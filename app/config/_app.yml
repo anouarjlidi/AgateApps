@@ -42,8 +42,8 @@ framework:
         name:          EsterenPortal
 
     # Use version code in assets
-    templating:
-        assets_version: "%version_code%"
+    assets:
+        version: "%version_code%"
 
 # Twig Configuration
 twig:
@@ -60,7 +60,6 @@ twig:
         esteren_domains_api: "%esteren_domains.api%"
         esteren_domains_cookie_domain: "%esteren_domains.cookie_domain%"
     form_themes:
-        - "@PierstovalTools/Form/form_div_layout.html.twig"
         - "@PierstovalTools/Form/fields.html.twig"
         - "@PierstovalTools/Form/form_errors.html.twig"
 
