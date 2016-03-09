@@ -1,13 +1,10 @@
 <?php
+
 namespace CorahnRin\CorahnRinBundle\Repository;
 
 use CorahnRin\CorahnRinBundle\Entity\Characters;
 use Orbitale\Component\DoctrineTools\BaseEntityRepository as BaseRepository;
 
-/**
- * CharactersRepository
- *
- */
 class CharactersRepository extends BaseRepository
 {
 
@@ -37,7 +34,8 @@ class CharactersRepository extends BaseRepository
             ->where('characters.id = :id')
             ->setParameter('id', (int) $id)
             ->getQuery()
-            ->getOneOrNullResult();
+            ->getOneOrNullResult()
+        ;
     }
 
     /**
@@ -45,8 +43,7 @@ class CharactersRepository extends BaseRepository
      * @param string $order       L'ordre (asc ou desc)
      * @param int    $limit       Le nombre d'éléments à récupérer
      * @param int    $offset      L'offset de départ
-     * @param bool   $getCount    Récupérer uniquement le nombre de résultats totaux (sans les informations "limit" et
-     *                            "offset")
+     * @param bool   $getCount    Récupérer uniquement le nombre de résultats totaux (sans les informations "limit" et "offset")
      *
      * @return Characters[]
      */
@@ -59,7 +56,8 @@ class CharactersRepository extends BaseRepository
             ->from($this->_entityName, 'characters')
             ->leftJoin('characters.job', 'job')->addSelect('job')
             ->leftJoin('characters.people', 'people')->addSelect('people')
-            ->leftJoin('characters.region', 'region')->addSelect('region');
+            ->leftJoin('characters.region', 'region')->addSelect('region')
+        ;
 
         if ($getCount) {
             $qb->addSelect('count(characters) as number');
@@ -67,7 +65,8 @@ class CharactersRepository extends BaseRepository
 
         if ($searchField === 'job') {
             $qb->addOrderBy('job.name', $order)
-               ->addOrderBy('characters.jobCustom', $order);
+               ->addOrderBy('characters.jobCustom', $order)
+            ;
         } elseif ($searchField === 'people') {
             $qb->orderBy('people.name');
         } elseif ($searchField === 'region') {
@@ -82,13 +81,13 @@ class CharactersRepository extends BaseRepository
         }
 
         if ($getCount) {
-            $datas = $qb->getQuery()->getScalarResult();
-            $datas = $datas[0]['number'];
+            $data = $qb->getQuery()->getScalarResult();
+            $data = $data[0]['number'];
         } else {
-            $datas = $qb->getQuery()->getResult();
+            $data = $qb->getQuery()->getResult();
         }
 
-        return $datas;
+        return $data;
     }
 
     /**

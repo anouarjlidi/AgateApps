@@ -1,24 +1,21 @@
 <?php
+
 namespace CorahnRin\CorahnRinBundle\Repository;
 
 use CorahnRin\CorahnRinBundle\Entity\Traits;
 use CorahnRin\CorahnRinBundle\Entity\Ways;
 use Orbitale\Component\DoctrineTools\BaseEntityRepository as BaseRepository;
 
-/**
- * TraitsRepository
- *
- */
 class TraitsRepository extends BaseRepository
 {
 
     /**
-     * @return array
+     * @return Traits[][]
      */
-    function findAllDifferenciated()
+    public function findAllDifferenciated()
     {
-        $list      = $this->findBy(array(), array('name' => 'asc'), null, null, true);
-        $qualities = $flaws = array();
+        $list      = $this->findBy([], ['name' => 'asc'], null, null, true);
+        $qualities = $flaws = [];
         foreach ($list as $id => $element) {
             if ($element instanceof Traits) {
                 if (!$element->getIsQuality()) {
@@ -28,10 +25,11 @@ class TraitsRepository extends BaseRepository
                 }
             }
         }
-        return array(
+
+        return [
             'qualities' => $qualities,
             'flaws'     => $flaws,
-        );
+        ];
     }
 
     /**
@@ -41,7 +39,11 @@ class TraitsRepository extends BaseRepository
      */
     public function sortQualitiesFlaws($traits)
     {
-        $list = array('qualities' => array(), 'flaws' => array());
+        $list = [
+            'qualities' => [],
+            'flaws'     => [],
+        ];
+
         foreach ($traits as $trait) {
             if ($trait->getIsQuality()) {
                 $list['qualities'][$trait->getId()] = $trait;
@@ -49,6 +51,7 @@ class TraitsRepository extends BaseRepository
                 $list['flaws'][$trait->getId()] = $trait;
             }
         }
+
         return $list;
     }
 
@@ -70,7 +73,8 @@ class TraitsRepository extends BaseRepository
             ->select('t')
             ->from($this->_entityName, 't')
             ->leftJoin('t.way', 'w')
-            ->addSelect('w');
+            ->addSelect('w')
+        ;
         foreach ($ways as $id => $value) {
             if (!is_numeric($id) || !is_numeric($value)) {
                 throw new \Exception('Error in ways values. Must be equivalent to this : array( [WAY_ID] => [WAY_VALUE] )');
@@ -78,7 +82,8 @@ class TraitsRepository extends BaseRepository
             if ($id >= 4 || $id <= 2) {
                 $qb->orWhere('w.id = :way'.$id.' AND t.isMajor = :way'.$id.'major')
                    ->setParameter(':way'.$id, $id)
-                   ->setParameter(':way'.$id.'major', $value >= 4);
+                   ->setParameter(':way'.$id.'major', $value >= 4)
+                ;
             }
         }
 
