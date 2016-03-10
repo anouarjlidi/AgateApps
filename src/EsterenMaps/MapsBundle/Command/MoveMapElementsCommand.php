@@ -35,7 +35,7 @@ class MoveMapElementsCommand extends ContainerAwareCommand
                 'This command moves all elements of the map, including routes, markers and zones,'."\n".
                 'depending on coordinates you specify: latitude, longitude and scale.'."\n\n".
                 'Example:'."\n".
-                '$ php app/console '.$this->getName().' --latitude="<info>-1.4</info>" --longitude="<info>8.7</info>" --scale="1.50"'."\n".
+                '$ php bin/console '.$this->getName().' --latitude="<info>-1.4</info>" --longitude="<info>8.7</info>" --scale="1.50"'."\n".
                 'The above command will first <info>widen</info> all elements by <info>1.5%</info>, '.
                 'then move every element <info>1.4 degrees to the south</info>, and <info>8.7 degrees to the east</info>.'."\n\n".
                 '<comment>Note:</comment> be very careful with negative values. You must proprly use the "=" sign'."\n".
@@ -213,4 +213,4 @@ class MoveMapElementsCommand extends ContainerAwareCommand
 
 
 // Command :
-// ./reset.bash && app/console d:q:s "`cat _dev_files/position_unclean_elements.sql`" && app/console esterenmaps:refresh-datas && app/console esterenmaps:move-map-elements 1 --latitude="-2.12074446617243" --longitude="8.5693359375" --no-interaction -v && php app/console esterenmaps:refresh-datas
+// ./reset.bash && bin/console d:q:s "`cat _dev_files/position_unclean_elements.sql`" && bin/console esterenmaps:refresh-datas && bin/console esterenmaps:move-map-elements 1 --latitude="-2.12074446617243" --longitude="8.5693359375" --no-interaction -v && php bin/console esterenmaps:refresh-datas

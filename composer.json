@@ -1,8 +1,8 @@
 {
     "name": "esteren/esteren",
     "license": "proprietary",
-    "type": "project",
     "description": "Global Esteren project",
+    "type": "project",
     "autoload": {
         "psr-4": {
             "": "src/"
@@ -15,22 +15,23 @@
         }
     },
     "require": {
-        "php": ">=5.3.9",
-        "symfony/symfony": "2.8.*",
-        "doctrine/orm": "^2.4.8",
-        "doctrine/doctrine-bundle": "~1.4",
-        "symfony/swiftmailer-bundle": "~2.3",
-        "symfony/monolog-bundle": "~2.4",
-        "sensio/distribution-bundle": "~5.0",
+        "php": ">=5.5.9",
+        "symfony/symfony": "3.0.*",
+        "doctrine/orm": "^2.5",
+        "doctrine/doctrine-bundle": "^1.6",
+        "doctrine/doctrine-cache-bundle": "^1.2",
+        "symfony/swiftmailer-bundle": "^2.3",
+        "symfony/monolog-bundle": "^2.8",
+        "sensio/distribution-bundle": "^5.0",
         "sensio/framework-extra-bundle": "^3.0.2",
-        "incenteev/composer-parameter-handler": "~2.0",
+        "incenteev/composer-parameter-handler": "^2.0",
 
-        "jms/serializer": ">=0.16,<1",
-        "jms/serializer-bundle": ">=0.13,<1",
-        "friendsofsymfony/user-bundle": "^1.3",
+        "jms/serializer": "^1.1",
+        "jms/serializer-bundle": "^1.1",
+        "friendsofsymfony/user-bundle": "^2.0.0@dev",
         "friendsofsymfony/rest-bundle": "^1.7",
         "nelmio/cors-bundle": "^1.4",
-        "egeloen/ckeditor-bundle": "^3.0",
+        "egeloen/ckeditor-bundle": "^4.0",
         "knplabs/knp-menu-bundle": "^2.1",
         "javiereguiluz/easyadmin-bundle": "^1.11",
         "stof/doctrine-extensions-bundle": "^1.2",
@@ -39,11 +40,11 @@
         "orbitale/cms-bundle": "^1.5",
         "orbitale/entity-merger": "^0.5",
         "orbitale/doctrine-tools": "^0.4.4",
-        "orbitale/imagemagick-php": "^1.3"
+        "orbitale/imagemagick-php": "^1.4"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
-        "symfony/phpunit-bridge": "~2.8",
+        "symfony/phpunit-bridge": "~3.0",
         "doctrine/doctrine-fixtures-bundle": "^2.2"
     },
     "scripts": {
@@ -54,11 +55,10 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::removeSymfonyStandardFiles",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget",
             "npm install",
             "node node_modules/gulp/bin/gulp.js dump --prod",
-            "app/console cache:clear --env=prod"
+            "bin/console cache:clear --env=prod"
         ],
         "post-update-cmd": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
@@ -66,7 +66,6 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::removeSymfonyStandardFiles",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget",
             "npm install",
             "node node_modules/gulp/bin/gulp.js dump --prod"
@@ -81,7 +80,10 @@
     },
     "extra": {
         "symfony-app-dir": "app",
+        "symfony-bin-dir": "bin",
+        "symfony-var-dir": "var",
         "symfony-web-dir": "web",
+        "symfony-tests-dir": "tests",
         "symfony-assets-install": "relative",
         "incenteev-parameters": {
             "file": "app/config/parameters.yml"

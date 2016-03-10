@@ -1,26 +1,30 @@
 <?php
+
 namespace CorahnRin\CorahnRinBundle\Repository;
 
+use CorahnRin\CorahnRinBundle\Entity\Jobs;
 use Orbitale\Component\DoctrineTools\BaseEntityRepository as BaseRepository;
 
-/**
- * JobsRepository
- *
- */
-class JobsRepository extends BaseRepository {
+class JobsRepository extends BaseRepository
+{
 
     /**
      * Renvoie la liste des métiers triés par livre associé.
      *
-     * @param bool $format
-     * @return array
+     * @return Jobs[][]
      */
-    public function findAllPerBook($format = true) {
-        $jobs = $this->findAll($format);
-        $jobs_ordered = array();
+    public function findAllPerBook()
+    {
+        /** @var Jobs[] $jobs */
+        $jobs = $this->findAll();
+
+        $books = [];
+
         foreach ($jobs as $job) {
-            $jobs_ordered[$job->getBook()->getId()][] = $job;
+            $books[$job->getBook()->getId()][] = $job;
         }
-        return $jobs_ordered;
+
+        return $books;
     }
+
 }

@@ -21,7 +21,7 @@ to know how it works and what it does.
 The script for this repo's deployment executes only 2 scripts to deploy:
 
 * `composer install`
-* `php app/console doctrine:schema:update --force --complete --dump-sql --env=prod`
+* `php bin/console doctrine:schema:update --force --complete --dump-sql --env=prod`
 
 As Composer is set up in [composer.json](../composer.json) automatically in the
 `post-install-cmd` script to clear the cache, install npm dependencies and dump

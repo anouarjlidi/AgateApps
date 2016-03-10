@@ -5,6 +5,8 @@ This project is a full-stack Symfony application.
 
 It was created in September 2013 with Symfony 2.3, but the different concepts and reflections started in March 2013.
 
+Now it's on Symfony 3!
+
 Since, it has followed all Symfony updates, and has been refactored countless times.
 
 It contains multiple apps:
@@ -28,7 +30,7 @@ It contains multiple apps:
 
 ## Pre-requisites
 
-* PHP 5.5+
+* PHP 5.6+
 * NodeJS 4.0+ and `npm` accessible globally.
 * Imagemagick accessible globally or at least from the app, mostly `convert` and `identify` binaries.
 
@@ -36,8 +38,8 @@ It contains multiple apps:
 
 ```bash
 $ composer install
-$ app/console doctrine:database:create
-$ app/console doctrine:schema:create
+$ bin/console doctrine:database:create
+$ bin/console doctrine:schema:create
 ```
 
 That's all!
@@ -59,7 +61,7 @@ You can set up the app on both Nginx and Apache, thanks to the [vhosts](docs/vho
 If you don't have a prod database export, load the fixtures in your database:
 
 ```bash
-$ app/console doctrine:fixtures:load --append
+$ bin/console doctrine:fixtures:load --append
 ```
 
 ## Tests
