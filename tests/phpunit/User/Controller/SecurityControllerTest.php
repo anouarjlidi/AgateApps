@@ -83,8 +83,8 @@ class SecurityControllerTest extends WebTestCase
         $form = $crawler->filter('form.fos_user_change_password')->form();
 
         $form['fos_user_change_password_form[current_password]'] = 'fakePassword';
-        $form['fos_user_change_password_form[new][first]'] = 'newPassword';
-        $form['fos_user_change_password_form[new][second]'] = 'newPassword';
+        $form['fos_user_change_password_form[plainPassword][first]'] = 'newPassword';
+        $form['fos_user_change_password_form[plainPassword][second]'] = 'newPassword';
 
         $client->submit($form);
 
@@ -97,7 +97,7 @@ class SecurityControllerTest extends WebTestCase
         $content = $crawler->html();
         $this->assertContains($msg, $content);
 
-        $user = $container->get('fos_user.user_manager')->loadUserByUsername('test_user');
+        $user = $container->get('fos_user.user_provider.username')->loadUserByUsername('test_user');
         $encoder = $container->get('security.encoder_factory')->getEncoder($user);
         $this->assertTrue($encoder->isPasswordValid($user->getPassword(), 'newPassword', $user->getSalt()));
 
@@ -115,7 +115,7 @@ class SecurityControllerTest extends WebTestCase
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
         $crawler->clear();
         $crawler = $client->followRedirect();
-        $this->assertEquals(1, $crawler->filter('.fos_user_success')->count());
+        $this->assertEquals(1, $crawler->filter('.alert.alert-success.success')->count());
 
         $crawler->clear();
         $crawler = $client->request('GET', '/fr/resetting/request');
@@ -126,10 +126,9 @@ class SecurityControllerTest extends WebTestCase
         $form['username'] = 'user_updated';
         $client->submit($form);
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
-        $email = $client->getRequest()->getSession()->get('fos_user_send_resetting_email/email');
         $crawler->clear();
         $crawler = $client->followRedirect();
-        $this->assertContains($container->get('translator')->trans('resetting.check_email', array('%email%' => $email), 'FOSUserBundle'), $crawler->filter('#content')->html());
+        $this->assertContains($container->get('translator')->trans('resetting.check_email', array('%email%' => '...@local.host.dev'), 'FOSUserBundle'), $crawler->filter('#content')->html());
 
         $tokenGenerator = $container->get('fos_user.util.token_generator');
         $user->setConfirmationToken($tokenGenerator->generateToken());
@@ -141,15 +140,15 @@ class SecurityControllerTest extends WebTestCase
         /** @var Form $form */
         $form = $crawler->filter('form.fos_user_resetting_reset')->form();
 
-        $form['fos_user_resetting_form[new][first]'] = 'anotherNewPassword';
-        $form['fos_user_resetting_form[new][second]'] = 'anotherNewPassword';
+        $form['fos_user_resetting_form[plainPassword][first]'] = 'anotherNewPassword';
+        $form['fos_user_resetting_form[plainPassword][second]'] = 'anotherNewPassword';
 
         $client->submit($form);
 
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
         $crawler->clear();
         $crawler = $client->followRedirect();
-        $this->assertEquals(1, $crawler->filter('.fos_user_success')->count());
+        $this->assertEquals(1, $crawler->filter('.alert.alert-success.success')->count());
     }
 
 }

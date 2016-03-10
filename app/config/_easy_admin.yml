@@ -59,7 +59,14 @@ easy_admin:
                     - js
                     - category
                     - parent
-                    - { property: host, type: choice, type_options: { choices: [ "%esteren_domains.games%", "%esteren_domains.portal%", "%esteren_domains.corahn_rin%" ] } }
+                    - property: host
+                      type: choice
+                      type_options:
+                          choices:
+                              - "%esteren_domains.games%"
+                              - "%esteren_domains.portal%"
+                              - "%esteren_domains.corahn_rin%"
+
                     - homepage
                     - enabled
 
@@ -97,7 +104,7 @@ easy_admin:
                 fields:
                     - name
                     - { property: nameSlug, type_options: { disabled: true, read_only: true } }
-                    - { property: image, type_options: { disabled: true, read_only: true } }
+                    - { property: image,    type_options: { disabled: true, read_only: true } }
                     - description
                     - maxZoom
                     - bounds
@@ -120,7 +127,7 @@ easy_admin:
                     - { property: latitude,  type_options: { disabled: true, required: false } }
                     - { property: longitude, type_options: { disabled: true, required: false } }
                     - { property: altitude,  type_options: { disabled: true, required: false } }
-                    - { property: map,  type_options: { disabled: true, required: false } }
+                    - { property: map,       type_options: { disabled: true, required: false } }
 
         "MarkersTypes":
             label: admin.maps.markers_types
@@ -145,7 +152,7 @@ easy_admin:
                     - faction
                     - guarded
                     - { property: coordinates, type_options: { disabled: true, required: false } }
-                    - { property: map,  type_options: { disabled: true, required: false } }
+                    - { property: map,         type_options: { disabled: true, required: false } }
 
         "RoutesTypes":
             label: admin.maps.routes_types
@@ -167,7 +174,7 @@ easy_admin:
                     - zoneType
                     - faction
                     - { property: coordinates, type_options: { disabled: true, required: false } }
-                    - { property: map,  type_options: { disabled: true, required: false } }
+                    - { property: map,         type_options: { disabled: true, required: false } }
 
         "ZonesTypes":
             label: admin.maps.zones_types
@@ -190,7 +197,8 @@ easy_admin:
                   - description
                   - property: transportsModifiers
                     type: 'Symfony\Component\Form\Extension\Core\Type\CollectionType'
-                    type_options: { entry_type: 'EsterenMaps\MapsBundle\Form\RoutesTransportsType' }
+                    type_options:
+                        entry_type: 'EsterenMaps\MapsBundle\Form\RoutesTransportsType'
 
 parameters:
     override: |
