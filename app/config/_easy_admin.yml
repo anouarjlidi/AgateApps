@@ -60,7 +60,7 @@ easy_admin:
                 fields:
                     - title
                     - slug
-                    - { property: content, type: ckeditor }
+                    - { property: content, type: 'Ivory\CKEditorBundle\Form\Type\CKEditorType' }
                     - metaDescription
                     - metaTitle
                     - metaKeywords
@@ -69,7 +69,7 @@ easy_admin:
                     - category
                     - parent
                     - property: host
-                      type: choice
+                      type: 'Symfony\Component\Form\Extension\Core\Type\ChoiceType'
                       type_options:
                           choices:
                               - "%esteren_domains.games%"
