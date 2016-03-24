@@ -4,8 +4,6 @@ imports:
     - { resource: 'admin/esterenmaps.yml' }
     - { resource: 'admin/cms.yml' }
 
-
-
 easy_admin:
     site_name: Esteren
 

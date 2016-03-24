@@ -1,12 +1,13 @@
 <?php
 
 namespace CorahnRin\CorahnRinBundle\Entity;
+
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Steps
+ * Steps.
  *
  * @ORM\Table(name="steps")
  * @Gedmo\SoftDeleteable(fieldName="deleted")
@@ -15,7 +16,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 class Steps
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id
@@ -24,7 +25,7 @@ class Steps
     protected $id;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="smallint", nullable=false, unique=true)
      */
@@ -60,23 +61,23 @@ class Steps
 
     /**
      * @var \Datetime
-
+     
      * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $updated;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
     protected $deleted = null;
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -84,18 +85,22 @@ class Steps
     }
 
     /**
-     * @param integer $id
+     * @param int $id
+     *
      * @return $this
      */
-    public function setId($id) {
+    public function setId($id)
+    {
         $this->id = $id;
+
         return $this;
     }
 
     /**
-     * Set step
+     * Set step.
      *
-     * @param integer $step
+     * @param int $step
+     *
      * @return Steps
      */
     public function setStep($step)
@@ -106,9 +111,9 @@ class Steps
     }
 
     /**
-     * Get step
+     * Get step.
      *
-     * @return integer
+     * @return int
      */
     public function getStep()
     {
@@ -116,9 +121,10 @@ class Steps
     }
 
     /**
-     * Set slug
+     * Set slug.
      *
      * @param string $slug
+     *
      * @return Steps
      */
     public function setSlug($slug)
@@ -129,7 +135,7 @@ class Steps
     }
 
     /**
-     * Get slug
+     * Get slug.
      *
      * @return string
      */
@@ -139,9 +145,10 @@ class Steps
     }
 
     /**
-     * Set title
+     * Set title.
      *
      * @param string $title
+     *
      * @return Steps
      */
     public function setTitle($title)
@@ -152,7 +159,7 @@ class Steps
     }
 
     /**
-     * Get title
+     * Get title.
      *
      * @return string
      */
@@ -162,9 +169,10 @@ class Steps
     }
 
     /**
-     * Set created
+     * Set created.
      *
      * @param \DateTime $created
+     *
      * @return Steps
      */
     public function setCreated($created)
@@ -175,7 +183,7 @@ class Steps
     }
 
     /**
-     * Get created
+     * Get created.
      *
      * @return \DateTime
      */
@@ -185,9 +193,10 @@ class Steps
     }
 
     /**
-     * Set updated
+     * Set updated.
      *
      * @param \DateTime $updated
+     *
      * @return Steps
      */
     public function setUpdated($updated)
@@ -198,7 +207,7 @@ class Steps
     }
 
     /**
-     * Get updated
+     * Get updated.
      *
      * @return \DateTime
      */
@@ -207,7 +216,7 @@ class Steps
         return $this->updated;
     }
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -215,10 +224,12 @@ class Steps
     }
 
     /**
-     * Add stepsToDisableOnChange
+     * Add stepsToDisableOnChange.
      *
      * @param Steps $step
+     *
      * @throws \Exception
+     *
      * @return Steps
      */
     public function addStepToDisableOnChange(Steps $step)
@@ -233,7 +244,7 @@ class Steps
     }
 
     /**
-     * Remove stepsToDisableOnChange
+     * Remove stepsToDisableOnChange.
      *
      * @param Steps $step
      */
@@ -243,7 +254,7 @@ class Steps
     }
 
     /**
-     * Get stepsToDisableOnChange
+     * Get stepsToDisableOnChange.
      *
      * @return Steps[]
      */

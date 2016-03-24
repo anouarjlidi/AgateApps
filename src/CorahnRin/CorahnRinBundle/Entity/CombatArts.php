@@ -6,16 +6,16 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * CombatArts
+ * CombatArts.
  *
  * @ORM\Table(name="combat_arts")
  * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity()
  */
-class CombatArts {
-
+class CombatArts
+{
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -38,21 +38,21 @@ class CombatArts {
     private $description;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="ranged", type="boolean")
      */
     private $ranged;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="melee", type="boolean")
      */
     private $melee;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="xp", type="smallint")
      */
@@ -79,217 +79,247 @@ class CombatArts {
     protected $updated;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
     protected $deleted = null;
 
-
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
     /**
-     * @param integer $id
+     * @param int $id
+     *
      * @return $this
      */
-    public function setId($id) {
+    public function setId($id)
+    {
         $this->id = $id;
+
         return $this;
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
+     *
      * @return CombatArts
      */
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
 
         return $this;
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
 
     /**
-     * Set description
+     * Set description.
      *
      * @param string $description
+     *
      * @return CombatArts
      */
-    public function setDescription($description) {
+    public function setDescription($description)
+    {
         $this->description = $description;
 
         return $this;
     }
 
     /**
-     * Get description
+     * Get description.
      *
      * @return string
      */
-    public function getDescription() {
+    public function getDescription()
+    {
         return $this->description;
     }
 
     /**
-     * Set ranged
+     * Set ranged.
      *
-     * @param boolean $ranged
+     * @param bool $ranged
+     *
      * @return CombatArts
      */
-    public function setRanged($ranged) {
+    public function setRanged($ranged)
+    {
         $this->ranged = $ranged;
 
         return $this;
     }
 
     /**
-     * Get ranged
+     * Get ranged.
      *
-     * @return boolean
+     * @return bool
      */
-    public function getRanged() {
+    public function getRanged()
+    {
         return $this->ranged;
     }
 
     /**
-     * Set melee
+     * Set melee.
      *
-     * @param boolean $melee
+     * @param bool $melee
+     *
      * @return CombatArts
      */
-    public function setMelee($melee) {
+    public function setMelee($melee)
+    {
         $this->melee = $melee;
 
         return $this;
     }
 
     /**
-     * Get melee
+     * Get melee.
      *
-     * @return boolean
+     * @return bool
      */
-    public function getMelee() {
+    public function getMelee()
+    {
         return $this->melee;
     }
 
     /**
-     * Set xp
+     * Set xp.
      *
-     * @param integer $xp
+     * @param int $xp
+     *
      * @return CombatArts
      */
-    public function setXp($xp) {
+    public function setXp($xp)
+    {
         $this->xp = $xp;
 
         return $this;
     }
 
     /**
-     * Get xp
+     * Get xp.
      *
-     * @return integer
+     * @return int
      */
-    public function getXp() {
+    public function getXp()
+    {
         return $this->xp;
     }
 
     /**
-     * Set book
+     * Set book.
      *
      * @param Books $book
+     *
      * @return Avantages
      */
-    public function setBook(Books $book = null) {
+    public function setBook(Books $book = null)
+    {
         $this->book = $book;
 
         return $this;
     }
 
     /**
-     * Get book
+     * Get book.
      *
      * @return Books
      */
-    public function getBook() {
+    public function getBook()
+    {
         return $this->book;
     }
 
     /**
-     * Set created
+     * Set created.
      *
      * @param \DateTime $created
+     *
      * @return CombatArts
      */
-    public function setCreated($created) {
+    public function setCreated($created)
+    {
         $this->created = $created;
 
         return $this;
     }
 
     /**
-     * Get created
+     * Get created.
      *
      * @return \DateTime
      */
-    public function getCreated() {
+    public function getCreated()
+    {
         return $this->created;
     }
 
     /**
-     * Set updated
+     * Set updated.
      *
      * @param \DateTime $updated
+     *
      * @return CombatArts
      */
-    public function setUpdated($updated) {
+    public function setUpdated($updated)
+    {
         $this->updated = $updated;
 
         return $this;
     }
 
     /**
-     * Get updated
+     * Get updated.
      *
      * @return \DateTime
      */
-    public function getUpdated() {
+    public function getUpdated()
+    {
         return $this->updated;
     }
 
     /**
-     * Set deleted
+     * Set deleted.
      *
      * @param \DateTime $deleted
+     *
      * @return CombatArts
      */
-    public function setDeleted($deleted) {
+    public function setDeleted($deleted)
+    {
         $this->deleted = $deleted;
 
         return $this;
     }
 
     /**
-     * Get deleted
+     * Get deleted.
      *
      * @return \DateTime
      */
-    public function getDeleted() {
+    public function getDeleted()
+    {
         return $this->deleted;
     }
 }

@@ -6,16 +6,16 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * Artifacts
+ * Artifacts.
  *
  * @ORM\Table(name="artifacts")
  * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity()
  */
-class Artifacts {
-
+class Artifacts
+{
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id
@@ -37,33 +37,33 @@ class Artifacts {
     protected $description;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="smallint")
      */
     protected $price;
 
     /**
-     * @var integer
+     * @var int
      * @ORM\Column(type="smallint")
      */
     protected $consumption;
 
     /**
-     * @var integer
+     * @var int
      * @ORM\Column(type="smallint")
      */
     protected $consumptionInterval;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="smallint", nullable=true)
      */
     protected $tank;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="smallint")
      */
@@ -84,7 +84,7 @@ class Artifacts {
     protected $handling;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="smallint", nullable=true)
      */
@@ -113,321 +113,367 @@ class Artifacts {
     protected $updated;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
     protected $deleted = null;
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
     /**
-     * @param integer $id
+     * @param int $id
+     *
      * @return $this
      */
-    public function setId($id) {
+    public function setId($id)
+    {
         $this->id = $id;
+
         return $this;
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
+     *
      * @return Artifacts
      */
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
 
         return $this;
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
 
     /**
-     * Set price
+     * Set price.
      *
-     * @param integer $price
+     * @param int $price
+     *
      * @return Artifacts
      */
-    public function setPrice($price) {
+    public function setPrice($price)
+    {
         $this->price = $price;
 
         return $this;
     }
 
     /**
-     * Get price
+     * Get price.
      *
-     * @return integer
+     * @return int
      */
-    public function getPrice() {
+    public function getPrice()
+    {
         return $this->price;
     }
 
     /**
-     * Set consumption
+     * Set consumption.
      *
-     * @param integer $consumption
+     * @param int $consumption
+     *
      * @return Artifacts
      */
-    public function setConsumption($consumption) {
+    public function setConsumption($consumption)
+    {
         $this->consumption = $consumption;
 
         return $this;
     }
 
     /**
-     * Get consumption
+     * Get consumption.
      *
-     * @return integer
+     * @return int
      */
-    public function getConsumption() {
+    public function getConsumption()
+    {
         return $this->consumption;
     }
 
     /**
-     * Set consumptionInterval
+     * Set consumptionInterval.
      *
-     * @param integer $consumptionInterval
+     * @param int $consumptionInterval
+     *
      * @return Artifacts
      */
-    public function setConsumptionInterval($consumptionInterval) {
+    public function setConsumptionInterval($consumptionInterval)
+    {
         $this->consumptionInterval = $consumptionInterval;
 
         return $this;
     }
 
     /**
-     * Get consumptionInterval
+     * Get consumptionInterval.
      *
-     * @return integer
+     * @return int
      */
-    public function getConsumptionInterval() {
+    public function getConsumptionInterval()
+    {
         return $this->consumptionInterval;
     }
 
     /**
-     * Set tank
+     * Set tank.
      *
-     * @param integer $tank
+     * @param int $tank
+     *
      * @return Artifacts
      */
-    public function setTank($tank) {
+    public function setTank($tank)
+    {
         $this->tank = $tank;
 
         return $this;
     }
 
     /**
-     * Get tank
+     * Get tank.
      *
-     * @return integer
+     * @return int
      */
-    public function getTank() {
+    public function getTank()
+    {
         return $this->tank;
     }
 
     /**
-     * Set resistance
+     * Set resistance.
      *
-     * @param integer $resistance
+     * @param int $resistance
+     *
      * @return Artifacts
      */
-    public function setResistance($resistance) {
+    public function setResistance($resistance)
+    {
         $this->resistance = $resistance;
 
         return $this;
     }
 
     /**
-     * Get resistance
+     * Get resistance.
      *
-     * @return integer
+     * @return int
      */
-    public function getResistance() {
+    public function getResistance()
+    {
         return $this->resistance;
     }
 
     /**
-     * Set vulnerability
+     * Set vulnerability.
      *
      * @param string $vulnerability
+     *
      * @return Artifacts
      */
-    public function setVulnerability($vulnerability) {
+    public function setVulnerability($vulnerability)
+    {
         $this->vulnerability = $vulnerability;
 
         return $this;
     }
 
     /**
-     * Get vulnerability
+     * Get vulnerability.
      *
      * @return string
      */
-    public function getVulnerability() {
+    public function getVulnerability()
+    {
         return $this->vulnerability;
     }
 
     /**
-     * Set handling
+     * Set handling.
      *
      * @param string $handling
+     *
      * @return Artifacts
      */
-    public function setHandling($handling) {
+    public function setHandling($handling)
+    {
         $this->handling = $handling;
 
         return $this;
     }
 
     /**
-     * Get handling
+     * Get handling.
      *
      * @return string
      */
-    public function getHandling() {
+    public function getHandling()
+    {
         return $this->handling;
     }
 
     /**
-     * Set damage
+     * Set damage.
      *
-     * @param integer $damage
+     * @param int $damage
+     *
      * @return Artifacts
      */
-    public function setDamage($damage) {
+    public function setDamage($damage)
+    {
         $this->damage = $damage;
 
         return $this;
     }
 
     /**
-     * Get damage
+     * Get damage.
      *
-     * @return integer
+     * @return int
      */
-    public function getDamage() {
+    public function getDamage()
+    {
         return $this->damage;
     }
 
     /**
-     * Set created
+     * Set created.
      *
      * @param \DateTime $created
+     *
      * @return Artifacts
      */
-    public function setCreated($created) {
+    public function setCreated($created)
+    {
         $this->created = $created;
 
         return $this;
     }
 
     /**
-     * Get created
+     * Get created.
      *
      * @return \DateTime
      */
-    public function getCreated() {
+    public function getCreated()
+    {
         return $this->created;
     }
 
     /**
-     * Set updated
+     * Set updated.
      *
      * @param \DateTime $updated
+     *
      * @return Artifacts
      */
-    public function setUpdated($updated) {
+    public function setUpdated($updated)
+    {
         $this->updated = $updated;
 
         return $this;
     }
 
     /**
-     * Get updated
+     * Get updated.
      *
      * @return \DateTime
      */
-    public function getUpdated() {
+    public function getUpdated()
+    {
         return $this->updated;
     }
 
     /**
-     * Set flux
+     * Set flux.
      *
      * @param Flux $flux
+     *
      * @return Artifacts
      */
-    public function setFlux(Flux $flux = null) {
+    public function setFlux(Flux $flux = null)
+    {
         $this->flux = $flux;
 
         return $this;
     }
 
     /**
-     * Get flux
+     * Get flux.
      *
      * @return Flux
      */
-    public function getFlux() {
+    public function getFlux()
+    {
         return $this->flux;
     }
 
     /**
-     * Set description
+     * Set description.
      *
      * @param string $description
+     *
      * @return Artifacts
      */
-    public function setDescription($description) {
+    public function setDescription($description)
+    {
         $this->description = $description;
 
         return $this;
     }
 
     /**
-     * Get description
+     * Get description.
      *
      * @return string
      */
-    public function getDescription() {
+    public function getDescription()
+    {
         return $this->description;
     }
 
     /**
-     * Set deleted
+     * Set deleted.
      *
      * @param \DateTime $deleted
+     *
      * @return Artifacts
      */
-    public function setDeleted($deleted) {
+    public function setDeleted($deleted)
+    {
         $this->deleted = $deleted;
 
         return $this;
     }
 
     /**
-     * Get deleted
+     * Get deleted.
      *
      * @return \DateTime
      */
-    public function getDeleted() {
+    public function getDeleted()
+    {
         return $this->deleted;
     }
 }

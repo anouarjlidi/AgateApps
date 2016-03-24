@@ -7,16 +7,16 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * Domains
+ * Domains.
  *
  * @ORM\Table(name="domains")
  * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity(repositoryClass="CorahnRin\CorahnRinBundle\Repository\DomainsRepository")
  */
-class Domains {
-
+class Domains
+{
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id
@@ -67,206 +67,236 @@ class Domains {
     protected $updated;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
     protected $deleted = null;
 
-    function __toString() {
+    public function __toString()
+    {
         return $this->id.' - '.$this->name;
     }
 
     /**
-     * Constructor
+     * Constructor.
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->disciplines = new ArrayCollection();
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
     /**
-     * @param integer $id
+     * @param int $id
+     *
      * @return $this
      */
-    public function setId($id) {
+    public function setId($id)
+    {
         $this->id = $id;
+
         return $this;
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
+     *
      * @return Domains
      */
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
 
         return $this;
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
 
     /**
-     * Set description
+     * Set description.
      *
      * @param string $description
+     *
      * @return Domains
      */
-    public function setDescription($description) {
+    public function setDescription($description)
+    {
         $this->description = $description;
 
         return $this;
     }
 
     /**
-     * Get description
+     * Get description.
      *
      * @return string
      */
-    public function getDescription() {
+    public function getDescription()
+    {
         return $this->description;
     }
 
     /**
-     * Set created
+     * Set created.
      *
      * @param \DateTime $created
+     *
      * @return Domains
      */
-    public function setCreated($created) {
+    public function setCreated($created)
+    {
         $this->created = $created;
 
         return $this;
     }
 
     /**
-     * Get created
+     * Get created.
      *
      * @return \DateTime
      */
-    public function getCreated() {
+    public function getCreated()
+    {
         return $this->created;
     }
 
     /**
-     * Set updated
+     * Set updated.
      *
      * @param \DateTime $updated
+     *
      * @return Domains
      */
-    public function setUpdated($updated) {
+    public function setUpdated($updated)
+    {
         $this->updated = $updated;
 
         return $this;
     }
 
     /**
-     * Get updated
+     * Get updated.
      *
      * @return \DateTime
      */
-    public function getUpdated() {
+    public function getUpdated()
+    {
         return $this->updated;
     }
 
     /**
-     * Set way
+     * Set way.
      *
      * @param Ways $way
+     *
      * @return Domains
      */
-    public function setWay(Ways $way = null) {
+    public function setWay(Ways $way = null)
+    {
         $this->way = $way;
 
         return $this;
     }
 
     /**
-     * Get way
+     * Get way.
      *
      * @return Ways
      */
-    public function getWay() {
+    public function getWay()
+    {
         return $this->way;
     }
 
     /**
-     * Add disciplines
+     * Add disciplines.
      *
      * @param Disciplines $disciplines
+     *
      * @return Domains
      */
-    public function addDiscipline(Disciplines $disciplines) {
+    public function addDiscipline(Disciplines $disciplines)
+    {
         $this->disciplines[] = $disciplines;
 
         return $this;
     }
 
     /**
-     * Remove disciplines
+     * Remove disciplines.
      *
      * @param Disciplines $disciplines
      */
-    public function removeDiscipline(Disciplines $disciplines) {
+    public function removeDiscipline(Disciplines $disciplines)
+    {
         $this->disciplines->removeElement($disciplines);
     }
 
     /**
-     * Get disciplines
+     * Get disciplines.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getDisciplines() {
+    public function getDisciplines()
+    {
         return $this->disciplines;
     }
 
     /**
      * @param Disciplines $discipline
+     *
      * @return bool
      */
     public function hasDiscipline(Disciplines $discipline)
     {
         $id = $discipline->getId();
-        return $this->disciplines->exists(function($key, Disciplines $element) use ($id) {
+
+        return $this->disciplines->exists(function ($key, Disciplines $element) use ($id) {
             return $element->getId() == $id;
         });
     }
 
     /**
-     * Set deleted
+     * Set deleted.
      *
      * @param \DateTime $deleted
+     *
      * @return Domains
      */
-    public function setDeleted($deleted) {
+    public function setDeleted($deleted)
+    {
         $this->deleted = $deleted;
 
         return $this;
     }
 
     /**
-     * Get deleted
+     * Get deleted.
      *
      * @return \DateTime
      */
-    public function getDeleted() {
+    public function getDeleted()
+    {
         return $this->deleted;
     }
 }

@@ -3,13 +3,12 @@
 namespace CorahnRin\CorahnRinBundle\Classes;
 
 /**
- * Classe gérant l'argent des personnages
+ * Classe gérant l'argent des personnages.
  *
  * @author Pierstoval
  */
 class Money
 {
-
     protected $name = 'Daol';
     protected $names = array('Braise', 'Azur', 'Givre');
     protected $names_literal = array('Daol%s% de Braise', 'Daol%s% d\'Azur', 'Daol%s% de Givre');
@@ -25,7 +24,8 @@ class Money
     }
 
     /**
-     * Retourne le tableau avec toutes les valeurs d'argent
+     * Retourne le tableau avec toutes les valeurs d'argent.
+     *
      * @return array
      */
     public function getValues()
@@ -34,7 +34,8 @@ class Money
     }
 
     /**
-     * Retourne le nom de la monnaie utilisée
+     * Retourne le nom de la monnaie utilisée.
+     *
      * @return string
      */
     public function name()
@@ -44,7 +45,7 @@ class Money
 
     /**
      * Retourne la liste des noms de monnaies, ou un nom litéral si un index
-     * est fourni
+     * est fourni.
      *
      * @param int $index Un index éventuel pour récupérer un nom litéral
      *
@@ -92,16 +93,15 @@ class Money
     }
 
     /**
-     * Reformate la monnaie selon les divers ratios
+     * Reformate la monnaie selon les divers ratios.
      */
     public function convert()
     {
         foreach ($this->names as $k => $v) {
             while ($this->values[$v] >= $this->ratio[$k] && isset($this->names[$k + 1])) {
                 $this->values[$v] = isset($this->values[$v]) ? $this->values[$v] - $this->ratio[$k] : 0;
-                $this->values[$this->names[$k + 1]] ++;
+                ++$this->values[$this->names[$k + 1]];
             }
         }
     }
-
 }

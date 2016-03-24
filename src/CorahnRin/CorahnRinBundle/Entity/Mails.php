@@ -6,16 +6,16 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * Mails
+ * Mails.
  *
  * @ORM\Table(name="mails")
  * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity()
  */
-class Mails {
-
+class Mails
+{
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id
@@ -59,153 +59,175 @@ class Mails {
     protected $updated;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
     protected $deleted = null;
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
     /**
-     * @param integer $id
+     * @param int $id
+     *
      * @return $this
      */
-    public function setId($id) {
+    public function setId($id)
+    {
         $this->id = $id;
+
         return $this;
     }
 
     /**
-     * Set code
+     * Set code.
      *
      * @param string $code
+     *
      * @return Mails
      */
-    public function setCode($code) {
+    public function setCode($code)
+    {
         $this->code = $code;
 
         return $this;
     }
 
     /**
-     * Get code
+     * Get code.
      *
      * @return string
      */
-    public function getCode() {
+    public function getCode()
+    {
         return $this->code;
     }
 
     /**
-     * Set content
+     * Set content.
      *
      * @param string $content
+     *
      * @return Mails
      */
-    public function setContent($content) {
+    public function setContent($content)
+    {
         $this->content = $content;
 
         return $this;
     }
 
     /**
-     * Get content
+     * Get content.
      *
      * @return string
      */
-    public function getContent() {
+    public function getContent()
+    {
         return $this->content;
     }
 
     /**
-     * Set subject
+     * Set subject.
      *
      * @param string $subject
+     *
      * @return Mails
      */
-    public function setSubject($subject) {
+    public function setSubject($subject)
+    {
         $this->subject = $subject;
 
         return $this;
     }
 
     /**
-     * Get subject
+     * Get subject.
      *
      * @return string
      */
-    public function getSubject() {
+    public function getSubject()
+    {
         return $this->subject;
     }
 
     /**
-     * Set created
+     * Set created.
      *
      * @param \DateTime $created
+     *
      * @return Mails
      */
-    public function setCreated($created) {
+    public function setCreated($created)
+    {
         $this->created = $created;
 
         return $this;
     }
 
     /**
-     * Get created
+     * Get created.
      *
      * @return \DateTime
      */
-    public function getCreated() {
+    public function getCreated()
+    {
         return $this->created;
     }
 
     /**
-     * Set updated
+     * Set updated.
      *
      * @param \DateTime $updated
+     *
      * @return Mails
      */
-    public function setUpdated($updated) {
+    public function setUpdated($updated)
+    {
         $this->updated = $updated;
 
         return $this;
     }
 
     /**
-     * Get updated
+     * Get updated.
      *
      * @return \DateTime
      */
-    public function getUpdated() {
+    public function getUpdated()
+    {
         return $this->updated;
     }
 
     /**
-     * Set deleted
+     * Set deleted.
      *
      * @param \DateTime $deleted
+     *
      * @return Mails
      */
-    public function setDeleted($deleted) {
+    public function setDeleted($deleted)
+    {
         $this->deleted = $deleted;
 
         return $this;
     }
 
     /**
-     * Get deleted
+     * Get deleted.
      *
      * @return \DateTime
      */
-    public function getDeleted() {
+    public function getDeleted()
+    {
         return $this->deleted;
     }
 }

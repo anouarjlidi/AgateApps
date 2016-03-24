@@ -3,19 +3,18 @@
 namespace CorahnRin\CorahnRinBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * CharDisciplines
+ * CharDisciplines.
  *
  * @ORM\Table(name="characters_disciplines")
  * @ORM\Entity()
  */
-class CharDisciplines {
-
+class CharDisciplines
+{
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Characters", inversedBy="disciplines")
@@ -42,7 +41,7 @@ class CharDisciplines {
     protected $domain;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer")
      * @Assert\NotNull()
@@ -51,86 +50,98 @@ class CharDisciplines {
     protected $score;
 
     /**
-     * Set score
+     * Set score.
      *
-     * @param integer $score
+     * @param int $score
+     *
      * @return CharDisciplines
      */
-    public function setScore($score) {
+    public function setScore($score)
+    {
         $this->score = $score;
 
         return $this;
     }
 
     /**
-     * Get score
+     * Get score.
      *
-     * @return integer
+     * @return int
      */
-    public function getScore() {
+    public function getScore()
+    {
         return $this->score;
     }
 
     /**
-     * Set character
+     * Set character.
      *
      * @param Characters $character
+     *
      * @return CharDisciplines
      */
-    public function setCharacter(Characters $character) {
+    public function setCharacter(Characters $character)
+    {
         $this->character = $character;
 
         return $this;
     }
 
     /**
-     * Get character
+     * Get character.
      *
      * @return Characters
      */
-    public function getCharacter() {
+    public function getCharacter()
+    {
         return $this->character;
     }
 
     /**
-     * Set discipline
+     * Set discipline.
      *
      * @param Disciplines $discipline
+     *
      * @return CharDisciplines
      */
-    public function setDiscipline(Disciplines $discipline) {
+    public function setDiscipline(Disciplines $discipline)
+    {
         $this->discipline = $discipline;
 
         return $this;
     }
 
     /**
-     * Get discipline
+     * Get discipline.
      *
      * @return Disciplines
      */
-    public function getDiscipline() {
+    public function getDiscipline()
+    {
         return $this->discipline;
     }
 
     /**
-     * Set domain
+     * Set domain.
      *
      * @param Domains $domain
+     *
      * @return CharDisciplines
      */
-    public function setDomain(Domains $domain) {
+    public function setDomain(Domains $domain)
+    {
         $this->domain = $domain;
 
         return $this;
     }
 
     /**
-     * Get domain
+     * Get domain.
      *
      * @return Domains
      */
-    public function getDomain() {
+    public function getDomain()
+    {
         return $this->domain;
     }
 }

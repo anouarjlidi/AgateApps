@@ -6,16 +6,16 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * Armors
+ * Armors.
  *
  * @ORM\Table(name="armors")
  * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity()
  */
-class Armors {
-
+class Armors
+{
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id
@@ -38,14 +38,14 @@ class Armors {
     protected $description;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="smallint")
      */
     protected $protection;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="smallint")
      */
@@ -73,7 +73,7 @@ class Armors {
     protected $updated;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
@@ -86,210 +86,240 @@ class Armors {
     protected $book;
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
     /**
-     * @param integer $id
+     * @param int $id
+     *
      * @return $this
      */
-    public function setId($id) {
+    public function setId($id)
+    {
         $this->id = $id;
+
         return $this;
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
+     *
      * @return Armors
      */
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
 
         return $this;
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
 
     /**
-     * Set description
+     * Set description.
      *
      * @param string $description
+     *
      * @return Armors
      */
-    public function setDescription($description) {
+    public function setDescription($description)
+    {
         $this->description = $description;
 
         return $this;
     }
 
     /**
-     * Get description
+     * Get description.
      *
      * @return string
      */
-    public function getDescription() {
+    public function getDescription()
+    {
         return $this->description;
     }
 
     /**
-     * Set protection
+     * Set protection.
      *
-     * @param integer $protection
+     * @param int $protection
+     *
      * @return Armors
      */
-    public function setProtection($protection) {
+    public function setProtection($protection)
+    {
         $this->protection = $protection;
 
         return $this;
     }
 
     /**
-     * Get protection
+     * Get protection.
      *
-     * @return integer
+     * @return int
      */
-    public function getProtection() {
+    public function getProtection()
+    {
         return $this->protection;
     }
 
     /**
-     * Set price
+     * Set price.
      *
-     * @param integer $price
+     * @param int $price
+     *
      * @return Armors
      */
-    public function setPrice($price) {
+    public function setPrice($price)
+    {
         $this->price = $price;
 
         return $this;
     }
 
     /**
-     * Get price
+     * Get price.
      *
-     * @return integer
+     * @return int
      */
-    public function getPrice() {
+    public function getPrice()
+    {
         return $this->price;
     }
 
     /**
-     * Set availability
+     * Set availability.
      *
      * @param string $availability
+     *
      * @return Armors
      */
-    public function setAvailability($availability) {
+    public function setAvailability($availability)
+    {
         $this->availability = $availability;
 
         return $this;
     }
 
     /**
-     * Get availability
+     * Get availability.
      *
      * @return string
      */
-    public function getAvailability() {
+    public function getAvailability()
+    {
         return $this->availability;
     }
 
     /**
-     * Set book
+     * Set book.
      *
      * @param Books $book
+     *
      * @return $this
      */
-    public function setBook(Books $book = null) {
+    public function setBook(Books $book = null)
+    {
         $this->book = $book;
 
         return $this;
     }
 
     /**
-     * Get book
+     * Get book.
      *
      * @return Books
      */
-    public function getBook() {
+    public function getBook()
+    {
         return $this->book;
     }
 
     /**
-     * Set created
+     * Set created.
      *
      * @param \DateTime $created
+     *
      * @return Armors
      */
-    public function setCreated($created) {
+    public function setCreated($created)
+    {
         $this->created = $created;
 
         return $this;
     }
 
     /**
-     * Get created
+     * Get created.
      *
      * @return \DateTime
      */
-    public function getCreated() {
+    public function getCreated()
+    {
         return $this->created;
     }
 
     /**
-     * Set updated
+     * Set updated.
      *
      * @param \DateTime $updated
+     *
      * @return Armors
      */
-    public function setUpdated($updated) {
+    public function setUpdated($updated)
+    {
         $this->updated = $updated;
 
         return $this;
     }
 
     /**
-     * Get updated
+     * Get updated.
      *
      * @return \DateTime
      */
-    public function getUpdated() {
+    public function getUpdated()
+    {
         return $this->updated;
     }
 
-
     /**
-     * Set deleted
+     * Set deleted.
      *
      * @param \DateTime $deleted
+     *
      * @return Armors
      */
-    public function setDeleted($deleted) {
+    public function setDeleted($deleted)
+    {
         $this->deleted = $deleted;
 
         return $this;
     }
 
     /**
-     * Get deleted
+     * Get deleted.
      *
      * @return \DateTime
      */
-    public function getDeleted() {
+    public function getDeleted()
+    {
         return $this->deleted;
     }
 }

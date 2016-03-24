@@ -15,7 +15,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AdminController extends BaseAdminController
 {
-
     /**
      * @Route("/", name="easyadmin")
      * {@inheritdoc}
@@ -29,7 +28,7 @@ class AdminController extends BaseAdminController
      * Creates the form builder of the form used to create or edit the given entity.
      *
      * @param TransportTypes $entity
-     * @param string         $view The name of the view where this form is used ('new' or 'edit')
+     * @param string         $view   The name of the view where this form is used ('new' or 'edit')
      *
      * @return FormBuilder
      */
@@ -40,6 +39,7 @@ class AdminController extends BaseAdminController
             $entity->getTransportsModifiers()->toArray(),
             function (array $carry = [], RoutesTransports $routeTransport) {
                 $carry[] = $routeTransport->getRouteType()->getId();
+
                 return $carry;
             },
             []

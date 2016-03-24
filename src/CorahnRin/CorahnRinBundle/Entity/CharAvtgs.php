@@ -3,17 +3,16 @@
 namespace CorahnRin\CorahnRinBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * CharAvtgs
+ * CharAvtgs.
  *
  * @ORM\Table(name="characters_avantages")
  * @ORM\Entity()
  */
-class CharAvtgs {
-
+class CharAvtgs
+{
     /**
      * @var Characters
      *
@@ -33,7 +32,7 @@ class CharAvtgs {
     protected $avantage;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(type="integer")
      * @Assert\NotNull()
@@ -42,65 +41,74 @@ class CharAvtgs {
     protected $doubleValue;
 
     /**
-     * Set doubleValue
+     * Set doubleValue.
      *
-     * @param integer $doubleValue
+     * @param int $doubleValue
+     *
      * @return CharAvtgs
      */
-    public function setDoubleValue($doubleValue) {
+    public function setDoubleValue($doubleValue)
+    {
         $this->doubleValue = $doubleValue;
 
         return $this;
     }
 
     /**
-     * Get doubleValue
+     * Get doubleValue.
      *
-     * @return integer
+     * @return int
      */
-    public function getDoubleValue() {
+    public function getDoubleValue()
+    {
         return $this->doubleValue;
     }
 
     /**
-     * Set character
+     * Set character.
      *
      * @param Characters $character
+     *
      * @return CharAvtgs
      */
-    public function setCharacter(Characters $character) {
+    public function setCharacter(Characters $character)
+    {
         $this->character = $character;
 
         return $this;
     }
 
     /**
-     * Get character
+     * Get character.
      *
      * @return Characters
      */
-    public function getCharacter() {
+    public function getCharacter()
+    {
         return $this->character;
     }
 
     /**
-     * Set avantage
+     * Set avantage.
      *
      * @param Avantages $avantage
+     *
      * @return CharAvtgs
      */
-    public function setAvantage(Avantages $avantage) {
+    public function setAvantage(Avantages $avantage)
+    {
         $this->avantage = $avantage;
 
         return $this;
     }
 
     /**
-     * Get avantage
+     * Get avantage.
      *
      * @return Avantages
      */
-    public function getAvantage() {
+    public function getAvantage()
+    {
         return $this->avantage;
     }
 }

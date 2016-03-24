@@ -6,16 +6,16 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * Regions
+ * Regions.
  *
  * @ORM\Table(name="regions")
  * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity()
  */
-class Regions {
-
+class Regions
+{
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id
@@ -73,167 +73,192 @@ class Regions {
     protected $deleted = null;
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
     /**
-     * @param integer $id
+     * @param int $id
+     *
      * @return $this
      */
-    public function setId($id) {
+    public function setId($id)
+    {
         $this->id = $id;
+
         return $this;
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
+     *
      * @return Regions
      */
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
 
         return $this;
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
 
     /**
-     * Set description
+     * Set description.
      *
      * @param string $description
+     *
      * @return Regions
      */
-    public function setDescription($description) {
+    public function setDescription($description)
+    {
         $this->description = $description;
 
         return $this;
     }
 
     /**
-     * Get description
+     * Get description.
      *
      * @return string
      */
-    public function getDescription() {
+    public function getDescription()
+    {
         return $this->description;
     }
 
     /**
-     * Set kingdom
+     * Set kingdom.
      *
      * @param string $kingdom
+     *
      * @return Regions
      */
-    public function setKingdom($kingdom) {
+    public function setKingdom($kingdom)
+    {
         $this->kingdom = $kingdom;
 
         return $this;
     }
 
     /**
-     * Get kingdom
+     * Get kingdom.
      *
      * @return string
      */
-    public function getKingdom() {
+    public function getKingdom()
+    {
         return $this->kingdom;
     }
 
     /**
-     * Set coordinates
+     * Set coordinates.
      *
      * @param string $coordinates
+     *
      * @return Regions
      */
-    public function setCoordinates($coordinates) {
+    public function setCoordinates($coordinates)
+    {
         $this->coordinates = $coordinates;
 
         return $this;
     }
 
     /**
-     * Get coordinates
+     * Get coordinates.
      *
      * @return string
      */
-    public function getCoordinates() {
+    public function getCoordinates()
+    {
         return $this->coordinates;
     }
 
     /**
-     * Set created
+     * Set created.
      *
      * @param \DateTime $created
+     *
      * @return Regions
      */
-    public function setCreated($created) {
+    public function setCreated($created)
+    {
         $this->created = $created;
 
         return $this;
     }
 
     /**
-     * Get created
+     * Get created.
      *
      * @return \DateTime
      */
-    public function getCreated() {
+    public function getCreated()
+    {
         return $this->created;
     }
 
     /**
-     * Set updated
+     * Set updated.
      *
      * @param \DateTime $updated
+     *
      * @return Regions
      */
-    public function setUpdated($updated) {
+    public function setUpdated($updated)
+    {
         $this->updated = $updated;
 
         return $this;
     }
 
     /**
-     * Get updated
+     * Get updated.
      *
      * @return \DateTime
      */
-    public function getUpdated() {
+    public function getUpdated()
+    {
         return $this->updated;
     }
 
     /**
-     * Set deleted
+     * Set deleted.
      *
      * @param \DateTime $deleted
+     *
      * @return Regions
      */
-    public function setDeleted($deleted) {
+    public function setDeleted($deleted)
+    {
         $this->deleted = $deleted;
 
         return $this;
     }
 
     /**
-     * Get deleted
+     * Get deleted.
      *
      * @return \DateTime
      */
-    public function getDeleted() {
+    public function getDeleted()
+    {
         return $this->deleted;
     }
 }

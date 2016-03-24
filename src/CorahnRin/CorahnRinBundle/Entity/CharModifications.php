@@ -8,15 +8,15 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * CharModifications
+ * CharModifications.
  *
  * @ORM\Table(name="characters_modifications")
  * @ORM\Entity()
  */
-class CharModifications {
-
+class CharModifications
+{
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id
@@ -61,154 +61,175 @@ class CharModifications {
     protected $updated;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
     protected $deleted = null;
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
     /**
-     * @param integer $id
+     * @param int $id
+     *
      * @return $this
      */
-    public function setId($id) {
+    public function setId($id)
+    {
         $this->id = $id;
+
         return $this;
     }
 
     /**
-     * Set before
+     * Set before.
      *
      * @param \stdClass $before
+     *
      * @return CharModifications
      */
-    public function setBefore($before) {
+    public function setBefore($before)
+    {
         $this->before = $before;
 
         return $this;
     }
 
     /**
-     * Get before
+     * Get before.
      *
      * @return \stdClass
      */
-    public function getBefore() {
+    public function getBefore()
+    {
         return $this->before;
     }
 
     /**
-     * Set created
+     * Set created.
      *
      * @param \DateTime $created
+     *
      * @return CharModifications
      */
-    public function setCreated($created) {
+    public function setCreated($created)
+    {
         $this->created = $created;
 
         return $this;
     }
 
     /**
-     * Get created
+     * Get created.
      *
      * @return \DateTime
      */
-    public function getCreated() {
+    public function getCreated()
+    {
         return $this->created;
     }
 
     /**
-     * Set updated
+     * Set updated.
      *
      * @param \DateTime $updated
+     *
      * @return CharModifications
      */
-    public function setUpdated($updated) {
+    public function setUpdated($updated)
+    {
         $this->updated = $updated;
 
         return $this;
     }
 
     /**
-     * Get updated
+     * Get updated.
      *
      * @return \DateTime
      */
-    public function getUpdated() {
+    public function getUpdated()
+    {
         return $this->updated;
     }
 
     /**
-     * Set character
+     * Set character.
      *
      * @param Characters $character
+     *
      * @return CharModifications
      */
-    public function setCharacter(Characters $character = null) {
+    public function setCharacter(Characters $character = null)
+    {
         $this->character = $character;
 
         return $this;
     }
 
     /**
-     * Get character
+     * Get character.
      *
      * @return Characters
      */
-    public function getCharacter() {
+    public function getCharacter()
+    {
         return $this->character;
     }
 
     /**
-     * Set user
+     * Set user.
      *
      * @param User $user
+     *
      * @return CharModifications
      */
-    public function setUser(User $user = null) {
+    public function setUser(User $user = null)
+    {
         $this->user = $user;
 
         return $this;
     }
 
     /**
-     * Get user
+     * Get user.
      *
      * @return User
      */
-    public function getUser() {
+    public function getUser()
+    {
         return $this->user;
     }
 
-
     /**
-     * Set deleted
+     * Set deleted.
      *
      * @param \DateTime $deleted
+     *
      * @return CharModifications
      */
-    public function setDeleted($deleted) {
+    public function setDeleted($deleted)
+    {
         $this->deleted = $deleted;
 
         return $this;
     }
 
     /**
-     * Get deleted
+     * Get deleted.
      *
      * @return \DateTime
      */
-    public function getDeleted() {
+    public function getDeleted()
+    {
         return $this->deleted;
     }
 }

@@ -7,16 +7,16 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Weapons
+ * Weapons.
  *
  * @ORM\Table(name="weapons")
  * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity()
  */
-class Weapons {
-
+class Weapons
+{
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id
@@ -40,14 +40,14 @@ class Weapons {
     protected $description;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(type="smallint")
      */
     protected $damage;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="smallint")
      */
@@ -61,14 +61,14 @@ class Weapons {
     protected $availability;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(type="boolean")
      */
     protected $melee = true;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="smallint")
      */
@@ -89,237 +89,271 @@ class Weapons {
     protected $updated;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
     protected $deleted = null;
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
     /**
-     * @param integer $id
+     * @param int $id
+     *
      * @return $this
      */
-    public function setId($id) {
+    public function setId($id)
+    {
         $this->id = $id;
+
         return $this;
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
+     *
      * @return Weapons
      */
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
 
         return $this;
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
 
     /**
-     * Set description
+     * Set description.
      *
      * @param string $description
+     *
      * @return Weapons
      */
-    public function setDescription($description) {
+    public function setDescription($description)
+    {
         $this->description = $description;
 
         return $this;
     }
 
     /**
-     * Get description
+     * Get description.
      *
      * @return string
      */
-    public function getDescription() {
+    public function getDescription()
+    {
         return $this->description;
     }
 
     /**
-     * Set damage
+     * Set damage.
      *
-     * @param integer $damage
+     * @param int $damage
+     *
      * @return Weapons
      */
-    public function setDamage($damage) {
+    public function setDamage($damage)
+    {
         $this->damage = $damage;
 
         return $this;
     }
 
     /**
-     * Get damage
+     * Get damage.
      *
-     * @return integer
+     * @return int
      */
-    public function getDamage() {
+    public function getDamage()
+    {
         return $this->damage;
     }
 
     /**
-     * Set price
+     * Set price.
      *
-     * @param integer $price
+     * @param int $price
+     *
      * @return Weapons
      */
-    public function setPrice($price) {
+    public function setPrice($price)
+    {
         $this->price = $price;
 
         return $this;
     }
 
     /**
-     * Get price
+     * Get price.
      *
-     * @return integer
+     * @return int
      */
-    public function getPrice() {
+    public function getPrice()
+    {
         return $this->price;
     }
 
     /**
-     * Set availability
+     * Set availability.
      *
      * @param string $availability
+     *
      * @return Weapons
      */
-    public function setAvailability($availability) {
+    public function setAvailability($availability)
+    {
         $this->availability = $availability;
 
         return $this;
     }
 
     /**
-     * Get availability
+     * Get availability.
      *
      * @return string
      */
-    public function getAvailability() {
+    public function getAvailability()
+    {
         return $this->availability;
     }
 
     /**
-     * Set melee
+     * Set melee.
      *
-     * @param integer $melee
+     * @param int $melee
+     *
      * @return Weapons
      */
-    public function setMelee($melee) {
+    public function setMelee($melee)
+    {
         $this->melee = $melee;
 
         return $this;
     }
 
     /**
-     * Get melee
+     * Get melee.
      *
-     * @return integer
+     * @return int
      */
-    public function getMelee() {
+    public function getMelee()
+    {
         return $this->melee;
     }
 
     /**
-     * Set range
+     * Set range.
      *
-     * @param integer $range
+     * @param int $range
+     *
      * @return Weapons
      */
-    public function setRange($range) {
+    public function setRange($range)
+    {
         $this->range = $range;
 
         return $this;
     }
 
     /**
-     * Get range
+     * Get range.
      *
-     * @return integer
+     * @return int
      */
-    public function getRange() {
+    public function getRange()
+    {
         return $this->range;
     }
 
     /**
-     * Set created
+     * Set created.
      *
      * @param \DateTime $created
+     *
      * @return Weapons
      */
-    public function setCreated($created) {
+    public function setCreated($created)
+    {
         $this->created = $created;
 
         return $this;
     }
 
     /**
-     * Get created
+     * Get created.
      *
      * @return \DateTime
      */
-    public function getCreated() {
+    public function getCreated()
+    {
         return $this->created;
     }
 
     /**
-     * Set updated
+     * Set updated.
      *
      * @param \DateTime $updated
+     *
      * @return Weapons
      */
-    public function setUpdated($updated) {
+    public function setUpdated($updated)
+    {
         $this->updated = $updated;
 
         return $this;
     }
 
     /**
-     * Get updated
+     * Get updated.
      *
      * @return \DateTime
      */
-    public function getUpdated() {
+    public function getUpdated()
+    {
         return $this->updated;
     }
 
     /**
-     * Set deleted
+     * Set deleted.
      *
      * @param \DateTime $deleted
+     *
      * @return Weapons
      */
-    public function setDeleted($deleted) {
+    public function setDeleted($deleted)
+    {
         $this->deleted = $deleted;
 
         return $this;
     }
 
     /**
-     * Get deleted
+     * Get deleted.
      *
      * @return \DateTime
      */
-    public function getDeleted() {
+    public function getDeleted()
+    {
         return $this->deleted;
     }
 }

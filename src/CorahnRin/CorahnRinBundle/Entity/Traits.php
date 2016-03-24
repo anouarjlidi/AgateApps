@@ -6,16 +6,16 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * Traits
+ * Traits.
  *
  * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity(repositoryClass="CorahnRin\CorahnRinBundle\Repository\TraitsRepository")
  * @ORM\Table(name="traits",uniqueConstraints={@ORM\UniqueConstraint(name="idxUnique", columns={"name", "way_id"})})
  */
-class Traits {
-
+class Traits
+{
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id
@@ -38,14 +38,14 @@ class Traits {
     protected $nameFemale;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(type="boolean")
      */
     protected $isQuality;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(type="boolean")
      */
@@ -73,7 +73,7 @@ class Traits {
     protected $updated;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
@@ -86,209 +86,240 @@ class Traits {
     private $book;
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
     /**
-     * @param integer $id
+     * @param int $id
+     *
      * @return $this
      */
-    public function setId($id) {
+    public function setId($id)
+    {
         $this->id = $id;
+
         return $this;
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
+     *
      * @return Traits
      */
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
 
         return $this;
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
 
     /**
-     * Set nameFemale
+     * Set nameFemale.
      *
      * @param string $nameFemale
+     *
      * @return Traits
      */
-    public function setNameFemale($nameFemale) {
+    public function setNameFemale($nameFemale)
+    {
         $this->nameFemale = $nameFemale;
 
         return $this;
     }
 
     /**
-     * Get nameFemale
+     * Get nameFemale.
      *
      * @return string
      */
-    public function getNameFemale() {
+    public function getNameFemale()
+    {
         return $this->nameFemale;
     }
 
     /**
-     * Set isQuality
+     * Set isQuality.
      *
-     * @param boolean $isQuality
+     * @param bool $isQuality
+     *
      * @return Traits
      */
-    public function setIsQuality($isQuality) {
+    public function setIsQuality($isQuality)
+    {
         $this->isQuality = $isQuality;
 
         return $this;
     }
 
     /**
-     * Get isQuality
+     * Get isQuality.
      *
-     * @return boolean
+     * @return bool
      */
-    public function getIsQuality() {
+    public function getIsQuality()
+    {
         return $this->isQuality;
     }
 
     /**
-     * Set isMajor
+     * Set isMajor.
      *
-     * @param boolean $isMajor
+     * @param bool $isMajor
+     *
      * @return Traits
      */
-    public function setIsMajor($isMajor) {
+    public function setIsMajor($isMajor)
+    {
         $this->isMajor = $isMajor;
 
         return $this;
     }
 
     /**
-     * Get isMajor
+     * Get isMajor.
      *
-     * @return boolean
+     * @return bool
      */
-    public function isMajor() {
+    public function isMajor()
+    {
         return $this->isMajor;
     }
 
     /**
-     * Set book
+     * Set book.
      *
      * @param Books $book
+     *
      * @return Traits
      */
-    public function setBook(Books $book = null) {
+    public function setBook(Books $book = null)
+    {
         $this->book = $book;
 
         return $this;
     }
 
     /**
-     * Get book
+     * Get book.
      *
      * @return Books
      */
-    public function getBook() {
+    public function getBook()
+    {
         return $this->book;
     }
 
     /**
-     * Set created
+     * Set created.
      *
      * @param \DateTime $created
+     *
      * @return Traits
      */
-    public function setCreated($created) {
+    public function setCreated($created)
+    {
         $this->created = $created;
 
         return $this;
     }
 
     /**
-     * Get created
+     * Get created.
      *
      * @return \DateTime
      */
-    public function getCreated() {
+    public function getCreated()
+    {
         return $this->created;
     }
 
     /**
-     * Set updated
+     * Set updated.
      *
      * @param \DateTime $updated
+     *
      * @return Traits
      */
-    public function setUpdated($updated) {
+    public function setUpdated($updated)
+    {
         $this->updated = $updated;
 
         return $this;
     }
 
     /**
-     * Get updated
+     * Get updated.
      *
      * @return \DateTime
      */
-    public function getUpdated() {
+    public function getUpdated()
+    {
         return $this->updated;
     }
 
     /**
-     * Set way
+     * Set way.
      *
      * @param Ways $way
+     *
      * @return Traits
      */
-    public function setWay(Ways $way = null) {
+    public function setWay(Ways $way = null)
+    {
         $this->way = $way;
 
         return $this;
     }
 
     /**
-     * Get way
+     * Get way.
      *
      * @return Ways
      */
-    public function getWay() {
+    public function getWay()
+    {
         return $this->way;
     }
 
     /**
-     * Set deleted
+     * Set deleted.
      *
      * @param \DateTime $deleted
+     *
      * @return Traits
      */
-    public function setDeleted($deleted) {
+    public function setDeleted($deleted)
+    {
         $this->deleted = $deleted;
 
         return $this;
     }
 
     /**
-     * Get deleted
+     * Get deleted.
      *
      * @return \DateTime
      */
-    public function getDeleted() {
+    public function getDeleted()
+    {
         return $this->deleted;
     }
 }

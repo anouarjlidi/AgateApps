@@ -3,17 +3,16 @@
 namespace CorahnRin\CorahnRinBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * CharSetbacks
+ * CharSetbacks.
  *
  * @ORM\Table(name="characters_setbacks")
  * @ORM\Entity()
  */
-class CharSetbacks {
-
+class CharSetbacks
+{
     /**
      * @var Characters
      *
@@ -33,72 +32,81 @@ class CharSetbacks {
     protected $setback;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(type="boolean")
      */
     protected $isAvoided = false;
 
     /**
-     * Set character
+     * Set character.
      *
-     * @param integer $character
+     * @param int $character
+     *
      * @return CharSetbacks
      */
-    public function setCharacter($character) {
+    public function setCharacter($character)
+    {
         $this->character = $character;
 
         return $this;
     }
 
     /**
-     * Get character
+     * Get character.
      *
-     * @return integer
+     * @return int
      */
-    public function getCharacter() {
+    public function getCharacter()
+    {
         return $this->character;
     }
 
     /**
-     * Set setback
+     * Set setback.
      *
-     * @param integer $setback
+     * @param int $setback
+     *
      * @return CharSetbacks
      */
-    public function setSetback($setback) {
+    public function setSetback($setback)
+    {
         $this->setback = $setback;
 
         return $this;
     }
 
     /**
-     * Get setback
+     * Get setback.
      *
-     * @return integer
+     * @return int
      */
-    public function getSetback() {
+    public function getSetback()
+    {
         return $this->setback;
     }
 
     /**
-     * Set isAvoided
+     * Set isAvoided.
      *
-     * @param boolean $isAvoided
+     * @param bool $isAvoided
+     *
      * @return CharSetbacks
      */
-    public function setIsAvoided($isAvoided) {
+    public function setIsAvoided($isAvoided)
+    {
         $this->isAvoided = $isAvoided;
 
         return $this;
     }
 
     /**
-     * Get isAvoided
+     * Get isAvoided.
      *
-     * @return boolean
+     * @return bool
      */
-    public function getIsAvoided() {
+    public function getIsAvoided()
+    {
         return $this->isAvoided;
     }
 }

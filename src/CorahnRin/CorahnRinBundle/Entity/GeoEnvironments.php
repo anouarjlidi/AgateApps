@@ -6,16 +6,16 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * GeoEnvironments
+ * GeoEnvironments.
  *
  * @ORM\Table(name="geo_environments")
  * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity()
  */
-class GeoEnvironments {
-
+class GeoEnvironments
+{
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -38,14 +38,14 @@ class GeoEnvironments {
     protected $description;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\ManyToOne(targetEntity="Books", fetch="EAGER")
      */
     protected $book;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\ManyToOne(targetEntity="Domains", fetch="EAGER")
      */
@@ -72,169 +72,193 @@ class GeoEnvironments {
      */
     protected $deleted = null;
 
-
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
     /**
-     * @param integer $id
+     * @param int $id
+     *
      * @return $this
      */
-    public function setId($id) {
+    public function setId($id)
+    {
         $this->id = $id;
+
         return $this;
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
+     *
      * @return GeoEnvironments
      */
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
 
         return $this;
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
 
     /**
-     * Set description
+     * Set description.
      *
      * @param string $description
+     *
      * @return GeoEnvironments
      */
-    public function setDescription($description) {
+    public function setDescription($description)
+    {
         $this->description = $description;
 
         return $this;
     }
 
     /**
-     * Get description
+     * Get description.
      *
      * @return string
      */
-    public function getDescription() {
+    public function getDescription()
+    {
         return $this->description;
     }
 
     /**
-     * Set book
+     * Set book.
      *
-     * @param integer $book
+     * @param int $book
+     *
      * @return GeoEnvironments
      */
-    public function setBook($book) {
+    public function setBook($book)
+    {
         $this->book = $book;
 
         return $this;
     }
 
     /**
-     * Get book
+     * Get book.
      *
-     * @return integer
+     * @return int
      */
-    public function getBook() {
+    public function getBook()
+    {
         return $this->book;
     }
 
     /**
-     * Set domain
+     * Set domain.
      *
-     * @param integer $domain
+     * @param int $domain
+     *
      * @return GeoEnvironments
      */
-    public function setDomain($domain) {
+    public function setDomain($domain)
+    {
         $this->domain = $domain;
 
         return $this;
     }
 
     /**
-     * Get domain
+     * Get domain.
      *
-     * @return integer
+     * @return int
      */
-    public function getDomain() {
+    public function getDomain()
+    {
         return $this->domain;
     }
 
     /**
-     * Set created
+     * Set created.
      *
      * @param \DateTime $created
+     *
      * @return GeoEnvironments
      */
-    public function setCreated($created) {
+    public function setCreated($created)
+    {
         $this->created = $created;
 
         return $this;
     }
 
     /**
-     * Get created
+     * Get created.
      *
      * @return \DateTime
      */
-    public function getCreated() {
+    public function getCreated()
+    {
         return $this->created;
     }
 
     /**
-     * Set updated
+     * Set updated.
      *
      * @param \DateTime $updated
+     *
      * @return GeoEnvironments
      */
-    public function setUpdated($updated) {
+    public function setUpdated($updated)
+    {
         $this->updated = $updated;
 
         return $this;
     }
 
     /**
-     * Get updated
+     * Get updated.
      *
      * @return \DateTime
      */
-    public function getUpdated() {
+    public function getUpdated()
+    {
         return $this->updated;
     }
 
     /**
-     * Set deleted
+     * Set deleted.
      *
      * @param \DateTime $deleted
+     *
      * @return GeoEnvironments
      */
-    public function setDeleted($deleted) {
+    public function setDeleted($deleted)
+    {
         $this->deleted = $deleted;
 
         return $this;
     }
 
     /**
-     * Get deleted
+     * Get deleted.
      *
      * @return \DateTime
      */
-    public function getDeleted() {
+    public function getDeleted()
+    {
         return $this->deleted;
     }
 }

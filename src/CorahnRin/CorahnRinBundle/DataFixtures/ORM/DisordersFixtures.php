@@ -10,27 +10,29 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
 
-class DisordersFixtures extends AbstractFixture implements OrderedFixtureInterface {
-
+class DisordersFixtures extends AbstractFixture implements OrderedFixtureInterface
+{
     /**
      * @var ObjectManager
      */
     private $manager;
 
     /**
-     * Get the order of this fixture
-     * @return integer
+     * Get the order of this fixture.
+     *
+     * @return int
      */
-    function getOrder()
+    public function getOrder()
     {
         return 2;
     }
 
     /**
-     * Load data fixtures with the passed EntityManager
+     * Load data fixtures with the passed EntityManager.
+     *
      * @param ObjectManager $manager
      */
-    function load(ObjectManager $manager)
+    public function load(ObjectManager $manager)
     {
         $this->manager = $manager;
 
@@ -39,16 +41,16 @@ class DisordersFixtures extends AbstractFixture implements OrderedFixtureInterfa
         /** @var Books $book */
         $book = $this->getReference('corahnrin-book-2');
 
-        $this->fixtureObject($repo, 1, 'Frénésie', '', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null,$book);
-        $this->fixtureObject($repo, 2, 'Exaltation', '', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null,$book);
-        $this->fixtureObject($repo, 3, 'Mélancolie', '', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null,$book);
-        $this->fixtureObject($repo, 4, 'Hallucination', '', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null,$book);
-        $this->fixtureObject($repo, 5, 'Confusion mentale', '', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null,$book);
-        $this->fixtureObject($repo, 6, 'Mimétisme', '', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null,$book);
-        $this->fixtureObject($repo, 7, 'Obsession', '', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null,$book);
-        $this->fixtureObject($repo, 8, 'Hystérie', '', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null,$book);
-        $this->fixtureObject($repo, 9, 'Mysticisme', '', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null,$book);
-        $this->fixtureObject($repo, 10, 'Paranoïa', '', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null,$book);
+        $this->fixtureObject($repo, 1, 'Frénésie', '', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null, $book);
+        $this->fixtureObject($repo, 2, 'Exaltation', '', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null, $book);
+        $this->fixtureObject($repo, 3, 'Mélancolie', '', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null, $book);
+        $this->fixtureObject($repo, 4, 'Hallucination', '', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null, $book);
+        $this->fixtureObject($repo, 5, 'Confusion mentale', '', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null, $book);
+        $this->fixtureObject($repo, 6, 'Mimétisme', '', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null, $book);
+        $this->fixtureObject($repo, 7, 'Obsession', '', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null, $book);
+        $this->fixtureObject($repo, 8, 'Hystérie', '', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null, $book);
+        $this->fixtureObject($repo, 9, 'Mysticisme', '', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null, $book);
+        $this->fixtureObject($repo, 10, 'Paranoïa', '', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null, $book);
 
         $this->manager->flush();
     }

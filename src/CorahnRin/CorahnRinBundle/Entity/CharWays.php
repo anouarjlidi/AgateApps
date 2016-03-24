@@ -3,16 +3,15 @@
 namespace CorahnRin\CorahnRinBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * CharWays
+ * CharWays.
  *
  * @ORM\Table(name="characters_ways")
  * @ORM\Entity()
  */
-class CharWays {
-
+class CharWays
+{
     /**
      * @var Characters
      *
@@ -30,72 +29,81 @@ class CharWays {
     protected $way;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer")
      */
     protected $score;
 
     /**
-     * Set character
+     * Set character.
      *
-     * @param integer $character
+     * @param int $character
+     *
      * @return CharWays
      */
-    public function setCharacter($character) {
+    public function setCharacter($character)
+    {
         $this->character = $character;
 
         return $this;
     }
 
     /**
-     * Get character
+     * Get character.
      *
-     * @return integer
+     * @return int
      */
-    public function getCharacter() {
+    public function getCharacter()
+    {
         return $this->character;
     }
 
     /**
-     * Set way
+     * Set way.
      *
      * @param Ways $way
+     *
      * @return CharWays
      */
-    public function setWay(Ways $way) {
+    public function setWay(Ways $way)
+    {
         $this->way = $way;
 
         return $this;
     }
 
     /**
-     * Get way
+     * Get way.
      *
      * @return Ways
      */
-    public function getWay() {
+    public function getWay()
+    {
         return $this->way;
     }
 
     /**
-     * Set score
+     * Set score.
      *
-     * @param integer $score
+     * @param int $score
+     *
      * @return CharWays
      */
-    public function setScore($score) {
+    public function setScore($score)
+    {
         $this->score = $score;
 
         return $this;
     }
 
     /**
-     * Get score
+     * Get score.
      *
-     * @return integer
+     * @return int
      */
-    public function getScore() {
+    public function getScore()
+    {
         return $this->score;
     }
 }

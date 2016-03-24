@@ -4,34 +4,35 @@ namespace CorahnRin\CorahnRinBundle\DataFixtures\ORM;
 
 use CorahnRin\CorahnRinBundle\Entity\Armors;
 use CorahnRin\CorahnRinBundle\Entity\Books;
-use CorahnRin\CorahnRinBundle\Repository\ArmorsRepository;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
 
-class ArmorsFixtures extends AbstractFixture implements OrderedFixtureInterface {
-
+class ArmorsFixtures extends AbstractFixture implements OrderedFixtureInterface
+{
     /**
      * @var ObjectManager
      */
     private $manager;
 
     /**
-     * Get the order of this fixture
-     * @return integer
+     * Get the order of this fixture.
+     *
+     * @return int
      */
-    function getOrder()
+    public function getOrder()
     {
         return 2;
     }
 
     /**
-     * Load data fixtures with the passed EntityManager
+     * Load data fixtures with the passed EntityManager.
+     *
      * @param ObjectManager $manager
      */
-    function load(ObjectManager $manager)
+    public function load(ObjectManager $manager)
     {
         $this->manager = $manager;
 
@@ -39,21 +40,21 @@ class ArmorsFixtures extends AbstractFixture implements OrderedFixtureInterface 
 
         /** @var Books $book */
         $book = $this->getReference('corahnrin-book-2');
-        $this->fixtureObject($repo, 1,'Bouclier rond','bois renforcé de métal',1,20,'FR','2014-04-09 08:56:43','2014-04-09 08:56:43',null,$book);
-        $this->fixtureObject($repo, 2,'Bouclier Osag','bois et renforts de métal, rectangulaire',1,20,'CO','2014-04-09 08:56:43','2014-04-09 08:56:43',null,$book);
-        $this->fixtureObject($repo, 3,'Écu Hilderin','en métal, de forme triangulaire',1,30,'RA','2014-04-09 08:56:43','2014-04-09 08:56:43',null,$book);
-        $this->fixtureObject($repo, 4,'Cotte de cuir','',1,20,'FR','2014-04-09 08:56:43','2014-04-09 08:56:43',null,$book);
-        $this->fixtureObject($repo, 5,'Cotte de cuir clouté','',2,30,'CO','2014-04-09 08:56:43','2014-04-09 08:56:43',null,$book);
-        $this->fixtureObject($repo, 6,'Cotte de mailles','',3,0,'CO','2014-04-09 08:56:43','2014-04-09 08:56:43',null,$book);
-        $this->fixtureObject($repo, 7,'Cuirasse en roseau','',2,10,'RA','2014-04-09 08:56:43','2014-04-09 08:56:43',null,$book);
-        $this->fixtureObject($repo, 8,'Cuirasse continentale',' en lamelles, cuir et métal',3,100,'RA','2014-04-09 08:56:43','2014-04-09 08:56:43',null,$book);
-        $this->fixtureObject($repo, 9,'Armure de plaques','',4,300,'EX','2014-04-09 08:56:43','2014-04-09 08:56:43',null,$book);
-        $this->fixtureObject($repo, 10,'Cagoule de cuir',' (Chaque armure est fournie avec le casque. Ne pas le porter suscite un malus de 1 au score de Protection, minimum 1)',0,4,'FR','2014-04-09 08:56:43','2014-04-09 08:56:43',null,$book);
-        $this->fixtureObject($repo, 11,'Cagoule de mailles',' (Chaque armure est fournie avec le casque. Ne pas le porter suscite un malus de 1 au score de Protection, minimum 1)',0,8,'CO','2014-04-09 08:56:43','2014-04-09 08:56:43',null,$book);
-        $this->fixtureObject($repo, 12,'Casque Osag',' (Chaque armure est fournie avec le casque. Ne pas le porter suscite un malus de 1 au score de Protection, minimum 1)',0,10,'FR','2014-04-09 08:56:43','2014-04-09 08:56:43',null,$book);
-        $this->fixtureObject($repo, 13,'Casque ouvert',' (Chaque armure est fournie avec le casque. Ne pas le porter suscite un malus de 1 au score de Protection, minimum 1)',0,20,'CO','2014-04-09 08:56:43','2014-04-09 08:56:43',null,$book);
-        $this->fixtureObject($repo, 14,'Heaume',' (Chaque armure est fournie avec le casque. Ne pas le porter suscite un malus de 1 au score de Protection, minimum 1)',0,40,'RA','2014-04-09 08:56:43','2014-04-09 08:56:43',null,$book);
-        $this->fixtureObject($repo, 15,'Pavois du temple','gravé du symbole de l\'Unique',1,20,'CO','2014-04-09 08:56:43','2014-04-09 08:56:43',null,$book);
+        $this->fixtureObject($repo, 1, 'Bouclier rond', 'bois renforcé de métal', 1, 20, 'FR', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null, $book);
+        $this->fixtureObject($repo, 2, 'Bouclier Osag', 'bois et renforts de métal, rectangulaire', 1, 20, 'CO', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null, $book);
+        $this->fixtureObject($repo, 3, 'Écu Hilderin', 'en métal, de forme triangulaire', 1, 30, 'RA', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null, $book);
+        $this->fixtureObject($repo, 4, 'Cotte de cuir', '', 1, 20, 'FR', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null, $book);
+        $this->fixtureObject($repo, 5, 'Cotte de cuir clouté', '', 2, 30, 'CO', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null, $book);
+        $this->fixtureObject($repo, 6, 'Cotte de mailles', '', 3, 0, 'CO', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null, $book);
+        $this->fixtureObject($repo, 7, 'Cuirasse en roseau', '', 2, 10, 'RA', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null, $book);
+        $this->fixtureObject($repo, 8, 'Cuirasse continentale', ' en lamelles, cuir et métal', 3, 100, 'RA', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null, $book);
+        $this->fixtureObject($repo, 9, 'Armure de plaques', '', 4, 300, 'EX', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null, $book);
+        $this->fixtureObject($repo, 10, 'Cagoule de cuir', ' (Chaque armure est fournie avec le casque. Ne pas le porter suscite un malus de 1 au score de Protection, minimum 1)', 0, 4, 'FR', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null, $book);
+        $this->fixtureObject($repo, 11, 'Cagoule de mailles', ' (Chaque armure est fournie avec le casque. Ne pas le porter suscite un malus de 1 au score de Protection, minimum 1)', 0, 8, 'CO', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null, $book);
+        $this->fixtureObject($repo, 12, 'Casque Osag', ' (Chaque armure est fournie avec le casque. Ne pas le porter suscite un malus de 1 au score de Protection, minimum 1)', 0, 10, 'FR', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null, $book);
+        $this->fixtureObject($repo, 13, 'Casque ouvert', ' (Chaque armure est fournie avec le casque. Ne pas le porter suscite un malus de 1 au score de Protection, minimum 1)', 0, 20, 'CO', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null, $book);
+        $this->fixtureObject($repo, 14, 'Heaume', ' (Chaque armure est fournie avec le casque. Ne pas le porter suscite un malus de 1 au score de Protection, minimum 1)', 0, 40, 'RA', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null, $book);
+        $this->fixtureObject($repo, 15, 'Pavois du temple', 'gravé du symbole de l\'Unique', 1, 20, 'CO', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null, $book);
 
         $this->manager->flush();
     }

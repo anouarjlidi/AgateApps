@@ -8,16 +8,16 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * Games
+ * Games.
  *
  * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity()
  * @ORM\Table(name="games", uniqueConstraints={@ORM\UniqueConstraint(name="idgUnique", columns={"name", "game_master_id"})})
  */
-class Games {
-
+class Games
+{
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id
@@ -76,211 +76,241 @@ class Games {
     protected $characters;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
     protected $deleted = null;
 
     /**
-     * Constructor
+     * Constructor.
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->characters = new ArrayCollection();
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
     /**
-     * @param integer $id
+     * @param int $id
+     *
      * @return $this
      */
-    public function setId($id) {
+    public function setId($id)
+    {
         $this->id = $id;
+
         return $this;
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
+     *
      * @return Games
      */
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
 
         return $this;
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
 
     /**
-     * Set summary
+     * Set summary.
      *
      * @param string $summary
+     *
      * @return Games
      */
-    public function setSummary($summary) {
+    public function setSummary($summary)
+    {
         $this->summary = $summary;
 
         return $this;
     }
 
     /**
-     * Get summary
+     * Get summary.
      *
      * @return string
      */
-    public function getSummary() {
+    public function getSummary()
+    {
         return $this->summary;
     }
 
     /**
-     * Set gmNotes
+     * Set gmNotes.
      *
      * @param string $gmNotes
+     *
      * @return Games
      */
-    public function setGmNotes($gmNotes) {
+    public function setGmNotes($gmNotes)
+    {
         $this->gmNotes = $gmNotes;
 
         return $this;
     }
 
     /**
-     * Get gmNotes
+     * Get gmNotes.
      *
      * @return string
      */
-    public function getGmNotes() {
+    public function getGmNotes()
+    {
         return $this->gmNotes;
     }
 
     /**
-     * Set created
+     * Set created.
      *
      * @param \DateTime $created
+     *
      * @return Games
      */
-    public function setCreated($created) {
+    public function setCreated($created)
+    {
         $this->created = $created;
 
         return $this;
     }
 
     /**
-     * Get created
+     * Get created.
      *
      * @return \DateTime
      */
-    public function getCreated() {
+    public function getCreated()
+    {
         return $this->created;
     }
 
     /**
-     * Set updated
+     * Set updated.
      *
      * @param \DateTime $updated
+     *
      * @return Games
      */
-    public function setUpdated($updated) {
+    public function setUpdated($updated)
+    {
         $this->updated = $updated;
 
         return $this;
     }
 
     /**
-     * Get updated
+     * Get updated.
      *
      * @return \DateTime
      */
-    public function getUpdated() {
+    public function getUpdated()
+    {
         return $this->updated;
     }
 
     /**
-     * Set gameMaster
+     * Set gameMaster.
      *
      * @param User $gameMaster
+     *
      * @return Games
      */
-    public function setGameMaster(User $gameMaster = null) {
+    public function setGameMaster(User $gameMaster = null)
+    {
         $this->gameMaster = $gameMaster;
 
         return $this;
     }
 
     /**
-     * Get gameMaster
+     * Get gameMaster.
      *
      * @return User
      */
-    public function getGameMaster() {
+    public function getGameMaster()
+    {
         return $this->gameMaster;
     }
 
     /**
-     * Add characters
+     * Add characters.
      *
      * @param Characters $characters
+     *
      * @return Games
      */
-    public function addCharacter(Characters $characters) {
+    public function addCharacter(Characters $characters)
+    {
         $this->characters[] = $characters;
 
         return $this;
     }
 
     /**
-     * Remove characters
+     * Remove characters.
      *
      * @param Characters $characters
      */
-    public function removeCharacter(Characters $characters) {
+    public function removeCharacter(Characters $characters)
+    {
         $this->characters->removeElement($characters);
     }
 
     /**
-     * Get characters
+     * Get characters.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getCharacters() {
+    public function getCharacters()
+    {
         return $this->characters;
     }
 
     /**
-     * Set deleted
+     * Set deleted.
      *
      * @param \DateTime $deleted
+     *
      * @return Games
      */
-    public function setDeleted($deleted) {
+    public function setDeleted($deleted)
+    {
         $this->deleted = $deleted;
 
         return $this;
     }
 
     /**
-     * Get deleted
+     * Get deleted.
      *
      * @return \DateTime
      */
-    public function getDeleted() {
+    public function getDeleted()
+    {
         return $this->deleted;
     }
 }

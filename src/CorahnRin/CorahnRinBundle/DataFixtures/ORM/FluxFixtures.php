@@ -9,27 +9,29 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
 
-class FluxFixtures extends AbstractFixture implements OrderedFixtureInterface {
-
+class FluxFixtures extends AbstractFixture implements OrderedFixtureInterface
+{
     /**
      * @var ObjectManager
      */
     private $manager;
 
     /**
-     * Get the order of this fixture
-     * @return integer
+     * Get the order of this fixture.
+     *
+     * @return int
      */
-    function getOrder()
+    public function getOrder()
     {
         return 2;
     }
 
     /**
-     * Load data fixtures with the passed EntityManager
+     * Load data fixtures with the passed EntityManager.
+     *
      * @param ObjectManager $manager
      */
-    function load(ObjectManager $manager)
+    public function load(ObjectManager $manager)
     {
         $this->manager = $manager;
 

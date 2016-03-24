@@ -6,14 +6,14 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * Avantages
+ * Avantages.
  *
  * @ORM\Table(name="avantages")
  * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity(repositoryClass="CorahnRin\CorahnRinBundle\Repository\AvantagesRepository")
  */
-class Avantages {
-
+class Avantages
+{
     const BONUS_100G = '100g';
     const BONUS_50G = '50g';
     const BONUS_20G = '20g';
@@ -28,7 +28,7 @@ class Avantages {
     const BONUS_SUR = 'sur';
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id
@@ -51,7 +51,7 @@ class Avantages {
     protected $nameFemale;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="smallint")
      */
@@ -65,7 +65,7 @@ class Avantages {
     protected $description;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(type="smallint")
      */
@@ -79,21 +79,21 @@ class Avantages {
     protected $bonusdisc;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(type="boolean")
      */
     protected $isDesv;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(type="boolean")
      */
     protected $isCombatArt;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="avtg_group", type="smallint", options={"default"="0"}, nullable=true)
      */
@@ -120,300 +120,343 @@ class Avantages {
     protected $updated;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
     protected $deleted = null;
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
     /**
-     * @param integer $id
+     * @param int $id
+     *
      * @return $this
      */
-    public function setId($id) {
+    public function setId($id)
+    {
         $this->id = $id;
+
         return $this;
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
+     *
      * @return Avantages
      */
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
 
         return $this;
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
 
     /**
-     * Set nameFemale
+     * Set nameFemale.
      *
      * @param string $nameFemale
+     *
      * @return Avantages
      */
-    public function setNameFemale($nameFemale) {
+    public function setNameFemale($nameFemale)
+    {
         $this->nameFemale = $nameFemale;
 
         return $this;
     }
 
     /**
-     * Get nameFemale
+     * Get nameFemale.
      *
      * @return string
      */
-    public function getNameFemale() {
+    public function getNameFemale()
+    {
         return $this->nameFemale;
     }
 
     /**
-     * Set xp
+     * Set xp.
      *
-     * @param integer $xp
+     * @param int $xp
+     *
      * @return Avantages
      */
-    public function setXp($xp) {
+    public function setXp($xp)
+    {
         $this->xp = $xp;
 
         return $this;
     }
 
     /**
-     * Get xp
+     * Get xp.
      *
-     * @return integer
+     * @return int
      */
-    public function getXp() {
+    public function getXp()
+    {
         return $this->xp;
     }
 
     /**
-     * Set description
+     * Set description.
      *
      * @param string $description
+     *
      * @return Avantages
      */
-    public function setDescription($description) {
+    public function setDescription($description)
+    {
         $this->description = $description;
 
         return $this;
     }
 
     /**
-     * Get description
+     * Get description.
      *
      * @return string
      */
-    public function getDescription() {
+    public function getDescription()
+    {
         return $this->description;
     }
 
     /**
-     * Set bonusdisc
+     * Set bonusdisc.
      *
      * @param string $bonusdisc
+     *
      * @return Avantages
      */
-    public function setBonusdisc($bonusdisc) {
+    public function setBonusdisc($bonusdisc)
+    {
         $this->bonusdisc = $bonusdisc;
 
         return $this;
     }
 
     /**
-     * Get bonusdisc
+     * Get bonusdisc.
      *
      * @return string
      */
-    public function getBonusdisc() {
+    public function getBonusdisc()
+    {
         return $this->bonusdisc;
     }
 
     /**
-     * Set isDesv
+     * Set isDesv.
      *
-     * @param boolean $isDesv
+     * @param bool $isDesv
+     *
      * @return Avantages
      */
-    public function setIsDesv($isDesv) {
+    public function setIsDesv($isDesv)
+    {
         $this->isDesv = $isDesv;
 
         return $this;
     }
 
     /**
-     * Get isDesv
+     * Get isDesv.
      *
-     * @return boolean
+     * @return bool
      */
-    public function getIsDesv() {
+    public function getIsDesv()
+    {
         return $this->isDesv;
     }
 
     /**
-     * Set isCombatArt
+     * Set isCombatArt.
      *
-     * @param boolean $isCombatArt
+     * @param bool $isCombatArt
+     *
      * @return Avantages
      */
-    public function setIsCombatArt($isCombatArt) {
+    public function setIsCombatArt($isCombatArt)
+    {
         $this->isCombatArt = $isCombatArt;
 
         return $this;
     }
 
     /**
-     * Get isCombatArt
+     * Get isCombatArt.
      *
-     * @return boolean
+     * @return bool
      */
-    public function getIsCombatArt() {
+    public function getIsCombatArt()
+    {
         return $this->isCombatArt;
     }
 
     /**
-     * Set created
+     * Set created.
      *
      * @param \DateTime $created
+     *
      * @return Avantages
      */
-    public function setCreated($created) {
+    public function setCreated($created)
+    {
         $this->created = $created;
 
         return $this;
     }
 
     /**
-     * Get created
+     * Get created.
      *
      * @return \DateTime
      */
-    public function getCreated() {
+    public function getCreated()
+    {
         return $this->created;
     }
 
     /**
-     * Set updated
+     * Set updated.
      *
      * @param \DateTime $updated
+     *
      * @return Avantages
      */
-    public function setUpdated($updated) {
+    public function setUpdated($updated)
+    {
         $this->updated = $updated;
 
         return $this;
     }
 
     /**
-     * Get updated
+     * Get updated.
      *
      * @return \DateTime
      */
-    public function getUpdated() {
+    public function getUpdated()
+    {
         return $this->updated;
     }
 
     /**
-     * Set book
+     * Set book.
      *
      * @param Books $book
+     *
      * @return Avantages
      */
-    public function setBook(Books $book = null) {
+    public function setBook(Books $book = null)
+    {
         $this->book = $book;
 
         return $this;
     }
 
     /**
-     * Get book
+     * Get book.
      *
      * @return Books
      */
-    public function getBook() {
+    public function getBook()
+    {
         return $this->book;
     }
 
     /**
-     * Set augmentation
+     * Set augmentation.
      *
-     * @param integer $augmentation
+     * @param int $augmentation
+     *
      * @return Avantages
      */
-    public function setAugmentation($augmentation) {
+    public function setAugmentation($augmentation)
+    {
         $this->augmentation = $augmentation;
 
         return $this;
     }
 
     /**
-     * Get augmentation
+     * Get augmentation.
      *
-     * @return integer
+     * @return int
      */
-    public function getAugmentation() {
+    public function getAugmentation()
+    {
         return $this->augmentation;
     }
 
     /**
-     * Set group
+     * Set group.
      *
-     * @param integer $group
+     * @param int $group
+     *
      * @return Avantages
      */
-    public function setGroup($group) {
+    public function setGroup($group)
+    {
         $this->group = $group;
 
         return $this;
     }
 
     /**
-     * Get group
+     * Get group.
      *
-     * @return integer
+     * @return int
      */
-    public function getGroup() {
+    public function getGroup()
+    {
         return $this->group;
     }
 
     /**
-     * Set deleted
+     * Set deleted.
      *
      * @param \DateTime $deleted
+     *
      * @return Avantages
      */
-    public function setDeleted($deleted) {
+    public function setDeleted($deleted)
+    {
         $this->deleted = $deleted;
 
         return $this;
     }
 
     /**
-     * Get deleted
+     * Get deleted.
      *
      * @return \DateTime
      */
-    public function getDeleted() {
+    public function getDeleted()
+    {
         return $this->deleted;
     }
 }

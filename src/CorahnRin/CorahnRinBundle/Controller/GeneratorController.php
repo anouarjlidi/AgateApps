@@ -13,7 +13,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class GeneratorController extends Controller
 {
-
     /**
      * @var Steps[]
      */
@@ -73,7 +72,7 @@ class GeneratorController extends Controller
 
         $this->steps = $this->steps ?: $em->getRepository('CorahnRinBundle:Steps')->findAll('step');
 
-        for ($i = 1; $i <= $step->getStep(); $i++) {
+        for ($i = 1; $i <= $step->getStep(); ++$i) {
             $stepName = $this->steps[$i]->getStep().'.'.$this->steps[$i]->getSlug();
             if (!array_key_exists($stepName, $character) && $step->getStep() > $this->steps[$i]->getStep()) {
                 return $this->_goToStep($this->steps[$i]->getStep());
@@ -129,13 +128,13 @@ class GeneratorController extends Controller
         $actual_step = (int) $this->get('session')->get('step') ?: 1;
         $this->steps = $this->steps
             ?: $this->getDoctrine()->getManager()->getRepository('CorahnRinBundle:Steps')->findAll('step');
-        $barWidth    = count($this->steps) ? ($actual_step / count($this->steps) * 100) : 0;
+        $barWidth = count($this->steps) ? ($actual_step / count($this->steps) * 100) : 0;
 
         return $this->render('@CorahnRin/Generator/menu.html.twig', [
-            'steps'        => $this->steps,
+            'steps' => $this->steps,
             'session_step' => $actual_step,
-            'bar_width'    => $barWidth,
-            'loaded_step'  => $step,
+            'bar_width' => $barWidth,
+            'loaded_step' => $step,
         ]);
     }
 
@@ -146,11 +145,12 @@ class GeneratorController extends Controller
     -------------------------------------------------------------------------*/
 
     /**
-     * Redirige vers une étape
+     * Redirige vers une étape.
      *
      * @param $stepNumber
      *
      * @return RedirectResponse
+     *
      * @throws \InvalidArgumentException
      */
     public function _goToStep($stepNumber)
@@ -176,5 +176,4 @@ class GeneratorController extends Controller
             throw new \InvalidArgumentException($msg);
         }
     }
-
 }

@@ -6,14 +6,14 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * DisordersWays
+ * DisordersWays.
  *
  * @ORM\Table(name="disorders_ways")
  * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity()
  */
-class DisordersWays {
-
+class DisordersWays
+{
     /**
      * @var Disorders
      *
@@ -31,104 +31,117 @@ class DisordersWays {
     protected $way;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(type="boolean", options={"default":0})
      */
     protected $isMajor = 0;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
     protected $deleted = null;
 
-    function __toString() {
+    public function __toString()
+    {
         return $this->disorder->getName().' - '.$this->way->getName();
     }
 
     /**
-     * Set disorder
+     * Set disorder.
      *
-     * @param integer $disorder
+     * @param int $disorder
+     *
      * @return DisordersWays
      */
-    public function setDisorder($disorder) {
+    public function setDisorder($disorder)
+    {
         $this->disorder = $disorder;
 
         return $this;
     }
 
     /**
-     * Get disorder
+     * Get disorder.
      *
-     * @return integer
+     * @return int
      */
-    public function getDisorder() {
+    public function getDisorder()
+    {
         return $this->disorder;
     }
 
     /**
-     * Set way
+     * Set way.
      *
-     * @param integer $way
+     * @param int $way
+     *
      * @return DisordersWays
      */
-    public function setWay($way) {
+    public function setWay($way)
+    {
         $this->way = $way;
 
         return $this;
     }
 
     /**
-     * Get way
+     * Get way.
      *
-     * @return integer
+     * @return int
      */
-    public function getWay() {
+    public function getWay()
+    {
         return $this->way;
     }
 
     /**
-     * Set isMajor
+     * Set isMajor.
      *
-     * @param boolean $isMajor
+     * @param bool $isMajor
+     *
      * @return DisordersWays
      */
-    public function setIsMajor($isMajor) {
+    public function setIsMajor($isMajor)
+    {
         $this->isMajor = $isMajor;
 
         return $this;
     }
 
     /**
-     * Get isMajor
+     * Get isMajor.
      *
-     * @return boolean
+     * @return bool
      */
-    public function isMajor() {
+    public function isMajor()
+    {
         return $this->isMajor;
     }
 
     /**
-     * Set deleted
+     * Set deleted.
      *
      * @param \DateTime $deleted
+     *
      * @return DisordersWays
      */
-    public function setDeleted($deleted) {
+    public function setDeleted($deleted)
+    {
         $this->deleted = $deleted;
 
         return $this;
     }
 
     /**
-     * Get deleted
+     * Get deleted.
      *
      * @return \DateTime
      */
-    public function getDeleted() {
+    public function getDeleted()
+    {
         return $this->deleted;
     }
 }

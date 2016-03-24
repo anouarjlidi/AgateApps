@@ -10,8 +10,8 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 
-class DisciplinesDomainsFixtures extends AbstractFixture implements OrderedFixtureInterface {
-
+class DisciplinesDomainsFixtures extends AbstractFixture implements OrderedFixtureInterface
+{
     /**
      * @var EntityManager
      */
@@ -23,19 +23,21 @@ class DisciplinesDomainsFixtures extends AbstractFixture implements OrderedFixtu
     private $domains = array();
 
     /**
-     * Get the order of this fixture
-     * @return integer
+     * Get the order of this fixture.
+     *
+     * @return int
      */
-    function getOrder()
+    public function getOrder()
     {
         return 4;
     }
 
     /**
-     * Load data fixtures with the passed EntityManager
+     * Load data fixtures with the passed EntityManager.
+     *
      * @param ObjectManager $manager
      */
-    function load(ObjectManager $manager)
+    public function load(ObjectManager $manager)
     {
         $this->manager = $manager;
 
@@ -49,7 +51,7 @@ class DisciplinesDomainsFixtures extends AbstractFixture implements OrderedFixtu
         $this->fixtureObject($discRepo, $domRepo, 5, array(14));
         $this->fixtureObject($discRepo, $domRepo, 6, array(2));
         $this->fixtureObject($discRepo, $domRepo, 7, array(14));
-        $this->fixtureObject($discRepo, $domRepo, 8, array(2,7,13,14));
+        $this->fixtureObject($discRepo, $domRepo, 8, array(2, 7, 13, 14));
         $this->fixtureObject($discRepo, $domRepo, 9, array(15));
         $this->fixtureObject($discRepo, $domRepo, 10, array(11));
         $this->fixtureObject($discRepo, $domRepo, 11, array(2));
@@ -64,7 +66,7 @@ class DisciplinesDomainsFixtures extends AbstractFixture implements OrderedFixtu
         $this->fixtureObject($discRepo, $domRepo, 20, array(2));
         $this->fixtureObject($discRepo, $domRepo, 21, array(12));
         $this->fixtureObject($discRepo, $domRepo, 22, array(11));
-        $this->fixtureObject($discRepo, $domRepo, 23, array(6,9));
+        $this->fixtureObject($discRepo, $domRepo, 23, array(6, 9));
         $this->fixtureObject($discRepo, $domRepo, 24, array(1));
         $this->fixtureObject($discRepo, $domRepo, 25, array(13));
         $this->fixtureObject($discRepo, $domRepo, 26, array(11));
@@ -94,7 +96,7 @@ class DisciplinesDomainsFixtures extends AbstractFixture implements OrderedFixtu
         $this->fixtureObject($discRepo, $domRepo, 50, array(13));
         $this->fixtureObject($discRepo, $domRepo, 51, array(2));
         $this->fixtureObject($discRepo, $domRepo, 52, array(16));
-        $this->fixtureObject($discRepo, $domRepo, 53, array(6,16));
+        $this->fixtureObject($discRepo, $domRepo, 53, array(6, 16));
         $this->fixtureObject($discRepo, $domRepo, 54, array(16));
         $this->fixtureObject($discRepo, $domRepo, 55, array(7));
         $this->fixtureObject($discRepo, $domRepo, 56, array(13));
@@ -107,10 +109,10 @@ class DisciplinesDomainsFixtures extends AbstractFixture implements OrderedFixtu
         $this->fixtureObject($discRepo, $domRepo, 63, array(6));
         $this->fixtureObject($discRepo, $domRepo, 64, array(16));
         $this->fixtureObject($discRepo, $domRepo, 65, array(8));
-        $this->fixtureObject($discRepo, $domRepo, 66, array(1,13));
+        $this->fixtureObject($discRepo, $domRepo, 66, array(1, 13));
         $this->fixtureObject($discRepo, $domRepo, 67, array(1));
         $this->fixtureObject($discRepo, $domRepo, 68, array(13));
-        $this->fixtureObject($discRepo, $domRepo, 69, array(4,13));
+        $this->fixtureObject($discRepo, $domRepo, 69, array(4, 13));
         $this->fixtureObject($discRepo, $domRepo, 70, array(6));
         $this->fixtureObject($discRepo, $domRepo, 71, array(6));
         $this->fixtureObject($discRepo, $domRepo, 72, array(1));
@@ -119,8 +121,8 @@ class DisciplinesDomainsFixtures extends AbstractFixture implements OrderedFixtu
         $this->fixtureObject($discRepo, $domRepo, 75, array(10));
         $this->fixtureObject($discRepo, $domRepo, 76, array(15));
         $this->fixtureObject($discRepo, $domRepo, 77, array(8));
-        $this->fixtureObject($discRepo, $domRepo, 78, array(5,8,15));
-        $this->fixtureObject($discRepo, $domRepo, 79, array(1,7,13));
+        $this->fixtureObject($discRepo, $domRepo, 78, array(5, 8, 15));
+        $this->fixtureObject($discRepo, $domRepo, 79, array(1, 7, 13));
         $this->fixtureObject($discRepo, $domRepo, 80, array(1));
         $this->fixtureObject($discRepo, $domRepo, 81, array(11));
         $this->fixtureObject($discRepo, $domRepo, 82, array(7));
@@ -131,14 +133,14 @@ class DisciplinesDomainsFixtures extends AbstractFixture implements OrderedFixtu
         $this->fixtureObject($discRepo, $domRepo, 87, array(16));
         $this->fixtureObject($discRepo, $domRepo, 88, array(4));
         $this->fixtureObject($discRepo, $domRepo, 89, array(9));
-        $this->fixtureObject($discRepo, $domRepo, 90, array(4,13));
+        $this->fixtureObject($discRepo, $domRepo, 90, array(4, 13));
         $this->fixtureObject($discRepo, $domRepo, 91, array(6));
         $this->fixtureObject($discRepo, $domRepo, 92, array(1));
         $this->fixtureObject($discRepo, $domRepo, 93, array(8));
         $this->fixtureObject($discRepo, $domRepo, 94, array(1));
         $this->fixtureObject($discRepo, $domRepo, 95, array(6));
         $this->fixtureObject($discRepo, $domRepo, 96, array(15));
-        $this->fixtureObject($discRepo, $domRepo, 97, array(6,9,13));
+        $this->fixtureObject($discRepo, $domRepo, 97, array(6, 9, 13));
         $this->fixtureObject($discRepo, $domRepo, 98, array(5));
         $this->fixtureObject($discRepo, $domRepo, 99, array(16));
         $this->fixtureObject($discRepo, $domRepo, 100, array(4));

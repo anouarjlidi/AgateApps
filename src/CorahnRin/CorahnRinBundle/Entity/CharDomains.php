@@ -3,17 +3,16 @@
 namespace CorahnRin\CorahnRinBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * CharDomains
+ * CharDomains.
  *
  * @ORM\Table(name="characters_domains")
  * @ORM\Entity()
  */
-class CharDomains {
-
+class CharDomains
+{
     /**
      * @var Characters
      *
@@ -33,7 +32,7 @@ class CharDomains {
     protected $domain;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer")
      * @Assert\NotNull()
@@ -42,65 +41,74 @@ class CharDomains {
     protected $score;
 
     /**
-     * Set score
+     * Set score.
      *
-     * @param integer $score
+     * @param int $score
+     *
      * @return CharDomains
      */
-    public function setScore($score) {
+    public function setScore($score)
+    {
         $this->score = $score;
 
         return $this;
     }
 
     /**
-     * Get score
+     * Get score.
      *
-     * @return integer
+     * @return int
      */
-    public function getScore() {
+    public function getScore()
+    {
         return $this->score;
     }
 
     /**
-     * Set character
+     * Set character.
      *
      * @param Characters $character
+     *
      * @return CharDomains
      */
-    public function setCharacter(Characters $character) {
+    public function setCharacter(Characters $character)
+    {
         $this->character = $character;
 
         return $this;
     }
 
     /**
-     * Get character
+     * Get character.
      *
      * @return Characters
      */
-    public function getCharacter() {
+    public function getCharacter()
+    {
         return $this->character;
     }
 
     /**
-     * Set domain
+     * Set domain.
      *
      * @param Domains $domain
+     *
      * @return CharDomains
      */
-    public function setDomain(Domains $domain) {
+    public function setDomain(Domains $domain)
+    {
         $this->domain = $domain;
 
         return $this;
     }
 
     /**
-     * Get domain
+     * Get domain.
      *
      * @return Domains
      */
-    public function getDomain() {
+    public function getDomain()
+    {
         return $this->domain;
     }
 }
