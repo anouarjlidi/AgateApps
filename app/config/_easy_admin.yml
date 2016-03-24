@@ -1,6 +1,16 @@
 
+# Entities configuration are stored in these files.
+imports:
+    - { resource: 'admin/esterenmaps.yml' }
+    - { resource: 'admin/cms.yml' }
+
+
+
 easy_admin:
     site_name: Esteren
+
+    list:
+        max_results: 50
 
     design:
         brand_color: "rgb(88, 88, 216)"
@@ -33,182 +43,7 @@ easy_admin:
                   - { entity: "ZonesTypes" }
                   - { entity: "TransportTypes" }
 
-    list:
-        max_results: 50
-
-    entities:
-
-        ####################
-        ## Orbitale CMS
-        "Pages":
-            label: admin.cms.pages
-            class: Orbitale\Bundle\CmsBundle\Entity\Page
-            show:
-                fields: [ id, parent, title, slug, tree, content, metaDescription, metaTitle, category, host, locale, homepage, enabled ]
-            list:
-                fields:
-                    - id
-                    - parent
-                    - title
-                    - slug
-                    - tree
-                    - host
-                    - locale
-                    - { property: homepage, type: boolean }
-                    - { property: enabled, type: boolean }
-            form:
-                fields:
-                    - title
-                    - slug
-                    - { property: content, type: 'Ivory\CKEditorBundle\Form\Type\CKEditorType' }
-                    - metaDescription
-                    - metaTitle
-                    - metaKeywords
-                    - css
-                    - js
-                    - category
-                    - parent
-                    - property: host
-                      type: 'Symfony\Component\Form\Extension\Core\Type\ChoiceType'
-                      type_options:
-                          choices:
-                              - "%esteren_domains.games%"
-                              - "%esteren_domains.portal%"
-                              - "%esteren_domains.corahn_rin%"
-
-                    - homepage
-                    - enabled
-
-        ####################
-        ## Esteren Maps
-        "Factions":
-            label: admin.maps.factions
-            class: EsterenMaps\MapsBundle\Entity\Factions
-            list:
-                fields: [ id, name, description, book ]
-            form:
-                fields: [ name, description, book ]
-
-        "Maps":
-            label: admin.maps.maps
-            class: EsterenMaps\MapsBundle\Entity\Maps
-            list:
-                actions:
-                    - edit
-                    - { name: admin_esterenmaps_maps_maps_editInteractive, type: route, label: actions.interactive  }
-                fields: [ id, name, nameSlug, maxZoom, startZoom, startX, startY ]
-            new:
-                fields:
-                    - name
-                    - nameSlug
-                    - image
-                    - description
-                    - maxZoom
-                    - bounds
-                    - startZoom
-                    - startX
-                    - startY
-                    - coordinatesRatio
-            edit:
-                fields:
-                    - name
-                    - { property: nameSlug, type_options: { disabled: true, read_only: true } }
-                    - { property: image,    type_options: { disabled: true, read_only: true } }
-                    - description
-                    - maxZoom
-                    - bounds
-                    - startZoom
-                    - startX
-                    - startY
-                    - coordinatesRatio
-
-        "Markers":
-            label: admin.maps.markers
-            class: EsterenMaps\MapsBundle\Entity\Markers
-            list:
-                fields: [ id, name, latitude, longitude, markerType, { property: webIcon, type: image } ]
-            form:
-                fields:
-                    - { property: name, type_options: { required: true } }
-                    - description
-                    - markerType
-                    - faction
-                    - { property: latitude,  type_options: { disabled: true, required: false } }
-                    - { property: longitude, type_options: { disabled: true, required: false } }
-                    - { property: altitude,  type_options: { disabled: true, required: false } }
-                    - { property: map,       type_options: { disabled: true, required: false } }
-
-        "MarkersTypes":
-            label: admin.maps.markers_types
-            class: EsterenMaps\MapsBundle\Entity\MarkersTypes
-            list:
-                fields: [ id, name, { property: webIcon, type: image }, markers ]
-            form:
-                fields: [ name, icon, markers ]
-
-        "Routes":
-            label: admin.maps.routes
-            class: EsterenMaps\MapsBundle\Entity\Routes
-            list:
-                fields: [ id, name, distance, description, routeType, markerStart, markerEnd ]
-            form:
-                fields:
-                    - { property: name, type_options: { required: true } }
-                    - description
-                    - markerStart
-                    - markerEnd
-                    - routeType
-                    - faction
-                    - guarded
-                    - { property: coordinates, type_options: { disabled: true, required: false } }
-                    - { property: map,         type_options: { disabled: true, required: false } }
-
-        "RoutesTypes":
-            label: admin.maps.routes_types
-            class: EsterenMaps\MapsBundle\Entity\RoutesTypes
-            list:
-                fields: [ id, name, color, routes ]
-            form:
-                fields: [ name, color ]
-
-        "Zones":
-            label: admin.maps.zones
-            class: EsterenMaps\MapsBundle\Entity\Zones
-            list:
-                fields: [ id, name, description, zoneType, map, faction ]
-            form:
-                fields:
-                    - { property: name, type_options: { required: true } }
-                    - description
-                    - zoneType
-                    - faction
-                    - { property: coordinates, type_options: { disabled: true, required: false } }
-                    - { property: map,         type_options: { disabled: true, required: false } }
-
-        "ZonesTypes":
-            label: admin.maps.zones_types
-            class: EsterenMaps\MapsBundle\Entity\ZonesTypes
-            list:
-                fields: [ id, name, color, parent, zones ]
-            form:
-                fields: [ name, color, parent ]
-
-        "TransportTypes":
-            label: admin.maps.transports_types
-            class: EsterenMaps\MapsBundle\Entity\TransportTypes
-            list:
-                fields: [ id, name, slug, { property: speed, format: "%.2f" }, description ]
-            form:
-                fields:
-                  - name
-                  - slug
-                  - { property: speed, help: "(Km/h)" }
-                  - description
-                  - property: transportsModifiers
-                    type: 'Symfony\Component\Form\Extension\Core\Type\CollectionType'
-                    type_options:
-                        entry_type: 'EsterenMaps\MapsBundle\Form\RoutesTransportsType'
-
+# This is to be kept until these entities will be managed in EasyAdmin
 parameters:
     override: |
         ####################

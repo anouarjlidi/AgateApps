@@ -33,9 +33,10 @@ doctrine:
 
 framework:
     translator:      { fallbacks: %locales% } # Activate translator
-    # Add cookie domain as trusted host because requests are made with CORS
+    # Add cookie domain as trusted host because requests are made with CORS.
     trusted_hosts:
         - "^[a-z]+\\%esteren_domains.cookie_domain%$"
+        # TODO: Add 127.0.0.1 while in dev mode if you need it.
 
     session:
         cookie_domain: "%esteren_domains.cookie_domain%"
@@ -50,7 +51,6 @@ twig:
     globals:
         version_code: "%version_code%"
         version_date: "%version_date%"
-        kernel_root_dir: "%kernel.root_dir%"
         locales: "%locales%"
         locales_regex: "%locales_regex%"
         esteren_domains_corahn_rin: "%esteren_domains.corahn_rin%"
@@ -67,31 +67,11 @@ twig:
 doctrine:
     orm:
         filters:
+            # Activate SoftDeleteable for some entities
+            # There are some other filters down there
             softdeleteable:
                 class: Gedmo\SoftDeleteable\Filter\SoftDeleteableFilter
                 enabled: true
-
-fos_user:
-    db_driver:     orm
-    firewall_name: main
-    user_class:    UserBundle\Entity\User
-
-# TODO: remove FOSRest integration
-fos_rest:
-    param_fetcher_listener: true
-    body_listener: true
-    format_listener:
-        rules:
-            - { path: "^/((%locales_regex%)/)?api", priorities: ["json", "html"], fallback_format: json, prefer_extension: true }
-            - { path: "^/", priorities: [ "html", "*/*"], fallback_format: ~, prefer_extension: true }
-
-# JSON beautifier
-jms_serializer:
-    visitors:
-        json:
-            # Corresponds to these constants:
-            # JSON_NUMERIC_CHECK | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE
-            options: 480
 
 # Doctrine extensions
 # TODO: Implement Translatable
@@ -107,6 +87,29 @@ stof_doctrine_extensions:
             sluggable: true
             timestampable: true
             softdeleteable: true
+
+# Base FOSUser integration
+fos_user:
+    db_driver:     orm
+    firewall_name: main
+    user_class:    UserBundle\Entity\User
+
+# TODO: remove FOSRest integration or refactor it
+fos_rest:
+    param_fetcher_listener: true
+    body_listener: true
+    format_listener:
+        rules:
+            - { path: "^/((%locales_regex%)/)?api", priorities: ["json", "html"], fallback_format: json, prefer_extension: true }
+            - { path: "^/", priorities: [ "html", "*/*"], fallback_format: ~, prefer_extension: true }
+
+# JSON beautifier in JMS serializer
+jms_serializer:
+    visitors:
+        json:
+            # Corresponds to these constants:
+            # JSON_NUMERIC_CHECK | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE
+            options: 480
 
 # Api services
 # TODO: Refactor this and use a better method to generate WS based on entities
@@ -125,12 +128,14 @@ pierstoval_api:
         zonestypes:     { entity: EsterenMaps\MapsBundle\Entity\ZonesTypes }
         transports:     { entity: EsterenMaps\MapsBundle\Entity\TransportTypes }
 
+# This allows using the default layout for Pages and Categories
+# See: https://github.com/Orbitale/CmsBundle#using-different-layouts
 orbitale_cms:
     layouts:
         front:
             resource: "base.html.twig"
 
-# CORS management
+# CORS management for all APIs
 nelmio_cors:
     paths:
         "^/":
