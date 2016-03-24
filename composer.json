@@ -45,6 +45,7 @@
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
         "symfony/phpunit-bridge": "~3.0",
+        "phpunit/phpunit": "^5.2",
         "doctrine/doctrine-fixtures-bundle": "^2.2"
     },
     "scripts": {
@@ -72,7 +73,6 @@
         ]
     },
     "config": {
-        "bin-dir": "bin",
         "autoloader-suffix": "EsterenPortal",
         "platform": {
             "php": "5.6"
