@@ -2,13 +2,12 @@
 
 namespace Pierstoval\Bundle\ApiBundle\Services;
 
-
 use Symfony\Component\HttpFoundation\HeaderBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-class OriginChecker {
-
+class OriginChecker
+{
     /**
      * @var array
      */
@@ -27,6 +26,7 @@ class OriginChecker {
 
     /**
      * @param Request $request
+     *
      * @throws AccessDeniedException
      */
     public function checkRequest(Request $request)
@@ -52,12 +52,13 @@ class OriginChecker {
         if ($match === false) {
             throw new AccessDeniedException('Origin not allowed.');
         }
-
     }
 
     /**
-     * Check Origin header to see if origin is in the `allowed_origins` parameter
+     * Check Origin header to see if origin is in the `allowed_origins` parameter.
+     *
      * @param HeaderBag $headers
+     *
      * @return bool
      */
     public function checkOriginHeader(HeaderBag $headers)
@@ -73,12 +74,15 @@ class OriginChecker {
                 }
             }
         }
+
         return false;
     }
 
     /**
-     * Also checks the users' IP address as a potential allowed origin
+     * Also checks the users' IP address as a potential allowed origin.
+     *
      * @param string $remoteAddr
+     *
      * @return bool
      */
     private function checkRemoteIp($remoteAddr)
@@ -88,7 +92,7 @@ class OriginChecker {
                 return true;
             }
         }
+
         return false;
     }
-
 }

@@ -8,13 +8,12 @@ use Orbitale\Component\DoctrineTools\BaseEntityRepository as BaseRepository;
 
 class TraitsRepository extends BaseRepository
 {
-
     /**
      * @return Traits[][]
      */
     public function findAllDifferenciated()
     {
-        $list      = $this->findBy([], ['name' => 'asc'], null, null, true);
+        $list = $this->findBy([], ['name' => 'asc'], null, null, true);
         $qualities = $flaws = [];
         foreach ($list as $id => $element) {
             if ($element instanceof Traits) {
@@ -28,7 +27,7 @@ class TraitsRepository extends BaseRepository
 
         return [
             'qualities' => $qualities,
-            'flaws'     => $flaws,
+            'flaws' => $flaws,
         ];
     }
 
@@ -41,7 +40,7 @@ class TraitsRepository extends BaseRepository
     {
         $list = [
             'qualities' => [],
-            'flaws'     => [],
+            'flaws' => [],
         ];
 
         foreach ($traits as $trait) {
@@ -59,11 +58,12 @@ class TraitsRepository extends BaseRepository
      * Récupère les données à partir des voies.
      * ATTENTION :
      * Le tableau $ways DOIT être structuré de cette façon :
-     * (key) wayid => (value) way score
+     * (key) wayid => (value) way score.
      *
      * @param Ways[] $ways
      *
      * @throws \Exception
+     *
      * @return array
      */
     public function findAllDependingOnWays(array $ways)

@@ -12,7 +12,7 @@ use JMS\Serializer\Annotation\Expose as Expose;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * TransportTypes
+ * TransportTypes.
  *
  * @ORM\Table(name="maps_transports_types")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
@@ -21,12 +21,11 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class TransportTypes
 {
-
     use TimestampableEntity;
     use SoftDeleteableEntity;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id
@@ -189,7 +188,7 @@ class TransportTypes
     }
 
     /**
-     * Add transportsModifier
+     * Add transportsModifier.
      *
      * @param RoutesTransports $transportsModifier
      *
@@ -203,9 +202,10 @@ class TransportTypes
     }
 
     /**
-     * Remove transportsModifier
+     * Remove transportsModifier.
      *
      * @param RoutesTransports $transportsModifier
+     *
      * @return $this
      */
     public function removeTransportsModifier(RoutesTransports $transportsModifier)
@@ -216,7 +216,7 @@ class TransportTypes
     }
 
     /**
-     * Get transportsModifiers
+     * Get transportsModifiers.
      *
      * @return ArrayCollection|RoutesTransports[]
      */

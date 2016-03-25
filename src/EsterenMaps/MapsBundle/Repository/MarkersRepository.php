@@ -1,27 +1,30 @@
 <?php
+
 namespace EsterenMaps\MapsBundle\Repository;
+
 use EsterenMaps\MapsBundle\Entity\Markers;
 use EsterenMaps\MapsBundle\Entity\TransportTypes;
 use Orbitale\Component\DoctrineTools\BaseEntityRepository as BaseRepository;
 use EsterenMaps\MapsBundle\Entity\Maps;
 
 /**
- * MarkersRepository
+ * MarkersRepository.
  */
-class MarkersRepository extends BaseRepository {
-
+class MarkersRepository extends BaseRepository
+{
     /**
      * Get all markers with their routes (start/end) linked to a specific map.
+     *
      * @param Maps           $map
      * @param TransportTypes $transportType
+     *
      * @return array
      */
     public function getAllWithRoutesArray(Maps $map, TransportTypes $transportType = null)
     {
-
         $parameters = array();
 
-        $dql = "
+        $dql = '
             SELECT
                 markers,
 
@@ -34,10 +37,10 @@ class MarkersRepository extends BaseRepository {
                 markerEndStart,
                 markerEndEnd
 
-                ".($transportType?"
+                '.($transportType ? '
                     ,routesStartTypesTransports
                     ,routesEndTypesTransports
-                ":"")."
+                ' : '')."
 
             FROM {$this->_entityName} markers
 
@@ -49,7 +52,7 @@ class MarkersRepository extends BaseRepository {
                 LEFT JOIN routesEnd.markerStart markerStartEnd
                 LEFT JOIN routesEnd.markerEnd markerEndEnd
 
-            ".($transportType?"
+            ".($transportType ? '
                 LEFT JOIN routesStart.routeType routesStartTypes
                 LEFT JOIN routesStartTypes.transports routesStartTypesTransports
                     WITH routesStartTypesTransports.transportType = :transport
@@ -57,11 +60,11 @@ class MarkersRepository extends BaseRepository {
                 LEFT JOIN routesEnd.routeType routesEndTypes
                 LEFT JOIN routesEndTypes.transports routesEndTypesTransports
                     WITH routesEndTypesTransports.transportType = :transport
-            ":"")."
+            ' : '').'
 
             WHERE markers.map = :map
 
-        ";
+        ';
 
         if ($transportType) {
             $parameters['transport'] = $transportType->getId();
@@ -110,6 +113,7 @@ class MarkersRepository extends BaseRepository {
         foreach ($result as $marker) {
             $a[$marker['id']] = $marker;
         }
+
         return $a;
     }
 }

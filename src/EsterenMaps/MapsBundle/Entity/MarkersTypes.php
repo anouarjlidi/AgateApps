@@ -11,7 +11,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 use JMS\Serializer\Annotation as Serializer;
 
 /**
- * MarkersType
+ * MarkersType.
  *
  * @ORM\Table(name="maps_markers_types")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
@@ -20,12 +20,11 @@ use JMS\Serializer\Annotation as Serializer;
  */
 class MarkersTypes
 {
-
     use TimestampableEntity;
     use SoftDeleteableEntity;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id
@@ -97,7 +96,7 @@ class MarkersTypes
     }
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -105,9 +104,9 @@ class MarkersTypes
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -127,7 +126,7 @@ class MarkersTypes
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      *
@@ -141,7 +140,7 @@ class MarkersTypes
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -151,7 +150,7 @@ class MarkersTypes
     }
 
     /**
-     * Add markers
+     * Add markers.
      *
      * @param Markers $markers
      *
@@ -165,7 +164,7 @@ class MarkersTypes
     }
 
     /**
-     * Remove markers
+     * Remove markers.
      *
      * @param Markers $markers
      */
@@ -175,7 +174,7 @@ class MarkersTypes
     }
 
     /**
-     * Get markers
+     * Get markers.
      *
      * @return Markers[]
      */
@@ -274,7 +273,7 @@ class MarkersTypes
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getIconCenterX()
     {
@@ -294,7 +293,7 @@ class MarkersTypes
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getIconCenterY()
     {
@@ -312,5 +311,4 @@ class MarkersTypes
 
         return $this;
     }
-
 }

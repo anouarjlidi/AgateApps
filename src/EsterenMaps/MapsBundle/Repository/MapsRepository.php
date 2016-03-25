@@ -7,7 +7,6 @@ use Orbitale\Component\DoctrineTools\BaseEntityRepository;
 
 class MapsRepository extends BaseEntityRepository
 {
-
     /**
      * @return Maps[]
      */
@@ -38,5 +37,4 @@ class MapsRepository extends BaseEntityRepository
             ->getQuery()->getArrayResult()
         ;
     }
-
 }

@@ -15,7 +15,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class MoveMapElementsCommand extends ContainerAwareCommand
 {
-
     /**
      * @var float
      */
@@ -72,6 +71,7 @@ class MoveMapElementsCommand extends ContainerAwareCommand
 
         if (!$latitude && !$longitude && !$this->scale) {
             $output->writeln('No datas specified. Please read the help by running this command with "--help" or "-h".');
+
             return 1;
         }
 
@@ -82,7 +82,7 @@ class MoveMapElementsCommand extends ContainerAwareCommand
         }
 
         do {
-            $map = $repo->findOneBy(array('id'=>$id));
+            $map = $repo->findOneBy(array('id' => $id));
             if (!$map) {
                 $maps_list = array();
                 if ($list === null) {
@@ -110,15 +110,15 @@ class MoveMapElementsCommand extends ContainerAwareCommand
         $output->writeln("Map to update: <info>$map</info>");
 
         if ($latitude) {
-            $output->writeln("Latitude to move: <info>$latitude</info> (to ".($latitude>0?'North':'South').')');
+            $output->writeln("Latitude to move: <info>$latitude</info> (to ".($latitude > 0 ? 'North' : 'South').')');
         }
 
         if ($longitude) {
-            $output->writeln("Longitude to move: <info>$longitude</info> (to ".($longitude>0?'East':'West').')');
+            $output->writeln("Longitude to move: <info>$longitude</info> (to ".($longitude > 0 ? 'East' : 'West').')');
         }
 
         if ($this->scale) {
-            $output->writeln("Scale to apply: <info>{$this->scale}</info> (".($this->scaleAfter?'after':'before').")");
+            $output->writeln("Scale to apply: <info>{$this->scale}</info> (".($this->scaleAfter ? 'after' : 'before').')');
         }
 
         $numberOfElements = count($map->getMarkers()) + count($map->getRoutes()) + count($map->getZones());
@@ -171,8 +171,8 @@ class MoveMapElementsCommand extends ContainerAwareCommand
     }
 
     /**
-     * @param float   $initialValue
-     * @param float   $reference
+     * @param float $initialValue
+     * @param float $reference
      *
      * @return float
      */
@@ -180,15 +180,18 @@ class MoveMapElementsCommand extends ContainerAwareCommand
     {
         $value = (float) $initialValue;
 
-        if (!$this->scaleAfter) { $value += $value * ($this->scale / 100); }
+        if (!$this->scaleAfter) {
+            $value += $value * ($this->scale / 100);
+        }
 
         $value += $reference;
 
-        if ($this->scaleAfter) { $value += $value * ($this->scale / 100); }
+        if ($this->scaleAfter) {
+            $value += $value * ($this->scale / 100);
+        }
 
         return $value;
     }
-
 }
 
 // DATAS
@@ -210,7 +213,6 @@ class MoveMapElementsCommand extends ContainerAwareCommand
 //
 // -2,12074446617243
 //  8,5693359375
-
 
 // Command :
 // ./reset.bash && bin/console d:q:s "`cat _dev_files/position_unclean_elements.sql`" && bin/console esterenmaps:refresh-datas && bin/console esterenmaps:move-map-elements 1 --latitude="-2.12074446617243" --longitude="8.5693359375" --no-interaction -v && php bin/console esterenmaps:refresh-datas

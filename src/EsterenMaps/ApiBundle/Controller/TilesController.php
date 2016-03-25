@@ -15,14 +15,14 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 class TilesController extends Controller
 {
-
     /**
      * @Route("/maps/image/{id}", requirements={"id":"\d+"}, host="%esteren_domains.api%", name="esterenmaps_generate_map_image")
      * @Cache(expires="+1 day", public=true)
      * @Method("GET")
      *
      * @param Request $request
-     * @param Maps $map
+     * @param Maps    $map
+     *
      * @return Response
      */
     public function generateMapImageAction(Request $request, Maps $map)
@@ -42,9 +42,12 @@ class TilesController extends Controller
             } catch (\Exception $e) {
                 $message = '';
                 do {
-                    if ($message) { $message .= "\n"; }
+                    if ($message) {
+                        $message .= "\n";
+                    }
                     $message .= $e->getMessage();
                 } while ($e = $e->getPrevious());
+
                 return new JsonResponse(array(
                     'error' => true,
                     'message' => $message,
@@ -56,6 +59,7 @@ class TilesController extends Controller
                 $field = $error->getOrigin()->getName();
                 $messages[] = $this->get('translator')->trans('field_error', ['%field%' => $field], 'validators').': '.$error->getMessage();
             }
+
             return new JsonResponse(array(
                 'error' => true,
                 'message' => $messages,
@@ -68,9 +72,10 @@ class TilesController extends Controller
      * @Cache(maxage="864000", expires="+10 days")
      *
      * @param Maps $map
-     * @param integer $zoom
-     * @param integer $x
-     * @param integer $y
+     * @param int  $zoom
+     * @param int  $x
+     * @param int  $y
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function tileAction(Maps $map, $zoom, $x, $y)
@@ -85,5 +90,4 @@ class TilesController extends Controller
 
         return new BinaryFileResponse($file, 200, array('Content-Type' => 'image/jpeg'));
     }
-
 }

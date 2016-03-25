@@ -3,11 +3,10 @@
 namespace EsterenMaps\MapsBundle\ImageManagement;
 
 /**
- * This class stores the attributes of an identification made by the MapsTilesManager
+ * This class stores the attributes of an identification made by the MapsTilesManager.
  */
 class ImageIdentification implements \ArrayAccess
 {
-
     /**
      * @var array
      */
@@ -119,6 +118,7 @@ class ImageIdentification implements \ArrayAccess
                 $offset
             ));
         }
+
         return $this;
     }
 
@@ -128,6 +128,7 @@ class ImageIdentification implements \ArrayAccess
     public function offsetUnset($offset)
     {
         unset($this->properties[$offset]);
+
         return $this;
     }
 }

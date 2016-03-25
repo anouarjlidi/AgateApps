@@ -8,7 +8,6 @@ use Orbitale\Component\DoctrineTools\BaseEntityRepository as BaseRepository;
 
 class RoutesRepository extends BaseRepository
 {
-
     /**
      * @param array $ids
      * @param bool  $sortByIds
@@ -40,6 +39,7 @@ class RoutesRepository extends BaseRepository
             }
             $result = $a;
         }
+
         return $result;
     }
 }

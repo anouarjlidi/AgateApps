@@ -7,7 +7,6 @@ use Orbitale\Component\DoctrineTools\BaseEntityRepository as BaseRepository;
 
 class JobsRepository extends BaseRepository
 {
-
     /**
      * Renvoie la liste des métiers triés par livre associé.
      *
@@ -26,5 +25,4 @@ class JobsRepository extends BaseRepository
 
         return $books;
     }
-
 }

@@ -15,7 +15,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class UsersFixtures extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
-
     /**
      * @var ObjectManager
      */
@@ -32,10 +31,11 @@ class UsersFixtures extends AbstractFixture implements OrderedFixtureInterface, 
     private $userManager;
 
     /**
-     * Get the order of this fixture
-     * @return integer
+     * Get the order of this fixture.
+     *
+     * @return int
      */
-    function getOrder()
+    public function getOrder()
     {
         return 0;
     }
@@ -51,7 +51,7 @@ class UsersFixtures extends AbstractFixture implements OrderedFixtureInterface, 
     /**
      * {@inheritdoc}
      */
-    function load(ObjectManager $manager)
+    public function load(ObjectManager $manager)
     {
         $this->manager = $manager;
 
@@ -69,9 +69,9 @@ class UsersFixtures extends AbstractFixture implements OrderedFixtureInterface, 
 
     public function fixtureObject(EntityRepository $repo, $id, $name, $email, $password, $superAdmin)
     {
-        $obj       = null;
+        $obj = null;
         $newObject = false;
-        $addRef    = false;
+        $addRef = false;
         if ($id) {
             $obj = $repo->find($id);
             if ($obj) {

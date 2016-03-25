@@ -9,8 +9,8 @@ use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
-class JsonResponseListener implements EventSubscriberInterface {
-
+class JsonResponseListener implements EventSubscriberInterface
+{
     /**
      * @var string
      */
@@ -22,7 +22,7 @@ class JsonResponseListener implements EventSubscriberInterface {
     }
 
     /**
-     * Will force any response with the ApiController to have an "application/json" format
+     * Will force any response with the ApiController to have an "application/json" format.
      *
      * @param FilterResponseEvent $event
      */
@@ -33,11 +33,10 @@ class JsonResponseListener implements EventSubscriberInterface {
         if (strpos($controller, 'Pierstoval\Bundle\ApiBundle\Controller\ApiController') !== false) {
             $event->getResponse()->headers->set('Content-type', 'application/json', true);
         }
-
     }
 
     /**
-     * Helps throwing exceptions with the ApiController, by transforming the exception into a JSON object
+     * Helps throwing exceptions with the ApiController, by transforming the exception into a JSON object.
      *
      * @param GetResponseForExceptionEvent $event
      */
@@ -78,7 +77,7 @@ class JsonResponseListener implements EventSubscriberInterface {
     }
 
     /**
-     * {@inheritdoc
+     * {@inheritdoc}
      */
     public static function getSubscribedEvents()
     {
@@ -87,5 +86,4 @@ class JsonResponseListener implements EventSubscriberInterface {
             KernelEvents::EXCEPTION => array('onException', 1),
         );
     }
-
 }

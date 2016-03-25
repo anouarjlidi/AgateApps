@@ -1,10 +1,9 @@
 <?php
 /**
- * Traits de caractère
+ * Traits de caractère.
  *
  * @var $this CorahnRin\CorahnRinBundle\Steps\StepLoader
  */
-
 $global_list = $this->em->getRepository('CorahnRinBundle:Avantages')->findAllDifferenciated();
 
 $current_xp = 100;
@@ -68,10 +67,11 @@ if ($this->request->isMethod('POST')) {
             'advantages' => $advantages_selected,
             'disadvantages' => $disadvantages_selected,
         ));
+
         return $this->nextStep();
     } else {
         $this->flashMessage('Une erreur est survenue dans la sélection d\'avantages ou de désavantages.', 'error.steps');
     }
-
 }
+
 return $datas;

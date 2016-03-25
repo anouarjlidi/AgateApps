@@ -2,14 +2,13 @@
 
 namespace EsterenMaps\MapsBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
- * Npcs
+ * Npcs.
  *
  * @ORM\Table(name="maps_npcs")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
@@ -17,12 +16,11 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
  */
 class Npcs
 {
-
     use TimestampableEntity;
     use SoftDeleteableEntity;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id
@@ -38,9 +36,9 @@ class Npcs
     protected $name;
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -48,7 +46,7 @@ class Npcs
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      *
@@ -62,7 +60,7 @@ class Npcs
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -70,5 +68,4 @@ class Npcs
     {
         return $this->name;
     }
-
 }

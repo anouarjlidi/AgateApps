@@ -17,7 +17,6 @@ use Symfony\Bundle\TwigBundle\TwigEngine;
  */
 class DirectionsManager
 {
-
     /**
      * @var EntityManager
      */
@@ -39,19 +38,19 @@ class DirectionsManager
     protected $cacheDir;
 
     /**
-     * @var integer
+     * @var int
      */
     protected $cacheTTL;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $debug;
 
     /**
      * @param string        $cacheDir
-     * @param integer       $cacheTTL
-     * @param boolean       $debug
+     * @param int           $cacheTTL
+     * @param bool          $debug
      * @param EntityManager $entityManager
      * @param Serializer    $serializer
      *
@@ -66,11 +65,11 @@ class DirectionsManager
                 throw new \RuntimeException('Could not create cache directory for directions.');
             }
         }
-        $this->cacheTTL      = $cacheTTL;
-        $this->debug         = $debug;
+        $this->cacheTTL = $cacheTTL;
+        $this->debug = $debug;
         $this->entityManager = $entityManager;
-        $this->serializer    = $serializer;
-        $this->templating    = $templating;
+        $this->serializer = $serializer;
+        $this->templating = $templating;
     }
 
     /**
@@ -85,7 +84,7 @@ class DirectionsManager
     public function getDirections(Maps $map, Markers $start, Markers $end, $hoursPerDay = 7, TransportTypes $transportType = null)
     {
         $cacheFile = $this->getCacheFile($map, $start, $end, $transportType);
-        $exists    = file_exists($cacheFile) && filemtime($cacheFile) > (time() - $this->cacheTTL);
+        $exists = file_exists($cacheFile) && filemtime($cacheFile) > (time() - $this->cacheTTL);
 
         if (true === $exists && !$this->debug) {
             $directions = json_decode(file_get_contents($cacheFile), true);
@@ -124,61 +123,61 @@ class DirectionsManager
         $nodes = [];
         $edges = [];
 
-        /**
+        /*
          * Formatage des noeuds et des arcs pour une exploitation plus simple par l'algo de dijkstra.
          * Nous avons ici une liste de marqueurs "start" et "end", ainsi que de routes
          *   nous voulons des noeuds (marqueurs) et des arêtes (routes).
          */
         foreach ($allMarkers as $marker) {
-            $markerId         = (int)$marker['id'];
+            $markerId = (int) $marker['id'];
             $nodes[$markerId] = [
-                'id'         => $markerId,
-                'name'       => $marker['name'],
+                'id' => $markerId,
+                'name' => $marker['name'],
                 'neighbours' => [],
             ];
             foreach ($marker['routesStart'] as $route) {
-                $routeId                                  = (int)$route['id'];
+                $routeId = (int) $route['id'];
                 $nodes[$markerId]['neighbours'][$routeId] = [
                     'distance' => $route['distance'],
-                    'end'      => $route['markerEnd']['id'],
+                    'end' => $route['markerEnd']['id'],
                 ];
                 if (!array_key_exists($routeId, $edges)) {
                     $edges[$routeId] = [
-                        'id'       => $routeId,
-                        'name'     => $route['name'],
+                        'id' => $routeId,
+                        'name' => $route['name'],
                         'distance' => $route['distance'],
                         'vertices' => [
                             'start' => $markerId,
-                            'end'   => $route['markerEnd']['id'],
+                            'end' => $route['markerEnd']['id'],
                         ],
                     ];
                 }
             }
             foreach ($marker['routesEnd'] as $route) {
-                $routeId                                  = (int)$route['id'];
+                $routeId = (int) $route['id'];
                 $nodes[$markerId]['neighbours'][$routeId] = [
                     'distance' => $route['distance'],
-                    'end'      => $route['markerStart']['id'],
+                    'end' => $route['markerStart']['id'],
                 ];
                 if (!array_key_exists($routeId, $edges)) {
                     $edges[$routeId] = [
-                        'id'       => $routeId,
-                        'name'     => $route['name'],
+                        'id' => $routeId,
+                        'name' => $route['name'],
                         'distance' => $route['distance'],
                         'vertices' => [
                             'start' => $route['markerStart']['id'],
-                            'end'   => $markerId,
+                            'end' => $markerId,
                         ],
                     ];
                 }
             }
         }
 
-        $paths = $this->dijkstra($nodes, $edges, (int)$start->getId(), (int)$end->getId());
+        $paths = $this->dijkstra($nodes, $edges, (int) $start->getId(), (int) $end->getId());
 
-        $routesIds     = array_values($paths);
-        $markersArray  = $this->entityManager->getRepository('EsterenMapsBundle:Markers')->findByIds(array_keys($paths));
-        $routesArray   = $this->entityManager->getRepository('EsterenMapsBundle:Routes')->findByIds($routesIds, true, true);
+        $routesIds = array_values($paths);
+        $markersArray = $this->entityManager->getRepository('EsterenMapsBundle:Markers')->findByIds(array_keys($paths));
+        $routesArray = $this->entityManager->getRepository('EsterenMapsBundle:Routes')->findByIds($routesIds, true, true);
         $routesObjects = $this->entityManager->getRepository('EsterenMapsBundle:Routes')->findByIds($routesIds, false, false);
 
         $paths = $this->checkTransportType($paths, $routesObjects, $transportType);
@@ -186,7 +185,7 @@ class DirectionsManager
         $steps = [];
 
         foreach ($paths as $markerId => $routeId) {
-            $marker          = $markersArray[$markerId];
+            $marker = $markersArray[$markerId];
             $marker['route'] = $routeId ? $routesArray[$routeId] : null;
             unset(
                 $marker['routesStart'],
@@ -232,13 +231,12 @@ class DirectionsManager
      */
     protected function dijkstra($nodes, $edges, $start, $end)
     {
-
         $distances = [];
 
         foreach ($nodes as $id => $node) {
             foreach ($node['neighbours'] as $nid => $neighbour) {
                 $distances[$id][$neighbour['end']] = [
-                    'edge'     => $edges[$nid],
+                    'edge' => $edges[$nid],
                     'distance' => $neighbour['distance'],
                 ];
             }
@@ -259,7 +257,6 @@ class DirectionsManager
                 break;
             }
             foreach ($distances[$min] as $key => $val) {
-
                 $dist = $val['distance'];
 
                 if (!empty($Q[$key]) && $Q[$min] + $dist < $Q[$key]) {
@@ -275,31 +272,29 @@ class DirectionsManager
         }
 
         $path = [];
-        $pos  = $end;
+        $pos = $end;
         while ($pos !== $start) {
             $path[] = $pos;
-            $pos    = $S[$pos][0];
+            $pos = $S[$pos][0];
         }
         $path[] = $start;
-        $path   = array_reverse($path);
+        $path = array_reverse($path);
 
         $realPath = [];
 
         foreach ($path as $k => $nodeId) {
-
             $next = isset($path[$k + 1]) ? $path[$k + 1] : null;
 
             $realPath[$nodeId] = null;
 
             if ($next) {
-
-                $dist     = INF;
+                $dist = INF;
                 $realEdge = null;
 
                 foreach ($nodes[$nodeId]['neighbours'] as $edgeId => $edge) {
                     if ($edge['distance'] < $dist && $edge['end'] === $next) {
                         $realEdge = $edges[$edgeId];
-                        $dist     = $edge['distance'];
+                        $dist = $edge['distance'];
                     }
                 }
 
@@ -340,8 +335,8 @@ class DirectionsManager
     protected function getDataArray(Markers $from, Markers $to, array $directions, array $routes, $hoursPerDay = 7, TransportTypes $transport = null)
     {
         $distance = 0;
-        $NE       = [];
-        $SW       = [];
+        $NE = [];
+        $SW = [];
 
         foreach ($directions as $step) {
             $distance += ($step['route'] ? $step['route']['distance'] : 0);
@@ -365,22 +360,22 @@ class DirectionsManager
         }
 
         $data = [
-            'found'           => count($directions) > 0,
-            'path_view'       => null,
-            'duration_raw'    => null,
-            'duration_real'   => null,
-            'transport'       => json_decode($this->serializer->serialize($transport, 'json', $this->createSerializationContext()), true),
-            'bounds'          => ['northEast' => $NE, 'southWest' => $SW],
-            'total_distance'  => $distance,
+            'found' => count($directions) > 0,
+            'path_view' => null,
+            'duration_raw' => null,
+            'duration_real' => null,
+            'transport' => json_decode($this->serializer->serialize($transport, 'json', $this->createSerializationContext()), true),
+            'bounds' => ['northEast' => $NE, 'southWest' => $SW],
+            'total_distance' => $distance,
             'number_of_steps' => count($directions) ? (count($directions) - 2) : 0,
-            'start'           => $from,
-            'end'             => $to,
-            'path'            => $directions,
+            'start' => $from,
+            'end' => $to,
+            'path' => $directions,
         ];
 
-        $data['duration_raw']  = $this->getTravelDuration($routes, $transport, $hoursPerDay, true);
+        $data['duration_raw'] = $this->getTravelDuration($routes, $transport, $hoursPerDay, true);
         $data['duration_real'] = $this->getTravelDuration($routes, $transport, $hoursPerDay, false);
-        $data['path_view']     = $this->templating->render('@EsterenMapsApi/Maps/path_view.html.twig', $data);
+        $data['path_view'] = $this->templating->render('@EsterenMapsApi/Maps/path_view.html.twig', $data);
 
         return $data;
     }
@@ -423,20 +418,20 @@ class DirectionsManager
      * @param Routes[]       $routes
      * @param TransportTypes $transport
      * @param int            $hoursPerDay
-     * @param boolean        $raw
+     * @param bool           $raw
      *
      * @return int|null
      */
     private function getTravelDuration(array $routes, TransportTypes $transport, $hoursPerDay = 7, $raw = true)
     {
         if (!$transport) {
-            return null;
+            return;
         }
 
         $total = 0;
 
         foreach ($routes as $route) {
-            $distance          = $route->getDistance();
+            $distance = $route->getDistance();
             $transportModifier = null;
             foreach ($route->getRouteType()->getTransports() as $routeTransport) {
                 if ($routeTransport->getTransportType()->getId() === $transport->getId()) {
@@ -444,7 +439,7 @@ class DirectionsManager
                 }
             }
             if ($transportModifier) {
-                $percentage = (float)$transportModifier->getPercentage();
+                $percentage = (float) $transportModifier->getPercentage();
                 if ($transportModifier->isPositiveRatio()) {
                     $speed = $transport->getSpeed() * ($percentage / 100);
                 } else {
@@ -457,12 +452,12 @@ class DirectionsManager
             }
         }
 
-        $hours   = (int)floor($total);
-        $minutes = (int)ceil(($total - $hours) * 100 * 60 / 100);
+        $hours = (int) floor($total);
+        $minutes = (int) ceil(($total - $hours) * 100 * 60 / 100);
 
         $interval = new \DateInterval('PT'.$hours.'H'.$minutes.'M');
-        $start    = new \DateTime();
-        $end      = new \DateTime();
+        $start = new \DateTime();
+        $end = new \DateTime();
         $end->add($interval);
 
         // Recreating the interval allows automatic calculation of days/months.
@@ -476,11 +471,11 @@ class DirectionsManager
         // Here we'll try to convert hours into a more "realistic" travel time.
         $realisticDays = $total / $hoursPerDay;
 
-        $days  = (int)floor($realisticDays);
-        $hours = (float)number_format(($realisticDays - $days) * $hoursPerDay, 2);
+        $days = (int) floor($realisticDays);
+        $hours = (float) number_format(($realisticDays - $days) * $hoursPerDay, 2);
 
         return [
-            'days'  => $days,
+            'days' => $days,
             'hours' => $hours,
         ];
     }

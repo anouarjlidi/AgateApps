@@ -1,9 +1,9 @@
 <?php
 /**
- * Orientation de la personnalité
+ * Orientation de la personnalité.
+ *
  * @var $this CorahnRin\CorahnRinBundle\Steps\StepLoader
  */
-
 $orientation = $this->getStepValue();
 
 $orientations = array(
@@ -50,10 +50,11 @@ if ($this->request->isMethod('POST')) {
 
     if ($orientation_exists) {
         $this->characterSet($orientation);
+
         return $this->nextStep();
     } else {
         $this->flashMessage('L\'orientation de la personnalité est incorrecte, veuillez vérifier.', null, 'error');
     }
-
 }
+
 return $datas;

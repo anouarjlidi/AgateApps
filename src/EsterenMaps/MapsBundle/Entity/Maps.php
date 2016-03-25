@@ -13,7 +13,7 @@ use JMS\Serializer\Annotation\VirtualProperty;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Maps
+ * Maps.
  *
  * @ORM\Table(name="maps")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
@@ -23,12 +23,11 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Maps
 {
-
     use TimestampableEntity;
     use SoftDeleteableEntity;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id
@@ -71,7 +70,7 @@ class Maps
     protected $description;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="max_zoom", type="smallint", options={"default":1})
      * @Assert\Range(
@@ -83,7 +82,7 @@ class Maps
     protected $maxZoom = 10;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="start_zoom", type="smallint", options={"default":1})
      * @Assert\Range(
@@ -94,9 +93,8 @@ class Maps
      */
     protected $startZoom = 10;
 
-
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="start_x", type="smallint", options={"default":1})
      * @Expose
@@ -104,7 +102,7 @@ class Maps
     protected $startX = 0;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="start_y", type="smallint", options={"default":1})
      * @Expose
@@ -118,7 +116,7 @@ class Maps
     protected $bounds = '[]';
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="coordinates_ratio", type="smallint", options={"default":1})
      * @Expose
@@ -155,19 +153,19 @@ class Maps
     }
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
-        $this->routes  = new ArrayCollection();
+        $this->routes = new ArrayCollection();
         $this->markers = new ArrayCollection();
-        $this->zones   = new ArrayCollection();
+        $this->zones = new ArrayCollection();
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -187,7 +185,7 @@ class Maps
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      *
@@ -201,7 +199,7 @@ class Maps
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -211,7 +209,7 @@ class Maps
     }
 
     /**
-     * Set image
+     * Set image.
      *
      * @param string $image
      *
@@ -225,7 +223,7 @@ class Maps
     }
 
     /**
-     * Get image
+     * Get image.
      *
      * @return string
      */
@@ -235,7 +233,7 @@ class Maps
     }
 
     /**
-     * Set description
+     * Set description.
      *
      * @param string $description
      *
@@ -249,7 +247,7 @@ class Maps
     }
 
     /**
-     * Get description
+     * Get description.
      *
      * @return string
      */
@@ -259,9 +257,9 @@ class Maps
     }
 
     /**
-     * Set maxZoom
+     * Set maxZoom.
      *
-     * @param boolean $maxZoom
+     * @param bool $maxZoom
      *
      * @return Maps
      */
@@ -273,9 +271,9 @@ class Maps
     }
 
     /**
-     * Get maxZoom
+     * Get maxZoom.
      *
-     * @return integer
+     * @return int
      */
     public function getMaxZoom()
     {
@@ -283,7 +281,7 @@ class Maps
     }
 
     /**
-     * Add routes
+     * Add routes.
      *
      * @param Routes $routes
      *
@@ -297,7 +295,7 @@ class Maps
     }
 
     /**
-     * Remove routes
+     * Remove routes.
      *
      * @param Routes $routes
      */
@@ -307,7 +305,7 @@ class Maps
     }
 
     /**
-     * Get routes
+     * Get routes.
      *
      * @return Routes[]|ArrayCollection
      */
@@ -317,7 +315,7 @@ class Maps
     }
 
     /**
-     * Get zone
+     * Get zone.
      *
      * @param Routes $route
      *
@@ -333,11 +331,11 @@ class Maps
             }
         }
 
-        return null;
+        return;
     }
 
     /**
-     * Get zone
+     * Get zone.
      *
      * @param Routes $route
      *
@@ -357,7 +355,7 @@ class Maps
     }
 
     /**
-     * Add markers
+     * Add markers.
      *
      * @param Markers $markers
      *
@@ -371,7 +369,7 @@ class Maps
     }
 
     /**
-     * Remove markers
+     * Remove markers.
      *
      * @param Markers $markers
      */
@@ -381,7 +379,7 @@ class Maps
     }
 
     /**
-     * Get markers
+     * Get markers.
      *
      * @return Markers[]|ArrayCollection
      */
@@ -391,7 +389,7 @@ class Maps
     }
 
     /**
-     * Get zone
+     * Get zone.
      *
      * @param Markers $marker
      *
@@ -407,7 +405,7 @@ class Maps
             }
         }
 
-        return null;
+        return;
     }
 
     /**
@@ -432,7 +430,7 @@ class Maps
     }
 
     /**
-     * Add zones
+     * Add zones.
      *
      * @param Zones $zones
      *
@@ -446,7 +444,7 @@ class Maps
     }
 
     /**
-     * Remove zones
+     * Remove zones.
      *
      * @param Zones $zones
      */
@@ -456,7 +454,7 @@ class Maps
     }
 
     /**
-     * Get zone
+     * Get zone.
      *
      * @param Zones $zone
      *
@@ -472,7 +470,7 @@ class Maps
             }
         }
 
-        return null;
+        return;
     }
 
     /**
@@ -490,7 +488,7 @@ class Maps
     }
 
     /**
-     * Get zones
+     * Get zones.
      *
      * @return Zones[]|ArrayCollection
      */
@@ -500,7 +498,7 @@ class Maps
     }
 
     /**
-     * Set nameSlug
+     * Set nameSlug.
      *
      * @param string $nameSlug
      *
@@ -514,7 +512,7 @@ class Maps
     }
 
     /**
-     * Get nameSlug
+     * Get nameSlug.
      *
      * @return string
      */
@@ -613,16 +611,18 @@ class Maps
 
     /**
      * @param int $coordinatesRatio
+     *
      * @return Maps
      */
     public function setCoordinatesRatio($coordinatesRatio)
     {
         $this->coordinatesRatio = $coordinatesRatio;
+
         return $this;
     }
 
     /**
-     * Réinitialise correctement les informations de la map
+     * Réinitialise correctement les informations de la map.
      */
     public function refresh()
     {
@@ -644,12 +644,13 @@ class Maps
 
     /**
      * @param array $bounds
+     *
      * @return $this
      */
     public function setJsonBounds(array $bounds = array())
     {
         $this->bounds = json_encode($bounds);
+
         return $this;
     }
-
 }

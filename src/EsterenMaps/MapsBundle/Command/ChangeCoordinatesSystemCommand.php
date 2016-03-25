@@ -12,9 +12,14 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * Class ChangeCoordinatesSystemCommand.
+ * 
+ * @todo Remove this class.
+ * @deprecated This class should NOT be used.
+ */
 class ChangeCoordinatesSystemCommand extends ContainerAwareCommand
 {
-
     protected function configure()
     {
         $this
@@ -31,9 +36,11 @@ class ChangeCoordinatesSystemCommand extends ContainerAwareCommand
     }
 
     /**
-     * WIP
-     * @param  InputInterface  $input
-     * @param  OutputInterface $output
+     * WIP.
+     *
+     * @param InputInterface  $input
+     * @param OutputInterface $output
+     *
      * @return mixed
      */
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -47,7 +54,7 @@ class ChangeCoordinatesSystemCommand extends ContainerAwareCommand
         /** @var BaseEntityRepository $mapsRepo */
         $mapsRepo = $em->getRepository('EsterenMapsBundle:Maps');
 
-        /** @var Maps $map */
+        /* @var Maps $map */
         if ($input->getArgument('id')) {
             $map = $mapsRepo->find($input->getArgument('id'));
         } else {
@@ -55,6 +62,7 @@ class ChangeCoordinatesSystemCommand extends ContainerAwareCommand
 
             if (!count($maps)) {
                 $output->writeln('<comment>There is no map in the database.</comment>');
+
                 return 1;
             }
 
@@ -76,11 +84,10 @@ class ChangeCoordinatesSystemCommand extends ContainerAwareCommand
         $marker = $map->getMarkers()[0];
 
         $xy = $this->transformLatLngToXY($map, (float) $marker->getLatitude(), (float) $marker->getLongitude());
-
     }
 
     /**
-     * Transforms a latlng point to x,y
+     * Transforms a latlng point to x,y.
      *
      * @param Maps  $map
      * @param float $lat
@@ -100,8 +107,8 @@ class ChangeCoordinatesSystemCommand extends ContainerAwareCommand
         $height = $identification->getGlobalHeight();
 
         return [
-            'x' => ( $lng + 180 ) * ($width / 360),
-            'y' => ( ( -1 * $lat ) + 90 ) * ( $height / 180 ),
+            'x' => ($lng + 180) * ($width / 360),
+            'y' => ((-1 * $lat) + 90) * ($height / 180),
         ];
     }
 }

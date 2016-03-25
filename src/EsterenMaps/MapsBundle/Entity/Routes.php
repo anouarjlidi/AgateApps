@@ -10,7 +10,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 use JMS\Serializer\Annotation as Serializer;
 
 /**
- * Routes
+ * Routes.
  *
  * @ORM\Table(name="maps_routes")
  * @ORM\Entity(repositoryClass="EsterenMaps\MapsBundle\Repository\RoutesRepository")
@@ -20,12 +20,11 @@ use JMS\Serializer\Annotation as Serializer;
  */
 class Routes
 {
-
     use TimestampableEntity;
     use SoftDeleteableEntity;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id
@@ -59,7 +58,7 @@ class Routes
     protected $coordinates = '';
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="distance", type="float", precision=12, scale=6, options={"default":0})
      * @Serializer\Expose
@@ -131,7 +130,7 @@ class Routes
     }
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -139,9 +138,9 @@ class Routes
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -149,7 +148,7 @@ class Routes
     }
 
     /**
-     * Set id
+     * Set id.
      *
      * @param string $id
      *
@@ -163,7 +162,7 @@ class Routes
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      *
@@ -177,7 +176,7 @@ class Routes
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -207,7 +206,7 @@ class Routes
     }
 
     /**
-     * Set coordinates
+     * Set coordinates.
      *
      * @param string $coordinates
      *
@@ -223,7 +222,7 @@ class Routes
     }
 
     /**
-     * Get coordinates
+     * Get coordinates.
      *
      * @return string
      */
@@ -233,7 +232,7 @@ class Routes
     }
 
     /**
-     * Add resources
+     * Add resources.
      *
      * @param Resources $resources
      *
@@ -247,7 +246,7 @@ class Routes
     }
 
     /**
-     * Remove resources
+     * Remove resources.
      *
      * @param Resources $resources
      */
@@ -257,7 +256,7 @@ class Routes
     }
 
     /**
-     * Get resources
+     * Get resources.
      *
      * @return Resources[]
      */
@@ -267,7 +266,7 @@ class Routes
     }
 
     /**
-     * Set map
+     * Set map.
      *
      * @param Maps $map
      *
@@ -281,7 +280,7 @@ class Routes
     }
 
     /**
-     * Get map
+     * Get map.
      *
      * @return Maps
      */
@@ -291,7 +290,7 @@ class Routes
     }
 
     /**
-     * Set faction
+     * Set faction.
      *
      * @param Factions $faction
      *
@@ -305,7 +304,7 @@ class Routes
     }
 
     /**
-     * Get faction
+     * Get faction.
      *
      * @return Factions
      */
@@ -315,7 +314,7 @@ class Routes
     }
 
     /**
-     * Set routeType
+     * Set routeType.
      *
      * @param RoutesTypes $routeType
      *
@@ -329,7 +328,7 @@ class Routes
     }
 
     /**
-     * Get routeType
+     * Get routeType.
      *
      * @return RoutesTypes
      */
@@ -339,7 +338,7 @@ class Routes
     }
 
     /**
-     * Set markerStart
+     * Set markerStart.
      *
      * @param Markers $markerStart
      *
@@ -353,7 +352,7 @@ class Routes
     }
 
     /**
-     * Get markerStart
+     * Get markerStart.
      *
      * @return Markers
      */
@@ -363,7 +362,7 @@ class Routes
     }
 
     /**
-     * Set markerEnd
+     * Set markerEnd.
      *
      * @param Markers $markerEnd
      *
@@ -377,7 +376,7 @@ class Routes
     }
 
     /**
-     * Get markerEnd
+     * Get markerEnd.
      *
      * @return Markers
      */
@@ -387,7 +386,7 @@ class Routes
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getDistance()
     {
@@ -395,7 +394,7 @@ class Routes
     }
 
     /**
-     * @param integer $distance
+     * @param int $distance
      *
      * @return $this
      */
@@ -407,7 +406,7 @@ class Routes
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isGuarded()
     {
@@ -415,7 +414,7 @@ class Routes
     }
 
     /**
-     * @param boolean $guarded
+     * @param bool $guarded
      *
      * @return Routes
      */
@@ -443,9 +442,11 @@ class Routes
     }
 
     /**
-     * Réinitialise correctement les informations de la route
+     * Réinitialise correctement les informations de la route.
+     *
      * @ORM\PrePersist
      * @ORM\PreUpdate
+     *
      * @return $this
      */
     public function refresh()
@@ -476,12 +477,12 @@ class Routes
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function calcDistance()
     {
         $distance = 0;
-        $points   = json_decode($this->coordinates, true);
+        $points = json_decode($this->coordinates, true);
 
         reset($points);
 
@@ -491,8 +492,8 @@ class Routes
             if (false !== $next) {
                 $currentX = $current['lng'];
                 $currentY = $current['lat'];
-                $nextX    = $next['lng'];
-                $nextY    = $next['lat'];
+                $nextX = $next['lng'];
+                $nextY = $next['lat'];
 
                 $distance += sqrt(
                     ($nextX * $nextX)
@@ -523,5 +524,4 @@ class Routes
 
         return $distance;
     }
-
 }

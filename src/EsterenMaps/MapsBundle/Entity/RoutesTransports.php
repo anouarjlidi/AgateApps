@@ -11,7 +11,7 @@ use JMS\Serializer\Annotation\Expose;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * RoutesTransports
+ * RoutesTransports.
  *
  * @ORM\Table(name="maps_routes_transports", uniqueConstraints={@ORM\UniqueConstraint(name="unique_route_transport",columns={"route_type_id", "transport_type_id"})})
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
@@ -20,13 +20,11 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class RoutesTransports
 {
-
     use TimestampableEntity;
     use SoftDeleteableEntity;
 
     /**
-     *
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id
@@ -62,7 +60,7 @@ class RoutesTransports
     protected $percentage = 100;
 
     /**
-     * @var boolean
+     * @var bool
      * @ORM\Column(name="positive_ratio", type="boolean", nullable=false, options={"default": "1"})
      * @Assert\Type(type="boolean")
      * @Assert\NotNull()
@@ -150,7 +148,7 @@ class RoutesTransports
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isPositiveRatio()
     {
@@ -158,7 +156,7 @@ class RoutesTransports
     }
 
     /**
-     * @param boolean $positiveRatio
+     * @param bool $positiveRatio
      *
      * @return RoutesTransports
      */

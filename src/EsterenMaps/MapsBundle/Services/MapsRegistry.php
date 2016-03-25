@@ -1,14 +1,12 @@
 <?php
 
-
 namespace EsterenMaps\MapsBundle\Services;
 
 /**
- * Class MapsRegistry
+ * Class MapsRegistry.
  */
 class MapsRegistry
 {
-
     /**
      * @var DirectionsManager
      */
@@ -39,9 +37,9 @@ class MapsRegistry
      */
     public function __construct(DirectionsManager $directionsManager, MapImageManager $imageManager, MapsTilesManager $tilesManager, CoordinatesManager $coordinatesManager)
     {
-        $this->directionsManager  = $directionsManager;
-        $this->imageManager       = $imageManager;
-        $this->tilesManager       = $tilesManager;
+        $this->directionsManager = $directionsManager;
+        $this->imageManager = $imageManager;
+        $this->tilesManager = $tilesManager;
         $this->coordinatesManager = $coordinatesManager;
     }
 
@@ -76,5 +74,4 @@ class MapsRegistry
     {
         return $this->coordinatesManager;
     }
-
 }

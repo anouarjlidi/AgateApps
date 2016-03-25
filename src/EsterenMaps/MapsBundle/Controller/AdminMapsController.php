@@ -11,11 +11,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  * @Security("has_role('ROLE_MANAGER')")
  * @Route(host="%esteren_domains.backoffice%")
  */
-class AdminMapsController extends Controller {
-
+class AdminMapsController extends Controller
+{
     /**
      * @Route("/maps/edit-interactive/{id}", name="admin_esterenmaps_maps_maps_editInteractive")
+     *
      * @param Maps $map
+     *
      * @return array
      */
     public function editAction(Maps $map)
@@ -26,5 +28,4 @@ class AdminMapsController extends Controller {
             'tile_size' => $this->container->getParameter('esterenmaps.tile_size'),
         ));
     }
-
 }

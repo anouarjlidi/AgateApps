@@ -1,4 +1,5 @@
 <?php
+
 namespace EsterenMaps\MapsBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -9,28 +10,29 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class MapTileCommand extends ContainerAwareCommand
 {
-
     /**
-     * Static var to use in validators
+     * Static var to use in validators.
+     *
      * @var int
      */
     public static $xmax;
 
     /**
-     * Static var to use in validators
+     * Static var to use in validators.
+     *
      * @var int
      */
     public static $ymax;
 
     /**
-     * Static var to use in validators
+     * Static var to use in validators.
+     *
      * @var int
      */
     public static $zoom;
 
     protected function configure()
     {
-
         $this
             ->setName('esterenmaps:map:generate-tile')
             ->setDescription('Generate one tile for a specific map.')
@@ -52,8 +54,8 @@ class MapTileCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-
         $output->writeln('<error>Not implemented anymore, needs refactoring...</error>');
+
         return 2;
 
         /*

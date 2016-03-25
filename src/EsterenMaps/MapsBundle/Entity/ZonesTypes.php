@@ -11,7 +11,7 @@ use JMS\Serializer\Annotation\ExclusionPolicy as ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose as Expose;
 
 /**
- * ZonesTypes
+ * ZonesTypes.
  *
  * @ORM\Table(name="maps_zones_types")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
@@ -20,12 +20,11 @@ use JMS\Serializer\Annotation\Expose as Expose;
  */
 class ZonesTypes
 {
-
     use TimestampableEntity;
     use SoftDeleteableEntity;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id
@@ -81,12 +80,12 @@ class ZonesTypes
     protected $children = array();
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
         $this->resources = new ArrayCollection();
-        $this->zones     = new ArrayCollection();
+        $this->zones = new ArrayCollection();
     }
 
     public function __toString()
@@ -95,9 +94,9 @@ class ZonesTypes
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -105,7 +104,7 @@ class ZonesTypes
     }
 
     /**
-     * @param integer $id
+     * @param int $id
      *
      * @return $this
      */
@@ -117,7 +116,7 @@ class ZonesTypes
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      *
@@ -131,7 +130,7 @@ class ZonesTypes
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -141,7 +140,7 @@ class ZonesTypes
     }
 
     /**
-     * Add resources
+     * Add resources.
      *
      * @param Resources $resources
      *
@@ -155,7 +154,7 @@ class ZonesTypes
     }
 
     /**
-     * Remove resources
+     * Remove resources.
      *
      * @param Resources $resources
      */
@@ -165,7 +164,7 @@ class ZonesTypes
     }
 
     /**
-     * Get resources
+     * Get resources.
      *
      * @return Resources[]
      */
@@ -175,7 +174,7 @@ class ZonesTypes
     }
 
     /**
-     * Add zones
+     * Add zones.
      *
      * @param Zones $zones
      *
@@ -189,7 +188,7 @@ class ZonesTypes
     }
 
     /**
-     * Remove zones
+     * Remove zones.
      *
      * @param Zones $zones
      */
@@ -199,7 +198,7 @@ class ZonesTypes
     }
 
     /**
-     * Get zones
+     * Get zones.
      *
      * @return Zones[]
      */
@@ -209,7 +208,7 @@ class ZonesTypes
     }
 
     /**
-     * Set parent
+     * Set parent.
      *
      * @param ZonesTypes $parent
      *
@@ -223,7 +222,7 @@ class ZonesTypes
     }
 
     /**
-     * Get parent
+     * Get parent.
      *
      * @return ZonesTypes
      */
@@ -278,7 +277,6 @@ class ZonesTypes
         }
 
         return $this;
-
     }
 
     /**
@@ -322,7 +320,7 @@ class ZonesTypes
     }
 
     /**
-     * Retourne le parent à un certain niveau d'héritage
+     * Retourne le parent à un certain niveau d'héritage.
      *
      * @param int $level
      *
@@ -335,7 +333,7 @@ class ZonesTypes
         if ($actualParent) {
             while ($level > 0) {
                 $actualParent = $actualParent->getParent();
-                $level --;
+                --$level;
                 if (!$actualParent && $level > 0) {
                     $level = 0;
                 }
@@ -344,5 +342,4 @@ class ZonesTypes
 
         return $actualParent;
     }
-
 }

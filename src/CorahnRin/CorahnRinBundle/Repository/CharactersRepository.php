@@ -7,7 +7,6 @@ use Orbitale\Component\DoctrineTools\BaseEntityRepository as BaseRepository;
 
 class CharactersRepository extends BaseRepository
 {
-
     /**
      * @param $id
      *
@@ -49,7 +48,6 @@ class CharactersRepository extends BaseRepository
      */
     public function findSearch($searchField = 'id', $order = 'asc', $limit = 20, $offset = 0, $getCount = false)
     {
-
         $qb = $this->_em
             ->createQueryBuilder()
             ->select('characters')
@@ -102,5 +100,4 @@ class CharactersRepository extends BaseRepository
     {
         return $this->findSearch($searchField, $order, $limit, $offset, true);
     }
-
 }

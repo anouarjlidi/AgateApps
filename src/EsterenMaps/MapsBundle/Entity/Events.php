@@ -9,7 +9,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Events
+ * Events.
  *
  * @ORM\Table(name="events")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
@@ -17,12 +17,11 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Events
 {
-
     use TimestampableEntity;
     use SoftDeleteableEntity;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
@@ -103,26 +102,26 @@ class Events
     protected $zones;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
-        $this->foes         = new ArrayCollection();
-        $this->npcs         = new ArrayCollection();
-        $this->weather      = new ArrayCollection();
-        $this->markers      = new ArrayCollection();
+        $this->foes = new ArrayCollection();
+        $this->npcs = new ArrayCollection();
+        $this->weather = new ArrayCollection();
+        $this->markers = new ArrayCollection();
         $this->markersTypes = new ArrayCollection();
-        $this->resources    = new ArrayCollection();
-        $this->routes       = new ArrayCollection();
-        $this->routesTypes  = new ArrayCollection();
-        $this->zonesTypes   = new ArrayCollection();
-        $this->zones        = new ArrayCollection();
+        $this->resources = new ArrayCollection();
+        $this->routes = new ArrayCollection();
+        $this->routesTypes = new ArrayCollection();
+        $this->zonesTypes = new ArrayCollection();
+        $this->zones = new ArrayCollection();
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -130,7 +129,7 @@ class Events
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      *
@@ -144,7 +143,7 @@ class Events
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -154,7 +153,7 @@ class Events
     }
 
     /**
-     * Set percentage
+     * Set percentage.
      *
      * @param string $percentage
      *
@@ -168,7 +167,7 @@ class Events
     }
 
     /**
-     * Get percentage
+     * Get percentage.
      *
      * @return string
      */
@@ -178,7 +177,7 @@ class Events
     }
 
     /**
-     * Add foes
+     * Add foes.
      *
      * @param Foes $foes
      *
@@ -192,7 +191,7 @@ class Events
     }
 
     /**
-     * Remove foes
+     * Remove foes.
      *
      * @param Foes $foes
      */
@@ -202,7 +201,7 @@ class Events
     }
 
     /**
-     * Get foes
+     * Get foes.
      *
      * @return Foes[]
      */
@@ -212,7 +211,7 @@ class Events
     }
 
     /**
-     * Add npcs
+     * Add npcs.
      *
      * @param Npcs $npcs
      *
@@ -226,7 +225,7 @@ class Events
     }
 
     /**
-     * Remove npcs
+     * Remove npcs.
      *
      * @param Npcs $npcs
      */
@@ -236,7 +235,7 @@ class Events
     }
 
     /**
-     * Get npcs
+     * Get npcs.
      *
      * @return Npcs[]
      */
@@ -246,7 +245,7 @@ class Events
     }
 
     /**
-     * Add weather
+     * Add weather.
      *
      * @param Weather $weather
      *
@@ -260,7 +259,7 @@ class Events
     }
 
     /**
-     * Remove weather
+     * Remove weather.
      *
      * @param Weather $weather
      */
@@ -270,7 +269,7 @@ class Events
     }
 
     /**
-     * Get weather
+     * Get weather.
      *
      * @return Weather[]
      */
@@ -280,7 +279,7 @@ class Events
     }
 
     /**
-     * Add markers
+     * Add markers.
      *
      * @param Markers $markers
      *
@@ -294,7 +293,7 @@ class Events
     }
 
     /**
-     * Remove markers
+     * Remove markers.
      *
      * @param Markers $markers
      */
@@ -304,7 +303,7 @@ class Events
     }
 
     /**
-     * Get markers
+     * Get markers.
      *
      * @return Markers[]
      */
@@ -314,7 +313,7 @@ class Events
     }
 
     /**
-     * Add markersTypes
+     * Add markersTypes.
      *
      * @param MarkersTypes $markersTypes
      *
@@ -328,7 +327,7 @@ class Events
     }
 
     /**
-     * Remove markersTypes
+     * Remove markersTypes.
      *
      * @param MarkersTypes $markersTypes
      */
@@ -338,7 +337,7 @@ class Events
     }
 
     /**
-     * Get markersTypes
+     * Get markersTypes.
      *
      * @return MarkersTypes[]
      */
@@ -348,7 +347,7 @@ class Events
     }
 
     /**
-     * Add resources
+     * Add resources.
      *
      * @param Resources $resources
      *
@@ -362,7 +361,7 @@ class Events
     }
 
     /**
-     * Remove resources
+     * Remove resources.
      *
      * @param Resources $resources
      */
@@ -372,7 +371,7 @@ class Events
     }
 
     /**
-     * Get resources
+     * Get resources.
      *
      * @return Resources[]
      */
@@ -382,7 +381,7 @@ class Events
     }
 
     /**
-     * Add routes
+     * Add routes.
      *
      * @param Routes $routes
      *
@@ -396,7 +395,7 @@ class Events
     }
 
     /**
-     * Remove routes
+     * Remove routes.
      *
      * @param Routes $routes
      */
@@ -406,7 +405,7 @@ class Events
     }
 
     /**
-     * Get routes
+     * Get routes.
      *
      * @return Routes[]
      */
@@ -416,7 +415,7 @@ class Events
     }
 
     /**
-     * Add routesTypes
+     * Add routesTypes.
      *
      * @param RoutesTypes $routesTypes
      *
@@ -430,7 +429,7 @@ class Events
     }
 
     /**
-     * Remove routesTypes
+     * Remove routesTypes.
      *
      * @param RoutesTypes $routesTypes
      */
@@ -440,7 +439,7 @@ class Events
     }
 
     /**
-     * Get routesTypes
+     * Get routesTypes.
      *
      * @return RoutesTypes[]
      */
@@ -450,7 +449,7 @@ class Events
     }
 
     /**
-     * Add zonesTypes
+     * Add zonesTypes.
      *
      * @param ZonesTypes $zonesTypes
      *
@@ -464,7 +463,7 @@ class Events
     }
 
     /**
-     * Remove zonesTypes
+     * Remove zonesTypes.
      *
      * @param ZonesTypes $zonesTypes
      */
@@ -474,7 +473,7 @@ class Events
     }
 
     /**
-     * Get zonesTypes
+     * Get zonesTypes.
      *
      * @return ZonesTypes[]
      */
@@ -484,7 +483,7 @@ class Events
     }
 
     /**
-     * Add zones
+     * Add zones.
      *
      * @param Zones $zones
      *
@@ -498,7 +497,7 @@ class Events
     }
 
     /**
-     * Remove zones
+     * Remove zones.
      *
      * @param Zones $zones
      */
@@ -508,7 +507,7 @@ class Events
     }
 
     /**
-     * Get zones
+     * Get zones.
      *
      * @return Zones[]
      */

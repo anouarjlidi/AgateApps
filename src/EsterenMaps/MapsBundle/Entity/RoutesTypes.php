@@ -10,7 +10,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 use JMS\Serializer\Annotation as Serializer;
 
 /**
- * RoutesTypes
+ * RoutesTypes.
  *
  * @ORM\Table(name="maps_routes_types")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
@@ -19,12 +19,11 @@ use JMS\Serializer\Annotation as Serializer;
  */
 class RoutesTypes
 {
-
     use TimestampableEntity;
     use SoftDeleteableEntity;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id
@@ -82,19 +81,19 @@ class RoutesTypes
     }
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
-        $this->resources  = new ArrayCollection();
-        $this->routes     = new ArrayCollection();
+        $this->resources = new ArrayCollection();
+        $this->routes = new ArrayCollection();
         $this->transports = new ArrayCollection();
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -102,7 +101,7 @@ class RoutesTypes
     }
 
     /**
-     * @param integer $id
+     * @param int $id
      *
      * @return $this
      */
@@ -114,7 +113,7 @@ class RoutesTypes
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      *
@@ -128,7 +127,7 @@ class RoutesTypes
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -138,7 +137,7 @@ class RoutesTypes
     }
 
     /**
-     * Add resources
+     * Add resources.
      *
      * @param Resources $resources
      *
@@ -152,7 +151,7 @@ class RoutesTypes
     }
 
     /**
-     * Remove resources
+     * Remove resources.
      *
      * @param Resources $resources
      */
@@ -162,7 +161,7 @@ class RoutesTypes
     }
 
     /**
-     * Get resources
+     * Get resources.
      *
      * @return Resources[]
      */
@@ -172,7 +171,7 @@ class RoutesTypes
     }
 
     /**
-     * Add routes
+     * Add routes.
      *
      * @param Routes $routes
      *
@@ -186,7 +185,7 @@ class RoutesTypes
     }
 
     /**
-     * Remove routes
+     * Remove routes.
      *
      * @param Routes $routes
      */
@@ -196,7 +195,7 @@ class RoutesTypes
     }
 
     /**
-     * Get routes
+     * Get routes.
      *
      * @return Routes[]
      */
@@ -246,7 +245,7 @@ class RoutesTypes
     }
 
     /**
-     * Add transports
+     * Add transports.
      *
      * @param RoutesTransports $transports
      *
@@ -260,7 +259,7 @@ class RoutesTypes
     }
 
     /**
-     * Remove transports
+     * Remove transports.
      *
      * @param RoutesTransports $transports
      *
@@ -274,7 +273,7 @@ class RoutesTypes
     }
 
     /**
-     * Get transports
+     * Get transports.
      *
      * @return RoutesTransports[]
      */
@@ -285,11 +284,12 @@ class RoutesTypes
 
     /**
      * @param TransportTypes $transportType
+     *
      * @return RoutesTransports
      */
     public function getTransport(TransportTypes $transportType)
     {
-        $transports = $this->transports->filter(function(RoutesTransports $element) use ($transportType){
+        $transports = $this->transports->filter(function (RoutesTransports $element) use ($transportType) {
             return $element->getTransportType()->getId() === $transportType->getId();
         });
 
@@ -299,5 +299,4 @@ class RoutesTypes
 
         return $transports->first();
     }
-
 }

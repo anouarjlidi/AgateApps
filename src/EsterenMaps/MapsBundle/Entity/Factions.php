@@ -12,7 +12,7 @@ use JMS\Serializer\Annotation\ExclusionPolicy as ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose as Expose;
 
 /**
- * Factions
+ * Factions.
  *
  * @ORM\Table(name="maps_factions")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
@@ -21,12 +21,11 @@ use JMS\Serializer\Annotation\Expose as Expose;
  */
 class Factions
 {
-
     use TimestampableEntity;
     use SoftDeleteableEntity;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
@@ -83,19 +82,19 @@ class Factions
     }
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
-        $this->zones   = new ArrayCollection();
-        $this->routes  = new ArrayCollection();
+        $this->zones = new ArrayCollection();
+        $this->routes = new ArrayCollection();
         $this->markers = new ArrayCollection();
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -103,7 +102,7 @@ class Factions
     }
 
     /**
-     * @param integer $id
+     * @param int $id
      *
      * @return $this
      */
@@ -115,7 +114,7 @@ class Factions
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      *
@@ -129,7 +128,7 @@ class Factions
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -139,7 +138,7 @@ class Factions
     }
 
     /**
-     * Add zones
+     * Add zones.
      *
      * @param Zones $zones
      *
@@ -153,7 +152,7 @@ class Factions
     }
 
     /**
-     * Remove zones
+     * Remove zones.
      *
      * @param Zones $zones
      */
@@ -163,7 +162,7 @@ class Factions
     }
 
     /**
-     * Get zones
+     * Get zones.
      *
      * @return Zones[]
      */
@@ -173,7 +172,7 @@ class Factions
     }
 
     /**
-     * Add routes
+     * Add routes.
      *
      * @param Routes $routes
      *
@@ -187,7 +186,7 @@ class Factions
     }
 
     /**
-     * Remove routes
+     * Remove routes.
      *
      * @param Routes $routes
      */
@@ -197,7 +196,7 @@ class Factions
     }
 
     /**
-     * Get routes
+     * Get routes.
      *
      * @return Routes[]
      */
@@ -207,7 +206,7 @@ class Factions
     }
 
     /**
-     * Add markers
+     * Add markers.
      *
      * @param Markers $markers
      *
@@ -221,7 +220,7 @@ class Factions
     }
 
     /**
-     * Remove markers
+     * Remove markers.
      *
      * @param Markers $markers
      */
@@ -231,7 +230,7 @@ class Factions
     }
 
     /**
-     * Get markers
+     * Get markers.
      *
      * @return Markers[]
      */
@@ -241,7 +240,7 @@ class Factions
     }
 
     /**
-     * Set description
+     * Set description.
      *
      * @param string $description
      *
@@ -255,7 +254,7 @@ class Factions
     }
 
     /**
-     * Get description
+     * Get description.
      *
      * @return string
      */
@@ -265,7 +264,7 @@ class Factions
     }
 
     /**
-     * Set book
+     * Set book.
      *
      * @param Books $book
      *
@@ -279,7 +278,7 @@ class Factions
     }
 
     /**
-     * Get book
+     * Get book.
      *
      * @return Books
      */
@@ -287,5 +286,4 @@ class Factions
     {
         return $this->book;
     }
-
 }

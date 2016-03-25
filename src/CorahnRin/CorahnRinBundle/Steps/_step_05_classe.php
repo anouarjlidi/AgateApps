@@ -1,9 +1,9 @@
 <?php
 /**
- * Classe sociale
+ * Classe sociale.
+ *
  * @var $this CorahnRin\CorahnRinBundle\Steps\StepLoader
  */
-
 $socialClasses = $this->em->getRepository('CorahnRinBundle:SocialClasses')->findAll(true);
 
 $socialClassesDomains = (isset($this->character[$this->stepFullName()]['domains']) ? $this->character[$this->stepFullName()]['domains'] : array());
@@ -39,14 +39,13 @@ if ($this->request->isMethod('POST')) {
         if ($error) {
             $this->flashMessage('Les domaines choisis ne sont pas associés à la classe sociale sélectionnée.');
         } else {
-
             $this->characterSet(array(
                 'id' => $socialClass_value,
                 'domains' => array_combine(array_keys($socialClassDomains), array_keys($socialClassDomains)),
             ));
+
             return $this->nextStep();
         }
-
     } else {
 
         // ERREURS
@@ -58,6 +57,6 @@ if ($this->request->isMethod('POST')) {
             $this->flashMessage('Les domaines choisis ne sont pas associés à la classe sociale sélectionnée.');
         }
     }
-
 }
+
 return $datas;

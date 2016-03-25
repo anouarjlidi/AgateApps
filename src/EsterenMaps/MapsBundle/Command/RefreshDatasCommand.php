@@ -12,7 +12,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class RefreshDatasCommand extends ContainerAwareCommand
 {
-
     protected function configure()
     {
         $this
@@ -44,6 +43,7 @@ class RefreshDatasCommand extends ContainerAwareCommand
                     'The --nan-as option must be a valid number. "%s" given.',
                     $input->getOption('nan-as')
                 ));
+
                 return 1;
             }
 
@@ -55,7 +55,7 @@ class RefreshDatasCommand extends ContainerAwareCommand
         $maps = $em->getRepository('EsterenMapsBundle:Maps')->findAllWithRoutes();
 
         // Calculate the number of objects.
-        $numberTotal = array_reduce($maps, function($carry, Maps $map){
+        $numberTotal = array_reduce($maps, function ($carry, Maps $map) {
             return $carry + $map->getRoutes()->count();
         }, 0);
         $numberModified = 0;
@@ -112,14 +112,13 @@ class RefreshDatasCommand extends ContainerAwareCommand
                     } else {
                         $changesets['distance'] = array_map('floatval', $changesets['distance']);
                     }
-
                 }
 
                 if (!count($changesets)) {
                     continue;
                 }
 
-                $numberModified++;
+                ++$numberModified;
                 $io->progressAdvance();
             }
         }
@@ -128,6 +127,7 @@ class RefreshDatasCommand extends ContainerAwareCommand
 
         if ($numberModified === 0) {
             $io->block('Nothing to update.', null, 'comment');
+
             return 2;
         }
 
@@ -135,7 +135,6 @@ class RefreshDatasCommand extends ContainerAwareCommand
             array_unshift($errors, '');
             $io->warning($errors);
         }
-
 
         $io->writeln('Elements updated: <info>'.$numberModified.' / '.$numberTotal.'</info>');
 

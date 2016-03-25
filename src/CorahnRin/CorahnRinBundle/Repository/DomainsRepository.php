@@ -6,7 +6,6 @@ use Orbitale\Component\DoctrineTools\BaseEntityRepository as BaseRepository;
 
 class DomainsRepository extends BaseRepository
 {
-
     /**
      * @return string[]
      */
@@ -24,5 +23,4 @@ class DomainsRepository extends BaseRepository
             yield $id => $element['name'];
         }
     }
-
 }

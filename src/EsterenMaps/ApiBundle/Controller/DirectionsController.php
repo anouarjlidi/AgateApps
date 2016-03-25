@@ -13,8 +13,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-class DirectionsController extends Controller {
-
+class DirectionsController extends Controller
+{
     /**
      * @Route("/maps/directions/{id}/{from}/{to}", name="esterenmaps_directions", requirements={"id":"\d+", "from":"\d+", "to":"\d+"}, host="%esteren_domains.api%")
      * @Method("GET")
@@ -22,8 +22,8 @@ class DirectionsController extends Controller {
      * @ParamConverter(name="to", class="EsterenMapsBundle:Markers", options={"id": "to"})
      * @-Cache(public=true, maxage=3600)
      */
-    public function getDirectionsAction(Maps $map, Markers $from, Markers $to, Request $request) {
-
+    public function getDirectionsAction(Maps $map, Markers $from, Markers $to, Request $request)
+    {
         $this->container->get('pierstoval.api.originChecker')->checkRequest($request);
 
         $code = 200;
@@ -50,7 +50,7 @@ class DirectionsController extends Controller {
     /**
      * @param Markers $from
      * @param Markers $to
-     * @param integer $transportId
+     * @param int     $transportId
      * @param string  $message
      *
      * @return array

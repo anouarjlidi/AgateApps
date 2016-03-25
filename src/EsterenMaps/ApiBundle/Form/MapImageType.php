@@ -1,12 +1,10 @@
 <?php
 
-
 namespace EsterenMaps\ApiBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints as Constraint;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Range;
 use Symfony\Component\Validator\Constraints\Type;
@@ -17,7 +15,6 @@ use Symfony\Component\Validator\Constraints\Type;
  */
 class MapImageType extends AbstractType
 {
-
     /**
      * {@inheritdoc}
      */
@@ -28,8 +25,8 @@ class MapImageType extends AbstractType
                 [
                     'constraints' => [
                         new Type(['type' => 'integer']),
-                        new Range(['min' => 1, 'max' => 100])
-                    ]
+                        new Range(['min' => 1, 'max' => 100]),
+                    ],
                 ]
             )
             ->add('width', 'integer',
@@ -37,8 +34,8 @@ class MapImageType extends AbstractType
                     'constraints' => [
                         new Type(['type' => 'integer']),
                         new NotBlank(),
-                        new Range(['min' => 50])
-                    ]
+                        new Range(['min' => 50]),
+                    ],
                 ]
             )
             ->add('height', 'integer',
@@ -46,8 +43,8 @@ class MapImageType extends AbstractType
                     'constraints' => [
                         new Type(['type' => 'integer']),
                         new NotBlank(),
-                        new Range(['min' => 50])
-                    ]
+                        new Range(['min' => 50]),
+                    ],
                 ]
             )
             ->add('x', 'integer', ['constraints' => [new Type(['type' => 'integer'])]])

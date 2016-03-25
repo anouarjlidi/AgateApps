@@ -1,4 +1,5 @@
 <?php
+
 namespace EsterenMaps\MapsBundle\Command;
 
 use DateTime;
@@ -15,8 +16,6 @@ use EsterenMaps\MapsBundle\Entity\Routes;
 use EsterenMaps\MapsBundle\Entity\ZonesTypes;
 use Orbitale\Component\DoctrineTools\BaseEntityRepository;
 use Symfony\Component\Console\Helper\Table;
-use Symfony\Component\Console\Helper\TableCell;
-use Symfony\Component\Console\Helper\TableHelper;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -26,7 +25,6 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
 
 class ImportTiddlyWikiCommand extends ContainerAwareCommand
 {
-
     /**
      * @var array
      */
@@ -48,7 +46,7 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
     private $output;
 
     /**
-     * @var boolean
+     * @var bool
      */
     private $dryRun = true;
 
@@ -152,11 +150,12 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
 
         $output->writeln('Processing...');
 
-        $tags = array_reduce($datas, function($carry, $object) {
+        $tags = array_reduce($datas, function ($carry, $object) {
             $carry[$object['tags']] = array(
                 'tag' => $object['tags'],
-                'nb_occurrences' => isset($carry[$object['tags']]['nb_occurrences']) ? $carry[$object['tags']]['nb_occurrences']+1 : 1,
+                'nb_occurrences' => isset($carry[$object['tags']]['nb_occurrences']) ? $carry[$object['tags']]['nb_occurrences'] + 1 : 1,
             );
+
             return $carry;
         });
         $table = new Table($output);
@@ -164,16 +163,16 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
         $table->setRows($tags);
         $table->render();
 
-        $this->maps         = $this->getRepository('EsterenMapsBundle:Maps')->findAllRoot(true);
+        $this->maps = $this->getRepository('EsterenMapsBundle:Maps')->findAllRoot(true);
 
-        $this->factions     = $this->getReferenceObjects('factions', Factions::class);
+        $this->factions = $this->getReferenceObjects('factions', Factions::class);
         $this->markersTypes = $this->getReferenceObjects('markertype', MarkersTypes::class);
-        $this->zonesTypes   = $this->getReferenceObjects('zonetype', ZonesTypes::class);
-        $this->routesTypes  = $this->getReferenceObjects('routetype', RoutesTypes::class);
+        $this->zonesTypes = $this->getReferenceObjects('zonetype', ZonesTypes::class);
+        $this->routesTypes = $this->getReferenceObjects('routetype', RoutesTypes::class);
 
         $this->markers = $this->processObjects('marqueurs', Markers::class, 'id_');
-        $this->zones   = $this->processObjects('zones', Zones::class, 'id_');
-        $this->routes  = $this->processObjects('routes', Routes::class, 'id_');
+        $this->zones = $this->processObjects('zones', Zones::class, 'id_');
+        $this->routes = $this->processObjects('routes', Routes::class, 'id_');
 
         $allDatas = array_merge(
             $this->factions['new'],
@@ -201,7 +200,6 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
             $changesetsNb = 0;
             $class = get_class($object);
 
-
             $table = new Table($this->output);
             $table->setHeaders(array('Class', 'Property', 'Before', 'After'));
 
@@ -209,7 +207,7 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
                 if ($field === 'createdAt' || $field === 'updatedAt') {
                     continue;
                 }
-                $changesetsNb++;
+                ++$changesetsNb;
                 $before = $changeset[0];
                 $after = $changeset[1];
                 $table->addRow(array($class, $field, $before, $after));
@@ -218,7 +216,6 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
             if ($changesetsNb) {
                 $table->render();
             }
-
         }
 
         if ($this->dryRun) {
@@ -258,7 +255,7 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
 
                     if ($newId) {
                         $this->datas[$k]['id'] = (string) $newId;
-                        $idsUpdated++;
+                        ++$idsUpdated;
                     }
                 }
 
@@ -273,6 +270,7 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
         }
 
         $output->writeln('Executed in '.number_format(microtime(true) - $time, 4).' seconds');
+
         return $code;
     }
 
@@ -300,7 +298,6 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
         $accessor = PropertyAccess::createPropertyAccessor();
 
         foreach ($datas as $data) {
-
             $object = null;
 
             $id = $data['id'];
@@ -309,7 +306,8 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
             // If not, we get the object by title
             if (isset($objects[$id])) {
                 $object = $objects[$id];
-            } elseif ($object = $repo->findOneBy(array($nameProperty => $data['title']))) {}
+            } elseif ($object = $repo->findOneBy(array($nameProperty => $data['title']))) {
+            }
 
             if ($object) {
                 $existing[$object->getId()] = $object;
@@ -358,7 +356,6 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
         $accessor = PropertyAccess::createPropertyAccessor();
 
         foreach ($datas as $data) {
-
             $object = null;
 
             $id = $data['id'];
@@ -367,7 +364,8 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
             // If not, we get the object by title
             if (isset($objects[$id])) {
                 $object = $objects[$id];
-            } elseif ($object = $repo->findOneBy(array('name' => $data['title']))) {}
+            } elseif ($object = $repo->findOneBy(array('name' => $data['title']))) {
+            }
 
             if ($object) {
                 $existing[$object->getId()] = $object;
@@ -405,16 +403,17 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
         if (!isset($this->repos[$entityName])) {
             $this->repos[$entityName] = $this->em->getRepository($entityName);
         }
+
         return $this->repos[$entityName];
     }
 
     /**
      * @param Markers|Zones|Routes $object
-     * @param array $data
+     * @param array                $data
      */
     private function updateOneObject($object, $data)
     {
-        $data['created']  = DateTime::createFromFormat('YmdHisu', isset($data['created']) ? $data['created'] : date('YmdHisu'));
+        $data['created'] = DateTime::createFromFormat('YmdHisu', isset($data['created']) ? $data['created'] : date('YmdHisu'));
 
         $object
             ->setId(is_numeric($data['id']) ? $data['id'] : null)
@@ -476,7 +475,7 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
                 $object = $datas['existing'][$id];
             }
         }
+
         return $object;
     }
-
 }

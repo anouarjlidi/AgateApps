@@ -11,7 +11,7 @@ use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Markers
+ * Markers.
  *
  * @ORM\Table(name="maps_markers")
  * @ORM\HasLifecycleCallbacks()
@@ -21,12 +21,11 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Markers
 {
-
     use TimestampableEntity;
     use SoftDeleteableEntity;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
@@ -130,17 +129,17 @@ class Markers
     }
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
-        $this->routes      = new ArrayCollection();
+        $this->routes = new ArrayCollection();
         $this->routesStart = new ArrayCollection();
-        $this->routesEnd   = new ArrayCollection();
+        $this->routesEnd = new ArrayCollection();
     }
 
     /**
-     * Get id
+     * Get id.
      *
      * @param $id
      *
@@ -154,9 +153,9 @@ class Markers
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -164,7 +163,7 @@ class Markers
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      *
@@ -178,7 +177,7 @@ class Markers
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -188,7 +187,7 @@ class Markers
     }
 
     /**
-     * Add routes
+     * Add routes.
      *
      * @param Routes $routes
      *
@@ -202,7 +201,7 @@ class Markers
     }
 
     /**
-     * Remove routes
+     * Remove routes.
      *
      * @param Routes $routes
      */
@@ -212,7 +211,7 @@ class Markers
     }
 
     /**
-     * Get routes
+     * Get routes.
      *
      * @return Routes[]
      */
@@ -222,7 +221,7 @@ class Markers
     }
 
     /**
-     * Set faction
+     * Set faction.
      *
      * @param Factions $faction
      *
@@ -236,7 +235,7 @@ class Markers
     }
 
     /**
-     * Get faction
+     * Get faction.
      *
      * @return Factions
      */
@@ -246,7 +245,7 @@ class Markers
     }
 
     /**
-     * Set map
+     * Set map.
      *
      * @param Maps $map
      *
@@ -260,7 +259,7 @@ class Markers
     }
 
     /**
-     * Get map
+     * Get map.
      *
      * @return Maps
      */
@@ -270,7 +269,7 @@ class Markers
     }
 
     /**
-     * Set markerType
+     * Set markerType.
      *
      * @param MarkersTypes $markerType
      *
@@ -284,7 +283,7 @@ class Markers
     }
 
     /**
-     * Get markerType
+     * Get markerType.
      *
      * @return MarkersTypes
      */
@@ -294,7 +293,7 @@ class Markers
     }
 
     /**
-     * Add routesStart
+     * Add routesStart.
      *
      * @param Routes $routesStart
      *
@@ -308,7 +307,7 @@ class Markers
     }
 
     /**
-     * Remove routesStart
+     * Remove routesStart.
      *
      * @param Routes $routesStart
      */
@@ -318,7 +317,7 @@ class Markers
     }
 
     /**
-     * Get routesStart
+     * Get routesStart.
      *
      * @return Routes[]
      */
@@ -328,7 +327,7 @@ class Markers
     }
 
     /**
-     * Get routesStart
+     * Get routesStart.
      *
      * @return array
      */
@@ -343,7 +342,7 @@ class Markers
     }
 
     /**
-     * Add routesEnd
+     * Add routesEnd.
      *
      * @param Routes $routesEnd
      *
@@ -357,7 +356,7 @@ class Markers
     }
 
     /**
-     * Remove routesEnd
+     * Remove routesEnd.
      *
      * @param Routes $routesEnd
      */
@@ -367,7 +366,7 @@ class Markers
     }
 
     /**
-     * Get routesEnd
+     * Get routesEnd.
      *
      * @return Routes[]
      */
@@ -377,7 +376,7 @@ class Markers
     }
 
     /**
-     * Get routesEnd
+     * Get routesEnd.
      *
      * @return array
      */
@@ -392,7 +391,7 @@ class Markers
     }
 
     /**
-     * Set altitude
+     * Set altitude.
      *
      * @param string $altitude
      *
@@ -406,7 +405,7 @@ class Markers
     }
 
     /**
-     * Get altitude
+     * Get altitude.
      *
      * @return string
      */
@@ -416,7 +415,7 @@ class Markers
     }
 
     /**
-     * Set latitude
+     * Set latitude.
      *
      * @param string $latitude
      *
@@ -430,7 +429,7 @@ class Markers
     }
 
     /**
-     * Get latitude
+     * Get latitude.
      *
      * @return string
      */
@@ -440,7 +439,7 @@ class Markers
     }
 
     /**
-     * Set longitude
+     * Set longitude.
      *
      * @param string $longitude
      *
@@ -454,7 +453,7 @@ class Markers
     }
 
     /**
-     * Get longitude
+     * Get longitude.
      *
      * @return string
      */
@@ -464,7 +463,7 @@ class Markers
     }
 
     /**
-     * Set description
+     * Set description.
      *
      * @param string $description
      *
@@ -478,7 +477,7 @@ class Markers
     }
 
     /**
-     * Get description
+     * Get description.
      *
      * @return string
      */
@@ -506,15 +505,11 @@ class Markers
      */
     public function updateRoutesCoordinates()
     {
-
         foreach ($this->routesStart as $route) {
             $route->refresh();
         }
         foreach ($this->routesEnd as $route) {
             $route->refresh();
         }
-
-
     }
 }
-

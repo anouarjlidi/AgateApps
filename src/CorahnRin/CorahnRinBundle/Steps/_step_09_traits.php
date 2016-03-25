@@ -1,9 +1,9 @@
 <?php
 /**
- * Traits de caractère
+ * Traits de caractère.
+ *
  * @var $this CorahnRin\CorahnRinBundle\Steps\StepLoader
  */
-
 $ways = $this->getStepValue(8);
 
 $traits = $this->em->getRepository('CorahnRinBundle:Traits')->findAllDependingOnWays($ways);
@@ -29,10 +29,11 @@ if ($this->request->isMethod('POST')) {
             'quality' => $quality,
             'flaw' => $flaw,
         ));
+
         return $this->nextStep();
     } else {
         $this->flashMessage('Les traits de caractère choisis sont incorrects.', 'error.steps');
     }
-
 }
+
 return $datas;

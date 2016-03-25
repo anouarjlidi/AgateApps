@@ -9,7 +9,6 @@ use Symfony\Component\HttpKernel\KernelInterface;
 
 class MapImageManager
 {
-
     /**
      * @var bool
      */
@@ -25,7 +24,7 @@ class MapImageManager
      */
     private $em;
 
-    function __construct($outputDirectory, $imageMagickPath, EntityManager $em, KernelInterface $kernel)
+    public function __construct($outputDirectory, $imageMagickPath, EntityManager $em, KernelInterface $kernel)
     {
         $outputDirectory = rtrim($outputDirectory, '\\/');
         $this->magickPath = rtrim($imageMagickPath, '\\/').DIRECTORY_SEPARATOR;
@@ -43,6 +42,7 @@ class MapImageManager
      * @param Maps $map
      *
      * @return string
+     *
      * @throws Exception
      */
     public function getImagePath(Maps $map)

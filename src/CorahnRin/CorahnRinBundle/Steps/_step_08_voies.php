@@ -1,10 +1,9 @@
 <?php
 /**
- * Voies
+ * Voies.
  *
  * @var $this CorahnRin\CorahnRinBundle\Steps\StepLoader
  */
-
 $ways = $this->em->getRepository('CorahnRinBundle:Ways')->findAll(true);
 
 $ways_values = isset($this->character[$this->stepFullName()]) ? $this->character[$this->stepFullName()] : null;
@@ -22,7 +21,6 @@ if (null === $ways_values) {
             $ways_values[$id] = 1;
         }
     }
-
 }
 
 $datas = array(
@@ -75,6 +73,8 @@ if ($this->request->isMethod('POST')) {
     }
 
     $this->characterSet($ways_values);
+
     return $this->nextStep();
 }
+
 return $datas;

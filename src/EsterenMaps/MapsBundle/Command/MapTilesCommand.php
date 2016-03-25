@@ -1,4 +1,5 @@
 <?php
+
 namespace EsterenMaps\MapsBundle\Command;
 
 use EsterenMaps\MapsBundle\Entity\Maps;
@@ -12,7 +13,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class MapTilesCommand extends ContainerAwareCommand
 {
-
     protected function configure()
     {
         $this
@@ -31,7 +31,6 @@ class MapTilesCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-
         $id = $input->hasArgument('id') ? $input->getArgument('id') : null;
 
         /** @var DialogHelper $dialog */
@@ -57,7 +56,7 @@ class MapTilesCommand extends ContainerAwareCommand
                 $maps_list = array();
                 if ($list === null) {
 
-                    /** @var Maps[] $list */
+                    /* @var Maps[] $list */
                     $maps_list = $repo->findAll('id');
 
                     if (!count($maps_list)) {
@@ -97,11 +96,11 @@ class MapTilesCommand extends ContainerAwareCommand
         }
 
         try {
-            for ($i = 0; $i <= $map->getMaxZoom(); $i ++) {
+            for ($i = 0; $i <= $map->getMaxZoom(); ++$i) {
                 $output->writeln('Processing extraction for zoom value '.$i);
                 $tilesManager->generateTiles($i, true, $map);
             }
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             throw new \RuntimeException('Error while processing extraction for zoom value "'.(isset($i) ? $i : '0').'".', 1, $e);
         }
 

@@ -9,7 +9,7 @@ use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
- * Resources
+ * Resources.
  *
  * @ORM\Table(name="maps_resources")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
@@ -17,12 +17,11 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
  */
 class Resources
 {
-
     use TimestampableEntity;
     use SoftDeleteableEntity;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id
@@ -56,19 +55,19 @@ class Resources
     protected $zonesTypes;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
-        $this->routes      = new ArrayCollection();
+        $this->routes = new ArrayCollection();
         $this->routesTypes = new ArrayCollection();
-        $this->zonesTypes  = new ArrayCollection();
+        $this->zonesTypes = new ArrayCollection();
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -76,7 +75,7 @@ class Resources
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      *
@@ -90,7 +89,7 @@ class Resources
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -100,7 +99,7 @@ class Resources
     }
 
     /**
-     * Add routes
+     * Add routes.
      *
      * @param Routes $routes
      *
@@ -114,7 +113,7 @@ class Resources
     }
 
     /**
-     * Remove routes
+     * Remove routes.
      *
      * @param Routes $routes
      */
@@ -124,7 +123,7 @@ class Resources
     }
 
     /**
-     * Get routes
+     * Get routes.
      *
      * @return Routes[]
      */
@@ -134,7 +133,7 @@ class Resources
     }
 
     /**
-     * Add routesTypes
+     * Add routesTypes.
      *
      * @param RoutesTypes $routesTypes
      *
@@ -148,7 +147,7 @@ class Resources
     }
 
     /**
-     * Remove routesTypes
+     * Remove routesTypes.
      *
      * @param RoutesTypes $routesTypes
      */
@@ -158,7 +157,7 @@ class Resources
     }
 
     /**
-     * Get routesTypes
+     * Get routesTypes.
      *
      * @return RoutesTypes[]
      */
@@ -168,7 +167,7 @@ class Resources
     }
 
     /**
-     * Add zonesTypes
+     * Add zonesTypes.
      *
      * @param ZonesTypes $zonesTypes
      *
@@ -182,7 +181,7 @@ class Resources
     }
 
     /**
-     * Remove zonesTypes
+     * Remove zonesTypes.
      *
      * @param ZonesTypes $zonesTypes
      */
@@ -192,7 +191,7 @@ class Resources
     }
 
     /**
-     * Get zonesTypes
+     * Get zonesTypes.
      *
      * @return ZonesTypes[]
      */
@@ -200,5 +199,4 @@ class Resources
     {
         return $this->zonesTypes;
     }
-
 }

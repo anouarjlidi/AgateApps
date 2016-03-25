@@ -1,4 +1,5 @@
 <?php
+
 namespace CorahnRin\CorahnRinBundle\Steps;
 
 use CorahnRin\CorahnRinBundle\Controller\GeneratorController as Controller;
@@ -13,7 +14,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Translation\Translator;
 
 /**
- * Charge les étapes pour le contrôleur, d'après un nom de fichier dépendant de l'étape injectée
+ * Charge les étapes pour le contrôleur, d'après un nom de fichier dépendant de l'étape injectée.
  *
  * @author  Alex "Pierstoval" <pierstoval@gmail.com>
  */
@@ -52,7 +53,7 @@ class StepLoader implements ContainerAwareInterface
     private $filename;
 
     /**
-     * @var integer
+     * @var int
      */
     private $step;
 
@@ -83,9 +84,8 @@ class StepLoader implements ContainerAwareInterface
 
     public function __construct($steps_managers_directory, $steps_views_directory)
     {
-
         $this->steps_managers_directory = $steps_managers_directory;
-        $this->steps_views_directory    = $steps_views_directory;
+        $this->steps_views_directory = $steps_views_directory;
     }
 
     /**
@@ -101,22 +101,23 @@ class StepLoader implements ContainerAwareInterface
      */
     public function initialize(Controller $controller, SessionInterface $session, Request $request, Steps $step, $steps)
     {
-        $this->em          = $this->container->get('doctrine')->getManager();
-        $this->controller  = $controller;
-        $this->session     = $session;
-        $this->request     = $request;
-        $this->stepEntity  = $step;
-        $this->step        = $step->getStep();
-        $this->steps       = $steps;
-        $this->filename    = $this->steps_managers_directory.'/_step_'.str_pad($step->getId(), 2, 0, STR_PAD_LEFT).'_'.$step->getSlug().'.php';
-        $this->character   = $session->get('character');
+        $this->em = $this->container->get('doctrine')->getManager();
+        $this->controller = $controller;
+        $this->session = $session;
+        $this->request = $request;
+        $this->stepEntity = $step;
+        $this->step = $step->getStep();
+        $this->steps = $steps;
+        $this->filename = $this->steps_managers_directory.'/_step_'.str_pad($step->getId(), 2, 0, STR_PAD_LEFT).'_'.$step->getSlug().'.php';
+        $this->character = $session->get('character');
         $this->initialized = true;
     }
 
     /**
-     * Vérifie que le StepLoader a été initialisé
+     * Vérifie que le StepLoader a été initialisé.
      *
      * @return bool
+     *
      * @throws \Exception
      */
     public function checkInitialized()
@@ -129,9 +130,9 @@ class StepLoader implements ContainerAwareInterface
     }
 
     /**
-     * Vérifie si le fichier de l'étape existe
+     * Vérifie si le fichier de l'étape existe.
      *
-     * @return boolean
+     * @return bool
      */
     public function exists()
     {
@@ -139,11 +140,12 @@ class StepLoader implements ContainerAwareInterface
     }
 
     /**
-     * Récupère une étape à partir du numéro de l'étape demandée
+     * Récupère une étape à partir du numéro de l'étape demandée.
      *
      * @param Steps|int $step
      *
      * @return Steps
+     *
      * @throws \Exception
      */
     public function getStep($step = null)
@@ -167,7 +169,7 @@ class StepLoader implements ContainerAwareInterface
 
     /**
      * Renvoie la valeur de l'étape demandée dans le personnage en session.
-     * Renvoie null si la clé n'existe pas
+     * Renvoie null si la clé n'existe pas.
      *
      * @param Steps|int $step
      *
@@ -175,7 +177,7 @@ class StepLoader implements ContainerAwareInterface
      */
     public function getStepValue($step = null)
     {
-        $step         = $this->getStep($step);
+        $step = $this->getStep($step);
         $stepFullName = $this->stepFullName($step);
 
         return array_key_exists($stepFullName, $this->character)
@@ -184,7 +186,7 @@ class StepLoader implements ContainerAwareInterface
     }
 
     /**
-     * Retourne le dossier de chargement des vues liées aux managers d'étape
+     * Retourne le dossier de chargement des vues liées aux managers d'étape.
      *
      * @return string
      */
@@ -195,7 +197,7 @@ class StepLoader implements ContainerAwareInterface
 
     /**
      * Retourne le nom complet de l'étape : {step}.{slug}
-     * Utilisé majoritairement en session pour définir les différentes clés
+     * Utilisé majoritairement en session pour définir les différentes clés.
      *
      * @param Steps $step L'étape à parser. Si aucune étape n'est parsée, l'étape en cours est renvoyée
      *
@@ -209,14 +211,14 @@ class StepLoader implements ContainerAwareInterface
     }
 
     /**
-     * Affecte les données $datas au personnage à l'étape en cours, ou à l'étape demandée
+     * Affecte les données $datas au personnage à l'étape en cours, ou à l'étape demandée.
      *
      * @param mixed     $datas
      * @param Steps|int $step
      */
     public function characterSet($datas, $step = null)
     {
-        $step                   = $this->stepFullName($step);
+        $step = $this->stepFullName($step);
         $this->character[$step] = $datas;
         $this->session->set('character', $this->character);
     }
@@ -238,7 +240,7 @@ class StepLoader implements ContainerAwareInterface
     }
 
     /**
-     * Redirige à l'étape suivante
+     * Redirige à l'étape suivante.
      *
      * @return Steps|array
      */
@@ -248,7 +250,7 @@ class StepLoader implements ContainerAwareInterface
     }
 
     /**
-     * Supprime de la session les valeurs qui dépendent de l'étape en cours
+     * Supprime de la session les valeurs qui dépendent de l'étape en cours.
      *
      * @return $this
      */
@@ -262,7 +264,7 @@ class StepLoader implements ContainerAwareInterface
     }
 
     /**
-     * Exécute le fichier php existant et renvoie sa réponse
+     * Exécute le fichier php existant et renvoie sa réponse.
      *
      * La réponse peut être un array :<br />
      *  Dans ce cas, c'est la vue twig qui sera chargée, et on enverra le tableau en guise de variables
@@ -270,6 +272,7 @@ class StepLoader implements ContainerAwareInterface
      *  Dans ce cas, on redirige, soit vers l'étape suivante, soit vers une autre page
      *
      * @throws \InvalidArgumentException If steps the file does not exist.
+     *
      * @return array|RedirectResponse
      */
     public function load()
@@ -294,7 +297,7 @@ class StepLoader implements ContainerAwareInterface
     }
 
     /**
-     * Crée une erreur "flash"
+     * Crée une erreur "flash".
      *
      * @param string $msg
      * @param string $type

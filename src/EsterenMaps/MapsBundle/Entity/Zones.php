@@ -9,7 +9,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 use JMS\Serializer\Annotation as Serializer;
 
 /**
- * Zones
+ * Zones.
  *
  * @ORM\Table(name="maps_zones")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
@@ -18,12 +18,11 @@ use JMS\Serializer\Annotation as Serializer;
  */
 class Zones
 {
-
     use TimestampableEntity;
     use SoftDeleteableEntity;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
@@ -88,9 +87,9 @@ class Zones
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -98,9 +97,9 @@ class Zones
     }
 
     /**
-     * Set id
+     * Set id.
      *
-     * @param integer $id
+     * @param int $id
      *
      * @return Zones
      */
@@ -112,7 +111,7 @@ class Zones
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      *
@@ -126,7 +125,7 @@ class Zones
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -156,7 +155,7 @@ class Zones
     }
 
     /**
-     * Set coordinates
+     * Set coordinates.
      *
      * @param string $coordinates
      *
@@ -170,7 +169,7 @@ class Zones
     }
 
     /**
-     * Get coordinates
+     * Get coordinates.
      *
      * @return string
      */
@@ -180,7 +179,7 @@ class Zones
     }
 
     /**
-     * Set map
+     * Set map.
      *
      * @param Maps $map
      *
@@ -194,7 +193,7 @@ class Zones
     }
 
     /**
-     * Get map
+     * Get map.
      *
      * @return Maps
      */
@@ -204,7 +203,7 @@ class Zones
     }
 
     /**
-     * Set faction
+     * Set faction.
      *
      * @param Factions $faction
      *
@@ -218,7 +217,7 @@ class Zones
     }
 
     /**
-     * Get faction
+     * Get faction.
      *
      * @return Factions
      */
@@ -228,7 +227,7 @@ class Zones
     }
 
     /**
-     * Set zoneType
+     * Set zoneType.
      *
      * @param ZonesTypes $zoneType
      *
@@ -242,7 +241,7 @@ class Zones
     }
 
     /**
-     * Get zoneType
+     * Get zoneType.
      *
      * @return ZonesTypes
      */

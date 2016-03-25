@@ -34,7 +34,7 @@ class RoutesTransportsType extends AbstractType
     {
         $resolver->setDefaults(array(
             'label' => false,
-            'data_class' => 'EsterenMaps\MapsBundle\Entity\RoutesTransports'
+            'data_class' => 'EsterenMaps\MapsBundle\Entity\RoutesTransports',
         ));
     }
 

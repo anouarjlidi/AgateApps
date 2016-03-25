@@ -8,7 +8,7 @@ use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
- * Foes
+ * Foes.
  *
  * @ORM\Table(name="maps_foes")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
@@ -16,12 +16,11 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
  */
 class Foes
 {
-
     use TimestampableEntity;
     use SoftDeleteableEntity;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
@@ -37,9 +36,9 @@ class Foes
     protected $name;
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -47,7 +46,7 @@ class Foes
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      *
@@ -61,7 +60,7 @@ class Foes
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -69,5 +68,4 @@ class Foes
     {
         return $this->name;
     }
-
 }
