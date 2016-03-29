@@ -22,9 +22,10 @@ class MarkersRepository extends BaseRepository
      */
     public function getAllWithRoutesArray(Maps $map, TransportTypes $transportType = null)
     {
-        $parameters = array();
+        $parameters = [];
 
-        $dql = '
+        $dql
+            = '
             SELECT
                 markers,
 
@@ -79,7 +80,7 @@ class MarkersRepository extends BaseRepository
 
         $results = $query->getArrayResult();
 
-        $markers = array();
+        $markers = [];
 
         foreach ($results as $result) {
             $markers[$result['id']] = $result;
@@ -109,7 +110,7 @@ class MarkersRepository extends BaseRepository
             ->getArrayResult()
         ;
 
-        $a = array();
+        $a = [];
         foreach ($result as $marker) {
             $a[$marker['id']] = $marker;
         }

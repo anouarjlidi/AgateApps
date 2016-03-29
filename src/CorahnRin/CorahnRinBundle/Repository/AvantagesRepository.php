@@ -13,7 +13,7 @@ class AvantagesRepository extends BaseRepository
     public function findAllDifferenciated()
     {
         /** @var Avantages[] $list */
-        $list = $this->findAll(true);
+        $list       = $this->findAll(true);
         $advantages = $disadvantages = [];
 
         foreach ($list as $id => $element) {
@@ -25,7 +25,7 @@ class AvantagesRepository extends BaseRepository
         }
 
         return [
-            'advantages' => $advantages,
+            'advantages'    => $advantages,
             'disadvantages' => $disadvantages,
         ];
     }

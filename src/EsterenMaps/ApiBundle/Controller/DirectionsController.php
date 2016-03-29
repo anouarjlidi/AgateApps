@@ -29,18 +29,18 @@ class DirectionsController extends Controller
         $code = 200;
 
         $transportId = $request->query->get('transport');
-        $transport = $this->getDoctrine()->getRepository('EsterenMapsBundle:TransportTypes')->findOneBy(array('id' => $transportId));
+        $transport   = $this->getDoctrine()->getRepository('EsterenMapsBundle:TransportTypes')->findOneBy(['id' => $transportId]);
 
         $hoursPerDay = $request->query->get('hours_per_day', 7);
 
         if (!$transport && $transportId) {
             $directions = $this->getError($from, $to, $transportId, 'Transport not found.');
-            $code = 404;
+            $code       = 404;
         } else {
             $directions = $this->container->get('esteren_maps')->getDirectionsManager()->getDirections($map, $from, $to, $hoursPerDay, $transport);
             if (!count($directions)) {
                 $directions = $this->getError($from, $to);
-                $code = 404;
+                $code       = 404;
             }
         }
 
@@ -57,14 +57,14 @@ class DirectionsController extends Controller
      */
     private function getError(Markers $from, Markers $to, $transportId = null, $message = 'No path found for this query.')
     {
-        return array(
-            'error' => true,
+        return [
+            'error'   => true,
             'message' => $this->get('translator')->trans($message),
-            'query' => array(
-                'from' => $from,
-                'to' => $to,
+            'query'   => [
+                'from'      => $from,
+                'to'        => $to,
                 'transport' => $transportId,
-            ),
-        );
+            ],
+        ];
     }
 }

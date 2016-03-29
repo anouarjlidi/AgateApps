@@ -263,6 +263,6 @@ class Zones
      */
     public function getDecodedCoordinates()
     {
-        return json_decode($this->coordinates, true) ?: array();
+        return json_decode($this->coordinates, true) ?: [];
     }
 }

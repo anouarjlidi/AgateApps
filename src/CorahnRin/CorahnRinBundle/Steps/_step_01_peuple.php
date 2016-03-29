@@ -6,10 +6,10 @@
  */
 $peoples = $this->em->getRepository('CorahnRinBundle:Peoples')->findAll(true);
 
-$datas = array(
-    'peoples' => $peoples,
+$datas = [
+    'peoples'      => $peoples,
     'people_value' => (isset($this->character[$this->stepFullName()]) ? (int) $this->character[$this->stepFullName()] : null),
-);
+];
 
 if ($this->request->isMethod('POST')) {
     $people_id = (int) $this->request->request->get('gen-div-choice');

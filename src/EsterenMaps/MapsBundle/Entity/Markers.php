@@ -133,9 +133,9 @@ class Markers
      */
     public function __construct()
     {
-        $this->routes = new ArrayCollection();
+        $this->routes      = new ArrayCollection();
         $this->routesStart = new ArrayCollection();
-        $this->routesEnd = new ArrayCollection();
+        $this->routesEnd   = new ArrayCollection();
     }
 
     /**
@@ -333,7 +333,7 @@ class Markers
      */
     public function getRoutesStartIds()
     {
-        $array = array();
+        $array = [];
         foreach ($this->routesStart as $routeStart) {
             $array[$routeStart->getId()] = $routeStart->getId();
         }
@@ -382,7 +382,7 @@ class Markers
      */
     public function getRoutesEndIds()
     {
-        $array = array();
+        $array = [];
         foreach ($this->routesEnd as $routeEnd) {
             $array[$routeEnd->getId()] = $routeEnd->getId();
         }

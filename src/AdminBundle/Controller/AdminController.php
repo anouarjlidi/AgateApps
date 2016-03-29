@@ -28,7 +28,7 @@ class AdminController extends BaseAdminController
      * Creates the form builder of the form used to create or edit the given entity.
      *
      * @param TransportTypes $entity
-     * @param string         $view   The name of the view where this form is used ('new' or 'edit')
+     * @param string         $view The name of the view where this form is used ('new' or 'edit')
      *
      * @return FormBuilder
      */

@@ -61,7 +61,6 @@ class Steps
 
     /**
      * @var \Datetime
-     
      * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=false)
      */
@@ -215,6 +214,7 @@ class Steps
     {
         return $this->updated;
     }
+
     /**
      * Constructor.
      */

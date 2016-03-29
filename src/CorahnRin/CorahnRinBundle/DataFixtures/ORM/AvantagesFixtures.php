@@ -94,9 +94,9 @@ class AvantagesFixtures extends AbstractFixture implements OrderedFixtureInterfa
 
     public function fixtureObject(EntityRepository $repo, $id, $group, $name, $nameFemale, $xp, $description, $augmentation, $bonusDisc, $isDesv, $isCombatArt, $created, $updated, $deleted = null, $book)
     {
-        $obj = null;
+        $obj       = null;
         $newObject = false;
-        $addRef = false;
+        $addRef    = false;
         if ($id) {
             $obj = $repo->find($id);
             if ($obj) {

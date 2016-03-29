@@ -14,8 +14,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Class ChangeCoordinatesSystemCommand.
- * 
- * @todo Remove this class.
+ *
+ * @todo       Remove this class.
  * @deprecated This class should NOT be used.
  */
 class ChangeCoordinatesSystemCommand extends ContainerAwareCommand
@@ -26,9 +26,9 @@ class ChangeCoordinatesSystemCommand extends ContainerAwareCommand
             ->setName('esterenmaps:map:change-coordinates')
             ->setDescription('Changes the coordinates system for a map.')
             ->setHelp('This allows you to switch from { latitude, longitude } coordinates system with Mercator Projection'
-                      ."\n".'(which is limited in terms of minimum and maximum latitude and longitude) to a classic and'
-                      ."\n".'infinite { x, y } canvas that will allow both negative and positive coordinates.'
-                      ."\n\n".'<info>Be very careful</info> because it can change a lot of things, and can also change the map representation!')
+                ."\n".'(which is limited in terms of minimum and maximum latitude and longitude) to a classic and'
+                ."\n".'infinite { x, y } canvas that will allow both negative and positive coordinates.'
+                ."\n\n".'<info>Be very careful</info> because it can change a lot of things, and can also change the map representation!')
             ->addArgument('system', InputArgument::REQUIRED, 'The system you want to use. Can be one of "latlng" or "xy".')
             ->addArgument('id', InputArgument::OPTIONAL, 'The ID of the map to manage.', null)
             ->addOption('--force', null, InputOption::VALUE_NONE, 'By default, this command executes as dry run. This option will update the whole database.')
@@ -67,7 +67,7 @@ class ChangeCoordinatesSystemCommand extends ContainerAwareCommand
             }
 
             do {
-                $id = $dialog->select(
+                $id  = $dialog->select(
                     $output,
                     'Select a map:',
                     $maps,
@@ -103,7 +103,7 @@ class ChangeCoordinatesSystemCommand extends ContainerAwareCommand
 
         $identification = $manager->identifyImage(1);
 
-        $width = $identification->getGlobalWidth();
+        $width  = $identification->getGlobalWidth();
         $height = $identification->getGlobalHeight();
 
         return [

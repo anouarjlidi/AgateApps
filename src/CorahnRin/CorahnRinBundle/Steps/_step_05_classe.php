@@ -6,18 +6,18 @@
  */
 $socialClasses = $this->em->getRepository('CorahnRinBundle:SocialClasses')->findAll(true);
 
-$socialClassesDomains = (isset($this->character[$this->stepFullName()]['domains']) ? $this->character[$this->stepFullName()]['domains'] : array());
+$socialClassesDomains = (isset($this->character[$this->stepFullName()]['domains']) ? $this->character[$this->stepFullName()]['domains'] : []);
 
 $socialClass_value = (isset($this->character[$this->stepFullName()]['id']) ? (int) $this->character[$this->stepFullName()]['id'] : null);
 
-$datas = array(
-    'socialClasses' => $socialClasses,
-    'socialClass_value' => $socialClass_value,
+$datas = [
+    'socialClasses'      => $socialClasses,
+    'socialClass_value'  => $socialClass_value,
     'socialClassDomains' => $socialClassesDomains,
-);
+];
 
 if ($this->request->isMethod('POST')) {
-    $socialClass_value = (int) $this->request->request->get('gen-div-choice');
+    $socialClass_value  = (int) $this->request->request->get('gen-div-choice');
     $socialClassDomains = $this->request->request->get('domains');
 
     if (isset($socialClasses[$socialClass_value]) && isset($socialClassDomains[$socialClass_value]) && count($socialClassDomains[$socialClass_value]) == 2) {
@@ -39,10 +39,10 @@ if ($this->request->isMethod('POST')) {
         if ($error) {
             $this->flashMessage('Les domaines choisis ne sont pas associés à la classe sociale sélectionnée.');
         } else {
-            $this->characterSet(array(
-                'id' => $socialClass_value,
+            $this->characterSet([
+                'id'      => $socialClass_value,
                 'domains' => array_combine(array_keys($socialClassDomains), array_keys($socialClassDomains)),
-            ));
+            ]);
 
             return $this->nextStep();
         }

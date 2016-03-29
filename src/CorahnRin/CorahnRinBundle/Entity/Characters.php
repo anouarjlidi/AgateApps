@@ -448,18 +448,18 @@ class Characters
      */
     public function __construct()
     {
-        $this->armors = new ArrayCollection();
-        $this->artifacts = new ArrayCollection();
-        $this->miracles = new ArrayCollection();
-        $this->ogham = new ArrayCollection();
-        $this->weapons = new ArrayCollection();
-        $this->avantages = new ArrayCollection();
-        $this->domains = new ArrayCollection();
-        $this->disciplines = new ArrayCollection();
-        $this->ways = new ArrayCollection();
-        $this->flux = new ArrayCollection();
+        $this->armors        = new ArrayCollection();
+        $this->artifacts     = new ArrayCollection();
+        $this->miracles      = new ArrayCollection();
+        $this->ogham         = new ArrayCollection();
+        $this->weapons       = new ArrayCollection();
+        $this->avantages     = new ArrayCollection();
+        $this->domains       = new ArrayCollection();
+        $this->disciplines   = new ArrayCollection();
+        $this->ways          = new ArrayCollection();
+        $this->flux          = new ArrayCollection();
         $this->modifications = new ArrayCollection();
-        $this->setbacks = new ArrayCollection();
+        $this->setbacks      = new ArrayCollection();
     }
 
     /**

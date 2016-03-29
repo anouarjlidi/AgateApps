@@ -26,7 +26,7 @@ class MapImageManager
 
     public function __construct($outputDirectory, $imageMagickPath, EntityManager $em, KernelInterface $kernel)
     {
-        $outputDirectory = rtrim($outputDirectory, '\\/');
+        $outputDirectory  = rtrim($outputDirectory, '\\/');
         $this->magickPath = rtrim($imageMagickPath, '\\/').DIRECTORY_SEPARATOR;
         if (strpos($outputDirectory, '@') === 0) {
             $this->outputDirectory = $kernel->locateResource($outputDirectory);
@@ -34,8 +34,8 @@ class MapImageManager
             $this->outputDirectory = $outputDirectory;
         }
         $this->webDir = $kernel->getRootDir().'/../web';
-        $this->debug = $kernel->isDebug();
-        $this->em = $em;
+        $this->debug  = $kernel->isDebug();
+        $this->em     = $em;
     }
 
     /**

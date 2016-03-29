@@ -69,9 +69,9 @@ class UsersFixtures extends AbstractFixture implements OrderedFixtureInterface, 
 
     public function fixtureObject(EntityRepository $repo, $id, $name, $email, $password, $superAdmin)
     {
-        $obj = null;
+        $obj       = null;
         $newObject = false;
-        $addRef = false;
+        $addRef    = false;
         if ($id) {
             $obj = $repo->find($id);
             if ($obj) {

@@ -53,19 +53,19 @@ class JsonResponseListener implements EventSubscriberInterface
 
             $code = $e->getCode();
 
-            $data = array(
-                'error' => true,
-                'message' => $e->getMessage(),
-                'exception' => array(
+            $data = [
+                'error'     => true,
+                'message'   => $e->getMessage(),
+                'exception' => [
                     'code' => $code,
-                ),
-            );
+                ],
+            ];
 
             if ($this->environment === 'dev') {
-                $data['exception']['file'] = $e->getFile();
-                $data['exception']['line'] = $e->getLine();
+                $data['exception']['file']          = $e->getFile();
+                $data['exception']['line']          = $e->getLine();
                 $data['exception']['traceAsString'] = $e->getTraceAsString();
-                $data['exception']['trace'] = $e->getTrace();
+                $data['exception']['trace']         = $e->getTrace();
             }
 
             // Checks that the exception code corresponds to any HTTP code
@@ -81,9 +81,9 @@ class JsonResponseListener implements EventSubscriberInterface
      */
     public static function getSubscribedEvents()
     {
-        return array(
-            KernelEvents::RESPONSE => array('onResponse', 1),
-            KernelEvents::EXCEPTION => array('onException', 1),
-        );
+        return [
+            KernelEvents::RESPONSE  => ['onResponse', 1],
+            KernelEvents::EXCEPTION => ['onException', 1],
+        ];
     }
 }

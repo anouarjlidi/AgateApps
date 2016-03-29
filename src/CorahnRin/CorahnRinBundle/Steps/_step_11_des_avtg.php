@@ -9,12 +9,12 @@ $global_list = $this->em->getRepository('CorahnRinBundle:Avantages')->findAllDif
 $current_xp = 100;
 
 $this->getStepValue();
-$advantages = isset($this->character[$this->stepFullName()]['advantages'])
+$advantages    = isset($this->character[$this->stepFullName()]['advantages'])
     ? $this->character[$this->stepFullName()]['advantages']
-    : array();
+    : [];
 $disadvantages = isset($this->character[$this->stepFullName()]['disadvantages'])
     ? $this->character[$this->stepFullName()]['disadvantages']
-    : array();
+    : [];
 
 foreach ($advantages as $id => $value) {
     if ($value == 1) {
@@ -36,16 +36,16 @@ foreach ($disadvantages as $id => $value) {
     }
 }
 
-$datas = array(
-    'current_xp' => $current_xp,
-    'advantages' => $advantages,
-    'disadvantages' => $disadvantages,
-    'advantages_list' => $global_list['advantages'],
+$datas = [
+    'current_xp'         => $current_xp,
+    'advantages'         => $advantages,
+    'disadvantages'      => $disadvantages,
+    'advantages_list'    => $global_list['advantages'],
     'disadvantages_list' => $global_list['disadvantages'],
-);
+];
 
 if ($this->request->isMethod('POST')) {
-    $advantages_selected = $this->request->request->get('advantages');
+    $advantages_selected    = $this->request->request->get('advantages');
     $disadvantages_selected = $this->request->request->get('disadvantages');
 
     $error = false;
@@ -63,10 +63,10 @@ if ($this->request->isMethod('POST')) {
     }
 
     if (false === $error) {
-        $this->characterSet(array(
-            'advantages' => $advantages_selected,
+        $this->characterSet([
+            'advantages'    => $advantages_selected,
             'disadvantages' => $disadvantages_selected,
-        ));
+        ]);
 
         return $this->nextStep();
     } else {

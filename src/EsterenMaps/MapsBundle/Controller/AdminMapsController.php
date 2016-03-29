@@ -22,10 +22,10 @@ class AdminMapsController extends Controller
      */
     public function editAction(Maps $map)
     {
-        return $this->render('@EsterenMaps/AdminMaps/edit.html.twig', array(
-            'config' => $this->container->getParameter('easyadmin.config'),
-            'map' => $map,
+        return $this->render('@EsterenMaps/AdminMaps/edit.html.twig', [
+            'config'    => $this->container->getParameter('easyadmin.config'),
+            'map'       => $map,
             'tile_size' => $this->container->getParameter('esterenmaps.tile_size'),
-        ));
+        ]);
     }
 }

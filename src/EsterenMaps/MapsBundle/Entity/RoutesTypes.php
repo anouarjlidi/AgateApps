@@ -85,8 +85,8 @@ class RoutesTypes
      */
     public function __construct()
     {
-        $this->resources = new ArrayCollection();
-        $this->routes = new ArrayCollection();
+        $this->resources  = new ArrayCollection();
+        $this->routes     = new ArrayCollection();
         $this->transports = new ArrayCollection();
     }
 

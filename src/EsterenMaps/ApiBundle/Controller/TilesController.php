@@ -37,7 +37,7 @@ class TilesController extends Controller
                 return new BinaryFileResponse(
                     $this->get('esteren_maps')->getTilesManager()->setMap($map)->createImage($data['ratio'], $data['x'], $data['y'], $data['width'], $data['height'], $data['withImages']),
                     200,
-                    array('Content-Type' => 'image/jpeg')
+                    ['Content-Type' => 'image/jpeg']
                 );
             } catch (\Exception $e) {
                 $message = '';
@@ -48,22 +48,22 @@ class TilesController extends Controller
                     $message .= $e->getMessage();
                 } while ($e = $e->getPrevious());
 
-                return new JsonResponse(array(
-                    'error' => true,
+                return new JsonResponse([
+                    'error'   => true,
                     'message' => $message,
-                ), 400);
+                ], 400);
             }
         } else {
             $messages = [];
             foreach ($form->getErrors(true, true) as $error) {
-                $field = $error->getOrigin()->getName();
+                $field      = $error->getOrigin()->getName();
                 $messages[] = $this->get('translator')->trans('field_error', ['%field%' => $field], 'validators').': '.$error->getMessage();
             }
 
-            return new JsonResponse(array(
-                'error' => true,
+            return new JsonResponse([
+                'error'   => true,
                 'message' => $messages,
-            ), 400);
+            ], 400);
         }
     }
 
@@ -88,6 +88,6 @@ class TilesController extends Controller
             $file = $outputDirectory.'/empty.jpg';
         }
 
-        return new BinaryFileResponse($file, 200, array('Content-Type' => 'image/jpeg'));
+        return new BinaryFileResponse($file, 200, ['Content-Type' => 'image/jpeg']);
     }
 }

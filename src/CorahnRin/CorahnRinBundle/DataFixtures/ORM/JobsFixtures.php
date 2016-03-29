@@ -37,15 +37,15 @@ class JobsFixtures extends AbstractFixture implements OrderedFixtureInterface
 
         $repo = $this->manager->getRepository('CorahnRinBundle:Jobs');
 
-        $domain1 = $this->getReference('corahnrin-domain-1');
-        $domain2 = $this->getReference('corahnrin-domain-2');
-        $domain3 = $this->getReference('corahnrin-domain-3');
-        $domain4 = $this->getReference('corahnrin-domain-4');
-        $domain5 = $this->getReference('corahnrin-domain-5');
-        $domain6 = $this->getReference('corahnrin-domain-6');
-        $domain7 = $this->getReference('corahnrin-domain-7');
-        $domain8 = $this->getReference('corahnrin-domain-8');
-        $domain9 = $this->getReference('corahnrin-domain-9');
+        $domain1  = $this->getReference('corahnrin-domain-1');
+        $domain2  = $this->getReference('corahnrin-domain-2');
+        $domain3  = $this->getReference('corahnrin-domain-3');
+        $domain4  = $this->getReference('corahnrin-domain-4');
+        $domain5  = $this->getReference('corahnrin-domain-5');
+        $domain6  = $this->getReference('corahnrin-domain-6');
+        $domain7  = $this->getReference('corahnrin-domain-7');
+        $domain8  = $this->getReference('corahnrin-domain-8');
+        $domain9  = $this->getReference('corahnrin-domain-9');
         $domain10 = $this->getReference('corahnrin-domain-10');
         $domain11 = $this->getReference('corahnrin-domain-11');
         $domain12 = $this->getReference('corahnrin-domain-12');
@@ -54,7 +54,7 @@ class JobsFixtures extends AbstractFixture implements OrderedFixtureInterface
         $domain15 = $this->getReference('corahnrin-domain-15');
         $domain16 = $this->getReference('corahnrin-domain-16');
 
-        $book2 = $this->getReference('corahnrin-book-2');
+        $book2  = $this->getReference('corahnrin-book-2');
         $book13 = $this->getReference('corahnrin-book-13');
 
         $this->fixtureObject($repo, 1, $book2, 'Artisan', 'Quel que soit son domaine, l\'artisan est un manuel qualifié.'."\n".'Forgeron, cuisinier, architecte, cordonnier, bûcheron, sculpteur, joailler ; les artisans couvrent un grand nombre de spécialités.'."\n".'Dans les cités où est implantée la magience, on trouve aussi des réparateurs d\'artefacts et des ouvriers spécialisés travaillant dans les usines.', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null, $domain1);
@@ -89,9 +89,9 @@ class JobsFixtures extends AbstractFixture implements OrderedFixtureInterface
 
     public function fixtureObject(EntityRepository $repo, $id, $book, $name, $description, $created, $updated, $deleted = null, $domainPrimary)
     {
-        $obj = null;
+        $obj       = null;
         $newObject = false;
-        $addRef = false;
+        $addRef    = false;
         if ($id) {
             $obj = $repo->find($id);
             if ($obj) {

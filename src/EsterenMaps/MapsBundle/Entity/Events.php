@@ -106,16 +106,16 @@ class Events
      */
     public function __construct()
     {
-        $this->foes = new ArrayCollection();
-        $this->npcs = new ArrayCollection();
-        $this->weather = new ArrayCollection();
-        $this->markers = new ArrayCollection();
+        $this->foes         = new ArrayCollection();
+        $this->npcs         = new ArrayCollection();
+        $this->weather      = new ArrayCollection();
+        $this->markers      = new ArrayCollection();
         $this->markersTypes = new ArrayCollection();
-        $this->resources = new ArrayCollection();
-        $this->routes = new ArrayCollection();
-        $this->routesTypes = new ArrayCollection();
-        $this->zonesTypes = new ArrayCollection();
-        $this->zones = new ArrayCollection();
+        $this->resources    = new ArrayCollection();
+        $this->routes       = new ArrayCollection();
+        $this->routesTypes  = new ArrayCollection();
+        $this->zonesTypes   = new ArrayCollection();
+        $this->zones        = new ArrayCollection();
     }
 
     /**

@@ -156,9 +156,9 @@ class DisciplinesFixtures extends AbstractFixture implements OrderedFixtureInter
 
     public function fixtureObject(EntityRepository $repo, $id, $name, $description, $rank, $created, $updated, $deleted = null, $book)
     {
-        $obj = null;
+        $obj       = null;
         $newObject = false;
-        $addRef = false;
+        $addRef    = false;
         if ($id) {
             $obj = $repo->find($id);
             if ($obj) {

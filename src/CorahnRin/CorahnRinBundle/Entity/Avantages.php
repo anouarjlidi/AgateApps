@@ -14,18 +14,18 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 class Avantages
 {
-    const BONUS_100G = '100g';
-    const BONUS_50G = '50g';
-    const BONUS_20G = '20g';
-    const BONUS_50A = '50a';
-    const BONUS_20A = '20a';
-    const BONUS_RESM = 'resm';
+    const BONUS_100G  = '100g';
+    const BONUS_50G   = '50g';
+    const BONUS_20G   = '20g';
+    const BONUS_50A   = '50a';
+    const BONUS_20A   = '20a';
+    const BONUS_RESM  = 'resm';
     const BONUS_BLESS = 'bless';
-    const BONUS_VIG = 'vig';
-    const BONUS_TRAU = 'trau';
-    const BONUS_DEF = 'def';
-    const BONUS_RAP = 'rap';
-    const BONUS_SUR = 'sur';
+    const BONUS_VIG   = 'vig';
+    const BONUS_TRAU  = 'trau';
+    const BONUS_DEF   = 'def';
+    const BONUS_RAP   = 'rap';
+    const BONUS_SUR   = 'sur';
 
     /**
      * @var int

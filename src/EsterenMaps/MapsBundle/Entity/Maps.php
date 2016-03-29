@@ -157,9 +157,9 @@ class Maps
      */
     public function __construct()
     {
-        $this->routes = new ArrayCollection();
+        $this->routes  = new ArrayCollection();
         $this->markers = new ArrayCollection();
-        $this->zones = new ArrayCollection();
+        $this->zones   = new ArrayCollection();
     }
 
     /**
@@ -647,7 +647,7 @@ class Maps
      *
      * @return $this
      */
-    public function setJsonBounds(array $bounds = array())
+    public function setJsonBounds(array $bounds = [])
     {
         $this->bounds = json_encode($bounds);
 

@@ -13,7 +13,7 @@ class TraitsRepository extends BaseRepository
      */
     public function findAllDifferenciated()
     {
-        $list = $this->findBy([], ['name' => 'asc'], null, null, true);
+        $list      = $this->findBy([], ['name' => 'asc'], null, null, true);
         $qualities = $flaws = [];
         foreach ($list as $id => $element) {
             if ($element instanceof Traits) {
@@ -27,7 +27,7 @@ class TraitsRepository extends BaseRepository
 
         return [
             'qualities' => $qualities,
-            'flaws' => $flaws,
+            'flaws'     => $flaws,
         ];
     }
 
@@ -40,7 +40,7 @@ class TraitsRepository extends BaseRepository
     {
         $list = [
             'qualities' => [],
-            'flaws' => [],
+            'flaws'     => [],
         ];
 
         foreach ($traits as $trait) {

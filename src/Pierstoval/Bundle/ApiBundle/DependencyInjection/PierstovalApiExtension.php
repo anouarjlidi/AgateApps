@@ -20,7 +20,7 @@ class PierstovalApiExtension extends Extension
     public function load(array $configs, ContainerBuilder $container)
     {
         $configuration = new Configuration();
-        $config = $this->processConfiguration($configuration, $configs);
+        $config        = $this->processConfiguration($configuration, $configs);
 
         if (isset($config['services'])) {
             foreach ($config['services'] as $name => $v) {

@@ -24,8 +24,8 @@ class Sheets
     public function __construct($sheets_folder, TranslatorInterface $translator, Kernel $kernel)
     {
         $this->sheets_folder = $sheets_folder;
-        $this->translator = $translator;
-        $this->kernel = $kernel;
+        $this->translator    = $translator;
+        $this->kernel        = $kernel;
     }
 
     /**
@@ -65,7 +65,7 @@ class Sheets
 
     private function createManager($type)
     {
-        $type = ucfirst(strtolower($type));
+        $type      = ucfirst(strtolower($type));
         $className = '\CorahnRin\CorahnRinBundle\SheetsManagers\\Managers\\'.$type.'Manager';
 
         if (!class_exists($className)) {

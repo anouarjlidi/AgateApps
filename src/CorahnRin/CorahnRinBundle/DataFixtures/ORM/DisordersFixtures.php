@@ -57,9 +57,9 @@ class DisordersFixtures extends AbstractFixture implements OrderedFixtureInterfa
 
     public function fixtureObject(EntityRepository $repo, $id, $name, $description, $created, $updated, $deleted = null, $book)
     {
-        $obj = null;
+        $obj       = null;
         $newObject = false;
-        $addRef = false;
+        $addRef    = false;
         if ($id) {
             $obj = $repo->find($id);
             if ($obj) {

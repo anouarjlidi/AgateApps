@@ -46,7 +46,7 @@ class ApiController extends FOSRestController
 
         $datas = $this->getDoctrine()->getManager()->getRepository($service['entity'])->findAll();
 
-        $datas = array($serviceName => $datas);
+        $datas = [$serviceName => $datas];
 
         return $this->view($datas);
     }
@@ -90,7 +90,7 @@ class ApiController extends FOSRestController
             return $this->error('No item found with this identifier.');
         }
 
-        $data = array($key => $data);
+        $data = [$key => $data];
 
         return $this->view($data);
     }
@@ -133,7 +133,7 @@ class ApiController extends FOSRestController
 
         $em->flush();
 
-        return $this->view(array('newObject' => $object));
+        return $this->view(['newObject' => $object]);
     }
 
     /**
@@ -153,7 +153,7 @@ class ApiController extends FOSRestController
         $service = $this->getService($serviceName);
 
         /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
+        $em   = $this->getDoctrine()->getManager();
         $repo = $em->getRepository($service['entity']);
 
         // Get full item from database
@@ -173,7 +173,7 @@ class ApiController extends FOSRestController
         $em->flush();
 
         // We retrieve back the object from the database to get it full with relations
-        return $this->view(array('newObject' => $repo->find($id)));
+        return $this->view(['newObject' => $repo->find($id)]);
     }
 
     /**
@@ -208,7 +208,7 @@ class ApiController extends FOSRestController
         $em->remove($data);
         $em->flush();
 
-        $data = array($key => $data);
+        $data = [$key => $data];
 
         return $this->view($data);
     }
@@ -253,10 +253,10 @@ class ApiController extends FOSRestController
                     "Service \"%service%\" not found in the API.\n".
                     "Did you forget to specify it in your configuration ?\n".
                     'Available services : %services%',
-                    array('%service%' => $serviceName, '%services%' => implode(', ', array_keys($this->services)))
+                    ['%service%' => $serviceName, '%services%' => implode(', ', array_keys($this->services))]
                 ), 1);
             } else {
-                throw new \InvalidArgumentException($this->get('translator')->trans('Unrecognized service %service%', array('%service%' => $serviceName)), 1);
+                throw new \InvalidArgumentException($this->get('translator')->trans('Unrecognized service %service%', ['%service%' => $serviceName]), 1);
             }
         }
 
@@ -272,7 +272,7 @@ class ApiController extends FOSRestController
      *
      * @return View|Response
      */
-    protected function view($data = null, $statusCode = null, array $headers = array())
+    protected function view($data = null, $statusCode = null, array $headers = [])
     {
         $view = parent::view($data, $statusCode, $headers);
         $view->setFormat('json');
@@ -288,11 +288,11 @@ class ApiController extends FOSRestController
      */
     protected function validationError(ConstraintViolationListInterface $errors)
     {
-        return $this->view(array(
-            'error' => true,
-            'message' => $this->get('translator')->trans('Invalid form, please re-check.', array(), 'pierstoval_api.exceptions'),
-            'errors' => $errors,
-        ), 500);
+        return $this->view([
+            'error'   => true,
+            'message' => $this->get('translator')->trans('Invalid form, please re-check.', [], 'pierstoval_api.exceptions'),
+            'errors'  => $errors,
+        ], 500);
     }
 
     /**
@@ -305,14 +305,14 @@ class ApiController extends FOSRestController
      *
      * @return View
      */
-    protected function error($message = '', $messageParams = array(), $code = 404)
+    protected function error($message = '', $messageParams = [], $code = 404)
     {
         $message = $this->get('translator')->trans($message, $messageParams, 'pierstoval_api.exceptions');
 
-        return $this->view(array(
-            'error' => true,
+        return $this->view([
+            'error'   => true,
             'message' => $message,
-        ), $code);
+        ], $code);
     }
 
     /**
@@ -331,9 +331,9 @@ class ApiController extends FOSRestController
         if (!$userObject) {
             $msg = 'You must specify the "json" POST parameter.';
 
-            return new ConstraintViolationList(array(
-                new ConstraintViolation($msg, $msg, array(), '', null, '', ''),
-            ));
+            return new ConstraintViolationList([
+                new ConstraintViolation($msg, $msg, [], '', null, '', ''),
+            ]);
         }
         if (is_string($userObject)) {
             // Allows either JSON string or array
@@ -341,9 +341,9 @@ class ApiController extends FOSRestController
             if (!$userObject) {
                 $msg = 'Error while parsing json.';
 
-                return new ConstraintViolationList(array(
-                    new ConstraintViolation($msg, $msg, array(), '', null, '', ''),
-                ));
+                return new ConstraintViolationList([
+                    new ConstraintViolation($msg, $msg, [], '', null, '', ''),
+                ]);
             }
         }
 
@@ -354,27 +354,27 @@ class ApiController extends FOSRestController
             try {
                 $object = $entityMerger->merge($object, $userObject, $post->get('mapping'));
             } catch (\Exception $e) {
-                $msg = $e->getMessage();
+                $msg          = $e->getMessage();
                 $propertyPath = null;
                 if (strpos($msg, 'If you want to specify ') !== false) {
                     $propertyPath = preg_replace('~^.*If you want to specify "([^"]+)".*$~', '$1', $msg);
                 }
 
-                return new ConstraintViolationList(array(
-                    new ConstraintViolation($msg, $msg, array(), '', $propertyPath, '', ''),
-                ));
+                return new ConstraintViolationList([
+                    new ConstraintViolation($msg, $msg, [], '', $propertyPath, '', ''),
+                ]);
             }
         } else {
             // Transform the full item recursively into an array
-            $object = $serializer->deserialize($serializer->serialize($object, 'json'), 'array', 'json');
-            $json = $post->get('json');
-            $requestObject = (is_string($json) ? json_decode($post->get('json'), true) : $json) ?: array();
+            $object        = $serializer->deserialize($serializer->serialize($object, 'json'), 'array', 'json');
+            $json          = $post->get('json');
+            $requestObject = (is_string($json) ? json_decode($post->get('json'), true) : $json) ?: [];
 
             // Merge the two arrays with request parameters
             $userObject = array_merge($object, $requestObject);
 
             // Serialize POST and deserialize to get full object
-            $json = $serializer->serialize($userObject, 'json');
+            $json   = $serializer->serialize($userObject, 'json');
             $object = $serializer->deserialize($json, $this->service['entity'], 'json');
         }
 
@@ -411,12 +411,12 @@ class ApiController extends FOSRestController
                     foreach ($data as $searchingData) {
                         if ($this->getPropertyValue('_id', $searchingData) === $element) {
                             $found = true;
-                            $data = $searchingData;
+                            $data  = $searchingData;
                         }
                     }
                     if (!$found) {
                         return $this->error('Found no element with identifier "'.$element.'" in requested object.',
-                            array(), 404);
+                            [], 404);
                     }
                 } else {
                     return $this->error('Identifier cannot be requested for a collection.');
@@ -457,9 +457,10 @@ class ApiController extends FOSRestController
                 return $this
                     ->getDoctrine()->getManager()
                     ->getRepository($service['entity'])
-                    ->findBy(array(
+                    ->findBy([
                         $metadatas->getAssociationMappedByTargetField($field) => $this->getPropertyValue('_id', $object),
-                    ));
+                    ])
+                    ;
             }
             if ($metadatas->hasField($field) || $metadatas->hasAssociation($field)) {
                 $reflectionProperty = $metadatas->getReflectionClass()->getProperty($field);

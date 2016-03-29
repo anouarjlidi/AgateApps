@@ -55,11 +55,11 @@ class SetbacksFixtures extends AbstractFixture implements OrderedFixtureInterfac
         $this->manager->flush();
     }
 
-    public function fixtureObject(EntityRepository $repo, $id, $name, $description, $malus, $created, $updated, $deleted = null,  $book)
+    public function fixtureObject(EntityRepository $repo, $id, $name, $description, $malus, $created, $updated, $deleted = null, $book)
     {
-        $obj = null;
+        $obj       = null;
         $newObject = false;
-        $addRef = false;
+        $addRef    = false;
         if ($id) {
             $obj = $repo->find($id);
             if ($obj) {

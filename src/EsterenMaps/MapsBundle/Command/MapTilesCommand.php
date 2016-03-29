@@ -19,14 +19,15 @@ class MapTilesCommand extends ContainerAwareCommand
             ->setName('esterenmaps:map:generate-tiles')
             ->setDescription('Generate all tiles for a specific map.')
             ->setHelp('This command is used to generate a tile image for one of your maps.'."\n"
-                      .'You can specify the id of the map by adding it as an argument, or as an option with "-i x" or "--i=x" where "x" is the map id'."\n"
-                      ."\n".'The command will generate all tiles of a map. The tiles number is calculated upon the image size and the maxZoom value'
-                      ."\n".'The higher is the maxZoom value, higher is the number of tiles.'
-                      ."\n".'This command can take a long time to execute, depending of your system.'
-                      ."\n".'but do not worry : you can restart it at any time and skip all existing files')
+                .'You can specify the id of the map by adding it as an argument, or as an option with "-i x" or "--i=x" where "x" is the map id'."\n"
+                ."\n".'The command will generate all tiles of a map. The tiles number is calculated upon the image size and the maxZoom value'
+                ."\n".'The higher is the maxZoom value, higher is the number of tiles.'
+                ."\n".'This command can take a long time to execute, depending of your system.'
+                ."\n".'but do not worry : you can restart it at any time and skip all existing files')
             ->addArgument('id', InputArgument::OPTIONAL, 'Enter the id of the map you want to generate', null)
             ->addOption('replace', 'r', InputOption::VALUE_NONE, 'Replaces all existing tiles')
-            ->addOption('skip', 'k', InputOption::VALUE_NONE, 'Skip all existing tiles');
+            ->addOption('skip', 'k', InputOption::VALUE_NONE, 'Skip all existing tiles')
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -49,11 +50,11 @@ class MapTilesCommand extends ContainerAwareCommand
 
         do {
             // Finds a map
-            $map = $repo->findOneBy(array('id' => $id));
+            $map = $repo->findOneBy(['id' => $id]);
 
             // If no map is found, we'll ask the user to choose between any of the maps in the database
             if (!$map) {
-                $maps_list = array();
+                $maps_list = [];
                 if ($list === null) {
 
                     /* @var Maps[] $list */

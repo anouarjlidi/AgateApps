@@ -20,7 +20,7 @@ class OriginChecker
 
     public function __construct(array $allowedOrigins, $kernelEnvironment)
     {
-        $this->allowedOrigins = $allowedOrigins;
+        $this->allowedOrigins    = $allowedOrigins;
         $this->kernelEnvironment = $kernelEnvironment;
     }
 
@@ -35,7 +35,7 @@ class OriginChecker
 
         // Allows automatically the current server to allow internal requests
         $allowedOrigins[] = $request->server->get('SERVER_ADDR');
-        $host = $request->getHost();
+        $host             = $request->getHost();
         if (!in_array($host, $allowedOrigins)) {
             $allowedOrigins[] = $host;
         }

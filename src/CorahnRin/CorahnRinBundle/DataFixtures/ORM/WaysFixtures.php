@@ -51,9 +51,9 @@ Certains se tournent vers la religion, d\'autres vers des préceptes de chevaler
 
     public function fixtureObject(EntityRepository $repo, $id, $shortName, $name, $fault, $description, $created, $updated, $deleted = null)
     {
-        $obj = null;
+        $obj       = null;
         $newObject = false;
-        $addRef = false;
+        $addRef    = false;
         if ($id) {
             $obj = $repo->find($id);
             if ($obj) {

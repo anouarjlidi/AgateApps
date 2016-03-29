@@ -9,11 +9,11 @@ namespace CorahnRin\CorahnRinBundle\Classes;
  */
 class Money
 {
-    protected $name = 'Daol';
-    protected $names = array('Braise', 'Azur', 'Givre');
-    protected $names_literal = array('Daol%s% de Braise', 'Daol%s% d\'Azur', 'Daol%s% de Givre');
-    protected $ratio = array(10, 10, 10);
-    protected $values = array('Braise' => 0, 'Azur' => 0, 'Givre' => 0);
+    protected $name          = 'Daol';
+    protected $names         = ['Braise', 'Azur', 'Givre'];
+    protected $names_literal = ['Daol%s% de Braise', 'Daol%s% d\'Azur', 'Daol%s% de Givre'];
+    protected $ratio         = [10, 10, 10];
+    protected $values        = ['Braise' => 0, 'Azur' => 0, 'Givre' => 0];
 
     public function __construct()
     {

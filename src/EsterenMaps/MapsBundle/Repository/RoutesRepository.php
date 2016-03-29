@@ -33,7 +33,7 @@ class RoutesRepository extends BaseRepository
         ;
 
         if ($sortByIds) {
-            $a = array();
+            $a = [];
             foreach ($result as $route) {
                 $a[$asArray ? $route['id'] : $route->getId()] = $route;
             }

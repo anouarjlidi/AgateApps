@@ -20,7 +20,7 @@ class RoutesTransportsType extends AbstractType
         $builder
             ->add('percentage')
             ->add('routeType', TextType::class, [
-                'disabled' => true,
+                'disabled'  => true,
                 'read_only' => true,
             ])
             ->add('positiveRatio')
@@ -32,10 +32,10 @@ class RoutesTransportsType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'label' => false,
+        $resolver->setDefaults([
+            'label'      => false,
             'data_class' => 'EsterenMaps\MapsBundle\Entity\RoutesTransports',
-        ));
+        ]);
     }
 
     /**

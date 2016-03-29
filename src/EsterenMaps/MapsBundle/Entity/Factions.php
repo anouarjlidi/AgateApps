@@ -86,8 +86,8 @@ class Factions
      */
     public function __construct()
     {
-        $this->zones = new ArrayCollection();
-        $this->routes = new ArrayCollection();
+        $this->zones   = new ArrayCollection();
+        $this->routes  = new ArrayCollection();
         $this->markers = new ArrayCollection();
     }
 

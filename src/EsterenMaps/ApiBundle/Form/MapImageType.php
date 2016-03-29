@@ -60,11 +60,11 @@ class MapImageType extends AbstractType
     {
         $resolver->setDefaults([
             'csrf_protection' => false,
-            'data' => [
+            'data'            => [
                 'withImages' => false,
-                'ratio' => 100,
-                'width' => 100,
-                'height' => 100,
+                'ratio'      => 100,
+                'width'      => 100,
+                'height'     => 100,
             ],
         ]);
     }

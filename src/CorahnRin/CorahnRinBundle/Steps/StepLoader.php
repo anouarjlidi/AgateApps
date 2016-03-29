@@ -85,7 +85,7 @@ class StepLoader implements ContainerAwareInterface
     public function __construct($steps_managers_directory, $steps_views_directory)
     {
         $this->steps_managers_directory = $steps_managers_directory;
-        $this->steps_views_directory = $steps_views_directory;
+        $this->steps_views_directory    = $steps_views_directory;
     }
 
     /**
@@ -101,15 +101,15 @@ class StepLoader implements ContainerAwareInterface
      */
     public function initialize(Controller $controller, SessionInterface $session, Request $request, Steps $step, $steps)
     {
-        $this->em = $this->container->get('doctrine')->getManager();
-        $this->controller = $controller;
-        $this->session = $session;
-        $this->request = $request;
-        $this->stepEntity = $step;
-        $this->step = $step->getStep();
-        $this->steps = $steps;
-        $this->filename = $this->steps_managers_directory.'/_step_'.str_pad($step->getId(), 2, 0, STR_PAD_LEFT).'_'.$step->getSlug().'.php';
-        $this->character = $session->get('character');
+        $this->em          = $this->container->get('doctrine')->getManager();
+        $this->controller  = $controller;
+        $this->session     = $session;
+        $this->request     = $request;
+        $this->stepEntity  = $step;
+        $this->step        = $step->getStep();
+        $this->steps       = $steps;
+        $this->filename    = $this->steps_managers_directory.'/_step_'.str_pad($step->getId(), 2, 0, STR_PAD_LEFT).'_'.$step->getSlug().'.php';
+        $this->character   = $session->get('character');
         $this->initialized = true;
     }
 
@@ -177,7 +177,7 @@ class StepLoader implements ContainerAwareInterface
      */
     public function getStepValue($step = null)
     {
-        $step = $this->getStep($step);
+        $step         = $this->getStep($step);
         $stepFullName = $this->stepFullName($step);
 
         return array_key_exists($stepFullName, $this->character)
@@ -218,7 +218,7 @@ class StepLoader implements ContainerAwareInterface
      */
     public function characterSet($datas, $step = null)
     {
-        $step = $this->stepFullName($step);
+        $step                   = $this->stepFullName($step);
         $this->character[$step] = $datas;
         $this->session->set('character', $this->character);
     }

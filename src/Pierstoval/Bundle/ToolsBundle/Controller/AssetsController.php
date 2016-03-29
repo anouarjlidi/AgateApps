@@ -22,11 +22,11 @@ class AssetsController extends Controller
     public function jsTranslationsAction($_locale)
     {
         $response = new Response();
-        $response->headers->add(array('Content-type' => 'application/javascript'));
+        $response->headers->add(['Content-type' => 'application/javascript']);
 
-        $datas = array(
+        $datas = [
             'locale' => $_locale,
-        );
+        ];
 
         return $this->render('PierstovalToolsBundle:Assets:jsTranslations.js.twig', $datas, $response);
     }

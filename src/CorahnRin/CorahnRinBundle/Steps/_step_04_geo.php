@@ -6,10 +6,10 @@
  */
 $geoEnvironments = $this->em->getRepository('CorahnRinBundle:GeoEnvironments')->findAll(true);
 
-$datas = array(
-    'geoEnvironments' => $geoEnvironments,
+$datas = [
+    'geoEnvironments'      => $geoEnvironments,
     'geoEnvironment_value' => (isset($this->character[$this->stepFullName()]) ? (int) $this->character[$this->stepFullName()] : null),
-);
+];
 
 if ($this->request->isMethod('POST')) {
     $geoEnvironment_id = (int) $this->request->request->get('gen-div-choice');

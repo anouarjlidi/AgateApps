@@ -37,7 +37,7 @@ class GeneralMenu implements ContainerAwareInterface
         // Create the Maps dropdown menu.
         $menu
             ->addChild('Maps', [
-                'label' => 'Maps <b class="caret"></b>',
+                'label'  => 'Maps <b class="caret"></b>',
                 'extras' => ['safe_label' => true],
             ])
             ->setAttributes(['class' => 'dropdown'])
@@ -50,7 +50,7 @@ class GeneralMenu implements ContainerAwareInterface
         $maps = $this->container->get('doctrine')->getManager()->getRepository('EsterenMapsBundle:Maps')->findForMenu();
         foreach ($maps as $map) {
             $menu['Maps']->addChild($map['name'], [
-                'route' => 'esterenmaps_maps_maps_view',
+                'route'           => 'esterenmaps_maps_maps_view',
                 'routeParameters' => ['nameSlug' => $map['nameSlug']],
             ]);
         }

@@ -64,9 +64,9 @@ class MoveMapElementsCommand extends ContainerAwareCommand
 
         $list = null;
 
-        $latitude = (float) $input->getOption('latitude');
-        $longitude = (float) $input->getOption('longitude');
-        $this->scale = (float) $input->getOption('scale');
+        $latitude         = (float) $input->getOption('latitude');
+        $longitude        = (float) $input->getOption('longitude');
+        $this->scale      = (float) $input->getOption('scale');
         $this->scaleAfter = (bool) $input->getOptions('scale-after');
 
         if (!$latitude && !$longitude && !$this->scale) {
@@ -82,9 +82,9 @@ class MoveMapElementsCommand extends ContainerAwareCommand
         }
 
         do {
-            $map = $repo->findOneBy(array('id' => $id));
+            $map = $repo->findOneBy(['id' => $id]);
             if (!$map) {
-                $maps_list = array();
+                $maps_list = [];
                 if ($list === null) {
                     /** @var Maps[] $list */
                     $list = $repo->findAll();

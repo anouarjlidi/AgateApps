@@ -4,9 +4,9 @@
  *
  * @var $this CorahnRin\CorahnRinBundle\Steps\StepLoader
  */
-$datas = array(
+$datas = [
     'age' => (isset($this->character[$this->stepFullName()]) ? (int) $this->character[$this->stepFullName()] : 16),
-);
+];
 
 if ($this->request->isMethod('POST')) {
     $age = (int) $this->request->request->get('age');

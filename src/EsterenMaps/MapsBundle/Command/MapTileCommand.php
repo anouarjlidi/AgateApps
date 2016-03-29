@@ -37,19 +37,20 @@ class MapTileCommand extends ContainerAwareCommand
             ->setName('esterenmaps:map:generate-tile')
             ->setDescription('Generate one tile for a specific map.')
             ->setHelp('This command is used to generate a tile image for one of your maps.'."\n"
-                      .'You can specify the id of the map by adding it as an argument, or as an option with "-i x" where "x" is the map id'."\n"
-                      ."\n".'The command will generate a tile with three mandatory options:'
-                      ."\n".'x => the "x" value of the tile, from left to right, starting at 0'
-                      ."\n".'y => the "y" value of the tile, from top to bottom, starting at 0'
-                      ."\n".'zoom (or -z) => the zoom value used to generate the tile, starting at 0'
-                      ."\n\n".'You can also use the --replace command to overwrite any existing tile.')
+                .'You can specify the id of the map by adding it as an argument, or as an option with "-i x" where "x" is the map id'."\n"
+                ."\n".'The command will generate a tile with three mandatory options:'
+                ."\n".'x => the "x" value of the tile, from left to right, starting at 0'
+                ."\n".'y => the "y" value of the tile, from top to bottom, starting at 0'
+                ."\n".'zoom (or -z) => the zoom value used to generate the tile, starting at 0'
+                ."\n\n".'You can also use the --replace command to overwrite any existing tile.')
             ->addArgument('id', InputArgument::OPTIONAL, 'Enter the id of the map you want to generate')
             ->addOption('id', 'i', InputOption::VALUE_OPTIONAL, 'Enter the id of the map you want to generate', null)
             ->addOption('x', 'x', InputOption::VALUE_OPTIONAL, 'Determines the "x" value of the tile', null)
             ->addOption('y', 'y', InputOption::VALUE_OPTIONAL, 'Determines the "y" value of the tile', null)
             ->addOption('zoom', 'z', InputOption::VALUE_OPTIONAL, 'Determines the "zoom" value of the tile', null)
             ->addOption('replace', 'r', InputOption::VALUE_NONE, 'Replaces the tile if it already exists')
-            ->addOption('no-interaction', 'n', InputOption::VALUE_NONE, 'No interaction (used by controllers)');
+            ->addOption('no-interaction', 'n', InputOption::VALUE_NONE, 'No interaction (used by controllers)')
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

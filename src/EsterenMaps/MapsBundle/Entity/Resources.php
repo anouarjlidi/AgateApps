@@ -59,9 +59,9 @@ class Resources
      */
     public function __construct()
     {
-        $this->routes = new ArrayCollection();
+        $this->routes      = new ArrayCollection();
         $this->routesTypes = new ArrayCollection();
-        $this->zonesTypes = new ArrayCollection();
+        $this->zonesTypes  = new ArrayCollection();
     }
 
     /**

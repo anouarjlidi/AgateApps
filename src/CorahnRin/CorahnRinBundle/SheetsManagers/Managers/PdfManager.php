@@ -19,41 +19,41 @@ class PdfManager extends SheetsManager implements SheetsManagerInterface
 {
     protected function originalSheet(Characters $character, $printer_friendly = false, $page = 0)
     {
-        $general_width = 893;
+        $general_width  = 893;
         $general_height = 1263;
-        $pdf = new PDF('P', 'pt');
+        $pdf            = new PDF('P', 'pt');
         $pdf->SetCompression(false);
         $translator = $this->getService()->getTranslator();
         $pdf->setTranslator($translator);
 
-        $p = array(
-            'lettrine' => array(
+        $p = [
+            'lettrine' => [
                 'file' => 'LettrinEsteren-Regular.ttf',
                 'name' => 'lettrinesteren-regular',
-            ),
-            'unz' => array(
+            ],
+            'unz'      => [
                 'file' => 'UnZialish.ttf',
                 'name' => 'unzialish',
-            ),
-            'caro' => array(
+            ],
+            'caro'     => [
                 'file' => 'carolingia.ttf',
                 'name' => 'carolingia',
-            ),
-            'carbold' => array(
+            ],
+            'carbold'  => [
                 'file' => 'carolingia_old.ttf',
                 'name' => 'carolingia_old',
-            ),
-            'times' => array(
+            ],
+            'times'    => [
                 'file' => 'times.ttf',
                 'name' => 'times',
-            ),
-            'arial' => array(
+            ],
+            'arial'    => [
                 'file' => 'arial.ttf',
                 'name' => 'arial',
-            ),
-        );
+            ],
+        ];
         foreach ($p as $key => $v) {
-            $file = $this->getService()->locateResource('@EsterenPortalBundle/Resources/public/fonts/'.$v['file']);
+            $file            = $this->getService()->locateResource('@EsterenPortalBundle/Resources/public/fonts/'.$v['file']);
             $p[$key]['file'] = $file;
             $pdf->AddFont($v['name'], '', $file, true);
         }
@@ -63,13 +63,13 @@ class PdfManager extends SheetsManager implements SheetsManagerInterface
         /*--------------------------------*/
 
         //*-----------------------------------
-        $pdf->AddPage('', array($general_width, $general_height));
+        $pdf->AddPage('', [$general_width, $general_height]);
         $pdf->Image($this->getFolder().'/'.
-                'original'.
-                '_'.$this->getLocale().
-                '_1'.
-                '_'.($printer_friendly === true ? 'pf' : 'npf').
-                '.jpg', 0, 0, $general_width, $general_height);
+            'original'.
+            '_'.$this->getLocale().
+            '_1'.
+            '_'.($printer_friendly === true ? 'pf' : 'npf').
+            '.jpg', 0, 0, $general_width, $general_height);
 
         $pdf->textbox($character->getName(), 213, 280, $p['lettrine'], 25, 370);
 
@@ -112,7 +112,7 @@ class PdfManager extends SheetsManager implements SheetsManagerInterface
         $pdf->textline($character->getWay('emp')->getScore(), 1065, 1502, $p['unz'], 22);
 
         // Avantages et désavantages
-        $av = array();
+        $av = [];
         foreach ($character->getAvantages() as $v) {
             if (!$v->getAvantage()->getIsDesv()) {
                 $av[] = $translator->trans($v->getAvantage()->getName()).($v->getDoubleValue() > 1 ? '    x'.$v->getDoubleValue() : '');
@@ -130,7 +130,7 @@ class PdfManager extends SheetsManager implements SheetsManagerInterface
         if (isset($av[3])) {
             $pdf->textline(substr($av[3], 0, 25), 430, 620, $p['caro'], 18);
         }
-        $dv = array();
+        $dv = [];
         foreach ($character->getAvantages() as $v) {
             if ($v->getAvantage()->getIsDesv()) {
                 $dv[] = $translator->trans($v->getAvantage()->getName()).($v->getDoubleValue() > 1 ? '    x'.$v->getDoubleValue() : '');
@@ -168,9 +168,9 @@ class PdfManager extends SheetsManager implements SheetsManagerInterface
         $pdf->textline($character->getSurvival(), 1090, 798, $p['caro'], 22);
 
         // Domaines
-        $x_arr = array(0, 91, 91, 91, 350, 350, 350, 350, 614, 614, 614, 614, 874, 874, 874, 874, 91);
-        $y_arr = array(0, 988, 1165, 1331, 988, 1165, 1333, 1499, 988, 1165, 1331, 1499, 988, 1165, 1331, 1499, 1499);
-        $j = 0;
+        $x_arr = [0, 91, 91, 91, 350, 350, 350, 350, 614, 614, 614, 614, 874, 874, 874, 874, 91];
+        $y_arr = [0, 988, 1165, 1331, 988, 1165, 1333, 1499, 988, 1165, 1331, 1499, 988, 1165, 1331, 1499, 1499];
+        $j     = 0;
         if ($printer_friendly === true) {
             $pdf->SetTextColor(0x14, 0x14, 0x14);
         } else {
@@ -178,7 +178,7 @@ class PdfManager extends SheetsManager implements SheetsManagerInterface
         }
         foreach ($character->getDomains() as $key => $val) {
             $string = '';
-            $score = $val->getScore();
+            $score  = $val->getScore();
             ++$j;
             if ($score >= 0) {
                 for ($i = 1; $i <= $score; ++$i) {
@@ -209,13 +209,13 @@ class PdfManager extends SheetsManager implements SheetsManagerInterface
         /*---------------------------------*/
 
         //*-----------------------------------
-        $pdf->AddPage('', array($general_width, $general_height));
+        $pdf->AddPage('', [$general_width, $general_height]);
         $pdf->Image($this->getFolder().'/'.
-                'original'.
-                '_'.$this->getLocale().
-                '_2'.
-                '_'.($printer_friendly === true ? 'pf' : 'npf').
-                '.jpg', 0, 0, $general_width, $general_height);
+            'original'.
+            '_'.$this->getLocale().
+            '_2'.
+            '_'.($printer_friendly === true ? 'pf' : 'npf').
+            '.jpg', 0, 0, $general_width, $general_height);
 
         $i = 0;
         foreach ($character->getWeapons() as $v) {
@@ -230,18 +230,18 @@ class PdfManager extends SheetsManager implements SheetsManagerInterface
         $pdf->textline($character->getPotential(), 335, 366, $p['caro'], 32);
 
         //Attitudes de combat
-        $tir = $character->getAttackScore('ranged');
-        $cac = $character->getAttackScore('melee');
-        $pot = $character->getPotential();
-        $rap = $character->getBaseSpeed() + $character->getSpeed();
-        $def = $character->getBaseDefense() + $character->getDefense();
-        $attitudes = array(
-            array('tir' => $tir,        'cac' => $cac,        'def' => $def,        'rap' => $rap), //Attitudes standards
-            array('tir' => $tir + $pot,    'cac' => $cac + $pot,    'def' => $def - $pot,    'rap' => $rap), //Attitudes offensives
-            array('tir' => $tir - $pot,    'cac' => $cac - $pot,    'def' => $def + $pot,    'rap' => $rap), //Attitudes défensives
-            array('tir' => $tir,        'cac' => $cac,        'def' => $def - $pot,    'rap' => $rap + $pot), //Attitudes rapide
-            array('tir' => 0,            'cac' => 0,            'def' => $def + $pot,    'rap' => $rap), //Attitudes de mouvement
-        );
+        $tir       = $character->getAttackScore('ranged');
+        $cac       = $character->getAttackScore('melee');
+        $pot       = $character->getPotential();
+        $rap       = $character->getBaseSpeed() + $character->getSpeed();
+        $def       = $character->getBaseDefense() + $character->getDefense();
+        $attitudes = [
+            ['tir' => $tir, 'cac' => $cac, 'def' => $def, 'rap' => $rap], //Attitudes standards
+            ['tir' => $tir + $pot, 'cac' => $cac + $pot, 'def' => $def - $pot, 'rap' => $rap], //Attitudes offensives
+            ['tir' => $tir - $pot, 'cac' => $cac - $pot, 'def' => $def + $pot, 'rap' => $rap], //Attitudes défensives
+            ['tir' => $tir, 'cac' => $cac, 'def' => $def - $pot, 'rap' => $rap + $pot], //Attitudes rapide
+            ['tir' => 0, 'cac' => 0, 'def' => $def + $pot, 'rap' => $rap], //Attitudes de mouvement
+        ];
         $pdf->textline('CàC/Tir', 475, 115, $p['times'], 13, true);
         foreach ($attitudes as $k => $v) {
             $pdf->textline($v['cac'].'/'.$v['tir'], 489, 161 + $k * 54, $p['carbold'], 15);
@@ -275,7 +275,7 @@ class PdfManager extends SheetsManager implements SheetsManagerInterface
 
         if ($character->getArmors()) {
             $arr = $character->getArmors();
-            $i = 0;
+            $i   = 0;
             foreach ($arr as $k => $v) {
                 if ($i > 3) {
                     break;
@@ -298,7 +298,7 @@ class PdfManager extends SheetsManager implements SheetsManagerInterface
             }
         }
 
-        $arr = array();
+        $arr = [];
         foreach ($character->getArtifacts() as $k => $v) {
             $arr[] = $translator->trans($v->getName());
         }
@@ -329,7 +329,7 @@ class PdfManager extends SheetsManager implements SheetsManagerInterface
 
         if ($character->getOgham()) {
             $arr = $character->getOgham();
-            $i = 0;
+            $i   = 0;
             foreach ($arr as $v) {
                 if ($i > 5) {
                     break;
@@ -340,8 +340,8 @@ class PdfManager extends SheetsManager implements SheetsManagerInterface
         }
 
         if ($character->getMiracles()) {
-            $min = array();
-            $maj = array();
+            $min = [];
+            $maj = [];
             foreach ($character->getMiracles() as $miracle) {
                 if ($miracle->isMajor()) {
                     $maj[] = $translator->trans($miracle->getName());
@@ -369,13 +369,13 @@ class PdfManager extends SheetsManager implements SheetsManagerInterface
         /*---------------------------------*/
         /*---------TROISIÈME FICHE---------*/
         /*---------------------------------*/
-        $pdf->AddPage('', array($general_width, $general_height));
+        $pdf->AddPage('', [$general_width, $general_height]);
         $pdf->Image($this->getFolder().'/'.
-                'original'.
-                '_'.$this->getLocale().
-                '_3'.
-                '_'.($printer_friendly === true ? 'pf' : 'npf').
-                '.jpg', 0, 0, $general_width, $general_height);
+            'original'.
+            '_'.$this->getLocale().
+            '_3'.
+            '_'.($printer_friendly === true ? 'pf' : 'npf').
+            '.jpg', 0, 0, $general_width, $general_height);
 
         $resist_mentale = $character->getBaseMentalResist() + $character->getMentalResist();
         $pdf->textline($resist_mentale, 323, 528, $p['carbold'], 25);
@@ -393,7 +393,7 @@ class PdfManager extends SheetsManager implements SheetsManagerInterface
         $pdf->textline($character->getSocialClasses()->getName(), 557, 114, $p['caro'], 14, true);
 
         if ($character->getSetbacks()) {
-            $rev = array();
+            $rev = [];
             foreach ($character->getSetbacks() as $v) {
                 $rev[] = $translator->trans($v->getSetback()->getName());
             }
@@ -403,7 +403,7 @@ class PdfManager extends SheetsManager implements SheetsManagerInterface
 
         //Points de traumatisme
         $trauma = $character->getTraumaPermanent() + $character->getTrauma();
-        $off = 0;
+        $off    = 0;
         for ($i = 1; $i <= $trauma; ++$i) {
             if ($i <= $character->getTraumaPermanent()) {
                 $pdf->SetTextColor(0x22, 0x11, 0x4);
@@ -421,7 +421,7 @@ class PdfManager extends SheetsManager implements SheetsManagerInterface
         //Points d'endurcissement
         if ($character->getHardening()) {
             $endurcissement = (int) $character->getHardening();
-            $off = 0;
+            $off            = 0;
             if ($printer_friendly === true) {
                 $pdf->SetTextColor(0x14, 0x14, 0x14);
             } else {
@@ -451,15 +451,15 @@ class PdfManager extends SheetsManager implements SheetsManagerInterface
         $pdf->textline($character->getExperienceActual().'     ( '.$translator->trans('Total').' '.$character->getExperienceSpent().' )', 679, 1325, $p['carbold'], 24);
 
         if ($character->getFacts()) {
-            $str = preg_replace('#\n|\r#isU', '', $translator->trans($character->getFacts()));
+            $str             = preg_replace('#\n|\r#isU', '', $translator->trans($character->getFacts()));
             $taille_du_texte = 14;
             $police_du_texte = $p['times'];
-            $desc = array(0 => '');
-            $arr = explode(' ', $str, 200);
-            $line = 0;
+            $desc            = [0 => ''];
+            $arr             = explode(' ', $str, 200);
+            $line            = 0;
             foreach ($arr as $word) {
                 $teststring = $desc[$line].' '.$word;
-                $testbox = imagettfbbox($taille_du_texte, 0, $police_du_texte['file'], $teststring);
+                $testbox    = imagettfbbox($taille_du_texte, 0, $police_du_texte['file'], $teststring);
                 if ($line == 0) {
                     $larg = 729;
                 } elseif ($line == 1) {

@@ -24,8 +24,8 @@ abstract class SheetsManager implements SheetsManagerInterface
     public function __construct(Sheets $service)
     {
         $this->service = $service;
-        $this->locale = $service->getTranslator()->getLocale();
-        $this->folder = $service->getFolder();
+        $this->locale  = $service->getTranslator()->getLocale();
+        $this->folder  = $service->getFolder();
     }
 
     /**
@@ -35,7 +35,7 @@ abstract class SheetsManager implements SheetsManagerInterface
      * L'extension et la locale sont automatiquement récupérée depuis le traducteur injecté.
      *
      * @param \CorahnRin\CorahnRinBundle\Entity\Characters $character
-     * @param string                                       $type             Le type de feuille
+     * @param string                                       $type Le type de feuille
      * @param bool                                         $printer_friendly
      * @param int                                          $page
      *

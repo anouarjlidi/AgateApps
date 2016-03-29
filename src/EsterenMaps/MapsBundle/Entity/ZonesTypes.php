@@ -77,7 +77,7 @@ class ZonesTypes
      */
     protected $zones;
 
-    protected $children = array();
+    protected $children = [];
 
     /**
      * Constructor.
@@ -85,7 +85,7 @@ class ZonesTypes
     public function __construct()
     {
         $this->resources = new ArrayCollection();
-        $this->zones = new ArrayCollection();
+        $this->zones     = new ArrayCollection();
     }
 
     public function __toString()

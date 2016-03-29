@@ -51,11 +51,11 @@ class RefreshDatasCommand extends ContainerAwareCommand
         }
 
         /** @var EntityManager $em */
-        $em = $this->getContainer()->get('doctrine')->getManager();
+        $em   = $this->getContainer()->get('doctrine')->getManager();
         $maps = $em->getRepository('EsterenMapsBundle:Maps')->findAllWithRoutes();
 
         // Calculate the number of objects.
-        $numberTotal = array_reduce($maps, function ($carry, Maps $map) {
+        $numberTotal    = array_reduce($maps, function ($carry, Maps $map) {
             return $carry + $map->getRoutes()->count();
         }, 0);
         $numberModified = 0;

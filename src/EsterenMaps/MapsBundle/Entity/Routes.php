@@ -457,16 +457,16 @@ class Routes
         $coords = json_decode($this->coordinates, true);
 
         if ($this->markerStart && isset($coords[0])) {
-            $coords[0] = array(
+            $coords[0] = [
                 'lat' => $this->markerStart->getLatitude(),
                 'lng' => $this->markerStart->getLongitude(),
-            );
+            ];
         }
         if ($this->markerEnd) {
-            $coords[count($coords) - ((int) (count($coords) > 1))] = array(
+            $coords[count($coords) - ((int) (count($coords) > 1))] = [
                 'lat' => $this->markerEnd->getLatitude(),
                 'lng' => $this->markerEnd->getLongitude(),
-            );
+            ];
         }
 
         $this->calcDistance();
@@ -482,7 +482,7 @@ class Routes
     public function calcDistance()
     {
         $distance = 0;
-        $points = json_decode($this->coordinates, true);
+        $points   = json_decode($this->coordinates, true);
 
         reset($points);
 
@@ -492,8 +492,8 @@ class Routes
             if (false !== $next) {
                 $currentX = $current['lng'];
                 $currentY = $current['lat'];
-                $nextX = $next['lng'];
-                $nextY = $next['lat'];
+                $nextX    = $next['lng'];
+                $nextY    = $next['lat'];
 
                 $distance += sqrt(
                     ($nextX * $nextX)

@@ -23,29 +23,29 @@ if (null === $ways_values) {
     }
 }
 
-$datas = array(
+$datas = [
     'ways_values' => $ways_values,
-    'ways_list' => $ways,
-);
+    'ways_list'   => $ways,
+];
 
 if ($this->request->isMethod('POST')) {
     $ways_values = (array) $this->request->request->get('ways');
 
-    $error = false;
-    $errorWayNotExists = false;
+    $error                = false;
+    $errorWayNotExists    = false;
     $errorValueNotInRange = false;
-    $sum = 0;
-    $has1or5 = false;
+    $sum                  = 0;
+    $has1or5              = false;
 
     foreach ($ways_values as $id => $value) {
         $value = (int) $value;
         if (!array_key_exists($id, $ways) && false === $errorWayNotExists) {
-            $error = true;
+            $error             = true;
             $errorWayNotExists = true;
             $this->flashMessage('Erreur dans le formulaire. Merci de vérifier les valeurs soumises.');
         }
         if (($value <= 0 || $value > 5) && false === $errorValueNotInRange) {
-            $error = true;
+            $error                = true;
             $errorValueNotInRange = true;
             $this->flashMessage('Les voies doivent être comprises entre 1 et 5.');
         }

@@ -145,11 +145,11 @@ class TraitsFixtures extends AbstractFixture implements OrderedFixtureInterface
         $this->manager->flush();
     }
 
-    public function fixtureObject(EntityRepository $repo, $id, $way, $name, $nameFemale, $isQuality, $isMajor, $created, $updated, $deleted = null,  $book)
+    public function fixtureObject(EntityRepository $repo, $id, $way, $name, $nameFemale, $isQuality, $isMajor, $created, $updated, $deleted = null, $book)
     {
-        $obj = null;
+        $obj       = null;
         $newObject = false;
-        $addRef = false;
+        $addRef    = false;
         if ($id) {
             $obj = $repo->find($id);
             if ($obj) {

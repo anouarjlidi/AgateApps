@@ -52,9 +52,9 @@ class CombatArtsFixtures extends AbstractFixture implements OrderedFixtureInterf
 
     public function fixtureObject(EntityRepository $repo, $id, $melee, $ranged, $name, $xp, $description, $created, $updated, $deleted = null, $book)
     {
-        $obj = null;
+        $obj       = null;
         $newObject = false;
-        $addRef = false;
+        $addRef    = false;
         if ($id) {
             $obj = $repo->find($id);
             if ($obj) {

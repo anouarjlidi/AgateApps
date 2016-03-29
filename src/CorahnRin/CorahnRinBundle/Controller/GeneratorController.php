@@ -128,13 +128,13 @@ class GeneratorController extends Controller
         $actual_step = (int) $this->get('session')->get('step') ?: 1;
         $this->steps = $this->steps
             ?: $this->getDoctrine()->getManager()->getRepository('CorahnRinBundle:Steps')->findAll('step');
-        $barWidth = count($this->steps) ? ($actual_step / count($this->steps) * 100) : 0;
+        $barWidth    = count($this->steps) ? ($actual_step / count($this->steps) * 100) : 0;
 
         return $this->render('@CorahnRin/Generator/menu.html.twig', [
-            'steps' => $this->steps,
+            'steps'        => $this->steps,
             'session_step' => $actual_step,
-            'bar_width' => $barWidth,
-            'loaded_step' => $step,
+            'bar_width'    => $barWidth,
+            'loaded_step'  => $step,
         ]);
     }
 
