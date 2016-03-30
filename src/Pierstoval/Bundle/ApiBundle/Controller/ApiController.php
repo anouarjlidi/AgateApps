@@ -235,7 +235,7 @@ class ApiController extends FOSRestController
      */
     protected function checkAsker(Request $request)
     {
-        $this->container->get('pierstoval.api.originChecker')->checkRequest($request);
+        $this->container->get('pierstoval.api.origin_checker')->checkRequest($request);
     }
 
     /**

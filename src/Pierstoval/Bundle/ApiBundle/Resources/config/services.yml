@@ -1,6 +1,6 @@
 
 services:
-    pierstoval.api.originChecker:
+    pierstoval.api.origin_checker:
         class: Pierstoval\Bundle\ApiBundle\Services\OriginChecker
         arguments:
             allowedOrigins: %pierstoval_api.allowed_origins%

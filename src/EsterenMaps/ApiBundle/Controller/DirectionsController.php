@@ -24,7 +24,7 @@ class DirectionsController extends Controller
      */
     public function getDirectionsAction(Maps $map, Markers $from, Markers $to, Request $request)
     {
-        $this->container->get('pierstoval.api.originChecker')->checkRequest($request);
+        $this->container->get('pierstoval.api.origin_checker')->checkRequest($request);
 
         $code = 200;
 

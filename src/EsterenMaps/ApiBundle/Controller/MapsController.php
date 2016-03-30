@@ -115,7 +115,7 @@ class MapsController extends Controller
     private function checkAsker(Request $request)
     {
         try {
-            $this->container->get('pierstoval.api.originChecker')->checkRequest($request);
+            $this->container->get('pierstoval.api.origin_checker')->checkRequest($request);
 
             return false;
         } catch (AccessDeniedException $e) {
