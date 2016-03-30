@@ -50,7 +50,7 @@ Some pretty spaces are also added in `AppKernel.php` and `composer.json` to sepa
 ## Menus
 
 Menus are managed with [KnpMenuBundle](https://github.com/KnpLabs/KnpMenuBundle).
-A single menu is present in the top-menu and is configured in [GeneralMenu.php](../src/Esteren/PortalBundle/Menu/GeneralMenu.php)
+A single menu is present in the top-menu and is configured in [GeneralMenu](../src/Esteren/PortalBundle/Menu/GeneralMenu.php)
 
 ## Tests
 

@@ -54,3 +54,21 @@ $ bin/console esterenmaps:map:generate-tiles
 
 It will use [ImageMagick](http://www.imagemagick.org) and the [Orbitale ImageMagickPHP](https://github.com/Orbitale/ImageMagickPHP)
  command wrapper to generate tiles of 128x128px.
+
+## Directions
+
+Directions are calculated by the [DirectionsManager](../src/EsterenMaps/MapsBundle/Services/DirectionsManager.php).
+
+Each time a direction is asked by an end-user, it is cached to avoid consuming too much resource when resolving Dijkstra's
+ algorithm to calculate the best direction.
+
+The cache key is calculated simply by all the arguments.
+
+### Clear Directions cache
+
+This cache can be cleared like any other cache by the `bin/console cache:clear` command, depending on your environment.
+
+But it is also **automatically** cleared when you update any Maps-related entity.
+Check the [CacheClearSubscriber](../src/EsterenMaps/MapsBundle/DoctrineListeners/CacheClearSubscriber.php) class. 
+
+#Again design pattern concerns: When creating a doctrine listener, is it better to chain "instanceof" instructions, or to create an empty interface?

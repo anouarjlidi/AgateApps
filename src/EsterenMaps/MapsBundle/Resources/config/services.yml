@@ -51,3 +51,10 @@ services:
         class: EsterenMaps\MapsBundle\Services\CoordinatesManager
         public: false
         lazy: true
+
+    esterenmaps.subscriber.cache_clear:
+        class: EsterenMaps\MapsBundle\DoctrineListeners\CacheClearSubscriber
+        arguments:
+            - "%esterenmaps.directions.cache_dir%"
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
