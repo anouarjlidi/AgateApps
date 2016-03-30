@@ -1,8 +1,8 @@
 
 # Entities configuration are stored in these files.
 imports:
-    - { resource: 'admin/esterenmaps.yml' }
     - { resource: 'admin/cms.yml' }
+    - { resource: 'admin/esterenmaps.yml' }
 
 easy_admin:
     site_name: Esteren
