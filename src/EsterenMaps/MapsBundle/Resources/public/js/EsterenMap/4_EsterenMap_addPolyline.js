@@ -70,6 +70,11 @@
         this.setLatLngs(latlngs);
     };
 
+    /**
+     * @todo check if this can be removed safely.
+     * @param marker
+     * @param isMarkerStart
+     */
     L.Polyline.prototype.updateMarkerDetails = function(marker, isMarkerStart) {
         var latlngs;
 
@@ -95,6 +100,13 @@
             i = 0,
             l = points.length,
             current, next, currentX, currentY, nextX, nextY;
+
+        // Same behavior as in the PHP entity, we override the distance in case of "forcing" the distance manually.
+        if (this._esterenRoute.forced_distance) {
+            this._esterenRoute.distance = this._esterenRoute.forced_distance;
+            return this._esterenRoute.forced_distance;
+        }
+
         do {
             current = points[i];
             next = points[i+1];
@@ -135,6 +147,7 @@
             esterenRoute.marker_end = { id: esterenRoute.marker_end.id };
             esterenRoute.faction = esterenRoute.faction || {};
             esterenRoute.guarded = !!esterenRoute.guarded;
+            esterenRoute.forced_distance = esterenRoute.forced_distance || '';
             this.calcDistance();
             this.launched = true;
             this._esterenMap._load({
@@ -147,6 +160,7 @@
                         coordinates: true,
                         map: true,
                         distance: true,
+                        forced_distance: { objectField: 'forcedDistance' },
                         route_type: { objectField: 'routeType' },
                         marker_start: { objectField: 'markerStart' },
                         marker_end: { objectField: 'markerEnd' },
@@ -203,6 +217,7 @@
         marker_end: null,
         faction: null,
         distance: 0,
+        forcedDistance: null,
         coordinates: null
     };
 
@@ -230,6 +245,7 @@
 
             if (polyline._sidebar.isVisible()) {
                 d.getElementById('polyline_popup_name').innerHTML = esterenRoute.name;
+                d.getElementById('polyline_popup_forcedDistance').innerHTML = esterenRoute.forced_distance;
                 d.getElementById('polyline_popup_type').innerHTML = esterenRoute.route_type.name;
                 d.getElementById('polyline_popup_faction').innerHTML = esterenRoute.faction ? esterenRoute.faction.name : '';
                 d.getElementById('polyline_popup_markerStart').innerHTML = esterenRoute.marker_start ? esterenRoute.marker_start.name : '';
@@ -267,6 +283,7 @@
                     });
 
                     d.getElementById('polyline_popup_name').value = polyline._esterenRoute.name;
+                    d.getElementById('polyline_popup_forcedDistance').value = polyline._esterenRoute.forced_distance;
                     d.getElementById('polyline_popup_faction').value = polyline._esterenRoute.faction ? polyline._esterenRoute.faction.id : '';
                     d.getElementById('polyline_popup_type').value = polyline._esterenRoute.route_type ? polyline._esterenRoute.route_type.id : '';
                     d.getElementById('polyline_popup_markerStart').value = polyline._esterenRoute.marker_start ? polyline._esterenRoute.marker_start.id : '';
@@ -275,6 +292,12 @@
 
                     $('#polyline_popup_name').off('keyup').on('keyup', function(){
                         map._polylines[id]._esterenRoute.name = this.value;
+                        if (this._timeout) { clearTimeout(this._timeout); }
+                        this._timeout = setTimeout(function(){ map._polylines[id]._updateEM(); }, 1000);
+                        return false;
+                    });
+                    $('#polyline_popup_forcedDistance').off('keyup').on('keyup', function(){
+                        map._polylines[id]._esterenRoute.forced_distance = this.value;
                         if (this._timeout) { clearTimeout(this._timeout); }
                         this._timeout = setTimeout(function(){ map._polylines[id]._updateEM(); }, 1000);
                         return false;

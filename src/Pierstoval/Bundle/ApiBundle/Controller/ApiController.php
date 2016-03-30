@@ -2,6 +2,7 @@
 
 namespace Pierstoval\Bundle\ApiBundle\Controller;
 
+use JMS\Serializer\SerializationContext;
 use Orbitale\Component\EntityMerger\EntityMerger;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
@@ -10,6 +11,7 @@ use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\View\View;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,6 +27,17 @@ class ApiController extends FOSRestController
 {
     private $services;
     private $service;
+
+    /**
+     * @var SerializationContext
+     */
+    private $serializationContext;
+
+    public function __construct()
+    {
+        $this->serializationContext = new SerializationContext();
+        $this->serializationContext->setSerializeNull(true);
+    }
 
     /**
      * @Route("/{serviceName}", name="pierstoval_api_cget")
@@ -90,9 +103,13 @@ class ApiController extends FOSRestController
             return $this->error('No item found with this identifier.');
         }
 
-        $data = [$key => $data];
+        $serializer = $this->get('jms_serializer');
 
-        return $this->view($data);
+        $data = $serializer->serialize($data, 'json', clone $this->serializationContext);
+
+        $data = [$key => json_decode($data, true)];
+
+        return new JsonResponse($data);
     }
 
     /**
@@ -366,7 +383,7 @@ class ApiController extends FOSRestController
             }
         } else {
             // Transform the full item recursively into an array
-            $object        = $serializer->deserialize($serializer->serialize($object, 'json'), 'array', 'json');
+            $object        = $serializer->deserialize($serializer->serialize($object, 'json', clone $this->serializationContext), 'array', 'json');
             $json          = $post->get('json');
             $requestObject = (is_string($json) ? json_decode($post->get('json'), true) : $json) ?: [];
 
@@ -374,7 +391,7 @@ class ApiController extends FOSRestController
             $userObject = array_merge($object, $requestObject);
 
             // Serialize POST and deserialize to get full object
-            $json   = $serializer->serialize($userObject, 'json');
+            $json   = $serializer->serialize($userObject, 'json', clone $this->serializationContext);
             $object = $serializer->deserialize($json, $this->service['entity'], 'json');
         }
 

@@ -64,6 +64,14 @@ Each time a direction is asked by an end-user, it is cached to avoid consuming t
 
 The cache key is calculated simply by all the arguments.
 
+### Distance calculation
+
+Distances are automatically calculated based on Pythagore's theorem with all coordinates of all points of the Route.
+
+BUT, one can set the `forcedDistance` field, so if it is set, it forces (wow...) the `distance` attribute to be set 
+ identically as `forcedDistance`. This helps to hijack the distance if the visual map does not correspond enough to what
+ you would like to have in your map.
+
 ### Clear Directions cache
 
 This cache can be cleared like any other cache by the `bin/console cache:clear` command, depending on your environment.

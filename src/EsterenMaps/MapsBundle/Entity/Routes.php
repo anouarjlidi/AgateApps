@@ -66,6 +66,14 @@ class Routes
     protected $distance = 0;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="forced_distance", type="float", precision=12, scale=6, nullable=true)
+     * @Serializer\Expose
+     */
+    protected $forcedDistance;
+
+    /**
      * @var bool
      *
      * @ORM\Column(name="guarded", type="boolean")
@@ -152,7 +160,7 @@ class Routes
      *
      * @param string $id
      *
-     * @return Routes
+     * @return $this
      */
     public function setId($id)
     {
@@ -166,7 +174,7 @@ class Routes
      *
      * @param string $name
      *
-     * @return Routes
+     * @return $this
      */
     public function setName($name)
     {
@@ -196,7 +204,7 @@ class Routes
     /**
      * @param string $description
      *
-     * @return Routes
+     * @return $this
      */
     public function setDescription($description)
     {
@@ -210,7 +218,7 @@ class Routes
      *
      * @param string $coordinates
      *
-     * @return Routes
+     * @return $this
      */
     public function setCoordinates($coordinates)
     {
@@ -236,7 +244,7 @@ class Routes
      *
      * @param Resources $resources
      *
-     * @return Routes
+     * @return $this
      */
     public function addResource(Resources $resources)
     {
@@ -270,7 +278,7 @@ class Routes
      *
      * @param Maps $map
      *
-     * @return Routes
+     * @return $this
      */
     public function setMap(Maps $map = null)
     {
@@ -294,7 +302,7 @@ class Routes
      *
      * @param Factions $faction
      *
-     * @return Routes
+     * @return $this
      */
     public function setFaction(Factions $faction = null)
     {
@@ -318,7 +326,7 @@ class Routes
      *
      * @param RoutesTypes $routeType
      *
-     * @return Routes
+     * @return $this
      */
     public function setRouteType(RoutesTypes $routeType = null)
     {
@@ -330,7 +338,7 @@ class Routes
     /**
      * Get routeType.
      *
-     * @return RoutesTypes
+     * @return $thisTypes
      */
     public function getRouteType()
     {
@@ -342,7 +350,7 @@ class Routes
      *
      * @param Markers $markerStart
      *
-     * @return Routes
+     * @return $this
      */
     public function setMarkerStart(Markers $markerStart = null)
     {
@@ -366,7 +374,7 @@ class Routes
      *
      * @param Markers $markerEnd
      *
-     * @return Routes
+     * @return $this
      */
     public function setMarkerEnd(Markers $markerEnd = null)
     {
@@ -406,6 +414,26 @@ class Routes
     }
 
     /**
+     * @return int
+     */
+    public function getForcedDistance()
+    {
+        return $this->forcedDistance;
+    }
+
+    /**
+     * @param int $forcedDistance
+     *
+     * @return $this
+     */
+    public function setForcedDistance($forcedDistance)
+    {
+        $this->forcedDistance = $forcedDistance;
+
+        return $this;
+    }
+
+    /**
      * @return bool
      */
     public function isGuarded()
@@ -416,7 +444,7 @@ class Routes
     /**
      * @param bool $guarded
      *
-     * @return Routes
+     * @return $this
      */
     public function setGuarded($guarded)
     {
@@ -481,6 +509,15 @@ class Routes
      */
     public function calcDistance()
     {
+        // Override distance if we have set forcedDistance
+        if ($this->forcedDistance) {
+            $this->distance = $this->forcedDistance;
+            return $this->forcedDistance;
+        } else {
+            // Else, we force the null value
+            $this->forcedDistance = null;
+        }
+
         $distance = 0;
         $points   = json_decode($this->coordinates, true);
 
