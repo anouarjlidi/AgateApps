@@ -18,7 +18,6 @@
          beScritAboutOutputDuringTests="true"
          beScritAboutTestSize="true"
          beScritAboutChangestoGlobalState="true"
-         checkForUnintentionallyCoveredCode="true"
 >
 
     <testsuites>
