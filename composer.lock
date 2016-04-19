@@ -815,16 +815,16 @@
         },
         {
             "name": "egeloen/ckeditor-bundle",
-            "version": "4.0.1",
+            "version": "4.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/egeloen/IvoryCKEditorBundle.git",
-                "reference": "da7c2264ba89d834677749e4f041c6a3731eec72"
+                "reference": "161f680774103468e24f8c5f56a8f22e7a2bfa21"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/egeloen/IvoryCKEditorBundle/zipball/da7c2264ba89d834677749e4f041c6a3731eec72",
-                "reference": "da7c2264ba89d834677749e4f041c6a3731eec72",
+                "url": "https://api.github.com/repos/egeloen/IvoryCKEditorBundle/zipball/161f680774103468e24f8c5f56a8f22e7a2bfa21",
+                "reference": "161f680774103468e24f8c5f56a8f22e7a2bfa21",
                 "shasum": ""
             },
             "require": {
@@ -836,12 +836,12 @@
             },
             "require-dev": {
                 "phpunit/phpunit": "~4.0",
-                "satooshi/php-coveralls": "~0.6",
                 "symfony/phpunit-bridge": "~2.7|~3.0",
                 "symfony/yaml": "^2.0.5|~3.0",
                 "twig/twig": "~1.12"
             },
             "suggest": {
+                "egeloen/form-extra-bundle": "Allows to load CKEditor asynchronously",
                 "twig/twig": "Allows to use Twig templates"
             },
             "type": "symfony-bundle",
@@ -869,7 +869,7 @@
             "keywords": [
                 "CKEditor"
             ],
-            "time": "2015-12-09 10:54:32"
+            "time": "2016-04-08 12:09:48"
         },
         {
             "name": "egeloen/json-builder",
@@ -1211,16 +1211,16 @@
         },
         {
             "name": "javiereguiluz/easyadmin-bundle",
-            "version": "v1.12.4",
+            "version": "v1.12.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/javiereguiluz/EasyAdminBundle.git",
-                "reference": "6e4e17536500b8abbf1dd19a9feaf3f1179bfa6d"
+                "reference": "4009d0536b74db049fa241315634e51cb010c4fc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/javiereguiluz/EasyAdminBundle/zipball/6e4e17536500b8abbf1dd19a9feaf3f1179bfa6d",
-                "reference": "6e4e17536500b8abbf1dd19a9feaf3f1179bfa6d",
+                "url": "https://api.github.com/repos/javiereguiluz/EasyAdminBundle/zipball/4009d0536b74db049fa241315634e51cb010c4fc",
+                "reference": "4009d0536b74db049fa241315634e51cb010c4fc",
                 "shasum": ""
             },
             "require": {
@@ -1286,7 +1286,7 @@
                 "backend",
                 "generator"
             ],
-            "time": "2016-03-24 15:46:38"
+            "time": "2016-04-15 18:23:01"
         },
         {
             "name": "jdorn/sql-formatter",
@@ -1693,16 +1693,16 @@
         },
         {
             "name": "monolog/monolog",
-            "version": "1.18.1",
+            "version": "1.19.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "a5f2734e8c16f3aa21b3da09715d10e15b4d2d45"
+                "reference": "5f56ed5212dc509c8dc8caeba2715732abb32dbf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/a5f2734e8c16f3aa21b3da09715d10e15b4d2d45",
-                "reference": "a5f2734e8c16f3aa21b3da09715d10e15b4d2d45",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/5f56ed5212dc509c8dc8caeba2715732abb32dbf",
+                "reference": "5f56ed5212dc509c8dc8caeba2715732abb32dbf",
                 "shasum": ""
             },
             "require": {
@@ -1717,13 +1717,13 @@
                 "doctrine/couchdb": "~1.0@dev",
                 "graylog2/gelf-php": "~1.0",
                 "jakub-onderka/php-parallel-lint": "0.9",
+                "php-amqplib/php-amqplib": "~2.4",
                 "php-console/php-console": "^3.1.3",
                 "phpunit/phpunit": "~4.5",
                 "phpunit/phpunit-mock-objects": "2.3.0",
                 "raven/raven": "^0.13",
                 "ruflin/elastica": ">=0.90 <3.0",
-                "swiftmailer/swiftmailer": "~5.3",
-                "videlalvaro/php-amqplib": "~2.4"
+                "swiftmailer/swiftmailer": "~5.3"
             },
             "suggest": {
                 "aws/aws-sdk-php": "Allow sending log messages to AWS services like DynamoDB",
@@ -1732,11 +1732,11 @@
                 "ext-mongo": "Allow sending log messages to a MongoDB server",
                 "graylog2/gelf-php": "Allow sending log messages to a GrayLog2 server",
                 "mongodb/mongodb": "Allow sending log messages to a MongoDB server via PHP Driver",
+                "php-amqplib/php-amqplib": "Allow sending log messages to an AMQP server using php-amqplib",
                 "php-console/php-console": "Allow sending log messages to Google Chrome",
                 "raven/raven": "Allow sending log messages to a Sentry server",
                 "rollbar/rollbar": "Allow sending log messages to Rollbar",
-                "ruflin/elastica": "Allow sending log messages to an Elastic Search server",
-                "videlalvaro/php-amqplib": "Allow sending log messages to an AMQP server using php-amqplib"
+                "ruflin/elastica": "Allow sending log messages to an Elastic Search server"
             },
             "type": "library",
             "extra": {
@@ -1767,7 +1767,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2016-03-13 16:08:35"
+            "time": "2016-04-12 18:29:35"
         },
         {
             "name": "nelmio/cors-bundle",
@@ -1991,16 +1991,16 @@
         },
         {
             "name": "orbitale/imagemagick-php",
-            "version": "v1.4.0",
+            "version": "v1.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Orbitale/ImageMagickPHP.git",
-                "reference": "3ae84efe918e616f4280d4b31ab6508847965543"
+                "reference": "a897116110809c2adda12238a06714fb66eaaa7c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Orbitale/ImageMagickPHP/zipball/3ae84efe918e616f4280d4b31ab6508847965543",
-                "reference": "3ae84efe918e616f4280d4b31ab6508847965543",
+                "url": "https://api.github.com/repos/Orbitale/ImageMagickPHP/zipball/a897116110809c2adda12238a06714fb66eaaa7c",
+                "reference": "a897116110809c2adda12238a06714fb66eaaa7c",
                 "shasum": ""
             },
             "require": {
@@ -2033,7 +2033,7 @@
                 "image",
                 "imagick"
             ],
-            "time": "2016-03-08 17:41:16"
+            "time": "2016-04-15 11:19:40"
         },
         {
             "name": "pagerfanta/pagerfanta",
@@ -2562,20 +2562,20 @@
         },
         {
             "name": "symfony/monolog-bundle",
-            "version": "v2.10.0",
+            "version": "2.11.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/monolog-bundle.git",
-                "reference": "82fd8f36e2cccbe94faf237403c48052d4d4b77e"
+                "reference": "e7caf4936c7be82bc6d68df87f1d23a0d5bf6e00"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/monolog-bundle/zipball/82fd8f36e2cccbe94faf237403c48052d4d4b77e",
-                "reference": "82fd8f36e2cccbe94faf237403c48052d4d4b77e",
+                "url": "https://api.github.com/repos/symfony/monolog-bundle/zipball/e7caf4936c7be82bc6d68df87f1d23a0d5bf6e00",
+                "reference": "e7caf4936c7be82bc6d68df87f1d23a0d5bf6e00",
                 "shasum": ""
             },
             "require": {
-                "monolog/monolog": "~1.12",
+                "monolog/monolog": "~1.18",
                 "php": ">=5.3.2",
                 "symfony/config": "~2.3|~3.0",
                 "symfony/dependency-injection": "~2.3|~3.0",
@@ -2590,7 +2590,7 @@
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.9.x-dev"
+                    "dev-master": "2.x-dev"
                 }
             },
             "autoload": {
@@ -2618,7 +2618,7 @@
                 "log",
                 "logging"
             ],
-            "time": "2016-03-13 15:55:56"
+            "time": "2016-04-13 16:21:01"
         },
         {
             "name": "symfony/polyfill-intl-icu",
@@ -3560,16 +3560,16 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "3.3.0",
+            "version": "3.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "fe33716763b604ade4cb442c0794f5bd5ad73004"
+                "reference": "2431befdd451fac43fbcde94d1a92fb3b8b68f86"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/fe33716763b604ade4cb442c0794f5bd5ad73004",
-                "reference": "fe33716763b604ade4cb442c0794f5bd5ad73004",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/2431befdd451fac43fbcde94d1a92fb3b8b68f86",
+                "reference": "2431befdd451fac43fbcde94d1a92fb3b8b68f86",
                 "shasum": ""
             },
             "require": {
@@ -3587,7 +3587,7 @@
             },
             "suggest": {
                 "ext-dom": "*",
-                "ext-xdebug": ">=2.2.1",
+                "ext-xdebug": ">=2.4.0",
                 "ext-xmlwriter": "*"
             },
             "type": "library",
@@ -3619,7 +3619,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2016-03-03 08:49:08"
+            "time": "2016-04-08 08:14:53"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -3801,16 +3801,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "5.2.12",
+            "version": "5.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "6f0948bab32270352f97d1913d82a49338dcb0da"
+                "reference": "2c6da3536035617bae3fe3db37283c9e0eb63ab3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/6f0948bab32270352f97d1913d82a49338dcb0da",
-                "reference": "6f0948bab32270352f97d1913d82a49338dcb0da",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/2c6da3536035617bae3fe3db37283c9e0eb63ab3",
+                "reference": "2c6da3536035617bae3fe3db37283c9e0eb63ab3",
                 "shasum": ""
             },
             "require": {
@@ -3825,13 +3825,14 @@
                 "phpunit/php-code-coverage": "^3.3.0",
                 "phpunit/php-file-iterator": "~1.4",
                 "phpunit/php-text-template": "~1.2",
-                "phpunit/php-timer": ">=1.0.6",
-                "phpunit/phpunit-mock-objects": ">=3.0.5",
+                "phpunit/php-timer": "^1.0.6",
+                "phpunit/phpunit-mock-objects": "^3.1",
                 "sebastian/comparator": "~1.1",
                 "sebastian/diff": "~1.2",
                 "sebastian/environment": "~1.3",
                 "sebastian/exporter": "~1.2",
                 "sebastian/global-state": "~1.0",
+                "sebastian/object-enumerator": "~1.0",
                 "sebastian/resource-operations": "~1.0",
                 "sebastian/version": "~1.0|~2.0",
                 "symfony/yaml": "~2.1|~3.0"
@@ -3845,7 +3846,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "5.2.x-dev"
+                    "dev-master": "5.3.x-dev"
                 }
             },
             "autoload": {
@@ -3871,7 +3872,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2016-03-15 05:59:58"
+            "time": "2016-04-12 16:20:08"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -4256,6 +4257,52 @@
                 "global state"
             ],
             "time": "2015-10-12 03:26:01"
+        },
+        {
+            "name": "sebastian/object-enumerator",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sebastianbergmann/object-enumerator.git",
+                "reference": "d4ca2fb70344987502567bc50081c03e6192fb26"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/object-enumerator/zipball/d4ca2fb70344987502567bc50081c03e6192fb26",
+                "reference": "d4ca2fb70344987502567bc50081c03e6192fb26",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6",
+                "sebastian/recursion-context": "~1.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastian Bergmann",
+                    "email": "sebastian@phpunit.de"
+                }
+            ],
+            "description": "Traverses array structures and object graphs to enumerate all referenced objects",
+            "homepage": "https://github.com/sebastianbergmann/object-enumerator/",
+            "time": "2016-01-28 13:25:10"
         },
         {
             "name": "sebastian/recursion-context",
