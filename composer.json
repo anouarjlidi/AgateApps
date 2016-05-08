@@ -59,7 +59,7 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget",
             "npm install",
             "node node_modules/gulp/bin/gulp.js dump --prod",
-            "bin/console cache:clear --env=prod"
+            "php bin/console cache:clear --env=prod"
         ],
         "post-update-cmd": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
