@@ -6,6 +6,8 @@ pwd
 # Get composer
 curl -sS https://getcomposer.org/installer | php
 
+# WARNING:
+# Do not execute this script outside Jenkins, it could break your app.
 cp tests/jenkins/parameters.yml app/config/parameters.yml
 cp tests/jenkins/phpunit.xml tests/phpunit.xml
 
