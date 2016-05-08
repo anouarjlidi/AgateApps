@@ -10,7 +10,7 @@ portal:
     prefix:   /
     host:     "{domainName}"
     defaults:
-        domainName: %esteren_domains.portal%
+        domainName: '%esteren_domains.portal%'
         slugs: ""
     requirements:
         domainName: "^(?:%esteren_domains.portal%|%esteren_domains.games%|%esteren_domains.corahn_rin%)$"

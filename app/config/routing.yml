@@ -10,7 +10,7 @@ root:
     path: /
     defaults:
         _controller: FrameworkBundle:Redirect:urlRedirect
-        path: /%locale%/
+        path: '/%locale%/'
         permanent: true
 
 #-----------------------------------
@@ -19,21 +19,21 @@ pierstoval_tools:
     resource: "@PierstovalToolsBundle/Controller/"
     type:     annotation
     prefix:   /{_locale}/
-    host:     %esteren_domains.portal%
+    host:     '%esteren_domains.portal%'
     defaults:
-         _locale: %locale%
+         _locale: '%locale%'
     requirements:
-        _locale: ^(%locales_regex%)$
+        _locale: '^(%locales_regex%)$'
 
 pierstoval_api:
     resource: "@PierstovalApiBundle/Controller/"
     type:     annotation
-    host:     %esteren_domains.api%
+    host:     '%esteren_domains.api%'
     prefix:   /{_locale}/
     defaults:
-         _locale: %locale%
+         _locale: '%locale%'
     requirements:
-        _locale: ^(%locales_regex%)$
+        _locale: '^(%locales_regex%)$'
 
 #-----------------------------------
 # Admin relative Routing
@@ -42,10 +42,10 @@ application_admin:
     type:     annotation
     prefix:   /{_locale}/
     defaults:
-         _locale: %locale%
+         _locale: '%locale%'
     requirements:
-        _locale: ^(%locales_regex%)$
-    host: %esteren_domains.backoffice%
+        _locale: '^(%locales_regex%)$'
+    host: '%esteren_domains.backoffice%'
 
 #-----------------------------------
 # Portal routing. MUST be at the end, because it's an OrbitaleCms routing,
