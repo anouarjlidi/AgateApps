@@ -18,6 +18,7 @@ var config = {
             "src/AdminBundle/Resources/public/less/admin.less"
         ]
     },
+    "sass": {},
     "css": {
         "css/generator.css": [
             "src/CorahnRin/CorahnRinBundle/Resources/public/generator/css/*.css"
@@ -62,9 +63,10 @@ var gulp         = require('gulp'),
     gulpif       = require('gulp-if'),
     watch        = require('gulp-watch'),
     less         = require('gulp-less'),
+    sass         = require('gulp-sass'),
     concat       = require('gulp-concat'),
     uglyfly      = require('gulp-uglyfly'),
-    minifycss    = require('gulp-minify-css'),
+    cssnano      = require('gulp-cssnano'),
     sourcemaps   = require('gulp-sourcemaps'),
     autoprefixer = require('gulp-autoprefixer')
 ;
@@ -89,10 +91,35 @@ gulp.task('less', function() {
             .pipe(less())
             .pipe(concat(assets_output))
             .pipe(autoprefixer())
-            .pipe(gulpif(isProd, minifycss({
-                keepBreaks: false,
-                keepSpecialComments: 0
-            })))
+            .pipe(gulpif(isProd, cssnano()))
+            .pipe(concat(assets_output))
+            .pipe(gulp.dest(outputDir))
+        ;
+
+        console.info(" [file+] "+assets_output+" >");
+        for (i = 0, l = assets.length; i < l; i++) {
+            console.info("       > "+assets[i]);
+        }
+    }
+});
+
+/**
+ * Dumps the SASS assets
+ */
+gulp.task('sass', function() {
+    var list = config.sass,
+        outputDir = config.output_directory+'/',
+        assets_output, assets, pipes, i, l
+    ;
+    for (assets_output in list) {
+        if (!list.hasOwnProperty(assets_output)) { continue; }
+        assets = list[assets_output];
+        pipes = gulp
+            .src(assets)
+            .pipe(sass())
+            .pipe(concat(assets_output))
+            .pipe(autoprefixer())
+            .pipe(gulpif(isProd, cssnano()))
             .pipe(concat(assets_output))
             .pipe(gulp.dest(outputDir))
         ;
@@ -119,10 +146,7 @@ gulp.task('css', function() {
             .src(assets)
             .pipe(concat(assets_output))
             .pipe(autoprefixer())
-            .pipe(gulpif(isProd, minifycss({
-                keepBreaks: false,
-                keepSpecialComments: 0
-            })))
+            .pipe(gulpif(isProd, cssnano()))
             .pipe(concat(assets_output))
             .pipe(gulp.dest(outputDir))
         ;
@@ -164,9 +188,10 @@ gulp.task('js', function() {
  * Will watch for files and run "dump" for each modification
  */
 gulp.task('watch', ['dump'], function() {
-    var less = [],
-        css = [],
-        js = [],
+    var files_less = [],
+        files_css = [],
+        files_sass = [],
+        files_js = [],
         callback = function(event) {
             console.log('File "' + event.path + '" updated');
         },
@@ -175,28 +200,52 @@ gulp.task('watch', ['dump'], function() {
     console.info('Night gathers, and now my watch begins...');
 
     for (i in config.less) {
-        if (!config.less.hasOwnProperty(i)) { continue; }
-        less.push(config.less[i]);
+        if (!config.less.hasOwnProperty(i)) {
+            continue;
+        }
+        files_less.push(config.less[i]);
+        console.info('Watching file: '+config.less[i]);
+    }
+    for (i in config.sass) {
+        if (!config.sass.hasOwnProperty(i)) {
+            continue;
+        }
+        files_sass.push(config.sass[i]);
+        console.info('Watching file: '+config.sass[i]);
     }
     for (i in config.css) {
-        if (!config.css.hasOwnProperty(i)) { continue; }
-        css.push(config.css[i]);
+        if (!config.css.hasOwnProperty(i)) {
+            continue;
+        }
+        files_css.push(config.css[i]);
+        console.info('Watching file: '+config.css[i]);
     }
     for (i in config.js) {
-        if (!config.js.hasOwnProperty(i)) { continue; }
-        js.push(config.js[i]);
+        if (!config.js.hasOwnProperty(i)) {
+            continue;
+        }
+        files_js.push(config.js[i]);
+        console.info('Watching file: '+config.js[i]);
     }
 
-    gulp.watch(less, ['less']).on('change', callback);
-    gulp.watch(css, ['css']).on('change', callback);
-    gulp.watch(js, ['js']).on('change', callback);
-
+    if (files_less.length) {
+        gulp.watch(files_less, ['less']).on('change', callback);
+    }
+    if (files_sass.length) {
+        gulp.watch(files_sass, ['sass']).on('change', callback);
+    }
+    if (files_css.length) {
+        gulp.watch(files_css, ['css']).on('change', callback);
+    }
+    if (files_js.length) {
+        gulp.watch(files_js, ['js']).on('change', callback);
+    }
 });
 
 /**
  * Runs all the needed commands to dump all assets and manifests
  */
-gulp.task('dump', ['less', 'css', 'js']);
+gulp.task('dump', ['less', 'sass', 'css', 'js']);
 
 /**
  * Small user guide
@@ -206,18 +255,19 @@ gulp.task('default', function(){
     console.info("usage: gulp [command] [--prod]");
     console.info("");
     console.info("Options:");
-    console.info("    --prod       If specified, will run some minifycss and uglyfyjs when dumping the assets.");
+    console.info("    --prod       If specified, will run some cleancss and uglyfyjs when dumping the assets.");
     console.info("");
     console.info("Commands:");
-    console.info("    less         Dumps the sources in the `config.less` parameter.");
-    console.info("    css          Dumps the sources in the `config.css` parameter.");
-    console.info("    js           Dumps the sources in the `config.js` parameter.");
+    console.info("    less         Dumps the sources in the `config.less` parameter from LESS files.");
+    console.info("    sass         Dumps the sources in the `config.sass` parameter from SCSS files.");
+    console.info("    css          Dumps the sources in the `config.css` parameter from plain CSS files.");
+    console.info("    js           Dumps the sources in the `config.js` parameter from plain JS files.");
     console.info("    dump         Executes all the above commands.");
-    console.info("    watch        Executes 'dump', and then watches all assets to dump them all when any is modified.");
+    console.info("    watch        Executes 'dump', then watch all sources, and dump all assets once any file is updated.");
     console.info("");
 });
 
 // Gulpfile with a single var as configuration.
 // License: MIT
-// Author: Alex "Pierstoval" Rock Ancelet <alex@orbitale.io>
+// Author: 2016 - Alex "Pierstoval" Rock Ancelet <alex@orbitale.io>
 // Repository: https://gist.github.com/Pierstoval/9d88b0dcb64f30eff4dc
