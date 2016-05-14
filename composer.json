@@ -7,7 +7,10 @@
         "psr-4": {
             "": "src/"
         },
-        "classmap": [ "app/AppKernel.php", "app/AppCache.php" ]
+        "classmap": [
+            "app/AppKernel.php",
+            "app/AppCache.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
@@ -44,7 +47,7 @@
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
-        "symfony/phpunit-bridge": "~3.0",
+        "symfony/phpunit-bridge": "^3.0",
         "phpunit/phpunit": "^5.2",
         "doctrine/doctrine-fixtures-bundle": "^2.2"
     },
@@ -57,9 +60,10 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget",
-            "npm install",
+            "npm -v && npm install",
             "node node_modules/gulp/bin/gulp.js dump --prod",
-            "php bin/console cache:clear --env=prod"
+            "php bin/console cache:clear --env=prod",
+            "php bin/console doctrine:schema:validate --env=prod"
         ],
         "post-update-cmd": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
@@ -67,13 +71,12 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget",
-            "npm install",
-            "node node_modules/gulp/bin/gulp.js dump --prod"
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
         ]
     },
     "config": {
         "autoloader-suffix": "EsterenPortal",
+        "optimize-autoloader": true,
         "platform": {
             "php": "5.6"
         }
