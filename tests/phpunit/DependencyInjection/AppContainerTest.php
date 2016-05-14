@@ -35,13 +35,13 @@ class AppContainerTest extends WebTestCase
 
         // We "fail" manually to avoid phpunit to say there's an error.
         if (!$container->has($serviceId)) {
-            $this->fail('Service '.$serviceId.' does not exist.');
+            static::fail('Service '.$serviceId.' does not exist.');
 
             return;
         }
 
         $service = $container->get($serviceId);
-        $this->assertNotNull($service);
+        static::assertNotNull($service);
     }
 
 }

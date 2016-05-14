@@ -16,12 +16,12 @@ class CharacterViewControllerTest extends WebTestCase
      */
     public function testList()
     {
-        $client = static::getClient('corahnrin.esteren.dev', array(), array('ROLE_MANAGER'));
+        $client = $this->getClient('corahnrin.esteren.dev', array(), array('ROLE_MANAGER'));
 
         $crawler = $client->request('GET', '/fr/characters/');
 
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertEquals(1, $crawler->filter('table.table.table-condensed')->count());
+        static::assertEquals(200, $client->getResponse()->getStatusCode());
+        static::assertEquals(1, $crawler->filter('table.table.table-condensed')->count());
     }
 
     /**
@@ -29,11 +29,11 @@ class CharacterViewControllerTest extends WebTestCase
      */
     public function testView404()
     {
-        $client = static::getClient('corahnrin.esteren.dev', array(), array('ROLE_MANAGER'));
+        $client = $this->getClient('corahnrin.esteren.dev', array(), array('ROLE_MANAGER'));
 
         $client->request('GET', '/fr/characters/9999999-aaaaaaaa');
 
-        $this->assertEquals(404, $client->getResponse()->getStatusCode());
+        static::assertEquals(404, $client->getResponse()->getStatusCode());
     }
 
     /**
@@ -41,7 +41,7 @@ class CharacterViewControllerTest extends WebTestCase
      */
     public function testView()
     {
-        $client = static::getClient('corahnrin.esteren.dev', array(), array('ROLE_MANAGER'));
+        $client = $this->getClient('corahnrin.esteren.dev', array(), array('ROLE_MANAGER'));
 
         /**
          * @var Characters|null $char
@@ -49,13 +49,13 @@ class CharacterViewControllerTest extends WebTestCase
         $char = $client->getContainer()->get('doctrine')->getRepository('CorahnRinBundle:Characters')->find(608);
 
         if (!$char) {
-            $this->markTestSkipped('No character available in the database to test the route.');
+            static::markTestSkipped('No character available in the database to test the route.');
         }
 
         $crawler = $client->request('GET', '/fr/characters/'.$char->getId().'-'.$char->getNameSlug());
 
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertEquals(1, $crawler->filter('h2.char-name')->count());
+        static::assertEquals(200, $client->getResponse()->getStatusCode());
+        static::assertEquals(1, $crawler->filter('h2.char-name')->count());
     }
 
 }

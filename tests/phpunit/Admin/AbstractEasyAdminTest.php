@@ -2,6 +2,7 @@
 
 namespace Tests\Admin;
 
+use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Component\DomCrawler\Crawler;
 use Tests\WebTestCase;
 
@@ -38,52 +39,56 @@ abstract class AbstractEasyAdminTest extends WebTestCase
 
     public function testListingFields()
     {
-        $client = static::getClient();
+        $client = $this->getClient();
 
         $crawler = $client->request('GET', '/fr/?entity='.$this->getEntityName().'&action=list');
 
         $wishedColumns = $this->provideListingFields();
 
         if (!$wishedColumns) {
-            $this->markTestSkipped('No columns to test the listing page.');
+            static::markTestSkipped('No columns to test the listing page.');
         }
 
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        static::assertEquals(200, $client->getResponse()->getStatusCode());
 
-        /** @var Crawler $nodeHeaders */
+        /** @var Crawler|\DOMElement[] $nodeHeaders */
         $nodeHeaders = $crawler->filter('#main table thead tr th[data-property-name]');
 
-        $this->assertCount(count($wishedColumns), $nodeHeaders);
+        static::assertCount(count($wishedColumns), $nodeHeaders);
 
         foreach ($nodeHeaders as $k => $node) {
-            $this->assertArrayHasKey($k, $wishedColumns);
-            $this->assertEquals($wishedColumns[$k], $node->getAttribute('data-property-name'));
+            static::assertArrayHasKey($k, $wishedColumns);
+            static::assertEquals($wishedColumns[$k], $node->getAttribute('data-property-name'));
         }
 
         foreach ($wishedColumns as $columnName) {
-            $this->assertEquals(1, $crawler->filter('#main table thead tr th[data-property-name="'.$columnName.'"]')->count(), 'Column '.$columnName.' in title.');
+            static::assertEquals(1, $crawler->filter('#main table thead tr th[data-property-name="'.$columnName.'"]')->count(), 'Column '.$columnName.' in title.');
         }
     }
 
     public function testListingContents()
     {
-        $client = static::getClient();
+        $client = $this->getClient();
 
         $crawler = $client->request('GET', '/fr/?entity='.$this->getEntityName().'&action=list');
 
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        static::assertEquals(200, $client->getResponse()->getStatusCode());
 
         $count = $crawler->filter('#main table tr[data-id]')->count();
 
         if (0 === $count) {
-            $this->markTestSkipped('No data to test in the listing for the entity "'.$this->getEntityName().'"');
+            static::markTestSkipped('No data to test in the listing for the entity "'.$this->getEntityName().'"');
         }
     }
 
     /**
      * Overrides classic client behavior to be sure we have a client that points to the backend.
      *
-     * {@inheritdoc}
+     * @param string        $host
+     * @param array         $options
+     * @param array|string  $tokenRoles
+     *
+     * @return Client
      */
     protected function getClient($host = null, array $options = array(), $tokenRoles = array())
     {
@@ -93,7 +98,7 @@ abstract class AbstractEasyAdminTest extends WebTestCase
         if (0 === count($tokenRoles)) {
             $tokenRoles[] = 'ROLE_ADMIN';
         }
-        return parent::getClient($host, $options, $tokenRoles);
+        return parent::getClient($host, $options, is_array($tokenRoles) ? $tokenRoles : [$tokenRoles]);
     }
 
 }

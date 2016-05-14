@@ -14,11 +14,11 @@ class GeneratorControllerTest extends WebTestCase
      */
     public function testIndex()
     {
-        $client = static::getClient('corahnrin.esteren.dev', array(), array('ROLE_MANAGER'));
+        $client = $this->getClient('corahnrin.esteren.dev', array(), array('ROLE_MANAGER'));
 
         $client->request('GET', '/fr/characters/generate/');
 
-        $this->assertTrue($client->getResponse()->isRedirect('/fr/characters/generate/1-peuple'));
+        static::assertTrue($client->getResponse()->isRedirect('/fr/characters/generate/1-peuple'));
     }
 
     /**
@@ -26,13 +26,13 @@ class GeneratorControllerTest extends WebTestCase
      */
     public function testStep1()
     {
-        $client = static::getClient('corahnrin.esteren.dev', array(), array('ROLE_MANAGER'));
+        $client = $this->getClient('corahnrin.esteren.dev', array(), array('ROLE_MANAGER'));
 
         $crawler = $client->request('GET', '/fr/characters/generate/1-peuple');
 
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertEquals(1, $crawler->filter('#gen-div-choice')->count());
-        $this->assertEquals(1, $crawler->filter('#generator_peuple')->count());
+        static::assertEquals(200, $client->getResponse()->getStatusCode());
+        static::assertEquals(1, $crawler->filter('#gen-div-choice')->count());
+        static::assertEquals(1, $crawler->filter('#generator_peuple')->count());
     }
 
     /**
@@ -40,11 +40,11 @@ class GeneratorControllerTest extends WebTestCase
      */
     public function testAllSteps()
     {
-        $client = static::getClient('corahnrin.esteren.dev');
+        $client = $this->getClient('corahnrin.esteren.dev');
 
         $client->request('GET', '/fr/characters/generate/1-peuple');
 
-        $this->markTestIncomplete('Need to generate unit tests for the whole 20-steps process... One day, maybe...');
+        static::markTestIncomplete('Need to generate unit tests for the whole 20-steps process... One day, maybe...');
     }
 
 }

@@ -13,11 +13,11 @@ class PortalControllerTest extends WebTestCase
      */
     public function testIndexWithNoPage()
     {
-        $client = static::getClient('portal.esteren.dev');
+        $client = $this->getClient('portal.esteren.dev');
 
         $client->request('GET', '/fr/');
 
-        $this->assertEquals(404, $client->getResponse()->getStatusCode());
+        static::assertEquals(404, $client->getResponse()->getStatusCode());
     }
 
     /**
@@ -25,7 +25,7 @@ class PortalControllerTest extends WebTestCase
      */
     public function testIndexWithHomepage()
     {
-        $client = static::getClient('www.esteren.dev');
+        $client = $this->getClient('www.esteren.dev');
 
         $page = new Page();
         $page
@@ -46,10 +46,10 @@ class PortalControllerTest extends WebTestCase
         $client->restart();
 
         $crawler = $client->request('GET', '/fr/');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode(), $client->getResponse()->getContent());
+        static::assertEquals(200, $client->getResponse()->getStatusCode(), $client->getResponse()->getContent());
 
-        $this->assertEquals($page->getTitle(), trim($crawler->filter('#content section article h1')->html()));
-        $this->assertContains($page->getContent(), trim($crawler->filter('#content section article')->html()));
+        static::assertEquals($page->getTitle(), trim($crawler->filter('#content section article h1')->html()));
+        static::assertContains($page->getContent(), trim($crawler->filter('#content section article')->html()));
     }
 
     /**
@@ -57,7 +57,7 @@ class PortalControllerTest extends WebTestCase
      */
     public function testIndexWithOnePage()
     {
-        $client = static::getClient('www.esteren.dev');
+        $client = $this->getClient('www.esteren.dev');
 
         $page = new Page();
         $page
@@ -75,7 +75,7 @@ class PortalControllerTest extends WebTestCase
 
         // First, we check that "enabled" is false by default
         $client->request('GET', '/fr/page-test');
-        $this->assertEquals(404, $client->getResponse()->getStatusCode());
+        static::assertEquals(404, $client->getResponse()->getStatusCode());
 
         $page->setEnabled(true);
         $em->flush($page);
@@ -83,10 +83,10 @@ class PortalControllerTest extends WebTestCase
         $client->restart();
 
         $crawler = $client->request('GET', '/fr/page-test');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode(), $client->getResponse()->getContent());
+        static::assertEquals(200, $client->getResponse()->getStatusCode(), $client->getResponse()->getContent());
 
-        $this->assertEquals($page->getTitle(), trim($crawler->filter('#content section article h1')->html()));
-        $this->assertContains($page->getContent(), trim($crawler->filter('#content section article')->html()));
+        static::assertEquals($page->getTitle(), trim($crawler->filter('#content section article h1')->html()));
+        static::assertContains($page->getContent(), trim($crawler->filter('#content section article')->html()));
     }
 
 }

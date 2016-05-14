@@ -10,9 +10,9 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase as BaseWebTestCase;
 abstract class WebTestCase extends BaseWebTestCase
 {
     /**
-     * @param string $host
-     * @param array  $options
-     * @param array  $tokenRoles
+     * @param string        $host
+     * @param array         $options
+     * @param array|string  $tokenRoles
      *
      * @return Client
      */
@@ -25,7 +25,7 @@ abstract class WebTestCase extends BaseWebTestCase
         $client = static::createClient($options, $server);
 
         if ($tokenRoles) {
-            static::setToken($client, 'user', $tokenRoles);
+            static::setToken($client, 'user', is_array($tokenRoles) ? $tokenRoles : [$tokenRoles]);
         }
 
         return $client;
@@ -36,7 +36,7 @@ abstract class WebTestCase extends BaseWebTestCase
      * @param string       $userName
      * @param array|string $roles
      */
-    protected static function setToken(Client $client, $userName = "user", $roles = array('ROLE_USER'))
+    protected static function setToken(Client $client, $userName = 'user', array $roles = array('ROLE_USER'))
     {
         $session = $client->getContainer()->get('session');
 

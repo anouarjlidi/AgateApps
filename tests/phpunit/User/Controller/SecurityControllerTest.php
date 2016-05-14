@@ -10,45 +10,45 @@ class SecurityControllerTest extends WebTestCase
 
     public function testForceLogin()
     {
-        $client = static::getClient('www.esteren.dev', array(), 'ROLE_USER');
+        $client = $this->getClient('www.esteren.dev', array(), 'ROLE_USER');
 
         $crawler = $client->request('GET', '/fr/profile/');
 
         if (403 === $client->getResponse()->getStatusCode()) {
-            $this->markTestSkipped('Skipped because still in restrictive mode.');
+            static::markTestSkipped('Skipped because still in restrictive mode.');
         }
 
-        $this->assertEquals(401, $client->getResponse()->getStatusCode());
+        static::assertEquals(401, $client->getResponse()->getStatusCode());
 
         $form = $crawler->filter('#form_login');
-        $this->assertEquals(1, $form->count());
-        $this->assertContains('/login_check', $form->attr('action'));
+        static::assertEquals(1, $form->count());
+        static::assertContains('/login_check', $form->attr('action'));
     }
 
     public function testForbiddenAdmin()
     {
-        $client = static::getClient('back.esteren.dev', array(), 'ROLE_USER');
+        $client = $this->getClient('back.esteren.dev', array(), 'ROLE_USER');
 
         $client->request('GET', '/fr/');
 
-        $this->assertEquals(403, $client->getResponse()->getStatusCode());
+        static::assertEquals(403, $client->getResponse()->getStatusCode());
     }
 
     public function testAllowedAdmin()
     {
-        $client = static::getClient('back.esteren.dev', array(), 'ROLE_ADMIN');
+        $client = $this->getClient('back.esteren.dev', array(), 'ROLE_ADMIN');
 
         $client->request('GET', '/fr/');
 
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
-        $this->assertContains('/fr/?action=list&entity=Page', $client->getResponse()->headers->get('Location'));
+        static::assertEquals(302, $client->getResponse()->getStatusCode());
+        static::assertContains('/fr/?action=list&entity=Page', $client->getResponse()->headers->get('Location'));
         $client->followRedirect();
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        static::assertEquals(200, $client->getResponse()->getStatusCode());
     }
 
     public function testAllProfileProcesses()
     {
-        $client = static::getClient('www.esteren.dev');
+        $client = $this->getClient('www.esteren.dev');
 
         $container = static::$kernel->getContainer();
 
@@ -64,7 +64,7 @@ class SecurityControllerTest extends WebTestCase
 
         $crawler = $client->submit($form);
 
-        $this->assertEquals(302, $client->getResponse()->getStatusCode(), $crawler->html());
+        static::assertEquals(302, $client->getResponse()->getStatusCode(), $crawler->html());
 
         $crawler->clear();
         $crawler = $client->followRedirect();
@@ -73,8 +73,8 @@ class SecurityControllerTest extends WebTestCase
         $msg2 = $container->get('translator')->trans('registration.flash.user_created', array(), 'FOSUserBundle');
 
         $content = $crawler->html();
-        $this->assertContains($msg1, $content);
-        $this->assertContains($msg2, $content);
+        static::assertContains($msg1, $content);
+        static::assertContains($msg2, $content);
 
         $crawler->clear();
         $crawler = $client->request('GET', '/fr/profile/change-password');
@@ -88,18 +88,18 @@ class SecurityControllerTest extends WebTestCase
 
         $client->submit($form);
 
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+        static::assertEquals(302, $client->getResponse()->getStatusCode());
 
         $crawler->clear();
         $crawler = $client->followRedirect();
 
         $msg = $container->get('translator')->trans('change_password.flash.success', array('%username%'=>'test_user'), 'FOSUserBundle');
         $content = $crawler->html();
-        $this->assertContains($msg, $content);
+        static::assertContains($msg, $content);
 
         $user = $container->get('fos_user.user_provider.username')->loadUserByUsername('test_user');
         $encoder = $container->get('security.encoder_factory')->getEncoder($user);
-        $this->assertTrue($encoder->isPasswordValid($user->getPassword(), 'newPassword', $user->getSalt()));
+        static::assertTrue($encoder->isPasswordValid($user->getPassword(), 'newPassword', $user->getSalt()));
 
         $crawler->clear();
         $crawler = $client->request('GET', '/fr/profile/edit');
@@ -112,10 +112,10 @@ class SecurityControllerTest extends WebTestCase
         $form['fos_user_profile_form[current_password]'] = 'newPassword';
 
         $client->submit($form);
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+        static::assertEquals(302, $client->getResponse()->getStatusCode());
         $crawler->clear();
         $crawler = $client->followRedirect();
-        $this->assertEquals(1, $crawler->filter('.alert.alert-success.success')->count());
+        static::assertEquals(1, $crawler->filter('.alert.alert-success.success')->count());
 
         $crawler->clear();
         $crawler = $client->request('GET', '/fr/resetting/request');
@@ -125,10 +125,10 @@ class SecurityControllerTest extends WebTestCase
 
         $form['username'] = 'user_updated';
         $client->submit($form);
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+        static::assertEquals(302, $client->getResponse()->getStatusCode());
         $crawler->clear();
         $crawler = $client->followRedirect();
-        $this->assertContains($container->get('translator')->trans('resetting.check_email', array('%email%' => '...@local.host.dev'), 'FOSUserBundle'), $crawler->filter('#content')->html());
+        static::assertContains($container->get('translator')->trans('resetting.check_email', array('%email%' => '...@local.host.dev'), 'FOSUserBundle'), $crawler->filter('#content')->html());
 
         $tokenGenerator = $container->get('fos_user.util.token_generator');
         $user->setConfirmationToken($tokenGenerator->generateToken());
@@ -145,10 +145,10 @@ class SecurityControllerTest extends WebTestCase
 
         $client->submit($form);
 
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+        static::assertEquals(302, $client->getResponse()->getStatusCode());
         $crawler->clear();
         $crawler = $client->followRedirect();
-        $this->assertEquals(1, $crawler->filter('.alert.alert-success.success')->count());
+        static::assertEquals(1, $crawler->filter('.alert.alert-success.success')->count());
     }
 
 }
