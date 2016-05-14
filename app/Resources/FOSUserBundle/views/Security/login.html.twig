@@ -11,7 +11,7 @@
         <h3>{{ 'layout.login' | trans({}, 'FOSUserBundle') }}</h3>
 
         {% if error %}
-            <div class="alert alert-danger">{{ error|trans({}, 'FOSUserBundle') }}</div>
+            <div class="alert alert-danger">{{ (error.message)|trans }}</div>
         {% endif %}
 
         <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
