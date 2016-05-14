@@ -2,7 +2,7 @@
 
 use Symfony\Component\Console\Input\ArgvInput;
 
-$rootDir = realpath(__DIR__.'/../..');
+$rootDir = __DIR__.'/../..';
 
 $file = $rootDir.'/app/autoload.php';
 if (!file_exists($file)) {
@@ -14,7 +14,7 @@ $autoload = require_once $file;
 
 $input = new ArgvInput();
 
-if (true === $input->hasParameterOption('--no-db')) {
+if (true === $input->hasParameterOption('--no-db') || getenv('TESTS_NO_DB')) {
     return;
 }
 

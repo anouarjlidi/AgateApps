@@ -39,4 +39,28 @@ class MapsAdminTest extends AbstractEasyAdminTest
         );
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function provideNewFormData()
+    {
+        // TODO
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function provideEditFormData()
+    {
+        // TODO
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function provideIdToDelete()
+    {
+        return false;
+    }
+
 }
