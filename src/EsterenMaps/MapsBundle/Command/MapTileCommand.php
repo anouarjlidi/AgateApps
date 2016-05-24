@@ -34,7 +34,7 @@ class MapTileCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('esterenmaps:map:generate-tile')
+            ->setName('esterenmaps:map:generate-one-tile')
             ->setDescription('Generate one tile for a specific map.')
             ->setHelp('This command is used to generate a tile image for one of your maps.'."\n"
                 .'You can specify the id of the map by adding it as an argument, or as an option with "-i x" where "x" is the map id'."\n"
