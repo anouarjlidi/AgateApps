@@ -10,6 +10,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 class MapTilesCommand extends ContainerAwareCommand
 {
@@ -32,18 +33,16 @@ class MapTilesCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $id = $input->hasArgument('id') ? $input->getArgument('id') : null;
+        $io = new SymfonyStyle($input, $output);
 
-        /** @var DialogHelper $dialog */
-        $dialog = $this->getHelperSet()->get('dialog');
+        $id = $input->hasArgument('id') ? $input->getArgument('id') : null;
 
         /** @var BaseEntityRepository $repo */
         $repo = $this->getContainer()->get('doctrine')->getManager()->getRepository('EsterenMapsBundle:Maps');
 
         $list = null;
 
-        $output->writeln('Be careful : as maps may be huge, this application can use a lot of memory and take very long to execute.');
-        $output->writeln('');
+        $io->comment('Be careful: as maps may be huge, this application can use a lot of memory and take very long to execute.');
 
         /** @var Maps $map */
         $map = null;
@@ -58,10 +57,10 @@ class MapTilesCommand extends ContainerAwareCommand
                 if ($list === null) {
 
                     /* @var Maps[] $list */
-                    $maps_list = $repo->findAll('id');
+                    $maps_list = $repo->findAllRoot('id');
 
                     if (!count($maps_list)) {
-                        $output->writeln('<comment>There is no map in the database.</comment>');
+                        $io->comment('There is no map in the database.');
 
                         return 1;
                     }
@@ -69,20 +68,13 @@ class MapTilesCommand extends ContainerAwareCommand
                     unset($list);
                 }
                 if ($id !== null) {
-                    $output->writeln('<comment>No map with id "'.$id.'".</comment>');
+                    $io->warning('No map with id: '.$id);
                 }
-                $id = $dialog->select(
-                    $output,
-                    'Select a map to generate:',
-                    $maps_list,
-                    false,
-                    false,
-                    'No id "%s" in maps list.'
-                );
+                $id = $io->choice('Select a map to generate:', $maps_list);
             }
         } while (!$map);
 
-        $output->writeln('Generating map tiles for "'.$map->getName().'"');
+        $io->comment('Generating map tiles for "'.$map->getName().'"');
 
         $tilesManager = $this->getContainer()->get('esteren_maps')->getTilesManager();
 
@@ -98,7 +90,7 @@ class MapTilesCommand extends ContainerAwareCommand
 
         try {
             for ($i = 0; $i <= $map->getMaxZoom(); ++$i) {
-                $output->writeln('Processing extraction for zoom value '.$i);
+                $io->comment('Processing extraction for zoom value '.$i);
                 $tilesManager->generateTiles($i, true, $map);
             }
         } catch (\Exception $e) {
