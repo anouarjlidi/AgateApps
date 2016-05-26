@@ -42,10 +42,10 @@ $ bin/console doctrine:database:create
 $ bin/console doctrine:schema:create
 ```
 
-That's all!
-
 Composer is configured to install npm dependencies and dump assets. See
 [composer.json](composer.json) scripts configuration for more informations.
+
+Next, you need to set up your environment to fit our stack.
 
 ## Setup
 
@@ -64,12 +64,21 @@ If you don't have a prod database export, load the fixtures in your database:
 $ bin/console doctrine:fixtures:load --append
 ```
 
+### Assets management
+
+Most of the CSS comes from LESS files, and all JS/CSS files are compiled with Gulp.
+
+We use a specific gulpfile from [Orbitale/Gulpfile](https://github.com/Orbitale/Gulpfile) which allows good
+flexibility and is based only on one config variable (similar to Grunt).
+
+You can use `gulp watch` when you are working with assets so they're compiled on-change.
+
 ## Tests
 
 To run the tests, get the config from the `tests` directory:
 
 ```bash
-$ phpunit -c tests/
+$ vendor/bin/phpunit -c tests/
 ```
 
 ## Issues tracking

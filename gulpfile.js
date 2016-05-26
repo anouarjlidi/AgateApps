@@ -4,6 +4,9 @@
 // The array VALUES contain a LIST OF SOURCE FILES
 var config = {
     "output_directory": "web",
+    "files_to_watch": [
+        "src/Esteren/PortalBundle/Resources/public/less/*.less"
+    ],
     "less": {
         "css/fontawesome.css": [
             "src/Esteren/PortalBundle/Resources/public/less/_fontawesome.less"
@@ -58,6 +61,37 @@ var config = {
 // Everything AFTER this line of code is updatable to the latest version of this gulpfile.
 // Check it out there if you need: https://gist.github.com/Pierstoval/9d88b0dcb64f30eff4dc
 
+/************* Some polyfills *************/
+
+Object.prototype.p_size = function() {
+    var size = 0, key;
+    for (key in this) {
+        if (this.hasOwnProperty(key)) {
+            size++;
+        }
+    }
+    return size;
+};
+
+Object.prototype.p_forEach = function(callback) {
+    var key;
+    for (key in this) {
+        if (this.hasOwnProperty(key)) {
+            callback.apply(this, [key, this[key]]);
+        }
+    }
+    return this;
+};
+
+/*************** Global vars ***************/
+
+var isProd  = process.argv.indexOf('--prod') >= 0,
+    hasLess = config.less.p_size() > 0,
+    hasSass = config.sass.p_size() > 0,
+    hasCss  = config.css.p_size() > 0,
+    hasJs   = config.js.p_size() > 0
+    ;
+
 // Required extensions
 var gulp         = require('gulp'),
     gulpif       = require('gulp-if'),
@@ -66,12 +100,10 @@ var gulp         = require('gulp'),
     sass         = require('gulp-sass'),
     concat       = require('gulp-concat'),
     uglyfly      = require('gulp-uglyfly'),
-    cssnano      = require('gulp-cssnano'),
+    cleancss     = require('gulp-clean-css'),
     sourcemaps   = require('gulp-sourcemaps'),
     autoprefixer = require('gulp-autoprefixer')
 ;
-
-var isProd = process.argv.indexOf('--prod') >= 0;
 
 /*************** Gulp tasks ***************/
 
@@ -91,7 +123,7 @@ gulp.task('less', function() {
             .pipe(less())
             .pipe(concat(assets_output))
             .pipe(autoprefixer())
-            .pipe(gulpif(isProd, cssnano()))
+            .pipe(gulpif(isProd, cleancss()))
             .pipe(concat(assets_output))
             .pipe(gulp.dest(outputDir))
         ;
@@ -119,7 +151,7 @@ gulp.task('sass', function() {
             .pipe(sass())
             .pipe(concat(assets_output))
             .pipe(autoprefixer())
-            .pipe(gulpif(isProd, cssnano()))
+            .pipe(gulpif(isProd, cleancss()))
             .pipe(concat(assets_output))
             .pipe(gulp.dest(outputDir))
         ;
@@ -146,7 +178,7 @@ gulp.task('css', function() {
             .src(assets)
             .pipe(concat(assets_output))
             .pipe(autoprefixer())
-            .pipe(gulpif(isProd, cssnano()))
+            .pipe(gulpif(isProd, cleancss()))
             .pipe(concat(assets_output))
             .pipe(gulp.dest(outputDir))
         ;
@@ -195,39 +227,27 @@ gulp.task('watch', ['dump'], function() {
         callback = function(event) {
             console.log('File "' + event.path + '" updated');
         },
-        files_to_watch = [],
-        i;
+        other_files_to_watch = config.files_to_watch || [],
+        files_to_watch = [];
 
     console.info('Night gathers, and now my watch begins...');
 
-    for (i in config.less) {
-        if (!config.less.hasOwnProperty(i)) {
-            continue;
-        }
-        files_less.push(config.less[i]);
-        files_to_watch.push(config.less[i]);
-    }
-    for (i in config.sass) {
-        if (!config.sass.hasOwnProperty(i)) {
-            continue;
-        }
-        files_sass.push(config.sass[i]);
-        files_to_watch.push(config.sass[i]);
-    }
-    for (i in config.css) {
-        if (!config.css.hasOwnProperty(i)) {
-            continue;
-        }
-        files_css.push(config.css[i]);
-        files_to_watch.push(config.css[i]);
-    }
-    for (i in config.js) {
-        if (!config.js.hasOwnProperty(i)) {
-            continue;
-        }
-        files_js.push(config.js[i]);
-        files_to_watch.push(config.js[i]);
-    }
+    config.less.p_forEach(function(key, less){
+        files_less.push(config.less[less]);
+        files_to_watch.push(config.less[less]);
+    });
+    config.sass.p_forEach(function(key, sass){
+        files_sass.push(config.sass[sass]);
+        files_to_watch.push(config.sass[sass]);
+    });
+    config.css.p_forEach(function(key, css){
+        files_css.push(config.css[css]);
+        files_to_watch.push(config.css[css]);
+    });
+    config.js.p_forEach(function(key, js){
+        files_js.push(config.js[js]);
+        files_to_watch.push(config.js[js]);
+    });
 
     if (files_to_watch.length) {
         console.info('Watching file(s):');
@@ -236,16 +256,19 @@ gulp.task('watch', ['dump'], function() {
         console.info("       > "+files_to_watch.join("\n       > "));
     }
 
-    if (files_less.length) {
+    if (other_files_to_watch.length) {
+        gulp.watch(other_files_to_watch, ['dump']).on('change', callback);
+    }
+    if (hasLess) {
         gulp.watch(files_less, ['less']).on('change', callback);
     }
-    if (files_sass.length) {
+    if (hasSass) {
         gulp.watch(files_sass, ['sass']).on('change', callback);
     }
-    if (files_css.length) {
+    if (hasCss.length) {
         gulp.watch(files_css, ['css']).on('change', callback);
     }
-    if (files_js.length) {
+    if (hasJs.length) {
         gulp.watch(files_js, ['js']).on('change', callback);
     }
 });
@@ -253,7 +276,12 @@ gulp.task('watch', ['dump'], function() {
 /**
  * Runs all the needed commands to dump all assets and manifests
  */
-gulp.task('dump', ['less', 'sass', 'css', 'js']);
+var dumpTasks = [];
+if (hasLess) { dumpTasks.push('less'); }
+if (hasSass) { dumpTasks.push('sass'); }
+if (hasCss) { dumpTasks.push('css'); }
+if (hasJs) { dumpTasks.push('js'); }
+gulp.task('dump', dumpTasks);
 
 /**
  * Small user guide
@@ -263,7 +291,7 @@ gulp.task('default', function(){
     console.info("usage: gulp [command] [--prod]");
     console.info("");
     console.info("Options:");
-    console.info("    --prod       If specified, will run cssnano and uglyfyjs when dumping the assets.");
+    console.info("    --prod       If specified, will run clean-css and uglyfyjs when dumping the assets.");
     console.info("");
     console.info("Commands:");
     console.info("    less         Dumps the sources in the `config.less` parameter from LESS files.");
