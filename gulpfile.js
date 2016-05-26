@@ -263,7 +263,7 @@ gulp.task('default', function(){
     console.info("usage: gulp [command] [--prod]");
     console.info("");
     console.info("Options:");
-    console.info("    --prod       If specified, will run some cleancss and uglyfyjs when dumping the assets.");
+    console.info("    --prod       If specified, will run cssnano and uglyfyjs when dumping the assets.");
     console.info("");
     console.info("Commands:");
     console.info("    less         Dumps the sources in the `config.less` parameter from LESS files.");
