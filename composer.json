@@ -52,7 +52,6 @@
         "doctrine/doctrine-fixtures-bundle": "^2.2"
     },
     "scripts": {
-        "gulp": "node node_modules/gulp/bin/gulp.js",
         "post-install-cmd": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
