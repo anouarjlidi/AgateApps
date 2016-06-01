@@ -19,5 +19,5 @@ php composer.phar install -o
 echo "Execute tests"
 
 # Execute tests
-vendor/bin/phpunit -c tests/phpunit.xml --coverage-text --coverage-clover build/logs/clover.xml
+phpunit -c tests/phpunit.xml --coverage-text --coverage-clover build/logs/clover.xml
 
