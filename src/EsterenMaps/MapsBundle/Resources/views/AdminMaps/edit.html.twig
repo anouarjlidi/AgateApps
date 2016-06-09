@@ -19,31 +19,7 @@
         <div id="main" class="col-sm-12">
             <div id="map_wrapper">
                 <div id="maps_admin_container">
-                    <div id="map_edit_menu">
-
-                        <ul class="list-inline">
-                            <li data-toggle="tooltip">
-                                <button data-toggle-class="btn-info btn-inverse" id="hide_zones" class="btn btn-info" type="button">
-                                    <span class="fa fa-eye"></span>
-                                    {{ 'entities.zones.title' | trans({}, 'EsterenMaps') }}
-                                </button>
-                            </li>
-                            <li data-toggle="tooltip">
-                                <button data-toggle-class="btn-info btn-inverse" id="hide_routes" class="btn btn-info" type="button">
-                                    <span class="fa fa-eye"></span>
-                                    {{ 'entities.routes.title' | trans({}, 'EsterenMaps') }}
-                                </button>
-                            </li>
-                            <li data-toggle="tooltip">
-                                <button data-toggle-class="btn-info btn-inverse" id="hide_markers" class="btn btn-info" type="button">
-                                    <span class="fa fa-eye"></span>
-                                    {{ 'entities.markers.title' | trans({}, 'EsterenMaps') }}
-                                </button>
-                            </li>
-                            <li id="esterenmap_message_element"></li>
-                        </ul>
-
-                    </div>
+                    {{ include('@EsterenMaps/menu/show_hide.html.twig') }}
                 </div>
                 <div id="esterenmap_sidebar"></div>
                 <div id="map"></div>
@@ -60,7 +36,6 @@
     <script type="text/javascript" src="{{ asset('js/maps_lib.js') }}"></script>
 
     <script type="text/javascript" src="{{ path('pierstoval_tools_assets_jstranslations', {"_locale": app.request.locale}) }}"></script>
-    <script type="text/javascript" src="{{ asset('js/map_edit_more.js') }}"></script>
 
     <script type="text/javascript">
         (function($, d){

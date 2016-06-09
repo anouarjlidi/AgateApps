@@ -110,9 +110,6 @@ var config = {
             "web/components/leaflet-draw/dist/leaflet.draw-src.js",
             "src/EsterenMaps/MapsBundle/Resources/public/js/EsterenMap/*.js"
         ],
-        "js/map_edit_more.js": [
-            "src/EsterenMaps/MapsBundle/Resources/public/js/map_edit.js"
-        ],
         "js/generator.js": [
             "src/CorahnRin/CorahnRinBundle/Resources/public/generator/js/*.js"
         ]
