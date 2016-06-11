@@ -7,7 +7,7 @@
  * @param toggledClass
  * @returns {Element}
  */
-Element.prototype.toogleClass = function (toggledClass) {
+Element.prototype.toggleClass = function (toggledClass) {
     var classes = this.className.toString().trim();
 
     toggledClass = toggledClass.trim();
