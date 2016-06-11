@@ -1,6 +1,9 @@
 actions:
     interactive: 'Interactive edit'
 Maps: Maps
+maps:
+    list: Maps list
+    view: View map
 admin:
     menu:
         esteren_maps: 'Esteren Maps'

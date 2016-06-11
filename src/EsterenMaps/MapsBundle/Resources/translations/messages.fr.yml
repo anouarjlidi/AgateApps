@@ -1,6 +1,9 @@
 actions:
     interactive: 'Édition interactive'
 Maps: Cartes
+maps:
+    list: Liste des cartes
+    view: Voir la carte
 admin:
     menu:
         esteren_maps: 'Esteren Maps'
