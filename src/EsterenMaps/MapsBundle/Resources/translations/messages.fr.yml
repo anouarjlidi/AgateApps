@@ -1,0 +1,18 @@
+actions:
+    interactive: 'Édition interactive'
+Maps: Cartes
+admin:
+    menu:
+        esteren_maps: 'Esteren Maps'
+        esteren_maps_data: 'Données'
+    maps:
+        markers: 'Marqueurs'
+        routes: 'Routes'
+        zones: 'Zones'
+        factions: 'Factions'
+        maps: 'Cartes'
+        markers_types: 'Types de marqueurs'
+        routes_types: 'Types de routes'
+        zones_types: 'Types de zones'
+        transports_types: 'Moyens de transport'
+        transportsModifiers: 'Modificateurs de vitesse'

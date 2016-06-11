@@ -1,28 +1,12 @@
 'Bad credentials.': 'User name or password invalid.'
-actions:
-    interactive: 'Interactive edit'
 Pages: Pages
-Maps: Maps
 admin:
     cms:
         pages: 'Pages'
     menu:
         site: 'Site'
-        esteren_maps: 'Esteren Maps'
-        esteren_maps_data: 'Données'
         types: 'Reference types'
         transports: 'Transports'
-    maps:
-        markers: 'Markers'
-        routes: 'Routes'
-        zones: 'Zones'
-        factions: 'Factions'
-        maps: 'Maps'
-        markers_types: 'Markers types'
-        routes_types: 'Routes types'
-        zones_types: 'Zones types'
-        transports_types: 'Transports'
-        transportsModifiers: 'Transports speed modifiers'
 ID: ID
 tree: Tree
 links:
