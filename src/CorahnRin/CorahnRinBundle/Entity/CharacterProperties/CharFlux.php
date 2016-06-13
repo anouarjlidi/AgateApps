@@ -1,7 +1,9 @@
 <?php
 
-namespace CorahnRin\CorahnRinBundle\Entity;
+namespace CorahnRin\CorahnRinBundle\Entity\CharacterProperties;
 
+use CorahnRin\CorahnRinBundle\Entity\Characters;
+use CorahnRin\CorahnRinBundle\Entity\Flux;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -17,7 +19,7 @@ class CharFlux
      * @var Characters
      *
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="Characters", inversedBy="flux")
+     * @ORM\ManyToOne(targetEntity="CorahnRin\CorahnRinBundle\Entity\Characters", inversedBy="flux")
      * @Assert\NotNull()
      */
     protected $character;
@@ -27,7 +29,7 @@ class CharFlux
      *
      * @ORM\Column(type="integer")
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="Flux")
+     * @ORM\ManyToOne(targetEntity="CorahnRin\CorahnRinBundle\Entity\Flux")
      * @Assert\NotNull()
      */
     protected $flux;

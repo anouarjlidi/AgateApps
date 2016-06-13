@@ -1,7 +1,9 @@
 <?php
 
-namespace CorahnRin\CorahnRinBundle\Entity;
+namespace CorahnRin\CorahnRinBundle\Entity\CharacterProperties;
 
+use CorahnRin\CorahnRinBundle\Entity\Characters;
+use CorahnRin\CorahnRinBundle\Entity\Ways;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -16,7 +18,7 @@ class CharWays
      * @var Characters
      *
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="Characters", inversedBy="ways")
+     * @ORM\ManyToOne(targetEntity="CorahnRin\CorahnRinBundle\Entity\Characters", inversedBy="ways")
      */
     protected $character;
 
@@ -24,7 +26,7 @@ class CharWays
      * @var Ways
      *
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="Ways")
+     * @ORM\ManyToOne(targetEntity="CorahnRin\CorahnRinBundle\Entity\Ways")
      */
     protected $way;
 

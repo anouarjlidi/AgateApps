@@ -1,67 +1,69 @@
 <?php
 
-namespace CorahnRin\CorahnRinBundle\Entity;
+namespace CorahnRin\CorahnRinBundle\Entity\CharacterProperties;
 
+use CorahnRin\CorahnRinBundle\Entity\Characters;
+use CorahnRin\CorahnRinBundle\Entity\Domains;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * CharAvtgs.
+ * CharDomains.
  *
- * @ORM\Table(name="characters_avantages")
+ * @ORM\Table(name="characters_domains")
  * @ORM\Entity()
  */
-class CharAvtgs
+class CharDomains
 {
     /**
      * @var Characters
      *
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="Characters", inversedBy="avantages")
+     * @ORM\ManyToOne(targetEntity="CorahnRin\CorahnRinBundle\Entity\Characters", inversedBy="domains")
      * @Assert\NotNull()
      */
     protected $character;
 
     /**
-     * @var Avantages
+     * @var Domains
      *
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="Avantages")
+     * @ORM\ManyToOne(targetEntity="CorahnRin\CorahnRinBundle\Entity\Domains")
      * @Assert\NotNull()
      */
-    protected $avantage;
+    protected $domain;
 
     /**
-     * @var bool
+     * @var int
      *
      * @ORM\Column(type="integer")
      * @Assert\NotNull()
      * @Assert\GreaterThanOrEqual(value=0)
      */
-    protected $doubleValue;
+    protected $score;
 
     /**
-     * Set doubleValue.
+     * Set score.
      *
-     * @param int $doubleValue
+     * @param int $score
      *
-     * @return CharAvtgs
+     * @return CharDomains
      */
-    public function setDoubleValue($doubleValue)
+    public function setScore($score)
     {
-        $this->doubleValue = $doubleValue;
+        $this->score = $score;
 
         return $this;
     }
 
     /**
-     * Get doubleValue.
+     * Get score.
      *
      * @return int
      */
-    public function getDoubleValue()
+    public function getScore()
     {
-        return $this->doubleValue;
+        return $this->score;
     }
 
     /**
@@ -69,7 +71,7 @@ class CharAvtgs
      *
      * @param Characters $character
      *
-     * @return CharAvtgs
+     * @return CharDomains
      */
     public function setCharacter(Characters $character)
     {
@@ -89,26 +91,26 @@ class CharAvtgs
     }
 
     /**
-     * Set avantage.
+     * Set domain.
      *
-     * @param Avantages $avantage
+     * @param Domains $domain
      *
-     * @return CharAvtgs
+     * @return CharDomains
      */
-    public function setAvantage(Avantages $avantage)
+    public function setDomain(Domains $domain)
     {
-        $this->avantage = $avantage;
+        $this->domain = $domain;
 
         return $this;
     }
 
     /**
-     * Get avantage.
+     * Get domain.
      *
-     * @return Avantages
+     * @return Domains
      */
-    public function getAvantage()
+    public function getDomain()
     {
-        return $this->avantage;
+        return $this->domain;
     }
 }

@@ -1,7 +1,9 @@
 <?php
 
-namespace CorahnRin\CorahnRinBundle\Entity;
+namespace CorahnRin\CorahnRinBundle\Entity\CharacterProperties;
 
+use CorahnRin\CorahnRinBundle\Entity\Disciplines;
+use CorahnRin\CorahnRinBundle\Entity\Domains;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -17,7 +19,7 @@ class CharDisciplines
      * @var int
      *
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="Characters", inversedBy="disciplines")
+     * @ORM\ManyToOne(targetEntity="CorahnRin\CorahnRinBundle\Entity\Characters", inversedBy="disciplines")
      * @Assert\NotNull()
      */
     protected $character;
@@ -26,7 +28,7 @@ class CharDisciplines
      * @var Disciplines
      *
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="Disciplines")
+     * @ORM\ManyToOne(targetEntity="CorahnRin\CorahnRinBundle\Entity\Disciplines")
      * @Assert\NotNull()
      */
     protected $discipline;
@@ -35,7 +37,7 @@ class CharDisciplines
      * @var Domains
      *
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="Domains")
+     * @ORM\ManyToOne(targetEntity="CorahnRin\CorahnRinBundle\Entity\Domains")
      * @Assert\NotNull()
      */
     protected $domain;

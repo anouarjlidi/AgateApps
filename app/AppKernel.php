@@ -30,6 +30,7 @@ class AppKernel extends Kernel
             new AdminBundle\AdminBundle(),
 
             // Corahn-Rin
+            new Pierstoval\Bundle\CharacterGeneratorBundle\PierstovalCharacterGeneratorBundle(),
             new CorahnRin\CorahnRinBundle\CorahnRinBundle(),
 
             // Esteren

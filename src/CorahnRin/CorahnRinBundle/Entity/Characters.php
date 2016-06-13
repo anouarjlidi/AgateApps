@@ -2,7 +2,14 @@
 
 namespace CorahnRin\CorahnRinBundle\Entity;
 
-use CorahnRin\CorahnRinBundle\Classes\Money;
+use CorahnRin\CorahnRinBundle\Entity\CharacterProperties\CharAdvantages;
+use CorahnRin\CorahnRinBundle\Entity\CharacterProperties\CharDisciplines;
+use CorahnRin\CorahnRinBundle\Entity\CharacterProperties\CharDomains;
+use CorahnRin\CorahnRinBundle\Entity\CharacterProperties\CharFlux;
+use CorahnRin\CorahnRinBundle\Entity\CharacterProperties\CharSetbacks;
+use CorahnRin\CorahnRinBundle\Entity\CharacterProperties\CharWays;
+use CorahnRin\CorahnRinBundle\Entity\CharacterProperties\Money;
+use Pierstoval\Bundle\CharacterGeneratorBundle\Model\Character as BaseCharacter;
 use CorahnRin\CorahnRinBundle\Exception\CharactersException;
 use UserBundle\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -17,7 +24,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="CorahnRin\CorahnRinBundle\Repository\CharactersRepository")
  * @ORM\Table(name="characters",uniqueConstraints={@ORM\UniqueConstraint(name="idcUnique", columns={"name", "user_id"})})
  */
-class Characters
+class Characters extends BaseCharacter
 {
     /**
      * @var int
@@ -96,9 +103,9 @@ class Characters
     protected $inventory;
 
     /**
-     * @var \CorahnRin\CorahnRinBundle\Classes\Money
+     * @var Money
      *
-     * @ORM\Column(type="object")
+     * @ORM\Embedded(class="CorahnRin\CorahnRinBundle\Entity\CharacterProperties\Money", columnPrefix="daol_")
      */
     protected $money;
 
@@ -261,145 +268,140 @@ class Characters
     /**
      * @var Peoples
      *
-     * @ORM\ManyToOne(targetEntity="Peoples")
+     * @ORM\ManyToOne(targetEntity="CorahnRin\CorahnRinBundle\Entity\Peoples")
      */
     protected $people;
 
     /**
      * @var Armors[]
      *
-     * @ORM\ManyToMany(targetEntity="Armors")
+     * @ORM\ManyToMany(targetEntity="CorahnRin\CorahnRinBundle\Entity\Armors")
      */
     protected $armors;
 
     /**
      * @var Artifacts[]
      *
-     * @ORM\ManyToMany(targetEntity="Artifacts")
+     * @ORM\ManyToMany(targetEntity="CorahnRin\CorahnRinBundle\Entity\Artifacts")
      */
     protected $artifacts;
 
     /**
      * @var Miracles[]
      *
-     * @ORM\ManyToMany(targetEntity="Miracles")
+     * @ORM\ManyToMany(targetEntity="CorahnRin\CorahnRinBundle\Entity\Miracles")
      */
     protected $miracles;
 
     /**
      * @var Ogham[]
      *
-     * @ORM\ManyToMany(targetEntity="Ogham")
+     * @ORM\ManyToMany(targetEntity="CorahnRin\CorahnRinBundle\Entity\Ogham")
      */
     protected $ogham;
 
     /**
      * @var Weapons[]
      *
-     * @ORM\ManyToMany(targetEntity="Weapons")
+     * @ORM\ManyToMany(targetEntity="CorahnRin\CorahnRinBundle\Entity\Weapons")
      */
     protected $weapons;
 
     /**
      * @var SocialClasses
      *
-     * @ORM\ManyToOne(targetEntity="SocialClasses", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="CorahnRin\CorahnRinBundle\Entity\SocialClasses", fetch="EAGER")
      */
     protected $socialClasses;
 
     /**
      * @var Domains
      *
-     * @ORM\ManyToOne(targetEntity="Domains")
+     * @ORM\ManyToOne(targetEntity="CorahnRin\CorahnRinBundle\Entity\Domains")
      */
-    protected $SocialClassDomain1;
+    protected $socialClassDomain1;
 
     /**
      * @var Domains
      *
-     * @ORM\ManyToOne(targetEntity="Domains")
+     * @ORM\ManyToOne(targetEntity="CorahnRin\CorahnRinBundle\Entity\Domains")
      */
-    protected $SocialClassDomain2;
+    protected $socialClassDomain2;
 
     /**
      * @var Disorders
      *
-     * @ORM\ManyToOne(targetEntity="Disorders")
+     * @ORM\ManyToOne(targetEntity="CorahnRin\CorahnRinBundle\Entity\Disorders")
      */
     protected $disorder;
 
     /**
      * @var Jobs
      *
-     * @ORM\ManyToOne(targetEntity="Jobs", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="CorahnRin\CorahnRinBundle\Entity\Jobs", fetch="EAGER")
      */
     protected $job;
 
     /**
      * @var Regions
      *
-     * @ORM\ManyToOne(targetEntity="Regions", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="CorahnRin\CorahnRinBundle\Entity\Regions", fetch="EAGER")
      */
     protected $region;
 
     /**
      * @var Traits
-     * @ORM\ManyToOne(targetEntity="Traits")
+     * @ORM\ManyToOne(targetEntity="CorahnRin\CorahnRinBundle\Entity\Traits")
+     * @ORM\JoinColumn(name="trait_flaw_id")
      */
-    protected $traitFlaw;
+    protected $flaw;
 
     /**
      * @var Traits
-     * @ORM\ManyToOne(targetEntity="Traits")
+     * @ORM\ManyToOne(targetEntity="CorahnRin\CorahnRinBundle\Entity\Traits")
+     * @ORM\JoinColumn(name="trait_quality_id")
      */
-    protected $traitQuality;
+    protected $quality;
 
     /**
-     * @var Avantages[]
+     * @var CharAdvantages[]
      *
-     * @ORM\OneToMany(targetEntity="CharAvtgs", mappedBy="character")
+     * @ORM\OneToMany(targetEntity="CorahnRin\CorahnRinBundle\Entity\CharacterProperties\CharAdvantages", mappedBy="character")
      */
-    protected $avantages;
+    protected $advantages;
 
     /**
-     * @var Domains[]
+     * @var CharDomains[]
      *
-     * @ORM\OneToMany(targetEntity="CharDomains", mappedBy="character")
+     * @ORM\OneToMany(targetEntity="CorahnRin\CorahnRinBundle\Entity\CharacterProperties\CharDomains", mappedBy="character")
      */
     protected $domains;
 
     /**
-     * @var Disciplines[]
+     * @var CharDisciplines[]
      *
-     * @ORM\OneToMany(targetEntity="CharDisciplines", mappedBy="character")
+     * @ORM\OneToMany(targetEntity="CorahnRin\CorahnRinBundle\Entity\CharacterProperties\CharDisciplines", mappedBy="character")
      */
     protected $disciplines;
 
     /**
-     * @var Ways[]
+     * @var CharWays[]
      *
-     * @ORM\OneToMany(targetEntity="CharWays", mappedBy="character")
+     * @ORM\OneToMany(targetEntity="CorahnRin\CorahnRinBundle\Entity\CharacterProperties\CharWays", mappedBy="character")
      */
     protected $ways;
 
     /**
-     * @var Flux[]
+     * @var CharFlux[]
      *
-     * @ORM\OneToMany(targetEntity="CharFlux", mappedBy="character")
+     * @ORM\OneToMany(targetEntity="CorahnRin\CorahnRinBundle\Entity\CharacterProperties\CharFlux", mappedBy="character")
      */
     protected $flux;
 
     /**
-     * @var CharModifications
+     * @var CharSetbacks[]
      *
-     * @ORM\OneToMany(targetEntity="CharModifications", mappedBy="character")
-     */
-    protected $modifications;
-
-    /**
-     * @var Setbacks[]
-     *
-     * @ORM\OneToMany(targetEntity="CharSetbacks", mappedBy="character")
+     * @ORM\OneToMany(targetEntity="CorahnRin\CorahnRinBundle\Entity\CharacterProperties\CharSetbacks", mappedBy="character")
      */
     protected $setbacks;
 
@@ -411,7 +413,7 @@ class Characters
 
     /**
      * @var Games
-     * @ORM\ManyToOne(targetEntity="Games", inversedBy="characters", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="CorahnRin\CorahnRinBundle\Entity\Games", inversedBy="characters", fetch="EAGER")
      */
     protected $game;
 
@@ -434,37 +436,33 @@ class Characters
      *
      * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
-    protected $deleted = null;
-
-    /**
-     * Utilisé pour déterminer les différences lorsque le personnage sera mis à jour.
-     *
-     * @var Characters
-     */
-    protected $baseChar;
+    protected $deleted;
 
     /**
      * Constructor.
      */
     public function __construct()
     {
-        $this->armors        = new ArrayCollection();
-        $this->artifacts     = new ArrayCollection();
-        $this->miracles      = new ArrayCollection();
-        $this->ogham         = new ArrayCollection();
-        $this->weapons       = new ArrayCollection();
-        $this->avantages     = new ArrayCollection();
-        $this->domains       = new ArrayCollection();
-        $this->disciplines   = new ArrayCollection();
-        $this->ways          = new ArrayCollection();
-        $this->flux          = new ArrayCollection();
-        $this->modifications = new ArrayCollection();
-        $this->setbacks      = new ArrayCollection();
+        $this->armors      = new ArrayCollection();
+        $this->artifacts   = new ArrayCollection();
+        $this->miracles    = new ArrayCollection();
+        $this->ogham       = new ArrayCollection();
+        $this->weapons     = new ArrayCollection();
+        $this->advantages  = new ArrayCollection();
+        $this->domains     = new ArrayCollection();
+        $this->disciplines = new ArrayCollection();
+        $this->ways        = new ArrayCollection();
+        $this->flux        = new ArrayCollection();
+        $this->setbacks    = new ArrayCollection();
     }
 
+    /*-------------------------------------------------*/
+    /*-------------------------------------------------*/
+    /*----------- Plain getters and setters -----------*/
+    /*-------------------------------------------------*/
+    /*-------------------------------------------------*/
+
     /**
-     * Get id.
-     *
      * @return int
      */
     public function getId()
@@ -485,56 +483,6 @@ class Characters
     }
 
     /**
-     * Set name.
-     *
-     * @param string $name
-     *
-     * @return Characters
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get name.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * Set nameSlug.
-     *
-     * @param string $nameSlug
-     *
-     * @return Characters
-     */
-    public function setNameSlug($nameSlug)
-    {
-        $this->nameSlug = $nameSlug;
-
-        return $this;
-    }
-
-    /**
-     * Get nameSlug.
-     *
-     * @return string
-     */
-    public function getNameSlug()
-    {
-        return $this->nameSlug;
-    }
-
-    /**
-     * Set playerName.
-     *
      * @param string $playerName
      *
      * @return Characters
@@ -547,8 +495,6 @@ class Characters
     }
 
     /**
-     * Get playerName.
-     *
      * @return string
      */
     public function getPlayerName()
@@ -557,8 +503,6 @@ class Characters
     }
 
     /**
-     * Set status.
-     *
      * @param int $status
      *
      * @return Characters
@@ -571,8 +515,6 @@ class Characters
     }
 
     /**
-     * Get status.
-     *
      * @return int
      */
     public function getStatus()
@@ -581,8 +523,6 @@ class Characters
     }
 
     /**
-     * Set sex.
-     *
      * @param string $sex
      *
      * @return Characters
@@ -595,8 +535,6 @@ class Characters
     }
 
     /**
-     * Get sex.
-     *
      * @return string
      */
     public function getSex()
@@ -605,8 +543,6 @@ class Characters
     }
 
     /**
-     * Set description.
-     *
      * @param string $description
      *
      * @return Characters
@@ -619,8 +555,6 @@ class Characters
     }
 
     /**
-     * Get description.
-     *
      * @return string
      */
     public function getDescription()
@@ -629,8 +563,6 @@ class Characters
     }
 
     /**
-     * Set story.
-     *
      * @param string $story
      *
      * @return Characters
@@ -643,8 +575,6 @@ class Characters
     }
 
     /**
-     * Get story.
-     *
      * @return string
      */
     public function getStory()
@@ -653,8 +583,6 @@ class Characters
     }
 
     /**
-     * Set facts.
-     *
      * @param string $facts
      *
      * @return Characters
@@ -667,8 +595,6 @@ class Characters
     }
 
     /**
-     * Get facts.
-     *
      * @return string
      */
     public function getFacts()
@@ -677,8 +603,6 @@ class Characters
     }
 
     /**
-     * Set inventory.
-     *
      * @param array $inventory
      *
      * @return Characters
@@ -691,8 +615,6 @@ class Characters
     }
 
     /**
-     * Get inventory.
-     *
      * @return array
      */
     public function getInventory()
@@ -701,13 +623,11 @@ class Characters
     }
 
     /**
-     * Set money.
-     *
      * @param Money $money
      *
      * @return Characters
      */
-    public function setMoney($money)
+    public function setMoney(Money $money)
     {
         $this->money = $money;
 
@@ -715,8 +635,6 @@ class Characters
     }
 
     /**
-     * Get money.
-     *
      * @return Money
      */
     public function getMoney()
@@ -725,8 +643,6 @@ class Characters
     }
 
     /**
-     * Set orientation.
-     *
      * @param string $orientation
      *
      * @return Characters
@@ -739,8 +655,6 @@ class Characters
     }
 
     /**
-     * Get orientation.
-     *
      * @return string
      */
     public function getOrientation()
@@ -749,28 +663,6 @@ class Characters
     }
 
     /**
-     * Get conscience value.
-     *
-     * @return string
-     */
-    public function getConscience()
-    {
-        return $this->getWay('rai')->getScore() + $this->getWay('ide')->getScore();
-    }
-
-    /**
-     * Get instinct value.
-     *
-     * @return string
-     */
-    public function getInstinct()
-    {
-        return $this->getWay('cre')->getScore() + $this->getWay('com')->getScore();
-    }
-
-    /**
-     * Set jobCustom.
-     *
      * @param string $jobCustom
      *
      * @return Characters
@@ -783,8 +675,6 @@ class Characters
     }
 
     /**
-     * Get jobCustom.
-     *
      * @return string
      */
     public function getJobCustom()
@@ -793,8 +683,6 @@ class Characters
     }
 
     /**
-     * Set geoLiving.
-     *
      * @param string $geoLiving
      *
      * @return Characters
@@ -807,8 +695,6 @@ class Characters
     }
 
     /**
-     * Get geoLiving.
-     *
      * @return string
      */
     public function getGeoLiving()
@@ -817,8 +703,6 @@ class Characters
     }
 
     /**
-     * Set trauma.
-     *
      * @param int $trauma
      *
      * @return Characters
@@ -831,8 +715,6 @@ class Characters
     }
 
     /**
-     * Get trauma.
-     *
      * @return int
      */
     public function getTrauma()
@@ -841,8 +723,6 @@ class Characters
     }
 
     /**
-     * Set traumaPermanent.
-     *
      * @param int $traumaPermanent
      *
      * @return Characters
@@ -855,8 +735,6 @@ class Characters
     }
 
     /**
-     * Get traumaPermanent.
-     *
      * @return int
      */
     public function getTraumaPermanent()
@@ -865,992 +743,6 @@ class Characters
     }
 
     /**
-     * Set age.
-     *
-     * @param int $age
-     *
-     * @return Characters
-     */
-    public function setAge($age)
-    {
-        $this->age = $age;
-
-        return $this;
-    }
-
-    /**
-     * Get age.
-     *
-     * @return int
-     */
-    public function getAge()
-    {
-        return $this->age;
-    }
-
-    /**
-     * Set mentalResist.
-     *
-     * @param int $mentalResist
-     *
-     * @return Characters
-     */
-    public function setMentalResist($mentalResist)
-    {
-        $this->mentalResist = $mentalResist;
-
-        return $this;
-    }
-
-    /**
-     * Get mentalResist.
-     *
-     * @return int
-     */
-    public function getMentalResist()
-    {
-        return $this->mentalResist;
-    }
-
-    /**
-     * Set health.
-     *
-     * @param int $health
-     *
-     * @return Characters
-     */
-    public function setHealth($health)
-    {
-        $this->health = $health;
-
-        return $this;
-    }
-
-    /**
-     * Get health.
-     *
-     * @return int
-     */
-    public function getHealth()
-    {
-        return $this->health;
-    }
-
-    /**
-     * Set stamina.
-     *
-     * @param int $stamina
-     *
-     * @return Characters
-     */
-    public function setStamina($stamina)
-    {
-        $this->stamina = $stamina;
-
-        return $this;
-    }
-
-    /**
-     * Get stamina.
-     *
-     * @return int
-     */
-    public function getStamina()
-    {
-        return $this->stamina;
-    }
-
-    /**
-     * Set survival.
-     *
-     * @param bool $survival
-     *
-     * @return Characters
-     */
-    public function setSurvival($survival)
-    {
-        $this->survival = $survival;
-
-        return $this;
-    }
-
-    /**
-     * Get survival.
-     *
-     * @return bool
-     */
-    public function getSurvival()
-    {
-        return $this->survival;
-    }
-
-    /**
-     * Set speed.
-     *
-     * @param int $speed
-     *
-     * @return Characters
-     */
-    public function setSpeed($speed)
-    {
-        $this->speed = $speed;
-
-        return $this;
-    }
-
-    /**
-     * Get speed.
-     *
-     * @return int
-     */
-    public function getSpeed()
-    {
-        return $this->speed;
-    }
-
-    /**
-     * Set defense.
-     *
-     * @param int $defense
-     *
-     * @return Characters
-     */
-    public function setDefense($defense)
-    {
-        $this->defense = $defense;
-
-        return $this;
-    }
-
-    /**
-     * Get defense.
-     *
-     * @return int
-     */
-    public function getDefense()
-    {
-        return $this->defense;
-    }
-
-    /**
-     * Set rindath.
-     *
-     * @param int $rindath
-     *
-     * @return Characters
-     */
-    public function setRindath($rindath)
-    {
-        $this->rindath = $rindath;
-
-        return $this;
-    }
-
-    /**
-     * Get rindath.
-     *
-     * @return int
-     */
-    public function getRindath()
-    {
-        return $this->rindath;
-    }
-
-    /**
-     * Set exaltation.
-     *
-     * @param int $exaltation
-     *
-     * @return Characters
-     */
-    public function setExaltation($exaltation)
-    {
-        $this->exaltation = $exaltation;
-
-        return $this;
-    }
-
-    /**
-     * Get exaltation.
-     *
-     * @return int
-     */
-    public function getExaltation()
-    {
-        return $this->exaltation;
-    }
-
-    /**
-     * Set experienceActual.
-     *
-     * @param int $experienceActual
-     *
-     * @return Characters
-     */
-    public function setExperienceActual($experienceActual)
-    {
-        $this->experienceActual = $experienceActual;
-
-        return $this;
-    }
-
-    /**
-     * Get experienceActual.
-     *
-     * @return int
-     */
-    public function getExperienceActual()
-    {
-        return $this->experienceActual;
-    }
-
-    /**
-     * Set experienceSpent.
-     *
-     * @param int $experienceSpent
-     *
-     * @return Characters
-     */
-    public function setExperienceSpent($experienceSpent)
-    {
-        $this->experienceSpent = $experienceSpent;
-
-        return $this;
-    }
-
-    /**
-     * Get experienceSpent.
-     *
-     * @return int
-     */
-    public function getExperienceSpent()
-    {
-        return $this->experienceSpent;
-    }
-
-    /**
-     * Set created.
-     *
-     * @param \DateTime $created
-     *
-     * @return Characters
-     */
-    public function setCreated($created)
-    {
-        $this->created = $created;
-
-        return $this;
-    }
-
-    /**
-     * Get created.
-     *
-     * @return \DateTime
-     */
-    public function getCreated()
-    {
-        return $this->created;
-    }
-
-    /**
-     * Set updated.
-     *
-     * @param \DateTime $updated
-     *
-     * @return Characters
-     */
-    public function setUpdated($updated)
-    {
-        $this->updated = $updated;
-
-        return $this;
-    }
-
-    /**
-     * Get updated.
-     *
-     * @return \DateTime
-     */
-    public function getUpdated()
-    {
-        return $this->updated;
-    }
-
-    /**
-     * Set people.
-     *
-     * @param Peoples $people
-     *
-     * @return Characters
-     */
-    public function setPeople(Peoples $people = null)
-    {
-        $this->people = $people;
-
-        return $this;
-    }
-
-    /**
-     * Get people.
-     *
-     * @return Peoples
-     */
-    public function getPeople()
-    {
-        return $this->people;
-    }
-
-    /**
-     * Add armors.
-     *
-     * @param Armors $armors
-     *
-     * @return Characters
-     */
-    public function addArmor(Armors $armors)
-    {
-        $this->armors[] = $armors;
-
-        return $this;
-    }
-
-    /**
-     * Remove armors.
-     *
-     * @param Armors $armors
-     */
-    public function removeArmor(Armors $armors)
-    {
-        $this->armors->removeElement($armors);
-    }
-
-    /**
-     * Get armors.
-     *
-     * @return Armors[]
-     */
-    public function getArmors()
-    {
-        return $this->armors;
-    }
-
-    /**
-     * Add artifacts.
-     *
-     * @param Artifacts $artifacts
-     *
-     * @return Characters
-     */
-    public function addArtifact(Artifacts $artifacts)
-    {
-        $this->artifacts[] = $artifacts;
-
-        return $this;
-    }
-
-    /**
-     * Remove artifacts.
-     *
-     * @param Artifacts $artifacts
-     */
-    public function removeArtifact(Artifacts $artifacts)
-    {
-        $this->artifacts->removeElement($artifacts);
-    }
-
-    /**
-     * Get artifacts.
-     *
-     * @return Artifacts[]
-     */
-    public function getArtifacts()
-    {
-        return $this->artifacts;
-    }
-
-    /**
-     * Add miracles.
-     *
-     * @param Miracles $miracles
-     *
-     * @return Characters
-     */
-    public function addMiracle(Miracles $miracles)
-    {
-        $this->miracles[] = $miracles;
-
-        return $this;
-    }
-
-    /**
-     * Remove miracles.
-     *
-     * @param Miracles $miracles
-     */
-    public function removeMiracle(Miracles $miracles)
-    {
-        $this->miracles->removeElement($miracles);
-    }
-
-    /**
-     * Get miracles.
-     *
-     * @return Miracles[]
-     */
-    public function getMiracles()
-    {
-        return $this->miracles;
-    }
-
-    /**
-     * Add ogham.
-     *
-     * @param Ogham $ogham
-     *
-     * @return Characters
-     */
-    public function addOgham(Ogham $ogham)
-    {
-        $this->ogham[] = $ogham;
-
-        return $this;
-    }
-
-    /**
-     * Remove ogham.
-     *
-     * @param Ogham $ogham
-     */
-    public function removeOgham(Ogham $ogham)
-    {
-        $this->ogham->removeElement($ogham);
-    }
-
-    /**
-     * Get ogham.
-     *
-     * @return Ogham[]
-     */
-    public function getOgham()
-    {
-        return $this->ogham;
-    }
-
-    /**
-     * Add weapons.
-     *
-     * @param Weapons $weapons
-     *
-     * @return Characters
-     */
-    public function addWeapon(Weapons $weapons)
-    {
-        $this->weapons[] = $weapons;
-
-        return $this;
-    }
-
-    /**
-     * Remove weapons.
-     *
-     * @param Weapons $weapons
-     */
-    public function removeWeapon(Weapons $weapons)
-    {
-        $this->weapons->removeElement($weapons);
-    }
-
-    /**
-     * Get weapons.
-     *
-     * @return Weapons[]
-     */
-    public function getWeapons()
-    {
-        return $this->weapons;
-    }
-
-    /**
-     * Set socialClasses.
-     *
-     * @param SocialClasses $socialClasses
-     *
-     * @return Characters
-     */
-    public function setSocialClasses(SocialClasses $socialClasses = null)
-    {
-        $this->socialClasses = $socialClasses;
-
-        return $this;
-    }
-
-    /**
-     * Get socialClasses.
-     *
-     * @return SocialClasses
-     */
-    public function getSocialClasses()
-    {
-        return $this->socialClasses;
-    }
-
-    /**
-     * Set SocialClassDomain1.
-     *
-     * @param Domains $socialClassDomain1
-     *
-     * @return Characters
-     */
-    public function setSocialClassDomain1(Domains $socialClassDomain1 = null)
-    {
-        $this->SocialClassDomain1 = $socialClassDomain1;
-
-        return $this;
-    }
-
-    /**
-     * Get SocialClassDomain1.
-     *
-     * @return Domains
-     */
-    public function getSocialClassDomain1()
-    {
-        return $this->SocialClassDomain1;
-    }
-
-    /**
-     * Set SocialClassDomain2.
-     *
-     * @param Domains $socialClassDomain2
-     *
-     * @return Characters
-     */
-    public function setSocialClassDomain2(Domains $socialClassDomain2 = null)
-    {
-        $this->SocialClassDomain2 = $socialClassDomain2;
-
-        return $this;
-    }
-
-    /**
-     * Get SocialClassDomain2.
-     *
-     * @return Domains
-     */
-    public function getSocialClassDomain2()
-    {
-        return $this->SocialClassDomain2;
-    }
-
-    /**
-     * Set disorder.
-     *
-     * @param Disorders $disorder
-     *
-     * @return Characters
-     */
-    public function setDisorder(Disorders $disorder = null)
-    {
-        $this->disorder = $disorder;
-
-        return $this;
-    }
-
-    /**
-     * Get disorder.
-     *
-     * @return Disorders
-     */
-    public function getDisorder()
-    {
-        return $this->disorder;
-    }
-
-    /**
-     * Set job.
-     *
-     * @param Jobs $job
-     *
-     * @return Characters
-     */
-    public function setJob(Jobs $job = null)
-    {
-        $this->job = $job;
-
-        return $this;
-    }
-
-    /**
-     * Get job.
-     *
-     * @return Jobs
-     */
-    public function getJob()
-    {
-        return $this->job;
-    }
-
-    /**
-     * Set region.
-     *
-     * @param Regions $region
-     *
-     * @return Characters
-     */
-    public function setRegion(Regions $region = null)
-    {
-        $this->region = $region;
-
-        return $this;
-    }
-
-    /**
-     * Get region.
-     *
-     * @return Regions
-     */
-    public function getRegion()
-    {
-        return $this->region;
-    }
-
-    /**
-     * Set traitFlaw.
-     *
-     * @param Traits $traitFlaw
-     *
-     * @return Characters
-     */
-    public function setTraitFlaw(Traits $traitFlaw = null)
-    {
-        $this->traitFlaw = $traitFlaw;
-
-        return $this;
-    }
-
-    /**
-     * Get traitFlaw.
-     *
-     * @return Traits
-     */
-    public function getTraitFlaw()
-    {
-        return $this->traitFlaw;
-    }
-
-    /**
-     * Set traitQuality.
-     *
-     * @param Traits $traitQuality
-     *
-     * @return Characters
-     */
-    public function setTraitQuality(Traits $traitQuality = null)
-    {
-        $this->traitQuality = $traitQuality;
-
-        return $this;
-    }
-
-    /**
-     * Get traitQuality.
-     *
-     * @return Traits
-     */
-    public function getTraitQuality()
-    {
-        return $this->traitQuality;
-    }
-
-    /**
-     * Add avantages.
-     *
-     * @param CharAvtgs $avantages
-     *
-     * @return Characters
-     */
-    public function addAvantage(CharAvtgs $avantages)
-    {
-        $this->avantages[] = $avantages;
-
-        return $this;
-    }
-
-    /**
-     * Remove avantages.
-     *
-     * @param CharAvtgs $avantages
-     */
-    public function removeAvantage(CharAvtgs $avantages)
-    {
-        $this->avantages->removeElement($avantages);
-    }
-
-    /**
-     * Get avantages.
-     *
-     * @return Avantages[]
-     */
-    public function getAvantages()
-    {
-        return $this->avantages;
-    }
-
-    /**
-     * Add domains.
-     *
-     * @param CharDomains $domains
-     *
-     * @return Characters
-     */
-    public function addDomain(CharDomains $domains)
-    {
-        $this->domains[] = $domains;
-
-        return $this;
-    }
-
-    /**
-     * Remove domains.
-     *
-     * @param CharDomains $domains
-     */
-    public function removeDomain(CharDomains $domains)
-    {
-        $this->domains->removeElement($domains);
-    }
-
-    /**
-     * Get domains.
-     *
-     * @return Domains[]
-     */
-    public function getDomains()
-    {
-        return $this->domains;
-    }
-
-    /**
-     * Add disciplines.
-     *
-     * @param CharDisciplines $disciplines
-     *
-     * @return Characters
-     */
-    public function addDiscipline(CharDisciplines $disciplines)
-    {
-        $this->disciplines[] = $disciplines;
-
-        return $this;
-    }
-
-    /**
-     * Remove disciplines.
-     *
-     * @param CharDisciplines $disciplines
-     */
-    public function removeDiscipline(CharDisciplines $disciplines)
-    {
-        $this->disciplines->removeElement($disciplines);
-    }
-
-    /**
-     * Get disciplines.
-     *
-     * @return Disciplines[]
-     */
-    public function getDisciplines()
-    {
-        return $this->disciplines;
-    }
-
-    /**
-     * Add ways.
-     *
-     * @param CharWays $ways
-     *
-     * @return Characters
-     */
-    public function addWay(CharWays $ways)
-    {
-        $this->ways[] = $ways;
-
-        return $this;
-    }
-
-    /**
-     * Remove ways.
-     *
-     * @param CharWays $ways
-     */
-    public function removeWay(CharWays $ways)
-    {
-        $this->ways->removeElement($ways);
-    }
-
-    /**
-     * Get ways.
-     *
-     * @return Ways[]
-     */
-    public function getWays()
-    {
-        return $this->ways;
-    }
-
-    /**
-     * Add flux.
-     *
-     * @param CharFlux $flux
-     *
-     * @return Characters
-     */
-    public function addFlux(CharFlux $flux)
-    {
-        $this->flux[] = $flux;
-
-        return $this;
-    }
-
-    /**
-     * Remove flux.
-     *
-     * @param CharFlux $flux
-     */
-    public function removeFlux(CharFlux $flux)
-    {
-        $this->flux->removeElement($flux);
-    }
-
-    /**
-     * Get flux.
-     *
-     * @return Flux[]
-     */
-    public function getFlux()
-    {
-        return $this->flux;
-    }
-
-    /**
-     * Add CharModifications[].
-     *
-     * @param CharModifications $modifications
-     *
-     * @return Characters
-     */
-    public function addModification(CharModifications $modifications)
-    {
-        $this->modifications[] = $modifications;
-
-        return $this;
-    }
-
-    /**
-     * Remove modifications.
-     *
-     * @param CharModifications $modifications
-     */
-    public function removeModification(CharModifications $modifications)
-    {
-        $this->modifications->removeElement($modifications);
-    }
-
-    /**
-     * Get modifications.
-     *
-     * @return array
-     */
-    public function getModifications()
-    {
-        return $this->modifications;
-    }
-
-    /**
-     * Add setbacks.
-     *
-     * @param CharSetbacks $setbacks
-     *
-     * @return Characters
-     */
-    public function addSetback(CharSetbacks $setbacks)
-    {
-        $this->setbacks[] = $setbacks;
-
-        return $this;
-    }
-
-    /**
-     * Remove setbacks.
-     *
-     * @param CharSetbacks $setbacks
-     */
-    public function removeSetback(CharSetbacks $setbacks)
-    {
-        $this->setbacks->removeElement($setbacks);
-    }
-
-    /**
-     * Get setbacks.
-     *
-     * @return Setbacks[]
-     */
-    public function getSetbacks()
-    {
-        return $this->setbacks;
-    }
-
-    /**
-     * Set user.
-     *
-     * @param User $user
-     *
-     * @return Characters
-     */
-    public function setUser(User $user = null)
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    /**
-     * Get user.
-     *
-     * @return User
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
-
-    /**
-     * Set game.
-     *
-     * @param Games $game
-     *
-     * @return Characters
-     */
-    public function setGame(Games $game = null)
-    {
-        $this->game = $game;
-
-        return $this;
-    }
-
-    /**
-     * Get game.
-     *
-     * @return Games
-     */
-    public function getGame()
-    {
-        return $this->game;
-    }
-
-    /**
-     * Set hardening.
-     *
      * @param int $hardening
      *
      * @return Characters
@@ -1863,8 +755,6 @@ class Characters
     }
 
     /**
-     * Get hardening.
-     *
      * @return int
      */
     public function getHardening()
@@ -1872,200 +762,67 @@ class Characters
         return $this->hardening;
     }
 
-    /*-------------------------------------------------*/
-    /*-------------------------------------------------*/
-    /*-------Méthodes de récupération de données-------*/
-    /*-------------------------------------------------*/
-    /*-------------------------------------------------*/
-
     /**
-     * Get domain.
+     * @param int $age
      *
-     * @param int $id
-     *
-     * @return CharDomains
+     * @return Characters
      */
-    public function getDomain($id)
+    public function setAge($age)
     {
-        foreach ($this->domains as $charDomain) {
-            if (
-                $charDomain instanceof CharDomains &&
-                ($charDomain->getDomain()->getId() == $id
-                    || $charDomain->getDomain()->getName() == $id
-                    || $charDomain->getDomain() === $id
-                )
-            ) {
-                return $charDomain;
-            }
-        }
+        $this->age = $age;
 
-        return;
+        return $this;
     }
 
     /**
-     * Get way.
-     *
-     * @param string $shortName
-     *
-     * @return CharWays|null
-     */
-    public function getWay($shortName)
-    {
-        foreach ($this->ways as $charWay) {
-            if (
-                $charWay instanceof CharWays &&
-                $charWay->getWay()->getShortName() == $shortName
-            ) {
-                return $charWay;
-            }
-        }
-
-        return;
-    }
-
-    /**
-     * Get discipline.
-     *
-     * @param mixed $id La discipline à chercher. Peut être son ID, son nom ou l'objet lui-même.
-     *
-     * @return CharDisciplines|null
-     */
-    public function getDiscipline($id)
-    {
-        foreach ($this->disciplines as $charDiscipline) {
-            if (
-                $charDiscipline instanceof CharDisciplines &&
-                ($charDiscipline->getDiscipline()->getId() == $id
-                    || $charDiscipline->getDiscipline()->getName() == $id
-                    || $charDiscipline->getDiscipline() == $id)
-            ) {
-                return $charDiscipline;
-            }
-        }
-
-        return;
-    }
-
-    /**
-     * Retourne le score de base de défense du personnage.
-     *
      * @return int
      */
-    public function getBaseDefense()
+    public function getAge()
     {
-        $rai = $this->getWay('rai')->getScore();
-        $emp = $this->getWay('emp')->getScore();
-
-        return $rai + $emp + 5;
+        return $this->age;
     }
 
     /**
-     * Retourne le score de base de rapidité du personnage.
+     * @param int $mentalResist
      *
+     * @return Characters
+     */
+    public function setMentalResist($mentalResist)
+    {
+        $this->mentalResist = $mentalResist;
+
+        return $this;
+    }
+
+    /**
      * @return int
      */
-    public function getBaseSpeed()
+    public function getMentalResist()
     {
-        $com = $this->getWay('com')->getScore();
-        $emp = $this->getWay('emp')->getScore();
-
-        return $com + $emp;
+        return $this->mentalResist;
     }
 
     /**
-     * Retourne le score de base de rapidité du personnage.
+     * @param int $health
      *
+     * @return Characters
+     */
+    public function setHealth($health)
+    {
+        $this->health = $health;
+
+        return $this;
+    }
+
+    /**
      * @return int
      */
-    public function getBaseMentalResist()
+    public function getHealth()
     {
-        $ide = $this->getWay('ide')->getScore();
-
-        return $ide + 5;
-    }
-
-    public function getPotential()
-    {
-        $creativity = $this->getWay('cre')->getScore();
-        if ($creativity == 1) {
-            return 1;
-        } elseif ($creativity >= 2 && $creativity <= 4) {
-            return 2;
-        } elseif ($creativity == 5) {
-            return 3;
-        } else {
-            throw new CharactersException('Le calcul du potentiel du personnage a renvoyé une erreur');
-        }
+        return $this->health;
     }
 
     /**
-     * Retourne le score de base de combat au contact.
-     *
-     * @param null   $discipline
-     * @param string $potential
-     *
-     * @return int
-     */
-    public function getMeleeAttackScore($discipline = null, $potential = '')
-    {
-        return $this->getAttackScore('melee', $discipline, $potential);
-    }
-
-    /**
-     * Retourne le score de base du type de combat spécifié dans $type.
-     * Si $discipline est mentionné, il doit s'agir d'un identifiant valide de discipline,.
-     *
-     * @param string $type
-     * @param null   $discipline
-     * @param string $potential
-     *
-     * @throws CharactersException
-     *
-     * @return int
-     */
-    public function getAttackScore($type = 'melee', $discipline = null, $potential = '')
-    {
-
-        // Récupération du score de voie
-        $way = $this->getWay('com')->getScore();
-
-        // Définition de l'id des domaines "Combat au contact" et "Tir & lancer"
-        if ($type === 'melee') {
-            $domain_id = 2;
-        } elseif ($type === 'ranged') {
-            $domain_id = 14;
-        } else {
-            throw new CharactersException('Vous devez indiquer un type d\'attaque entre "melee" et "ranged".');
-        }
-
-        // Récupération du score du domaine
-        $domain = $this->getDomain($domain_id)->getScore();
-
-        // Si on indique une discipline, le score du domaine sera remplacé par le score de discipline
-        if ($discipline) {
-            $discipline = $this->getDiscipline($discipline);
-
-            // Il faut impérativement que la discipline soit associée au même domaine
-            if ($discipline->getDomain()->getId() == $domain_id) {
-                // Remplacement du nouveau score
-                $domain = $discipline->getScore();
-            }
-        }
-
-        $attack = $way + $domain;
-
-        if ($potential == '+') {
-            $attack += $this->getPotential();
-        } elseif ($potential === '-') {
-            $attack -= $this->getPotential();
-        }
-
-        return $attack;
-    }
-
-    /**
-     * Set maxHealth.
-     *
      * @param int $maxHealth
      *
      * @return Characters
@@ -2078,8 +835,6 @@ class Characters
     }
 
     /**
-     * Get maxHealth.
-     *
      * @return int
      */
     public function getMaxHealth()
@@ -2088,13 +843,211 @@ class Characters
     }
 
     /**
-     * Set deleted.
+     * @param int $stamina
      *
+     * @return Characters
+     */
+    public function setStamina($stamina)
+    {
+        $this->stamina = $stamina;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getStamina()
+    {
+        return $this->stamina;
+    }
+
+    /**
+     * @param bool $survival
+     *
+     * @return Characters
+     */
+    public function setSurvival($survival)
+    {
+        $this->survival = $survival;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getSurvival()
+    {
+        return $this->survival;
+    }
+
+    /**
+     * @param int $speed
+     *
+     * @return Characters
+     */
+    public function setSpeed($speed)
+    {
+        $this->speed = $speed;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getSpeed()
+    {
+        return $this->speed;
+    }
+
+    /**
+     * @param int $defense
+     *
+     * @return Characters
+     */
+    public function setDefense($defense)
+    {
+        $this->defense = $defense;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDefense()
+    {
+        return $this->defense;
+    }
+
+    /**
+     * @param int $rindath
+     *
+     * @return Characters
+     */
+    public function setRindath($rindath)
+    {
+        $this->rindath = $rindath;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getRindath()
+    {
+        return $this->rindath;
+    }
+
+    /**
+     * @param int $exaltation
+     *
+     * @return Characters
+     */
+    public function setExaltation($exaltation)
+    {
+        $this->exaltation = $exaltation;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getExaltation()
+    {
+        return $this->exaltation;
+    }
+
+    /**
+     * @param int $experienceActual
+     *
+     * @return Characters
+     */
+    public function setExperienceActual($experienceActual)
+    {
+        $this->experienceActual = $experienceActual;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getExperienceActual()
+    {
+        return $this->experienceActual;
+    }
+
+    /**
+     * @param int $experienceSpent
+     *
+     * @return Characters
+     */
+    public function setExperienceSpent($experienceSpent)
+    {
+        $this->experienceSpent = $experienceSpent;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getExperienceSpent()
+    {
+        return $this->experienceSpent;
+    }
+
+    /**
+     * @param \DateTime $created
+     *
+     * @return Characters
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * @param \DateTime $updated
+     *
+     * @return Characters
+     */
+    public function setUpdated($updated)
+    {
+        $this->updated = $updated;
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getUpdated()
+    {
+        return $this->updated;
+    }
+
+    /**
      * @param \DateTime $deleted
      *
      * @return Characters
      */
-    public function setDeleted($deleted)
+    public function setDeleted(\DateTime $deleted = null)
     {
         $this->deleted = $deleted;
 
@@ -2102,12 +1055,816 @@ class Characters
     }
 
     /**
-     * Get deleted.
-     *
      * @return \DateTime
      */
     public function getDeleted()
     {
         return $this->deleted;
     }
+
+    /**
+     * @param Peoples $people
+     *
+     * @return Characters
+     */
+    public function setPeople(Peoples $people = null)
+    {
+        $this->people = $people;
+
+        return $this;
+    }
+
+    /**
+     * @return Peoples
+     */
+    public function getPeople()
+    {
+        return $this->people;
+    }
+
+    /**
+     * @param Armors $armor
+     *
+     * @return Characters
+     */
+    public function addArmor(Armors $armor)
+    {
+        $this->armors[] = $armor;
+
+        return $this;
+    }
+
+    /**
+     * @param Armors $armor
+     *
+     * @return Characters
+     */
+    public function removeArmor(Armors $armor)
+    {
+        $this->armors->removeElement($armor);
+
+        return $this;
+    }
+
+    /**
+     * @return Armors[]
+     */
+    public function getArmors()
+    {
+        return $this->armors;
+    }
+
+    /**
+     * @param Artifacts $artifact
+     *
+     * @return Characters
+     */
+    public function addArtifact(Artifacts $artifact)
+    {
+        $this->artifacts[] = $artifact;
+
+        return $this;
+    }
+
+    /**
+     * @param Artifacts $artifact
+     *
+     * @return Characters
+     */
+    public function removeArtifact(Artifacts $artifact)
+    {
+        $this->artifacts->removeElement($artifact);
+
+        return $this;
+    }
+
+    /**
+     * @return Artifacts[]
+     */
+    public function getArtifacts()
+    {
+        return $this->artifacts;
+    }
+
+    /**
+     * @param Miracles $miracle
+     *
+     * @return Characters
+     */
+    public function addMiracle(Miracles $miracle)
+    {
+        $this->miracles[] = $miracle;
+
+        return $this;
+    }
+
+    /**
+     * @param Miracles $miracle
+     *
+     * @return Characters
+     */
+    public function removeMiracle(Miracles $miracle)
+    {
+        $this->miracles->removeElement($miracle);
+
+        return $this;
+    }
+
+    /**
+     * @return Miracles[]
+     */
+    public function getMiracles()
+    {
+        return $this->miracles;
+    }
+
+    /**
+     * @param Ogham $ogham
+     *
+     * @return Characters
+     */
+    public function addOgham(Ogham $ogham)
+    {
+        $this->ogham[] = $ogham;
+
+        return $this;
+    }
+
+    /**
+     * @param Ogham $ogham
+     *
+     * @return Characters
+     */
+    public function removeOgham(Ogham $ogham)
+    {
+        $this->ogham->removeElement($ogham);
+
+        return $this;
+    }
+
+    /**
+     * @return Ogham[]
+     */
+    public function getOgham()
+    {
+        return $this->ogham;
+    }
+
+    /**
+     * @param Weapons $weapon
+     *
+     * @return Characters
+     */
+    public function addWeapon(Weapons $weapon)
+    {
+        $this->weapons[] = $weapon;
+
+        return $this;
+    }
+
+    /**
+     * @param Weapons $weapon
+     *
+     * @return Characters
+     */
+    public function removeWeapon(Weapons $weapon)
+    {
+        $this->weapons->removeElement($weapon);
+
+        return $this;
+    }
+
+    /**
+     * @return Weapons[]
+     */
+    public function getWeapons()
+    {
+        return $this->weapons;
+    }
+
+    /**
+     * @param SocialClasses $socialClasses
+     *
+     * @return Characters
+     */
+    public function setSocialClasses(SocialClasses $socialClasses = null)
+    {
+        $this->socialClasses = $socialClasses;
+
+        return $this;
+    }
+
+    /**
+     * @return SocialClasses
+     */
+    public function getSocialClasses()
+    {
+        return $this->socialClasses;
+    }
+
+    /**
+     * @param Domains $socialClassDomain1
+     *
+     * @return Characters
+     */
+    public function setSocialClassDomain1(Domains $socialClassDomain1 = null)
+    {
+        $this->socialClassDomain1 = $socialClassDomain1;
+
+        return $this;
+    }
+
+    /**
+     * @return Domains
+     */
+    public function getSocialClassDomain1()
+    {
+        return $this->socialClassDomain1;
+    }
+
+    /**
+     * @param Domains $socialClassDomain2
+     *
+     * @return Characters
+     */
+    public function setSocialClassDomain2(Domains $socialClassDomain2 = null)
+    {
+        $this->socialClassDomain2 = $socialClassDomain2;
+
+        return $this;
+    }
+
+    /**
+     * @return Domains
+     */
+    public function getSocialClassDomain2()
+    {
+        return $this->socialClassDomain2;
+    }
+
+    /**
+     * @param Disorders $disorder
+     *
+     * @return Characters
+     */
+    public function setDisorder(Disorders $disorder = null)
+    {
+        $this->disorder = $disorder;
+
+        return $this;
+    }
+
+    /**
+     * @return Disorders
+     */
+    public function getDisorder()
+    {
+        return $this->disorder;
+    }
+
+    /**
+     * @param Jobs $job
+     *
+     * @return Characters
+     */
+    public function setJob(Jobs $job = null)
+    {
+        $this->job = $job;
+
+        return $this;
+    }
+
+    /**
+     * @return Jobs
+     */
+    public function getJob()
+    {
+        return $this->job;
+    }
+
+    /**
+     * @param Regions $region
+     *
+     * @return Characters
+     */
+    public function setRegion(Regions $region = null)
+    {
+        $this->region = $region;
+
+        return $this;
+    }
+
+    /**
+     * @return Regions
+     */
+    public function getRegion()
+    {
+        return $this->region;
+    }
+
+    /**
+     * @param Traits $flaw
+     *
+     * @return Characters
+     */
+    public function setFlaw(Traits $flaw = null)
+    {
+        $this->flaw = $flaw;
+
+        return $this;
+    }
+
+    /**
+     * @return Traits
+     */
+    public function getFlaw()
+    {
+        return $this->flaw;
+    }
+
+    /**
+     * @param Traits $quality
+     *
+     * @return Characters
+     */
+    public function setQuality(Traits $quality = null)
+    {
+        $this->quality = $quality;
+
+        return $this;
+    }
+
+    /**
+     * @return Traits
+     */
+    public function getQuality()
+    {
+        return $this->quality;
+    }
+
+    /**
+     * @param CharAdvantages $advantage
+     *
+     * @return Characters
+     */
+    public function addAdvantage(CharAdvantages $advantage)
+    {
+        $this->advantages[] = $advantage;
+
+        return $this;
+    }
+
+    /**
+     * @param CharAdvantages $advantage
+     *
+     * @return Characters
+     */
+    public function removeAdvantage(CharAdvantages $advantage)
+    {
+        $this->advantages->removeElement($advantage);
+
+        return $this;
+    }
+
+    /**
+     * @return CharAdvantages[]
+     */
+    public function getAdvantages()
+    {
+        return $this->advantages;
+    }
+
+    /**
+     * @param CharDomains $domain
+     *
+     * @return Characters
+     */
+    public function addDomain(CharDomains $domain)
+    {
+        $this->domains[] = $domain;
+
+        return $this;
+    }
+
+    /**
+     * @param CharDomains $domain
+     *
+     * @return $this
+     */
+    public function removeDomain(CharDomains $domain)
+    {
+        $this->domains->removeElement($domain);
+
+        return $this;
+    }
+
+    /**
+     * @return CharDomains[]
+     */
+    public function getDomains()
+    {
+        return $this->domains;
+    }
+
+    /**
+     * @param CharDisciplines $discipline
+     *
+     * @return Characters
+     */
+    public function addDiscipline(CharDisciplines $discipline)
+    {
+        $this->disciplines[] = $discipline;
+
+        return $this;
+    }
+
+    /**
+     * @param CharDisciplines $discipline
+     *
+     * @return $this
+     */
+    public function removeDiscipline(CharDisciplines $discipline)
+    {
+        $this->disciplines->removeElement($discipline);
+
+        return $this;
+    }
+
+    /**
+     * @return CharDisciplines[]
+     */
+    public function getDisciplines()
+    {
+        return $this->disciplines;
+    }
+
+    /**
+     * @param CharWays $way
+     *
+     * @return Characters
+     */
+    public function addWay(CharWays $way)
+    {
+        $this->ways[] = $way;
+
+        return $this;
+    }
+
+    /**
+     * @param CharWays $way
+     *
+     * @return $this
+     */
+    public function removeWay(CharWays $way)
+    {
+        $this->ways->removeElement($way);
+
+        return $this;
+    }
+
+    /**
+     * @return CharWays[]
+     */
+    public function getWays()
+    {
+        return $this->ways;
+    }
+
+    /**
+     * @param CharFlux $flux
+     *
+     * @return Characters
+     */
+    public function addFlux(CharFlux $flux)
+    {
+        $this->flux[] = $flux;
+
+        return $this;
+    }
+
+    /**
+     * @param CharFlux $flux
+     *
+     * @return $this
+     */
+    public function removeFlux(CharFlux $flux)
+    {
+        $this->flux->removeElement($flux);
+
+        return $this;
+    }
+
+    /**
+     * @return CharFlux[]
+     */
+    public function getFlux()
+    {
+        return $this->flux;
+    }
+
+    /**
+     * @param CharSetbacks $setback
+     *
+     * @return Characters
+     */
+    public function addSetback(CharSetbacks $setback)
+    {
+        $this->setbacks[] = $setback;
+
+        return $this;
+    }
+
+    /**
+     * @param CharSetbacks $setback
+     *
+     * @return $this
+     */
+    public function removeSetback(CharSetbacks $setback)
+    {
+        $this->setbacks->removeElement($setback);
+
+        return $this;
+    }
+
+    /**
+     * @return CharSetbacks[]|ArrayCollection
+     */
+    public function getSetbacks()
+    {
+        return $this->setbacks;
+    }
+
+    /**
+     * @param User $user
+     *
+     * @return Characters
+     */
+    public function setUser(User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param Games $game
+     *
+     * @return Characters
+     */
+    public function setGame(Games $game = null)
+    {
+        $this->game = $game;
+
+        return $this;
+    }
+
+    /**
+     * @return Games
+     */
+    public function getGame()
+    {
+        return $this->game;
+    }
+
+    /*-------------------------------------------------*/
+    /*-------------------------------------------------*/
+    /*--------- Methods used for entity logic ---------*/
+    /*-------------------------------------------------*/
+    /*-------------------------------------------------*/
+
+    public function createFromGenerator(array $data) {
+        $character = new static();
+
+        $mandatoryFields = [
+            'name',
+        ];
+
+        foreach ($mandatoryFields as $field) {
+            if (!array_key_exists($field, $data)) {
+                throw new \InvalidArgumentException('Field "'.$field.'" is not defined in data.');
+            }
+            $this->$field = $data[$field];
+        }
+
+        //TODO: add logic
+
+        return $character;
+    }
+
+    /**
+     * Conscience is determined by "Reason" and "Conviction" ways.
+     *
+     * @return string
+     */
+    public function getConscience()
+    {
+        return $this->getWay('rai')->getScore() + $this->getWay('ide')->getScore();
+    }
+
+    /**
+     * Conscience is determined by "Creativity" and "Combativity" ways.
+     *
+     * @return string
+     */
+    public function getInstinct()
+    {
+        return $this->getWay('cre')->getScore() + $this->getWay('com')->getScore();
+    }
+
+    /**
+     * Get a domain based on its id or name.
+     *
+     * @param int|string $id
+     *
+     * @return CharDomains
+     */
+    public function getDomain($id)
+    {
+        foreach ($this->domains as $charDomain) {
+            $domain = $charDomain->getDomain();
+            if (
+                $charDomain instanceof CharDomains &&
+                (($domain->getId() === (int) $id) || $domain->getName() === $id)
+            ) {
+                return $charDomain;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @param string $shortName
+     *
+     * @return CharWays|null
+     */
+    public function getWay($shortName)
+    {
+        foreach ($this->ways as $charWay) {
+            if (
+                $charWay instanceof CharWays &&
+                $charWay->getWay()->getShortName() === $shortName
+            ) {
+                return $charWay;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @param CharDisciplines|int|string $id
+     *
+     * @return CharDisciplines|null
+     */
+    public function getDiscipline($id)
+    {
+        foreach ($this->disciplines as $charDiscipline) {
+            $discipline = $charDiscipline->getDiscipline();
+            if (
+                $charDiscipline instanceof CharDisciplines &&
+                (($discipline->getId() === (int) $id) || $discipline->getName() === $id)
+            ) {
+                return $charDiscipline;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Base defense is calculated from "Reason" and "Empathy".
+     *
+     * @return int
+     */
+    public function getBaseDefense()
+    {
+        $rai = $this->getWay('rai')->getScore();
+        $emp = $this->getWay('emp')->getScore();
+
+        return $rai + $emp + 5;
+    }
+
+    /**
+     * Base speed is calculated from "Combativity" and "Empathy".
+     *
+     * @return int
+     */
+    public function getBaseSpeed()
+    {
+        $com = $this->getWay('com')->getScore();
+        $emp = $this->getWay('emp')->getScore();
+
+        return $com + $emp;
+    }
+
+    /**
+     * Base mental resistance is calculated from "Conviction".
+     *
+     * @return int
+     */
+    public function getBaseMentalResist()
+    {
+        $ide = $this->getWay('ide')->getScore();
+
+        return $ide + 5;
+    }
+
+    /**
+     * @return int
+     * @throws CharactersException
+     */
+    public function getPotential()
+    {
+        $creativity = (int) $this->getWay('cre')->getScore();
+        if ($creativity === 1) {
+            return 1;
+        } elseif ($creativity >= 2 && $creativity <= 4) {
+            return 2;
+        } elseif ($creativity === 5) {
+            return 3;
+        } else {
+            throw new CharactersException('Le calcul du potentiel du personnage a renvoyé une erreur');
+        }
+    }
+
+    /**
+     * Calculate melee attack score.
+     *
+     * @param int|string $discipline
+     * @param string     $potentialOperator  Can be "+" or "-"
+     *
+     * @return int
+     */
+    public function getMeleeAttackScore($discipline = null, $potentialOperator = '')
+    {
+        return $this->getAttackScore('melee', $discipline, $potentialOperator);
+    }
+
+    /**
+     * Retourne le score de base du type de combat spécifié dans $type.
+     * Si $discipline est mentionné, il doit s'agir d'un identifiant valide de discipline,.
+     *
+     * @param string     $type
+     * @param int|string $discipline
+     * @param string     $potentialOperator Can be "+" or "-".
+     *
+     * @throws CharactersException
+     *
+     * @return int
+     */
+    public function getAttackScore($type = 'melee', $discipline = null, $potentialOperator = '')
+    {
+        // Récupération du score de voie
+        $way = $this->getWay('com')->getScore();
+
+        // Définition de l'id des domaines "Combat au contact" et "Tir & lancer"
+        if ($type === 'melee') {
+            $domain_id = 2;
+        } elseif ($type === 'ranged') {
+            $domain_id = 14;
+        } else {
+            throw new CharactersException('Vous devez indiquer un type d\'attaque entre "melee" et "ranged".');
+        }
+
+        $domain_id = (int)$domain_id;
+
+        // Récupération du score du domaine
+        $domain = $this->getDomain($domain_id)->getScore();
+
+        // Si on indique une discipline, le score du domaine sera remplacé par le score de discipline
+        if (null !== $discipline) {
+            $discipline = $this->getDiscipline($discipline);
+
+            // Il faut impérativement que la discipline soit associée au même domaine
+            if ($discipline->getDomain()->getId() === $domain_id) {
+                // Remplacement du nouveau score
+                $domain = $discipline->getScore();
+            }
+        }
+
+        $attack = $way + $domain;
+
+        if ($potentialOperator === '+') {
+            $attack += $this->getPotential();
+        } elseif ($potentialOperator === '-') {
+            $attack -= $this->getPotential();
+        } else {
+            throw new \InvalidArgumentException(sprintf(
+                'Wrong potential operator specified. "%s" or "%s" expected, "%s" given.',
+                '+', '-', $potentialOperator
+            ));
+        }
+
+        return $attack;
+    }
+
 }

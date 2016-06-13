@@ -113,7 +113,7 @@ class PdfManager extends SheetsManager implements SheetsManagerInterface
 
         // Avantages et désavantages
         $av = [];
-        foreach ($character->getAvantages() as $v) {
+        foreach ($character->getAdvantages() as $v) {
             if (!$v->getAvantage()->getIsDesv()) {
                 $av[] = $translator->trans($v->getAvantage()->getName()).($v->getDoubleValue() > 1 ? '    x'.$v->getDoubleValue() : '');
             }
@@ -131,7 +131,7 @@ class PdfManager extends SheetsManager implements SheetsManagerInterface
             $pdf->textline(substr($av[3], 0, 25), 430, 620, $p['caro'], 18);
         }
         $dv = [];
-        foreach ($character->getAvantages() as $v) {
+        foreach ($character->getAdvantages() as $v) {
             if ($v->getAvantage()->getIsDesv()) {
                 $dv[] = $translator->trans($v->getAvantage()->getName()).($v->getDoubleValue() > 1 ? '    x'.$v->getDoubleValue() : '');
             }
@@ -288,9 +288,9 @@ class PdfManager extends SheetsManager implements SheetsManagerInterface
             }
         }
 
-        if ($character->getAvantages()) {
+        if ($character->getAdvantages()) {
             $i = 0;
-            foreach ($character->getAvantages() as $v) {
+            foreach ($character->getAdvantages() as $v) {
                 if ($v->getAvantage()->getIsCombatArt()) {
                     $pdf->textline($v->getName(), 448, 1026 + ($i * 44), $p['carbold'], 20, true);
                     ++$i;
@@ -444,8 +444,8 @@ class PdfManager extends SheetsManager implements SheetsManagerInterface
         $pdf->textline($character->getDisorder()->getName(), 195, 674, $p['carbold'], 21, true);
 
         //Qualité et défaut
-        $pdf->textline($translator->trans('Qualité').' : '.$translator->trans($character->getTraitQuality()->getName()), 270, 940, $p['carbold'], 21);
-        $pdf->textline($translator->trans('Défaut').' : '.$translator->trans($character->getTraitFlaw()->getName()), 270, 982, $p['carbold'], 21);
+        $pdf->textline($translator->trans('Qualité').' : '.$translator->trans($character->getQuality()->getName()), 270, 940, $p['carbold'], 21);
+        $pdf->textline($translator->trans('Défaut').' : '.$translator->trans($character->getFlaw()->getName()), 270, 982, $p['carbold'], 21);
 
         //Expérience
         $pdf->textline($character->getExperienceActual().'     ( '.$translator->trans('Total').' '.$character->getExperienceSpent().' )', 679, 1325, $p['carbold'], 24);
