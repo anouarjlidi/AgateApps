@@ -105,7 +105,8 @@ var config = {
             "web/components/bootstrap/js/popover.js",
             "web/components/bootstrap/js/transition.js",
             "web/components/bootstrap/js/tab.js",
-            "src/Esteren/PortalBundle/Resources/public/js/corahn_rin.js"
+            "src/Esteren/PortalBundle/Resources/public/js/corahn_rin.js",
+            "src/Esteren/PortalBundle/Resources/public/js/helpers.js"
         ],
         "js/maps_lib.js": [
             "web/components/leaflet/dist/leaflet-src.js",

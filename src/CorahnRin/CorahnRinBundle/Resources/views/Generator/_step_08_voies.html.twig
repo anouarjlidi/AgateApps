@@ -1,3 +1,4 @@
+{% spaceless %}
 <p class="alert alert-info">
     {{ 'Les voies sont comprises entre 1 et 5, et la somme totale des voies doit être égale à 15.' | trans }}
     <br />
@@ -10,12 +11,38 @@
         </div>
         <div class="col-sm-2">
             <div class="input-group">
+
+                {# "minus" button #}
                 <span class="input-group-btn">
-                    <button class="btn btn-inverse" data-toggle="increment" data-increment-min="1" data-increment-max="5" data-increment="-1" data-target-node="way_{{ id }}" data-sum-max="15" data-sum-selector=".input_way" type="button">-</button>
+                    <button
+                        class="btn btn-inverse"
+                        data-toggle-increment
+                        data-ti-increment-min="1"
+                        data-ti-increment-max="5"
+                        data-ti-increment="-1"
+                        data-ti-target-node="way_{{ id }}"
+                        data-ti-sum-max="15"
+                        data-ti-sum-selector=".input_way"
+                        type="button"
+                    >&minus;</button>
                 </span>
-                <input id="way_{{ id }}" name="ways[{{ id }}]" type="text" class="form-control input_way text-center input-black disabled" value="{{ ways_values[id] }}"/>
+
+                {# Input that stores the sum for each way#}
+                <input id="way_{{ id }}" name="ways[{{ id }}]" type="text" class="form-control input_way text-center input-black disabled" value="{{ ways_values[id] }}" title="{{ way.name | trans }}"/>
+
+                {# "plus" button #}
                 <span class="input-group-btn">
-                    <button class="btn btn-inverse" data-toggle="increment" data-increment-min="1" data-increment-max="5" data-increment="1" data-target-node="way_{{ id }}"  data-sum-max="15" data-sum-selector=".input_way" type="button">+</button>
+                    <button
+                        class="btn btn-inverse"
+                        data-toggle-increment
+                        data-ti-increment-min="1"
+                        data-ti-increment-max="5"
+                        data-ti-increment="1"
+                        data-ti-target-node="way_{{ id }}"
+                        data-ti-sum-max="15"
+                        data-ti-sum-selector=".input_way"
+                        type="button"
+                    >&plus;</button>
                 </span>
             </div><!-- /input-group -->
         </div>
@@ -24,3 +51,4 @@
         </div>
     </div>
 {% endfor %}
+{% endspaceless %}
