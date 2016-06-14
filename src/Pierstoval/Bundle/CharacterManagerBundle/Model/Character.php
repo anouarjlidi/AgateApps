@@ -1,6 +1,6 @@
 <?php
 
-namespace Pierstoval\Bundle\CharacterGeneratorBundle\Model;
+namespace Pierstoval\Bundle\CharacterManagerBundle\Model;
 
 abstract class Character
 {
