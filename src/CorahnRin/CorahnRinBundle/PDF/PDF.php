@@ -1,5 +1,6 @@
 <?php
-namespace CorahnRin\ToolsBundle\PDF;
+
+namespace CorahnRin\CorahnRinBundle\PDF;
 
 use Symfony\Component\Translation\TranslatorInterface;
 
@@ -22,14 +23,14 @@ class PDF extends FPDF {
      */
     protected $translator;
 
-    function __construct($orientation = 'P', $unit = 'mm', $size = 'A4') {
+    public function __construct($orientation = 'P', $unit = 'mm', $size = 'A4') {
         $this->fontpath = str_replace(array('/', '\\'), array(DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR),
             __DIR__.'/../Resources/fpdf/fonts'
         );
-        return parent::__construct($orientation, $unit, $size);
+        parent::__construct($orientation, $unit, $size);
     }
 
-    function setTranslator(TranslatorInterface $translator) {
+    public function setTranslator(TranslatorInterface $translator) {
         $this->translator = $translator;
         return $this;
     }
@@ -49,7 +50,7 @@ class PDF extends FPDF {
      * @return $this
      * @author Pierstoval    06/06/2013
      */
-    function multiple_lines($text, $x, $y, $font, $size, $width, $lines, $line_offset, $translate = false) {
+    public function multiple_lines($text, $x, $y, $font, $size, $width, $lines, $line_offset, $translate = false) {
         if ($this->translator && $translate === true) {
             $text = $this->translator->trans($text);
             $translate = false;
@@ -101,7 +102,7 @@ class PDF extends FPDF {
      * @return $this
      * @author Pierstoval    06/06/2013
      */
-    function textbox($text, $x, $y, $font, $size, $width, $translate = false) {
+    public function textbox($text, $x, $y, $font, $size, $width, $translate = false) {
         if ($this->translator && $translate === true) {
             $text = $this->translator->trans($text);
             $translate = false;
@@ -140,7 +141,7 @@ class PDF extends FPDF {
      * @return $this
      * @author Pierstoval    06/06/2013
      */
-    function textline($text, $x, $y, $font, $size, $translate = true) {
+    public function textline($text, $x, $y, $font, $size, $translate = true) {
         if ($this->translator && $translate === true) {
             $text = $this->translator->trans($text);
         }
