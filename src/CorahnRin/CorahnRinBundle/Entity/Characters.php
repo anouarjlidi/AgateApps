@@ -9,7 +9,7 @@ use CorahnRin\CorahnRinBundle\Entity\CharacterProperties\CharFlux;
 use CorahnRin\CorahnRinBundle\Entity\CharacterProperties\CharSetbacks;
 use CorahnRin\CorahnRinBundle\Entity\CharacterProperties\CharWays;
 use CorahnRin\CorahnRinBundle\Entity\CharacterProperties\Money;
-use Pierstoval\Bundle\CharacterGeneratorBundle\Model\Character as BaseCharacter;
+use Pierstoval\Bundle\CharacterManagerBundle\Model\Character as BaseCharacter;
 use CorahnRin\CorahnRinBundle\Exception\CharactersException;
 use UserBundle\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -1721,7 +1721,7 @@ class Characters extends BaseCharacter
     }
 
     /**
-     * @param CharDisciplines|int|string $id
+     * @param int|string $id
      *
      * @return CharDisciplines|null
      */
@@ -1842,12 +1842,12 @@ class Characters extends BaseCharacter
 
         // Si on indique une discipline, le score du domaine sera remplacé par le score de discipline
         if (null !== $discipline) {
-            $discipline = $this->getDiscipline($discipline);
+            $charDiscipline = $this->getDiscipline($discipline);
 
             // Il faut impérativement que la discipline soit associée au même domaine
-            if ($discipline->getDomain()->getId() === $domain_id) {
+            if ($charDiscipline->getDomain()->getId() === $domain_id) {
                 // Remplacement du nouveau score
-                $domain = $discipline->getScore();
+                $domain = $charDiscipline->getScore();
             }
         }
 
@@ -1859,7 +1859,7 @@ class Characters extends BaseCharacter
             $attack -= $this->getPotential();
         } else {
             throw new \InvalidArgumentException(sprintf(
-                'Wrong potential operator specified. "%s" or "%s" expected, "%s" given.',
+                'Wrong potential operator specified: "%s" or "%s" expected, "%s" given.',
                 '+', '-', $potentialOperator
             ));
         }

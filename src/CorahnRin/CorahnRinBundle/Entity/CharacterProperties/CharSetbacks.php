@@ -67,11 +67,11 @@ class CharSetbacks
     /**
      * Set setback.
      *
-     * @param int $setback
+     * @param Setbacks $setback
      *
      * @return CharSetbacks
      */
-    public function setSetback($setback)
+    public function setSetback(Setbacks $setback)
     {
         $this->setback = $setback;
 
@@ -81,7 +81,7 @@ class CharSetbacks
     /**
      * Get setback.
      *
-     * @return int
+     * @return Setbacks
      */
     public function getSetback()
     {
