@@ -1,29 +1,65 @@
 <?php
 
-namespace CorahnRin\CorahnRinBundle\SheetsManagers\Managers;
+namespace CorahnRin\CorahnRinBundle\SheetsManagers;
 
 use CorahnRin\CorahnRinBundle\Entity\Characters;
-use CorahnRin\CorahnRinBundle\SheetsManagers\SheetsManagerInterface;
-use CorahnRin\CorahnRinBundle\SheetsManagers\SheetsManager;
-use CorahnRin\ToolsBundle\PDF\PDF;
+use CorahnRin\CorahnRinBundle\PDF\PDF;
+use Pierstoval\Bundle\CharacterManagerBundle\Model\Character;
+use Symfony\Component\Translation\Translator;
 
-/**
- * Class CharacterSheets
- * Project corahn_rin.
- *
- * @author Pierstoval
- *
- * @version 1.0 20/02/2014
- */
-class PdfManager extends SheetsManager implements SheetsManagerInterface
+class PdfManager implements SheetsManagerInterface
 {
-    protected function originalSheet(Characters $character, $printer_friendly = false, $page = 0)
+
+    /**
+     * @var Translator
+     */
+    private $translator;
+
+    /**
+     * @var string
+     */
+    private $sheetsFolder;
+
+    public function __construct($sheetsFolder, Translator $translator)
+    {
+        $this->translator   = $translator;
+        $this->sheetsFolder = $sheetsFolder;
+    }
+
+    private function getFolder()
+    {
+        return $this->sheetsFolder;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @return PDF
+     */
+    public function generateSheet(Character $character, $printer_friendly = false)
+    {
+        if (!($character instanceof Characters)) {
+            throw new \InvalidArgumentException(sprintf(
+                'To generate sheet, character must be an instance of "%s". "%s" given.',
+                Characters::class, get_class($character)
+            ));
+        }
+        return $this->originalSheet($character, $printer_friendly);
+    }
+
+    /**
+     * @param Characters $character
+     * @param bool       $printer_friendly
+     *
+     * @return PDF
+     */
+    private function originalSheet(Characters $character, $printer_friendly = false)
     {
         $general_width  = 893;
         $general_height = 1263;
         $pdf            = new PDF('P', 'pt');
         $pdf->SetCompression(false);
-        $translator = $this->getService()->getTranslator();
+        $translator = $this->translator;
         $pdf->setTranslator($translator);
 
         $p = [
@@ -53,7 +89,7 @@ class PdfManager extends SheetsManager implements SheetsManagerInterface
             ],
         ];
         foreach ($p as $key => $v) {
-            $file            = $this->getService()->locateResource('@EsterenPortalBundle/Resources/public/fonts/'.$v['file']);
+            $file            = __DIR__.'/../Resources/public/fonts/'.$v['file'];
             $p[$key]['file'] = $file;
             $pdf->AddFont($v['name'], '', $file, true);
         }
@@ -66,7 +102,7 @@ class PdfManager extends SheetsManager implements SheetsManagerInterface
         $pdf->AddPage('', [$general_width, $general_height]);
         $pdf->Image($this->getFolder().'/'.
             'original'.
-            '_'.$this->getLocale().
+            '_'.$translator->getLocale().
             '_1'.
             '_'.($printer_friendly === true ? 'pf' : 'npf').
             '.jpg', 0, 0, $general_width, $general_height);
@@ -75,13 +111,13 @@ class PdfManager extends SheetsManager implements SheetsManagerInterface
 
         $pdf->textbox($character->getPlayerName(), 880, 280, $p['lettrine'], 21, 230);
 
-        $pdf->textline(substr($translator->trans($character->getSex()), 0, 1), 215, 322, $p['times'], 18);
+        $pdf->textline($translator->trans($character->getSex())[0], 215, 322, $p['times'], 18);
         $pdf->textline(substr($character->getAge(), 0, 3), 343, 322, $p['caro'], 18);
 
         $pdf->multiple_lines($character->getDescription(), 295, 365, $p['carbold'], 17, 820, 1, 0, true);
 
         $pdf->textline(substr($character->getPeople()->getName(), 0, 20), 530, 322, $p['lettrine'], 18, true);
-        $pdf->textline(substr($character->getJobCustom() ? $character->getJobCustom() : $character->getJob()->getName(), 0, 25), 895, 322, $p['lettrine'], 18, true);
+        $pdf->textline(substr($character->getJobCustom() ?: $character->getJob()->getName(), 0, 25), 895, 322, $p['lettrine'], 18, true);
 
         // voies
         $pdf->textline($character->getWay('com')->getScore(), 325, 545, $p['carbold'], 28);
@@ -111,11 +147,11 @@ class PdfManager extends SheetsManager implements SheetsManagerInterface
         $pdf->textline($character->getWay('emp')->getScore(), 800, 1502, $p['unz'], 22);
         $pdf->textline($character->getWay('emp')->getScore(), 1065, 1502, $p['unz'], 22);
 
-        // Avantages et désavantages
+        // Advantages and disadvantages
         $av = [];
         foreach ($character->getAdvantages() as $v) {
-            if (!$v->getAvantage()->getIsDesv()) {
-                $av[] = $translator->trans($v->getAvantage()->getName()).($v->getDoubleValue() > 1 ? '    x'.$v->getDoubleValue() : '');
+            if (!$v->getAdvantage()->getIsDesv()) {
+                $av[] = $translator->trans($v->getAdvantage()->getName()).($v->getDoubleValue() > 1 ? '    x'.$v->getDoubleValue() : '');
             }
         }
         if (isset($av[0])) {
@@ -132,8 +168,8 @@ class PdfManager extends SheetsManager implements SheetsManagerInterface
         }
         $dv = [];
         foreach ($character->getAdvantages() as $v) {
-            if ($v->getAvantage()->getIsDesv()) {
-                $dv[] = $translator->trans($v->getAvantage()->getName()).($v->getDoubleValue() > 1 ? '    x'.$v->getDoubleValue() : '');
+            if ($v->getAdvantage()->getIsDesv()) {
+                $dv[] = $translator->trans($v->getAdvantage()->getName()).($v->getDoubleValue() > 1 ? '    x'.$v->getDoubleValue() : '');
             }
         }
         if (isset($dv[0])) {
@@ -177,7 +213,6 @@ class PdfManager extends SheetsManager implements SheetsManagerInterface
             $pdf->SetTextColor(0x22, 0x11, 0x4);
         }
         foreach ($character->getDomains() as $key => $val) {
-            $string = '';
             $score  = $val->getScore();
             ++$j;
             if ($score >= 0) {
@@ -192,10 +227,10 @@ class PdfManager extends SheetsManager implements SheetsManagerInterface
 //				$pdf->textline('-'.$val['malus'], $x_arr[$j]+143, $y_arr[$j]+23, $p['unz'], 16);
 //			}
             $l = 0;
-            foreach ($character->getDisciplines() as $v) {
-                if ($v->getDomain()->getId() == $val->getDomain()->getId()) {
-                    $pdf->textline($v->getDiscipline()->getName(), $x_arr[$j] + 45, $y_arr[$j] + 45 + $l * 22, $p['times'], 13, true);
-                    $pdf->textline($v->getScore(), $x_arr[$j] + 222, $y_arr[$j] + 45 + $l * 22, $p['caro'], 17);
+            foreach ($character->getDisciplines() as $charDisciplines) {
+                if ($charDisciplines->getDomain()->getId() === $val->getDomain()->getId()) {
+                    $pdf->textline($charDisciplines->getDiscipline()->getName(), $x_arr[$j] + 45, $y_arr[$j] + 45 + $l * 22, $p['times'], 13, true);
+                    $pdf->textline($charDisciplines->getScore(), $x_arr[$j] + 222, $y_arr[$j] + 45 + $l * 22, $p['caro'], 17);
                     ++$l;
                 }
             }
@@ -212,7 +247,7 @@ class PdfManager extends SheetsManager implements SheetsManagerInterface
         $pdf->AddPage('', [$general_width, $general_height]);
         $pdf->Image($this->getFolder().'/'.
             'original'.
-            '_'.$this->getLocale().
+            '_'.$translator->getLocale().
             '_2'.
             '_'.($printer_friendly === true ? 'pf' : 'npf').
             '.jpg', 0, 0, $general_width, $general_height);
@@ -257,11 +292,7 @@ class PdfManager extends SheetsManager implements SheetsManagerInterface
         }
         if ($character->getDefense()) {
             for ($i = 1; $i <= $character->getDefense(); ++$i) {
-                if ($i > 5) {
-                    $off = 12;
-                } else {
-                    $off = 0;
-                }
+                $off = $i > 5 ? 12 : 0;
                 $pdf->textline('●', 767 + ($i - 1) * 27.6 + $off, 136, $p['arial'], 30);
             }
         }
@@ -291,8 +322,8 @@ class PdfManager extends SheetsManager implements SheetsManagerInterface
         if ($character->getAdvantages()) {
             $i = 0;
             foreach ($character->getAdvantages() as $v) {
-                if ($v->getAvantage()->getIsCombatArt()) {
-                    $pdf->textline($v->getName(), 448, 1026 + ($i * 44), $p['carbold'], 20, true);
+                if ($v->getAdvantage()->getIsCombatArt()) {
+                    $pdf->textline($v->getAdvantage()->getName(), 448, 1026 + ($i * 44), $p['carbold'], 20, true);
                     ++$i;
                 }
             }
@@ -360,10 +391,10 @@ class PdfManager extends SheetsManager implements SheetsManagerInterface
         $pdf->textline($character->getExaltation().' / '.$character->getExaltation(), 540, 1272, $p['carbold'], 32);
 
         //Argent
-        $argent = $character->getMoney()->getValues();
-        $pdf->textline($argent['Braise'], 830, 540, $p['carbold'], 28);
-        $pdf->textline($argent['Azur'], 830, 609, $p['carbold'], 28);
-        $pdf->textline($argent['Givre'], 830, 676, $p['carbold'], 28);
+        $money = $character->getMoney();
+        $pdf->textline($money->getEmber(), 830, 540, $p['carbold'], 28);
+        $pdf->textline($money->getAzure(), 830, 609, $p['carbold'], 28);
+        $pdf->textline($money->getFrost(), 830, 676, $p['carbold'], 28);
         //-----------------------------------*/
 
         /*---------------------------------*/
@@ -372,7 +403,7 @@ class PdfManager extends SheetsManager implements SheetsManagerInterface
         $pdf->AddPage('', [$general_width, $general_height]);
         $pdf->Image($this->getFolder().'/'.
             'original'.
-            '_'.$this->getLocale().
+            '_'.$translator->getLocale().
             '_3'.
             '_'.($printer_friendly === true ? 'pf' : 'npf').
             '.jpg', 0, 0, $general_width, $general_height);
@@ -394,8 +425,8 @@ class PdfManager extends SheetsManager implements SheetsManagerInterface
 
         if ($character->getSetbacks()) {
             $rev = [];
-            foreach ($character->getSetbacks() as $v) {
-                $rev[] = $translator->trans($v->getSetback()->getName());
+            foreach ($character->getSetbacks() as $charSetbacks) {
+                $rev[] = $translator->trans($charSetbacks->getSetback()->getName());
             }
             $rev = implode(' - ', $rev);
             $pdf->textline($rev, 557, 142, $p['caro'], 14);
@@ -410,7 +441,7 @@ class PdfManager extends SheetsManager implements SheetsManagerInterface
             } else {
                 $pdf->SetTextColor(0x88, 0x6F, 0x4B);
             }
-            if (($i - 1) % 5 == 0) {
+            if (($i - 1) % 5 === 0) {
                 $off += 12;
             }
             $pdf->textline('●', 219 + ($i - 1) * 27.75 + $off, 595, $p['arial'], 32);
@@ -428,7 +459,7 @@ class PdfManager extends SheetsManager implements SheetsManagerInterface
                 $pdf->SetTextColor(0x22, 0x11, 0x4);
             }
             for ($i = 1; $i <= $endurcissement; ++$i) {
-                if (($i - 1) % 5 == 0) {
+                if (($i - 1) % 5 === 0) {
                     $off += 12;
                 }
                 $pdf->textline('●', 219 + ($i - 1) * 27.75 + $off, 631, $p['arial'], 32);
@@ -451,7 +482,7 @@ class PdfManager extends SheetsManager implements SheetsManagerInterface
         $pdf->textline($character->getExperienceActual().'     ( '.$translator->trans('Total').' '.$character->getExperienceSpent().' )', 679, 1325, $p['carbold'], 24);
 
         if ($character->getFacts()) {
-            $str             = preg_replace('#\n|\r#isU', '', $translator->trans($character->getFacts()));
+            $str             = preg_replace('~\n|\r~iU', '', $translator->trans($character->getFacts()));
             $taille_du_texte = 14;
             $police_du_texte = $p['times'];
             $desc            = [0 => ''];
@@ -460,47 +491,49 @@ class PdfManager extends SheetsManager implements SheetsManagerInterface
             foreach ($arr as $word) {
                 $teststring = $desc[$line].' '.$word;
                 $testbox    = imagettfbbox($taille_du_texte, 0, $police_du_texte['file'], $teststring);
-                if ($line == 0) {
+                if ($line === 0) {
                     $larg = 729;
-                } elseif ($line == 1) {
+                } elseif ($line === 1) {
                     $larg = 929;
-                } elseif ($line == 2) {
+                } elseif ($line === 2) {
                     $larg = 908;
-                } elseif ($line == 3) {
+                } elseif ($line === 3) {
                     $larg = 898;
-                } elseif ($line == 4) {
+                } elseif ($line === 4) {
                     $larg = 878;
                 } elseif ($line > 4) {
                     $larg = 856;
+                } else {
+                    throw new \InvalidArgumentException('Error when creating image box for PDF.');
                 }
                 if ($testbox[2] > $larg) {
-                    if ($desc[$line] == '') {
+                    if (!$desc[$line]) {
                         $desc[$line] .= $word;
                     } else {
                         ++$line;
                         $desc[$line] = $word;
                     }
                 } else {
-                    $desc[$line] .= ($desc[$line] == '' ? '' : ' ').$word;
+                    $desc[$line] .= (!$desc[$line] ? '' : ' ').$word;
                 }
             }
 
             foreach ($desc as $i => $v) {
                 $offset = 0;
-                if ($i == 0) {
+                if ($i === 0) {
                     $offset = 197;
-                } elseif ($i == 2) {
+                } elseif ($i === 2) {
                     $offset = 18;
-                } elseif ($i == 3) {
+                } elseif ($i === 3) {
                     $offset = 32;
-                } elseif ($i == 4) {
+                } elseif ($i === 4) {
                     $offset = 52;
-                } elseif ($i == 5) {
+                } elseif ($i === 5) {
                     $offset = 74;
                 }
                 if ($i < 5) {
                     $pdf->textline($v, 176 + $offset, 1388 + $i * 43, $police_du_texte, $taille_du_texte);
-                } elseif ($i == 5) {
+                } elseif ($i === 5) {
                     $pdf->textline($v.'(...)', 176 + $offset, 1388 + $i * 43, $police_du_texte, $taille_du_texte);
                 } else {
                     break;

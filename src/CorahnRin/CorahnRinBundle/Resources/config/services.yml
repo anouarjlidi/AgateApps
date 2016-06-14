@@ -2,17 +2,12 @@ parameters:
     corahnrin.generator.sheets_output: "%kernel.cache_dir%/character_sheets/"
 
 services:
-  corahn_rin_generator.sheets_manager:
-      class: CorahnRin\CorahnRinBundle\Services\Sheets
-      arguments:
-          sheets_folder: "%kernel.root_dir%/../src/CorahnRin/CorahnRinBundle/SheetsManagers/files"
-          translator: "@translator"
-          kernel: "@kernel"
 
-  corahn_rin_generator.steps_loader:
-      class: CorahnRin\CorahnRinBundle\Steps\StepLoader
-      arguments:
-          steps_manager_directory: "%kernel.root_dir%/../src/CorahnRin/CorahnRinBundle/Steps"
-          steps_views_directory: CorahnRinBundle:Generator
-      calls:
-          - [ 'setContainer', ['@service_container']]
+    corahn_rin_generator.pdf_manager:
+        class: CorahnRin\CorahnRinBundle\SheetsManagers\PdfManager
+        arguments:
+            sheets_folder: "%kernel.root_dir%/../src/CorahnRin/CorahnRinBundle/Resources/pdf_sources"
+            translator: "@translator"
+
+    corahn_rin_generator.steps.step_1:
+        class: CorahnRin\CorahnRinBundle\Action\Step1

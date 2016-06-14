@@ -3,6 +3,7 @@
 namespace CorahnRin\CorahnRinBundle\Controller;
 
 use CorahnRin\CorahnRinBundle\Entity\Characters;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -12,6 +13,10 @@ class CharacterViewController extends Controller
 {
     /**
      * @Route("/characters/{id}-{nameSlug}", requirements={"id" = "\d+"})
+     *
+     * @param Characters $character
+     *
+     * @return Response
      */
     public function viewAction(Characters $character)
     {
@@ -20,6 +25,10 @@ class CharacterViewController extends Controller
 
     /**
      * @Route("/characters/", name="corahnrin_characters_viewer_list")
+     *
+     * @param Request $request
+     *
+     * @return RedirectResponse|Response
      */
     public function listAction(Request $request)
     {
@@ -78,6 +87,11 @@ class CharacterViewController extends Controller
 
     /**
      * @Route("/characters/pdf/{id}-{nameSlug}.pdf")
+     *
+     * @param Characters $character
+     * @param Request    $request
+     *
+     * @return Response
      */
     public function pdfAction(Characters $character, Request $request)
     {
@@ -88,7 +102,7 @@ class CharacterViewController extends Controller
 
         $output_dir = $this->get('service_container')->getParameter('corahnrin.generator.sheets_output');
         if (!is_dir($output_dir)) {
-            mkdir($output_dir, 0777, true);
+            $this->get('filesystem')->mkdir($output_dir, 0777);
         }
 
         $file_name = ucfirst($character->getNameSlug()).
@@ -98,11 +112,12 @@ class CharacterViewController extends Controller
             '-'.$character->getId().
             '.pdf';
 
-        if (!file_exists($output_dir.$file_name) || true) {
-            $manager = $this->get('corahn_rin_generator.sheets_manager');
-            $pdf     = $manager->getManager('pdf')
-                               ->generateSheet($character, $sheet_type, $printer_friendly)
-                               ->output($output_dir.$file_name, 'F')
+        // Generate the PDF if the file doesn't exist yet,
+        // or if we're in debug mode.
+        if (!file_exists($output_dir.$file_name) || $this->getParameter('kernel.debug')) {
+            $this->get('corahn_rin_generator.pdf_manager')
+                ->generateSheet($character, $printer_friendly)
+                ->Output($output_dir.$file_name, 'F')
             ;
         }
 
