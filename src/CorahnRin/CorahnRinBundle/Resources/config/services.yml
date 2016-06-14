@@ -1,6 +1,3 @@
-parameters:
-    corahnrin.generator.sheets_output: "%kernel.cache_dir%/character_sheets/"
-
 services:
 
     corahn_rin_generator.pdf_manager:

@@ -12,7 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class CharacterViewController extends Controller
 {
     /**
-     * @Route("/characters/{id}-{nameSlug}", requirements={"id" = "\d+"})
+     * @Route("/characters/{id}-{nameSlug}", requirements={"id" = "\d+"}, name="corahnrin_character_view")
      *
      * @param Characters $character
      *
@@ -24,7 +24,7 @@ class CharacterViewController extends Controller
     }
 
     /**
-     * @Route("/characters/", name="corahnrin_characters_viewer_list")
+     * @Route("/characters/", name="corahnrin_character_list")
      *
      * @param Request $request
      *
@@ -85,59 +85,4 @@ class CharacterViewController extends Controller
         ]);
     }
 
-    /**
-     * @Route("/characters/pdf/{id}-{nameSlug}.pdf")
-     *
-     * @param Characters $character
-     * @param Request    $request
-     *
-     * @return Response
-     */
-    public function pdfAction(Characters $character, Request $request)
-    {
-        $response = new Response();
-
-        $printer_friendly = $request->query->get('printer_friendly') === 'true';
-        $sheet_type       = $request->query->get('sheet_type') ?: 'original';
-
-        $output_dir = $this->get('service_container')->getParameter('corahnrin.generator.sheets_output');
-        if (!is_dir($output_dir)) {
-            $this->get('filesystem')->mkdir($output_dir, 0777);
-        }
-
-        $file_name = ucfirst($character->getNameSlug()).
-            ($printer_friendly ? '-pf' : '').
-            '-'.$sheet_type.
-            '-'.$this->get('translator')->getLocale().
-            '-'.$character->getId().
-            '.pdf';
-
-        // Generate the PDF if the file doesn't exist yet,
-        // or if we're in debug mode.
-        if (!file_exists($output_dir.$file_name) || $this->getParameter('kernel.debug')) {
-            $this->get('corahn_rin_generator.pdf_manager')
-                ->generateSheet($character, $printer_friendly)
-                ->Output($output_dir.$file_name, 'F')
-            ;
-        }
-
-        $response->setContent(file_get_contents($output_dir.$file_name));
-        $response->headers->add(['Content-type' => 'application/pdf']);
-
-        return $response;
-    }
-
-    /**
-     * @Route("/characters/zip/{id}-{name}.zip")
-     */
-    public function zipAction($id, $name)
-    {
-    }
-
-    /**
-     * @Route("/characters/jpg/{id}-{name}.zip")
-     */
-    public function jpgAction($id, $name)
-    {
-    }
 }

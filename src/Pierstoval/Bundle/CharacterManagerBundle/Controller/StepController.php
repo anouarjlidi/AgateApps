@@ -1,34 +1,27 @@
 <?php
 
-namespace CorahnRin\CorahnRinBundle\Controller;
+namespace Pierstoval\Bundle\CharacterManagerBundle\Controller;
 
-use CorahnRin\CorahnRinBundle\Entity\Steps;
-use CorahnRin\CorahnRinBundle\Steps\StepLoader;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class GeneratorController extends Controller
+class StepController extends Controller
 {
     /**
-     * @var Steps[]
-     */
-    private $steps;
-
-    /**
      * @Route("/characters/generate/", name="corahnrin_generator_generator_index")
-     * @Template("CorahnRinBundle:Generator:step_base.html.twig")
+     *
+     * @return RedirectResponse
      */
     public function indexAction()
     {
-        /** @var Steps $step */
-        $step = $this->getDoctrine()->getManager()->getRepository('CorahnRinBundle:Steps')->findOneBy(['step' => 1]);
-        if (!$step) {
-            throw $this->createNotFoundException('Step not found');
-        }
+        $steps = $this->getParameter('pierstoval_character_manager.steps');
+
+        dump($steps);
+        exit;
 
         return $this->redirect($this->generateUrl('corahnrin_generator_generator_step', [
             'step' => $step->getStep(),
@@ -102,11 +95,11 @@ class GeneratorController extends Controller
                 //Fichier de la vue de l'étape
                 $data['loaded_step_filename']
                     = $stepLoader->getViewsDirectory().':'.
-                    '_step_'
-                    .str_pad($step->getStep(), 2, '0', STR_PAD_LEFT)
-                    .'_'
-                    .$step->getSlug()
-                    .'.html.twig';
+                      '_step_'
+                      .str_pad($step->getStep(), 2, '0', STR_PAD_LEFT)
+                      .'_'
+                      .$step->getSlug()
+                      .'.html.twig';
 
                 return $this->render('CorahnRinBundle:Generator:step_base.html.twig', $data);
             }
@@ -159,8 +152,8 @@ class GeneratorController extends Controller
         $step = $this->steps
             ? $this->steps[$stepNumber]
             : $this->getDoctrine()->getManager()
-                   ->getRepository('CorahnRinBundle:Steps')
-                   ->findOneBy(['step' => $stepNumber])
+                ->getRepository('CorahnRinBundle:Steps')
+                ->findOneBy(['step' => $stepNumber])
         ;
 
         if ($step) {
