@@ -3,28 +3,22 @@
 namespace CorahnRin\CorahnRinBundle\Controller;
 
 use CorahnRin\CorahnRinBundle\Entity\Characters;
+use CorahnRin\CorahnRinBundle\Repository\CharactersRepository;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
+/**
+ * @Route("/characters")
+ */
 class CharacterViewController extends Controller
 {
-    /**
-     * @Route("/characters/{id}-{nameSlug}", requirements={"id" = "\d+"}, name="corahnrin_character_view")
-     *
-     * @param Characters $character
-     *
-     * @return Response
-     */
-    public function viewAction(Characters $character)
-    {
-        return $this->render('CorahnRinBundle:CharacterView:view.html.twig', ['character' => $character]);
-    }
 
     /**
-     * @Route("/characters/", name="corahnrin_character_list")
+     * @Route("/", name="corahnrin_characters_list")
      *
      * @param Request $request
      *
@@ -32,57 +26,51 @@ class CharacterViewController extends Controller
      */
     public function listAction(Request $request)
     {
-
-        // Variables GET
+        // GET variables used for searching
         $page        = (int) $request->query->get('page') ?: 1;
-        $limitPost   = $request->request->get('limit');
-        $limit       = $limitPost ?: ((int) $request->query->get('limit') ?: 20);
-        $searchField = $request->query->get('searchField') ?: 'name';
-        $order       = $request->query->get('order') ?: 'asc';
+        $limit       = (int) $request->query->get('limit') ?: 20;
+        $searchField = $request->query->get('search_field') ?: 'name';
+        $order       = strtolower($request->query->get('order') ?: 'asc');
 
-        if ($page < 1) {
-            $page = 1;
-        }
-        if ($limit < 5) {
-            $limit = 5;
-        } elseif ($limit > 100) {
-            $limit = 100;
-        }
-        $order = strtolower($order) === 'desc' ? 'desc' : 'asc';
-
-        $repo = $this->getDoctrine()->getManager()->getRepository('CorahnRinBundle:Characters');
-
-        $number_of_chars = $repo->getNumberOfElementsSearch($searchField, $order, $limit, ($page - 1) * $limit);
-        $pages           = ceil($number_of_chars / $limit);
-
-        if ($limitPost) {
-            if ($page > $pages) {
-                $page = $pages;
-            }
-
-            return $this->redirect($this->generateUrl('corahnrin_characters_viewer_list', [
-                'searchField' => $searchField,
-                'order'       => $order,
-                'page'        => $page,
-                'limit'       => $limitPost,
-            ]));
+        if ($limit > 100) {
+            throw new BadRequestHttpException('Cannot retrieve more than 100 characters.');
         }
 
-        $characters_list = $repo->findSearch($searchField, $order, $limit, ($page - 1) * $limit);
+        if (!in_array($order, ['desc', 'asc'], true)) {
+            throw new BadRequestHttpException('Filter order must be either "desc" or "asc".');
+        }
 
-        return $this->render('CorahnRinBundle:CharacterView:list.html.twig', [
-            'characters_list' => $characters_list,
-            'number_of_chars' => $number_of_chars,
-            'pages'           => $pages,
-            'linkDatas'       => [
-                'searchField' => $searchField,
-                'order'       => $order,
-                'page'        => $page,
-                'limit'       => $limit,
-            ],
-            'orderSwaped'     => $order === 'desc' ? 'asc' : 'desc',
+        /** @var CharactersRepository $repo */
+        $repo       = $this->getDoctrine()->getManager()->getRepository('CorahnRinBundle:Characters');
+        $countChars = $repo->countSearch($searchField, $order);
+        $characters = $repo->findSearch($searchField, $order, $limit, ($page - 1) * $limit);
+        $pages      = ceil($countChars / $limit);
+
+        return $this->render('@CorahnRin/CharacterView/list.html.twig', [
+            'characters'      => $characters,
+            'count_chars'     => $countChars,
+            'count_pages'     => $pages,
             'page'            => $page,
+            'order_swaped'    => $order === 'desc' ? 'asc' : 'desc',
+            'link_data'       => [
+                'search_field' => $searchField,
+                'order'        => $order,
+                'page'         => $page,
+                'limit'        => $limit,
+            ],
         ]);
+    }
+
+    /**
+     * @Route("/{id}-{nameSlug}", requirements={"id" = "\d+"}, name="corahnrin_characters_view")
+     *
+     * @param Characters $character
+     *
+     * @return Response
+     */
+    public function viewAction(Characters $character)
+    {
+        return $this->render('@CorahnRin/CharacterView/view.html.twig', ['character' => $character]);
     }
 
 }

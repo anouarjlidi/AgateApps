@@ -6,6 +6,23 @@ parameters:
 
 services:
 
+    # Twig extension
+    esteren_maps.twig.extension:
+        class: EsterenMaps\MapsBundle\Twig\MapsExtension
+        arguments:
+            - "@esteren_maps.doctrine.repository"
+        tags:
+            - { name: twig.extension }
+
+    # Repository as service
+    esteren_maps.doctrine.repository:
+        class: EsterenMaps\MapsBundle\Repository\MapsRepository
+        factory:
+            - '@doctrine.orm.default_entity_manager'
+            - 'getRepository'
+        arguments:
+            - EsterenMaps\MapsBundle\Entity\Maps
+
     esteren_maps:
         class: EsterenMaps\MapsBundle\Services\MapsRegistry
         arguments:

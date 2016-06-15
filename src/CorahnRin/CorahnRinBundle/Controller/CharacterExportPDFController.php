@@ -11,7 +11,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class CharacterExportPDFController extends Controller
 {
     /**
-     * @Route("/characters/pdf/{id}-{nameSlug}.pdf", name="corahnrin_character_export_pdf")
+     * @Route(
+     *     "/characters/export/{id}-{nameSlug}.{_format}",
+     *     name="corahnrin_character_export_pdf",
+     *     requirements={"_format": "pdf"}
+     * )
      *
      * @param Characters $character
      * @param Request    $request

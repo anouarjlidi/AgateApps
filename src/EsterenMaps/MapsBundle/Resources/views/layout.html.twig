@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block menu_left_content %}
+    <li class="dropdown">
+        <a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ 'Maps' | trans }} <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+            {% for map in get_menu_maps() %}
+                <li>
+                    <a href="{{ path('esterenmaps_maps_maps_view', {'nameSlug': map.nameSlug}) }}">{{ map.name | trans }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </li>
+{% endblock %}

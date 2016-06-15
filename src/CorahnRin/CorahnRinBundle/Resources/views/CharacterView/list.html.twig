@@ -1,4 +1,4 @@
-{% extends "::base.html.twig" %}
+{% extends '@CorahnRin/layout.html.twig' %}
 
 {% block title %}Liste des personnages - {{ parent() }}{% endblock %}
 
@@ -6,70 +6,70 @@
 
 <h2>{{'Visualiser un personnage'}}</h2>
 
-<h5>{{ 'Nombre total de personnages :' | trans }} {{ number_of_chars }}</h5>
+<h5>{{ 'Nombre total de personnages :' | trans }} {{ count_chars }}</h5>
 
 <table class="table table-condensed table-striped">
 	<tr>
 		<th>
-            {% set order = linkDatas.searchField == 'id' ? orderSwaped : linkDatas.order %}
-            <a href="{{ path('corahnrin_characters_viewer_list',linkDatas|merge({'searchField':'id','order':order})) }}" class="btn btn-link">
-                {% if linkDatas.searchField == 'id' %}
-                    <span class="glyphicon-half icon-chevron-{{ linkDatas.order == 'asc' ? 'up' : 'down' }}"></span>
+            {% set order = link_data.search_field == 'id' ? order_swaped : link_data.order %}
+            <a href="{{ path('corahnrin_characters_list',link_data|merge({'search_field': 'id','order': order})) }}" class="btn btn-link">
+                {% if link_data.search_field == 'id' %}
+                    <span class="glyphicon-half icon-chevron-{{ link_data.order == 'asc' ? 'up' : 'down' }}"></span>
                     <strong class="text-underline text-black">
                 {% endif %}
                     #
-                {% if linkDatas.searchField == 'id' %}</strong>{% endif %}
+                {% if link_data.search_field == 'id' %}</strong>{% endif %}
             </a>
         </th>
 		<th>
-            {% set order = linkDatas.searchField == 'name' ? orderSwaped : linkDatas.order %}
-            <a href="{{ path('corahnrin_characters_viewer_list',linkDatas|merge({'searchField':'name','order':order})) }}" class="btn btn-link">
-                {% if linkDatas.searchField == 'name' %}
-                    <span class="glyphicon-half icon-chevron-{{ linkDatas.order == 'asc' ? 'up' : 'down' }}"></span>
+            {% set order = link_data.search_field == 'name' ? order_swaped : link_data.order %}
+            <a href="{{ path('corahnrin_characters_list',link_data|merge({'search_field': 'name','order': order})) }}" class="btn btn-link">
+                {% if link_data.search_field == 'name' %}
+                    <span class="glyphicon-half icon-chevron-{{ link_data.order == 'asc' ? 'up' : 'down' }}"></span>
                     <strong class="text-underline text-black">
                 {% endif %}
                 {{ 'Nom' | trans }}
-                {% if linkDatas.searchField == 'name' %}</strong>{% endif %}
+                {% if link_data.search_field == 'name' %}</strong>{% endif %}
             </a>
         </th>
 		<th>
-            {% set order = linkDatas.searchField == 'job' ? orderSwaped : linkDatas.order %}
-            <a href="{{ path('corahnrin_characters_viewer_list',linkDatas|merge({'searchField':'job','order':order})) }}" class="btn btn-link">
-                {% if linkDatas.searchField == 'job' %}
-                    <span class="glyphicon-half icon-chevron-{{ linkDatas.order == 'asc' ? 'up' : 'down' }}"></span>
+            {% set order = link_data.search_field == 'job' ? order_swaped : link_data.order %}
+            <a href="{{ path('corahnrin_characters_list',link_data|merge({'search_field': 'job','order': order})) }}" class="btn btn-link">
+                {% if link_data.search_field == 'job' %}
+                    <span class="glyphicon-half icon-chevron-{{ link_data.order == 'asc' ? 'up' : 'down' }}"></span>
                     <strong class="text-underline text-black">
                 {% endif %}
                 {{ 'Métier' | trans }}
-                {% if linkDatas.searchField == 'job' %}</strong>{% endif %}
+                {% if link_data.search_field == 'job' %}</strong>{% endif %}
             </a>
         </th>
 		<th>
-            {% set order = linkDatas.searchField == 'people' ? orderSwaped : linkDatas.order %}
-            <a href="{{ path('corahnrin_characters_viewer_list',linkDatas|merge({'searchField':'people','order':order})) }}" class="btn btn-link">
-                {% if linkDatas.searchField == 'people' %}
-                    <span class="glyphicon-half icon-chevron-{{ linkDatas.order == 'asc' ? 'up' : 'down' }}"></span>
+            {% set order = link_data.search_field == 'people' ? order_swaped : link_data.order %}
+            <a href="{{ path('corahnrin_characters_list',link_data|merge({'search_field': 'people','order': order})) }}" class="btn btn-link">
+                {% if link_data.search_field == 'people' %}
+                    <span class="glyphicon-half icon-chevron-{{ link_data.order == 'asc' ? 'up' : 'down' }}"></span>
                     <strong class="text-underline text-black">
                 {% endif %}
                 {{ 'Peuple' | trans }}
-                {% if linkDatas.searchField == 'people' %}</strong>{% endif %}
+                {% if link_data.search_field == 'people' %}</strong>{% endif %}
             </a>
         </th>
 		<th>
-            {% set order = linkDatas.searchField == 'region' ? orderSwaped : linkDatas.order %}
-            <a href="{{ path('corahnrin_characters_viewer_list',linkDatas|merge({'searchField':'region','order':order})) }}" class="btn btn-link">
-                {% if linkDatas.searchField == 'region' %}
-                    <span class="glyphicon-half icon-chevron-{{ linkDatas.order == 'asc' ? 'up' : 'down' }}"></span>
+            {% set order = link_data.search_field == 'region' ? order_swaped : link_data.order %}
+            <a href="{{ path('corahnrin_characters_list',link_data|merge({'search_field': 'region','order': order})) }}" class="btn btn-link">
+                {% if link_data.search_field == 'region' %}
+                    <span class="glyphicon-half icon-chevron-{{ link_data.order == 'asc' ? 'up' : 'down' }}"></span>
                     <strong class="text-underline text-black">
                 {% endif %}
                 {{ 'Région de naissance' | trans }}
-                {% if linkDatas.searchField == 'region' %}</strong>{% endif %}
+                {% if link_data.search_field == 'region' %}</strong>{% endif %}
             </a>
         </th>
 	</tr>
-	{% for character in characters_list %}
+	{% for character in characters %}
 		<tr>
 			<td>{{ character.id }}</td>
-			<td><a href="{{ path('corahnrin_characters_viewer_view', {'id':character.id,'nameSlug':character.nameSlug}) }}" class="btn btn-link btn-sm" title="{{ 'Voir le personnage %character_name%' | trans({'%character_name%':character.name}) }}">{{ character.name }}</a></td>
+			<td><a href="{{ path('corahnrin_characters_view', {'id': character.id,'nameSlug': character.nameSlug}) }}" class="btn btn-link btn-sm" title="{{ 'Voir le personnage %character_name%' | trans({'%character_name%': character.name}) }}">{{ character.name }}</a></td>
 			<td>
                 {% if character.job %}
                     {{ character.job.name | trans }}
@@ -86,31 +86,37 @@
 
 <ul class="pagination pagination-sm">
 
-    <li{{ page == 1 ? ' class="disabled"' : '' }}><a href="{{ path('corahnrin_characters_viewer_list',linkDatas|merge({'page':page - 1})) }}">&larr; {{ 'Précédent' | trans }}</a></li>
+    {# First page, always visible #}
+    <li{{ page == 1 ? ' class="disabled"' : '' }}><a href="{{ path('corahnrin_characters_list',link_data|merge({'page': page - 1})) }}">&larr; {{ 'Précédent' | trans }}</a></li>
 
-    {% if page-5 > 1 %}
-        <li><a href="{{ path('corahnrin_characters_viewer_list',linkDatas|merge({'page':1})) }}">1</a></li>
-        {% if page-5 > 2 %}
+    {# If we are at page 5+, we show other pages, and maybe "..." #}
+    {% if page - 5 > 1 %}
+        <li><a href="{{ path('corahnrin_characters_list',link_data|merge({'page': 1})) }}">1</a></li>
+        {% if page - 5 > 2 %}
         <li class="disabled"><a>...</a></li>
         {% endif %}
     {% endif %}
-    {% for i in page-5..page+5 %}
-        {% if i >= 1 and i <= pages %}
-            <li{{ i == page ? ' class="active"' : '' }}><a href="{{ path('corahnrin_characters_viewer_list',linkDatas|merge({'page':i})) }}">{{ i }}{% if i == page %} <span class="sr-only">({{ 'Current page' | trans }})</span>{% endif %}</a></li>
+
+    {# Show all other pages missing #}
+    {% for i in page - 5..(page + 5) %}
+        {% if i >= 1 and i <= count_pages %}
+            <li{{ i == page ? ' class="active"' : '' }}><a href="{{ path('corahnrin_characters_list',link_data|merge({'page': i})) }}">{{ i }}{% if i == page %} <span class="sr-only">({{ 'Current page' | trans }})</span>{% endif %}</a></li>
         {% endif %}
     {% endfor %}
-    {% if page+5 < pages %}
-        {% if page+5 < pages - 1 %}
+
+    {# If we are more than 5 pages before the last, we show other pages, and maybe "..." #}
+    {% if page + 5 < count_pages %}
+        {% if page + 5 < count_pages - 1 %}
             <li class="disabled"><a>...</a></li>
         {% endif %}
-        <li><a href="{{ path('corahnrin_characters_viewer_list',linkDatas|merge({'page':pages})) }}">{{ pages }}</a></li>
+        <li><a href="{{ path('corahnrin_characters_list',link_data|merge({'page': count_pages})) }}">{{ count_pages }}</a></li>
     {% endif %}
 
-    <li{{ page == pages ? ' class="disabled"' : '' }}><a href="{{ path('corahnrin_characters_viewer_list',linkDatas|merge({'page':page+1})) }}">{{ 'Suivant' | trans }} &rarr;</a></li>
+    <li{{ page == count_pages ? ' class="disabled"' : '' }}><a href="{{ path('corahnrin_characters_list',link_data|merge({'page': page+1})) }}">{{ 'Suivant' | trans }} &rarr;</a></li>
 
 </ul>
 
-<form method="post" action="{{ path('corahnrin_characters_viewer_list', linkDatas) }}" class="form-horizontal">
+<form method="post" action="{{ path('corahnrin_characters_list', link_data) }}" class="form-horizontal">
     <fieldset>
         <div class="form-group row">
             <div class="col-lg-2">
@@ -120,18 +126,17 @@
             </div>
             <div class="col-lg-3">
                 <select id="number_per_page" name="limit" class="text-black input-sm form-control" data-onchangesubmit="true">
-                    <option{{ linkDatas.limit == 5 ? ' selected="selected"' : '' }} value="5">5</option>
-                    <option{{ linkDatas.limit == 10 ? ' selected="selected"' : '' }} value="10">10</option>
-                    <option{{ linkDatas.limit == 25 ? ' selected="selected"' : '' }} value="25">25</option>
-                    <option{{ linkDatas.limit == 50 ? ' selected="selected"' : '' }} value="50">50</option>
-                    <option{{ linkDatas.limit == 75 ? ' selected="selected"' : '' }} value="75">75</option>
-                    <option{{ linkDatas.limit == 100 ? ' selected="selected"' : '' }} value="100">100</option>
+                    <option{{ link_data.limit == 5 ? ' selected="selected"' : '' }} value="5">5</option>
+                    <option{{ link_data.limit == 10 ? ' selected="selected"' : '' }} value="10">10</option>
+                    <option{{ link_data.limit == 25 ? ' selected="selected"' : '' }} value="25">25</option>
+                    <option{{ link_data.limit == 50 ? ' selected="selected"' : '' }} value="50">50</option>
+                    <option{{ link_data.limit == 75 ? ' selected="selected"' : '' }} value="75">75</option>
+                    <option{{ link_data.limit == 100 ? ' selected="selected"' : '' }} value="100">100</option>
                 </select>
             </div>
             <noscript><button type="submit" class="btn btn-default">{{ 'Envoyer' | trans }}</button></noscript>
         </div>
     </fieldset>
 </form>
-
 
 {% endblock %}

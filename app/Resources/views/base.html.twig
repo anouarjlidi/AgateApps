@@ -29,9 +29,14 @@
         <link rel="stylesheet" href="{{ asset('css/fontawesome.css') }}" type="text/css" />
     {% endblock %}
 
-    {{ include('_favicons.html.twig') }}
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ asset('img/favicon-144.png') }}">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ asset('img/favicon-114.png') }}">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ asset('img/favicon-72.png') }}">
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="{{ asset('img/favicon-57.png') }}">
+    <link rel="icon" type="image/x-icon" href="{{ asset('img/favicon-57.png') }}"/>
+    <link rel="shortcut icon" href="{{ asset('img/favicon-57.png') }}">
 
-{% endspaceless %}
+{% endspaceless -%}
 </head>
 
 <body>
@@ -43,12 +48,98 @@
     {% block layout %}
 
         {% block menus %}
-            {% include 'EsterenPortalBundle:Menu:general_menu.html.twig' %}
+            {% spaceless %}
+            {% if locale is not defined %}
+                {% set locale = app.request.locale %}
+            {% endif %}
+            <div class="navbar navbar-inverse" id="navigation">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        {% block menu_brand_link %}
+                            <a href="{{ path('root') }}" class="navbar-brand">{{ 'home' | trans({}, 'OrbitaleCms') }}</a>
+                        {% endblock %}
+                    </div>
+                    <div class="navbar-collapse collapse">
+
+                        {% block menu_left %}
+                            <ul class="nav navbar-nav">
+                                {% block menu_left_content %}{% endblock %}
+                            </ul>
+                        {% endblock %}
+
+                        {% block menu_right %}
+                        <ul class="nav navbar-nav navbar-right">
+                            {% block menu_right_content %}
+                                {% block menu_locale %}
+                                    <li class="dropdown">
+                                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ 'lang' | trans({}, 'Languages') }} [{{ locale|upper }}] <b class="caret"></b></a>
+                                        <ul class="dropdown-menu">
+                                            {% set route_name = app.request.attributes.get('_route') %}
+                                            {% set route_params = app.request.attributes.get('_route_params') %}
+                                            {% for loc in locales %}
+                                                {% if loc == locale %}
+                                                    <li class="active"><a>{{ loc | trans({}, 'Languages') }}</a></li>
+                                                {% else %}
+                                                    <li><a href="{{ path(route_name, ((route_params|default({}, 'Languages')) | merge({'_locale':loc})) ) }}">{{ loc | trans({}, 'Languages') }}</a></li>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </ul>
+                                    </li>
+                                {% endblock %}
+                                {% block menu_security %}
+                                    {% if app.user.username is not defined %}
+                                        <li><a href="{{ path('fos_user_security_login') }}">{{ 'layout.login' | trans({},'FOSUserBundle') }}</a></li>
+                                    {% else %}
+                                        <li><a href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout' | trans({},'FOSUserBundle') }} [ {{ app.user.username }} ]</a></li>
+                                        {% if is_granted('ROLE_MANAGER') %}
+                                            <li><a href="{{ path('easyadmin') }}">{{ 'links.admin' | trans }}</a></li>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endblock %}
+                            {% endblock %}
+                        </ul>
+                        {% endblock %}
+                    </div>
+                    <!--/.nav-collapse -->
+                </div>
+            </div><!--/.navbar.navbar-default-->
+            {% endspaceless %}
+
         {% endblock %}
 
         <div id="layout" class="container">
 
-            {% include '_flash_messages.html.twig' with {'messages': app.session.flashbag.all()} %}
+            {# Flash messaages #}
+            {% spaceless %}
+                {% set messages = (messages is defined ? messages : null) %}
+                {% for key, messageList in messages %}
+
+                    {% set translation_domain = 'messages.flash' %}
+
+                    {% set class = key %}
+                    {% if 'fos_user_' in class %}
+                        {# Sometimes, FOSUser can send specific error keys #}
+                        {% set class = (class | replace({'fos_user_': ''})) %}
+                        {% set translation_domain = 'FOSUserBundle' %}
+                    {% endif %}
+                    {% if 'error' == class %}
+                        {# Fit bootstrap's needs #}
+                        {% set class = 'danger' %}
+                    {% endif %}
+
+                    <div class="alert alert-{{ class }} {{ key }}">
+                        {% for message in messageList %}
+                            {{ message | trans({}, translation_domain) | raw }}
+                            {% if not loop.last %}<br />{% endif %}
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            {% endspaceless %}
 
             <div id="content">
 

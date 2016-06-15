@@ -3,12 +3,15 @@
 namespace CorahnRin\CorahnRinBundle\Repository;
 
 use CorahnRin\CorahnRinBundle\Entity\Characters;
+use Doctrine\ORM\QueryBuilder;
 use Orbitale\Component\DoctrineTools\BaseEntityRepository as BaseRepository;
 
 class CharactersRepository extends BaseRepository
 {
     /**
-     * @param $id
+     * Get a Characters object with all its data.
+     *
+     * @param int $id
      *
      * @return Characters|null
      */
@@ -18,20 +21,20 @@ class CharactersRepository extends BaseRepository
             ->createQueryBuilder()
             ->select('characters')
             ->from($this->_entityName, 'characters')
-            ->leftJoin('characters.job', 'job')->addSelect('job')
-            ->leftJoin('characters.ways', 'ways')->addSelect('ways')
-            ->leftJoin('characters.people', 'people')->addSelect('people')
-            ->leftJoin('characters.region', 'region')->addSelect('region')
-            ->leftJoin('characters.armors', 'armors')->addSelect('armors')
-            ->leftJoin('characters.weapons', 'weapons')->addSelect('weapons')
-            ->leftJoin('characters.artifacts', 'artifacts')->addSelect('artifacts')
-            ->leftJoin('characters.flux', 'flux')->addSelect('flux')
-            ->leftJoin('characters.miracles', 'miracles')->addSelect('miracles')
-            ->leftJoin('characters.domains', 'domains')->addSelect('domains')
-            ->leftJoin('characters.disciplines', 'disciplines')->addSelect('disciplines')
-            ->leftJoin('characters.avantages', 'avantages')->addSelect('avantages')
+                ->leftJoin('characters.job', 'job')->addSelect('job')
+                ->leftJoin('characters.ways', 'ways')->addSelect('ways')
+                ->leftJoin('characters.people', 'people')->addSelect('people')
+                ->leftJoin('characters.region', 'region')->addSelect('region')
+                ->leftJoin('characters.armors', 'armors')->addSelect('armors')
+                ->leftJoin('characters.weapons', 'weapons')->addSelect('weapons')
+                ->leftJoin('characters.artifacts', 'artifacts')->addSelect('artifacts')
+                ->leftJoin('characters.flux', 'flux')->addSelect('flux')
+                ->leftJoin('characters.miracles', 'miracles')->addSelect('miracles')
+                ->leftJoin('characters.domains', 'domains')->addSelect('domains')
+                ->leftJoin('characters.disciplines', 'disciplines')->addSelect('disciplines')
+                ->leftJoin('characters.avantages', 'avantages')->addSelect('avantages')
             ->where('characters.id = :id')
-            ->setParameter('id', (int) $id)
+                ->setParameter('id', (int) $id)
             ->getQuery()
             ->getOneOrNullResult()
         ;
@@ -42,11 +45,10 @@ class CharactersRepository extends BaseRepository
      * @param string $order       L'ordre (asc ou desc)
      * @param int    $limit       Le nombre d'éléments à récupérer
      * @param int    $offset      L'offset de départ
-     * @param bool   $getCount    Récupérer uniquement le nombre de résultats totaux (sans les informations "limit" et "offset")
      *
-     * @return Characters[]
+     * @return QueryBuilder
      */
-    public function findSearch($searchField = 'id', $order = 'asc', $limit = 20, $offset = 0, $getCount = false)
+    public function searchQueryBuilder($searchField = 'id', $order = null, $limit = null, $offset = null)
     {
         $qb = $this->_em
             ->createQueryBuilder()
@@ -57,35 +59,30 @@ class CharactersRepository extends BaseRepository
             ->leftJoin('characters.region', 'region')->addSelect('region')
         ;
 
-        if ($getCount) {
-            $qb->addSelect('count(characters) as number');
+        if (null !== $searchField && null !== $order) {
+            if ($searchField === 'job') {
+                $qb
+                    ->addOrderBy('job.name', $order)
+                    ->addOrderBy('characters.jobCustom', $order)
+                ;
+            } elseif ($searchField === 'people') {
+                $qb->orderBy('people.name');
+            } elseif ($searchField === 'region') {
+                $qb->orderBy('region.name');
+            } else {
+                $qb->orderBy('characters.'.$searchField, $order);
+            }
         }
 
-        if ($searchField === 'job') {
-            $qb->addOrderBy('job.name', $order)
-               ->addOrderBy('characters.jobCustom', $order)
-            ;
-        } elseif ($searchField === 'people') {
-            $qb->orderBy('people.name');
-        } elseif ($searchField === 'region') {
-            $qb->orderBy('region.name');
-        } else {
-            $qb->orderBy('characters.'.$searchField, $order);
-        }
-
-        if (!$getCount) {
+        if (null !== $offset) {
             $qb->setFirstResult($offset);
+        }
+
+        if (null !== $limit) {
             $qb->setMaxResults($limit);
         }
 
-        if ($getCount) {
-            $data = $qb->getQuery()->getScalarResult();
-            $data = $data[0]['number'];
-        } else {
-            $data = $qb->getQuery()->getResult();
-        }
-
-        return $data;
+        return $qb;
     }
 
     /**
@@ -96,8 +93,28 @@ class CharactersRepository extends BaseRepository
      *
      * @return Characters[]
      */
-    public function getNumberOfElementsSearch($searchField = 'id', $order = 'asc', $limit = 20, $offset = 0)
+    public function findSearch($searchField = 'id', $order = 'asc', $limit = 20, $offset = 0)
     {
-        return $this->findSearch($searchField, $order, $limit, $offset, true);
+        return $this
+            ->searchQueryBuilder($searchField, $order, $limit, $offset)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+     * @param string $searchField
+     * @param string $order
+     *
+     * @return int
+     */
+    public function countSearch($searchField = 'id', $order = 'asc')
+    {
+        return $this
+            ->searchQueryBuilder($searchField, $order)
+            ->select('count (characters.id) as number')
+            ->getQuery()
+            ->getScalarResult()[0]['number']
+        ;
     }
 }
