@@ -29,12 +29,7 @@
         <link rel="stylesheet" href="{{ asset('css/fontawesome.css') }}" type="text/css" />
     {% endblock %}
 
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ asset('img/favicon-144.png') }}">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ asset('img/favicon-114.png') }}">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ asset('img/favicon-72.png') }}">
-    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="{{ asset('img/favicon-57.png') }}">
-    <link rel="icon" type="image/x-icon" href="{{ asset('img/favicon-57.png') }}"/>
-    <link rel="shortcut icon" href="{{ asset('img/favicon-57.png') }}">
+    {{ include('_favicons.html.twig') }}
 
 {% endspaceless -%}
 </head>
