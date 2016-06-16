@@ -18,7 +18,7 @@ class StepControllerTest extends WebTestCase
 
         $client->request('GET', '/fr/character/generate');
 
-        static::assertTrue($client->getResponse()->isRedirect('/fr/character/generate/01-peuple'), 'Could not check that generator index redirects to first step');
+        static::assertTrue($client->getResponse()->isRedirect('/fr/character/generate/people'), 'Could not check that generator index redirects to first step');
     }
 
     /**
@@ -28,12 +28,12 @@ class StepControllerTest extends WebTestCase
     {
         $client = $this->getClient('corahnrin.esteren.dev', array(), array('ROLE_MANAGER'));
 
-        $crawler = $client->request('GET', '/fr/character/generate/01-peuple');
+        $crawler = $client->request('GET', '/fr/character/generate/people');
 
         static::assertEquals(200, $client->getResponse()->getStatusCode(), 'Could not execute step 1 request...');
         // TODO
 //        static::assertEquals(1, $crawler->filter('#gen-div-choice')->count());
-//        static::assertEquals(1, $crawler->filter('#generator_peuple')->count());
+//        static::assertEquals(1, $crawler->filter('#generator_people')->count());
     }
 
     /**

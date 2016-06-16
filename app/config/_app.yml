@@ -146,7 +146,7 @@ orbitale_cms:
 pierstoval_character_manager:
     character_class: CorahnRin\CorahnRinBundle\Entity\Characters
     steps:
-        01_peuple:
+        people:
             action: corahn_rin_generator.steps.step_1
 
 # CORS management for all APIs
