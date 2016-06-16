@@ -14,7 +14,7 @@
         </div>
         <div class="col-sm-9 step_module">
             <h1>{{ 'Étape' | trans }} {{ loaded_step.step }} : {{ loaded_step.title | trans }}</h1>
-            <form name="generator_form" id="generator_form" method="post" action="{{ path('corahnrin_generator_generator_step', {'step':loaded_step.step,'slug':loaded_step.slug}) }}">
+            <form name="generator_form" id="generator_form" method="post" action="{{ path('pierstoval_character_generator_step', {'step':loaded_step.step,'slug':loaded_step.slug}) }}">
                 <fieldset id="generator_{{ loaded_step.slug }}">
                     <button type="submit" id="submit_btn" class="btn btn-inverse">{{ 'Étape suivante' | trans }}</button>
                     <hr />

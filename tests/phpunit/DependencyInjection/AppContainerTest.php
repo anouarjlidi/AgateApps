@@ -10,8 +10,8 @@ class AppContainerTest extends WebTestCase
     public function provideServiceIds()
     {
         return [
-            'corahn_rin_generator.sheets_manager' => ['corahn_rin_generator.sheets_manager'],
-            'corahn_rin_generator.steps_loader'   => ['corahn_rin_generator.steps_loader'],
+            'corahn_rin_generator.pdf_manager'    => ['corahn_rin_generator.pdf_manager'],
+            'corahn_rin_generator.steps.step_1'   => ['corahn_rin_generator.steps.step_1'],
             'esteren_maps'                        => ['esteren_maps'],
             'esterenmaps.tiles_manager'           => ['esterenmaps.tiles_manager'],
             'esterenmaps.map_image_manager'       => ['esterenmaps.map_image_manager'],

@@ -1,4 +1,10 @@
-corahn_rin_characters:
+corahnrin_characters:
     resource: "@CorahnRinBundle/Controller/"
     type:     annotation
+    host:     '%esteren_domains.corahn_rin%'
+
+corahnrin_steps:
+    resource: "@PierstovalCharacterManagerBundle/Controller/StepController.php"
+    type:     annotation
+    prefix:   /character
     host:     '%esteren_domains.corahn_rin%'

@@ -2,6 +2,7 @@
 
 namespace CorahnRin\CorahnRinBundle\Entity\CharacterProperties;
 
+use CorahnRin\CorahnRinBundle\Entity\Characters;
 use CorahnRin\CorahnRinBundle\Entity\Disciplines;
 use CorahnRin\CorahnRinBundle\Entity\Domains;
 use Doctrine\ORM\Mapping as ORM;
