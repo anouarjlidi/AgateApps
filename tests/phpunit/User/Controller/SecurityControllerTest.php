@@ -72,9 +72,8 @@ class SecurityControllerTest extends WebTestCase
         $msg1 = $container->get('translator')->trans('registration.confirmed', array('%username%'=>'test_user'), 'FOSUserBundle');
         $msg2 = $container->get('translator')->trans('registration.flash.user_created', array(), 'FOSUserBundle');
 
-        $content = $crawler->html();
-        static::assertContains($msg1, $content);
-        static::assertContains($msg2, $content);
+        static::assertContains($msg1, $crawler->filter('#layout #content p')->html());
+        static::assertContains($msg2, $crawler->filter('#layout #flash-messages')->html());
 
         $crawler->clear();
         $crawler = $client->request('GET', '/fr/profile/change-password');
@@ -89,13 +88,15 @@ class SecurityControllerTest extends WebTestCase
         $client->submit($form);
 
         static::assertEquals(302, $client->getResponse()->getStatusCode());
+        static::assertTrue($client->getResponse()->isRedirect('/fr/profile/'));
 
         $crawler->clear();
         $crawler = $client->followRedirect();
 
-        $msg = $container->get('translator')->trans('change_password.flash.success', array('%username%'=>'test_user'), 'FOSUserBundle');
-        $content = $crawler->html();
-        static::assertContains($msg, $content);
+        $msg1 = $container->get('translator')->trans('change_password.flash.success', array('%username%'=>'test_user'), 'FOSUserBundle');
+        $msg2 = $container->get('translator')->trans('form.username', array('%username%'=>'test_user'), 'FOSUserBundle');
+        static::assertContains($msg1, $crawler->filter('#layout #flash-messages')->html());
+        static::assertContains($msg2, $crawler->filter('#layout #content p')->html());
 
         $user = $container->get('fos_user.user_provider.username')->loadUserByUsername('test_user');
         $encoder = $container->get('security.encoder_factory')->getEncoder($user);

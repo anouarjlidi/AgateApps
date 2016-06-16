@@ -111,8 +111,9 @@
 
             {# Flash messaages #}
             {% spaceless %}
-                {% set messages = (messages is defined ? messages : null) %}
-                {% for key, messageList in messages %}
+                {% for key, messageList in app.session.flashbag.all %}
+
+                    {% if loop.first %}<div id="flash-messages">{% endif %}
 
                     {% set translation_domain = 'messages.flash' %}
 
@@ -133,6 +134,8 @@
                             {% if not loop.last %}<br />{% endif %}
                         {% endfor %}
                     </div>
+
+                    {% if loop.last %}</div>{% endif %}
                 {% endfor %}
             {% endspaceless %}
 

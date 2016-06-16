@@ -5,13 +5,13 @@ namespace CorahnRin\CorahnRinBundle\SheetsManagers;
 use CorahnRin\CorahnRinBundle\Entity\Characters;
 use CorahnRin\CorahnRinBundle\PDF\PDF;
 use Pierstoval\Bundle\CharacterManagerBundle\Model\Character;
-use Symfony\Component\Translation\Translator;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class PdfManager implements SheetsManagerInterface
 {
 
     /**
-     * @var Translator
+     * @var TranslatorInterface
      */
     private $translator;
 
@@ -20,7 +20,7 @@ class PdfManager implements SheetsManagerInterface
      */
     private $sheetsFolder;
 
-    public function __construct($sheetsFolder, Translator $translator)
+    public function __construct($sheetsFolder, TranslatorInterface $translator)
     {
         $this->translator   = $translator;
         $this->sheetsFolder = $sheetsFolder;
