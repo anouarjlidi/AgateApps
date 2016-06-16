@@ -185,13 +185,7 @@ ivory_ck_editor:
                 - { name: "about", items: [ "About" ] }
 
 # Services declaration
-# TODO: Check if these can be removed safely
 services:
-
-    twig.text_extension:
-        class: Twig_Extensions_Extension_Text
-        tags:
-            - name: twig.extension
 
     twig.intl_extension:
         class: Twig_Extensions_Extension_Intl
