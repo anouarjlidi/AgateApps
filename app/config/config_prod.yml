@@ -30,5 +30,6 @@ monolog:
             to_email:   pierstoval+esterenprod@gmail.com
             subject:    An Error Occurred!
             level:      debug
+	    include_stacktraces: true
         console:
             type:  console
