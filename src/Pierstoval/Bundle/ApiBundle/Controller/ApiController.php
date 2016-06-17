@@ -57,11 +57,11 @@ class ApiController extends FOSRestController
             return $service;
         }
 
-        $datas = $this->getDoctrine()->getManager()->getRepository($service['entity'])->findAll();
+        $data = $this->getDoctrine()->getManager()->getRepository($service['entity'])->findAll();
 
-        $datas = [$serviceName => $datas];
+        $data = [$serviceName => $data];
 
-        return $this->view($datas);
+        return $this->view($data);
     }
 
     /**
@@ -85,7 +85,7 @@ class ApiController extends FOSRestController
         /** @var EntityRepository $repo */
         $repo = $this->getDoctrine()->getManager()->getRepository($service['entity']);
 
-        // Fetch datas
+        // Fetch data
         $data = $repo->find($id);
 
         // The entity key has it's trailing "s" removed
@@ -143,7 +143,7 @@ class ApiController extends FOSRestController
         $id = $em->getUnitOfWork()->getSingleIdentifierValue($object);
 
         if ($id && $em->getRepository($service['entity'])->find($id)) {
-            throw new \InvalidArgumentException('"PUT" method is used to insert new datas. If you want to merge object, use the "POST" method instead.');
+            throw new \InvalidArgumentException('"PUT" method is used to insert new data. If you want to merge object, use the "POST" method instead.');
         } else {
             $em->persist($object);
         }
@@ -212,7 +212,7 @@ class ApiController extends FOSRestController
 
         $em = $this->getDoctrine()->getManager();
 
-        // Fetch datas
+        // Fetch data
         $data = $em->getRepository($service['entity'])->find($id);
 
         // The entity key has it's trailing "s" removed
@@ -333,7 +333,7 @@ class ApiController extends FOSRestController
     }
 
     /**
-     * Merges POST datas into an object, and returns validation result.
+     * Merges POST data into an object, and returns validation result.
      *
      * @param object       $object
      * @param ParameterBag $post
@@ -462,11 +462,11 @@ class ApiController extends FOSRestController
         if (!is_object($object)) {
             throw new \Exception('Field "'.$field.'" cannot be retrieved as analyzed element is not an object.');
         }
-        $metadatas = $this->getDoctrine()->getManager()->getClassMetadata(get_class($object));
+        $metadata = $this->getDoctrine()->getManager()->getClassMetadata(get_class($object));
 
         if ($field === '_id') {
             // Check for identifier
-            return (int) (array_values($metadatas->getIdentifierValues($object))[0]);
+            return (int) (array_values($metadata->getIdentifierValues($object))[0]);
         } else {
             // Check for any other field
             $service = $this->getService($field, false);
@@ -475,12 +475,12 @@ class ApiController extends FOSRestController
                     ->getDoctrine()->getManager()
                     ->getRepository($service['entity'])
                     ->findBy([
-                        $metadatas->getAssociationMappedByTargetField($field) => $this->getPropertyValue('_id', $object),
+                        $metadata->getAssociationMappedByTargetField($field) => $this->getPropertyValue('_id', $object),
                     ])
                     ;
             }
-            if ($metadatas->hasField($field) || $metadatas->hasAssociation($field)) {
-                $reflectionProperty = $metadatas->getReflectionClass()->getProperty($field);
+            if ($metadata->hasField($field) || $metadata->hasAssociation($field)) {
+                $reflectionProperty = $metadata->getReflectionClass()->getProperty($field);
                 $reflectionProperty->setAccessible(true);
 
                 $data = $reflectionProperty->getValue($object);

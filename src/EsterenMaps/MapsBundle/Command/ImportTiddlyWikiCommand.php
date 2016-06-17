@@ -28,7 +28,7 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
     /**
      * @var array
      */
-    private $datas = [];
+    private $data = [];
 
     /**
      * @var EntityManager
@@ -103,7 +103,7 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
         $this
             ->setName('esterenmaps:import:tiddly-wiki')
             ->setDescription('Generate all tiles for a specific map.')
-            ->setHelp('This command imports datas from a tiddly wiki file or url into the database.')
+            ->setHelp('This command imports data from a tiddly wiki file or url into the database.')
             ->addArgument('file', InputArgument::REQUIRED, 'The file or the url to check.')
             ->addOption('force', 'f', InputOption::VALUE_NONE, 'Executes the command instead of just showing modified elements.')
         ;
@@ -122,35 +122,35 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
 
         $file = $input->getArgument('file');
 
-        $datas    = file_get_contents($file);
-        $encoding = mb_detect_encoding($datas);
+        $data    = file_get_contents($file);
+        $encoding = mb_detect_encoding($data);
         if ($encoding !== 'UTF-8') {
-            // Force UTF8 conversion to avoid reinserting datas
-            $datas = mb_convert_encoding($datas, 'UTF-8');
+            // Force UTF8 conversion to avoid reinserting data
+            $data = mb_convert_encoding($data, 'UTF-8');
         }
 
-        if (!$datas) {
+        if (!$data) {
             throw new \Exception('Tiddly wiki content could not be retrieved.');
         }
 
-        $datas = json_decode($datas, true);
+        $data = json_decode($data, true);
 
-        if (!$datas) {
+        if (!$data) {
             throw new \Exception('Json error while decoding: <error>'.json_last_error_msg().'</error>.');
         }
 
         $this->em  = $this->getContainer()->get('doctrine')->getManager();
         $this->uow = $this->em->getUnitOfWork();
 
-        // Setting all datas in the class for we can use it in the other methods
-        $this->datas = $datas;
-        $total       = count($datas);
+        // Setting all data in the class for we can use it in the other methods
+        $this->data = $data;
+        $total      = count($data);
 
         $output->writeln('Found <info>'.$total.'</info> items to check for import.');
 
         $output->writeln('Processing...');
 
-        $tags  = array_reduce($datas, function ($carry, $object) {
+        $tags  = array_reduce($data, function ($carry, $object) {
             $carry[$object['tags']] = [
                 'tag'            => $object['tags'],
                 'nb_occurrences' => isset($carry[$object['tags']]['nb_occurrences']) ? $carry[$object['tags']]['nb_occurrences'] + 1 : 1,
@@ -174,7 +174,7 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
         $this->zones   = $this->processObjects('zones', Zones::class, 'id_');
         $this->routes  = $this->processObjects('routes', Routes::class, 'id_');
 
-        $allDatas = array_merge(
+        $allData = array_merge(
             $this->factions['new'],
             $this->factions['existing'],
             $this->markersTypes['new'],
@@ -195,7 +195,7 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
 
         $uow->computeChangeSets();
 
-        foreach ($allDatas as $object) {
+        foreach ($allData as $object) {
             $changesets   = $uow->getEntityChangeset($object);
             $changesetsNb = 0;
             $class        = get_class($object);
@@ -223,13 +223,13 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
             $code = 1;
         } else {
             try {
-                $output->write('Attempting to flush all datas...');
+                $output->write('Attempting to flush all data...');
                 $this->em->flush();
                 $output->writeln(' <info>Ok!</info>');
 
                 $idsUpdated = 0;
 
-                foreach ($this->datas as $k => $data) {
+                foreach ($this->data as $k => $data) {
                     $id = $data['id'];
 
                     if (is_numeric($id)) {
@@ -254,12 +254,12 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
                     }
 
                     if ($newId) {
-                        $this->datas[$k]['id'] = (string) $newId;
+                        $this->data[$k]['id'] = (string) $newId;
                         ++$idsUpdated;
                     }
                 }
 
-                $json = json_encode($this->datas, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_BIGINT_AS_STRING);
+                $json = json_encode($this->data, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_BIGINT_AS_STRING);
                 file_put_contents($file, $json);
                 $output->writeln('Updated <info>'.$idsUpdated.'</info> identifiers in the JSON file.');
 
@@ -283,7 +283,7 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
      */
     private function getReferenceObjects($tag, $entity, $nameProperty = 'name')
     {
-        $datas = array_filter($this->datas, function ($element) use ($tag) {
+        $data = array_filter($this->data, function ($element) use ($tag) {
             return isset($element['tags']) && $element['tags'] === $tag;
         });
 
@@ -297,16 +297,16 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
 
         $accessor = PropertyAccess::createPropertyAccessor();
 
-        foreach ($datas as $data) {
+        foreach ($data as $datum) {
             $object = null;
 
-            $id = $data['id'];
+            $id = $datum['id'];
 
             // Checks automatically if the objects exists from its ID.
             // If not, we get the object by title
             if (isset($objects[$id])) {
                 $object = $objects[$id];
-            } elseif ($object = $repo->findOneBy([$nameProperty => $data['title']])) {
+            } elseif ($object = $repo->findOneBy([$nameProperty => $datum['title']])) {
             }
 
             if ($object) {
@@ -316,7 +316,7 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
                 $new[$id] = $object;
             }
 
-            $accessor->setValue($object, $nameProperty, $data['title']);
+            $accessor->setValue($object, $nameProperty, $datum['title']);
 
             $this->em->persist($object);
         }
@@ -341,7 +341,7 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
      */
     private function processObjects($tag, $entity)
     {
-        $datas = array_filter($this->datas, function ($element) use ($tag) {
+        $data = array_filter($this->data, function ($element) use ($tag) {
             return isset($element['tags']) && $element['tags'] === $tag;
         });
 
@@ -355,16 +355,16 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
 
         $accessor = PropertyAccess::createPropertyAccessor();
 
-        foreach ($datas as $data) {
+        foreach ($data as $datum) {
             $object = null;
 
-            $id = $data['id'];
+            $id = $datum['id'];
 
             // Checks automatically if the objects exists from its ID.
             // If not, we get the object by title
             if (isset($objects[$id])) {
                 $object = $objects[$id];
-            } elseif ($object = $repo->findOneBy(['name' => $data['title']])) {
+            } elseif ($object = $repo->findOneBy(['name' => $datum['title']])) {
             }
 
             if ($object) {
@@ -374,9 +374,9 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
                 $new[$id] = $object;
             }
 
-            $accessor->setValue($object, 'name', $data['title']);
+            $accessor->setValue($object, 'name', $datum['title']);
 
-            $this->updateOneObject($object, $data);
+            $this->updateOneObject($object, $datum);
 
             $this->em->persist($object);
         }
@@ -466,11 +466,11 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
     {
         $object = null;
         if ($id) {
-            $datas = $this->$type;
-            if (isset($datas['new'][$id])) {
-                $object = $datas['new'][$id];
-            } elseif (isset($datas['existing'][$id])) {
-                $object = $datas['existing'][$id];
+            $data = $this->$type;
+            if (isset($data['new'][$id])) {
+                $object = $data['new'][$id];
+            } elseif (isset($data['existing'][$id])) {
+                $object = $data['existing'][$id];
             }
         }
 

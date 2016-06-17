@@ -70,7 +70,7 @@ class MoveMapElementsCommand extends ContainerAwareCommand
         $this->scaleAfter = (bool) $input->getOptions('scale-after');
 
         if (!$latitude && !$longitude && !$this->scale) {
-            $output->writeln('No datas specified. Please read the help by running this command with "--help" or "-h".');
+            $output->writeln('No data specified. Please read the help by running this command with "--help" or "-h".');
 
             return 1;
         }
@@ -194,7 +194,7 @@ class MoveMapElementsCommand extends ContainerAwareCommand
     }
 }
 
-// DATAS
+// DATA
 
 //   82.74690205692
 // -138,71484406292
@@ -215,4 +215,4 @@ class MoveMapElementsCommand extends ContainerAwareCommand
 //  8,5693359375
 
 // Command :
-// ./reset.bash && bin/console d:q:s "`cat _dev_files/position_unclean_elements.sql`" && bin/console esterenmaps:refresh-datas && bin/console esterenmaps:move-map-elements 1 --latitude="-2.12074446617243" --longitude="8.5693359375" --no-interaction -v && php bin/console esterenmaps:refresh-datas
+// ./reset.bash && bin/console d:q:s "`cat _dev_files/position_unclean_elements.sql`" && bin/console esterenmaps:refresh-data && bin/console esterenmaps:move-map-elements 1 --latitude="-2.12074446617243" --longitude="8.5693359375" --no-interaction -v && php bin/console esterenmaps:refresh-data

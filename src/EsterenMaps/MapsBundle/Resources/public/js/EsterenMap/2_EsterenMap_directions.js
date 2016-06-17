@@ -192,15 +192,15 @@
                 return false;
             });
             $(this._controlContent).find('#directions_form').on('submit', function(e){
-                var datas = $(this).serializeArray(),
+                var data = $(this).serializeArray(),
                     markers = map._markers,
                     control = map._directionsControl,
                     submitButton = this.querySelector('[type="submit"]'),
                     messageBox = d.getElementById('directions_message'),
                     markerStart, markerEnd,
-                    start = datas.filter(function(e){return e.name==='start';})[0].value,
-                    end = datas.filter(function(e){return e.name==='end';})[0].value,
-                    transport = datas.filter(function(e){return e.name==='directions_transport';})[0].value
+                    start = data.filter(function(e){return e.name==='start';})[0].value,
+                    end = data.filter(function(e){return e.name==='end';})[0].value,
+                    transport = data.filter(function(e){return e.name==='directions_transport';})[0].value
                 ;
                 if (submitButton.hasAttribute('disabled')) {
                     return false;
@@ -226,7 +226,7 @@
                     map._load({
                         uri: 'maps/directions/'+map.options().id+'/'+markerStart+'/'+markerEnd,
                         xhr_name: 'directions_calculate',
-                        datas: {
+                        data: {
                             'transport': transport
                         },
                         callback: function(response) {

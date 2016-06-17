@@ -19,9 +19,6 @@ parameters:
     locales: [ fr, en ]
     locales_regex: "fr|en"
 
-    # Map used for step 3 of the character generator
-    step_3_map_id: 1
-
 doctrine:
     orm:
         # Override the default repository to get some more good tools
@@ -53,7 +50,7 @@ twig:
         version_date: "%version_date%"
         locales: "%locales%"
         locales_regex: "%locales_regex%"
-        esteren_domains_corahn_rin: "%esteren_domains.corahn_rin%"
+        esteren_domains_corahnrin: "%esteren_domains.corahnrin%"
         esteren_domains_esteren_maps: "%esteren_domains.esteren_maps%"
         esteren_domains_portal: "%esteren_domains.portal%"
         esteren_domains_backoffice: "%esteren_domains.backoffice%"
@@ -116,6 +113,7 @@ jms_serializer:
 pierstoval_api:
     allowed_origins:
         - "%esteren_domains.esteren_maps%"
+        - "%esteren_domains.corahnrin%"
         - "%esteren_domains.backoffice%"
         - "%esteren_domains.api%"
         # TODO: Add 127.0.0.1 while in dev mode if you need it.
@@ -138,16 +136,22 @@ orbitale_cms:
             resource: "base.html.twig"
         corahnrin:
             resource: "@CorahnRin/layout.html.twig"
-            host: "%esteren_domains.corahn_rin%"
+            host: "%esteren_domains.corahnrin%"
         maps:
             resource: "@EsterenMaps/layout.html.twig"
             host: "%esteren_domains.esteren_maps%%"
 
+# Use PierstovalCharacterManager to setup CorahnRin's character generator.
+# This bundle has to be standalone as much as possible, to only use config and/or override.
 pierstoval_character_manager:
     character_class: CorahnRin\CorahnRinBundle\Entity\Characters
     steps:
         people:
-            action: corahn_rin_generator.steps.step_1
+            action: corahnrin_generator.steps.step_01
+        job:
+            action: corahnrin_generator.steps.step_02
+        birthplace:
+            action: corahnrin_generator.steps.step_03
 
 # CORS management for all APIs
 nelmio_cors:
@@ -157,6 +161,7 @@ nelmio_cors:
             origin_regex: true
             allow_origin:
                 - "^(https?://)?%esteren_domains.api%"
+                - "^(https?://)?%esteren_domains.corahnrin%"
                 - "^(https?://)?%esteren_domains.esteren_maps%"
                 - "^(https?://)?%esteren_domains.backoffice%"
             allow_headers: ["Origin","Accept","Content-Type"]
@@ -164,8 +169,6 @@ nelmio_cors:
             max_age: 3600
             hosts:
                 - "%esteren_domains.api%"
-                - "%esteren_domains.esteren_maps%"
-                - "%esteren_domains.backoffice%"
 
 # Used in EasyAdmin's ckeditor fields
 ivory_ck_editor:

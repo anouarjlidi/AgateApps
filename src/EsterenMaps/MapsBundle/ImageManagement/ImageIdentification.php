@@ -26,11 +26,11 @@ class ImageIdentification implements \ArrayAccess
     ];
 
     /**
-     * @param array $datas
+     * @param array $data
      */
-    public function __construct(array $datas = [])
+    public function __construct(array $data = [])
     {
-        $this->properties = array_merge(array_fill_keys($this->validProperties, null), $datas);
+        $this->properties = array_merge(array_fill_keys($this->validProperties, null), $data);
     }
 
     /**

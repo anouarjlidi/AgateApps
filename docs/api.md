@@ -63,9 +63,9 @@ All webservices are accessible from the domain configured in the `esteren_domain
 
 * `post` and `put`
 
- The PUT route is only used to INSERT datas.
+ The PUT route is only used to INSERT data.
 
- The POST route is only used to UPDATE datas.
+ The POST route is only used to UPDATE data.
 
  Check [OrbitaleApiBundle's documentation](https://github.com/Orbitale/ApiBundle#post-and-put-routes) for more infos.
 

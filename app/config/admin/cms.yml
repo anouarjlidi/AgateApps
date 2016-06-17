@@ -37,7 +37,7 @@ easy_admin:
                           choices:
                               - "%esteren_domains.games%"
                               - "%esteren_domains.portal%"
-                              - "%esteren_domains.corahn_rin%"
+                              - "%esteren_domains.corahnrin%"
 
                     - homepage
                     - enabled

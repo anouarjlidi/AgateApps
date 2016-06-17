@@ -225,27 +225,27 @@
         this._editedMarker = null;
     };
 
-    EsterenMap.prototype.refDatas = function(name, id) {
-        var datas = this.cloneObject((this._refDatas['ref-datas'] ? this._refDatas['ref-datas'] : this._refDatas)), grep;
+    EsterenMap.prototype.refData = function(name, id) {
+        var data = this.cloneObject((this._refData['ref-data'] ? this._refData['ref-data'] : this._refData)), grep;
         if (name) {
-            if (datas[name]) {
+            if (data[name]) {
                 if (!isNaN(id)) {
-                    grep = $.grep(datas[name], function(element){return element.id == id;});
+                    grep = $.grep(data[name], function(element){return element.id == id;});
                     if (grep.length) {
-                        datas = grep[0];
+                        data = grep[0];
                     } else {
                         console.warn('No ref data with id "'+id+'" in "'+name+'"');
-                        datas = {};
+                        data = {};
                     }
                 } else {
-                    datas = datas[name];
+                    data = data[name];
                 }
             } else {
                 console.warn('No ref data with name "'+name+'"');
-                datas = null;
+                data = null;
             }
         }
-        return datas;
+        return data;
     };
 
     /**
@@ -253,14 +253,14 @@
      * via l'API
      *
      * @param {object|string} name Le type d'élément à récupérer. Si plusieurs éléments sont indiqués dans un tableau, chacun sera validé à partir des options "allowedElement", cela créera une requête plus précise. Exemple : ["maps","routes"]. Des nombres sont autorisés pour récupérer un ID.
-     * @param {object|null} [datas] les options à envoyer à l'objet AJAX
+     * @param {object|null} [data] les options à envoyer à l'objet AJAX
      * @param {string|null} [method] La méthode HTTP. GET par défaut.
      * @param {function|null} [callback] Une fonction de callback à envoyer à la méthode "success" de l'objet Ajax.
      * @param {function|null} [callbackComplete] Idem que "callback" mais pour la méthode "complete"
      * @param {function|null} [callbackError] Idem que "callback" mais pour la méthode "error"
      * @returns {*}
      */
-    EsterenMap.prototype._load = function(name, datas, method, callback, callbackComplete, callbackError) {
+    EsterenMap.prototype._load = function(name, data, method, callback, callbackComplete, callbackError) {
         var url, ajaxObject, i, c, xhr_name, xhr_object,
             otherParams = {},
             _this = this,
@@ -270,7 +270,7 @@
 
         if ($.isPlainObject(name)) {
             xhr_name = name.xhr_name || null;
-            datas = name.datas || name.data || datas;
+            data = name.datas || name.data || data;
             method = name.method || method;
             callback = name.callback || callback;
             callbackComplete = name.callbackComplete || callbackComplete;
@@ -285,8 +285,8 @@
             return false;
         }
 
-        if (!datas) {
-            datas = {};
+        if (!data) {
+            data = {};
         }
 
         // D'abord, on autorise les chaînes de caractères avec des "/".
@@ -332,7 +332,7 @@
             crossDomain: true,
             contentType: method === 'GET' ? "application/x-www-form-urlencoded" : "application/json",
             jsonp: false,
-            data: method === 'GET' ? datas : JSON.stringify(datas ? datas : {})
+            data: method === 'GET' ? data : JSON.stringify(data ? data : {})
         };
         if (typeof(callback) === 'function') {
             ajaxObject.success = function(response) {
@@ -411,7 +411,7 @@
         var _this = this;
         if  (this._transports) {
             if (callback) {
-                callback({"transports": this._refDatas['transports']});
+                callback({"transports": this._refData['transports']});
             }
             return this._transports;
         }
@@ -431,16 +431,16 @@
         });
     };
 
-    EsterenMap.prototype.loadRefDatas = function(callback){
+    EsterenMap.prototype.loadRefData = function(callback){
         var _this = this,
-            refDatasService = "ref-datas",
+            refDataService = "ref-data",
             finalCallback;
 
-        if (this._refDatas) {
+        if (this._refData) {
             // Si les données ont déjà été chargées, on va simplement exécuter callback
             // Avec un tableau similaire
             var d = {};
-            d[refDatasService] = this.refDatas();
+            d[refDataService] = this.refData();
             callback.call(this, d);
             return this;
         }
@@ -450,13 +450,13 @@
         // à partir du moment où elles l'ont été au moins une fois.
         // Elles seront de facto rechargées, sans requête AJAX
         finalCallback = function(response) {
-            _this._refDatas = response;
-            _this._markersTypes = response[refDatasService].markersTypes;
-            _this._routesTypes = response[refDatasService].routesTypes;
-            _this._zonesTypes = response[refDatasService].zonesTypes;
+            _this._refData = response;
+            _this._markersTypes = response[refDataService].markersTypes;
+            _this._routesTypes = response[refDataService].routesTypes;
+            _this._zonesTypes = response[refDataService].zonesTypes;
             callback.call(_this, response);
         };
-        return this._load(["maps",refDatasService], null, "GET", finalCallback);
+        return this._load(["maps",refDataService], null, "GET", finalCallback);
     };
 
     /**
@@ -465,7 +465,11 @@
      * @returns {Object} [this.mapOptions]
      */
     EsterenMap.prototype.options = function() {
-        return this.cloneObject(this._mapOptions);
+        if (!this._clonedOptions) {
+            this._mapOptions = this.cloneObject(this._mapOptions);
+            this._clonedOptions = true;
+        }
+        return this._mapOptions;
     };
 
     /**

@@ -22,7 +22,7 @@ You can easily download Composer by checking [the official Composer website](htt
 Initialization
 -------------------------
 
-You need to initialize some settings to make sure the bundle is configured properly. 
+You need to initialize some settings to make sure the bundle is configured properly.
 
 1. First, register the required bundles in the kernel:
 
@@ -85,39 +85,39 @@ The generator handles **GET**, **POST** (update), **PUT** (insert) and **DELETE*
 ### GET routes
 
 * `pierstoval_api_cget` : `/{serviceName}`
-    
+
     This route allows to get a collection of objects of the specified entity.
-    
+
     The received collection has the same key as the `serviceName`, and is an array of objects.
 
 * `pierstoval_api_get` : `/{serviceName}/{id}`
-    
+
     This route retrieves a single object with its primary key (even if this primary key is not called `id`). The received element will have the same key as the `serviceName` but with removed trailing 's' at the end of it (for example, `posts` will become `post`).
-    
+
     All the received attributes in the object will follow your `ExclusionPolicy` and different `Expose` or `Exclude` settings in the `jms_serializer`.
-    
+
     If you need more information about exposing or not some fields, you can check [JMSSerializer's documentation](http://jmsyst.com/libs/serializer/master/reference/annotations)
 
 * `pierstoval_api_get_subrequest` : `/{serviceName}/{id}/{subElement}`
 
     This is the great point of this Api generator.
-    
+
     This route can retrieve any element recursively depending on three parameters:
     * The parameter has to be a valid entity attribute.
     * If the attribute is a collection, you can fetch one element in this collection by appending its primary key.
     * The value must not be null (or it'll return an empty value).
 
     For example, if your `Page` entity has a `title` attribute, you can type this url: `http://127.0.0.1:8000/api/pages/1/title`.
-    
+
     And you may see something like this:
-    
+
     ```json
     {"page.1.title":"Default page"}
     ```
-    
+
     As the `subRequest` is managed recursively, you really can navigate in a complex object like this:
     `http://127.0.0.1:8000/api/pages/1/children/2/category/name`.
-    It will then retrieve datas in the specified order :
+    It will then retrieve data in the specified order :
     * Get the `page` element with primary key `1`.
     * Get its element `children`, which is a collection of `Page`.
     * Retrieve the one with the primary key `2`.
@@ -128,13 +128,13 @@ The generator handles **GET**, **POST** (update), **PUT** (insert) and **DELETE*
     ```json
     {"page.1.children.2.category.name": "Default category"}
     ```
-    
+
     The object's key is the compilation of your request, so you can check whether it exists in your code, and if it does, it means that it's a valid object.
-    
+
 ### POST and PUT routes
 
-The POST route is only used to UPDATE datas.
-The PUT route is only used to INSERT datas.
+The POST route is only used to UPDATE data.
+The PUT route is only used to INSERT data.
 
 Basically, the PUT route works the same than the POST route, but it won't merge any entity in the database. It will instead fill an empty entity, validate it, and if the object is valid, persist it.
 
@@ -144,8 +144,8 @@ Basically, the PUT route works the same than the POST route, but it won't merge 
 The route will first search for an entity of `serviceName` with primary key `id`.
 
 
-##### The `json` object 
-The API will search for a `json` parameter in POST datas. If it's a string, it's automatically transformed into a Json object.
+##### The `json` object
+The API will search for a `json` parameter in POST data. If it's a string, it's automatically transformed into a Json object.
 
 This `json` object is a transposition of your entity serialized object, with its values.
 
@@ -154,7 +154,7 @@ It will simply `merge` (if POST) or fill an empty object (if PUT) to the databas
 
 ##### The `mapping` object
 
-Additionally, the Api will search for a `mapping` object. This object is mandatory, and it defines all the fields you want to 
+Additionally, the Api will search for a `mapping` object. This object is mandatory, and it defines all the fields you want to
 
 For example, if you only want to modify a `Page` `title` attribute, you can use this json object:
 
@@ -173,11 +173,11 @@ The output is the newly updated or inserted object.
 ### Mapping-specific behavior
 
 Sometimes you use `camelCase`, sometime `snake_case`, and `jms_serializer` can be configured differently in different apps.
- 
+
 This is why some attributes may have their name changed through the serialization process.
- 
+
 One simple case :
- 
+
 In your `Page` entity, you have a `ManyToOne` relationship with a `Category` object.
 
 Your mapping looks like this:
@@ -214,7 +214,7 @@ With this special mapping for `page_category`, you will tell the API that the `p
 
 
 ### Relationships
-    
+
 As no automatic cascading operation is made, you'll have to specify it in your Entity mapping.
 
 Plus, the object must be an existing object, or you can have some unexpected behavior.
@@ -235,7 +235,7 @@ You can add other IPs or domain names in this attribute like this:
 ```yaml
 # app/config/config.yml
 pierstoval_api:
-    allowed_origins: 
+    allowed_origins:
         - 1.2.3.4
         - my.domain.com
 ```
@@ -248,7 +248,7 @@ Conclusion
 You can also view this repository [on its Packagist.org page](https://packagist.org/packages/pierstoval/api-bundle), even though it's not really useful to see.
 
 Feel free to send me a mail at pierstoval@gmail.com if you have any question !! (I LOVE questions, really, feel free to ask !)
- 
+
 If you find this bundle to be cool, feel free to propose improvements and send pull-requests !
 
 Thanks for reading and using !

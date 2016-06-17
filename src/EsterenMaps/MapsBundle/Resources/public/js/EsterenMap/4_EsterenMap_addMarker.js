@@ -330,12 +330,12 @@
                     return false;
                 });
                 $('#marker_popup_type').off('change').on('change', function(){
-                    map._markers[id]._esterenMarker.marker_type = map.refDatas('markersTypes', this.value);
+                    map._markers[id]._esterenMarker.marker_type = map.refData('markersTypes', this.value);
                     map._markers[id]._updateEM();
                     return false;
                 });
                 $('#marker_popup_faction').off('change').on('change', function(){
-                    map._markers[id]._esterenMarker.faction = map.refDatas('factions', this.value);
+                    map._markers[id]._esterenMarker.faction = map.refData('factions', this.value);
                     map._markers[id]._updateEM();
                     return false;
                 });
@@ -427,7 +427,7 @@
         } else {
             // Ici on tente de créer un nouveau marqueur
             marker._esterenMarker = this.esterenMarkerPrototype;
-            marker._esterenMarker.marker_type = this.refDatas('markersTypes', 1);
+            marker._esterenMarker.marker_type = this.refData('markersTypes', 1);
         }
 
         markerType = marker._esterenMarker.marker_type;

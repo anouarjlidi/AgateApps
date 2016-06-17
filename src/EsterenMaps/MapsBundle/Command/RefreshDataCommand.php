@@ -16,10 +16,10 @@ class RefreshDataCommand extends ContainerAwareCommand
     {
         $this
             ->setName('esterenmaps:map:refresh')
-            ->setDescription('Refresh all dynamic datas (routes distances, etc.)')
-            ->setHelp('This command is here to update all datas that may be dynamic.'."\n"
+            ->setDescription('Refresh all dynamic data (routes distances, etc.)')
+            ->setHelp('This command is here to update all data that may be dynamic.'."\n"
                 .'For example, the start and end marker of each route may change its coordinates,'."\n"
-                .'and the distance depends on the coordinates, so both datas are updated with this command.'."\n\n"
+                .'and the distance depends on the coordinates, so both data are updated with this command.'."\n\n"
                 .'This command runs on every data for every map in the database.'
             )
             ->addOption('nan-as', null, InputOption::VALUE_OPTIONAL, 'Treat all "NaN" values as the specified number.', null)

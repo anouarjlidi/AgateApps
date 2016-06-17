@@ -120,7 +120,7 @@
             ;
 
             /**
-             * When "keyup" fires in the input, we show a list of matching datas.
+             * When "keyup" fires in the input, we show a list of matching data.
              * The engine works simply with a regexp.
              */
             $(this._controlContent).find('#'+L.Control.Search.INPUT_QUERY_ID).on('keyup', function(event){

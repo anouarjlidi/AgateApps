@@ -177,12 +177,12 @@
                         return false;
                     });
                     $('#polygon_popup_type').off('change').on('change', function(){
-                        map._polygons[id]._esterenZone.zone_type = map.refDatas('zonesTypes', this.value);
+                        map._polygons[id]._esterenZone.zone_type = map.refData('zonesTypes', this.value);
                         this._timeout = setTimeout(function(){ map._polygons[id]._updateEM(); }, 1000);
                         return false;
                     });
                     $('#polygon_popup_faction').off('change').on('change', function(){
-                        map._polygons[id]._esterenZone.faction = this.value ? map.refDatas('factions', this.value) : null;
+                        map._polygons[id]._esterenZone.faction = this.value ? map.refData('factions', this.value) : null;
                         this._timeout = setTimeout(function(){ map._polygons[id]._updateEM(); }, 1000);
                         return false;
                     });
@@ -308,7 +308,7 @@
         } else {
             // Ici on tente de créer une nouvelle zone
             polygon._esterenZone = this.esterenZonePrototype;
-            polygon._esterenZone.zone_type = this.refDatas('zonesTypes', 1);
+            polygon._esterenZone.zone_type = this.refData('zonesTypes', 1);
         }
 
         // Création d'une popup

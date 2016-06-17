@@ -45,7 +45,7 @@ class CharacterExportPDFController extends Controller
         // Generate the PDF if the file doesn't exist yet,
         // or if we're in debug mode.
         if (!file_exists($output_dir.$file_name) || $this->getParameter('kernel.debug')) {
-            $this->get('corahn_rin_generator.pdf_manager')
+            $this->get('corahnrin_generator.pdf_manager')
                 ->generateSheet($character, $printer_friendly)
                 ->Output($output_dir.$file_name, 'F')
             ;
