@@ -2,24 +2,32 @@
 <div id="map_edit_menu">
 
     <ul class="list-inline">
+        {% if showZones is not defined or showZones is defined and showZones == true %}
         <li data-toggle="tooltip">
             <button data-toggle-class="btn-info btn-inverse" id="hide_zones" class="btn btn-info" type="button">
                 <span class="fa fa-eye"></span>
                 {{ 'entities.zones.title' | trans({}, 'EsterenMaps') }}
             </button>
         </li>
+        {% endif %}
+
+        {% if showRoutes is not defined or showRoutes is defined and showRoutes == true %}
         <li data-toggle="tooltip">
             <button data-toggle-class="btn-info btn-inverse" id="hide_routes" class="btn btn-info" type="button">
                 <span class="fa fa-eye"></span>
                 {{ 'entities.routes.title' | trans({}, 'EsterenMaps') }}
             </button>
         </li>
+        {% endif %}
+
+        {% if showMarkers is not defined or showMarkers is defined and showMarkers == true %}
         <li data-toggle="tooltip">
             <button data-toggle-class="btn-info btn-inverse" id="hide_markers" class="btn btn-info" type="button">
                 <span class="fa fa-eye"></span>
                 {{ 'entities.markers.title' | trans({}, 'EsterenMaps') }}
             </button>
         </li>
+        {% endif %}
         <li id="esterenmap_message_element"></li>
     </ul>
 

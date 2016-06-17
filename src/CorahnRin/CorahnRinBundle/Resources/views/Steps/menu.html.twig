@@ -1,3 +1,7 @@
+{% set steps_length = steps|length %}
+{% set bar_width = steps_length ? (current_step.step / steps_length * 100) : 0 %}
+{{ dump(steps) }}
+{{ dump(current_step) }}
 <nav class="nav">
     <div class="progress">
         <div class="progress-bar" role="progressbar" aria-valuenow="{{ bar_width }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ bar_width }}%;">
@@ -5,16 +9,15 @@
         </div>
     </div>
     <ul class="list-unstyled list-sm-inline step_list">
-        {% for step in steps %}
-            {% if session_step >= step.step %}
-
-                <li{% if loaded_step and loaded_step.step == step.step %} class="active"{% endif %}>
-                    <a href="{{ path('pierstoval_character_generator_step', {'step':step.step,'slug':step.slug}) }}">
-                        {{ step.step }}. {{ step.title | trans }}
+        {% for stepName, step in steps %}
+            {% if current_step.step >= step.step %}
+                <li{% if current_step and current_step.step == step.step %} class="active"{% endif %}>
+                    <a href="{{ path('pierstoval_character_generator_step', {'requestStep': stepName}) }}">
+                        {{ current_step.step == step.step ? '&raquo;' }} {{ step.step }}. {{ step.label | trans }}
                     </a>
                 </li>
             {% else %}
-                <li>{{ step.step }}. {{ step.title | trans }}</li>
+                <li>{{ step.step }}. {{ step.label | trans }}</li>
             {% endif %}
         {% endfor %}
         {% if app.session.get('step') > 1 %}

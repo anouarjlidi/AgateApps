@@ -1,0 +1,59 @@
+{% extends '@CorahnRin/Steps/step_base.html.twig' %}
+
+{% block step_content %}
+
+<input type="hidden" name="job_value" id="job_value" value="{{ job_value }}" />
+{% for jobs in jobs_list %}
+    <h3>{{ jobs[0].book.name | trans }}</h3>
+        {% for job in jobs %}
+            {% if loop.first %}
+                <div class="row">
+            {% endif %}
+
+            <div class="col-sm-4">
+                <div class="btn-group">
+                    <button type="button" data-toggle="modal" data-target="#modal_job_{{ job.id }}" class="btn btn-inverse {{ job_value == job.id ? 'active' : '' }}">
+                        <span class="fa fa-search"></span>
+                    </button>
+                    <button type="button" id="btn-gen-choice-{{ job.id }}" data-toggle="btn-gen-choice" data-input-value="{{ job.id }}" data-target-node="job_value" class="btn btn-inverse {{ job_value == job.id ? 'active' : '' }}">{{ job.name | trans }}</button>
+                </div>
+                <div class="modal fade" id="modal_job_{{ job.id }}" aria-hidden="true" role="dialog" aria-labelledby="modal_job_label_{{ job.id }}">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title" id="modal_job_label_{{ job.id }}">{{ job.name | trans }} <small>{{ job.book.name | trans }}</small></h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>{{ job.description | trans | raw }}</p>
+                                <p>{{ 'Domaine primaire' | trans }} : {{ job.domainPrimary.name | trans }}</p>
+                                <p>
+                                    {{ 'Domaines secondaires' | trans }} :
+                                    {% for domain in job.domainsSecondary %}
+                                        {% if loop.index0 > 0 %} &ndash; {% endif %}
+                                        {{ domain.name | trans }}
+                                    {% else %}
+                                        {{ 'Au choix' | trans }}
+                                    {% endfor %}
+                                </p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btnjob btn btn-inverse pull-left" data-dismiss="modal">{{ 'Fermer' | trans }}</button>
+                                <button type="button" class="btnjob btn btn-primary" data-toggle="btn-dist-click" data-dismiss="modal" data-target-node="btn-gen-choice-{{ job.id }}">{{ 'Sélectionner' | trans }}</button>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+            </div>
+
+            {% if loop.index % 3 == 0 and not loop.last %}
+                </div><!-- /.row --><div class="row">
+            {% elseif loop.last %}
+                </div><!-- /.row -->
+            {% endif %}
+
+        {% endfor %}{# jobs #}
+{% endfor %}{# books #}
+
+{% endblock %}

@@ -1,10 +1,7 @@
 services:
 
-    corahn_rin_generator.pdf_manager:
+    corahnrin_generator.pdf_manager:
         class: CorahnRin\CorahnRinBundle\SheetsManagers\PdfManager
         arguments:
             sheets_folder: "%kernel.root_dir%/../src/CorahnRin/CorahnRinBundle/Resources/pdf_sources"
             translator: "@translator"
-
-    corahn_rin_generator.steps.step_1:
-        class: CorahnRin\CorahnRinBundle\Action\Step1

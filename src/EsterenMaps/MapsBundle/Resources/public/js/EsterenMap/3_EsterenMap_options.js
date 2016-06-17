@@ -10,9 +10,11 @@
     EsterenMap.prototype._editedPolyline = null;
     EsterenMap.prototype._editedPolygon = null;
 
+    EsterenMap.prototype._clonedOptions = false;
+
     EsterenMap.prototype._messageElement = null;
 
-    EsterenMap.prototype._refDatas = false;
+    EsterenMap.prototype._refData = false;
 
     EsterenMap.prototype._transports = false;
 
@@ -38,7 +40,7 @@
         zones: true,
         zonestypes: true,
         settings: true,
-        "ref-datas": true,
+        "ref-data": true,
         transports: true
     };
 
@@ -49,15 +51,24 @@
         showFilters: true,
         showDirections: true,
         showSearchEngine: true,
+        showMarkers: true,
+        showRoutes: true,
+        showZones: true,
         autoResize: true,
         containerHeight: 400,
         sidebarContainer: 'esterenmap_sidebar',
         container: 'map',
         wrapper: 'map_wrapper',
         loadedCallback: function () {
-            this.loadMarkers();
-            this.loadRoutes();
-            this.loadZones();
+            if (this._mapOptions.showMarkers) {
+                this.loadMarkers();
+            }
+            if (this._mapOptions.showRoutes) {
+                this.loadRoutes();
+            }
+            if (this._mapOptions.showZones) {
+                this.loadZones();
+            }
             this.loadTransports();
         },
         messageElementId: 'esterenmap_message_element',

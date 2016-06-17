@@ -1,0 +1,18 @@
+services:
+
+    corahnrin_generator.steps.step_01:
+        class: CorahnRin\CorahnRinBundle\Action\Step01People
+        calls:
+            - ['setDefaultServices', ['@doctrine.orm.entity_manager', '@templating', '@router', '@translator']]
+
+    corahnrin_generator.steps.step_02:
+        class: CorahnRin\CorahnRinBundle\Action\Step02Job
+        calls:
+            - ['setDefaultServices', ['@doctrine.orm.entity_manager', '@templating', '@router', '@translator']]
+
+    corahnrin_generator.steps.step_03:
+        class: CorahnRin\CorahnRinBundle\Action\Step03Birthplace
+        arguments:
+            - '%esterenmaps.tile_size%'
+        calls:
+            - ['setDefaultServices', ['@doctrine.orm.entity_manager', '@templating', '@router', '@translator']]

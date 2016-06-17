@@ -115,7 +115,10 @@ var config = {
             "src/EsterenMaps/MapsBundle/Resources/public/js/EsterenMap/*.js"
         ],
         "js/generator.js": [
-            "src/CorahnRin/CorahnRinBundle/Resources/public/generator/js/*.js"
+            "src/CorahnRin/CorahnRinBundle/Resources/public/generator/js/main_steps.js"
+        ],
+        "js/step_03_birthplace.js": [
+            "src/CorahnRin/CorahnRinBundle/Resources/public/generator/js/step_03_birthplace.js"
         ]
     }
 };

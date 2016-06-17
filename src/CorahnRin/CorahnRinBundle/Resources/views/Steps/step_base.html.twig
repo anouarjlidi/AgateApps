@@ -1,6 +1,6 @@
-{% extends "::base.html.twig" %}
+{% extends "base.html.twig" %}
 
-{% block title %}{{ 'Générateur' | trans }} - {{ loaded_step.title | trans }} - {{ parent() }}{% endblock %}
+{% block title %}{{ 'Générateur' | trans }} - {{ current_step.title | trans }} - {{ parent() }}{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -10,15 +10,19 @@
 {% block content_for_layout %}
     <div class="row">
         <div class="col-sm-3 step_menu">
-            {{ render(controller("CorahnRinBundle:Generator:menu", {"step":loaded_step})) }}
+            {{ include('@CorahnRin/Steps/menu.html.twig', {
+                'steps': steps,
+                'current_step': current_step
+            }) }}
         </div>
         <div class="col-sm-9 step_module">
-            <h1>{{ 'Étape' | trans }} {{ loaded_step.step }} : {{ loaded_step.title | trans }}</h1>
-            <form name="generator_form" id="generator_form" method="post" action="{{ path('pierstoval_character_generator_step', {'step':loaded_step.step,'slug':loaded_step.slug}) }}">
-                <fieldset id="generator_{{ loaded_step.slug }}">
+            <h1>{{ 'Étape' | trans }} {{ current_step.step }} : {{ current_step.label | trans }}</h1>
+            <form name="generator_form" id="generator_form" method="post" action="{{ path('pierstoval_character_generator_step', {'requestStep': current_step.name}) }}">
+                <fieldset id="generator_{{ current_step.name }}">
                     <button type="submit" id="submit_btn" class="btn btn-inverse">{{ 'Étape suivante' | trans }}</button>
                     <hr />
-                    {{ include(loaded_step_filename) }}
+                    {% block step_content %}
+                    {% endblock %}
                     <hr />
                     <button type="submit" id="submit_btn" class="btn btn-inverse">{{ 'Étape suivante' | trans }}</button>
                 </fieldset>

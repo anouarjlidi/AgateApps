@@ -1,0 +1,71 @@
+{% extends '@CorahnRin/Steps/step_base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/maps_lib.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('css/fontawesome.css') }}" type="text/css" />
+    <style type="text/css" id="map_add_style"></style>
+{% endblock %}
+
+{% block step_content %}
+    <input type="hidden" name="region_value" id="region_value" value="{{ region_value }}" />
+
+    <div id="map_wrapper">
+        <div id="maps_admin_container">
+        </div>
+        <div id="esterenmap_sidebar"></div>
+        <div id="map"></div>
+        <div id="inputs_container"></div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+{# Include necessary scripts #}
+{{ parent() }}
+<script type="text/javascript" src="{{ asset('js/maps_lib.js') }}"></script>
+
+{# Initialize dynamic map options. Non-dynamic are set in JS file. #}
+<script type="text/javascript">
+    (function(w){
+        w.document._map_params = {
+            id: {{ map.id }},
+            loaderCallbacks: {
+                zonesComplete: function() {
+                    var i, polygons;
+                    {% if region_value %}
+                    polygons = this._polygons;
+                    for (i in polygons) {
+                        if (polygons.hasOwnProperty(i)) {
+                            if (polygons[i]._esterenZone.id == {{ region_value }}) {
+                                polygons[i].fireEvent('click');
+                                polygons[i].hideSidebar();
+                            }
+                        }
+                    }
+                    {% endif %}
+                }
+            },
+            apiUrls: {
+                base: "http://{{ esteren_domains_api }}/{{ app.request.locale }}",
+                settings: "{{ url('esterenmaps_api_maps_settings_distant', {"id":map.id}) }}",
+                tiles: "http://{{ esteren_domains_api }}{{ asset('maps_tiles/'~map.id~'/{z}/{y}/{x}.jpg') }}"
+            },
+            LeafletMapBaseOptions: {
+                zoom: {{ map.startZoom }},
+                maxZoom: {{ map.maxZoom }}
+                {% if map.jsonBounds|length %},
+                maxBounds: {{ map.bounds|raw }}
+                {% endif %}
+            },
+            LeafletLayerBaseOptions: {
+                maxZoom: {{ map.maxZoom }},
+                maxNativeZoom: {{ map.maxZoom }},
+                tileSize: {{ tile_size }}
+            }
+        };
+    })(window);
+</script>
+
+{# Load this step's JS, where EsterenMap object is created. #}
+<script type="text/javascript" src="{{ asset('js/step_03_birthplace.js') }}"></script>
+{% endblock %}

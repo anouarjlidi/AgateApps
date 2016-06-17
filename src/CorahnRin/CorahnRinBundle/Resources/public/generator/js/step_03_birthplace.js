@@ -1,12 +1,20 @@
 (function($, d){
-    var params, baseOptions;
-    if (d.getElementById('generator_naissance')) {
+    var params, basePolygonOptions;
+    if (d.getElementById('generator_birthplace')) {
 
         if (d._map_params) {
-            baseOptions = EsterenMap.prototype.mapOptions.LeafletPolygonBaseOptions;
+            basePolygonOptions = EsterenMap.prototype._mapOptions.LeafletPolygonBaseOptions;
+
+            basePolygonOptions.clickable = true;
+
             params = $.extend(true, d._map_params, {
                 editMode: false,
+                showDirections: false,
+                autoresize: false,
+                showMarkers: false,
+                showRoutes: false,
                 autoResize: false,
+                LeafletPolygonBaseOptions: basePolygonOptions,
                 loadedCallback: function(){
                     this.loadZones();
                 },
@@ -17,7 +25,7 @@
                             id = polygon.options.className.replace('drawn_polygon_',''),
                             polygons = map._polygons,
                             esterenZone = polygon._esterenZone,
-                            i, marker, latlngs
+                            i
                         ;
 
                         polygon.showSidebar();
@@ -30,10 +38,10 @@
                         for (i in polygons) {
                             if (polygons.hasOwnProperty(i)) {
                                 polygons[i].setStyle({
-                                    color: baseOptions.color,
-                                    fillOpacity: baseOptions.fillOpacity,
-                                    fillColor: baseOptions.fillOpacity,
-                                    weight: baseOptions.weight
+                                    color: basePolygonOptions.color,
+                                    fillOpacity: basePolygonOptions.fillOpacity,
+                                    fillColor: basePolygonOptions.fillOpacity,
+                                    weight: basePolygonOptions.weight
                                 });
                             }
                         }

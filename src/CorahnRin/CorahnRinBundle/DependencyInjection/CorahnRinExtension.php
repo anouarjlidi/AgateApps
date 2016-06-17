@@ -24,9 +24,10 @@ class CorahnRinExtension extends Extension
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
+        $loader->load('steps.yml');
 
         foreach ($config as $name => $value) {
-            $container->setParameter('corahn_rin_generator.'.$name, $value);
+            $container->setParameter('corahnrin_generator.'.$name, $value);
         }
     }
 }
