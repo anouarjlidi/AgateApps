@@ -31,6 +31,12 @@ abstract class AbstractStepAction extends StepAction
      */
     protected $translator;
 
+    /**
+     * @param EntityManager       $em
+     * @param TwigEngine          $templating
+     * @param RouterInterface     $router
+     * @param TranslatorInterface $translator
+     */
     public function setDefaultServices(EntityManager $em, TwigEngine $templating, RouterInterface $router, TranslatorInterface $translator)
     {
         $this->em         = $em;
