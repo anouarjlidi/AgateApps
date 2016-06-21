@@ -105,8 +105,12 @@ jms_serializer:
     visitors:
         json:
             # Corresponds to these constants:
-            # JSON_NUMERIC_CHECK | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE
-            options: 480
+            options:
+                - JSON_NUMERIC_CHECK
+                - JSON_UNESCAPED_SLASHES      # PHP 5.4+
+                - JSON_UNESCAPED_UNICODE      # PHP 5.4+
+                - JSON_PRETTY_PRINT           # PHP 5.4+
+                - JSON_PRESERVE_ZERO_FRACTION # PHP 5.6+
 
 # Api services
 # TODO: Refactor this and use a better method to generate WS based on entities
