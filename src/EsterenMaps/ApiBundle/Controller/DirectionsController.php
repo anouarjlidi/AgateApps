@@ -37,7 +37,7 @@ class DirectionsController extends Controller
             $directions = $this->getError($from, $to, $transportId, 'Transport not found.');
             $code       = 404;
         } else {
-            $directions = $this->container->get('esteren_maps')->getDirectionsManager()->getDirections($map, $from, $to, $hoursPerDay, $transport);
+            $directions = $this->container->get('esterenmaps')->getDirectionsManager()->getDirections($map, $from, $to, $hoursPerDay, $transport);
             if (!count($directions)) {
                 $directions = $this->getError($from, $to);
                 $code       = 404;

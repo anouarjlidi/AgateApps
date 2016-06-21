@@ -76,7 +76,7 @@ class MapTilesCommand extends ContainerAwareCommand
 
         $io->comment('Generating map tiles for "'.$map->getName().'"');
 
-        $tilesManager = $this->getContainer()->get('esteren_maps')->getTilesManager();
+        $tilesManager = $this->getContainer()->get('esterenmaps')->getTilesManager();
 
         // This is a workaround to allow images to be stored with either global path or relative path
         if (!file_exists($map->getImage())) {

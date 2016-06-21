@@ -34,6 +34,6 @@ class MapsExtension extends \Twig_Extension
      */
     public function getName()
     {
-        return 'esteren_maps';
+        return 'esterenmaps';
     }
 }

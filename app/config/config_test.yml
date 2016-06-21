@@ -26,7 +26,7 @@ doctrine:
 # Force these domain names to be used in the tests
 parameters:
     esteren_domains.corahnrin:      corahnrin.esteren.dev
-    esteren_domains.esteren_maps:   maps.esteren.dev
+    esteren_domains.esterenmaps:    maps.esteren.dev
     esteren_domains.portal:         www.esteren.dev
     esteren_domains.backoffice:     back.esteren.dev
     esteren_domains.api:            api.esteren.dev

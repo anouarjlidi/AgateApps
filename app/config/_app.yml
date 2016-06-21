@@ -51,7 +51,7 @@ twig:
         locales: "%locales%"
         locales_regex: "%locales_regex%"
         esteren_domains_corahnrin: "%esteren_domains.corahnrin%"
-        esteren_domains_esteren_maps: "%esteren_domains.esteren_maps%"
+        esteren_domains_esterenmaps: "%esteren_domains.esterenmaps%"
         esteren_domains_portal: "%esteren_domains.portal%"
         esteren_domains_backoffice: "%esteren_domains.backoffice%"
         esteren_domains_api: "%esteren_domains.api%"
@@ -116,7 +116,7 @@ jms_serializer:
 # TODO: Refactor this and use a better method to generate WS based on entities
 pierstoval_api:
     allowed_origins:
-        - "%esteren_domains.esteren_maps%"
+        - "%esteren_domains.esterenmaps%"
         - "%esteren_domains.corahnrin%"
         - "%esteren_domains.backoffice%"
         - "%esteren_domains.api%"
@@ -143,7 +143,7 @@ orbitale_cms:
             host: "%esteren_domains.corahnrin%"
         maps:
             resource: "@EsterenMaps/layout.html.twig"
-            host: "%esteren_domains.esteren_maps%%"
+            host: "%esteren_domains.esterenmaps%%"
 
 # Use PierstovalCharacterManager to setup CorahnRin's character generator.
 # This bundle has to be standalone as much as possible, to only use config and/or override.
@@ -166,7 +166,7 @@ nelmio_cors:
             allow_origin:
                 - "^(https?://)?%esteren_domains.api%"
                 - "^(https?://)?%esteren_domains.corahnrin%"
-                - "^(https?://)?%esteren_domains.esteren_maps%"
+                - "^(https?://)?%esteren_domains.esterenmaps%"
                 - "^(https?://)?%esteren_domains.backoffice%"
             allow_headers: ["Origin","Accept","Content-Type"]
             allow_methods: ["POST","GET","DELETE","PUT","OPTIONS"]

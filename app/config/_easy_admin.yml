@@ -24,11 +24,11 @@ easy_admin:
             - { label: "admin.menu.site" }
             - { entity: "Pages", icon: "file-text" }
 
-            - { label: "admin.menu.esteren_maps" }
+            - { label: "admin.menu.esterenmaps" }
             - { entity: "Maps", icon: "map" }
             - { entity: "Factions", icon: "flag" }
 
-            - label: "admin.menu.esteren_maps_data"
+            - label: "admin.menu.esterenmaps_data"
               children:
                   - { entity: "Markers" }
                   - { entity: "Routes" }

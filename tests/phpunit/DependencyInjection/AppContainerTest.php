@@ -12,7 +12,7 @@ class AppContainerTest extends WebTestCase
         return [
             'corahnrin_generator.pdf_manager'     => ['corahnrin_generator.pdf_manager'],
             'corahnrin_generator.steps.step_01'   => ['corahnrin_generator.steps.step_01'],
-            'esteren_maps'                        => ['esteren_maps'],
+            'esterenmaps'                         => ['esterenmaps'],
             'esterenmaps.tiles_manager'           => ['esterenmaps.tiles_manager'],
             'esterenmaps.map_image_manager'       => ['esterenmaps.map_image_manager'],
             'esterenmaps.directions_manager'      => ['esterenmaps.directions_manager'],

@@ -97,7 +97,7 @@ class ChangeCoordinatesSystemCommand extends ContainerAwareCommand
      */
     private function transformLatLngToXY(Maps $map, $lat, $lng)
     {
-        $manager = $this->getContainer()->get('esteren_maps')->getTilesManager();
+        $manager = $this->getContainer()->get('esterenmaps')->getTilesManager();
 
         $manager->setMap($map);
 

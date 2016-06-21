@@ -21,7 +21,7 @@ The routing load order is the following:
 
 * FOSUser, which are loaded globally for every domain
 * CorahnRin (character manager), under `%esteren_domains.corahnrin%` host.
-* Esteren Maps, under `%esteren_domains.esteren_maps%` host.
+* Esteren Maps, under `%esteren_domains.esterenmaps%` host.
 * Root (the `/` route), which simply redirects to `/%locale%/` to handle the route for all subdomains.
 * PierstovalTools' `AssetsController`, which allows loading a javascript file containing translations (and caching it).
  Also available for all subdomains.

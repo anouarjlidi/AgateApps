@@ -10,7 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 /**
  * Class MapsController.
  *
- * @Route(host="%esteren_domains.esteren_maps%")
+ * @Route(host="%esteren_domains.esterenmaps%")
  */
 class MapsController extends Controller
 {

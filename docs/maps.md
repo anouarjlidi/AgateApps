@@ -37,7 +37,7 @@ To use the different services provided by the `EsterenMapsBundle`, you must load
 /**
  * @var EsterenMaps\MapsBundle\Services\Registry $esterenMaps
  */
-$esterenMaps = $this->container->get('esteren_maps');
+$esterenMaps = $this->container->get('esterenmaps');
 ```
 
 Then, with auto-completion in IDEs you can retrieve all other services.
@@ -68,7 +68,7 @@ The cache key is calculated simply by all the arguments.
 
 Distances are automatically calculated based on Pythagore's theorem with all coordinates of all points of the Route.
 
-BUT, one can set the `forcedDistance` field, so if it is set, it forces (wow...) the `distance` attribute to be set 
+BUT, one can set the `forcedDistance` field, so if it is set, it forces (wow...) the `distance` attribute to be set
  identically as `forcedDistance`. This helps to hijack the distance if the visual map does not correspond enough to what
  you would like to have in your map.
 
@@ -77,6 +77,6 @@ BUT, one can set the `forcedDistance` field, so if it is set, it forces (wow...)
 This cache can be cleared like any other cache by the `bin/console cache:clear` command, depending on your environment.
 
 But it is also **automatically** cleared when you update any Maps-related entity.
-Check the [CacheClearSubscriber](../src/EsterenMaps/MapsBundle/DoctrineListeners/CacheClearSubscriber.php) class. 
+Check the [CacheClearSubscriber](../src/EsterenMaps/MapsBundle/DoctrineListeners/CacheClearSubscriber.php) class.
 
 #Again design pattern concerns: When creating a doctrine listener, is it better to chain "instanceof" instructions, or to create an empty interface?

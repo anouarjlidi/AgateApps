@@ -6,8 +6,8 @@ maps:
     view: View map
 admin:
     menu:
-        esteren_maps: 'Esteren Maps'
-        esteren_maps_data: 'Données'
+        esterenmaps: 'Esteren Maps'
+        esterenmaps_data: 'Données'
     maps:
         markers: 'Markers'
         routes: 'Routes'
