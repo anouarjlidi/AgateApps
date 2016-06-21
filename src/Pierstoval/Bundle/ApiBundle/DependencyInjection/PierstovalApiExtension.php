@@ -2,6 +2,7 @@
 
 namespace Pierstoval\Bundle\ApiBundle\DependencyInjection;
 
+use Pierstoval\Bundle\ApiBundle\Listeners\JsonResponseListener;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -32,10 +33,15 @@ class PierstovalApiExtension extends Extension
         $config['allowed_origins'] = array_unique($config['allowed_origins']);
 
         foreach ($config as $name => $value) {
-            $container->setParameter('pierstoval_api.'.$name, $value);
+            $container->setParameter('pierstoval_api.' . $name, $value);
         }
 
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');
+
+        // compile commonly used classes
+        $this->addClassesToCompile([
+            JsonResponseListener::class,
+        ]);
     }
 }

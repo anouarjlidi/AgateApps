@@ -2,6 +2,7 @@
 
 namespace EsterenMaps\MapsBundle\DependencyInjection;
 
+use EsterenMaps\MapsBundle\Twig\MapsExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -30,6 +31,10 @@ class EsterenMapsExtension extends Extension
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
+
+        $this->addClassesToCompile([
+            MapsExtension::class
+        ]);
     }
 
     public function getAlias()
