@@ -2,7 +2,7 @@
 
 namespace CorahnRin\CorahnRinBundle\Action;
 
-class Step01People extends AbstractStepAction
+class Step01 extends AbstractStepAction
 {
 
     /**

@@ -1,18 +1,104 @@
 services:
 
     corahnrin_generator.steps.step_01:
-        class: CorahnRin\CorahnRinBundle\Action\Step01People
+        class: CorahnRin\CorahnRinBundle\Action\Step01
         calls:
             - ['setDefaultServices', ['@doctrine.orm.entity_manager', '@templating', '@router', '@translator']]
 
     corahnrin_generator.steps.step_02:
-        class: CorahnRin\CorahnRinBundle\Action\Step02Job
+        class: CorahnRin\CorahnRinBundle\Action\Step02
         calls:
             - ['setDefaultServices', ['@doctrine.orm.entity_manager', '@templating', '@router', '@translator']]
 
     corahnrin_generator.steps.step_03:
-        class: CorahnRin\CorahnRinBundle\Action\Step03Birthplace
+        class: CorahnRin\CorahnRinBundle\Action\Step03
         arguments:
             - '%esterenmaps.tile_size%'
         calls:
             - ['setDefaultServices', ['@doctrine.orm.entity_manager', '@templating', '@router', '@translator']]
+
+    corahnrin_generator.steps.step_04:
+        class: CorahnRin\CorahnRinBundle\Action\Step04
+        calls:
+            - ['setDefaultServices', ['@doctrine.orm.entity_manager', '@templating', '@router', '@translator']]
+
+    corahnrin_generator.steps.step_05:
+        class: CorahnRin\CorahnRinBundle\Action\Step05
+        calls:
+            - ['setDefaultServices', ['@doctrine.orm.entity_manager', '@templating', '@router', '@translator']]
+
+    corahnrin_generator.steps.step_06:
+        class: CorahnRin\CorahnRinBundle\Action\Step06
+        calls:
+            - ['setDefaultServices', ['@doctrine.orm.entity_manager', '@templating', '@router', '@translator']]
+
+    corahnrin_generator.steps.step_07:
+        class: CorahnRin\CorahnRinBundle\Action\Step07
+        calls:
+            - ['setDefaultServices', ['@doctrine.orm.entity_manager', '@templating', '@router', '@translator']]
+
+    corahnrin_generator.steps.step_08:
+        class: CorahnRin\CorahnRinBundle\Action\Step08
+        calls:
+            - ['setDefaultServices', ['@doctrine.orm.entity_manager', '@templating', '@router', '@translator']]
+
+    corahnrin_generator.steps.step_09:
+        class: CorahnRin\CorahnRinBundle\Action\Step09
+        calls:
+            - ['setDefaultServices', ['@doctrine.orm.entity_manager', '@templating', '@router', '@translator']]
+
+    corahnrin_generator.steps.step_10:
+        class: CorahnRin\CorahnRinBundle\Action\Step10
+        calls:
+            - ['setDefaultServices', ['@doctrine.orm.entity_manager', '@templating', '@router', '@translator']]
+
+    corahnrin_generator.steps.step_11:
+        class: CorahnRin\CorahnRinBundle\Action\Step11
+        calls:
+            - ['setDefaultServices', ['@doctrine.orm.entity_manager', '@templating', '@router', '@translator']]
+
+    corahnrin_generator.steps.step_12:
+        class: CorahnRin\CorahnRinBundle\Action\Step12
+        calls:
+            - ['setDefaultServices', ['@doctrine.orm.entity_manager', '@templating', '@router', '@translator']]
+
+    corahnrin_generator.steps.step_13:
+        class: CorahnRin\CorahnRinBundle\Action\Step13
+        calls:
+            - ['setDefaultServices', ['@doctrine.orm.entity_manager', '@templating', '@router', '@translator']]
+
+    corahnrin_generator.steps.step_14:
+        class: CorahnRin\CorahnRinBundle\Action\Step14
+        calls:
+            - ['setDefaultServices', ['@doctrine.orm.entity_manager', '@templating', '@router', '@translator']]
+
+    corahnrin_generator.steps.step_15:
+        class: CorahnRin\CorahnRinBundle\Action\Step15
+        calls:
+            - ['setDefaultServices', ['@doctrine.orm.entity_manager', '@templating', '@router', '@translator']]
+
+    corahnrin_generator.steps.step_16:
+        class: CorahnRin\CorahnRinBundle\Action\Step16
+        calls:
+            - ['setDefaultServices', ['@doctrine.orm.entity_manager', '@templating', '@router', '@translator']]
+
+    corahnrin_generator.steps.step_17:
+        class: CorahnRin\CorahnRinBundle\Action\Step17
+        calls:
+            - ['setDefaultServices', ['@doctrine.orm.entity_manager', '@templating', '@router', '@translator']]
+
+    corahnrin_generator.steps.step_18:
+        class: CorahnRin\CorahnRinBundle\Action\Step18
+        calls:
+            - ['setDefaultServices', ['@doctrine.orm.entity_manager', '@templating', '@router', '@translator']]
+
+    corahnrin_generator.steps.step_19:
+        class: CorahnRin\CorahnRinBundle\Action\Step19
+        calls:
+            - ['setDefaultServices', ['@doctrine.orm.entity_manager', '@templating', '@router', '@translator']]
+
+    corahnrin_generator.steps.step_20:
+        class: CorahnRin\CorahnRinBundle\Action\Step20
+        calls:
+            - ['setDefaultServices', ['@doctrine.orm.entity_manager', '@templating', '@router', '@translator']]
+

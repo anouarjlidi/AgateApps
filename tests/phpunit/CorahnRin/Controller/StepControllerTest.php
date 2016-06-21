@@ -78,7 +78,7 @@ class StepControllerTest extends WebTestCase
 
     private function step3(Client $client)
     {
-        $crawler = $client->request('GET', '/fr/character/generate/job');
+        $crawler = $client->request('GET', '/fr/character/generate/birthplace');
 
         static::assertEquals(200, $client->getResponse()->getStatusCode(), 'Could not execute step request...');
 
@@ -89,7 +89,7 @@ class StepControllerTest extends WebTestCase
 
         $client->submit($form);
 
-        static::assertTrue($client->getResponse()->isRedirect('/fr/character/generate/birthplace'));
+        static::assertTrue($client->getResponse()->isRedirect('/fr/character/generate/geo'));
 
         fwrite(STDOUT, '.');
     }

@@ -2,7 +2,7 @@
 
 namespace CorahnRin\CorahnRinBundle\Action;
 
-class Step02Job extends AbstractStepAction
+class Step02 extends AbstractStepAction
 {
 
     /**
@@ -13,17 +13,17 @@ class Step02Job extends AbstractStepAction
         $jobs = $this->em->getRepository('CorahnRinBundle:Jobs')->findAllPerBook();
 
         if ($this->request->isMethod('POST')) {
-            $job_value  = (int) $this->request->request->get('job_value');
-            $job_exists = false;
+            $jobValue  = (int) $this->request->request->get('job_value');
+            $jobExists = false;
 
             foreach ($jobs as $id => $jobs_list) {
-                if (isset($jobs_list[$job_value])) {
-                    $job_exists = true;
+                if (isset($jobs_list[$jobValue])) {
+                    $jobExists = true;
                 }
             }
 
-            if ($job_exists) {
-                $this->updateCharacterStep($job_value);
+            if ($jobExists) {
+                $this->updateCharacterStep($jobValue);
 
                 return $this->nextStep();
             } else {

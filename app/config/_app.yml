@@ -150,12 +150,26 @@ orbitale_cms:
 pierstoval_character_manager:
     character_class: CorahnRin\CorahnRinBundle\Entity\Characters
     steps:
-        people:
-            action: corahnrin_generator.steps.step_01
-        job:
-            action: corahnrin_generator.steps.step_02
-        birthplace:
-            action: corahnrin_generator.steps.step_03
+        people:          { action: corahnrin_generator.steps.step_01 }
+        job:             { action: corahnrin_generator.steps.step_02 }
+        birthplace:      { action: corahnrin_generator.steps.step_03 }
+        geo:             { action: corahnrin_generator.steps.step_04 }
+        social_class:    { action: corahnrin_generator.steps.step_05 }
+        age:             { action: corahnrin_generator.steps.step_06 }
+        setbacks:        { action: corahnrin_generator.steps.step_07 }
+        ways:            { action: corahnrin_generator.steps.step_08 }
+        traits:          { action: corahnrin_generator.steps.step_09 }
+        orentation:      { action: corahnrin_generator.steps.step_10 }
+        advantages:      { action: corahnrin_generator.steps.step_11 }
+        mental_health:   { action: corahnrin_generator.steps.step_12 }
+        primary_domains: { action: corahnrin_generator.steps.step_13 }
+        upgrade_domains: { action: corahnrin_generator.steps.step_14 }
+        bonus_domains:   { action: corahnrin_generator.steps.step_15 }
+        disciplines:     { action: corahnrin_generator.steps.step_16 }
+        combat_arts:     { action: corahnrin_generator.steps.step_17 }
+        equipment:       { action: corahnrin_generator.steps.step_18 }
+        description:     { action: corahnrin_generator.steps.step_19 }
+        finish:          { action: corahnrin_generator.steps.step_20 }
 
 # CORS management for all APIs
 nelmio_cors:

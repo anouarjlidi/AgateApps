@@ -1,3 +1,6 @@
+{% extends '@CorahnRin/Steps/step_base.html.twig' %}
+
+{% block step_content %}
 <input type="hidden" name="gen-div-choice" id="gen-div-choice" value="{{ geoEnvironment_value }}" />
 <div class="row">
 {% for geoEnvironment in geoEnvironments %}
@@ -19,3 +22,4 @@
     <p class="alert alert-error">{{ 'Une erreur est survenue lors du chargement de la liste des environnements géographiques' | trans }}</p>
 {% endfor %}
 </div>
+{% endblock %}
