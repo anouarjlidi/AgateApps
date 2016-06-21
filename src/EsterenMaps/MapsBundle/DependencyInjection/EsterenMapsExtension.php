@@ -34,6 +34,6 @@ class EsterenMapsExtension extends Extension
 
     public function getAlias()
     {
-        return 'esterenmaps';
+        return 'esteren_maps';
     }
 }
