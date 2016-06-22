@@ -6,7 +6,7 @@
 <div class="row">
 {% for people in peoples %}
     <div class="col-sm-6 gen-div-choice{% if people_value == people.id %} selected{% endif %}"
-         data-div-choice-value="{{ people.id }}">
+         data-divchoice-value="{{ people.id }}">
         <article>
             <header>
                 <h3 class="text-center">{{ people.name | trans }}</h3>

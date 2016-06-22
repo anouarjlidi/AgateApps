@@ -202,17 +202,6 @@ class SocialClasses
         return $this->domains;
     }
 
-    public function findDomainById($id)
-    {
-        foreach ($this->domains as $domain) {
-            if ($domain->getId() == $id) {
-                return $domain;
-            }
-        }
-
-        return;
-    }
-
     /**
      * Set description.
      *
@@ -259,5 +248,43 @@ class SocialClasses
     public function getDeleted()
     {
         return $this->deleted;
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return Domains|null
+     */
+    public function findDomainById($id)
+    {
+        $id = (int) $id;
+        $domainToReturn = null;
+
+        foreach ($this->domains as $domain) {
+            if ($domain->getId() === $id) {
+                $domainToReturn = $domain;
+                break;
+            }
+        }
+
+        return $domainToReturn;
+    }
+
+    /**
+     * @param int|Domains $domainToCheck
+     *
+     * @return bool
+     */
+    public function hasDomain($domainToCheck)
+    {
+        $id = $domainToCheck instanceof Domains ? $domainToCheck->getId() : $domainToCheck;
+
+        foreach ($this->domains as $domain) {
+            if ($domain->getId() === $id) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

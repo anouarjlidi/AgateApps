@@ -1,8 +1,0 @@
-<input type="hidden" name="age" id="age" value="{{ age }}" />
-<h3>{{ 'Âge <small>(Min 16, max 35)</small>' | trans | raw }}</h3>
-<p>
-    {{ 'Valeur' | trans }} : <span id="age_value" class="well well-sm">{{ age }}</span>
-</p>
-<div style="position: relative;">
-    <div id="age_slider" data-toggle="ui-slider" data-slider-input="age" data-slider-label="age_value" data-slider-value="{{ age }}" data-slider-min="16" data-slider-max="35"></div>
-</div>

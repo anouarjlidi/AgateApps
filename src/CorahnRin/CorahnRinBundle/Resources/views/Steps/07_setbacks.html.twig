@@ -1,0 +1,11 @@
+{% extends '@CorahnRin/Steps/step_base.html.twig' %}
+
+{% block step_content %}
+
+    {% if choice_available %}
+        {{ include('@CorahnRin/Steps/setbacks/manual.html.twig', with_context = true) }}
+    {% else %}
+        {{ include('@CorahnRin/Steps/setbacks/auto.html.twig', with_context = true) }}
+    {% endif %}
+
+{% endblock %}

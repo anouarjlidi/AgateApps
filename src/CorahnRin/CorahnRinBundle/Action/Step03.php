@@ -39,7 +39,7 @@ class Step03 extends AbstractStepAction
             'map'          => $map,
             'tile_size'    => $this->tileSize,
             'regions_list' => $regions,
-            'region_value' => $this->getCharacterProperty($this->step->getName()),
+            'region_value' => $this->getCharacterProperty(),
         ]);
     }
 }

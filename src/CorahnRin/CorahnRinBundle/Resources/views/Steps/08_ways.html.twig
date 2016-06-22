@@ -1,3 +1,7 @@
+{% extends '@CorahnRin/Steps/step_base.html.twig' %}
+
+{% block step_content %}
+
 {% spaceless %}
 <p class="alert alert-info">
     {{ 'Les voies sont comprises entre 1 et 5, et la somme totale des voies doit être égale à 15.' | trans }}
@@ -52,3 +56,5 @@
     </div>
 {% endfor %}
 {% endspaceless %}
+
+{% endblock %}

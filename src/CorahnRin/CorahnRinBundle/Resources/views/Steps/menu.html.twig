@@ -1,6 +1,5 @@
 {% set steps_length = steps|length %}
 {% set bar_width = steps_length ? (current_step.step / steps_length * 100) : 0 %}
-{{ dump(steps) }}
 {{ dump(current_step) }}
 <nav class="nav">
     <div class="progress">
@@ -9,16 +8,25 @@
         </div>
     </div>
     <ul class="list-unstyled list-sm-inline step_list">
-        {% for stepName, step in steps %}
-            {% if current_step.step >= step.step %}
-                <li{% if current_step and current_step.step == step.step %} class="active"{% endif %}>
+
+        {% set previous = null %}
+
+        {% for stepName, loop_step in steps %}
+            {% set is_superior_to_current = current_step.step >= loop_step.step %}
+            {% set is_defined_step = current_character[loop_step.name] is defined %}
+            {% set is_last_undefined_step = (current_character[loop_step.name] is not defined and current_character[previous.name] is defined) %}
+
+            {% if is_superior_to_current or is_defined_step or is_last_undefined_step %}
+                <li{% if current_step and current_step.step == loop_step.step %} class="active"{% endif %}>
                     <a href="{{ path('pierstoval_character_generator_step', {'requestStep': stepName}) }}">
-                        {{ current_step.step == step.step ? '&raquo;' }} {{ step.step }}. {{ step.label | trans }}
+                        {{ current_step.step == loop_step.step ? '&raquo;' }} {{ loop_step.step }}. {{ loop_step.label | trans }}
                     </a>
                 </li>
             {% else %}
-                <li>{{ step.step }}. {{ step.label | trans }}</li>
+                <li>{{ loop_step.step }}. {{ loop_step.label | trans }}</li>
             {% endif %}
+
+            {% set previous = loop_step %}
         {% endfor %}
         {% if app.session.get('step') > 1 %}
             <li>
@@ -28,3 +36,4 @@
 
     </ul>
 </nav>
+{{ dump(current_character) }}

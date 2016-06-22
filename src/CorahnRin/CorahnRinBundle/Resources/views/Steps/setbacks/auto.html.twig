@@ -1,0 +1,55 @@
+
+{% set setback_symbol -%}
+    <span class="fa fa-hand-o-right"><span class="sr-only">&raquo;</span></span>
+{%- endset %}
+
+<p class="alert alert-info">
+    {% if age > 20 %}
+        {{ 'Votre personnage a <span class="label label-warning">%age%</span> ans, il a donc au moins <span class="label label-warning">%count%</span> revers.' | trans({'%age%':age,'%count%': setbacks_number}) | raw }}
+        <br>
+        {{ 'Les revers tirés sont indiqués par le symbole "%symbol%".' | trans({'%symbol%': setback_symbol}) | raw }}
+    {% else %}
+        {{ 'Votre personnage a %age% ans, il n\'a donc aucun revers.' | trans({'%age%':age}) }}
+    {% endif %}
+
+    <br>
+    {% if choice_available %}
+        <a href="{{ path('pierstoval_character_generator_step', {'requestStep': current_step.name}) }}">
+            {{ 'Voulez-vous déterminer les revers automatiquement ?'|trans }}
+        </a>
+    {% else %}
+        <a href="{{ path('pierstoval_character_generator_step', {'requestStep': current_step.name, 'manual': '1'}) }}">
+            {{ 'Voulez-vous déterminer les revers manuellement ?'|trans }}
+        </a>
+    {% endif %}
+</p>
+
+{% for setback in setbacks_list %}
+    <div class="row mb15">
+
+        <div class="col-sm-3">
+            <p>
+                {% if setbacks_value[setback.id] is defined %}
+                    <span class="text-{{ not setbacks_value[setback.id].avoided and setback.id != 10 ? 'red' : 'green' }}">
+                    {{ setback_symbol }}
+                        {{ setback.name | trans }}
+                        {% if setbacks_value[setback.id].avoided %}
+                            <small>({{ 'Évité'|trans }})</small>
+                        {% endif %}
+                </span>
+                    {% if setbacks_value[setback.id].avoided == true %}
+                        <small class="bl">{{ 'Par chance, votre personnage a évité ce revers !' | trans }}</small>
+                    {% endif %}
+
+                {% else %}
+                    {{ setback.name | trans }}
+                {% endif %}
+            </p>
+        </div>
+        <div class="col-sm-9">
+            <p>{{ setback.description | trans }}</p>
+        </div>
+
+    </div><!-- /.row -->
+
+{% endfor %}{# setbacks #}

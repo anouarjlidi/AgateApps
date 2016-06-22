@@ -33,7 +33,7 @@ class Step02 extends AbstractStepAction
 
         return $this->renderCurrentStep([
             'jobs_list' => $jobs,
-            'job_value' => $this->getCharacterProperty($this->step->getName()),
+            'job_value' => $this->getCharacterProperty(),
         ]);
     }
 }

@@ -110,7 +110,7 @@
     }
 
     /**
-     * Fonction permettant d'utiliser des div pour changer la valeur d'un input
+     * Activate generator divchoice component (div as "checkboxes")
      */
     if (d.querySelector('.gen-div-choice')) {
         var divChoiceNodesList = d.querySelectorAll('.gen-div-choice');
@@ -118,13 +118,17 @@
             divChoiceNodesList[i].addEventListener('click', function () {
                 var nodes = d.getElementsByClassName('gen-div-choice'),
                     count = nodes.length,
-                    node;
+                    node
+                ;
+
                 if (this.classList.contains('selected')) {
                     return false;
                 }
+
                 if (this.classList.contains('divchoice-button')) {
                     return false;
                 }
+
                 for (var i = 0; i < count; i++) {
                     nodes[i].classList.remove('selected');
                     if (nodes[i].getAttribute('data-divchoice-inside') === 'true') {
@@ -135,83 +139,103 @@
                         }
                     }
                 }
+
                 this.classList.add('selected');
+
                 if (this.getAttribute('data-target-node')) {
                     node = d.querySelector(this.getAttribute('data-target-node'));
                 } else {
                     node = d.getElementById('gen-div-choice');
                 }
+
                 if (this.getAttribute('data-divchoice-inside') === 'true') {
                     $(this.querySelector('.divchoice-inside')).slideDown(400);
                 }
-                node.value = this.getAttribute('data-div-choice-value');
+
+                if (node) {
+                    node.value = this.getAttribute('data-divchoice-value');
+                }
                 return false;
             });
         }
     }
 
-    $('[data-toggle="buttons"][data-max-buttons] .btn').bind('click.maxbuttons', function(){
-        var parent = $(this).data('jq_parent');
-        if (!parent) {
-            parent = $(this).parents('[data-max-buttons]')[0];
-            $(this).data('jq_parent', parent);
-        }
+    /**
+     * Used in social classes:
+     * Allows to select a specific number of checkboxes in a group of multiple inputs.
+     * Processed with bootstrap's radio buttons.
+     */
+    if (d.querySelector('[data-max-buttons] label.btn')) {
+        $('[data-max-buttons] label.btn')
+            .each(function() {
+                // Set JS data to avoid reprocessing all parameters
+                var $this = $(this);
 
-        var max = $(this).data('jq_max_number');
-        if (!max) {
-            max = parent.getAttribute('data-max-buttons');
-            $(this).data('jq_max_number', max);
-        }
+                var parent = $this.data('jq_parent');
+                if (!parent) {
+                    parent = $this.parents('[data-max-buttons]')[0];
+                    $this.data('jq_parent', parent);
+                }
 
-        if (this.classList.contains('active')) {
-            this.classList.remove('active');
-            this.firstElementChild.checked = false;
-        } else {
-            this.classList.add('active');
-            this.firstElementChild.checked = true;
-        }
+                var max = $this.data('jq_max_number');
+                if (!max) {
+                    max = parseInt(parent.getAttribute('data-max-buttons'));
+                    if (isNaN(max)) { max = 1; }
+                    $this.data('jq_max_number', max);
+                }
+            })
+            .on('click', function(){
+                // Remove other active labels for this group of inputs
+                var $this = $(this);
+                var max = $this.data('jq_max_number');
 
-        var elements = parent.querySelectorAll('label.active');
-        console.info(elements);
-        if (elements.length > max) {
-            for (var i = max,c = elements.length; i < c ; i++) {
-                elements[i].classList.remove('active');
-                elements[i].firstElementChild.checked = false;
-            }
-        }
-    });
+                // Applicate this trick with asynchronous call to be sure click event is finished
+                setTimeout(function(){
+                    var elements = $this.data('jq_parent').querySelectorAll('label.active');
+                    if (elements.length > max) {
+                        for (var i = max, c = elements.length; i < c ; i++) {
+                            elements[i].classList.remove('active');
+                            elements[i].firstElementChild.checked = false;
+                        }
+                    }
+                }, 50);
+            })
+        ;
+    }
 
     /**
-     * Fonction permettant d'activer les boutons et un input associé
+     * Activates generator choice button with potential info modal (used un jobs, traits...).
      */
-    $('[data-toggle="btn-gen-choice"]').bind('mousedown', function(){var e=this;setTimeout(function(){
-        var node,
-            count,
-            i,
-            prev = e.previousElementSibling,
-            selector = '[data-toggle="btn-gen-choice"].active'
-        ;
-        if (e.getAttribute('data-group')) {
-            selector += '[data-group="'+e.getAttribute('data-group')+'"]';
-        }
-        node = d.querySelectorAll(selector);
-        count = node.length;
-        for (i=0;i<count;i++){
-            node[i].classList.remove('active');
-            if (node[i].previousElementSibling) {
-                if (node[i].previousElementSibling.classList.contains('btn')) {
-                    node[i].previousElementSibling.classList.remove('active');
+    if (d.querySelector('[data-toggle="btn-gen-choice"]')) {
+        $('[data-toggle="btn-gen-choice"]').on('click', function(){var e=this;setTimeout(function(){
+            var node,
+                count,
+                i,
+                prev = e.previousElementSibling,
+                selectorForActiveGenChoices = '[data-toggle="btn-gen-choice"].active'
+            ;
+            if (e.getAttribute('data-group')) {
+                selectorForActiveGenChoices += '[data-group="' + e.getAttribute('data-group') + '"]';
+            }
+            node = d.querySelectorAll(selectorForActiveGenChoices);
+            count = node.length;
+            for (i = 0; i < count; i++) {
+                node[i].classList.remove('active');
+                if (node[i].previousElementSibling) {
+                    if (node[i].previousElementSibling.classList.contains('btn')) {
+                        node[i].previousElementSibling.classList.remove('active');
+                    }
                 }
             }
-        }
-        e.classList.add('active');
-        if (prev) {
-            if (prev.classList.contains('btn')) {
-                prev.classList.add('active');
+            e.classList.add('active');
+            if (prev) {
+                if (prev.classList.contains('btn')) {
+                    prev.classList.add('active');
+                }
             }
-        }
-        d.getElementById(e.getAttribute('data-target-node')).value = e.getAttribute('data-input-value');
-    },1);});
+            d.getElementById(e.getAttribute('data-target-node')).value = e.getAttribute('data-input-value');
+        },1);});
+    }
 
     /**
      * Clic distant sur un élément

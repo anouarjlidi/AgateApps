@@ -2,7 +2,7 @@
 <div class="row">
     {% for id, orientation in orientations %}
     <div class="col-sm-6 gen-div-choice{{ can_be_changed ? '' : '-disabled' }}{{ orientation_value == id ? ' selected' }}"
-         data-div-choice-value="{{ id }}">
+         data-divchoice-value="{{ id }}">
         <article>
             <header>
                 <h3 class="text-center">{{ orientation.name | trans }}</h3>

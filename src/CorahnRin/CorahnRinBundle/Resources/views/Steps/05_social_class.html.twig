@@ -5,10 +5,9 @@
 <div class="row">
 {% for socialClass in socialClasses %}
     <div class="col-sm-6 gen-div-choice{% if socialClass_value == socialClass.id %} selected{% endif %}"
-         data-div-choice-value="{{ socialClass.id }}"
+         data-divchoice-value="{{ socialClass.id }}"
          data-divchoice-inside="true"
-         data-input-container="socialClassDomains"
-         data-divchoice-maxSelected="2">
+         data-divchoice-max-selected="2">
         <article>
             <header>
                 <h3 class="text-center">{{ socialClass.name | trans }}</h3>
@@ -18,8 +17,8 @@
                 <p>{{ '+1 dans deux domaine parmi les suivants' | trans }} :</p>
                 <div data-toggle="buttons" data-max-buttons="2">
                     {% for domain in socialClass.domains %}
-                    <label for="button_{{ socialClass.id }}_{{ domain.id }}" class="btn btn-inverse{{ socialClassDomains[domain.id] is defined ? ' active' : '' }}">
-                        <input type="checkbox" id="button_{{ socialClass.id }}_{{ domain.id }}" name="domains[{{ socialClass.id }}][{{ domain.id }}]" {{ socialClassDomains[domain.id] is defined ? ' checked="checked"' : '' }} />
+                    <label for="button_{{ socialClass.id }}_{{ domain.id }}" class="btn btn-inverse {{ socialClassDomains[domain.id] is defined ? ' active' : '' }}">
+                        <input type="checkbox" id="button_{{ socialClass.id }}_{{ domain.id }}" name="domains[]" value="{{ domain.id }}" {{ socialClassDomains[domain.id] is defined ? ' checked="checked"' : '' }} />
                         {{ domain.name | trans }}
                     </label>
                     {% endfor %}

@@ -9,6 +9,8 @@ class Step08 extends AbstractStepAction
      */
     public function execute()
     {
-        // TODO: Implement execute() method.
+        return $this->renderCurrentStep([
+            'ways_list' => [],
+        ]);
     }
 }

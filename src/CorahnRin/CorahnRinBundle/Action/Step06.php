@@ -9,6 +9,21 @@ class Step06 extends AbstractStepAction
      */
     public function execute()
     {
-        // TODO: Implement execute() method.
+
+        if ($this->request->isMethod('POST')) {
+            $age = (int) $this->request->request->get('age');
+            if (16 <= $age && $age <= 35) {
+                $this->updateCharacterStep($age);
+
+                return $this->nextStep();
+            } else {
+                $this->flashMessage('L\'âge doit être compris entre 16 et 35 ans.');
+            }
+        }
+
+        return $this->renderCurrentStep([
+            'age' => $this->getCharacterProperty() ?: 16,
+        ]);
+
     }
 }

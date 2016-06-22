@@ -94,8 +94,9 @@ abstract class AbstractStepAction extends StepAction
     {
         // Default parameters always injected in template.
         // Not overridable, they're mandatory.
-        $parameters['current_step'] = $this->step;
-        $parameters['steps']        = $this->steps;
+        $parameters['current_step']      = $this->step;
+        $parameters['steps']             = $this->steps;
+        $parameters['current_character'] = $this->getCurrentCharacter();
 
         // Get template name
         $template = '@CorahnRin/Steps/'.str_pad($this->step->getStep(), 2, '0', STR_PAD_LEFT).'_'.$this->step->getName().'.html.twig';
