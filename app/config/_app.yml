@@ -168,9 +168,12 @@ pierstoval_character_manager:
             action: corahnrin_generator.steps.step_07
         08_ways:
             action: corahnrin_generator.steps.step_08
+            steps_to_disable_on_change:
+                - '09_traits'
+                - '10_orientation'
         09_traits:
             action: corahnrin_generator.steps.step_09
-        10_orentation:
+        10_orientation:
             action: corahnrin_generator.steps.step_10
         11_advantages:
             action: corahnrin_generator.steps.step_11
