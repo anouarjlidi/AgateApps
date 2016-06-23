@@ -35,21 +35,22 @@ class WaysFixtures extends AbstractFixture implements OrderedFixtureInterface
     {
         $this->manager = $manager;
 
+        /** @var EntityRepository $repo */
         $repo = $this->manager->getRepository('CorahnRinBundle:Ways');
 
-        $this->fixtureObject($repo, 1, 'com', 'Combativité', 'Passion', 'Cette Voie traduit la pugnacité, l\'énergie qui pousse à agir, la rage de vivre.', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null);
-        $this->fixtureObject($repo, 2, 'cre', 'Créativité', 'Subversion', 'La capacité à imaginer, à donner à sa vie un sens original, l\'inventivité, la débrouillardise.', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null);
+        $this->fixtureObject($repo, 1, 'com', 'Combativité', 'Passion', 'Cette Voie traduit la pugnacité, l\'énergie qui pousse à agir, la rage de vivre.');
+        $this->fixtureObject($repo, 2, 'cre', 'Créativité', 'Subversion', 'La capacité à imaginer, à donner à sa vie un sens original, l\'inventivité, la débrouillardise.');
         $this->fixtureObject($repo, 3, 'emp', 'Empathie', 'Émotivité', 'Le lien qui relie un être humain à son environnement.
 Par exemple, les Demorthèn se servent de leur Empathie pour communiquer avec la nature.
-Au niveau relationnel, l\'Empathie désigne la faculté de ressentir les émotions d\'une autre personne.', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null);
-        $this->fixtureObject($repo, 4, 'rai', 'Raison', 'Doute', 'La rationnalisation, mais aussi la recherche et la réflexion. Elle traduit la capacité d\'apprentissage d\'un personnage, sa curiosité, etc.', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null);
+Au niveau relationnel, l\'Empathie désigne la faculté de ressentir les émotions d\'une autre personne.');
+        $this->fixtureObject($repo, 4, 'rai', 'Raison', 'Doute', 'La rationnalisation, mais aussi la recherche et la réflexion. Elle traduit la capacité d\'apprentissage d\'un personnage, sa curiosité, etc.');
         $this->fixtureObject($repo, 5, 'ide', 'Idéal', 'Culpabilité', 'Généralement, un humain se raccroche à un idéal ou des convictions qui guident sa vie.
-Certains se tournent vers la religion, d\'autres vers des préceptes de chevalerie, d\'autres encore suivent un code personnel.', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null);
+Certains se tournent vers la religion, d\'autres vers des préceptes de chevalerie, d\'autres encore suivent un code personnel.');
 
         $this->manager->flush();
     }
 
-    public function fixtureObject(EntityRepository $repo, $id, $shortName, $name, $fault, $description, $created, $updated, $deleted = null)
+    public function fixtureObject(EntityRepository $repo, $id, $shortName, $name, $fault, $description)
     {
         $obj       = null;
         $newObject = false;
@@ -71,9 +72,6 @@ Certains se tournent vers la religion, d\'autres vers des préceptes de chevaler
                 ->setDescription($description)
                 ->setShortName($shortName)
                 ->setFault($fault)
-                ->setCreated($created ? new \Datetime($created) : new \Datetime())
-                ->setUpdated($updated ? new \Datetime($updated) : null)
-                ->setDeleted($deleted ? new \Datetime($deleted) : null)
             ;
             if ($id) {
                 /** @var ClassMetadata $metadata */
