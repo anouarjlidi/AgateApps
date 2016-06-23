@@ -2,7 +2,7 @@
 
 namespace CorahnRin\CorahnRinBundle\Action;
 
-class Step12 extends AbstractStepAction
+class Step12MentalHealth extends AbstractStepAction
 {
     /**
      * {@inheritdoc}

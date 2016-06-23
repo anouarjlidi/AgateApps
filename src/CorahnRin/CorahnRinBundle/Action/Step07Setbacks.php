@@ -4,7 +4,7 @@ namespace CorahnRin\CorahnRinBundle\Action;
 
 use CorahnRin\CorahnRinBundle\Entity\Setbacks;
 
-class Step07 extends AbstractStepAction
+class Step07Setbacks extends AbstractStepAction
 {
     /**
      * @var int
@@ -26,7 +26,7 @@ class Step07 extends AbstractStepAction
 
         $setbacksValue = $this->getCharacterProperty() ?: [];
 
-        $age = $this->getCharacterProperty('age');
+        $age = $this->getCharacterProperty('06_age');
 
         // The user should be able to determine setbacks automatically OR manually.
         $chooseStepsManually = $this->request->query->has('manual') ?: $this->request->request->has('manual');

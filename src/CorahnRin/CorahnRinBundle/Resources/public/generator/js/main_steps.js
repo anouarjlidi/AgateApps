@@ -37,8 +37,8 @@
      * @param data-ti-sum-max        Get the sum of all elements in "data-ti-sum-selector", and checks that it does not reach the "sum-max".
      * @param data-ti-sum-selector   Used conjointedly with "data-ti-sum-max".
      */
-    if (d.querySelector('data-toggle-increment')) {
-        var incrementNodesList = d.querySelectorAll('data-toggle-increment');
+    if (d.querySelector('[data-toggle-increment]')) {
+        var incrementNodesList = d.querySelectorAll('[data-toggle-increment]');
         for (i = 0, l = incrementNodesList.length; i < l; i++) {
             incrementNodesList[i].addEventListener('click', function(e){
                 var target      = this.getAttribute('data-ti-target-node'),

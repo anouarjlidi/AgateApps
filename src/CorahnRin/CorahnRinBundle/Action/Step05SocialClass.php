@@ -4,7 +4,7 @@ namespace CorahnRin\CorahnRinBundle\Action;
 
 use CorahnRin\CorahnRinBundle\Entity\SocialClasses;
 
-class Step05 extends AbstractStepAction
+class Step05SocialClass extends AbstractStepAction
 {
     /**
      * {@inheritdoc}

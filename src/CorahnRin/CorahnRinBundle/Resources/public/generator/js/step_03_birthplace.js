@@ -1,6 +1,6 @@
 (function($, d){
     var params, basePolygonOptions;
-    if (d.getElementById('generator_birthplace')) {
+    if (d.getElementById('generator_03_birthplace')) {
 
         if (d._map_params) {
             basePolygonOptions = EsterenMap.prototype._mapOptions.LeafletPolygonBaseOptions;

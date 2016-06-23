@@ -2,15 +2,13 @@
 
 namespace CorahnRin\CorahnRinBundle\Action;
 
-class Step08 extends AbstractStepAction
+class Step13PrimaryDomains extends AbstractStepAction
 {
     /**
      * {@inheritdoc}
      */
     public function execute()
     {
-        return $this->renderCurrentStep([
-            'ways_list' => [],
-        ]);
+        // TODO: Implement execute() method.
     }
 }

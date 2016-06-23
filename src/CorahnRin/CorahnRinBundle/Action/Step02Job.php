@@ -2,7 +2,7 @@
 
 namespace CorahnRin\CorahnRinBundle\Action;
 
-class Step02 extends AbstractStepAction
+class Step02Job extends AbstractStepAction
 {
 
     /**

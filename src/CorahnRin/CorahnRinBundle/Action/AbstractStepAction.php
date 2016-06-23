@@ -81,6 +81,10 @@ abstract class AbstractStepAction extends StepAction
 
         $character[$this->step->getName()] = $value;
 
+        foreach ($this->step->getStepsToDisableOnChange() as $stepToDisable) {
+            unset($character[$stepToDisable]);
+        }
+
         $this->request->getSession()->set('character', $character);
     }
 
@@ -99,7 +103,7 @@ abstract class AbstractStepAction extends StepAction
         $parameters['current_character'] = $this->getCurrentCharacter();
 
         // Get template name
-        $template = '@CorahnRin/Steps/'.str_pad($this->step->getStep(), 2, '0', STR_PAD_LEFT).'_'.$this->step->getName().'.html.twig';
+        $template = '@CorahnRin/Steps/'.$this->step->getName().'.html.twig';
 
         return $this->templating->renderResponse($template, $parameters);
     }

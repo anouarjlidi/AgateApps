@@ -2,7 +2,7 @@
 
 namespace CorahnRin\CorahnRinBundle\Action;
 
-class Step14 extends AbstractStepAction
+class Step10Orientation extends AbstractStepAction
 {
     /**
      * {@inheritdoc}

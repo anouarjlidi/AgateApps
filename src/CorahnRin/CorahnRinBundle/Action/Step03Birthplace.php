@@ -2,7 +2,7 @@
 
 namespace CorahnRin\CorahnRinBundle\Action;
 
-class Step03 extends AbstractStepAction
+class Step03Birthplace extends AbstractStepAction
 {
     /**
      * @var int
