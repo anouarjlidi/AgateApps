@@ -51,10 +51,15 @@ Next, you need to set up your environment to fit our stack.
 
 ### Subdomains
 
-You need to be sure that your webserver points to every domain name set up in the parameters,
- see [the default app/config/parameters.yml.dist file](app/config/parameters.yml) to know what domains are used.
+You need to be sure that your webserver listens to every domain name set up in the application.
 
-You can set up the app on both Nginx and Apache, thanks to the [vhosts](docs/vhosts.md) provided by the docs.
+You can configure the main domain in `parameters.yml`, let's check the default at  [parameters.yml.dist file](app/config/parameters.yml).
+
+There are a lot of subdomains that are linked to this application, so make sure each and anyone of them
+is well listened by your webserver: you can set up the app on both Nginx and Apache, thanks to the
+[vhosts](docs/03_vhosts.md) provided by the docs.
+
+To view the list of all subdomains, check the [_app.yml](app/config/_app.yml) file.
 
 ### Fixtures (if you don't have a proper database export to be imported)
 

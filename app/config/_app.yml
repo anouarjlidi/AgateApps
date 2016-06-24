@@ -19,6 +19,15 @@ parameters:
     locales: [ fr, en ]
     locales_regex: "fr|en"
 
+    # Definition of all subdomains used in the app
+    esteren_domains.cookie_domain:      ".%esteren_domain%"
+    esteren_domains.portal:          "www.%esteren_domain%"
+    esteren_domains.esterenmaps:    "maps.%esteren_domain%"
+    esteren_domains.corahnrin: "corahnrin.%esteren_domain%"
+    esteren_domains.games:         "games.%esteren_domain%"
+    esteren_domains.api:             "api.%esteren_domain%"
+    esteren_domains.backoffice:     "back.%esteren_domain%"
+
 doctrine:
     orm:
         # Override the default repository to get some more good tools
@@ -163,14 +172,14 @@ pierstoval_character_manager:
         06_age:
             action: corahnrin_generator.steps.step_06
             steps_to_disable_on_change:
-                - '07_setbacks'
+                - "07_setbacks"
         07_setbacks:
             action: corahnrin_generator.steps.step_07
         08_ways:
             action: corahnrin_generator.steps.step_08
             steps_to_disable_on_change:
-                - '09_traits'
-                - '10_orientation'
+                - "09_traits"
+                - "10_orientation"
         09_traits:
             action: corahnrin_generator.steps.step_09
         10_orientation:
