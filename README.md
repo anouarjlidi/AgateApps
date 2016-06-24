@@ -26,6 +26,7 @@ It contains multiple apps:
 * [Set up a vhost](docs/vhosts.md)
 * [API / webservices](docs/api.md)
 * [Esteren Maps library](docs/maps.md)
+* [Corahn Rin / Character manager](docs/character_manager.md)
 * [Deploy](docs/deploy.md)
 
 ## Pre-requisites
