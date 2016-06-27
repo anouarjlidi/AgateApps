@@ -272,7 +272,7 @@ class Domains
         $id = $discipline->getId();
 
         return $this->disciplines->exists(function ($key, Disciplines $element) use ($id) {
-            return $element->getId() == $id;
+            return $element->getId() === $id;
         });
     }
 

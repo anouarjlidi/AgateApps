@@ -57,7 +57,7 @@ class RoutesFixtures extends AbstractFixture
 
         /** @var Markers[] $markers */
         $markers = [];
-        for ($i = 1; $i <= 177; $i++) {
+        for ($i = 1; $i <= 177; ++$i) {
             if ($this->hasReference('esterenmaps-markers-'.$i)) {
                 $markers[$i] = $this->getReference('esterenmaps-markers-'.$i);
             }

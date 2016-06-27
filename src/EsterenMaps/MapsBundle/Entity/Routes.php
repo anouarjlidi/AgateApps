@@ -512,6 +512,7 @@ class Routes
         // Override distance if we have set forcedDistance
         if ($this->forcedDistance) {
             $this->distance = $this->forcedDistance;
+
             return $this->forcedDistance;
         } else {
             // Else, we force the null value

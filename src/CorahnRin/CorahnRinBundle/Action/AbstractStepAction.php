@@ -2,8 +2,8 @@
 
 namespace CorahnRin\CorahnRinBundle\Action;
 
-use Pierstoval\Bundle\CharacterManagerBundle\Action\StepAction;
 use Doctrine\ORM\EntityManager;
+use Pierstoval\Bundle\CharacterManagerBundle\Action\StepAction;
 use Symfony\Bundle\TwigBundle\TwigEngine;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\RouterInterface;
@@ -65,6 +65,7 @@ abstract class AbstractStepAction extends StepAction
         foreach ($this->steps as $step) {
             if ($step->getStep() === $stepNumber) {
                 $this->request->getSession()->set('step', $stepNumber);
+
                 return new RedirectResponse($this->router->generate('pierstoval_character_generator_step', ['requestStep' => $step->getName()]));
             }
         }
@@ -92,6 +93,7 @@ abstract class AbstractStepAction extends StepAction
      * @param array $parameters
      *
      * @return string
+     *
      * @throws \Twig_Error
      */
     protected function renderCurrentStep(array $parameters = [])

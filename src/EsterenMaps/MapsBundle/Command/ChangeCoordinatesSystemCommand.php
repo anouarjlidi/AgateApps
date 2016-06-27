@@ -16,6 +16,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  * Class ChangeCoordinatesSystemCommand.
  *
  * @todo       Remove this class.
+ *
  * @deprecated This class should NOT be used.
  */
 class ChangeCoordinatesSystemCommand extends ContainerAwareCommand
@@ -67,7 +68,7 @@ class ChangeCoordinatesSystemCommand extends ContainerAwareCommand
             }
 
             do {
-                $id  = $dialog->select(
+                $id = $dialog->select(
                     $output,
                     'Select a map:',
                     $maps,

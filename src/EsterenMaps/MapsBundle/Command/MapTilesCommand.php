@@ -5,7 +5,6 @@ namespace EsterenMaps\MapsBundle\Command;
 use EsterenMaps\MapsBundle\Entity\Maps;
 use Orbitale\Component\DoctrineTools\BaseEntityRepository;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Console\Helper\DialogHelper;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;

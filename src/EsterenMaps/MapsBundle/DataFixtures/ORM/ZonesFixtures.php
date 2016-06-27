@@ -777,7 +777,5 @@ class ZonesFixtures extends AbstractFixture
                 'deletedAt'   => null,
             ],
         ];
-
     }
-
 }

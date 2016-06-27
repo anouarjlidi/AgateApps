@@ -9,7 +9,6 @@ use Symfony\Component\Translation\TranslatorInterface;
 
 class PdfManager implements SheetsManagerInterface
 {
-
     /**
      * @var TranslatorInterface
      */
@@ -44,6 +43,7 @@ class PdfManager implements SheetsManagerInterface
                 Characters::class, get_class($character)
             ));
         }
+
         return $this->originalSheet($character, $printer_friendly);
     }
 
@@ -213,7 +213,7 @@ class PdfManager implements SheetsManagerInterface
             $pdf->SetTextColor(0x22, 0x11, 0x4);
         }
         foreach ($character->getDomains() as $key => $val) {
-            $score  = $val->getScore();
+            $score = $val->getScore();
             ++$j;
             if ($score >= 0) {
                 for ($i = 1; $i <= $score; ++$i) {

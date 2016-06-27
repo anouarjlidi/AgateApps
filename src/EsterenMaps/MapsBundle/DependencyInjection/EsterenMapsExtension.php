@@ -3,10 +3,10 @@
 namespace EsterenMaps\MapsBundle\DependencyInjection;
 
 use EsterenMaps\MapsBundle\Twig\MapsExtension;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
-use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader;
+use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
  * This is the class that loads and manages your bundle configuration.
@@ -21,7 +21,7 @@ class EsterenMapsExtension extends Extension
     public function load(array $configs, ContainerBuilder $container)
     {
         $configuration = new Configuration();
-        $config = $this->processConfiguration($configuration, $configs);
+        $config        = $this->processConfiguration($configuration, $configs);
 
         $config['tile_size'] = (int) $config['tile_size'];
 
@@ -33,7 +33,7 @@ class EsterenMapsExtension extends Extension
         $loader->load('services.yml');
 
         $this->addClassesToCompile([
-            MapsExtension::class
+            MapsExtension::class,
         ]);
     }
 

@@ -9,7 +9,7 @@ $global_list = $this->em->getRepository('CorahnRinBundle:Avantages')->findAllDif
 $current_xp = 100;
 
 $this->getStepValue();
-$advantages    = isset($this->character[$this->stepFullName()]['advantages'])
+$advantages = isset($this->character[$this->stepFullName()]['advantages'])
     ? $this->character[$this->stepFullName()]['advantages']
     : [];
 $disadvantages = isset($this->character[$this->stepFullName()]['disadvantages'])
@@ -17,20 +17,20 @@ $disadvantages = isset($this->character[$this->stepFullName()]['disadvantages'])
     : [];
 
 foreach ($advantages as $id => $value) {
-    if ($value == 1) {
+    if ($value === 1) {
         $current_xp -= $global_list['advantages'][$id]->getXp();
-    } elseif ($value == 2) {
+    } elseif ($value === 2) {
         $current_xp -= (int) ($global_list['advantages'][$id]->getXp() * 1.5);
     }
 }
 foreach ($disadvantages as $id => $value) {
-    if ($id == 50) {
+    if ($id === 50) {
         // Cas particulier du désavantage "Traumatisme"
         $current_xp += $value * $global_list['disadvantages'][$id]->getXp();
     } else {
-        if ($value == 1) {
+        if ($value === 1) {
             $current_xp += $global_list['disadvantages'][$id]->getXp();
-        } elseif ($value == 2) {
+        } elseif ($value === 2) {
             $current_xp += (int) ($global_list['disadvantages'][$id]->getXp() * 1.5);
         }
     }

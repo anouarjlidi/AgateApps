@@ -21,7 +21,7 @@ class Step07Setbacks extends AbstractStepAction
      */
     public function execute()
     {
-        /** @var Setbacks[] $setbacks */
+        /* @var Setbacks[] $setbacks */
         $this->setbacks = $this->em->getRepository('CorahnRinBundle:Setbacks')->findAll(true);
 
         $setbacksValue = $this->getCharacterProperty() ?: [];
@@ -90,7 +90,6 @@ class Step07Setbacks extends AbstractStepAction
             'setbacks_list'    => $this->setbacks,
             'choice_available' => $chooseStepsManually,
         ]);
-
     }
 
     /**
@@ -138,7 +137,6 @@ class Step07Setbacks extends AbstractStepAction
                         unset($setbacksDiceList[$k]);
                     }
                 }
-
             } elseif ($diceResult->getId() === 10) {
                 // Lucky!
 

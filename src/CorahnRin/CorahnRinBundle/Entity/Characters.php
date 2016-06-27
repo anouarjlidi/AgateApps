@@ -9,14 +9,14 @@ use CorahnRin\CorahnRinBundle\Entity\CharacterProperties\CharFlux;
 use CorahnRin\CorahnRinBundle\Entity\CharacterProperties\CharSetbacks;
 use CorahnRin\CorahnRinBundle\Entity\CharacterProperties\CharWays;
 use CorahnRin\CorahnRinBundle\Entity\CharacterProperties\Money;
-use Doctrine\Common\Collections\Collection;
-use Pierstoval\Bundle\CharacterManagerBundle\Model\Character as BaseCharacter;
 use CorahnRin\CorahnRinBundle\Exception\CharactersException;
-use UserBundle\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Pierstoval\Bundle\CharacterManagerBundle\Model\Character as BaseCharacter;
 use Symfony\Component\Validator\Constraints as Assert;
+use UserBundle\Entity\User;
 
 /**
  * Characters.
@@ -28,7 +28,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Characters extends BaseCharacter
 {
     const FEMALE = 'character.sex.female';
-    const MALE = 'character.sex.male';
+    const MALE   = 'character.sex.male';
 
     /**
      * @var int
@@ -1644,7 +1644,8 @@ class Characters extends BaseCharacter
     /*-------------------------------------------------*/
     /*-------------------------------------------------*/
 
-    public function createFromGenerator(array $data) {
+    public function createFromGenerator(array $data)
+    {
         $character = new static();
 
         $mandatoryFields = [
@@ -1702,7 +1703,7 @@ class Characters extends BaseCharacter
             }
         }
 
-        return null;
+        return;
     }
 
     /**
@@ -1721,7 +1722,7 @@ class Characters extends BaseCharacter
             }
         }
 
-        return null;
+        return;
     }
 
     /**
@@ -1741,7 +1742,7 @@ class Characters extends BaseCharacter
             }
         }
 
-        return null;
+        return;
     }
 
     /**
@@ -1784,6 +1785,7 @@ class Characters extends BaseCharacter
 
     /**
      * @return int
+     *
      * @throws CharactersException
      */
     public function getPotential()
@@ -1804,7 +1806,7 @@ class Characters extends BaseCharacter
      * Calculate melee attack score.
      *
      * @param int|string $discipline
-     * @param string     $potentialOperator  Can be "+" or "-"
+     * @param string     $potentialOperator Can be "+" or "-"
      *
      * @return int
      */
@@ -1839,7 +1841,7 @@ class Characters extends BaseCharacter
             throw new CharactersException('Vous devez indiquer un type d\'attaque entre "melee" et "ranged".');
         }
 
-        $domain_id = (int)$domain_id;
+        $domain_id = (int) $domain_id;
 
         // Récupération du score du domaine
         $domain = $this->getDomain($domain_id)->getScore();
@@ -1870,5 +1872,4 @@ class Characters extends BaseCharacter
 
         return $attack;
     }
-
 }

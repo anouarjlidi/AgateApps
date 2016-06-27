@@ -4,7 +4,6 @@ namespace CorahnRin\CorahnRinBundle\Action;
 
 class Step02Job extends AbstractStepAction
 {
-
     /**
      * {@inheritdoc}
      */

@@ -2,9 +2,9 @@
 
 namespace EsterenMaps\MapsBundle\Services;
 
-use Exception;
 use EsterenMaps\MapsBundle\Entity\Maps;
 use EsterenMaps\MapsBundle\ImageManagement\ImageIdentification;
+use Exception;
 use Orbitale\Component\ImageMagick\Command;
 use Orbitale\Component\ImageMagick\ReferenceClasses\Geometry;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -125,7 +125,7 @@ class MapsTilesManager
             if (!$size || !isset($size[0]) || !isset($size[1])) {
                 throw new \RunTimeException('Error while retrieving map dimensions');
             }
-            list($w, $h) = $size;
+            list($w, $h)      = $size;
             $this->img_width  = $w;
             $this->img_height = $h;
         }

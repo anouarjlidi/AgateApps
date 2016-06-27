@@ -18,12 +18,12 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('pierstoval_api');
+        $rootNode    = $treeBuilder->root('pierstoval_api');
 
         $rootNode
             ->children()
                 ->arrayNode('allowed_origins')
-                    ->defaultValue(array())
+                    ->defaultValue([])
                     ->prototype('scalar')->cannotBeEmpty()->isRequired()->end()
                 ->end()
                 ->arrayNode('services')

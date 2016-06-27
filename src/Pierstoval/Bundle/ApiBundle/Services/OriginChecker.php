@@ -36,7 +36,7 @@ class OriginChecker
         // Allows automatically the current server to allow internal requests
         $allowedOrigins[] = $request->server->get('SERVER_ADDR');
         $host             = $request->getHost();
-        if (!in_array($host, $allowedOrigins)) {
+        if (!in_array($host, $allowedOrigins, true)) {
             $allowedOrigins[] = $host;
         }
 

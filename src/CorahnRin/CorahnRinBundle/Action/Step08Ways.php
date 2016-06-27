@@ -74,7 +74,6 @@ class Step08Ways extends AbstractStepAction
 
                 return $this->nextStep();
             }
-
         }
 
         return $this->renderCurrentStep([

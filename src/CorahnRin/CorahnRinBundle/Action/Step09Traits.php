@@ -42,6 +42,5 @@ class Step09Traits extends AbstractStepAction
             'flaw'        => $flaw,
             'traits_list' => $traitsList,
         ]);
-
     }
 }

@@ -2303,6 +2303,5 @@ class MarkersFixtures extends AbstractFixture
                 'deletedAt'   => null,
             ],
         ];
-
     }
 }

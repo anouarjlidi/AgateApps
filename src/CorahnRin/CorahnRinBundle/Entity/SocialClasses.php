@@ -257,7 +257,7 @@ class SocialClasses
      */
     public function findDomainById($id)
     {
-        $id = (int) $id;
+        $id             = (int) $id;
         $domainToReturn = null;
 
         foreach ($this->domains as $domain) {

@@ -166,7 +166,7 @@ class DisciplinesDomainsFixtures extends AbstractFixture implements OrderedFixtu
             throw new \Exception('Discipline with id "'.$disciplineId.'" does not exist.');
         }
         foreach ($domains as $id) {
-            /** @var Domains $domain */
+            /* @var Domains $domain */
             if (isset($this->domains[$id])) {
                 $domain = $this->domains[$id];
             } else {

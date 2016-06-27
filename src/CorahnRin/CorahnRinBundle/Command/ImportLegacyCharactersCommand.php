@@ -157,7 +157,7 @@ SQL;
         $characters = $this->legacyCnx->query($sql)->fetchAll();
 
         foreach ($characters as $arrayCharacter) {
-            $character = new Characters();
+            $character     = new Characters();
             $jsonCharacter = json_decode($arrayCharacter['char_content'], true);
 
             $character
@@ -181,14 +181,12 @@ SQL;
                 ->processMentalData($character, $jsonCharacter)
             ;
 
-
             // FIXME
             if ($this->io->isVerbose()) {
                 dump($arrayCharacter, $jsonCharacter, 'OK');
             }
             exit;
         }
-
     }
 
     /**
@@ -262,7 +260,7 @@ SQL;
      */
     private function processUser(Characters $character, array $arrayCharacter)
     {
-        $user = null;
+        $user            = null;
         $legacyUserEmail = $arrayCharacter['user_email'];
 
         if (array_key_exists($legacyUserEmail, $this->users)) {
@@ -289,7 +287,7 @@ SQL;
      */
     private function processGame(Characters $character, array $arrayCharacter)
     {
-        $game = null;
+        $game         = null;
         $legacyGameId = $arrayCharacter['game_id'];
 
         if (array_key_exists($legacyGameId, $this->games)) {

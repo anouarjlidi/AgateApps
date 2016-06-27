@@ -83,5 +83,4 @@ class Money
     {
         $this->ember = $ember;
     }
-
 }

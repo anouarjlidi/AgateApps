@@ -2,8 +2,8 @@
 
 namespace EsterenMaps\MapsBundle\DoctrineListeners;
 
-use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\Common\EventSubscriber;
+use Doctrine\ORM\Event\LifecycleEventArgs;
 use EsterenMaps\MapsBundle\Entity\Markers;
 use EsterenMaps\MapsBundle\Entity\MarkersTypes;
 use EsterenMaps\MapsBundle\Entity\Routes;
@@ -16,7 +16,6 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class CacheClearSubscriber implements EventSubscriber
 {
-
     /**
      * @var string
      */

@@ -8,11 +8,10 @@ use Orbitale\Component\DoctrineTools\AbstractFixture;
 
 class FactionsFixtures extends AbstractFixture
 {
-
     /**
-     * Get the order of this fixture
+     * Get the order of this fixture.
      *
-     * @return integer
+     * @return int
      */
     public function getOrder()
     {

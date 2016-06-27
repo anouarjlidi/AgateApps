@@ -7,7 +7,6 @@ use Orbitale\Component\DoctrineTools\AbstractFixture;
 
 class PageFixtures extends AbstractFixture
 {
-
     /**
      * {@inheritdoc}
      */

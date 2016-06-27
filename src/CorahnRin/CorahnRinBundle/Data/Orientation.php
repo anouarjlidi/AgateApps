@@ -9,9 +9,11 @@ final class Orientation implements DataInterface
     const RATIONAL = 'character.orientation.rational';
 
     /**
-     * Don't allow construction of this class
+     * Don't allow construction of this class.
      */
-    private function __construct(){}
+    private function __construct()
+    {
+    }
 
     /**
      * {@inheritdoc}

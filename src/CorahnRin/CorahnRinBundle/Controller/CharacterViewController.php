@@ -4,11 +4,11 @@ namespace CorahnRin\CorahnRinBundle\Controller;
 
 use CorahnRin\CorahnRinBundle\Entity\Characters;
 use CorahnRin\CorahnRinBundle\Repository\CharactersRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
@@ -16,7 +16,6 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
  */
 class CharacterViewController extends Controller
 {
-
     /**
      * @Route("/", name="corahnrin_characters_list")
      *
@@ -72,5 +71,4 @@ class CharacterViewController extends Controller
     {
         return $this->render('@CorahnRin/CharacterView/view.html.twig', ['character' => $character]);
     }
-
 }

@@ -3,13 +3,13 @@
 namespace EsterenMaps\ApiBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use EsterenMaps\MapsBundle\Entity\Maps;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class MapsController extends Controller
 {
@@ -38,7 +38,7 @@ class MapsController extends Controller
         $factions     = $em->getRepository('EsterenMapsBundle:Factions')->findBy([], ['name' => 'asc']);
 
         if ($request->query->get('editMode') === 'true') {
-            $data['LeafletPopupMarkerBaseContent']   = $this->renderView('EsterenMapsApiBundle:Maps:popupContentMarkerEditMode.html.twig', [
+            $data['LeafletPopupMarkerBaseContent'] = $this->renderView('EsterenMapsApiBundle:Maps:popupContentMarkerEditMode.html.twig', [
                 'markersTypes' => $markersTypes,
                 'factions'     => $factions,
             ]);
@@ -47,12 +47,12 @@ class MapsController extends Controller
                 'routesTypes' => $routesTypes,
                 'factions'    => $factions,
             ]);
-            $data['LeafletPopupPolygonBaseContent']  = $this->renderView('EsterenMapsApiBundle:Maps:popupContentPolygonEditMode.html.twig', [
+            $data['LeafletPopupPolygonBaseContent'] = $this->renderView('EsterenMapsApiBundle:Maps:popupContentPolygonEditMode.html.twig', [
                 'factions'   => $factions,
                 'zonesTypes' => $zonesTypes,
             ]);
         } else {
-            $data['LeafletPopupMarkerBaseContent']   = $this->renderView('EsterenMapsApiBundle:Maps:popupContentMarker.html.twig', [
+            $data['LeafletPopupMarkerBaseContent'] = $this->renderView('EsterenMapsApiBundle:Maps:popupContentMarker.html.twig', [
                 'markersTypes' => $markersTypes,
                 'factions'     => $factions,
             ]);
@@ -61,14 +61,14 @@ class MapsController extends Controller
                 'routesTypes' => $routesTypes,
                 'factions'    => $factions,
             ]);
-            $data['LeafletPopupPolygonBaseContent']  = $this->renderView('EsterenMapsApiBundle:Maps:popupContentPolygon.html.twig', [
+            $data['LeafletPopupPolygonBaseContent'] = $this->renderView('EsterenMapsApiBundle:Maps:popupContentPolygon.html.twig', [
                 'factions'   => $factions,
                 'zonesTypes' => $zonesTypes,
             ]);
         }
 
         $response = new Response();
-        $data    = json_encode(['settings' => $data], 335);
+        $data     = json_encode(['settings' => $data], 335);
 
         $response->headers->add(['Content-type' => 'application/json; charset=utf-8']);
 

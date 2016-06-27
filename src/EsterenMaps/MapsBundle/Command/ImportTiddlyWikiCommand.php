@@ -3,24 +3,24 @@
 namespace EsterenMaps\MapsBundle\Command;
 
 use DateTime;
-use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\UnitOfWork;
 use EsterenMaps\MapsBundle\Entity\Factions;
 use EsterenMaps\MapsBundle\Entity\Maps;
 use EsterenMaps\MapsBundle\Entity\Markers;
 use EsterenMaps\MapsBundle\Entity\MarkersTypes;
+use EsterenMaps\MapsBundle\Entity\Routes;
 use EsterenMaps\MapsBundle\Entity\RoutesTypes;
 use EsterenMaps\MapsBundle\Entity\Zones;
-use EsterenMaps\MapsBundle\Entity\Routes;
 use EsterenMaps\MapsBundle\Entity\ZonesTypes;
 use Orbitale\Component\DoctrineTools\BaseEntityRepository;
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 
 class ImportTiddlyWikiCommand extends ContainerAwareCommand
@@ -122,8 +122,8 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
 
         $file = $input->getArgument('file');
 
-        $data    = file_get_contents($file);
-        $encoding = mb_detect_encoding($data);
+        $data     = file_get_contents($file);
+        $encoding = mb_detect_encoding($data, mb_detect_order(), true);
         if ($encoding !== 'UTF-8') {
             // Force UTF8 conversion to avoid reinserting data
             $data = mb_convert_encoding($data, 'UTF-8');
@@ -150,7 +150,7 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
 
         $output->writeln('Processing...');
 
-        $tags  = array_reduce($data, function ($carry, $object) {
+        $tags = array_reduce($data, function ($carry, $object) {
             $carry[$object['tags']] = [
                 'tag'            => $object['tags'],
                 'nb_occurrences' => isset($carry[$object['tags']]['nb_occurrences']) ? $carry[$object['tags']]['nb_occurrences'] + 1 : 1,
