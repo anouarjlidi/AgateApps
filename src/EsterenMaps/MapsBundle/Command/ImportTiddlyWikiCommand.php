@@ -170,9 +170,9 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
         $this->zonesTypes   = $this->getReferenceObjects('zonetype', ZonesTypes::class);
         $this->routesTypes  = $this->getReferenceObjects('routetype', RoutesTypes::class);
 
-        $this->markers = $this->processObjects('marqueurs', Markers::class, 'id_');
-        $this->zones   = $this->processObjects('zones', Zones::class, 'id_');
-        $this->routes  = $this->processObjects('routes', Routes::class, 'id_');
+        $this->markers = $this->processObjects('marqueurs', Markers::class);
+        $this->zones   = $this->processObjects('zones', Zones::class);
+        $this->routes  = $this->processObjects('routes', Routes::class);
 
         $allData = array_merge(
             $this->factions['new'],
@@ -306,7 +306,8 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
             // If not, we get the object by title
             if (isset($objects[$id])) {
                 $object = $objects[$id];
-            } elseif ($object = $repo->findOneBy([$nameProperty => $datum['title']])) {
+            } else {
+                $object = $repo->findOneBy([$nameProperty => $datum['title']]);
             }
 
             if ($object) {
@@ -364,7 +365,8 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
             // If not, we get the object by title
             if (isset($objects[$id])) {
                 $object = $objects[$id];
-            } elseif ($object = $repo->findOneBy(['name' => $datum['title']])) {
+            } else {
+                $object = $repo->findOneBy(['name' => $datum['title']]);
             }
 
             if ($object) {

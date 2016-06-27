@@ -222,7 +222,7 @@ class MapsTilesManager
             if ($debug) {
                 $msg .= "\n".'Executed command : '."\n\t".$cmd;
             }
-            throw new \RunTimeException($msg);
+            throw new \RuntimeException($msg);
         }
 
         $existing_files = glob(dirname($output_scheme).'/*');

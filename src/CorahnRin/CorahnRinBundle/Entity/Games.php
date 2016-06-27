@@ -35,14 +35,14 @@ class Games
     /**
      * @var string
      *
-     * @ORM\Column(type="text",nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     protected $summary;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="text",nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     protected $gmNotes;
 
@@ -80,7 +80,7 @@ class Games
      *
      * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
-    protected $deleted = null;
+    protected $deleted;
 
     /**
      * Constructor.
