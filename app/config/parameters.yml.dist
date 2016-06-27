@@ -11,6 +11,12 @@ parameters:
     database_driver:   pdo_mysql
     database_path:     "%kernel.root_dir%/data.db3"
 
+    database_host_legacy:     127.0.0.1
+    database_port_legacy:     null
+    database_name_legacy:     esteren_legacy
+    database_user_legacy:     root
+    database_password_legacy: null
+
     mailer_transport:  smtp
     mailer_host:       127.0.0.1
     mailer_user:       ~

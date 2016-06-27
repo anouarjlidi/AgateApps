@@ -33,9 +33,22 @@ doctrine:
         # Override the default repository to get some more good tools
         default_repository_class: Orbitale\Component\DoctrineTools\BaseEntityRepository
     dbal:
-        # For eventual sqlite integration, in case of
-        driver: "%database_driver%"
-        path: "%database_path%"
+        default_connection: default
+        connections:
+            default:
+                driver:   "%database_driver%"
+                host:     "%database_host%"
+                dbname:   "%database_name%"
+                user:     "%database_user%"
+                password: "%database_password%"
+                path:     "%database_path%"
+                charset:  UTF8
+            legacy:
+                host:     "%database_host_legacy%"
+                dbname:   "%database_name_legacy%"
+                user:     "%database_user_legacy%"
+                password: "%database_password_legacy%"
+                charset:  UTF8
 
 framework:
     translator:      { fallbacks: "%locales%" } # Activate translator

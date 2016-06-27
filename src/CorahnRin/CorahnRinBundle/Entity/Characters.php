@@ -9,6 +9,7 @@ use CorahnRin\CorahnRinBundle\Entity\CharacterProperties\CharFlux;
 use CorahnRin\CorahnRinBundle\Entity\CharacterProperties\CharSetbacks;
 use CorahnRin\CorahnRinBundle\Entity\CharacterProperties\CharWays;
 use CorahnRin\CorahnRinBundle\Entity\CharacterProperties\Money;
+use Doctrine\Common\Collections\Collection;
 use Pierstoval\Bundle\CharacterManagerBundle\Model\Character as BaseCharacter;
 use CorahnRin\CorahnRinBundle\Exception\CharactersException;
 use UserBundle\Entity\User;
@@ -26,6 +27,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Characters extends BaseCharacter
 {
+    const FEMALE = 'character.sex.female';
+    const MALE = 'character.sex.male';
+
     /**
      * @var int
      *
@@ -1523,7 +1527,7 @@ class Characters extends BaseCharacter
     }
 
     /**
-     * @return CharWays[]
+     * @return CharWays[]|Collection
      */
     public function getWays()
     {

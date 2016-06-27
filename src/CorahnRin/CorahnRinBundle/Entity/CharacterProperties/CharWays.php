@@ -40,13 +40,17 @@ class CharWays
     /**
      * Set character.
      *
-     * @param int $character
+     * @param Characters $character
      *
      * @return CharWays
      */
-    public function setCharacter($character)
+    public function setCharacter(Characters $character)
     {
         $this->character = $character;
+
+        if (!$character->getWay($this->way->getShortName())) {
+            $character->addWay($this);
+        }
 
         return $this;
     }
