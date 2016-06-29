@@ -41,12 +41,19 @@ It contains multiple apps:
 $ composer install
 $ bin/console doctrine:database:create
 $ bin/console doctrine:schema:create
+$ bin/console doctrine:fixtures:load --append
 ```
 
 Composer is configured to install npm dependencies and dump assets. See
 [composer.json](composer.json) scripts configuration for more informations.
 
 Next, you need to set up your environment to fit our stack.
+
+### (optional) Install Esteren Maps base tiles.
+
+If you need to install Esteren Maps, you also need to generate the fixture tiles.
+
+Check the [Esteren Maps](docs/maps.md#tiles-generation) documentation for this.
 
 ## Setup
 
@@ -99,6 +106,16 @@ For any question or problem, please open a new issue on Redmine depending on the
 | Other                          | [apps](http://redmine.pierstoval.com/projects/apps/issues)
 
 Any issue on Github will be transformed into a Redmine ticket.
+
+## CI
+
+There's no working CI at the moment.
+
+We might use either Jenkins or Travis-CI
+
+As none of them is easily configurable (Jenkins must be configured on a dedicated server, Travis-CI is not free for private projects), a `tests/jenkins/jenkins.bash` file has been created in case of (tested & working on a small jenkins server).
+
+Also, a `.travis.yml` file exists too, but needs more configuration (maybe we'll use jenkins's file too).
 
 ## License
 

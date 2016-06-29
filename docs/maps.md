@@ -54,7 +54,8 @@ $ bin/console esterenmaps:map:generate-tiles
 ```
 
 It will use [ImageMagick](http://www.imagemagick.org) and the [Orbitale ImageMagickPHP](https://github.com/Orbitale/ImageMagickPHP)
- command wrapper to generate tiles of 128x128px.
+ command wrapper to generate tiles of 128x128px.<br>
+<small>(actually, it doesn't use it yet, but it will)</small>
 
 ## Directions
 
