@@ -1,0 +1,11 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = git@github.com:Pierstoval/CharacterManagerBundle.git
+	branch = master
+	commit = 23bc4a36a26785d79618bc83e0081587fe3862d0
+	parent = b8458b3a057ccb7d6e47f409ff34656d8e4eb9cb
+	cmdver = 0.3.0
