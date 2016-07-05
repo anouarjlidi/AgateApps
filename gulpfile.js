@@ -55,6 +55,9 @@ var config = {
         ],
         "css/admin.css": [
             "src/AdminBundle/Resources/public/less/admin.less"
+        ],
+        "css/generator.css": [
+            "src/CorahnRin/CorahnRinBundle/Resources/public/generator/css/*.less"
         ]
     },
 
@@ -78,9 +81,6 @@ var config = {
         ]
      */
     "css": {
-        "css/generator.css": [
-            "src/CorahnRin/CorahnRinBundle/Resources/public/generator/css/*.css"
-        ]
     },
 
     /**
@@ -119,6 +119,9 @@ var config = {
         ],
         "js/step_03_birthplace.js": [
             "src/CorahnRin/CorahnRinBundle/Resources/public/generator/js/step_03_birthplace.js"
+        ],
+        "js/step_11_advantages.js": [
+            "src/CorahnRin/CorahnRinBundle/Resources/public/generator/js/step_11_advantages.js"
         ]
     }
 };

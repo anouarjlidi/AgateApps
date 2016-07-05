@@ -1,19 +1,25 @@
 {% extends '@CorahnRin/Steps/step_base.html.twig' %}
 
+{% block javascripts %}
+{{ parent() }}
+<script type="text/javascript" src="{{ asset('js/step_11_advantages.js') }}"></script>
+{% endblock %}
+
 {% block step_content %}
 
 <div class="row">
-    <div class="ml20 mb10">
-        {{ 'Expérience' }} : <span class="well well-sm"><span id="xp">{{ experience }}</span> / 100</span>
-    </div>
-    <div id="list_advantages" class="col-sm-6">
+    <p>{{ 'Expérience' }} : <span class="well well-sm"><span id="xp">{{ experience }}</span> / 100</span></p>
+    <p class="alert alert-info">
+        {{ 'Les avantages / désavantages marqués du symbole %symbol% peuvent être sélectionnés plusieurs fois' | trans({'%symbol%': '<span class="text-red">*</span>'}) | raw }}
+    </p>
+    <div id="list_advantages" class="col-md-6">
         <h4 class="text-center">{{ 'Avantages' | trans }}</h4>
         {% for avtg in advantages_list %}
             {% if loop.first %}
                 <div class="row mb5">
             {% endif %}
 
-            <div class="col-sm-6">
+            <div class="col-md-6">
                 {% set classMore = '' %}
                 {% if advantages[avtg.id] is defined and advantages[avtg.id] > 0 %}
                     {% if advantages[avtg.id] == 1 %}
@@ -37,7 +43,12 @@
                            data-element-id="{{ avtg.id }}"
                            data-element-cost="{{ avtg.xp }}"
                            class="_hidden input_avtg" />
-                    <span{% if avtg.augmentation > 0 %} class="text-underline"{% endif %}>{{ avtg.name | trans({}, 'Entity.Avantages') }}</span>
+                    <span>
+                        {% if avtg.augmentation > 0 %}
+                            <span class="text-red">*</span>
+                        {% endif %}
+                        {{ avtg.name | trans({}, 'Entity.Avantages') }}
+                    </span>
 
                 </label>
             </div>
@@ -50,7 +61,7 @@
 
         {% endfor %}{# advantages #}
     </div>
-    <div id="list_disadvantages" class="col-sm-6">
+    <div id="list_disadvantages" class="col-md-6">
         <h4 class="text-center">{{ 'Désavantages' | trans }}</h4>
         {% for desv in disadvantages_list %}
             {% if loop.first %}
@@ -67,7 +78,7 @@
                     {% set classMore = ' btn-primary' %}
                 {% endif %}
             {% endif %}
-            <div class="col-sm-6">
+            <div class="col-md-6">
                 <label for="desv-{{ desv.id }}"
                        data-toggle="tooltip"
                        title="{{ (desv.description | trans({},'Entity.Avantages')) | escape('html_attr') }} ({{ 'Gain en XP' | trans | escape('html_attr') }} : {{ desv.xp }})"
@@ -82,7 +93,10 @@
                            data-element-id="{{ desv.id }}"
                            data-element-cost="{{ desv.xp }}"
                            class="_hidden input_desv" />
-                    <span{% if desv.augmentation > 0 %} class="text-underline"{% endif %}>{{ desv.name | trans }}</span>
+                    {% if desv.augmentation > 0 %}
+                        <span class="text-red">*</span>
+                    {% endif %}
+                    {{ desv.name | trans({}, 'Entity.Avantages') }}
                 </label>
             </div>
 

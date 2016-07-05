@@ -1,12 +1,116 @@
-(function ($, d, w) {
+(function ($, d) {
 
-    if (d.getElementById('generator_des_avtg')) {
+    if (d.getElementById('generator_11_advantages')) {
 
-        $('.change_avdesv').on('mouseup', function () {
+        /**----------------------------------------------------------------------
+         ------------------------------------------------------------------------
+         ------------------------------ FUNCTIONS -------------------------------
+         ------------------------------------------------------------------------
+         ----------------------------------------------------------------------*/
+
+        /**
+         * Get a plain object representing the advantage, based on an HTML input.
+         *
+         * @param input Element
+         * @returns {{id: Number, xp: Number, baseValue: Number, currentValue: Number, augmentation: Number, isAdvantage: boolean}|*}
+         */
+        function getAdvantageFromInput(input){
+            var id = parseInt(input.getAttribute('data-element-id'));
+            var xp = parseInt(input.getAttribute('data-element-cost'));
+            var currentValue = parseInt(input.value);
+            var augmentation = parseInt(input.getAttribute('data-augmentation'));
+            var isAdvantage = null;
+
+            // If these elements are not numbers,
+            // it means someone attempted to override DOM values.
+            if (isNaN(xp) || isNaN(currentValue) || isNaN(augmentation) || isNaN(id)) {
+                throw 'Wrong values';
+            }
+
+            // Determine whether it's an advantage or a disadvantage.
+            if (this.classList.contains('change_desv')) {
+                isAdvantage = false;
+            } else if (this.classList.contains('change_avtg')) {
+                isAdvantage = true;
+            } else {
+                throw 'Wrong element class, missing change_avtg or change_desv.';
+            }
+
+            return {
+                'id': id,
+                'xp': xp,
+                'baseValue': currentValue,
+                'currentValue': currentValue,
+                'augmentation': augmentation,
+                'isAdvantage': isAdvantage
+            };
+        }
+
+        /**-----------------------------------------------------------------------
+         -------------------------------------------------------------------------
+         ---------------------------------- VARS ---------------------------------
+         -------------------------------------------------------------------------
+         -----------------------------------------------------------------------*/
+
+        var $labelsCollection = $('.change_avdesv');
+        var $advantagesElements = $labelsCollection.filter('.change_avtg');
+        var $disadvantagesElements = $labelsCollection.filter('.change_desv');
+
+        var advantagesList = {};
+        var disadvantagesList = {};
+
+        // Initialize the two arrays.
+        // Allows us to only work with memory and not always with loops through DOM...
+        for (var i = 0, l = $labelsCollection.length; i < l; i++) {
+            (function(){
+                var input = this.querySelector('input');
+                var element = getAdvantageFromInput(input);
+                // Push these changes into memory array.
+                if (element.isAdvantage) {
+                    advantagesList[element.id] = element;
+                } else {
+                    disadvantagesList[element.id] = element;
+                }
+            }).apply($labelsCollection[i]);
+        }
+        // End initialize
+
+        /**-----------------------------------------------------------------------
+         -------------------------------------------------------------------------
+         --------------------------------- EVENTS --------------------------------
+         -------------------------------------------------------------------------
+         -----------------------------------------------------------------------*/
+
+        // Process event listeners.
+        // If we're here, input DOM attributes are already validated, so no more checks.
+        $labelsCollection.on('mouseup', function(){
+            var input = this.querySelector('input');
+            var id = parseInt(input.getAttribute('data-element-id'));
+            var experience = 100;
+
+            /**-----------------------------------------------------------------------
+             ---------------------- CALCULATE FROM DISADVANTAGES ---------------------
+             -----------------------------------------------------------------------*/
+            // TODO Calculate exp based on disadvantages.
+            // TODO Remove when exp gained > 80 and/or more than 4 disadvantages.
+
+            /**-----------------------------------------------------------------------
+             ------------------------ CALCULATE FROM ADVANTAGES ----------------------
+             -----------------------------------------------------------------------*/
+            // TODO Then calculate based on advantages.
+            // TODO Remove when total exp < 0 and/or more than 4 advantages.
+
+            /**-----------------------------------------------------------------------
+             --------------------------- PROCESS DOM BUTTONS -------------------------
+             -----------------------------------------------------------------------*/
+            // TODO Reset classes & input values everywhere
+            // TODO Set proper values depending on what's in memory
+        });
+
+        /*
+        $collection.on('mouseup', function (e) {
             var tclass, i, exp,
                 desvexp = 0,
-                final_cost = 0,
-                act = [],
                 values = [],
                 actavtg = [],
                 actdesv = [],
@@ -169,7 +273,7 @@
              --------------------- Début de la boucle de calcul --------------------
              -- Calcule le montant total d'expérience selon les avantages trouvés --
              ----------- Rétablit également la valeur finale des inputs ------------
-             ---------------------------------------------------------------------*/
+             ---------------------------------------------------------------------/
             $('.change_avdesv').sort(function (a, b) {
                 // Tri du tableau pour que les désavantages soient en premier
                 return a.classList.contains('change_desv') ? -1 : 1;
@@ -276,5 +380,6 @@
 
             return false;
         });
+        */
     }
-})(jQuery, document, window);
+})(jQuery, document);

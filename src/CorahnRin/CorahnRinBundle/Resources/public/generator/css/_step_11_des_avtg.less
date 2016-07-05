@@ -1,0 +1,33 @@
+
+// Webserver dir is used by Less to import files, mostly.
+// You should duplicate these parameters when creating new LESS resources in another bundle.
+@src-dir: "../../../../../..";
+@components-dir: "@{src-dir}/../web/components";
+
+// Path to the ./web/ directory used for computed resources paths only.
+// Default is "../" because the css is outputted to web/css/
+@web-dir: "../";
+
+@import "@{components-dir}/bootstrap/less/variables.less";
+@import "@{src-dir}/Esteren/PortalBundle/Resources/public/less/bootstrap-override-variables.less";
+
+#list_advantages .change_avdesv,
+#list_disadvantages .change_avdesv {
+    -webkit-transition: background 400ms;
+       -moz-transition: background 400ms;
+         -o-transition: background 400ms;
+            transition: background 400ms;
+}
+
+
+@media (max-width: @screen-sm-max) {
+    #list_advantages {
+        border-bottom: solid 1px white;
+    }
+}
+
+@media (min-width: @screen-md-min) {
+    #list_advantages {
+        border-right: solid 1px white;
+    }
+}
