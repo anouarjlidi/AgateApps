@@ -1,9 +1,9 @@
 <?php
 
-namespace Tests\User\Controller;
+namespace UserBundle\Tests;
 
-use Tests\WebTestCase;
 use Symfony\Component\DomCrawler\Form;
+use Tests\WebTestCase;
 
 class SecurityControllerTest extends WebTestCase
 {

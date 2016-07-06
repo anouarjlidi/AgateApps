@@ -1,10 +1,10 @@
 <?php
 
-namespace Tests\Admin;
+namespace AdminBundle\Tests;
 
-use EsterenMaps\MapsBundle\Entity\Factions;
+use EsterenMaps\MapsBundle\Entity\RoutesTypes;
 
-class FactionsAdminTest extends AbstractEasyAdminTest
+class RoutesTypesAdminTest extends AbstractEasyAdminTest
 {
 
     /**
@@ -12,7 +12,7 @@ class FactionsAdminTest extends AbstractEasyAdminTest
      */
     public function getEntityName()
     {
-        return 'Factions';
+        return 'RoutesTypes';
     }
 
     /**
@@ -20,7 +20,7 @@ class FactionsAdminTest extends AbstractEasyAdminTest
      */
     public function getEntityClass()
     {
-        return Factions::class;
+        return RoutesTypes::class;
     }
 
     /**
@@ -31,8 +31,8 @@ class FactionsAdminTest extends AbstractEasyAdminTest
         return array(
             'id',
             'name',
-            'description',
-            'book',
+            'color',
+            'routes',
         );
     }
 
@@ -59,4 +59,5 @@ class FactionsAdminTest extends AbstractEasyAdminTest
     {
         return false;
     }
+
 }

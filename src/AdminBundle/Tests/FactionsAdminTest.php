@@ -1,10 +1,10 @@
 <?php
 
-namespace Tests\Admin;
+namespace AdminBundle\Tests;
 
-use EsterenMaps\MapsBundle\Entity\MarkersTypes;
+use EsterenMaps\MapsBundle\Entity\Factions;
 
-class MarkersTypesAdminTest extends AbstractEasyAdminTest
+class FactionsAdminTest extends AbstractEasyAdminTest
 {
 
     /**
@@ -12,7 +12,7 @@ class MarkersTypesAdminTest extends AbstractEasyAdminTest
      */
     public function getEntityName()
     {
-        return 'MarkersTypes';
+        return 'Factions';
     }
 
     /**
@@ -20,7 +20,7 @@ class MarkersTypesAdminTest extends AbstractEasyAdminTest
      */
     public function getEntityClass()
     {
-        return MarkersTypes::class;
+        return Factions::class;
     }
 
     /**
@@ -31,8 +31,8 @@ class MarkersTypesAdminTest extends AbstractEasyAdminTest
         return array(
             'id',
             'name',
-            'webIcon',
-            'markers',
+            'description',
+            'book',
         );
     }
 
@@ -59,5 +59,4 @@ class MarkersTypesAdminTest extends AbstractEasyAdminTest
     {
         return false;
     }
-
 }

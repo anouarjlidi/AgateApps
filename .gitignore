@@ -39,6 +39,3 @@
 
 # NodeJS components
 /node_modules/
-
-# Local test files
-/tests/phpunit.xml

@@ -1,10 +1,10 @@
 <?php
 
-namespace Tests\Admin;
+namespace AdminBundle\Tests;
 
-use EsterenMaps\MapsBundle\Entity\RoutesTypes;
+use EsterenMaps\MapsBundle\Entity\Maps;
 
-class RoutesTypesAdminTest extends AbstractEasyAdminTest
+class MapsAdminTest extends AbstractEasyAdminTest
 {
 
     /**
@@ -12,7 +12,7 @@ class RoutesTypesAdminTest extends AbstractEasyAdminTest
      */
     public function getEntityName()
     {
-        return 'RoutesTypes';
+        return 'Maps';
     }
 
     /**
@@ -20,7 +20,7 @@ class RoutesTypesAdminTest extends AbstractEasyAdminTest
      */
     public function getEntityClass()
     {
-        return RoutesTypes::class;
+        return Maps::class;
     }
 
     /**
@@ -31,8 +31,11 @@ class RoutesTypesAdminTest extends AbstractEasyAdminTest
         return array(
             'id',
             'name',
-            'color',
-            'routes',
+            'nameSlug',
+            'maxZoom',
+            'startZoom',
+            'startX',
+            'startY',
         );
     }
 

@@ -1,7 +1,6 @@
 <?php
 
-
-namespace Tests\Admin;
+namespace AdminBundle\Tests;
 
 use Tests\WebTestCase;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Admin;
+namespace AdminBundle\Tests;
 
 use EsterenMaps\MapsBundle\Entity\TransportTypes;
 

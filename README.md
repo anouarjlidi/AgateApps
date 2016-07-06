@@ -88,11 +88,23 @@ You can use `gulp watch` when you are working with assets so they're compiled on
 
 ## Tests
 
-To run the tests, get the config from the `tests` directory:
+To run the tests, just run phpunit:
 
 ```bash
-$ vendor/bin/phpunit -c tests/
+$ phpunit
 ```
+
+### Test without resetting the database
+
+If you **do not want to reset the database, you can add the `TESTS_NO_DB` env var.
+
+```bash
+$ TESTS_NO_DB=1 phpunit
+```
+
+### Testing for CI
+
+**Note:**
 
 ## Issues tracking
 
@@ -111,11 +123,11 @@ Any issue on Github will be transformed into a Redmine ticket.
 
 There's no working CI at the moment.
 
-We might use either Jenkins or Travis-CI
+We might use either Jenkins or Travis-CI.
 
-As none of them is easily configurable (Jenkins must be configured on a dedicated server, Travis-CI is not free for private projects), a `tests/jenkins/jenkins.bash` file has been created in case of (tested & working on a small jenkins server).
+As none of them is easily configurable (Jenkins must be configured on a dedicated server, Travis-CI is not free for private projects), a `tests/ci/ci.bash` file has been created in case of (tested & working on a small jenkins server).
 
-Also, a `.travis.yml` file exists too, but needs more configuration (maybe we'll use jenkins's file too).
+Also, a `.travis.yml` file exists too, but needs more configuration (maybe we'll use the same CI file too).
 
 ## License
 

@@ -1,10 +1,10 @@
 <?php
 
-namespace Tests\Admin;
+namespace AdminBundle\Tests;
 
-use EsterenMaps\MapsBundle\Entity\ZonesTypes;
+use EsterenMaps\MapsBundle\Entity\MarkersTypes;
 
-class ZonesTypesAdminTest extends AbstractEasyAdminTest
+class MarkersTypesAdminTest extends AbstractEasyAdminTest
 {
 
     /**
@@ -12,7 +12,7 @@ class ZonesTypesAdminTest extends AbstractEasyAdminTest
      */
     public function getEntityName()
     {
-        return 'ZonesTypes';
+        return 'MarkersTypes';
     }
 
     /**
@@ -20,7 +20,7 @@ class ZonesTypesAdminTest extends AbstractEasyAdminTest
      */
     public function getEntityClass()
     {
-        return ZonesTypes::class;
+        return MarkersTypes::class;
     }
 
     /**
@@ -31,9 +31,8 @@ class ZonesTypesAdminTest extends AbstractEasyAdminTest
         return array(
             'id',
             'name',
-            'color',
-            'parent',
-            'zones',
+            'webIcon',
+            'markers',
         );
     }
 

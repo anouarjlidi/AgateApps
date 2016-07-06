@@ -1,4 +1,5 @@
-# Jenkins file
+# CI file
+# To be used, it automatically sets up database and domain names.
 # Parameters are overriden in the config_test.yml file, but not all of them.
 parameters:
     database_host:     ~

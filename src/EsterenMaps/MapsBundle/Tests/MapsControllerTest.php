@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\EsterenMaps\Controller;
+namespace EsterenMaps\MapsBundle\Tests;
 
 use Tests\WebTestCase;
 

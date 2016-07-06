@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\CorahnRin\Controller;
+namespace CorahnRin\CorahnRinBundle\Tests\Controller;
 
 use CorahnRin\CorahnRinBundle\Entity\Characters;
 use Tests\WebTestCase;

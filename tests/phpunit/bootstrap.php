@@ -1,6 +1,7 @@
 <?php
 
 use Symfony\Component\Console\Input\ArgvInput;
+use Symfony\Component\Filesystem\Filesystem;
 
 $rootDir = __DIR__.'/../..';
 
@@ -14,32 +15,25 @@ $autoload = require_once $file;
 
 $input = new ArgvInput();
 
-if (true === $input->hasParameterOption('--no-db') || getenv('TESTS_NO_DB')) {
+if (getenv('TESTS_NO_DB')) {
     return;
 }
+
+$fs = new Filesystem();
 
 // Remove build dir files
 if (is_dir($rootDir.'/build')) {
     echo "Removing files in the build directory.\n".__DIR__."\n";
-    $files = new RecursiveIteratorIterator(
-        new RecursiveDirectoryIterator($rootDir.'/build/', RecursiveDirectoryIterator::SKIP_DOTS),
-        RecursiveIteratorIterator::CHILD_FIRST
-    );
-    foreach ($files as $fileinfo) {
-        $todo = ($fileinfo->isDir() ? 'rmdir' : 'unlink');
-        $todo($fileinfo->getRealPath());
-    }
+    $fs->remove($rootDir.'/build');
 }
 
-if (!is_dir($rootDir.'/build')) {
-    mkdir($rootDir.'/build');
+$fs->mkdir($rootDir.'/build');
+
+if ($fs->exists($rootDir.'/build/database_test.db')) {
+    $fs->remove($rootDir.'/build/database_test.db');
 }
 
-if (file_exists($rootDir.'/build/database_test.db')) {
-    unlink($rootDir.'/build/database_test.db');
-}
-
-system('php '.$rootDir.'/bin/console --env=test cache:clear --no-warmup');
-system('php '.$rootDir.'/bin/console --env=test doctrine:database:create');
-system('php '.$rootDir.'/bin/console --env=test doctrine:schema:create');
-system('php '.$rootDir.'/bin/console --env=test doctrine:fixtures:load --append');
+system('php '.$rootDir.'/bin/console cache:clear --no-warmup');
+system('php '.$rootDir.'/bin/console doctrine:database:create');
+system('php '.$rootDir.'/bin/console doctrine:schema:create');
+system('php '.$rootDir.'/bin/console doctrine:fixtures:load --append');

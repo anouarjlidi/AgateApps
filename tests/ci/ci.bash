@@ -12,15 +12,15 @@ curl -sS https://getcomposer.org/installer | php
 
 # Backup any existing parameters file.
 if [ -f app/config/parameters.yml ]; then
-    if ! grep -q "# Jenkins file" "app/config/parameters.yml"; then
+    if ! grep -q "# CI file" "app/config/parameters.yml"; then
         echo "Backing up parameters.yml file"
         mv app/config/parameters.yml app/config/parameters.yml.backup
     fi
 fi
 
-echo "Update parameters and phpunit file for jenkins"
-cp tests/jenkins/parameters.yml app/config/parameters.yml
-cp tests/jenkins/phpunit.xml tests/phpunit.xml
+echo "Update parameters and phpunit file for CI"
+cp tests/ci/parameters.yml app/config/parameters.yml
+cp tests/ci/phpunit.xml tests/phpunit.xml
 
 export SYMFONY_ENV='test'
 

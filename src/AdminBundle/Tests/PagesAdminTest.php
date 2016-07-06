@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Admin;
+namespace AdminBundle\Tests;
 
 use Doctrine\ORM\EntityManager;
 use Orbitale\Bundle\CmsBundle\Entity\Page;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Portal;
+namespace Esteren\PortalBundle\Tests;
 
 use Doctrine\ORM\EntityManager;
 use Orbitale\Bundle\CmsBundle\Entity\Page;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Admin;
+namespace AdminBundle\Tests;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Client;
