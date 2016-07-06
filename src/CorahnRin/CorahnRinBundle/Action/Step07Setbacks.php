@@ -62,7 +62,7 @@ class Step07Setbacks extends AbstractStepAction
                 $anyWrongSetbackId = false;
 
                 foreach ($setbacksValue as $id) {
-                    if (!array_key_exists($id, $this->setbacks)) {
+                    if (!array_key_exists((int)$id, $this->setbacks)) {
                         $anyWrongSetbackId = true;
                     }
                 }
@@ -70,7 +70,7 @@ class Step07Setbacks extends AbstractStepAction
                 if (!$anyWrongSetbackId) {
                     $finalSetbacks = [];
                     foreach ($setbacksValue as $id) {
-                        $finalSetbacks[$id] = ['id' => $id, 'avoided' => false];
+                        $finalSetbacks[$id] = ['id' => (int)$id, 'avoided' => false];
                     }
                     $this->updateCharacterStep($finalSetbacks);
 

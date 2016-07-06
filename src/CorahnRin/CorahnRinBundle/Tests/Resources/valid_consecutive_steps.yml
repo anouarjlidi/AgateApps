@@ -1,0 +1,152 @@
+01_people:
+    next_step: 02_job
+    form_values:
+        # People1: Tri-Kazel
+        gen-div-choice: 1
+    session_value: 1
+
+02_job:
+    next_step: 03_birthplace
+    form_values:
+        # Job1: Arti*san
+        job_value: 1
+    session_value: 1
+
+03_birthplace:
+    next_step: 04_geo
+    form_values:
+        # Zone1: Calvaire
+        region_value: 1
+    session_value: 1
+
+04_geo:
+    next_step: 05_social_class
+    form_values:
+        # GeoEnvironment1: Rural
+        gen-div-choice: 1
+    session_value: 1
+
+05_social_class:
+    next_step: 06_age
+    form_values:
+        # SocialClass1: Artisan
+        gen-div-choice: 1
+        # Domain5: Milieu Naturel
+        # Domain8: Perception
+        domains: [5, 8]
+    session_value:
+        id: 1
+        domains:
+            5: 5
+            8: 8
+
+06_age:
+    next_step: 07_setbacks
+    form_values:
+        # We need at least 1 setback, so...
+        age: 21
+    session_value: 21
+
+07_setbacks:
+    # Force manual setup
+    route_uri: '07_setbacks?manual'
+    next_step: 08_ways
+    form_values:
+        # Setback2: Séquelle
+        setbacks_value: [2]
+    session_value:
+        2:
+            id: 2
+            avoided: false
+
+08_ways:
+    next_step: 09_traits
+    form_values:
+        ways:
+            1: 5
+            2: 4
+            3: 3
+            4: 2
+            5: 1
+    session_value:
+        1: 5
+        2: 4
+        3: 3
+        4: 2
+        5: 1
+
+09_traits:
+    next_step: 10_orientation
+    form_values:
+        # Trait1: Combatif
+        quality: 1
+        # Trait10: Impulsif
+        flaw: 10
+    session_value:
+        quality: 1
+        flaw: 10
+
+10_orientation:
+    next_step: 11_advantages
+    form_values: []
+    session_value: 'character.orientation.instinctive'
+
+# TODO
+11_advantages:
+    next_step: 12_mental_health
+    form_values: ~
+    session_value: ~
+
+# TODO
+12_mental_health:
+    next_step: 13_primary_domains
+    form_values: ~
+    session_value: ~
+
+# TODO
+13_primary_domains:
+    next_step: 14_upgrade_domains
+    form_values: ~
+    session_value: ~
+
+# TODO
+14_upgrade_domains:
+    next_step: 15_bonus_domains
+    form_values: ~
+    session_value: ~
+
+# TODO
+15_bonus_domains:
+    next_step: 16_disciplines
+    form_values: ~
+    session_value: ~
+
+# TODO
+16_disciplines:
+    next_step: 17_combat_arts
+    form_values: ~
+    session_value: ~
+
+# TODO
+17_combat_arts:
+    next_step: 18_equipment
+    form_values: ~
+    session_value: ~
+
+# TODO
+18_equipment:
+    next_step: 19_description
+    form_values: ~
+    session_value: ~
+
+# TODO
+19_description:
+    next_step: 20_finish
+    form_values: ~
+    session_value: ~
+
+# TODO
+20_finish:
+    next_step: ~
+    form_values: ~
+    session_value: ~
