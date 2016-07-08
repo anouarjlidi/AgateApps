@@ -57,7 +57,8 @@ class RoutesTypesAdminTest extends AbstractEasyAdminTest
      */
     public function provideIdToDelete()
     {
-        return false;
+        // RouteType1: Chemin
+        return 1;
     }
 
 }

@@ -58,7 +58,8 @@ class ZonesTypesAdminTest extends AbstractEasyAdminTest
      */
     public function provideIdToDelete()
     {
-        return false;
+        // Zone1: Politique
+        return 1;
     }
 
 }

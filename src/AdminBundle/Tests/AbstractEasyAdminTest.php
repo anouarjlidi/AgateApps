@@ -239,6 +239,7 @@ abstract class AbstractEasyAdminTest extends WebTestCase
         // False means that we do not ever want to test this feature.
         // Allows a cleaner phpunit output.
         if (false === $id) {
+            static::assertTrue(true);
             return;
         }
 

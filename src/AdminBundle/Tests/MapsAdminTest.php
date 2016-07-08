@@ -60,7 +60,8 @@ class MapsAdminTest extends AbstractEasyAdminTest
      */
     public function provideIdToDelete()
     {
-        return false;
+        // Map1: Tri-Kazel
+        return 1;
     }
 
 }

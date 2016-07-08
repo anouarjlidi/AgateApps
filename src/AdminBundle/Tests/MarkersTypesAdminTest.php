@@ -57,7 +57,8 @@ class MarkersTypesAdminTest extends AbstractEasyAdminTest
      */
     public function provideIdToDelete()
     {
-        return false;
+        // Marker1: Cité
+        return 1;
     }
 
 }

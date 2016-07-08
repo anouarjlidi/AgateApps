@@ -57,6 +57,7 @@ class FactionsAdminTest extends AbstractEasyAdminTest
      */
     public function provideIdToDelete()
     {
-        return false;
+        // Faction1: Temple
+        return 1;
     }
 }

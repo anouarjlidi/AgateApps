@@ -58,6 +58,7 @@ class TransportTypesAdminTest extends AbstractEasyAdminTest
      */
     public function provideIdToDelete()
     {
+        // Delete action is disabled
         return false;
     }
 
