@@ -67,6 +67,7 @@ abstract class AbstractEasyAdminTest extends WebTestCase
         // False means that we do not ever want to test this feature.
         // Allows a cleaner phpunit output.
         if (false === $wishedColumns) {
+            static::assertTrue(true);
             return;
         }
 
@@ -113,6 +114,7 @@ abstract class AbstractEasyAdminTest extends WebTestCase
         // False means that we do not ever want to test this feature.
         // Allows a cleaner phpunit output.
         if (false === $data) {
+            static::assertTrue(true);
             return;
         }
 
@@ -176,6 +178,7 @@ abstract class AbstractEasyAdminTest extends WebTestCase
         // False means that we do not ever want to test this feature.
         // Allows a cleaner phpunit output.
         if (false === $data) {
+            static::assertTrue(true);
             return;
         }
 

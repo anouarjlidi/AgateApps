@@ -9,6 +9,7 @@
 
 imports:
     - { resource: config.yml }
+    - { resource: _corahnrin.yml }
     - { resource: _easy_admin.yml }
 
 parameters:
@@ -165,58 +166,7 @@ orbitale_cms:
             host: "%esteren_domains.corahnrin%"
         maps:
             resource: "@EsterenMaps/layout.html.twig"
-            host: "%esteren_domains.esterenmaps%%"
-
-# Use PierstovalCharacterManager to setup CorahnRin's character generator.
-# This bundle has to be standalone as much as possible, to only use config and/or override.
-pierstoval_character_manager:
-    character_class: CorahnRin\CorahnRinBundle\Entity\Characters
-    steps:
-        01_people:
-            action: corahnrin_generator.steps.step_01
-        02_job:
-            action: corahnrin_generator.steps.step_02
-        03_birthplace:
-            action: corahnrin_generator.steps.step_03
-        04_geo:
-            action: corahnrin_generator.steps.step_04
-        05_social_class:
-            action: corahnrin_generator.steps.step_05
-        06_age:
-            action: corahnrin_generator.steps.step_06
-            steps_to_disable_on_change:
-                - "07_setbacks"
-        07_setbacks:
-            action: corahnrin_generator.steps.step_07
-        08_ways:
-            action: corahnrin_generator.steps.step_08
-            steps_to_disable_on_change:
-                - "09_traits"
-                - "10_orientation"
-        09_traits:
-            action: corahnrin_generator.steps.step_09
-        10_orientation:
-            action: corahnrin_generator.steps.step_10
-        11_advantages:
-            action: corahnrin_generator.steps.step_11
-        12_mental_health:
-            action: corahnrin_generator.steps.step_12
-        13_primary_domains:
-            action: corahnrin_generator.steps.step_13
-        14_upgrade_domains:
-            action: corahnrin_generator.steps.step_14
-        15_bonus_domains:
-            action: corahnrin_generator.steps.step_15
-        16_disciplines:
-            action: corahnrin_generator.steps.step_16
-        17_combat_arts:
-            action: corahnrin_generator.steps.step_17
-        18_equipment:
-            action: corahnrin_generator.steps.step_18
-        19_description:
-            action: corahnrin_generator.steps.step_19
-        20_finish:
-            action: corahnrin_generator.steps.step_20
+            host: "%esteren_domains.esterenmaps%"
 
 # CORS management for all APIs
 nelmio_cors:
