@@ -9,17 +9,19 @@
 @web-dir: "../";
 
 // Loads the whole bootstrap
-@import "bootstrap.less";
+@import "bootstrap";
 
 // Load fontawesome variables so that we can also use icons for custom use
-@import "@{components-dir}/fontawesome/less/variables.less";
+@import "@{components-dir}/fontawesome/less/variables";
+
+@import "mixins";
 
 // Extending bootstrap
-@import "bootstrap-more.less";
+@import "bootstrap-more";
 
 // Handy tools to fasten some designs
-@import "initializer.less";
+@import "initializer";
 
 // Global theme
-@import "corahn_rin.less";
-@import "corahn_rin_theme.less";
+@import "corahn_rin";
+@import "corahn_rin_theme";

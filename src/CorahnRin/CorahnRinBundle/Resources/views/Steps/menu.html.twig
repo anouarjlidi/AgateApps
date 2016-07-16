@@ -1,12 +1,6 @@
 {% set steps_length = steps|length %}
-{% set bar_width = steps_length ? (current_step.step / steps_length * 100) : 0 %}
 {{ dump(current_step) }}
 <nav class="nav">
-    <div class="progress">
-        <div class="progress-bar" role="progressbar" aria-valuenow="{{ bar_width }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ bar_width }}%;">
-            <span class="sr-only">{{ bar_width }}%</span>
-        </div>
-    </div>
     <ul class="list-unstyled list-sm-inline step_list">
 
         {% set previous = null %}
