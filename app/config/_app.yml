@@ -156,17 +156,19 @@ pierstoval_api:
         transports:     { entity: EsterenMaps\MapsBundle\Entity\TransportTypes }
 
 # This allows using the default layout for Pages and Categories
-# See: https://github.com/Orbitale/CmsBundle#using-different-layouts
+# See: https://github.com/Orbitale/CmsBundle
 orbitale_cms:
+    page_class:     Esteren\PortalBundle\Entity\Page
+    category_class: Esteren\PortalBundle\Entity\Category
     layouts:
-        front:
-            resource: "base.html.twig"
         corahnrin:
             resource: "@CorahnRin/layout.html.twig"
             host: "%esteren_domains.corahnrin%"
         maps:
             resource: "@EsterenMaps/layout.html.twig"
             host: "%esteren_domains.esterenmaps%"
+        front:
+            resource: "base.html.twig"
 
 # CORS management for all APIs
 nelmio_cors:

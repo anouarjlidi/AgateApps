@@ -9,7 +9,6 @@ use Tests\WebTestCase;
 
 abstract class AbstractEasyAdminTest extends WebTestCase
 {
-
     /**
      * Returns the entity name in the backend.
      *
@@ -18,14 +17,16 @@ abstract class AbstractEasyAdminTest extends WebTestCase
     abstract public function getEntityName();
 
     /**
-     * The entity full qualified class name to be used when managing entities
+     * The entity full qualified class name to be used when managing entities.
      *
      * @return string
      */
     abstract public function getEntityClass();
 
     /**
-     * Returns the list of fields you expect to see in the backend
+     * Returns the list of fields you expect to see in the backend.
+     * Return "false" if you don't want to test native listing.
+     *
      * @return array
      */
     abstract public function provideListingFields();
@@ -33,6 +34,7 @@ abstract class AbstractEasyAdminTest extends WebTestCase
     /**
      * A simple array of data to submit in the "new" form.
      * Keys of the array must correspond to the property field as specified in EasyAdmin config.
+     * Return "false" if you don't want to test "new" form.
      *
      * @return array
      */
@@ -43,6 +45,7 @@ abstract class AbstractEasyAdminTest extends WebTestCase
      * Keys of the array must correspond to the property field as specified in EasyAdmin config.
      * Must specify an "id" attribute, else it will fail.
      * To be sure the test works, you might need to add fixtures with proper ID forced in the database.
+     * Return "false" if you don't want to test "edit" form.
      *
      * @return array
      */
@@ -51,6 +54,7 @@ abstract class AbstractEasyAdminTest extends WebTestCase
     /**
      * Provides an ID to test the "delete" action.
      * To be sure the test works, you might need to add fixtures with proper ID forced in the database.
+     * Return "false" if you don't want to test "delete" form.
      *
      * @return integer
      */

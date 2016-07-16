@@ -3,7 +3,7 @@
 namespace Esteren\PortalBundle\Tests;
 
 use Doctrine\ORM\EntityManager;
-use Orbitale\Bundle\CmsBundle\Entity\Page;
+use Esteren\PortalBundle\Entity\Page;
 use Tests\WebTestCase;
 
 class PortalControllerTest extends WebTestCase

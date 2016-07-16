@@ -3,7 +3,7 @@
 namespace AdminBundle\Tests;
 
 use Doctrine\ORM\EntityManager;
-use Orbitale\Bundle\CmsBundle\Entity\Page;
+use Esteren\PortalBundle\Entity\Page;
 
 class PagesAdminTest extends AbstractEasyAdminTest
 {
@@ -100,15 +100,9 @@ class PagesAdminTest extends AbstractEasyAdminTest
         ;
 
         $page = $em
-            ->getRepository('OrbitaleCmsBundle:Page')
+            ->getRepository('EsterenPortalBundle:Page')
             ->findOneBy([])
         ;
-
-        // Ensure page is not deleted from another script.
-        if ($page->getDeletedAt()) {
-            $page->setDeletedAt(null);
-            $em->flush($page);
-        }
 
         static::$kernel->shutdown();
 

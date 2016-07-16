@@ -2,7 +2,7 @@
 
 namespace Esteren\PortalBundle\DataFixtures\ORM;
 
-use Orbitale\Bundle\CmsBundle\Entity\Page;
+use Esteren\PortalBundle\Entity\Page;
 use Orbitale\Component\DoctrineTools\AbstractFixture;
 
 class PageFixtures extends AbstractFixture
@@ -43,9 +43,6 @@ class PageFixtures extends AbstractFixture
                 'content'   => 'This this a default home page.',
                 'enabled'   => true,
                 'homepage'  => true,
-                'createdAt' => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-05-14 15:26:55'),
-                'updatedAt' => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-05-14 15:26:55'),
-                'deletedAt' => null,
             ],
         ];
     }
