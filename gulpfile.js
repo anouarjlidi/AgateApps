@@ -121,6 +121,8 @@ var config = {
             "src/CorahnRin/CorahnRinBundle/Resources/public/generator/js/step_03_birthplace.js"
         ],
         "js/step_11_advantages.js": [
+            "src/CorahnRin/CorahnRinBundle/Resources/public/generator/js/step_11_advantage_class.js",
+            "src/CorahnRin/CorahnRinBundle/Resources/public/generator/js/step_11_functions.js",
             "src/CorahnRin/CorahnRinBundle/Resources/public/generator/js/step_11_advantages.js"
         ]
     }

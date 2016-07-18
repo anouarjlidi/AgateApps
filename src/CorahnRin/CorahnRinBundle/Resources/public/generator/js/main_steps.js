@@ -240,8 +240,8 @@
     /**
      * Clic distant sur un élément
      */
-    $('[data-toggle="btn-dist-click"]').bind('mouseup', function(){
-        $(d.getElementById(this.getAttribute('data-target-node'))).mousedown();
+    $('[data-toggle="btn-dist-click"]').on('click', function(){
+        $('#'+this.getAttribute('data-target-node')).click();
     });
 
     (function(){

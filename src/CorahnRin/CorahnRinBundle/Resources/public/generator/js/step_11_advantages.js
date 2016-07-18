@@ -1,50 +1,9 @@
 (function ($, d) {
 
+    // Depends on the "Advantage" class.
+    // Depends on all functions for this specific step.
+
     if (d.getElementById('generator_11_advantages')) {
-
-        /**----------------------------------------------------------------------
-         ------------------------------------------------------------------------
-         ------------------------------ FUNCTIONS -------------------------------
-         ------------------------------------------------------------------------
-         ----------------------------------------------------------------------*/
-
-        /**
-         * Get a plain object representing the advantage, based on an HTML input.
-         *
-         * @param input Element
-         * @returns {{id: Number, xp: Number, baseValue: Number, currentValue: Number, augmentation: Number, isAdvantage: boolean}|*}
-         */
-        function getAdvantageFromInput(input){
-            var id = parseInt(input.getAttribute('data-element-id'));
-            var xp = parseInt(input.getAttribute('data-element-cost'));
-            var currentValue = parseInt(input.value);
-            var augmentation = parseInt(input.getAttribute('data-augmentation'));
-            var isAdvantage = null;
-
-            // If these elements are not numbers,
-            // it means someone attempted to override DOM values.
-            if (isNaN(xp) || isNaN(currentValue) || isNaN(augmentation) || isNaN(id)) {
-                throw 'Wrong values';
-            }
-
-            // Determine whether it's an advantage or a disadvantage.
-            if (this.classList.contains('change_desv')) {
-                isAdvantage = false;
-            } else if (this.classList.contains('change_avtg')) {
-                isAdvantage = true;
-            } else {
-                throw 'Wrong element class, missing change_avtg or change_desv.';
-            }
-
-            return {
-                'id': id,
-                'xp': xp,
-                'baseValue': currentValue,
-                'currentValue': currentValue,
-                'augmentation': augmentation,
-                'isAdvantage': isAdvantage
-            };
-        }
 
         /**-----------------------------------------------------------------------
          -------------------------------------------------------------------------
@@ -58,20 +17,22 @@
 
         var advantagesList = {};
         var disadvantagesList = {};
+        var numberOfAdvantages = 0;
+        var numberOfDisadvantages = 0;
 
         // Initialize the two arrays.
         // Allows us to only work with memory and not always with loops through DOM...
         for (var i = 0, l = $labelsCollection.length; i < l; i++) {
-            (function(){
-                var input = this.querySelector('input');
-                var element = getAdvantageFromInput(input);
-                // Push these changes into memory array.
-                if (element.isAdvantage) {
-                    advantagesList[element.id] = element;
-                } else {
-                    disadvantagesList[element.id] = element;
-                }
-            }).apply($labelsCollection[i]);
+            var input = $labelsCollection[i].querySelector('input');
+            var element = getAdvantageFromInput(input, $labelsCollection[i]);
+            // Push these changes into memory array.
+            if (element.isAdvantage) {
+                advantagesList[element.id] = element;
+                ++numberOfAdvantages;
+            } else {
+                disadvantagesList[element.id] = element;
+                ++numberOfDisadvantages;
+            }
         }
         // End initialize
 
@@ -83,16 +44,32 @@
 
         // Process event listeners.
         // If we're here, input DOM attributes are already validated, so no more checks.
-        $labelsCollection.on('mouseup', function(){
-            var input = this.querySelector('input');
-            var id = parseInt(input.getAttribute('data-element-id'));
+        $labelsCollection.on('click', function(){
+            var currentInput = this.querySelector('input');
+            var currentId = parseInt(currentInput.getAttribute('data-element-id'));
             var experience = 100;
+
+            console.info('clicked on a label', this);
 
             /**-----------------------------------------------------------------------
              ---------------------- CALCULATE FROM DISADVANTAGES ---------------------
              -----------------------------------------------------------------------*/
             // TODO Calculate exp based on disadvantages.
             // TODO Remove when exp gained > 80 and/or more than 4 disadvantages.
+            for (var elementId in disadvantagesList) {
+                // skip loop if the property is from prototype
+                if (!disadvantagesList.hasOwnProperty(elementId)) { continue; }
+
+                var disadvantage = disadvantagesList[elementId];
+
+                var xpLost = calculateXpFromAdvantage(disadvantage);
+
+                if (0 === xpLost) {
+                    continue;
+                }
+
+                console.info('xp lost', xpLost);
+            }
 
             /**-----------------------------------------------------------------------
              ------------------------ CALCULATE FROM ADVANTAGES ----------------------
