@@ -110,7 +110,7 @@ class CharactersRepository extends BaseRepository
      */
     public function countSearch($searchField = 'id', $order = 'asc')
     {
-        return $this
+        return (int) $this
             ->searchQueryBuilder($searchField, $order)
             ->select('count (characters.id) as number')
             ->getQuery()

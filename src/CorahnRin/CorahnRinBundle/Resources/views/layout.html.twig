@@ -1,7 +1,10 @@
 {% extends 'base.html.twig' %}
 
 {% block menu_left_content %}
-    <li>
+    <li {{ app.request.attributes.get('_route') == 'corahnrin_characters_list' ? 'class="selected"' }}>
         <a href="{{ path('corahnrin_characters_list') }}">{{ 'Liste des personnages' | trans }}</a>
+    </li>
+    <li {{ app.request.attributes.get('_route') == 'pierstoval_character_generator_step' ? 'class="selected"' }}>
+        <a href="{{ path('pierstoval_character_generator_index') }}">{{ 'Créer un personnage' | trans }}</a>
     </li>
 {% endblock %}

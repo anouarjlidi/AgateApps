@@ -27,13 +27,10 @@ class CharacterViewController extends Controller
     {
         // GET variables used for searching
         $page        = (int) $request->query->get('page') ?: 1;
-        $limit       = (int) $request->query->get('limit') ?: 20;
         $searchField = $request->query->get('search_field') ?: 'name';
         $order       = strtolower($request->query->get('order') ?: 'asc');
 
-        if ($limit > 100) {
-            throw new BadRequestHttpException('Cannot retrieve more than 100 characters.');
-        }
+        $limit = 25;
 
         if (!in_array($order, ['desc', 'asc'], true)) {
             throw new BadRequestHttpException('Filter order must be either "desc" or "asc".');
@@ -46,12 +43,12 @@ class CharacterViewController extends Controller
         $pages      = ceil($countChars / $limit);
 
         return $this->render('@CorahnRin/CharacterView/list.html.twig', [
-            'characters'      => $characters,
-            'count_chars'     => $countChars,
-            'count_pages'     => $pages,
-            'page'            => $page,
-            'order_swaped'    => $order === 'desc' ? 'asc' : 'desc',
-            'link_data'       => [
+            'characters'   => $characters,
+            'count_chars'  => $countChars,
+            'count_pages'  => $pages,
+            'page'         => $page,
+            'order_swaped' => $order === 'desc' ? 'asc' : 'desc',
+            'link_data'    => [
                 'search_field' => $searchField,
                 'order'        => $order,
                 'page'         => $page,

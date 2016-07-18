@@ -87,7 +87,7 @@
 <ul class="pagination pagination-sm">
 
     {# First page, always visible #}
-    <li{{ page == 1 ? ' class="disabled"' : '' }}><a href="{{ path('corahnrin_characters_list',link_data|merge({'page': page - 1})) }}">&larr; {{ 'Précédent' | trans }}</a></li>
+    <li{{ page <= 1 or count_pages == 0 ? ' class="disabled"' : '' }}><a href="{{ path('corahnrin_characters_list',link_data|merge({'page': page - 1})) }}">&larr; {{ 'Précédent' | trans }}</a></li>
 
     {# If we are at page 5+, we show other pages, and maybe "..." #}
     {% if page - 5 > 1 %}
@@ -98,7 +98,7 @@
     {% endif %}
 
     {# Show all other pages missing #}
-    {% for i in page - 5..(page + 5) %}
+    {% for i in (page - 5)..(page + 5) %}
         {% if i >= 1 and i <= count_pages %}
             <li{{ i == page ? ' class="active"' : '' }}><a href="{{ path('corahnrin_characters_list',link_data|merge({'page': i})) }}">{{ i }}{% if i == page %} <span class="sr-only">({{ 'Current page' | trans }})</span>{% endif %}</a></li>
         {% endif %}
@@ -112,31 +112,8 @@
         <li><a href="{{ path('corahnrin_characters_list',link_data|merge({'page': count_pages})) }}">{{ count_pages }}</a></li>
     {% endif %}
 
-    <li{{ page == count_pages ? ' class="disabled"' : '' }}><a href="{{ path('corahnrin_characters_list',link_data|merge({'page': page+1})) }}">{{ 'Suivant' | trans }} &rarr;</a></li>
+    <li{{ page == count_pages or count_pages == 0 ? ' class="disabled"' : '' }}><a href="{{ path('corahnrin_characters_list',link_data|merge({'page': page+1})) }}">{{ 'Suivant' | trans }} &rarr;</a></li>
 
 </ul>
-
-<form method="post" action="{{ path('corahnrin_characters_list', link_data) }}" class="form-horizontal">
-    <fieldset>
-        <div class="form-group row">
-            <div class="col-lg-2">
-                <label for="number_per_page">
-                    {{ 'Nombre par page' | trans }}
-                </label>
-            </div>
-            <div class="col-lg-3">
-                <select id="number_per_page" name="limit" class="text-black input-sm form-control" data-onchangesubmit="true">
-                    <option{{ link_data.limit == 5 ? ' selected="selected"' : '' }} value="5">5</option>
-                    <option{{ link_data.limit == 10 ? ' selected="selected"' : '' }} value="10">10</option>
-                    <option{{ link_data.limit == 25 ? ' selected="selected"' : '' }} value="25">25</option>
-                    <option{{ link_data.limit == 50 ? ' selected="selected"' : '' }} value="50">50</option>
-                    <option{{ link_data.limit == 75 ? ' selected="selected"' : '' }} value="75">75</option>
-                    <option{{ link_data.limit == 100 ? ' selected="selected"' : '' }} value="100">100</option>
-                </select>
-            </div>
-            <noscript><button type="submit" class="btn btn-default">{{ 'Envoyer' | trans }}</button></noscript>
-        </div>
-    </fieldset>
-</form>
 
 {% endblock %}
