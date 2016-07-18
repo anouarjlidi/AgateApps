@@ -7,6 +7,9 @@
 
     .jumbotron {
         background: rgba(0, 0, 0, 0.5) none;
+        -webkit-box-shadow: 0 0 10px rgba(255,255,255,0.2);
+        -moz-box-shadow: 0 0 10px rgba(255,255,255,0.2);
+        box-shadow: 0 0 10px rgba(255,255,255,0.2);
     }
 
     .modal-content {
@@ -21,26 +24,7 @@
     }
 
     .page-header {
-        border-color: #888888;
-    }
-
-    a.list-group-item.active,
-    a.list-group-item.active:hover, a.list-group-item.active:focus,
-    a.list-group-item:hover,
-    a.list-group-item:focus {
-        background-color: #634C39;
-        border-color: #634C39;
-        color: #ddd;
-    }
-
-    a.list-group-item:hover,
-    a.list-group-item:focus {
-        background-color: rgba(99, 76, 57, 0.6);
-        border-color: #666;
-    }
-
-    a.list-group-item .list-group-item-heading {
-        color: inherit;
+        border-color: #888;
     }
 
     .alert p:last-child,
@@ -70,33 +54,6 @@
         border-color: #4d4d4d;
     }
 
-    .dropdown-menu {
-        background-color: #222;
-    }
-
-    .dropdown-menu > li > a {
-        color: #ddd;
-    }
-
-    .dropdown-menu > li.active > a {
-        color: #eee;
-    }
-    /** Dropdown **/
-    .dropdown-menu > .active > a,
-    .dropdown-menu > .active > a:hover,
-    .dropdown-menu > .active > a:focus {
-        background-color: #555;
-    }
-
-    .dropdown-menu > li > a:hover,
-    .dropdown-menu > li > a:focus {
-        background-color: #333;
-    }
-
-    .dropdown-menu .divider {
-        background-color: #333;
-    }
-
     /** Boutons **/
     *:not('.input-group-btn') .btn {
         padding: 5px 12px;
@@ -115,10 +72,6 @@
         background-color: rgba(255, 255, 255, 0.08);
     }
 
-    .breadcrumb {
-        background-color: rgba(245, 245, 245, 0.2);
-    }
-
     .jumbotron {
         font-size: 16px;
     }
@@ -131,49 +84,63 @@
     .table-row-variant(warning; darken(@state-warning-bg, 25%));
     .table-row-variant(danger; darken(@state-danger-bg, 25%));
 
-    /** Pagination **/
-    .pagination > li > a,
-    .pagination > li > span {
-        background-color: rgba(105, 95, 75, 0.4);
-        border-color: #666;
-        color: #bbb;
+    input[type="file"] {
+        background-color: transparent;
+        border: none;
+        color: #ddd;
+        padding: 0;
     }
 
-    .pagination > li:hover > a,
-    .pagination > li:hover > span {
-        background-color: rgba(105, 95, 75, 0.55);
+    #content {
+        background-color: rgba(0, 0, 0, 0.25);
+        .border-radius(20px);
+        -webkit-box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+        -moz-box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+        padding: 5px 20px;
     }
 
-    .pagination > li.active > a,
-    .pagination > li:active > a,
-    .pagination > li.active > span,
-    .pagination > li:active > span {
-        background-color: rgba(105, 95, 75, 0.75);
+    p {
+        text-align: justify;
     }
 
-
-    /** jQueryUI **/
-    .ui-slider .ui-slider-handle {
-        background-color: #aaa0aa;
-        border: 1px solid #666666;
-        -webkit-border-radius: 5px;
-        -moz-border-radius: 5px;
-        border-radius: 5px;
+    #form_login {
+        width: 430px;
+        margin-left: auto;
+        margin-right: auto;
     }
 
-    .ui-slider:hover .ui-slider-handle {
-        background-color: #C8BCAB;
+    li.active .btn { border-color: #000; }
+
+    @media (max-width: 768px) {
+        .list-sm-inline > li {
+            display: inline-block;
+            padding-right: 5px;
+            padding-left: 5px;
+        }
     }
 
-    .ui-slider .ui-slider-handle:hover {
-        background-color: #BEAC92;
+    article.version-article {
+        padding-left: 25px;
+        margin-bottom: 10px;
     }
 
-    .ui-slider {
-        background-color: rgba(132, 132, 132, 0.2);
-        border: solid 1px #666;
-        -webkit-border-radius: 5px;
-        -moz-border-radius: 5px;
-        border-radius: 5px;
+    footer#footer {
+        background-color: rgba(0, 0, 0, 0.2);
+        -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+        -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+        padding: 10px 0;
     }
+
+    input.input-black {
+        color: #ddd;
+        border-color: #000;
+        background-color: #333;
+    }
+    input.input-black[disabled],
+    input.input-black.disabled {
+        background-color: #252525;
+    }
+
 }

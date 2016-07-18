@@ -468,6 +468,7 @@
         <div class="progress-bar progress-bar-danger" style="width: 10%"><span class='sr-only'>10% Complete (danger)</span></div>
     </div>
 
+    {#
     <div class="page-header">
         <h1>List groups</h1>
     </div>
@@ -509,7 +510,9 @@
             </div>
         </div><!-- /.col-sm-4 -->
     </div>
+    #}
 
+    {#
     <div class="page-header">
         <h1>Panels</h1>
     </div>
@@ -569,6 +572,7 @@
             </div>
         </div><!-- /.col-sm-4 -->
     </div>
+    #}
 
     <div class="page-header">
         <h1>Wells</h1>
@@ -577,6 +581,7 @@
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget risus varius blandit sit amet non magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Cras mattis consectetur purus sit amet fermentum. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Aenean lacinia bibendum nulla sed consectetur.</p>
     </div>
 
+    {#
     <div class="page-header">
         <h1>Carousel</h1>
     </div>
@@ -606,17 +611,44 @@
             <span class="sr-only">Next</span>
         </a>
     </div>
-
+    #}
 
     <div class="page-header">
-        <h1>Breadcrums</h1>
+        <h1>Breadcrumbs</h1>
     </div>
     <div>
         <ol class="breadcrumb">
-            <li><a href="javascript:void(0);">Home</a></li>
-            <li><a href="javascript:void(0);">Library</a></li>
-            <li class="active">Data</li>
+            <li><a href="javascript:void(0);">Inactive link</a></li>
+            <li class="active"><a href="javascript:void(0);">Active link</a></li>
+            <li>Inactive</li>
+            <li class="active">Active</li>
         </ol>
     </div>
+
+
+    <div class="page-header">
+        <h1>Pagination</h1>
+    </div>
+    <div>
+        <ul class="pagination pagination-sm">
+            <li><a href="javascript:void(0);">← Précédent</a></li>
+            <li><a href="javascript:void(0);">1</a></li>
+            <li class="active"><a href="javascript:void(0);">2</a></li>
+            <li><a href="javascript:void(0);">3</a></li>
+            <li><a href="javascript:void(0);">4</a></li>
+            <li><a href="javascript:void(0);">Suivant →</a></li>
+        </ul>
+        <br>
+        <ul class="pagination pagination-sm">
+            <li class="disabled"><a href="javascript:void(0);">← Précédent</a></li>
+            <li><a href="javascript:void(0);">1</a></li>
+            <li class="disabled"><a href="javascript:void(0);">2</a></li>
+            <li><a href="javascript:void(0);">3</a></li>
+            <li><a href="javascript:void(0);">4</a></li>
+            <li><a href="javascript:void(0);">Suivant →</a></li>
+        </ul>
+    </div>
+
+
 
 </div> <!-- /container -->
