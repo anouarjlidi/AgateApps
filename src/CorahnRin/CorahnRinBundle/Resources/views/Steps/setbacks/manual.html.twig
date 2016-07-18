@@ -22,29 +22,3 @@
 
         </div>
     </div>
-
-{% for setbackId, setback in setbacks_list %}
-
-    {#
-    <div class="row">
-        <div class="col-sm-3">
-            <input type="text" id="setbacks_value_{{ setback.id }}" name="setbacks_value[]" value="">
-            <button
-                type="button"
-                id="btn-gen-choice-{{ setback.id }}"
-                data-toggle="btn-gen-choice"
-                data-max-genchoices="{{ setbacks_number }}"
-                data-input-value="{{ setback.id }}"
-                data-target-node="setbacks_value_{{ setback.id }}"
-                class="btn btn-block btn-default {{ setbacks_value[setbackId] is defined ? 'active' : '' }}"
-            >
-                {{- setback.name | trans -}}
-            </button>
-        </div>
-        <div class="col-sm-9">
-            {{- setback.description -}}
-        </div>
-    </div>
-    #}
-
-{% endfor %}
