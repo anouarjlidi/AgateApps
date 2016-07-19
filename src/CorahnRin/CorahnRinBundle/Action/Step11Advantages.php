@@ -7,71 +7,64 @@ use CorahnRin\CorahnRinBundle\Entity\Avantages;
 class Step11Advantages extends AbstractStepAction
 {
     /**
+     * @var Avantages[][]
+     */
+    private $globalList;
+
+    /**
      * {@inheritdoc}
      */
     public function execute()
     {
-        $globalList = $this->em->getRepository('CorahnRinBundle:Avantages')->findAllDifferenciated();
-
-        $experience = 100;
+        $this->globalList = $this->em->getRepository('CorahnRinBundle:Avantages')->findAllDifferenciated();
 
         $currentStepValue = $this->getCharacterProperty();
         $advantages       = isset($currentStepValue['advantages']) ? $currentStepValue['advantages'] : [];
         $disadvantages    = isset($currentStepValue['disadvantages']) ? $currentStepValue['disadvantages'] : [];
 
-        foreach ($advantages as $id => $value) {
-            /** @var Avantages $advantage */
-            $advantage = $globalList['advantages'][$id];
-            if ($value === 1) {
-                $experience -= $advantage->getXp();
-            } elseif ($value === 2) {
-                $experience -= (int) ($advantage->getXp() * 1.5);
-            } else {
-                throw new \RuntimeException('Non-handled case.');
-            }
-        }
-        foreach ($disadvantages as $id => $value) {
-            /** @var Avantages $disadvantage */
-            $disadvantage = $globalList['advantages'][$id];
-            if ($id === 50) {
-                // Specific case of the "Trauma" disadvantage
-                $experience += $value * $disadvantage->getXp();
-            } elseif ($value === 1) {
-                    $experience += $disadvantage->getXp();
-            } elseif ($value === 2) {
-                $experience += (int) ($disadvantage->getXp() * 1.5);
-            } else {
-                throw new \RuntimeException('Non-handled case.');
-            }
-        }
+        $experience = $this->calculateExperience($advantages, $disadvantages);
 
         if ($this->request->isMethod('POST')) {
-            $selectedAdvantages    = $this->request->request->get('advantages');
-            $selectedDisadvantages = $this->request->request->get('disadvantages');
+            $advantages    = array_map('intval', $this->request->request->get('advantages'));
+            $disadvantages = array_map('intval', $this->request->request->get('disadvantages'));
 
             $error = false;
 
-            foreach ($selectedAdvantages as $id => $value) {
-                if (
-                    !isset($advantages[$id])
-                    || !is_numeric($id)
-                    || !is_numeric($value)
-                    || $advantages[$id]->getAugmentation() < $value
-                ) {
+            // First, validate all IDs
+            foreach ($advantages as $id => $value) {
+                if (!array_key_exists($id, $this->globalList['advantages'])) {
+                    $error = true;
+                    break;
+                }
+            }
+            foreach ($disadvantages as $id => $value) {
+                if (!array_key_exists($id, $this->globalList['disadvantages'])) {
                     $error = true;
                     break;
                 }
             }
 
-            if (false === $error) {
+            $experience = $this->calculateExperience($advantages, $disadvantages);
+
+            if (false === $error && $experience >= 0) {
                 $this->updateCharacterStep([
-                    'advantages'    => $selectedAdvantages,
-                    'disadvantages' => $selectedDisadvantages,
+                    'advantages'    => $advantages,
+                    'disadvantages' => $disadvantages,
                 ]);
 
                 return $this->nextStep();
-            } else {
-                $this->flashMessage('Une erreur est survenue dans la sélection d\'avantages ou de désavantages.', 'error.steps');
+            }
+
+            $this->flashMessage('Une erreur est survenue...');
+
+            if (true === $error) {
+                $this->flashMessage('Les avantages/désavantages soumis sont incorrects.');
+            }
+            if ($experience < 0) {
+                $this->flashMessage('Vous n\'avez pas assez d\'expérience.');
+            }
+            if (false === $experience) {
+                $this->flashMessage('Vos désavantages vous donnent un gain d\'expérience supérieur à 80.');
             }
         }
 
@@ -79,8 +72,54 @@ class Step11Advantages extends AbstractStepAction
             'experience'         => $experience,
             'advantages'         => $advantages,
             'disadvantages'      => $disadvantages,
-            'advantages_list'    => $globalList['advantages'],
-            'disadvantages_list' => $globalList['disadvantages'],
+            'advantages_list'    => $this->globalList['advantages'],
+            'disadvantages_list' => $this->globalList['disadvantages'],
         ]);
+    }
+
+    /**
+     * @param Avantages[] $advantages
+     * @param Avantages[] $disadvantages
+     * @param bool        $returnFalseOnError
+     *
+     * @return float|int|mixed
+     */
+    private function calculateExperience(array $advantages, array $disadvantages, $returnFalseOnError = false)
+    {
+        $experience = 100;
+
+        foreach ($disadvantages as $id => $value) {
+            /** @var Avantages $disadvantage */
+            $disadvantage = $this->globalList['disadvantages'][$id];
+            if ($id === 50) {
+                // Specific case of the "Trauma" disadvantage
+                $experience += $value * $disadvantage->getXp();
+            } elseif ($value === 1) {
+                $experience += $disadvantage->getXp();
+            } elseif ($value === 2) {
+                $experience += floor($disadvantage->getXp() * 1.5);
+            } elseif ($value) {
+                throw new \RuntimeException('Non-handled case.');
+            }
+            if ($experience > 180 && $returnFalseOnError) {
+                return false;
+            }
+        }
+
+        unset($value);
+
+        foreach ($advantages as $id => $value) {
+            /** @var Avantages $advantage */
+            $advantage = $this->globalList['advantages'][$id];
+            if ($value === 1) {
+                $experience -= $advantage->getXp();
+            } elseif ($value === 2) {
+                $experience -= floor($advantage->getXp() * 1.5);
+            } elseif ($value) {
+                throw new \RuntimeException('Non-handled case.');
+            }
+        }
+
+        return $experience;
     }
 }
