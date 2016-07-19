@@ -1,16 +1,4 @@
 
-// Webserver dir is used by Less to import files, mostly.
-// You should duplicate these parameters when creating new LESS resources in another bundle.
-@src-dir: "../../../../../..";
-@components-dir: "@{src-dir}/../web/components";
-
-// Path to the ./web/ directory used for computed resources paths only.
-// Default is "../" because the css is outputted to web/css/
-@web-dir: "../";
-
-@import "@{components-dir}/bootstrap/less/variables.less";
-@import "@{src-dir}/Esteren/PortalBundle/Resources/public/less/bootstrap-override-variables.less";
-
 #list_advantages .change_avdesv,
 #list_disadvantages .change_avdesv {
     -webkit-transition: background 400ms;
@@ -29,5 +17,27 @@
 @media (min-width: @screen-md-min) {
     #list_advantages {
         border-right: solid 1px white;
+    }
+}
+
+/* Setup advantage states */
+.btn {
+    &[class*="btn-state"] {
+        color: @link-color;
+    }
+    &[class*="btn-state"]:before {
+        font-family: FontAwesome;
+        display: inline-block;
+        color: @state-success-bg;
+        letter-spacing: 5px;
+    }
+    &.btn-state-1:before {
+        content: "@{fa-var-check-circle} ";
+    }
+    &.btn-state-2:before {
+        content: "@{fa-var-check-circle} @{fa-var-check-circle} ";
+    }
+    &.btn-state-3:before {
+        content: "@{fa-var-check-circle} @{fa-var-check-circle} @{fa-var-check-circle} ";
     }
 }

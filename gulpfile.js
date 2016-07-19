@@ -17,7 +17,8 @@ var config = {
         "src/AppBundle/Resources/public/less/*.less"
      */
     "files_to_watch": [
-        "src/Esteren/PortalBundle/Resources/public/less/*.less"
+        "src/Esteren/PortalBundle/Resources/public/less/*.less",
+        "src/CorahnRin/CorahnRinBundle/Resources/public/generator/css/*.less"
     ],
 
     /**
@@ -57,7 +58,7 @@ var config = {
             "src/AdminBundle/Resources/public/less/admin.less"
         ],
         "css/generator.css": [
-            "src/CorahnRin/CorahnRinBundle/Resources/public/generator/css/*.less"
+            "src/CorahnRin/CorahnRinBundle/Resources/public/generator/css/main_steps.less"
         ]
     },
 
@@ -123,7 +124,7 @@ var config = {
         "js/step_11_advantages.js": [
             "src/CorahnRin/CorahnRinBundle/Resources/public/generator/js/step_11_advantage_class.js",
             "src/CorahnRin/CorahnRinBundle/Resources/public/generator/js/step_11_functions.js",
-            "src/CorahnRin/CorahnRinBundle/Resources/public/generator/js/step_11_advantages.js"
+            "src/CorahnRin/CorahnRinBundle/Resources/public/generator/js/step_11_advantages_process.js"
         ]
     }
 };
