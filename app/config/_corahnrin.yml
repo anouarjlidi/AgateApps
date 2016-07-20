@@ -4,38 +4,49 @@
 pierstoval_character_manager:
     character_class: 'CorahnRin\CorahnRinBundle\Entity\Characters'
     steps:
+
         01_people:
             action: corahnrin_generator.steps.step_01
+
         02_job:
             action: corahnrin_generator.steps.step_02
+
         03_birthplace:
             action: corahnrin_generator.steps.step_03
+
         04_geo:
             action: corahnrin_generator.steps.step_04
+
         05_social_class:
             action: corahnrin_generator.steps.step_05
+
         06_age:
             action: corahnrin_generator.steps.step_06
             onchange_clear:
                 - "07_setbacks"
+
         07_setbacks:
             action: corahnrin_generator.steps.step_07
             depends_on:
                 - "06_age"
+
         08_ways:
             action: corahnrin_generator.steps.step_08
             onchange_clear:
                 - "09_traits"
                 - "10_orientation"
                 - "17_combat_arts"
+
         09_traits:
             action: corahnrin_generator.steps.step_09
             depends_on:
                 - "08_ways"
+
         10_orientation:
             action: corahnrin_generator.steps.step_10
             depends_on:
                 - "08_ways"
+
         11_advantages:
             action: corahnrin_generator.steps.step_11
             onchange_clear:
@@ -44,10 +55,12 @@ pierstoval_character_manager:
                 - "15_bonus_domains"
                 - "16_disciplines"
                 - "17_combat_arts"
+
         12_mental_disorder:
             action: corahnrin_generator.steps.step_12
             depends_on:
                 - "08_ways"
+
         13_primary_domains:
             action: corahnrin_generator.steps.step_13
             depends_on:
@@ -58,6 +71,7 @@ pierstoval_character_manager:
                 - "15_bonus_domains"
                 - "16_disciplines"
                 - "17_combat_arts"
+
         14_upgrade_domains:
             action: corahnrin_generator.steps.step_14
             depends_on:
@@ -65,23 +79,29 @@ pierstoval_character_manager:
             onchange_clear:
                 - "15_bonus_domains"
                 - "16_disciplines"
+
         15_bonus_domains:
             action: corahnrin_generator.steps.step_15
             depends_on:
                 - "14_upgrade_domains"
             onchange_clear:
                 - "16_disciplines"
+
         16_disciplines:
             action: corahnrin_generator.steps.step_16
             depends_on:
                 - "15_bonus_domains"
+
         17_combat_arts:
             action: corahnrin_generator.steps.step_17
             depends_on:
                 - "15_bonus_domains"
+
         18_equipment:
             action: corahnrin_generator.steps.step_18
+
         19_description:
             action: corahnrin_generator.steps.step_19
+
         20_finish:
             action: corahnrin_generator.steps.step_20
