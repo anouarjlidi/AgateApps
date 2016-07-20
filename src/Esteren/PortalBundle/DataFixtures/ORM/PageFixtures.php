@@ -38,6 +38,7 @@ class PageFixtures extends AbstractFixture
     {
         return [
             [
+                'id'        => 1,
                 'title'     => 'Homepage',
                 'slug'      => 'homepage',
                 'content'   => 'This this a default home page.',
