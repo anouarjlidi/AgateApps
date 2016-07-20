@@ -3,24 +3,12 @@
 namespace CorahnRin\CorahnRinBundle\DataFixtures\ORM;
 
 use CorahnRin\CorahnRinBundle\Entity\Disorders;
-use CorahnRin\CorahnRinBundle\Entity\Books;
-use Doctrine\Common\DataFixtures\AbstractFixture;
-use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Mapping\ClassMetadata;
+use Orbitale\Component\DoctrineTools\AbstractFixture;
 
-class DisordersFixtures extends AbstractFixture implements OrderedFixtureInterface
+class DisordersFixtures extends AbstractFixture
 {
     /**
-     * @var ObjectManager
-     */
-    private $manager;
-
-    /**
-     * Get the order of this fixture.
-     *
-     * @return int
+     * {@inheritdoc}
      */
     public function getOrder()
     {
@@ -28,68 +16,83 @@ class DisordersFixtures extends AbstractFixture implements OrderedFixtureInterfa
     }
 
     /**
-     * Load data fixtures with the passed EntityManager.
-     *
-     * @param ObjectManager $manager
+     * {@inheritdoc}
      */
-    public function load(ObjectManager $manager)
+    protected function getEntityClass()
     {
-        $this->manager = $manager;
-
-        $repo = $this->manager->getRepository('CorahnRinBundle:Disorders');
-
-        /** @var Books $book */
-        $book = $this->getReference('corahnrin-book-2');
-
-        $this->fixtureObject($repo, 1, 'Frénésie', '', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null, $book);
-        $this->fixtureObject($repo, 2, 'Exaltation', '', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null, $book);
-        $this->fixtureObject($repo, 3, 'Mélancolie', '', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null, $book);
-        $this->fixtureObject($repo, 4, 'Hallucination', '', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null, $book);
-        $this->fixtureObject($repo, 5, 'Confusion mentale', '', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null, $book);
-        $this->fixtureObject($repo, 6, 'Mimétisme', '', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null, $book);
-        $this->fixtureObject($repo, 7, 'Obsession', '', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null, $book);
-        $this->fixtureObject($repo, 8, 'Hystérie', '', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null, $book);
-        $this->fixtureObject($repo, 9, 'Mysticisme', '', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null, $book);
-        $this->fixtureObject($repo, 10, 'Paranoïa', '', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null, $book);
-
-        $this->manager->flush();
+        return Disorders::class;
     }
 
-    public function fixtureObject(EntityRepository $repo, $id, $name, $description, $created, $updated, $deleted = null, $book)
+    protected function getReferencePrefix()
     {
-        $obj       = null;
-        $newObject = false;
-        $addRef    = false;
-        if ($id) {
-            $obj = $repo->find($id);
-            if ($obj) {
-                $addRef = true;
-            } else {
-                $newObject = true;
-            }
-        } else {
-            $newObject = true;
-        }
-        if ($newObject === true) {
-            $obj = new Disorders();
-            $obj->setId($id)
-                ->setName($name)
-                ->setDescription($description)
-                ->setBook($book)
-                ->setCreated($created ? new \Datetime($created) : new \Datetime())
-                ->setUpdated($updated ? new \Datetime($updated) : null)
-                ->setDeleted($deleted ? new \Datetime($deleted) : null)
-            ;
-            if ($id) {
-                /** @var ClassMetadata $metadata */
-                $metadata = $this->manager->getClassMetaData(get_class($obj));
-                $metadata->setIdGeneratorType(ClassMetadata::GENERATOR_TYPE_NONE);
-            }
-            $this->manager->persist($obj);
-            $addRef = true;
-        }
-        if ($addRef === true && $obj) {
-            $this->addReference('corahnrin-disorder-'.$id, $obj);
-        }
+        return 'corahnrin-disorder-';
+    }
+
+    protected function getObjects()
+    {
+        $created = \DateTime::createFromFormat('Y-m-d H:i:s', '2014-04-09 08:56:43');
+
+        return [
+            [
+                'id'          => 1,
+                'name'        => 'Frénésie',
+                'description' => '',
+                'created'     => $created,
+            ],
+            [
+                'id'          => 2,
+                'name'        => 'Exaltation',
+                'description' => '',
+                'created'     => $created,
+            ],
+            [
+                'id'          => 3,
+                'name'        => 'Mélancolie',
+                'description' => '',
+                'created'     => $created,
+            ],
+            [
+                'id'          => 4,
+                'name'        => 'Hallucination',
+                'description' => '',
+                'created'     => $created,
+            ],
+            [
+                'id'          => 5,
+                'name'        => 'Confusion mentale',
+                'description' => '',
+                'created'     => $created,
+            ],
+            [
+                'id'          => 6,
+                'name'        => 'Mimétisme',
+                'description' => '',
+                'created'     => $created,
+            ],
+            [
+                'id'          => 7,
+                'name'        => 'Obsession',
+                'description' => '',
+                'created'     => $created,
+            ],
+            [
+                'id'          => 8,
+                'name'        => 'Hystérie',
+                'description' => '',
+                'created'     => $created,
+            ],
+            [
+                'id'          => 9,
+                'name'        => 'Mysticisme',
+                'description' => '',
+                'created'     => $created,
+            ],
+            [
+                'id'          => 10,
+                'name'        => 'Paranoïa',
+                'description' => '',
+                'created'     => $created,
+            ],
+        ];
     }
 }

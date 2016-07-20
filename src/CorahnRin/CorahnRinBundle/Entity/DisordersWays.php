@@ -38,11 +38,11 @@ class DisordersWays
     protected $isMajor = 0;
 
     /**
-     * @var bool
+     * @var \DateTime
      *
      * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
-    protected $deleted = null;
+    protected $deleted;
 
     public function __toString()
     {
@@ -52,11 +52,11 @@ class DisordersWays
     /**
      * Set disorder.
      *
-     * @param int $disorder
+     * @param Disorders $disorder
      *
      * @return DisordersWays
      */
-    public function setDisorder($disorder)
+    public function setDisorder(Disorders $disorder)
     {
         $this->disorder = $disorder;
 
@@ -66,7 +66,7 @@ class DisordersWays
     /**
      * Get disorder.
      *
-     * @return int
+     * @return Disorders
      */
     public function getDisorder()
     {
@@ -76,11 +76,11 @@ class DisordersWays
     /**
      * Set way.
      *
-     * @param int $way
+     * @param Ways $way
      *
      * @return DisordersWays
      */
-    public function setWay($way)
+    public function setWay(Ways $way)
     {
         $this->way = $way;
 
@@ -90,7 +90,7 @@ class DisordersWays
     /**
      * Get way.
      *
-     * @return int
+     * @return Ways
      */
     public function getWay()
     {

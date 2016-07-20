@@ -37,7 +37,7 @@ pierstoval_character_manager:
                 - "08_ways"
         11_advantages:
             action: corahnrin_generator.steps.step_11
-        12_mental_health:
+        12_mental_disorder:
             action: corahnrin_generator.steps.step_12
             depends_on:
                 - "08_ways"

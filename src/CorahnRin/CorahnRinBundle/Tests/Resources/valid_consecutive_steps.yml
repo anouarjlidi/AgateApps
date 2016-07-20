@@ -91,9 +91,8 @@
     form_values: []
     session_value: 'character.orientation.instinctive'
 
-# TODO
 11_advantages:
-    next_step: 12_mental_health
+    next_step: 12_mental_disorder
     form_values:
         advantages:
             3: 1
@@ -153,11 +152,12 @@
             51: 0
             52: 0
 
-# TODO
-12_mental_health:
+12_mental_disorder:
     next_step: 13_primary_domains
-    form_values: ~
-    session_value: ~
+    form_values:
+        # Disorder1: Frénésie
+        gen-div-choice: 1
+    session_value: 1
 
 # TODO
 13_primary_domains:

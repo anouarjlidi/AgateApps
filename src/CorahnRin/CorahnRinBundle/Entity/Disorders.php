@@ -12,7 +12,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @ORM\Table(name="disorders")
  * @Gedmo\SoftDeleteable(fieldName="deleted")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="CorahnRin\CorahnRinBundle\Repository\DisordersRepository")
  */
 class Disorders
 {
@@ -54,11 +54,11 @@ class Disorders
     protected $updated;
 
     /**
-     * @var bool
+     * @var \DateTime
      *
      * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
-    protected $deleted = null;
+    protected $deleted;
 
     /**
      * @var DisordersWays[]
@@ -226,7 +226,7 @@ class Disorders
     /**
      * Get ways.
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return DisordersWays[]|ArrayCollection
      */
     public function getWays()
     {

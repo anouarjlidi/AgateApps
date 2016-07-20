@@ -58,7 +58,7 @@ services:
             - { name: pierstoval_character_step }
 
     corahnrin_generator.steps.step_12:
-        class: CorahnRin\CorahnRinBundle\Action\Step12MentalHealth
+        class: CorahnRin\CorahnRinBundle\Action\Step12MentalDisorder
         tags:
             - { name: pierstoval_character_step }
 

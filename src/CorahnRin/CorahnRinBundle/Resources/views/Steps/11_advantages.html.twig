@@ -20,13 +20,9 @@
             {% endif %}
 
             <div class="col-md-6">
-                {% set classMore = '' %}
+                {% set class_moroe = '' %}
                 {% if advantages[avtg.id] is defined and advantages[avtg.id] > 0 %}
-                    {% if advantages[avtg.id] == 1 %}
-                        {% set classMore = ' btn-inverse' %}
-                    {% elseif advantages[avtg.id] == 2 %}
-                        {% set classMore = ' btn-info' %}
-                    {% endif %}
+                    {% set class_moroe = ' btn-state-'~advantages[avtg.id] %}
                 {% endif %}
                 <label
                       for="avtg-{{ avtg.id }}"
@@ -34,7 +30,7 @@
                       title="{{ (avtg.description | trans({},'Entity.Avantages')) | escape('html_attr') }} ({{ 'Coût en XP' | trans | escape('html_attr') }} : {{ avtg.xp }})"
                       data-placement="top"
                       id="label-avdesv-{{ avtg.id }}"
-                      class="change_avdesv change_avtg btn btn-block{{ classMore }}">
+                      class="change_avdesv change_avtg btn btn-block{{ class_moroe }}">
                     <input data-augmentation="{{ avtg.augmentation }}"
                            type="hidden"
                            name="advantages[{{ avtg.id }}]"
@@ -68,23 +64,18 @@
                 <div class="row mb5">
             {% endif %}
 
-            {% set classMore = '' %}
+            {% set class_moroe = '' %}
             {% if disadvantages[desv.id] is defined and disadvantages[desv.id] > 0 %}
-                {% if disadvantages[desv.id] == 1 %}
-                    {% set classMore = ' btn-inverse' %}
-                {% elseif disadvantages[desv.id] == 2 %}
-                    {% set classMore = ' btn-info' %}
-                {% elseif disadvantages[desv.id] == 3 %}
-                    {% set classMore = ' btn-primary' %}
-                {% endif %}
+                {% set class_moroe = ' btn-state-'~disadvantages[desv.id] %}
             {% endif %}
+
             <div class="col-md-6">
                 <label for="desv-{{ desv.id }}"
                        data-toggle="tooltip"
                        title="{{ (desv.description | trans({},'Entity.Avantages')) | escape('html_attr') }} ({{ 'Gain en XP' | trans | escape('html_attr') }} : {{ desv.xp }})"
                        data-placement="top"
                        id="label-avdesv-{{ desv.id }}"
-                       class="change_avdesv change_desv btn btn-block">
+                       class="change_avdesv change_desv btn btn-block{{ class_moroe }}">
                     <input data-augmentation="{{ desv.augmentation }}"
                            type="hidden"
                            name="disadvantages[{{ desv.id }}]"
