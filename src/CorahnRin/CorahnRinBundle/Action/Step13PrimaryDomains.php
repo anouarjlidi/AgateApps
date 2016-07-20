@@ -10,5 +10,8 @@ class Step13PrimaryDomains extends AbstractStepAction
     public function execute()
     {
         // TODO: Implement execute() method.
+
+        return $this->renderCurrentStep([
+        ]);
     }
 }

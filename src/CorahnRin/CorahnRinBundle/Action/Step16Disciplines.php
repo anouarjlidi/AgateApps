@@ -10,5 +10,8 @@ class Step16Disciplines extends AbstractStepAction
     public function execute()
     {
         // TODO: Implement execute() method.
+
+        return $this->renderCurrentStep([
+        ]);
     }
 }

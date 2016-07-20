@@ -10,5 +10,8 @@ class Step20Finish extends AbstractStepAction
     public function execute()
     {
         // TODO: Implement execute() method.
+
+        return $this->renderCurrentStep([
+        ]);
     }
 }

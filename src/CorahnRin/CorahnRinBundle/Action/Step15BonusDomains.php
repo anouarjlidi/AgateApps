@@ -10,5 +10,8 @@ class Step15BonusDomains extends AbstractStepAction
     public function execute()
     {
         // TODO: Implement execute() method.
+
+        return $this->renderCurrentStep([
+        ]);
     }
 }
