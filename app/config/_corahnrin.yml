@@ -45,6 +45,7 @@ pierstoval_character_manager:
             action: corahnrin_generator.steps.step_13
             depends_on:
                 - "08_ways"
+                - "11_advantages"
             onchange_clear:
                 - "14_upgrade_domains"
                 - "15_bonus_domains"
