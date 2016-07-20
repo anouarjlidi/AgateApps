@@ -27,6 +27,7 @@ pierstoval_character_manager:
             onchange_clear:
                 - "09_traits"
                 - "10_orientation"
+                - "17_combat_arts"
         09_traits:
             action: corahnrin_generator.steps.step_09
             depends_on:
@@ -37,6 +38,12 @@ pierstoval_character_manager:
                 - "08_ways"
         11_advantages:
             action: corahnrin_generator.steps.step_11
+            onchange_clear:
+                - "13_primary_domains"
+                - "14_upgrade_domains"
+                - "15_bonus_domains"
+                - "16_disciplines"
+                - "17_combat_arts"
         12_mental_disorder:
             action: corahnrin_generator.steps.step_12
             depends_on:
