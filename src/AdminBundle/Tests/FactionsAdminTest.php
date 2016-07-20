@@ -51,13 +51,4 @@ class FactionsAdminTest extends AbstractEasyAdminTest
     {
         // TODO
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function provideIdToDelete()
-    {
-        // Faction1: Temple
-        return 1;
-    }
 }

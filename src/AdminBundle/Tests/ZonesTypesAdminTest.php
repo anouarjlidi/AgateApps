@@ -52,14 +52,4 @@ class ZonesTypesAdminTest extends AbstractEasyAdminTest
     {
         // TODO
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function provideIdToDelete()
-    {
-        // Zone1: Politique
-        return 1;
-    }
-
 }

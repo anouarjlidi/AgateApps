@@ -58,7 +58,9 @@ abstract class AbstractEasyAdminTest extends WebTestCase
      *
      * @return integer
      */
-    abstract public function provideIdToDelete();
+    public function provideIdToDelete() {
+        return false;
+    }
 
     public function testListingFields()
     {

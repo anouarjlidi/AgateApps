@@ -51,14 +51,4 @@ class RoutesTypesAdminTest extends AbstractEasyAdminTest
     {
         // TODO
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function provideIdToDelete()
-    {
-        // RouteType1: Chemin
-        return 1;
-    }
-
 }

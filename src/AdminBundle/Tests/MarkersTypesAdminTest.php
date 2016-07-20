@@ -51,14 +51,4 @@ class MarkersTypesAdminTest extends AbstractEasyAdminTest
     {
         // TODO
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function provideIdToDelete()
-    {
-        // Marker1: Cité
-        return 1;
-    }
-
 }

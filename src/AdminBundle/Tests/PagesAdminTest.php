@@ -7,7 +7,6 @@ use Esteren\PortalBundle\Entity\Page;
 
 class PagesAdminTest extends AbstractEasyAdminTest
 {
-
     /**
      * {@inheritdoc}
      */

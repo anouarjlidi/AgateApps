@@ -69,7 +69,7 @@ class FullValidStepsControllerTest extends WebTestCase
 
         // Here, if the redirection is made for the next step, it means everything's valid.
         $client->submit($form);
-        static::assertTrue($client->getResponse()->isRedirect('/fr/character/generate/'.$nextStep));
+        static::assertTrue($client->getResponse()->isRedirect('/fr/character/generate/'.$nextStep), 'Request does not redirect.');
 
         // We also make sure that the session has been correctly updated.
         $character = $session->get('character');

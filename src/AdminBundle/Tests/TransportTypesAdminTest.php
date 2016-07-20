@@ -52,14 +52,4 @@ class TransportTypesAdminTest extends AbstractEasyAdminTest
     {
         // TODO
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function provideIdToDelete()
-    {
-        // Delete action is disabled
-        return false;
-    }
-
 }

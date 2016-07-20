@@ -54,14 +54,4 @@ class MapsAdminTest extends AbstractEasyAdminTest
     {
         // TODO
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function provideIdToDelete()
-    {
-        // Map1: Tri-Kazel
-        return 1;
-    }
-
 }
