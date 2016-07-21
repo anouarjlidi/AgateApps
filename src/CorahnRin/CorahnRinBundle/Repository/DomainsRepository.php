@@ -2,25 +2,20 @@
 
 namespace CorahnRin\CorahnRinBundle\Repository;
 
+use CorahnRin\CorahnRinBundle\Entity\Domains;
 use Orbitale\Component\DoctrineTools\BaseEntityRepository as BaseRepository;
 
 class DomainsRepository extends BaseRepository
 {
     /**
-     * @return string[]
+     * @return \Generator|Domains[]
      */
-    public function findAllSortedByName()
+    public function findAllForGenerator()
     {
-        $data = $this->_em
-            ->createQueryBuilder()
-            ->select('domains.name as name')
-            ->from($this->_entityName, 'domains')
+        return $this->createQueryBuilder('domain', 'domain.id')
+            ->from($this->_entityName, 'domains', 'domains.id')
             ->orderBy('domains.name', 'asc')
-            ->getQuery()->getArrayResult()
+            ->getQuery()->getResult()
         ;
-
-        foreach ($data as $id => $element) {
-            yield $id => $element['name'];
-        }
     }
 }

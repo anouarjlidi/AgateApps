@@ -1,0 +1,19 @@
+.domain {
+
+    button {
+        font-size: 1em;
+        padding: 1px 5px;
+
+        &[data-change="0"] {
+            color: #777;
+        }
+
+        // Adds saturation to "success" and "danger" state for it to be brigther in the buttons.
+        &[data-change="3"] {
+            color: hsl(hue(@state-success-bg), saturation(@state-success-bg) + 10%, lightness(@state-success-bg));
+        }
+        &[data-change="5"] {
+            color: hsl(hue(@state-danger-bg), saturation(@state-danger-bg) + 10%, lightness(@state-danger-bg));
+        }
+    }
+}
