@@ -1,0 +1,35 @@
+default:
+    autoload:
+        'Context': '%paths.base%/features'
+    suites:
+#        domain:
+#            path: '%paths.base%/features'
+#            contexts: []
+        webapp:
+            filters:
+                tags: "@webapp"
+            path: '%paths.base%/features'
+            contexts:
+                - Context\LoadFixturesContext
+                - Context\Webapp\LoginContext
+                - Knp\FriendlyContexts\Context\EntityContext
+
+    extensions:
+        Behat\Symfony2Extension: ~
+
+        Knp\FriendlyContexts\Extension:
+            entities:
+                namespaces:
+                    - UserBundle
+
+        Behat\MinkExtension:
+            base_url: 'http://portal.esteren.dev/app_test.php'
+            sessions:
+                default:
+                    symfony2: ~
+                javascript:
+                    selenium2: ~
+            browser_name: chromium-browser
+            show_cmd: 'w3m %s'
+            show_auto: true # Whether the opened page should be shown automatically when a step fails.
+            files_path: web
