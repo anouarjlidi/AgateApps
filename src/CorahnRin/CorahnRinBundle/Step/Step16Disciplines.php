@@ -1,8 +1,8 @@
 <?php
 
-namespace CorahnRin\CorahnRinBundle\Action;
+namespace CorahnRin\CorahnRinBundle\Step;
 
-class Step13PrimaryDomains extends AbstractStepAction
+class Step16Disciplines extends AbstractStepAction
 {
     /**
      * {@inheritdoc}

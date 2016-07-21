@@ -1,8 +1,8 @@
 <?php
 
-namespace CorahnRin\CorahnRinBundle\Action;
+namespace CorahnRin\CorahnRinBundle\Step;
 
-class Step15BonusDomains extends AbstractStepAction
+class Step17CombatArts extends AbstractStepAction
 {
     /**
      * {@inheritdoc}

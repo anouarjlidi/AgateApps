@@ -1,6 +1,6 @@
 <?php
 
-namespace CorahnRin\CorahnRinBundle\Action;
+namespace CorahnRin\CorahnRinBundle\Step;
 
 class Step04Geo extends AbstractStepAction
 {
