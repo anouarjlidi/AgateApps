@@ -15,3 +15,9 @@ footer:
     rights: 'Agate RPG, Tous droits réservés.'
     brand: 'Agate RPG est une marque d''Agate Éditions'
     version: Version
+
+register_optin: >
+    J'autorise Agate Éditions et ses partenaires à ne rien faire de mes données. <small>De toute façon,
+    Agate Éditions ne fera rien du tout avec ces données, elles servent uniquement au bon fonctionnement
+    de ce site, donc nous ne diffuserons jamais vos données à qui que ce soit, ni ne les vendrons, ni rien.
+    Elles sont votre propriété.</small>

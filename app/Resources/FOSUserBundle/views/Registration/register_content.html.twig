@@ -1,0 +1,20 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+{{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'id': 'form_login', 'class': 'fos_user_registration_register'}}) }}
+
+    <h2>{{ 'layout.register' | trans }}</h2>
+
+    {{ form_widget(form) }}
+
+    <div class="checkbox">
+        <label for="remember_me">
+            <input type="checkbox" value="on" />
+            {{ 'register_optin'|trans({}, 'messages')|raw}}
+        </label>
+    </div>
+
+    <div>
+        <input class="btn btn-default" type="submit" value="{{ 'registration.submit'|trans }}" />
+    </div>
+
+{{ form_end(form) }}

@@ -80,8 +80,7 @@ twig:
         esteren_domains_api: "%esteren_domains.api%"
         esteren_domains_cookie_domain: "%esteren_domains.cookie_domain%"
     form_themes:
-        - "@PierstovalTools/Form/fields.html.twig"
-        - "@PierstovalTools/Form/form_errors.html.twig"
+        - "bootstrap_3_layout.html.twig"
 
 # Doctrine Configuration
 doctrine:
