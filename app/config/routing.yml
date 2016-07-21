@@ -51,4 +51,4 @@ application_admin:
 # Portal routing. MUST be at the end, because it's an OrbitaleCms routing,
 #   and therefore has many dynamic urls that will come as "fallback" to any other
 #   application routing.
-portal: { resource: "routing__portal.yml", prefix: "/{_locale}/", defaults: { _locale: "%locale%" }, requirements: { _locale: "^(?:%locales_regex%)$" } }
+portal: { resource: "routing__portal.yml", prefix: "/{_locale}", defaults: { _locale: "%locale%" }, requirements: { _locale: "^(?:%locales_regex%)$" } }

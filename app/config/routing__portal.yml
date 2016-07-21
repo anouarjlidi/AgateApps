@@ -8,7 +8,6 @@ portal:
     resource: "@OrbitaleCmsBundle/Controller/PageController.php"
     type:     annotation
     prefix:   /
-    host:     "{domainName}"
     defaults:
         domainName: '%esteren_domains.portal%'
         slugs: ""
