@@ -59,8 +59,11 @@ framework:
         # TODO: Add 127.0.0.1 while in dev mode if you need it.
 
     session:
-        cookie_domain: "%esteren_domains.cookie_domain%"
-        name:          EsterenPortal
+        enabled:         true
+        cookie_domain:   "%esteren_domains.cookie_domain%"
+        name:            EsterenPortal
+        cookie_lifetime: 8640000
+        gc_maxlifetime:  86400
 
     # Use version code in assets
     assets:
