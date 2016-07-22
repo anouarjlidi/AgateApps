@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "f0b721ebe76ae72b6721c298add2e97d",
-    "content-hash": "6cf3ce448557b7d3c85278f4ef15e789",
+    "hash": "b33fdc61d436b35d28594111d1ea1661",
+    "content-hash": "ae552c233cc6a6e92ff6c6890d72cf5b",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -1766,16 +1766,16 @@
         },
         {
             "name": "orbitale/doctrine-tools",
-            "version": "v0.4.4",
+            "version": "v0.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Orbitale/DoctrineTools.git",
-                "reference": "5e4326dcf1aea405795a85f4477ca0f445070e89"
+                "reference": "9db5b6bcf3d9702e76967a07222bd9c797764af3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Orbitale/DoctrineTools/zipball/5e4326dcf1aea405795a85f4477ca0f445070e89",
-                "reference": "5e4326dcf1aea405795a85f4477ca0f445070e89",
+                "url": "https://api.github.com/repos/Orbitale/DoctrineTools/zipball/9db5b6bcf3d9702e76967a07222bd9c797764af3",
+                "reference": "9db5b6bcf3d9702e76967a07222bd9c797764af3",
                 "shasum": ""
             },
             "require": {
@@ -1789,7 +1789,8 @@
             },
             "suggest": {
                 "doctrine/data-fixtures": "To use the nice AbstractFixture class",
-                "doctrine/doctrine-fixtures-bundle": "To use the AbstractFixture class inside a Symfony app"
+                "doctrine/doctrine-fixtures-bundle": "To use the AbstractFixture class inside a Symfony app",
+                "symfony/property-access": "To use property accessor with fixtures"
             },
             "type": "library",
             "autoload": {
@@ -1817,7 +1818,7 @@
                 "repository",
                 "tools"
             ],
-            "time": "2016-03-08 10:20:14"
+            "time": "2016-07-22 14:21:10"
         },
         {
             "name": "orbitale/entity-merger",
