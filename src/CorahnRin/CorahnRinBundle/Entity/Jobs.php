@@ -53,7 +53,7 @@ class Jobs
     protected $domainPrimary;
 
     /**
-     * @var Domains
+     * @var ArrayCollection|Domains[]
      *
      * @ORM\ManyToMany(targetEntity="Domains")
      */
@@ -74,11 +74,11 @@ class Jobs
     protected $updated;
 
     /**
-     * @var bool
+     * @var \DateTime
      *
      * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
-    protected $deleted = null;
+    protected $deleted;
 
     /**
      * Get id.
@@ -279,9 +279,33 @@ class Jobs
     }
 
     /**
+     * Set domainPrimary.
+     *
+     * @param array|ArrayCollection|Domains[] $domainsSecondary
+     *
+     * @return Jobs
+     */
+    public function setDomainsSecondary($domainsSecondary)
+    {
+        if (!count($domainsSecondary)) {
+            foreach ($this->domainsSecondary as $domain) {
+                $this->removeDomainsSecondary($domain);
+            }
+        }
+
+        foreach ($domainsSecondary as $domain) {
+            if (!$this->domainsSecondary->contains($domain)) {
+                $this->addDomainsSecondary($domain);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
      * Get domainsSecondary.
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Domains[]|ArrayCollection
      */
     public function getDomainsSecondary()
     {

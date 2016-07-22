@@ -1,16 +1,26 @@
 .domain {
 
     button {
-        font-size: 1em;
-        padding: 1px 5px;
+        font-size: 0.8em;
+        padding: 3px 4px;
+
+        &.disabled:not(.active) {
+            opacity: 0.25;
+        }
 
         &[data-change="0"] {
             color: #777;
         }
 
         // Adds saturation to "success" and "danger" state for it to be brigther in the buttons.
-        &[data-change="3"] {
+        &[data-change="1"] {
+            color: hsl(hue(@btn-primary-bg), saturation(@btn-primary-bg) + 10%, lightness(@btn-primary-bg));
+        }
+        &[data-change="2"] {
             color: hsl(hue(@state-success-bg), saturation(@state-success-bg) + 10%, lightness(@state-success-bg));
+        }
+        &[data-change="3"] {
+            color: hsl(hue(@btn-warning-bg), saturation(@btn-warning-bg) + 10%, lightness(@btn-warning-bg));
         }
         &[data-change="5"] {
             color: hsl(hue(@state-danger-bg), saturation(@state-danger-bg) + 10%, lightness(@state-danger-bg));

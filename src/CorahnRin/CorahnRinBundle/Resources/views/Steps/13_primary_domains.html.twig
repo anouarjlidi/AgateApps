@@ -2,12 +2,17 @@
 
 {% block step_content %}
 
+    <h3>{{ job.name }}</h3>
+
+    {# For jobs that have no secondary domain, we allow the user to choose any. #}
+    {% set show_all_secondary_domains = (secondary_domains|length) == 0 %}
+
     {% for domains_chunk in all_domains|batch(4, []) %}
 
         <div class="row">
         {% for id, domain in domains_chunk %}
 
-            {% set value = domains_values[id] is defined ? domains_values[id] : 0 %}
+            {% set value = domains_values[id] %}
 
             <div class="col-sm-3 domain" data-stepid="{{ id }}" data-jobval="{{ value }}">
                 <h4>
@@ -15,14 +20,29 @@
                 </h4>
                 <div class="btn-group">
                     {% for i in [0, 1, 2, 3, 5] %}
-                        <button type="button" data-change="{{ i }}" class="btn btn-inverse btn-xs">
-                            {%- if i == 0 -%}
-                                &#9734;
-                            {%- else -%}
-                                {%- for j in 1..i -%}
-                                    &#9733;
-                                {%- endfor -%}
-                            {%- endif -%}
+
+                        {% set selected = i == value %}
+
+                        {% set disabled =
+                            value == 5
+                            or (i == 3 and id not in secondary_domains and not show_all_secondary_domains)
+                            or (i == 5 and value != 5)
+                        %}
+
+                        {% set class -%}
+                            {{- value == i ? ' active' -}}
+                            {{- disabled ? ' disabled' -}}
+                        {%- endset %}
+                        <button type="button" data-change="{{ i }}" class="btn btn-inverse btn-xs {{ class }}">
+                            <span {{ disabled and not selected ? 'class="invisible"' }}>
+                                {%- if i == 0 -%}
+                                    &#9734;
+                                {%- else -%}
+                                    {%- for j in 1..i -%}
+                                       &#9733;
+                                    {%- endfor -%}
+                                {%- endif -%}
+                            </span>
                         </button>
                     {% endfor %}
                 </div>

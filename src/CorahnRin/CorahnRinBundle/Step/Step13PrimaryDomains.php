@@ -9,21 +9,34 @@ class Step13PrimaryDomains extends AbstractStepAction
      */
     public function execute()
     {
-        $allDomains = $this->em->getRepository('CorahnRinBundle:Domains')->findAllForGenerator();
-        $job        = $this->em->find('CorahnRinBundle:Jobs', $this->getCharacterProperty('02_job'));
-        $advantages = $this->getCharacterProperty('11_advantages');
+        $allDomains    = $this->em->getRepository('CorahnRinBundle:Domains')->findAllForGenerator();
+        $job           = $this->em->getRepository('CorahnRinBundle:Jobs')->findWithDomains($this->getCharacterProperty('02_job'));
+        $advantages    = $this->getCharacterProperty('11_advantages');
+        $mentor        = 1 === $advantages['advantages'][2]; // Mentor is advantage 2.
+        $scholar       = 1 === $advantages['advantages'][23]; // Scholar is advantage 23.
+        $domainsValues = $this->getCharacterProperty() ?: [];
 
-        // Mentor is advantage 2.
-        $mentor = 1 === $advantages['advantages'][2];
+        // Setup all values to 0 if unset.
+        foreach ($allDomains as $id => $domain) {
+            if (!array_key_exists($id, $domainsValues)) {
+                $domainsValues[$id] = 0;
+            }
+        }
 
-        // Scholar is advantage 23.
-        $scholar = 1 === $advantages['advantages'][23];
+        // Primary domain, impossible to change.
+        $domainsValues[$job->getDomainPrimary()->getId()] = 5;
 
-        $domainsValues = $this->getCharacterProperty();
+        // Determine secondary domains if applicable (some jobs don't have any).
+        $secondaryDomains = [];
+        foreach ($job->getDomainsSecondary() as $domain) {
+            $secondaryDomains[] = $domain->getId();
+        }
 
         return $this->renderCurrentStep([
-            'all_domains' => $allDomains,
-            'domains_values' => $domainsValues,
+            'job'               => $job,
+            'all_domains'       => $allDomains,
+            'domains_values'    => $domainsValues,
+            'secondary_domains' => $secondaryDomains,
         ]);
     }
 }
