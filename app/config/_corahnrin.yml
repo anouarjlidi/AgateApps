@@ -10,6 +10,12 @@ pierstoval_character_manager:
 
         02_job:
             action: corahnrin_generator.steps.step_02
+            onchange_clear:
+                - "13_primary_domains"
+                - "14_upgrade_domains"
+                - "15_bonus_domains"
+                - "16_disciplines"
+                - "17_combat_arts"
 
         03_birthplace:
             action: corahnrin_generator.steps.step_03
@@ -64,6 +70,7 @@ pierstoval_character_manager:
         13_primary_domains:
             action: corahnrin_generator.steps.step_13
             depends_on:
+                - "02_job"
                 - "08_ways"
                 - "11_advantages"
             onchange_clear:
