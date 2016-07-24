@@ -15,6 +15,7 @@
             {% set value = domains_values[id] %}
 
             <div class="col-sm-3 domain" data-stepid="{{ id }}" data-jobval="{{ value }}">
+                <input type="hidden" name="domains[{{ id }}]" value="{{ value }}">
                 <h4>
                     {{ domain.name }}
                 </h4>

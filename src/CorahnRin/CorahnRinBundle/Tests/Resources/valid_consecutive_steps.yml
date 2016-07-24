@@ -8,7 +8,7 @@
 02_job:
     next_step: 03_birthplace
     form_values:
-        # Job1: Arti*san
+        # Job1: Artisan
         job_value: 1
     session_value: 1
 
@@ -162,8 +162,32 @@
 # TODO
 13_primary_domains:
     next_step: 14_upgrade_domains
-    form_values: ~
-    session_value: ~
+    form_values:
+        domains:
+            2:  1 # Combat au contact
+            5:  1 # Milieu naturel
+            15: 2 # Voyage
+            16: 2 # Érudition
+            13: 3 # SCience
+
+    session_value:
+        values:
+            1:  5 # Artisanat
+            2:  1 # Combat au contact
+            3:  0
+            4:  0
+            5:  1 # Milieu naturel
+            6:  0
+            7:  0
+            8:  0
+            9:  0
+            10: 0
+            11: 0
+            12: 0
+            13: 3 # Science
+            14: 0
+            15: 2 # Voyage
+            16: 2 # Érudition
 
 # TODO
 14_upgrade_domains:
