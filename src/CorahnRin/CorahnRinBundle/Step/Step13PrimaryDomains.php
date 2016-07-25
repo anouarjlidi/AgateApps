@@ -95,21 +95,30 @@ class Step13PrimaryDomains extends AbstractStepAction
         $numberOf2 = 0;
         $numberOf3 = 0;
 
+        $error = false;
+
         foreach ($domainsValues as $id => $domainValue) {
             if (!array_key_exists($id, $this->allDomains)) {
                 $this->flashMessage('Les domaines envoyés sont invalides.');
+            }
+
+            if (!in_array($domainValue, [1, 2, 3], true)) {
+                $domainsValues[$id] = 0;
+                $domainValue = 0;
             }
 
             // If value is 3, it must be for a secondary domain.
             if (3 === $domainValue) {
                 if (!in_array($id, $this->secondaryDomains, true)) {
                     $this->flashMessage('La valeur 3 ne peut être donnée qu\'à l\'un des domaines de prédilection du métier choisi.');
-                    return false;
+                    $error = true;
+                    $domainsValues[$id] = 0;
                 }
                 $numberOf3++;
                 if ($numberOf3 > 1) {
                     $this->flashMessage('La valeur 3 ne peut être donnée qu\'une seule fois.');
-                    return false;
+                    $error = true;
+                    $domainsValues[$id] = 0;
                 }
             }
 
@@ -117,7 +126,8 @@ class Step13PrimaryDomains extends AbstractStepAction
                 $numberOf2++;
                 if ($numberOf2 > 2) {
                     $this->flashMessage('La valeur 2 ne peut être donnée que deux fois.');
-                    return false;
+                    $error = true;
+                    $domainsValues[$id] = 0;
                 }
             }
 
@@ -125,17 +135,33 @@ class Step13PrimaryDomains extends AbstractStepAction
                 $numberOf1++;
                 if ($numberOf1 > 2) {
                     $this->flashMessage('La valeur 1 ne peut être donnée que deux fois.');
-                    return false;
+                    $error = true;
+                    $domainsValues[$id] = 0;
                 }
             }
         }
 
+        if ($numberOf1 !== 2) {
+            $this->flashMessage('La valeur 1 doit être sélectionnée deux fois.');
+            $error = true;
+        }
+        if ($numberOf2 !== 2) {
+            $this->flashMessage('La valeur 2 doit être sélectionnée deux fois.');
+            $error = true;
+        }
+        if ($numberOf3 !== 1) {
+            $this->flashMessage('La valeur 3 doit être sélectionnée.');
+            $error = true;
+        }
+
         $this->domainsValues = $domainsValues;
 
-        $this->updateCharacterStep([
-            'values' => $this->domainsValues,
-        ]);
+        if (false === $error) {
+            $this->updateCharacterStep([
+                'values' => $this->domainsValues,
+            ]);
+        }
 
-        return true;
+        return !$error;
     }
 }

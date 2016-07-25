@@ -1,6 +1,6 @@
 
 /**
- * Advantage object type.
+ * Advantage immutable object type.
  *
  * @param object
  * @constructor
@@ -22,4 +22,5 @@ var Advantage = function(object) {
     this.isAdvantage  = !!object.isAdvantage;
     this.input        = object.input || null;
     this.label        = object.label || null;
+    Object.freeze(this);
 };
