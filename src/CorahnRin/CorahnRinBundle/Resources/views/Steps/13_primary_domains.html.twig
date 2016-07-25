@@ -9,6 +9,21 @@
 
     <h3>{{ job.name }}</h3>
 
+    <input type="hidden" name="ost" id="ost" value="{{ domains_values['ost'] }}">
+    <p class="alert alert-info">
+        {% trans with {"%button%": '<button type="button" class="btn btn-xs btn-inverse"><span class="fa fa-asterisk"></span></button>'} %}
+        Si votre personnage n'a pas effectué de <strong>service militaire</strong>, vous pouvez cliquer sur le bouton "%button%" afin d'obtenir un bonus de +1 à un autre domaine que "Combat au contact".
+        {% endtrans %}
+    </p>
+    {% if scholar %}
+        <input type="hidden" name="scholar" id="scholar">
+        <p class="alert alert-info">
+            {% trans with {"%button%": '<button type="button" class="btn btn-xs btn-inverse"><span class="fa fa-book"></span></button>'} %}
+            Vootre personnage possède l'avantage "Lettré", par conséquent vous pouvez cliquer sur le bouton "%button%" afin d'obtenir un bonus de +1 à ce domaine grâce à cet avantage.
+            {% endtrans %}
+        </p>
+    {% endif %}
+
     {# For jobs that have no secondary domain, we allow the user to choose any. #}
     {% set show_all_secondary_domains = (secondary_domains|length) == 0 %}
 
@@ -17,13 +32,23 @@
         <div class="row">
         {% for id, domain in domains_chunk %}
 
-            {% set value = domains_values[id] %}
+            {% set value = domains_values['domains'][id] %}
 
             <div class="col-sm-3 domain" data-domain-id="{{ id }}">
                 <input type="hidden" name="domains[{{ id }}]" value="{{ value }}">
                 <h4>
                     {{ domain.name }}
                 </h4>
+                <div class="suppl">
+                    <button type="button" data-type="ost" data-domain-id="{{ id }}" class="btn btn-inverse btn-sm {{ domains_values['ost'] == id ? 'active' }}" data-toggle="tooltip" title="{{ 'Service militaire' | trans }}">
+                        <span class="fa fa-asterisk"></span>
+                    </button>
+                    {% if scholar and id in scholar_domains_ids %}
+                        <button type="button" data-type="scholar" data-domain-id="{{ id }}" class="btn btn-inverse btn-sm" data-toggle="tooltip" title="{{ 'Utiliser l\'avantage "lettré"' | trans }}">
+                            <span class="fa fa-book"></span>
+                        </button>
+                    {% endif %}
+                </div>
                 <div class="btn-group">
                     {% for i in [0, 1, 2, 3, 5] %}
 

@@ -127,7 +127,9 @@ var config = {
             "src/CorahnRin/CorahnRinBundle/Resources/public/generator/js/step_11_advantages_process.js"
         ],
         "js/step_13_primary_domains.js": [
-            "src/CorahnRin/CorahnRinBundle/Resources/public/generator/js/step_13_primary_domains.js"
+            "src/CorahnRin/CorahnRinBundle/Resources/public/generator/js/step_13_primary_domains.js",
+            "src/CorahnRin/CorahnRinBundle/Resources/public/generator/js/step_13_ost.js",
+            "src/CorahnRin/CorahnRinBundle/Resources/public/generator/js/step_13_scholar.js"
         ]
     }
 };

@@ -2,6 +2,7 @@
 
 namespace CorahnRin\CorahnRinBundle\Step;
 
+use CorahnRin\CorahnRinBundle\Entity\Avantages;
 use CorahnRin\CorahnRinBundle\Entity\Domains;
 use CorahnRin\CorahnRinBundle\Entity\Jobs;
 
@@ -18,24 +19,26 @@ class Step13PrimaryDomains extends AbstractStepAction
     private $job;
 
     /**
-     * @var bool
-     */
-    private $mentor;
-
-    /**
+     * Determines whether the character can benefit from "Scholar" advantage.
+     *
      * @var bool
      */
     private $scholar;
 
     /**
-     * @var array[]
-     */
-    private $domainsValues;
-
-    /**
      * @var int[]
      */
     private $secondaryDomains;
+
+    /**
+     * Keys are the following:
+     * "domains":          domain_id=>domain_value
+     * "military_service": domain_id|null
+     * "scholar":          domain_id|null
+     *
+     * @var array[]
+     */
+    private $domainsValues;
 
     /**
      * {@inheritdoc}
@@ -44,15 +47,33 @@ class Step13PrimaryDomains extends AbstractStepAction
     {
         $this->allDomains    = $this->em->getRepository('CorahnRinBundle:Domains')->findAllForGenerator();
         $this->job           = $this->em->getRepository('CorahnRinBundle:Jobs')->findWithDomains($this->getCharacterProperty('02_job'));
-        $advantages          = $this->getCharacterProperty('11_advantages');
-        $this->mentor        = 1 === $advantages['advantages'][2]; // Mentor is advantage 2.
-        $this->scholar       = 1 === $advantages['advantages'][23]; // Scholar is advantage 23.
-        $this->domainsValues = $this->getCharacterProperty() ?: [];
+        $this->scholar       = 1 === $this->getCharacterProperty('11_advantages')['advantages'][23]; // Scholar is advantage 23.
+
+        // This makes sure that session is not polluted with wrong data.
+        $sessionValue = $this->getCharacterProperty() ?: [
+            'domains' => [],
+            'ost' => 2,
+            'scholar' => null,
+        ];
+        $this->domainsValues = [
+            'domains' => $sessionValue['domains'],
+            'ost' => $sessionValue['ost'],
+            'scholar' => $sessionValue['scholar'],
+        ];
+
+        if (!array_key_exists('domains', $this->domainsValues)) {
+            $this->domainsValues['domains'] = [];
+        }
+
+        if (!array_key_exists('ost', $this->domainsValues)) {
+            // Default "ost" value is 2: close fight.
+            $this->domainsValues['ost'] = 2;
+        }
 
         // Setup all values to 0 if unset.
         foreach ($this->allDomains as $id => $domain) {
-            if (!array_key_exists($id, $this->domainsValues)) {
-                $this->domainsValues[$id] = 0;
+            if (!array_key_exists($id, $this->domainsValues['domains'])) {
+                $this->domainsValues['domains'][$id] = 0;
             }
         }
 
@@ -66,14 +87,13 @@ class Step13PrimaryDomains extends AbstractStepAction
             return $this->nextStep();
         }
 
-        // Primary domain, impossible to change.
-        $this->domainsValues[$this->job->getDomainPrimary()->getId()] = 5;
-
         return $this->renderCurrentStep([
-            'job'               => $this->job,
-            'all_domains'       => $this->allDomains,
-            'domains_values'    => $this->domainsValues,
-            'secondary_domains' => $this->secondaryDomains,
+            'job'                 => $this->job,
+            'all_domains'         => $this->allDomains,
+            'domains_values'      => $this->domainsValues,
+            'secondary_domains'   => $this->secondaryDomains,
+            'scholar'             => $this->scholar,
+            'scholar_domains_ids' => Avantages::BONUS_SCHOLAR_DOMAINS,
         ]);
     }
 
@@ -82,12 +102,15 @@ class Step13PrimaryDomains extends AbstractStepAction
      */
     private function managePost()
     {
+        // Primary domain, impossible to change.
+        $this->domainsValues['domains'][$this->job->getDomainPrimary()->getId()] = 5;
+
         if (!$this->request->isMethod('POST')) {
             return false;
         }
 
-        $domainsValues = $this->request->request->get('domains');
-        $domainsValues = array_map('intval', $domainsValues);
+        /** @var int[] $domainsValues */
+        $domainsValues = (array) array_map('intval', $this->request->request->get('domains'));
 
         // There should be twice 1 and 2, and once 3.
         // We don't take 5 in account because it can never be replaced.
@@ -104,20 +127,20 @@ class Step13PrimaryDomains extends AbstractStepAction
 
             if (!in_array($domainValue, [1, 2, 3], true)) {
                 $domainsValues[$id] = 0;
-                $domainValue = 0;
+                $domainValue        = 0;
             }
 
             // If value is 3, it must be for a secondary domain.
             if (3 === $domainValue) {
                 if (!in_array($id, $this->secondaryDomains, true)) {
                     $this->flashMessage('La valeur 3 ne peut être donnée qu\'à l\'un des domaines de prédilection du métier choisi.');
-                    $error = true;
+                    $error              = true;
                     $domainsValues[$id] = 0;
                 }
                 $numberOf3++;
                 if ($numberOf3 > 1) {
                     $this->flashMessage('La valeur 3 ne peut être donnée qu\'une seule fois.');
-                    $error = true;
+                    $error              = true;
                     $domainsValues[$id] = 0;
                 }
             }
@@ -126,7 +149,7 @@ class Step13PrimaryDomains extends AbstractStepAction
                 $numberOf2++;
                 if ($numberOf2 > 2) {
                     $this->flashMessage('La valeur 2 ne peut être donnée que deux fois.');
-                    $error = true;
+                    $error              = true;
                     $domainsValues[$id] = 0;
                 }
             }
@@ -135,7 +158,7 @@ class Step13PrimaryDomains extends AbstractStepAction
                 $numberOf1++;
                 if ($numberOf1 > 2) {
                     $this->flashMessage('La valeur 1 ne peut être donnée que deux fois.');
-                    $error = true;
+                    $error              = true;
                     $domainsValues[$id] = 0;
                 }
             }
@@ -154,14 +177,74 @@ class Step13PrimaryDomains extends AbstractStepAction
             $error = true;
         }
 
-        $this->domainsValues = $domainsValues;
+        $this->domainsValues['domains'] = $domainsValues;
+
+        // These two don't throw error.
+        // Scholar is safe, and ost cannot really be hacked.
+        if (false === $this->checkScholar()) {
+            $error = true;
+        }
+        if (false === $this->checkOst()) {
+            $error = true;
+        }
+
+        // Reset again the primary domain, because impossible to change it.
+        $this->domainsValues['domains'][$this->job->getDomainPrimary()->getId()] = 5;
 
         if (false === $error) {
-            $this->updateCharacterStep([
-                'values' => $this->domainsValues,
-            ]);
+            $this->updateCharacterStep($this->domainsValues);
         }
 
         return !$error;
+    }
+
+    /**
+     * Makes sure that the "scholar" value is respected.
+     *
+     * @return bool False if any error occurs.
+     */
+    private function checkScholar()
+    {
+        $id = (int) $this->request->request->get('scholar');
+
+        $keyExists = $id
+            ? array_key_exists($id, $this->allDomains) && in_array($id, Avantages::BONUS_SCHOLAR_DOMAINS, true)
+            : null;
+
+        if (false === $this->scholar || null === $id || false === $keyExists) {
+            $this->domainsValues['scholar'] = null;
+            if (!$keyExists) {
+                $this->flashMessage('Le domaine spécifié pour l\'avantage Lettré n\'est pas valide.');
+                return false;
+            }
+        } else {
+            $this->domainsValues['scholar'] = $id;
+        }
+
+        return true;
+    }
+
+    /**
+     * Makes sure the "ost" domain is valid.
+     *
+     * @return bool False if any error occurs.
+     */
+    private function checkOst()
+    {
+        $id = (int) $this->request->request->get('ost');
+
+        $keyExists = $id ? array_key_exists($id, $this->allDomains) : null;
+
+        if (null === $id || false === $keyExists) {
+            $this->domainsValues['ost'] = 2; // Default value is 2
+            if (!$keyExists) {
+                $this->flashMessage('Le domaine spécifié pour le service d\'Ost n\'est pas valide.');
+                return false;
+            }
+        } else {
+            $this->domainsValues['ost'] = $id;
+        }
+
+        return true;
     }
 }

@@ -28,6 +28,15 @@ class Avantages
     const BONUS_SUR   = 'sur';
 
     /**
+     * Scholar advantage domain bonuses.
+     * 4: Magience.
+     * 7: Occultism.
+     * 13: Science.
+     * 16: Erudition.
+     */
+    const BONUS_SCHOLAR_DOMAINS = [4, 7, 13, 16];
+
+    /**
      * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
