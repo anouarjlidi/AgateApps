@@ -4,6 +4,7 @@ namespace EsterenMaps\MapsBundle\DoctrineListeners;
 
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
+use EsterenMaps\MapsBundle\Cache\CacheManager;
 use EsterenMaps\MapsBundle\Entity\Markers;
 use EsterenMaps\MapsBundle\Entity\MarkersTypes;
 use EsterenMaps\MapsBundle\Entity\Routes;
@@ -12,18 +13,17 @@ use EsterenMaps\MapsBundle\Entity\RoutesTypes;
 use EsterenMaps\MapsBundle\Entity\TransportTypes;
 use EsterenMaps\MapsBundle\Entity\Zones;
 use EsterenMaps\MapsBundle\Entity\ZonesTypes;
-use Symfony\Component\Filesystem\Filesystem;
 
 class CacheClearSubscriber implements EventSubscriber
 {
     /**
-     * @var string
+     * @var CacheManager
      */
-    protected $directionsCacheDir;
+    private $cacheService;
 
-    public function __construct($directionsCacheDir)
+    public function __construct(CacheManager $cacheService)
     {
-        $this->directionsCacheDir = $directionsCacheDir;
+        $this->cacheService = $cacheService;
     }
 
     /**
@@ -52,7 +52,7 @@ class CacheClearSubscriber implements EventSubscriber
         $entity = $args->getEntity();
 
         // Clear the map cache if the entity corresponds to a specific class.
-        if ((
+        if (
             $entity instanceof Routes
             || $entity instanceof RoutesTypes
             || $entity instanceof Markers
@@ -61,9 +61,8 @@ class CacheClearSubscriber implements EventSubscriber
             || $entity instanceof ZonesTypes
             || $entity instanceof TransportTypes
             || $entity instanceof RoutesTransports
-        ) && is_dir($this->directionsCacheDir)) {
-            $fs = new Filesystem();
-            $fs->remove($this->directionsCacheDir);
+        ) {
+            $this->cacheService->getAdapter()->deleteItem(CacheManager::CACHE_NAME);
         }
     }
 }

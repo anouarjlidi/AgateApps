@@ -18,7 +18,7 @@ class MarkersRepository extends BaseRepository
      * @param Maps           $map
      * @param TransportTypes $transportType
      *
-     * @return array
+     * @return array[][]
      */
     public function getAllWithRoutesArray(Maps $map, TransportTypes $transportType = null)
     {

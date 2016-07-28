@@ -3,6 +3,7 @@
 namespace EsterenMaps\MapsBundle\Services;
 
 use Doctrine\ORM\EntityManager;
+use EsterenMaps\MapsBundle\Cache\CacheManager;
 use EsterenMaps\MapsBundle\Entity\Maps;
 use EsterenMaps\MapsBundle\Entity\Markers;
 use EsterenMaps\MapsBundle\Entity\Routes;
@@ -20,56 +21,42 @@ class DirectionsManager
     /**
      * @var EntityManager
      */
-    protected $entityManager;
+    private $entityManager;
 
     /**
      * @var Serializer
      */
-    protected $serializer;
+    private $serializer;
 
     /**
      * @var TwigEngine
      */
-    protected $templating;
-
-    /**
-     * @var string
-     */
-    protected $cacheDir;
-
-    /**
-     * @var int
-     */
-    protected $cacheTTL;
+    private $templating;
 
     /**
      * @var bool
      */
-    protected $debug;
+    private $debug;
 
     /**
-     * @param string        $cacheDir
-     * @param int           $cacheTTL
+     * @var CacheManager
+     */
+    private $cache;
+
+    /**
      * @param bool          $debug
      * @param EntityManager $entityManager
      * @param Serializer    $serializer
-     *
-     * @throws \RuntimeException If the cache directory cannot be created.
+     * @param TwigEngine    $templating
+     * @param CacheManager  $cache
      */
-    public function __construct($cacheDir, $cacheTTL, $debug, EntityManager $entityManager, Serializer $serializer, TwigEngine $templating)
+    public function __construct($debug, EntityManager $entityManager, Serializer $serializer, TwigEngine $templating, CacheManager $cache)
     {
-        $this->cacheDir = rtrim($cacheDir, '/\\');
-        if (!is_dir($this->cacheDir)) {
-            if (!@mkdir($this->cacheDir, 0777, true) && !is_dir($this->cacheDir)) {
-                // This trick allows checking the directory first, then create it, and then re-check it if an error occured.
-                throw new \RuntimeException('Could not create cache directory for directions.');
-            }
-        }
-        $this->cacheTTL      = $cacheTTL;
         $this->debug         = $debug;
         $this->entityManager = $entityManager;
         $this->serializer    = $serializer;
         $this->templating    = $templating;
+        $this->cache         = $cache;
     }
 
     /**
@@ -83,11 +70,14 @@ class DirectionsManager
      */
     public function getDirections(Maps $map, Markers $start, Markers $end, $hoursPerDay = 7, TransportTypes $transportType = null)
     {
-        $cacheFile = $this->getCacheFile($map, $start, $end, $transportType);
-        $exists    = file_exists($cacheFile) && filemtime($cacheFile) > (time() - $this->cacheTTL);
+        $cacheHash = $this->generateDirectionHash($map, $start, $end, $transportType);
 
-        if (true === $exists && !$this->debug) {
-            $directions = json_decode(file_get_contents($cacheFile), true);
+        $cacheItem = $this->cache->getCacheItem();
+
+        // Get cache only in prod.
+        if (!$this->debug && null !== $cacheItem && $cacheItem->isHit()) {
+            $directions = json_decode($this->cache->getItemValue($cacheItem, $cacheHash), true);
+            $directions['from_cache'] = true;
         } else {
             $directions = $this->doGetDirections($map, $start, $end, $hoursPerDay, $transportType);
 
@@ -95,9 +85,10 @@ class DirectionsManager
 
             // Make the directions a full array
             $directions = json_decode($jsonString, true);
+            $directions['from_cache'] = false;
 
             // Save in the cache file
-            file_put_contents($cacheFile, $jsonString);
+            $this->cache->save($cacheHash, $jsonString);
         }
 
         return $directions;
@@ -112,21 +103,21 @@ class DirectionsManager
      *
      * @return array
      */
-    protected function doGetDirections(Maps $map, Markers $start, Markers $end, $hoursPerDay = 7, TransportTypes $transportType = null)
+    private function doGetDirections(Maps $map, Markers $start, Markers $end, $hoursPerDay = 7, TransportTypes $transportType = null)
     {
-
         /** @var MarkersRepository $repo */
         $repo = $this->entityManager->getRepository('EsterenMapsBundle:Markers');
 
+        /** @var array[][] $allMarkers */
         $allMarkers = $repo->getAllWithRoutesArray($map, $transportType);
 
         $nodes = [];
         $edges = [];
 
         /*
-         * Formatage des noeuds et des arcs pour une exploitation plus simple par l'algo de dijkstra.
-         * Nous avons ici une liste de marqueurs "start" et "end", ainsi que de routes
-         *   nous voulons des noeuds (marqueurs) et des arêtes (routes).
+         * Reformat nodes and edges for a better use of the Dijkstra algorithm.
+         * We here have a list of "start" and "end" markers, and routes.
+         * We need nodes (markers) and edges (routes).
          */
         foreach ($allMarkers as $marker) {
             $markerId         = (int) $marker['id'];
@@ -176,14 +167,21 @@ class DirectionsManager
         $paths = $this->dijkstra($nodes, $edges, (int) $start->getId(), (int) $end->getId());
 
         $routesIds     = array_values($paths);
-        $markersArray  = $this->entityManager->getRepository('EsterenMapsBundle:Markers')->findByIds(array_keys($paths));
-        $routesArray   = $this->entityManager->getRepository('EsterenMapsBundle:Routes')->findByIds($routesIds, true, true);
-        $routesObjects = $this->entityManager->getRepository('EsterenMapsBundle:Routes')->findByIds($routesIds, false, false);
+        $markersArray  = $this->entityManager->getRepository('EsterenMapsBundle:Markers')
+            ->findByIds(array_keys($paths))
+        ;
+        $routesArray   = $this->entityManager->getRepository('EsterenMapsBundle:Routes')
+            ->findByIds($routesIds, true, true)
+        ;
+        $routesObjects = $this->entityManager->getRepository('EsterenMapsBundle:Routes')
+            ->findByIds($routesIds, false, false)
+        ;
 
         $paths = $this->checkTransportType($paths, $routesObjects, $transportType);
 
         $steps = [];
 
+        // Remove unused fields
         foreach ($paths as $markerId => $routeId) {
             $marker          = $markersArray[$markerId];
             $marker['route'] = $routeId ? $routesArray[$routeId] : null;
@@ -222,15 +220,16 @@ class DirectionsManager
      *
      * @link http://codereview.stackexchange.com/questions/75641/dijkstras-algorithm-in-php
      *
-     * @param array $nodes
-     * @param array $edges
-     * @param int   $start
-     * @param int   $end
+     * @param array[][] $nodes
+     * @param array[][] $edges
+     * @param int       $start
+     * @param int       $end
      *
      * @return array
      */
-    protected function dijkstra($nodes, $edges, $start, $end)
+    private function dijkstra(array $nodes, array $edges, $start, $end)
     {
+        /** @var array[][] $distances */
         $distances = [];
 
         foreach ($nodes as $id => $node) {
@@ -245,7 +244,8 @@ class DirectionsManager
         //initialize the array for storing
         $S = [];//the nearest path with its parent and weight
         $Q = [];//the left nodes without the nearest path
-        foreach (array_keys($distances) as $val) {
+        $distanceKeys = array_keys($distances);
+        foreach ($distanceKeys as $val) {
             $Q[$val] = INF;
         }
         $Q[$start] = 0;
@@ -259,8 +259,8 @@ class DirectionsManager
             foreach ($distances[$min] as $key => $val) {
                 $dist = $val['distance'];
 
-                if (!empty($Q[$key]) && $Q[$min] + $dist < $Q[$key]) {
-                    $Q[$key] = $Q[$min] + $dist;
+                if (!empty($Q[$key]) && $Q[$min]+$dist < $Q[$key]) {
+                    $Q[$key] = $Q[$min]+$dist;
                     $S[$key] = [$min, $Q[$key]];
                 }
             }
@@ -283,7 +283,7 @@ class DirectionsManager
         $realPath = [];
 
         foreach ($path as $k => $nodeId) {
-            $next = isset($path[$k + 1]) ? $path[$k + 1] : null;
+            $next = isset($path[$k+1]) ? $path[$k+1] : null;
 
             $realPath[$nodeId] = null;
 
@@ -308,21 +308,6 @@ class DirectionsManager
     }
 
     /**
-     * @param Maps           $map
-     * @param Markers        $start
-     * @param Markers        $end
-     * @param TransportTypes $transportType
-     *
-     * @return array
-     */
-    protected function getCacheFile(Maps $map, Markers $start, Markers $end, TransportTypes $transportType = null)
-    {
-        $hash = md5($map->getId().$start->getId().$end->getId().($transportType ?: ''));
-
-        return $this->cacheDir.'/'.$hash.'.json';
-    }
-
-    /**
      * @param Markers        $from
      * @param Markers        $to
      * @param array[]        $directions
@@ -332,7 +317,7 @@ class DirectionsManager
      *
      * @return array
      */
-    protected function getDataArray(Markers $from, Markers $to, array $directions, array $routes, $hoursPerDay = 7, TransportTypes $transport = null)
+    private function getDataArray(Markers $from, Markers $to, array $directions, array $routes, $hoursPerDay = 7, TransportTypes $transport = null)
     {
         $distance = 0;
         $NE       = [];
@@ -341,6 +326,7 @@ class DirectionsManager
         foreach ($directions as $step) {
             $distance += ($step['route'] ? $step['route']['distance'] : 0);
             if ($step['route']) {
+                /** @var array $coords */
                 $coords = json_decode($step['route']['coordinates'], true);
                 foreach ($coords as $latLng) {
                     if (!isset($NE['lat']) || ($NE['lat'] < $latLng['lat'])) {
@@ -367,7 +353,7 @@ class DirectionsManager
             'transport'       => json_decode($this->serializer->serialize($transport, 'json', $this->createSerializationContext()), true),
             'bounds'          => ['northEast' => $NE, 'southWest' => $SW],
             'total_distance'  => $distance,
-            'number_of_steps' => count($directions) ? (count($directions) - 2) : 0,
+            'number_of_steps' => count($directions) ? (count($directions)-2) : 0,
             'start'           => $from,
             'end'             => $to,
             'path'            => $directions,
@@ -420,12 +406,12 @@ class DirectionsManager
      * @param int            $hoursPerDay
      * @param bool           $raw
      *
-     * @return int|null
+     * @return int[]|null
      */
     private function getTravelDuration(array $routes, TransportTypes $transport, $hoursPerDay = 7, $raw = true)
     {
         if (!$transport) {
-            return;
+            return null;
         }
 
         $total = 0;
@@ -441,11 +427,11 @@ class DirectionsManager
             if ($transportModifier) {
                 $percentage = (float) $transportModifier->getPercentage();
                 if ($transportModifier->isPositiveRatio()) {
-                    $speed = $transport->getSpeed() * ($percentage / 100);
+                    $speed = $transport->getSpeed()*($percentage/100);
                 } else {
-                    $speed = $transport->getSpeed() * ((100 - $percentage) / 100);
+                    $speed = $transport->getSpeed()*((100-$percentage)/100);
                 }
-                $hours = $distance / $speed;
+                $hours = $distance/$speed;
                 $total += $hours;
             } else {
                 continue;
@@ -453,7 +439,7 @@ class DirectionsManager
         }
 
         $hours   = (int) floor($total);
-        $minutes = (int) ceil(($total - $hours) * 100 * 60 / 100);
+        $minutes = (int) ceil(($total-$hours)*100*60/100);
 
         $interval = new \DateInterval('PT'.$hours.'H'.$minutes.'M');
         $start    = new \DateTime();
@@ -469,14 +455,29 @@ class DirectionsManager
         }
 
         // Here we'll try to convert hours into a more "realistic" travel time.
-        $realisticDays = $total / $hoursPerDay;
+        $realisticDays = $total/$hoursPerDay;
 
         $days  = (int) floor($realisticDays);
-        $hours = (float) number_format(($realisticDays - $days) * $hoursPerDay, 2);
+        $hours = (float) number_format(($realisticDays-$days)*$hoursPerDay, 2);
 
         return [
             'days'  => $days,
             'hours' => $hours,
         ];
+    }
+
+    /**
+     * Generates a unique hash based on all direction data.
+     *
+     * @param Maps                $map
+     * @param Markers             $start
+     * @param Markers             $end
+     * @param TransportTypes|null $transportType
+     *
+     * @return string
+     */
+    private function generateDirectionHash(Maps $map, Markers $start, Markers $end, TransportTypes $transportType = null)
+    {
+        return md5($map->getId().$start->getId().$end->getId().($transportType ?: ''));
     }
 }

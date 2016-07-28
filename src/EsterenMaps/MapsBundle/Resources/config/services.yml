@@ -14,12 +14,19 @@ services:
         tags:
             - { name: twig.extension }
 
+    # Cache manager
+    esterenmaps.cache:
+        class: EsterenMaps\MapsBundle\Cache\CacheManager
+        arguments:
+            - "%esterenmaps.directions.cache_ttl%"
+            - "@cache.app"
+
     # Repository as service
     esterenmaps.doctrine.repository:
         class: EsterenMaps\MapsBundle\Repository\MapsRepository
         factory:
-            - '@doctrine.orm.default_entity_manager'
-            - 'getRepository'
+            - "@doctrine.orm.default_entity_manager"
+            - "getRepository"
         arguments:
             - EsterenMaps\MapsBundle\Entity\Maps
 
@@ -57,21 +64,27 @@ services:
         public: false
         lazy: true
         arguments:
-            - "%esterenmaps.directions.cache_dir%"
-            - "%esterenmaps.directions.cache_ttl%"
             - "%kernel.debug%"
             - "@doctrine.orm.default_entity_manager"
             - "@jms_serializer"
             - "@templating"
+            - "@esterenmaps.cache"
 
     esterenmaps.coordinates_manager:
         class: EsterenMaps\MapsBundle\Services\CoordinatesManager
         public: false
         lazy: true
 
-    esterenmaps.subscriber.cache_clear:
+    esterenmaps.doctrine_subscriber.cache_clear:
         class: EsterenMaps\MapsBundle\DoctrineListeners\CacheClearSubscriber
         arguments:
-            - "%esterenmaps.directions.cache_dir%"
+            - "@esterenmaps.cache"
         tags:
             - { name: doctrine.event_subscriber, connection: default }
+
+    esterenmaps.cache_clearer.directions:
+        class: EsterenMaps\MapsBundle\Cache\DirectionsCacheClearer
+        arguments:
+            - "@esterenmaps.cache"
+        tags:
+            - { name: kernel.cache_clearer }
