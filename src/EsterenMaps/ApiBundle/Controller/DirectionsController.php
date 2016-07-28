@@ -24,7 +24,7 @@ class DirectionsController extends Controller
      */
     public function getDirectionsAction(Maps $map, Markers $from, Markers $to, Request $request)
     {
-        $this->container->get('pierstoval.api.origin_checker')->checkRequest($request);
+        $this->get('pierstoval.api.origin_checker')->checkRequest($request);
 
         $code = 200;
 
@@ -37,7 +37,7 @@ class DirectionsController extends Controller
             $directions = $this->getError($from, $to, $transportId, 'Transport not found.');
             $code       = 404;
         } else {
-            $directions = $this->container->get('esterenmaps')->getDirectionsManager()->getDirections($map, $from, $to, $hoursPerDay, $transport);
+            $directions = $this->get('esterenmaps')->getDirectionsManager()->getDirections($map, $from, $to, $hoursPerDay, $transport);
             if (!count($directions)) {
                 $directions = $this->getError($from, $to);
                 $code       = 404;

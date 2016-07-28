@@ -160,7 +160,7 @@ class Routes
      *
      * @param string $id
      *
-     * @return $this
+     * @return Routes
      */
     public function setId($id)
     {
@@ -174,7 +174,7 @@ class Routes
      *
      * @param string $name
      *
-     * @return $this
+     * @return Routes
      */
     public function setName($name)
     {
@@ -204,7 +204,7 @@ class Routes
     /**
      * @param string $description
      *
-     * @return $this
+     * @return Routes
      */
     public function setDescription($description)
     {
@@ -218,7 +218,7 @@ class Routes
      *
      * @param string $coordinates
      *
-     * @return $this
+     * @return Routes
      */
     public function setCoordinates($coordinates)
     {
@@ -244,7 +244,7 @@ class Routes
      *
      * @param Resources $resources
      *
-     * @return $this
+     * @return Routes
      */
     public function addResource(Resources $resources)
     {
@@ -278,7 +278,7 @@ class Routes
      *
      * @param Maps $map
      *
-     * @return $this
+     * @return Routes
      */
     public function setMap(Maps $map = null)
     {
@@ -302,7 +302,7 @@ class Routes
      *
      * @param Factions $faction
      *
-     * @return $this
+     * @return Routes
      */
     public function setFaction(Factions $faction = null)
     {
@@ -326,7 +326,7 @@ class Routes
      *
      * @param RoutesTypes $routeType
      *
-     * @return $this
+     * @return Routes
      */
     public function setRouteType(RoutesTypes $routeType = null)
     {
@@ -338,7 +338,7 @@ class Routes
     /**
      * Get routeType.
      *
-     * @return $thisTypes
+     * @return RoutesTypes
      */
     public function getRouteType()
     {
@@ -350,7 +350,7 @@ class Routes
      *
      * @param Markers $markerStart
      *
-     * @return $this
+     * @return Routes
      */
     public function setMarkerStart(Markers $markerStart = null)
     {
@@ -374,7 +374,7 @@ class Routes
      *
      * @param Markers $markerEnd
      *
-     * @return $this
+     * @return Routes
      */
     public function setMarkerEnd(Markers $markerEnd = null)
     {
@@ -404,7 +404,7 @@ class Routes
     /**
      * @param int $distance
      *
-     * @return $this
+     * @return Routes
      */
     public function setDistance($distance)
     {
@@ -424,7 +424,7 @@ class Routes
     /**
      * @param int $forcedDistance
      *
-     * @return $this
+     * @return Routes
      */
     public function setForcedDistance($forcedDistance)
     {
@@ -444,7 +444,7 @@ class Routes
     /**
      * @param bool $guarded
      *
-     * @return $this
+     * @return Routes
      */
     public function setGuarded($guarded)
     {
@@ -475,7 +475,7 @@ class Routes
      * @ORM\PrePersist
      * @ORM\PreUpdate
      *
-     * @return $this
+     * @return Routes
      */
     public function refresh()
     {

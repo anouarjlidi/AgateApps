@@ -21,7 +21,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\PropertyAccess\PropertyAccess;
+use Symfony\Component\PropertyAccess\PropertyAccessor;
 
 class ImportTiddlyWikiCommand extends ContainerAwareCommand
 {
@@ -56,37 +56,37 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
     private $maps = [];
 
     /**
-     * @var Factions[]
+     * @var Factions[][]
      */
     private $factions = [];
 
     /**
-     * @var MarkersTypes[]
+     * @var MarkersTypes[][]
      */
     private $markersTypes = [];
 
     /**
-     * @var ZonesTypes[]
+     * @var ZonesTypes[][]
      */
     private $zonesTypes = [];
 
     /**
-     * @var RoutesTypes[]
+     * @var RoutesTypes[][]
      */
     private $routesTypes = [];
 
     /**
-     * @var Routes[]
+     * @var Routes[][]
      */
     private $routes = [];
 
     /**
-     * @var Zones[]
+     * @var Zones[][]
      */
     private $zones = [];
 
     /**
-     * @var Markers[]
+     * @var Markers[][]
      */
     private $markers = [];
 
@@ -94,6 +94,11 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
      * @var array
      */
     private $repos = [];
+
+    /**
+     * @var PropertyAccessor
+     */
+    private $propertyAccessor;
 
     /**
      * {@inheritdoc}
@@ -120,6 +125,8 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
 
         $this->dryRun = !$input->getOption('force');
 
+        $this->propertyAccessor = $this->getContainer()->get('property_accessor');
+
         $file = $input->getArgument('file');
 
         $data     = file_get_contents($file);
@@ -130,13 +137,14 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
         }
 
         if (!$data) {
-            throw new \Exception('Tiddly wiki content could not be retrieved.');
+            throw new \InvalidArgumentException('Tiddly wiki content could not be retrieved.');
         }
 
+        /** @var array $data */
         $data = json_decode($data, true);
 
         if (!$data) {
-            throw new \Exception('Json error while decoding: <error>'.json_last_error_msg().'</error>.');
+            throw new \InvalidArgumentException('Json error while decoding: <error>'.json_last_error_msg().'</error>.');
         }
 
         $this->em  = $this->getContainer()->get('doctrine')->getManager();
@@ -196,7 +204,7 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
         $uow->computeChangeSets();
 
         foreach ($allData as $object) {
-            $changesets   = $uow->getEntityChangeset($object);
+            $changesets   = $uow->getEntityChangeSet($object);
             $changesetsNb = 0;
             $class        = get_class($object);
 
@@ -295,8 +303,6 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
         /** @var Markers[]|Zones[]|Routes[] $objects */
         $objects = $repo->findAllRoot('id');
 
-        $accessor = PropertyAccess::createPropertyAccessor();
-
         foreach ($data as $datum) {
             $object = null;
 
@@ -317,7 +323,7 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
                 $new[$id] = $object;
             }
 
-            $accessor->setValue($object, $nameProperty, $datum['title']);
+            $this->propertyAccessor->setValue($object, $nameProperty, $datum['title']);
 
             $this->em->persist($object);
         }
@@ -354,8 +360,6 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
         /** @var Markers[]|Zones[]|Routes[] $objects */
         $objects = $repo->findAllRoot(true);
 
-        $accessor = PropertyAccess::createPropertyAccessor();
-
         foreach ($data as $datum) {
             $object = null;
 
@@ -376,7 +380,7 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
                 $new[$id] = $object;
             }
 
-            $accessor->setValue($object, 'name', $datum['title']);
+            $this->propertyAccessor->setValue($object, 'name', $datum['title']);
 
             $this->updateOneObject($object, $datum);
 
