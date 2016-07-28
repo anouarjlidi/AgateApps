@@ -113,7 +113,19 @@ var config = {
             "web/components/leaflet/dist/leaflet-src.js",
             "web/components/leaflet-sidebar/src/L.Control.Sidebar.js",
             "web/components/leaflet-draw/dist/leaflet.draw-src.js",
-            "src/EsterenMaps/MapsBundle/Resources/public/js/EsterenMap/*.js"
+            "src/EsterenMaps/MapsBundle/Resources/public/js/EsterenMap/1_EsterenMap.js",
+            "src/EsterenMaps/MapsBundle/Resources/public/js/EsterenMap/1_EsterenMap.load.js",
+            "src/EsterenMaps/MapsBundle/Resources/public/js/EsterenMap/2_EsterenMap_CRS_XY.js",
+            "src/EsterenMaps/MapsBundle/Resources/public/js/EsterenMap/2_EsterenMap_directions.js",
+            "src/EsterenMaps/MapsBundle/Resources/public/js/EsterenMap/2_EsterenMap_LatLngBounds.js",
+            "src/EsterenMaps/MapsBundle/Resources/public/js/EsterenMap/3_EsterenMap_ActivateLeafletDraw.js",
+            "src/EsterenMaps/MapsBundle/Resources/public/js/EsterenMap/3_EsterenMap_options.js",
+            "src/EsterenMaps/MapsBundle/Resources/public/js/EsterenMap/4_EsterenMap_addMarker.js",
+            "src/EsterenMaps/MapsBundle/Resources/public/js/EsterenMap/4_EsterenMap_addPolygon.js",
+            "src/EsterenMaps/MapsBundle/Resources/public/js/EsterenMap/4_EsterenMap_addPolyline.js",
+            "src/EsterenMaps/MapsBundle/Resources/public/js/EsterenMap/4_EsterenMap_filters.js",
+            "src/EsterenMaps/MapsBundle/Resources/public/js/EsterenMap/4_EsterenMap_search_engine.js",
+            "src/EsterenMaps/MapsBundle/Resources/public/js/EsterenMap/5_EsterenMap_mapEdit.js"
         ],
         "js/generator.js": [
             "src/CorahnRin/CorahnRinBundle/Resources/public/generator/js/main_steps.js"
