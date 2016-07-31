@@ -163,6 +163,7 @@
 13_primary_domains:
     next_step: 14_upgrade_domains
     form_values:
+        ost: 2
         domains:
             2:  1 # Combat au contact
             5:  1 # Milieu naturel
@@ -171,7 +172,9 @@
             13: 3 # SCience
 
     session_value:
-        values:
+        ost: 2
+        scholar: 0
+        domains:
             1:  5 # Artisanat
             2:  1 # Combat au contact
             3:  0

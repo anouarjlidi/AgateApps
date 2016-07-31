@@ -205,13 +205,19 @@ class Step13PrimaryDomains extends AbstractStepAction
      */
     private function checkScholar()
     {
+        // Don't manage scholar value if don't have the advantage.
+        if (false === $this->scholar) {
+            $this->domainsValues['scholar'] = null;
+            return true;
+        }
+
         $id = (int) $this->request->request->get('scholar');
 
         $keyExists = $id
             ? array_key_exists($id, $this->allDomains) && in_array($id, Avantages::BONUS_SCHOLAR_DOMAINS, true)
             : null;
 
-        if (false === $this->scholar || null === $id || false === $keyExists) {
+        if (null === $id || false === $keyExists) {
             $this->domainsValues['scholar'] = null;
             if (!$keyExists) {
                 $this->flashMessage('Le domaine spécifié pour l\'avantage Lettré n\'est pas valide.');
