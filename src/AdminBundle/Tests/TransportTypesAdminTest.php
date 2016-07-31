@@ -42,7 +42,7 @@ class TransportTypesAdminTest extends AbstractEasyAdminTest
      */
     public function provideNewFormData()
     {
-        // TODO
+        return false;
     }
 
     /**
@@ -50,6 +50,6 @@ class TransportTypesAdminTest extends AbstractEasyAdminTest
      */
     public function provideEditFormData()
     {
-        // TODO
+        return false;
     }
 }

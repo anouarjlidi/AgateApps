@@ -41,7 +41,7 @@ class FactionsAdminTest extends AbstractEasyAdminTest
      */
     public function provideNewFormData()
     {
-        // TODO
+        return false;
     }
 
     /**
@@ -49,6 +49,6 @@ class FactionsAdminTest extends AbstractEasyAdminTest
      */
     public function provideEditFormData()
     {
-        // TODO
+        return false;
     }
 }

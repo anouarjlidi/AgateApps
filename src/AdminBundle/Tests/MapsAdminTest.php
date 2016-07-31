@@ -44,7 +44,7 @@ class MapsAdminTest extends AbstractEasyAdminTest
      */
     public function provideNewFormData()
     {
-        // TODO
+        return false;
     }
 
     /**
@@ -52,6 +52,6 @@ class MapsAdminTest extends AbstractEasyAdminTest
      */
     public function provideEditFormData()
     {
-        // TODO
+        return false;
     }
 }
