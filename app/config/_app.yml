@@ -195,6 +195,7 @@ ivory_ck_editor:
     default_config: base_config
     configs:
         base_config:
+            language: '%locale%'
             toolbar:
                 - { name: "basicstyles", items: [ "Bold", "Italic", "Underline", "Strike", "Subscript", "Superscript", "-", "RemoveFormat" ] }
                 - { name: "links", items: [ "Link", "Unlink", "Anchor" ] }
