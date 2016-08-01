@@ -5,6 +5,10 @@ namespace EsterenMaps\MapsBundle\Cache;
 use Symfony\Component\Cache\Adapter\AdapterInterface;
 use Symfony\Component\Cache\CacheItem;
 
+/**
+ * Standalone service to manage cache for EsterenMaps.
+ * At first it's for Directions, but can be extended to other systems.
+ */
 class CacheManager
 {
     const CACHE_NAME = 'esterenmaps';

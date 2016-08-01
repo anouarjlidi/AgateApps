@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of the corahn_rin package.
  *
@@ -12,6 +13,9 @@ namespace EsterenMaps\MapsBundle\Cache;
 
 use Symfony\Component\HttpKernel\CacheClearer\CacheClearerInterface;
 
+/**
+ * Listener executed on cache:clear command to empty the Directions cache.
+ */
 class DirectionsCacheClearer implements CacheClearerInterface
 {
     /**
@@ -19,9 +23,6 @@ class DirectionsCacheClearer implements CacheClearerInterface
      */
     private $cache;
 
-    /**
-     * DirectionsCacheClearer constructor.
-     */
     public function __construct(CacheManager $cache)
     {
         $this->cache = $cache;

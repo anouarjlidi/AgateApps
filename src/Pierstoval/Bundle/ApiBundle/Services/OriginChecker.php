@@ -65,7 +65,7 @@ class OriginChecker
     {
         if ($headers->has('Origin')) {
             $origin = $headers->get('Origin');
-            $origin = preg_replace('~https?://~isUu', '', $origin);
+            $origin = preg_replace('~https?://~iUu', '', $origin);
             $origin = trim($origin, '/');
             // Checks if the header corresponds to an allowed origin
             foreach ($this->allowedOrigins as $address) {
