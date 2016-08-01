@@ -87,7 +87,7 @@ class MapsTilesManager
     /**
      * @param Maps $map
      *
-     * @return $this
+     * @return MapsTilesManager
      *
      * @throws Exception
      */

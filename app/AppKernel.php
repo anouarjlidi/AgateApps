@@ -37,7 +37,6 @@ class AppKernel extends Kernel
 
             // Esteren Maps
             new EsterenMaps\MapsBundle\EsterenMapsBundle(),
-            new EsterenMaps\ApiBundle\EsterenMapsApiBundle(),
 
             // Pierstoval's tools
             new Orbitale\Bundle\CmsBundle\OrbitaleCmsBundle(),

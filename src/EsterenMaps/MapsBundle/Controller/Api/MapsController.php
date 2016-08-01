@@ -1,6 +1,6 @@
 <?php
 
-namespace EsterenMaps\ApiBundle\Controller;
+namespace EsterenMaps\MapsBundle\Controller\Api;
 
 use Doctrine\ORM\EntityManager;
 use EsterenMaps\MapsBundle\Entity\Maps;
@@ -16,7 +16,7 @@ class MapsController extends Controller
     /**
      * @Route("/maps/settings/{id}.{_format}",
      *      requirements={"id":"\d+","_format":"json"},
-     *      defaults={"_format":"json"}, host="%esteren_domains.api%",
+     *      defaults={"_format":"json"},
      *      name="esterenmaps_api_maps_settings_distant"
      * )
      * @Method("GET")
@@ -38,30 +38,30 @@ class MapsController extends Controller
         $factions     = $em->getRepository('EsterenMapsBundle:Factions')->findBy([], ['name' => 'asc']);
 
         if ($request->query->get('editMode') === 'true') {
-            $data['LeafletPopupMarkerBaseContent'] = $this->renderView('EsterenMapsApiBundle:Maps:popupContentMarkerEditMode.html.twig', [
+            $data['LeafletPopupMarkerBaseContent'] = $this->renderView('@EsterenMaps/Api/popupContentMarkerEditMode.html.twig', [
                 'markersTypes' => $markersTypes,
                 'factions'     => $factions,
             ]);
-            $data['LeafletPopupPolylineBaseContent'] = $this->renderView('EsterenMapsApiBundle:Maps:popupContentPolylineEditMode.html.twig', [
+            $data['LeafletPopupPolylineBaseContent'] = $this->renderView('@EsterenMaps/Api/popupContentPolylineEditMode.html.twig', [
                 'markers'     => $map->getMarkers(),
                 'routesTypes' => $routesTypes,
                 'factions'    => $factions,
             ]);
-            $data['LeafletPopupPolygonBaseContent'] = $this->renderView('EsterenMapsApiBundle:Maps:popupContentPolygonEditMode.html.twig', [
+            $data['LeafletPopupPolygonBaseContent'] = $this->renderView('@EsterenMaps/Api/popupContentPolygonEditMode.html.twig', [
                 'factions'   => $factions,
                 'zonesTypes' => $zonesTypes,
             ]);
         } else {
-            $data['LeafletPopupMarkerBaseContent'] = $this->renderView('EsterenMapsApiBundle:Maps:popupContentMarker.html.twig', [
+            $data['LeafletPopupMarkerBaseContent'] = $this->renderView('@EsterenMaps/Api/popupContentMarker.html.twig', [
                 'markersTypes' => $markersTypes,
                 'factions'     => $factions,
             ]);
-            $data['LeafletPopupPolylineBaseContent'] = $this->renderView('EsterenMapsApiBundle:Maps:popupContentPolyline.html.twig', [
+            $data['LeafletPopupPolylineBaseContent'] = $this->renderView('@EsterenMaps/Api/popupContentPolyline.html.twig', [
                 'markers'     => $map->getMarkers(),
                 'routesTypes' => $routesTypes,
                 'factions'    => $factions,
             ]);
-            $data['LeafletPopupPolygonBaseContent'] = $this->renderView('EsterenMapsApiBundle:Maps:popupContentPolygon.html.twig', [
+            $data['LeafletPopupPolygonBaseContent'] = $this->renderView('@EsterenMaps/Api/popupContentPolygon.html.twig', [
                 'factions'   => $factions,
                 'zonesTypes' => $zonesTypes,
             ]);

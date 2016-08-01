@@ -1,8 +1,8 @@
 <?php
 
-namespace EsterenMaps\ApiBundle\Controller;
+namespace EsterenMaps\MapsBundle\Controller\Api;
 
-use EsterenMaps\ApiBundle\Form\MapImageType;
+use EsterenMaps\MapsBundle\Form\MapImageType;
 use EsterenMaps\MapsBundle\Entity\Maps;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -16,7 +16,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class TilesController extends Controller
 {
     /**
-     * @Route("/maps/image/{id}", requirements={"id":"\d+"}, host="%esteren_domains.api%", name="esterenmaps_generate_map_image")
+     * @Route("/maps/image/{id}", requirements={"id":"\d+"}, name="esterenmaps_generate_map_image")
      * @Cache(expires="+1 day", public=true)
      * @Method("GET")
      *
@@ -68,7 +68,7 @@ class TilesController extends Controller
     }
 
     /**
-     * @Route("/maps/tile/{id}/{zoom}/{x}/{y}.jpg", requirements={"id":"\d+"}, host="%esteren_domains.api%", name="esterenmaps_api_tiles")
+     * @Route("/maps/tile/{id}/{zoom}/{x}/{y}.jpg", requirements={"id":"\d+"}, name="esterenmaps_api_tiles")
      * @Cache(maxage="864000", expires="+10 days")
      *
      * @param Maps $map

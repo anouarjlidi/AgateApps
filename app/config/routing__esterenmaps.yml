@@ -3,5 +3,6 @@ esterenmaps:
     type:     annotation
 
 esterenmaps_api:
-    resource: "@EsterenMapsApiBundle/Controller/"
+    resource: "@EsterenMapsBundle/Controller/Api/"
     type:     annotation
+    host:     '%esteren_domains.api%'

@@ -1,6 +1,6 @@
 <?php
 
-namespace EsterenMaps\ApiBundle\Controller;
+namespace EsterenMaps\MapsBundle\Controller\Api;
 
 use EsterenMaps\MapsBundle\Entity\Maps;
 use EsterenMaps\MapsBundle\Entity\Markers;
@@ -16,11 +16,18 @@ use Symfony\Component\HttpFoundation\Request;
 class DirectionsController extends Controller
 {
     /**
-     * @Route("/maps/directions/{id}/{from}/{to}", name="esterenmaps_directions", requirements={"id":"\d+", "from":"\d+", "to":"\d+"}, host="%esteren_domains.api%")
+     * @Route("/maps/directions/{id}/{from}/{to}", name="esterenmaps_directions", requirements={"id":"\d+", "from":"\d+", "to":"\d+"})
      * @Method("GET")
      * @ParamConverter(name="from", class="EsterenMapsBundle:Markers", options={"id": "from"})
      * @ParamConverter(name="to", class="EsterenMapsBundle:Markers", options={"id": "to"})
      * @-Cache(public=true, maxage=3600)
+     *
+     * @param Maps    $map
+     * @param Markers $from
+     * @param Markers $to
+     * @param Request $request
+     *
+     * @return JsonResponse
      */
     public function getDirectionsAction(Maps $map, Markers $from, Markers $to, Request $request)
     {

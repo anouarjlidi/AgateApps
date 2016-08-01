@@ -1,8 +1,9 @@
 <?php
 
-namespace EsterenMaps\ApiBundle\Form;
+namespace EsterenMaps\MapsBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -21,7 +22,7 @@ class MapImageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('ratio', 'integer',
+            ->add('ratio', IntegerType::class,
                 [
                     'constraints' => [
                         new Type(['type' => 'integer']),
@@ -29,7 +30,7 @@ class MapImageType extends AbstractType
                     ],
                 ]
             )
-            ->add('width', 'integer',
+            ->add('width', IntegerType::class,
                 [
                     'constraints' => [
                         new Type(['type' => 'integer']),
@@ -38,7 +39,7 @@ class MapImageType extends AbstractType
                     ],
                 ]
             )
-            ->add('height', 'integer',
+            ->add('height', IntegerType::class,
                 [
                     'constraints' => [
                         new Type(['type' => 'integer']),
@@ -47,9 +48,15 @@ class MapImageType extends AbstractType
                     ],
                 ]
             )
-            ->add('x', 'integer', ['constraints' => [new Type(['type' => 'integer'])]])
-            ->add('y', 'integer', ['constraints' => [new Type(['type' => 'integer'])]])
-            ->add('withImages', 'checkbox', ['constraints' => [new Type(['type' => 'boolean'])]])
+            ->add('x', IntegerType::class, [
+                'constraints' => [new Type(['type' => 'integer'])],
+            ])
+            ->add('y', IntegerType::class, [
+                'constraints' => [new Type(['type' => 'integer'])],
+            ])
+            ->add('withImages', IntegerType::class, [
+                'constraints' => [new Type(['type' => 'boolean'])],
+            ])
         ;
     }
 
