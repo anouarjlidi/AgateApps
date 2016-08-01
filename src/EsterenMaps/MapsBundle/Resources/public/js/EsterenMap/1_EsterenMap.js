@@ -1,12 +1,12 @@
 (function($, L, d, w){
 
     /**
-     * @param {object} user_mapOptions
+     * @param {object} userMapOptions
      * @returns {EsterenMap}
      * @this {EsterenMap}
      * @constructor
      */
-    var EsterenMap = function (user_mapOptions) {
+    var EsterenMap = function (userMapOptions) {
 
         // Données utilisées dans le scope de la classe
         var _this = this, ajaxD;
@@ -14,13 +14,10 @@
         // Force CANVAS
         w.L_PREFER_CANVAS = true;
 
-        if (!user_mapOptions.id) {
+        if (!userMapOptions.id) {
             console.error('Map id must be defined');
             return _this;
         }
-
-        // Force le clonage des options pour ne pas altérer le prototype
-        this._mapOptions = this.options();
 
         if ( !(this instanceof EsterenMap) ) {
             console.error('Wrong scope check, incorrect instance.');
@@ -34,8 +31,8 @@
         }
 
         // Merge des options de base
-        if (user_mapOptions){
-            this._mapOptions = mergeRecursive(this._mapOptions, user_mapOptions);
+        if (userMapOptions){
+            this._mapOptions = this.cloneObject(this._mapOptions, userMapOptions);
         }
 
         if (!d.getElementById(this._mapOptions.container)) {
@@ -66,8 +63,8 @@
         d.initializedEsterenMap = true;
 
         // Formatage de l'url d'API qui doit utiliser l'ID de la map
-        this._mapOptions.apiUrls.tiles = this.options().apiUrls.tiles.replace('{id}', ''+this.options().id);
-        mapOptions = this.options();
+        this._mapOptions.apiUrls.tiles = this._mapOptions.apiUrls.tiles.replace('{id}', ''+this._mapOptions.id);
+        mapOptions = this._mapOptions;
 
         // Reset du wrapper avant création de la map
         // Force la redimension du wrapper lors de la redimension de la page
@@ -168,6 +165,9 @@
             mapOptions.loadedCallback.call(this);
         }
 
+        this._mapOptions = this.cloneObject(this._mapOptions);
+
+        Object.freeze(this._mapOptions);
     };
 
     EsterenMap.prototype.message = function(message, type, messageElement, disappearTimeout) {
@@ -256,14 +256,14 @@
         }
 
         return this._load(
-            ["maps","settings",this.options().id],
+            ["maps","settings",this._mapOptions.id],
             ajaxD,
             "GET",
             function(response){
                 //callback "success"
                 _this.mapAllowedElements.settings = false;// Désactive les settings une fois chargés
                 if (response.settings) {
-                    _this._mapOptions = mergeRecursive(_this._mapOptions, response.settings);
+                    _this._mapOptions = _this.cloneObject(_this._mapOptions, response.settings);
                     _this._initialize();
                 } else {
                     console.error('Map couldn\'t initialize because settings response was not correct.');
@@ -278,17 +278,17 @@
     };
 
     EsterenMap.prototype.loadMarkers = function(){
-        var mapOptions = this.options();
+        var mapOptions = this._mapOptions;
         return this._load(["maps",mapOptions.id,"markers"], null, null, mapOptions.loaderCallbacks.markers);
     };
 
     EsterenMap.prototype.loadRoutes = function(){
-        var mapOptions = this.options();
+        var mapOptions = this._mapOptions;
         return this._load(["maps",mapOptions.id,"routes"], null, null, mapOptions.loaderCallbacks.routes);
     };
 
     EsterenMap.prototype.loadZones = function(){
-        var mapOptions = this.options();
+        var mapOptions = this._mapOptions;
         return this._load(["maps",mapOptions.id,"zones"], null, null, mapOptions.loaderCallbacks.zones);
     };
 
@@ -389,9 +389,9 @@
     EsterenMap.prototype.resetHeight = function(height) {
         // Remet la valeur de la hauteur de façon correcte par rapport au navigateur.
         if (height) {
-            $(d.getElementById(this.options().container)).height(height);
+            $(d.getElementById(this._mapOptions.container)).height(height);
         } else {
-            $(d.getElementById(this.options().container)).height(
+            $(d.getElementById(this._mapOptions.container)).height(
                   $(w).height()
                 - $('#footer').outerHeight(true)
                 - $('#navigation').outerHeight(true)

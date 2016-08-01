@@ -6,7 +6,7 @@
      */
     EsterenMap.prototype.activateLeafletDraw = function(){
         var _this = this,
-            mapOptions = this.options(),
+            mapOptions = this._mapOptions,
             drawControl, drawnItems, styleTag
         ;
 
@@ -48,7 +48,7 @@
         this._map.on('draw:created', function(event) {
             var type = event.layerType,
                 layer = event.layer,
-                mapOptions = _this.options(),
+                mapOptions = _this._mapOptions,
                 latlng,
                 popupContent,
                 options,

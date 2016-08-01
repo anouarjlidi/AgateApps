@@ -140,7 +140,7 @@
             callbackMessageType = 'success',
             id = esterenRoute.id || null;
         if (esterenRoute && this._map && !this.launched && esterenRoute.marker_start && esterenRoute.marker_end) {
-            esterenRoute.map = esterenRoute.map || {id: this._esterenMap.options().id };
+            esterenRoute.map = esterenRoute.map || {id: this._esterenMap._mapOptions.id };
             esterenRoute.coordinates = JSON.stringify(this._latlngs ? this._latlngs : {});
             esterenRoute.route_type = { id: esterenRoute.route_type.id };
             esterenRoute.marker_start = { id: esterenRoute.marker_start.id };
@@ -356,7 +356,7 @@
     EsterenMap.prototype._mapOptions.loaderCallbacks.routes = function(response){
         var routes, i, route,
             finalOptions,finalLeafletOptions,
-            mapOptions = this.options(),
+            mapOptions = this._mapOptions,
             popupContent = mapOptions.LeafletPopupPolylineBaseContent,
             options = mapOptions.CustomPolylineBaseOptions,
             leafletOptions = mapOptions.LeafletPolylineBaseOptions,
@@ -423,7 +423,7 @@
      */
     EsterenMap.prototype.addPolyline = function(latLng, leafletUserOptions, customUserOptions) {
         var _this = this,
-            mapOptions = this.options(),
+            mapOptions = this._mapOptions,
             className,
             id,
             option,
@@ -432,7 +432,7 @@
             L_map = _this._map;
 
         if (leafletUserOptions) {
-            leafletOptions = mergeRecursive(leafletOptions, leafletUserOptions);
+            leafletOptions = this.cloneObject(leafletOptions, leafletUserOptions);
         }
 
         while (d.getElementById('polyline_'+this._mapOptions.maxPolylineId+'_name')) {
@@ -470,7 +470,7 @@
         if (popupContent && typeof popupContent === 'string') {
             popupOptions = mapOptions.LeafletPopupBaseOptions;
             if (typeof customUserOptions.popupOptions !== 'undefined') {
-                popupOptions = mergeRecursive(popupOptions, customUserOptions.popupOptions);
+                popupOptions = _this.cloneObject(popupOptions, customUserOptions.popupOptions);
             }
             polyline.bindSidebar(this._sidebar, popupContent);
         } else if (customUserOptions.popupContent && typeof customUserOptions.popupContent !== 'string') {

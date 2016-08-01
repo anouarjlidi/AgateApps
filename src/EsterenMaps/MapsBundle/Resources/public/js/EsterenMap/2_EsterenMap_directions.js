@@ -224,7 +224,7 @@
                 if (markerStart && markerEnd) {
                     d.getElementById('directions_wait_overlay').style.display = "block";
                     map._load({
-                        uri: 'maps/directions/'+map.options().id+'/'+markerStart+'/'+markerEnd,
+                        uri: 'maps/directions/'+map._mapOptions.id+'/'+markerStart+'/'+markerEnd,
                         xhr_name: 'directions_calculate',
                         data: {
                             'transport': transport

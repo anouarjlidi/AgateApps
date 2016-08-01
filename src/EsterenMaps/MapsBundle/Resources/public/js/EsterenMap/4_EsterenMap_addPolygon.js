@@ -52,7 +52,7 @@
             esterenZone = this._esterenZone || null,
             id = esterenZone.id || null;
         if (esterenZone && this._map && !this.launched) {
-            esterenZone.map = esterenZone.map || {id: this._esterenMap.options().id };
+            esterenZone.map = esterenZone.map || {id: this._esterenMap._mapOptions.id };
             esterenZone.coordinates = JSON.stringify(this._latlngs ? this._latlngs : {});
             esterenZone.faction = esterenZone.faction || {};
             esterenZone.zone_type = { id: esterenZone.zone_type.id };
@@ -193,7 +193,7 @@
             var polygon = e.target,
                 msg = CONFIRM_DELETE || 'Supprimer ?',
                 id = polygon._esterenZone ? polygon._esterenZone.id : null;
-            if (polygon._esterenMap.options().editMode == true && id) {
+            if (polygon._esterenMap._mapOptions.editMode == true && id) {
                 if (confirm(msg)) {
                     polygon._map.removeLayer(polygon);
                     polygon.fire('remove');
@@ -215,7 +215,7 @@
     EsterenMap.prototype._mapOptions.loaderCallbacks.zones = function(response){
         var zones, i, zone,
             finalOptions,finalLeafletOptions,
-            mapOptions = this.options(),
+            mapOptions = this._mapOptions,
             popupContent = mapOptions.LeafletPopupPolygonBaseContent,
             options = mapOptions.CustomPolygonBaseOptions,
             leafletOptions = mapOptions.LeafletPolygonBaseOptions,
@@ -272,16 +272,15 @@
      */
     EsterenMap.prototype.addPolygon = function(latLng, leafletUserOptions, customUserOptions) {
         var _this = this,
-            mapOptions = this.options(),
+            mapOptions = this._mapOptions,
             className,
             id,
             option,
             leafletOptions = mapOptions.LeafletPolygonBaseOptions,
-            polygon,popup,popupContent,popupOptions,
-            L_map = _this._map;
+            polygon,popupContent,popupOptions;
 
         if (leafletUserOptions) {
-            leafletOptions = mergeRecursive(leafletOptions, leafletUserOptions);
+            leafletOptions = this.cloneObject(leafletOptions, leafletUserOptions);
         }
 
         while (d.getElementById('polygon_'+this._mapOptions.maxPolygonId+'_name')) {

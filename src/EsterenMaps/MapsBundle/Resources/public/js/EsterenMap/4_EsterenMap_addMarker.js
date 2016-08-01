@@ -112,7 +112,7 @@
         var marker = this,
             msg = CONFIRM_DELETE || 'Supprimer ?',
             id = marker._esterenMarker ? marker._esterenMarker.id : null;
-        if (marker._esterenMap.options().editMode == true && id) {
+        if (marker._esterenMap._mapOptions.editMode == true && id) {
             if (confirm(msg)) {
                 marker._map.removeLayer(marker);
                 marker.fire('remove');
@@ -130,7 +130,7 @@
             id = esterenMarker.id || null;
         if (esterenMarker && this._map && !this.launched) {
             this.launched = true;
-            esterenMarker.map = esterenMarker.map || {id: this._esterenMap.options().id };
+            esterenMarker.map = esterenMarker.map || {id: this._esterenMap._mapOptions.id };
             esterenMarker.latitude = this._latlng.lat;
             esterenMarker.longitude = this._latlng.lng;
             esterenMarker.altitude = this._latlng.alt;
@@ -210,7 +210,7 @@
      */
     EsterenMap.prototype._mapOptions.loaderCallbacks.markers = function(response){
         var markers, i, marker,
-            mapOptions = this.options(),
+            mapOptions = this._mapOptions,
             popupContent = mapOptions.LeafletPopupMarkerBaseContent,
             options = mapOptions.CustomMarkerBaseOptions,
             leafletOptions = mapOptions.LeafletMarkerBaseOptions,
@@ -383,7 +383,7 @@
      */
     EsterenMap.prototype.addMarker = function(latLng, leafletUserOptions, customUserOptions) {
         var _this = this,
-            mapOptions = this.options(),
+            mapOptions = this._mapOptions,
             leafletOptions = this.cloneObject(mapOptions.LeafletMarkerBaseOptions),
             iconOptions = this.cloneObject(mapOptions.LeafletIconBaseOptions),
             id,option,optionTag,icon,iconHeight,iconWidth,initialIconHeight,initialIconWidth,

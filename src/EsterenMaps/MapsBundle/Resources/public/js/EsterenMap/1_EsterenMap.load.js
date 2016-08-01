@@ -1,4 +1,18 @@
-(function($){
+(function($, w){
+
+    /**
+     * @param {string} str
+     * @returns {number}
+     */
+    function hashCode(str) {
+        var hash = 0, i, len;
+        if (str.length === 0) { return hash; }
+        for (i = 0, len = str.length; i < len; i++) {
+            hash  = ((hash << 5) - hash) + str.charCodeAt(i);
+            hash |= 0; // Convert to 32bit integer
+        }
+        return hash;
+    }
 
     /**
      * Exécute une requête AJAX dans le but de récupérer des éléments liés à la map
@@ -13,12 +27,11 @@
      * @returns {*}
      */
     EsterenMap.prototype._load = function(name, data, method, callback, callbackComplete, callbackError) {
-        var url, ajaxObject, i, c, xhr_name, xhr_object,
-            otherParams = {},
+        var url, ajaxObject, i, c, xhr_name, xhr_object, cacheTTL, cacheKey, cacheItem, now,
             _this = this,
-            mapOptions = this.options(),
+            mapOptions = this._mapOptions,
             allowedMethods = ["GET", "POST", "PUT"]
-            ;
+        ;
 
         if ($.isPlainObject(name)) {
             xhr_name = name.xhr_name || null;
@@ -28,6 +41,7 @@
             callbackComplete = name.callbackComplete || callbackComplete;
             callbackError = name.callbackError || callbackError;
             name = name.uri || name ;
+            cacheTTL = name.cacheTTL || mapOptions.cacheTTL;
         }
 
         method = method ? method.toUpperCase() : "GET";
@@ -86,16 +100,51 @@
             jsonp: false,
             data: method === 'GET' ? data : JSON.stringify(data ? data : {})
         };
-        if (typeof(callback) === 'function') {
-            ajaxObject.success = function(response) {
-                callback.call(_this, response);
+
+        // Define the cache key based on this ajax object.
+        // Callbacks cannot be stringified so we don't care about them.
+        cacheKey = mapOptions.cachePrefix + hashCode(JSON.stringify(ajaxObject));
+
+        if (cacheItem = w.localStorage.getItem(cacheKey)) {
+            cacheItem = JSON.parse(cacheItem);
+            if (!cacheItem.hasOwnProperty('date') || !cacheItem.hasOwnProperty('response')) {
+                console.warn('Corrupted cache data.');
+            } else {
+                now = new Date();
+                if (cacheItem.date > now.getTime()) {
+                    console.info('expired');
+                    w.localStorage.removeItem(cacheKey);
+                } else {
+                    callback.call(_this, cacheItem.response);
+                    return this;
+                }
             }
         }
+
+        // Apply the different callbacks
+        if (typeof(callback) === 'function') {
+            ajaxObject.success = function(response) {
+
+                // Set the cache item in the browser
+                var expirationDate = new Date();
+
+                callback.call(_this, response);
+                cacheItem = JSON.stringify({
+                    date: expirationDate.getTime() + cacheTTL,
+                    response: response
+                });
+
+                w.localStorage.setItem(cacheKey, cacheItem);
+            }
+        }
+
         if (typeof(callbackComplete) === 'function') {
             ajaxObject.complete = function(){
                 callbackComplete.call(_this);
             }
         }
+
+        // This callback is special because it's the one that stores the results in localStorage cache.
         if (typeof(callbackError) === 'function') {
             ajaxObject.callbackError = function(){
                 callbackError.call(_this);
@@ -114,4 +163,4 @@
 
         return this;
     };
-})(jQuery);
+})(jQuery, window);

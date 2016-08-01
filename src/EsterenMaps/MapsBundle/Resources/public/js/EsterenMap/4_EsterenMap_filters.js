@@ -2,7 +2,7 @@
 
     EsterenMap.prototype.initFilters = function(){
         var control, _this = this,
-            mapOptions = this.options()
+            mapOptions = this._mapOptions
         ;
 
         if (mapOptions.showFilters !== true) {

@@ -57,6 +57,8 @@
         autoResize: true,
         containerHeight: 400,
         sidebarContainer: 'esterenmap_sidebar',
+        cachePrefix: 'esterenmaps',
+        cacheTTL: 3600,
         container: 'map',
         wrapper: 'map_wrapper',
         loadedCallback: function () {
