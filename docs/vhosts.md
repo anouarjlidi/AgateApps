@@ -53,7 +53,7 @@ The dist file contains comments about what it does, whereas the vhost does not, 
         # Here starts Symfony's .htaccess config.
         # Put it in the vhost for maximum performance.
         # For more info, check web/.htaccess.dist default file.
-        # > https://github.com/symfony/symfony-standard/blob/2.8/web/.htaccess
+        # > https://github.com/symfony/symfony-standard/blob/3.1/web/.htaccess
         DirectoryIndex app.php
         <IfModule mod_negotiation.c>
             Options -MultiViews
@@ -68,17 +68,17 @@ The dist file contains comments about what it does, whereas the vhost does not, 
             RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 
             RewriteCond %{ENV:REDIRECT_STATUS} ^$
-            RewriteRule ^app\.php(/(.*)|$) %{ENV:BASE}/$2 [R=302,L]
+            RewriteRule ^app\.php(?:/(.*)|$) %{ENV:BASE}/$1 [R=301,L]
 
             RewriteCond %{REQUEST_FILENAME} -f
-            RewriteRule .? - [L]
+            RewriteRule ^ - [L]
 
             # Avoids getting 404 errors for missing map tiles.
             RewriteCond %{REQUEST_URI} maps_tiles/ [NC]
             RewriteCond %{REQUEST_FILENAME} !-f
             RewriteRule .? %{ENV:BASE}/maps_tiles/empty.jpg [L,R=302]
 
-            RewriteRule .? %{ENV:BASE}/app.php [L]
+            RewriteRule ^ %{ENV:BASE}/app.php [L]
         </IfModule>
         <IfModule !mod_rewrite.c>
             <IfModule mod_alias.c>
@@ -92,8 +92,8 @@ The dist file contains comments about what it does, whereas the vhost does not, 
     </Directory>
 
     # Logs are added automatically to Symfony's log dir
-    ErrorLog /var/www/corahn_rin/app/logs/apache_error.log
-    CustomLog /var/www/corahn_rin/app/logs/apache_access.log combined
+    ErrorLog /var/www/corahn_rin/var/logs/apache_error.log
+    CustomLog /var/www/corahn_rin/var/logs/apache_access.log combined
 
 </VirtualHost>
 ```
@@ -131,30 +131,38 @@ server {
     }
 
     # DEV
+    # Remove this part when using for prod
     location / {
         # try to serve file directly, fallback to app.php
         try_files $uri /app_dev.php$is_args$args;
     }
     location ~ ^/(app_dev|config)\.php(/|$) {
-
         # Check your fastcgi path depending on your environment
         fastcgi_pass unix:/var/run/php5-fpm.sock; # With FPM socket
         #fastcgi_pass 127.0.0.1:9000;             # With FastCGI / FPM classic
 
         fastcgi_split_path_info ^(.+\.php)(/.*)$;
         include fastcgi_params;
-
+        
+        # When you are using symlinks to link the document root to the
+        # current version of your application, you should pass the real
+        # application path instead of the path to the symlink to PHP
+        # FPM.
+        # Otherwise, PHP's OPcache may not properly detect changes to
+        # your PHP files (see https://github.com/zendtech/ZendOptimizerPlus/issues/126
+        # for more information).
         fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
         fastcgi_param DOCUMENT_ROOT $realpath_root;
     }
+    # end DEV
 
     # PROD
+    # Remove this part when using for dev
     location / {
         # try to serve file directly, fallback to app.php
         try_files $uri /app.php$is_args$args;
     }
     location ~ ^/app\.php(/|$) {
-
         # Check your fastcgi path depending on your environment
         fastcgi_pass unix:/var/run/php5-fpm.sock; # With FPM socket
         #fastcgi_pass 127.0.0.1:9000;             # With FastCGI / FPM classic
@@ -162,16 +170,30 @@ server {
         fastcgi_split_path_info ^(.+\.php)(/.*)$;
         include fastcgi_params;
 
-        fastcgi_param  SCRIPT_FILENAME  $realpath_root$fastcgi_script_name;
+        # When you are using symlinks to link the document root to the
+        # current version of your application, you should pass the real
+        # application path instead of the path to the symlink to PHP
+        # FPM.
+        # Otherwise, PHP's OPcache may not properly detect changes to
+        # your PHP files (see https://github.com/zendtech/ZendOptimizerPlus/issues/126
+        # for more information).
+        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
         fastcgi_param DOCUMENT_ROOT $realpath_root;
         # Prevents URIs that include the front controller. This will 404:
         # http://domain.tld/app.php/some-path
         # Remove the internal directive to allow URIs like this
         internal;
     }
+    # end PROD
+    
+    # return 404 for all other php files not matching the front controller
+    # this prevents access to other php files you don't want to be accessible.
+    location ~ \.php$ {
+      return 404;
+    }
 
     # Logs are added automatically to Symfony's log dir
-    error_log /var/www/corahn_rin/app/logs/nginx_error.log;
-    access_log /var/www/corahn_rin/app/logs/nginx_access.log;
+    error_log /var/www/corahn_rin/var/logs/nginx_error.log;
+    access_log /var/www/corahn_rin/var/logs/nginx_access.log;
 }
 ```
