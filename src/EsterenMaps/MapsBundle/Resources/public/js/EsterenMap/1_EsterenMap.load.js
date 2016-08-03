@@ -105,13 +105,20 @@
         // Callbacks cannot be stringified so we don't care about them.
         cacheKey = mapOptions.cachePrefix + hashCode(JSON.stringify(ajaxObject));
 
+        // Check in the cache if we have an element.
         if (cacheItem = w.localStorage.getItem(cacheKey)) {
             cacheItem = JSON.parse(cacheItem);
+
             if (!cacheItem.hasOwnProperty('date') || !cacheItem.hasOwnProperty('response')) {
+                // If cache item does not have the right properties, its corrupted.
+                // By the way, corrupted data cannot hurt "that much",
+                // since they can't contain functions (localStorage doesn't allow).
                 console.warn('Corrupted cache data.');
             } else {
                 now = new Date();
+
                 if (cacheItem.date > now.getTime()) {
+                    // If expired, let's remove the item.
                     console.info('expired');
                     w.localStorage.removeItem(cacheKey);
                 } else {

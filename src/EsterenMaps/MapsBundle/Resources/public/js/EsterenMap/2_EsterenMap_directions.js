@@ -170,7 +170,11 @@
                     value = $this.val().trim(),
                     keyCode = event.keyCode ? event.keyCode : event.which,
                     directionsHelper = $this.next('.directions_helper'),
-                    firstFoundElement, marker;
+                    marker;
+
+                // If user entered a value, we create a list based on all markers.
+                // We are matching markers only with a regexp.
+                // Regexp curious users will be pleased to test this themselves... :D
                 if (value) {
                     for (marker in map._markers) {
                         if (map._markers.hasOwnProperty(marker)) {
@@ -181,14 +185,21 @@
                         }
                     }
                 }
+
+                // And finally add the list to the directions helper.
                 if (html) {
                     html = '<ul class="list-unstyled">'+html+'</ul>';
                 }
                 directionsHelper.html(html);
+
+                // If pressed "enter", we click on the first element.
                 if (keyCode == 13) {
-                    // Pressed "Enter"
                     directionsHelper.find('ul > li').first().click();
+
+                    // Avoid submitting the form at the same time, most of the time it triggers errors.
+                    event.preventDefault();
                 }
+
                 return false;
             });
             $(this._controlContent).find('#directions_form').on('submit', function(e){
@@ -226,6 +237,7 @@
                     map._load({
                         uri: 'maps/directions/'+map._mapOptions.id+'/'+markerStart+'/'+markerEnd,
                         xhr_name: 'directions_calculate',
+                        cacheTTL: 3600, // One hour cache for directions.
                         data: {
                             'transport': transport
                         },
