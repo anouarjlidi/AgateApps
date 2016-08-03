@@ -6,9 +6,8 @@ use Tests\WebTestCase;
 
 class DefaultEasyAdminTest extends WebTestCase
 {
-
     /**
-     * Test the homepage
+     * Test backend homepage.
      */
     public function testIndex()
     {
@@ -21,8 +20,9 @@ class DefaultEasyAdminTest extends WebTestCase
 
         $crawler = $client->followRedirect();
 
-        static::assertEquals(200, $client->getResponse()->getStatusCode());
+        static::assertEquals(200, $client->getResponse()->getStatusCode(), $crawler->filter('title')->html());
         static::assertEquals('EasyAdmin', $crawler->filter('meta[name="generator"]')->attr('content'));
+        static::assertGreaterThanOrEqual(1, $crawler->filter('#main.content .table-responsive tbody tr[data-id]')->count());
     }
 
 }

@@ -10,19 +10,21 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase as BaseWebTestCase;
 abstract class WebTestCase extends BaseWebTestCase
 {
     /**
-     * @param string        $host
-     * @param array         $options
-     * @param array|string  $tokenRoles
+     * @param string       $host
+     * @param array        $options
+     * @param array|string $tokenRoles
      *
      * @return Client
      */
-    protected function getClient($host = null, array $options = array(), $tokenRoles = array())
+    protected function getClient($host = null, array $options = [], $tokenRoles = null)
     {
-        $server = array();
+        $server = [];
         if ($host) {
             $server['HTTP_HOST'] = $host;
         }
         $client = static::createClient($options, $server);
+        // Disable reboot, allows client to be reused for other requests.
+        $client->disableReboot();
 
         if ($tokenRoles) {
             static::setToken($client, 'user', is_array($tokenRoles) ? $tokenRoles : [$tokenRoles]);
@@ -36,16 +38,16 @@ abstract class WebTestCase extends BaseWebTestCase
      * @param string       $userName
      * @param array|string $roles
      */
-    protected static function setToken(Client $client, $userName = 'user', array $roles = array('ROLE_USER'))
+    protected static function setToken(Client $client, $userName = 'user', array $roles = ['ROLE_USER'])
     {
         $session = $client->getContainer()->get('session');
 
         if (is_string($roles)) {
-            $roles = array($roles);
+            $roles = [$roles];
         }
 
         $firewall = 'main';
-        $token = new UsernamePasswordToken($userName, null, $firewall, $roles);
+        $token    = new UsernamePasswordToken($userName, null, $firewall, $roles);
         $session->set('_security_'.$firewall, serialize($token));
         $session->save();
 

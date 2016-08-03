@@ -3,6 +3,10 @@
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Filesystem\Filesystem;
 
+if (!getenv('SYMFONY_ENV')) {
+    putenv('SYMFONY_ENV=test');
+}
+
 $rootDir = __DIR__.'/../..';
 
 $file = $rootDir.'/app/autoload.php';
