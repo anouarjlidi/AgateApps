@@ -164,7 +164,7 @@
                 });
                 $(_this._controlContent).find('#directions_transport').html(transportsOptions);
             });
-            $(this._controlContent).find('#directions_start,#directions_end').on('keyup', function(event){
+            $(this._controlContent).find('#directions_start,#directions_end').on('keypress', function(event){
                 var $this = $(this),
                     html = '',
                     value = $this.val().trim(),
@@ -198,9 +198,8 @@
 
                     // Avoid submitting the form at the same time, most of the time it triggers errors.
                     event.preventDefault();
+                    return false;
                 }
-
-                return false;
             });
             $(this._controlContent).find('#directions_form').on('submit', function(e){
                 var data = $(this).serializeArray(),
@@ -218,7 +217,7 @@
                 }
                 submitButton.setAttribute('disabled', 'disabled');
                 control.cleanDirections();
-                for (marker in markers) {
+                for (var marker in markers) {
                     if (markers.hasOwnProperty(marker)) {
                         marker = markers[marker]._esterenMarker;
                         if (!markerStart && marker.name === start) {
@@ -256,9 +255,20 @@
                         },
                         callbackComplete: function() {
                             submitButton.removeAttribute('disabled');
+                        },
+                        callbackError: function() {
+                            submitButton.removeAttribute('disabled');
                         }
                     });
                 } else if (markerStart || markerEnd || start || end) {
+                    // If pressed "enter", we click on the first element.
+                    if (keyCode == 13) {
+                        directionsHelper.find('ul > li').first().click();
+
+                        // Avoid submitting the form at the same time, most of the time it triggers errors.
+                        event.preventDefault();
+                    }
+
                     message = '';
                     if (!markerStart && start) {
                         message += start;
