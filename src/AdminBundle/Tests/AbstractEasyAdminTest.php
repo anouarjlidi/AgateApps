@@ -291,13 +291,13 @@ abstract class AbstractEasyAdminTest extends WebTestCase
     /**
      * Overrides classic client behavior to be sure we have a client that points to the backend.
      *
-     * @param string        $host
-     * @param array         $options
-     * @param array|string  $tokenRoles
+     * @param string       $host
+     * @param array        $kernelOptions
+     * @param array|string $tokenRoles
      *
      * @return Client
      */
-    protected function getClient($host = null, array $options = array(), $tokenRoles = array())
+    protected function getClient($host = null, array $kernelOptions = array(), $tokenRoles = array())
     {
         if (null === $host) {
             $host = 'back.esteren.dev';
@@ -305,7 +305,7 @@ abstract class AbstractEasyAdminTest extends WebTestCase
         if (0 === count($tokenRoles)) {
             $tokenRoles[] = 'ROLE_ADMIN';
         }
-        return parent::getClient($host, $options, is_array($tokenRoles) ? $tokenRoles : [$tokenRoles]);
+        return parent::getClient($host, $kernelOptions, is_array($tokenRoles) ? $tokenRoles : [$tokenRoles]);
     }
 
 }

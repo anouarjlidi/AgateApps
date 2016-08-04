@@ -11,18 +11,18 @@ abstract class WebTestCase extends BaseWebTestCase
 {
     /**
      * @param string       $host
-     * @param array        $options
+     * @param array        $kernelOptions
      * @param array|string $tokenRoles
      *
      * @return Client
      */
-    protected function getClient($host = null, array $options = [], $tokenRoles = null)
+    protected function getClient($host = null, array $kernelOptions = [], $tokenRoles = null)
     {
         $server = [];
         if ($host) {
             $server['HTTP_HOST'] = $host;
         }
-        $client = static::createClient($options, $server);
+        $client = static::createClient($kernelOptions, $server);
         // Disable reboot, allows client to be reused for other requests.
         $client->disableReboot();
 
