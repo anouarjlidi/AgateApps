@@ -236,7 +236,6 @@
                     map._load({
                         uri: 'maps/directions/'+map._mapOptions.id+'/'+markerStart+'/'+markerEnd,
                         xhr_name: 'directions_calculate',
-                        cacheTTL: 3600, // One hour cache for directions.
                         data: {
                             'transport': transport
                         },
