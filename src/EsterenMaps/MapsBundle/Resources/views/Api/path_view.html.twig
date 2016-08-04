@@ -1,5 +1,5 @@
 {% trans_default_domain 'EsterenMaps' %}
-
+{% spaceless %}
 {% if path|length %}
     <h3>{{ 'travel.itinerary' | trans }} :</h3>
     <p>
@@ -31,3 +31,4 @@
     <p><strong>{{ 'travel.path.start' | trans }} :</strong> {{ start.name }}</p>
     <p><strong>{{ 'travel.path.arrival' | trans }} :</strong> {{ end.name }}</p>
 {% endif %}
+{% endspaceless %}
