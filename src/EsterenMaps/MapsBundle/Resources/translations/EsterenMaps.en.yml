@@ -5,7 +5,9 @@ entities:
         title: Routes
     zones:
         title: Zones
-
+    maps:
+        single_view: Map
+        title: Maps
 admin:
     edit_map: Edit the map
 
