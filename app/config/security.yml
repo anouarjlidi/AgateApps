@@ -9,30 +9,31 @@ security:
     # http://symfony.com/doc/current/book/security.html#hierarchical-roles
     role_hierarchy:
 
+        # Anyone who is a backer from Kickstarter or Ulule.
         ROLE_BACKER: ROLE_USER
+
+        # A user that can view the map is automatically a user.
+        ROLE_MAPS_VIEW: ROLE_USER
 
         # Backers "Travels" reedition
         ROLE_BACKER_TRAVELS:
             - ROLE_BACKER
             - ROLE_MAPS_VIEW
 
-        # Managers de contenu (accès à l'administration)
+        # Content managers (access to backend)
         ROLE_MANAGER:                   ROLE_USER
 
         # Maps
         ROLE_ADMIN_MAPS:                ROLE_MANAGER
-        ROLE_ADMIN_MAPS_SUPER:          ROLE_ADMIN_MAPS
 
-        # Generator
+        # Character Generator
         ROLE_ADMIN_GENERATOR:           ROLE_MANAGER
-        ROLE_ADMIN_GENERATOR_SUPER:     ROLE_ADMIN_GENERATOR
 
         # Translator
         ROLE_ADMIN_TRANSLATOR:          ROLE_MANAGER
 
-        # Site manager
+        # Site manager (CMS)
         ROLE_ADMIN_MANAGE_SITE:         ROLE_MANAGER
-        ROLE_ADMIN_MANAGE_SITE_SUPER:   ROLE_ADMIN_MANAGE_SITE
 
         # Admins
         ROLE_ADMIN:
@@ -44,9 +45,6 @@ security:
         ROLE_SUPER_ADMIN:
             - ROLE_BACKER_TRAVELS
             - ROLE_ADMIN
-            - ROLE_ADMIN_GENERATOR_SUPER
-            - ROLE_ADMIN_MAPS_SUPER
-            - ROLE_ADMIN_MANAGE_SITE_SUPER
             - ROLE_ALLOWED_TO_SWITCH
 
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
