@@ -4,27 +4,27 @@
     <ul class="list-inline">
         {% if showZones is not defined or showZones is defined and showZones == true %}
         <li data-toggle="tooltip">
-            <button data-toggle-class="btn-info btn-inverse" id="hide_zones" class="btn btn-info" type="button">
+            <button data-toggle-class="btn-info btn-inverse" id="hide_zones" class="btn btn-info" type="button" title="{{ 'map.hide.zones'|trans({}, 'EsterenMaps') }}">
                 <span class="fa fa-eye"></span>
-                {{ 'entities.zones.title' | trans({}, 'EsterenMaps') }}
+                {{ 'map.hide.zones' | trans({}, 'EsterenMaps') }}
             </button>
         </li>
         {% endif %}
 
         {% if showRoutes is not defined or showRoutes is defined and showRoutes == true %}
         <li data-toggle="tooltip">
-            <button data-toggle-class="btn-info btn-inverse" id="hide_routes" class="btn btn-info" type="button">
+            <button data-toggle-class="btn-info btn-inverse" id="hide_routes" class="btn btn-info" type="button" title="{{ 'map.hide.routes'|trans({}, 'EsterenMaps') }}">
                 <span class="fa fa-eye"></span>
-                {{ 'entities.routes.title' | trans({}, 'EsterenMaps') }}
+                {{ 'map.hide.routes' | trans({}, 'EsterenMaps') }}
             </button>
         </li>
         {% endif %}
 
         {% if showMarkers is not defined or showMarkers is defined and showMarkers == true %}
         <li data-toggle="tooltip">
-            <button data-toggle-class="btn-info btn-inverse" id="hide_markers" class="btn btn-info" type="button">
+            <button data-toggle-class="btn-info btn-inverse" id="hide_markers" class="btn btn-info" type="button" title="{{ 'map.hide.markers'|trans({}, 'EsterenMaps') }}">
                 <span class="fa fa-eye"></span>
-                {{ 'entities.markers.title' | trans({}, 'EsterenMaps') }}
+                {{ 'map.hide.markers' | trans({}, 'EsterenMaps') }}
             </button>
         </li>
         {% endif %}

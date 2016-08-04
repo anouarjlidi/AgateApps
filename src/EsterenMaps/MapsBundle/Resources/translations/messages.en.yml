@@ -1,21 +1,21 @@
 actions:
-    interactive: 'Interactive edit'
+    interactive: Interactive edit
 Maps: Maps
 maps:
     list: Maps list
     view: View map
 admin:
     menu:
-        esterenmaps: 'Esteren Maps'
-        esterenmaps_data: 'Données'
+        esterenmaps: Esteren Maps
+        esterenmaps_data: Données
     maps:
-        markers: 'Markers'
-        routes: 'Routes'
-        zones: 'Zones'
-        factions: 'Factions'
-        maps: 'Maps'
-        markers_types: 'Markers types'
-        routes_types: 'Routes types'
-        zones_types: 'Zones types'
-        transports_types: 'Transports'
-        transportsModifiers: 'Transports speed modifiers'
+        markers: Markers
+        routes: Routes
+        zones: Zones
+        factions: Factions
+        maps: Maps
+        markers_types: Markers types
+        routes_types: Routes types
+        zones_types: Zones types
+        transports_types: Transports
+        transportsModifiers: Transports speed modifiers

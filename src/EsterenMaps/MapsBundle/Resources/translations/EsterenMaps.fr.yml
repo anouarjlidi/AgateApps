@@ -7,17 +7,23 @@ entities:
         title: Zones
 
 admin:
-    edit_map: 'Modifier la carte'
+    edit_map: Modifier la carte
 
 travel:
-    duration: '%days% jours et %hours% heures'
-    duration_estimated: 'Durée de voyage estimée'
-    distance: 'Distance'
+    duration_estimated: Durée de voyage estimée
+    duration:  '%days% jours et %hours% heures'
+    distance:  Distance
+    itinerary: Itinerary
     path:
-        start: 'Départ'
-        stop: 'Escale'
-        route: 'Route'
-        arrival: 'Arrivée'
+        start:   Départ
+        stop:    Escale
+        route:   Route
+        arrival: Arrivée
     error:
-        no_itinerary: 'Aucun itinéraire trouvé...'
-    itinerary: 'Itinéraire'
+        no_itinerary: Aucun itinéraire trouvé...
+
+map:
+    hide:
+        zones:   Masquer les zones
+        routes:  Masquer les routes
+        markers: Masquer les marqueurs
