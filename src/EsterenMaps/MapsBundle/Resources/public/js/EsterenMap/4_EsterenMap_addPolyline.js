@@ -245,7 +245,6 @@
 
             if (polyline._sidebar.isVisible()) {
                 d.getElementById('polyline_popup_name').innerHTML = esterenRoute.name;
-                d.getElementById('polyline_popup_forcedDistance').innerHTML = esterenRoute.forced_distance;
                 d.getElementById('polyline_popup_type').innerHTML = esterenRoute.route_type.name;
                 d.getElementById('polyline_popup_faction').innerHTML = esterenRoute.faction ? esterenRoute.faction.name : '';
                 d.getElementById('polyline_popup_markerStart').innerHTML = esterenRoute.marker_start ? esterenRoute.marker_start.name : '';
