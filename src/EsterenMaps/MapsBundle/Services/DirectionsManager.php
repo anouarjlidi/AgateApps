@@ -361,7 +361,7 @@ class DirectionsManager
 
         $data['duration_raw']  = $this->getTravelDuration($routes, $transport, $hoursPerDay, true);
         $data['duration_real'] = $this->getTravelDuration($routes, $transport, $hoursPerDay, false);
-        $data['path_view']     = $this->templating->render('@EsterenMapsApi/Maps/path_view.html.twig', $data);
+        $data['path_view']     = $this->templating->render('@EsterenMaps/Api/path_view.html.twig', $data);
 
         return $data;
     }
