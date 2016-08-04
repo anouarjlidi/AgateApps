@@ -9,7 +9,6 @@ use Tests\WebTestCase;
  */
 class MapsControllerTest extends WebTestCase
 {
-
     /**
      * @see MapsController::indexAction
      */
@@ -30,5 +29,4 @@ class MapsControllerTest extends WebTestCase
 
         static::assertEquals(1, $crawler->filter('#map_wrapper')->count(), print_r($client->getResponse()->getContent(), true));
     }
-
 }
