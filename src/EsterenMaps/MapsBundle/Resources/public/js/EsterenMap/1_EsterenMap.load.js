@@ -122,7 +122,12 @@
                     console.info('expired');
                     w.localStorage.removeItem(cacheKey);
                 } else {
-                    callback.call(_this, cacheItem.response);
+                    if (typeof(callback) === 'function') {
+                        callback.call(_this, cacheItem.response);
+                    }
+                    if (typeof(callbackComplete) === 'function') {
+                        callbackComplete.call(_this);
+                    }
                     return this;
                 }
             }
