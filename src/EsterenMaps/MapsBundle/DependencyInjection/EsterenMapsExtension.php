@@ -23,8 +23,6 @@ class EsterenMapsExtension extends Extension
         $configuration = new Configuration();
         $config        = $this->processConfiguration($configuration, $configs);
 
-        $config['tile_size'] = (int) $config['tile_size'];
-
         foreach ($config as $name => $value) {
             $container->setParameter('esterenmaps.'.$name, $value);
         }
