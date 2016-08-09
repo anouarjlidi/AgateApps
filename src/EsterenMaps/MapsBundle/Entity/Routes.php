@@ -132,6 +132,13 @@ class Routes
      */
     protected $routeType;
 
+    /**
+     * If it's false, the object won't be refreshed by the listener.
+     *
+     * @var bool
+     */
+    public $refresh = true;
+
     public function __toString()
     {
         return $this->id.' - '.$this->name;
@@ -479,6 +486,10 @@ class Routes
      */
     public function refresh()
     {
+        if (!$this->refresh) {
+            return $this;
+        }
+
         if (!$this->coordinates) {
             $this->coordinates = '[]';
         }
