@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "84111a7a4a03c9ec951d1a24ec35ed77",
-    "content-hash": "9af6e2d50ea8345cf5e8eb562aa1ae6d",
+    "hash": "bfb95331a4dc78ac1aaee205eb518c13",
+    "content-hash": "d8b66100d15256b74b53630298be0d4c",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -1215,16 +1215,16 @@
         },
         {
             "name": "javiereguiluz/easyadmin-bundle",
-            "version": "v1.15.0",
+            "version": "v1.15.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/javiereguiluz/EasyAdminBundle.git",
-                "reference": "e67dd3ca92346b97e554bf2118660ff958147326"
+                "reference": "044e569a12011474dcbdcedc4f298d5f30cf4dff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/javiereguiluz/EasyAdminBundle/zipball/e67dd3ca92346b97e554bf2118660ff958147326",
-                "reference": "e67dd3ca92346b97e554bf2118660ff958147326",
+                "url": "https://api.github.com/repos/javiereguiluz/EasyAdminBundle/zipball/044e569a12011474dcbdcedc4f298d5f30cf4dff",
+                "reference": "044e569a12011474dcbdcedc4f298d5f30cf4dff",
                 "shasum": ""
             },
             "require": {
@@ -1294,7 +1294,7 @@
                 "backend",
                 "generator"
             ],
-            "time": "2016-07-10 19:24:38"
+            "time": "2016-08-04 15:40:39"
         },
         {
             "name": "jdorn/sql-formatter",
@@ -1770,16 +1770,16 @@
         },
         {
             "name": "orbitale/doctrine-tools",
-            "version": "v0.5.0",
+            "version": "v0.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Orbitale/DoctrineTools.git",
-                "reference": "9db5b6bcf3d9702e76967a07222bd9c797764af3"
+                "reference": "234675ea6eb5b6b337a860d7bedcd2f539bdf917"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Orbitale/DoctrineTools/zipball/9db5b6bcf3d9702e76967a07222bd9c797764af3",
-                "reference": "9db5b6bcf3d9702e76967a07222bd9c797764af3",
+                "url": "https://api.github.com/repos/Orbitale/DoctrineTools/zipball/234675ea6eb5b6b337a860d7bedcd2f539bdf917",
+                "reference": "234675ea6eb5b6b337a860d7bedcd2f539bdf917",
                 "shasum": ""
             },
             "require": {
@@ -1822,7 +1822,7 @@
                 "repository",
                 "tools"
             ],
-            "time": "2016-07-22 14:21:10"
+            "time": "2016-08-09 10:30:46"
         },
         {
             "name": "orbitale/entity-merger",
@@ -2039,16 +2039,16 @@
         },
         {
             "name": "phpcollection/phpcollection",
-            "version": "0.4.0",
+            "version": "0.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/schmittjoh/php-collection.git",
-                "reference": "b8bf55a0a929ca43b01232b36719f176f86c7e83"
+                "reference": "f2bcff45c0da7c27991bbc1f90f47c4b7fb434a6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmittjoh/php-collection/zipball/b8bf55a0a929ca43b01232b36719f176f86c7e83",
-                "reference": "b8bf55a0a929ca43b01232b36719f176f86c7e83",
+                "url": "https://api.github.com/repos/schmittjoh/php-collection/zipball/f2bcff45c0da7c27991bbc1f90f47c4b7fb434a6",
+                "reference": "f2bcff45c0da7c27991bbc1f90f47c4b7fb434a6",
                 "shasum": ""
             },
             "require": {
@@ -2057,7 +2057,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.3-dev"
+                    "dev-master": "0.4-dev"
                 }
             },
             "autoload": {
@@ -2071,10 +2071,8 @@
             ],
             "authors": [
                 {
-                    "name": "Johannes Schmitt",
-                    "email": "schmittjoh@gmail.com",
-                    "homepage": "https://github.com/schmittjoh",
-                    "role": "Developer of wrapped JMSSerializerBundle"
+                    "name": "Johannes M. Schmitt",
+                    "email": "schmittjoh@gmail.com"
                 }
             ],
             "description": "General-Purpose Collection Library for PHP",
@@ -2085,7 +2083,7 @@
                 "sequence",
                 "set"
             ],
-            "time": "2014-03-11 13:46:42"
+            "time": "2015-05-17 12:39:23"
         },
         {
             "name": "phpoption/phpoption",
@@ -2139,16 +2137,16 @@
         },
         {
             "name": "psr/cache",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/cache.git",
-                "reference": "9e66031f41fbbdda45ee11e93c45d480ccba3eb3"
+                "reference": "d11b50ad223250cf17b86e38383413f5a6764bf8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/cache/zipball/9e66031f41fbbdda45ee11e93c45d480ccba3eb3",
-                "reference": "9e66031f41fbbdda45ee11e93c45d480ccba3eb3",
+                "url": "https://api.github.com/repos/php-fig/cache/zipball/d11b50ad223250cf17b86e38383413f5a6764bf8",
+                "reference": "d11b50ad223250cf17b86e38383413f5a6764bf8",
                 "shasum": ""
             },
             "require": {
@@ -2181,7 +2179,7 @@
                 "psr",
                 "psr-6"
             ],
-            "time": "2015-12-11 02:52:07"
+            "time": "2016-08-06 20:24:11"
         },
         {
             "name": "psr/log",
