@@ -11,7 +11,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * Events.
  *
- * @ORM\Table(name="events")
+ * @ORM\Table(schema="maps", name="events")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  * @ORM\Entity()
  */

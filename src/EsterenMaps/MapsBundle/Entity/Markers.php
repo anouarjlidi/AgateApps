@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Markers.
  *
- * @ORM\Table(name="maps_markers")
+ * @ORM\Table(schema="maps", name="maps_markers")
  * @ORM\HasLifecycleCallbacks()
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  * @ORM\Entity(repositoryClass="EsterenMaps\MapsBundle\Repository\MarkersRepository")

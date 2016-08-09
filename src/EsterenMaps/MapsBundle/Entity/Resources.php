@@ -11,7 +11,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 /**
  * Resources.
  *
- * @ORM\Table(name="maps_resources")
+ * @ORM\Table(schema="maps", name="maps_resources")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  * @ORM\Entity()
  */

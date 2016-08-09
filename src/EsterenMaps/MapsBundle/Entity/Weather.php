@@ -10,7 +10,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 /**
  * Weather.
  *
- * @ORM\Table(name="maps_weather")
+ * @ORM\Table(schema="maps", name="maps_weather")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  * @ORM\Entity()
  */
