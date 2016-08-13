@@ -11,7 +11,7 @@ use JMS\Serializer\Annotation as Serializer;
 /**
  * Zones.
  *
- * @ORM\Table(schema="maps", name="maps_zones")
+ * @ORM\Table(name="maps_zones")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  * @ORM\Entity()
  * @Serializer\ExclusionPolicy("all")

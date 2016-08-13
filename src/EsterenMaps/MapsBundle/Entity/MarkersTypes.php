@@ -13,7 +13,7 @@ use JMS\Serializer\Annotation as Serializer;
 /**
  * MarkersType.
  *
- * @ORM\Table(schema="maps", name="maps_markers_types")
+ * @ORM\Table(name="maps_markers_types")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  * @ORM\Entity()
  * @Serializer\ExclusionPolicy("all")
