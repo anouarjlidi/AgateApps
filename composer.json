@@ -42,7 +42,7 @@
 
         "orbitale/cms-bundle": "^2.0.1",
         "orbitale/entity-merger": "^0.5",
-        "orbitale/doctrine-tools": "^0.5.1",
+        "orbitale/doctrine-tools": "^0.5.2",
         "orbitale/imagemagick-php": "^1.4"
     },
     "require-dev": {

@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "bfb95331a4dc78ac1aaee205eb518c13",
-    "content-hash": "d8b66100d15256b74b53630298be0d4c",
+    "hash": "30f260c9355fc8d6a3b737167ac73a6e",
+    "content-hash": "cb75ab266f3807d8ce07586fe1da5ed9",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -1086,16 +1086,16 @@
         },
         {
             "name": "gedmo/doctrine-extensions",
-            "version": "v2.4.20",
+            "version": "v2.4.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Atlantic18/DoctrineExtensions.git",
-                "reference": "24cd861d755282f4c9fb1c8f4634ffd6ca12182b"
+                "reference": "dcaab46a25e1baeb5142c3e25d5b6fd495ced504"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Atlantic18/DoctrineExtensions/zipball/24cd861d755282f4c9fb1c8f4634ffd6ca12182b",
-                "reference": "24cd861d755282f4c9fb1c8f4634ffd6ca12182b",
+                "url": "https://api.github.com/repos/Atlantic18/DoctrineExtensions/zipball/dcaab46a25e1baeb5142c3e25d5b6fd495ced504",
+                "reference": "dcaab46a25e1baeb5142c3e25d5b6fd495ced504",
                 "shasum": ""
             },
             "require": {
@@ -1161,7 +1161,7 @@
                 "tree",
                 "uploadable"
             ],
-            "time": "2016-07-30 15:51:52"
+            "time": "2016-08-17 16:52:00"
         },
         {
             "name": "incenteev/composer-parameter-handler",
@@ -1771,16 +1771,16 @@
         },
         {
             "name": "orbitale/doctrine-tools",
-            "version": "v0.5.1",
+            "version": "v0.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Orbitale/DoctrineTools.git",
-                "reference": "234675ea6eb5b6b337a860d7bedcd2f539bdf917"
+                "reference": "9aaa16458e9003579f108fb967aa224e3579d649"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Orbitale/DoctrineTools/zipball/234675ea6eb5b6b337a860d7bedcd2f539bdf917",
-                "reference": "234675ea6eb5b6b337a860d7bedcd2f539bdf917",
+                "url": "https://api.github.com/repos/Orbitale/DoctrineTools/zipball/9aaa16458e9003579f108fb967aa224e3579d649",
+                "reference": "9aaa16458e9003579f108fb967aa224e3579d649",
                 "shasum": ""
             },
             "require": {
@@ -1823,7 +1823,7 @@
                 "repository",
                 "tools"
             ],
-            "time": "2016-08-09 10:30:46"
+            "time": "2016-08-18 08:20:51"
         },
         {
             "name": "orbitale/entity-merger",
@@ -2222,16 +2222,16 @@
         },
         {
             "name": "sensio/distribution-bundle",
-            "version": "v5.0.7",
+            "version": "v5.0.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioDistributionBundle.git",
-                "reference": "a9c4723cbdbc6cf7fbfdfde3c639cb1943f0293a"
+                "reference": "f8ace5c71ee309492b027ef71215577f5a52b4ea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/a9c4723cbdbc6cf7fbfdfde3c639cb1943f0293a",
-                "reference": "a9c4723cbdbc6cf7fbfdfde3c639cb1943f0293a",
+                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/f8ace5c71ee309492b027ef71215577f5a52b4ea",
+                "reference": "f8ace5c71ee309492b027ef71215577f5a52b4ea",
                 "shasum": ""
             },
             "require": {
@@ -2270,7 +2270,7 @@
                 "configuration",
                 "distribution"
             ],
-            "time": "2016-06-23 16:11:33"
+            "time": "2016-08-17 18:16:49"
         },
         {
             "name": "sensio/framework-extra-bundle",
