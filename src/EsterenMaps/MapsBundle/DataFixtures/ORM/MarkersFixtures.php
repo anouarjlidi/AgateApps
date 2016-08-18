@@ -33,6 +33,14 @@ class MarkersFixtures extends AbstractFixture
     /**
      * {@inheritdoc}
      */
+    protected function clearEntityManagerOnFlush()
+    {
+        return false;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     protected function getObjects()
     {
         $map1 = $this->getReference('esterenmaps-maps-1');
@@ -74,7 +82,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 56.74192,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-04-02 11:04:00'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:25:52'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 8,
@@ -88,7 +95,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 76.69856,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-05 15:38:38'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:25:58'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 9,
@@ -102,7 +108,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 53.73904,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-13 05:34:27'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:25:55'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 10,
@@ -116,7 +121,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 41.72752,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-06 12:20:22'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:25:50'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 11,
@@ -130,7 +134,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 99.06376,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-04-02 10:48:49'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:25:46'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 12,
@@ -144,7 +147,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 105.31976,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-26 12:32:57'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:25:48'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 13,
@@ -158,7 +160,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 93.5272,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-26 13:01:18'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:26:00'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 14,
@@ -172,7 +173,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 100.59648,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-30 09:35:10'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:26:01'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 15,
@@ -186,7 +186,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 105.16336,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-12 22:52:42'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:26:10'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 16,
@@ -200,7 +199,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 104.38136,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-30 09:37:00'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:26:04'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 17,
@@ -214,7 +212,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 106.1956,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-30 09:38:36'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:26:06'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 18,
@@ -228,7 +225,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 101.44104,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-22 08:51:47'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:26:08'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 19,
@@ -242,7 +238,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 106.63352,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-04-07 11:22:52'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:26:13'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 20,
@@ -256,7 +251,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 97.75,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-19 11:36:01'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:26:14'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 21,
@@ -270,7 +264,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 120.86592,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-26 12:36:01'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:26:19'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 22,
@@ -284,7 +277,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 108.91696,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-26 11:53:36'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:26:17'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 23,
@@ -298,7 +290,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 101.9728,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-30 09:41:37'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:26:21'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 24,
@@ -312,7 +303,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 109.51128,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-26 11:46:23'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:26:25'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 25,
@@ -326,7 +316,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 78.73176,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-19 11:51:30'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:26:23'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 26,
@@ -340,7 +329,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 61.68416,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-19 12:03:55'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:26:27'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 27,
@@ -354,7 +342,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 92.9016,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-14 15:37:00'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:26:29'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 28,
@@ -368,7 +355,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 81.6408,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-30 09:43:36'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:26:37'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 29,
@@ -382,7 +368,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 92.55752,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-19 12:21:37'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:26:31'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 30,
@@ -396,7 +381,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 91.58784,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-06 11:28:26'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:26:33'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 31,
@@ -410,7 +394,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 99.72064,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-22 08:50:44'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:26:42'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 32,
@@ -424,7 +407,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 97.87512,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-04-13 11:01:48'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:26:40'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 33,
@@ -438,7 +420,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 95.8732,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-30 09:45:33'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:26:47'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 34,
@@ -452,7 +433,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 83.79912,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-26 12:02:41'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:26:50'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 35,
@@ -466,7 +446,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 86.3328,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-26 12:51:39'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:26:44'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 36,
@@ -480,7 +459,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 79.85784,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-31 11:05:01'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:26:53'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 37,
@@ -494,7 +472,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 94.622,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-30 09:51:49'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:26:55'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 38,
@@ -508,7 +485,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 93.71488,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-30 12:22:13'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:27:01'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 39,
@@ -522,7 +498,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 132.56464,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-26 12:58:43'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:26:57'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 40,
@@ -536,7 +511,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 143.888,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-26 11:59:06'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:26:59'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 41,
@@ -550,7 +524,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 109.98048,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-26 12:07:43'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:27:03'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 42,
@@ -564,7 +537,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 111.70088,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-26 11:33:30'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:27:05'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 43,
@@ -578,7 +550,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 42.10288,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-30 12:46:07'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:27:08'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 44,
@@ -592,7 +563,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 62.90408,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-05 15:46:45'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:27:07'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 45,
@@ -606,7 +576,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 34.68952,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-19 11:48:50'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:27:10'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 46,
@@ -620,7 +589,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 39.28768,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-14 15:32:17'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:27:14'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 47,
@@ -634,7 +602,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 28.71504,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-04-02 11:07:19'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:27:12'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 48,
@@ -648,7 +615,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 58.39976,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-30 11:01:52'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:27:19'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 49,
@@ -662,7 +628,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 57.96184,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-30 11:20:08'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:27:16'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 50,
@@ -676,7 +641,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 58.1808,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-30 11:32:53'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:27:23'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 51,
@@ -690,7 +654,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 60.77704,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-31 11:21:03'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:27:21'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 52,
@@ -704,7 +667,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 62.30976,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-29 18:42:06'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:27:25'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 53,
@@ -718,7 +680,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 36.69144,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-30 12:48:02'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:27:32'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 54,
@@ -732,7 +693,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 51.42432,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-30 12:49:14'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:27:27'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 55,
@@ -746,7 +706,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 48.04608,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-04-02 10:58:47'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:27:29'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 56,
@@ -760,7 +719,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 61.12112,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-30 11:35:36'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:27:30'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 57,
@@ -774,7 +732,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 51.67456,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-30 12:50:28'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:27:31'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 58,
@@ -788,7 +745,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 120.70952,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-30 12:53:27'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:27:34'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 59,
@@ -802,7 +758,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 68.69088,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-27 11:50:15'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:27:33'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 60,
@@ -816,7 +771,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 75.57248,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-31 11:49:32'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:27:35'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 61,
@@ -830,7 +784,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 76.4796,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-31 11:52:58'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:27:36'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 62,
@@ -844,7 +797,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 80.26448,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-27 12:08:52'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:27:37'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 63,
@@ -858,7 +810,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 85.26928,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-31 10:56:03'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:27:39'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 64,
@@ -872,7 +823,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 36.97296,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-04-10 16:46:42'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:27:38'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 65,
@@ -886,7 +836,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 33.34448,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-04-10 16:46:58'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:27:40'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 66,
@@ -900,7 +849,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 33.4696,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-04-10 16:54:30'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:27:42'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 67,
@@ -914,7 +862,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 29.49704,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-04-10 16:47:22'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:27:43'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 68,
@@ -928,7 +875,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 35.40896,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-04-10 16:51:46'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:27:44'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 69,
@@ -942,7 +888,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 56.71064,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-19 12:29:22'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:27:45'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 70,
@@ -956,7 +901,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 26.24392,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-31 11:10:19'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:27:47'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 71,
@@ -970,7 +914,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 63.6548,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-14 15:41:57'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:27:46'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 72,
@@ -984,7 +927,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 106.72736,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-04-02 10:51:55'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:27:50'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 73,
@@ -998,7 +940,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 102.66096,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-31 10:49:15'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:27:49'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 74,
@@ -1012,7 +953,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 110.35584,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-06 18:02:01'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:27:51'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 75,
@@ -1026,7 +966,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 34.408,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-30 12:55:51'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:27:48'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 76,
@@ -1040,7 +979,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 24.46096,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-30 11:45:44'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:27:52'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 77,
@@ -1054,7 +992,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 20.0192,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-30 07:57:57'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:27:57'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 78,
@@ -1068,7 +1005,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 28.49608,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-30 11:43:28'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:27:54'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 79,
@@ -1082,7 +1018,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 62.68512,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-13 18:59:11'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:27:55'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 80,
@@ -1096,7 +1031,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 67.7212,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-04-02 11:14:24'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:27:58'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 81,
@@ -1110,7 +1044,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 78.71875,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-27 11:41:04'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:44:58'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 82,
@@ -1124,7 +1057,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 25.99368,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-27 11:47:28'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:00'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 83,
@@ -1138,7 +1070,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 103.16144,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-04-08 07:39:16'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:27:59'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 84,
@@ -1152,7 +1083,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 41.85264,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-27 12:07:19'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:03'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 85,
@@ -1166,7 +1096,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 65.18752,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-05-28 14:41:06'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:01'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 86,
@@ -1180,7 +1109,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 60.43296,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-05-29 08:16:49'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:05'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 87,
@@ -1194,7 +1122,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 68.3468,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-05-29 08:17:49'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:04'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 88,
@@ -1208,7 +1135,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 63.71736,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-05-29 08:08:17'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:06'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 89,
@@ -1222,7 +1148,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 62.05952,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-27 12:13:16'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:08'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 90,
@@ -1236,7 +1161,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 67.90888,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-27 12:19:59'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:07'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 91,
@@ -1250,7 +1174,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 31.5928,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-29 18:48:41'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:10'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 92,
@@ -1264,7 +1187,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 28.84016,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-30 10:58:50'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:11'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 93,
@@ -1278,7 +1200,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 27.49512,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-04-28 20:20:21'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:14'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 94,
@@ -1292,7 +1213,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 95.90448,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-04-30 11:55:53'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:12'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 95,
@@ -1306,7 +1226,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 108.57288,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-04-15 11:12:44'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:13'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 96,
@@ -1320,7 +1239,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 57.61776,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-31 11:40:49'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:15'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 97,
@@ -1334,7 +1252,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 67.53352,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-19 11:59:32'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:16'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 98,
@@ -1348,7 +1265,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 106.78992,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-26 12:11:28'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:18'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 99,
@@ -1362,7 +1278,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 22.64672,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-04-13 18:33:59'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:17'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 100,
@@ -1376,7 +1291,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 25.93112,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-04-13 18:34:02'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:19'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 101,
@@ -1390,7 +1304,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 73.0388,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-19 12:08:50'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:21'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 102,
@@ -1404,7 +1317,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 99.81448,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-05-24 07:10:00'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:20'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 103,
@@ -1418,7 +1330,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 93.27696,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-04-25 13:58:45'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:20'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 104,
@@ -1432,7 +1343,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 143.38752,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-04-29 20:48:26'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:22'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 105,
@@ -1446,7 +1356,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 107.134,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-04-09 15:09:49'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:23'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 106,
@@ -1460,7 +1369,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 90.11768,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-04-16 11:15:14'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:23'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 107,
@@ -1474,7 +1382,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 58.86896,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-06 12:09:18'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:27'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 108,
@@ -1488,7 +1395,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 107.35296,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-06-04 08:15:15'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:26'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 109,
@@ -1502,7 +1408,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 114.60992,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-06-02 08:36:56'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:29'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 110,
@@ -1516,7 +1421,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 121.55408,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-26 13:07:03'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:25'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 111,
@@ -1530,7 +1434,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 115.61088,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-27 11:32:21'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:28'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 112,
@@ -1544,7 +1447,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 115.04784,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-26 11:29:40'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:32'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 113,
@@ -1558,7 +1460,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 29.4032,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-11-15 22:00:46'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:30'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 114,
@@ -1572,7 +1473,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 29.59088,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-11-15 22:00:41'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:33'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 115,
@@ -1586,7 +1486,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 81.67208,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-27 11:58:43'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:31'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 116,
@@ -1600,7 +1499,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 66.59512,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-04-01 14:40:57'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:34'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 117,
@@ -1614,7 +1512,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 95.05992,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-11-15 22:00:25'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:36'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 118,
@@ -1628,7 +1525,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 100.03344,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-11-15 22:00:19'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:34'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 119,
@@ -1642,7 +1538,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 91.77552,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-15 20:01:10'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:35'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 120,
@@ -1656,7 +1551,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 52.76936,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-06 10:55:20'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:37'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 121,
@@ -1670,7 +1564,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 85.48824,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-19 12:27:11'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:36'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 122,
@@ -1684,7 +1577,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 20.36328,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-27 12:14:55'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:38'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 123,
@@ -1698,7 +1590,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 39.69432,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-27 12:17:23'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:39'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 124,
@@ -1712,7 +1603,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 108.29136,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-26 11:55:37'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:40'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 125,
@@ -1726,7 +1616,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 42.97872,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-15 19:49:56'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:42'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 126,
@@ -1740,7 +1629,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 58.21208,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-04-09 11:58:26'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:41'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 127,
@@ -1754,7 +1642,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 50.25,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-27 12:22:13'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:56:29'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 128,
@@ -1768,7 +1655,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 53.73904,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-06-08 11:08:15'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:44'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 129,
@@ -1782,7 +1668,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 52.17504,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-06 18:16:50'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:43'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 130,
@@ -1796,7 +1681,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 33.7824,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-30 11:16:58'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:45'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 131,
@@ -1810,7 +1694,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 127.09064,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-08 21:31:30'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:44'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 132,
@@ -1824,7 +1707,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 97.71872,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-31 10:44:42'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:46'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 133,
@@ -1838,7 +1720,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 29.5596,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-31 11:27:36'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:48'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 134,
@@ -1852,7 +1733,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 58.61872,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-04-24 08:25:24'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:47'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 135,
@@ -1866,7 +1746,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 49.92288,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-31 12:07:47'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:48'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 136,
@@ -1880,7 +1759,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 129.56176,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-27 11:30:06'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:49'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 137,
@@ -1894,7 +1772,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 110.76248,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-15 20:51:34'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:50'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 138,
@@ -1908,7 +1785,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 29.716,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-04-02 10:42:43'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:49'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 139,
@@ -1922,7 +1798,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 121.89816,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-16 18:36:30'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:51'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 140,
@@ -1936,7 +1811,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 46.48208,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-05-21 19:45:39'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:51'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 141,
@@ -1950,7 +1824,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 42.94744,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-04-02 11:01:17'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:52'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 142,
@@ -1964,7 +1837,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 88.0532,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-11-15 22:00:30'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:53'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 143,
@@ -1978,7 +1850,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 30.9672,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-21 16:44:38'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:54'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 144,
@@ -1992,7 +1863,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 77.418,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-04-04 14:19:24'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:55'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 145,
@@ -2006,7 +1876,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 58.93152,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-20 19:18:35'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:54'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 147,
@@ -2020,7 +1889,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 119.39576,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-23 19:06:51'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:55'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 158,
@@ -2034,7 +1902,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 44.85552,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-08-23 09:46:58'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:59'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 159,
@@ -2048,7 +1915,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 39.91328,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-08-23 09:46:49'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:56'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 160,
@@ -2062,7 +1928,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 30.6544,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-08-25 08:01:07'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:57'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 161,
@@ -2076,7 +1941,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 128.49824,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-08-23 10:11:23'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:57'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 162,
@@ -2090,7 +1954,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 52.42528,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-08-23 09:16:34'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:58'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 163,
@@ -2104,7 +1967,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 42.6972,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-08-23 09:16:49'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:28:59'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 164,
@@ -2118,7 +1980,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 62.12208,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-08-23 10:11:54'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:29:00'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 165,
@@ -2132,7 +1993,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 31.46768,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-08-25 07:53:43'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:29:00'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 166,
@@ -2146,7 +2006,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 27.02592,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-08-25 08:12:31'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:29:02'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 167,
@@ -2160,7 +2019,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 27.2136,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-08-25 08:03:52'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:29:01'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 168,
@@ -2174,7 +2032,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 42.5,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-08-29 14:06:53'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:56:33'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 169,
@@ -2188,7 +2045,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 74.41512,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-08-29 14:32:38'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:29:03'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 170,
@@ -2202,7 +2058,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 102.2856,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-08-29 20:27:25'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:29:04'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 171,
@@ -2216,7 +2071,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 52.04992,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-09-06 13:45:14'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:29:05'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 172,
@@ -2230,7 +2084,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 108.60416,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-09-06 13:29:07'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:29:05'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 173,
@@ -2244,7 +2097,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 89.86744,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-09-06 15:56:16'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:29:06'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 174,
@@ -2258,7 +2110,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 104.85056,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-09-06 13:58:31'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:29:06'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 175,
@@ -2272,7 +2123,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 51.33048,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-09-06 13:35:58'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:29:08'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 176,
@@ -2286,7 +2136,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 131.00064,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-09-06 13:54:32'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:29:07'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 177,
@@ -2300,7 +2149,6 @@ class MarkersFixtures extends AbstractFixture
                 'longitude'   => 38.13032,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-09-06 13:23:46'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:29:08'),
-                'deletedAt'   => null,
             ],
         ];
     }

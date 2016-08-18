@@ -34,6 +34,14 @@ class RoutesFixtures extends AbstractFixture
     /**
      * {@inheritdoc}
      */
+    protected function clearEntityManagerOnFlush()
+    {
+        return false;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getObjects()
     {
         $map1 = $this->getReference('esterenmaps-maps-1');
