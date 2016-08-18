@@ -105,11 +105,7 @@ class DirectionsManager
      */
     private function doGetDirections(Maps $map, Markers $start, Markers $end, $hoursPerDay = 7, TransportTypes $transportType = null)
     {
-        /** @var MarkersRepository $repo */
-        $repo = $this->entityManager->getRepository('EsterenMapsBundle:Markers');
-
-        /** @var array[][] $allMarkers */
-        $allMarkers = $repo->getAllWithRoutesArray($map, $transportType);
+        $routes = $this->entityManager->getRepository('EsterenMapsBundle:Routes')->findForDirections($map, $transportType);
 
         $nodes = [];
         $edges = [];
@@ -119,49 +115,44 @@ class DirectionsManager
          * We here have a list of "start" and "end" markers, and routes.
          * We need nodes (markers) and edges (routes).
          */
-        foreach ($allMarkers as $marker) {
-            $markerId         = (int) $marker['id'];
-            $nodes[$markerId] = [
-                'id'         => $markerId,
-                'name'       => $marker['name'],
-                'neighbours' => [],
+        foreach ($routes as $routeId => $route) {
+
+            // Create an edge based on a route.
+            $edge = [
+                'id'       => $routeId,
+                'distance' => $route['forcedDistance'] ?: $route['distance'],
+                'start' => $route['markerStartId'],
+                'end'   => $route['markerEndId'],
             ];
-            foreach ($marker['routesStart'] as $route) {
-                $routeId                                  = (int) $route['id'];
-                $nodes[$markerId]['neighbours'][$routeId] = [
-                    'distance' => $route['distance'],
-                    'end'      => $route['markerEnd']['id'],
+
+            // Set the start node if does not exist.
+            if (!array_key_exists($route['markerStartId'], $nodes)) {
+                $nodes[$route['markerStartId']] = [
+                    'id'         => $route['markerStartId'],
+                    'name'       => $route['markerStartName'],
+                    'neighbours' => [],
                 ];
-                if (!array_key_exists($routeId, $edges)) {
-                    $edges[$routeId] = [
-                        'id'       => $routeId,
-                        'name'     => $route['name'],
-                        'distance' => $route['distance'],
-                        'vertices' => [
-                            'start' => $markerId,
-                            'end'   => $route['markerEnd']['id'],
-                        ],
-                    ];
-                }
             }
-            foreach ($marker['routesEnd'] as $route) {
-                $routeId                                  = (int) $route['id'];
-                $nodes[$markerId]['neighbours'][$routeId] = [
-                    'distance' => $route['distance'],
-                    'end'      => $route['markerStart']['id'],
+
+            // Set the end node if does not exist.
+            if (!array_key_exists($route['markerEndId'], $nodes)) {
+                $nodes[$route['markerEndId']] = [
+                    'id'         => $route['markerEndId'],
+                    'name'       => $route['markerEndName'],
+                    'neighbours' => [],
                 ];
-                if (!array_key_exists($routeId, $edges)) {
-                    $edges[$routeId] = [
-                        'id'       => $routeId,
-                        'name'     => $route['name'],
-                        'distance' => $route['distance'],
-                        'vertices' => [
-                            'start' => $route['markerStart']['id'],
-                            'end'   => $markerId,
-                        ],
-                    ];
-                }
             }
+
+            // Add nodes and edge.
+            $nodes[$route['markerStartId']]['neighbours'][$routeId] = [
+                'distance' => $route['distance'],
+                'end' => $route['markerEndId'],
+            ];
+            $nodes[$route['markerEndId']]['neighbours'][$routeId] = [
+                'distance' => $route['distance'],
+                'end' => $route['markerStartId'],
+            ];
+            $edges[$routeId] = $edge;
         }
 
         $paths = $this->dijkstra($nodes, $edges, (int) $start->getId(), (int) $end->getId());
@@ -181,6 +172,7 @@ class DirectionsManager
 
         $steps = [];
 
+        /*
         // Remove unused fields
         foreach ($paths as $markerId => $routeId) {
             $marker          = $markersArray[$markerId];
@@ -209,6 +201,7 @@ class DirectionsManager
             );
             $steps[] = $marker;
         }
+        */
 
         return $this->getDataArray($start, $end, $steps, $routesObjects, $hoursPerDay, $transportType);
     }
@@ -315,7 +308,7 @@ class DirectionsManager
      * @param int            $hoursPerDay
      * @param TransportTypes $transport
      *
-     * @return array
+     * @return array[]
      */
     private function getDataArray(Markers $from, Markers $to, array $directions, array $routes, $hoursPerDay = 7, TransportTypes $transport = null)
     {
