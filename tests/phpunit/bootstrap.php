@@ -11,6 +11,9 @@ if (!getenv('SYMFONY_ENV')) {
 
 $rootDir = __DIR__.'/../..';
 
+define('DATABASE_TEST_FILE', $rootDir.'/build/database_test.db');
+define('DATABASE_REFERENCE_FILE', $rootDir.'/build/database_reference.db');
+
 $file = $rootDir.'/app/autoload.php';
 if (!file_exists($file)) {
     throw new RuntimeException('Install dependencies to run test suite.');
@@ -53,12 +56,12 @@ if (!is_dir($rootDir.'/build')) {
     $fs->mkdir($rootDir.'/build');
 }
 
-if ($fs->exists($rootDir.'/build/database_test.db')) {
-    $fs->remove($rootDir.'/build/database_test.db');
+if ($fs->exists(DATABASE_TEST_FILE)) {
+    $fs->remove(DATABASE_TEST_FILE);
 }
 
-if (!getenv('TESTS_REWRITE_DB') && $fs->exists($rootDir.'/build/database_reference.db')) {
-    $fs->copy($rootDir.'/build/database_reference.db', $rootDir.'/build/database_test.db');
+if (!getenv('TESTS_REWRITE_DB') && $fs->exists(DATABASE_REFERENCE_FILE)) {
+    $fs->copy(DATABASE_REFERENCE_FILE, DATABASE_TEST_FILE);
     return;
 }
 
@@ -66,4 +69,4 @@ runCommand('php '.$rootDir.'/bin/console doctrine:database:create');
 runCommand('php '.$rootDir.'/bin/console doctrine:schema:create');
 runCommand('php '.$rootDir.'/bin/console doctrine:fixtures:load --append');
 
-$fs->copy($rootDir.'/build/database_test.db', $rootDir.'/build/database_reference.db');
+$fs->copy(DATABASE_TEST_FILE, DATABASE_REFERENCE_FILE);

@@ -3,12 +3,26 @@
 namespace Tests;
 
 use Symfony\Component\BrowserKit\Cookie;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase as BaseWebTestCase;
 
 abstract class WebTestCase extends BaseWebTestCase
 {
+    /**
+     * Rewrite database before each test so we have a clean one.
+     */
+    public function resetDatabase()
+    {
+        if (defined('DATABASE_TEST_FILE') && defined('DATABASE_REFERENCE_FILE')) {
+            $fs = new Filesystem();
+            $fs->copy(DATABASE_TEST_FILE, DATABASE_REFERENCE_FILE);
+        } else {
+            throw new \InvalidArgumentException('"DATABASE_TEST_FILE" and "DATABASE_REFERENCE_FILE" should be defined to reset database.');
+        }
+    }
+
     /**
      * @param string       $host
      * @param array        $kernelOptions
