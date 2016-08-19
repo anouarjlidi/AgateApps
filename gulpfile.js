@@ -271,7 +271,8 @@ gulp.task('images', function() {
             .pipe(imagemin({
                 optimizationLevel: 7,
                 progressive: true,
-                interlaced: true
+                interlaced: true,
+                verbose: true
             }))
             .pipe(gulp.dest(outputDir + assets_output))
         ;
