@@ -125,33 +125,38 @@ class DirectionsManager
                 'end'   => $route['markerEndId'],
             ];
 
-            // Set the start node if does not exist.
-            if (!array_key_exists($route['markerStartId'], $nodes)) {
-                $nodes[$route['markerStartId']] = [
-                    'id'         => $route['markerStartId'],
-                    'name'       => $route['markerStartName'],
-                    'neighbours' => [],
-                ];
-            }
-
-            // Set the end node if does not exist.
-            if (!array_key_exists($route['markerEndId'], $nodes)) {
-                $nodes[$route['markerEndId']] = [
-                    'id'         => $route['markerEndId'],
-                    'name'       => $route['markerEndName'],
-                    'neighbours' => [],
-                ];
-            }
 
             // Add nodes and edge.
-            $nodes[$route['markerStartId']]['neighbours'][$routeId] = [
-                'distance' => $route['distance'],
-                'end' => $route['markerEndId'],
-            ];
-            $nodes[$route['markerEndId']]['neighbours'][$routeId] = [
-                'distance' => $route['distance'],
-                'end' => $route['markerStartId'],
-            ];
+            if ($route['markerStartId']) {
+                // Set the start node if does not exist.
+                if (!array_key_exists($route['markerStartId'], $nodes)) {
+                    $nodes[$route['markerStartId']] = [
+                        'id'         => $route['markerStartId'],
+                        'name'       => $route['markerStartName'],
+                        'neighbours' => [],
+                    ];
+                }
+                
+                $nodes[$route['markerStartId']]['neighbours'][$routeId] = [
+                    'distance' => $route['forcedDistance'] ?: $route['distance'],
+                    'end' => $route['markerEndId'],
+                ];
+            }
+            if ($route['markerEndId']) {
+                // Set the end node if does not exist.
+                if (!array_key_exists($route['markerEndId'], $nodes)) {
+                    $nodes[$route['markerEndId']] = [
+                        'id' => $route['markerEndId'],
+                        'name' => $route['markerEndName'],
+                        'neighbours' => [],
+                    ];
+                }
+
+                $nodes[$route['markerEndId']]['neighbours'][$routeId] = [
+                    'distance' => $route['forcedDistance'] ?: $route['distance'],
+                    'end' => $route['markerStartId'],
+                ];
+            }
             $edges[$routeId] = $edge;
         }
 
@@ -172,14 +177,11 @@ class DirectionsManager
 
         $steps = [];
 
-        /*
         // Remove unused fields
         foreach ($paths as $markerId => $routeId) {
             $marker          = $markersArray[$markerId];
             $marker['route'] = $routeId ? $routesArray[$routeId] : null;
             unset(
-                $marker['routesStart'],
-                $marker['routesEnd'],
                 $marker['createdAt'],
                 $marker['updatedAt'],
                 $marker['deletedAt'],
@@ -201,7 +203,6 @@ class DirectionsManager
             );
             $steps[] = $marker;
         }
-        */
 
         return $this->getDataArray($start, $end, $steps, $routesObjects, $hoursPerDay, $transportType);
     }
@@ -213,12 +214,14 @@ class DirectionsManager
      *
      * @link http://codereview.stackexchange.com/questions/75641/dijkstras-algorithm-in-php
      *
+     * Return an array where keys are the markers IDs and values the values are route IDs.
+     *
      * @param array[][] $nodes
      * @param array[][] $edges
      * @param int       $start
      * @param int       $end
      *
-     * @return array
+     * @return int[]
      */
     private function dijkstra(array $nodes, array $edges, $start, $end)
     {
@@ -352,8 +355,14 @@ class DirectionsManager
             'path'            => $directions,
         ];
 
-        $data['duration_raw']  = $this->getTravelDuration($routes, $transport, $hoursPerDay, true);
-        $data['duration_real'] = $this->getTravelDuration($routes, $transport, $hoursPerDay, false);
+        $data['duration_raw']  = ['days' => null, 'hours' => null];
+        $data['duration_real'] = ['days' => null, 'hours' => null];
+
+        if ($transport) {
+            $data['duration_raw']  = $this->getTravelDuration($routes, $transport, $hoursPerDay, true);
+            $data['duration_real'] = $this->getTravelDuration($routes, $transport, $hoursPerDay, false);
+        }
+
         $data['path_view']     = $this->templating->render('@EsterenMaps/Api/path_view.html.twig', $data);
 
         return $data;
@@ -403,10 +412,6 @@ class DirectionsManager
      */
     private function getTravelDuration(array $routes, TransportTypes $transport, $hoursPerDay = 7, $raw = true)
     {
-        if (!$transport) {
-            return null;
-        }
-
         $total = 0;
 
         foreach ($routes as $route) {

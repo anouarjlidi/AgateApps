@@ -36,7 +36,7 @@ class DirectionsManager extends WebTestCase
         $to = $em->getRepository('EsterenMapsBundle:Markers')->findOneBy(['name' => $to]);
 
         if ($transport) {
-            $transport = $em->find('EsterenMapsBundle:TransportTypes', $transport);
+            $transport = $em->getRepository('EsterenMapsBundle:TransportTypes')->findOneBy(['slug' => $transport]);
         }
 
         $dirs = $directions->getDirections($map, $from, $to, 7, $transport);
@@ -49,6 +49,16 @@ class DirectionsManager extends WebTestCase
         }
     }
 
+    /**
+     * Syntax:
+     * > Expected output values (will check only these ones, if there are others, we don't check it).
+     * > Map slug
+     * > FROM Marker name
+     * > TO marker name
+     * > WITH Transport slug (can be null)
+     *
+     * @return array[]
+     */
     public function provideWorkingDirections()
     {
         return [
@@ -56,25 +66,34 @@ class DirectionsManager extends WebTestCase
                 [
                     'found' => true,
                     'from_cache' => false,
-                    'number_of_steps' => 16,
+                    'number_of_steps' => 10,
                 ],
-                // From "Pointe de Hòb" to "Col de Gaos-Bodhar" with "default" transport
                 'tri-kazel',
                 'Pointe de Hòb',
                 'Col de Gaos-Bodhar',
-                1
+                null
             ],
             [
                 [
                     'found' => true,
                     'from_cache' => false,
-                    'number_of_steps' => 16,
+                    'number_of_steps' => 10,
                 ],
-                // From "Pointe de Hòb" to "Col de Gaos-Bodhar" with "Chariot" transport
                 'tri-kazel',
                 'Pointe de Hòb',
                 'Col de Gaos-Bodhar',
-                2
+                'transport-par-defaut'
+            ],
+            [
+                [
+                    'found' => true,
+                    'from_cache' => false,
+                    'number_of_steps' => 10,
+                ],
+                'tri-kazel',
+                'Pointe de Hòb',
+                'Col de Gaos-Bodhar',
+                'chariot'
             ],
         ];
     }
