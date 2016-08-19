@@ -16,7 +16,7 @@ travel:
     duration_estimated: Durée de voyage estimée
     duration:  '%days% jours et %hours% heures'
     distance:  Distance
-    itinerary: Itinerary
+    itinerary: Itinéraire
     path:
         start:   Départ
         stop:    Escale
