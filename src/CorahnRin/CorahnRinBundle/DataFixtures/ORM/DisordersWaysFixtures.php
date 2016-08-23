@@ -4,9 +4,12 @@ namespace CorahnRin\CorahnRinBundle\DataFixtures\ORM;
 
 use CorahnRin\CorahnRinBundle\Entity\DisordersWays;
 use Orbitale\Component\DoctrineTools\AbstractFixture;
+use Pierstoval\Bundle\ToolsBundle\Doctrine\FixtureMetadataIdGeneratorTrait;
 
 class DisordersWaysFixtures extends AbstractFixture
 {
+    use FixtureMetadataIdGeneratorTrait;
+
     /**
      * {@inheritdoc}
      */

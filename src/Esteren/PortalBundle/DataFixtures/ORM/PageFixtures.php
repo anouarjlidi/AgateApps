@@ -4,9 +4,12 @@ namespace Esteren\PortalBundle\DataFixtures\ORM;
 
 use Esteren\PortalBundle\Entity\Page;
 use Orbitale\Component\DoctrineTools\AbstractFixture;
+use Pierstoval\Bundle\ToolsBundle\Doctrine\FixtureMetadataIdGeneratorTrait;
 
 class PageFixtures extends AbstractFixture
 {
+    use FixtureMetadataIdGeneratorTrait;
+
     /**
      * {@inheritdoc}
      */

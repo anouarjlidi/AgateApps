@@ -5,9 +5,12 @@ namespace EsterenMaps\MapsBundle\DataFixtures\ORM;
 use Doctrine\Common\Persistence\ObjectManager;
 use EsterenMaps\MapsBundle\Entity\ZonesTypes;
 use Orbitale\Component\DoctrineTools\AbstractFixture;
+use Pierstoval\Bundle\ToolsBundle\Doctrine\FixtureMetadataIdGeneratorTrait;
 
 class ZonesTypesFixtures extends AbstractFixture
 {
+    use FixtureMetadataIdGeneratorTrait;
+
     /**
      * {@inheritdoc}
      */

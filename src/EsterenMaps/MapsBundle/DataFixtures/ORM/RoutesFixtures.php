@@ -4,9 +4,12 @@ namespace EsterenMaps\MapsBundle\DataFixtures\ORM;
 
 use EsterenMaps\MapsBundle\Entity\Markers;
 use Orbitale\Component\DoctrineTools\AbstractFixture;
+use Pierstoval\Bundle\ToolsBundle\Doctrine\FixtureMetadataIdGeneratorTrait;
 
 class RoutesFixtures extends AbstractFixture
 {
+    use FixtureMetadataIdGeneratorTrait;
+
     /**
      * {@inheritdoc}
      */

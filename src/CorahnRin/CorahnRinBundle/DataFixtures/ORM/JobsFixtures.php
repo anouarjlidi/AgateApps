@@ -4,9 +4,11 @@ namespace CorahnRin\CorahnRinBundle\DataFixtures\ORM;
 
 use CorahnRin\CorahnRinBundle\Entity\Jobs;
 use Orbitale\Component\DoctrineTools\AbstractFixture;
+use Pierstoval\Bundle\ToolsBundle\Doctrine\FixtureMetadataIdGeneratorTrait;
 
 class JobsFixtures extends AbstractFixture
 {
+    use FixtureMetadataIdGeneratorTrait;
 
     /**
      * Returns the class of the entity you're managing.

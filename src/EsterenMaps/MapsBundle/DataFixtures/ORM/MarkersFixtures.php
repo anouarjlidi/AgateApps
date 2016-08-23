@@ -3,9 +3,12 @@
 namespace EsterenMaps\MapsBundle\DataFixtures\ORM;
 
 use Orbitale\Component\DoctrineTools\AbstractFixture;
+use Pierstoval\Bundle\ToolsBundle\Doctrine\FixtureMetadataIdGeneratorTrait;
 
 class MarkersFixtures extends AbstractFixture
 {
+    use FixtureMetadataIdGeneratorTrait;
+
     /**
      * {@inheritdoc}
      */
@@ -28,14 +31,6 @@ class MarkersFixtures extends AbstractFixture
     protected function getReferencePrefix()
     {
         return 'esterenmaps-markers-';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function clearEntityManagerOnFlush()
-    {
-        return false;
     }
 
     /**

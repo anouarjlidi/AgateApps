@@ -5,9 +5,12 @@ namespace EsterenMaps\MapsBundle\DataFixtures\ORM;
 use CorahnRin\CorahnRinBundle\Entity\Books;
 use EsterenMaps\MapsBundle\Entity\Factions;
 use Orbitale\Component\DoctrineTools\AbstractFixture;
+use Pierstoval\Bundle\ToolsBundle\Doctrine\FixtureMetadataIdGeneratorTrait;
 
 class FactionsFixtures extends AbstractFixture
 {
+    use FixtureMetadataIdGeneratorTrait;
+
     /**
      * Get the order of this fixture.
      *
