@@ -10,7 +10,7 @@
          processIsolation="false"
          stopOnFailure="false"
          colors="true"
-         verbose="false"
+         verbose="true"
          bootstrap="./tests/phpunit/bootstrap.php"
          beStrictAboutTestsThatDoNotTestAnything="true"
          beStrictAboutOutputDuringTests="true"
