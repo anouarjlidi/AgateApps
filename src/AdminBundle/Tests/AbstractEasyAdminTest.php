@@ -294,10 +294,11 @@ abstract class AbstractEasyAdminTest extends WebTestCase
      * @param string       $host
      * @param array        $kernelOptions
      * @param array|string $tokenRoles
+     * @param array        $server
      *
      * @return Client
      */
-    protected function getClient($host = null, array $kernelOptions = array(), $tokenRoles = array())
+    protected function getClient($host = null, array $kernelOptions = [], $tokenRoles = null, array $server = [])
     {
         if (null === $host) {
             $host = 'back.esteren.dev';

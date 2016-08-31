@@ -13,7 +13,7 @@ abstract class WebTestCase extends BaseWebTestCase
     /**
      * Rewrite database before each test so we have a clean one.
      */
-    public function resetDatabase()
+    protected static function resetDatabase()
     {
         if (defined('DATABASE_TEST_FILE') && defined('DATABASE_REFERENCE_FILE')) {
             $fs = new Filesystem();
@@ -27,12 +27,12 @@ abstract class WebTestCase extends BaseWebTestCase
      * @param string       $host
      * @param array        $kernelOptions
      * @param array|string $tokenRoles
+     * @param array        $server
      *
      * @return Client
      */
-    protected function getClient($host = null, array $kernelOptions = [], $tokenRoles = null)
+    protected function getClient($host = null, array $kernelOptions = [], $tokenRoles = null, array $server = [])
     {
-        $server = [];
         if ($host) {
             $server['HTTP_HOST'] = $host;
         }
