@@ -4,6 +4,7 @@ Maps: Cartes
 maps:
     list: Liste des cartes
     view: Voir la carte
+    none: Aucune carte
 admin:
     menu:
         esterenmaps: Esteren Maps
