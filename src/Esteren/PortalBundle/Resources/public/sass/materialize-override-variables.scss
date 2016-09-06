@@ -1,3 +1,10 @@
 $roboto-font-path: "/components/materialize/fonts/roboto/";
 
-$primary-color: color("indigo", "darken-4")
+$primary-color: #2c2776;
+
+$secondary-color: #42777a;
+$success-color: #40653b;
+$error-color: #91494a;
+$link-color: lighten($primary-color, 40%);
+
+$footer-bg-color: darken($primary-color, 10%);

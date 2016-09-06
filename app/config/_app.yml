@@ -171,6 +171,10 @@ orbitale_cms:
             host: "%esteren_domains.esterenmaps%"
         front:
             resource: "base.html.twig"
+        home_portal_fr:
+            pattern: "^/fr/?$"
+            host: "%esteren_domains.portal%"
+            resource: "@EsterenPortal/home/portal-fr.html.twig"
 
 # CORS management for all APIs
 nelmio_cors:

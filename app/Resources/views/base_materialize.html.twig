@@ -1,0 +1,194 @@
+{% if locale is not defined %}
+    {% set locale = app.request.locale %}
+{% endif %}
+<!DOCTYPE html>
+<html id="corahnrin" lang="{{ app.request.locale|default(app.request.defaultLocale)|default('fr') }}">
+<head>
+    {%- spaceless %}
+
+        <meta charset="utf-8">
+
+        <title>
+            {%- if title is defined -%}
+                {{- title ~ ' ' -}}
+                {%- if title != 'Esteren' -%}
+                    - Esteren
+                {%- endif -%}
+            {%- else -%}
+                Esteren
+            {%- endif -%}
+        </title>
+
+        <meta name="generator" content="Pierstoval"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        {% block more_headers %}{% endblock %}
+
+        {% block stylesheets %}
+            <link rel="stylesheet" href="{{ asset('css/global_mat.css') }}" type="text/css" />
+            <link rel="stylesheet" href="{{ asset('bundles/esterenportal/css/initializer.css') }}" type="text/css" />
+            <link rel="stylesheet" href="{{ asset('css/fontawesome.css') }}" type="text/css" />
+        {% endblock %}
+
+        {{ include('_favicons.html.twig') }}
+
+    {% endspaceless -%}
+</head>
+
+<body>
+
+{% block body %}
+
+    <div id="wrapper">
+
+        {% block layout %}
+
+            {% block menus %}
+                {% spaceless %}
+
+                    <nav class="darkblue" role="navigation">
+                        <div class="nav-wrapper container blue-text">
+                            {% block menu_brand_link %}
+                                <a href="{{ path('root') }}" class="brand-logo position-static left">{{ 'home' | trans({}, 'OrbitaleCms') }}</a>
+                            {% endblock %}
+
+                            {% block menu_left %}
+                                <ul class="left hide-on-med-and-down">
+                                    {% block menu_left_content %}{% endblock %}
+                                </ul>
+                            {% endblock %}
+                            {% block menu_right %}
+                                <ul class="right hide-on-med-and-down">
+                                    {% block menu_right_content %}
+                                        {% block menu_locale %}{% endblock %}
+                                        {% block menu_security %}
+                                            {% if app.user.username is not defined %}
+                                                <li><a href="{{ path('fos_user_security_login') }}">{{ 'layout.login' | trans({}, 'FOSUserBundle') }}</a></li>
+                                            {% else %}
+                                                <li><a href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout' | trans({}, 'FOSUserBundle') }} [ {{ app.user.username }} ]</a></li>
+                                                {% if is_granted('ROLE_MANAGER') %}
+                                                    <li><a href="{{ path('easyadmin') }}">{{ 'links.admin' | trans }}</a></li>
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endblock %}
+                                    {% endblock %}
+                                </ul>
+                            {% endblock %}
+
+                            <ul id="nav-mobile" class="side-nav">
+                                {{ block('menu_left_content') }}
+                                {{ block('menu_right_content') }}
+                            </ul>
+                            <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="fa fa-bars">menu</i></a>
+                        </div>
+                    </nav>
+                {% endspaceless %}
+            {% endblock %}
+
+            <div id="layout" class="container">
+
+                {# Flash messaages #}
+                {% spaceless %}
+                    {% for key, messageList in app.session.flashbag.all %}
+
+                        {% if loop.first %}<div id="flash-messages">{% endif %}
+
+                        {% set translation_domain = 'messages.flash' %}
+
+                        {% set class = key %}
+                        {% if 'fos_user_' in class %}
+                            {# Sometimes, FOSUser can send specific error keys #}
+                            {% set class = (class | replace({'fos_user_': ''})) %}
+                            {% set translation_domain = 'FOSUserBundle' %}
+                        {% endif %}
+                        {% if 'error' == class %}
+                            {# Fit bootstrap's needs #}
+                            {% set class = 'danger' %}
+                        {% endif %}
+
+                        <div class="alert alert-{{ class }} {{ key }}">
+                            {% for message in messageList %}
+                                {{ message | trans({}, translation_domain) | raw }}
+                                {% if not loop.last %}<br />{% endif %}
+                            {% endfor %}
+                        </div>
+
+                        {% if loop.last %}</div>{% endif %}
+                    {% endfor %}
+                {% endspaceless %}
+
+                <div id="content">
+
+                    {% block orbitale_cms_breadcrumbs %}{% endblock %}
+
+                    {% block fos_user_content %}{% endblock %}
+
+                    {% block content_for_layout %}{% endblock %}
+
+                    {# This block is hidden by default (for the Portal pages), if you want it, add it manually to another layout
+                    {% block orbitale_cms_page_content %}{% endblock %}
+                    #}
+
+                </div><!--/#content-->
+
+            </div><!--/#layout-->
+
+            {# FOOTER #}
+            {% block footer %}
+                <footer class="page-footer">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col l6 s12">
+                                <h5 class="white-text">Footer Content</h5>
+                                <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
+                            </div>
+                            <div class="col l4 offset-l2 s12">
+                                <h5 class="white-text">Links</h5>
+                                <ul>
+                                    <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
+                                    <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
+                                    <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
+                                    <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer-copyright">
+                        <div class="container">
+                            {{ 'footer.version' | trans }} : {{ version_code }} : {{ version_date }}
+                            &ndash;
+                            Copyright &copy; – 2012 - {{ 'now'|date('Y') }} {{ 'footer.rights' | trans }}
+                            &ndash;
+                            {{ 'footer.brand' | trans }}
+                            {% set route_name = app.request.attributes.get('_route') %}
+                            {% set route_params = app.request.attributes.get('_route_params') %}
+                            {% for loc in locales %}
+                                {% if loc == locale %}
+                                    <a class="right" href="#">{{ loc | trans({}, 'Languages') }}</a>
+                                {% else %}
+                                    <a class="right" href="{{ path(route_name, ((route_params|default({}, 'Languages')) | merge({'_locale':loc})) ) }}">{{ loc | trans({}, 'Languages') }}</a>
+                                {% endif %}
+                                {% if not loop.last %}&ndash;{% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </footer>
+            {% endblock %}
+
+        {% endblock %}
+
+    </div><!--/#wrapper-->
+
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ path('pierstoval_tools_assets_jstranslations', {"_locale": app.request.locale}) }}"></script>
+    <script type="text/javascript" src="{{ asset('js/jquery.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/global_mat.js') }}"></script>
+{% endblock %}
+
+</body>
+</html>
