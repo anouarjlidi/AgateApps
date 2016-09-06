@@ -18,6 +18,8 @@ var config = {
      */
     "files_to_watch": [
         "src/Esteren/PortalBundle/Resources/public/less/*.less",
+        "src/Esteren/PortalBundle/Resources/public/css/*.css",
+        "src/Esteren/PortalBundle/Resources/public/sass/*.scss",
         "src/CorahnRin/CorahnRinBundle/Resources/public/generator/css/*.less"
     ],
 
@@ -72,7 +74,7 @@ var config = {
      */
     "sass": {
         "css/global_mat.css": [
-            "src/Esteren/PortalBundle/Resources/public/sass/materialize.scss"
+            "src/Esteren/PortalBundle/Resources/public/sass/_main.scss"
         ]
     },
 
@@ -85,6 +87,9 @@ var config = {
         ]
      */
     "css": {
+        "css/initializer.css": [
+            "src/Esteren/PortalBundle/Resources/public/css/initializer.css"
+        ]
     },
 
     /**

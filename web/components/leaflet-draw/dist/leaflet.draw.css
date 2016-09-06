@@ -24,12 +24,14 @@
 
 .leaflet-draw-toolbar a {
 	background-image: url('../components/leaflet-draw/dist/images/spritesheet.png');
+	background-image: linear-gradient(transparent, transparent), url('../components/leaflet-draw/dist/images/spritesheet.svg');
 	background-repeat: no-repeat;
+	background-size: 270px 30px;
 }
 
 .leaflet-retina .leaflet-draw-toolbar a {
 	background-image: url('../components/leaflet-draw/dist/images/spritesheet-2x.png');
-	background-size: 270px 30px;
+	background-image: linear-gradient(transparent, transparent), url('../components/leaflet-draw/dist/images/spritesheet.svg');
 }
 
 .leaflet-draw a {
