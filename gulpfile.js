@@ -71,6 +71,9 @@ var config = {
         ]
      */
     "sass": {
+        "css/global_mat.css": [
+            "src/Esteren/PortalBundle/Resources/public/sass/materialize.scss"
+        ]
     },
 
     /**
@@ -107,6 +110,40 @@ var config = {
             "web/components/bootstrap/js/transition.js",
             "web/components/bootstrap/js/tab.js",
             "src/Esteren/PortalBundle/Resources/public/js/corahn_rin.js",
+            "src/Esteren/PortalBundle/Resources/public/js/helpers.js"
+        ],
+        "js/global_mat.js": [
+            "web/components/materialize/js/animation.js",
+            "web/components/materialize/js/initial.js",
+            "web/components/materialize/js/jquery.easing.1.3.js",
+            "web/components/materialize/js/animation.js",
+            "web/components/materialize/js/velocity.min.js",
+            "web/components/materialize/js/hammer.min.js",
+            "web/components/materialize/js/jquery.hammer.js",
+            "web/components/materialize/js/global.js",
+            "web/components/materialize/js/collapsible.js",
+            "web/components/materialize/js/dropdown.js",
+            "web/components/materialize/js/modal.js",
+            "web/components/materialize/js/materialbox.js",
+            "web/components/materialize/js/parallax.js",
+            "web/components/materialize/js/tabs.js",
+            "web/components/materialize/js/tooltip.js",
+            "web/components/materialize/js/waves.js",
+            "web/components/materialize/js/toasts.js",
+            "web/components/materialize/js/sideNav.js",
+            "web/components/materialize/js/scrollspy.js",
+            "web/components/materialize/js/forms.js",
+            "web/components/materialize/js/slider.js",
+            "web/components/materialize/js/cards.js",
+            "web/components/materialize/js/chips.js",
+            "web/components/materialize/js/pushpin.js",
+            "web/components/materialize/js/buttons.js",
+            "web/components/materialize/js/transitions.js",
+            "web/components/materialize/js/scrollFire.js",
+            "web/components/materialize/js/date_picker/picker.js",
+            "web/components/materialize/js/date_picker/picker.date.js",
+            "web/components/materialize/js/character_counter.js",
+            "web/components/materialize/js/carousel.js",
             "src/Esteren/PortalBundle/Resources/public/js/helpers.js"
         ],
         "js/maps_lib.js": [

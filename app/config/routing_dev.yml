@@ -19,3 +19,9 @@ _bootstrap_theme:
     defaults:
         _controller: FrameworkBundle:Template:template
         template:    _theme/theme.html.twig
+
+_materialize_theme:
+    path:     /_theme_mat
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template:    _theme/materialize.html.twig

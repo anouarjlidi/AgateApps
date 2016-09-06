@@ -1,0 +1,43 @@
+
+@charset "UTF-8";
+
+// Mixins
+// @import "../../../../../../web/components/materialize/sass/components/prefixer";
+@import "../../../../../../web/components/materialize/sass/components/mixins";
+@import "../../../../../../web/components/materialize/sass/components/color";
+
+// Variables;
+@import "../../../../../../web/components/materialize/sass/components/variables";
+
+@import "materialize-override-variables";
+
+// Reset
+@import "../../../../../../web/components/materialize/sass/components/normalize";
+
+// components
+@import "../../../../../../web/components/materialize/sass/components/global";
+@import "../../../../../../web/components/materialize/sass/components/icons-material-design";
+@import "../../../../../../web/components/materialize/sass/components/grid";
+@import "../../../../../../web/components/materialize/sass/components/navbar";
+@import "../../../../../../web/components/materialize/sass/components/roboto";
+@import "../../../../../../web/components/materialize/sass/components/typography";
+@import "../../../../../../web/components/materialize/sass/components/cards";
+@import "../../../../../../web/components/materialize/sass/components/toast";
+@import "../../../../../../web/components/materialize/sass/components/tabs";
+@import "../../../../../../web/components/materialize/sass/components/tooltip";
+@import "../../../../../../web/components/materialize/sass/components/buttons";
+@import "../../../../../../web/components/materialize/sass/components/dropdown";
+@import "../../../../../../web/components/materialize/sass/components/waves";
+@import "../../../../../../web/components/materialize/sass/components/modal";
+@import "../../../../../../web/components/materialize/sass/components/collapsible";
+@import "../../../../../../web/components/materialize/sass/components/chips";
+@import "../../../../../../web/components/materialize/sass/components/materialbox";
+@import "../../../../../../web/components/materialize/sass/components/forms/forms";
+@import "../../../../../../web/components/materialize/sass/components/table_of_contents";
+@import "../../../../../../web/components/materialize/sass/components/sideNav";
+@import "../../../../../../web/components/materialize/sass/components/preloader";
+@import "../../../../../../web/components/materialize/sass/components/slider";
+@import "../../../../../../web/components/materialize/sass/components/carousel";
+@import "../../../../../../web/components/materialize/sass/components/date_picker/default";
+@import "../../../../../../web/components/materialize/sass/components/date_picker/default.date";
+@import "../../../../../../web/components/materialize/sass/components/date_picker/default.time";
