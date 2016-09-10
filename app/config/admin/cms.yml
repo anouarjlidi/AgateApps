@@ -3,7 +3,7 @@ easy_admin:
 
         ####################
         ## Orbitale CMS
-        "Pages":
+        Pages:
             label: admin.cms.pages
             class: Esteren\PortalBundle\Entity\Page
             show:
@@ -19,25 +19,53 @@ easy_admin:
                     - locale
                     - { property: homepage, type: boolean }
                     - { property: enabled, type: boolean }
+
             form:
                 fields:
+
+                    # Right panel with general informations
+                    - { type: 'group', css_class: 'col-sm-8' }
                     - title
                     - slug
-                    - { property: content, type: 'Ivory\CKEditorBundle\Form\Type\CKEditorType' }
-                    - metaDescription
-                    - metaTitle
-                    - metaKeywords
-                    - css
-                    - js
-                    - category
-                    - parent
+                    - { property: content, type: ckeditor }
+
                     - property: host
-                      type: 'Symfony\Component\Form\Extension\Core\Type\ChoiceType'
+                      type: choice
                       type_options:
                           choices:
-                              - "%esteren_domains.games%"
-                              - "%esteren_domains.portal%"
-                              - "%esteren_domains.corahnrin%"
+                              '%esteren_domains.games%': '%esteren_domains.games%'
+                              '%esteren_domains.portal%': '%esteren_domains.portal%'
+                              '%esteren_domains.corahnrin%': '%esteren_domains.corahnrin%'
+
+                    - property: locale
+                      type: choice
+                      type_options:
+                          choices: '%locales%'
 
                     - homepage
                     - enabled
+
+                    # Left panel with other sections
+                    - { type: 'group', css_class: 'col-sm-4 right' }
+
+                    - { type: 'section', label: 'SEO' }
+                    - metaDescription
+                    - metaTitle
+                    - metaKeywords
+
+                    - { type: 'section', label: 'Design' }
+                    - property: template
+                      type: choice
+                      type_options:
+                          required: false
+                          placeholder: '-'
+                          empty_data: null
+                          choices:
+                              'templates.base': 'base.html.twig'
+                              'templates.material': 'base_materialize.html.twig'
+                    - css
+                    - js
+
+                    - { type: 'section', label: 'Associations' }
+                    - category
+                    - parent

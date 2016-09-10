@@ -17,7 +17,9 @@ parameters:
     version_code: 0.7.2
     version_date: 11/06/2015
     locale: fr
-    locales: [ fr, en ]
+    locales:
+        fr: fr
+        en: en
     locales_regex: "fr|en"
 
     # Definition of all subdomains used in the app
@@ -200,6 +202,7 @@ ivory_ck_editor:
     configs:
         base_config:
             language: '%locale%'
+            allowedContent: true
             toolbar:
                 - { name: "basicstyles", items: [ "Bold", "Italic", "Underline", "Strike", "Subscript", "Superscript", "-", "RemoveFormat" ] }
                 - { name: "links", items: [ "Link", "Unlink", "Anchor" ] }
