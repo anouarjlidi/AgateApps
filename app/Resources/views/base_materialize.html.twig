@@ -29,8 +29,8 @@
 
         {% block stylesheets %}
             <link rel="stylesheet" href="{{ asset('css/global_mat.css') }}" type="text/css" />
-            <link rel="stylesheet" href="{{ asset('bundles/esterenportal/css/initializer.css') }}" type="text/css" />
-            <link rel="stylesheet" href="{{ asset('css/fontawesome.css') }}" type="text/css" />
+            <link rel="stylesheet" href="{{ asset('css/initializer.css') }}" type="text/css" />
+            <link rel="stylesheet" href="{{ asset('css/fa.css') }}" type="text/css" />
         {% endblock %}
 
         {{ include('_favicons.html.twig') }}
@@ -82,13 +82,13 @@
                                 {{ block('menu_left_content') }}
                                 {{ block('menu_right_content') }}
                             </ul>
-                            <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="fa fa-bars">menu</i></a>
+                            <a href="#" data-activates="nav-mobile" class="button-collapse" title="Menu"><i class="fa fa-bars"></i></a>
                         </div>
                     </nav>
                 {% endspaceless %}
             {% endblock %}
 
-            <div id="layout" class="container">
+            <div id="layout" class="{% block layout_class %}{% endblock %}">
 
                 {# Flash messaages #}
                 {% spaceless %}
@@ -139,7 +139,7 @@
             {# FOOTER #}
             {% block footer %}
                 <footer class="page-footer">
-                    <div class="container">
+                    {#<div class="container">
                         <div class="row">
                             <div class="col l6 s12">
                                 <h5 class="white-text">Footer Content</h5>
@@ -156,23 +156,31 @@
                             </div>
                         </div>
                     </div>
+                    #}
                     <div class="footer-copyright">
                         <div class="container">
+                            <p class="left">
                             {{ 'footer.version' | trans }} : {{ version_code }} : {{ version_date }}
                             &ndash;
-                            Copyright &copy; – 2012 - {{ 'now'|date('Y') }} {{ 'footer.rights' | trans }}
+                            Copyright &copy; 2012-{{ 'now'|date('Y') }} {{ 'footer.rights' | trans }}
                             &ndash;
                             {{ 'footer.brand' | trans }}
+                            </p>
+
+                            <p class="right light">
                             {% set route_name = app.request.attributes.get('_route') %}
                             {% set route_params = app.request.attributes.get('_route_params') %}
                             {% for loc in locales %}
                                 {% if loc == locale %}
-                                    <a class="right" href="#">{{ loc | trans({}, 'Languages') }}</a>
+                                    {{ loc | trans({}, 'Languages') }}
                                 {% else %}
-                                    <a class="right" href="{{ path(route_name, ((route_params|default({}, 'Languages')) | merge({'_locale':loc})) ) }}">{{ loc | trans({}, 'Languages') }}</a>
+                                    <a class="text-underline" href="{{ path(route_name, ((route_params|default({}, 'Languages')) | merge({'_locale':loc})) ) }}">{{ loc | trans({}, 'Languages') }}</a>
                                 {% endif %}
                                 {% if not loop.last %}&ndash;{% endif %}
                             {% endfor %}
+                            </p>
+
+                            <div class="clear"></div>
                         </div>
                     </div>
                 </footer>
@@ -188,6 +196,8 @@
     <script type="text/javascript" src="{{ path('pierstoval_tools_assets_jstranslations', {"_locale": app.request.locale}) }}"></script>
     <script type="text/javascript" src="{{ asset('js/jquery.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/global_mat.js') }}"></script>
+    {# Activate button collapse "side" navigation #}
+    <script>(function($){$(function(){$('.button-collapse').sideNav();});})(jQuery);</script>
 {% endblock %}
 
 </body>

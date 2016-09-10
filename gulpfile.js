@@ -47,7 +47,7 @@ var config = {
         ]
      */
     "less": {
-        "css/fontawesome.css": [
+        "css/fa.css": [
             "src/Esteren/PortalBundle/Resources/public/less/_fontawesome.less"
         ],
         "css/global.css": [
