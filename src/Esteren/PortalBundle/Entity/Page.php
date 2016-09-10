@@ -20,6 +20,13 @@ class Page extends BasePage
     protected $id;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="template", type="string", length=255)
+     */
+    protected $template;
+
+    /**
      * @return int
      */
     public function getId()
@@ -35,6 +42,26 @@ class Page extends BasePage
     public function setId($id)
     {
         $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTemplate()
+    {
+        return $this->template;
+    }
+
+    /**
+     * @param string $template
+     *
+     * @return Page
+     */
+    public function setTemplate($template)
+    {
+        $this->template = $template;
 
         return $this;
     }
