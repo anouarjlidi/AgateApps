@@ -157,8 +157,8 @@
         {% block footer %}
         <footer id="footer">
             <div class="container">
-                <p class="text-muted text-center">{{ 'footer.version' | trans }} : {{ version_code }} : {{ version_date }}</a></p>
-                <p class="text-muted text-center">Copyright &copy; – 2012 - {{ 'now'|date('Y') }} {{ 'footer.rights' | trans }}</p>
+                <p class="text-muted text-center">{{ 'footer.version' | trans }} {{ version_code }} ({{ version_date }})</p>
+                <p class="text-muted text-center">Copyright &copy; 2012 - {{ 'now'|date('Y') }} {{ 'footer.rights' | trans }}</p>
                 <p class="text-muted text-center">{{ 'footer.brand' | trans }}</p>
             </div>
         </footer>
