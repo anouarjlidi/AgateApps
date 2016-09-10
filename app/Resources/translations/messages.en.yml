@@ -20,3 +20,7 @@ register_optin: >
     I grant Agate Éditions and its partners to do nothing with my data. <small>Anyway, Agate Éditions will
     not do anything with these data, they're used only to make the website work properly for you, so we
     will never spread your data anywhere to anyone, nor sell them, nothing. These are your property.</small>
+
+templates:
+    base: Bootstrap
+    material: Materialize

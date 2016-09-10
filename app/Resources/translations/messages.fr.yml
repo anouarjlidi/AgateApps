@@ -21,3 +21,7 @@ register_optin: >
     Agate Éditions ne fera rien du tout avec ces données, elles servent uniquement au bon fonctionnement
     de ce site, donc nous ne diffuserons jamais vos données à qui que ce soit, ni ne les vendrons, ni rien.
     Elles sont votre propriété.</small>
+
+templates:
+    base: Bootstrap
+    material: Materialize

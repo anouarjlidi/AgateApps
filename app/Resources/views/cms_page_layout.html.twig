@@ -1,0 +1,15 @@
+{#
+Here, the goal is to load this template only with CMS pages.
+This allows specific pages to extend manually their own template, as of the "page.template" property.
+#}
+{% if
+    page is defined
+    and page.template is defined
+    and page.template is not empty
+%}
+    {% set _layout_template = page.template %}
+{% else %}
+    {% set _layout_template = 'base.html.twig' %}
+{% endif %}
+
+{% extends _layout_template %}
