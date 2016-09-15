@@ -1,0 +1,21 @@
+{% extends 'IvoryCKEditorBundle:Form:ckeditor_widget.html.twig' %}
+
+{% block ckeditor_widget_extra %}
+    var cms_page_template = document.querySelector('select#pages_template');
+    if (cms_page_template && cms_page_template.value) {
+        CKEDITOR.on('instanceCreated', function(event) {
+            var template;
+            switch (cms_page_template.value) {
+                case 'base_materialize.html.twig':
+                    template = '/css/global_mat.css';
+                    break;
+                case '':
+                    template = '/css/global.css';
+                    break;
+            }
+            if (template) {
+                event.editor.config.contentsCss = template;
+            }
+        });
+    }
+{% endblock %}

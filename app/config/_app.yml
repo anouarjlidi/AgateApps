@@ -14,8 +14,8 @@ imports:
 
 parameters:
     # The version code is always the last version that was put in production
-    version_code: 0.8.0
-    version_date: 11/09/2016
+    version_code: 0.8.1
+    version_date: 14/09/2016
     locale: fr
     locales:
         fr: fr
@@ -24,7 +24,7 @@ parameters:
 
     # Definition of all subdomains used in the app
     esteren_domains.cookie_domain:      ".%esteren_domain%"
-    esteren_domains.portal:          "www.%esteren_domain%"
+    esteren_domains.portal:       "portal.%esteren_domain%"
     esteren_domains.esterenmaps:    "maps.%esteren_domain%"
     esteren_domains.corahnrin: "corahnrin.%esteren_domain%"
     esteren_domains.games:         "games.%esteren_domain%"
@@ -86,6 +86,7 @@ twig:
         esteren_domains_cookie_domain: "%esteren_domains.cookie_domain%"
     form_themes:
         - "bootstrap_3_layout.html.twig"
+        - "form/ckeditor_widget.html.twig"
 
 # Doctrine Configuration
 doctrine:
@@ -195,20 +196,22 @@ nelmio_cors:
 ivory_ck_editor:
     input_sync: true
     default_config: base_config
+    jquery: true
+    jquery_path: ''
     configs:
         base_config:
-            language: '%locale%'
+            language: "%locale%"
             allowedContent: true
             toolbar:
                 - { name: "basicstyles", items: [ "Bold", "Italic", "Underline", "Strike", "Subscript", "Superscript", "-", "RemoveFormat" ] }
-                - { name: "links", items: [ "Link", "Unlink", "Anchor" ] }
-                - { name: "insert", items: [ "Image", "Table", "HorizontalRule", "SpecialChar" ] }
-                - { name: "tools", items: [ "Maximize" ] }
+                - { name: "links",       items: [ "Link", "Unlink", "Anchor" ] }
+                - { name: "insert",      items: [ "Image", "Table", "HorizontalRule", "SpecialChar" ] }
+                - { name: "tools",       items: [ "Maximize" ] }
                 - "/"
-                - { name: "paragraph", items: [ "NumberedList", "BulletedList", "-", "Outdent", "Indent", "-", "Blockquote" ] }
-                - { name: "styles", items: [ "Styles", "Format" ] }
-                - { name: "document", items: [ "Source", "-" ] }
-                - { name: "about", items: [ "About" ] }
+                - { name: "paragraph",   items: [ "NumberedList", "BulletedList", "-", "Outdent", "Indent", "-", "Blockquote" ] }
+                - { name: "styles",      items: [ "Styles", "Format" ] }
+                - { name: "document",    items: [ "Source", "-" ] }
+                - { name: "about",       items: [ "About" ] }
 
 # Services declaration
 services:

@@ -25,3 +25,9 @@ register_optin: >
 templates:
     base: Bootstrap
     material: Materialize
+
+page:
+    preview:
+        return_to_backoffice: 'Retourner à l''administration'
+        admin_link: 'Prévisualiser'
+        previewing: 'Prévisualisation'

@@ -74,7 +74,7 @@ var config = {
      */
     "sass": {
         "css/global_mat.css": [
-            "src/Esteren/PortalBundle/Resources/public/sass/materialize.scss"
+            "src/Esteren/PortalBundle/Resources/public/sass/main.scss"
         ]
     },
 

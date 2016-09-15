@@ -194,8 +194,15 @@
     <script type="text/javascript" src="{{ path('pierstoval_tools_assets_jstranslations', {"_locale": app.request.locale}) }}"></script>
     <script type="text/javascript" src="{{ asset('js/jquery.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/global_mat.js') }}"></script>
-    {# Activate button collapse "side" navigation #}
-    <script>(function($){$(function(){$('.button-collapse').sideNav();});})(jQuery);</script>
+    <script>(function($, d){$(function(){
+        {# Activate button collapse "side" navigation #}
+        if (d.querySelector('.button-collapse')) {
+            $('.button-collapse').sideNav();;
+        }
+        if (d.querySelector('.parallax')) {
+            $('.parallax').parallax();
+        }
+    })})(jQuery, document);</script>
 {% endblock %}
 
 </body>

@@ -9,6 +9,8 @@ easy_admin:
             show:
                 fields: [ id, parent, title, slug, tree, content, metaDescription, metaTitle, category, host, locale, homepage, enabled ]
             list:
+                actions:
+                    - { name: 'admin_page_preview', label: 'page.preview.admin_link', icon: 'search', type: route }
                 fields:
                     - id
                     - parent
