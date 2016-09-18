@@ -106,7 +106,7 @@
         cacheKey = mapOptions.cachePrefix + hashCode(JSON.stringify(ajaxObject));
 
         // Check in the cache if we have an element.
-        if (cacheItem = w.localStorage.getItem(cacheKey)) {
+        if (cacheTTL > 0 && (cacheItem = w.localStorage.getItem(cacheKey))) {
             cacheItem = JSON.parse(cacheItem);
 
             if (!cacheItem.hasOwnProperty('date') || !cacheItem.hasOwnProperty('response')) {
