@@ -3,7 +3,7 @@ easy_admin:
 
         ####################
         ## Esteren Maps
-        "Factions":
+        Factions:
             label: admin.maps.factions
             class: EsterenMaps\MapsBundle\Entity\Factions
             list:
@@ -11,7 +11,7 @@ easy_admin:
             form:
                 fields: [ name, description, book ]
 
-        "Maps":
+        Maps:
             label: admin.maps.maps
             class: EsterenMaps\MapsBundle\Entity\Maps
             list:
@@ -19,7 +19,14 @@ easy_admin:
                     - edit
                     - { name: admin_esterenmaps_maps_maps_editInteractive, type: route, label: actions.interactive  }
                     - '-delete'
-                fields: [ id, name, nameSlug, maxZoom, startZoom, startX, startY ]
+                fields:
+                    - id
+                    - name
+                    - nameSlug
+                    - maxZoom
+                    - startZoom
+                    - startX
+                    - startY
             new:
                 fields:
                     - name
@@ -45,25 +52,41 @@ easy_admin:
                     - startY
                     - coordinatesRatio
 
-        "Markers":
+        Markers:
             label: admin.maps.markers
             class: EsterenMaps\MapsBundle\Entity\Markers
             list:
                 actions:
                     - '-delete'
-                fields: [ id, name, latitude, longitude, markerType, { property: webIcon, type: image } ]
+                fields:
+                    - id
+                    - name
+                    - latitude
+                    - longitude
+                    - markerType
+                    - property: webIcon
+                      type: image
             form:
                 fields:
-                    - { property: name, type_options: { required: true } }
+                    - property: name
+                      type_options:
+                          required: true
                     - description
                     - markerType
                     - faction
-                    - { property: latitude,  type_options: { disabled: true, required: false } }
-                    - { property: longitude, type_options: { disabled: true, required: false } }
-                    - { property: altitude,  type_options: { disabled: true, required: false } }
-                    - { property: map,       type_options: { disabled: true, required: false } }
+                    - property: latitude
+                      type_options: { disabled: true, required: false }
 
-        "MarkersTypes":
+                    - property: longitude
+                      type_options: { disabled: true, required: false }
+
+                    - property: altitude
+                      type_options: { disabled: true, required: false }
+
+                    - property: map
+                      type_options: { disabled: true, required: false }
+
+        MarkersTypes:
             label: admin.maps.markers_types
             class: EsterenMaps\MapsBundle\Entity\MarkersTypes
             list:
@@ -73,13 +96,20 @@ easy_admin:
             form:
                 fields: [ name, icon, markers ]
 
-        "Routes":
+        Routes:
             label: admin.maps.routes
             class: EsterenMaps\MapsBundle\Entity\Routes
             list:
                 actions:
                     - '-delete'
-                fields: [ id, name, distance, description, routeType, markerStart, markerEnd ]
+                fields:
+                    - id
+                    - name
+                    - distance
+                    - description
+                    - routeType
+                    - markerStart
+                    - markerEnd
             form:
                 fields:
                     - { property: name, type_options: { required: true } }
@@ -92,7 +122,7 @@ easy_admin:
                     - { property: coordinates, type_options: { disabled: true, required: false } }
                     - { property: map,         type_options: { disabled: true, required: false } }
 
-        "RoutesTypes":
+        RoutesTypes:
             label: admin.maps.routes_types
             class: EsterenMaps\MapsBundle\Entity\RoutesTypes
             list:
@@ -102,23 +132,39 @@ easy_admin:
             form:
                 fields: [ name, color ]
 
-        "Zones":
+        Zones:
             label: admin.maps.zones
             class: EsterenMaps\MapsBundle\Entity\Zones
             list:
                 actions:
                     - '-delete'
-                fields: [ id, name, description, zoneType, map, faction ]
+                fields:
+                    - id
+                    - name
+                    - description
+                    - zoneType
+                    - map
+                    - faction
             form:
                 fields:
-                    - { property: name, type_options: { required: true } }
+                    - property: name
+                      type_options:
+                          required: true
                     - description
                     - zoneType
                     - faction
-                    - { property: coordinates, type_options: { disabled: true, required: false } }
-                    - { property: map,         type_options: { disabled: true, required: false } }
+                    - property: coordinates
+                      type_options:
+                          disabled: true
+                          required: false
+                          attr: { readonly: readonly }
+                    - property: map
+                      type_options:
+                          disabled: true
+                          required: false
+                          attr: { readonly: readonly }
 
-        "ZonesTypes":
+        ZonesTypes:
             label: admin.maps.zones_types
             class: EsterenMaps\MapsBundle\Entity\ZonesTypes
             list:
@@ -128,9 +174,10 @@ easy_admin:
             form:
                 fields: [ name, color, parent ]
 
-        "TransportTypes":
+        TransportTypes:
             label: admin.maps.transports_types
             class: EsterenMaps\MapsBundle\Entity\TransportTypes
+            controller: EsterenMaps\MapsBundle\Controller\Admin\TransportTypesController
             list:
                 actions:
                     - '-delete'

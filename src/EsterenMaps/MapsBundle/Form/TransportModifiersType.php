@@ -20,8 +20,9 @@ class TransportModifiersType extends AbstractType
         $builder
             ->add('percentage')
             ->add('routeType', TextType::class, [
-                'disabled'  => true,
-                'read_only' => true,
+                'disabled' => true,
+                'attr'     => ['read_only' => true],
+                'required' => false,
             ])
             ->add('positiveRatio')
         ;
