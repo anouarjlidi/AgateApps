@@ -8,40 +8,18 @@ use Tests\WebTestCase;
 
 class PortalControllerTest extends WebTestCase
 {
-    /**
-     * @see GeneratorController::indexAction
-     */
-    public function testIndexWithNoPage()
+    public function testIndexWithHomepage()
     {
         $client = $this->getClient('portal.esteren.dev');
 
-        $client->request('GET', '/fr/');
-
-        static::assertEquals(404, $client->getResponse()->getStatusCode());
-    }
-
-    /**
-     * @see GeneratorController::indexAction
-     */
-    public function testIndexWithHomepage()
-    {
-        $client = $this->getClient('www.esteren.dev');
-
-        $page = new Page();
-        $page
-            ->setHomepage(true)
-            ->setHost('www.esteren.dev')
-            ->setTitle('Homepage test')
-            ->setContent('<h2>This tag is only here for testing</h2>')
-            ->setSlug('homepage-test')
-            ->setLocale('fr')
-            ->setEnabled(true)
+        // Find first page
+        $page = static::$kernel
+            ->getContainer()
+            ->get('doctrine')
+            ->getManager()
+            ->getRepository('EsterenPortalBundle:Page')
+            ->findOneBy([])
         ;
-
-        /** @var EntityManager $em */
-        $em = static::$kernel->getContainer()->get('doctrine')->getManager();
-        $em->persist($page);
-        $em->flush();
 
         $client->restart();
 
@@ -57,11 +35,12 @@ class PortalControllerTest extends WebTestCase
      */
     public function testIndexWithOnePage()
     {
-        $client = $this->getClient('www.esteren.dev');
+        $client = $this->getClient('portal.esteren.dev');
 
         $page = new Page();
         $page
-            ->setHost('www.esteren.dev')
+            ->setTemplate('base.html.twig')
+            ->setHost('portal.esteren.dev')
             ->setTitle('Page test')
             ->setContent('<h2>This tag is only here for testing</h2>')
             ->setSlug('page-test')

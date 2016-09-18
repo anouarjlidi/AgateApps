@@ -57,6 +57,7 @@ class PagesAdminTest extends AbstractEasyAdminTest
             'category'        => '',
             'parent'          => '',
             'host'            => '',
+            'template'        => 'base.html.twig',
             'homepage'        => false,
             'enabled'         => true,
         ];
