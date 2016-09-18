@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityManager;
 use EsterenMaps\MapsBundle\Services\MapsRegistry;
 use Tests\WebTestCase;
 
-class DirectionsManager extends WebTestCase
+class DirectionsManagerTest extends WebTestCase
 {
     /**
      * @dataProvider provideWorkingDirections
