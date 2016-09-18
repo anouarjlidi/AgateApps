@@ -11,14 +11,14 @@ use JMS\Serializer\Annotation\Expose;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * RoutesTransports.
+ * TransportModifiers.
  *
  * @ORM\Table(name="maps_routes_transports", uniqueConstraints={@ORM\UniqueConstraint(name="unique_route_transport",columns={"route_type_id", "transport_type_id"})})
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  * @ORM\Entity()
  * @ExclusionPolicy("all")
  */
-class RoutesTransports
+class TransportModifiers
 {
     use TimestampableEntity;
     use SoftDeleteableEntity;
@@ -78,7 +78,7 @@ class RoutesTransports
     /**
      * @param int $id
      *
-     * @return RoutesTransports
+     * @return TransportModifiers
      */
     public function setId($id)
     {
@@ -98,7 +98,7 @@ class RoutesTransports
     /**
      * @param RoutesTypes $routeType
      *
-     * @return RoutesTransports
+     * @return TransportModifiers
      */
     public function setRouteType($routeType)
     {
@@ -118,7 +118,7 @@ class RoutesTransports
     /**
      * @param mixed $transportType
      *
-     * @return RoutesTransports
+     * @return TransportModifiers
      */
     public function setTransportType($transportType)
     {
@@ -138,7 +138,7 @@ class RoutesTransports
     /**
      * @param mixed $percentage
      *
-     * @return RoutesTransports
+     * @return TransportModifiers
      */
     public function setPercentage($percentage)
     {
@@ -158,7 +158,7 @@ class RoutesTransports
     /**
      * @param bool $positiveRatio
      *
-     * @return RoutesTransports
+     * @return TransportModifiers
      */
     public function setPositiveRatio($positiveRatio)
     {

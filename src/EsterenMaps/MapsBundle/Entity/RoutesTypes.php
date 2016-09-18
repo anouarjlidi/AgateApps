@@ -69,8 +69,8 @@ class RoutesTypes
     protected $routes;
 
     /**
-     * @var RoutesTransports[]
-     * @ORM\OneToMany(targetEntity="EsterenMaps\MapsBundle\Entity\RoutesTransports", mappedBy="routeType")
+     * @var TransportModifiers[]
+     * @ORM\OneToMany(targetEntity="EsterenMaps\MapsBundle\Entity\TransportModifiers", mappedBy="routeType")
      * @Serializer\Expose
      */
     protected $transports;
@@ -247,11 +247,11 @@ class RoutesTypes
     /**
      * Add transports.
      *
-     * @param RoutesTransports $transports
+     * @param TransportModifiers $transports
      *
      * @return RoutesTypes
      */
-    public function addTransport(RoutesTransports $transports)
+    public function addTransport(TransportModifiers $transports)
     {
         $this->transports[] = $transports;
 
@@ -261,11 +261,11 @@ class RoutesTypes
     /**
      * Remove transports.
      *
-     * @param RoutesTransports $transports
+     * @param TransportModifiers $transports
      *
      * @return RoutesTypes
      */
-    public function removeTransport(RoutesTransports $transports)
+    public function removeTransport(TransportModifiers $transports)
     {
         $this->transports->removeElement($transports);
 
@@ -275,7 +275,7 @@ class RoutesTypes
     /**
      * Get transports.
      *
-     * @return RoutesTransports[]
+     * @return TransportModifiers[]
      */
     public function getTransports()
     {
@@ -285,11 +285,11 @@ class RoutesTypes
     /**
      * @param TransportTypes $transportType
      *
-     * @return RoutesTransports
+     * @return TransportModifiers
      */
     public function getTransport(TransportTypes $transportType)
     {
-        $transports = $this->transports->filter(function (RoutesTransports $element) use ($transportType) {
+        $transports = $this->transports->filter(function (TransportModifiers $element) use ($transportType) {
             return $element->getTransportType()->getId() === $transportType->getId();
         });
 

@@ -5,7 +5,7 @@ namespace EsterenMaps\MapsBundle\DataFixtures\ORM;
 use Orbitale\Component\DoctrineTools\AbstractFixture;
 use Pierstoval\Bundle\ToolsBundle\Doctrine\FixtureMetadataIdGeneratorTrait;
 
-class RoutesTransportsFixtures extends AbstractFixture
+class TransportModifiersFixtures extends AbstractFixture
 {
     use FixtureMetadataIdGeneratorTrait;
 
@@ -22,7 +22,7 @@ class RoutesTransportsFixtures extends AbstractFixture
      */
     protected function getEntityClass()
     {
-        return 'EsterenMaps\MapsBundle\Entity\RoutesTransports';
+        return 'EsterenMaps\MapsBundle\Entity\TransportModifiers';
     }
 
     /**

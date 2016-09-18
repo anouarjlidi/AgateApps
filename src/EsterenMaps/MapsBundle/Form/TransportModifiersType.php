@@ -10,7 +10,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * This FormType is used in EasyAdmin mostly.
  */
-class RoutesTransportsType extends AbstractType
+class TransportModifiersType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -34,7 +34,7 @@ class RoutesTransportsType extends AbstractType
     {
         $resolver->setDefaults([
             'label'      => false,
-            'data_class' => 'EsterenMaps\MapsBundle\Entity\RoutesTransports',
+            'data_class' => 'EsterenMaps\MapsBundle\Entity\TransportModifiers',
         ]);
     }
 

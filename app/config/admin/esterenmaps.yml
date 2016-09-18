@@ -144,4 +144,4 @@ easy_admin:
                   - property: transportsModifiers
                     type: 'Symfony\Component\Form\Extension\Core\Type\CollectionType'
                     type_options:
-                        entry_type: 'EsterenMaps\MapsBundle\Form\RoutesTransportsType'
+                        entry_type: 'EsterenMaps\MapsBundle\Form\TransportModifiersType'

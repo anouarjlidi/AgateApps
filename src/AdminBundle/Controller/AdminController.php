@@ -2,7 +2,7 @@
 
 namespace AdminBundle\Controller;
 
-use EsterenMaps\MapsBundle\Entity\RoutesTransports;
+use EsterenMaps\MapsBundle\Entity\TransportModifiers;
 use EsterenMaps\MapsBundle\Entity\TransportTypes;
 use JavierEguiluz\Bundle\EasyAdminBundle\Controller\AdminController as BaseAdminController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -37,7 +37,7 @@ class AdminController extends BaseAdminController
         // Get IDs in the entity and try to retrieve non-existing transport ids.
         $routesTypesIds = array_reduce(
             $entity->getTransportsModifiers()->toArray(),
-            function (array $carry = [], RoutesTransports $routeTransport) {
+            function (array $carry = [], TransportModifiers $routeTransport) {
                 $carry[] = $routeTransport->getRouteType()->getId();
 
                 return $carry;
@@ -52,7 +52,7 @@ class AdminController extends BaseAdminController
 
         foreach ($missingRoutesTypes as $routeType) {
             $entity->addTransportsModifier(
-                (new RoutesTransports())
+                (new TransportModifiers())
                 ->setTransportType($entity)
                 ->setRouteType($routeType)
             );

@@ -71,9 +71,9 @@ class TransportTypes
     protected $speed;
 
     /**
-     * @var ArrayCollection|RoutesTransports[]
+     * @var ArrayCollection|TransportModifiers[]
      *
-     * @ORM\OneToMany(targetEntity="EsterenMaps\MapsBundle\Entity\RoutesTransports", mappedBy="transportType", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="EsterenMaps\MapsBundle\Entity\TransportModifiers", mappedBy="transportType", cascade={"persist", "remove"})
      */
     protected $transportsModifiers;
 
@@ -190,11 +190,11 @@ class TransportTypes
     /**
      * Add transportsModifier.
      *
-     * @param RoutesTransports $transportsModifier
+     * @param TransportModifiers $transportsModifier
      *
      * @return TransportTypes
      */
-    public function addTransportsModifier(RoutesTransports $transportsModifier)
+    public function addTransportsModifier(TransportModifiers $transportsModifier)
     {
         $this->transportsModifiers[] = $transportsModifier;
 
@@ -204,11 +204,11 @@ class TransportTypes
     /**
      * Remove transportsModifier.
      *
-     * @param RoutesTransports $transportsModifier
+     * @param TransportModifiers $transportsModifier
      *
      * @return $this
      */
-    public function removeTransportsModifier(RoutesTransports $transportsModifier)
+    public function removeTransportsModifier(TransportModifiers $transportsModifier)
     {
         $this->transportsModifiers->removeElement($transportsModifier);
 
@@ -218,7 +218,7 @@ class TransportTypes
     /**
      * Get transportsModifiers.
      *
-     * @return ArrayCollection|RoutesTransports[]
+     * @return ArrayCollection|TransportModifiers[]
      */
     public function getTransportsModifiers()
     {

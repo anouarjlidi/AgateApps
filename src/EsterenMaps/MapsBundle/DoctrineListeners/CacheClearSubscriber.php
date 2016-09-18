@@ -8,7 +8,7 @@ use EsterenMaps\MapsBundle\Cache\CacheManager;
 use EsterenMaps\MapsBundle\Entity\Markers;
 use EsterenMaps\MapsBundle\Entity\MarkersTypes;
 use EsterenMaps\MapsBundle\Entity\Routes;
-use EsterenMaps\MapsBundle\Entity\RoutesTransports;
+use EsterenMaps\MapsBundle\Entity\TransportModifiers;
 use EsterenMaps\MapsBundle\Entity\RoutesTypes;
 use EsterenMaps\MapsBundle\Entity\TransportTypes;
 use EsterenMaps\MapsBundle\Entity\Zones;
@@ -60,7 +60,7 @@ class CacheClearSubscriber implements EventSubscriber
             || $entity instanceof Zones
             || $entity instanceof ZonesTypes
             || $entity instanceof TransportTypes
-            || $entity instanceof RoutesTransports
+            || $entity instanceof TransportModifiers
         ) {
             $this->cacheService->getAdapter()->deleteItem(CacheManager::CACHE_NAME);
         }
