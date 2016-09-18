@@ -31,9 +31,9 @@ class DirectionsManagerTest extends WebTestCase
 
         $directions = $maps->getDirectionsManager();
 
-        $map = $em->getRepository('EsterenMapsBundle:Maps')->findOneBy(['nameSlug' => $map]);
+        $map  = $em->getRepository('EsterenMapsBundle:Maps')->findOneBy(['nameSlug' => $map]);
         $from = $em->getRepository('EsterenMapsBundle:Markers')->findOneBy(['name' => $from]);
-        $to = $em->getRepository('EsterenMapsBundle:Markers')->findOneBy(['name' => $to]);
+        $to   = $em->getRepository('EsterenMapsBundle:Markers')->findOneBy(['name' => $to]);
 
         if ($transport) {
             $transport = $em->getRepository('EsterenMapsBundle:TransportTypes')->findOneBy(['slug' => $transport]);
@@ -62,38 +62,53 @@ class DirectionsManagerTest extends WebTestCase
     public function provideWorkingDirections()
     {
         return [
+            // Test from bottom left to top right with no transport (similar to "default")
             [
                 [
-                    'found' => true,
-                    'from_cache' => false,
-                    'number_of_steps' => 10,
+                    'found'           => true,
+                    'from_cache'      => false,
+                    'number_of_steps' => 16,
                 ],
                 'tri-kazel',
                 'Pointe de Hòb',
                 'Col de Gaos-Bodhar',
-                null
+                null,
             ],
+            // Test from bottom left to top right with "default" transport
             [
                 [
-                    'found' => true,
-                    'from_cache' => false,
-                    'number_of_steps' => 10,
+                    'found'           => true,
+                    'from_cache'      => false,
+                    'number_of_steps' => 16,
                 ],
                 'tri-kazel',
                 'Pointe de Hòb',
                 'Col de Gaos-Bodhar',
-                'transport-par-defaut'
+                'transport-par-defaut',
             ],
+            // Test from bottom left to top right with ground transport
             [
                 [
-                    'found' => true,
-                    'from_cache' => false,
-                    'number_of_steps' => 10,
+                    'found'           => true,
+                    'from_cache'      => false,
+                    'number_of_steps' => 18,
                 ],
                 'tri-kazel',
                 'Pointe de Hòb',
                 'Col de Gaos-Bodhar',
-                'chariot'
+                'chariot',
+            ],
+            // Test small ship transport with only routes in the sea
+            [
+                [
+                    'found'           => true,
+                    'from_cache'      => false,
+                    'number_of_steps' => 2,
+                ],
+                'tri-kazel',
+                'Tuaille',
+                'Seòl',
+                'coracle',
             ],
         ];
     }

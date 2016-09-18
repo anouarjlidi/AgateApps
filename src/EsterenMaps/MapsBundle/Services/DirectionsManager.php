@@ -8,7 +8,7 @@ use EsterenMaps\MapsBundle\Entity\Maps;
 use EsterenMaps\MapsBundle\Entity\Markers;
 use EsterenMaps\MapsBundle\Entity\Routes;
 use EsterenMaps\MapsBundle\Entity\TransportTypes;
-use EsterenMaps\MapsBundle\Repository\MarkersRepository;
+use EsterenMaps\MapsBundle\Model\DirectionRoute;
 use JMS\Serializer\SerializationContext;
 use JMS\Serializer\Serializer;
 use Symfony\Bundle\TwigBundle\TwigEngine;
@@ -105,6 +105,7 @@ class DirectionsManager
      */
     private function doGetDirections(Maps $map, Markers $start, Markers $end, $hoursPerDay = 7, TransportTypes $transportType = null)
     {
+        /** @var DirectionRoute[] $routes */
         $routes = $this->entityManager->getRepository('EsterenMapsBundle:Routes')->findForDirections($map, $transportType);
 
         $nodes = [];
@@ -115,46 +116,47 @@ class DirectionsManager
          * We here have a list of "start" and "end" markers, and routes.
          * We need nodes (markers) and edges (routes).
          */
-        foreach ($routes as $routeId => $route) {
+        foreach ($routes as $route) {
+
+            $routeId = $route->getId();
 
             // Create an edge based on a route.
             $edge = [
                 'id'       => $routeId,
-                'distance' => $route['forcedDistance'] ?: $route['distance'],
-                'start' => $route['markerStartId'],
-                'end'   => $route['markerEndId'],
+                'distance' => $route->getForcedDistance() ?: $route->getDistance(),
+                'start'    => $route->getMarkerStartId(),
+                'end'      => $route->getMarkerEndId(),
             ];
 
-
             // Add nodes and edge.
-            if ($route['markerStartId']) {
+            if ($route->getMarkerStartId()) {
                 // Set the start node if does not exist.
-                if (!array_key_exists($route['markerStartId'], $nodes)) {
-                    $nodes[$route['markerStartId']] = [
-                        'id'         => $route['markerStartId'],
-                        'name'       => $route['markerStartName'],
+                if (!array_key_exists($route->getMarkerStartId(), $nodes)) {
+                    $nodes[$route->getMarkerStartId()] = [
+                        'id'         => $route->getMarkerStartId(),
+                        'name'       => $route->getMarkerStartName(),
                         'neighbours' => [],
                     ];
                 }
-                
-                $nodes[$route['markerStartId']]['neighbours'][$routeId] = [
-                    'distance' => $route['forcedDistance'] ?: $route['distance'],
-                    'end' => $route['markerEndId'],
+
+                $nodes[$route->getMarkerStartId()]['neighbours'][$routeId] = [
+                    'distance' => $route->getForcedDistance() ?: $route->getDistance(),
+                    'end' => $route->getMarkerEndId(),
                 ];
             }
-            if ($route['markerEndId']) {
+            if ($route->getMarkerEndId()) {
                 // Set the end node if does not exist.
-                if (!array_key_exists($route['markerEndId'], $nodes)) {
-                    $nodes[$route['markerEndId']] = [
-                        'id' => $route['markerEndId'],
-                        'name' => $route['markerEndName'],
+                if (!array_key_exists($route->getMarkerEndId(), $nodes)) {
+                    $nodes[$route->getMarkerEndId()] = [
+                        'id' => $route->getMarkerEndId(),
+                        'name' => $route->getMarkerEndName(),
                         'neighbours' => [],
                     ];
                 }
 
-                $nodes[$route['markerEndId']]['neighbours'][$routeId] = [
-                    'distance' => $route['forcedDistance'] ?: $route['distance'],
-                    'end' => $route['markerStartId'],
+                $nodes[$route->getMarkerEndId()]['neighbours'][$routeId] = [
+                    'distance' => $route->getForcedDistance() ?: $route->getDistance(),
+                    'end' => $route->getMarkerStartId(),
                 ];
             }
             $edges[$routeId] = $edge;

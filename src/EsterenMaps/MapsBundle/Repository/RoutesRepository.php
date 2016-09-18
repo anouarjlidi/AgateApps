@@ -6,6 +6,8 @@ use Doctrine\ORM\Query;
 use EsterenMaps\MapsBundle\Entity\Maps;
 use EsterenMaps\MapsBundle\Entity\Routes;
 use EsterenMaps\MapsBundle\Entity\TransportTypes;
+use EsterenMaps\MapsBundle\Hydrator\DirectionsRouteHydrator;
+use EsterenMaps\MapsBundle\Model\DirectionRoute;
 use Orbitale\Component\DoctrineTools\BaseEntityRepository as BaseRepository;
 
 class RoutesRepository extends BaseRepository
@@ -14,55 +16,52 @@ class RoutesRepository extends BaseRepository
      * @param Maps|int       $map
      * @param TransportTypes $transportType
      *
-     * @return array[]
+     * @return DirectionRoute[]
      */
     public function findForDirections($map, TransportTypes $transportType = null)
     {
         $qb = $this
             ->createQueryBuilder('route')
             ->select('
-                route.id,
-                route.name,
-                route.distance,
-                route.forcedDistance,
-                route.coordinates,
-                route.guarded,
-                
-                markerStart.id as markerStartId,
-                markerStart.name as markerStartName,
-                
-                markerEnd.id as markerEndId,
-                markerEnd.name as markerEndName,
-                
-                routeType.id,
-                routeType.name,
-                
-                transportType.id,
-                transportType.name,
-                transportType.slug,
-                transportType.speed
+                route,
+                routeType,
+                markerStart,
+                markerEnd,
+                transports,
+                transportType
             ')
-            ->leftJoin('route.markerStart', 'markerStart')
-            ->leftJoin('route.markerEnd', 'markerEnd')
+            ->innerJoin('route.markerStart', 'markerStart')
+            ->innerJoin('route.markerEnd', 'markerEnd')
             ->innerJoin('route.routeType', 'routeType')
-            ->innerJoin('routeType.transports', 'transports')
-            ->innerJoin('transports.transportType', 'transportType')
+                ->innerJoin('routeType.transports', 'transports')
+                    ->innerJoin('transports.transportType', 'transportType')
             ->indexBy('route', 'route.id')
             ->where('route.map = :map')
-                ->setParameter('map', $map)
+                ->setParameter('map', $map->getId())
         ;
 
-        if ($transportType) {
-            // Don't get route where transport type is not available or when speed is zero.
-            $qb
-                ->andWhere('transportType = :transportType OR (transportType != :transportType AND transports.percentage > 0)')
-                ->setParameter('transportType', $transportType)
-            ;
+        // Prepare custom hydration system
+        $this->_em->getConfiguration()->addCustomHydrationMode('directions_route', DirectionsRouteHydrator::class);
+
+        /** @var DirectionRoute[] $directionRoutes */
+        $directionRoutes = $qb->getQuery()->getResult('directions_route');
+
+        if (null !== $transportType) {
+            // Remove each route on which current transport has speed equal to zero
+            foreach ($directionRoutes as $k => $directionRoute) {
+                foreach ($directionRoute->getTransports() as $resultTransport) {
+                    if (
+                        $resultTransport->getId() === $transportType->getId()
+                        && $resultTransport->getPercentage() === 0.0
+                    ) {
+                        unset($directionRoutes[$k]);
+                        break;
+                    }
+                }
+            }
         }
 
-        return $qb
-            ->getQuery()->getArrayResult()
-        ;
+        return $directionRoutes;
     }
 
     /**
