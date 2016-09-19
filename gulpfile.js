@@ -149,7 +149,8 @@ var config = {
             "web/components/materialize/js/date_picker/picker.date.js",
             "web/components/materialize/js/character_counter.js",
             "web/components/materialize/js/carousel.js",
-            "src/Esteren/PortalBundle/Resources/public/js/helpers.js"
+            "src/Esteren/PortalBundle/Resources/public/js/helpers.js",
+            "src/Esteren/PortalBundle/Resources/public/js/global_mat.js"
         ],
         "js/maps_lib.js": [
             "web/components/leaflet/dist/leaflet-src.js",

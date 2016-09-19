@@ -1,6 +1,6 @@
-(function($, d, w){
+(function($, d){
 
-    // Placement dynamique d'une tooltip
+    // Dynamic tooltip management
     if (d.querySelector('[data-toggle="tooltip"]')) {
         $('[data-toggle="tooltip"]').tooltip({
             "placement" : function(event,element){
@@ -17,4 +17,4 @@
         });
     }
 
-})(jQuery, document, window);
+})(jQuery, document);
