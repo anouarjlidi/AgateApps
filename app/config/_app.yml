@@ -31,6 +31,10 @@ parameters:
     esteren_domains.api:             "api.%esteren_domain%"
     esteren_domains.backoffice:     "back.%esteren_domain%"
 
+    google_tags:
+        analytics:   'UA-43812649-5'
+        tag_manager: 'GTM-T5PQWF'
+
 doctrine:
     orm:
         # Override the default repository to get some more good tools
@@ -58,7 +62,7 @@ framework:
     # Add cookie domain as trusted host because requests are made with CORS.
     trusted_hosts:
         - "^[a-z]+\\%esteren_domains.cookie_domain%$"
-        # TODO: Add 127.0.0.1 while in dev mode if you need it.
+        # - 127.0.0.1 # To add in dev mode if needed
 
     session:
         enabled:         true
@@ -84,6 +88,7 @@ twig:
         esteren_domains_backoffice: "%esteren_domains.backoffice%"
         esteren_domains_api: "%esteren_domains.api%"
         esteren_domains_cookie_domain: "%esteren_domains.cookie_domain%"
+        esteren_domains_games: '%esteren_domains.games%'
     form_themes:
         - "bootstrap_3_layout.html.twig"
         - "form/ckeditor_widget.html.twig"
@@ -148,7 +153,7 @@ pierstoval_api:
         - "%esteren_domains.corahnrin%"
         - "%esteren_domains.backoffice%"
         - "%esteren_domains.api%"
-        # TODO: Add 127.0.0.1 while in dev mode if you need it.
+        # - 127.0.0.1 # To add in dev mode if needed
 
     services:
         maps:           { entity: EsterenMaps\MapsBundle\Entity\Maps }

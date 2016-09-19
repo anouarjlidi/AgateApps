@@ -1,0 +1,8 @@
+services:
+    portal.twig.google_tags:
+        class: Esteren\PortalBundle\Twig\GoogleTagsExtension
+        arguments:
+            - '%google_tags%'
+            - '%kernel.debug%'
+        tags:
+            - { name: twig.extension }

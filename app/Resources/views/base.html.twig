@@ -36,6 +36,8 @@
 
 <body>
 
+{{ include('_google_tag_manager.html.twig') }}
+
 {% block body %}
 
     <div id="wrapper">
@@ -169,6 +171,8 @@
     </div><!--/#wrapper-->
 
 {% endblock %}
+
+{{ include('_google_analytics.html.twig') }}
 
 {% block javascripts %}
     <script type="text/javascript" src="{{ path('pierstoval_tools_assets_jstranslations', {"_locale": app.request.locale}) }}"></script>
