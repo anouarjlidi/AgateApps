@@ -36,7 +36,7 @@ class GoogleTagsExtension extends \Twig_Extension
      */
     public function getGoogleTagManager()
     {
-        return $this->googleTags['tag_manager'];
+        return $this->debug ? '' : $this->googleTags['tag_manager'];
     }
 
     /**
@@ -44,7 +44,7 @@ class GoogleTagsExtension extends \Twig_Extension
      */
     public function getGoogleAnalytics()
     {
-        return $this->googleTags['analytics'];
+        return $this->debug ? '' : $this->googleTags['analytics'];
     }
 
     /**
