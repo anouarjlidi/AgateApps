@@ -1,6 +1,6 @@
-{% if locale is not defined %}
-    {% set locale = app.request.locale %}
-{% endif %}
+{%- if locale is not defined -%}
+    {%- set locale = app.request.locale -%}
+{%- endif -%}
 <!DOCTYPE html>
 <html id="corahnrin" lang="{{ app.request.locale|default(app.request.defaultLocale)|default('fr') }}">
 <head>
@@ -51,7 +51,7 @@
             {% block menus %}
                 {% spaceless %}
 
-                    <nav class="black" role="navigation">
+                    <nav id="main_navigation" class="black" role="navigation">
                         <div class="nav-wrapper container blue-text">
                             {% block menu_brand_link %}
                                 <a href="{{ path('root') }}" class="brand-logo position-static left" title="{{ 'home' | trans({}, 'OrbitaleCms') }}">
@@ -86,7 +86,7 @@
                                 {{ block('menu_left_content') }}
                                 {{ block('menu_right_content') }}
                             </ul>
-                            <a href="#" data-activates="nav-mobile" class="button-collapse right" title="{{ 'links.menu'|trans }}"><i class="fa fa-bars"></i></a>
+                            <a href="#" data-activates="nav-mobile" class="button-collapse right text-white" title="{{ 'links.menu'|trans }}"><i class="fa fa-bars"></i></a>
                         </div>
                     </nav>
                 {% endspaceless %}
@@ -126,7 +126,7 @@
 
                 <div id="content">
 
-                    {% block orbitale_cms_breadcrumbs %}{% endblock %}
+                    {#{% block orbitale_cms_breadcrumbs %}{% endblock %}#}
 
                     {% block fos_user_content %}{% endblock %}
 
