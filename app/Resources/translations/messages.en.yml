@@ -11,6 +11,7 @@ ID: ID
 tree: Tree
 links:
     admin: 'Admin panel'
+    menu: 'Menu'
 footer:
     rights: 'Agate RPG, All rights reserved'
     brand: 'Agate RPG is a brand of Agate Éditions'

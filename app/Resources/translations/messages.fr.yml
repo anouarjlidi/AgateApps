@@ -11,6 +11,7 @@ ID: ID
 tree: "Chemin d'URL"
 links:
     admin: Administration
+    amenu: Menu
 footer:
     rights: 'Agate RPG, Tous droits réservés.'
     brand: 'Agate RPG est une marque d''Agate Éditions'

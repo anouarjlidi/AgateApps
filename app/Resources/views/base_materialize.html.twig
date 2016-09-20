@@ -54,7 +54,9 @@
                     <nav class="darkblue" role="navigation">
                         <div class="nav-wrapper container blue-text">
                             {% block menu_brand_link %}
-                                <a href="{{ path('root') }}" class="brand-logo position-static left">{{ 'home' | trans({}, 'OrbitaleCms') }}</a>
+                                <a href="{{ path('root') }}" class="brand-logo position-static left" title="{{ 'home' | trans({}, 'OrbitaleCms') }}">
+                                    <img id="esteren_logo" src="{{ asset('img/Esteren_logo_400.png') }}" alt="{{ 'home' | trans({}, 'OrbitaleCms') }}">
+                                </a>
                             {% endblock %}
 
                             {% block menu_left %}
@@ -84,7 +86,7 @@
                                 {{ block('menu_left_content') }}
                                 {{ block('menu_right_content') }}
                             </ul>
-                            <a href="#" data-activates="nav-mobile" class="button-collapse" title="Menu"><i class="fa fa-bars"></i></a>
+                            <a href="#" data-activates="nav-mobile" class="button-collapse right" title="{{ 'links.menu'|trans }}"><i class="fa fa-bars"></i></a>
                         </div>
                     </nav>
                 {% endspaceless %}
