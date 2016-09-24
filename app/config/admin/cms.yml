@@ -46,6 +46,7 @@ easy_admin:
 
                     - homepage
                     - enabled
+                    - showTitle
 
                     # Left panel with other sections
                     - { type: 'group', css_class: 'col-sm-4 right' }
