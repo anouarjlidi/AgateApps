@@ -124,13 +124,13 @@
                     {% endfor %}
                 {% endspaceless %}
 
-                <div id="content">
+                <div id="content" class="container">
 
                     {#{% block orbitale_cms_breadcrumbs %}{% endblock %}#}
 
                     {% block fos_user_content %}{% endblock %}
 
-                    {% block content_for_layout %}{% endblock %}
+                        {% block content_for_layout %}{% endblock %}
 
                     {% block orbitale_cms_page_content %}{% endblock %}
 
@@ -141,24 +141,24 @@
             {# FOOTER #}
             {% block footer %}
                 <footer class="page-footer">
-                    {#<div class="container">
+                    <div class="container">
                         <div class="row">
                             <div class="col l6 s12">
-                                <h5 class="white-text">Footer Content</h5>
-                                <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
+                                <h5 class="white-text">{{ 'footer.about'|trans }}</h5>
+                                <p class="grey-text text-lighten-4">
+                                    {{ 'footer.about_text'|trans }}
+                                </p>
                             </div>
                             <div class="col l4 offset-l2 s12">
-                                <h5 class="white-text">Links</h5>
+                                <h5 class="white-text">{{ 'footer.links'|trans }}</h5>
                                 <ul>
-                                    <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
-                                    <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
-                                    <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
-                                    <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
+                                    <li><a href="#">{{ 'footer.contact'|trans }}</a></li>
+                                    <li><a href="#">{{ 'footer.subscribe'|trans }}</a></li>
+                                    <li><a href="#">{{ 'footer.agate_rpg'|trans }}</a></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
-                    #}
                     <div class="footer-copyright">
                         <div class="container">
                             <p class="left">
@@ -166,7 +166,7 @@
                             &ndash;
                             Copyright &copy; 2012-{{ 'now'|date('Y') }} {{ 'footer.rights' | trans }}
                             &ndash;
-                            {{ 'footer.brand' | trans }}
+                            {{ 'footer.brand' | trans | raw }}
                             </p>
 
                             <p class="right light">
