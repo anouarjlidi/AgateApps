@@ -22,9 +22,16 @@ class Page extends BasePage
     /**
      * @var string
      *
-     * @ORM\Column(name="template", type="string", length=255)
+     * @ORM\Column(name="template", type="string", length=255, nullable=true)
      */
     protected $template;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="show_title", type="boolean", options={"default": "1"})
+     */
+    private $showTitle = true;
 
     /**
      * @return int
@@ -37,7 +44,7 @@ class Page extends BasePage
     /**
      * @param int $id
      *
-     * @return $this
+     * @return Page
      */
     public function setId($id)
     {
@@ -62,6 +69,26 @@ class Page extends BasePage
     public function setTemplate($template)
     {
         $this->template = $template;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function showTitle()
+    {
+        return $this->showTitle;
+    }
+
+    /**
+     * @param bool $showTitle
+     *
+     * @return Page
+     */
+    public function setShowTitle($showTitle)
+    {
+        $this->showTitle = $showTitle;
 
         return $this;
     }

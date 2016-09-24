@@ -25,7 +25,7 @@
 
 {% block orbitale_cms_page_content %}
     {% spaceless %}
-        {% if page.title %}
+        {% if page.title and page.showTitle %}
             <h1>{{ page.title }}</h1>
         {% endif %}
         {{ page.content | raw }}
