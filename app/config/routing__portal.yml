@@ -1,4 +1,8 @@
 
+contact:
+    resource: "@EsterenPortalBundle/Controller/ContactController.php"
+    type:     annotation
+
 orbitale_cms_category:
     resource: "@OrbitaleCmsBundle/Controller/CategoryController.php"
     type:     annotation

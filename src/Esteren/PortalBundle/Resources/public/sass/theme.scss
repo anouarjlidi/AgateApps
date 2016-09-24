@@ -47,3 +47,10 @@ html {
         max-height: 50px;
     }
 }
+
+form textarea {
+    outline: none;
+    border-top: none transparent;
+    border-left: none transparent;
+    border-right: none transparent;
+}

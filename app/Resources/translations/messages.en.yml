@@ -14,13 +14,24 @@ links:
     menu: 'Menu'
 footer:
     rights: 'Agate RPG, All rights reserved'
-    brand: 'Agate RPG is a brand of Agate Éditions'
+    brand: 'Design &amp; development: Pierstoval'
     version: Version
+    links: 'Links'
+    contact: 'Contact the team'
+    subscribe: 'Subscribe to the newsletter'
+    agate_rpg: 'Agate RPG'
+    about: 'About'
+    about_text: >
+        Shadows of Esteren is an independent project founded in 2006. The first book
+        was published in France in 2010 and then in the USA in 2012. Innovative project,
+        pionneer in the crossmedia world, Esteren is the first french project to have won
+        a dozen of prizes in the USA including four Ennie Awards in 2013 and 2016.
 
 register_optin: >
-    I grant Agate Éditions and its partners to do nothing with my data. <small>Anyway, Agate Éditions will
-    not do anything with these data, they're used only to make the website work properly for you, so we
-    will never spread your data anywhere to anyone, nor sell them, nothing. These are your property.</small>
+    I grant Agate Éditions and its partners to do nothing with my data. <small>Anyway, Agate Éditions
+    will not do anything with these data, they're used only to make the website work properly for you,
+    so we will never spread your data anywhere to anyone, nor sell them, nothing. These are your
+    property.</small>
 
 templates:
     base: Bootstrap
@@ -31,3 +42,7 @@ page:
         return_to_backoffice: 'Back to admin panel'
         admin_link: 'Preview'
         previewing: 'Preview'
+
+contact:
+    send: Send
+    message_sent: 'Your email has been sent! Thanks!'
