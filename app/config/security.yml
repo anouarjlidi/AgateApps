@@ -69,13 +69,14 @@ security:
                 name:           EsterenRememberMe
                 domain:         "%esteren_domains.cookie_domain%"
             form_login:
+                csrf_token_generator: security.csrf.token_manager
                 provider:       fos_user
                 login_path:     fos_user_security_login
-                csrf_token_generator: security.csrf.token_manager
                 use_forward:    true
                 check_path:     fos_user_security_check
                 use_referer:    true
             logout:
+                invalidate_session: false
                 path:           fos_user_security_logout
                 target:         root
 
