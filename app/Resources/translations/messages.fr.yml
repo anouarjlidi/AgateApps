@@ -11,7 +11,7 @@ ID: ID
 tree: 'Chemin d''URL'
 links:
     admin: Administration
-    amenu: Menu
+    menu: Menu
 footer:
     rights: 'Agate RPG, Tous droits réservés.'
     brand: 'Design &amp; développement : Pierstoval'
