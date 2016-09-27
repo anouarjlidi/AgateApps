@@ -79,7 +79,8 @@ $ bin/console doctrine:fixtures:load --append
 
 ### Assets management
 
-Most of the CSS comes from LESS files, and all JS/CSS files are compiled with Gulp.
+Most of the CSS comes from LESS files for Bootstrap, SASS for materialize, and all JS/CSS files are compiled
+with Gulp.
 
 We use a specific gulpfile from [Orbitale/Gulpfile](https://github.com/Orbitale/Gulpfile) which allows good
 flexibility and is based only on one config variable (similar to Grunt).
@@ -94,17 +95,31 @@ To run the tests, just run phpunit:
 $ phpunit
 ```
 
-### Test without resetting the database
+### Use the database for tests
 
-If you **do not want to reset the database, you can add the `TESTS_NO_DB` env var.
+If you **do not want to reset the database**, you can add the `TESTS_NO_DB` env var.
 
 ```bash
 $ TESTS_NO_DB=1 phpunit
 ```
 
-### Testing for CI
+If you are using the database, there will be a first Sqlite file written after creating the schema and importing
+the fixtures, and this file will serve as a reference for all tests until deleted.<br>
+If you want, you can force the tests to rewrite the whole database by using this environment variable:
 
-**Note:**
+```bash
+$ TESTS_REWRITE_DB=1 phpunit
+```
+
+### CI
+
+There's no working CI at the moment.
+
+We might use either Jenkins or Travis-CI.
+
+As none of them is easily configurable (Jenkins must be configured on a dedicated server, Travis-CI is not free for private projects), a `tests/ci/ci.bash` file has been created in case of (tested & working on a small jenkins server).
+
+Also, a `.travis.yml` file exists too, but needs more configuration (maybe we'll use the same CI file too).
 
 ## Issues tracking
 
@@ -118,16 +133,6 @@ For any question or problem, please open a new issue on Redmine depending on the
 | Other                          | [apps](http://redmine.pierstoval.com/projects/apps/issues)
 
 Any issue on Github will be transformed into a Redmine ticket.
-
-## CI
-
-There's no working CI at the moment.
-
-We might use either Jenkins or Travis-CI.
-
-As none of them is easily configurable (Jenkins must be configured on a dedicated server, Travis-CI is not free for private projects), a `tests/ci/ci.bash` file has been created in case of (tested & working on a small jenkins server).
-
-Also, a `.travis.yml` file exists too, but needs more configuration (maybe we'll use the same CI file too).
 
 ## License
 
