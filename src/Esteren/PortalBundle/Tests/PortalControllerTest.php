@@ -10,6 +10,8 @@ class PortalControllerTest extends WebTestCase
 {
     public function testIndexWithHomepage()
     {
+        static::resetDatabase();
+
         $client = $this->getClient('portal.esteren.dev');
 
         // Find first page
@@ -18,7 +20,10 @@ class PortalControllerTest extends WebTestCase
             ->get('doctrine')
             ->getManager()
             ->getRepository('EsterenPortalBundle:Page')
-            ->findOneBy([])
+            ->findOneBy([
+                'homepage' => true,
+                'enabled' => true,
+            ])
         ;
 
         $client->restart();
@@ -26,8 +31,8 @@ class PortalControllerTest extends WebTestCase
         $crawler = $client->request('GET', '/fr/');
         static::assertEquals(200, $client->getResponse()->getStatusCode(), $client->getResponse()->getContent());
 
-        static::assertEquals($page->getTitle(), trim($crawler->filter('#content section article h1')->html()));
-        static::assertContains($page->getContent(), trim($crawler->filter('#content section article')->html()));
+        static::assertEquals($page->getTitle(), trim($crawler->filter('#content h1')->html()));
+        static::assertContains($page->getContent(), trim($crawler->filter('#content')->html()));
     }
 
     /**
@@ -35,6 +40,8 @@ class PortalControllerTest extends WebTestCase
      */
     public function testIndexWithOnePage()
     {
+        static::resetDatabase();
+
         $client = $this->getClient('portal.esteren.dev');
 
         $page = new Page();
@@ -64,8 +71,8 @@ class PortalControllerTest extends WebTestCase
         $crawler = $client->request('GET', '/fr/page-test');
         static::assertEquals(200, $client->getResponse()->getStatusCode(), $client->getResponse()->getContent());
 
-        static::assertEquals($page->getTitle(), trim($crawler->filter('#content section article h1')->html()));
-        static::assertContains($page->getContent(), trim($crawler->filter('#content section article')->html()));
+        static::assertEquals($page->getTitle(), trim($crawler->filter('#content h1')->html()));
+        static::assertContains($page->getContent(), trim($crawler->filter('#content')->html()));
     }
 
 }

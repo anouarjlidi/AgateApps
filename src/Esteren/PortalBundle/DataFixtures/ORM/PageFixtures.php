@@ -50,17 +50,6 @@ class PageFixtures extends AbstractFixture
                 'homepage' => true,
                 'template' => 'base.html.twig',
             ],
-            [
-                'id'       => 2,
-                'title'    => 'Esteren',
-                'slug'     => 'esteren',
-                'locale'   => 'fr',
-                'content'  => 'This should not be visible.',
-                'enabled'  => true,
-                'homepage' => true,
-                'host'     => 'portal.esteren.dev',
-                'template' => 'base.html.twig',
-            ],
         ];
     }
 }
