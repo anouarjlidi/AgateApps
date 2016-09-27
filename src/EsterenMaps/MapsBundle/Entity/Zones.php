@@ -3,6 +3,7 @@
 namespace EsterenMaps\MapsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use EsterenMaps\MapsBundle\Cache\ClearerEntityInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
@@ -16,7 +17,7 @@ use JMS\Serializer\Annotation as Serializer;
  * @ORM\Entity()
  * @Serializer\ExclusionPolicy("all")
  */
-class Zones
+class Zones implements ClearerEntityInterface
 {
     use TimestampableEntity;
     use SoftDeleteableEntity;

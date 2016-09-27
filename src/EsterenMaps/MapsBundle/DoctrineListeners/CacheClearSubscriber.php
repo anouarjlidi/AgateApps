@@ -4,6 +4,7 @@ namespace EsterenMaps\MapsBundle\DoctrineListeners;
 
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
+use EsterenMaps\MapsBundle\Cache\ClearerEntityInterface;
 use EsterenMaps\MapsBundle\Cache\CacheManager;
 use EsterenMaps\MapsBundle\Entity\Markers;
 use EsterenMaps\MapsBundle\Entity\MarkersTypes;
@@ -52,16 +53,7 @@ class CacheClearSubscriber implements EventSubscriber
         $entity = $args->getEntity();
 
         // Clear the map cache if the entity corresponds to a specific class.
-        if (
-            $entity instanceof Routes
-            || $entity instanceof RoutesTypes
-            || $entity instanceof Markers
-            || $entity instanceof MarkersTypes
-            || $entity instanceof Zones
-            || $entity instanceof ZonesTypes
-            || $entity instanceof TransportTypes
-            || $entity instanceof TransportModifiers
-        ) {
+        if ($entity instanceof ClearerEntityInterface) {
             $this->cacheService->getAdapter()->deleteItem(CacheManager::CACHE_NAME);
         }
     }

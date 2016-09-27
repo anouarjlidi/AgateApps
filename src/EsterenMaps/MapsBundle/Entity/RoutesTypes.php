@@ -4,6 +4,7 @@ namespace EsterenMaps\MapsBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use EsterenMaps\MapsBundle\Cache\ClearerEntityInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
@@ -17,7 +18,7 @@ use JMS\Serializer\Annotation as Serializer;
  * @ORM\Entity(repositoryClass="EsterenMaps\MapsBundle\Repository\RoutesTypesRepository")
  * @Serializer\ExclusionPolicy("all")
  */
-class RoutesTypes
+class RoutesTypes implements ClearerEntityInterface
 {
     use TimestampableEntity;
     use SoftDeleteableEntity;

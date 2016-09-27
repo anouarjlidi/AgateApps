@@ -2,9 +2,9 @@
 
 namespace EsterenMaps\MapsBundle\Entity;
 
-use Application\Sonata\MediaBundle\Entity\Media;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use EsterenMaps\MapsBundle\Cache\ClearerEntityInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
@@ -18,7 +18,7 @@ use JMS\Serializer\Annotation as Serializer;
  * @ORM\Entity()
  * @Serializer\ExclusionPolicy("all")
  */
-class MarkersTypes
+class MarkersTypes implements ClearerEntityInterface
 {
     use TimestampableEntity;
     use SoftDeleteableEntity;
@@ -50,7 +50,8 @@ class MarkersTypes
     protected $description;
 
     /**
-     * @var Media
+     * @var string
+     *
      * @ORM\Column(name="icon", type="string", length=255, nullable=false)
      */
     protected $icon = '';
@@ -204,7 +205,7 @@ class MarkersTypes
     }
 
     /**
-     * @return Media
+     * @return string
      */
     public function getIcon()
     {
