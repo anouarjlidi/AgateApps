@@ -28,13 +28,15 @@ The routing load order is the following:
  Also available for all subdomains.
 * PierstovalApi's webservices, all loaded under the `%esteren_domains.api%` host.
 * Admin routes, under `%esteren_domains.backoffice%` host.
+* Front-office routes, like the contact form.
 * All other portals, they lie under all subdomains to be handled by OrbitaleCmsBundle ([view below](#cms)).
-
 
 ## Locale
 
 All routes are manually prepended with the locale.
 You **must** be aware of this when creating new routes, because every part of the app has to be translated.
+
+If something has to be specific to one locale, make sure your route has a requirement for this locale.
 
 ## CMS
 

@@ -30,7 +30,7 @@ The class **must** extend the Model provided in the bundle.
 
 ## Routing
 
-The character manager and generator relies under the `esteren_domains.corahnrin` domain.
+The character manager and generator relies under the `%esteren_domains.corahnrin%` domain.
 
 Some routes are imported from the `PierstovalCharacterManagerBundle`, some in `CorahnRinBundle`.
 

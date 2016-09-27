@@ -29,6 +29,9 @@ The stack is the following:
 3. `EsterenMap.initialize()`: This function sets up the different Leaflet layers and components.
 4. `EsterenMap._mapOptions.loadedCallback()`: By default, this function loads **markers**, **routes**, **zones** and
  **transports**.
+ 
+The `_load()` function also has a localStorage cache system that allows using a frontend cache which makes the queries
+much faster (no more AJAX, actually).
 
 ## Services
 
@@ -55,7 +58,7 @@ $ bin/console esterenmaps:map:generate-tiles
 
 It will use [ImageMagick](http://www.imagemagick.org) and the [Orbitale ImageMagickPHP](https://github.com/Orbitale/ImageMagickPHP)
  command wrapper to generate tiles of 128x128px.<br>
-<small>(actually, it doesn't use it yet, but it will)</small>
+<small>(actually, it doesn't use the Orbitale package yet, but it will)</small>
 
 ## Directions
 
@@ -72,13 +75,14 @@ Distances are automatically calculated based on Pythagore's theorem with all coo
 
 BUT, one can set the `forcedDistance` field, so if it is set, it forces (wow...) the `distance` attribute to be set
  identically as `forcedDistance`. This helps to hijack the distance if the visual map does not correspond enough to what
- you would like to have in your map.
+ you would like to have in your real map.
 
 ### Clear Directions cache
 
 This cache can be cleared like any other cache by the `bin/console cache:clear` command, depending on your environment.
 
-But it is also **automatically** cleared when you update any Maps-related entity.
-Check the [CacheClearSubscriber](../src/EsterenMaps/MapsBundle/DoctrineListeners/CacheClearSubscriber.php) class.
-
-#Again design pattern concerns: When creating a doctrine listener, is it better to chain "instanceof" instructions, or to create an empty interface?
+But it is also **automatically** cleared when you update any Maps-related entity, or any class implementing the
+ `ClearerEntityInterface` interface.
+ 
+Check the [CacheClearSubscriber](../src/EsterenMaps/MapsBundle/DoctrineListeners/CacheClearSubscriber.php) class for
+ more information

@@ -16,7 +16,8 @@
 
 Contrary to [Symfony's recommendations and best practices](http://symfony.com/doc/current/best_practices/templates.html#template-locations),
 we need the bundles to be the most standalone possible, so the views are kept inside each bundle.
-Only the base template and the EasyAdmin ([view below](#backoffice)) views are stored in `app/Resources/views`.
+Only the base template and the EasyAdmin ([view below](#backoffice)) views are stored in `app/Resources/views`,
+ as of the layout & includes and form themes.
 
 ## CMS
 
@@ -48,15 +49,12 @@ This way, the base config is left unchanged, and `config.yml` is included **afte
 Some pretty spaces are also added in `AppKernel.php` and `composer.json` to separate Symfony's default configuration to
  the application specific config.
 
-## Menus
-
-Menus are managed with [KnpMenuBundle](https://github.com/KnpLabs/KnpMenuBundle).
-A single menu is present in the top-menu and is configured in [GeneralMenu](../src/Esteren/PortalBundle/Menu/GeneralMenu.php)
-
 ## Tests
 
-Unfortunately, it's a bit hard to keep tests standalone, so they're all located in `tests/`.
-A directory is created for each kind of tests.
+Tests are located in the associated bundles, but global configuration is in the root directory.
+
+The bootstrap file and the default `WebTestCase` class are located in the `tests/phpunit/` directory.
+
 For now, there's only PHPUnit, but maybe one day there'll be behat or phpspec tests to be runned, this is why there is
  another directory level to allow this more easily.
 
@@ -66,3 +64,7 @@ Users are managed with [FOSUserBundle](https://github.com/FriendsOfSymfony/FOSUs
 A simple `UsersBundle` exists to contain some fixtures and the `User` entity to be used in the whole application.
 It's important to note that this bundle **extends FOSUserBundle**, because in the future we might need to tweak/override
  the behavior of some FormTypes or controllers (because there's a project of merging users from different platforms).
+ 
+**Note:** I wish to get rid of `FOSUserBundle` one day, because we will need different types of authentication.
+At least we could have the model and the user provider, but it could be much better to have a fully custom user
+ management system.

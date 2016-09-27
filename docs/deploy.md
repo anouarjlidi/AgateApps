@@ -17,7 +17,8 @@ repo that mirrors this actual repository.
 
 This script is based on [this Gist by Pierstoval]
 (https://gist.github.com/Pierstoval/27e8f309034fa0ababa1) and you should see it
-to know how it works and what it does.
+to know how it works and what it does (but basically it checkouts a release
+tag into a new branch and switches to this branch).
 
 The script for this repo's deployment executes only 2 scripts to deploy:
 
@@ -33,7 +34,7 @@ assets, there is nearly nothing else to do to deploy the project.
 To deploy from your machine, set up your local repository with this remote:
 
 ```bash
-$ git remote add prod ssh://my_ssh_user@188.165.206.57:2010/var/www/esteren.org/portal_repo
+$ git remote add prod ssh://my_ssh_user@188.165.206.57:2010/var/www/portal.esteren.org/repo
 ```
 
 The ssh user `my_ssh_user` should obviously be replaced by your own ssh user.
