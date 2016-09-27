@@ -68,6 +68,7 @@ easy_admin:
                               'templates.material': 'base_materialize.html.twig'
                     - css
                     - js
+                    - containerCssClass
 
                     - { type: 'section', label: 'Associations' }
                     - category

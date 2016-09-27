@@ -13,3 +13,12 @@ This allows specific pages to extend manually their own template, as of the "pag
 {% endif %}
 
 {% extends _layout_template %}
+
+{# Allow to change the container css class if needed, to remove the "container" #}
+{%- block content_layout_class -%}
+    {%- if page.containerCssClass -%}
+        {{- page.containerCssClass -}}
+    {%- else -%}
+        {{- parent() -}}
+    {%- endif -%}
+{%- endif -%}

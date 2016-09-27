@@ -34,6 +34,13 @@ class Page extends BasePage
     private $showTitle = true;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="container_css_class", type="string", nullable=true)
+     */
+    private $containerCssClass;
+
+    /**
      * @return int
      */
     public function getId()
@@ -89,6 +96,26 @@ class Page extends BasePage
     public function setShowTitle($showTitle)
     {
         $this->showTitle = $showTitle;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getContainerCssClass()
+    {
+        return $this->containerCssClass;
+    }
+
+    /**
+     * @param string $containerCssClass
+     *
+     * @return Page
+     */
+    public function setContainerCssClass($containerCssClass)
+    {
+        $this->containerCssClass = $containerCssClass;
 
         return $this;
     }

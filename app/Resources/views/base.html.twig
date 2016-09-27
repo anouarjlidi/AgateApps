@@ -109,7 +109,7 @@
 
         {% endblock %}
 
-        <div id="layout" class="container">
+        <div id="layout" class="{% block content_layout_class %}container{% endblock %}">
 
             {# Flash messaages #}
             {% spaceless %}

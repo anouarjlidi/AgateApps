@@ -124,7 +124,7 @@
                     {% endfor %}
                 {% endspaceless %}
 
-                <div id="content" class="container">
+                <div id="content" class="{% block content_layout_class %}container{% endblock %}">
 
                     {#{% block orbitale_cms_breadcrumbs %}{% endblock %}#}
 
