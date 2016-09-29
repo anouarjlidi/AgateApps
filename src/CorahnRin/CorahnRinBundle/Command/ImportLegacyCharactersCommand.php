@@ -229,7 +229,7 @@ SQL;
             $user
                 ->setUsername($username)
                 ->setEmail($email)
-                ->setPlainPassword(uniqid('pwd', true))
+                ->setPlainPassword(openssl_random_pseudo_bytes(255))
             ;
 
             $this->userManager->updateUser($user, false);
