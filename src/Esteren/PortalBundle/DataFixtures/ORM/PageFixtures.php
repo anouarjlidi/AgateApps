@@ -41,14 +41,22 @@ class PageFixtures extends AbstractFixture
     {
         return [
             [
-                'id'       => 1,
                 'title'    => 'Homepage',
                 'slug'     => 'homepage',
                 'content'  => 'This this a default home page.',
                 'host'     => null,
                 'enabled'  => true,
                 'homepage' => true,
-                'template' => 'base.html.twig',
+                'template' => 'base_materialize.html.twig',
+            ],
+            [
+                'title'    => 'Static page',
+                'slug'     => 'static-page',
+                'content'  => 'This this a default static page.',
+                'host'     => null,
+                'enabled'  => true,
+                'homepage' => false,
+                'template' => 'base_materialize.html.twig',
             ],
         ];
     }
