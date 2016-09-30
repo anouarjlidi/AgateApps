@@ -21,7 +21,7 @@
     {% endset %}
     {{ macros.text(textMessage) }}
     <hr>
-    {{ macros.text(message.content) }}
+    {{ macros.text(message.content, 14, 'monospace') }}
     <hr>
     {{ macros.link_btn_center('mailto:'~message.email, 'Répondre') }}
 {% endblock %}
