@@ -19,39 +19,15 @@ class ContactController extends Controller
         $form    = $this->createForm(ContactType::class, $message);
         $form->handleRequest($request);
 
-        $mailError = null;
+        if ($form->isValid() && $this->get('esteren_mailer')->sendContactMail($message, $request->getClientIp())) {
+            $request->getSession()->getFlashBag()->add('success', $this->get('translator')->trans('contact.message_sent'));
 
-        if ($form->isValid()) {
-            $message = \Swift_Message::newInstance()
-                ->setSubject($message->getSubject())
-                ->setFrom($message->getEmail())
-                ->setTo('pierstoval+esterenportal@gmail.com')
-                ->setBody(
-                    $this->renderView(
-                        '@EsterenPortal/email/contact_email.html.twig',
-                        [
-                            'ip'      => $request->getClientIp(),
-                            'name'    => $message->getName(),
-                            'message' => $message->getMessage(),
-                        ]
-                    )
-                )
-            ;
-
-            if ($this->get('mailer')->send($message)) {
-                $request->getSession()->getFlashBag()->add('success', $this->get('translator')
-                    ->trans('contact.message_sent'))
-                ;
-
-                return $this->redirect($this->generateUrl('contact'));
-            }
-
-            $mailError = true;
+            return $this->redirect($this->generateUrl('contact'));
         }
 
         return $this->render('@EsterenPortal/contact.html.twig', [
             'form'       => $form->createView(),
-            'mail_error' => $mailError,
+            'mail_error' => $form->getErrors(true, true)->count(),
         ]);
     }
 }

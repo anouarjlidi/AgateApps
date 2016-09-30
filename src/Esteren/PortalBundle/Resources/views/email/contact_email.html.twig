@@ -1,0 +1,29 @@
+{% spaceless %}
+
+{% extends '@EsterenPortal/email/email_layout_internal.html.twig' %}
+
+{% import '@EsterenPortal/email/macro/macros.html.twig' as macros %}
+
+{# For demonstration only #}
+{% if message is not defined and app.environment == 'dev' and app.debug %}
+    {% set message = {
+        'name': 'USER',
+        'subject': 'SUBJECT',
+        'email' : 'no-reply@esteren.org',
+        'content': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti eaque labore minima sit tempora voluptas! Aspernatur dolor, ducimus eligendi iste itaque laudantium, modi nam nemo nulla numquam, odio quo vero.'
+    } %}
+    {% set ip = '127.0.0.1' %}
+{% endif %}
+
+{% block content %}
+    {% set textMessage %}
+        Un message privé vient d'être envoyé par <strong>{{ message.name }}</strong> sur le portail Esteren.
+    {% endset %}
+    {{ macros.text(textMessage) }}
+    <hr>
+    {{ macros.text(message.content) }}
+    <hr>
+    {{ macros.link_btn_center('mailto:'~message.email, 'Répondre') }}
+{% endblock %}
+
+{% endspaceless %}

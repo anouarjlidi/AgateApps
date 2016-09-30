@@ -25,3 +25,9 @@ _materialize_theme:
     defaults:
         _controller: FrameworkBundle:Template:template
         template:    _theme/materialize.html.twig
+
+_email_contact:
+    path:     /_email/contact
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template:    '@EsterenPortal/email/contact_email.html.twig'

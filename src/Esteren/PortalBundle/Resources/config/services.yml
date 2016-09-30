@@ -6,3 +6,9 @@ services:
             - '%kernel.debug%'
         tags:
             - { name: twig.extension }
+
+    esteren_mailer:
+        class: Esteren\PortalBundle\Mailer\Mailer
+        arguments:
+            - '@mailer'
+            - '@templating.engine.twig'
