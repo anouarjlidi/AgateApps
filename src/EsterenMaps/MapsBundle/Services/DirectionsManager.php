@@ -254,6 +254,12 @@ class DirectionsManager
             if ($min === $end) {
                 break;
             }
+            if (!array_key_exists($min, $distances)) {
+                // In the case the route ID does not exist, we set it as empty.
+                // It can only happen if the transport selected "removes" some inaccessible routes,
+                //  specificly when the route type has a speed modifier of 0 with this transport.
+                $distances[$min] = [];
+            }
             foreach ($distances[$min] as $key => $val) {
                 $dist = $val['distance'];
 
