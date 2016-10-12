@@ -20,16 +20,16 @@ parameters:
     locales:
         fr: fr
         en: en
-    locales_regex: "fr|en"
+    locales_regex: 'fr|en'
 
     # Definition of all subdomains used in the app
-    esteren_domains.cookie_domain:      ".%esteren_domain%"
-    esteren_domains.portal:       "portal.%esteren_domain%"
-    esteren_domains.esterenmaps:    "maps.%esteren_domain%"
-    esteren_domains.corahnrin: "corahnrin.%esteren_domain%"
-    esteren_domains.games:         "games.%esteren_domain%"
-    esteren_domains.api:             "api.%esteren_domain%"
-    esteren_domains.backoffice:     "back.%esteren_domain%"
+    esteren_domains.cookie_domain:      '.%esteren_domain%'
+    esteren_domains.portal:       'portal.%esteren_domain%'
+    esteren_domains.esterenmaps:    'maps.%esteren_domain%'
+    esteren_domains.corahnrin: 'corahnrin.%esteren_domain%'
+    esteren_domains.games:         'games.%esteren_domain%'
+    esteren_domains.api:             'api.%esteren_domain%'
+    esteren_domains.backoffice:     'back.%esteren_domain%'
 
     google_tags:
         analytics:   'UA-43812649-5'
@@ -43,55 +43,55 @@ doctrine:
         default_connection: default
         connections:
             default:
-                driver:   "%database_driver%"
-                host:     "%database_host%"
-                dbname:   "%database_name%"
-                user:     "%database_user%"
-                password: "%database_password%"
-                path:     "%database_path%"
+                driver:   '%database_driver%'
+                host:     '%database_host%'
+                dbname:   '%database_name%'
+                user:     '%database_user%'
+                password: '%database_password%'
+                path:     '%database_path%'
                 charset:  UTF8
             legacy:
-                host:     "%database_host_legacy%"
-                dbname:   "%database_name_legacy%"
-                user:     "%database_user_legacy%"
-                password: "%database_password_legacy%"
+                host:     '%database_host_legacy%'
+                dbname:   '%database_name_legacy%'
+                user:     '%database_user_legacy%'
+                password: '%database_password_legacy%'
                 charset:  UTF8
 
 framework:
-    translator:      { fallbacks: "%locales%" } # Activate translator
+    translator:      { fallbacks: '%locales%' } # Activate translator
     # Add cookie domain as trusted host because requests are made with CORS.
     trusted_hosts:
-        - "^[a-z]+\\%esteren_domains.cookie_domain%$"
-        # - 127.0.0.1 # To add in dev mode if needed
+        - '^[a-z]+\\%esteren_domains.cookie_domain%$'
+#        - 127.0.0.1 # To add in dev mode if needed
 
     session:
         enabled:         true
-        cookie_domain:   "%esteren_domains.cookie_domain%"
+        cookie_domain:   '%esteren_domains.cookie_domain%'
         name:            EsterenPortal
         cookie_lifetime: 8640000
         gc_maxlifetime:  86400
 
     # Use version code in assets
     assets:
-        version: "%version_code%"
+        version: '%version_code%'
 
 # Twig Configuration
 twig:
     globals:
-        version_code: "%version_code%"
-        version_date: "%version_date%"
-        locales: "%locales%"
-        locales_regex: "%locales_regex%"
-        esteren_domains_corahnrin: "%esteren_domains.corahnrin%"
-        esteren_domains_esterenmaps: "%esteren_domains.esterenmaps%"
-        esteren_domains_portal: "%esteren_domains.portal%"
-        esteren_domains_backoffice: "%esteren_domains.backoffice%"
-        esteren_domains_api: "%esteren_domains.api%"
-        esteren_domains_cookie_domain: "%esteren_domains.cookie_domain%"
+        version_code: '%version_code%'
+        version_date: '%version_date%'
+        locales: '%locales%'
+        locales_regex: '%locales_regex%'
+        esteren_domains_corahnrin: '%esteren_domains.corahnrin%'
+        esteren_domains_esterenmaps: '%esteren_domains.esterenmaps%'
+        esteren_domains_portal: '%esteren_domains.portal%'
+        esteren_domains_backoffice: '%esteren_domains.backoffice%'
+        esteren_domains_api: '%esteren_domains.api%'
+        esteren_domains_cookie_domain: '%esteren_domains.cookie_domain%'
         esteren_domains_games: '%esteren_domains.games%'
     form_themes:
-        - "bootstrap_3_layout.html.twig"
-        - "form/ckeditor_widget.html.twig"
+        - 'bootstrap_3_layout.html.twig'
+        - 'form/ckeditor_widget.html.twig'
 
 # Doctrine Configuration
 doctrine:
@@ -106,9 +106,9 @@ doctrine:
 # Doctrine extensions
 # TODO: Implement Translatable
 stof_doctrine_extensions:
-    default_locale: "%locale%"
+    default_locale: '%locale%'
     uploadable:
-        default_file_path: "%kernel.root_dir%/../web/uploads"
+        default_file_path: '%kernel.root_dir%/../web/uploads'
         mime_type_guesser_class: Stof\DoctrineExtensionsBundle\Uploadable\MimeTypeGuesserAdapter
         default_file_info_class: Stof\DoctrineExtensionsBundle\Uploadable\UploadedFileInfo
     orm:
@@ -130,8 +130,8 @@ fos_rest:
     body_listener: true
     format_listener:
         rules:
-            - { path: "^/((%locales_regex%)/)?api", priorities: ["json", "html"], fallback_format: json, prefer_extension: true }
-            - { path: "^/", priorities: [ "html", "*/*"], fallback_format: ~, prefer_extension: true }
+            - { path: '^/((%locales_regex%)/)?api', priorities: ['json', 'html'], fallback_format: json, prefer_extension: true }
+            - { path: '^/', priorities: [ 'html', '*/*'], fallback_format: ~, prefer_extension: true }
 
 # JSON beautifier in JMS serializer
 jms_serializer:
@@ -149,11 +149,11 @@ jms_serializer:
 # TODO: Refactor this and use a better method to generate WS based on entities
 pierstoval_api:
     allowed_origins:
-        - "%esteren_domains.esterenmaps%"
-        - "%esteren_domains.corahnrin%"
-        - "%esteren_domains.backoffice%"
-        - "%esteren_domains.api%"
-        # - 127.0.0.1 # To add in dev mode if needed
+        - '%esteren_domains.esterenmaps%'
+        - '%esteren_domains.corahnrin%'
+        - '%esteren_domains.backoffice%'
+        - '%esteren_domains.api%'
+#        - 127.0.0.1 # To add in dev mode if needed
 
     services:
         maps:           { entity: EsterenMaps\MapsBundle\Entity\Maps }
@@ -172,30 +172,30 @@ orbitale_cms:
     category_class: Esteren\PortalBundle\Entity\Category
     layouts:
         corahnrin:
-            resource: "@CorahnRin/layout.html.twig"
-            host: "%esteren_domains.corahnrin%"
+            resource: '@CorahnRin/layout.html.twig'
+            host: '%esteren_domains.corahnrin%'
         maps:
-            resource: "@EsterenMaps/layout.html.twig"
-            host: "%esteren_domains.esterenmaps%"
+            resource: '@EsterenMaps/layout.html.twig'
+            host: '%esteren_domains.esterenmaps%'
         front:
-            resource: "cms_page_layout.html.twig"
+            resource: 'cms_page_layout.html.twig'
 
 # CORS management for all APIs
 nelmio_cors:
     paths:
-        "^/":
+        '^/':
             allow_credentials: true
             origin_regex: true
             allow_origin:
-                - "^(https?://)?%esteren_domains.api%"
-                - "^(https?://)?%esteren_domains.corahnrin%"
-                - "^(https?://)?%esteren_domains.esterenmaps%"
-                - "^(https?://)?%esteren_domains.backoffice%"
-            allow_headers: ["Origin","Accept","Content-Type"]
-            allow_methods: ["POST","GET","DELETE","PUT","OPTIONS"]
+                - '^(https?://)?%esteren_domains.api%'
+                - '^(https?://)?%esteren_domains.corahnrin%'
+                - '^(https?://)?%esteren_domains.esterenmaps%'
+                - '^(https?://)?%esteren_domains.backoffice%'
+            allow_headers: ['Origin','Accept','Content-Type']
+            allow_methods: ['POST','GET','DELETE','PUT','OPTIONS']
             max_age: 3600
             hosts:
-                - "%esteren_domains.api%"
+                - '%esteren_domains.api%'
 
 # Used in EasyAdmin's ckeditor fields
 ivory_ck_editor:
@@ -205,18 +205,18 @@ ivory_ck_editor:
     jquery_path: ''
     configs:
         base_config:
-            language: "%locale%"
+            language: '%locale%'
             allowedContent: true
             toolbar:
-                - { name: "basicstyles", items: [ "Bold", "Italic", "Underline", "Strike", "Subscript", "Superscript", "-", "RemoveFormat" ] }
-                - { name: "links",       items: [ "Link", "Unlink", "Anchor" ] }
-                - { name: "insert",      items: [ "Image", "Table", "HorizontalRule", "SpecialChar" ] }
-                - { name: "tools",       items: [ "Maximize" ] }
-                - "/"
-                - { name: "paragraph",   items: [ "NumberedList", "BulletedList", "-", "Outdent", "Indent", "-", "Blockquote" ] }
-                - { name: "styles",      items: [ "Styles", "Format" ] }
-                - { name: "document",    items: [ "Source", "-" ] }
-                - { name: "about",       items: [ "About" ] }
+                - { name: 'basicstyles', items: [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat' ] }
+                - { name: 'links',       items: [ 'Link', 'Unlink', 'Anchor' ] }
+                - { name: 'insert',      items: [ 'Image', 'Table', 'HorizontalRule', 'SpecialChar' ] }
+                - { name: 'tools',       items: [ 'Maximize' ] }
+                - '/'
+                - { name: 'paragraph',   items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote' ] }
+                - { name: 'styles',      items: [ 'Styles', 'Format' ] }
+                - { name: 'document',    items: [ 'Source', '-' ] }
+                - { name: 'about',       items: [ 'About' ] }
 
 # Services declaration
 services:
