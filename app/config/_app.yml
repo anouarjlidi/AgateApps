@@ -105,6 +105,7 @@ doctrine:
 
 # Doctrine extensions
 # TODO: Implement Translatable
+# TODO: Use KnpDoctrineBehaviors instead, more robust
 stof_doctrine_extensions:
     default_locale: '%locale%'
     uploadable:
