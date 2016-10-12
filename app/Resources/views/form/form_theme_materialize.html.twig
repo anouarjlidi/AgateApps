@@ -2,34 +2,15 @@
 
 {%- block form_label -%}
     {% if label is not same as(false) -%}
-        {% if not compound -%}
-            {% set label_attr = label_attr|merge({'for': id}) %}
-        {%- endif -%}
-        {% if required -%}
-            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
-        {%- endif -%}
-        {% if label is empty -%}
-            {%- if label_format is not empty -%}
-                {% set label = label_format|replace({
-                '%name%': name,
-                '%id%': id,
-                }) %}
-            {%- else -%}
-                {%- set label = name|humanize -%}
-            {%- endif -%}
-        {%- endif -%}
-
-        {#- Override here -#}
         {%- if label_attr['data-error'] is not defined -%}
             {%- set label_attr = label_attr|merge({'data-error': 'KO'}) -%}
         {%- endif -%}
         {%- if label_attr['data-success'] is not defined -%}
             {%- set label_attr = label_attr|merge({'data-success': 'OK'}) -%}
         {%- endif -%}
-        {#- End override -#}
-
-        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ translation_domain is same as(false) ? label : label|trans({}, translation_domain) }}</label>
     {%- endif -%}
+
+    {{- parent() -}}
 {%- endblock form_label -%}
 
 {%- block form_row -%}
@@ -55,24 +36,10 @@
 {%- endblock form_errors -%}
 
 {%- block button_attributes -%}
-    id="{{ id }}" name="{{ full_name }}"{% if disabled %} disabled="disabled"{% endif -%}
-
-    {#- Override here -#}
     {%- if attr.class is defined and 'btn' not in attr.class -%}
         {%- set attr = attr|merge({'class': attr.class~' btn'}) -%}
     {%- elseif attr.class is not defined or not attr.class -%}
         {%- set attr = attr|merge({'class': (attr.class~' btn'|trim)}) -%}
     {%- endif -%}
-    {#- End override -#}
-
-    {%- for attrname, attrvalue in attr -%}
-        {{- " " -}}
-        {%- if attrname in ['placeholder', 'title'] -%}
-            {{- attrname }}="{{ translation_domain is same as(false) ? attrvalue : attrvalue|trans({}, translation_domain) }}"
-        {%- elseif attrvalue is same as(true) -%}
-            {{- attrname }}="{{ attrname }}"
-        {%- elseif attrvalue is not same as(false) -%}
-            {{- attrname }}="{{ attrvalue }}"
-        {%- endif -%}
-    {%- endfor -%}
+    {{- parent() -}}
 {%- endblock button_attributes -%}
