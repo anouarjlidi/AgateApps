@@ -1,0 +1,3 @@
+# This file is auto-generated during the composer install
+parameters:
+    magick_binaries_path: /usr/bin

@@ -18,8 +18,7 @@
 /composer.phar
 /.env
 
-# Heroku specific
-/app/config/config_heroku.yml
+!/docker/
 
 # Esteren Maps
 /web/maps_tiles/*

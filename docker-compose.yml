@@ -1,0 +1,32 @@
+version: '2'
+
+services:
+    app:
+        container_name: esteren_php
+        build: .
+        volumes:
+            - /var/www/html
+        links:
+            - db
+
+    nginx:
+        container_name: esteren_nginx
+        build: ./docker/nginx/
+        working_dir: /var/www/html/
+        ports:
+            - '8080:80'
+        links:
+            - app
+        volumes_from:
+            - app
+
+    db:
+        container_name: esteren_db
+        image: 'mariadb:10.1'
+        ports:
+            - '3306:3306'
+        environment:
+            MYSQL_ROOT_PASSWORD: esteren_portal
+            MYSQL_DATABASE: esteren_portal
+            MYSQL_USER: esteren_portal
+            MYSQL_PASSWORD: esteren_portal
