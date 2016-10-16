@@ -61,7 +61,7 @@ framework:
     translator:      { fallbacks: '%locales%' } # Activate translator
     # Add cookie domain as trusted host because requests are made with CORS.
     trusted_hosts:
-        - '^[a-z]+\\%esteren_domains.cookie_domain%$'
+        - '%esteren_domains.cookie_domain%$'
 #        - 127.0.0.1 # To add in dev mode if needed
 
     session:
