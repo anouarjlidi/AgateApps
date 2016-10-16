@@ -51,7 +51,7 @@
             {% block menus %}
                 {% spaceless %}
 
-                    <nav id="main_navigation" class="black" role="navigation">
+                    <nav id="main_navigation" role="navigation">
                         <div class="nav-wrapper container blue-text">
                             {% block menu_brand_link %}
                                 <a href="{{ path('root') }}" class="brand-logo position-static left" title="{{ 'home' | trans({}, 'OrbitaleCms') }}">
@@ -145,7 +145,7 @@
                         <div class="row">
                             <div class="col l6 s12">
                                 <h5 class="white-text">{{ 'footer.about'|trans }}</h5>
-                                <p class="grey-text text-lighten-4">
+                                <p class="grey-text">
                                     {{ 'footer.about_text'|trans }}
                                 </p>
                             </div>

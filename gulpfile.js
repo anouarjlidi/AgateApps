@@ -20,6 +20,7 @@ var config = {
         "src/Esteren/PortalBundle/Resources/public/less/*.less",
         "src/Esteren/PortalBundle/Resources/public/css/*.css",
         "src/Esteren/PortalBundle/Resources/public/sass/*.scss",
+        "src/Esteren/PortalBundle/Resources/public/sass/theme_components/*.scss",
         "src/CorahnRin/CorahnRinBundle/Resources/public/generator/css/*.less"
     ],
 

@@ -1,51 +1,15 @@
 html {
-    background: #000;
-    color: #eee;
+    background: #fff;
+    color: #000;
 }
 
 #layout {
     clear: both;
 }
 
-.parallax-container {
-    min-height: 380px;
-    line-height: 0;
-    height: auto;
-    color: rgba(255, 255, 255, .9);
-}
-
-.parallax-container .section {
-    width: 100%;
-    padding-bottom: 0;
-}
-
 #esteren_logo {
     max-height: 60px;
     margin-top: 5px;
-}
-
-#main_navigation {
-    overflow: hidden;
-}
-
-@media only screen and (max-width: #{$medium-screen}) {
-    .parallax-container .section {
-        position: absolute;
-        top: 40%;
-    }
-
-    #index-banner .section {
-        top: 10%;
-    }
-}
-
-@media only screen and (max-width: #{$small-screen}) {
-    #index-banner .section {
-        top: 0;
-    }
-    #esteren_logo {
-        max-height: 50px;
-    }
 }
 
 form textarea {
