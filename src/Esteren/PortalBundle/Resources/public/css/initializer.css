@@ -30,7 +30,10 @@
 *.text-darkred { color: darkred !important; }
 *.text-green   { color: green !important; }
 *.text-black   { color: black !important; }
+*.text-gold    { color: goldenrod !important; }
 *.text-trans   { color: transparent !important; }
+
+*.bg-gold      { background-color: goldenrod !important; }
 
 *.text-shadow-black-10 { text-shadow: 0 0 10px rgba(0,0,0,0.75) !important; }
 
