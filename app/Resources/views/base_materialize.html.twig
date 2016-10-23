@@ -144,13 +144,13 @@
                     <div class="container">
                         <div class="row">
                             <div class="col l6 s12">
-                                <h5 class="white-text">{{ 'footer.about'|trans }}</h5>
-                                <p class="grey-text">
+                                <h5>{{ 'footer.about'|trans }}</h5>
+                                <p>
                                     {{ 'footer.about_text'|trans }}
                                 </p>
                             </div>
                             <div class="col l4 offset-l2 s12">
-                                <h5 class="white-text">{{ 'footer.links'|trans }}</h5>
+                                <h5>{{ 'footer.links'|trans }}</h5>
                                 <ul>
                                     <li><a href="{{ path('contact') }}">{{ 'footer.contact'|trans }}</a></li>
                                     <li><a href="#">{{ 'footer.subscribe'|trans }}</a></li>
@@ -163,7 +163,7 @@
                         <div class="container">
                             <p class="left">
                             {{ 'footer.version' | trans }} {{ version_code }} ({{ version_date }})
-                            &ndash;
+                            <br>
                             Copyright &copy; 2012-{{ 'now'|date('Y') }} {{ 'footer.rights' | trans }}
                             &ndash;
                             {{ 'footer.brand' | trans | raw }}

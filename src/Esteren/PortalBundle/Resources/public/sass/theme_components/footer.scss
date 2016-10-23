@@ -1,4 +1,10 @@
 footer.page-footer {
-    background-color: transparent;
-    color: black;
+    color: white;
+    a {
+        color: lighten($link-color, 30%);
+    }
+    .footer-copyright {
+        height: auto;
+        line-height: inherit;
+    }
 }
