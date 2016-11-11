@@ -7,6 +7,11 @@ use Esteren\PortalBundle\Entity\Page;
 
 class PagesAdminTest extends AbstractEasyAdminTest
 {
+    public function setUp()
+    {
+        static::resetDatabase();
+    }
+
     /**
      * {@inheritdoc}
      */
