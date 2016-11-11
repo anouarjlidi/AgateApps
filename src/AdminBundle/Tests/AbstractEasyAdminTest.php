@@ -148,12 +148,14 @@ abstract class AbstractEasyAdminTest extends WebTestCase
         }
 
         $crawler = $client->submit($form);
+
         // If redirects to list, it means it's correct, else it would redirect to "new" action.
-        static::assertEquals(302, $client->getResponse()->getStatusCode(), $this->getEntityName());
+        static::assertEquals(302, $client->getResponse()->getStatusCode(), 'Not redirecting when editing '.$this->getEntityName());
         static::assertEquals('/fr/?action=list&entity='.$this->getEntityName(), $client->getResponse()->headers->get('location'), $this->getEntityName());
 
         $crawler->clear();
         $client->followRedirect();
+
         static::assertEquals(200, $client->getResponse()->getStatusCode(), $this->getEntityName());
 
         // Now, test that the last inserted entity corresponds.
@@ -177,6 +179,9 @@ abstract class AbstractEasyAdminTest extends WebTestCase
         }
     }
 
+    /**
+     * @depends testNewAction
+     */
     public function testEditAction()
     {
         $data = $this->provideEditFormData();
@@ -241,6 +246,9 @@ abstract class AbstractEasyAdminTest extends WebTestCase
         }
     }
 
+    /**
+     * @depends testNewAction
+     */
     public function testDeleteAction()
     {
         $id = $this->provideIdToDelete();

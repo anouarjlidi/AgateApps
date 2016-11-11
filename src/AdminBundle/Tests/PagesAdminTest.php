@@ -7,11 +7,6 @@ use Esteren\PortalBundle\Entity\Page;
 
 class PagesAdminTest extends AbstractEasyAdminTest
 {
-    public function setUp()
-    {
-        static::resetDatabase();
-    }
-
     /**
      * {@inheritdoc}
      */
@@ -51,6 +46,8 @@ class PagesAdminTest extends AbstractEasyAdminTest
      */
     public function provideNewFormData()
     {
+        static::resetDatabase();
+
         return [
             'title'           => 'Testing new page',
             'content'         => 'This is a page to test the "new" form.',
@@ -73,6 +70,8 @@ class PagesAdminTest extends AbstractEasyAdminTest
      */
     public function provideEditFormData()
     {
+        static::resetDatabase();
+
         return [
             'id'              => 1,
             'title'           => 'Testing new page',
