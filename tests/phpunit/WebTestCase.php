@@ -16,11 +16,11 @@ abstract class WebTestCase extends BaseWebTestCase
     protected static function resetDatabase()
     {
         if (defined('DATABASE_TEST_FILE') && defined('DATABASE_REFERENCE_FILE')) {
-            $fs = new Filesystem();
-            $fs->copy(DATABASE_TEST_FILE, DATABASE_REFERENCE_FILE);
             if (static::$kernel) {
                 static::$kernel->shutdown();
             }
+            $fs = new Filesystem();
+            $fs->copy(DATABASE_TEST_FILE, DATABASE_REFERENCE_FILE);
         } else {
             throw new \InvalidArgumentException('"DATABASE_TEST_FILE" and "DATABASE_REFERENCE_FILE" should be defined to reset database.');
         }
