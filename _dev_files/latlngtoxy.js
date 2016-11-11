@@ -1,5 +1,5 @@
 /**
- * This script is here to transform latlng to x,y when Penrose projection is activated.
+ * This script was here to transform latlng to x,y when Mercator projection is activated.
  */
 
 // Whole update script
