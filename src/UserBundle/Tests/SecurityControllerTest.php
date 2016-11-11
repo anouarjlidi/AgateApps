@@ -7,10 +7,12 @@ use Tests\WebTestCase;
 
 class SecurityControllerTest extends WebTestCase
 {
+    const USER_NAME = 'test_user';
+    const USER_NAME_AFTER_UPDATE = 'user_updated';
 
     public function testForceLogin()
     {
-        $client = $this->getClient('www.esteren.dev', array(), 'ROLE_USER');
+        $client = $this->getClient('www.esteren.dev', [], 'ROLE_USER');
 
         $crawler = $client->request('GET', '/fr/profile/');
 
@@ -27,7 +29,7 @@ class SecurityControllerTest extends WebTestCase
 
     public function testForbiddenAdmin()
     {
-        $client = $this->getClient('back.esteren.dev', array(), 'ROLE_USER');
+        $client = $this->getClient('back.esteren.dev', [], 'ROLE_USER');
 
         $client->request('GET', '/fr/');
 
@@ -36,7 +38,7 @@ class SecurityControllerTest extends WebTestCase
 
     public function testAllowedAdmin()
     {
-        $client = $this->getClient('back.esteren.dev', array(), 'ROLE_ADMIN');
+        $client = $this->getClient('back.esteren.dev', [], 'ROLE_ADMIN');
 
         $client->request('GET', '/fr/');
 
@@ -46,90 +48,145 @@ class SecurityControllerTest extends WebTestCase
         static::assertEquals(200, $client->getResponse()->getStatusCode());
     }
 
-    public function testAllProfileProcesses()
+    /**
+     * Test registration action
+     */
+    public function testRegister()
     {
-        $client = $this->getClient('www.esteren.dev');
+        static::resetDatabase();
 
-        $container = static::$kernel->getContainer();
+        $client = $this->getClient('www.esteren.dev');
 
         $crawler = $client->request('GET', '/fr/register/');
 
         /** @var Form $form */
         $form = $crawler->filter('form.fos_user_registration_register')->form();
 
-        $form['fos_user_registration_form[username]'] = 'test_user';
+        // Fill registration form
+        $form['fos_user_registration_form[username]'] = static::USER_NAME;
         $form['fos_user_registration_form[email]'] = 'test@local.host.dev';
         $form['fos_user_registration_form[plainPassword][first]'] = 'fakePassword';
         $form['fos_user_registration_form[plainPassword][second]'] = 'fakePassword';
 
+        // Submit form
         $crawler = $client->submit($form);
 
-        static::assertEquals(302, $client->getResponse()->getStatusCode(), $crawler->html());
+        // Check redirection was made correctly to the Profile page
+        static::assertTrue($client->getResponse()->isRedirection(), 'Is not redirection');
+        static::assertTrue($client->getResponse()->isRedirect('/fr/profile/'), 'Does not redirect to profile');
 
         $crawler->clear();
         $crawler = $client->followRedirect();
 
-        $msg1 = $container->get('translator')->trans('registration.confirmed', array('%username%'=>'test_user'), 'FOSUserBundle');
-        $msg2 = $container->get('translator')->trans('registration.flash.user_created', array(), 'FOSUserBundle');
-
-        static::assertContains($msg1, $crawler->filter('#layout #content p')->html());
-        static::assertContains($msg2, $crawler->filter('#layout #flash-messages')->html());
+        // Check flash messages are correct
+        $flashUserCreated = $client->getKernel()->getContainer()->get('translator')->trans('registration.flash.user_created', [], 'FOSUserBundle');
+        static::assertContains($flashUserCreated, $crawler->filter('#layout #flash-messages')->html());
 
         $crawler->clear();
+    }
+
+    /**
+     * @depends testRegister
+     */
+    public function testChangePassword()
+    {
+        $client = $this->getClient('www.esteren.dev');
+        $container = $client->getKernel()->getContainer();
+        $user = $container->get('fos_user.user_provider.username')->loadUserByUsername(static::USER_NAME);
+        static::setToken($client, $user, $user->getRoles());
+
         $crawler = $client->request('GET', '/fr/profile/change-password');
 
-        /** @var Form $form */
+        // Fill "change password" form
         $form = $crawler->filter('form.fos_user_change_password')->form();
-
         $form['fos_user_change_password_form[current_password]'] = 'fakePassword';
         $form['fos_user_change_password_form[plainPassword][first]'] = 'newPassword';
         $form['fos_user_change_password_form[plainPassword][second]'] = 'newPassword';
 
         $client->submit($form);
 
+        // Check that it redirects to profile page
         static::assertEquals(302, $client->getResponse()->getStatusCode());
         static::assertTrue($client->getResponse()->isRedirect('/fr/profile/'));
 
         $crawler->clear();
         $crawler = $client->followRedirect();
 
-        $msg1 = $container->get('translator')->trans('change_password.flash.success', array('%username%'=>'test_user'), 'FOSUserBundle');
-        $msg2 = $container->get('translator')->trans('form.username', array('%username%'=>'test_user'), 'FOSUserBundle');
-        static::assertContains($msg1, $crawler->filter('#layout #flash-messages')->html());
-        static::assertContains($msg2, $crawler->filter('#layout #content p')->html());
+        $container = $client->getKernel()->getContainer();
 
-        $user = $container->get('fos_user.user_provider.username')->loadUserByUsername('test_user');
+        // Once redirected, we check the flash messages are correct
+        $flashPasswordChanged = $container->get('translator')->trans('change_password.flash.success', [], 'FOSUserBundle');
+        static::assertContains($flashPasswordChanged, $crawler->filter('#layout #flash-messages')->html());
+
+        // Now check that new password is correctly saved in database
+        $user = $container->get('fos_user.user_provider.username')->loadUserByUsername(static::USER_NAME);
         $encoder = $container->get('security.encoder_factory')->getEncoder($user);
         static::assertTrue($encoder->isPasswordValid($user->getPassword(), 'newPassword', $user->getSalt()));
 
         $crawler->clear();
+    }
+
+    /**
+     * @depends testChangePassword
+     */
+    public function testEditProfile()
+    {
+        $client = $this->getClient('www.esteren.dev');
+        $container = $client->getKernel()->getContainer();
+        $user = $container->get('fos_user.user_provider.username')->loadUserByUsername(static::USER_NAME);
+        static::setToken($client, $user, $user->getRoles());
+
         $crawler = $client->request('GET', '/fr/profile/edit');
 
-        /** @var Form $form */
+        // Fill the "edit profile" form
         $form = $crawler->filter('form.fos_user_profile_edit')->form();
-
-        $form['fos_user_profile_form[username]'] = 'user_updated';
+        $form['fos_user_profile_form[username]'] = static::USER_NAME_AFTER_UPDATE;
         $form['fos_user_profile_form[email]'] = $user->getEmail();
         $form['fos_user_profile_form[current_password]'] = 'newPassword';
 
         $client->submit($form);
+
+        // Check that form submission redirects to same page
         static::assertEquals(302, $client->getResponse()->getStatusCode());
+        static::assertTrue($client->getResponse()->isRedirect('/fr/profile/'));
         $crawler->clear();
         $crawler = $client->followRedirect();
-        static::assertEquals(1, $crawler->filter('.alert.alert-success.success')->count());
+
+        // Once redirected, we check the flash messages are correct
+        $flashPasswordChanged = $container->get('translator')->trans('profile.flash.updated', [], 'FOSUserBundle');
+        static::assertContains($flashPasswordChanged, $crawler->filter('#layout #flash-messages')->html());
 
         $crawler->clear();
+    }
+
+    /**
+     * @depends testEditProfile
+     */
+    public function testResetPasswordRequest()
+    {
+        $client = $this->getClient('www.esteren.dev');
+        $container = $client->getKernel()->getContainer();
+        $user = $container->get('fos_user.user_provider.username')->loadUserByUsername(static::USER_NAME_AFTER_UPDATE);
+        static::setToken($client, $user, $user->getRoles());
+
         $crawler = $client->request('GET', '/fr/resetting/request');
 
-        /** @var Form $form */
         $form = $crawler->filter('.fos_user_resetting_request')->form();
 
-        $form['username'] = 'user_updated';
+        $form['username'] = static::USER_NAME_AFTER_UPDATE;
         $client->submit($form);
         static::assertEquals(302, $client->getResponse()->getStatusCode());
         $crawler->clear();
         $crawler = $client->followRedirect();
-        static::assertContains($container->get('translator')->trans('resetting.check_email', array('%email%' => '...@local.host.dev'), 'FOSUserBundle'), $crawler->filter('#content')->html());
+
+        // This message contains informations about user resetting token TTL.
+        // This information is set in the FOSUser ResettingController and must be copied here just for testing.
+        $emailSentMessage = $container
+            ->get('translator')
+            ->trans('resetting.check_email', [
+                '%tokenLifetime%' => floor($container->getParameter('fos_user.resetting.token_ttl') / 3600),
+            ], 'FOSUserBundle');
+        static::assertContains($emailSentMessage, $crawler->filter('#content')->html());
 
         $tokenGenerator = $container->get('fos_user.util.token_generator');
         $user->setConfirmationToken($tokenGenerator->generateToken());
@@ -138,7 +195,6 @@ class SecurityControllerTest extends WebTestCase
         $crawler->clear();
         $crawler = $client->request('GET', '/fr/resetting/reset/'.$user->getConfirmationToken());
 
-        /** @var Form $form */
         $form = $crawler->filter('form.fos_user_resetting_reset')->form();
 
         $form['fos_user_resetting_form[plainPassword][first]'] = 'anotherNewPassword';
@@ -150,6 +206,7 @@ class SecurityControllerTest extends WebTestCase
         $crawler->clear();
         $crawler = $client->followRedirect();
         static::assertEquals(1, $crawler->filter('.alert.alert-success.success')->count());
-    }
 
+        $crawler->clear();
+    }
 }
