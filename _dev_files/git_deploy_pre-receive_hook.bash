@@ -3,20 +3,27 @@
 ########################################################################
 ################################ README ################################
 ########################################################################
-# Based on https://gist.github.com/Pierstoval/27e8f309034fa0ababa1
-# This script is here to allow the use of "git push prod v1.2.3"
+#
+# This script is here to allow the use of "git push prod v1.2.3" commands or similar.
+#
 # Push a tag to a bare repository having this file as pre-receive hook,
 #  and you'll be able to deploy directly from command line in your local environment,
 #  as long as you create a git remote pointing to this bare repo via ssh.
+#
+# For more info, full readme can be found here: https://gist.github.com/Pierstoval/27e8f309034fa0ababa1
+#
+# Enjoy! :)
 
-# This file should be put in a BARE REPO. This is mandatory, else, pushing to it won't work.
 
-echo "[INFO] Receiving the current push as `whoami`."
 
+# Working Tree
 # This var corresponds to the project you are working on.
 # This is where the fetch & checkout will occur for deployment.
 workingtree="/home/esteren/www/portal.esteren.org/www"
 
+
+
+# Success Script for a git TAG reference
 # Example of script executed after a successful deploy
 # Change it accordingly if you want to use proper commands for your projects
 # This script is executed after a "cd" to the $workingtree directory.
@@ -28,15 +35,31 @@ read -d '' success_tag_script << SCRIPT
 SCRIPT
 
 
+
+# Success Script for a git NON-TAG reference
 # This script is executed if you push something else than a tag.
 # Actually, if you don't push a tag, we cannot know exactly the branch you're pushing.
 # (Note: I may not have discovered it yet, actually, feel free to enlighten me if you know!)
 # So it's your job to specify another script to be executed!
 read -d '' success_nontag_script  << SCRIPT
     echo "This is not a tag, so I will not do anything.'
+    exit 1
 SCRIPT
 
+
+
+
+
+
+
+####
 #### Script start
+####
+
+# You should not modify anything starting here.
+# But still, if you want to read the comments... ;)
+
+echo "[INFO] Receiving the current push as `whoami`."
 
 gitcmd="git --git-dir=${workingtree}/.git --work-tree=${workingtree}"
 
@@ -94,8 +117,6 @@ do
                 echo "[INFO] Creating a new branch based on the tag."
 
                 currentbranch=`$gitcmd name-rev --name-only HEAD`
-                # Cleans the current repository modifications
-                $gitcmd checkout .
                 $gitcmd checkout -b "release_${tag}" "tags/${tag}"
                 cmdcode=$?
 
@@ -137,9 +158,15 @@ do
 
             fi # end if commands failed/succeeded
 
+            # End of "tag" deployment
+
         else
+
             # Here it means the pushed ref is not a tag, so it's certainly a branch.
             # You can do something else if you want, like checkout the branch and deploy it...
+            # By default, we do nothing, it's your role to check everything.
+            # If you want a hint, many users may simply do a "git pull origin master" in
+            #  their distant repository...
             echo "[INFO] Not a tag, executing the plain configured script."
 
             # Move to the directory to execute scripts
@@ -156,9 +183,14 @@ do
             else
                 echo "[SUCCESS] Deployed!"
             fi
+
         fi
 
     fi # endif line is not empty
 done < "${ST:-/dev/stdin}"
 
 echo "[INFO] End of pre-receive script."
+
+# Copyright (c) 2016 Alex Rock Ancelet <pierstoval@gmail.com>
+# MIT license - https://opensource.org/licenses/MIT
+# Source: https://gist.github.com/Pierstoval/27e8f309034fa0ababa1
