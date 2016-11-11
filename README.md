@@ -97,10 +97,10 @@ $ phpunit
 
 ### Use the database for tests
 
-If you **do not want to reset the database**, you can add the `TESTS_NO_DB` env var.
+If you **do not want to reset the database**, you can add the `NO_RECREATE_DB` env var.
 
 ```bash
-$ TESTS_NO_DB=1 phpunit
+$ NO_RECREATE_DB=1 phpunit
 ```
 
 If you are using the database, there will be a first Sqlite file written after creating the schema and importing
@@ -108,7 +108,7 @@ the fixtures, and this file will serve as a reference for all tests until delete
 If you want, you can force the tests to rewrite the whole database by using this environment variable:
 
 ```bash
-$ TESTS_REWRITE_DB=1 phpunit
+$ RECREATE_DB=1 phpunit
 ```
 
 ### CI

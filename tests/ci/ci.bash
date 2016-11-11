@@ -28,7 +28,7 @@ echo "Install dependencies"
 php composer.phar install -o --no-interaction
 
 echo "Execute tests"
-TESTS_REWRITE_DB=1 phpunit -c tests/phpunit.xml --coverage-text --coverage-clover build/logs/clover.xml
+RECREATE_DB=1 phpunit -c tests/phpunit.xml --coverage-text --coverage-clover build/logs/clover.xml
 
 if [ -f app/config/parameters.yml.backup ]; then
     echo "Retrieve backed up parameters file"

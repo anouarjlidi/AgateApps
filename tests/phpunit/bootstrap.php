@@ -26,7 +26,7 @@ $autoload = require $file;
 
 $input = new ArgvInput();
 
-if (getenv('TESTS_NO_DB')) {
+if (getenv('NO_RECREATE_DB')) {
     return;
 }
 
@@ -64,7 +64,7 @@ if ($fs->exists(DATABASE_TEST_FILE)) {
     $fs->remove(DATABASE_TEST_FILE);
 }
 
-if (!getenv('TESTS_REWRITE_DB') && $fs->exists(DATABASE_REFERENCE_FILE)) {
+if (!getenv('RECREATE_DB') && $fs->exists(DATABASE_REFERENCE_FILE)) {
     $fs->copy(DATABASE_REFERENCE_FILE, DATABASE_TEST_FILE);
     return;
 }
