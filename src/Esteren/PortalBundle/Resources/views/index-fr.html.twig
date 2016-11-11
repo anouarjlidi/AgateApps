@@ -1,0 +1,210 @@
+{% extends 'base_materialize.html.twig' %}
+
+{% block content_layout_class '' %}
+
+{% block content_for_layout %}
+
+    <div id="index-banner" class="parallax-container">
+        <div class="section no-pad-bot">
+            <div class="container">
+                <h1 class="header center white-text text-shadow-black-10">Best Cartography</h1>
+                <div class="row center">
+                    <h5 class="header col s12 light white-text text-shadow-black-10">
+                        Un nouvel Ennie Award pour les Ombres d'Esteren à la GenCon US 2016
+                    </h5>
+                </div>
+                <div class="row center">
+                    <a href="http://ombresdesteren.blogspot.fr/2016/08/de-retour-de-la-gencon-un-nouvel-ennie.html" class="btn-large waves-effect waves-light bg-gold">
+                        En savoir plus
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="parallax">
+            <img src="http://www.esteren.org/gold_ennie_esteren.jpg" alt="Un nouvel Ennie award pour Les Ombres d'Esteren !">
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="section">
+
+            <div class="row">
+                <div class="col s12 m3">
+                    <div class="bl">
+                        <h2 class="center" style="color: #E25822;"><img src="{{ asset('img/d10.svg') }}" alt="d10"></h2>
+                        <h5 class="center">Jeu de rôle<br><small>(bientôt un nouveau portail dédié !)</small></h5>
+                        <p class="light">Découvrez la gamme de jeu de rôle et toutes les publications parues à ce jour.</p>
+                    </div>
+                </div>
+                <div class="col s12 m3 hoverable">
+                    <a href="https://soundcloud.com/esteren" class="bl">
+                        <h2 class="center" style="color: #E27822;"><span class="fa fa-music">&nbsp;</span></h2>
+                        <h5 class="center">Musique</h5>
+                        <p class="light">Écoutez des extraits des trois albums sur Soundcloud et bientôt sur Bandcamp.</p>
+                    </a>
+                </div>
+                <div class="col s12 m3">
+                    <div class="bl">
+                        <h2 class="center" style="color: #E29822;"><span class="fa fa-gamepad">&nbsp;</span></h2>
+                        <h5 class="center">Jeu vidéo <small>(bientôt !)</small></h5>
+                        <p class="light">Echappez aux Griffes du Seigneur Sorcier ou suivez le développement de l'Héritage des Mac Lyr.</p>
+                    </div>
+                </div>
+                <div class="col s12 m3">
+                    <div class="bl">
+                        <h2 class="center" style="color: #E2B822;"><span class="fa fa-book">&nbsp;</span></h2>
+                        <h5 class="center">Littérature <small>(bientôt !)</small></h5>
+                        <p class="light">Plongez dans les légendes occultes de Tri-Kazel avec le premier recueil de nouvelles : Hantises.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col s12 m3 hoverable">
+                    <a href="http://blog.esteren.org/" class="bl">
+                        <h2 class="center" style="color: #E2B822;"><span class="fa fa-rss">&nbsp;</span></h2>
+                        <h5 class="center">Blog</h5>
+                        <p class="light">Suivez les actualités du projet, nouvelles illustrations et carnet de bord des auteurs.</p>
+                    </a>
+                </div>
+                <div class="col s12 m3 hoverable">
+                    <a href="https://www.esteren.org/forum/" class="bl">
+                        <h2 class="center" style="color: #E29822;"><span class="fa fa-users">&nbsp;</span></h2>
+                        <h5 class="center">Forum</h5>
+                        <p class="light">Rejoignez une communauté de 1000 meneurs de jeu et partagez vos créations.</p>
+                    </a>
+                </div>
+                <div class="col s12 m3 hoverable">
+                    <a href="https://shop.esteren.org/" class="bl">
+                        <h2 class="center" style="color: #E27822;"><span class="fa fa-shopping-cart">&nbsp;</span></h2>
+                        <h5 class="center">Boutique</h5>
+                        <p class="light">Commandez en ligne, profitez d’offres exclusives et soutenez directement les créateurs.</p>
+                    </a>
+                </div>
+                <div class="col s12 m3">
+                    <div class="bl">
+                        <h2 class="center" style="color: #E25822;"><span class="fa fa-hand-grab-o">&nbsp;</span></h2>
+                        <h5 class="center">Jeu de société <small>(bientôt !)</small></h5>
+                        <p class="light">Survivez à la Rose Noire, quelque part entre Résistance, le Cluedo et les Loups-Garous de Thiercelieux.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col s12 m3 hoverable">
+                    <a href="https://www.google.com/maps/d/viewer?mid=1wdFjK4OsYcQpwiASe9AVhkGNPbQ" class="bl">
+                        <h2 class="center" style="color: #E25822;"><span class="fa fa-map">&nbsp;</span></h2>
+                        <h5 class="center">Esteren Tour</h5>
+                        <p class="light">Rencontrez l’équipe pendant l’une des dates de la tournée initiée en 2010.</p>
+                    </a>
+                </div>
+                <div class="col s12 m3 hoverable">
+                    <a href="https://maps.esteren.org/fr/map-tri-kazel" class="bl">
+                        <h2 class="center" style="color: #E27822;"><span class="fa fa-map-marker">&nbsp;</span></h2>
+                        <h5 class="center">Esteren Maps</h5>
+                        <p class="light">Voyagez avec ce logiciel qui calculera votre prochain itinéraire sur la carte de Tri-Kazel.</p>
+                    </a>
+                </div>
+                <div class="col s12 m3 hoverable">
+                    <a href="https://www.facebook.com/LesOmbresdEsteren/" class="bl">
+                        <h2 class="center" style="color: #E29822;"><span class="fa fa-share-alt-square">&nbsp;</span></h2>
+                        <h5 class="center">Réseaux sociaux</h5>
+                        <p class="light">Retrouvez les Ombres d'Esteren sur Facebook, Twitter et Instagram.</p>
+                    </a>
+                </div>
+                <div class="col s12 m3 hoverable">
+                    <a href="https://www.dropbox.com/sh/bp2kfgn43ueu6ru/AAAZytOXUADMlVpQdEG-Ttl1a" class="bl">
+                        <h2 class="center" style="color: #E2B822;"><span class="fa fa-dropbox">&nbsp;</span></h2>
+                        <h5 class="center">Ressources</h5>
+                        <p class="light">Téléchargez vos ressources sur la Dropbox et dans la Bibliothèque des Mac Lyr conçue par la communauté.</p>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="parallax-container valign-wrapper">
+        <div class="section no-pad-bot">
+            <div class="container">
+                <div class="row center">
+                    <h4 class="header col s12 light">
+                        Un univers médiéval horrifique et gothique inspiré par les légendes celtes
+                    </h4>
+                </div>
+            </div>
+        </div>
+        <div class="parallax"><img src="{{ asset('img/Esteren_stones.jpg') }}" alt="Les Ombres d'Esteren : cercle de pierres"></div>
+    </div>
+
+    <div class="container">
+        <div class="section">
+            <div class="row">
+                <div class="col s12 center">
+                    <h4>Entrez dans les ombres</h4>
+                    <p class="left-align">
+                        L'univers des Ombres d’Esteren possède une part de fantastique qui se
+                        veut discrète, derrière une façade sobre et réaliste.<br>Les Hommes font face à un quotidien
+                        rude et à une menace surnaturelle, tapie dans l’ombre.
+                    </p>
+                    <p class="left-align">
+                        Axé sur des scénarios d’enquête et de survie, Les Ombres d’Esteren est un jeu de rôle
+                        privilégiant l’ambiance et les interactions entre les joueurs.
+                    </p><p class="left-align">
+                        Cette ambiance particulière puise dans plusieurs sources d’inspirations : la
+                        rudesse et le romantisme du film Braveheart de Mel Gibson, l’univers de Tim Burton et en
+                        particulier celui de Sleepy Hollow, Nausicaä de la vallée du vent et Princesse Mononoke d’Hayao
+                        Miyazaki ainsi que Berserk, le manga de Kentaro Miura.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="parallax-container valign-wrapper">
+        <div class="section no-pad-bot">
+            <div class="container">
+                <div class="row center">
+                    <!-- -->
+                </div>
+            </div>
+        </div>
+        <div class="parallax"><img src="{{ asset('img/Esteren_Arven_marche.jpg') }}" alt="Les Ombres d'Esteren : Arven en train de marcher"></div>
+    </div>
+
+    <iframe style="resize: both;overflow: auto; width: 100%; height: 450px;" scrolling="no" frameborder="no" src=https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/users/35988611&color=ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false"></iframe>
+
+{% endblock %}
+
+{#
+These are all the colors I tried until we found a "final decision".
+But still, it can be changed again...
+
+/*$('#content .section .fa').eq(0).css('color', '#D49E17');
+ $('#content .section .fa').eq(1).css('color', '#DE9218');
+ $('#content .section .fa').eq(2).css('color', '#C7711F');
+ $('#content .section .fa').eq(3).css('color', '#DE5B18');
+ $('#content .section .fa').eq(4).css('color', '#D43B17');
+ $('#content .section .fa').eq(5).css('color', '#B26206');
+ $('#content .section .fa').eq(6).css('color', '#FFC27C');
+ $('#content .section .fa').eq(7).css('color', '#FF9011');
+ $('#content .section .fa').eq(8).css('color', '#5A98B2');
+ $('#content .section .fa').eq(9).css('color', '#9AE1FE');
+ $('#content .section .fa').eq(10).css('color', '#BDEBFF');
+ $('#content .section .fa').css('color', 'goldenrod');*/
+
+$('#content .section .fa').eq(0).css('color', '#E25822');
+$('#content .section .fa').eq(1).css('color', '#E27822');
+$('#content .section .fa').eq(2).css('color', '#E29822');
+$('#content .section .fa').eq(3).css('color', '#E2B822');
+
+$('#content .section .fa').eq(4).css('color', '#E2B822');
+$('#content .section .fa').eq(5).css('color', '#E29822');
+$('#content .section .fa').eq(6).css('color', '#E27822');
+$('#content .section .fa').eq(7).css('color', '#E25822');
+
+$('#content .section .fa').eq(8).css('color', '#E25822');
+$('#content .section .fa').eq(9).css('color', '#E27822');
+$('#content .section .fa').eq(10).css('color', '#E29822');
+$('#content .section .fa').eq(11).css('color', '#E2B822');
+#}
