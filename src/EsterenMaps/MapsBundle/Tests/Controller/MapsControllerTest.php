@@ -5,7 +5,7 @@ namespace EsterenMaps\MapsBundle\Tests\Controller;
 use Tests\WebTestCase;
 
 /**
- * @see EsterenMaps\MapsBundle\Controller\MapsController
+ * @see \EsterenMaps\MapsBundle\Controller\MapsController
  */
 class MapsControllerTest extends WebTestCase
 {

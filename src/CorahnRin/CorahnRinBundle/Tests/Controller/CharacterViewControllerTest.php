@@ -6,11 +6,10 @@ use CorahnRin\CorahnRinBundle\Entity\Characters;
 use Tests\WebTestCase;
 
 /**
- * @see CorahnRin\CorahnRinBundle\Controller\CharacterViewController
+ * @see \CorahnRin\CorahnRinBundle\Controller\CharacterViewController
  */
 class CharacterViewControllerTest extends WebTestCase
 {
-
     /**
      * @see CharacterViewController::listAction
      */
