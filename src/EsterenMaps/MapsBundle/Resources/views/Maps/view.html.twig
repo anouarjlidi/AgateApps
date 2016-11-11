@@ -33,9 +33,9 @@
                 d.map = new EsterenMap({
                     id: {{ map.id }},
                     apiUrls: {
-                        base: "http://{{ esteren_domains_api }}/{{ app.request.locale }}",
+                        base: "{{ app.request.scheme }}://{{ esteren_domains_api }}/{{ app.request.locale }}",
                         settings: "{{ url('esterenmaps_api_maps_settings_distant', {"id":map.id}) }}",
-                        tiles: "http://{{ esteren_domains_api }}{{ asset('maps_tiles/'~map.id~'/{z}/{y}/{x}.jpg') }}"
+                        tiles: "{{ app.request.scheme }}://{{ esteren_domains_api }}{{ asset('maps_tiles/'~map.id~'/{z}/{y}/{x}.jpg') }}"
                     },
                     LeafletMapBaseOptions: {
                         zoom: {{ map.startZoom }},
