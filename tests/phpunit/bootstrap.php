@@ -11,6 +11,8 @@ if (!getenv('SYMFONY_ENV')) {
 
 $rootDir = __DIR__.'/../..';
 
+define('BUILD_DIR', $rootDir.'/build');
+
 define('DATABASE_TEST_FILE', $rootDir.'/build/database_test.db');
 define('DATABASE_REFERENCE_FILE', $rootDir.'/build/database_reference.db');
 
@@ -20,7 +22,7 @@ if (!file_exists($file)) {
 }
 
 /** @var Composer\Autoload\ClassLoader $autoload */
-$autoload = require_once $file;
+$autoload = require $file;
 
 $input = new ArgvInput();
 
@@ -47,7 +49,9 @@ function runCommand($cmd) {
     }
 }
 
-runCommand('php '.$rootDir.'/bin/console cache:clear --no-warmup');
+if (!getenv('NO_CLEAR_CACHE')) {
+    runCommand('php '.$rootDir.'/bin/console cache:clear --no-warmup');
+}
 
 $fs = new Filesystem();
 
