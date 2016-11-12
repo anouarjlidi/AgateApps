@@ -151,7 +151,7 @@
             this.calcDistance();
             this.launched = true;
             this._esterenMap._load({
-                uri: "routes" + (id ? '/'+id : ''),
+                url: "routes" + (id ? '/'+id : ''),
                 method: id ? "POST" : "PUT", // Si on n'a pas d'ID, c'est qu'on crée une nouvelle route
                 data: {
                     json: esterenRoute,

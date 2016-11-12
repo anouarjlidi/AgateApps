@@ -249,17 +249,18 @@
     };
 
     EsterenMap.prototype.loadSettings = function(){
-        var ajaxD = {}, _this = this;
+        var _this = this;
+        var data = {};
 
         if (this._mapOptions.editMode == true) {
-            ajaxD.editMode = true;
+            data.editMode = 'true';
         }
 
-        return this._load(
-            ["maps","settings",this._mapOptions.id],
-            ajaxD,
-            "GET",
-            function(response){
+        return this._load({
+            url: ["maps","settings",this._mapOptions.id],
+            method: 'GET',
+            data: data,
+            callback: function(response){
                 //callback "success"
                 _this.mapAllowedElements.settings = false;// Désactive les settings une fois chargés
                 if (response.settings) {
@@ -269,27 +270,33 @@
                     console.error('Map couldn\'t initialize because settings response was not correct.');
                 }
             },
-            null, //callback "Complete"
-            function(){
+            callbackError: function(){
                 //callback "Error"
                 console.error('Error while loading settings');
             }
-        );
+        });
     };
 
     EsterenMap.prototype.loadMarkers = function(){
         var mapOptions = this._mapOptions;
-        return this._load(["maps",mapOptions.id,"markers"], null, null, mapOptions.loaderCallbacks.markers);
+        return this._load({
+            url: ["maps",mapOptions.id,"markers"],
+            callback: mapOptions.loaderCallbacks.markers
+        });
     };
 
     EsterenMap.prototype.loadRoutes = function(){
-        var mapOptions = this._mapOptions;
-        return this._load(["maps",mapOptions.id,"routes"], null, null, mapOptions.loaderCallbacks.routes);
+        return this._load({
+            url: ["maps", this._mapOptions.id, "routes"],
+            callback: this._mapOptions.loaderCallbacks.routes
+        });
     };
 
     EsterenMap.prototype.loadZones = function(){
-        var mapOptions = this._mapOptions;
-        return this._load(["maps",mapOptions.id,"zones"], null, null, mapOptions.loaderCallbacks.zones);
+        return this._load({
+            url: ["maps", this._mapOptions.id, "zones"],
+            callback: this._mapOptions.loaderCallbacks.zones
+        });
     };
 
     EsterenMap.prototype.loadTransports = function(callback){
@@ -301,7 +308,7 @@
             return this._transports;
         }
         return this._load({
-            uri: "transports",
+            url: "transports",
             type: "GET",
             callback: function(response){
                 if (response.transports) {
@@ -341,7 +348,10 @@
             _this._zonesTypes = response[refDataService].zonesTypes;
             callback.call(_this, response);
         };
-        return this._load(["maps",refDataService], null, "GET", finalCallback);
+        return this._load({
+            url: ["maps",refDataService],
+            callback: finalCallback
+        });
     };
 
     /**

@@ -58,7 +58,7 @@
             esterenZone.zone_type = { id: esterenZone.zone_type.id };
             this.launched = true;
             this._esterenMap._load({
-                uri: "zones" + (id ? '/'+id : ''),
+                url: "zones" + (id ? '/'+id : ''),
                 method: id ? "POST" : "PUT", // Si on n'a pas d'ID, c'est qu'on crée une nouvelle zone
                 data: {
                     json: esterenZone,

@@ -137,7 +137,7 @@
             esterenMarker.faction = esterenMarker.faction || {};
             esterenMarker.marker_type = { id: esterenMarker.marker_type.id };
             this._esterenMap._load({
-                uri: "markers" + (id ? '/'+id : ''),
+                url: "markers" + (id ? '/'+id : ''),
                 method: id ? "POST" : "PUT", // Si on n'a pas d'ID, c'est qu'on crée un nouveau marqueur
                 data: {
                     json: esterenMarker,
