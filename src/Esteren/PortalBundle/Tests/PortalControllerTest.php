@@ -20,6 +20,6 @@ class PortalControllerTest extends WebTestCase
         static::assertEquals(200, $client->getResponse()->getStatusCode());
 
         // Check <h1> content only, this will be our "regression point" for homepage (now that it's static and no more in the CMS)
-        static::assertEquals('Best Cartography', trim($crawler->filter('#content h1')->text()));
+        static::assertEquals('Bienvenue sur le nouveau portail des Ombres d\'Esteren', trim($crawler->filter('#content h1')->text()));
     }
 }

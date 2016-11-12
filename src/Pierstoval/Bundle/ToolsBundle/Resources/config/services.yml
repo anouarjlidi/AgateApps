@@ -3,11 +3,3 @@ services:
         class: Pierstoval\Bundle\ToolsBundle\Twig\JsonExtension
         tags:
             - { name: twig.extension }
-
-    # TODO: remove when generator is finished
-    pierstoval_tools.twig.dump:
-        class: Pierstoval\Bundle\ToolsBundle\Twig\DumpExtension
-        calls:
-            - ['setDebugExtension', ['@?twig.extension.debug']]
-        tags:
-            - { name: twig.extension }
