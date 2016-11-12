@@ -9,14 +9,16 @@
         <meta charset="utf-8">
 
         <title>
-            {%- if title is defined -%}
-                {{- title ~ ' ' -}}
-                {%- if title != 'Esteren' -%}
-                    - Esteren
+            {% block title %}
+                {%- if title is defined -%}
+                    {{- title ~ ' ' -}}
+                    {%- if title != 'Esteren' -%}
+                        - Esteren
+                    {%- endif -%}
+                {%- else -%}
+                    Esteren
                 {%- endif -%}
-            {%- else -%}
-                Esteren
-            {%- endif -%}
+            {% endblock %}
         </title>
 
         <meta name="generator" content="Pierstoval"/>
@@ -140,6 +142,7 @@
 
             {# FOOTER #}
             {% block footer %}
+                {% spaceless %}
                 <footer class="page-footer">
                     <div class="container">
                         <div class="row">
@@ -170,22 +173,23 @@
                             </p>
 
                             <p class="right light">
-                            {% set route_name = app.request.attributes.get('_route') %}
-                            {% set route_params = app.request.attributes.get('_route_params') %}
-                            {% for loc in locales %}
-                                {% if loc == locale %}
-                                    {{ loc | trans({}, 'Languages') }}
-                                {% else %}
+                            {%- set route_name = app.request.attributes.get('_route') -%}
+                            {%- set route_params = app.request.attributes.get('_route_params') -%}
+                            {%- for loc in locales %}
+                                {%- if loc == locale -%}
+                                    {{- loc | trans({}, 'Languages') -}}
+                                {%- else -%}
                                     <a class="text-underline" href="{{ path(route_name, ((route_params|default({}, 'Languages')) | merge({'_locale':loc})) ) }}">{{ loc | trans({}, 'Languages') }}</a>
-                                {% endif %}
-                                {% if not loop.last %}&ndash;{% endif %}
-                            {% endfor %}
+                                {%- endif -%}
+                                {%- if not loop.last -%}&ndash;{% endif -%}
+                            {%- endfor -%}
                             </p>
 
                             <div class="clear"></div>
                         </div>
                     </div>
                 </footer>
+                {% endspaceless %}
             {% endblock %}
 
         {% endblock %}
