@@ -31,11 +31,11 @@
 /web/js/*
 /web/css/*
 /web/uploads/*
+/web/img/generator/*
 /web/img/markerstypes/*
 !/web/js/.gitkeep
 !/web/css/.gitkeep
 !/web/uploads/.gitkeep
-!/web/img/markerstypes/.gitkeep
 
 # NodeJS components
 /node_modules/
