@@ -9,8 +9,9 @@
 
             params = $.extend(true, d._map_params, {
                 editMode: false,
+                containerHeight: 600,
+                autoresize: true,
                 showDirections: false,
-                autoresize: false,
                 showMarkers: false,
                 showRoutes: false,
                 autoResize: false,
@@ -22,7 +23,6 @@
                     clickCallback: function(e){
                         var polygon = e.target,
                             map = polygon._esterenMap,
-                            id = polygon.options.className.replace('drawn_polygon_',''),
                             polygons = map._polygons,
                             esterenZone = polygon._esterenZone,
                             i

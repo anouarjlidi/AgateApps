@@ -19,29 +19,84 @@
 @import '_step_11_des_avtg';
 @import '_step_13_primary_domains';
 
-div.gen-div-choice,
-div.gen-div-choice-disabled {
-   -webkit-transition: 0.2s background-color ease-in-out;
-      -moz-transition: 0.2s background-color ease-in-out;
-        -o-transition: 0.2s background-color ease-in-out;
-           transition: 0.2s background-color ease-in-out;
+#generator_form {
+    div.gen-div-choice {
+
+        & article {
+            border: solid 1px #f5f5f5;
+            padding: 10px;
+
+            -webkit-transition: 0.2s background-color ease-in-out;
+            -moz-transition: 0.2s background-color ease-in-out;
+            -o-transition: 0.2s background-color ease-in-out;
+            transition: 0.2s background-color ease-in-out;
+        }
+
+        &:hover {
+            cursor: pointer;
+        }
+
+        &.selected article {
+            background-color: #eeeeee;
+        }
+
+        &.selected:hover article {
+            background-color: #e3e3e3;
+        }
+
+        & div.divchoice-inside {
+            display: none;
+            padding-bottom: 10px;
+        }
+    }
+
+    .btn-gen-choice {
+        cursor: pointer;
+        border: solid 1px gray;
+        min-width: 50px;
+
+        background: #eee;
+
+        & {
+            -webkit-transition: 0.2s background-color ease-in-out;
+            -moz-transition: 0.2s background-color ease-in-out;
+            -o-transition: 0.2s background-color ease-in-out;
+            transition: 0.2s background-color ease-in-out;
+        }
+        > .modal-activator > .modal-img {
+            -webkit-transition: 0.2s border-color ease-in-out;
+            -moz-transition: 0.2s border-color ease-in-out;
+            -o-transition: 0.2s border-color ease-in-out;
+            transition: 0.2s border-color ease-in-out;
+        }
+
+        &.active, &:hover {
+            background: #bbb;
+            border-color: #26a69a;
+        }
+        &.active > .modal-activator > .modal-img {
+            border-color: #26a69a;
+        }
+        &.active:hover {
+            background: #aaa;
+        }
+
+        > .modal-activator {
+            & > .modal-img {
+                margin-top: -1px;
+                margin-left: -13px;
+                border: solid 1px gray;
+
+                &:hover {
+                    border-color: black;
+                }
+            }
+        }
+    }
 }
 
-div.gen-div-choice:hover {
-    background-color: rgba(238, 238, 238, 0.1);
-    cursor:pointer;
-}
-
-div.gen-div-choice.selected,
-div.gen-div-choice-disabled.selected {
-    background-color: rgba(238, 238, 238, 0.2);
-}
-
-div.gen-div-choice.selected:hover {
-    background-color: rgba(238, 238, 238, 0.3);
-}
-
-div.divchoice-inside {
-    display: none;
-    padding-bottom: 10px;
+/* Materialize setup */
+.step_menu li.step_available {
+    border-left: solid 5px gray;
+    padding-left: 10px;
 }

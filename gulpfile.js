@@ -35,6 +35,9 @@ var config = {
     "images": {
         "img/markerstypes": [
             "src/EsterenMaps/MapsBundle/Resources/public/img/markerstypes/*"
+        ],
+        "img/generator": [
+            "src/CorahnRin/CorahnRinBundle/Resources/public/img/*"
         ]
     },
 
@@ -119,7 +122,6 @@ var config = {
             "src/Esteren/PortalBundle/Resources/public/js/helpers.js"
         ],
         "js/global_mat.js": [
-            "web/components/materialize/js/animation.js",
             "web/components/materialize/js/initial.js",
             "web/components/materialize/js/jquery.easing.1.3.js",
             "web/components/materialize/js/animation.js",

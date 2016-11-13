@@ -46,3 +46,7 @@ page:
 contact:
     send: Send
     message_sent: 'Your email has been sent! Thanks!'
+
+button:
+    select: 'Select'
+    close: 'Close'

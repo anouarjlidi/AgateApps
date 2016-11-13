@@ -46,3 +46,7 @@ page:
 contact:
     send: Envoyer
     message_sent: 'Votre message a été envoyé, merci!'
+
+button:
+    select: 'Sélectionner'
+    close: 'Fermer'

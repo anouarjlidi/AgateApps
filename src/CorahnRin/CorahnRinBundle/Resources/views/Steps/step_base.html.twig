@@ -1,6 +1,6 @@
 {% extends '@CorahnRin/layout.html.twig' %}
 
-{% block title %}{{ 'Générateur' | trans }} - {{ current_step.title | trans }} - {{ parent() }}{% endblock %}
+{% block title %}{{ 'Générateur' | trans }} - {{ current_step.name | trans }} - {{ parent() }}{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -9,23 +9,23 @@
 
 {% block content_for_layout %}
     <div class="row">
-        <div class="col-sm-3 step_menu">
+        <div class="col l3 step_menu">
             {{ include('@CorahnRin/Steps/menu.html.twig', {
                 'steps': steps,
                 'current_step': current_step
             }) }}
         </div>
-        <div class="col-sm-9 step_module">
+        <div class="col l9 step_module">
             <h1>{{ 'Étape' | trans }} {{ current_step.step }} : {{ current_step.label | trans }}</h1>
             <form class="{% block form_class '' %}" name="generator_form" id="generator_form" method="post" action="{{ path('pierstoval_character_generator_step', {'requestStep': current_step.name}) }}">
-                <fieldset id="generator_{{ current_step.name }}">
+                <div id="generator_{{ current_step.name }}">
                     <button type="submit" id="submit_btn" class="btn btn-inverse">{{ 'Étape suivante' | trans }}</button>
                     <hr />
                     {% block step_content %}
                     {% endblock %}
                     <hr />
                     <button type="submit" id="submit_btn" class="btn btn-inverse">{{ 'Étape suivante' | trans }}</button>
-                </fieldset>
+                </div>
             </form>
         </div>
     </div>

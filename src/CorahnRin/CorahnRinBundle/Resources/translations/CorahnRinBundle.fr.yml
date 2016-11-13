@@ -1,0 +1,8 @@
+step_2:
+    modal:
+        details: 'Voir les détails'
+
+domain:
+    primary: 'Domaine primaire'
+    secondary: 'Domaine secondaire'
+    manual: 'Au choix'

@@ -206,41 +206,43 @@
     /**
      * Activates generator choice button with potential info modal (used un jobs, traits...).
      */
-    if (d.querySelector('[data-toggle="btn-gen-choice"]')) {
-        $('[data-toggle="btn-gen-choice"]').on('click', function(){var e=this;setTimeout(function(){
-            var node,
-                count,
-                i,
-                prev = e.previousElementSibling,
-                selectorForActiveGenChoices = '[data-toggle="btn-gen-choice"].active'
-            ;
-            if (e.getAttribute('data-group')) {
-                selectorForActiveGenChoices += '[data-group="' + e.getAttribute('data-group') + '"]';
-            }
-            node = d.querySelectorAll(selectorForActiveGenChoices);
-            count = node.length;
-            for (i = 0; i < count; i++) {
-                node[i].classList.remove('active');
-                if (node[i].previousElementSibling) {
-                    if (node[i].previousElementSibling.classList.contains('btn')) {
-                        node[i].previousElementSibling.classList.remove('active');
-                    }
+    if (d.querySelector('.btn-gen-choice')) {
+        var btnGenChoiceList = d.querySelectorAll('.btn-gen-choice');
+        for (i = 0, l = btnGenChoiceList.length; i < l; i++) {
+            btnGenChoiceList[i].addEventListener('click', function (event) {
+                var tagName = event.target.nodeName.toLowerCase();
+
+                // Do nothing if we clicked on the image or its link.
+                // This behavior allows clicking on any part, and not only on the span link
+                if (tagName === 'img' || tagName === 'a') {
+                    return true;
                 }
-            }
-            e.classList.add('active');
-            if (prev) {
-                if (prev.classList.contains('btn')) {
-                    prev.classList.add('active');
+
+                var node,
+                    count,
+                    i,
+                    e = this,
+                    selectorForActiveGenChoices = '.btn-gen-choice.active'
+                ;
+
+                if (e.getAttribute('data-group')) {
+                    selectorForActiveGenChoices += '[data-group="' + e.getAttribute('data-group') + '"]';
                 }
-            }
-            d.getElementById(e.getAttribute('data-target-node')).value = e.getAttribute('data-input-value');
-        },1);});
+                node = d.querySelectorAll(selectorForActiveGenChoices);
+                count = node.length;
+                for (i = 0; i < count; i++) {
+                    node[i].classList.remove('active');
+                }
+                this.classList.add('active');
+                d.getElementById(e.getAttribute('data-target-node')).value = e.getAttribute('data-input-value');
+            });
+        }
     }
 
     /**
      * Clic distant sur un élément
      */
-    $('[data-toggle="btn-dist-click"]').on('click', function(){
+    $('[data-dist-click]').on('click', function(){
         $('#'+this.getAttribute('data-target-node')).click();
     });
 
