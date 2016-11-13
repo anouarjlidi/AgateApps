@@ -73,7 +73,7 @@ class SecurityControllerTest extends WebTestCase
 
         // Check redirection was made correctly to the Profile page
         static::assertTrue($client->getResponse()->isRedirection(), 'Is not redirection');
-        static::assertTrue($client->getResponse()->isRedirect('/fr/profile/'), 'Does not redirect to profile');
+        static::assertTrue($client->getResponse()->isRedirect('/fr/register/confirmed'), 'Does not redirect to profile');
 
         $crawler->clear();
         $crawler = $client->followRedirect();
