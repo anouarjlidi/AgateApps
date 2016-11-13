@@ -10,4 +10,9 @@
         $('.parallax').parallax();
     }
 
+    // Automatically activate modals
+    if (d.querySelector('.modal')) {
+        $('.modal').modal();
+    }
+
 })})(jQuery, document);
