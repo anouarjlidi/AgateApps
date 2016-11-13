@@ -7,12 +7,13 @@
     <style type="text/css" id="map_add_style"></style>
 {% endblock %}
 
+{% block content_layout_class '' %}
+
 {% block step_content %}
     <input type="hidden" name="region_value" id="region_value" value="{{ region_value }}" />
 
     <div id="map_wrapper">
-        <div id="maps_admin_container">
-        </div>
+        <div id="maps_admin_container"></div>
         <div id="esterenmap_sidebar"></div>
         <div id="map"></div>
         <div id="inputs_container"></div>
