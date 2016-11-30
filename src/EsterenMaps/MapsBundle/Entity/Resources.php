@@ -64,6 +64,12 @@ class Resources
         $this->zonesTypes  = new ArrayCollection();
     }
 
+    public function __toString()
+    {
+        return $this->name;
+    }
+
+
     /**
      * Get id.
      *

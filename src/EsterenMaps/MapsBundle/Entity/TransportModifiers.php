@@ -36,6 +36,7 @@ class TransportModifiers implements ClearerEntityInterface
 
     /**
      * @var RoutesTypes
+     *
      * @ORM\ManyToOne(targetEntity="EsterenMaps\MapsBundle\Entity\RoutesTypes", inversedBy="transports")
      * @ORM\JoinColumn(name="route_type_id", nullable=false)
      * @Assert\NotNull()
@@ -44,6 +45,7 @@ class TransportModifiers implements ClearerEntityInterface
 
     /**
      * @var TransportTypes
+     *
      * @ORM\ManyToOne(targetEntity="EsterenMaps\MapsBundle\Entity\TransportTypes", inversedBy="transportsModifiers")
      * @ORM\JoinColumn(name="transport_type_id", nullable=false)
      * @Assert\NotNull()
@@ -53,6 +55,7 @@ class TransportModifiers implements ClearerEntityInterface
 
     /**
      * @var float
+     *
      * @ORM\Column(name="percentage", type="decimal", scale=6, precision=9, nullable=false, options={"default": "100"})
      * @Assert\NotNull()
      * @Assert\Range(max="100", min="0")
@@ -62,11 +65,19 @@ class TransportModifiers implements ClearerEntityInterface
 
     /**
      * @var bool
+     *
      * @ORM\Column(name="positive_ratio", type="boolean", nullable=false, options={"default": "1"})
      * @Assert\Type(type="boolean")
      * @Assert\NotNull()
      */
     protected $positiveRatio = true;
+
+    public function __toString()
+    {
+        return (string)$this->transportType .
+            ' - ' . $this->routeType .
+            ' (' . ($this->positiveRatio ? 1 : -1) . $this->percentage . '%)';
+    }
 
     /**
      * @return int
@@ -109,7 +120,7 @@ class TransportModifiers implements ClearerEntityInterface
     }
 
     /**
-     * @return mixed
+     * @return TransportTypes
      */
     public function getTransportType()
     {
@@ -117,11 +128,11 @@ class TransportModifiers implements ClearerEntityInterface
     }
 
     /**
-     * @param mixed $transportType
+     * @param TransportTypes $transportType
      *
      * @return TransportModifiers
      */
-    public function setTransportType($transportType)
+    public function setTransportType(TransportTypes $transportType)
     {
         $this->transportType = $transportType;
 
@@ -129,7 +140,7 @@ class TransportModifiers implements ClearerEntityInterface
     }
 
     /**
-     * @return mixed
+     * @return float
      */
     public function getPercentage()
     {
@@ -137,7 +148,7 @@ class TransportModifiers implements ClearerEntityInterface
     }
 
     /**
-     * @param mixed $percentage
+     * @param float $percentage
      *
      * @return TransportModifiers
      */
