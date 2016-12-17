@@ -9,6 +9,9 @@ if (!getenv('SYMFONY_ENV')) {
     putenv('SYMFONY_ENV=test');
 }
 
+gc_disable();
+ini_set('memory_limit', -1);
+
 $rootDir = __DIR__.'/../..';
 
 define('BUILD_DIR', $rootDir.'/build');
