@@ -1,0 +1,9 @@
+{% extends 'base_materialize.html.twig' %}
+
+{% block content_for_layout %}
+    <div class="card">
+        <div class="card-content yellow darken-4 yellow-text text-lighten-4">
+            {{ 'error_403' | trans({}, 'errors') }}
+        </div>
+    </div>
+{% endblock %}

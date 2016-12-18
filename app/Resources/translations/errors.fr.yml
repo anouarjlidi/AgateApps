@@ -1,0 +1,3 @@
+error_403: 'Vous n''avez pas accès à cette page.'
+error_404: 'La page n''a pas été trouvée.'
+error_500: 'Une erreur est survenue. Nos équipe viennent d''être prévenues et vont faire le maximum pour régler ce problème.'
