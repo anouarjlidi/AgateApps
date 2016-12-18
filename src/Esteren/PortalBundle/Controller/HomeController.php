@@ -2,17 +2,22 @@
 
 namespace Esteren\PortalBundle\Controller;
 
-use FOS\RestBundle\Controller\Annotations\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class HomeController extends Controller
 {
     /**
-     * @Route("/", name="portal_home", requirements={"_locale": "fr"})
+     * @Route("/", name="portal_home")
      */
-    public function indexAction()
+    public function indexAction($_locale)
     {
-        return $this->render('@EsterenPortal/index-fr.html.twig');
+        $template = '@EsterenPortal/index-'.$_locale.'.html.twig';
 
+        if (!$this->get('templating')->exists($template)) {
+            throw $this->createNotFoundException();
+        }
+
+        return $this->render($template);
     }
 }
