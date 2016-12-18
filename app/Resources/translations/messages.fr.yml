@@ -1,5 +1,5 @@
 'Bad credentials.': 'Nom d''utilisateur ou mot de passe invalide.'
-Pages: Pages
+Pages: 'Pages'
 admin:
     cms:
         pages: 'Pages'
@@ -7,15 +7,14 @@ admin:
         site: 'Site'
         types: 'Types de référence'
         transports: 'Transport'
-ID: ID
-tree: 'Chemin d''URL'
+ID: 'ID'
 links:
-    admin: Administration
-    menu: Menu
+    admin: 'Administration'
+    menu: 'Menu'
 footer:
     rights: 'Agate RPG, Tous droits réservés.'
     brand: 'Design &amp; développement : Pierstoval'
-    version: Version
+    version: 'Version'
     links: 'Liens'
     contact: 'Contacter l''équipe'
     subscribe: 'Inscription à la newsletter'
@@ -34,8 +33,8 @@ register_optin: >
     Elles sont votre propriété.</small>
 
 templates:
-    base: Bootstrap
-    material: Materialize
+    base: 'Bootstrap'
+    material: 'Materialize'
 
 page:
     preview:
@@ -44,7 +43,7 @@ page:
         previewing: 'Prévisualisation'
 
 contact:
-    send: Envoyer
+    send: 'Envoyer'
     message_sent: 'Votre message a été envoyé, merci!'
 
 button:
