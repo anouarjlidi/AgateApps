@@ -6,7 +6,7 @@ use Tests\WebTestCase;
 
 class PortalControllerTest extends WebTestCase
 {
-    public function testIndexWithHomepage()
+    public function testIndexWithFrenchHomepage()
     {
         parent::resetDatabase();
 
@@ -21,5 +21,17 @@ class PortalControllerTest extends WebTestCase
 
         // Check <h1> content only, this will be our "regression point" for homepage (now that it's static and no more in the CMS)
         static::assertEquals('Bienvenue sur le nouveau portail des Ombres d\'Esteren', trim($crawler->filter('#content h1')->text()));
+    }
+
+    public function testIndexWithNonSupportedHomepage()
+    {
+        parent::resetDatabase();
+
+        $client = $this->getClient('portal.esteren.dev');
+
+        $client->request('GET', '/en/');
+
+        // Ensures that portal homepage is managed in a controller and not in the CMS
+        static::assertEquals(404, $client->getResponse()->getStatusCode());
     }
 }
