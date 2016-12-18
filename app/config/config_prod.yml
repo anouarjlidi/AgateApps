@@ -10,26 +10,57 @@ imports:
 # Monolog is overriden because we need to send an e-mail when there is any error.
 monolog:
     handlers:
-        main:
-            type:         fingers_crossed
-            action_level: error
-            handler:      grouped
-        grouped:
-            type:    group
-            members: [nested, buffered]
-        nested:
-            type:  stream
-            path:  "%kernel.logs_dir%/%kernel.environment%.log"
-            level: debug
-        buffered:
-            type:    buffer
-            handler: swift
-        swift:
-            type:       swift_mailer
-            from_email: no-reply@pierstoval.com
-            to_email:   pierstoval+esterenprod@gmail.com
-            subject:    An Error Occurred!
-            level:      debug
-            include_stacktraces: true
+
         console:
             type:  console
+
+        # Get ALL error logs and put them in a file
+        main:
+            type:           rotating_file
+            path:           "%kernel.logs_dir%/%kernel.environment%.all.log"
+            level:          info
+
+        # Get all security logs (login, logout, etc.) and put them in a file
+        security:
+            type:           rotating_file
+            path:           "%kernel.logs_dir%/%kernel.environment%.auth.log"
+            level:          info
+            channels:       security
+
+        # All "error" are sent into another file, including 404 for example
+        main_error:
+            type:           fingers_crossed
+            action_level:   error
+            handler:        streamed_error
+        streamed_error:
+            type:           rotating_file
+            path:           "%kernel.logs_dir%/%kernel.environment%.error.log"
+            level:          debug
+
+        ## For any "critical", we send an email
+        main_critical:
+            type:           fingers_crossed
+            action_level:   critical
+            handler:        grouped_critical
+            include_stacktraces: true
+        grouped_critical:
+            type:           group
+            members:        [streamed_critical, buffered_critical]
+            include_stacktraces: true
+        streamed_critical:
+            type:           rotating_file
+            max_files:      60
+            path:           "%kernel.logs_dir%/%kernel.environment%.critical.log"
+            level:          info
+            include_stacktraces: true
+        buffered_critical:
+            type:           buffer
+            handler:        swift_critical
+            include_stacktraces: true
+        swift_critical:
+            type:           swift_mailer
+            from_email:     no-reply@pierstoval.com
+            to_email:       pierstoval+esterenprod@gmail.com
+            subject:        An Error Occurred!
+            level:          debug
+            include_stacktraces: true
