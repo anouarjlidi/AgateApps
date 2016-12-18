@@ -35,7 +35,15 @@ parameters:
         analytics:   'UA-43812649-5'
         tag_manager: 'GTM-T5PQWF'
 
+# Doctrine Configuration
 doctrine:
+    orm:
+        filters:
+            # Activate SoftDeleteable for some entities
+            # There are some other filters down there
+            softdeleteable:
+                class: Gedmo\SoftDeleteable\Filter\SoftDeleteableFilter
+                enabled: true
     orm:
         # Override the default repository to get some more good tools
         default_repository_class: Orbitale\Component\DoctrineTools\BaseEntityRepository
@@ -92,16 +100,6 @@ twig:
     form_themes:
         - 'bootstrap_3_layout.html.twig'
         - 'form/ckeditor_widget.html.twig'
-
-# Doctrine Configuration
-doctrine:
-    orm:
-        filters:
-            # Activate SoftDeleteable for some entities
-            # There are some other filters down there
-            softdeleteable:
-                class: Gedmo\SoftDeleteable\Filter\SoftDeleteableFilter
-                enabled: true
 
 # Doctrine extensions
 # TODO: Implement Translatable
