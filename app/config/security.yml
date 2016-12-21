@@ -1,12 +1,12 @@
 # To get started with security, check out the documentation:
-# http://symfony.com/doc/current/book/security.html
+# http://symfony.com/doc/current/security.html
 security:
 
-    # http://symfony.com/doc/current/book/security.html#encoding-the-user-s-password
+    # http://symfony.com/doc/current/security.html#encoding-the-user-s-password
     encoders:
         FOS\UserBundle\Model\UserInterface: sha512
 
-    # http://symfony.com/doc/current/book/security.html#hierarchical-roles
+    # http://symfony.com/doc/current/security.html#hierarchical-roles
     role_hierarchy:
 
         # Anyone who is a backer from Kickstarter or Ulule.
@@ -47,7 +47,7 @@ security:
             - ROLE_ADMIN
             - ROLE_ALLOWED_TO_SWITCH
 
-    # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
+    # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
         fos_user:
             id: fos_user.user_provider.username
@@ -58,8 +58,8 @@ security:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        # http://symfony.com/doc/current/book/security.html#a-configuring-how-your-users-will-authenticate
-        # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
+        # http://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
+        # http://symfony.com/doc/current/security/form_login_setup.html
         main:
             pattern:            ^/
             anonymous:          ~
@@ -82,7 +82,7 @@ security:
 
     # with these settings you can restrict or allow access for different parts
     # of your application based on roles, ip, host or methods
-    # http://symfony.com/doc/current/book/security.html#security-book-access-control-matching-options
+    # http://symfony.com/doc/current/security.html#security-book-access-control-matching-options
     access_control:
         - { path: "^/(?:%locales_regex%)/login$",     role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: "^/(?:%locales_regex%)/register",   role: IS_AUTHENTICATED_ANONYMOUSLY }
