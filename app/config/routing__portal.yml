@@ -2,6 +2,7 @@
 portal_home:
     resource: "@EsterenPortalBundle/Controller/HomeController.php"
     type:     annotation
+    host:     '%esteren_domains.portal%'
 
 contact:
     resource: "@EsterenPortalBundle/Controller/ContactController.php"
