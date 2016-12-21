@@ -36,8 +36,13 @@
 /web/img/markerstypes/*
 !/web/js/.gitkeep
 !/web/css/.gitkeep
+!/web/img/generator/.gitkeep
+!/web/img/markerstypes/.gitkeep
 !/web/uploads/.gitkeep
 !/web/fonts/.gitkeep
+
+# This directory is used only by LeafletJS defaults, we're not sure we won't ever use it...
+/web/images/*
 
 # NodeJS components
 /node_modules/
