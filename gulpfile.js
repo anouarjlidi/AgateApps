@@ -1,8 +1,8 @@
 /*
-There here is YOUR config
-This var is an example of the assets you can use in your own application.
-The array KEYS correspond to the OUTPUT files/directories,
-The array VALUES contain a LIST OF SOURCE FILES
+* There here is YOUR config
+* This var is an example of the assets you can use in your own application.
+* The array KEYS correspond to the OUTPUT files/directories,
+* The array VALUES contain a LIST OF SOURCE FILES
 */
 var config = {
 
@@ -10,11 +10,30 @@ var config = {
     "output_directory": "web",
 
     /**
+     * This option is used to simply copy files into a new directory.
+     * This is very useful when copying dist files of external components.
+     * Example:
+     *     "fonts/": [
+     *         "node_modules/materialize-css/dist/fonts/*",
+     *         "node_modules/bootstrap/dist/fonts/*"
+     *     ]
+     */
+    "copy": {
+        "fonts/": [
+            "node_modules/materialize-css/dist/fonts/**/",
+            "node_modules/bootstrap/dist/fonts/*"
+        ],
+        "images": [
+            "node_modules/leaflet/dist/images/*"
+        ]
+    },
+
+    /**
      * Here you can add other files to watch when using "gulp watch".
      * They will automatically run the "dump" command when modified.
      * It is VERY useful when you use massively less/sass "import" rules, for example.
      * Example:
-        "src/AppBundle/Resources/public/less/*.less"
+     *     "src/AppBundle/Resources/public/less/*.less"
      */
     "files_to_watch": [
         "src/Esteren/PortalBundle/Resources/public/less/*.less",
@@ -28,9 +47,9 @@ var config = {
      * All files here are images that will be optimized/compressed with imagemin.
      * The key corresponds to the output directory (prepended with "output_directory" previous option).
      * Example:
-        "images/": [
-            "src/AppBundle/Resources/public/images/*"
-        ]
+     *     "images/": [
+     *         "src/AppBundle/Resources/public/images/*"
+     *     ]
      */
     "images": {
         "img/markerstypes": [
@@ -45,14 +64,14 @@ var config = {
      * All files from this section are parsed with LESS plugin and dumped into a CSS file.
      * If using "--prod" in command line, will minify with "clean-css".
      * Example:
-        "css/main_less.css": [
-            "web/components/bootstrap/less/bootstrap.less",
-            "src/AppBundle/Resources/public/less/main.less"
-        ]
+     *     "css/main_less.css": [
+     *         "node_modules/bootstrap/less/bootstrap.less",
+     *         "src/AppBundle/Resources/public/less/main.less"
+     *     ]
      */
     "less": {
         "css/fa.css": [
-            "src/Esteren/PortalBundle/Resources/public/less/_fontawesome.less"
+            "node_modules/font-awesome/less/fontawesome.less"
         ],
         "css/global.css": [
             "src/Esteren/PortalBundle/Resources/public/less/_main.less"
@@ -72,9 +91,9 @@ var config = {
      * All files from this section are parsed with SASS plugin and dumped into a CSS file.
      * If using "--prod" in command line, will minify with "clean-css".
      * Example:
-        "css/main_sass.css": [
-            "src/AppBundle/Resources/public/less/main.scss"
-        ]
+     *     "css/main_sass.css": [
+     *         "src/AppBundle/Resources/public/less/main.scss"
+     *     ]
      */
     "sass": {
         "css/global_mat.css": [
@@ -86,9 +105,9 @@ var config = {
      * All files from this section are just concatenated and dumped into a CSS file.
      * If using "--prod" in command line, will minify with "clean-css".
      * Example:
-        "css/main.css": [
-            "src/AppBundle/Resources/public/css/main.css"
-        ]
+     *     "css/main.css": [
+     *         "src/AppBundle/Resources/public/css/main.css"
+     *     ]
      */
     "css": {
         "css/initializer.css": [
@@ -100,63 +119,34 @@ var config = {
      * All files from this section are just concatenated and dumped into a JS file.
      * If using "--prod" in command line, will minify with "uglyflyjs".
      * Example:
-        "js/main.js": [
-            "web/components/bootstrap/dist/bootstrap-src.js",
-            "src/AppBundle/Resources/public/css/main.js"
-        ]
+     *     "js/main.js": [
+     *         "web/components/bootstrap/dist/bootstrap-src.js",
+     *         "src/AppBundle/Resources/public/css/main.js"
+     *     ]
      */
     "js": {
         "js/jquery.js": [
-            "web/components/jquery/jquery.js"
+            "node_modules/jquery/jquery.js"
         ],
         "js/global.js": [
-            "web/components/bootstrap/js/button.js",
-            "web/components/bootstrap/js/collapse.js",
-            "web/components/bootstrap/js/dropdown.js",
-            "web/components/bootstrap/js/modal.js",
-            "web/components/bootstrap/js/tooltip.js",
-            "web/components/bootstrap/js/popover.js",
-            "web/components/bootstrap/js/transition.js",
-            "web/components/bootstrap/js/tab.js",
+            "node_modules/bootstrap/js/button.js",
+            "node_modules/bootstrap/js/collapse.js",
+            "node_modules/bootstrap/js/dropdown.js",
+            "node_modules/bootstrap/js/modal.js",
+            "node_modules/bootstrap/js/tooltip.js",
+            "node_modules/bootstrap/js/popover.js",
+            "node_modules/bootstrap/js/transition.js",
+            "node_modules/bootstrap/js/tab.js",
             "src/Esteren/PortalBundle/Resources/public/js/corahn_rin.js",
             "src/Esteren/PortalBundle/Resources/public/js/helpers.js"
         ],
         "js/global_mat.js": [
-            "web/components/materialize/js/initial.js",
-            "web/components/materialize/js/jquery.easing.1.3.js",
-            "web/components/materialize/js/animation.js",
-            "web/components/materialize/js/velocity.min.js",
-            "web/components/materialize/js/hammer.min.js",
-            "web/components/materialize/js/jquery.hammer.js",
-            "web/components/materialize/js/global.js",
-            "web/components/materialize/js/collapsible.js",
-            "web/components/materialize/js/dropdown.js",
-            "web/components/materialize/js/modal.js",
-            "web/components/materialize/js/materialbox.js",
-            "web/components/materialize/js/parallax.js",
-            "web/components/materialize/js/tabs.js",
-            "web/components/materialize/js/tooltip.js",
-            "web/components/materialize/js/waves.js",
-            "web/components/materialize/js/toasts.js",
-            "web/components/materialize/js/sideNav.js",
-            "web/components/materialize/js/scrollspy.js",
-            "web/components/materialize/js/forms.js",
-            "web/components/materialize/js/slider.js",
-            "web/components/materialize/js/cards.js",
-            "web/components/materialize/js/chips.js",
-            "web/components/materialize/js/pushpin.js",
-            "web/components/materialize/js/buttons.js",
-            "web/components/materialize/js/transitions.js",
-            "web/components/materialize/js/scrollFire.js",
-            "web/components/materialize/js/date_picker/picker.js",
-            "web/components/materialize/js/date_picker/picker.date.js",
-            "web/components/materialize/js/character_counter.js",
-            "web/components/materialize/js/carousel.js",
+            "node_modules/materialize-css/dist/js/materialize.js",
             "src/Esteren/PortalBundle/Resources/public/js/helpers.js",
             "src/Esteren/PortalBundle/Resources/public/js/global_mat.js"
         ],
         "js/maps_lib.js": [
-            "web/components/leaflet/dist/leaflet-src.js",
+            "node_modules/leaflet/dist/leaflet-src.js",
             "web/components/leaflet-sidebar/src/L.Control.Sidebar.js",
             "web/components/leaflet-draw/dist/leaflet.draw-src.js",
             "src/EsterenMaps/MapsBundle/Resources/public/js/EsterenMap/1_EsterenMap.js",
@@ -200,8 +190,15 @@ var config = {
 /************* Some helpers *************/
 
 var GulpfileHelpers = {};
+
+/**
+ * @param {Object} object
+ * @returns {Number}
+ */
 GulpfileHelpers.objectSize = function(object) {
-    var size = 0, key;
+    "use strict";
+
+    let size = 0, key;
     for (key in object) {
         if (object.hasOwnProperty(key)) {
             size++;
@@ -210,8 +207,15 @@ GulpfileHelpers.objectSize = function(object) {
     return size;
 };
 
+/**
+ * @param {Object} object
+ * @param {Function} callback
+ * @returns {Object}
+ */
 GulpfileHelpers.objectForEach = function(object, callback) {
-    var key;
+    "use strict";
+
+    let key;
     for (key in object) {
         if (object.hasOwnProperty(key)) {
             callback.apply(object, [key, object[key]]);
@@ -223,12 +227,13 @@ GulpfileHelpers.objectForEach = function(object, callback) {
 /*************** Global vars ***************/
 
 // These data are mostly used to introduce logic that will save memory and time.
-var isProd    = process.argv.indexOf('--prod') >= 0;
-var hasImages = GulpfileHelpers.objectSize(config.images) > 0;
-var hasLess   = GulpfileHelpers.objectSize(config.less) > 0;
-var hasSass   = GulpfileHelpers.objectSize(config.sass) > 0;
-var hasCss    = GulpfileHelpers.objectSize(config.css) > 0;
-var hasJs     = GulpfileHelpers.objectSize(config.js) > 0;
+const isProd    = process.argv.indexOf('--prod') >= 0;
+const hasImages = GulpfileHelpers.objectSize(config.images) > 0;
+const hasCopy   = GulpfileHelpers.objectSize(config.copy) > 0;
+const hasLess   = GulpfileHelpers.objectSize(config.less) > 0;
+const hasSass   = GulpfileHelpers.objectSize(config.sass) > 0;
+const hasCss    = GulpfileHelpers.objectSize(config.css) > 0;
+const hasJs     = GulpfileHelpers.objectSize(config.js) > 0;
 
 // Required extensions
 var gulp       = require('gulp');
@@ -250,7 +255,9 @@ var imagemin = hasImages ? require('gulp-imagemin') : function(){ return {}; };
  * Dumps the LESS assets
  */
 gulp.task('less', function() {
-    var list = config.less,
+    "use strict";
+
+    let list = config.less,
         outputDir = config.output_directory+'/',
         assets_output, assets, pipes, i, l
     ;
@@ -277,7 +284,9 @@ gulp.task('less', function() {
  * Dumps the SASS assets
  */
 gulp.task('sass', function() {
-    var list = config.sass,
+    "use strict";
+
+    let list = config.sass,
         outputDir = config.output_directory+'/',
         assets_output, assets, pipes, i, l
     ;
@@ -301,11 +310,39 @@ gulp.task('sass', function() {
 });
 
 /**
+ * Simply copy files into another directory.
+ * Useful for simple "dist" files from node_modules directory, for example.
+ */
+gulp.task('copy', function() {
+    "use strict";
+
+    let list = config.copy,
+        outputDir = config.output_directory+'/',
+        assets_output, assets, pipes, i, l
+    ;
+    for (assets_output in list) {
+        if (!list.hasOwnProperty(assets_output)) { continue; }
+        assets = list[assets_output];
+        pipes = gulp
+            .src(assets)
+            .pipe(gulp.dest(outputDir + assets_output))
+        ;
+
+        console.info(" [file+] "+assets_output+" >");
+        for (i = 0, l = assets.length; i < l; i++) {
+            console.info("       > "+assets[i]);
+        }
+    }
+});
+
+/**
  * Compress images.
  * Thanks to @docteurklein.
  */
 gulp.task('images', function() {
-    var list = config.images,
+    "use strict";
+
+    let list = config.images,
         outputDir = config.output_directory+'/',
         assets_output, assets, pipes, i, l
     ;
@@ -334,7 +371,9 @@ gulp.task('images', function() {
  * Dumps the CSS assets.
  */
 gulp.task('css', function() {
-    var list = config.css,
+    "use strict";
+
+    let list = config.css,
         outputDir = config.output_directory+'/',
         assets_output, assets, pipes, i, l
     ;
@@ -360,7 +399,9 @@ gulp.task('css', function() {
  * Dumps the JS assets
  */
 gulp.task('js', function() {
-    var list = config.js,
+    "use strict";
+
+    let list = config.js,
         outputDir = config.output_directory+'/',
         assets_output, assets, pipes, i, l
     ;
@@ -386,7 +427,9 @@ gulp.task('js', function() {
  * Will watch for files and run "dump" for each modification
  */
 gulp.task('watch', ['dump'], function() {
-    var files_less = [],
+    "use strict";
+
+    let files_less = [],
         files_images = [],
         files_css = [],
         files_sass = [],
@@ -453,6 +496,7 @@ gulp.task('watch', ['dump'], function() {
  */
 var dumpTasks = [];
 if (hasImages) { dumpTasks.push('images'); }
+if (hasCopy) { dumpTasks.push('copy'); }
 if (hasLess) { dumpTasks.push('less'); }
 if (hasSass) { dumpTasks.push('sass'); }
 if (hasCss) { dumpTasks.push('css'); }
@@ -470,6 +514,7 @@ gulp.task('default', function(){
     console.info("    --prod       If specified, will run clean-css and uglyfyjs when dumping the assets.");
     console.info("");
     console.info("Commands:");
+    console.info("    copy         Copy the sources in the `config.copy` into a destination folder.");
     console.info("    images       Dumps the sources in the `config.images` parameter from image files.");
     console.info("    less         Dumps the sources in the `config.less` parameter from LESS files.");
     console.info("    sass         Dumps the sources in the `config.sass` parameter from SCSS files.");
