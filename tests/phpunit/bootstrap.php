@@ -5,6 +5,10 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
+define('NO_RECREATE_DB', getenv('NO_RECREATE_DB'));
+define('NO_CLEAR_CACHE', getenv('NO_CLEAR_CACHE'));
+define('RECREATE_DB', getenv('RECREATE_DB'));
+
 if (!getenv('SYMFONY_ENV')) {
     putenv('SYMFONY_ENV=test');
 }
@@ -29,7 +33,7 @@ $autoload = require $file;
 
 $input = new ArgvInput();
 
-if (getenv('NO_RECREATE_DB')) {
+if (NO_RECREATE_DB) {
     return;
 }
 
@@ -52,7 +56,7 @@ function runCommand($cmd) {
     }
 }
 
-if (!getenv('NO_CLEAR_CACHE')) {
+if (!NO_CLEAR_CACHE) {
     runCommand('php '.$rootDir.'/bin/console cache:clear --no-warmup');
 }
 
@@ -67,7 +71,7 @@ if ($fs->exists(DATABASE_TEST_FILE)) {
     $fs->remove(DATABASE_TEST_FILE);
 }
 
-if (!getenv('RECREATE_DB') && $fs->exists(DATABASE_REFERENCE_FILE)) {
+if (!RECREATE_DB && $fs->exists(DATABASE_REFERENCE_FILE)) {
     $fs->copy(DATABASE_REFERENCE_FILE, DATABASE_TEST_FILE);
     return;
 }
