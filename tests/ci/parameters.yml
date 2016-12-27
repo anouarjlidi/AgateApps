@@ -7,8 +7,14 @@ parameters:
     database_name:     ~
     database_user:     ~
     database_password: ~
-    database_driver:   pdo_sqlite
-    database_path:     "%kernel.root_dir%/data.db3"
+    database_driver:   ~
+    database_path:     ~
+
+    database_host_legacy:     ~
+    database_port_legacy:     ~
+    database_name_legacy:     ~
+    database_user_legacy:     ~
+    database_password_legacy: ~
 
     mailer_transport:  smtp
     mailer_host:       127.0.0.1
@@ -20,10 +26,4 @@ parameters:
 
     magick_binaries_path: /usr/bin
 
-    esteren_domains.corahnrin:      corahnrin.esteren.dev
-    esteren_domains.esterenmaps:    maps.esteren.dev
-    esteren_domains.portal:         www.esteren.dev
-    esteren_domains.backoffice:     back.esteren.dev
-    esteren_domains.api:            api.esteren.dev
-    esteren_domains.games:          games.esteren.dev
-    esteren_domains.cookie_domain:  .esteren.dev
+    esteren_domain:    esteren.dev
