@@ -32,8 +32,11 @@ export SYMFONY_ENV='test'
 export SYMFONY_DEBUG=1
 export RECREATE_DB=1
 
-echo "Install dependencies"
-php composer.phar install -o --no-interaction || exit 130
+echo "Install NodeJS dependencies"
+node --version && npm -v && npm install || exit 130
+
+echo "Install Composer dependencies"
+php composer.phar install -o --no-interaction || exit 131
 
 echo "Testing environment capabilities and Symfony requirements"
 php bin/symfony_requirements || exit 140
