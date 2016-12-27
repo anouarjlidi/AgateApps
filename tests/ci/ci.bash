@@ -25,7 +25,6 @@ fi
 
 echo "Update parameters and phpunit file for CI"
 cp tests/ci/parameters.yml app/config/parameters.yml || exit 120
-cp tests/ci/phpunit.xml ./phpunit.xml || exit 121
 
 echo "Setup environment variables"
 export SYMFONY_ENV='test'
