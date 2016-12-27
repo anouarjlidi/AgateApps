@@ -7,6 +7,9 @@ cd ${DIR}
 echo "Working directory:"
 pwd
 
+echo "Testing environment capabilities and Symfony requirements"
+php bin/symfony_requirements
+
 echo "Installing composer"
 curl -sS https://getcomposer.org/installer | php
 
@@ -28,7 +31,7 @@ echo "Install dependencies"
 php composer.phar install -o --no-interaction
 
 echo "Execute tests"
-RECREATE_DB=1 phpunit -c tests/phpunit.xml --coverage-text --coverage-clover build/logs/clover.xml
+RECREATE_DB=1 ./vendor/bin/simple-phpunit -c tests/phpunit.xml --coverage-text --coverage-clover build/logs/clover.xml
 
 if [ -f app/config/parameters.yml.backup ]; then
     echo "Retrieve backed up parameters file"
