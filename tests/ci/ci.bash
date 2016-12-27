@@ -4,16 +4,16 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # Get root project directory name
-DIR=`realpath "${DIR}/../../"`
+DIR=`readlink -m "${DIR}/../../"`
 
 # Change directory to root directory so all commands are executed from there
-cd ${DIR}
+cd ${DIR} || exit 100
 
 echo "Working directory:"
 pwd
 
 echo "Testing environment capabilities and Symfony requirements"
-php bin/symfony_requirements
+php bin/symfony_requirements || exit 110
 
 echo "Installing composer"
 curl -sS https://getcomposer.org/installer | php
@@ -27,16 +27,23 @@ if [ -f app/config/parameters.yml ]; then
 fi
 
 echo "Update parameters and phpunit file for CI"
-cp tests/ci/parameters.yml app/config/parameters.yml
-cp tests/ci/phpunit.xml tests/phpunit.xml
+cp tests/ci/parameters.yml app/config/parameters.yml || exit 120
+cp tests/ci/phpunit.xml tests/phpunit.xml || exit 121
 
+echo "Setup environment variables"
 export SYMFONY_ENV='test'
+export SYMFONY_DEBUG=1
+export RECREATE_DB=1
 
 echo "Install dependencies"
-php composer.phar install -o --no-interaction
+php composer.phar install -o --no-interaction || exit 140
 
 echo "Execute tests"
-RECREATE_DB=1 ./vendor/bin/simple-phpunit -c tests/phpunit.xml --coverage-text --coverage-clover build/logs/clover.xml
+./vendor/bin/simple-phpunit \
+    -c tests/phpunit.xml \
+    --coverage-text \
+    --coverage-clover build/logs/clover.xml \
+    || exit 200
 
 if [ -f app/config/parameters.yml.backup ]; then
     echo "Retrieve backed up parameters file"
