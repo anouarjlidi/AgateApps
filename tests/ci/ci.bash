@@ -1,7 +1,12 @@
 #!/bin/bash
 
-# Make sure we're in the right directory
+# Get ci.bash directory name
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+# Get root project directory name
+DIR=`realpath "${DIR}/../../"`
+
+# Change directory to root directory so all commands are executed from there
 cd ${DIR}
 
 echo "Working directory:"
