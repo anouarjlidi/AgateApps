@@ -37,14 +37,13 @@ php composer.phar install -o --no-interaction --no-scripts || exit 130
 echo "Testing environment capabilities and Symfony requirements"
 php bin/symfony_requirements || exit 140
 
-if [[ -z "$PHPUNIT_COVERAGES" ]]; then
-    export PHPUNIT_COVERAGES="--coverage-text --coverage-clover build/logs/clover.xml"
+if [[ -z "$PHPUNIT_PARAMETERS" ]]; then
+    export PHPUNIT_PARAMETERS="--coverage-text --coverage-clover build/logs/clover.xml"
 fi
 
 echo "Execute tests"
 ./vendor/bin/simple-phpunit \
-    -c phpunit.xml \
-    ${PHPUNIT_COVERAGES} \
+    ${PHPUNIT_PARAMETERS} \
     || (echo "Tests failed" && exit 200)
 
 if [ -f app/config/parameters.yml.backup ]; then
