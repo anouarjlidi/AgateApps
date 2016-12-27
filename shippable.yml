@@ -8,4 +8,4 @@ before_script:
 
 build:
   ci:
-    - bash ./test/ci/ci.bash
+    - bash ./tests/ci/ci.bash
