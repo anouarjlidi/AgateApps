@@ -42,9 +42,7 @@ if [[ -z "$PHPUNIT_PARAMETERS" ]]; then
 fi
 
 echo "Execute tests"
-./vendor/bin/simple-phpunit \
-    ${PHPUNIT_PARAMETERS} \
-    || (echo "Tests failed" && exit 200)
+./vendor/bin/simple-phpunit ${PHPUNIT_PARAMETERS}
 
 if [ -f app/config/parameters.yml.backup ]; then
     echo "Retrieve backed up parameters file"
