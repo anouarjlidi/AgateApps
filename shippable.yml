@@ -4,6 +4,9 @@ php:
     - 5.6
     - 7.0
 
+env:
+    - 'PHPUNIT_PARAMETERS="--log-junit shippable/testresults/junit.xml --coverage-xml shippable/codecoverage"'
+
 build:
     cache: true
 
@@ -13,4 +16,6 @@ build:
     ci:
         - 'echo "date.timezone=Europe/Paris" >> $HOME/.phpenv/versions/$(phpenv version-name)/etc/php.ini;'
         - 'pickle install intl && echo "extension=intl.so" >> $HOME/.phpenv/versions/$(phpenv version-name)/etc/php.ini;'
+        - mkdir -p shippable/testresults
+        - mkdir -p shippable/codecoverage
         - bash ./tests/ci/ci.bash ; if [[ $? == 1 ]]; then exit 0; else exit $? ; fi
