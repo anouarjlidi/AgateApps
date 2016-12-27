@@ -12,13 +12,10 @@ cd ${DIR} || exit 100
 echo "Working directory:"
 pwd
 
-echo "Testing environment capabilities and Symfony requirements"
-php bin/symfony_requirements || exit 110
-
 echo "Installing composer"
-curl -sS https://getcomposer.org/installer | php
+curl -sS https://getcomposer.org/installer | php || exit 110
 
-# Backup any existing parameters file.
+echo "Backup any existing parameters file."
 if [ -f app/config/parameters.yml ]; then
     if ! grep -q "# CI file" "app/config/parameters.yml"; then
         echo "Backing up parameters.yml file"
@@ -36,13 +33,19 @@ export SYMFONY_DEBUG=1
 export RECREATE_DB=1
 
 echo "Install dependencies"
-php composer.phar install -o --no-interaction || exit 140
+php composer.phar install -o --no-interaction || exit 130
+
+echo "Testing environment capabilities and Symfony requirements"
+php bin/symfony_requirements || exit 140
+
+if [[ -z "$PHPUNIT_COVERAGES" ]]; then
+    export PHPUNIT_COVERAGES="--coverage-text --coverage-clover build/logs/clover.xml"
+fi
 
 echo "Execute tests"
 ./vendor/bin/simple-phpunit \
     -c tests/phpunit.xml \
-    --coverage-text \
-    --coverage-clover build/logs/clover.xml \
+    ${PHPUNIT_COVERAGES} \
     || exit 200
 
 if [ -f app/config/parameters.yml.backup ]; then
