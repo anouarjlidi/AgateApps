@@ -45,7 +45,7 @@ echo "Execute tests"
 ./vendor/bin/simple-phpunit \
     -c phpunit.xml \
     ${PHPUNIT_COVERAGES} \
-    || exit 200
+    || (echo "Tests failed" && exit 200)
 
 if [ -f app/config/parameters.yml.backup ]; then
     echo "Retrieve backed up parameters file"
