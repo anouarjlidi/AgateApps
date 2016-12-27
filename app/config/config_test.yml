@@ -24,13 +24,11 @@ doctrine:
                 dbname:   db_test.db
                 charset:  UTF8
                 path:     '%kernel.root_dir%/../build/database_test.db'
-                charset:  UTF8
             legacy:
                 driver:   pdo_sqlite
                 dbname:   db_test_legacy.db
                 charset:  UTF8
                 path:     '%kernel.root_dir%/../build/database_test_legacy.db'
-                charset:  UTF8
 
 # Force these domain names to be used in the tests
 parameters:
