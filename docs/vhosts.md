@@ -37,6 +37,14 @@ The dist file contains comments about what it does, whereas the vhost does not, 
 
     DocumentRoot /var/www/corahn_rin/web
 
+    # Dev
+    SetEnv SYMFONY_ENVIRONMENT dev
+    SetEnv SYMFONY_DEBUG 1
+
+    # Prod
+    SetEnv SYMFONY_ENVIRONMENT prod
+    SetEnv SYMFONY_DEBUG 0
+
     <Directory /var/www/corahn_rin/web>
 
         # Uncomment if using php with cgi
@@ -132,6 +140,8 @@ server {
 
     # DEV
     # Remove this part when using for prod
+    env SYMFONY_ENVIRONMENT=dev;
+    env SYMFONY_DEBUG=1;
     location / {
         # try to serve file directly, fallback to app.php
         try_files $uri /app_dev.php$is_args$args;
@@ -143,7 +153,7 @@ server {
 
         fastcgi_split_path_info ^(.+\.php)(/.*)$;
         include fastcgi_params;
-        
+
         # When you are using symlinks to link the document root to the
         # current version of your application, you should pass the real
         # application path instead of the path to the symlink to PHP
@@ -158,6 +168,8 @@ server {
 
     # PROD
     # Remove this part when using for dev
+    env SYMFONY_ENVIRONMENT=prod;
+    env SYMFONY_DEBUG=0;
     location / {
         # try to serve file directly, fallback to app.php
         try_files $uri /app.php$is_args$args;
@@ -185,7 +197,7 @@ server {
         internal;
     }
     # end PROD
-    
+
     # return 404 for all other php files not matching the front controller
     # this prevents access to other php files you don't want to be accessible.
     location ~ \.php$ {

@@ -1,17 +1,24 @@
 <?php
 
+use Symfony\Component\ClassLoader\ApcClassLoader;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Debug\Debug;
 
 umask(0002);
 
-$environment = (getenv('APP_ENVIRONMENT') !== false) ? getenv('APP_ENVIRONMENT') : 'dev';
-$debug       = (getenv('APP_DEBUG') !== false) ? (bool) getenv('APP_DEBUG') : true;
+$environment = (getenv('SYMFONY_ENVIRONMENT') !== false) ? getenv('SYMFONY_ENVIRONMENT') : 'dev';
+$debug       = (getenv('SYMFONY_DEBUG') !== false) ? (bool) getenv('SYMFONY_DEBUG') : true;
 
 /**
  * @var Composer\Autoload\ClassLoader
  */
 $loader = require __DIR__.'/../app/autoload.php';
+
+try {
+    $apcLoader = new ApcClassLoader('EsterenApp', $loader);
+    $apcLoader->register(true);
+    $loader = $apcLoader;
+} catch (Exception $e) {}
 
 if (true === $debug) {
     Debug::enable();

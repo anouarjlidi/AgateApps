@@ -10,23 +10,6 @@ class SecurityControllerTest extends WebTestCase
     const USER_NAME = 'test_user';
     const USER_NAME_AFTER_UPDATE = 'user_updated';
 
-    public function testForceLogin()
-    {
-        $client = $this->getClient('www.esteren.dev', [], 'ROLE_USER');
-
-        $crawler = $client->request('GET', '/fr/profile/');
-
-        if (403 === $client->getResponse()->getStatusCode()) {
-            static::markTestSkipped('Skipped because still in restrictive mode.');
-        }
-
-        static::assertEquals(401, $client->getResponse()->getStatusCode());
-
-        $form = $crawler->filter('#form_login');
-        static::assertEquals(1, $form->count());
-        static::assertContains('/login_check', $form->attr('action'));
-    }
-
     public function testForbiddenAdmin()
     {
         $client = $this->getClient('back.esteren.dev', [], 'ROLE_USER');

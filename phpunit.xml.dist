@@ -20,7 +20,7 @@
 >
 
     <testsuites>
-        <testsuite name="Project Test Suite">
+        <testsuite name="Shadows of Esteren project test suite">
             <directory>./phpunit/*</directory>
             <directory>./src/AdminBundle/Tests</directory>
             <directory>./src/UserBundle/Tests</directory>
