@@ -18,5 +18,4 @@ build:
         - 'pickle install intl && echo "extension=intl.so" >> $HOME/.phpenv/versions/$(phpenv version-name)/etc/php.ini;'
         - 'mkdir -p shippable/testresults'
         - 'mkdir -p shippable/codecoverage'
-        - 'composer require -ano --dev phpunit/phpunit'
         - './tests/ci/ci.bash || if [[ $? == 1 ]]; then exit 0; else exit $? ; fi'
