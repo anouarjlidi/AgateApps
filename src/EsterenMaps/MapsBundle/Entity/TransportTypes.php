@@ -90,6 +90,8 @@ class TransportTypes implements ClearerEntityInterface
 
     /**
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getId()
     {
@@ -100,6 +102,8 @@ class TransportTypes implements ClearerEntityInterface
      * @param int $id
      *
      * @return TransportTypes
+     *
+     * @codeCoverageIgnore
      */
     public function setId($id)
     {
@@ -110,6 +114,8 @@ class TransportTypes implements ClearerEntityInterface
 
     /**
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getName()
     {
@@ -120,6 +126,8 @@ class TransportTypes implements ClearerEntityInterface
      * @param string $name
      *
      * @return TransportTypes
+     *
+     * @codeCoverageIgnore
      */
     public function setName($name)
     {
@@ -130,6 +138,8 @@ class TransportTypes implements ClearerEntityInterface
 
     /**
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getSlug()
     {
@@ -140,6 +150,8 @@ class TransportTypes implements ClearerEntityInterface
      * @param string $slug
      *
      * @return TransportTypes
+     *
+     * @codeCoverageIgnore
      */
     public function setSlug($slug)
     {
@@ -150,6 +162,8 @@ class TransportTypes implements ClearerEntityInterface
 
     /**
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getDescription()
     {
@@ -160,6 +174,8 @@ class TransportTypes implements ClearerEntityInterface
      * @param string $description
      *
      * @return TransportTypes
+     *
+     * @codeCoverageIgnore
      */
     public function setDescription($description)
     {
@@ -170,6 +186,8 @@ class TransportTypes implements ClearerEntityInterface
 
     /**
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getSpeed()
     {
@@ -180,6 +198,8 @@ class TransportTypes implements ClearerEntityInterface
      * @param string $speed
      *
      * @return TransportTypes
+     *
+     * @codeCoverageIgnore
      */
     public function setSpeed($speed)
     {
@@ -220,6 +240,8 @@ class TransportTypes implements ClearerEntityInterface
      * Get transportsModifiers.
      *
      * @return ArrayCollection|TransportModifiers[]
+     *
+     * @codeCoverageIgnore
      */
     public function getTransportsModifiers()
     {

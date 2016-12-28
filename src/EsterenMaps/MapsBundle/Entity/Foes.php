@@ -39,6 +39,8 @@ class Foes
      * Get id.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getId()
     {
@@ -51,6 +53,8 @@ class Foes
      * @param string $name
      *
      * @return Foes
+     *
+     * @codeCoverageIgnore
      */
     public function setName($name)
     {
@@ -63,6 +67,8 @@ class Foes
      * Get name.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getName()
     {

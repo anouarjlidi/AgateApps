@@ -98,6 +98,8 @@ class ZonesTypes implements ClearerEntityInterface
      * Get id.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getId()
     {
@@ -108,6 +110,8 @@ class ZonesTypes implements ClearerEntityInterface
      * @param int $id
      *
      * @return $this
+     *
+     * @codeCoverageIgnore
      */
     public function setId($id)
     {
@@ -122,6 +126,8 @@ class ZonesTypes implements ClearerEntityInterface
      * @param string $name
      *
      * @return ZonesTypes
+     *
+     * @codeCoverageIgnore
      */
     public function setName($name)
     {
@@ -134,6 +140,8 @@ class ZonesTypes implements ClearerEntityInterface
      * Get name.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getName()
     {
@@ -168,6 +176,8 @@ class ZonesTypes implements ClearerEntityInterface
      * Get resources.
      *
      * @return Resources[]
+     *
+     * @codeCoverageIgnore
      */
     public function getResources()
     {
@@ -202,6 +212,8 @@ class ZonesTypes implements ClearerEntityInterface
      * Get zones.
      *
      * @return Zones[]
+     *
+     * @codeCoverageIgnore
      */
     public function getZones()
     {
@@ -214,6 +226,8 @@ class ZonesTypes implements ClearerEntityInterface
      * @param ZonesTypes $parent
      *
      * @return ZonesTypes
+     *
+     * @codeCoverageIgnore
      */
     public function setParent(ZonesTypes $parent = null)
     {
@@ -226,6 +240,8 @@ class ZonesTypes implements ClearerEntityInterface
      * Get parent.
      *
      * @return ZonesTypes
+     *
+     * @codeCoverageIgnore
      */
     public function getParent()
     {
@@ -248,6 +264,8 @@ class ZonesTypes implements ClearerEntityInterface
      * @param ZonesTypes[] $children
      *
      * @return $this
+     *
+     * @codeCoverageIgnore
      */
     public function setChildren($children)
     {
@@ -258,6 +276,8 @@ class ZonesTypes implements ClearerEntityInterface
 
     /**
      * @return ZonesTypes[]
+     *
+     * @codeCoverageIgnore
      */
     public function getChildren()
     {
@@ -282,6 +302,8 @@ class ZonesTypes implements ClearerEntityInterface
 
     /**
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getDescription()
     {
@@ -290,6 +312,8 @@ class ZonesTypes implements ClearerEntityInterface
 
     /**
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getColor()
     {
@@ -299,7 +323,9 @@ class ZonesTypes implements ClearerEntityInterface
     /**
      * @param string $color
      *
-     * @return RoutesTypes
+     * @return ZonesTypes
+     *
+     * @codeCoverageIgnore
      */
     public function setColor($color)
     {
@@ -312,6 +338,8 @@ class ZonesTypes implements ClearerEntityInterface
      * @param string $description
      *
      * @return $this
+     *
+     * @codeCoverageIgnore
      */
     public function setDescription($description)
     {

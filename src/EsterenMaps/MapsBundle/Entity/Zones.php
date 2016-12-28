@@ -91,6 +91,8 @@ class Zones implements ClearerEntityInterface
      * Get id.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getId()
     {
@@ -103,6 +105,8 @@ class Zones implements ClearerEntityInterface
      * @param int $id
      *
      * @return Zones
+     *
+     * @codeCoverageIgnore
      */
     public function setId($id)
     {
@@ -117,6 +121,8 @@ class Zones implements ClearerEntityInterface
      * @param string $name
      *
      * @return Zones
+     *
+     * @codeCoverageIgnore
      */
     public function setName($name)
     {
@@ -129,6 +135,8 @@ class Zones implements ClearerEntityInterface
      * Get name.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getName()
     {
@@ -137,6 +145,8 @@ class Zones implements ClearerEntityInterface
 
     /**
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getDescription()
     {
@@ -146,7 +156,9 @@ class Zones implements ClearerEntityInterface
     /**
      * @param string $description
      *
-     * @return Routes
+     * @return Zones
+     *
+     * @codeCoverageIgnore
      */
     public function setDescription($description)
     {
@@ -161,6 +173,8 @@ class Zones implements ClearerEntityInterface
      * @param string $coordinates
      *
      * @return Zones
+     *
+     * @codeCoverageIgnore
      */
     public function setCoordinates($coordinates)
     {
@@ -173,6 +187,8 @@ class Zones implements ClearerEntityInterface
      * Get coordinates.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getCoordinates()
     {
@@ -185,6 +201,8 @@ class Zones implements ClearerEntityInterface
      * @param Maps $map
      *
      * @return Zones
+     *
+     * @codeCoverageIgnore
      */
     public function setMap(Maps $map = null)
     {
@@ -197,6 +215,8 @@ class Zones implements ClearerEntityInterface
      * Get map.
      *
      * @return Maps
+     *
+     * @codeCoverageIgnore
      */
     public function getMap()
     {
@@ -209,6 +229,8 @@ class Zones implements ClearerEntityInterface
      * @param Factions $faction
      *
      * @return Zones
+     *
+     * @codeCoverageIgnore
      */
     public function setFaction(Factions $faction = null)
     {
@@ -221,6 +243,8 @@ class Zones implements ClearerEntityInterface
      * Get faction.
      *
      * @return Factions
+     *
+     * @codeCoverageIgnore
      */
     public function getFaction()
     {
@@ -233,6 +257,8 @@ class Zones implements ClearerEntityInterface
      * @param ZonesTypes $zoneType
      *
      * @return Zones
+     *
+     * @codeCoverageIgnore
      */
     public function setZoneType(ZonesTypes $zoneType = null)
     {
@@ -245,6 +271,8 @@ class Zones implements ClearerEntityInterface
      * Get zoneType.
      *
      * @return ZonesTypes
+     *
+     * @codeCoverageIgnore
      */
     public function getZoneType()
     {
@@ -256,7 +284,7 @@ class Zones implements ClearerEntityInterface
      */
     public function isLocalized()
     {
-        return $this->coordinates !== null;
+        return $this->coordinates !== null && count($this->getDecodedCoordinates());
     }
 
     /**

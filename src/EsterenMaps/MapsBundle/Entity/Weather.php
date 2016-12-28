@@ -39,6 +39,8 @@ class Weather
      * Get id.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getId()
     {
@@ -51,6 +53,8 @@ class Weather
      * @param string $name
      *
      * @return Weather
+     *
+     * @codeCoverageIgnore
      */
     public function setName($name)
     {
@@ -63,6 +67,8 @@ class Weather
      * Get name.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getName()
     {

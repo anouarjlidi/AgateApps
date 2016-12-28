@@ -48,6 +48,8 @@ class CharDomains
      * @param int $score
      *
      * @return CharDomains
+     *
+     * @codeCoverageIgnore
      */
     public function setScore($score)
     {
@@ -60,6 +62,8 @@ class CharDomains
      * Get score.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getScore()
     {
@@ -72,6 +76,8 @@ class CharDomains
      * @param Characters $character
      *
      * @return CharDomains
+     *
+     * @codeCoverageIgnore
      */
     public function setCharacter(Characters $character)
     {
@@ -84,6 +90,8 @@ class CharDomains
      * Get character.
      *
      * @return Characters
+     *
+     * @codeCoverageIgnore
      */
     public function getCharacter()
     {
@@ -96,6 +104,8 @@ class CharDomains
      * @param Domains $domain
      *
      * @return CharDomains
+     *
+     * @codeCoverageIgnore
      */
     public function setDomain(Domains $domain)
     {
@@ -108,6 +118,8 @@ class CharDomains
      * Get domain.
      *
      * @return Domains
+     *
+     * @codeCoverageIgnore
      */
     public function getDomain()
     {

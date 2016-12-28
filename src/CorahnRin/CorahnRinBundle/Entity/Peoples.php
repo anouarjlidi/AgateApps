@@ -58,16 +58,18 @@ class Peoples
     protected $updated;
 
     /**
-     * @var bool
+     * @var \DateTime
      *
      * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
-    protected $deleted = null;
+    protected $deleted;
 
     /**
      * Get id.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getId()
     {
@@ -78,6 +80,8 @@ class Peoples
      * @param int $id
      *
      * @return $this
+     *
+     * @codeCoverageIgnore
      */
     public function setId($id)
     {
@@ -92,6 +96,8 @@ class Peoples
      * @param string $name
      *
      * @return Peoples
+     *
+     * @codeCoverageIgnore
      */
     public function setName($name)
     {
@@ -104,6 +110,8 @@ class Peoples
      * Get name.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getName()
     {
@@ -116,6 +124,8 @@ class Peoples
      * @param string $description
      *
      * @return Peoples
+     *
+     * @codeCoverageIgnore
      */
     public function setDescription($description)
     {
@@ -128,6 +138,8 @@ class Peoples
      * Get description.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getDescription()
     {
@@ -139,7 +151,9 @@ class Peoples
      *
      * @param \DateTime $created
      *
-     * @return Ogham
+     * @return Peoples
+     *
+     * @codeCoverageIgnore
      */
     public function setCreated($created)
     {
@@ -152,6 +166,8 @@ class Peoples
      * Get created.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getCreated()
     {
@@ -163,7 +179,9 @@ class Peoples
      *
      * @param \DateTime $updated
      *
-     * @return Ogham
+     * @return Peoples
+     *
+     * @codeCoverageIgnore
      */
     public function setUpdated($updated)
     {
@@ -176,6 +194,8 @@ class Peoples
      * Get updated.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getUpdated()
     {
@@ -188,6 +208,8 @@ class Peoples
      * @param Books $book
      *
      * @return Peoples
+     *
+     * @codeCoverageIgnore
      */
     public function setBook(Books $book = null)
     {
@@ -200,6 +222,8 @@ class Peoples
      * Get book.
      *
      * @return Books
+     *
+     * @codeCoverageIgnore
      */
     public function getBook()
     {
@@ -212,6 +236,8 @@ class Peoples
      * @param \DateTime $deleted
      *
      * @return Peoples
+     *
+     * @codeCoverageIgnore
      */
     public function setDeleted($deleted)
     {
@@ -224,6 +250,8 @@ class Peoples
      * Get deleted.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getDeleted()
     {

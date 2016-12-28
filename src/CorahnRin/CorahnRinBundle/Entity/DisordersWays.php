@@ -55,6 +55,8 @@ class DisordersWays
      * @param Disorders $disorder
      *
      * @return DisordersWays
+     *
+     * @codeCoverageIgnore
      */
     public function setDisorder(Disorders $disorder)
     {
@@ -67,6 +69,8 @@ class DisordersWays
      * Get disorder.
      *
      * @return Disorders
+     *
+     * @codeCoverageIgnore
      */
     public function getDisorder()
     {
@@ -79,6 +83,8 @@ class DisordersWays
      * @param Ways $way
      *
      * @return DisordersWays
+     *
+     * @codeCoverageIgnore
      */
     public function setWay(Ways $way)
     {
@@ -91,6 +97,8 @@ class DisordersWays
      * Get way.
      *
      * @return Ways
+     *
+     * @codeCoverageIgnore
      */
     public function getWay()
     {
@@ -103,6 +111,8 @@ class DisordersWays
      * @param bool $isMajor
      *
      * @return DisordersWays
+     *
+     * @codeCoverageIgnore
      */
     public function setIsMajor($isMajor)
     {
@@ -127,6 +137,8 @@ class DisordersWays
      * @param \DateTime $deleted
      *
      * @return DisordersWays
+     *
+     * @codeCoverageIgnore
      */
     public function setDeleted($deleted)
     {
@@ -139,6 +151,8 @@ class DisordersWays
      * Get deleted.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getDeleted()
     {

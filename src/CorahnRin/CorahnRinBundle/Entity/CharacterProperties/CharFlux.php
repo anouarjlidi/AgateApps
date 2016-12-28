@@ -49,6 +49,8 @@ class CharFlux
      * @param int $flux
      *
      * @return CharFlux
+     *
+     * @codeCoverageIgnore
      */
     public function setFlux($flux)
     {
@@ -60,7 +62,9 @@ class CharFlux
     /**
      * Get flux.
      *
-     * @return int
+     * @return Flux
+     *
+     * @codeCoverageIgnore
      */
     public function getFlux()
     {
@@ -73,6 +77,8 @@ class CharFlux
      * @param int $quantity
      *
      * @return CharFlux
+     *
+     * @codeCoverageIgnore
      */
     public function setQuantity($quantity)
     {
@@ -85,6 +91,8 @@ class CharFlux
      * Get quantity.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getQuantity()
     {
@@ -97,6 +105,8 @@ class CharFlux
      * @param Characters $character
      *
      * @return CharFlux
+     *
+     * @codeCoverageIgnore
      */
     public function setCharacter(Characters $character)
     {
@@ -109,6 +119,8 @@ class CharFlux
      * Get character.
      *
      * @return Characters
+     *
+     * @codeCoverageIgnore
      */
     public function getCharacter()
     {

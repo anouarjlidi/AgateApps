@@ -65,16 +65,18 @@ class Miracles
     protected $updated;
 
     /**
-     * @var bool
+     * @var \DateTime
      *
      * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
-    protected $deleted = null;
+    protected $deleted;
 
     /**
      * Get id.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getId()
     {
@@ -85,6 +87,8 @@ class Miracles
      * @param int $id
      *
      * @return $this
+     *
+     * @codeCoverageIgnore
      */
     public function setId($id)
     {
@@ -99,6 +103,8 @@ class Miracles
      * @param string $name
      *
      * @return Miracles
+     *
+     * @codeCoverageIgnore
      */
     public function setName($name)
     {
@@ -111,6 +117,8 @@ class Miracles
      * Get name.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getName()
     {
@@ -123,6 +131,8 @@ class Miracles
      * @param bool $isMajor
      *
      * @return Miracles
+     *
+     * @codeCoverageIgnore
      */
     public function setIsMajor($isMajor)
     {
@@ -147,6 +157,8 @@ class Miracles
      * @param \DateTime $created
      *
      * @return Miracles
+     *
+     * @codeCoverageIgnore
      */
     public function setCreated($created)
     {
@@ -159,6 +171,8 @@ class Miracles
      * Get created.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getCreated()
     {
@@ -171,6 +185,8 @@ class Miracles
      * @param \DateTime $updated
      *
      * @return Miracles
+     *
+     * @codeCoverageIgnore
      */
     public function setUpdated($updated)
     {
@@ -183,6 +199,8 @@ class Miracles
      * Get updated.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getUpdated()
     {
@@ -195,6 +213,8 @@ class Miracles
      * @param string $description
      *
      * @return Miracles
+     *
+     * @codeCoverageIgnore
      */
     public function setDescription($description)
     {
@@ -207,6 +227,8 @@ class Miracles
      * Get description.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getDescription()
     {
@@ -219,6 +241,8 @@ class Miracles
      * @param Books $book
      *
      * @return Miracles
+     *
+     * @codeCoverageIgnore
      */
     public function setBook(Books $book = null)
     {
@@ -231,6 +255,8 @@ class Miracles
      * Get book.
      *
      * @return Books
+     *
+     * @codeCoverageIgnore
      */
     public function getBook()
     {
@@ -243,6 +269,8 @@ class Miracles
      * @param \DateTime $deleted
      *
      * @return Miracles
+     *
+     * @codeCoverageIgnore
      */
     public function setDeleted($deleted)
     {
@@ -255,6 +283,8 @@ class Miracles
      * Get deleted.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getDeleted()
     {

@@ -108,6 +108,8 @@ class MarkersTypes implements ClearerEntityInterface
      * Get id.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getId()
     {
@@ -118,6 +120,8 @@ class MarkersTypes implements ClearerEntityInterface
      * @param int $id
      *
      * @return $this
+     *
+     * @codeCoverageIgnore
      */
     public function setId($id)
     {
@@ -132,6 +136,8 @@ class MarkersTypes implements ClearerEntityInterface
      * @param string $name
      *
      * @return MarkersTypes
+     *
+     * @codeCoverageIgnore
      */
     public function setName($name)
     {
@@ -144,6 +150,8 @@ class MarkersTypes implements ClearerEntityInterface
      * Get name.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getName()
     {
@@ -178,6 +186,8 @@ class MarkersTypes implements ClearerEntityInterface
      * Get markers.
      *
      * @return Markers[]
+     *
+     * @codeCoverageIgnore
      */
     public function getMarkers()
     {
@@ -186,6 +196,8 @@ class MarkersTypes implements ClearerEntityInterface
 
     /**
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getDescription()
     {
@@ -196,6 +208,8 @@ class MarkersTypes implements ClearerEntityInterface
      * @param string $description
      *
      * @return $this
+     *
+     * @codeCoverageIgnore
      */
     public function setDescription($description)
     {
@@ -206,6 +220,8 @@ class MarkersTypes implements ClearerEntityInterface
 
     /**
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getIcon()
     {
@@ -216,6 +232,8 @@ class MarkersTypes implements ClearerEntityInterface
      * @param string $icon
      *
      * @return $this
+     *
+     * @codeCoverageIgnore
      */
     public function setIcon($icon = null)
     {
@@ -235,6 +253,8 @@ class MarkersTypes implements ClearerEntityInterface
 
     /**
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getIconWidth()
     {
@@ -245,6 +265,8 @@ class MarkersTypes implements ClearerEntityInterface
      * @param int $iconWidth
      *
      * @return MarkersTypes
+     *
+     * @codeCoverageIgnore
      */
     public function setIconWidth($iconWidth)
     {
@@ -255,6 +277,8 @@ class MarkersTypes implements ClearerEntityInterface
 
     /**
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getIconHeight()
     {
@@ -265,6 +289,8 @@ class MarkersTypes implements ClearerEntityInterface
      * @param int $iconHeight
      *
      * @return MarkersTypes
+     *
+     * @codeCoverageIgnore
      */
     public function setIconHeight($iconHeight)
     {
@@ -275,6 +301,8 @@ class MarkersTypes implements ClearerEntityInterface
 
     /**
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getIconCenterX()
     {
@@ -285,6 +313,8 @@ class MarkersTypes implements ClearerEntityInterface
      * @param int $iconCenterX
      *
      * @return MarkersTypes
+     *
+     * @codeCoverageIgnore
      */
     public function setIconCenterX($iconCenterX)
     {
@@ -295,6 +325,8 @@ class MarkersTypes implements ClearerEntityInterface
 
     /**
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getIconCenterY()
     {
@@ -305,6 +337,8 @@ class MarkersTypes implements ClearerEntityInterface
      * @param int $iconCenterY
      *
      * @return MarkersTypes
+     *
+     * @codeCoverageIgnore
      */
     public function setIconCenterY($iconCenterY)
     {

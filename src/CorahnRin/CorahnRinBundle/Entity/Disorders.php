@@ -85,6 +85,8 @@ class Disorders
      * Get id.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getId()
     {
@@ -95,6 +97,8 @@ class Disorders
      * @param int $id
      *
      * @return $this
+     *
+     * @codeCoverageIgnore
      */
     public function setId($id)
     {
@@ -109,6 +113,8 @@ class Disorders
      * @param string $name
      *
      * @return Disorders
+     *
+     * @codeCoverageIgnore
      */
     public function setName($name)
     {
@@ -121,6 +127,8 @@ class Disorders
      * Get name.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getName()
     {
@@ -133,6 +141,8 @@ class Disorders
      * @param Books $book
      *
      * @return $this
+     *
+     * @codeCoverageIgnore
      */
     public function setBook(Books $book = null)
     {
@@ -145,6 +155,8 @@ class Disorders
      * Get book.
      *
      * @return Books
+     *
+     * @codeCoverageIgnore
      */
     public function getBook()
     {
@@ -157,6 +169,8 @@ class Disorders
      * @param \DateTime $created
      *
      * @return Disorders
+     *
+     * @codeCoverageIgnore
      */
     public function setCreated($created)
     {
@@ -169,6 +183,8 @@ class Disorders
      * Get created.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getCreated()
     {
@@ -181,6 +197,8 @@ class Disorders
      * @param \DateTime $updated
      *
      * @return Disorders
+     *
+     * @codeCoverageIgnore
      */
     public function setUpdated($updated)
     {
@@ -193,6 +211,8 @@ class Disorders
      * Get updated.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getUpdated()
     {
@@ -227,6 +247,8 @@ class Disorders
      * Get ways.
      *
      * @return DisordersWays[]|ArrayCollection
+     *
+     * @codeCoverageIgnore
      */
     public function getWays()
     {
@@ -239,6 +261,8 @@ class Disorders
      * @param string $description
      *
      * @return Disorders
+     *
+     * @codeCoverageIgnore
      */
     public function setDescription($description)
     {
@@ -251,6 +275,8 @@ class Disorders
      * Get description.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getDescription()
     {
@@ -263,6 +289,8 @@ class Disorders
      * @param \DateTime $deleted
      *
      * @return Disorders
+     *
+     * @codeCoverageIgnore
      */
     public function setDeleted($deleted)
     {
@@ -275,6 +303,8 @@ class Disorders
      * Get deleted.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getDeleted()
     {

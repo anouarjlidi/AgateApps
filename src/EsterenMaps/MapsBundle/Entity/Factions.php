@@ -69,7 +69,7 @@ class Factions
     protected $markers;
 
     /**
-     * @var Books[]
+     * @var Books
      *
      * @ORM\ManyToOne(targetEntity="CorahnRin\CorahnRinBundle\Entity\Books")
      * @ORM\JoinColumn(name="book_id", nullable=false)
@@ -95,6 +95,8 @@ class Factions
      * Get id.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getId()
     {
@@ -105,6 +107,8 @@ class Factions
      * @param int $id
      *
      * @return $this
+     *
+     * @codeCoverageIgnore
      */
     public function setId($id)
     {
@@ -119,6 +123,8 @@ class Factions
      * @param string $name
      *
      * @return Factions
+     *
+     * @codeCoverageIgnore
      */
     public function setName($name)
     {
@@ -131,6 +137,8 @@ class Factions
      * Get name.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getName()
     {
@@ -165,6 +173,8 @@ class Factions
      * Get zones.
      *
      * @return Zones[]
+     *
+     * @codeCoverageIgnore
      */
     public function getZones()
     {
@@ -199,6 +209,8 @@ class Factions
      * Get routes.
      *
      * @return Routes[]
+     *
+     * @codeCoverageIgnore
      */
     public function getRoutes()
     {
@@ -233,6 +245,8 @@ class Factions
      * Get markers.
      *
      * @return Markers[]
+     *
+     * @codeCoverageIgnore
      */
     public function getMarkers()
     {
@@ -245,6 +259,8 @@ class Factions
      * @param string $description
      *
      * @return Factions
+     *
+     * @codeCoverageIgnore
      */
     public function setDescription($description)
     {
@@ -257,6 +273,8 @@ class Factions
      * Get description.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getDescription()
     {
@@ -269,6 +287,8 @@ class Factions
      * @param Books $book
      *
      * @return Factions
+     *
+     * @codeCoverageIgnore
      */
     public function setBook(Books $book = null)
     {
@@ -281,6 +301,8 @@ class Factions
      * Get book.
      *
      * @return Books
+     *
+     * @codeCoverageIgnore
      */
     public function getBook()
     {

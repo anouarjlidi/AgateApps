@@ -56,7 +56,7 @@ class Flux
      *
      * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
-    protected $deleted = null;
+    protected $deleted;
 
     public function __toString()
     {
@@ -67,6 +67,8 @@ class Flux
      * Get id.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getId()
     {
@@ -77,6 +79,8 @@ class Flux
      * @param int $id
      *
      * @return $this
+     *
+     * @codeCoverageIgnore
      */
     public function setId($id)
     {
@@ -91,6 +95,8 @@ class Flux
      * @param string $name
      *
      * @return Flux
+     *
+     * @codeCoverageIgnore
      */
     public function setName($name)
     {
@@ -103,6 +109,8 @@ class Flux
      * Get name.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getName()
     {
@@ -115,6 +123,8 @@ class Flux
      * @param \DateTime $created
      *
      * @return Flux
+     *
+     * @codeCoverageIgnore
      */
     public function setCreated($created)
     {
@@ -127,6 +137,8 @@ class Flux
      * Get created.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getCreated()
     {
@@ -139,6 +151,8 @@ class Flux
      * @param \DateTime $updated
      *
      * @return Flux
+     *
+     * @codeCoverageIgnore
      */
     public function setUpdated($updated)
     {
@@ -151,6 +165,8 @@ class Flux
      * Get updated.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getUpdated()
     {
@@ -163,6 +179,8 @@ class Flux
      * @param string $description
      *
      * @return Flux
+     *
+     * @codeCoverageIgnore
      */
     public function setDescription($description)
     {
@@ -175,6 +193,8 @@ class Flux
      * Get description.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getDescription()
     {
@@ -187,6 +207,8 @@ class Flux
      * @param \DateTime $deleted
      *
      * @return Flux
+     *
+     * @codeCoverageIgnore
      */
     public function setDeleted($deleted)
     {
@@ -199,6 +221,8 @@ class Flux
      * Get deleted.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getDeleted()
     {

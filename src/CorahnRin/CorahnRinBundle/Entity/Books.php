@@ -52,10 +52,10 @@ class Books
     protected $updated;
 
     /**
-     * @var bool
+     * @var \DateTime
      * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
-    protected $deleted = null;
+    protected $deleted ;
 
     public function __toString()
     {
@@ -66,6 +66,8 @@ class Books
      * Get id.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getId()
     {
@@ -76,6 +78,8 @@ class Books
      * @param int $id
      *
      * @return $this
+     *
+     * @codeCoverageIgnore
      */
     public function setId($id)
     {
@@ -90,6 +94,8 @@ class Books
      * @param string $name
      *
      * @return Books
+     *
+     * @codeCoverageIgnore
      */
     public function setName($name)
     {
@@ -102,6 +108,8 @@ class Books
      * Get name.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getName()
     {
@@ -114,6 +122,8 @@ class Books
      * @param string $description
      *
      * @return Books
+     *
+     * @codeCoverageIgnore
      */
     public function setDescription($description)
     {
@@ -126,6 +136,8 @@ class Books
      * Get description.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getDescription()
     {
@@ -138,6 +150,8 @@ class Books
      * @param \DateTime $created
      *
      * @return Books
+     *
+     * @codeCoverageIgnore
      */
     public function setCreated($created)
     {
@@ -150,6 +164,8 @@ class Books
      * Get created.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getCreated()
     {
@@ -162,6 +178,8 @@ class Books
      * @param \DateTime $updated
      *
      * @return Books
+     *
+     * @codeCoverageIgnore
      */
     public function setUpdated($updated)
     {
@@ -174,6 +192,8 @@ class Books
      * Get updated.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getUpdated()
     {
@@ -186,6 +206,8 @@ class Books
      * @param \DateTime $deleted
      *
      * @return Books
+     *
+     * @codeCoverageIgnore
      */
     public function setDeleted($deleted)
     {
@@ -198,6 +220,8 @@ class Books
      * Get deleted.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getDeleted()
     {

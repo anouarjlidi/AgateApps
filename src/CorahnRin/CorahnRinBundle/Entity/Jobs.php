@@ -81,9 +81,19 @@ class Jobs
     protected $deleted;
 
     /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+        $this->domainsSecondary = new ArrayCollection();
+    }
+
+    /**
      * Get id.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getId()
     {
@@ -94,6 +104,8 @@ class Jobs
      * @param int $id
      *
      * @return $this
+     *
+     * @codeCoverageIgnore
      */
     public function setId($id)
     {
@@ -108,6 +120,8 @@ class Jobs
      * @param string $name
      *
      * @return Jobs
+     *
+     * @codeCoverageIgnore
      */
     public function setName($name)
     {
@@ -120,6 +134,8 @@ class Jobs
      * Get name.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getName()
     {
@@ -132,6 +148,8 @@ class Jobs
      * @param string $description
      *
      * @return Jobs
+     *
+     * @codeCoverageIgnore
      */
     public function setDescription($description)
     {
@@ -144,6 +162,8 @@ class Jobs
      * Get description.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getDescription()
     {
@@ -156,6 +176,8 @@ class Jobs
      * @param \DateTime $created
      *
      * @return Jobs
+     *
+     * @codeCoverageIgnore
      */
     public function setCreated($created)
     {
@@ -168,6 +190,8 @@ class Jobs
      * Get created.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getCreated()
     {
@@ -180,6 +204,8 @@ class Jobs
      * @param \DateTime $updated
      *
      * @return Jobs
+     *
+     * @codeCoverageIgnore
      */
     public function setUpdated($updated)
     {
@@ -192,6 +218,8 @@ class Jobs
      * Get updated.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getUpdated()
     {
@@ -204,6 +232,8 @@ class Jobs
      * @param Books $book
      *
      * @return Jobs
+     *
+     * @codeCoverageIgnore
      */
     public function setBook(Books $book = null)
     {
@@ -216,18 +246,12 @@ class Jobs
      * Get book.
      *
      * @return Books
+     *
+     * @codeCoverageIgnore
      */
     public function getBook()
     {
         return $this->book;
-    }
-
-    /**
-     * Constructor.
-     */
-    public function __construct()
-    {
-        $this->domainsSecondary = new ArrayCollection();
     }
 
     /**
@@ -236,6 +260,8 @@ class Jobs
      * @param Domains $domainPrimary
      *
      * @return Jobs
+     *
+     * @codeCoverageIgnore
      */
     public function setDomainPrimary(Domains $domainPrimary = null)
     {
@@ -248,6 +274,8 @@ class Jobs
      * Get domainPrimary.
      *
      * @return Domains
+     *
+     * @codeCoverageIgnore
      */
     public function getDomainPrimary()
     {
@@ -306,6 +334,8 @@ class Jobs
      * Get domainsSecondary.
      *
      * @return Domains[]|ArrayCollection
+     *
+     * @codeCoverageIgnore
      */
     public function getDomainsSecondary()
     {
@@ -318,6 +348,8 @@ class Jobs
      * @param \DateTime $deleted
      *
      * @return Jobs
+     *
+     * @codeCoverageIgnore
      */
     public function setDeleted($deleted)
     {
@@ -330,6 +362,8 @@ class Jobs
      * Get deleted.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getDeleted()
     {

@@ -70,12 +70,14 @@ class Regions
      *
      * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
-    protected $deleted = null;
+    protected $deleted;
 
     /**
      * Get id.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getId()
     {
@@ -86,6 +88,8 @@ class Regions
      * @param int $id
      *
      * @return $this
+     *
+     * @codeCoverageIgnore
      */
     public function setId($id)
     {
@@ -100,6 +104,8 @@ class Regions
      * @param string $name
      *
      * @return Regions
+     *
+     * @codeCoverageIgnore
      */
     public function setName($name)
     {
@@ -112,6 +118,8 @@ class Regions
      * Get name.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getName()
     {
@@ -124,6 +132,8 @@ class Regions
      * @param string $description
      *
      * @return Regions
+     *
+     * @codeCoverageIgnore
      */
     public function setDescription($description)
     {
@@ -136,6 +146,8 @@ class Regions
      * Get description.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getDescription()
     {
@@ -148,6 +160,8 @@ class Regions
      * @param string $kingdom
      *
      * @return Regions
+     *
+     * @codeCoverageIgnore
      */
     public function setKingdom($kingdom)
     {
@@ -160,6 +174,8 @@ class Regions
      * Get kingdom.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getKingdom()
     {
@@ -172,6 +188,8 @@ class Regions
      * @param string $coordinates
      *
      * @return Regions
+     *
+     * @codeCoverageIgnore
      */
     public function setCoordinates($coordinates)
     {
@@ -184,6 +202,8 @@ class Regions
      * Get coordinates.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getCoordinates()
     {
@@ -196,6 +216,8 @@ class Regions
      * @param \DateTime $created
      *
      * @return Regions
+     *
+     * @codeCoverageIgnore
      */
     public function setCreated($created)
     {
@@ -208,6 +230,8 @@ class Regions
      * Get created.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getCreated()
     {
@@ -220,6 +244,8 @@ class Regions
      * @param \DateTime $updated
      *
      * @return Regions
+     *
+     * @codeCoverageIgnore
      */
     public function setUpdated($updated)
     {
@@ -232,6 +258,8 @@ class Regions
      * Get updated.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getUpdated()
     {
@@ -244,6 +272,8 @@ class Regions
      * @param \DateTime $deleted
      *
      * @return Regions
+     *
+     * @codeCoverageIgnore
      */
     public function setDeleted($deleted)
     {
@@ -256,6 +286,8 @@ class Regions
      * Get deleted.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getDeleted()
     {

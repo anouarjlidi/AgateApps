@@ -58,7 +58,9 @@ class CharWays
     /**
      * Get character.
      *
-     * @return int
+     * @return Characters
+     *
+     * @codeCoverageIgnore
      */
     public function getCharacter()
     {
@@ -71,6 +73,8 @@ class CharWays
      * @param Ways $way
      *
      * @return CharWays
+     *
+     * @codeCoverageIgnore
      */
     public function setWay(Ways $way)
     {
@@ -83,6 +87,8 @@ class CharWays
      * Get way.
      *
      * @return Ways
+     *
+     * @codeCoverageIgnore
      */
     public function getWay()
     {
@@ -95,6 +101,8 @@ class CharWays
      * @param int $score
      *
      * @return CharWays
+     *
+     * @codeCoverageIgnore
      */
     public function setScore($score)
     {
@@ -107,6 +115,8 @@ class CharWays
      * Get score.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getScore()
     {

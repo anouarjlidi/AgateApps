@@ -59,11 +59,11 @@ class Setbacks
     protected $updated;
 
     /**
-     * @var bool
+     * @var \DateTime
      *
      * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
-    protected $deleted = null;
+    protected $deleted;
 
     /**
      * @var Books
@@ -76,6 +76,8 @@ class Setbacks
      * Get id.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getId()
     {
@@ -86,6 +88,8 @@ class Setbacks
      * @param int $id
      *
      * @return $this
+     *
+     * @codeCoverageIgnore
      */
     public function setId($id)
     {
@@ -100,6 +104,8 @@ class Setbacks
      * @param string $name
      *
      * @return Setbacks
+     *
+     * @codeCoverageIgnore
      */
     public function setName($name)
     {
@@ -112,6 +118,8 @@ class Setbacks
      * Get name.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getName()
     {
@@ -124,6 +132,8 @@ class Setbacks
      * @param string $description
      *
      * @return Setbacks
+     *
+     * @codeCoverageIgnore
      */
     public function setDescription($description)
     {
@@ -136,6 +146,8 @@ class Setbacks
      * Get description.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getDescription()
     {
@@ -148,6 +160,8 @@ class Setbacks
      * @param \DateTime $created
      *
      * @return Setbacks
+     *
+     * @codeCoverageIgnore
      */
     public function setCreated($created)
     {
@@ -160,6 +174,8 @@ class Setbacks
      * Get created.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getCreated()
     {
@@ -172,6 +188,8 @@ class Setbacks
      * @param \DateTime $updated
      *
      * @return Setbacks
+     *
+     * @codeCoverageIgnore
      */
     public function setUpdated($updated)
     {
@@ -184,6 +202,8 @@ class Setbacks
      * Get updated.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getUpdated()
     {
@@ -196,6 +216,8 @@ class Setbacks
      * @param string $malus
      *
      * @return Setbacks
+     *
+     * @codeCoverageIgnore
      */
     public function setMalus($malus)
     {
@@ -208,6 +230,8 @@ class Setbacks
      * Get malus.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getMalus()
     {
@@ -220,6 +244,8 @@ class Setbacks
      * @param \DateTime $deleted
      *
      * @return Setbacks
+     *
+     * @codeCoverageIgnore
      */
     public function setDeleted($deleted)
     {
@@ -232,6 +258,8 @@ class Setbacks
      * Get deleted.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getDeleted()
     {
@@ -242,6 +270,8 @@ class Setbacks
      * @param Books $book
      *
      * @return $this
+     *
+     * @codeCoverageIgnore
      */
     public function setBook(Books $book)
     {
@@ -252,6 +282,8 @@ class Setbacks
 
     /**
      * @return Books
+     *
+     * @codeCoverageIgnore
      */
     public function getBook()
     {

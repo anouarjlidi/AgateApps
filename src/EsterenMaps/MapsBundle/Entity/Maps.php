@@ -166,6 +166,8 @@ class Maps
      * Get id.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getId()
     {
@@ -176,6 +178,8 @@ class Maps
      * @param $id
      *
      * @return $this
+     *
+     * @codeCoverageIgnore
      */
     public function setId($id)
     {
@@ -190,6 +194,8 @@ class Maps
      * @param string $name
      *
      * @return Maps
+     *
+     * @codeCoverageIgnore
      */
     public function setName($name)
     {
@@ -202,6 +208,8 @@ class Maps
      * Get name.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getName()
     {
@@ -214,6 +222,8 @@ class Maps
      * @param string $image
      *
      * @return Maps
+     *
+     * @codeCoverageIgnore
      */
     public function setImage($image)
     {
@@ -226,6 +236,8 @@ class Maps
      * Get image.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getImage()
     {
@@ -238,6 +250,8 @@ class Maps
      * @param string $description
      *
      * @return Maps
+     *
+     * @codeCoverageIgnore
      */
     public function setDescription($description)
     {
@@ -250,6 +264,8 @@ class Maps
      * Get description.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getDescription()
     {
@@ -262,6 +278,8 @@ class Maps
      * @param bool $maxZoom
      *
      * @return Maps
+     *
+     * @codeCoverageIgnore
      */
     public function setMaxZoom($maxZoom)
     {
@@ -274,6 +292,8 @@ class Maps
      * Get maxZoom.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getMaxZoom()
     {
@@ -308,6 +328,8 @@ class Maps
      * Get routes.
      *
      * @return Routes[]|ArrayCollection
+     *
+     * @codeCoverageIgnore
      */
     public function getRoutes()
     {
@@ -319,7 +341,7 @@ class Maps
      *
      * @param Routes $route
      *
-     * @return Routes
+     * @return Routes|null
      */
     public function getRoute(Routes $route)
     {
@@ -331,7 +353,7 @@ class Maps
             }
         }
 
-        return;
+        return null;
     }
 
     /**
@@ -382,6 +404,8 @@ class Maps
      * Get markers.
      *
      * @return Markers[]|ArrayCollection
+     *
+     * @codeCoverageIgnore
      */
     public function getMarkers()
     {
@@ -393,7 +417,7 @@ class Maps
      *
      * @param Markers $marker
      *
-     * @return Zones
+     * @return Zones|null
      */
     public function getMarker(Markers $marker)
     {
@@ -405,7 +429,7 @@ class Maps
             }
         }
 
-        return;
+        return null;
     }
 
     /**
@@ -458,7 +482,7 @@ class Maps
      *
      * @param Zones $zone
      *
-     * @return Zones
+     * @return Zones|null
      */
     public function getZone(Zones $zone)
     {
@@ -470,11 +494,13 @@ class Maps
             }
         }
 
-        return;
+        return null;
     }
 
     /**
      * @param Zones $zone
+     *
+     * @return $this
      */
     public function setZone(Zones $zone)
     {
@@ -485,12 +511,16 @@ class Maps
             $this->zones->removeElement($exists);
             $this->addZone($zone);
         }
+
+        return $this;
     }
 
     /**
      * Get zones.
      *
      * @return Zones[]|ArrayCollection
+     *
+     * @codeCoverageIgnore
      */
     public function getZones()
     {
@@ -503,6 +533,8 @@ class Maps
      * @param string $nameSlug
      *
      * @return Maps
+     *
+     * @codeCoverageIgnore
      */
     public function setNameSlug($nameSlug)
     {
@@ -515,6 +547,8 @@ class Maps
      * Get nameSlug.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getNameSlug()
     {
@@ -523,6 +557,8 @@ class Maps
 
     /**
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getStartZoom()
     {
@@ -533,6 +569,8 @@ class Maps
      * @param int $startZoom
      *
      * @return $this
+     *
+     * @codeCoverageIgnore
      */
     public function setStartZoom($startZoom)
     {
@@ -543,6 +581,8 @@ class Maps
 
     /**
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getStartX()
     {
@@ -553,6 +593,8 @@ class Maps
      * @param int $startX
      *
      * @return $this
+     *
+     * @codeCoverageIgnore
      */
     public function setStartX($startX)
     {
@@ -563,6 +605,8 @@ class Maps
 
     /**
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getStartY()
     {
@@ -573,6 +617,8 @@ class Maps
      * @param int $startY
      *
      * @return $this
+     *
+     * @codeCoverageIgnore
      */
     public function setStartY($startY)
     {
@@ -583,6 +629,8 @@ class Maps
 
     /**
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getBounds()
     {
@@ -593,6 +641,8 @@ class Maps
      * @param string $bounds
      *
      * @return Maps
+     *
+     * @codeCoverageIgnore
      */
     public function setBounds($bounds)
     {
@@ -603,6 +653,8 @@ class Maps
 
     /**
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getCoordinatesRatio()
     {
@@ -613,6 +665,8 @@ class Maps
      * @param int $coordinatesRatio
      *
      * @return Maps
+     *
+     * @codeCoverageIgnore
      */
     public function setCoordinatesRatio($coordinatesRatio)
     {

@@ -79,16 +79,18 @@ class CombatArts
     protected $updated;
 
     /**
-     * @var bool
+     * @var \DateTime
      *
      * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
-    protected $deleted = null;
+    protected $deleted;
 
     /**
      * Get id.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getId()
     {
@@ -99,6 +101,8 @@ class CombatArts
      * @param int $id
      *
      * @return $this
+     *
+     * @codeCoverageIgnore
      */
     public function setId($id)
     {
@@ -113,6 +117,8 @@ class CombatArts
      * @param string $name
      *
      * @return CombatArts
+     *
+     * @codeCoverageIgnore
      */
     public function setName($name)
     {
@@ -125,6 +131,8 @@ class CombatArts
      * Get name.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getName()
     {
@@ -137,6 +145,8 @@ class CombatArts
      * @param string $description
      *
      * @return CombatArts
+     *
+     * @codeCoverageIgnore
      */
     public function setDescription($description)
     {
@@ -149,6 +159,8 @@ class CombatArts
      * Get description.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getDescription()
     {
@@ -161,6 +173,8 @@ class CombatArts
      * @param bool $ranged
      *
      * @return CombatArts
+     *
+     * @codeCoverageIgnore
      */
     public function setRanged($ranged)
     {
@@ -173,6 +187,8 @@ class CombatArts
      * Get ranged.
      *
      * @return bool
+     *
+     * @codeCoverageIgnore
      */
     public function getRanged()
     {
@@ -185,6 +201,8 @@ class CombatArts
      * @param bool $melee
      *
      * @return CombatArts
+     *
+     * @codeCoverageIgnore
      */
     public function setMelee($melee)
     {
@@ -197,6 +215,8 @@ class CombatArts
      * Get melee.
      *
      * @return bool
+     *
+     * @codeCoverageIgnore
      */
     public function getMelee()
     {
@@ -209,6 +229,8 @@ class CombatArts
      * @param int $xp
      *
      * @return CombatArts
+     *
+     * @codeCoverageIgnore
      */
     public function setXp($xp)
     {
@@ -221,6 +243,8 @@ class CombatArts
      * Get xp.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getXp()
     {
@@ -232,7 +256,9 @@ class CombatArts
      *
      * @param Books $book
      *
-     * @return Avantages
+     * @return CombatArts
+     *
+     * @codeCoverageIgnore
      */
     public function setBook(Books $book = null)
     {
@@ -245,6 +271,8 @@ class CombatArts
      * Get book.
      *
      * @return Books
+     *
+     * @codeCoverageIgnore
      */
     public function getBook()
     {
@@ -257,6 +285,8 @@ class CombatArts
      * @param \DateTime $created
      *
      * @return CombatArts
+     *
+     * @codeCoverageIgnore
      */
     public function setCreated($created)
     {
@@ -269,6 +299,8 @@ class CombatArts
      * Get created.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getCreated()
     {
@@ -281,6 +313,8 @@ class CombatArts
      * @param \DateTime $updated
      *
      * @return CombatArts
+     *
+     * @codeCoverageIgnore
      */
     public function setUpdated($updated)
     {
@@ -293,6 +327,8 @@ class CombatArts
      * Get updated.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getUpdated()
     {
@@ -305,6 +341,8 @@ class CombatArts
      * @param \DateTime $deleted
      *
      * @return CombatArts
+     *
+     * @codeCoverageIgnore
      */
     public function setDeleted($deleted)
     {
@@ -317,6 +355,8 @@ class CombatArts
      * Get deleted.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getDeleted()
     {

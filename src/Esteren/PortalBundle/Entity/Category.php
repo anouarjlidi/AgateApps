@@ -21,6 +21,8 @@ class Category extends BaseCategory
 
     /**
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getId()
     {

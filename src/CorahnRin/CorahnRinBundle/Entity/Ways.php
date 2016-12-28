@@ -58,6 +58,8 @@ class Ways
      * Get id.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getId()
     {
@@ -68,6 +70,8 @@ class Ways
      * @param int $id
      *
      * @return $this
+     *
+     * @codeCoverageIgnore
      */
     public function setId($id)
     {
@@ -82,6 +86,8 @@ class Ways
      * @param string $shortName
      *
      * @return Ways
+     *
+     * @codeCoverageIgnore
      */
     public function setShortName($shortName)
     {
@@ -94,6 +100,8 @@ class Ways
      * Get shortName.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getShortName()
     {
@@ -106,6 +114,8 @@ class Ways
      * @param string $name
      *
      * @return Ways
+     *
+     * @codeCoverageIgnore
      */
     public function setName($name)
     {
@@ -118,6 +128,8 @@ class Ways
      * Get name.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getName()
     {
@@ -130,6 +142,8 @@ class Ways
      * @param string $fault
      *
      * @return Ways
+     *
+     * @codeCoverageIgnore
      */
     public function setFault($fault)
     {
@@ -142,6 +156,8 @@ class Ways
      * Get fault.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getFault()
     {
@@ -154,6 +170,8 @@ class Ways
      * @param string $description
      *
      * @return Ways
+     *
+     * @codeCoverageIgnore
      */
     public function setDescription($description)
     {
@@ -166,6 +184,8 @@ class Ways
      * Get description.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getDescription()
     {

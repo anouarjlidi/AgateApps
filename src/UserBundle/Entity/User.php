@@ -26,6 +26,8 @@ class User extends BaseUser
      * @param int $id
      *
      * @return $this
+     *
+     * @codeCoverageIgnore
      */
     public function setId($id)
     {

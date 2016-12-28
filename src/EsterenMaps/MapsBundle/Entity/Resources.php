@@ -74,6 +74,8 @@ class Resources
      * Get id.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getId()
     {
@@ -86,6 +88,8 @@ class Resources
      * @param string $name
      *
      * @return Resources
+     *
+     * @codeCoverageIgnore
      */
     public function setName($name)
     {
@@ -98,6 +102,8 @@ class Resources
      * Get name.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getName()
     {
@@ -132,6 +138,8 @@ class Resources
      * Get routes.
      *
      * @return Routes[]
+     *
+     * @codeCoverageIgnore
      */
     public function getRoutes()
     {
@@ -166,6 +174,8 @@ class Resources
      * Get routesTypes.
      *
      * @return RoutesTypes[]
+     *
+     * @codeCoverageIgnore
      */
     public function getRoutesTypes()
     {
@@ -200,6 +210,8 @@ class Resources
      * Get zonesTypes.
      *
      * @return ZonesTypes[]
+     *
+     * @codeCoverageIgnore
      */
     public function getZonesTypes()
     {

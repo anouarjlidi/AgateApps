@@ -66,7 +66,7 @@ class Events
     protected $markers;
 
     /**
-     * @var MarkersTypes
+     * @var MarkersTypes[]|ArrayCollection
      * @ORM\ManyToMany(targetEntity="MarkersTypes")
      */
     protected $markersTypes;
@@ -122,6 +122,8 @@ class Events
      * Get id.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getId()
     {
@@ -134,6 +136,8 @@ class Events
      * @param string $name
      *
      * @return Events
+     *
+     * @codeCoverageIgnore
      */
     public function setName($name)
     {
@@ -146,6 +150,8 @@ class Events
      * Get name.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getName()
     {
@@ -158,6 +164,8 @@ class Events
      * @param string $percentage
      *
      * @return Events
+     *
+     * @codeCoverageIgnore
      */
     public function setPercentage($percentage)
     {
@@ -170,6 +178,8 @@ class Events
      * Get percentage.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getPercentage()
     {
@@ -204,6 +214,8 @@ class Events
      * Get foes.
      *
      * @return Foes[]
+     *
+     * @codeCoverageIgnore
      */
     public function getFoes()
     {
@@ -238,6 +250,8 @@ class Events
      * Get npcs.
      *
      * @return Npcs[]
+     *
+     * @codeCoverageIgnore
      */
     public function getNpcs()
     {
@@ -272,6 +286,8 @@ class Events
      * Get weather.
      *
      * @return Weather[]
+     *
+     * @codeCoverageIgnore
      */
     public function getWeather()
     {
@@ -306,6 +322,8 @@ class Events
      * Get markers.
      *
      * @return Markers[]
+     *
+     * @codeCoverageIgnore
      */
     public function getMarkers()
     {
@@ -340,6 +358,8 @@ class Events
      * Get markersTypes.
      *
      * @return MarkersTypes[]
+     *
+     * @codeCoverageIgnore
      */
     public function getMarkersTypes()
     {
@@ -374,6 +394,8 @@ class Events
      * Get resources.
      *
      * @return Resources[]
+     *
+     * @codeCoverageIgnore
      */
     public function getResources()
     {
@@ -408,6 +430,8 @@ class Events
      * Get routes.
      *
      * @return Routes[]
+     *
+     * @codeCoverageIgnore
      */
     public function getRoutes()
     {
@@ -442,6 +466,8 @@ class Events
      * Get routesTypes.
      *
      * @return RoutesTypes[]
+     *
+     * @codeCoverageIgnore
      */
     public function getRoutesTypes()
     {
@@ -476,6 +502,8 @@ class Events
      * Get zonesTypes.
      *
      * @return ZonesTypes[]
+     *
+     * @codeCoverageIgnore
      */
     public function getZonesTypes()
     {
@@ -510,6 +538,8 @@ class Events
      * Get zones.
      *
      * @return Zones[]
+     *
+     * @codeCoverageIgnore
      */
     public function getZones()
     {

@@ -73,16 +73,18 @@ class MailsSent
     protected $mail;
 
     /**
-     * @var bool
+     * @var \DateTime
      *
      * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
-    protected $deleted = null;
+    protected $deleted;
 
     /**
      * Get id.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getId()
     {
@@ -93,6 +95,8 @@ class MailsSent
      * @param int $id
      *
      * @return $this
+     *
+     * @codeCoverageIgnore
      */
     public function setId($id)
     {
@@ -107,6 +111,8 @@ class MailsSent
      * @param string $toName
      *
      * @return MailsSent
+     *
+     * @codeCoverageIgnore
      */
     public function setToName($toName)
     {
@@ -119,6 +125,8 @@ class MailsSent
      * Get toName.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getToName()
     {
@@ -131,6 +139,8 @@ class MailsSent
      * @param string $toEmail
      *
      * @return MailsSent
+     *
+     * @codeCoverageIgnore
      */
     public function setToEmail($toEmail)
     {
@@ -143,6 +153,8 @@ class MailsSent
      * Get toEmail.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getToEmail()
     {
@@ -155,6 +167,8 @@ class MailsSent
      * @param string $subject
      *
      * @return MailsSent
+     *
+     * @codeCoverageIgnore
      */
     public function setSubject($subject)
     {
@@ -167,6 +181,8 @@ class MailsSent
      * Get subject.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getSubject()
     {
@@ -179,6 +195,8 @@ class MailsSent
      * @param string $content
      *
      * @return MailsSent
+     *
+     * @codeCoverageIgnore
      */
     public function setContent($content)
     {
@@ -191,6 +209,8 @@ class MailsSent
      * Get content.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getContent()
     {
@@ -203,6 +223,8 @@ class MailsSent
      * @param \DateTime $created
      *
      * @return MailsSent
+     *
+     * @codeCoverageIgnore
      */
     public function setCreated($created)
     {
@@ -215,6 +237,8 @@ class MailsSent
      * Get created.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getCreated()
     {
@@ -227,6 +251,8 @@ class MailsSent
      * @param \DateTime $updated
      *
      * @return MailsSent
+     *
+     * @codeCoverageIgnore
      */
     public function setUpdated($updated)
     {
@@ -239,6 +265,8 @@ class MailsSent
      * Get updated.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getUpdated()
     {
@@ -251,6 +279,8 @@ class MailsSent
      * @param Mails $mail
      *
      * @return MailsSent
+     *
+     * @codeCoverageIgnore
      */
     public function setMail(Mails $mail = null)
     {
@@ -263,6 +293,8 @@ class MailsSent
      * Get mail.
      *
      * @return Mails
+     *
+     * @codeCoverageIgnore
      */
     public function getMail()
     {
@@ -275,6 +307,8 @@ class MailsSent
      * @param \DateTime $deleted
      *
      * @return MailsSent
+     *
+     * @codeCoverageIgnore
      */
     public function setDeleted($deleted)
     {
@@ -287,6 +321,8 @@ class MailsSent
      * Get deleted.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getDeleted()
     {

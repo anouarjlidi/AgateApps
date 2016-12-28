@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class CharDisciplines
 {
     /**
-     * @var int
+     * @var Characters
      *
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="CorahnRin\CorahnRinBundle\Entity\Characters", inversedBy="disciplines")
@@ -58,6 +58,8 @@ class CharDisciplines
      * @param int $score
      *
      * @return CharDisciplines
+     *
+     * @codeCoverageIgnore
      */
     public function setScore($score)
     {
@@ -70,6 +72,8 @@ class CharDisciplines
      * Get score.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getScore()
     {
@@ -82,6 +86,8 @@ class CharDisciplines
      * @param Characters $character
      *
      * @return CharDisciplines
+     *
+     * @codeCoverageIgnore
      */
     public function setCharacter(Characters $character)
     {
@@ -94,6 +100,8 @@ class CharDisciplines
      * Get character.
      *
      * @return Characters
+     *
+     * @codeCoverageIgnore
      */
     public function getCharacter()
     {
@@ -106,6 +114,8 @@ class CharDisciplines
      * @param Disciplines $discipline
      *
      * @return CharDisciplines
+     *
+     * @codeCoverageIgnore
      */
     public function setDiscipline(Disciplines $discipline)
     {
@@ -118,6 +128,8 @@ class CharDisciplines
      * Get discipline.
      *
      * @return Disciplines
+     *
+     * @codeCoverageIgnore
      */
     public function getDiscipline()
     {
@@ -130,6 +142,8 @@ class CharDisciplines
      * @param Domains $domain
      *
      * @return CharDisciplines
+     *
+     * @codeCoverageIgnore
      */
     public function setDomain(Domains $domain)
     {
@@ -142,6 +156,8 @@ class CharDisciplines
      * Get domain.
      *
      * @return Domains
+     *
+     * @codeCoverageIgnore
      */
     public function getDomain()
     {

@@ -113,16 +113,18 @@ class Artifacts
     protected $updated;
 
     /**
-     * @var bool
+     * @var \DateTime
      *
      * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
-    protected $deleted = null;
+    protected $deleted;
 
     /**
      * Get id.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getId()
     {
@@ -133,6 +135,8 @@ class Artifacts
      * @param int $id
      *
      * @return $this
+     *
+     * @codeCoverageIgnore
      */
     public function setId($id)
     {
@@ -147,6 +151,8 @@ class Artifacts
      * @param string $name
      *
      * @return Artifacts
+     *
+     * @codeCoverageIgnore
      */
     public function setName($name)
     {
@@ -159,6 +165,8 @@ class Artifacts
      * Get name.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getName()
     {
@@ -171,6 +179,8 @@ class Artifacts
      * @param int $price
      *
      * @return Artifacts
+     *
+     * @codeCoverageIgnore
      */
     public function setPrice($price)
     {
@@ -183,6 +193,8 @@ class Artifacts
      * Get price.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getPrice()
     {
@@ -195,6 +207,8 @@ class Artifacts
      * @param int $consumption
      *
      * @return Artifacts
+     *
+     * @codeCoverageIgnore
      */
     public function setConsumption($consumption)
     {
@@ -207,6 +221,8 @@ class Artifacts
      * Get consumption.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getConsumption()
     {
@@ -219,6 +235,8 @@ class Artifacts
      * @param int $consumptionInterval
      *
      * @return Artifacts
+     *
+     * @codeCoverageIgnore
      */
     public function setConsumptionInterval($consumptionInterval)
     {
@@ -231,6 +249,8 @@ class Artifacts
      * Get consumptionInterval.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getConsumptionInterval()
     {
@@ -243,6 +263,8 @@ class Artifacts
      * @param int $tank
      *
      * @return Artifacts
+     *
+     * @codeCoverageIgnore
      */
     public function setTank($tank)
     {
@@ -255,6 +277,8 @@ class Artifacts
      * Get tank.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getTank()
     {
@@ -267,6 +291,8 @@ class Artifacts
      * @param int $resistance
      *
      * @return Artifacts
+     *
+     * @codeCoverageIgnore
      */
     public function setResistance($resistance)
     {
@@ -279,6 +305,8 @@ class Artifacts
      * Get resistance.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getResistance()
     {
@@ -291,6 +319,8 @@ class Artifacts
      * @param string $vulnerability
      *
      * @return Artifacts
+     *
+     * @codeCoverageIgnore
      */
     public function setVulnerability($vulnerability)
     {
@@ -303,6 +333,8 @@ class Artifacts
      * Get vulnerability.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getVulnerability()
     {
@@ -315,6 +347,8 @@ class Artifacts
      * @param string $handling
      *
      * @return Artifacts
+     *
+     * @codeCoverageIgnore
      */
     public function setHandling($handling)
     {
@@ -327,6 +361,8 @@ class Artifacts
      * Get handling.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getHandling()
     {
@@ -339,6 +375,8 @@ class Artifacts
      * @param int $damage
      *
      * @return Artifacts
+     *
+     * @codeCoverageIgnore
      */
     public function setDamage($damage)
     {
@@ -351,6 +389,8 @@ class Artifacts
      * Get damage.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getDamage()
     {
@@ -363,6 +403,8 @@ class Artifacts
      * @param \DateTime $created
      *
      * @return Artifacts
+     *
+     * @codeCoverageIgnore
      */
     public function setCreated($created)
     {
@@ -375,6 +417,8 @@ class Artifacts
      * Get created.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getCreated()
     {
@@ -387,6 +431,8 @@ class Artifacts
      * @param \DateTime $updated
      *
      * @return Artifacts
+     *
+     * @codeCoverageIgnore
      */
     public function setUpdated($updated)
     {
@@ -399,6 +445,8 @@ class Artifacts
      * Get updated.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getUpdated()
     {
@@ -411,6 +459,8 @@ class Artifacts
      * @param Flux $flux
      *
      * @return Artifacts
+     *
+     * @codeCoverageIgnore
      */
     public function setFlux(Flux $flux = null)
     {
@@ -423,6 +473,8 @@ class Artifacts
      * Get flux.
      *
      * @return Flux
+     *
+     * @codeCoverageIgnore
      */
     public function getFlux()
     {
@@ -435,6 +487,8 @@ class Artifacts
      * @param string $description
      *
      * @return Artifacts
+     *
+     * @codeCoverageIgnore
      */
     public function setDescription($description)
     {
@@ -447,6 +501,8 @@ class Artifacts
      * Get description.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getDescription()
     {
@@ -459,6 +515,8 @@ class Artifacts
      * @param \DateTime $deleted
      *
      * @return Artifacts
+     *
+     * @codeCoverageIgnore
      */
     public function setDeleted($deleted)
     {
@@ -471,6 +529,8 @@ class Artifacts
      * Get deleted.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getDeleted()
     {

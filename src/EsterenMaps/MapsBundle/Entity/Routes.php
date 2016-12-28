@@ -83,7 +83,7 @@ class Routes implements ClearerEntityInterface
     protected $guarded = false;
 
     /**
-     * @var Resources
+     * @var Resources[]|ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="Resources", mappedBy="routes")
      */
@@ -157,6 +157,8 @@ class Routes implements ClearerEntityInterface
      * Get id.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getId()
     {
@@ -169,6 +171,8 @@ class Routes implements ClearerEntityInterface
      * @param string $id
      *
      * @return Routes
+     *
+     * @codeCoverageIgnore
      */
     public function setId($id)
     {
@@ -183,6 +187,8 @@ class Routes implements ClearerEntityInterface
      * @param string $name
      *
      * @return Routes
+     *
+     * @codeCoverageIgnore
      */
     public function setName($name)
     {
@@ -195,6 +201,8 @@ class Routes implements ClearerEntityInterface
      * Get name.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getName()
     {
@@ -203,6 +211,8 @@ class Routes implements ClearerEntityInterface
 
     /**
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getDescription()
     {
@@ -213,6 +223,8 @@ class Routes implements ClearerEntityInterface
      * @param string $description
      *
      * @return Routes
+     *
+     * @codeCoverageIgnore
      */
     public function setDescription($description)
     {
@@ -227,6 +239,8 @@ class Routes implements ClearerEntityInterface
      * @param string $coordinates
      *
      * @return Routes
+     *
+     * @codeCoverageIgnore
      */
     public function setCoordinates($coordinates)
     {
@@ -241,6 +255,8 @@ class Routes implements ClearerEntityInterface
      * Get coordinates.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getCoordinates()
     {
@@ -275,6 +291,8 @@ class Routes implements ClearerEntityInterface
      * Get resources.
      *
      * @return Resources[]
+     *
+     * @codeCoverageIgnore
      */
     public function getResources()
     {
@@ -287,6 +305,8 @@ class Routes implements ClearerEntityInterface
      * @param Maps $map
      *
      * @return Routes
+     *
+     * @codeCoverageIgnore
      */
     public function setMap(Maps $map = null)
     {
@@ -299,6 +319,8 @@ class Routes implements ClearerEntityInterface
      * Get map.
      *
      * @return Maps
+     *
+     * @codeCoverageIgnore
      */
     public function getMap()
     {
@@ -311,6 +333,8 @@ class Routes implements ClearerEntityInterface
      * @param Factions $faction
      *
      * @return Routes
+     *
+     * @codeCoverageIgnore
      */
     public function setFaction(Factions $faction = null)
     {
@@ -323,6 +347,8 @@ class Routes implements ClearerEntityInterface
      * Get faction.
      *
      * @return Factions
+     *
+     * @codeCoverageIgnore
      */
     public function getFaction()
     {
@@ -335,6 +361,8 @@ class Routes implements ClearerEntityInterface
      * @param RoutesTypes $routeType
      *
      * @return Routes
+     *
+     * @codeCoverageIgnore
      */
     public function setRouteType(RoutesTypes $routeType = null)
     {
@@ -347,6 +375,8 @@ class Routes implements ClearerEntityInterface
      * Get routeType.
      *
      * @return RoutesTypes
+     *
+     * @codeCoverageIgnore
      */
     public function getRouteType()
     {
@@ -359,6 +389,8 @@ class Routes implements ClearerEntityInterface
      * @param Markers $markerStart
      *
      * @return Routes
+     *
+     * @codeCoverageIgnore
      */
     public function setMarkerStart(Markers $markerStart = null)
     {
@@ -371,6 +403,8 @@ class Routes implements ClearerEntityInterface
      * Get markerStart.
      *
      * @return Markers
+     *
+     * @codeCoverageIgnore
      */
     public function getMarkerStart()
     {
@@ -383,6 +417,8 @@ class Routes implements ClearerEntityInterface
      * @param Markers $markerEnd
      *
      * @return Routes
+     *
+     * @codeCoverageIgnore
      */
     public function setMarkerEnd(Markers $markerEnd = null)
     {
@@ -395,6 +431,8 @@ class Routes implements ClearerEntityInterface
      * Get markerEnd.
      *
      * @return Markers
+     *
+     * @codeCoverageIgnore
      */
     public function getMarkerEnd()
     {
@@ -403,6 +441,8 @@ class Routes implements ClearerEntityInterface
 
     /**
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getDistance()
     {
@@ -413,6 +453,8 @@ class Routes implements ClearerEntityInterface
      * @param int $distance
      *
      * @return Routes
+     *
+     * @codeCoverageIgnore
      */
     public function setDistance($distance)
     {
@@ -423,6 +465,8 @@ class Routes implements ClearerEntityInterface
 
     /**
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getForcedDistance()
     {
@@ -433,6 +477,8 @@ class Routes implements ClearerEntityInterface
      * @param int $forcedDistance
      *
      * @return Routes
+     *
+     * @codeCoverageIgnore
      */
     public function setForcedDistance($forcedDistance)
     {
@@ -453,6 +499,8 @@ class Routes implements ClearerEntityInterface
      * @param bool $guarded
      *
      * @return Routes
+     *
+     * @codeCoverageIgnore
      */
     public function setGuarded($guarded)
     {
@@ -466,7 +514,7 @@ class Routes implements ClearerEntityInterface
      */
     public function isLocalized()
     {
-        return $this->coordinates !== null && count($this->coordinates);
+        return $this->coordinates !== null && count($this->getDecodedCoordinates());
     }
 
     /**

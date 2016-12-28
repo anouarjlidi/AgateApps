@@ -76,7 +76,7 @@ class Games
     protected $characters;
 
     /**
-     * @var bool
+     * @var \DateTime
      *
      * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
@@ -94,6 +94,8 @@ class Games
      * Get id.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getId()
     {
@@ -104,6 +106,8 @@ class Games
      * @param int $id
      *
      * @return $this
+     *
+     * @codeCoverageIgnore
      */
     public function setId($id)
     {
@@ -118,6 +122,8 @@ class Games
      * @param string $name
      *
      * @return Games
+     *
+     * @codeCoverageIgnore
      */
     public function setName($name)
     {
@@ -130,6 +136,8 @@ class Games
      * Get name.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getName()
     {
@@ -142,6 +150,8 @@ class Games
      * @param string $summary
      *
      * @return Games
+     *
+     * @codeCoverageIgnore
      */
     public function setSummary($summary)
     {
@@ -154,6 +164,8 @@ class Games
      * Get summary.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getSummary()
     {
@@ -166,6 +178,8 @@ class Games
      * @param string $gmNotes
      *
      * @return Games
+     *
+     * @codeCoverageIgnore
      */
     public function setGmNotes($gmNotes)
     {
@@ -178,6 +192,8 @@ class Games
      * Get gmNotes.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getGmNotes()
     {
@@ -190,6 +206,8 @@ class Games
      * @param \DateTime $created
      *
      * @return Games
+     *
+     * @codeCoverageIgnore
      */
     public function setCreated($created)
     {
@@ -202,6 +220,8 @@ class Games
      * Get created.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getCreated()
     {
@@ -214,6 +234,8 @@ class Games
      * @param \DateTime $updated
      *
      * @return Games
+     *
+     * @codeCoverageIgnore
      */
     public function setUpdated($updated)
     {
@@ -226,6 +248,8 @@ class Games
      * Get updated.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getUpdated()
     {
@@ -238,6 +262,8 @@ class Games
      * @param User $gameMaster
      *
      * @return Games
+     *
+     * @codeCoverageIgnore
      */
     public function setGameMaster(User $gameMaster = null)
     {
@@ -250,6 +276,8 @@ class Games
      * Get gameMaster.
      *
      * @return User
+     *
+     * @codeCoverageIgnore
      */
     public function getGameMaster()
     {
@@ -284,6 +312,8 @@ class Games
      * Get characters.
      *
      * @return \Doctrine\Common\Collections\Collection
+     *
+     * @codeCoverageIgnore
      */
     public function getCharacters()
     {
@@ -296,6 +326,8 @@ class Games
      * @param \DateTime $deleted
      *
      * @return Games
+     *
+     * @codeCoverageIgnore
      */
     public function setDeleted($deleted)
     {
@@ -308,6 +340,8 @@ class Games
      * Get deleted.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getDeleted()
     {

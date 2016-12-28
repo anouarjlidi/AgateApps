@@ -129,16 +129,18 @@ class Avantages
     protected $updated;
 
     /**
-     * @var bool
+     * @var \DateTime
      *
      * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
-    protected $deleted = null;
+    protected $deleted;
 
     /**
      * Get id.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getId()
     {
@@ -149,6 +151,8 @@ class Avantages
      * @param int $id
      *
      * @return $this
+     *
+     * @codeCoverageIgnore
      */
     public function setId($id)
     {
@@ -163,6 +167,8 @@ class Avantages
      * @param string $name
      *
      * @return Avantages
+     *
+     * @codeCoverageIgnore
      */
     public function setName($name)
     {
@@ -175,6 +181,8 @@ class Avantages
      * Get name.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getName()
     {
@@ -187,6 +195,8 @@ class Avantages
      * @param string $nameFemale
      *
      * @return Avantages
+     *
+     * @codeCoverageIgnore
      */
     public function setNameFemale($nameFemale)
     {
@@ -199,6 +209,8 @@ class Avantages
      * Get nameFemale.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getNameFemale()
     {
@@ -211,6 +223,8 @@ class Avantages
      * @param int $xp
      *
      * @return Avantages
+     *
+     * @codeCoverageIgnore
      */
     public function setXp($xp)
     {
@@ -223,6 +237,8 @@ class Avantages
      * Get xp.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getXp()
     {
@@ -235,6 +251,8 @@ class Avantages
      * @param string $description
      *
      * @return Avantages
+     *
+     * @codeCoverageIgnore
      */
     public function setDescription($description)
     {
@@ -247,6 +265,8 @@ class Avantages
      * Get description.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getDescription()
     {
@@ -259,6 +279,8 @@ class Avantages
      * @param string $bonusdisc
      *
      * @return Avantages
+     *
+     * @codeCoverageIgnore
      */
     public function setBonusdisc($bonusdisc)
     {
@@ -271,6 +293,8 @@ class Avantages
      * Get bonusdisc.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getBonusdisc()
     {
@@ -283,6 +307,8 @@ class Avantages
      * @param bool $isDesv
      *
      * @return Avantages
+     *
+     * @codeCoverageIgnore
      */
     public function setIsDesv($isDesv)
     {
@@ -295,6 +321,8 @@ class Avantages
      * Get isDesv.
      *
      * @return bool
+     *
+     * @codeCoverageIgnore
      */
     public function getIsDesv()
     {
@@ -307,6 +335,8 @@ class Avantages
      * @param bool $isCombatArt
      *
      * @return Avantages
+     *
+     * @codeCoverageIgnore
      */
     public function setIsCombatArt($isCombatArt)
     {
@@ -319,6 +349,8 @@ class Avantages
      * Get isCombatArt.
      *
      * @return bool
+     *
+     * @codeCoverageIgnore
      */
     public function getIsCombatArt()
     {
@@ -331,6 +363,8 @@ class Avantages
      * @param \DateTime $created
      *
      * @return Avantages
+     *
+     * @codeCoverageIgnore
      */
     public function setCreated($created)
     {
@@ -343,6 +377,8 @@ class Avantages
      * Get created.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getCreated()
     {
@@ -355,6 +391,8 @@ class Avantages
      * @param \DateTime $updated
      *
      * @return Avantages
+     *
+     * @codeCoverageIgnore
      */
     public function setUpdated($updated)
     {
@@ -367,6 +405,8 @@ class Avantages
      * Get updated.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getUpdated()
     {
@@ -379,6 +419,8 @@ class Avantages
      * @param Books $book
      *
      * @return Avantages
+     *
+     * @codeCoverageIgnore
      */
     public function setBook(Books $book = null)
     {
@@ -391,6 +433,8 @@ class Avantages
      * Get book.
      *
      * @return Books
+     *
+     * @codeCoverageIgnore
      */
     public function getBook()
     {
@@ -403,6 +447,8 @@ class Avantages
      * @param int $augmentation
      *
      * @return Avantages
+     *
+     * @codeCoverageIgnore
      */
     public function setAugmentation($augmentation)
     {
@@ -415,6 +461,8 @@ class Avantages
      * Get augmentation.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getAugmentation()
     {
@@ -427,6 +475,8 @@ class Avantages
      * @param int $group
      *
      * @return Avantages
+     *
+     * @codeCoverageIgnore
      */
     public function setGroup($group)
     {
@@ -439,6 +489,8 @@ class Avantages
      * Get group.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getGroup()
     {
@@ -451,6 +503,8 @@ class Avantages
      * @param \DateTime $deleted
      *
      * @return Avantages
+     *
+     * @codeCoverageIgnore
      */
     public function setDeleted($deleted)
     {
@@ -463,6 +517,8 @@ class Avantages
      * Get deleted.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getDeleted()
     {

@@ -37,7 +37,26 @@ class Money
     protected $frost;
 
     /**
+     * @param int  $ember
+     * @param int  $azure
+     * @param int  $frost
+     * @param bool $recalculate
+     */
+    public function __construct($ember, $azure, $frost, $recalculate = false)
+    {
+        $this->ember = (int) $ember;
+        $this->azure = (int) $azure;
+        $this->frost = (int) $frost;
+
+        if ($recalculate) {
+            $this->recalculate();
+        }
+    }
+
+    /**
      * @return mixed
+     *
+     * @codeCoverageIgnore
      */
     public function getFrost()
     {
@@ -46,6 +65,8 @@ class Money
 
     /**
      * @param mixed $frost
+     *
+     * @codeCoverageIgnore
      */
     public function setFrost($frost)
     {
@@ -54,6 +75,8 @@ class Money
 
     /**
      * @return mixed
+     *
+     * @codeCoverageIgnore
      */
     public function getAzure()
     {
@@ -62,6 +85,8 @@ class Money
 
     /**
      * @param mixed $azure
+     *
+     * @codeCoverageIgnore
      */
     public function setAzure($azure)
     {
@@ -70,6 +95,8 @@ class Money
 
     /**
      * @return mixed
+     *
+     * @codeCoverageIgnore
      */
     public function getEmber()
     {
@@ -78,9 +105,21 @@ class Money
 
     /**
      * @param mixed $ember
+     *
+     * @codeCoverageIgnore
      */
     public function setEmber($ember)
     {
         $this->ember = $ember;
+    }
+
+    /**
+     * @return Money
+     */
+    public function recalculate()
+    {
+        // TODO
+
+        return $this;
     }
 }

@@ -95,6 +95,8 @@ class RoutesTypes implements ClearerEntityInterface
      * Get id.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getId()
     {
@@ -105,6 +107,8 @@ class RoutesTypes implements ClearerEntityInterface
      * @param int $id
      *
      * @return $this
+     *
+     * @codeCoverageIgnore
      */
     public function setId($id)
     {
@@ -119,6 +123,8 @@ class RoutesTypes implements ClearerEntityInterface
      * @param string $name
      *
      * @return RoutesTypes
+     *
+     * @codeCoverageIgnore
      */
     public function setName($name)
     {
@@ -131,6 +137,8 @@ class RoutesTypes implements ClearerEntityInterface
      * Get name.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getName()
     {
@@ -165,6 +173,8 @@ class RoutesTypes implements ClearerEntityInterface
      * Get resources.
      *
      * @return Resources[]
+     *
+     * @codeCoverageIgnore
      */
     public function getResources()
     {
@@ -199,6 +209,8 @@ class RoutesTypes implements ClearerEntityInterface
      * Get routes.
      *
      * @return Routes[]
+     *
+     * @codeCoverageIgnore
      */
     public function getRoutes()
     {
@@ -207,6 +219,8 @@ class RoutesTypes implements ClearerEntityInterface
 
     /**
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getColor()
     {
@@ -217,6 +231,8 @@ class RoutesTypes implements ClearerEntityInterface
      * @param string $color
      *
      * @return RoutesTypes
+     *
+     * @codeCoverageIgnore
      */
     public function setColor($color)
     {
@@ -227,6 +243,8 @@ class RoutesTypes implements ClearerEntityInterface
 
     /**
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getDescription()
     {
@@ -237,6 +255,8 @@ class RoutesTypes implements ClearerEntityInterface
      * @param string $description
      *
      * @return RoutesTypes
+     *
+     * @codeCoverageIgnore
      */
     public function setDescription($description)
     {
@@ -277,6 +297,8 @@ class RoutesTypes implements ClearerEntityInterface
      * Get transports.
      *
      * @return TransportModifiers[]
+     *
+     * @codeCoverageIgnore
      */
     public function getTransports()
     {

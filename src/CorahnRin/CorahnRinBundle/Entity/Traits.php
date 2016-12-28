@@ -73,11 +73,11 @@ class Traits
     protected $updated;
 
     /**
-     * @var bool
+     * @var \DateTime
      *
      * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
-    protected $deleted = null;
+    protected $deleted;
 
     /**
      * @var Books
@@ -89,6 +89,8 @@ class Traits
      * Get id.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getId()
     {
@@ -99,6 +101,8 @@ class Traits
      * @param int $id
      *
      * @return $this
+     *
+     * @codeCoverageIgnore
      */
     public function setId($id)
     {
@@ -113,6 +117,8 @@ class Traits
      * @param string $name
      *
      * @return Traits
+     *
+     * @codeCoverageIgnore
      */
     public function setName($name)
     {
@@ -125,6 +131,8 @@ class Traits
      * Get name.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getName()
     {
@@ -137,6 +145,8 @@ class Traits
      * @param string $nameFemale
      *
      * @return Traits
+     *
+     * @codeCoverageIgnore
      */
     public function setNameFemale($nameFemale)
     {
@@ -149,6 +159,8 @@ class Traits
      * Get nameFemale.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getNameFemale()
     {
@@ -161,6 +173,8 @@ class Traits
      * @param bool $isQuality
      *
      * @return Traits
+     *
+     * @codeCoverageIgnore
      */
     public function setIsQuality($isQuality)
     {
@@ -173,6 +187,8 @@ class Traits
      * Get isQuality.
      *
      * @return bool
+     *
+     * @codeCoverageIgnore
      */
     public function getIsQuality()
     {
@@ -185,6 +201,8 @@ class Traits
      * @param bool $isMajor
      *
      * @return Traits
+     *
+     * @codeCoverageIgnore
      */
     public function setIsMajor($isMajor)
     {
@@ -209,6 +227,8 @@ class Traits
      * @param Books $book
      *
      * @return Traits
+     *
+     * @codeCoverageIgnore
      */
     public function setBook(Books $book = null)
     {
@@ -221,6 +241,8 @@ class Traits
      * Get book.
      *
      * @return Books
+     *
+     * @codeCoverageIgnore
      */
     public function getBook()
     {
@@ -233,6 +255,8 @@ class Traits
      * @param \DateTime $created
      *
      * @return Traits
+     *
+     * @codeCoverageIgnore
      */
     public function setCreated($created)
     {
@@ -245,6 +269,8 @@ class Traits
      * Get created.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getCreated()
     {
@@ -257,6 +283,8 @@ class Traits
      * @param \DateTime $updated
      *
      * @return Traits
+     *
+     * @codeCoverageIgnore
      */
     public function setUpdated($updated)
     {
@@ -269,6 +297,8 @@ class Traits
      * Get updated.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getUpdated()
     {
@@ -281,6 +311,8 @@ class Traits
      * @param Ways $way
      *
      * @return Traits
+     *
+     * @codeCoverageIgnore
      */
     public function setWay(Ways $way = null)
     {
@@ -293,6 +325,8 @@ class Traits
      * Get way.
      *
      * @return Ways
+     *
+     * @codeCoverageIgnore
      */
     public function getWay()
     {
@@ -305,6 +339,8 @@ class Traits
      * @param \DateTime $deleted
      *
      * @return Traits
+     *
+     * @codeCoverageIgnore
      */
     public function setDeleted($deleted)
     {
@@ -317,6 +353,8 @@ class Traits
      * Get deleted.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getDeleted()
     {

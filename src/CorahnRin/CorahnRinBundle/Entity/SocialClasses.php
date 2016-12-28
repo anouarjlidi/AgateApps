@@ -60,11 +60,11 @@ class SocialClasses
     protected $domains;
 
     /**
-     * @var bool
+     * @var \DateTime
      *
      * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
-    protected $deleted = null;
+    protected $deleted;
 
     /**
      * Constructor.
@@ -78,6 +78,8 @@ class SocialClasses
      * Get id.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getId()
     {
@@ -88,6 +90,8 @@ class SocialClasses
      * @param int $id
      *
      * @return $this
+     *
+     * @codeCoverageIgnore
      */
     public function setId($id)
     {
@@ -102,6 +106,8 @@ class SocialClasses
      * @param string $name
      *
      * @return SocialClasses
+     *
+     * @codeCoverageIgnore
      */
     public function setName($name)
     {
@@ -114,6 +120,8 @@ class SocialClasses
      * Get name.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getName()
     {
@@ -126,6 +134,8 @@ class SocialClasses
      * @param \DateTime $created
      *
      * @return SocialClasses
+     *
+     * @codeCoverageIgnore
      */
     public function setCreated($created)
     {
@@ -138,6 +148,8 @@ class SocialClasses
      * Get created.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getCreated()
     {
@@ -150,6 +162,8 @@ class SocialClasses
      * @param \DateTime $updated
      *
      * @return SocialClasses
+     *
+     * @codeCoverageIgnore
      */
     public function setUpdated($updated)
     {
@@ -162,6 +176,8 @@ class SocialClasses
      * Get updated.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getUpdated()
     {
@@ -195,7 +211,9 @@ class SocialClasses
     /**
      * Get domains.
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Domains[]|ArrayCollection
+     *
+     * @codeCoverageIgnore
      */
     public function getDomains()
     {
@@ -208,6 +226,8 @@ class SocialClasses
      * @param string $description
      *
      * @return SocialClasses
+     *
+     * @codeCoverageIgnore
      */
     public function setDescription($description)
     {
@@ -220,6 +240,8 @@ class SocialClasses
      * Get description.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getDescription()
     {
@@ -232,6 +254,8 @@ class SocialClasses
      * @param \DateTime $deleted
      *
      * @return SocialClasses
+     *
+     * @codeCoverageIgnore
      */
     public function setDeleted($deleted)
     {
@@ -244,6 +268,8 @@ class SocialClasses
      * Get deleted.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getDeleted()
     {

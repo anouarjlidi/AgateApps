@@ -70,12 +70,14 @@ class GeoEnvironments
      *
      * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
-    protected $deleted = null;
+    protected $deleted;
 
     /**
      * Get id.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getId()
     {
@@ -86,6 +88,8 @@ class GeoEnvironments
      * @param int $id
      *
      * @return $this
+     *
+     * @codeCoverageIgnore
      */
     public function setId($id)
     {
@@ -100,6 +104,8 @@ class GeoEnvironments
      * @param string $name
      *
      * @return GeoEnvironments
+     *
+     * @codeCoverageIgnore
      */
     public function setName($name)
     {
@@ -112,6 +118,8 @@ class GeoEnvironments
      * Get name.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getName()
     {
@@ -124,6 +132,8 @@ class GeoEnvironments
      * @param string $description
      *
      * @return GeoEnvironments
+     *
+     * @codeCoverageIgnore
      */
     public function setDescription($description)
     {
@@ -136,6 +146,8 @@ class GeoEnvironments
      * Get description.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getDescription()
     {
@@ -148,6 +160,8 @@ class GeoEnvironments
      * @param int $book
      *
      * @return GeoEnvironments
+     *
+     * @codeCoverageIgnore
      */
     public function setBook($book)
     {
@@ -160,6 +174,8 @@ class GeoEnvironments
      * Get book.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getBook()
     {
@@ -172,6 +188,8 @@ class GeoEnvironments
      * @param int $domain
      *
      * @return GeoEnvironments
+     *
+     * @codeCoverageIgnore
      */
     public function setDomain($domain)
     {
@@ -184,6 +202,8 @@ class GeoEnvironments
      * Get domain.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getDomain()
     {
@@ -196,6 +216,8 @@ class GeoEnvironments
      * @param \DateTime $created
      *
      * @return GeoEnvironments
+     *
+     * @codeCoverageIgnore
      */
     public function setCreated($created)
     {
@@ -208,6 +230,8 @@ class GeoEnvironments
      * Get created.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getCreated()
     {
@@ -220,6 +244,8 @@ class GeoEnvironments
      * @param \DateTime $updated
      *
      * @return GeoEnvironments
+     *
+     * @codeCoverageIgnore
      */
     public function setUpdated($updated)
     {
@@ -232,6 +258,8 @@ class GeoEnvironments
      * Get updated.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getUpdated()
     {
@@ -244,6 +272,8 @@ class GeoEnvironments
      * @param \DateTime $deleted
      *
      * @return GeoEnvironments
+     *
+     * @codeCoverageIgnore
      */
     public function setDeleted($deleted)
     {
@@ -256,6 +286,8 @@ class GeoEnvironments
      * Get deleted.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getDeleted()
     {

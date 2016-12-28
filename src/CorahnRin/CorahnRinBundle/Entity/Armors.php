@@ -73,11 +73,11 @@ class Armors
     protected $updated;
 
     /**
-     * @var bool
+     * @var \DateTime
      *
      * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
-    protected $deleted = null;
+    protected $deleted;
 
     /**
      * @var Books
@@ -89,6 +89,8 @@ class Armors
      * Get id.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getId()
     {
@@ -99,6 +101,8 @@ class Armors
      * @param int $id
      *
      * @return $this
+     *
+     * @codeCoverageIgnore
      */
     public function setId($id)
     {
@@ -113,6 +117,8 @@ class Armors
      * @param string $name
      *
      * @return Armors
+     *
+     * @codeCoverageIgnore
      */
     public function setName($name)
     {
@@ -125,6 +131,8 @@ class Armors
      * Get name.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getName()
     {
@@ -137,6 +145,8 @@ class Armors
      * @param string $description
      *
      * @return Armors
+     *
+     * @codeCoverageIgnore
      */
     public function setDescription($description)
     {
@@ -149,6 +159,8 @@ class Armors
      * Get description.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getDescription()
     {
@@ -161,6 +173,8 @@ class Armors
      * @param int $protection
      *
      * @return Armors
+     *
+     * @codeCoverageIgnore
      */
     public function setProtection($protection)
     {
@@ -173,6 +187,8 @@ class Armors
      * Get protection.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getProtection()
     {
@@ -185,6 +201,8 @@ class Armors
      * @param int $price
      *
      * @return Armors
+     *
+     * @codeCoverageIgnore
      */
     public function setPrice($price)
     {
@@ -197,6 +215,8 @@ class Armors
      * Get price.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getPrice()
     {
@@ -209,6 +229,8 @@ class Armors
      * @param string $availability
      *
      * @return Armors
+     *
+     * @codeCoverageIgnore
      */
     public function setAvailability($availability)
     {
@@ -221,6 +243,8 @@ class Armors
      * Get availability.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getAvailability()
     {
@@ -233,6 +257,8 @@ class Armors
      * @param Books $book
      *
      * @return $this
+     *
+     * @codeCoverageIgnore
      */
     public function setBook(Books $book = null)
     {
@@ -245,6 +271,8 @@ class Armors
      * Get book.
      *
      * @return Books
+     *
+     * @codeCoverageIgnore
      */
     public function getBook()
     {
@@ -257,6 +285,8 @@ class Armors
      * @param \DateTime $created
      *
      * @return Armors
+     *
+     * @codeCoverageIgnore
      */
     public function setCreated($created)
     {
@@ -269,6 +299,8 @@ class Armors
      * Get created.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getCreated()
     {
@@ -281,6 +313,8 @@ class Armors
      * @param \DateTime $updated
      *
      * @return Armors
+     *
+     * @codeCoverageIgnore
      */
     public function setUpdated($updated)
     {
@@ -293,6 +327,8 @@ class Armors
      * Get updated.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getUpdated()
     {
@@ -305,6 +341,8 @@ class Armors
      * @param \DateTime $deleted
      *
      * @return Armors
+     *
+     * @codeCoverageIgnore
      */
     public function setDeleted($deleted)
     {
@@ -317,6 +355,8 @@ class Armors
      * Get deleted.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getDeleted()
     {

@@ -122,7 +122,12 @@ class Markers implements ClearerEntityInterface
      * @Serializer\Expose
      * @Serializer\Type("EsterenMaps\MapsBundle\Entity\Routes")
      */
-    public $route = null;
+    public $route;
+
+    /**
+     * @var Routes[]|ArrayCollection
+     */
+    public $routes;
 
     public function __toString()
     {
@@ -145,6 +150,8 @@ class Markers implements ClearerEntityInterface
      * @param $id
      *
      * @return $this
+     *
+     * @codeCoverageIgnore
      */
     public function setId($id)
     {
@@ -157,6 +164,8 @@ class Markers implements ClearerEntityInterface
      * Get id.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getId()
     {
@@ -169,6 +178,8 @@ class Markers implements ClearerEntityInterface
      * @param string $name
      *
      * @return $this
+     *
+     * @codeCoverageIgnore
      */
     public function setName($name)
     {
@@ -181,6 +192,8 @@ class Markers implements ClearerEntityInterface
      * Get name.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getName()
     {
@@ -215,6 +228,8 @@ class Markers implements ClearerEntityInterface
      * Get routes.
      *
      * @return Routes[]
+     *
+     * @codeCoverageIgnore
      */
     public function getRoutes()
     {
@@ -227,6 +242,8 @@ class Markers implements ClearerEntityInterface
      * @param Factions $faction
      *
      * @return Markers
+     *
+     * @codeCoverageIgnore
      */
     public function setFaction(Factions $faction = null)
     {
@@ -239,6 +256,8 @@ class Markers implements ClearerEntityInterface
      * Get faction.
      *
      * @return Factions
+     *
+     * @codeCoverageIgnore
      */
     public function getFaction()
     {
@@ -251,6 +270,8 @@ class Markers implements ClearerEntityInterface
      * @param Maps $map
      *
      * @return Markers
+     *
+     * @codeCoverageIgnore
      */
     public function setMap(Maps $map = null)
     {
@@ -263,6 +284,8 @@ class Markers implements ClearerEntityInterface
      * Get map.
      *
      * @return Maps
+     *
+     * @codeCoverageIgnore
      */
     public function getMap()
     {
@@ -275,6 +298,8 @@ class Markers implements ClearerEntityInterface
      * @param MarkersTypes $markerType
      *
      * @return Markers
+     *
+     * @codeCoverageIgnore
      */
     public function setMarkerType(MarkersTypes $markerType = null)
     {
@@ -287,6 +312,8 @@ class Markers implements ClearerEntityInterface
      * Get markerType.
      *
      * @return MarkersTypes
+     *
+     * @codeCoverageIgnore
      */
     public function getMarkerType()
     {
@@ -321,6 +348,8 @@ class Markers implements ClearerEntityInterface
      * Get routesStart.
      *
      * @return Routes[]
+     *
+     * @codeCoverageIgnore
      */
     public function getRoutesStart()
     {
@@ -370,6 +399,8 @@ class Markers implements ClearerEntityInterface
      * Get routesEnd.
      *
      * @return Routes[]
+     *
+     * @codeCoverageIgnore
      */
     public function getRoutesEnd()
     {
@@ -397,6 +428,8 @@ class Markers implements ClearerEntityInterface
      * @param string $altitude
      *
      * @return Markers
+     *
+     * @codeCoverageIgnore
      */
     public function setAltitude($altitude)
     {
@@ -409,6 +442,8 @@ class Markers implements ClearerEntityInterface
      * Get altitude.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getAltitude()
     {
@@ -421,6 +456,8 @@ class Markers implements ClearerEntityInterface
      * @param string $latitude
      *
      * @return Markers
+     *
+     * @codeCoverageIgnore
      */
     public function setLatitude($latitude)
     {
@@ -433,6 +470,8 @@ class Markers implements ClearerEntityInterface
      * Get latitude.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getLatitude()
     {
@@ -445,6 +484,8 @@ class Markers implements ClearerEntityInterface
      * @param string $longitude
      *
      * @return Markers
+     *
+     * @codeCoverageIgnore
      */
     public function setLongitude($longitude)
     {
@@ -457,6 +498,8 @@ class Markers implements ClearerEntityInterface
      * Get longitude.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getLongitude()
     {
@@ -469,6 +512,8 @@ class Markers implements ClearerEntityInterface
      * @param string $description
      *
      * @return $this
+     *
+     * @codeCoverageIgnore
      */
     public function setDescription($description)
     {
@@ -481,6 +526,8 @@ class Markers implements ClearerEntityInterface
      * Get description.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getDescription()
     {
@@ -495,6 +542,9 @@ class Markers implements ClearerEntityInterface
         return $this->latitude !== null && $this->longitude !== null;
     }
 
+    /**
+     * @return string
+     */
     public function getWebIcon()
     {
         return $this->markerType->getWebIcon();

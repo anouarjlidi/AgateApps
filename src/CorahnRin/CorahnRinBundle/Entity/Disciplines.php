@@ -60,11 +60,11 @@ class Disciplines
     protected $updated;
 
     /**
-     * @var bool
+     * @var \DateTime
      *
      * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
-    protected $deleted = null;
+    protected $deleted;
 
     /**
      * @var Books
@@ -96,6 +96,8 @@ class Disciplines
      * Get id.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getId()
     {
@@ -106,6 +108,8 @@ class Disciplines
      * @param int $id
      *
      * @return $this
+     *
+     * @codeCoverageIgnore
      */
     public function setId($id)
     {
@@ -120,6 +124,8 @@ class Disciplines
      * @param string $name
      *
      * @return Disciplines
+     *
+     * @codeCoverageIgnore
      */
     public function setName($name)
     {
@@ -132,6 +138,8 @@ class Disciplines
      * Get name.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getName()
     {
@@ -144,6 +152,8 @@ class Disciplines
      * @param string $description
      *
      * @return Disciplines
+     *
+     * @codeCoverageIgnore
      */
     public function setDescription($description)
     {
@@ -156,6 +166,8 @@ class Disciplines
      * Get description.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getDescription()
     {
@@ -168,6 +180,8 @@ class Disciplines
      * @param string $rank
      *
      * @return Disciplines
+     *
+     * @codeCoverageIgnore
      */
     public function setRank($rank)
     {
@@ -180,6 +194,8 @@ class Disciplines
      * Get rank.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getRank()
     {
@@ -192,6 +208,8 @@ class Disciplines
      * @param \DateTime $created
      *
      * @return Disciplines
+     *
+     * @codeCoverageIgnore
      */
     public function setCreated($created)
     {
@@ -204,6 +222,8 @@ class Disciplines
      * Get created.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getCreated()
     {
@@ -216,6 +236,8 @@ class Disciplines
      * @param \DateTime $updated
      *
      * @return Disciplines
+     *
+     * @codeCoverageIgnore
      */
     public function setUpdated($updated)
     {
@@ -228,6 +250,8 @@ class Disciplines
      * Get updated.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getUpdated()
     {
@@ -240,6 +264,8 @@ class Disciplines
      * @param Books $book
      *
      * @return Disciplines
+     *
+     * @codeCoverageIgnore
      */
     public function setBook(Books $book = null)
     {
@@ -252,6 +278,8 @@ class Disciplines
      * Get book.
      *
      * @return Books
+     *
+     * @codeCoverageIgnore
      */
     public function getBook()
     {
@@ -285,7 +313,9 @@ class Disciplines
     /**
      * Get domains.
      *
-     * @return Domains
+     * @return Domains[]
+     *
+     * @codeCoverageIgnore
      */
     public function getDomains()
     {
@@ -298,6 +328,8 @@ class Disciplines
      * @param \DateTime $deleted
      *
      * @return Disciplines
+     *
+     * @codeCoverageIgnore
      */
     public function setDeleted($deleted)
     {
@@ -310,6 +342,8 @@ class Disciplines
      * Get deleted.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getDeleted()
     {

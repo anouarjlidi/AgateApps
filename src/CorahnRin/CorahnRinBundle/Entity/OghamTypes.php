@@ -52,16 +52,18 @@ class OghamTypes
     protected $updated;
 
     /**
-     * @var bool
+     * @var \DateTime
      *
      * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
-    protected $deleted = null;
+    protected $deleted;
 
     /**
      * Get id.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getId()
     {
@@ -72,6 +74,8 @@ class OghamTypes
      * @param int $id
      *
      * @return $this
+     *
+     * @codeCoverageIgnore
      */
     public function setId($id)
     {
@@ -86,6 +90,8 @@ class OghamTypes
      * @param string $name
      *
      * @return OghamTypes
+     *
+     * @codeCoverageIgnore
      */
     public function setName($name)
     {
@@ -98,6 +104,8 @@ class OghamTypes
      * Get name.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getName()
     {
@@ -110,6 +118,8 @@ class OghamTypes
      * @param \DateTime $created
      *
      * @return OghamTypes
+     *
+     * @codeCoverageIgnore
      */
     public function setCreated($created)
     {
@@ -122,6 +132,8 @@ class OghamTypes
      * Get created.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getCreated()
     {
@@ -134,6 +146,8 @@ class OghamTypes
      * @param \DateTime $updated
      *
      * @return OghamTypes
+     *
+     * @codeCoverageIgnore
      */
     public function setUpdated($updated)
     {
@@ -146,6 +160,8 @@ class OghamTypes
      * Get updated.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getUpdated()
     {
@@ -158,6 +174,8 @@ class OghamTypes
      * @param string $description
      *
      * @return OghamTypes
+     *
+     * @codeCoverageIgnore
      */
     public function setDescription($description)
     {
@@ -170,6 +188,8 @@ class OghamTypes
      * Get description.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getDescription()
     {
@@ -182,6 +202,8 @@ class OghamTypes
      * @param \DateTime $deleted
      *
      * @return OghamTypes
+     *
+     * @codeCoverageIgnore
      */
     public function setDeleted($deleted)
     {
@@ -194,6 +216,8 @@ class OghamTypes
      * Get deleted.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getDeleted()
     {

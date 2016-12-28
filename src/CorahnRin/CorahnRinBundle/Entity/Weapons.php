@@ -89,16 +89,18 @@ class Weapons
     protected $updated;
 
     /**
-     * @var bool
+     * @var \DateTime
      *
      * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
-    protected $deleted = null;
+    protected $deleted;
 
     /**
      * Get id.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getId()
     {
@@ -109,6 +111,8 @@ class Weapons
      * @param int $id
      *
      * @return $this
+     *
+     * @codeCoverageIgnore
      */
     public function setId($id)
     {
@@ -123,6 +127,8 @@ class Weapons
      * @param string $name
      *
      * @return Weapons
+     *
+     * @codeCoverageIgnore
      */
     public function setName($name)
     {
@@ -135,6 +141,8 @@ class Weapons
      * Get name.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getName()
     {
@@ -147,6 +155,8 @@ class Weapons
      * @param string $description
      *
      * @return Weapons
+     *
+     * @codeCoverageIgnore
      */
     public function setDescription($description)
     {
@@ -159,6 +169,8 @@ class Weapons
      * Get description.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getDescription()
     {
@@ -171,6 +183,8 @@ class Weapons
      * @param int $damage
      *
      * @return Weapons
+     *
+     * @codeCoverageIgnore
      */
     public function setDamage($damage)
     {
@@ -183,6 +197,8 @@ class Weapons
      * Get damage.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getDamage()
     {
@@ -195,6 +211,8 @@ class Weapons
      * @param int $price
      *
      * @return Weapons
+     *
+     * @codeCoverageIgnore
      */
     public function setPrice($price)
     {
@@ -207,6 +225,8 @@ class Weapons
      * Get price.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getPrice()
     {
@@ -219,6 +239,8 @@ class Weapons
      * @param string $availability
      *
      * @return Weapons
+     *
+     * @codeCoverageIgnore
      */
     public function setAvailability($availability)
     {
@@ -231,6 +253,8 @@ class Weapons
      * Get availability.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getAvailability()
     {
@@ -243,6 +267,8 @@ class Weapons
      * @param int $melee
      *
      * @return Weapons
+     *
+     * @codeCoverageIgnore
      */
     public function setMelee($melee)
     {
@@ -255,6 +281,8 @@ class Weapons
      * Get melee.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getMelee()
     {
@@ -267,6 +295,8 @@ class Weapons
      * @param int $range
      *
      * @return Weapons
+     *
+     * @codeCoverageIgnore
      */
     public function setRange($range)
     {
@@ -279,6 +309,8 @@ class Weapons
      * Get range.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getRange()
     {
@@ -291,6 +323,8 @@ class Weapons
      * @param \DateTime $created
      *
      * @return Weapons
+     *
+     * @codeCoverageIgnore
      */
     public function setCreated($created)
     {
@@ -303,6 +337,8 @@ class Weapons
      * Get created.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getCreated()
     {
@@ -315,6 +351,8 @@ class Weapons
      * @param \DateTime $updated
      *
      * @return Weapons
+     *
+     * @codeCoverageIgnore
      */
     public function setUpdated($updated)
     {
@@ -327,6 +365,8 @@ class Weapons
      * Get updated.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getUpdated()
     {
@@ -339,6 +379,8 @@ class Weapons
      * @param \DateTime $deleted
      *
      * @return Weapons
+     *
+     * @codeCoverageIgnore
      */
     public function setDeleted($deleted)
     {
@@ -351,6 +393,8 @@ class Weapons
      * Get deleted.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getDeleted()
     {

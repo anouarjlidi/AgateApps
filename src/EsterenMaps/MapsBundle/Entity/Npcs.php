@@ -39,6 +39,8 @@ class Npcs
      * Get id.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getId()
     {
@@ -51,6 +53,8 @@ class Npcs
      * @param string $name
      *
      * @return Npcs
+     *
+     * @codeCoverageIgnore
      */
     public function setName($name)
     {
@@ -63,6 +67,8 @@ class Npcs
      * Get name.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getName()
     {

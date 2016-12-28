@@ -67,11 +67,11 @@ class Domains
     protected $updated;
 
     /**
-     * @var bool
+     * @var \DateTime
      *
      * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
-    protected $deleted = null;
+    protected $deleted;
 
     public function __toString()
     {
@@ -90,6 +90,8 @@ class Domains
      * Get id.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getId()
     {
@@ -100,6 +102,8 @@ class Domains
      * @param int $id
      *
      * @return $this
+     *
+     * @codeCoverageIgnore
      */
     public function setId($id)
     {
@@ -114,6 +118,8 @@ class Domains
      * @param string $name
      *
      * @return Domains
+     *
+     * @codeCoverageIgnore
      */
     public function setName($name)
     {
@@ -126,6 +132,8 @@ class Domains
      * Get name.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getName()
     {
@@ -138,6 +146,8 @@ class Domains
      * @param string $description
      *
      * @return Domains
+     *
+     * @codeCoverageIgnore
      */
     public function setDescription($description)
     {
@@ -150,6 +160,8 @@ class Domains
      * Get description.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getDescription()
     {
@@ -162,6 +174,8 @@ class Domains
      * @param \DateTime $created
      *
      * @return Domains
+     *
+     * @codeCoverageIgnore
      */
     public function setCreated($created)
     {
@@ -174,6 +188,8 @@ class Domains
      * Get created.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getCreated()
     {
@@ -186,6 +202,8 @@ class Domains
      * @param \DateTime $updated
      *
      * @return Domains
+     *
+     * @codeCoverageIgnore
      */
     public function setUpdated($updated)
     {
@@ -198,6 +216,8 @@ class Domains
      * Get updated.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getUpdated()
     {
@@ -210,6 +230,8 @@ class Domains
      * @param Ways $way
      *
      * @return Domains
+     *
+     * @codeCoverageIgnore
      */
     public function setWay(Ways $way = null)
     {
@@ -222,6 +244,8 @@ class Domains
      * Get way.
      *
      * @return Ways
+     *
+     * @codeCoverageIgnore
      */
     public function getWay()
     {
@@ -256,6 +280,8 @@ class Domains
      * Get disciplines.
      *
      * @return \Doctrine\Common\Collections\Collection
+     *
+     * @codeCoverageIgnore
      */
     public function getDisciplines()
     {
@@ -282,6 +308,8 @@ class Domains
      * @param \DateTime $deleted
      *
      * @return Domains
+     *
+     * @codeCoverageIgnore
      */
     public function setDeleted($deleted)
     {
@@ -294,6 +322,8 @@ class Domains
      * Get deleted.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getDeleted()
     {

@@ -81,6 +81,8 @@ class TransportModifiers implements ClearerEntityInterface
 
     /**
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getId()
     {
@@ -91,6 +93,8 @@ class TransportModifiers implements ClearerEntityInterface
      * @param int $id
      *
      * @return TransportModifiers
+     *
+     * @codeCoverageIgnore
      */
     public function setId($id)
     {
@@ -101,6 +105,8 @@ class TransportModifiers implements ClearerEntityInterface
 
     /**
      * @return RoutesTypes
+     *
+     * @codeCoverageIgnore
      */
     public function getRouteType()
     {
@@ -111,6 +117,8 @@ class TransportModifiers implements ClearerEntityInterface
      * @param RoutesTypes $routeType
      *
      * @return TransportModifiers
+     *
+     * @codeCoverageIgnore
      */
     public function setRouteType($routeType)
     {
@@ -121,6 +129,8 @@ class TransportModifiers implements ClearerEntityInterface
 
     /**
      * @return TransportTypes
+     *
+     * @codeCoverageIgnore
      */
     public function getTransportType()
     {
@@ -131,6 +141,8 @@ class TransportModifiers implements ClearerEntityInterface
      * @param TransportTypes $transportType
      *
      * @return TransportModifiers
+     *
+     * @codeCoverageIgnore
      */
     public function setTransportType(TransportTypes $transportType)
     {
@@ -141,6 +153,8 @@ class TransportModifiers implements ClearerEntityInterface
 
     /**
      * @return float
+     *
+     * @codeCoverageIgnore
      */
     public function getPercentage()
     {
@@ -151,6 +165,8 @@ class TransportModifiers implements ClearerEntityInterface
      * @param float $percentage
      *
      * @return TransportModifiers
+     *
+     * @codeCoverageIgnore
      */
     public function setPercentage($percentage)
     {
@@ -171,6 +187,8 @@ class TransportModifiers implements ClearerEntityInterface
      * @param bool $positiveRatio
      *
      * @return TransportModifiers
+     *
+     * @codeCoverageIgnore
      */
     public function setPositiveRatio($positiveRatio)
     {

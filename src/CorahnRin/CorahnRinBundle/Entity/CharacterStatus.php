@@ -53,16 +53,18 @@ class CharacterStatus
     protected $updated;
 
     /**
-     * @var bool
+     * @var \DateTime
      *
      * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
-    protected $deleted = null;
+    protected $deleted;
 
     /**
      * Get id.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getId()
     {
@@ -73,6 +75,8 @@ class CharacterStatus
      * @param int $id
      *
      * @return $this
+     *
+     * @codeCoverageIgnore
      */
     public function setId($id)
     {
@@ -87,6 +91,8 @@ class CharacterStatus
      * @param string $name
      *
      * @return CharacterStatus
+     *
+     * @codeCoverageIgnore
      */
     public function setName($name)
     {
@@ -99,6 +105,8 @@ class CharacterStatus
      * Get name.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getName()
     {
@@ -111,6 +119,8 @@ class CharacterStatus
      * @param string $description
      *
      * @return CharacterStatus
+     *
+     * @codeCoverageIgnore
      */
     public function setDescription($description)
     {
@@ -123,6 +133,8 @@ class CharacterStatus
      * Get description.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getDescription()
     {
@@ -135,6 +147,8 @@ class CharacterStatus
      * @param \DateTime $created
      *
      * @return CharacterStatus
+     *
+     * @codeCoverageIgnore
      */
     public function setCreated($created)
     {
@@ -147,6 +161,8 @@ class CharacterStatus
      * Get created.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getCreated()
     {
@@ -159,6 +175,8 @@ class CharacterStatus
      * @param \DateTime $updated
      *
      * @return CharacterStatus
+     *
+     * @codeCoverageIgnore
      */
     public function setUpdated($updated)
     {
@@ -171,6 +189,8 @@ class CharacterStatus
      * Get updated.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getUpdated()
     {
@@ -183,6 +203,8 @@ class CharacterStatus
      * @param \DateTime $deleted
      *
      * @return CharacterStatus
+     *
+     * @codeCoverageIgnore
      */
     public function setDeleted($deleted)
     {
@@ -195,6 +217,8 @@ class CharacterStatus
      * Get deleted.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getDeleted()
     {

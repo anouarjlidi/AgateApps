@@ -44,7 +44,7 @@ class Ogham
     protected $book;
 
     /**
-     * @var Books
+     * @var OghamTypes
      * @ORM\ManyToOne(targetEntity="OghamTypes")
      */
     protected $oghamType;
@@ -68,12 +68,14 @@ class Ogham
      *
      * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
-    protected $deleted = null;
+    protected $deleted;
 
     /**
      * Get id.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getId()
     {
@@ -84,6 +86,8 @@ class Ogham
      * @param int $id
      *
      * @return $this
+     *
+     * @codeCoverageIgnore
      */
     public function setId($id)
     {
@@ -98,6 +102,8 @@ class Ogham
      * @param string $name
      *
      * @return Ogham
+     *
+     * @codeCoverageIgnore
      */
     public function setName($name)
     {
@@ -110,6 +116,8 @@ class Ogham
      * Get name.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getName()
     {
@@ -122,6 +130,8 @@ class Ogham
      * @param \DateTime $created
      *
      * @return Ogham
+     *
+     * @codeCoverageIgnore
      */
     public function setCreated($created)
     {
@@ -134,6 +144,8 @@ class Ogham
      * Get created.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getCreated()
     {
@@ -146,6 +158,8 @@ class Ogham
      * @param \DateTime $updated
      *
      * @return Ogham
+     *
+     * @codeCoverageIgnore
      */
     public function setUpdated($updated)
     {
@@ -158,6 +172,8 @@ class Ogham
      * Get updated.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getUpdated()
     {
@@ -170,6 +186,8 @@ class Ogham
      * @param string $description
      *
      * @return Ogham
+     *
+     * @codeCoverageIgnore
      */
     public function setDescription($description)
     {
@@ -182,6 +200,8 @@ class Ogham
      * Get description.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getDescription()
     {
@@ -194,6 +214,8 @@ class Ogham
      * @param Books $book
      *
      * @return Ogham
+     *
+     * @codeCoverageIgnore
      */
     public function setBook(Books $book = null)
     {
@@ -206,6 +228,8 @@ class Ogham
      * Get book.
      *
      * @return Books
+     *
+     * @codeCoverageIgnore
      */
     public function getBook()
     {
@@ -218,6 +242,8 @@ class Ogham
      * @param OghamTypes $oghamType
      *
      * @return Ogham
+     *
+     * @codeCoverageIgnore
      */
     public function setOghamType(OghamTypes $oghamType = null)
     {
@@ -230,6 +256,8 @@ class Ogham
      * Get oghamType.
      *
      * @return OghamTypes
+     *
+     * @codeCoverageIgnore
      */
     public function getOghamType()
     {
@@ -242,6 +270,8 @@ class Ogham
      * @param \DateTime $deleted
      *
      * @return Ogham
+     *
+     * @codeCoverageIgnore
      */
     public function setDeleted($deleted)
     {
@@ -254,6 +284,8 @@ class Ogham
      * Get deleted.
      *
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getDeleted()
     {

@@ -436,7 +436,7 @@ class Characters extends BaseCharacter
     protected $updated;
 
     /**
-     * @var bool
+     * @var \DateTime
      *
      * @ORM\Column(name="deleted", type="datetime", nullable=true)
      */
@@ -468,6 +468,8 @@ class Characters extends BaseCharacter
 
     /**
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getId()
     {
@@ -478,6 +480,8 @@ class Characters extends BaseCharacter
      * @param int $id
      *
      * @return $this
+     *
+     * @codeCoverageIgnore
      */
     public function setId($id)
     {
@@ -490,6 +494,8 @@ class Characters extends BaseCharacter
      * @param string $playerName
      *
      * @return Characters
+     *
+     * @codeCoverageIgnore
      */
     public function setPlayerName($playerName)
     {
@@ -500,6 +506,8 @@ class Characters extends BaseCharacter
 
     /**
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getPlayerName()
     {
@@ -510,6 +518,8 @@ class Characters extends BaseCharacter
      * @param int $status
      *
      * @return Characters
+     *
+     * @codeCoverageIgnore
      */
     public function setStatus($status)
     {
@@ -520,6 +530,8 @@ class Characters extends BaseCharacter
 
     /**
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getStatus()
     {
@@ -530,6 +542,8 @@ class Characters extends BaseCharacter
      * @param string $sex
      *
      * @return Characters
+     *
+     * @codeCoverageIgnore
      */
     public function setSex($sex)
     {
@@ -540,6 +554,8 @@ class Characters extends BaseCharacter
 
     /**
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getSex()
     {
@@ -550,6 +566,8 @@ class Characters extends BaseCharacter
      * @param string $description
      *
      * @return Characters
+     *
+     * @codeCoverageIgnore
      */
     public function setDescription($description)
     {
@@ -560,6 +578,8 @@ class Characters extends BaseCharacter
 
     /**
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getDescription()
     {
@@ -570,6 +590,8 @@ class Characters extends BaseCharacter
      * @param string $story
      *
      * @return Characters
+     *
+     * @codeCoverageIgnore
      */
     public function setStory($story)
     {
@@ -580,6 +602,8 @@ class Characters extends BaseCharacter
 
     /**
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getStory()
     {
@@ -590,6 +614,8 @@ class Characters extends BaseCharacter
      * @param string $facts
      *
      * @return Characters
+     *
+     * @codeCoverageIgnore
      */
     public function setFacts($facts)
     {
@@ -600,6 +626,8 @@ class Characters extends BaseCharacter
 
     /**
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getFacts()
     {
@@ -610,6 +638,8 @@ class Characters extends BaseCharacter
      * @param array $inventory
      *
      * @return Characters
+     *
+     * @codeCoverageIgnore
      */
     public function setInventory($inventory)
     {
@@ -620,6 +650,8 @@ class Characters extends BaseCharacter
 
     /**
      * @return array
+     *
+     * @codeCoverageIgnore
      */
     public function getInventory()
     {
@@ -630,6 +662,8 @@ class Characters extends BaseCharacter
      * @param Money $money
      *
      * @return Characters
+     *
+     * @codeCoverageIgnore
      */
     public function setMoney(Money $money)
     {
@@ -640,6 +674,8 @@ class Characters extends BaseCharacter
 
     /**
      * @return Money
+     *
+     * @codeCoverageIgnore
      */
     public function getMoney()
     {
@@ -650,6 +686,8 @@ class Characters extends BaseCharacter
      * @param string $orientation
      *
      * @return Characters
+     *
+     * @codeCoverageIgnore
      */
     public function setOrientation($orientation)
     {
@@ -660,6 +698,8 @@ class Characters extends BaseCharacter
 
     /**
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getOrientation()
     {
@@ -670,6 +710,8 @@ class Characters extends BaseCharacter
      * @param string $jobCustom
      *
      * @return Characters
+     *
+     * @codeCoverageIgnore
      */
     public function setJobCustom($jobCustom)
     {
@@ -680,6 +722,8 @@ class Characters extends BaseCharacter
 
     /**
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getJobCustom()
     {
@@ -690,6 +734,8 @@ class Characters extends BaseCharacter
      * @param string $geoLiving
      *
      * @return Characters
+     *
+     * @codeCoverageIgnore
      */
     public function setGeoLiving($geoLiving)
     {
@@ -700,6 +746,8 @@ class Characters extends BaseCharacter
 
     /**
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getGeoLiving()
     {
@@ -710,6 +758,8 @@ class Characters extends BaseCharacter
      * @param int $trauma
      *
      * @return Characters
+     *
+     * @codeCoverageIgnore
      */
     public function setTrauma($trauma)
     {
@@ -720,6 +770,8 @@ class Characters extends BaseCharacter
 
     /**
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getTrauma()
     {
@@ -730,6 +782,8 @@ class Characters extends BaseCharacter
      * @param int $traumaPermanent
      *
      * @return Characters
+     *
+     * @codeCoverageIgnore
      */
     public function setTraumaPermanent($traumaPermanent)
     {
@@ -740,6 +794,8 @@ class Characters extends BaseCharacter
 
     /**
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getTraumaPermanent()
     {
@@ -750,6 +806,8 @@ class Characters extends BaseCharacter
      * @param int $hardening
      *
      * @return Characters
+     *
+     * @codeCoverageIgnore
      */
     public function setHardening($hardening)
     {
@@ -760,6 +818,8 @@ class Characters extends BaseCharacter
 
     /**
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getHardening()
     {
@@ -770,6 +830,8 @@ class Characters extends BaseCharacter
      * @param int $age
      *
      * @return Characters
+     *
+     * @codeCoverageIgnore
      */
     public function setAge($age)
     {
@@ -780,6 +842,8 @@ class Characters extends BaseCharacter
 
     /**
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getAge()
     {
@@ -790,6 +854,8 @@ class Characters extends BaseCharacter
      * @param int $mentalResist
      *
      * @return Characters
+     *
+     * @codeCoverageIgnore
      */
     public function setMentalResist($mentalResist)
     {
@@ -800,6 +866,8 @@ class Characters extends BaseCharacter
 
     /**
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getMentalResist()
     {
@@ -810,6 +878,8 @@ class Characters extends BaseCharacter
      * @param int $health
      *
      * @return Characters
+     *
+     * @codeCoverageIgnore
      */
     public function setHealth($health)
     {
@@ -820,6 +890,8 @@ class Characters extends BaseCharacter
 
     /**
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getHealth()
     {
@@ -830,6 +902,8 @@ class Characters extends BaseCharacter
      * @param int $maxHealth
      *
      * @return Characters
+     *
+     * @codeCoverageIgnore
      */
     public function setMaxHealth($maxHealth)
     {
@@ -840,6 +914,8 @@ class Characters extends BaseCharacter
 
     /**
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getMaxHealth()
     {
@@ -850,6 +926,8 @@ class Characters extends BaseCharacter
      * @param int $stamina
      *
      * @return Characters
+     *
+     * @codeCoverageIgnore
      */
     public function setStamina($stamina)
     {
@@ -860,6 +938,8 @@ class Characters extends BaseCharacter
 
     /**
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getStamina()
     {
@@ -870,6 +950,8 @@ class Characters extends BaseCharacter
      * @param bool $survival
      *
      * @return Characters
+     *
+     * @codeCoverageIgnore
      */
     public function setSurvival($survival)
     {
@@ -880,6 +962,8 @@ class Characters extends BaseCharacter
 
     /**
      * @return bool
+     *
+     * @codeCoverageIgnore
      */
     public function getSurvival()
     {
@@ -890,6 +974,8 @@ class Characters extends BaseCharacter
      * @param int $speed
      *
      * @return Characters
+     *
+     * @codeCoverageIgnore
      */
     public function setSpeed($speed)
     {
@@ -900,6 +986,8 @@ class Characters extends BaseCharacter
 
     /**
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getSpeed()
     {
@@ -910,6 +998,8 @@ class Characters extends BaseCharacter
      * @param int $defense
      *
      * @return Characters
+     *
+     * @codeCoverageIgnore
      */
     public function setDefense($defense)
     {
@@ -920,6 +1010,8 @@ class Characters extends BaseCharacter
 
     /**
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getDefense()
     {
@@ -930,6 +1022,8 @@ class Characters extends BaseCharacter
      * @param int $rindath
      *
      * @return Characters
+     *
+     * @codeCoverageIgnore
      */
     public function setRindath($rindath)
     {
@@ -940,6 +1034,8 @@ class Characters extends BaseCharacter
 
     /**
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getRindath()
     {
@@ -950,6 +1046,8 @@ class Characters extends BaseCharacter
      * @param int $exaltation
      *
      * @return Characters
+     *
+     * @codeCoverageIgnore
      */
     public function setExaltation($exaltation)
     {
@@ -960,6 +1058,8 @@ class Characters extends BaseCharacter
 
     /**
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getExaltation()
     {
@@ -970,6 +1070,8 @@ class Characters extends BaseCharacter
      * @param int $experienceActual
      *
      * @return Characters
+     *
+     * @codeCoverageIgnore
      */
     public function setExperienceActual($experienceActual)
     {
@@ -980,6 +1082,8 @@ class Characters extends BaseCharacter
 
     /**
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getExperienceActual()
     {
@@ -990,6 +1094,8 @@ class Characters extends BaseCharacter
      * @param int $experienceSpent
      *
      * @return Characters
+     *
+     * @codeCoverageIgnore
      */
     public function setExperienceSpent($experienceSpent)
     {
@@ -1000,6 +1106,8 @@ class Characters extends BaseCharacter
 
     /**
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getExperienceSpent()
     {
@@ -1010,6 +1118,8 @@ class Characters extends BaseCharacter
      * @param \DateTime $created
      *
      * @return Characters
+     *
+     * @codeCoverageIgnore
      */
     public function setCreated($created)
     {
@@ -1020,6 +1130,8 @@ class Characters extends BaseCharacter
 
     /**
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getCreated()
     {
@@ -1030,6 +1142,8 @@ class Characters extends BaseCharacter
      * @param \DateTime $updated
      *
      * @return Characters
+     *
+     * @codeCoverageIgnore
      */
     public function setUpdated($updated)
     {
@@ -1040,6 +1154,8 @@ class Characters extends BaseCharacter
 
     /**
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getUpdated()
     {
@@ -1050,6 +1166,8 @@ class Characters extends BaseCharacter
      * @param \DateTime $deleted
      *
      * @return Characters
+     *
+     * @codeCoverageIgnore
      */
     public function setDeleted(\DateTime $deleted = null)
     {
@@ -1060,6 +1178,8 @@ class Characters extends BaseCharacter
 
     /**
      * @return \DateTime
+     *
+     * @codeCoverageIgnore
      */
     public function getDeleted()
     {
@@ -1070,6 +1190,8 @@ class Characters extends BaseCharacter
      * @param Peoples $people
      *
      * @return Characters
+     *
+     * @codeCoverageIgnore
      */
     public function setPeople(Peoples $people = null)
     {
@@ -1080,6 +1202,8 @@ class Characters extends BaseCharacter
 
     /**
      * @return Peoples
+     *
+     * @codeCoverageIgnore
      */
     public function getPeople()
     {
@@ -1112,6 +1236,8 @@ class Characters extends BaseCharacter
 
     /**
      * @return Armors[]
+     *
+     * @codeCoverageIgnore
      */
     public function getArmors()
     {
@@ -1144,6 +1270,8 @@ class Characters extends BaseCharacter
 
     /**
      * @return Artifacts[]
+     *
+     * @codeCoverageIgnore
      */
     public function getArtifacts()
     {
@@ -1176,6 +1304,8 @@ class Characters extends BaseCharacter
 
     /**
      * @return Miracles[]
+     *
+     * @codeCoverageIgnore
      */
     public function getMiracles()
     {
@@ -1208,6 +1338,8 @@ class Characters extends BaseCharacter
 
     /**
      * @return Ogham[]
+     *
+     * @codeCoverageIgnore
      */
     public function getOgham()
     {
@@ -1240,6 +1372,8 @@ class Characters extends BaseCharacter
 
     /**
      * @return Weapons[]
+     *
+     * @codeCoverageIgnore
      */
     public function getWeapons()
     {
@@ -1250,6 +1384,8 @@ class Characters extends BaseCharacter
      * @param SocialClasses $socialClasses
      *
      * @return Characters
+     *
+     * @codeCoverageIgnore
      */
     public function setSocialClasses(SocialClasses $socialClasses = null)
     {
@@ -1260,6 +1396,8 @@ class Characters extends BaseCharacter
 
     /**
      * @return SocialClasses
+     *
+     * @codeCoverageIgnore
      */
     public function getSocialClasses()
     {
@@ -1270,6 +1408,8 @@ class Characters extends BaseCharacter
      * @param Domains $socialClassDomain1
      *
      * @return Characters
+     *
+     * @codeCoverageIgnore
      */
     public function setSocialClassDomain1(Domains $socialClassDomain1 = null)
     {
@@ -1280,6 +1420,8 @@ class Characters extends BaseCharacter
 
     /**
      * @return Domains
+     *
+     * @codeCoverageIgnore
      */
     public function getSocialClassDomain1()
     {
@@ -1290,6 +1432,8 @@ class Characters extends BaseCharacter
      * @param Domains $socialClassDomain2
      *
      * @return Characters
+     *
+     * @codeCoverageIgnore
      */
     public function setSocialClassDomain2(Domains $socialClassDomain2 = null)
     {
@@ -1300,6 +1444,8 @@ class Characters extends BaseCharacter
 
     /**
      * @return Domains
+     *
+     * @codeCoverageIgnore
      */
     public function getSocialClassDomain2()
     {
@@ -1310,6 +1456,8 @@ class Characters extends BaseCharacter
      * @param Disorders $disorder
      *
      * @return Characters
+     *
+     * @codeCoverageIgnore
      */
     public function setDisorder(Disorders $disorder = null)
     {
@@ -1320,6 +1468,8 @@ class Characters extends BaseCharacter
 
     /**
      * @return Disorders
+     *
+     * @codeCoverageIgnore
      */
     public function getDisorder()
     {
@@ -1330,6 +1480,8 @@ class Characters extends BaseCharacter
      * @param Jobs $job
      *
      * @return Characters
+     *
+     * @codeCoverageIgnore
      */
     public function setJob(Jobs $job = null)
     {
@@ -1340,6 +1492,8 @@ class Characters extends BaseCharacter
 
     /**
      * @return Jobs
+     *
+     * @codeCoverageIgnore
      */
     public function getJob()
     {
@@ -1350,6 +1504,8 @@ class Characters extends BaseCharacter
      * @param Regions $region
      *
      * @return Characters
+     *
+     * @codeCoverageIgnore
      */
     public function setRegion(Regions $region = null)
     {
@@ -1360,6 +1516,8 @@ class Characters extends BaseCharacter
 
     /**
      * @return Regions
+     *
+     * @codeCoverageIgnore
      */
     public function getRegion()
     {
@@ -1370,6 +1528,8 @@ class Characters extends BaseCharacter
      * @param Traits $flaw
      *
      * @return Characters
+     *
+     * @codeCoverageIgnore
      */
     public function setFlaw(Traits $flaw = null)
     {
@@ -1380,6 +1540,8 @@ class Characters extends BaseCharacter
 
     /**
      * @return Traits
+     *
+     * @codeCoverageIgnore
      */
     public function getFlaw()
     {
@@ -1390,6 +1552,8 @@ class Characters extends BaseCharacter
      * @param Traits $quality
      *
      * @return Characters
+     *
+     * @codeCoverageIgnore
      */
     public function setQuality(Traits $quality = null)
     {
@@ -1400,6 +1564,8 @@ class Characters extends BaseCharacter
 
     /**
      * @return Traits
+     *
+     * @codeCoverageIgnore
      */
     public function getQuality()
     {
@@ -1432,6 +1598,8 @@ class Characters extends BaseCharacter
 
     /**
      * @return CharAdvantages[]
+     *
+     * @codeCoverageIgnore
      */
     public function getAdvantages()
     {
@@ -1464,6 +1632,8 @@ class Characters extends BaseCharacter
 
     /**
      * @return CharDomains[]
+     *
+     * @codeCoverageIgnore
      */
     public function getDomains()
     {
@@ -1496,6 +1666,8 @@ class Characters extends BaseCharacter
 
     /**
      * @return CharDisciplines[]
+     *
+     * @codeCoverageIgnore
      */
     public function getDisciplines()
     {
@@ -1528,6 +1700,8 @@ class Characters extends BaseCharacter
 
     /**
      * @return CharWays[]|Collection
+     *
+     * @codeCoverageIgnore
      */
     public function getWays()
     {
@@ -1560,6 +1734,8 @@ class Characters extends BaseCharacter
 
     /**
      * @return CharFlux[]
+     *
+     * @codeCoverageIgnore
      */
     public function getFlux()
     {
@@ -1592,6 +1768,8 @@ class Characters extends BaseCharacter
 
     /**
      * @return CharSetbacks[]|ArrayCollection
+     *
+     * @codeCoverageIgnore
      */
     public function getSetbacks()
     {
@@ -1602,6 +1780,8 @@ class Characters extends BaseCharacter
      * @param User $user
      *
      * @return Characters
+     *
+     * @codeCoverageIgnore
      */
     public function setUser(User $user = null)
     {
@@ -1612,6 +1792,8 @@ class Characters extends BaseCharacter
 
     /**
      * @return User
+     *
+     * @codeCoverageIgnore
      */
     public function getUser()
     {
@@ -1622,6 +1804,8 @@ class Characters extends BaseCharacter
      * @param Games $game
      *
      * @return Characters
+     *
+     * @codeCoverageIgnore
      */
     public function setGame(Games $game = null)
     {
@@ -1632,6 +1816,8 @@ class Characters extends BaseCharacter
 
     /**
      * @return Games
+     *
+     * @codeCoverageIgnore
      */
     public function getGame()
     {
@@ -1689,7 +1875,7 @@ class Characters extends BaseCharacter
      *
      * @param int|string $id
      *
-     * @return CharDomains
+     * @return CharDomains|null
      */
     public function getDomain($id)
     {
@@ -1703,7 +1889,7 @@ class Characters extends BaseCharacter
             }
         }
 
-        return;
+        return null;
     }
 
     /**
@@ -1722,7 +1908,7 @@ class Characters extends BaseCharacter
             }
         }
 
-        return;
+        return null;
     }
 
     /**
@@ -1742,7 +1928,7 @@ class Characters extends BaseCharacter
             }
         }
 
-        return;
+        return null;
     }
 
     /**

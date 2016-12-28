@@ -48,6 +48,8 @@ class CharAdvantages
      * @param int $doubleValue
      *
      * @return CharAdvantages
+     *
+     * @codeCoverageIgnore
      */
     public function setDoubleValue($doubleValue)
     {
@@ -60,6 +62,8 @@ class CharAdvantages
      * Get doubleValue.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getDoubleValue()
     {
@@ -72,6 +76,8 @@ class CharAdvantages
      * @param Characters $character
      *
      * @return CharAdvantages
+     *
+     * @codeCoverageIgnore
      */
     public function setCharacter(Characters $character)
     {
@@ -84,6 +90,8 @@ class CharAdvantages
      * Get character.
      *
      * @return Characters
+     *
+     * @codeCoverageIgnore
      */
     public function getCharacter()
     {
@@ -96,6 +104,8 @@ class CharAdvantages
      * @param Avantages $advantage
      *
      * @return CharAdvantages
+     *
+     * @codeCoverageIgnore
      */
     public function setAdvantage(Avantages $advantage)
     {
@@ -108,6 +118,8 @@ class CharAdvantages
      * Get avantage.
      *
      * @return Avantages
+     *
+     * @codeCoverageIgnore
      */
     public function getAdvantage()
     {

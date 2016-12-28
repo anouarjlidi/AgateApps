@@ -42,6 +42,8 @@ class Page extends BasePage
 
     /**
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getId()
     {
@@ -52,6 +54,8 @@ class Page extends BasePage
      * @param int $id
      *
      * @return Page
+     *
+     * @codeCoverageIgnore
      */
     public function setId($id)
     {
@@ -62,6 +66,8 @@ class Page extends BasePage
 
     /**
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getTemplate()
     {
@@ -72,6 +78,8 @@ class Page extends BasePage
      * @param string $template
      *
      * @return Page
+     *
+     * @codeCoverageIgnore
      */
     public function setTemplate($template)
     {
@@ -82,8 +90,10 @@ class Page extends BasePage
 
     /**
      * @return bool
+     *
+     * @codeCoverageIgnore
      */
-    public function showTitle()
+    public function getShowTitle()
     {
         return $this->showTitle;
     }
@@ -92,6 +102,8 @@ class Page extends BasePage
      * @param bool $showTitle
      *
      * @return Page
+     *
+     * @codeCoverageIgnore
      */
     public function setShowTitle($showTitle)
     {
@@ -102,6 +114,8 @@ class Page extends BasePage
 
     /**
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getContainerCssClass()
     {
@@ -112,6 +126,8 @@ class Page extends BasePage
      * @param string $containerCssClass
      *
      * @return Page
+     *
+     * @codeCoverageIgnore
      */
     public function setContainerCssClass($containerCssClass)
     {
