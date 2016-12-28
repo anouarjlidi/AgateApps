@@ -41,8 +41,14 @@ if [[ -z "$PHPUNIT_PARAMETERS" ]]; then
     export PHPUNIT_PARAMETERS=" --coverage-text --coverage-clover build/logs/clover.xml "
 fi
 
+if [ -f ./vendor/bin/phpunit ]; then
+    phpunit_script="./vendor/bin/phpunit"
+else
+    phpunit_script="./vendor/bin/simple-phpunit"
+fi
+
 echo "Execute tests"
-./vendor/bin/simple-phpunit ${PHPUNIT_PARAMETERS}
+${phpunit_script} ${PHPUNIT_PARAMETERS}
 
 if [ -f app/config/parameters.yml.backup ]; then
     echo "Retrieve backed up parameters file"
