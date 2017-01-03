@@ -21,6 +21,7 @@ var config = {
     "copy": {
         "fonts/": [
             "node_modules/materialize-css/dist/fonts/**/",
+            "node_modules/font-awesome/fonts/**/",
             "node_modules/bootstrap/dist/fonts/*"
         ],
         "images": [
@@ -71,7 +72,7 @@ var config = {
      */
     "less": {
         "css/fa.css": [
-            "node_modules/font-awesome/less/fontawesome.less"
+            "node_modules/font-awesome/less/font-awesome.less"
         ],
         "css/global.css": [
             "src/Esteren/PortalBundle/Resources/public/less/_main.less"
@@ -147,8 +148,8 @@ var config = {
         ],
         "js/maps_lib.js": [
             "node_modules/leaflet/dist/leaflet-src.js",
-            "web/components/leaflet-sidebar/src/L.Control.Sidebar.js",
-            "web/components/leaflet-draw/dist/leaflet.draw-src.js",
+            "./web/components/leaflet-sidebar/src/L.Control.Sidebar.js",
+            "./web/components/leaflet-draw/dist/leaflet.draw-src.js",
             "src/EsterenMaps/MapsBundle/Resources/public/js/EsterenMap/1_EsterenMap.js",
             "src/EsterenMaps/MapsBundle/Resources/public/js/EsterenMap/1_EsterenMap.load.js",
             "src/EsterenMaps/MapsBundle/Resources/public/js/EsterenMap/2_EsterenMap_CRS_XY.js",
