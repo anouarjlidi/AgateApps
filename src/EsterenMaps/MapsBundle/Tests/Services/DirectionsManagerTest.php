@@ -3,6 +3,8 @@
 namespace EsterenMaps\MapsBundle\Tests\Services;
 
 use Doctrine\ORM\EntityManager;
+use EsterenMaps\MapsBundle\Entity\Maps;
+use EsterenMaps\MapsBundle\Entity\Markers;
 use EsterenMaps\MapsBundle\Services\MapsRegistry;
 use Tests\WebTestCase;
 
@@ -31,8 +33,13 @@ class DirectionsManagerTest extends WebTestCase
 
         $directions = $maps->getDirectionsManager();
 
+        /** @var Maps $map */
         $map  = $em->getRepository('EsterenMapsBundle:Maps')->findOneBy(['nameSlug' => $map]);
+
+        /** @var Markers $from */
         $from = $em->getRepository('EsterenMapsBundle:Markers')->findOneBy(['name' => $from]);
+
+        /** @var Markers $to */
         $to   = $em->getRepository('EsterenMapsBundle:Markers')->findOneBy(['name' => $to]);
 
         if ($transport) {
