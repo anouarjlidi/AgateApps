@@ -16,12 +16,12 @@ class OriginChecker
     /**
      * @var string
      */
-    private $kernelEnvironment;
+    private $debug;
 
-    public function __construct(array $allowedOrigins, $kernelEnvironment)
+    public function __construct(array $allowedOrigins, $debug)
     {
-        $this->allowedOrigins    = $allowedOrigins;
-        $this->kernelEnvironment = $kernelEnvironment;
+        $this->allowedOrigins = $allowedOrigins;
+        $this->debug = (bool)$debug;
     }
 
     /**
@@ -31,11 +31,15 @@ class OriginChecker
      */
     public function checkRequest(Request $request)
     {
+        if ($this->debug) {
+            return;
+        }
+
         $allowedOrigins = $this->allowedOrigins;
 
         // Allows automatically the current server to allow internal requests
         $allowedOrigins[] = $request->server->get('SERVER_ADDR');
-        $host             = $request->getHost();
+        $host = $request->getHost();
         if (!in_array($host, $allowedOrigins, true)) {
             $allowedOrigins[] = $host;
         }

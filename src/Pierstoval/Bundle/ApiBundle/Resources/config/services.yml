@@ -3,8 +3,8 @@ services:
     pierstoval.api.origin_checker:
         class: Pierstoval\Bundle\ApiBundle\Services\OriginChecker
         arguments:
-            allowedOrigins: "%pierstoval_api.allowed_origins%"
-            kernelEnvironment: "%kernel.environment%"
+            - "%pierstoval_api.allowed_origins%"
+            - "%kernel.debug%"
 
     pierstoval.api.listener:
         class: Pierstoval\Bundle\ApiBundle\Listeners\JsonResponseListener
