@@ -1,8 +1,8 @@
 <?php
 
 use Symfony\Component\ClassLoader\ApcClassLoader;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Debug\Debug;
+use Symfony\Component\HttpFoundation\Request;
 
 umask(0002);
 
@@ -14,6 +14,10 @@ $debug       = (getenv('SYMFONY_DEBUG') !== false) ? (bool) getenv('SYMFONY_DEBU
  */
 $loader = require __DIR__.'/../app/autoload.php';
 
+if (false === $debug) {
+    include_once __DIR__.'/../var/bootstrap.php.cache';
+}
+
 try {
     $apcLoader = new ApcClassLoader('EsterenApp', $loader);
     $apcLoader->register(true);
@@ -22,8 +26,6 @@ try {
 
 if (true === $debug) {
     Debug::enable();
-} else {
-    include_once __DIR__.'/../var/bootstrap.php.cache';
 }
 
 $kernel = new AppKernel($environment, $debug);
