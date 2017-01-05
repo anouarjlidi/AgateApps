@@ -34,6 +34,7 @@ The dist file contains comments about what it does, whereas the vhost does not, 
     ServerAlias www.esteren.dev
     ServerAlias back.esteren.dev
     ServerAlias games.esteren.dev
+    ServerAlias portal.esteren.dev
 
     DocumentRoot /var/www/corahn_rin/web
 
@@ -129,6 +130,7 @@ server {
         www.esteren.dev
         back.esteren.dev
         games.esteren.dev
+        portal.esteren.dev
     ;
 
     root /var/www/corahn_rin/web;
