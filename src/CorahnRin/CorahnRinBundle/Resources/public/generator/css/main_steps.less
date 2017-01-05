@@ -1,18 +1,18 @@
 
 // Webserver dir is used by Less to import files, mostly.
 // You should duplicate these parameters when creating new LESS resources in another bundle.
-@src-dir: "../../../../../..";
-@components-dir: "@{src-dir}/../web/components";
+@root-dir: "../../../../../../..";
+@components-dir: "@{root-dir}/node_modules";
 
 // Path to the ./web/ directory used for computed resources paths only.
 // Default is "../" because the css is outputted to web/css/
 @web-dir: "../";
 
 @import "@{components-dir}/bootstrap/less/variables";
-@import "@{src-dir}/Esteren/PortalBundle/Resources/public/less/bootstrap-override-variables";
+@import "@{root-dir}/src/Esteren/PortalBundle/Resources/public/less/bootstrap-override-variables";
 
 // Load fontawesome variables so that we can also use icons for custom use
-@import "@{components-dir}/fontawesome/less/variables";
+@import "@{components-dir}/font-awesome/less/variables";
 
 @import '_step_03_naissance';
 @import '_step_09_traits';
