@@ -17,6 +17,10 @@ class LegalMentionsController extends Controller
      */
     public function legalMentionsAction($_locale)
     {
+        if ($_locale !== 'fr') {
+            throw $this->createNotFoundException();
+        }
+
         return $this->render('@EsterenPortal/legal/mentions_'.$_locale.'.html.twig');
     }
 }

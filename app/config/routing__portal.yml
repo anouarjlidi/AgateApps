@@ -4,6 +4,11 @@ portal_home:
     type:     annotation
     host:     '%esteren_domains.portal%'
 
+legal_mentions:
+    resource: "@EsterenPortalBundle/Controller/LegalMentionsController.php"
+    type:     annotation
+    host:     '%esteren_domains.portal%'
+
 contact:
     resource: "@EsterenPortalBundle/Controller/ContactController.php"
     type:     annotation
