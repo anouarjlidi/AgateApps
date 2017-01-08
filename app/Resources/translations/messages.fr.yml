@@ -20,6 +20,7 @@ footer:
     subscribe: 'Inscription à la newsletter'
     agate_rpg: 'Agate RPG'
     about: 'À propos'
+    legal_mentions: 'Mentions légales'
     about_text: >
         Les Ombres d'Esteren est un projet indépendant fondé en 2006. Le premier ouvrage a
         été publié en France en 2010 puis aux USA en 2012. Projet innovant, pionnier dans le
@@ -49,3 +50,7 @@ contact:
 button:
     select: 'Sélectionner'
     close: 'Fermer'
+
+cnil_disclaimer: |
+    En poursuivant votre navigation sur ce site, vous acceptez l'utilisation des cookies telles qu'exposées dans les
+    <a href="%url%">mentions légales</a>.

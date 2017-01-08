@@ -132,7 +132,7 @@
 
                     {% block fos_user_content %}{% endblock %}
 
-                        {% block content_for_layout %}{% endblock %}
+                    {% block content_for_layout %}{% endblock %}
 
                     {% block orbitale_cms_page_content %}{% endblock %}
 
@@ -157,7 +157,10 @@
                                 <ul>
                                     <li><a href="{{ path('contact') }}">{{ 'footer.contact'|trans }}</a></li>
                                     <li><a href="#">{{ 'footer.subscribe'|trans }}</a></li>
-                                    <li><a href="http://agate-rpg.blogspot.fr/">{{ 'footer.agate_rpg'|trans }}</a></li>
+                                    <li><a href="http://agate-rpg.blogspot.frr/">{{ 'footer.agate_rpg'|trans }}</a></li>
+                                    {% if app.request.locale == 'fr' %}
+                                    <li><a href="{{ path('legal_mentions') }}">{{ 'footer.legal_mentions'|trans }}</a></li>
+                                    {% endif %}
                                 </ul>
                             </div>
                         </div>

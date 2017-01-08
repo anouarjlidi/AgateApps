@@ -18,3 +18,22 @@ form textarea {
     border-left: none transparent;
     border-right: none transparent;
 }
+
+.btn.disable_tags {
+    line-height: 2em;
+    font-size: 0.8em;
+    height: auto;
+    padding: 0 15px;
+}
+#cnil_disclaimer {
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    color: white;
+    background: black;
+    padding: 10px;
+    text-align: center;
+    line-height: 1.2em;
+}
