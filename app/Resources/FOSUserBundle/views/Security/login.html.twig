@@ -5,36 +5,37 @@
 {% endblock %}
 
 {% block fos_user_content %}
+    <div class="row">
+        <form class="col s6 offset-s3" action="{{ path("fos_user_security_check") }}" method="post" id="form_login">
+            <h3>{{ 'layout.login' | trans({}, 'FOSUserBundle') }}</h3>
 
-    <form action="{{ path("fos_user_security_check") }}" method="post" class="form-horizontal" id="form_login">
+            {% if error %}
+                <div class="alert alert-danger">{{ (error.message)|trans }}</div>
+            {% endif %}
 
-        <h3>{{ 'layout.login' | trans({}, 'FOSUserBundle') }}</h3>
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
 
-        {% if error %}
-            <div class="alert alert-danger">{{ (error.message)|trans }}</div>
-        {% endif %}
+            <div class="row">
+                <div class="input-field col s12">
+                    <input type="text" id="username" name="{{ constant('UserBundle\\Security\\FormLoginAuthenticator::USERNAME_OR_EMAIL_FORM_FIELD') }}" value="{{ last_username }}" required="required" class="validate">
+                    <label for="username">
+                        {{ 'security.login.username'|trans({}, 'FOSUserBundle') }}
+                        /
+                        {{ 'form.email'|trans({}, 'FOSUserBundle') }}
+                    </label>
+                </div>
+            </div>
 
-        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+            <div class="row">
+                <div class="input-field col s12">
+                    <label for="password">{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}</label>
+                    <input type="password" id="password" name="{{ constant('UserBundle\\Security\\FormLoginAuthenticator::PASSWORD_FORM_FIELD') }}" required="required" class="validate">
+                </div>
+            </div>
 
-        <div class="form-group">
-            <label for="username">{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}</label>
-            <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" class="form-control" />
-        </div>
-
-        <div class="form-group">
-            <label for="password">{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}</label>
-            <input type="password" id="password" name="_password" required="required" class="form-control" />
-        </div>
-
-        <div class="checkbox">
-            <label for="remember_me">
-                <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
-                {{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}
-            </label>
-        </div>
-
-        <button class="btn btn-default" type="submit" id="_submit" name="_submit">
-            {{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}
-        </button>
-    </form>
+            <button class="btn waves-effect waves-light" type="submit">
+                {{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}
+            </button>
+        </form>
+    </div>
 {% endblock fos_user_content %}
