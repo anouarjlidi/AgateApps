@@ -2,7 +2,6 @@
 
 namespace UserBundle\DataFixtures\ORM;
 
-use UserBundle\Entity\User;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -12,8 +11,9 @@ use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use FOS\UserBundle\Doctrine\UserManager;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use UserBundle\Entity\User;
 
-class UsersFixtures extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
+final class UsersFixtures extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
     /**
      * @var ObjectManager

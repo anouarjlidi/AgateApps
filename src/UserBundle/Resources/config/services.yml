@@ -1,0 +1,5 @@
+services:
+
+    user.form_login_authenticator:
+        class: UserBundle\Security\FormLoginAuthenticator
+        autowire: true
