@@ -64,7 +64,7 @@
         ],
         "post-install-cmd": [
             "@symfony-scripts",
-            "node --version && npm -v && npm install",
+            "node --version && yarn -V && yarn install",
             "node node_modules/gulp/bin/gulp.js dump --prod",
             "php bin/console cache:clear --env=prod",
             "php bin/console doctrine:schema:validate --env=prod || echo 'Doctrine schema not valid, please make sure it is correct.'"
