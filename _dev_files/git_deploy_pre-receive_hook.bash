@@ -29,8 +29,10 @@ workingtree="/home/esteren/www/portal.esteren.org/www"
 # This script is executed after a "cd" to the $workingtree directory.
 # Here is an example for a Symfony project
 read -d '' success_tag_script << SCRIPT
+    export SYMFONY_ENV=prod && \
+    export SYMFONY_DEBUG=0 && \
     composer install -ao --no-dev --apcu-autoloader && \
-    php bin/console cache:clear -e prod && \
+    php bin/console cache:clear && \
     php bin/console doctrine:schema:update --dump-sql --complete --force
 SCRIPT
 
