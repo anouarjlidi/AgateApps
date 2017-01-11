@@ -31,7 +31,9 @@ final class Mailer
      */
     public function sendContactMail(ContactMessage $message, $ip = null)
     {
-        $message = \Swift_Message::newInstance()
+        $swiftMessage = new \Swift_Message();
+
+        $swiftMessage
             ->setSubject($message->getSubject())
             ->setFrom($message->getEmail())
             ->setTo('pierstoval+esterenportal@gmail.com')
@@ -41,6 +43,6 @@ final class Mailer
             ]))
         ;
 
-        return $this->mailer->send($message);
+        return $this->mailer->send($swiftMessage);
     }
 }

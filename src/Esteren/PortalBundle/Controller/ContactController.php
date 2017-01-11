@@ -7,6 +7,7 @@ use Esteren\PortalBundle\Model\ContactMessage;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class ContactController extends Controller
 {
@@ -19,10 +20,12 @@ class ContactController extends Controller
         $form    = $this->createForm(ContactType::class, $message);
         $form->handleRequest($request);
 
-        if ($form->isValid() && $this->get('esteren_mailer')->sendContactMail($message, $request->getClientIp())) {
-            $request->getSession()->getFlashBag()->add('success', $this->get('translator')->trans('contact.message_sent'));
+        if ($form->isSubmitted() && $form->isValid() && $this->get('esteren_mailer')->sendContactMail($message, $request->getClientIp())) {
+            /** @var Session $session */
+            $session = $request->getSession();
+            $session->getFlashBag()->add('success', $this->get('translator')->trans('contact.message_sent'));
 
-            return $this->redirect($this->generateUrl('contact'));
+            return $this->redirectToRoute('contact');
         }
 
         return $this->render('@EsterenPortal/contact.html.twig', [
