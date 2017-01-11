@@ -15,10 +15,9 @@
 
             {{- form_row(form.name) -}}
             {{- form_row(form.email) -}}
-            {{- form_row(form.subject) -}}
             {{- form_row(form.message) -}}
 
-            <button class="btn" type="submit">{{ 'contact.send'|trans }}</button>
+            <button class="btn" type="submit">{{ 'form.send'|trans({}, 'contact') }}</button>
 
         {{- form_end(form) }}
     </div>

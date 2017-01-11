@@ -20,12 +20,26 @@ class ContactController extends Controller
         $form    = $this->createForm(ContactType::class, $message);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid() && $this->get('esteren_mailer')->sendContactMail($message, $request->getClientIp())) {
+        if ($form->isSubmitted() && $form->isValid()) {
+
             /** @var Session $session */
             $session = $request->getSession();
-            $session->getFlashBag()->add('success', $this->get('translator')->trans('contact.message_sent'));
+            $flashBag = $session->getFlashBag();
 
-            return $this->redirectToRoute('contact');
+            $translator = $this->get('translator');
+
+            $subject = $translator->trans('form.message_subject', ['%name%' => $message->getName()], 'contact');
+
+            // If message succeeds, we redirect
+            if ($this->get('esteren_mailer')->sendContactMail($message, $subject, $request->getClientIp())) {
+                $flashBag->add('success', $translator->trans('form.message_sent', [], 'contact'));
+
+                return $this->redirectToRoute('contact');
+            }
+
+            // Else, it means transport may had an error or something, so if no exception was thrown, we log this.
+            $flashBag->add('error', $translator->trans('form.error', [], 'contact'));
+            $this->get('logger')->error('Error when sending email', $this->get('jms_serializer')->serialize($message, 'json'));
         }
 
         return $this->render('@EsterenPortal/contact.html.twig', [

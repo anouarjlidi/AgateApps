@@ -42,10 +42,6 @@ page:
         admin_link: 'Preview'
         previewing: 'Preview'
 
-contact:
-    send: 'Send'
-    message_sent: 'Your email has been sent! Thanks!'
-
 button:
     select: 'Select'
     close: 'Close'

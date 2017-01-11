@@ -16,7 +16,7 @@
 {% endif %}
 
 {% set textMessage %}
-    Un message privé vient d'être envoyé par <strong>{{ message.name }}</strong> sur le portail Esteren.
+    {{ 'form.message_subject'|trans({'%name%': message.name}, 'contact') }}
 {% endset %}
 
 {% block title (textMessage|striptags) %}
