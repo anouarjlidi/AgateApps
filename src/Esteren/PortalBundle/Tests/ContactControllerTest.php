@@ -31,7 +31,6 @@ class ContactControllerTest extends WebTestCase
         $data = [
             'name' => 'username',
             'email' => 'test@local.host',
-            'subject' => 'a subject',
             'message' => 'a message for testing purpose',
         ];
 
@@ -46,7 +45,7 @@ class ContactControllerTest extends WebTestCase
 
         $crawler = $client->followRedirect();
 
-        $message = $client->getContainer()->get('translator')->trans('contact.message_sent');
+        $message = $client->getContainer()->get('translator')->trans('form.message_sent', [], 'contact');
 
         static::assertEquals($message, trim($crawler->filter('#flash-messages div.alert')->text()));
 
@@ -63,7 +62,6 @@ class ContactControllerTest extends WebTestCase
 
         // Asserting email data
         static::assertInstanceOf(\Swift_Message::class, $message);
-        static::assertEquals($data['subject'], $message->getSubject());
         static::assertEquals($data['email'], key($message->getFrom()));
         static::assertContains($data['message'], $message->getBody());
     }
