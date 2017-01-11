@@ -29,14 +29,6 @@ class ContactType extends AbstractType
                     new Constraints\Email(),
                 ],
             ])
-            ->add('subject', TextType::class, [
-                'attr'        => [
-                    'pattern' => '.{3,}' //minlength
-                ],
-                'constraints' => [
-                    new Constraints\Length(['min' => 3]),
-                ],
-            ])
             ->add('message', TextareaType::class)
         ;
     }
@@ -44,6 +36,7 @@ class ContactType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
+            'translation_domain' => 'contact',
             'data_class' => ContactMessage::class,
         ]);
     }

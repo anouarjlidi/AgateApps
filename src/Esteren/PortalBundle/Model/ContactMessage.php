@@ -12,11 +12,6 @@ class ContactMessage
     /**
      * @var string
      */
-    private $subject;
-
-    /**
-     * @var string
-     */
     private $email;
 
     /**
@@ -40,26 +35,6 @@ class ContactMessage
     public function setName($name)
     {
         $this->name = strip_tags((string) $name);
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getSubject()
-    {
-        return $this->subject;
-    }
-
-    /**
-     * @param string $subject
-     *
-     * @return ContactMessage
-     */
-    public function setSubject($subject)
-    {
-        $this->subject = strip_tags((string) $subject);
 
         return $this;
     }

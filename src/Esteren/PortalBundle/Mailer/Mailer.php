@@ -25,16 +25,17 @@ final class Mailer
 
     /**
      * @param ContactMessage $message
-     * @param string         $ip
+     * @param string $subject
+     * @param string $ip
      *
      * @return int
      */
-    public function sendContactMail(ContactMessage $message, $ip = null)
+    public function sendContactMail(ContactMessage $message, $subject, $ip = null)
     {
         $swiftMessage = new \Swift_Message();
 
         $swiftMessage
-            ->setSubject($message->getSubject())
+            ->setSubject($subject)
             ->setFrom($message->getEmail())
             ->setTo('pierstoval+esterenportal@gmail.com')
             ->setBody($this->templating->render('@EsterenPortal/email/contact_email.html.twig', [
