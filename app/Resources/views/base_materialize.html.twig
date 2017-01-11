@@ -185,7 +185,7 @@
                                     {%- else -%}
                                         <a class="text-underline" href="{{ path(route_name, ((route_params|default({}, 'Languages')) | merge({'_locale':loc})) ) }}">{{ loc | trans({}, 'Languages') }}</a>
                                     {%- endif -%}
-                                    {%- if not loop.last -%}&ndash;{% endif -%}
+                                    {%- if not loop.last %} &ndash; {% endif -%}
                                 {%- endfor -%}
                             {%- endif -%}
                             </p>
