@@ -27,7 +27,8 @@ With [OrbitaleCmsBundle](https://github.com/Orbitale/CmsBundle), a very simple C
 ## Backoffice
 
 The backoffice is powered by [EasyAdminBundle](https://github.com/javiereguiluz/EasyAdminBundle).
-Its configuration resides in [app/config/_easyadmin.yml](../app/config/_easyadmin.yml).
+Its configuration resides in [app/config/_easyadmin.yml](../app/config/_easyadmin.yml) and
+ [app/config/admin](../app/config/admin).
 An `AdminBundle` exists only to store the `AdminController` which allows complete override of any of EasyAdmin's feature.
 
 [IvoryCKEditorBundle](https://github.com/egeloen/IvoryCKEditorBundle) is installed and configured in the `Page` entity
@@ -55,15 +56,20 @@ Tests are located in the associated bundles, but global configuration is in the 
 
 The bootstrap file and the default `WebTestCase` class are located in the `tests/phpunit/` directory.
 
-For now, there's only PHPUnit, but maybe one day there'll be behat or phpspec tests to be runned, this is why there is
- another directory level to allow this more easily.
+For now, there's only PHPUnit, but maybe one day there'll be `behat` or `phpspec` tests to be runned, this is why there
+ is another directory level to allow this more easily.
 
 ## Users
 
 Users are managed with [FOSUserBundle](https://github.com/FriendsOfSymfony/FOSUserBundle).
+
 A simple `UsersBundle` exists to contain some fixtures and the `User` entity to be used in the whole application.
 It's important to note that this bundle **extends FOSUserBundle**, because in the future we might need to tweak/override
  the behavior of some FormTypes or controllers (because there's a project of merging users from different platforms).
+ 
+### Security
+
+Now all security authenticators have to be created in this bundle as a Guard Authenticator.
  
 **Note:** I wish to get rid of `FOSUserBundle` one day, because we will need different types of authentication.
 At least we could have the model and the user provider, but it could be much better to have a fully custom user

@@ -15,15 +15,11 @@
 A `post-receive` script has been set up on the production server, inside a bare
 repo that mirrors this actual repository.
 
-This script is based on [this Gist by Pierstoval]
-(https://gist.github.com/Pierstoval/27e8f309034fa0ababa1) and you should see it
-to know how it works and what it does (but basically it checkouts a release
-tag into a new branch and switches to this branch).
+You can see it in this file: [git_deploy_pre-receive_hook.bash](../_dev_files/git_deploy_pre-receive_hook.bash).
 
-The script for this repo's deployment executes only 2 scripts to deploy:
-
-* `composer install`
-* `php bin/console doctrine:schema:update --force --complete --dump-sql --env=prod`
+This script is based on [this Gist](https://gist.github.com/Pierstoval/27e8f309034fa0ababa1)
+and you should check it to know how it works and what it does (but basically it checkouts a release
+tag into a new branch and switches to this branch, and then run some scripts).
 
 As Composer is set up in [composer.json](../composer.json) automatically in the
 `post-install-cmd` script to clear the cache, install npm dependencies and dump
@@ -55,4 +51,4 @@ check it out with `git checkout release_v0.6.7`.
 After that, all scripts will be executed.
 
 **Note:** be sure the branch does not exist, else you will have to remove it
-manually from your server.
+manually from your server. Remember that **a tag can be pushed only once**.

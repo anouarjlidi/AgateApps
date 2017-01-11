@@ -30,8 +30,7 @@ The stack is the following:
 4. `EsterenMap._mapOptions.loadedCallback()`: By default, this function loads **markers**, **routes**, **zones** and
  **transports**.
  
-The `_load()` function also has a localStorage cache system that allows using a frontend cache which makes the queries
-much faster (no more AJAX, actually).
+The `_load()` function is the one that communicates with web services defined in the API (check documentation).
 
 ## Services
 
@@ -58,7 +57,7 @@ $ bin/console esterenmaps:map:generate-tiles
 
 It will use [ImageMagick](http://www.imagemagick.org) and the [Orbitale ImageMagickPHP](https://github.com/Orbitale/ImageMagickPHP)
  command wrapper to generate tiles of 128x128px.<br>
-<small>(actually, it doesn't use the Orbitale package yet, but it will)</small>
+<small>(actually, it doesn't use the Orbitale package yet, but it will one day)</small>
 
 ## Directions
 
@@ -67,7 +66,7 @@ Directions are calculated by the [DirectionsManager](../src/EsterenMaps/MapsBund
 Each time a direction is asked by an end-user, it is cached to avoid consuming too much resource when resolving Dijkstra's
  algorithm to calculate the best direction.
 
-The cache key is calculated simply by all the arguments.
+The cache key is calculated simply by hashing all the arguments.
 
 ### Distance calculation
 

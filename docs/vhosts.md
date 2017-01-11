@@ -13,6 +13,14 @@
 You can set up vhosts in different configuration.
 Mostly it can run on Apache without any issue, but can also work on Nginx.
 
+# Web entry point
+
+The `app_dev.php` file was removed and we only use `app.php` file in order to use environment vars for server parameters.
+
+This allows better support for other kind of systems like Docker stack (which we hope we can use one day).
+
+This is the reason why you need to set both `SYMFONY_ENV` and `SYMFONY_DEBUG` vars.
+
 # Apache vhost
 
 **Note:** Symfony's `.htaccess` file should be written in the vhost instead of in a `.htaccess` file for performances
@@ -21,7 +29,7 @@ reasons.
 But if you like, you can uncomment the "Symfony conf" part in the virtual host and use the `.htaccess` file by renaming
 the `web/.htaccess.dist` file.
 
-The dist file contains comments about what it does, whereas the vhost does not, that's all.
+The only difference is that the dist file contains comments about what it does, whereas the vhost does not, that's all.
 
 ```apache
 <VirtualHost *:80>
@@ -39,18 +47,14 @@ The dist file contains comments about what it does, whereas the vhost does not, 
     DocumentRoot /var/www/corahn_rin/web
 
     # Dev
-    SetEnv SYMFONY_ENVIRONMENT dev
+    SetEnv SYMFONY_ENV dev
     SetEnv SYMFONY_DEBUG 1
 
     # Prod
-    SetEnv SYMFONY_ENVIRONMENT prod
+    SetEnv SYMFONY_ENV prod
     SetEnv SYMFONY_DEBUG 0
 
     <Directory /var/www/corahn_rin/web>
-
-        # Uncomment if using php with cgi
-        #AddHandler php-cgi .php
-        #Action php-cgi /php-fcgi/php56
 
         AllowOverride all
         Options Indexes FollowSymLinks MultiViews
@@ -74,18 +78,13 @@ The dist file contains comments about what it does, whereas the vhost does not, 
             RewriteRule ^(.*) - [E=BASE:%1]
 
             RewriteCond %{HTTP:Authorization} .
-            RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+            RewriteRule ^ - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 
             RewriteCond %{ENV:REDIRECT_STATUS} ^$
             RewriteRule ^app\.php(?:/(.*)|$) %{ENV:BASE}/$1 [R=301,L]
 
             RewriteCond %{REQUEST_FILENAME} -f
             RewriteRule ^ - [L]
-
-            # Avoids getting 404 errors for missing map tiles.
-            RewriteCond %{REQUEST_URI} maps_tiles/ [NC]
-            RewriteCond %{REQUEST_FILENAME} !-f
-            RewriteRule .? %{ENV:BASE}/maps_tiles/empty.jpg [L,R=302]
 
             RewriteRule ^ %{ENV:BASE}/app.php [L]
         </IfModule>
@@ -142,7 +141,7 @@ server {
 
     # DEV
     # Remove this part when using for prod
-    env SYMFONY_ENVIRONMENT=dev;
+    env SYMFONY_ENV=dev;
     env SYMFONY_DEBUG=1;
     location / {
         # try to serve file directly, fallback to app.php
@@ -170,7 +169,7 @@ server {
 
     # PROD
     # Remove this part when using for dev
-    env SYMFONY_ENVIRONMENT=prod;
+    env SYMFONY_ENV=prod;
     env SYMFONY_DEBUG=0;
     location / {
         # try to serve file directly, fallback to app.php

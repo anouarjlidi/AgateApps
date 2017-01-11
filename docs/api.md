@@ -25,12 +25,12 @@ It makes use of [FOSRestBundle](https://github.com/FriendsOfSymfony/FOSRestBundl
  than the support of this bundle in this application.
 
 Every response object is serialized with [JMSSerializer](https://github.com/schmittjoh/serializer), so all the received
- objects will follow your `ExclusionPolicy` and different `Expose` or `Exclude` settings in `jms_serializer` config or
- in the `@Serializer` annotation in the entity.
+ objects will follow your `ExclusionPolicy` and different `@Expose` or `@Exclude` annotations in `jms_serializer` config
+ or in the `@Serializer` annotation in the entity.
 
 ## Services
 
-First, you must configure services. A service is composed of a name and an Entity.
+First, you must configure services. A service is composed of a **name** and an **Entity**.
 
 All webservices are accessible from the domain configured in the `esteren_domains.api` parameter and the routes are
  the following:

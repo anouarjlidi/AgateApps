@@ -28,8 +28,8 @@ The routing load order is the following:
  Also available for all subdomains.
 * PierstovalApi's webservices, all loaded under the `%esteren_domains.api%` host.
 * Admin routes, under `%esteren_domains.backoffice%` host.
-* Front-office routes, like the contact form.
-* All other portals, they lie under all subdomains to be handled by OrbitaleCmsBundle ([view below](#cms)).
+* Front-office routes, like the contact form, legal mentions, etc.
+* All other portals, they lie under all subdomains and are managed by OrbitaleCmsBundle ([view below](#cms)).
 
 ## Locale
 
@@ -37,6 +37,10 @@ All routes are manually prepended with the locale.
 You **must** be aware of this when creating new routes, because every part of the app has to be translated.
 
 If something has to be specific to one locale, make sure your route has a requirement for this locale.
+
+**Note:** Nested requirements don't work in Symfony. It means that if in `routing.yml` you import a file **with** 
+ requirements like `_locale: %regexp%`, you **cannot** have other requirements in the Route annotation. Yml file will
+ prevail.
 
 ## CMS
 
