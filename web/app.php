@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 umask(0002);
 
-$environment = (getenv('SYMFONY_ENVIRONMENT') !== false) ? getenv('SYMFONY_ENVIRONMENT') : 'dev';
+$environment = (getenv('SYMFONY_ENV') !== false) ? getenv('SYMFONY_ENV') : 'dev';
 $debug       = (getenv('SYMFONY_DEBUG') !== false) ? (bool) getenv('SYMFONY_DEBUG') : true;
 
 /**
