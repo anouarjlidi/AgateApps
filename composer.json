@@ -36,7 +36,7 @@
 
         "jms/serializer": "^1.2",
         "jms/serializer-bundle": "^1.1",
-        "friendsofsymfony/user-bundle": "^2.0.0@beta",
+        "friendsofsymfony/user-bundle": "^2.0.0@dev",
         "friendsofsymfony/rest-bundle": "^1.7",
         "nelmio/cors-bundle": "^1.4",
         "egeloen/ckeditor-bundle": "^4.0",
