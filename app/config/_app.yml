@@ -50,7 +50,7 @@ doctrine:
         default_connection: default
         connections:
             default:
-                driver:   '%database_driver%'
+                driver:   pdo_mysql
                 host:     '%database_host%'
                 dbname:   '%database_name%'
                 user:     '%database_user%'
@@ -58,6 +58,7 @@ doctrine:
                 path:     '%database_path%'
                 charset:  UTF8
             legacy:
+                driver:   pdo_mysql
                 host:     '%database_host_legacy%'
                 dbname:   '%database_name_legacy%'
                 user:     '%database_user_legacy%'

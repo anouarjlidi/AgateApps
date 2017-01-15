@@ -7,9 +7,6 @@ parameters:
     database_name:     esteren_portal
     database_user:     esteren_portal
     database_password: ~
-    # You may change these values if you are using sqlite
-    database_driver:   pdo_mysql
-    database_path:     "%kernel.root_dir%/data.db3"
 
     database_host_legacy:     127.0.0.1
     database_port_legacy:     null
