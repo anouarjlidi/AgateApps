@@ -164,11 +164,9 @@ class SecurityControllerTest extends WebTestCase
 
         // This message contains informations about user resetting token TTL.
         // This information is set in the FOSUser ResettingController and must be copied here just for testing.
-        $emailSentMessage = $container
-            ->get('translator')
-            ->trans('resetting.check_email', [
-                '%tokenLifetime%' => floor($container->getParameter('fos_user.resetting.token_ttl') / 3600),
-            ], 'FOSUserBundle');
+        // We are testing in french.
+        $emailSentMessage = 'Un e-mail a été envoyé. Il contient un lien sur lequel il vous faudra cliquer pour réinitialiser votre mot de passe.';
+
         static::assertContains($emailSentMessage, $crawler->filter('#content')->html());
 
         $tokenGenerator = $container->get('fos_user.util.token_generator');
