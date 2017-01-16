@@ -37,19 +37,20 @@
         <div class="col s1">
             <p class="{{ text_color }} right-align">
                 {{ setback_defined ? setback_symbol }}
-                {% if setback_defined and  setbacks_value[setback.id].avoided %}
-                    <small>({{ 'Évité'|trans }})</small>
-                {% endif %}
             </p>
         </div>
         <div class="col s3">
-            {% if setback_defined and setbacks_value[setback.id].avoided == true %}
-                <small class="bl green-text text-lighten-2">{{ 'Par chance, votre personnage a évité ce revers !' | trans }}</small>
-            {% endif %}
-
-            <p class="{{ text_color }}">{{ setback.name | trans }}</p>
+            <p class="{{ text_color }}">
+                {{ setback.name | trans }}
+                {% if setback_defined and  setbacks_value[setback.id].avoided %}
+                    <small>({{ 'setback.avoided'|trans({}, 'CorahnRinBundle') }})</small>
+                {% endif %}
+            </p>
         </div>
         <div class="col s8 {{ text_color }}">
+            {% if setback_defined and setbacks_value[setback.id].avoided == true %}
+                <p><small class="green-text text-lighten-2">{{ 'setback.avoided_long' | trans({}, 'CorahnRinBundle') }}</small></p>
+            {% endif %}
             <p>{{ setback.description | trans }}</p>
         </div>
 

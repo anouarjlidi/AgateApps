@@ -11,3 +11,7 @@ domain:
 age:
     select: 'Sélectionnez l''âge de votre personnage'
     min_max: 'Minimum : 16, maximum : 35'
+
+setback:
+    avoided: 'Évité'
+    avoided_long: 'Par chance, votre personnage a évité ce revers !'
