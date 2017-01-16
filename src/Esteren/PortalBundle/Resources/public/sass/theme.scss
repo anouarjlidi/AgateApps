@@ -37,3 +37,10 @@ form textarea {
     text-align: center;
     line-height: 1.2em;
 }
+
+#wrapper {
+    .btn.active {
+        @extend .btn.disabled;
+        pointer-events: auto;
+    }
+}

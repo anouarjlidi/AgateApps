@@ -155,6 +155,7 @@
                 if (node) {
                     node.value = this.getAttribute('data-divchoice-value');
                 }
+
                 return false;
             });
         }
@@ -184,21 +185,32 @@
                     $this.data('jq_max_number', max);
                 }
             })
-            .on('click', function(){
+            .on('click', function(e){
                 // Remove other active labels for this group of inputs
                 var $this = $(this);
                 var max = $this.data('jq_max_number');
 
-                // Applicate this trick with asynchronous call to be sure click event is finished
-                setTimeout(function(){
-                    var elements = $this.data('jq_parent').querySelectorAll('label.active');
-                    if (elements.length > max) {
-                        for (var i = max, c = elements.length; i < c ; i++) {
-                            elements[i].classList.remove('active');
-                            elements[i].firstElementChild.checked = false;
-                        }
+                // Disable activated elements if count is superior to maximum value
+                var elements = $this.data('jq_parent').querySelectorAll('label.active');
+                if (elements.length >= (max-1)) {
+                    for (var i = max, c = elements.length; i < c ; i++) {
+                        elements[i].classList.remove('active');
+                        elements[i].querySelector('input').checked = false;
                     }
-                }, 50);
+                }
+
+                if (this.classList.contains('active')) {
+                    this.classList.remove('active');
+                    this.querySelector('input').checked = false;
+                } else if (elements.length < max) {
+                    // Activate current label
+                    this.classList.add('active');
+                    this.querySelector('input').checked = true;
+                }
+
+                e.stopPropagation();
+
+                return false;
             })
         ;
     }

@@ -10,7 +10,7 @@
 
         {% if is_superior_to_current or is_defined_step or is_last_undefined_step %}
             <li class="collection-item step_available{% if current_step and current_step.step == loop_step.step %} active{% endif %}">
-                <a href="{{ path('pierstoval_character_generator_step', {'requestStep': stepName}) }}">
+                <a href="{{ path('pierstoval_character_generator_step', {'requestStep': stepName}) }}" class="bl">
                     {{ current_step.step == loop_step.step ? '&raquo;' }} {{ loop_step.step }}. {{ loop_step.label | trans }}
                 </a>
             </li>
