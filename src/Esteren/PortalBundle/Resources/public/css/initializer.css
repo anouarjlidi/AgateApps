@@ -16,6 +16,10 @@
     margin-right: auto;
 }
 
+.fln {
+    float: none !important;
+}
+
 .cursor-pointer:hover { cursor: pointer; }
 
 #layout {

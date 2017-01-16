@@ -3,50 +3,53 @@
     <span class="fa fa-hand-o-right"><span class="sr-only">&raquo;</span></span>
 {%- endset %}
 
-<p class="alert alert-info">
+<div class="card-panel teal lighten-4">
     {% if age > 20 %}
-        {{ 'Votre personnage a <span class="label label-warning">%age%</span> ans, il a donc au moins <span class="label label-warning">%count%</span> revers.' | trans({'%age%':age,'%count%': setbacks_number}) | raw }}
+        {{ 'Votre personnage a <span class="badge fln blue text-black lighten-3">%age%</span> ans, il a donc au moins <span class="label label-warning">%count%</span> revers.' | trans({'%age%':age,'%count%': setbacks_number}, 'CorahnRinBundle') | raw }}
         <br>
-        {{ 'Les revers tirés sont indiqués par le symbole "%symbol%".' | trans({'%symbol%': setback_symbol}) | raw }}
+        {{ 'Les revers tirés sont indiqués par le symbole "%symbol%".' | trans({'%symbol%': setback_symbol}, 'CorahnRinBundle') | raw }}
     {% else %}
-        {{ 'Votre personnage a %age% ans, il n\'a donc aucun revers.' | trans({'%age%':age}) }}
+        {{ 'Votre personnage a %age% ans, il n\'a donc aucun revers.' | trans({'%age%':age}, 'CorahnRinBundle') }}
     {% endif %}
 
     <br>
     {% if choice_available %}
         <a href="{{ path('pierstoval_character_generator_step', {'requestStep': current_step.name}) }}">
-            {{ 'Voulez-vous déterminer les revers automatiquement ?'|trans }}
+            {{ 'Voulez-vous déterminer les revers automatiquement ?'|trans({}, 'CorahnRinBundle') }}
         </a>
     {% else %}
         <a href="{{ path('pierstoval_character_generator_step', {'requestStep': current_step.name, 'manual': '1'}) }}">
-            {{ 'Voulez-vous déterminer les revers manuellement ?'|trans }}
+            {{ 'Voulez-vous déterminer les revers manuellement ?'|trans({}, 'CorahnRinBundle') }}
         </a>
     {% endif %}
-</p>
+</div>
 
 {% for setback in setbacks_list %}
-    <div class="row mb15">
+    {% set setback_defined = setbacks_value[setback.id] is defined %}
+    {% set text_color = setback_defined ? (not setbacks_value[setback.id].avoided and setback.id != 10 ? 'text-red' : 'text-green') : '' %}
 
-        <div class="col-sm-3">
-            <p>
-                {% if setbacks_value[setback.id] is defined %}
-                    <span class="text-{{ not setbacks_value[setback.id].avoided and setback.id != 10 ? 'red' : 'green' }}">
-                    {{ setback_symbol }}
-                        {{ setback.name | trans }}
-                        {% if setbacks_value[setback.id].avoided %}
-                            <small>({{ 'Évité'|trans }})</small>
-                        {% endif %}
-                </span>
-                    {% if setbacks_value[setback.id].avoided == true %}
-                        <small class="bl">{{ 'Par chance, votre personnage a évité ce revers !' | trans }}</small>
-                    {% endif %}
+    {% if not loop.first %}
+        <hr>
+    {% endif %}
 
-                {% else %}
-                    {{ setback.name | trans }}
+    <div class="row setback{{ setback_defined ? ' active' }}">
+
+        <div class="col s1">
+            <p class="{{ text_color }} right-align">
+                {{ setback_defined ? setback_symbol }}
+                {% if setback_defined and  setbacks_value[setback.id].avoided %}
+                    <small>({{ 'Évité'|trans }})</small>
                 {% endif %}
             </p>
         </div>
-        <div class="col-sm-9">
+        <div class="col s3">
+            {% if setback_defined and setbacks_value[setback.id].avoided == true %}
+                <small class="bl green-text text-lighten-2">{{ 'Par chance, votre personnage a évité ce revers !' | trans }}</small>
+            {% endif %}
+
+            <p class="{{ text_color }}">{{ setback.name | trans }}</p>
+        </div>
+        <div class="col s8 {{ text_color }}">
             <p>{{ setback.description | trans }}</p>
         </div>
 

@@ -43,4 +43,8 @@ form textarea {
         @extend .btn.disabled;
         pointer-events: auto;
     }
+    .badge.fln {
+        margin: 0;
+        padding: 3px 6px;
+    }
 }
