@@ -15,6 +15,11 @@
         $('.modal').modal();
     }
 
+    // Automatically activate materialize select tags
+    if (d.querySelector('select')) {
+        $('select').material_select();
+    }
+
     // Manage the "disable tags" cookie CNIL requirement
     if (d.querySelector('button.disable_tags')) {
         d.addEventListener('click', function(e){

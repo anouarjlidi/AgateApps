@@ -1,13 +1,13 @@
 {% extends '@CorahnRin/Steps/step_base.html.twig' %}
 
-{% block form_class 'form-inline' %}
-
 {% block step_content %}
-    <h3><label for="age_value">{{ 'Sélectionnez l\'âge de votre personnage' | trans | raw }}</label></h3>
-    <select name="age" id="age_value" class="form-control">
-        {% for i in 16..35 %}
-            <option value="{{ i }}" {{ age == i ? 'selected' }}>{{ i }}</option>
-        {% endfor %}
-    </select>
-    <p class="help-block">{{ 'Minimum : 16, maximum : 35' }}</p>
+    <div class="input-field">
+        <select name="age" id="age_value">
+            {% for i in 16..35 %}
+                <option value="{{ i }}" {{ age == i ? 'selected' }}>{{ i }}</option>
+            {% endfor %}
+        </select>
+        <label for="age_value">{{ 'age.select' | trans({}, 'CorahnRinBundle') | raw }}</label>
+    </div>
+    <p class="help-block">{{ 'age.min_max' | trans({}, 'CorahnRinBundle') }}</p>
 {% endblock %}

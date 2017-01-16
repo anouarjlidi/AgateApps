@@ -7,3 +7,7 @@ domain:
     secondary: 'Domaine secondaire'
     manual: 'Au choix'
     add_to_two_others: '+1 dans deux domaine parmi les suivants'
+
+age:
+    select: 'Sélectionnez l''âge de votre personnage'
+    min_max: 'Minimum : 16, maximum : 35'
