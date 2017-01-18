@@ -21,3 +21,9 @@ setback:
         auto: 'Voulez-vous déterminer les revers automatiquement ?'
     drawn: 'Les revers tirés sont indiqués par le symbole "%symbol%".'
     quantity : 'Votre personnage a <span class="badge fln blue text-black lighten-3">%age%</span> ans, il a donc au moins <span class="label label-warning">%count%</span> revers.'
+ways:
+    total: 'Total :'
+    explanation: |
+        Les voies sont comprises entre 1 et 5, et la somme totale des voies doit être égale à 15.
+        <br>
+        Pour obtenir des valeurs idéales, répartissez simplement les valeurs 1, 2, 3, 4 et 5 dans chacune des voies.

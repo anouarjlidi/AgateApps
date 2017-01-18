@@ -3,54 +3,62 @@
 {% block step_content %}
 
 {% spaceless %}
-<p class="alert alert-info">
-    {{ 'Les voies sont comprises entre 1 et 5, et la somme totale des voies doit être égale à 15.' | trans }}
-    <br />
-    {{ 'Pour obtenir des valeurs idéales, répartissez simplement les valeurs 1, 2, 3, 4 et 5 dans chacune des voies.' | trans }}
-</p>
+<div class="card-panel teal lighten-4">
+    {{ 'ways.explanation' | trans({}, 'CorahnRinBundle') | raw }}
+</div>
+
+<div class="card-panel teal lighten-5">
+    {% set total = 0 %}
+    {% for value in ways_values %}
+        {% set total = total + value %}
+    {% endfor %}
+    {{ 'ways.total'|trans({}, 'CorahnRinBundle') }}
+    <span id="sum_output" class="btn btn-small {{ total == 15 ? 'green' : 'red' }} lighten-2">{{ total }}</span>
+</div>
+
 {% for id,way in ways_list %}
     <div class="row mb10">
-        <div class="col-sm-2">
+        <div class="col m2">
             <p>{{ way.name | trans }}</p>
         </div>
-        <div class="col-sm-2">
-            <div class="input-group">
+        <div class="col m4">
+            <div class="input-field inline">
 
                 {# "minus" button #}
-                <span class="input-group-btn">
-                    <button
-                        class="btn btn-inverse"
-                        data-toggle-increment
-                        data-ti-increment-min="1"
-                        data-ti-increment-max="5"
-                        data-ti-increment="-1"
-                        data-ti-target-node="way_{{ id }}"
-                        data-ti-sum-max="15"
-                        data-ti-sum-selector=".input_way"
-                        type="button"
-                    >&minus;</button>
-                </span>
+                <button
+                    class="btn btn-small"
+                    data-toggle-increment
+                    data-ti-increment-min="1"
+                    data-ti-increment-max="5"
+                    data-ti-increment="-1"
+                    data-ti-target-node="way_{{ id }}"
+                    data-ti-sum-max="15"
+                    data-ti-sum-output="sum_output"
+                    data-ti-sum-output-html
+                    data-ti-sum-selector=".input_way"
+                    type="button"
+                >&minus;</button>
 
                 {# Input that stores the sum for each way#}
-                <input id="way_{{ id }}" name="ways[{{ id }}]" type="text" class="form-control input_way text-center input-black disabled" value="{{ ways_values[id] }}" title="{{ way.name | trans }}"/>
+                <input id="way_{{ id }}" name="ways[{{ id }}]" type="text" class="input_way w50 center" value="{{ ways_values[id] }}" title="{{ way.name | trans }}"/>
 
                 {# "plus" button #}
-                <span class="input-group-btn">
-                    <button
-                        class="btn btn-inverse"
-                        data-toggle-increment
-                        data-ti-increment-min="1"
-                        data-ti-increment-max="5"
-                        data-ti-increment="1"
-                        data-ti-target-node="way_{{ id }}"
-                        data-ti-sum-max="15"
-                        data-ti-sum-selector=".input_way"
-                        type="button"
-                    >&plus;</button>
-                </span>
+                <button
+                    class="btn btn-small"
+                    data-toggle-increment
+                    data-ti-increment-min="1"
+                    data-ti-increment-max="5"
+                    data-ti-increment="1"
+                    data-ti-target-node="way_{{ id }}"
+                    data-ti-sum-max="15"
+                    data-ti-sum-output="sum_output"
+                    data-ti-sum-output-html
+                    data-ti-sum-selector=".input_way"
+                    type="button"
+                >&plus;</button>
             </div><!-- /input-group -->
         </div>
-        <div class="col-sm-8">
+        <div class="col m6">
             <p>{{ way.description | trans | raw }}</p>
         </div>
     </div>

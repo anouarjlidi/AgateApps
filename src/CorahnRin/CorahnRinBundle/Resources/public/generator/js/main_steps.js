@@ -46,10 +46,13 @@
                     min         = this.getAttribute('data-ti-increment-min'),
                     sumMax      = parseInt(this.getAttribute('data-ti-sum-max')),
                     sumSelector = this.getAttribute('data-ti-sum-selector'),
+                    sumOutput   = this.getAttribute('data-ti-sum-output'),
+                    sumOutHtml  = this.hasAttribute('data-ti-sum-output-html'),
                     sum         = 0,
                     useHtml     = this.hasAttribute('data-ti-use-html'),
                     increment   = parseInt(this.getAttribute('data-ti-increment')),
                     value       = parseInt(useHtml ? d.getElementById(target).innerHTML : d.getElementById(target).value),
+                    sumOutputElement,
                     i, l, c, j // Only loop vars
                 ;
 
@@ -101,6 +104,40 @@
                     d.getElementById(target).innerHTML = value.toString();
                 } else {
                     d.getElementById(target).value = value;
+                }
+
+                if (sumOutput && sumSelector) {
+                    // Recalculate sum at the end of all calculation for display purpose
+                    sum = 0;
+
+                    for (i = 0, l = d.querySelectorAll(sumSelector), c = l.length; i < c; i++) {
+                        if (useHtml) {
+                            j = parseInt(l[i].innerHTML);
+                        } else {
+                            j = parseInt(l[i].value);
+                        }
+                        if (isNaN(j)) {
+                            console.warn('When calculating the sum, a node has a wrong value (but we converted it to zero in case of).', l[i]);
+                            j = 0;
+                        }
+                        sum += j;
+                    }
+
+                    sumOutputElement = d.getElementById(sumOutput);
+
+                    if (sumOutHtml) {
+                        sumOutputElement.innerHTML = sum.toString();
+                    } else {
+                        sumOutputElement.value = sum;
+                    }
+
+                    if (sum === sumMax) {
+                        sumOutputElement.classList.remove('red');
+                        sumOutputElement.classList.add('green');
+                    } else {
+                        sumOutputElement.classList.remove('green');
+                        sumOutputElement.classList.add('red');
+                    }
                 }
 
                 e.preventDefault();
