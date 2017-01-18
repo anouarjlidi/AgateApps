@@ -1,0 +1,26 @@
+
+{# Flash messages #}
+{% spaceless %}
+    {% for key, messageList in app.session.flashbag.all %}
+
+        {% if loop.first %}<div id="flash-messages">{% endif %}
+
+        {% set translation_domain = 'messages.flash' %}
+
+        {% if 'fos_user_' in key %}
+            {# Sometimes, FOSUser can send specific error messages #}
+            {% set translation_domain = 'FOSUserBundle' %}
+        {% endif %}
+
+        {% set class = get_flash_class(key) %}
+
+        <div class="card-panel {{ class }} {{ key }}">
+            {% for message in messageList %}
+                {{ message | trans({}, translation_domain) | raw }}
+                {% if not loop.last %}<br />{% endif %}
+            {% endfor %}
+        </div>
+
+        {% if loop.last %}</div>{% endif %}
+    {% endfor %}
+{% endspaceless %}

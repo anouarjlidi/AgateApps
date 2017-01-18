@@ -98,35 +98,9 @@
 
                 <div id="content" class="{% block content_layout_class %}container{% endblock %}">
 
-                    {# Flash messaages #}
-                    {% spaceless %}
-                        {% for key, messageList in app.session.flashbag.all %}
-
-                            {% if loop.first %}<div id="flash-messages">{% endif %}
-
-                            {% set translation_domain = 'messages.flash' %}
-
-                            {% set class = key %}
-                            {% if 'fos_user_' in class %}
-                                {# Sometimes, FOSUser can send specific error keys #}
-                                {% set class = (class | replace({'fos_user_': ''})) %}
-                                {% set translation_domain = 'FOSUserBundle' %}
-                            {% endif %}
-                            {% if 'error' == class %}
-                                {# Fit bootstrap's needs #}
-                                {% set class = 'danger' %}
-                            {% endif %}
-
-                            <div class="alert alert-{{ class }} {{ key }}">
-                                {% for message in messageList %}
-                                    {{ message | trans({}, translation_domain) | raw }}
-                                    {% if not loop.last %}<br />{% endif %}
-                                {% endfor %}
-                            </div>
-
-                            {% if loop.last %}</div>{% endif %}
-                        {% endfor %}
-                    {% endspaceless %}
+                    {% block flash_messages %}
+                        {{ include('_flash_messages.html.twig') }}
+                    {% endblock %}
 
                     {#{% block orbitale_cms_breadcrumbs %}{% endblock %}#}
 
