@@ -1,28 +1,4 @@
 
-{% set setback_symbol -%}
-    <span class="fa fa-hand-o-right"><span class="sr-only">&raquo;</span></span>
-{%- endset %}
-
-<div class="card-panel teal lighten-4">
-    {% if age > 20 %}
-        {{ 'Votre personnage a <span class="badge fln blue text-black lighten-3">%age%</span> ans, il a donc au moins <span class="label label-warning">%count%</span> revers.' | trans({'%age%':age,'%count%': setbacks_number}, 'CorahnRinBundle') | raw }}
-        <br>
-        {{ 'Les revers tirés sont indiqués par le symbole "%symbol%".' | trans({'%symbol%': setback_symbol}, 'CorahnRinBundle') | raw }}
-    {% else %}
-        {{ 'Votre personnage a %age% ans, il n\'a donc aucun revers.' | trans({'%age%':age}, 'CorahnRinBundle') }}
-    {% endif %}
-
-    <br>
-    {% if choice_available %}
-        <a href="{{ path('pierstoval_character_generator_step', {'requestStep': current_step.name}) }}">
-            {{ 'Voulez-vous déterminer les revers automatiquement ?'|trans({}, 'CorahnRinBundle') }}
-        </a>
-    {% else %}
-        <a href="{{ path('pierstoval_character_generator_step', {'requestStep': current_step.name, 'manual': '1'}) }}">
-            {{ 'Voulez-vous déterminer les revers manuellement ?'|trans({}, 'CorahnRinBundle') }}
-        </a>
-    {% endif %}
-</div>
 
 {% for setback in setbacks_list %}
     {% set setback_defined = setbacks_value[setback.id] is defined %}
@@ -48,10 +24,10 @@
             </p>
         </div>
         <div class="col s8 {{ text_color }}">
+            <p>{{ setback.description | trans }}</p>
             {% if setback_defined and setbacks_value[setback.id].avoided == true %}
                 <p><small class="green-text text-lighten-2">{{ 'setback.avoided_long' | trans({}, 'CorahnRinBundle') }}</small></p>
             {% endif %}
-            <p>{{ setback.description | trans }}</p>
         </div>
 
     </div><!-- /.row -->

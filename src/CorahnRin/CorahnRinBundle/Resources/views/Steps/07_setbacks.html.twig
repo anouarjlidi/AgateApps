@@ -2,10 +2,36 @@
 
 {% block step_content %}
 
-    {% if choice_available %}
-        {{ include('@CorahnRin/Steps/setbacks/manual.html.twig', with_context = true) }}
+    {% set setback_symbol -%}
+        <span class="fa fa-hand-o-right"><span class="sr-only">&raquo;</span></span>
+    {%- endset %}
+
+    <div class="card-panel teal lighten-4">
+        {{ 'setback.quantity' | trans({'%age%':age,'%count%': setbacks_number}, 'CorahnRinBundle') | raw }}
+        <br>
+
+        <br>
+        {% if choice_available %}
+            <a href="{{ path('pierstoval_character_generator_step', {'requestStep': current_step.name}) }}">
+                {{ 'setback.question.auto'|trans({}, 'CorahnRinBundle') }}
+            </a>
+        {% else %}
+            <p>{{ 'setback.drawn' | trans({'%symbol%': setback_symbol}, 'CorahnRinBundle') | raw }}</p>
+
+            <a href="{{ path('pierstoval_character_generator_step', {'requestStep': current_step.name, 'manual': ''}) }}">
+                {{ 'setback.question.manual'|trans({}, 'CorahnRinBundle') }}
+            </a>
+        {% endif %}
+    </div>
+
+    {% if age >= 21 %}
+        {% if choice_available %}
+            {{ include('@CorahnRin/Steps/setbacks/manual.html.twig', with_context = true) }}
+        {% else %}
+            {{ include('@CorahnRin/Steps/setbacks/auto.html.twig', with_context = true) }}
+        {% endif %}
     {% else %}
-        {{ include('@CorahnRin/Steps/setbacks/auto.html.twig', with_context = true) }}
+        <p class="text-green">{{ 'setback.none' | trans({}, 'CorahnRinBundle') }}</p>
     {% endif %}
 
 {% endblock %}

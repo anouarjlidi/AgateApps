@@ -15,3 +15,9 @@ age:
 setback:
     avoided: 'Évité'
     avoided_long: 'Par chance, votre personnage a évité ce revers !'
+    none: 'Votre personnage n''a aucun revers.'
+    question:
+        manual: 'Voulez-vous déterminer les revers manuellement ?'
+        auto: 'Voulez-vous déterminer les revers automatiquement ?'
+    drawn: 'Les revers tirés sont indiqués par le symbole "%symbol%".'
+    quantity : 'Votre personnage a <span class="badge fln blue text-black lighten-3">%age%</span> ans, il a donc au moins <span class="label label-warning">%count%</span> revers.'

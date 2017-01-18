@@ -52,6 +52,9 @@ class Step07Setbacks extends AbstractStepAction
             // Automatic calculation (roll dices, etc.)
             $setbacksValue = $this->determineSetbacksAutomatically();
             $this->updateCharacterStep($setbacksValue);
+        } elseif ($chooseStepsManually && !$this->request->isMethod('POST')) {
+            // Reset setbacks only for the view when user clicked "Choose setbacks manually".
+            $setbacksValue = [];
         }
 
         if ($this->request->isMethod('POST')) {

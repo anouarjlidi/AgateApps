@@ -6,7 +6,7 @@
             {# Loop through all setbacks BUT avoid "lucky" and "unlucky", to avoid complex validation... #}
             {% for setbackId, setback in setbacks_list if setbackId not in [1, 10] %}
                 <div class="row">
-                    <div class="col-sm-3">
+                    <div class="col s3">
                         <label for="button_{{ setback.id }}_{{ setback.id }}" class="btn btn-block btn-inverse {{ setbacks_value[setback.id] is defined ? ' active' : '' }}">
 
                             <input type="checkbox" id="button_{{ setback.id }}" name="setbacks_value[]" value="{{ setback.id }}" {{ setbacks_value[setback.id] is defined ? ' checked="checked"' : '' }} class="hidden" />
@@ -14,7 +14,7 @@
                             {{ setback.name | trans }}
                         </label>
                     </div>
-                    <div class="col-sm-9">
+                    <div class="col s9">
                         {{ setback.description | trans }}
                     </div>
                 </div>
