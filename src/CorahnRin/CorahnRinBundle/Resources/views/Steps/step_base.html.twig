@@ -1,5 +1,7 @@
 {% extends '@CorahnRin/layout.html.twig' %}
 
+{% block flash_messages '' %}
+
 {% block title %}{{ 'Générateur' | trans }} - {{ current_step.name | trans }} - {{ parent() }}{% endblock %}
 
 {% block stylesheets %}
@@ -18,6 +20,9 @@
         </div>
         <div class="col l9 step_module">
             <h1>{{ 'Étape' | trans }} {{ current_step.step }} : {{ current_step.label | trans }}</h1>
+
+            {{ include('_flash_messages.html.twig') }}
+
             <form class="{% block form_class '' %}" name="generator_form" id="generator_form" method="post" action="{{ path('pierstoval_character_generator_step', {'requestStep': current_step.name}) }}">
                 <div id="generator_{{ current_step.name }}">
                     <button type="submit" id="submit_btn" class="btn btn-inverse">{{ 'Étape suivante' | trans }}</button>
