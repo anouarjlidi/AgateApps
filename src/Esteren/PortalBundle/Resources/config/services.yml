@@ -4,8 +4,11 @@ services:
         arguments:
             - '%google_tags%'
             - '%kernel.debug%'
-        tags:
-            - { name: twig.extension }
+        tags: [{ name: twig.extension }]
+
+    portal.twig.flash_colors:
+        class: Esteren\PortalBundle\Twig\FlashMessageColorsExtension
+        tags: [{ name: twig.extension }]
 
     esteren_mailer:
         class: Esteren\PortalBundle\Mailer\Mailer
