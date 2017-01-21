@@ -7,7 +7,7 @@
 {% for row in socialClasses|batch(2) %}
     <div class="row">
     {% for socialClass in row if (socialClass|length) %}
-        <div class="col-sm-6 gen-div-choice{% if socialClass_value == socialClass.id %} selected{% endif %}"
+        <div class="col s6 gen-div-choice{% if socialClass_value == socialClass.id %} selected{% endif %}"
              data-divchoice-value="{{ socialClass.id }}"
              data-divchoice-inside="true"
              data-divchoice-max-selected="2">

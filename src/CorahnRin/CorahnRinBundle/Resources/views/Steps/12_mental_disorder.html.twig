@@ -7,7 +7,7 @@
     <input type="hidden" name="gen-div-choice" id="gen-div-choice" value="{{ disorder_value }}" />
     <div class="row">
     {% for disorder in disorders %}
-        <div class="col-sm-6 gen-div-choice{% if disorder_value == disorder.id %} selected{% endif %}"
+        <div class="col s6 gen-div-choice{% if disorder_value == disorder.id %} selected{% endif %}"
              data-divchoice-value="{{ disorder.id }}">
             <article>
                 <header>
