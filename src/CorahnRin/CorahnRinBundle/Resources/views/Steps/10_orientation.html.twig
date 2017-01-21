@@ -3,19 +3,22 @@
 {% block step_content %}
 
 {% if can_be_changed %}
-<input type="hidden" name="gen-div-choice" id="gen-div-choice" value="{{ orientation_value }}" />
+    <input type="hidden" name="gen-div-choice" id="gen-div-choice" value="{{ orientation_value }}" />
 {% endif %}
+
 <div class="row">
     {% for id, orientation in orientations %}
-    <div class="col s6 gen-div-choice{{ can_be_changed ? '' : '-disabled' }}{{ orientation_value == id ? ' selected' }}"
-         data-divchoice-value="{{ id }}">
-        <article>
-            <header>
-                <h3 class="text-center">{{ orientation.name | trans }}</h3>
-            </header>
-            <p>{{ orientation.description | trans }}</p>
-        </article>
-    </div>
+        {% if can_be_changed or (not can_be_changed and orientation_value == id) %}
+            <div class="col l6 gen-div-choice{{ not can_be_changed ? '-disabled' }}{{ orientation_value == id ? ' selected' }}"
+                 data-divchoice-value="{{ id }}">
+                <article class="{{ can_be_changed ? 'hoverable' }}">
+                    <header>
+                        <h3 class="center">{{ orientation.name | trans({}, 'CorahnRinBundle') }}</h3>
+                    </header>
+                    <p>{{ orientation.description | trans({}, 'CorahnRinBundle') | raw }}</p>
+                </article>
+            </div>
+        {% endif %}
     {% endfor %}
 </div>
 

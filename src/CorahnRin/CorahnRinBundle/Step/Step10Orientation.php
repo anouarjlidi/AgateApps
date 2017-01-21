@@ -19,13 +19,8 @@ class Step10Orientation extends AbstractStepAction
         // These data are static and are not related to anything else in the app.
         $orientations = Orientation::getData();
 
-        $com = $ways[1];
-        $cre = $ways[2];
-        $rai = $ways[4];
-        $ide = $ways[5];
-
-        $conscience = $rai + $ide;
-        $instinct   = $com + $cre;
+        $instinct   = $ways[1] + $ways[2]; // Combativeness + Creativity
+        $conscience = $ways[4] + $ways[5]; // Reason + Conviction
 
         $canBeChanged = $conscience === $instinct;
 
