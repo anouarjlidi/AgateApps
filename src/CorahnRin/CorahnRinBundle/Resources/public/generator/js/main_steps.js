@@ -255,8 +255,8 @@
     /**
      * Activates generator choice button with potential info modal (used un jobs, traits...).
      */
-    if (d.querySelector('.btn-gen-choice')) {
-        var btnGenChoiceList = d.querySelectorAll('.btn-gen-choice');
+    if (d.querySelector('[data-toggle="btn-gen-choice"]')) {
+        var btnGenChoiceList = d.querySelectorAll('[data-toggle="btn-gen-choice"]');
         for (i = 0, l = btnGenChoiceList.length; i < l; i++) {
             btnGenChoiceList[i].addEventListener('click', function (event) {
                 var tagName = event.target.nodeName.toLowerCase();
@@ -271,7 +271,7 @@
                     count,
                     i,
                     e = this,
-                    selectorForActiveGenChoices = '.btn-gen-choice.active'
+                    selectorForActiveGenChoices = '[data-toggle="btn-gen-choice"].active'
                 ;
 
                 if (e.getAttribute('data-group')) {
