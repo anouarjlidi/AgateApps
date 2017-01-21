@@ -5,43 +5,51 @@
 <input type="hidden" name="quality" id="quality" value="{{ quality }}" />
 <input type="hidden" name="flaw" id="flaw" value="{{ flaw }}" />
 <div class="row">
-    <div id="list_qualities" class="col-sm-6">
+    <div id="list_qualities" class="col s6">
         <h4 class="text-center">{{ 'Qualités' | trans }}</h4>
-        {% for trait in traits_list.qualities %}
-            {% if loop.first %}
-                <div class="row mb5">
-            {% endif %}
+        {% for list in traits_list.qualities|batch(2) %}
 
-            <div class="col-sm-6">
-                <button type="button" data-group="qualities" id="btn-gen-choice-{{ trait.id }}" data-toggle="btn-gen-choice" data-input-value="{{ trait.id }}" data-target-node="quality" class="btn btn-inverse btn-block {{ quality == trait.id ? 'active' : '' }}">{{ trait.name | trans }}</button>
+            <div class="row mb5">
+
+            {% for trait in list %}
+                <div class="col s6">
+                    <button type="button"
+                        data-group="qualities"
+                        id="btn-gen-choice-{{ trait.id }}"
+                        data-toggle="btn-gen-choice"
+                        data-input-value="{{ trait.id }}"
+                        data-target-node="quality"
+                        class="btn w100p btn-medium{{ quality == trait.id ? ' active' : '' }}"
+                    >{{ trait.name | trans }}</button>
+                </div>
+            {% endfor %}{# qualities #}
+
             </div>
-
-            {% if loop.index % 2 == 0 and not loop.last %}
-                </div><!-- /.row --><div class="row mb5">
-            {% elseif loop.last %}
-                </div><!-- /.row -->
-            {% endif %}
 
         {% endfor %}{# qualities #}
     </div>
-    <div id="list_flaws" class="col-sm-6">
+    <div id="list_flaws" class="col s6">
         <h4 class="text-center">{{ 'Défauts' | trans }}</h4>
-        {% for trait in traits_list.flaws %}
-            {% if loop.first %}
-                <div class="row mb5">
-            {% endif %}
+        {% for list in traits_list.flaws|batch(2) %}
 
-            <div class="col-sm-6">
-                <button type="button" data-group="flaws" id="btn-gen-choice-{{ trait.id }}" data-toggle="btn-gen-choice" data-input-value="{{ trait.id }}" data-target-node="flaw" class="btn btn-inverse btn-block {{ flaw == trait.id ? 'active' : '' }}">{{ trait.name | trans }}</button>
+            <div class="row mb5">
+
+            {% for trait in list %}
+                <div class="col s6">
+                    <button type="button"
+                        data-group="flaws"
+                        id="btn-gen-choice-{{ trait.id }}"
+                        data-toggle="btn-gen-choice"
+                        data-input-value="{{ trait.id }}"
+                        data-target-node="flaw"
+                        class="btn w100p btn-medium{{ flaw == trait.id ? ' active' : '' }}"
+                    >{{ trait.name | trans }}</button>
+                </div>
+            {% endfor %}{# flaws #}
+
             </div>
 
-            {% if loop.index % 2 == 0 and not loop.last %}
-                </div><!-- /.row --><div class="row mb5">
-            {% elseif loop.last %}
-                </div><!-- /.row -->
-            {% endif %}
-
-        {% endfor %}{# qualities #}
+        {% endfor %}{# flaws #}
     </div>
 </div>
 

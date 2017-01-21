@@ -10,7 +10,7 @@
 .ib.base { vertical-align: baseline; }
 
 /* Blocks */
-.bl { display: block; }
+.bl { display: block !important; }
 .bl.mid {
     margin-left: auto;
     margin-right: auto;
@@ -47,6 +47,8 @@
 /* Helpers */
 
 .mw50 { max-width:  50px; }
+
+.w100p { width: 100% !important; }
 
 .w50  { width:  50px !important; }
 .w100 { width: 100px; }
