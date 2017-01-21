@@ -27,3 +27,8 @@ ways:
         Les voies sont comprises entre 1 et 5, et la somme totale des voies doit être égale à 15.
         <br>
         Pour obtenir des valeurs idéales, répartissez simplement les valeurs 1, 2, 3, 4 et 5 dans chacune des voies.
+
+character:
+    orientation:
+        instinctive: 'L''Instinct concerne toute l''énergie pulsionnelle d''un être vivant. Cet Aspect regroupe notamment les instincts de survie et d''autoconservation ainsi que tout ce qui a trait à la sexualité.'
+        rational: 'Cet Aspect rend compte de l''importance de la rationalité pour le PJ, de son ancrage dans la réalité, de sa capacité de logique et de réflexion, et de sa solidité.'
