@@ -8,7 +8,12 @@
 
         {% for job in jobs %}
 
-                <div id="job_{{ job.id }}" class="chip btn-gen-choice {{ job_value == job.id ? 'active' : '' }}" data-toggle="btn-gen-choice" data-input-value="{{ job.id }}" data-target-node="job_value">
+                <div id="job_{{ job.id }}"
+                     class="chip bordered {{ job_value == job.id ? 'active' : '' }}"
+                     data-toggle="btn-gen-choice"
+                     data-input-value="{{ job.id }}"
+                     data-target-node="job_value"
+                >
                     <a class="modal-activator" href="#modal_job_{{ job.id }}">
                         <img class="modal-img" src="{{ asset('img/generator/search.png') }}" title="{{ 'step_2.modal.details'|trans({}, 'CorahnRinBundle') }}">
                     </a>
