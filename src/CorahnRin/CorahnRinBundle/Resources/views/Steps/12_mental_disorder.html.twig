@@ -2,27 +2,23 @@
 
 {% block step_content %}
 
-    <p>Vous pouvez choisir un désordre mental, celui-ci déterminera la tendance de votre personnage lorsqu'il est choqué, effrayé ou pris par surprise.</p>
+    <p>{{ 'mental_disorders.text'|trans({}, 'CorahnRinBundle') }}</p>
 
     <input type="hidden" name="gen-div-choice" id="gen-div-choice" value="{{ disorder_value }}" />
-    <div class="row">
-    {% for disorder in disorders %}
-        <div class="col s6 gen-div-choice{% if disorder_value == disorder.id %} selected{% endif %}"
-             data-divchoice-value="{{ disorder.id }}">
-            <article>
-                <header>
-                    <h3 class="text-center">{{ disorder.name | trans }}</h3>
-                </header>
-                <p>{{ disorder.description | trans | raw }}</p>
-            </article>
+    {% for list in disorders|batch(2) %}
+        <div class="row">
+        {% for disorder in list %}
+            <div class="col s6 gen-div-choice{% if disorder_value == disorder.id %} selected{% endif %}"
+                 data-divchoice-value="{{ disorder.id }}">
+                <article>
+                    <header>
+                        <h4 class="text-center">{{ disorder.name | trans }}</h4>
+                    </header>
+                    <p>{{ disorder.description | trans | raw }}</p>
+                </article>
+            </div>
+        {% endfor %}
         </div>
-        {% if loop.index % 2 == 0 %}
-            </div><!--/.row-->
-            <div class="row">
-        {% endif %}
-    {% else %}
-        <p class="alert alert-error">{{ 'Une erreur est survenue lors du chargement de la liste des désordres mentaux.' | trans }}</p>
     {% endfor %}
-    </div>
 
 {% endblock %}
