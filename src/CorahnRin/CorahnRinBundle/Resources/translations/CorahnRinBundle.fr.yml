@@ -36,8 +36,10 @@ advantages:
     choose_multiple_times: 'Les avantages / désavantages marqués du symbole <span class="text-red">*</span> peuvent être sélectionnés plusieurs fois'
     title: 'Avantages'
     xp_cost: 'Coût en XP'
+    details: 'Les avantages coûtent de l''expérience'
 disadvantages:
     title: 'Désavantages'
     xp_gain: 'Gain en XP'
+    details: 'Les désavantages vous font gagner de l''expérience'
 
 experience: 'Expérience'

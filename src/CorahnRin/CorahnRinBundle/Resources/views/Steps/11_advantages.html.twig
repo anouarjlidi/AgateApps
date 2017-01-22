@@ -19,6 +19,7 @@
 
     <div id="list_advantages" class="col m6">
         <h4 class="text-center">{{ 'advantages.title' | trans({}, 'CorahnRinBundle')}}</h4>
+        <h6>{{ 'advantages.details'|trans({}, 'CorahnRinBundle') }}</h6>
         {% for avtg in advantages_list %}
             {% if loop.first %}
                 <div class="row mb5">
@@ -57,7 +58,7 @@
                         {%- if avtg.augmentation > 0 -%}
                             <span class="text-red">*</span>&nbsp;
                         {%- endif -%}
-                        {{- avtg.name | trans }}
+                        {{- avtg.name | trans }} <small>(XP&nbsp;:&nbsp;{{ avtg.xp }})</small>
                     </span>
 
                 </label>
@@ -73,6 +74,7 @@
     </div>
     <div id="list_disadvantages" class="col m6">
         <h4 class="text-center">{{ 'disadvantages.title' | trans({}, 'CorahnRinBundle')}}</h4>
+        <h6>{{ 'disadvantages.details'|trans({}, 'CorahnRinBundle') }}</h6>
         {% for desv in disadvantages_list %}
             {% if loop.first %}
                 <div class="row mb5">
@@ -109,7 +111,7 @@
                     {%- if desv.augmentation > 0 -%}
                         <span class="text-red">*</span>&nbsp;
                     {%- endif -%}
-                    {{- desv.name | trans }}
+                    {{- desv.name | trans }} <small>(XP&nbsp;:&nbsp;{{ desv.xp }})</small>
                 </label>
             </div>
 
