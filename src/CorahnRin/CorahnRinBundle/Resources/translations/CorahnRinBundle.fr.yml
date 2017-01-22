@@ -1,6 +1,9 @@
-step_2:
+jobs:
     modal:
         details: 'Voir les détails'
+
+geo_environments:
+    bonus: 'Offre un bonus de +1 au domaine suivant :'
 
 domain:
     primary: 'Domaine primaire'
@@ -43,3 +46,9 @@ disadvantages:
     details: 'Les désavantages vous font gagner de l''expérience'
 
 experience: 'Expérience'
+
+mental_disorders:
+    text: 'Vous pouvez choisir un désordre mental, celui-ci déterminera la tendance de votre personnage lorsqu''il est choqué, effrayé ou pris par surprise.'
+traits:
+  qualities: 'Qualités'
+  flaws: 'Défauts'

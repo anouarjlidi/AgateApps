@@ -19,7 +19,7 @@
 {% for id,way in ways_list %}
     <div class="row mb10">
         <div class="col m2">
-            <p>{{ way.name | trans }}</p>
+            <p>{{ way.name | trans({}, 'CorahnRinBundle') }}</p>
         </div>
         <div class="col m4">
             <div class="input-field inline">
@@ -40,7 +40,7 @@
                 >&minus;</button>
 
                 {# Input that stores the sum for each way#}
-                <input id="way_{{ id }}" name="ways[{{ id }}]" type="text" class="input_way w50 center" value="{{ ways_values[id] }}" title="{{ way.name | trans }}"/>
+                <input id="way_{{ id }}" name="ways[{{ id }}]" type="text" class="input_way w50 center" value="{{ ways_values[id] }}" title="{{ way.name | trans({}, 'CorahnRinBundle') }}"/>
 
                 {# "plus" button #}
                 <button
@@ -59,7 +59,7 @@
             </div><!-- /input-group -->
         </div>
         <div class="col m6">
-            <p>{{ way.description | trans | raw }}</p>
+            <p>{{ way.description | trans({}, 'CorahnRinBundle') | raw }}</p>
         </div>
     </div>
 {% endfor %}

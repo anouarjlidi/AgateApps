@@ -6,7 +6,7 @@
 <input type="hidden" name="flaw" id="flaw" value="{{ flaw }}" />
 <div class="row">
     <div id="list_qualities" class="col s6">
-        <h4 class="text-center">{{ 'Qualités' | trans }}</h4>
+        <h4 class="text-center">{{ 'traits.qualities' | trans({}, 'CorahnRinBundle') }}</h4>
         {% for list in traits_list.qualities|batch(2) %}
 
             <div class="row mb5">
@@ -20,7 +20,7 @@
                         data-input-value="{{ trait.id }}"
                         data-target-node="quality"
                         class="btn w100p btn-medium{{ quality == trait.id ? ' active' : '' }}"
-                    >{{ trait.name | trans }}</button>
+                    >{{ trait.name | trans({}, 'CorahnRinBundle') }}</button>
                 </div>
             {% endfor %}{# qualities #}
 
@@ -29,7 +29,7 @@
         {% endfor %}{# qualities #}
     </div>
     <div id="list_flaws" class="col s6">
-        <h4 class="text-center">{{ 'Défauts' | trans }}</h4>
+        <h4 class="text-center">{{ 'traits.flaws' | trans({}, 'CorahnRinBundle') }}</h4>
         {% for list in traits_list.flaws|batch(2) %}
 
             <div class="row mb5">
@@ -43,7 +43,7 @@
                         data-input-value="{{ trait.id }}"
                         data-target-node="flaw"
                         class="btn w100p btn-medium{{ flaw == trait.id ? ' active' : '' }}"
-                    >{{ trait.name | trans }}</button>
+                    >{{ trait.name | trans({}, 'CorahnRinBundle') }}</button>
                 </div>
             {% endfor %}{# flaws #}
 

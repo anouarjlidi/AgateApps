@@ -33,7 +33,7 @@
                 {% endif %}
 
                 {% set tooltip_text %}
-                    {{ (avtg.description | trans) | escape('html_attr') }}
+                    {{ (avtg.description | trans({}, 'CorahnRinBundle')) | escape('html_attr') }}
                     <br>
                     ({{ 'advantages.xp_cost' | trans({}, 'CorahnRinBundle') | escape('html_attr') }} : {{ avtg.xp }})
                 {% endset %}
@@ -58,7 +58,7 @@
                         {%- if avtg.augmentation > 0 -%}
                             <span class="text-red">*</span>&nbsp;
                         {%- endif -%}
-                        {{- avtg.name | trans }} <small>(XP&nbsp;:&nbsp;{{ avtg.xp }})</small>
+                        {{- avtg.name | trans({}, 'CorahnRinBundle') }} <small>(XP&nbsp;:&nbsp;{{ avtg.xp }})</small>
                     </span>
 
                 </label>
@@ -86,7 +86,7 @@
             {% endif %}
 
             {% set tooltip_text %}
-                {{ (desv.description | trans) | escape('html_attr') }}
+                {{ (desv.description | trans({}, 'CorahnRinBundle')) | escape('html_attr') }}
                 <br>
                 ({{ 'disadvantages.xp_gain' | trans({}, 'CorahnRinBundle') | escape('html_attr') }} : {{ desv.xp }})
             {% endset %}
@@ -111,7 +111,7 @@
                     {%- if desv.augmentation > 0 -%}
                         <span class="text-red">*</span>&nbsp;
                     {%- endif -%}
-                    {{- desv.name | trans }} <small>(XP&nbsp;:&nbsp;{{ desv.xp }})</small>
+                    {{- desv.name | trans({}, 'CorahnRinBundle') }} <small>(XP&nbsp;:&nbsp;{{ desv.xp }})</small>
                 </label>
             </div>
 

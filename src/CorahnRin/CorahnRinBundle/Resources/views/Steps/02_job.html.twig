@@ -4,7 +4,7 @@
 
 <input type="hidden" name="job_value" id="job_value" value="{{ job_value }}" />
 {% for jobs in jobs_list %}
-    <h3>{{ jobs[0].book.name | trans }}</h3>
+    <h3>{{ jobs[0].book.name | trans({}, 'CorahnRinBundle') }}</h3>
 
         {% for job in jobs %}
 
@@ -15,21 +15,21 @@
                      data-target-node="job_value"
                 >
                     <a class="modal-activator" href="#modal_job_{{ job.id }}">
-                        <img class="modal-img" src="{{ asset('img/generator/search.png') }}" title="{{ 'step_2.modal.details'|trans({}, 'CorahnRinBundle') }}">
+                        <img class="modal-img" src="{{ asset('img/generator/search.png') }}" title="{{ 'jobs.modal.details'|trans({}, 'CorahnRinBundle') }}">
                     </a>
-                    {{ job.name | trans }}
+                    {{ job.name | trans({}, 'CorahnRinBundle') }}
                 </div>
 
                 <div id="modal_job_{{ job.id }}" class="modal">
                     <div class="modal-content">
-                        <h4>{{ job.name | trans }}</small></h4>
-                        <p>{{ job.description | trans | raw }}</p>
-                        <p>{{ 'domain.primary' | trans({}, 'CorahnRinBundle') }} : {{ job.domainPrimary.name | trans }}</p>
+                        <h4>{{ job.name | trans({}, 'CorahnRinBundle') }}</small></h4>
+                        <p>{{ job.description | trans({}, 'CorahnRinBundle') | raw }}</p>
+                        <p>{{ 'domain.primary' | trans({}, 'CorahnRinBundle') }} : {{ job.domainPrimary.name | trans({}, 'CorahnRinBundle') }}</p>
                         <p>
                             {{ 'domain.secondary' | trans({}, 'CorahnRinBundle') }} :
                             {% for domain in job.domainsSecondary %}
                                 {% if loop.index0 > 0 %} &ndash; {% endif %}
-                                {{ domain.name | trans }}
+                                {{ domain.name | trans({}, 'CorahnRinBundle') }}
                             {% else %}
                                 {{ 'domain.manual' | trans({}, 'CorahnRinBundle') }}
                             {% endfor %}
@@ -40,6 +40,7 @@
                         <button type="button" class="btn modal-action modal-close waves-effect" data-dist-click data-target-node="job_{{ job.id }}">{{ 'button.select' | trans }}</button>
                     </div>
                 </div>
+
         {% endfor %}{# jobs #}
 
 {% endfor %}{# books #}
