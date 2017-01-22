@@ -12,9 +12,9 @@
                  data-divchoice-value="{{ disorder.id }}">
                 <article class="hoverable">
                     <header>
-                        <h4 class="text-center">{{ disorder.name | trans }}</h4>
+                        <h4 class="text-center">{{ disorder.name | trans({}, 'CorahnRinBundle') }}</h4>
                     </header>
-                    <p>{{ disorder.description | trans | raw }}</p>
+                    <p>{{ disorder.description | trans({}, 'CorahnRinBundle') | raw }}</p>
                 </article>
             </div>
         {% endfor %}
