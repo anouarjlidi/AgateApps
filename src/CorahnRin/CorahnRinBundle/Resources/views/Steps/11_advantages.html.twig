@@ -8,18 +8,23 @@
 {% block step_content %}
 
 <div class="row">
-    <p>{{ 'Expérience' }} : <span class="well well-sm"><span id="xp">{{ experience }}</span> / 100</span></p>
-    <p class="alert alert-info">
-        {{ 'Les avantages / désavantages marqués du symbole %symbol% peuvent être sélectionnés plusieurs fois' | trans({'%symbol%': '<span class="text-red">*</span>'}) | raw }}
+
+    <p class="card-panel teal lighten-4">
+        {{ 'advantages.choose_multiple_times' | trans({}, 'CorahnRinBundle') | raw }}
     </p>
-    <div id="list_advantages" class="col-md-6">
-        <h4 class="text-center">{{ 'Avantages' | trans }}</h4>
+
+    <p class="text-center">
+        <span id="xp_chip" class="chip bordered text-m">{{ 'experience'|trans({}, 'CorahnRinBundle') }} : <span id="xp">{{ experience }}</span></span>
+    </p>
+
+    <div id="list_advantages" class="col m6">
+        <h4 class="text-center">{{ 'advantages.title' | trans({}, 'CorahnRinBundle')}}</h4>
         {% for avtg in advantages_list %}
             {% if loop.first %}
                 <div class="row mb5">
             {% endif %}
 
-            <div class="col-md-6">
+            <div class="col m6">
                 {% set class_moroe = '' %}
                 {% if advantages[avtg.id] is defined and advantages[avtg.id] > 0 %}
                     {% set class_moroe = ' btn-state-'~advantages[avtg.id] %}
@@ -27,10 +32,10 @@
                 <label
                       for="avtg-{{ avtg.id }}"
                       data-toggle="tooltip"
-                      title="{{ (avtg.description | trans({},'Entity.Avantages')) | escape('html_attr') }} ({{ 'Coût en XP' | trans | escape('html_attr') }} : {{ avtg.xp }})"
+                      title="{{ (avtg.description | trans) | escape('html_attr') }} ({{ 'advantages.xp_cost' | trans({}, 'CorahnRinBundle') | escape('html_attr') }} : {{ avtg.xp }})"
                       data-placement="top"
                       id="label-avdesv-{{ avtg.id }}"
-                      class="change_avdesv change_avtg btn btn-block{{ class_moroe }}">
+                      class="change_avdesv change_avtg btn btn-medium bl {{ class_moroe }}">
                     <input data-augmentation="{{ avtg.augmentation }}"
                            type="hidden"
                            name="advantages[{{ avtg.id }}]"
@@ -40,10 +45,10 @@
                            data-element-cost="{{ avtg.xp }}"
                            class="_hidden input_avtg" />
                     <span>
-                        {% if avtg.augmentation > 0 %}
-                            <span class="text-red">*</span>
-                        {% endif %}
-                        {{ avtg.name | trans({}, 'Entity.Avantages') }}
+                        {%- if avtg.augmentation > 0 -%}
+                            <span class="text-red">*</span>&nbsp;
+                        {%- endif -%}
+                        {{- avtg.name | trans }}
                     </span>
 
                 </label>
@@ -57,8 +62,8 @@
 
         {% endfor %}{# advantages #}
     </div>
-    <div id="list_disadvantages" class="col-md-6">
-        <h4 class="text-center">{{ 'Désavantages' | trans }}</h4>
+    <div id="list_disadvantages" class="col m6">
+        <h4 class="text-center">{{ 'disadvantages.title' | trans({}, 'CorahnRinBundle')}}</h4>
         {% for desv in disadvantages_list %}
             {% if loop.first %}
                 <div class="row mb5">
@@ -69,13 +74,13 @@
                 {% set class_moroe = ' btn-state-'~disadvantages[desv.id] %}
             {% endif %}
 
-            <div class="col-md-6">
+            <div class="col m6">
                 <label for="desv-{{ desv.id }}"
                        data-toggle="tooltip"
-                       title="{{ (desv.description | trans({},'Entity.Avantages')) | escape('html_attr') }} ({{ 'Gain en XP' | trans | escape('html_attr') }} : {{ desv.xp }})"
+                       title="{{ (desv.description | trans) | escape('html_attr') }} ({{ 'disadvantages.xp_gain' | trans({}, 'CorahnRinBundle') | escape('html_attr') }} : {{ desv.xp }})"
                        data-placement="top"
                        id="label-avdesv-{{ desv.id }}"
-                       class="change_avdesv change_desv btn btn-block{{ class_moroe }}">
+                       class="change_avdesv change_desv btn bl btn-medium {{ class_moroe }}">
                     <input data-augmentation="{{ desv.augmentation }}"
                            type="hidden"
                            name="disadvantages[{{ desv.id }}]"
@@ -84,10 +89,10 @@
                            data-element-id="{{ desv.id }}"
                            data-element-cost="{{ desv.xp }}"
                            class="_hidden input_desv" />
-                    {% if desv.augmentation > 0 %}
-                        <span class="text-red">*</span>
-                    {% endif %}
-                    {{ desv.name | trans({}, 'Entity.Avantages') }}
+                    {%- if desv.augmentation > 0 -%}
+                        <span class="text-red">*</span>&nbsp;
+                    {%- endif -%}
+                    {{- desv.name | trans }}
                 </label>
             </div>
 

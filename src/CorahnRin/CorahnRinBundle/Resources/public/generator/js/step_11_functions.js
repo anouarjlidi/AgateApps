@@ -53,6 +53,8 @@ function getAdvantageFromInput(input, label){
 function calculateXpFromAdvantage(advantage, virtualValue) {
     var value, xp;
 
+    // Virtual value is used to calculate experience only "for information", manually.
+    // If there is no virtual value, it means we process calculation based on the input value directly.
     if (null !== virtualValue && typeof virtualValue !== 'undefined') {
         value = virtualValue;
     } else {
@@ -67,8 +69,14 @@ function calculateXpFromAdvantage(advantage, virtualValue) {
 
     if (advantage.id === 50) {
         // Case of the "Trauma" disadvantage.
+        // Trauma XP calculation is simpler than other disadvantages.
         return value * advantage.xp;
     }
+
+    /**
+     * If advantage can be chosen twice, the total experience cost is
+     * the base price + half the base price, truncated.
+     */
 
     if (value === 0) {
         return 0;
@@ -164,7 +172,7 @@ function gainOrSpendExperience(currentAdvantageId, experience, advantagesList, d
         if (!advantagesList.hasOwnProperty(elementId)) { continue; }
 
         // Do not process current advantage
-        if (elementId.toString() === currentAdvantageId.toString()) { console.info('same advantage, do not process.'); continue; }
+        if (elementId.toString() === currentAdvantageId.toString()) { continue; }
 
         var advantageOrDisadvantage = advantagesList[elementId];
 

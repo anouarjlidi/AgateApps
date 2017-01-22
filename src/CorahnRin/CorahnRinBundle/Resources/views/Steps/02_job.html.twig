@@ -9,7 +9,7 @@
         {% for job in jobs %}
 
                 <div id="job_{{ job.id }}"
-                     class="chip bordered {{ job_value == job.id ? 'active' : '' }}"
+                     class="chip hoverable bordered {{ job_value == job.id ? 'active' : '' }}"
                      data-toggle="btn-gen-choice"
                      data-input-value="{{ job.id }}"
                      data-target-node="job_value"

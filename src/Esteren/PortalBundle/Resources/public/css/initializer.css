@@ -37,6 +37,10 @@
 *.text-gold    { color: goldenrod !important; }
 *.text-trans   { color: transparent !important; }
 
+*.text-center { text-align: center !important; }
+
+*.text-m { font-size: 1.2em !important; }
+
 *.bg-gold      { background-color: goldenrod !important; }
 
 *.text-shadow-black-10 { text-shadow: 0 0 10px rgba(0,0,0,0.75) !important; }

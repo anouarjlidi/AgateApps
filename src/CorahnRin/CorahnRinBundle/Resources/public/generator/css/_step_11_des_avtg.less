@@ -5,6 +5,7 @@
        -moz-transition: background 400ms;
          -o-transition: background 400ms;
             transition: background 400ms;
+    margin-top: 5px;
 }
 
 
@@ -21,23 +22,34 @@
 }
 
 /* Setup advantage states */
-.btn {
-    &[class*="btn-state"] {
-        color: @link-color;
+#generator_form {
+    .btn {
+        &[class*="btn-state"] {
+            background-color: #e1f5fe;
+        }
+        &[class*="btn-state"]:before {
+            font-family: FontAwesome;
+            display: inline-block;
+            color: #00b400;
+            letter-spacing: 5px;
+        }
+        &.btn-state-1:before {
+            content: "@{fa-var-check-circle} ";
+        }
+        &.btn-state-2:before {
+            content: "@{fa-var-check-circle} @{fa-var-check-circle} ";
+        }
+        &.btn-state-3:before {
+            content: "@{fa-var-check-circle} @{fa-var-check-circle} @{fa-var-check-circle} ";
+        }
     }
-    &[class*="btn-state"]:before {
-        font-family: FontAwesome;
-        display: inline-block;
-        color: @state-success-bg;
-        letter-spacing: 5px;
-    }
-    &.btn-state-1:before {
-        content: "@{fa-var-check-circle} ";
-    }
-    &.btn-state-2:before {
-        content: "@{fa-var-check-circle} @{fa-var-check-circle} ";
-    }
-    &.btn-state-3:before {
-        content: "@{fa-var-check-circle} @{fa-var-check-circle} @{fa-var-check-circle} ";
+
+    #xp_chip {
+        width: 260px;
+        background-color: #4fc3f7;
+        font-weight: normal;
+        #xp {
+            font-weight: bold;
+        }
     }
 }

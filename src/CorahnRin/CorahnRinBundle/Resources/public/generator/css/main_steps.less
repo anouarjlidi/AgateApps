@@ -14,12 +14,16 @@
 // Load fontawesome variables so that we can also use icons for custom use
 @import "@{components-dir}/font-awesome/less/variables";
 
-@import '_step_03_naissance';
-@import '_step_09_traits';
-@import '_step_11_des_avtg';
-@import '_step_13_primary_domains';
-
 #generator_form {
+    .btn {
+        background-color: #b3e5fc;
+        color: black;
+        height: auto;
+        &.active {
+            background-color: #e1f5fe;
+        }
+    }
+
     div.gen-div-choice {
 
         & article {
@@ -50,36 +54,17 @@
         }
     }
 
-    .chip.bordered {
-        cursor: pointer;
-        border: solid 1px gray;
-        min-width: 50px;
+    .chip {
+        &.hoverable {
+            cursor: pointer;
 
-        background: #eee;
-
-        & {
-            -webkit-transition: 0.2s background-color ease-in-out;
-            -moz-transition: 0.2s background-color ease-in-out;
-            -o-transition: 0.2s background-color ease-in-out;
-            transition: 0.2s background-color ease-in-out;
-        }
-        > .modal-activator > .modal-img {
-            -webkit-transition: 0.2s border-color ease-in-out;
-            -moz-transition: 0.2s border-color ease-in-out;
-            -o-transition: 0.2s border-color ease-in-out;
-            transition: 0.2s border-color ease-in-out;
+            &:hover {
+                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+                background: #bbb;
+                border-color: #26a69a;
+            }
         }
 
-        &.active, &:hover {
-            background: #bbb;
-            border-color: #26a69a;
-        }
-        &.active > .modal-activator > .modal-img {
-            border-color: #26a69a;
-        }
-        &.active:hover {
-            background: #aaa;
-        }
 
         > .modal-activator {
             & > .modal-img {
@@ -92,6 +77,37 @@
                 }
             }
         }
+
+        &.bordered {
+            border: solid 1px gray;
+            min-width: 50px;
+
+            background: #eee;
+
+            & {
+                -webkit-transition: 0.2s background-color ease-in-out;
+                -moz-transition: 0.2s background-color ease-in-out;
+                -o-transition: 0.2s background-color ease-in-out;
+                transition: 0.2s background-color ease-in-out;
+            }
+            > .modal-activator > .modal-img {
+                -webkit-transition: 0.2s border-color ease-in-out;
+                -moz-transition: 0.2s border-color ease-in-out;
+                -o-transition: 0.2s border-color ease-in-out;
+                transition: 0.2s border-color ease-in-out;
+            }
+
+            &.active {
+                background: #bbb;
+                border-color: #26a69a;
+            }
+            &.active > .modal-activator > .modal-img {
+                border-color: #26a69a;
+            }
+            &.active:hover {
+                background: #aaa;
+            }
+        }
     }
 }
 
@@ -100,3 +116,8 @@
     border-left: solid 5px gray;
     padding-left: 10px;
 }
+
+@import '_step_03_naissance';
+@import '_step_09_traits';
+@import '_step_11_des_avtg';
+@import '_step_13_primary_domains';
