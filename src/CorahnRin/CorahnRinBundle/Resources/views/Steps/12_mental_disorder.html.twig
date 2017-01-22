@@ -10,7 +10,7 @@
         {% for disorder in list %}
             <div class="col s6 gen-div-choice{% if disorder_value == disorder.id %} selected{% endif %}"
                  data-divchoice-value="{{ disorder.id }}">
-                <article>
+                <article class="hoverable">
                     <header>
                         <h4 class="text-center">{{ disorder.name | trans }}</h4>
                     </header>
