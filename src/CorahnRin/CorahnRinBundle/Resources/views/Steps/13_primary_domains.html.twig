@@ -10,15 +10,15 @@
     <h3>{{ job.name }}</h3>
 
     <input type="hidden" name="ost" id="ost" value="{{ domains_values['ost'] }}">
-    <p class="alert alert-info">
-        {% trans with {"%button%": '<button type="button" class="btn btn-xs btn-inverse"><span class="fa fa-asterisk"></span></button>'} %}
+    <p class="card-panel teal lighten-4">
+        {% trans with {"%button%": '<button type="button" class="btn btn-small btn-inverse"><span class="fa fa-asterisk"></span></button>'} %}
         Si votre personnage n'a pas effectué de <strong>service militaire</strong>, vous pouvez cliquer sur le bouton "%button%" afin d'obtenir un bonus de +1 à un autre domaine que "Combat au contact".
         {% endtrans %}
     </p>
     {% if scholar %}
         <input type="hidden" name="scholar" id="scholar">
-        <p class="alert alert-info">
-            {% trans with {"%button%": '<button type="button" class="btn btn-xs btn-inverse"><span class="fa fa-book"></span></button>'} %}
+        <p class="card-panel teal lighten-4">
+            {% trans with {"%button%": '<button type="button" class="btn btn-small btn-inverse"><span class="fa fa-book"></span></button>'} %}
             Vootre personnage possède l'avantage "Lettré", par conséquent vous pouvez cliquer sur le bouton "%button%" afin d'obtenir un bonus de +1 à ce domaine grâce à cet avantage.
             {% endtrans %}
         </p>
@@ -34,21 +34,22 @@
 
             {% set value = domains_values['domains'][id] %}
 
-            <div class="col s3 domain" data-domain-id="{{ id }}">
+            <div class="col s3 domain hoverable" data-domain-id="{{ id }}">
                 <input type="hidden" name="domains[{{ id }}]" value="{{ value }}">
-                <h4>
+                <h5>
                     {{ domain.name }}
-                </h4>
+                </h5>
                 <div class="suppl">
-                    <button type="button" data-type="ost" data-domain-id="{{ id }}" class="btn btn-inverse btn-sm {{ domains_values['ost'] == id ? 'active' }}" data-toggle="tooltip" title="{{ 'Service militaire' | trans }}">
+                    <button type="button" data-type="ost" data-domain-id="{{ id }}" class="btn btn-inverse btn-small {{ domains_values['ost'] == id ? 'active' }}" data-toggle="tooltip" title="{{ 'Service militaire' | trans }}">
                         <span class="fa fa-asterisk"></span>
                     </button>
                     {% if scholar and id in scholar_domains_ids %}
-                        <button type="button" data-type="scholar" data-domain-id="{{ id }}" class="btn btn-inverse btn-sm" data-toggle="tooltip" title="{{ 'Utiliser l\'avantage "lettré"' | trans }}">
+                        <button type="button" data-type="scholar" data-domain-id="{{ id }}" class="btn btn-inverse btn-small" data-toggle="tooltip" title="{{ 'Utiliser l\'avantage "lettré"' | trans }}">
                             <span class="fa fa-book"></span>
                         </button>
                     {% endif %}
                 </div>
+                <hr>
                 <div class="btn-group">
                     {% for i in [0, 1, 2, 3, 5] %}
 
@@ -68,7 +69,7 @@
                             {{- value == i ? ' active' -}}
                             {{- disabled ? ' disabled' : ' domain-change' -}}
                         {%- endset %}
-                        <button type="button" data-change="{{ i }}" class="btn btn-inverse btn-xs {{ class }}">
+                        <button type="button" data-change="{{ i }}" class="btn btn-inverse btn-small {{ class }}">
                             <span {{ disabled and not selected ? 'class="invisible"' }}>
                                 {%- if i == 0 -%}
                                     &#9734;
