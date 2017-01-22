@@ -20,108 +20,97 @@
     <div id="list_advantages" class="col m6">
         <h4 class="text-center">{{ 'advantages.title' | trans({}, 'CorahnRinBundle')}}</h4>
         <h6>{{ 'advantages.details'|trans({}, 'CorahnRinBundle') }}</h6>
-        {% for avtg in advantages_list %}
-            {% if loop.first %}
-                <div class="row mb5">
-            {% endif %}
+        {% for list in advantages_list|batch(2) %}
+        <div class="row mb5">
+            {% for avtg in list %}
+                <div class="col m6">
 
-            <div class="col m6">
+                    {% set class_more = '' %}
+                    {% if advantages[avtg.id] is defined and advantages[avtg.id] > 0 %}
+                        {% set class_more = ' btn-state-'~advantages[avtg.id] %}
+                    {% endif %}
 
-                {% set class_more = '' %}
-                {% if advantages[avtg.id] is defined and advantages[avtg.id] > 0 %}
-                    {% set class_more = ' btn-state-'~advantages[avtg.id] %}
-                {% endif %}
+                    {% set tooltip_text %}
+                        {{ (avtg.description | trans({}, 'CorahnRinBundle')) | escape('html_attr') }}
+                        <br>
+                        ({{ 'advantages.xp_cost' | trans({}, 'CorahnRinBundle') | escape('html_attr') }} : {{ avtg.xp }})
+                    {% endset %}
 
-                {% set tooltip_text %}
-                    {{ (avtg.description | trans({}, 'CorahnRinBundle')) | escape('html_attr') }}
-                    <br>
-                    ({{ 'advantages.xp_cost' | trans({}, 'CorahnRinBundle') | escape('html_attr') }} : {{ avtg.xp }})
-                {% endset %}
+                    <label
+                          id="label-avdesv-{{ avtg.id }}"
+                          for="avtg-{{ avtg.id }}"
+                          data-tooltip="{{ tooltip_text|raw }}"
+                          data-position="top"
+                          data-delay="50"
+                          data-html="true"
+                          class="change_avdesv change_avtg btn btn-medium bl tooltipped {{ class_more }}">
+                        <input data-augmentation="{{ avtg.augmentation }}"
+                               type="hidden"
+                               name="advantages[{{ avtg.id }}]"
+                               value="{{ advantages[avtg.id] is defined and advantages[avtg.id] ? advantages[avtg.id] : '0' }}"
+                               id="avtg-{{ avtg.id }}"
+                               data-element-id="{{ avtg.id }}"
+                               data-element-cost="{{ avtg.xp }}"
+                               class="_hidden input_avtg" />
+                        <span>
+                            {%- if avtg.augmentation > 0 -%}
+                                <span class="text-red">*</span>&nbsp;
+                            {%- endif -%}
+                            {{- avtg.name | trans({}, 'CorahnRinBundle') }} <small>(XP&nbsp;:&nbsp;{{ avtg.xp }})</small>
+                        </span>
 
-                <label
-                      id="label-avdesv-{{ avtg.id }}"
-                      for="avtg-{{ avtg.id }}"
-                      data-tooltip="{{ tooltip_text|raw }}"
-                      data-position="top"
-                      data-delay="50"
-                      data-html="true"
-                      class="change_avdesv change_avtg btn btn-medium bl tooltipped {{ class_more }}">
-                    <input data-augmentation="{{ avtg.augmentation }}"
-                           type="hidden"
-                           name="advantages[{{ avtg.id }}]"
-                           value="{{ advantages[avtg.id] is defined and advantages[avtg.id] ? advantages[avtg.id] : '0' }}"
-                           id="avtg-{{ avtg.id }}"
-                           data-element-id="{{ avtg.id }}"
-                           data-element-cost="{{ avtg.xp }}"
-                           class="_hidden input_avtg" />
-                    <span>
-                        {%- if avtg.augmentation > 0 -%}
-                            <span class="text-red">*</span>&nbsp;
-                        {%- endif -%}
-                        {{- avtg.name | trans({}, 'CorahnRinBundle') }} <small>(XP&nbsp;:&nbsp;{{ avtg.xp }})</small>
-                    </span>
+                    </label>
+                </div>
 
-                </label>
-            </div>
-
-            {% if loop.index % 2 == 0 and not loop.last %}
-                </div><!-- /.row --><div class="row mb5">
-            {% elseif loop.last %}
-                </div><!-- /.row -->
-            {% endif %}
-
-        {% endfor %}{# advantages #}
+            {% endfor %}{# advantages #}
+        </div>
+    {% endfor %}
     </div>
     <div id="list_disadvantages" class="col m6">
         <h4 class="text-center">{{ 'disadvantages.title' | trans({}, 'CorahnRinBundle')}}</h4>
         <h6>{{ 'disadvantages.details'|trans({}, 'CorahnRinBundle') }}</h6>
-        {% for desv in disadvantages_list %}
-            {% if loop.first %}
-                <div class="row mb5">
-            {% endif %}
+        {% for list in disadvantages_list|batch(2) %}
+            <div class="row mb5">
+                {% for desv in list %}
 
-            {% set class_more = '' %}
-            {% if disadvantages[desv.id] is defined and disadvantages[desv.id] > 0 %}
-                {% set class_more = ' btn-state-'~disadvantages[desv.id] %}
-            {% endif %}
+                    {% set class_more = '' %}
+                    {% if disadvantages[desv.id] is defined and disadvantages[desv.id] > 0 %}
+                        {% set class_more = ' btn-state-'~disadvantages[desv.id] %}
+                    {% endif %}
 
-            {% set tooltip_text %}
-                {{ (desv.description | trans({}, 'CorahnRinBundle')) | escape('html_attr') }}
-                <br>
-                ({{ 'disadvantages.xp_gain' | trans({}, 'CorahnRinBundle') | escape('html_attr') }} : {{ desv.xp }})
-            {% endset %}
+                    {% set tooltip_text %}
+                        {{ (desv.description | trans({}, 'CorahnRinBundle')) | escape('html_attr') }}
+                        <br>
+                        ({{ 'disadvantages.xp_gain' | trans({}, 'CorahnRinBundle') | escape('html_attr') }} : {{ desv.xp }})
+                    {% endset %}
 
-            <div class="col m6">
-                <label
-                      id="label-avdesv-{{ desv.id }}"
-                      for="desv-{{ desv.id }}"
-                      data-tooltip="{{ tooltip_text }}"
-                      data-position="top"
-                      data-delay="50"
-                      data-html="true"
-                      class="change_avdesv change_desv btn btn-medium bl tooltipped {{ class_more }}">
-                    <input data-augmentation="{{ desv.augmentation }}"
-                           type="hidden"
-                           name="disadvantages[{{ desv.id }}]"
-                           value="{{ disadvantages[desv.id] is defined and disadvantages[desv.id] ? disadvantages[desv.id] : '0' }}"
-                           id="desv-{{ desv.id }}"
-                           data-element-id="{{ desv.id }}"
-                           data-element-cost="{{ desv.xp }}"
-                           class="_hidden input_desv" />
-                    {%- if desv.augmentation > 0 -%}
-                        <span class="text-red">*</span>&nbsp;
-                    {%- endif -%}
-                    {{- desv.name | trans({}, 'CorahnRinBundle') }} <small>(XP&nbsp;:&nbsp;{{ desv.xp }})</small>
-                </label>
-            </div>
+                    <div class="col m6">
+                        <label
+                              id="label-avdesv-{{ desv.id }}"
+                              for="desv-{{ desv.id }}"
+                              data-tooltip="{{ tooltip_text }}"
+                              data-position="top"
+                              data-delay="50"
+                              data-html="true"
+                              class="change_avdesv change_desv btn btn-medium bl tooltipped {{ class_more }}">
+                            <input data-augmentation="{{ desv.augmentation }}"
+                                   type="hidden"
+                                   name="disadvantages[{{ desv.id }}]"
+                                   value="{{ disadvantages[desv.id] is defined and disadvantages[desv.id] ? disadvantages[desv.id] : '0' }}"
+                                   id="desv-{{ desv.id }}"
+                                   data-element-id="{{ desv.id }}"
+                                   data-element-cost="{{ desv.xp }}"
+                                   class="_hidden input_desv" />
+                            {%- if desv.augmentation > 0 -%}
+                                <span class="text-red">*</span>&nbsp;
+                            {%- endif -%}
+                            {{- desv.name | trans({}, 'CorahnRinBundle') }} <small>(XP&nbsp;:&nbsp;{{ desv.xp }})</small>
+                        </label>
+                    </div>
 
-            {% if loop.index % 2 == 0 and not loop.last %}
-                </div><!-- /.row --><div class="row mb5">
-            {% elseif loop.last %}
-                </div><!-- /.row -->
-            {% endif %}
-
-        {% endfor %}{# disadvantages #}
+                {% endfor %}
+            </div><!-- /.row -->
+        {% endfor %}
     </div>
 </div>
 
