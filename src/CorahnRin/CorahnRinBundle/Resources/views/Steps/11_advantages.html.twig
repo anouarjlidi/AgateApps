@@ -25,17 +25,26 @@
             {% endif %}
 
             <div class="col m6">
-                {% set class_moroe = '' %}
+
+                {% set class_more = '' %}
                 {% if advantages[avtg.id] is defined and advantages[avtg.id] > 0 %}
-                    {% set class_moroe = ' btn-state-'~advantages[avtg.id] %}
+                    {% set class_more = ' btn-state-'~advantages[avtg.id] %}
                 {% endif %}
+
+                {% set tooltip_text %}
+                    {{ (avtg.description | trans) | escape('html_attr') }}
+                    <br>
+                    ({{ 'advantages.xp_cost' | trans({}, 'CorahnRinBundle') | escape('html_attr') }} : {{ avtg.xp }})
+                {% endset %}
+
                 <label
-                      for="avtg-{{ avtg.id }}"
-                      data-toggle="tooltip"
-                      title="{{ (avtg.description | trans) | escape('html_attr') }} ({{ 'advantages.xp_cost' | trans({}, 'CorahnRinBundle') | escape('html_attr') }} : {{ avtg.xp }})"
-                      data-placement="top"
                       id="label-avdesv-{{ avtg.id }}"
-                      class="change_avdesv change_avtg btn btn-medium bl {{ class_moroe }}">
+                      for="avtg-{{ avtg.id }}"
+                      data-tooltip="{{ tooltip_text|raw }}"
+                      data-position="top"
+                      data-delay="50"
+                      data-html="true"
+                      class="change_avdesv change_avtg btn btn-medium bl tooltipped {{ class_more }}">
                     <input data-augmentation="{{ avtg.augmentation }}"
                            type="hidden"
                            name="advantages[{{ avtg.id }}]"
@@ -69,18 +78,26 @@
                 <div class="row mb5">
             {% endif %}
 
-            {% set class_moroe = '' %}
+            {% set class_more = '' %}
             {% if disadvantages[desv.id] is defined and disadvantages[desv.id] > 0 %}
-                {% set class_moroe = ' btn-state-'~disadvantages[desv.id] %}
+                {% set class_more = ' btn-state-'~disadvantages[desv.id] %}
             {% endif %}
 
+            {% set tooltip_text %}
+                {{ (desv.description | trans) | escape('html_attr') }}
+                <br>
+                ({{ 'disadvantages.xp_gain' | trans({}, 'CorahnRinBundle') | escape('html_attr') }} : {{ desv.xp }})
+            {% endset %}
+
             <div class="col m6">
-                <label for="desv-{{ desv.id }}"
-                       data-toggle="tooltip"
-                       title="{{ (desv.description | trans) | escape('html_attr') }} ({{ 'disadvantages.xp_gain' | trans({}, 'CorahnRinBundle') | escape('html_attr') }} : {{ desv.xp }})"
-                       data-placement="top"
-                       id="label-avdesv-{{ desv.id }}"
-                       class="change_avdesv change_desv btn bl btn-medium {{ class_moroe }}">
+                <label
+                      id="label-avdesv-{{ desv.id }}"
+                      for="desv-{{ desv.id }}"
+                      data-tooltip="{{ tooltip_text }}"
+                      data-position="top"
+                      data-delay="50"
+                      data-html="true"
+                      class="change_avdesv change_desv btn btn-medium bl tooltipped {{ class_more }}">
                     <input data-augmentation="{{ desv.augmentation }}"
                            type="hidden"
                            name="disadvantages[{{ desv.id }}]"

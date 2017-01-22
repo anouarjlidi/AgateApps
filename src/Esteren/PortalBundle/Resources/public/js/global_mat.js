@@ -1,13 +1,18 @@
 (function($, d){$(function(){
 
-    // Activate button collapse "side" navigation
+    // Automatically activate button collapse "side" navigation
     if (d.querySelector('.button-collapse')) {
         $('.button-collapse').sideNav();
     }
 
-    // Add parallax when available
+    // Automatically add parallax when available
     if (d.querySelector('.parallax')) {
         $('.parallax').parallax();
+    }
+
+    // Automatically activate tooltips
+    if (d.querySelector('.tooltipped')) {
+        $('.tooltipped').tooltip();
     }
 
     // Automatically activate modals
