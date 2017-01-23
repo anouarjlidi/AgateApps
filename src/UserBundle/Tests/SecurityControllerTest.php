@@ -186,7 +186,6 @@ class SecurityControllerTest extends WebTestCase
         static::assertEquals(302, $client->getResponse()->getStatusCode());
         $crawler->clear();
         $crawler = $client->followRedirect();
-        dump($client->getResponse()->getContent());
         static::assertEquals(1, $crawler->filter('.card-panel.success')->count());
 
         $crawler->clear();
