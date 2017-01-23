@@ -20,6 +20,10 @@ class FlashMessageColorsExtension extends \Twig_Extension
                 return 'red lighten-4';
             case 'warning':
                 return 'orange lighten-3';
+            case 'info':
+                return 'teal lighten-3';
+            case 'success':
+                return 'green lighten-3';
             default:
                 return '';
         }
