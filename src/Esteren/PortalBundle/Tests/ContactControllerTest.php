@@ -47,7 +47,7 @@ class ContactControllerTest extends WebTestCase
 
         $message = $client->getContainer()->get('translator')->trans('form.message_sent', [], 'contact');
 
-        static::assertEquals($message, trim($crawler->filter('#flash-messages div.alert')->text()));
+        static::assertEquals($message, trim($crawler->filter('#flash-messages div.card-panel.success')->text()));
 
         /** @var MessageDataCollector $mailCollector */
         $mailCollector = $client->getProfile()->getCollector('swiftmailer');
