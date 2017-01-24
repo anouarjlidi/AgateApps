@@ -55,6 +55,7 @@ class ContactControllerTest extends WebTestCase
         // Check that an email was sent
         $collectedMessages = $mailCollector->getMessages();
 
+        // FIXME
         static::assertGreaterThanOrEqual(1, $collectedMessages);
 
         /** @var \Swift_Message $message */
