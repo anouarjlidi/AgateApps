@@ -92,7 +92,11 @@ easy_admin:
             list:
                 actions:
                     - '-delete'
-                fields: [ id, name, { property: webIcon, type: image }, markers ]
+                fields:
+                    - id
+                    - name
+                    - { property: webIcon, type: image, virtual: false } # FIXME
+                    - markers
             form:
                 fields: [ name, icon, markers ]
 
