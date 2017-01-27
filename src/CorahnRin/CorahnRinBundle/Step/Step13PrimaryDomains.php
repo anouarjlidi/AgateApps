@@ -70,6 +70,20 @@ class Step13PrimaryDomains extends AbstractStepAction
             $this->domainsValues['ost'] = 2;
         }
 
+        // The number of domains set for each possible value.
+        $numberOf = [
+            1 => 0, // Max: 2
+            2 => 0, // Max: 2
+            3 => 0, // Max: 1
+        ];
+
+        // Setup the number of domains set depending on their "value"
+        foreach  ($this->domainsValues['domains'] as $value) {
+            if ($value >= 1 && $value <= 3) {
+                $numberOf[$value]++;
+            }
+        }
+
         // Setup all values to 0 if unset.
         foreach ($this->allDomains as $id => $domain) {
             if (!array_key_exists($id, $this->domainsValues['domains'])) {
@@ -90,6 +104,7 @@ class Step13PrimaryDomains extends AbstractStepAction
         return $this->renderCurrentStep([
             'job'                 => $this->job,
             'all_domains'         => $this->allDomains,
+            'number_of'           => $numberOf,
             'domains_values'      => $this->domainsValues,
             'secondary_domains'   => $this->secondaryDomains,
             'scholar'             => $this->scholar,

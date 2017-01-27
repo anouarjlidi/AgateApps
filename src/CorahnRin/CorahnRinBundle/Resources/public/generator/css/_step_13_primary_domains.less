@@ -1,32 +1,58 @@
-#generator_form .domain {
+// Different state colors
+@dataChange0: #777;
+@dataChange1: hsl(hue(@btn-primary-bg), saturation(@btn-primary-bg) + 20%, lightness(@btn-primary-bg) + 35%);
+@dataChange2: hsl(hue(@state-success-bg), saturation(@state-success-bg) + 20%, lightness(@state-success-bg) - 10%);
+@dataChange3: hsl(hue(@state-danger-bg), saturation(@state-danger-bg) + 40%, lightness(@state-danger-bg) - 12%);
 
-    padding-bottom: 15px;
+.domainValue0 { color: @dataChange0; }
+.domainValue1 { color: @dataChange1; }
+.domainValue2 { color: @dataChange2; }
+.domainValue3 { color: @dataChange3; }
 
-    button {
-        font-size: 0.8em;
-        padding: 0 4px;
-        margin: 0 -2px;
+#generator_form {
+    #information_table {
+        tr {
+            td {
+                padding: 2px 0 2px 0;
+            }
+        }
+    }
 
-        &.disabled:not(.active) {
-            opacity: 0.25;
-        }
+    .domain {
 
-        &[data-change="0"] {
-            color: #777;
-        }
+        padding-bottom: 15px;
 
-        // Adds saturation to "success" and "danger" state for it to be brigther in the buttons.
-        &[data-change="1"] {
-            color: hsl(hue(@btn-primary-bg), saturation(@btn-primary-bg) + 10%, lightness(@btn-primary-bg));
-        }
-        &[data-change="2"] {
-            color: hsl(hue(@state-success-bg), saturation(@state-success-bg) + 10%, lightness(@state-success-bg));
-        }
-        &[data-change="3"] {
-            color: hsl(hue(@btn-warning-bg), saturation(@btn-warning-bg) + 10%, lightness(@btn-warning-bg));
-        }
-        &[data-change="5"] {
-            color: hsl(hue(@state-danger-bg), saturation(@state-danger-bg) + 10%, lightness(@state-danger-bg));
+        button {
+            &.domain_button_value {
+                font-size: 1em;
+                font-weight: bold;
+                line-height: normal;
+                margin: 0 -2px;
+                padding: 1px 6px;
+                border: solid 1px transparent;
+                background: #ddf3fe;
+
+                &.not_selectable {
+                    opacity: 0.5;
+                }
+
+                &.disabled:not(.active) {
+                    opacity: 0.15;
+                }
+
+                &[data-change="0"] {
+                    .domainValue0;
+                }
+                &[data-change="1"] {
+                    .domainValue1;
+                }
+                &[data-change="2"] {
+                    .domainValue2;
+                }
+                &[data-change="3"] {
+                    .domainValue3;
+                }
+            }
         }
     }
 }

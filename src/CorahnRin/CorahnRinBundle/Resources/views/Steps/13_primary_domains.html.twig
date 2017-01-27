@@ -2,6 +2,7 @@
 
 {% block javascripts %}
     {{ parent() }}
+    {# The 3 files associated to step 13 are merged into one in the Gulpfile #}
     <script type="text/javascript" src="{{ asset('js/step_13_primary_domains.js') }}"></script>
 {% endblock %}
 
@@ -9,20 +10,74 @@
 
     <h3>{{ job.name }}</h3>
 
-    <input type="hidden" name="ost" id="ost" value="{{ domains_values['ost'] }}">
-    <p class="card-panel teal lighten-4">
-        {% trans with {"%button%": '<button type="button" class="btn btn-small btn-inverse"><span class="fa fa-asterisk"></span></button>'} %}
-        Si votre personnage n'a pas effectué de <strong>service militaire</strong>, vous pouvez cliquer sur le bouton "%button%" afin d'obtenir un bonus de +1 à un autre domaine que "Combat au contact".
-        {% endtrans %}
-    </p>
-    {% if scholar %}
-        <input type="hidden" name="scholar" id="scholar">
-        <p class="card-panel teal lighten-4">
-            {% trans with {"%button%": '<button type="button" class="btn btn-small btn-inverse"><span class="fa fa-book"></span></button>'} %}
-            Vootre personnage possède l'avantage "Lettré", par conséquent vous pouvez cliquer sur le bouton "%button%" afin d'obtenir un bonus de +1 à ce domaine grâce à cet avantage.
-            {% endtrans %}
-        </p>
-    {% endif %}
+    <div class="card-panel teal lighten-4">
+
+        <strong>{{ 'primary_domains.additionnal_options'|trans({}, 'CorahnRinBundle') }}&nbsp;:</strong>
+        <br>
+        <br>
+
+        <input type="hidden" name="ost" id="ost" value="{{ domains_values['ost'] }}">
+        <button type="button" class="btn btn-small btn-inverse"><span class="fa fa-asterisk"></span></button>&nbsp;&equals;
+        {{ 'primary_domains.ost_service_button'|trans({}, 'CorahnRinBundle')|raw }}
+
+        {% if scholar %}
+            <br>
+            <br>
+            <input type="hidden" name="scholar" id="scholar" value="{{ domains_values['scholar'] }}">
+            <button type="button" class="btn btn-small btn-inverse"><span class="fa fa-book"></span></button>&nbsp;&equals;
+            {{ 'primary_domains.scholar_button'|trans({}, 'CorahnRinBundle') }}
+        {% endif %}
+
+    </div>
+
+    <div class="card-panel blue lighten-4">
+        {{ 'primary_domains.explanation'|trans({}, 'CorahnRinBundle')|raw }}
+    </div>
+    <div class="card-panel blue lighten-4">
+        <table id="information_table">
+            <tbody>
+                <tr>
+                    <td class="domainValue1">
+                        <strong>{{ 'primary_domains.info_table.numberOf1'|trans({}, 'CorahnRinBundle') }}</strong>&nbsp;:
+                    </td>
+                    <td>
+                        <span id="numberOf1">{{ number_of[1] }}</span>&nbsp;/&nbsp;2
+                    </td>
+                </tr>
+                <tr>
+                    <td class="domainValue2">
+                        <strong>{{ 'primary_domains.info_table.numberOf2'|trans({}, 'CorahnRinBundle') }}</strong>&nbsp;:
+                    </td>
+                    <td>
+                        <span id="numberOf2">{{ number_of[2] }}</span>&nbsp;/&nbsp;2
+                    </td>
+                </tr>
+                <tr>
+                    <td class="domainValue3">
+                        <strong>{{ 'primary_domains.info_table.numberOf3'|trans({}, 'CorahnRinBundle') }}</strong>&nbsp;:
+                    </td>
+                    <td>
+                        <span id="numberOf3">{{ number_of[3] }}</span>&nbsp;/&nbsp;1
+                    </td>
+                </tr>
+                {% if scholar %}
+                    <tr>
+                        <td>
+                            <strong>{{ 'primary_domains.numberOfScholar'|trans({}, 'CorahnRinBundle') }}</strong>&nbsp;:
+                        </td>
+                        <td>
+                            <span id="scholarDisplay">{{ domains_values['scholar'] ? '1' : '0' }}</span>&nbsp;/&nbsp;1
+                        </td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+        <div id="numberOfCompleted" style="display: none;">
+            <div class="chip">
+                Ok !
+            </div>
+        </div>
+    </div>
 
     {# For jobs that have no secondary domain, we allow the user to choose any. #}
     {% set show_all_secondary_domains = (secondary_domains|length) == 0 %}
@@ -40,17 +95,17 @@
                     {{ domain.name }}
                 </h5>
                 <div class="suppl">
-                    <button type="button" data-type="ost" data-domain-id="{{ id }}" class="btn btn-inverse btn-small {{ domains_values['ost'] == id ? 'active' }}" data-toggle="tooltip" title="{{ 'Service militaire' | trans }}">
+                    <button type="button" data-type="ost" data-domain-id="{{ id }}" class="btn btn-inverse btn-small{{ domains_values['ost'] == id ? ' active' }}" data-toggle="tooltip" title="{{ 'primary_domains.ost_button_title' | trans({}, 'CorahnRinBundle') }}">
                         <span class="fa fa-asterisk"></span>
                     </button>
                     {% if scholar and id in scholar_domains_ids %}
-                        <button type="button" data-type="scholar" data-domain-id="{{ id }}" class="btn btn-inverse btn-small" data-toggle="tooltip" title="{{ 'Utiliser l\'avantage "lettré"' | trans }}">
+                        <button type="button" data-type="scholar" data-domain-id="{{ id }}" class="btn btn-inverse btn-small{{ id == domains_values['scholar'] ? ' active' }}" data-toggle="tooltip" title="{{ 'primary_domains.scholar_button_use' | trans({}, 'CorahnRinBundle') }}">
                             <span class="fa fa-book"></span>
                         </button>
                     {% endif %}
                 </div>
                 <hr>
-                <div class="btn-group">
+                <div class="domain_button_group">
                     {% for i in [0, 1, 2, 3, 5] %}
 
                         {% set selected = i == value %}
@@ -69,16 +124,8 @@
                             {{- value == i ? ' active' -}}
                             {{- disabled ? ' disabled' : ' domain-change' -}}
                         {%- endset %}
-                        <button type="button" data-change="{{ i }}" class="btn btn-inverse btn-small {{ class }}">
-                            <span {{ disabled and not selected ? 'class="invisible"' }}>
-                                {%- if i == 0 -%}
-                                    &#9734;
-                                {%- else -%}
-                                    {%- for j in 1..i -%}
-                                       &#9733;
-                                    {%- endfor -%}
-                                {%- endif -%}
-                            </span>
+                        <button type="button" data-change="{{ i }}" class="domain_button_value btn btn-inverse {{ class }}">
+                            {{ i }}
                         </button>
                     {% endfor %}
                 </div>
