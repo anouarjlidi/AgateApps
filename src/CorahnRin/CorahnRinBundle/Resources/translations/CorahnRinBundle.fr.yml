@@ -26,7 +26,7 @@ setback:
     quantity : 'Votre personnage a <span class="badge fln blue text-black lighten-3">%age%</span> ans, il a donc au moins <span class="label label-warning">%count%</span> revers.'
 ways:
     total: 'Total :'
-    explanation: |
+    explanation: >
         Les voies sont comprises entre 1 et 5, et la somme totale des voies doit être égale à 15.
         <br>
         Pour obtenir des valeurs idéales, répartissez simplement les valeurs 1, 2, 3, 4 et 5 dans chacune des voies.
@@ -50,5 +50,23 @@ experience: 'Expérience'
 mental_disorders:
     text: 'Vous pouvez choisir un désordre mental, celui-ci déterminera la tendance de votre personnage lorsqu''il est choqué, effrayé ou pris par surprise.'
 traits:
-  qualities: 'Qualités'
-  flaws: 'Défauts'
+    qualities: 'Qualités'
+    flaws: 'Défauts'
+primary_domains:
+    explanation: >
+        Vous devez définir quels sont les domaines primaires et secondaires de votre personnage.<br>
+        Chaque score peut être attribué seulement un certain nombre de fois, voici leur répartition:
+    additionnal_options: 'Options supplémentaires'
+    ost_service_button: >
+        Domaine acquis lors du service d'ost (service militaire).<br>
+        Si votre personnage n'a pas effectué de service militaire, vous pouvez sélectionner un autre domaine.
+    scholar_button: >
+        Votre personnage possède l'avantage "Lettré", par conséquent vous pouvez obtenir un bonus de +1 à ce domaine grâce à cet avantage.
+    info_table:
+        numberOf1: 'Nombre de domaines avec le score "1"'
+        numberOf2: 'Nombre de domaines avec le score "2"'
+        numberOf3: 'Nombre de domaines avec le score "3"'
+    numberOfScholar: 'Domaine pour l''avantage "Lettré"'
+    scholar_button_use: 'Utiliser l''avantage "Lettré"'
+    ost_button_title: 'Service militaire'
+
