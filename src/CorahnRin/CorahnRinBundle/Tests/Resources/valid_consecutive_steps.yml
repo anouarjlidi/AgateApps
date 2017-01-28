@@ -160,7 +160,7 @@
     session_value: 1
 
 13_primary_domains:
-    next_step: 14_upgrade_domains
+    next_step: 14_use_domain_bonuses
     form_values:
         ost: 2
         domains:
@@ -192,7 +192,7 @@
             16: 2 # Érudition
 
 # TODO
-14_upgrade_domains:
+14_use_domain_bonuses:
     next_step: 15_bonus_domains
     form_values: ~
     session_value: ~

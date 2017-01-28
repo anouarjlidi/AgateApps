@@ -4,7 +4,7 @@ namespace CorahnRin\CorahnRinBundle\Step;
 
 use CorahnRin\CorahnRinBundle\Entity\Domains;
 
-class Step14UpgradeDomains extends AbstractStepAction
+class Step14UseDomainBonuses extends AbstractStepAction
 {
     /**
      * @var \Generator|Domains[]

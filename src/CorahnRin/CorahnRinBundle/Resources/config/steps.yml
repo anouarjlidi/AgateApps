@@ -68,7 +68,7 @@ services:
             - { name: pierstoval_character_step }
 
     corahnrin_generator.steps.step_14:
-        class: CorahnRin\CorahnRinBundle\Step\Step14UpgradeDomains
+        class: CorahnRin\CorahnRinBundle\Step\Step14UseDomainBonuses
         tags:
             - { name: pierstoval_character_step }
 

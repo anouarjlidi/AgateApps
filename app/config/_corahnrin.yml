@@ -12,7 +12,7 @@ pierstoval_character_manager:
             action: corahnrin_generator.steps.step_02
             onchange_clear:
                 - "13_primary_domains"
-                - "14_upgrade_domains"
+                - "14_use_domain_bonuses"
                 - "15_bonus_domains"
                 - "16_disciplines"
                 - "17_combat_arts"
@@ -57,7 +57,7 @@ pierstoval_character_manager:
             action: corahnrin_generator.steps.step_11
             onchange_clear:
                 - "13_primary_domains"
-                - "14_upgrade_domains"
+                - "14_use_domain_bonuses"
                 - "15_bonus_domains"
                 - "16_disciplines"
                 - "17_combat_arts"
@@ -74,12 +74,12 @@ pierstoval_character_manager:
                 - "08_ways"
                 - "11_advantages"
             onchange_clear:
-                - "14_upgrade_domains"
+                - "14_use_domain_bonuses"
                 - "15_bonus_domains"
                 - "16_disciplines"
                 - "17_combat_arts"
 
-        14_upgrade_domains:
+        14_use_domain_bonuses:
             action: corahnrin_generator.steps.step_14
             depends_on:
                 - "13_primary_domains"
@@ -90,7 +90,7 @@ pierstoval_character_manager:
         15_bonus_domains:
             action: corahnrin_generator.steps.step_15
             depends_on:
-                - "14_upgrade_domains"
+                - "14_use_domain_bonuses"
             onchange_clear:
                 - "16_disciplines"
 
