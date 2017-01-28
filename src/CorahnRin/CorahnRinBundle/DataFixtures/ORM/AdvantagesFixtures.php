@@ -10,7 +10,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
 
-class AvantagesFixtures extends AbstractFixture implements OrderedFixtureInterface
+class AdvantagesFixtures extends AbstractFixture implements OrderedFixtureInterface
 {
     /**
      * @var ObjectManager
