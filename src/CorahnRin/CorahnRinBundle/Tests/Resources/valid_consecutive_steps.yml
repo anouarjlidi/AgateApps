@@ -159,7 +159,6 @@
         gen-div-choice: 1
     session_value: 1
 
-# TODO
 13_primary_domains:
     next_step: 14_upgrade_domains
     form_values:
