@@ -66,8 +66,8 @@
         }
 
 
-        > .modal-activator {
-            & > .modal-img {
+        .chip-link {
+            .modal-img {
                 margin-top: -1px;
                 margin-left: -13px;
                 border: solid 1px gray;
@@ -90,7 +90,7 @@
                 -o-transition: 0.2s background-color ease-in-out;
                 transition: 0.2s background-color ease-in-out;
             }
-            > .modal-activator > .modal-img {
+            .chip-link .modal-img {
                 -webkit-transition: 0.2s border-color ease-in-out;
                 -moz-transition: 0.2s border-color ease-in-out;
                 -o-transition: 0.2s border-color ease-in-out;
@@ -101,7 +101,7 @@
                 background: #bbb;
                 border-color: #26a69a;
             }
-            &.active > .modal-activator > .modal-img {
+            &.active .chip-link .modal-img {
                 border-color: #26a69a;
             }
             &.active:hover {
@@ -121,3 +121,4 @@
 @import '_step_09_traits';
 @import '_step_11_des_avtg';
 @import '_step_13_primary_domains';
+@import '_step_14_use_domain_bonuses';

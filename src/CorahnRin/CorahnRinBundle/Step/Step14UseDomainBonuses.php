@@ -65,10 +65,33 @@ class Step14UseDomainBonuses extends AbstractStepAction
             $this->checkDomainIdForBonus($primaryDomains['scholar']);
         }
 
+        // If "mentor ally" is selected, then the character has a bonus to one domain.
+        // Thanks to him! :D
+        $advantages = $this->getCharacterProperty('11_advantages');
+        $mentor = $advantages['advantages'][2];
+        $this->bonus += $mentor; // $mentor can be 0 or 1 only so no problem with this operation.
+
+        /** @var int $age */
+        $age = $this->getCharacterProperty('06_age');
+        if ($age > 20) {
+            ++$this->bonus;
+        }
+        if ($age > 25) {
+            ++$this->bonus;
+        }
+        if ($age > 30) {
+            ++$this->bonus;
+        }
+
+        $bonusValue = $this->bonus;
+
+        // TODO: Manage POST data
+
         return $this->renderCurrentStep([
+            'all_domains' => $this->allDomains,
             'domains_values' => $this->domainsCalculatedValues,
             'bonus_max' => $this->bonus,
-            'bonus_value' => $this->getCharacterProperty(),
+            'bonus_value' => $bonusValue,
         ]);
     }
 

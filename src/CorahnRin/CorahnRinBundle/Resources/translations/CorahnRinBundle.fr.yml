@@ -24,6 +24,7 @@ setback:
         auto: 'Voulez-vous déterminer les revers automatiquement ?'
     drawn: 'Les revers tirés sont indiqués par le symbole "%symbol%".'
     quantity : 'Votre personnage a <span class="badge fln blue text-black lighten-3">%age%</span> ans, il a donc au moins <span class="label label-warning">%count%</span> revers.'
+
 ways:
     total: 'Total :'
     explanation: >
@@ -35,6 +36,7 @@ character:
     orientation:
         instinctive: 'L''Instinct concerne toute l''énergie pulsionnelle d''un être vivant. Cet Aspect regroupe notamment les instincts de survie et d''autoconservation ainsi que tout ce qui a trait à la sexualité.'
         rational: 'Cet Aspect rend compte de l''importance de la rationalité pour le PJ, de son ancrage dans la réalité, de sa capacité de logique et de réflexion, et de sa solidité.'
+
 advantages:
     choose_multiple_times: 'Les avantages / désavantages marqués du symbole <span class="text-red">*</span> peuvent être sélectionnés plusieurs fois'
     title: 'Avantages'
@@ -49,9 +51,11 @@ experience: 'Expérience'
 
 mental_disorders:
     text: 'Vous pouvez choisir un désordre mental, celui-ci déterminera la tendance de votre personnage lorsqu''il est choqué, effrayé ou pris par surprise.'
+
 traits:
     qualities: 'Qualités'
     flaws: 'Défauts'
+
 primary_domains:
     explanation: >
         Vous devez définir quels sont les domaines primaires et secondaires de votre personnage.<br>
@@ -69,4 +73,8 @@ primary_domains:
     numberOfScholar: 'Domaine pour l''avantage "Lettré"'
     scholar_button_use: 'Utiliser l''avantage "Lettré"'
     ost_button_title: 'Service militaire'
+
+domains_bonuses:
+    explanation: 'D''après les informations fournies, votre personnage bénéficie d''un certain nombre de points bonus que vous pouvez répartir dans différents domaines.'
+    remaining: 'Points bonus restants :'
 
