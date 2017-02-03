@@ -42,6 +42,13 @@ class Step14UseDomainBonuses extends AbstractStepAction
         /** @var int[] $socialClassDomains */
         $socialClassDomains = $socialClassValues['domains'];
 
+        /** @var int[] $domainsBonuses */
+        $domainsBonuses = $this->getCharacterProperty();
+
+        if (null === $domainsBonuses) {
+            $domainsBonuses = $this->resetBonuses();
+        }
+
         /** @var array[] $primaryDomains */
         $primaryDomains = $this->getCharacterProperty('13_primary_domains');
 
@@ -85,16 +92,62 @@ class Step14UseDomainBonuses extends AbstractStepAction
 
         $bonusValue = $this->bonus;
 
-        // TODO: Manage POST data
+        // Manage form submit
+        if ($this->request->isMethod('POST')) {
+            /** @var int[] $postedValues */
+            $postedValues = $this->request->request->get('domains_bonuses');
+
+            $remainingPoints = $bonusValue;
+
+            $error = false;
+
+            foreach (array_keys($domainsBonuses) as $id) {
+                $value = isset($postedValues[$id]) ? $postedValues[$id] : null;
+                if (!array_key_exists($id, $postedValues) || !in_array($postedValues[$id], ['0', '1'], true)) {
+                    // If there is any error, we do nothing.
+                    $this->flashMessage('errors.incorrect_values');
+                    $error = true;
+                    break;
+                }
+                if ('1' === $value) {
+                    $remainingPoints--;
+                }
+                if ($remainingPoints < 0) {
+                    $this->flashMessage('domains_bonuses.errors.too_many_points');
+                    $error = true;
+                    break;
+                }
+
+                $domainsBonuses[$id] = (int) $value;
+            }
+
+            if (false === $error) {
+                if ($remainingPoints > 2) {
+                    $this->flashMessage('domains_bonuses.errors.more_than_two', null, ['%count%' => $remainingPoints]);
+                } elseif ($remainingPoints >= 0) {
+                    $this->updateCharacterStep($domainsBonuses);
+
+                    return $this->nextStep();
+                }
+            } else {
+                $domainsBonuses = $this->resetBonuses();
+                $this->updateCharacterStep(null);
+                $bonusValue = $this->bonus;
+            }
+        }
 
         return $this->renderCurrentStep([
             'all_domains' => $this->allDomains,
             'domains_values' => $this->domainsCalculatedValues,
+            'domains_bonuses' => $domainsBonuses,
             'bonus_max' => $this->bonus,
             'bonus_value' => $bonusValue,
         ]);
     }
 
+    /**
+     * @param int $domainId
+     */
     private function checkDomainIdForBonus($domainId)
     {
         if ($this->domainsCalculatedValues[$domainId] === 5) {
@@ -102,5 +155,19 @@ class Step14UseDomainBonuses extends AbstractStepAction
         } else {
             $this->domainsCalculatedValues[$domainId]++;
         }
+    }
+
+    /**
+     * @return int[]
+     */
+    private function resetBonuses()
+    {
+        $domainsBonuses = [];
+
+        foreach ($this->allDomains as $domain) {
+            $domainsBonuses[$domain->getId()] = 0;
+        }
+
+        return $domainsBonuses;
     }
 }

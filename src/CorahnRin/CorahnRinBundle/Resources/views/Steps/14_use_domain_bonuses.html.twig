@@ -2,12 +2,17 @@
 
 {% block javascripts %}
     {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/step_14_use_domain_bonuses.js') }}"></script>
 {% endblock %}
 
 {% block step_content %}
 
     <div class="card-panel teal lighten-4">
         {{ 'domains_bonuses.explanation'|trans({}, 'CorahnRinBundle')|raw }}
+        <br>
+        <i class="fa fa-hand-o-right teal-text text-darken-3"></i>&nbsp;
+        {{ 'domains_bonuses.explanation_disciplines'|trans({}, 'CorahnRinBundle')|raw }}
+
     </div>
 
     <div class="card-panel blue lighten-4">
@@ -15,7 +20,7 @@
         {{ 'domains_bonuses.remaining'|trans({}, 'CorahnRinBundle') }}
 
         <div class="chip bordered" id="bonus_points">
-            <span id="remaining_bonus_points">{{ bonus_value }}</span>&nbsp;/<span>{{ bonus_max }}</span>
+            <span id="remaining_bonus_points" class="text-black">{{ bonus_value }}</span>&nbsp;/<span id="max_bonus_points" class="text-black">{{ bonus_max }}</span>
         </div>
     </div>
 
@@ -27,7 +32,7 @@
             {% set value = domains_values[id] %}
 
             <div class="col s3 domain hoverable" data-domain-id="{{ id }}">
-                <input type="hidden" name="domains_bonuses[{{ id }}]" value="{{ value }}">
+                <input type="hidden" name="domains_bonuses[{{ id }}]" id="domains_{{ id }}" value="{{ domains_bonuses[id] }}">
                 <h5>
                     {{ domain.name }}
                 </h5>
@@ -50,7 +55,7 @@
                             {{- value == i ? ' active' -}}
                             {{- disabled ? ' disabled' : ' domain-change' -}}
                         {%- endset %}
-                        <button type="button" data-change="{{ i }}" class="domain_button_value btn btn-inverse {{ class }}">
+                        <button type="button" data-change="{{ i }}" data-domain-id="{{ id }}" class="domain_button_value btn btn-inverse {{ class }}">
                             {{ i }}
                         </button>
                     {% endfor %}

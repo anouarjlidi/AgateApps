@@ -177,6 +177,9 @@ var config = {
         ],
         "js/step_13_primary_domains.js": [
             "src/CorahnRin/CorahnRinBundle/Resources/public/generator/js/step_13_primary_domains.js"
+        ],
+        "js/step_14_use_domain_bonuses.js": [
+            "src/CorahnRin/CorahnRinBundle/Resources/public/generator/js/step_14_use_domain_bonuses.js"
         ]
     }
 };

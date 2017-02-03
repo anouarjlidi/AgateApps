@@ -1,3 +1,6 @@
+errors:
+    incorrect_values: 'Certaines valeurs envoyées sont incorrectes, veuillez recommencer (et sans tricher).'
+
 jobs:
     modal:
         details: 'Voir les détails'
@@ -77,4 +80,10 @@ primary_domains:
 domains_bonuses:
     explanation: 'D''après les informations fournies, votre personnage bénéficie d''un certain nombre de points bonus que vous pouvez répartir dans différents domaines.'
     remaining: 'Points bonus restants :'
-
+    explanation_disciplines: 'Sachez que vous pouvez <strong>conserver jusqu''à 2 points</strong> pour <strong>obtenir des disciplines</strong> dans les étapes suivantes.'
+    errors:
+        more_than_two: >
+            Il vous reste actuellement <strong>%count%</strong> points à dépenser.<br>
+            Sachez que s'il vous reste plus de deux points, tous les points au-delà seront <strong>perdus</strong> !<br>
+            Ainsi, nous vous recommandons de les utiliser, et d'en garder deux pour obtenir des disciplines dans les étapes suivantes.
+        too_many_points: 'Vous avez utilisé des points bonus que vous ne possédez pas, veuillez recommencer.'
