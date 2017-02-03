@@ -227,5 +227,4 @@
 
     refreshButtonsAndMessages();
 
-    w.buttons = buttons;
 })(jQuery, document, window);
