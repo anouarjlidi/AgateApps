@@ -98,6 +98,7 @@ class Step14UseDomainBonuses extends AbstractStepAction
             $postedValues = $this->request->request->get('domains_bonuses');
 
             $remainingPoints = $bonusValue;
+            $spent = 0;
 
             $error = false;
 
@@ -111,21 +112,24 @@ class Step14UseDomainBonuses extends AbstractStepAction
                 }
                 if ('1' === $value) {
                     $remainingPoints--;
-                }
-                if ($remainingPoints < 0) {
-                    $this->flashMessage('domains_bonuses.errors.too_many_points');
-                    $error = true;
-                    break;
+                    $spent++;
                 }
 
                 $domainsBonuses[$id] = (int) $value;
+            }
+
+            if ($remainingPoints < 0) {
+                $this->flashMessage('domains_bonuses.errors.too_many_points', null, ['%base%' => $this->bonus, '%spent%' => $spent]);
+                $error = true;
             }
 
             if (false === $error) {
                 if ($remainingPoints > 2) {
                     $this->flashMessage('domains_bonuses.errors.more_than_two', null, ['%count%' => $remainingPoints]);
                 } elseif ($remainingPoints >= 0) {
-                    $this->updateCharacterStep($domainsBonuses);
+                    $finalArray = $domainsBonuses;
+                    $finalArray['remaining'] = $remainingPoints;
+                    $this->updateCharacterStep($finalArray);
 
                     return $this->nextStep();
                 }

@@ -86,4 +86,4 @@ domains_bonuses:
             Il vous reste actuellement <strong>%count%</strong> points à dépenser.<br>
             Sachez que s'il vous reste plus de deux points, tous les points au-delà seront <strong>perdus</strong> !<br>
             Ainsi, nous vous recommandons de les utiliser, et d'en garder deux pour obtenir des disciplines dans les étapes suivantes.
-        too_many_points: 'Vous avez utilisé des points bonus que vous ne possédez pas, veuillez recommencer.'
+        too_many_points: 'Vous avez utilisé %spent% points bonus alors que vous aviez droit à %base% points, veuillez recommencer.'
