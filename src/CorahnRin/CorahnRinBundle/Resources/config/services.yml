@@ -5,3 +5,6 @@ services:
         arguments:
             sheets_folder: "%kernel.root_dir%/../src/CorahnRin/CorahnRinBundle/Resources/pdf_sources"
             translator: "@translator"
+
+    corahnrin_generator.domains_calculator:
+        class: CorahnRin\CorahnRinBundle\GeneratorTools\DomainsCalculator
