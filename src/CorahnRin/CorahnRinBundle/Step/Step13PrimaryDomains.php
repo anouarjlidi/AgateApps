@@ -125,7 +125,7 @@ class Step13PrimaryDomains extends AbstractStepAction
         }
 
         /** @var int[] $domainsValues */
-        $domainsValues = (array) array_map('intval', $this->request->request->get('domains'));
+        $domainsValues = (array) array_map(function($i){return (int) $i;}, $this->request->request->get('domains'));
 
         // There should be twice 1 and 2, and once 3.
         // We don't take 5 in account because it can never be replaced.
