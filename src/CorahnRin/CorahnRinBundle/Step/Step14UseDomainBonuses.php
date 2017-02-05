@@ -3,6 +3,7 @@
 namespace CorahnRin\CorahnRinBundle\Step;
 
 use CorahnRin\CorahnRinBundle\Entity\Domains;
+use CorahnRin\CorahnRinBundle\GeneratorTools\DomainsCalculator;
 
 class Step14UseDomainBonuses extends AbstractStepAction
 {
@@ -30,46 +31,42 @@ class Step14UseDomainBonuses extends AbstractStepAction
     private $bonus = 0;
 
     /**
+     * @var DomainsCalculator
+     */
+    private $domainsCalculator;
+
+    public function __construct(DomainsCalculator $domainsCalculator)
+    {
+        $this->domainsCalculator = $domainsCalculator;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function execute()
     {
         $this->allDomains = $this->em->getRepository('CorahnRinBundle:Domains')->findAllForGenerator();
 
+        $step13Domains = $this->getCharacterProperty('13_primary_domains');
+        $socialClassValues = $this->getCharacterProperty('05_social_class')['domains'];
         $geoEnvironment = $this->em->find('CorahnRinBundle:GeoEnvironments', $this->getCharacterProperty('04_geo'));
 
-        $socialClassValues = $this->getCharacterProperty('05_social_class');
-        /** @var int[] $socialClassDomains */
-        $socialClassDomains = $socialClassValues['domains'];
+        $this->domainsCalculatedValues = $this->domainsCalculator->calculateFromGeneratorData(
+            $this->allDomains,
+            $socialClassValues,
+            $step13Domains['ost'],
+            $step13Domains['scholar'] ?: null,
+            $geoEnvironment,
+            $step13Domains['domains']
+        );
 
-        /** @var int[] $domainsBonuses */
-        $domainsBonuses = $this->getCharacterProperty();
+        $this->bonus = $this->domainsCalculator->getBonus();
 
-        if (null === $domainsBonuses) {
-            $domainsBonuses = $this->resetBonuses();
-        }
+        /** @var int[] $characterBonuses */
+        $characterBonuses = $this->getCharacterProperty();
 
-        /** @var array[] $primaryDomains */
-        $primaryDomains = $this->getCharacterProperty('13_primary_domains');
-
-        // First, let's get the base values set at previous step.
-        foreach ($primaryDomains['domains'] as $id => $value) {
-            $this->domainsCalculatedValues[$id] = $value;
-        }
-
-        // Next, process social class domains values or bonuses.
-        foreach ($socialClassDomains as $domainId) {
-            $this->checkDomainIdForBonus($domainId);
-        }
-
-        // Process bonuses for:
-        // GeoEnvironment
-        // Ost service
-        // Scholar advantage (if set)
-        $this->checkDomainIdForBonus($geoEnvironment->getId());
-        $this->checkDomainIdForBonus($primaryDomains['ost']);
-        if ($primaryDomains['scholar']) {
-            $this->checkDomainIdForBonus($primaryDomains['scholar']);
+        if (null === $characterBonuses) {
+            $characterBonuses = $this->resetBonuses();
         }
 
         // If "mentor ally" is selected, then the character has a bonus to one domain.
@@ -80,15 +77,9 @@ class Step14UseDomainBonuses extends AbstractStepAction
 
         /** @var int $age */
         $age = $this->getCharacterProperty('06_age');
-        if ($age > 20) {
-            ++$this->bonus;
-        }
-        if ($age > 25) {
-            ++$this->bonus;
-        }
-        if ($age > 30) {
-            ++$this->bonus;
-        }
+        if ($age > 20) { $this->bonus++; }
+        if ($age > 25) { $this->bonus++; }
+        if ($age > 30) { $this->bonus++; }
 
         $bonusValue = $this->bonus;
 
@@ -102,7 +93,7 @@ class Step14UseDomainBonuses extends AbstractStepAction
 
             $error = false;
 
-            foreach (array_keys($domainsBonuses) as $id) {
+            foreach (array_keys($characterBonuses) as $id) {
                 $value = isset($postedValues[$id]) ? $postedValues[$id] : null;
                 if (!array_key_exists($id, $postedValues) || !in_array($postedValues[$id], ['0', '1'], true)) {
                     // If there is any error, we do nothing.
@@ -115,7 +106,7 @@ class Step14UseDomainBonuses extends AbstractStepAction
                     $spent++;
                 }
 
-                $domainsBonuses[$id] = (int) $value;
+                $characterBonuses[$id] = (int) $value;
             }
 
             if ($remainingPoints < 0) {
@@ -127,14 +118,14 @@ class Step14UseDomainBonuses extends AbstractStepAction
                 if ($remainingPoints > 2) {
                     $this->flashMessage('domains_bonuses.errors.more_than_two', null, ['%count%' => $remainingPoints]);
                 } elseif ($remainingPoints >= 0) {
-                    $finalArray = $domainsBonuses;
+                    $finalArray = $characterBonuses;
                     $finalArray['remaining'] = $remainingPoints;
                     $this->updateCharacterStep($finalArray);
 
                     return $this->nextStep();
                 }
             } else {
-                $domainsBonuses = $this->resetBonuses();
+                $characterBonuses = $this->resetBonuses();
                 $this->updateCharacterStep(null);
                 $bonusValue = $this->bonus;
             }
@@ -143,22 +134,10 @@ class Step14UseDomainBonuses extends AbstractStepAction
         return $this->renderCurrentStep([
             'all_domains' => $this->allDomains,
             'domains_values' => $this->domainsCalculatedValues,
-            'domains_bonuses' => $domainsBonuses,
+            'domains_bonuses' => $characterBonuses,
             'bonus_max' => $this->bonus,
             'bonus_value' => $bonusValue,
         ]);
-    }
-
-    /**
-     * @param int $domainId
-     */
-    private function checkDomainIdForBonus($domainId)
-    {
-        if ($this->domainsCalculatedValues[$domainId] === 5) {
-            $this->bonus++;
-        } else {
-            $this->domainsCalculatedValues[$domainId]++;
-        }
     }
 
     /**

@@ -56,8 +56,9 @@ services:
 
     corahnrin_generator.steps.step_14:
         class: CorahnRin\CorahnRinBundle\Step\Step14UseDomainBonuses
-        tags:
-            - { name: pierstoval_character_step }
+        arguments:
+            - '@corahnrin_generator.domains_calculator'
+        tags: [{ name: pierstoval_character_step }]
 
     corahnrin_generator.steps.step_15:
         class: CorahnRin\CorahnRinBundle\Step\Step15DomainsSpendExp
