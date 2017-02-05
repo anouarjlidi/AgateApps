@@ -192,7 +192,7 @@
             16: 2 # Érudition
 
 14_use_domain_bonuses:
-    next_step: 15_bonus_domains
+    next_step: 15_domains_spend_exp
     form_values:
         domains_bonuses:
             1:  0
@@ -231,7 +231,7 @@
         remaining: 2
 
 # TODO
-15_bonus_domains:
+15_domains_spend_exp:
     next_step: 16_disciplines
     form_values: ~
     session_value: ~

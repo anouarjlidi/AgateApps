@@ -60,9 +60,10 @@ services:
             - { name: pierstoval_character_step }
 
     corahnrin_generator.steps.step_15:
-        class: CorahnRin\CorahnRinBundle\Step\Step15BonusDomains
-        tags:
-            - { name: pierstoval_character_step }
+        class: CorahnRin\CorahnRinBundle\Step\Step15DomainsSpendExp
+        arguments:
+            - '@corahnrin_generator.domains_calculator'
+        tags: [{ name: pierstoval_character_step }]
 
     corahnrin_generator.steps.step_16:
         class: CorahnRin\CorahnRinBundle\Step\Step16Disciplines

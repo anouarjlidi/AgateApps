@@ -13,7 +13,7 @@ pierstoval_character_manager:
             onchange_clear:
                 - "13_primary_domains"
                 - "14_use_domain_bonuses"
-                - "15_bonus_domains"
+                - "15_domains_spend_exp"
                 - "16_disciplines"
                 - "17_combat_arts"
 
@@ -22,14 +22,19 @@ pierstoval_character_manager:
 
         04_geo:
             action: corahnrin_generator.steps.step_04
+            onchange_clear:
+                - "14_use_domain_bonuses"
 
         05_social_class:
             action: corahnrin_generator.steps.step_05
+            onchange_clear:
+                - "14_use_domain_bonuses"
 
         06_age:
             action: corahnrin_generator.steps.step_06
             onchange_clear:
                 - "07_setbacks"
+                - "14_use_domain_bonuses"
 
         07_setbacks:
             action: corahnrin_generator.steps.step_07
@@ -58,7 +63,7 @@ pierstoval_character_manager:
             onchange_clear:
                 - "13_primary_domains"
                 - "14_use_domain_bonuses"
-                - "15_bonus_domains"
+                - "15_domains_spend_exp"
                 - "16_disciplines"
                 - "17_combat_arts"
 
@@ -75,7 +80,7 @@ pierstoval_character_manager:
                 - "11_advantages"
             onchange_clear:
                 - "14_use_domain_bonuses"
-                - "15_bonus_domains"
+                - "15_domains_spend_exp"
                 - "16_disciplines"
                 - "17_combat_arts"
 
@@ -84,10 +89,10 @@ pierstoval_character_manager:
             depends_on:
                 - "13_primary_domains"
             onchange_clear:
-                - "15_bonus_domains"
+                - "15_domains_spend_exp"
                 - "16_disciplines"
 
-        15_bonus_domains:
+        15_domains_spend_exp:
             action: corahnrin_generator.steps.step_15
             depends_on:
                 - "14_use_domain_bonuses"
@@ -97,12 +102,13 @@ pierstoval_character_manager:
         16_disciplines:
             action: corahnrin_generator.steps.step_16
             depends_on:
-                - "15_bonus_domains"
+                - "14_use_domain_bonuses"
+                - "15_domains_spend_exp"
 
         17_combat_arts:
             action: corahnrin_generator.steps.step_17
             depends_on:
-                - "15_bonus_domains"
+                - "15_domains_spend_exp"
 
         18_equipment:
             action: corahnrin_generator.steps.step_18
