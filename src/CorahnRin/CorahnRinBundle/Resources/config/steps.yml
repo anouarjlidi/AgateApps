@@ -2,70 +2,57 @@ services:
 
     corahnrin_generator.steps.step_01:
         class: CorahnRin\CorahnRinBundle\Step\Step01People
-        tags:
-            - { name: pierstoval_character_step }
+        tags: [{ name: pierstoval_character_step }]
 
     corahnrin_generator.steps.step_02:
         class: CorahnRin\CorahnRinBundle\Step\Step02Job
-        tags:
-            - { name: pierstoval_character_step }
+        tags: [{ name: pierstoval_character_step }]
 
     corahnrin_generator.steps.step_03:
         class: CorahnRin\CorahnRinBundle\Step\Step03Birthplace
         arguments:
             - '%esterenmaps.tile_size%'
-        tags:
-            - { name: pierstoval_character_step }
+        tags: [{ name: pierstoval_character_step }]
 
     corahnrin_generator.steps.step_04:
         class: CorahnRin\CorahnRinBundle\Step\Step04Geo
-        tags:
-            - { name: pierstoval_character_step }
+        tags: [{ name: pierstoval_character_step }]
 
     corahnrin_generator.steps.step_05:
         class: CorahnRin\CorahnRinBundle\Step\Step05SocialClass
-        tags:
-            - { name: pierstoval_character_step }
+        tags: [{ name: pierstoval_character_step }]
 
     corahnrin_generator.steps.step_06:
         class: CorahnRin\CorahnRinBundle\Step\Step06Age
-        tags:
-            - { name: pierstoval_character_step }
+        tags: [{ name: pierstoval_character_step }]
 
     corahnrin_generator.steps.step_07:
         class: CorahnRin\CorahnRinBundle\Step\Step07Setbacks
-        tags:
-            - { name: pierstoval_character_step }
+        tags: [{ name: pierstoval_character_step }]
 
     corahnrin_generator.steps.step_08:
         class: CorahnRin\CorahnRinBundle\Step\Step08Ways
-        tags:
-            - { name: pierstoval_character_step }
+        tags: [{ name: pierstoval_character_step }]
 
     corahnrin_generator.steps.step_09:
         class: CorahnRin\CorahnRinBundle\Step\Step09Traits
-        tags:
-            - { name: pierstoval_character_step }
+        tags: [{ name: pierstoval_character_step }]
 
     corahnrin_generator.steps.step_10:
         class: CorahnRin\CorahnRinBundle\Step\Step10Orientation
-        tags:
-            - { name: pierstoval_character_step }
+        tags: [{ name: pierstoval_character_step }]
 
     corahnrin_generator.steps.step_11:
         class: CorahnRin\CorahnRinBundle\Step\Step11Advantages
-        tags:
-            - { name: pierstoval_character_step }
+        tags: [{ name: pierstoval_character_step }]
 
     corahnrin_generator.steps.step_12:
         class: CorahnRin\CorahnRinBundle\Step\Step12MentalDisorder
-        tags:
-            - { name: pierstoval_character_step }
+        tags: [{ name: pierstoval_character_step }]
 
     corahnrin_generator.steps.step_13:
         class: CorahnRin\CorahnRinBundle\Step\Step13PrimaryDomains
-        tags:
-            - { name: pierstoval_character_step }
+        tags: [{ name: pierstoval_character_step }]
 
     corahnrin_generator.steps.step_14:
         class: CorahnRin\CorahnRinBundle\Step\Step14UseDomainBonuses
@@ -79,26 +66,21 @@ services:
 
     corahnrin_generator.steps.step_16:
         class: CorahnRin\CorahnRinBundle\Step\Step16Disciplines
-        tags:
-            - { name: pierstoval_character_step }
+        tags: [{ name: pierstoval_character_step }]
 
     corahnrin_generator.steps.step_17:
         class: CorahnRin\CorahnRinBundle\Step\Step17CombatArts
-        tags:
-            - { name: pierstoval_character_step }
+        tags: [{ name: pierstoval_character_step }]
 
     corahnrin_generator.steps.step_18:
         class: CorahnRin\CorahnRinBundle\Step\Step18Equipment
-        tags:
-            - { name: pierstoval_character_step }
+        tags: [{ name: pierstoval_character_step }]
 
     corahnrin_generator.steps.step_19:
         class: CorahnRin\CorahnRinBundle\Step\Step19Description
-        tags:
-            - { name: pierstoval_character_step }
+        tags: [{ name: pierstoval_character_step }]
 
     corahnrin_generator.steps.step_20:
         class: CorahnRin\CorahnRinBundle\Step\Step20Finish
-        tags:
-            - { name: pierstoval_character_step }
+        tags: [{ name: pierstoval_character_step }]
 
