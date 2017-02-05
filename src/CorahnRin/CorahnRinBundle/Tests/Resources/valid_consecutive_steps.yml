@@ -43,20 +43,24 @@
 06_age:
     next_step: 07_setbacks
     form_values:
-        # We need at least 1 setback, so...
-        age: 21
-    session_value: 21
+        # We need at least one setback and some bonus points, so...
+        age: 31
+    session_value: 31
 
 07_setbacks:
     # Force manual setup
     route_uri: '07_setbacks?manual'
     next_step: 08_ways
     form_values:
-        # Setback2: Séquelle
-        setbacks_value: [2]
+        setbacks_value:
+            - 2 # Séquelle
+            - 3 # Adversaire
     session_value:
         2:
             id: 2
+            avoided: false
+        3:
+            id: 3
             avoided: false
 
 08_ways:
@@ -151,6 +155,7 @@
             50: 0
             51: 0
             52: 0
+        remainingExp: 80
 
 12_mental_disorder:
     next_step: 13_primary_domains
@@ -209,7 +214,7 @@
             12: 0
             13: 0
             14: 0
-            15: 1 # Voyage
+            15: 0
             16: 1 # Érudition
     session_value:
         1:  0
@@ -226,7 +231,7 @@
         12: 0
         13: 0
         14: 0
-        15: 1 # Voyage
+        15: 0
         16: 1 # Érudition
         remaining: 2
 
