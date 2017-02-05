@@ -102,7 +102,6 @@ pierstoval_character_manager:
         16_disciplines:
             action: corahnrin_generator.steps.step_16
             depends_on:
-                - "14_use_domain_bonuses"
                 - "15_domains_spend_exp"
 
         17_combat_arts:
