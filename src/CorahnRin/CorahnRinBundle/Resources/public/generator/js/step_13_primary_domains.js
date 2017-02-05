@@ -73,6 +73,9 @@
 
         if (scholarElement && scholarElement.value) {
             numberOfCompleted++;
+            d.getElementById('scholarDisplay').innerHTML = '1';
+        } else {
+            d.getElementById('scholarDisplay').innerHTML = '0';
         }
 
         if (numberOfCompleted === numberToComplete) {

@@ -53,62 +53,6 @@
             padding-bottom: 10px;
         }
     }
-
-    .chip {
-        &.hoverable {
-            cursor: pointer;
-
-            &:hover {
-                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
-                background: #bbb;
-                border-color: #26a69a;
-            }
-        }
-
-
-        .chip-link {
-            .modal-img {
-                margin-top: -1px;
-                margin-left: -13px;
-                border: solid 1px gray;
-
-                &:hover {
-                    border-color: black;
-                }
-            }
-        }
-
-        &.bordered {
-            border: solid 1px gray;
-            min-width: 50px;
-
-            background: #eee;
-
-            & {
-                -webkit-transition: 0.2s background-color ease-in-out;
-                -moz-transition: 0.2s background-color ease-in-out;
-                -o-transition: 0.2s background-color ease-in-out;
-                transition: 0.2s background-color ease-in-out;
-            }
-            .chip-link .modal-img {
-                -webkit-transition: 0.2s border-color ease-in-out;
-                -moz-transition: 0.2s border-color ease-in-out;
-                -o-transition: 0.2s border-color ease-in-out;
-                transition: 0.2s border-color ease-in-out;
-            }
-
-            &.active {
-                background: #bbb;
-                border-color: #26a69a;
-            }
-            &.active .chip-link .modal-img {
-                border-color: #26a69a;
-            }
-            &.active:hover {
-                background: #aaa;
-            }
-        }
-    }
 }
 
 /* Materialize setup */

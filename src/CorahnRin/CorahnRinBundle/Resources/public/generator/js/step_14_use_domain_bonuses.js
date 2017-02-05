@@ -26,9 +26,11 @@
                 if (isActive && button._is_domain_base === false) {
                     remainingPoints--;
                 }
+                domainsButtons[domainId].bonus.parentElement.parentElement.classList.add('active');
                 domainsButtons[domainId].bonus.classList.add('active');
                 domainsButtons[domainId].base.classList.remove('active');
             } else {
+                domainsButtons[domainId].bonus.parentElement.parentElement.classList.remove('active');
                 domainsButtons[domainId].bonus.classList.remove('active');
                 domainsButtons[domainId].base.classList.add('active');
             }
