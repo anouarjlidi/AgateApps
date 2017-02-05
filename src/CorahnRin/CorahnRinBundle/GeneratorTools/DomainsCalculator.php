@@ -130,6 +130,14 @@ final class DomainsCalculator
             $this->addValueToDomain($id);
         }
 
+        if (null !== $domainsBonuses) {
+            foreach ($this->finalCalculatedDomains as $id => $value) {
+                if ($value > 5) {
+                    $this->finalCalculatedDomains[$id] = 5;
+                }
+            }
+        }
+
         return $this->finalCalculatedDomains;
     }
 
