@@ -31,12 +31,12 @@ class FullValidStepsControllerTest extends WebTestCase
      * @param string $routeUri
      * @param string $nextStep
      * @param array  $formValues
-     * @param mixed  $sessionValue
+     * @param mixed  $expectedSessionValue
      * @param array  $previousSteps
      */
-    public function testAllSteps($stepName, $routeUri, $nextStep, array $formValues, $sessionValue, array $previousSteps)
+    public function testAllSteps($stepName, $routeUri, $nextStep, array $formValues, $expectedSessionValue, array $previousSteps)
     {
-        if (!$formValues && !$sessionValue) {
+        if (!$formValues && !$expectedSessionValue) {
             static::markTestIncomplete('Missing form values for step '.$stepName);
         }
         $client = $this->getClient('corahnrin.esteren.dev', [], ['ROLE_MANAGER']);
@@ -80,7 +80,7 @@ class FullValidStepsControllerTest extends WebTestCase
 
         // We also make sure that the session has been correctly updated.
         $character = $session->get('character');
-        static::assertEquals($character[$stepName], $sessionValue, 'Character values are not equal to session ones...');
+        static::assertEquals($expectedSessionValue, $character[$stepName], 'Character values are not equal to session ones...');
     }
 
     public static function provideValidSteps()
