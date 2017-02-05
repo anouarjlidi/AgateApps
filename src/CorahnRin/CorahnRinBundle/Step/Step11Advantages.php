@@ -50,6 +50,7 @@ class Step11Advantages extends AbstractStepAction
                 $this->updateCharacterStep([
                     'advantages'    => $advantages,
                     'disadvantages' => $disadvantages,
+                    'remainingExp'  => $experience,
                 ]);
 
                 return $this->nextStep();
