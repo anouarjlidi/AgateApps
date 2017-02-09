@@ -51,7 +51,7 @@ class DirectionsManagerTest extends WebTestCase
         foreach ($expectedData as $key => $expectedValue) {
             static::assertArrayHasKey($key, $dirs);
             if (array_key_exists($key, $dirs)) {
-                static::assertEquals($expectedValue, $dirs[$key], 'Json response key "'.$key.'" has invalid value.');
+                static::assertSame($expectedValue, $dirs[$key], 'Json response key "'.$key.'" has invalid value.');
             }
         }
     }

@@ -176,8 +176,6 @@
             13: 3 # SCience
 
     session_value:
-        ost: 2
-        scholar: 0
         domains:
             1:  5 # Artisanat
             2:  1 # Combat au contact
@@ -195,6 +193,8 @@
             14: 0
             15: 2 # Voyage
             16: 2 # Érudition
+        ost: 2
+        scholar: null
 
 14_use_domain_bonuses:
     next_step: 15_domains_spend_exp

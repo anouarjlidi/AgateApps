@@ -9,9 +9,7 @@ define('NO_RECREATE_DB', getenv('NO_RECREATE_DB'));
 define('NO_CLEAR_CACHE', getenv('NO_CLEAR_CACHE'));
 define('RECREATE_DB', getenv('RECREATE_DB'));
 
-if (!getenv('SYMFONY_ENV')) {
     putenv('SYMFONY_ENV=test');
-}
 
 gc_disable();
 ini_set('memory_limit', -1);

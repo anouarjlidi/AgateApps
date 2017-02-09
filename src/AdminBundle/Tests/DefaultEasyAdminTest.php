@@ -17,13 +17,13 @@ class DefaultEasyAdminTest extends WebTestCase
 
         $client->request('GET', '/fr/');
 
-        static::assertEquals(302, $client->getResponse()->getStatusCode(), print_r($client->getResponse()->getContent(), true));
-        static::assertEquals('/fr/?action=list&entity=Pages', $client->getResponse()->headers->get('Location'));
+        static::assertSame(302, $client->getResponse()->getStatusCode(), print_r($client->getResponse()->getContent(), true));
+        static::assertSame('/fr/?action=list&entity=Pages', $client->getResponse()->headers->get('Location'));
 
         $crawler = $client->followRedirect();
 
-        static::assertEquals(200, $client->getResponse()->getStatusCode(), $crawler->filter('title')->html());
-        static::assertEquals('EasyAdmin', $crawler->filter('meta[name="generator"]')->attr('content'));
+        static::assertSame(200, $client->getResponse()->getStatusCode(), $crawler->filter('title')->html());
+        static::assertSame('EasyAdmin', $crawler->filter('meta[name="generator"]')->attr('content'));
         static::assertGreaterThanOrEqual(1, $crawler->filter('#main.content .table-responsive tbody tr[data-id]')->count());
     }
 

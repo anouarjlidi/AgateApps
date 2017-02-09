@@ -16,7 +16,7 @@ class SecurityControllerTest extends WebTestCase
 
         $client->request('GET', '/fr/');
 
-        static::assertEquals(403, $client->getResponse()->getStatusCode());
+        static::assertSame(403, $client->getResponse()->getStatusCode());
     }
 
     public function testAllowedAdmin()
@@ -25,10 +25,10 @@ class SecurityControllerTest extends WebTestCase
 
         $client->request('GET', '/fr/');
 
-        static::assertEquals(302, $client->getResponse()->getStatusCode());
+        static::assertSame(302, $client->getResponse()->getStatusCode());
         static::assertContains('/fr/?action=list&entity=Page', $client->getResponse()->headers->get('Location'));
         $client->followRedirect();
-        static::assertEquals(200, $client->getResponse()->getStatusCode());
+        static::assertSame(200, $client->getResponse()->getStatusCode());
     }
 
     /**
@@ -89,7 +89,7 @@ class SecurityControllerTest extends WebTestCase
         $client->submit($form);
 
         // Check that it redirects to profile page
-        static::assertEquals(302, $client->getResponse()->getStatusCode());
+        static::assertSame(302, $client->getResponse()->getStatusCode());
         static::assertTrue($client->getResponse()->isRedirect('/fr/profile/'));
 
         $crawler->clear();
@@ -130,7 +130,7 @@ class SecurityControllerTest extends WebTestCase
         $client->submit($form);
 
         // Check that form submission redirects to same page
-        static::assertEquals(302, $client->getResponse()->getStatusCode());
+        static::assertSame(302, $client->getResponse()->getStatusCode());
         static::assertTrue($client->getResponse()->isRedirect('/fr/profile/'));
         $crawler->clear();
         $crawler = $client->followRedirect();
@@ -158,7 +158,7 @@ class SecurityControllerTest extends WebTestCase
 
         $form['username'] = static::USER_NAME_AFTER_UPDATE;
         $client->submit($form);
-        static::assertEquals(302, $client->getResponse()->getStatusCode());
+        static::assertSame(302, $client->getResponse()->getStatusCode());
         $crawler->clear();
         $crawler = $client->followRedirect();
 
@@ -183,10 +183,10 @@ class SecurityControllerTest extends WebTestCase
 
         $client->submit($form);
 
-        static::assertEquals(302, $client->getResponse()->getStatusCode());
+        static::assertSame(302, $client->getResponse()->getStatusCode());
         $crawler->clear();
         $crawler = $client->followRedirect();
-        static::assertEquals(1, $crawler->filter('.card-panel.success')->count());
+        static::assertSame(1, $crawler->filter('.card-panel.success')->count());
 
         $crawler->clear();
     }

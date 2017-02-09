@@ -56,7 +56,7 @@ class FullValidStepsControllerTest extends WebTestCase
         $crawler = $client->request('GET', '/fr/character/generate/'.$routeUri);
 
         // If it's not 200, it certainly session is invalid.
-        static::assertEquals(200, $client->getResponse()->getStatusCode(), 'Could not execute step request...');
+        static::assertSame(200, $client->getResponse()->getStatusCode(), 'Could not execute step request...');
 
         // Prepare form values.
         $form = $crawler->filter('#generator_form')->form();
@@ -80,7 +80,7 @@ class FullValidStepsControllerTest extends WebTestCase
 
         // We also make sure that the session has been correctly updated.
         $character = $session->get('character');
-        static::assertEquals($expectedSessionValue, $character[$stepName], 'Character values are not equal to session ones...');
+        static::assertSame($expectedSessionValue, $character[$stepName], 'Character values are not equal to session ones...');
     }
 
     public static function provideValidSteps()

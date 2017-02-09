@@ -28,9 +28,9 @@ class LegalMentionsControllerTest extends WebTestCase
 
         $crawler = $client->request('GET', '/'.$locale.'/legal');
 
-        static::assertEquals('legal_mentions', $client->getRequest()->attributes->get('_route'));
+        static::assertSame('legal_mentions', $client->getRequest()->attributes->get('_route'));
 
-        static::assertEquals(200, $client->getResponse()->getStatusCode());
+        static::assertSame(200, $client->getResponse()->getStatusCode());
 
         static::assertStringStartsWith('Article 1', trim($crawler->filter('#content h3#article-1')->text()));
     }
@@ -55,7 +55,7 @@ class LegalMentionsControllerTest extends WebTestCase
 
         $client->request('GET', '/'.$locale.'/legal');
 
-        static::assertEquals(404, $client->getResponse()->getStatusCode());
+        static::assertSame(404, $client->getResponse()->getStatusCode());
     }
 
     public function provideNotAllowedLocales()

@@ -15,12 +15,12 @@ class PortalControllerTest extends WebTestCase
         $crawler = $client->request('GET', '/fr/');
 
         // Ensures that portal homepage is managed in a controller and not in the CMS
-        static::assertEquals('portal_home', $client->getRequest()->attributes->get('_route'));
+        static::assertSame('portal_home', $client->getRequest()->attributes->get('_route'));
 
-        static::assertEquals(200, $client->getResponse()->getStatusCode());
+        static::assertSame(200, $client->getResponse()->getStatusCode());
 
         // Check <h1> content only, this will be our "regression point" for homepage (now that it's static and no more in the CMS)
-        static::assertEquals('Bienvenue sur le nouveau portail des Ombres d\'Esteren', trim($crawler->filter('#content h1')->text()));
+        static::assertSame('Bienvenue sur le nouveau portail des Ombres d\'Esteren', trim($crawler->filter('#content h1')->text()));
     }
 
     public function testIndexWithNonSupportedHomepage()
@@ -32,6 +32,6 @@ class PortalControllerTest extends WebTestCase
         $client->request('GET', '/en/');
 
         // Ensures that portal homepage is managed in a controller and not in the CMS
-        static::assertEquals(404, $client->getResponse()->getStatusCode());
+        static::assertSame(404, $client->getResponse()->getStatusCode());
     }
 }

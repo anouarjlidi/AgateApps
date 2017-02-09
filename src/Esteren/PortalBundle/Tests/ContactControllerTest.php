@@ -24,7 +24,7 @@ class ContactControllerTest extends WebTestCase
 
         $crawler = $client->request('GET', '/fr/contact');
 
-        static::assertEquals(200, $client->getResponse()->getStatusCode());
+        static::assertSame(200, $client->getResponse()->getStatusCode());
 
         $form = $crawler->filter('#content .container form')->form();
 
@@ -41,13 +41,13 @@ class ContactControllerTest extends WebTestCase
         // Enable the profiler for the next request (it does nothing if the profiler is not available)
         $client->enableProfiler();
 
-        static::assertEquals(302, $client->getResponse()->getStatusCode());
+        static::assertSame(302, $client->getResponse()->getStatusCode());
 
         $crawler = $client->followRedirect();
 
         $message = $client->getContainer()->get('translator')->trans('form.message_sent', [], 'contact');
 
-        static::assertEquals($message, trim($crawler->filter('#flash-messages div.card-panel.success')->text()));
+        static::assertSame($message, trim($crawler->filter('#flash-messages div.card-panel.success')->text()));
 
         /** @var MessageDataCollector $mailCollector */
         $mailCollector = $client->getProfile()->getCollector('swiftmailer');
@@ -63,7 +63,7 @@ class ContactControllerTest extends WebTestCase
 
         // Asserting email data
         static::assertInstanceOf(\Swift_Message::class, $message);
-        static::assertEquals($data['email'], key($message->getFrom()));
+        static::assertSame($data['email'], key($message->getFrom()));
         static::assertContains($data['message'], $message->getBody());
     }
 
