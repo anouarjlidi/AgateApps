@@ -127,7 +127,7 @@ var config = {
      */
     "js": {
         "js/jquery.js": [
-            "node_modules/jquery/jquery.js"
+            "node_modules/jquery/dist/jquery.js"
         ],
         "js/global.js": [
             "node_modules/bootstrap/js/button.js",
