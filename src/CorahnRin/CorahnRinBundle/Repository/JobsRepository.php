@@ -20,7 +20,7 @@ class JobsRepository extends BaseRepository
         $books = [];
 
         foreach ($jobs as $job) {
-            $books[$job->getBook()->getId()][] = $job;
+            $books[$job->getBook()->getId()][$job->getId()] = $job;
         }
 
         return $books;

@@ -7,64 +7,74 @@
 
 {% block step_content %}
 
-    <div class="card-panel teal lighten-4">
-        {{ 'domains_bonuses.explanation'|trans({}, 'CorahnRinBundle')|raw }}
-        <br>
-        <i class="fa fa-hand-o-right teal-text text-darken-3"></i>&nbsp;
-        {{ 'domains_bonuses.explanation_disciplines'|trans({}, 'CorahnRinBundle')|raw }}
+    {% if not bonus_max %}
 
-    </div>
-
-    <div class="card-panel blue lighten-4">
-
-        {{ 'domains_bonuses.remaining'|trans({}, 'CorahnRinBundle') }}
-
-        <div class="chip bordered" id="bonus_points">
-            <span id="remaining_bonus_points" class="text-black">{{ bonus_value }}</span>&nbsp;/<span id="max_bonus_points" class="text-black">{{ bonus_max }}</span>
+        <div class="card-panel teal lighten-4">
+            {{ 'domains_bonuses.no_bonus_point'|trans({}, 'CorahnRinBundle') }}
         </div>
-    </div>
 
-    {% for domains_chunk in all_domains|batch(4, []) %}
+    {% else %}
 
-        <div class="row">
-        {% for id, domain in domains_chunk %}
+        <div class="card-panel teal lighten-4">
+            {{ 'domains_bonuses.explanation'|trans({}, 'CorahnRinBundle')|raw }}
+            <br>
+            <i class="fa fa-hand-o-right teal-text text-darken-3"></i>&nbsp;
+            {{ 'domains_bonuses.explanation_disciplines'|trans({}, 'CorahnRinBundle')|raw }}
 
-            {% set value = domains_values[id] %}
+        </div>
 
-            <div class="col s3 domain hoverable" data-domain-id="{{ id }}">
-                <input type="hidden" name="domains_bonuses[{{ id }}]" id="domains_{{ id }}" value="{{ domains_bonuses[id] }}">
-                <h5>
-                    {{ domain.name }}
-                </h5>
-                <div class="domain_button_group">
-                    {% for i in [0, 1, 2, 3, 5] %}
+        <div class="card-panel blue lighten-4">
 
-                        {% set selected = i == value %}
+            {{ 'domains_bonuses.remaining'|trans({}, 'CorahnRinBundle') }}
 
-                        {% set disabled =
-                            i < value
-                            or value == 5
-                            or i > (value + 1)
-                        %}
+            <div class="chip bordered" id="bonus_points">
+                <span id="remaining_bonus_points" class="text-black">{{ bonus_value }}</span>&nbsp;/<span id="max_bonus_points" class="text-black">{{ bonus_max }}</span>
+            </div>
+        </div>
 
-                        {#
-                            If button is not disabled we add the "domain-change" class.
-                            This will be the one that will receive the event listeners.
-                        #}
-                        {% set class -%}
-                            {{- value == i ? ' active' -}}
-                            {{- disabled ? ' disabled' : ' domain-change' -}}
-                        {%- endset %}
-                        <button type="button" data-change="{{ i }}" data-domain-id="{{ id }}" class="domain_button_value btn btn-inverse {{ class }}">
-                            {{ i }}
-                        </button>
-                    {% endfor %}
+        {% for domains_chunk in all_domains|batch(4, []) %}
+
+            <div class="row">
+            {% for id, domain in domains_chunk %}
+
+                {% set value = domains_values[id] %}
+
+                <div class="col s3 domain hoverable" data-domain-id="{{ id }}">
+                    <input type="hidden" name="domains_bonuses[{{ id }}]" id="domains_{{ id }}" value="{{ domains_bonuses[id] }}">
+                    <h5>
+                        {{ domain.name }}
+                    </h5>
+                    <div class="domain_button_group">
+                        {% for i in [0, 1, 2, 3, 5] %}
+
+                            {% set selected = i == value %}
+
+                            {% set disabled =
+                                i < value
+                                or value == 5
+                                or i > (value + 1)
+                            %}
+
+                            {#
+                                If button is not disabled we add the "domain-change" class.
+                                This will be the one that will receive the event listeners.
+                            #}
+                            {% set class -%}
+                                {{- value == i ? ' active' -}}
+                                {{- disabled ? ' disabled' : ' domain-change' -}}
+                            {%- endset %}
+                            <button type="button" data-change="{{ i }}" data-domain-id="{{ id }}" class="domain_button_value btn btn-inverse {{ class }}">
+                                {{ i }}
+                            </button>
+                        {% endfor %}
+                    </div>
                 </div>
+
+            {% endfor %}
             </div>
 
         {% endfor %}
-        </div>
 
-    {% endfor %}
+    {% endif %}{# end if bonus value #}
 
 {% endblock %}

@@ -4,7 +4,7 @@
 
 <input type="hidden" name="job_value" id="job_value" value="{{ job_value }}" />
 {% for jobs in jobs_list %}
-    <h3>{{ jobs[0].book.name | trans({}, 'CorahnRinBundle') }}</h3>
+    <h3>{{ (jobs|first).book.name | trans({}, 'CorahnRinBundle') }}</h3>
 
         {% for job in jobs %}
 

@@ -33,7 +33,7 @@ class Step09Traits extends AbstractStepAction
 
                 return $this->nextStep();
             } else {
-                $this->flashMessage('Les traits de caractère choisis sont incorrects.', 'error.steps');
+                $this->flashMessage('Les traits de caractère choisis sont incorrects.');
             }
         }
 

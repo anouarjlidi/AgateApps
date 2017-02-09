@@ -18,7 +18,7 @@ class Step04Geo extends AbstractStepAction
 
                 return $this->nextStep();
             } else {
-                $this->flashMessage('Veuillez indiquer un peuple correct.');
+                $this->flashMessage('Veuillez indiquer un lieu de vie géographique correct.');
             }
         }
 

@@ -11,6 +11,7 @@ class Step12MentalDisorder extends AbstractStepAction
     {
         $disorderValue = $this->getCharacterProperty();
 
+        /** @var int[] $ways */
         $ways = $this->getCharacterProperty('08_ways');
 
         // They MUST be indexed by ids by the repository.
@@ -43,7 +44,7 @@ class Step12MentalDisorder extends AbstractStepAction
 
         // Validate form.
         if ($this->request->isMethod('POST')) {
-            $disorderValue = $this->request->request->get('gen-div-choice');
+            $disorderValue = (int) $this->request->request->get('gen-div-choice');
 
             // Success!
             if (array_key_exists($disorderValue, $disorders)) {
@@ -52,7 +53,11 @@ class Step12MentalDisorder extends AbstractStepAction
                 return $this->nextStep();
             }
 
-            $this->flashMessage('Le désordre mental choisi n\'existe pas.');
+            if (0 === $disorderValue) {
+                $this->flashMessage('Veuillez choisir un désordre mental.');
+            } else {
+                $this->flashMessage('Le désordre mental choisi n\'existe pas.');
+            }
         }
 
         return $this->renderCurrentStep([

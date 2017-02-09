@@ -85,6 +85,15 @@ class Step14UseDomainBonuses extends AbstractStepAction
 
         // Manage form submit
         if ($this->request->isMethod('POST')) {
+
+            if (0 === $this->bonus) {
+                $finalArray = $this->resetBonuses();
+                $finalArray['remaining'] = $this->bonus;
+                $this->updateCharacterStep($finalArray);
+
+                return $this->nextStep();
+            }
+
             /** @var int[] $postedValues */
             $postedValues = $this->request->request->get('domains_bonuses');
 
