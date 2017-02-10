@@ -214,7 +214,7 @@
             12: 0
             13: 0
             14: 0
-            15: 0
+            15: 1 # Voyage
             16: 1 # Érudition
     session_value:
         1:  0
@@ -231,7 +231,7 @@
         12: 0
         13: 0
         14: 0
-        15: 0
+        15: 1 # Voyage
         16: 1 # Érudition
         remaining: 2
 

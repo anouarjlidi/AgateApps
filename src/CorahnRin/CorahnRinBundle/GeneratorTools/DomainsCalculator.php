@@ -83,7 +83,7 @@ final class DomainsCalculator
                         '$domainsBonuses', 'integers', 'domain id'
                     ));
                 }
-                $this->finalCalculatedDomains[$id] += $domainsBonuses[$id];
+                $this->addValueToDomain($id, $domainsBonuses[$id]);
             }
         }
 
@@ -156,7 +156,7 @@ final class DomainsCalculator
     private function addValueToDomain($domainId, $value = 1)
     {
         if (1 === $value) {
-            if ($this->finalCalculatedDomains[$domainId] <= 5) {
+            if ($this->finalCalculatedDomains[$domainId] < 5) {
                 $this->finalCalculatedDomains[$domainId]++;
             } else {
                 $this->bonus++;
