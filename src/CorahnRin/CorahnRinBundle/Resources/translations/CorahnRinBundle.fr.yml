@@ -88,3 +88,14 @@ domains_bonuses:
             Ainsi, nous vous recommandons de les utiliser, et d'en garder deux pour obtenir des disciplines dans les étapes suivantes.
         too_many_points: 'Vous avez utilisé %spent% points bonus alors que vous aviez droit à %base% points, veuillez recommencer.'
     no_bonus_point: 'Vous ne disposez pas de points bonus'
+
+domains_spend_exp:
+    no_exp: 'Vous n''avez plus assez de points d''expérience à pour améliorer vos domaines.'
+    remaining: 'Expérience restante :'
+    explanation: >
+        Vous pouvez dépenser de l'expérience pour améliorer vos domaines.<br>
+        <strong>Chaque point supplémentaire coûte 10XP</strong>
+
+steps:
+    next: 'Étape suivante'
+    reset: 'Réinitialiser cette étape'

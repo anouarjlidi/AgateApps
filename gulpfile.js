@@ -180,6 +180,9 @@ var config = {
         ],
         "js/step_14_use_domain_bonuses.js": [
             "src/CorahnRin/CorahnRinBundle/Resources/public/generator/js/step_14_use_domain_bonuses.js"
+        ],
+        "js/step_15_domains_spend_exp.js": [
+            "src/CorahnRin/CorahnRinBundle/Resources/public/generator/js/step_15_domains_spend_exp.js"
         ]
     }
 };

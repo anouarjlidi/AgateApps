@@ -30,6 +30,11 @@ class Step15DomainsSpendExp extends AbstractStepAction
      */
     private $domainsSpentWithExp;
 
+    /**
+     * @var int
+     */
+    private $expRemainingFromAdvantages;
+
     public function __construct(DomainsCalculator $domainsCalculator)
     {
         $this->domainsCalculator = $domainsCalculator;
@@ -44,7 +49,7 @@ class Step15DomainsSpendExp extends AbstractStepAction
     {
         $this->allDomains = $this->em->getRepository('CorahnRinBundle:Domains')->findAllForGenerator();
 
-        $step13Domains = $this->getCharacterProperty('13_primary_domains');
+        $primaryDomains = $this->getCharacterProperty('13_primary_domains');
         $socialClassValues = $this->getCharacterProperty('05_social_class')['domains'];
         $domainBonuses = $this->getCharacterProperty('14_use_domain_bonuses');
         $geoEnvironment = $this->em->find('CorahnRinBundle:GeoEnvironments', $this->getCharacterProperty('04_geo'));
@@ -52,30 +57,40 @@ class Step15DomainsSpendExp extends AbstractStepAction
         $domainsBaseValues = $this->domainsCalculator->calculateFromGeneratorData(
             $this->allDomains,
             $socialClassValues,
-            $step13Domains['ost'],
-            $step13Domains['scholar'] ?: null,
+            $primaryDomains['ost'],
+            $primaryDomains['scholar'] ?: null,
             $geoEnvironment,
-            $step13Domains['domains'],
+            $primaryDomains['domains'],
             $domainBonuses
         );
+
+        $this->expRemainingFromAdvantages = $this->getCharacterProperty('11_advantages')['remainingExp'];
 
         /** @var int[] $currentDomainsSpentWithExp */
         $this->domainsSpentWithExp = $this->getCharacterProperty();
 
         if (null === $this->domainsSpentWithExp) {
-            $domainsSpentWithExp = $this->resetDomains();
+            $this->resetDomains();
         }
 
         return $this->renderCurrentStep([
+            'all_domains' => $this->allDomains,
             'domains_base_values' => $domainsBaseValues,
-            'domains_spent_with_exp' => $this->domainsSpentWithExp,
+            'domains_spent_with_exp' => $this->domainsSpentWithExp['domains'],
+            'exp_max' => $this->expRemainingFromAdvantages,
+            'exp_value' => $this->domainsSpentWithExp['remainingExp'],
         ]);
     }
 
     private function resetDomains()
     {
+        $this->domainsSpentWithExp = [
+            'domains' => [],
+            'remainingExp' => $this->expRemainingFromAdvantages,
+        ];
+
         foreach ($this->allDomains as $id => $value) {
-            $this->domainsSpentWithExp[$id] = 0;
+            $this->domainsSpentWithExp['domains'][$id] = 0;
         }
     }
 
