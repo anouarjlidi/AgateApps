@@ -45,9 +45,9 @@
                         {{ domain.name }}
                     </h5>
                     <div class="domain_button_group">
-                        {% for i in [0, 1, 2, 3, 5] %}
+                        {% for i, buttonValue in 0..5 %}
 
-                            {% set selected = i == value %}
+                            {% set selected = buttonValue == value %}
 
                             {% set disabled =
                                 i < value
@@ -64,7 +64,7 @@
                                 {{- disabled ? ' disabled' : ' domain-change' -}}
                             {%- endset %}
                             <button type="button" data-change="{{ i }}" data-domain-id="{{ id }}" class="domain_button_value btn btn-inverse {{ class }}">
-                                {{ i }}
+                                {{ buttonValue }}
                             </button>
                         {% endfor %}
                     </div>
@@ -77,4 +77,5 @@
 
     {% endif %}{# end if bonus value #}
 
+    {{ dump() }}
 {% endblock %}

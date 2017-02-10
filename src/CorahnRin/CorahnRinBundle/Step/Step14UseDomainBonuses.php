@@ -103,6 +103,8 @@ class Step14UseDomainBonuses extends AbstractStepAction
             $error = false;
 
             foreach (array_keys($characterBonuses) as $id) {
+                if ('remaining' === $id) { continue; }
+
                 $value = isset($postedValues[$id]) ? $postedValues[$id] : null;
                 if (!array_key_exists($id, $postedValues) || !in_array($postedValues[$id], ['0', '1'], true)) {
                     // If there is any error, we do nothing.
@@ -110,6 +112,7 @@ class Step14UseDomainBonuses extends AbstractStepAction
                     $error = true;
                     break;
                 }
+
                 if ('1' === $value) {
                     $remainingPoints--;
                     $spent++;

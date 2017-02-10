@@ -3,11 +3,15 @@
 @dataChange1: hsl(hue(@btn-primary-bg), saturation(@btn-primary-bg) + 20%, lightness(@btn-primary-bg) + 35%);
 @dataChange2: hsl(hue(@state-success-bg), saturation(@state-success-bg) + 20%, lightness(@state-success-bg) - 10%);
 @dataChange3: hsl(hue(@state-danger-bg), saturation(@state-danger-bg) + 40%, lightness(@state-danger-bg) - 12%);
+@dataChange4: hsl(hue(@state-warning-bg), saturation(@state-warning-bg) + 40%, lightness(@state-warning-bg) - 12%);
+@dataChange5: #bb0000;
 
 .domainValue0 { color: @dataChange0; }
 .domainValue1 { color: @dataChange1; }
 .domainValue2 { color: @dataChange2; }
 .domainValue3 { color: @dataChange3; }
+.domainValue4 { color: @dataChange4; }
+.domainValue5 { color: @dataChange5; }
 
 #generator_form {
     #information_table {
@@ -51,6 +55,12 @@
                 }
                 &[data-change="3"] {
                     .domainValue3;
+                }
+                &[data-change="4"] {
+                    .domainValue4;
+                }
+                &[data-change="5"] {
+                    .domainValue5;
                 }
             }
         }
