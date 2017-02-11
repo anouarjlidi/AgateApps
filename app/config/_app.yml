@@ -121,6 +121,9 @@ fos_user:
     db_driver:     orm
     firewall_name: main
     user_class:    UserBundle\Entity\User
+    from_email:
+        address: "no-reply@%esteren_domain%"
+        sender_name: "Esteren team"
 
 # TODO: remove FOSRest integration or refactor it
 fos_rest:
