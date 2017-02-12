@@ -75,8 +75,13 @@ class DirectionsManager
         $cacheItem = $this->cache->getCacheItem();
 
         // Get cache only in prod.
-        if (!$this->debug && null !== $cacheItem && $cacheItem->isHit()) {
-            $directions = json_decode($this->cache->getItemValue($cacheItem, $cacheHash), true);
+        if (
+            !$this->debug
+            && null !== $cacheItem
+            && $cacheItem->isHit()
+            && $jsonString = $this->cache->getItemValue($cacheItem, $cacheHash)
+        ) {
+            $directions = json_decode($jsonString, true);
             $directions['from_cache'] = true;
         } else {
             $directions = $this->doGetDirections($map, $start, $end, $hoursPerDay, $transportType);
