@@ -74,7 +74,6 @@
             this.resetHeight(mapOptions.containerHeight);
         }
 
-
         if (mapOptions.messageElementId) {
             this._messageElement = d.getElementById(mapOptions.messageElementId);
         }
@@ -401,11 +400,14 @@
         if (height) {
             $(d.getElementById(this._mapOptions.container)).height(height);
         } else {
+            var footer = d.getElementById('footer');
+            var navigation = d.getElementById('navigation');
+            var map_edit_menu = d.getElementById('map_edit_menu');
             $(d.getElementById(this._mapOptions.container)).height(
                   $(w).height()
-                - $('#footer').outerHeight(true)
-                - $('#navigation').outerHeight(true)
-                - $('#map_edit_menu').outerHeight(true)
+                - (footer ? $(footer).outerHeight(true) : 0)
+                - (navigation ? $(navigation).outerHeight(true) : 0)
+                - (map_edit_menu ? $(map_edit_menu).outerHeight(true) : 0)
                 //- 40
             );
         }
