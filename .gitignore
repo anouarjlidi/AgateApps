@@ -31,6 +31,8 @@
 /web/js/*
 /web/css/*
 /web/uploads/*
+!/web/uploads/maps/.gitkeep
+!/web/uploads/maps/esteren*
 /web/fonts/*
 /web/img/generator/*
 /web/img/markerstypes/*
