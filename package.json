@@ -11,18 +11,18 @@
         "bootstrap": "^3.3.7",
         "font-awesome": "^4.7.0",
         "gulp": "^3.9",
-        "gulp-clean-css": "^2.0",
+        "gulp-clean-css": "^3.0",
         "gulp-concat": "^2.6",
         "gulp-if": "^2.0",
-        "gulp-imagemin": "^3.0",
-        "gulp-less": "^3.0",
-        "gulp-sass": "^2.2",
-        "gulp-sourcemaps": "^1.6",
+        "gulp-imagemin": "^3.1",
+        "gulp-less": "^3.3",
+        "gulp-sass": "^3.1",
+        "gulp-sourcemaps": "^2.4",
         "gulp-uglyfly": "^1.4",
         "gulp-watch": "^4.3",
         "jquery": "^3.1.1",
         "leaflet": "^0.7",
-        "materialize-css": "^0.97.8"
+        "materialize-css": "^0.98"
     },
     "contributors": [
         {
