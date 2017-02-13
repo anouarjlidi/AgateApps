@@ -45,7 +45,7 @@ php composer.phar install -o --no-interaction --no-scripts || exit 130
 
 echo ""
 echo "$echoPrefix Testing environment capabilities and Symfony requirements"
-php bin/symfony_requirements || exit 140
+php bin/symfony_requirements
 
 if [[ -z "$PHPUNIT_PARAMETERS" ]]; then
     export PHPUNIT_PARAMETERS=" --coverage-text --coverage-clover build/logs/clover.xml "
