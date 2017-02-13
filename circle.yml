@@ -7,12 +7,13 @@ machine:
         SYMFONY_ENV: test
         SYMFONY_DEBUG: 1
         PATH: "${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin"
+        PHPUNIT_PARAMETERS: ' --log-junit $CIRCLE_TEST_REPORTS/phpunit/junit.xml '
 
 dependencies:
     cache_directories:
         - ~/.cache/yarn
     override:
-        - 'echo "date.timezone = Europe/Paris" > /opt/circleci/php/$(phpenv global)/etc/conf.d/date.ini'
+        - mkdir -p $CIRCLE_TEST_REPORTS/phpunit
         - yarn
         - composer install --no-interaction
 

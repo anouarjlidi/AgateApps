@@ -14,7 +14,6 @@ build:
         - '$HOME/.phpenv/versions/$(phpenv version-name)/lib/php/extensions/'
         - '$SHIPPABLE_BUILD_DIR/node_modules'
     ci:
-        - 'echo "date.timezone=Europe/Paris" >> $HOME/.phpenv/versions/$(phpenv version-name)/etc/php.ini;'
         - 'pickle install intl && echo "extension=intl.so" >> $HOME/.phpenv/versions/$(phpenv version-name)/etc/php.ini;'
         - 'mkdir -p shippable/testresults'
         - 'mkdir -p shippable/codecoverage'
