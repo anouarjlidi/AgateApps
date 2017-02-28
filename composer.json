@@ -5,7 +5,12 @@
     "type": "project",
     "autoload": {
         "psr-4": {
-            "": "src/"
+            "AdminBundle\\": "src/AdminBundle",
+            "CorahnRin\\": "src/CorahnRin",
+            "Esteren\\": "src/Esteren",
+            "EsterenMaps\\": "src/EsterenMaps",
+            "Pierstoval\\": "src/Pierstoval",
+            "UserBundle\\": "src/UserBundle"
         },
         "classmap": [
             "app/AppKernel.php",
@@ -75,7 +80,7 @@
     },
     "config": {
         "autoloader-suffix": "EsterenPortal",
-        "optimize-autoloader": true,
+        "classmap-authoritative": true,
         "platform": {
             "php": "5.6"
         }
