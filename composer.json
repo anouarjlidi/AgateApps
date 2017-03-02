@@ -80,7 +80,6 @@
     },
     "config": {
         "autoloader-suffix": "EsterenPortal",
-        "classmap-authoritative": true,
         "platform": {
             "php": "5.6"
         }
