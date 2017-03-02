@@ -41,7 +41,7 @@ export RECREATE_DB=1
 
 echo ""
 echo "$echoPrefix Install Composer dependencies"
-php composer.phar install -o --no-interaction --no-scripts || exit 130
+php composer.phar install --classmap-authoritative --no-interaction --no-scripts || exit 130
 
 echo ""
 echo "$echoPrefix Testing environment capabilities and Symfony requirements"
