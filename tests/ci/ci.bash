@@ -59,7 +59,9 @@ fi
 
 echo ""
 echo "$echoPrefix Execute tests"
+
 ${phpunit_script} ${PHPUNIT_PARAMETERS}
+./vendor/bin/behat
 
 if [ -f app/config/parameters.yml.backup ]; then
     echo ""
