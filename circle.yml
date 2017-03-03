@@ -15,7 +15,6 @@ dependencies:
     override:
         - mkdir -p $CIRCLE_TEST_REPORTS/phpunit
         - yarn
-        - composer selfupdate
         - composer install --no-interaction
 
 test:
