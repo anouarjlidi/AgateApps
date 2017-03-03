@@ -14,8 +14,7 @@ dependencies:
         - ~/.cache/yarn
     override:
         - mkdir -p $CIRCLE_TEST_REPORTS/phpunit
-        - yarn
-        - composer install --no-interaction
+        - 'echo "date.timezone = Europe/Paris" >> /opt/circleci/php/$(phpenv global)/etc/php.ini'
 
 test:
     override:
