@@ -15,9 +15,10 @@ dependencies:
     override:
         - mkdir -p $CIRCLE_TEST_REPORTS/phpunit
         - yarn
+        - composer selfupdate
         - composer install --no-interaction
 
 test:
     override:
         - './node_modules/.bin/gulp dump'
-        - './tests/ci/ci.bash || if [[ $? == 1 ]]; then echo "Exit code is 1..."; exit 0; else exit $? ; fi'
+        - './tests/ci/ci.bash'
