@@ -4,7 +4,7 @@ namespace CorahnRin\CorahnRinBundle\SheetsManagers;
 
 use CorahnRin\CorahnRinBundle\Entity\Characters;
 use CorahnRin\CorahnRinBundle\PDF\PDF;
-use Pierstoval\Bundle\CharacterManagerBundle\Model\Character;
+use Pierstoval\Bundle\CharacterManagerBundle\Model\CharacterInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 class PdfManager implements SheetsManagerInterface
@@ -35,7 +35,7 @@ class PdfManager implements SheetsManagerInterface
      *
      * @return PDF
      */
-    public function generateSheet(Character $character, $printer_friendly = false)
+    public function generateSheet(CharacterInterface $character, $printer_friendly = false)
     {
         if (!($character instanceof Characters)) {
             throw new \InvalidArgumentException(sprintf(

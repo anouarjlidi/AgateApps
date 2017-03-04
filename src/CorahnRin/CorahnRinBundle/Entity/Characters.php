@@ -14,7 +14,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Pierstoval\Bundle\CharacterManagerBundle\Model\Character as BaseCharacter;
+use Pierstoval\Bundle\CharacterManagerBundle\Entity\Character as BaseCharacter;
 use Symfony\Component\Validator\Constraints as Assert;
 use UserBundle\Entity\User;
 
