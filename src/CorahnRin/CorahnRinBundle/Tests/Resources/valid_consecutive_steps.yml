@@ -235,11 +235,45 @@
         16: 1 # Érudition
         remaining: 2
 
-# TODO
 15_domains_spend_exp:
     next_step: 16_disciplines
-    form_values: ~
-    session_value: ~
+    form_values:
+        domains_spend_exp:
+            1:  0
+            2:  1 # Combat au contact
+            3:  0
+            4:  0
+            5:  2 # Milieu naturel
+            6:  0
+            7:  0
+            8:  0
+            9:  0
+            10: 0
+            11: 0
+            12: 0
+            13: 0
+            14: 0
+            15: 0
+            16: 0
+    session_value:
+        domains:
+            1:  0
+            2:  1 # Combat au contact
+            3:  0
+            4:  0
+            5:  2 # Milieu naturel
+            6:  0
+            7:  0
+            8:  0
+            9:  0
+            10: 0
+            11: 0
+            12: 0
+            13: 0
+            14: 0
+            15: 0
+            16: 0
+        remainingExp: 50
 
 # TODO
 16_disciplines:
