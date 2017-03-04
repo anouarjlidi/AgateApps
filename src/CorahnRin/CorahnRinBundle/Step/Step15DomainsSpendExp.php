@@ -73,6 +73,51 @@ class Step15DomainsSpendExp extends AbstractStepAction
             $this->resetDomains();
         }
 
+        // Manage form submit
+        if ($this->request->isMethod('POST')) {
+            /** @var int[] $domainsValues */
+            $domainsValues = $this->request->get('domains_spend_exp');
+
+            if (!is_array($domainsValues)) {
+                $this->flashMessage('errors.incorrect_values');
+            } else {
+                $remainingExp = $this->expRemainingFromAdvantages;
+
+                $errors = false;
+
+                // First, check the ids
+                foreach ($domainsValues as $id => $value) {
+                    if (
+                        !array_key_exists($id, $this->allDomains)
+                        || !is_numeric($value)
+                        || $value < 0
+                        || ($remainingExp - ($value * 10)) < 0
+                        || $value + $domainsBaseValues[$id] > 5
+                    ) {
+                        $errors = true;
+                        $this->flashMessage('errors.incorrect_values');
+                        break;
+                    }
+
+                    $domainsValues[$id] = (int) $value;
+
+                    $remainingExp -= ($value * 10);
+                }
+
+                if (false === $errors) {
+                    $this->domainsSpentWithExp = [
+                        'domains' => $domainsValues,
+                        'remainingExp' => $remainingExp,
+                    ];
+
+                    $this->updateCharacterStep($this->domainsSpentWithExp);
+
+                    return $this->nextStep();
+                }
+            }
+
+        }
+
         return $this->renderCurrentStep([
             'all_domains' => $this->allDomains,
             'domains_base_values' => $domainsBaseValues,
