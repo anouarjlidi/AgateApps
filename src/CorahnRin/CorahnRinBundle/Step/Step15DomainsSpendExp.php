@@ -61,7 +61,7 @@ class Step15DomainsSpendExp extends AbstractStepAction
             $primaryDomains['scholar'] ?: null,
             $geoEnvironment,
             $primaryDomains['domains'],
-            $domainBonuses
+            $domainBonuses['domains']
         );
 
         $this->expRemainingFromAdvantages = $this->getCharacterProperty('11_advantages')['remainingExp'];

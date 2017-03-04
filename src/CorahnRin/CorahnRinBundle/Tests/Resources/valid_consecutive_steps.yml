@@ -217,22 +217,23 @@
             15: 1 # Voyage
             16: 1 # Érudition
     session_value:
-        1:  0
-        2:  0
-        3:  0
-        4:  0
-        5:  0
-        6:  0
-        7:  0
-        8:  0
-        9:  0
-        10: 0
-        11: 0
-        12: 0
-        13: 0
-        14: 0
-        15: 1 # Voyage
-        16: 1 # Érudition
+        domains:
+            1:  0
+            2:  0
+            3:  0
+            4:  0
+            5:  0
+            6:  0
+            7:  0
+            8:  0
+            9:  0
+            10: 0
+            11: 0
+            12: 0
+            13: 0
+            14: 0
+            15: 1 # Voyage
+            16: 1 # Érudition
         remaining: 2
 
 15_domains_spend_exp:

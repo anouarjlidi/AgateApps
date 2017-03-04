@@ -40,7 +40,7 @@
                 {% set value = domains_values[id] %}
 
                 <div class="col s3 domain hoverable" data-domain-id="{{ id }}">
-                    <input type="hidden" name="domains_bonuses[{{ id }}]" id="domains_{{ id }}" value="{{ domains_bonuses[id] }}">
+                    <input type="hidden" name="domains_bonuses[{{ id }}]" id="domains_{{ id }}" value="{{ domains_bonuses['domains'][id] }}">
                     <h5>
                         {{ domain.name }}
                     </h5>

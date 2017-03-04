@@ -235,9 +235,12 @@ class Step13PrimaryDomains extends AbstractStepAction
         if (null === $id || false === $keyExists) {
             $this->domainsValues['scholar'] = null;
             if (!$keyExists) {
-                $this->flashMessage('Le domaine spécifié pour l\'avantage Lettré n\'est pas valide.');
+                $this->flashMessage('Le domaine spécifié pour l\'avantage "Lettré" n\'est pas valide.');
                 return false;
             }
+        } elseif (!$id) {
+            $this->flashMessage('Veuillez spécifier un domaine pour l\'avantage "Lettré"');
+            return false;
         } else {
             $this->domainsValues['scholar'] = $id;
         }

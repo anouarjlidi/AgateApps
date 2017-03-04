@@ -102,9 +102,7 @@ class Step14UseDomainBonuses extends AbstractStepAction
 
             $error = false;
 
-            foreach (array_keys($characterBonuses) as $id) {
-                if ('remaining' === $id) { continue; }
-
+            foreach (array_keys($characterBonuses['domains']) as $id) {
                 $value = isset($postedValues[$id]) ? $postedValues[$id] : null;
                 if (!array_key_exists($id, $postedValues) || !in_array($postedValues[$id], ['0', '1'], true)) {
                     // If there is any error, we do nothing.
@@ -118,7 +116,7 @@ class Step14UseDomainBonuses extends AbstractStepAction
                     $spent++;
                 }
 
-                $characterBonuses[$id] = (int) $value;
+                $characterBonuses['domains'][$id] = (int) $value;
             }
 
             if ($remainingPoints < 0) {
@@ -130,9 +128,8 @@ class Step14UseDomainBonuses extends AbstractStepAction
                 if ($remainingPoints > 2) {
                     $this->flashMessage('domains_bonuses.errors.more_than_two', null, ['%count%' => $remainingPoints]);
                 } elseif ($remainingPoints >= 0) {
-                    $finalArray = $characterBonuses;
-                    $finalArray['remaining'] = $remainingPoints;
-                    $this->updateCharacterStep($finalArray);
+                    $characterBonuses['remaining'] = $remainingPoints;
+                    $this->updateCharacterStep($characterBonuses);
 
                     return $this->nextStep();
                 }
@@ -157,10 +154,13 @@ class Step14UseDomainBonuses extends AbstractStepAction
      */
     private function resetBonuses()
     {
-        $domainsBonuses = [];
+        $domainsBonuses = [
+            'domains' => [],
+            'remaining' => 0,
+        ];
 
         foreach ($this->allDomains as $domain) {
-            $domainsBonuses[$domain->getId()] = 0;
+            $domainsBonuses['domains'][$domain->getId()] = 0;
         }
 
         return $domainsBonuses;
