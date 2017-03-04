@@ -1,6 +1,6 @@
 (function ($, d) {
     var i, j, k, l, input, id, value, btns, baseValue;
-    var buttons  = d.querySelectorAll('.domain button.domain-change:not(.disabled)');
+    var buttons = d.querySelectorAll('.domain button.domain-change:not(.disabled)');
     var domainsInputs = {};
     var remainingPointsDiv = d.getElementById('remaining_exp_points');
 
@@ -42,7 +42,7 @@
         };
 
         // Get list of all buttons for this id
-        btns = d.querySelectorAll('[data-domain-id="'+id.toString()+'"]');
+        btns = d.querySelectorAll('button[data-domain-id="'+id.toString()+'"]');
 
         // Store them in the buttons property for this domainInput
         for (j = 0, k = btns.length; j < k; j++) {
@@ -59,13 +59,13 @@
      * Calculates number of spent points, update UI to show the value, and return it.
      */
     function recalculateTotalExpPoints() {
-        var id, input, value;
+        var id, domainData, value, key;
         var currentExp = maxExpPoints;
 
         for (id in domainsInputs) {
             if (!domainsInputs.hasOwnProperty(id)) { continue; }
-            input = domainsInputs[id];
-            value = parseInt(input.value, 10);
+            domainData = domainsInputs[id];
+            value = parseInt(domainData.value, 10);
 
             if (isNaN(value)) {
                 throw 'Input value for id '+id+' is not valid';
@@ -95,7 +95,7 @@
         button.addEventListener('click', function(){
             var isActive = this.classList.contains('active');
             var domainId = this.getAttribute('data-domain-id');
-            var domainData, input, baseValue, newValue;
+            var domainData, input, baseValue, newValue, buttonValue, computedValue, key, button;
 
             if (isActive || globalCurrentExp < 10) {
                 return false;
@@ -114,8 +114,28 @@
             domainData = domainsInputs[domainId];
             baseValue = domainData.baseValue;
             value = domainData.value;
+            buttonValue = parseInt(this.getAttribute('data-change'));
 
-            console.info(domainId, baseValue, value, domainData);
+            if (isNaN(buttonValue) || buttonValue > 5 || buttonValue < baseValue) {
+                throw 'Invalid button value';
+            }
+
+            computedValue = buttonValue - baseValue;
+
+            domainData.value = computedValue;
+            domainData.input.value = computedValue;
+
+            for (key in domainData.buttons) {
+                if (!domainData.buttons.hasOwnProperty(key)) { continue; }
+
+                button = domainData.buttons[key];
+
+                if (button.getAttribute('data-change').toString() === buttonValue.toString()) {
+                    button.classList.add('active');
+                } else {
+                    button.classList.remove('active');
+                }
+            }
 
             recalculateTotalExpPoints();
         });
