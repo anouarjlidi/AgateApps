@@ -14,8 +14,8 @@ imports:
 
 parameters:
     # The version code is always the last version that was put in production
-    version_code: '0.10.1'
-    version_date: '12/02/2017'
+    version_code: '0.11.0'
+    version_date: '04/03/2017'
     locale: fr
     locales:
         fr: fr
