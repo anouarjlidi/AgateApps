@@ -6,6 +6,7 @@ use Pierstoval\Bundle\CharacterManagerBundle\Action\StepAction;
 
 abstract class AbstractStepAction extends StepAction
 {
+    protected static $translationDomain = 'CorahnRinBundle';
 
     /**
      * Renders current step view by its name.
