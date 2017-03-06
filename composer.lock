@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "7fb7a7d58d0a4f7372495bfd952b837e",
+    "content-hash": "5673b20134e9eb586127a95b9e4a2896",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -4866,6 +4866,42 @@
                 "xunit"
             ],
             "time": "2016-12-08T20:27:08+00:00"
+        },
+        {
+            "name": "pierstoval/web-test-case",
+            "version": "v0.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Pierstoval/PHPUnitWebTestCase.git",
+                "reference": "c6fcb45eb74323459f7719867e65216b2a8611fc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Pierstoval/PHPUnitWebTestCase/zipball/c6fcb45eb74323459f7719867e65216b2a8611fc",
+                "reference": "c6fcb45eb74323459f7719867e65216b2a8611fc",
+                "shasum": ""
+            },
+            "require": {
+                "symfony/browser-kit": "^2.8|^3.0",
+                "symfony/framework-bundle": "^2.8|^3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.4|^5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Tests\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Alex Rock Ancelet",
+                    "email": "pierstoval@gmail.com"
+                }
+            ],
+            "time": "2017-03-05T18:56:11+00:00"
         },
         {
             "name": "psr/container",
