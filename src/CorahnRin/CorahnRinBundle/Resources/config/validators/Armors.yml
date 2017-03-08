@@ -13,5 +13,5 @@ CorahnRin\CorahnRinBundle\Entity\Armors:
             - Type: integer
         availability:
             - NotNull: ~
-            - Choice: { choices: { "CO", "FR", "RA", "EX" } }
+            - Choice: { choices: ["CO", "FR", "RA", "EX"] }
             - Type: string
