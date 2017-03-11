@@ -3,3 +3,7 @@ services:
     user.form_login_authenticator:
         class: UserBundle\Security\FormLoginAuthenticator
         autowire: true
+
+    user.provider.username_or_email:
+        class: UserBundle\Security\Provider\UsernameOrEmailProvider
+        autowire: true

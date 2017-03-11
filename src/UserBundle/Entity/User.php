@@ -7,7 +7,7 @@ use FOS\UserBundle\Model\User as BaseUser;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="UserBundle\Repository\UserRepository")
  * @ORM\Table(name="fos_user_user")
  */
 class User extends BaseUser

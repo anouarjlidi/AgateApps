@@ -75,7 +75,7 @@ class SecurityControllerTest extends WebTestCase
     {
         $client = $this->getClient('www.esteren.dev');
         $container = $client->getKernel()->getContainer();
-        $user = $container->get('fos_user.user_provider.username_email')->loadUserByUsername(static::USER_NAME);
+        $user = $container->get('user.provider.username_or_email')->loadUserByUsername(static::USER_NAME);
         static::setToken($client, $user, $user->getRoles());
 
         $crawler = $client->request('GET', '/fr/profile/change-password');
@@ -102,7 +102,7 @@ class SecurityControllerTest extends WebTestCase
         static::assertContains($flashPasswordChanged, $crawler->filter('#layout #flash-messages')->html());
 
         // Now check that new password is correctly saved in database
-        $user = $container->get('fos_user.user_provider.username_email')->loadUserByUsername(static::USER_NAME);
+        $user = $container->get('user.provider.username_or_email')->loadUserByUsername(static::USER_NAME);
         $encoder = $container->get('security.encoder_factory')->getEncoder($user);
         static::assertTrue($encoder->isPasswordValid($user->getPassword(), 'newPassword', $user->getSalt()));
 
@@ -116,7 +116,7 @@ class SecurityControllerTest extends WebTestCase
     {
         $client = $this->getClient('www.esteren.dev');
         $container = $client->getKernel()->getContainer();
-        $user = $container->get('fos_user.user_provider.username_email')->loadUserByUsername(static::USER_NAME);
+        $user = $container->get('user.provider.username_or_email')->loadUserByUsername(static::USER_NAME);
         static::setToken($client, $user, $user->getRoles());
 
         $crawler = $client->request('GET', '/fr/profile/edit');
@@ -149,7 +149,7 @@ class SecurityControllerTest extends WebTestCase
     {
         $client = $this->getClient('www.esteren.dev');
         $container = $client->getKernel()->getContainer();
-        $user = $container->get('fos_user.user_provider.username_email')->loadUserByUsername(static::USER_NAME_AFTER_UPDATE);
+        $user = $container->get('user.provider.username_or_email')->loadUserByUsername(static::USER_NAME_AFTER_UPDATE);
         static::setToken($client, $user, $user->getRoles());
 
         $crawler = $client->request('GET', '/fr/resetting/request');
