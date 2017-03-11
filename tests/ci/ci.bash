@@ -9,7 +9,36 @@ DIR=`readlink -m "${DIR}/../../"`
 # Change directory to root directory so all commands are executed from there
 cd ${DIR} || exit 100
 
-echoPrefix="[CI SCRIPT] -"
+echoPrefix="[CI SCRIPT] "
+
+# This var will be used by command tester
+errors=""
+
+# Executes and a command and keeps error output in the $errors var
+function test_command {
+    command=$*
+
+    tmpfile=$(mktemp)
+
+    ${command} > /dev/stdout 2>${tmpfile}
+
+    code=$?
+
+    if [[ ${code} != 0 ]]; then
+        content=$(cat ${tmpfile})
+
+        echo "[Command] ${command} > ERROR"
+
+        read -d '' errors << CNT
+${echoPrefix} ${errors}
+${echoPrefix}
+${echoPrefix} [ERROR] [Command] ${command}
+${echoPrefix}         [Message] ${content}
+CNT
+    else
+        echo "${echoPrefix} [Command] ${command} > OK"
+    fi
+}
 
 echo "$echoPrefix====================================================="
 echo "$echoPrefix Working directory:"
@@ -23,7 +52,7 @@ echo "$echoPrefix====================================================="
 echo "$echoPrefix Backup any existing parameters file."
 if [ -f app/config/parameters.yml ]; then
     if ! grep -q "# CI file" "app/config/parameters.yml"; then
-        echo $echoPrefix"====================================================="
+        echo "$echoPrefix====================================================="
 echo "$echoPrefix Backing up parameters.yml file"
         mv app/config/parameters.yml app/config/parameters.yml.backup
     fi
@@ -62,18 +91,18 @@ fi
 
 echo "$echoPrefix====================================================="
 echo "[TESTS] PHPUnit"
-${phpunit_script} ${PHPUNIT_PARAMETERS}
+test_command ${phpunit_script} ${PHPUNIT_PARAMETERS}
 
 echo "$echoPrefix====================================================="
 echo "[TESTS] Behat"
-./vendor/bin/behat
+test_command ./vendor/bin/behat
 
 echo "$echoPrefix====================================================="
 echo "[TESTS] Symfony linters & security"
-php bin/console security:check
-php bin/console lint:twig app/Resources src
-php bin/console lint:yaml app/config
-php bin/console lint:yaml src
+test_command php bin/console security:check
+test_command php bin/console lint:twig app/Resources src
+test_command php bin/console lint:yaml app/config
+test_command php bin/console lint:yaml src
 php bin/console debug:translation --only-missing --all fr
 php bin/console debug:translation --only-missing --all en
 
@@ -81,4 +110,12 @@ if [ -f app/config/parameters.yml.backup ]; then
     echo "$echoPrefix====================================================="
     echo "$echoPrefix Retrieve backed up parameters file"
     cp app/config/parameters.yml.backup app/config/parameters.yml
+fi
+
+if [[ -z "${errors}" ]]; then
+    echo "$echoPrefix Script was successful!"
+else
+    echo "$echoPrefix Script has errors:"
+    echo "${errors}"
+    exit 200
 fi
