@@ -10,14 +10,16 @@ machine:
         PHPUNIT_PARAMETERS: ' --log-junit $CIRCLE_TEST_REPORTS/phpunit/junit.xml '
 
 dependencies:
-    cache_directories:
-        - '~/.composer/cache'
-        - '~/.cache/yarn'
     override:
         - 'mkdir -p ~/.composer/cache'
         - 'mkdir -p $CIRCLE_TEST_REPORTS/phpunit'
         - 'echo "date.timezone = Europe/Paris" >> /opt/circleci/php/$(phpenv global)/etc/php.ini'
+    cache_directories:
+        - '~/.composer'
+        - '~/.cache/yarn'
+        - 'vendor'
 
 test:
     override:
+        - 'composer install --classmap-authoritative --no-interaction --no-scripts'
         - './tests/ci/ci.bash'
