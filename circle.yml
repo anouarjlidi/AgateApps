@@ -20,5 +20,4 @@ dependencies:
 
 test:
     override:
-        - './node_modules/.bin/gulp dump'
         - './tests/ci/ci.bash'
