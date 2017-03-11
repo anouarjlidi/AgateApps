@@ -11,9 +11,10 @@ machine:
 
 dependencies:
     cache_directories:
-        - ~/.cache/yarn
+        - '~/.composer/cache'
+        - '~/.cache/yarn'
     override:
-        - mkdir -p $CIRCLE_TEST_REPORTS/phpunit
+        - 'mkdir -p $CIRCLE_TEST_REPORTS/phpunit'
         - 'echo "date.timezone = Europe/Paris" >> /opt/circleci/php/$(phpenv global)/etc/php.ini'
 
 test:
