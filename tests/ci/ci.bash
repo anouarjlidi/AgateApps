@@ -47,6 +47,7 @@ pwd
 echo "$echoPrefix====================================================="
 echo "$echoPrefix Installing composer"
 curl -sS https://getcomposer.org/installer | php || exit 110
+php composer.phar config -l
 
 echo "$echoPrefix====================================================="
 echo "$echoPrefix Backup any existing parameters file."
