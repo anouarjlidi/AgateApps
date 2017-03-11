@@ -11,7 +11,8 @@ machine:
 
 dependencies:
     override:
-        - 'mkdir -p ~/.composer/cache'
+        - '[[ -d "vendor" ]] || mkdir vendor'
+        - '[[ -d "~/.composer/cache" ]] || mkdir -p ~/.composer/cache'
         - 'mkdir -p $CIRCLE_TEST_REPORTS/phpunit'
         - 'echo "date.timezone = Europe/Paris" >> /opt/circleci/php/$(phpenv global)/etc/php.ini'
     cache_directories:
