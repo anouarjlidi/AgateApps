@@ -17,13 +17,13 @@ monolog:
         # Get ALL error logs and put them in a file
         main:
             type:           rotating_file
-            path:           "%kernel.logs_dir%/%kernel.environment%.all.log"
+            path:           '%kernel.logs_dir%/%kernel.environment%.all.log'
             level:          info
 
         # Get all security logs (login, logout, etc.) and put them in a file
         security:
             type:           rotating_file
-            path:           "%kernel.logs_dir%/%kernel.environment%.auth.log"
+            path:           '%kernel.logs_dir%/%kernel.environment%.auth.log'
             level:          info
             channels:       security
 
@@ -34,7 +34,7 @@ monolog:
             handler:        streamed_error
         streamed_error:
             type:           rotating_file
-            path:           "%kernel.logs_dir%/%kernel.environment%.error.log"
+            path:           '%kernel.logs_dir%/%kernel.environment%.error.log'
             level:          debug
 
         ## For any "critical", we send an email
@@ -50,7 +50,7 @@ monolog:
         streamed_critical:
             type:           rotating_file
             max_files:      60
-            path:           "%kernel.logs_dir%/%kernel.environment%.critical.log"
+            path:           '%kernel.logs_dir%/%kernel.environment%.critical.log'
             level:          info
             include_stacktraces: true
         buffered_critical:
