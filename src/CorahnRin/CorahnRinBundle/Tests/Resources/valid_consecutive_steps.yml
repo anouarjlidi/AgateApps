@@ -276,11 +276,22 @@
             16: 0
         remainingExp: 50
 
-# TODO
 16_disciplines:
     next_step: 17_combat_arts
-    form_values: ~
-    session_value: ~
+    form_values:
+        disciplines_spend_exp:
+            1:            # Artisanat
+                12: "on"  # Bijouterie
+                45: "on"  # Extraction minière
+                92: "on"  # Menuiserie
+    session_value:
+        disciplines:
+            1:
+                12: true
+                45: true
+                92: true
+        remainingExp: 25
+        remainingBonusPoints: 0
 
 # TODO
 17_combat_arts:

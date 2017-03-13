@@ -124,8 +124,8 @@ class Step16Disciplines extends AbstractStepAction
                         }
                         $disciplinesValues[$domainId][$disciplineId] = true;
 
-                        if ($this->remainingBonusPoints > 0) {
-                            $this->remainingBonusPoints--;
+                        if ($remainingBonusPoints > 0) {
+                            $remainingBonusPoints--;
                         } else {
                             if ($remainingExp - 25 < 0) {
                                 $errors = true;
