@@ -55,7 +55,8 @@
         "orbitale/cms-bundle": "^2.0.1",
         "orbitale/entity-merger": "^0.5",
         "orbitale/doctrine-tools": "^0.5.2",
-        "orbitale/imagemagick-php": "^1.4"
+        "orbitale/imagemagick-php": "^1.4",
+        "pierstoval/character_manager": "^0.1|^1.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
