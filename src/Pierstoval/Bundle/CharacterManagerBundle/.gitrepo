@@ -6,6 +6,6 @@
 [subrepo]
 	remote = git@github.com:Pierstoval/CharacterManagerBundle.git
 	branch = master
-	commit = 23bc4a36a26785d79618bc83e0081587fe3862d0
-	parent = b8458b3a057ccb7d6e47f409ff34656d8e4eb9cb
-	cmdver = 0.3.0
+	commit = f8d857ef59d1b8368d18f76bd7128d79576b805d
+	parent = 87a20424ff36b3cf23c4d8381bb1af38cf562fa8
+	cmdver = 0.3.1
