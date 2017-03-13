@@ -45,7 +45,7 @@ class Step13PrimaryDomains extends AbstractStepAction
      */
     public function execute()
     {
-        $this->allDomains    = $this->em->getRepository('CorahnRinBundle:Domains')->findAllForGenerator();
+        $this->allDomains    = $this->em->getRepository('CorahnRinBundle:Domains')->findAllSortedByName();
         $this->job           = $this->em->getRepository('CorahnRinBundle:Jobs')->findWithDomains($this->getCharacterProperty('02_job'));
         $this->scholar       = 1 === $this->getCharacterProperty('11_advantages')['advantages'][23]; // Scholar is advantage 23.
 

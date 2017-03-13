@@ -96,7 +96,16 @@ domains_spend_exp:
         Vous pouvez dépenser de l'expérience pour améliorer vos domaines.<br>
         <strong>Chaque point supplémentaire coûte 10XP</strong>
 
+disciplines_spend_exp:
+    no_exp_or_bonus_points: 'Il ne vous reste pas assez de points bonus ou d''expérience pour obtenir des disciplines'
+    remaining: 'Expérience restante'
+    remaining_bonus_points: 'Points bonus restants'
+    explanation: >
+        Vous pouvez dépenser de l'expérience pour obtenir des disciplines.<br>
+        <strong>Chaque discipline coûte 25XP</strong>, et celles-ci ne peuvent être acquises
+        que pour vos domaines principaux et secondaires, qui dépendent de votre métier (vous pouvez
+        les consulter à l'étape 2 si besoin).
+
 steps:
     next: 'Étape suivante'
     reset: 'Réinitialiser cette étape'
-

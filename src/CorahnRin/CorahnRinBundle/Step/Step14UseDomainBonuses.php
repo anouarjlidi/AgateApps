@@ -45,7 +45,7 @@ class Step14UseDomainBonuses extends AbstractStepAction
      */
     public function execute()
     {
-        $this->allDomains = $this->em->getRepository('CorahnRinBundle:Domains')->findAllForGenerator();
+        $this->allDomains = $this->em->getRepository('CorahnRinBundle:Domains')->findAllSortedByName();
 
         $step13Domains = $this->getCharacterProperty('13_primary_domains');
         $socialClassValues = $this->getCharacterProperty('05_social_class')['domains'];

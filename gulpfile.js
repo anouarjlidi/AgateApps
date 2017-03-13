@@ -167,23 +167,16 @@ var config = {
         "js/generator.js": [
             "src/CorahnRin/CorahnRinBundle/Resources/public/generator/js/main_steps.js"
         ],
-        "js/step_03_birthplace.js": [
-            "src/CorahnRin/CorahnRinBundle/Resources/public/generator/js/step_03_birthplace.js"
-        ],
+        "js/step_03_birthplace.js": ["src/CorahnRin/CorahnRinBundle/Resources/public/generator/js/step_03_birthplace.js"],
         "js/step_11_advantages.js": [
             "src/CorahnRin/CorahnRinBundle/Resources/public/generator/js/step_11_advantage_class.js",
             "src/CorahnRin/CorahnRinBundle/Resources/public/generator/js/step_11_functions.js",
             "src/CorahnRin/CorahnRinBundle/Resources/public/generator/js/step_11_advantages_process.js"
         ],
-        "js/step_13_primary_domains.js": [
-            "src/CorahnRin/CorahnRinBundle/Resources/public/generator/js/step_13_primary_domains.js"
-        ],
-        "js/step_14_use_domain_bonuses.js": [
-            "src/CorahnRin/CorahnRinBundle/Resources/public/generator/js/step_14_use_domain_bonuses.js"
-        ],
-        "js/step_15_domains_spend_exp.js": [
-            "src/CorahnRin/CorahnRinBundle/Resources/public/generator/js/step_15_domains_spend_exp.js"
-        ]
+        "js/step_13_primary_domains.js": ["src/CorahnRin/CorahnRinBundle/Resources/public/generator/js/step_13_primary_domains.js"],
+        "js/step_14_use_domain_bonuses.js": ["src/CorahnRin/CorahnRinBundle/Resources/public/generator/js/step_14_use_domain_bonuses.js"],
+        "js/step_15_domains_spend_exp.js": ["src/CorahnRin/CorahnRinBundle/Resources/public/generator/js/step_15_domains_spend_exp.js"],
+        "js/step_16_disciplines.js": ["src/CorahnRin/CorahnRinBundle/Resources/public/generator/js/step_16_disciplines.js"]
     }
 };
 

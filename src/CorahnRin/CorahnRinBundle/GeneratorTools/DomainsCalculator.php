@@ -27,11 +27,19 @@ final class DomainsCalculator
     private $bonus = 0;
 
     /**
+     * @return int
+     */
+    public function getBonus()
+    {
+        return $this->bonus;
+    }
+
+    /**
      * If $domainsBonuses IS NOT provided, then it will return calculated domains values with an array of this type:
-     * [ 'bonus'=>X, 'domains'=>[...] ]
+     * [ 'bonus'=>0, 'domains'=>[...] ]
      * Mostly used for step 14.
      *
-     * If $domainsBonuses IS provided, then it will a
+     * If $domainsBonuses IS provided, then it will add the correct bonuses if some domains exceed 5 points.
      *
      * @param Domains[] $allDomains
      * @param array $socialClasses
@@ -142,11 +150,38 @@ final class DomainsCalculator
     }
 
     /**
-     * @return int
+     * Based on all three specified steps, will calculate final domains values.
+     * Mostly used in step 16 to calculate disciplines and in step 17 to check if combat arts are available.
+     *
+     * @param Domains[] $allDomains
+     * @param int[] $primaryDomains
+     * @param int[] $domainsBonuses
+     * @param int[] $domainsSpendExp
+     *
+     * @return int[]
      */
-    public function getBonus()
+    public function calculateFinalValues(array $allDomains, array $primaryDomains, array $domainsBonuses, array $domainsSpendExp)
     {
-        return $this->bonus;
+        $finalValues = [];
+
+        foreach ($allDomains as $id => $domain) {
+
+            // First, validate arguments.
+            if (!($domain instanceof Domains) || $domain->getId() !== $id) {
+                throw new \InvalidArgumentException(sprintf(
+                    'Invalid %s argument sent. It must be an array of %s instances, and the array key must correspond to the "%s" property.',
+                    '$allDomains', Domains::class, 'id'
+                ));
+            }
+
+            if (!isset($primaryDomains[$id], $domainsBonuses[$id], $domainsSpendExp[$id])) {
+                throw new \InvalidArgumentException('Invalid arguments sent for step domains. It must be an array of integers, and the array key must correspond to the domain id.');
+            }
+
+            $finalValues[$id] = $primaryDomains[$id] + $domainsBonuses[$id] + $domainsSpendExp[$id];
+        }
+
+        return $finalValues;
     }
 
     /**

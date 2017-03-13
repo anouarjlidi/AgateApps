@@ -68,6 +68,8 @@ services:
 
     corahnrin_generator.steps.step_16:
         class: CorahnRin\CorahnRinBundle\Step\Step16Disciplines
+        arguments:
+            - '@corahnrin_generator.domains_calculator'
         tags: [{ name: pierstoval_character_step }]
 
     corahnrin_generator.steps.step_17:

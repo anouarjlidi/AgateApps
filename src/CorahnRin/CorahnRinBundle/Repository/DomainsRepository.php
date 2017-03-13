@@ -8,9 +8,9 @@ use Orbitale\Component\DoctrineTools\BaseEntityRepository as BaseRepository;
 class DomainsRepository extends BaseRepository
 {
     /**
-     * @return \Generator|Domains[]
+     * @return Domains[]
      */
-    public function findAllForGenerator()
+    public function findAllSortedByName()
     {
         return $this->createQueryBuilder('domain', 'domain.id')
             ->from($this->_entityName, 'domains', 'domains.id')

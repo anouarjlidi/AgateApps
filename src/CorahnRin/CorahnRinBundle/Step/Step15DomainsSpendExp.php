@@ -13,14 +13,6 @@ class Step15DomainsSpendExp extends AbstractStepAction
     private $allDomains;
 
     /**
-     * Basic principle: each domain point costs 10XP.
-     * Exp is retrieved from advantages/disadvantages calculations.
-     *
-     * @var int
-     */
-    private $exp = 0;
-
-    /**
      * @var DomainsCalculator
      */
     private $domainsCalculator;
@@ -47,7 +39,7 @@ class Step15DomainsSpendExp extends AbstractStepAction
      */
     public function execute()
     {
-        $this->allDomains = $this->em->getRepository('CorahnRinBundle:Domains')->findAllForGenerator();
+        $this->allDomains = $this->em->getRepository('CorahnRinBundle:Domains')->findAllSortedByName();
 
         $primaryDomains = $this->getCharacterProperty('13_primary_domains');
         $socialClassValues = $this->getCharacterProperty('05_social_class')['domains'];
