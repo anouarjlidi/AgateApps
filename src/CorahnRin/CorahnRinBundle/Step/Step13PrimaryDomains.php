@@ -147,7 +147,7 @@ class Step13PrimaryDomains extends AbstractStepAction
 
             // If value is 3, it must be for a secondary domain.
             if (3 === $domainValue) {
-                if (!in_array($id, $this->secondaryDomains, true)) {
+                if (count($this->secondaryDomains) && !in_array($id, $this->secondaryDomains, true)) {
                     $this->flashMessage('La valeur 3 ne peut être donnée qu\'à l\'un des domaines de prédilection du métier choisi.');
                     $error              = true;
                     $domainsValues[$id] = 0;
