@@ -154,13 +154,12 @@ final class DomainsCalculator
      * Mostly used in step 16 to calculate disciplines and in step 17 to check if combat arts are available.
      *
      * @param Domains[] $allDomains
-     * @param int[] $primaryDomains
-     * @param int[] $domainsBonuses
+     * @param int[] $domainsBaseValues
      * @param int[] $domainsSpendExp
      *
      * @return int[]
      */
-    public function calculateFinalValues(array $allDomains, array $primaryDomains, array $domainsBonuses, array $domainsSpendExp)
+    public function calculateFinalValues(array $allDomains, array $domainsBaseValues, array $domainsSpendExp)
     {
         $finalValues = [];
 
@@ -174,11 +173,11 @@ final class DomainsCalculator
                 ));
             }
 
-            if (!isset($primaryDomains[$id], $domainsBonuses[$id], $domainsSpendExp[$id])) {
+            if (!isset($domainsBaseValues[$id], $domainsSpendExp[$id])) {
                 throw new \InvalidArgumentException('Invalid arguments sent for step domains. It must be an array of integers, and the array key must correspond to the domain id.');
             }
 
-            $finalValues[$id] = $primaryDomains[$id] + $domainsBonuses[$id] + $domainsSpendExp[$id];
+            $finalValues[$id] = $domainsBaseValues[$id] + $domainsSpendExp[$id];
         }
 
         return $finalValues;

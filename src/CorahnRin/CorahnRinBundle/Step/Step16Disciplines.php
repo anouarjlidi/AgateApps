@@ -52,7 +52,7 @@ class Step16Disciplines extends AbstractStepAction
     {
         $this->allDomains = $this->em->getRepository('CorahnRinBundle:Domains')->findAllSortedByName();
 
-        $primaryDomains = $this->getCharacterProperty('13_primary_domains')['domains'];
+        $primaryDomains = $this->getCharacterProperty('13_primary_domains');
         $useDomainBonuses = $this->getCharacterProperty('14_use_domain_bonuses');
         $this->remainingBonusPoints = $useDomainBonuses['remaining'];
         $this->expRemainingFromDomains = $this->getCharacterProperty('15_domains_spend_exp')['remainingExp'];
@@ -64,18 +64,31 @@ class Step16Disciplines extends AbstractStepAction
 
         if ($canHaveDisciplines) {
 
+            $socialClassValues = $this->getCharacterProperty('05_social_class')['domains'];
+            $domainBonuses = $this->getCharacterProperty('14_use_domain_bonuses');
+            $geoEnvironment = $this->em->find('CorahnRinBundle:GeoEnvironments', $this->getCharacterProperty('04_geo'));
+
             // Calculate final values from previous steps
+            $domainsBaseValues = $this->domainsCalculator->calculateFromGeneratorData(
+                $this->allDomains,
+                $socialClassValues,
+                $primaryDomains['ost'],
+                $primaryDomains['scholar'] ?: null,
+                $geoEnvironment,
+                $primaryDomains['domains'],
+                $domainBonuses['domains']
+            );
+
             $finalDomainsValues = $this->domainsCalculator->calculateFinalValues(
                 $this->allDomains,
-                $primaryDomains,
-                $useDomainBonuses['domains'],
-                $this->getCharacterProperty('15_domains_spend_exp')['domains']
+                $domainsBaseValues,
+                array_map(function($e) { return (int) $e; }, $this->getCharacterProperty('15_domains_spend_exp')['domains'])
             );
 
             // Disciplines can be acquired only for domains with 5 points, and only for primary or secondary domains.
             // Of course, the user can rise up domains after character creation, but hey, this respects the book rules!
             $availableDomainsForDisciplines = array_filter($finalDomainsValues, function ($domainValue, $domainId) use ($primaryDomains) {
-                return $domainValue === 5 && ($primaryDomains[$domainId] === 5 || $primaryDomains[$domainId] === 3);
+                return $domainValue === 5 && ($primaryDomains['domains'][$domainId] === 5 || $primaryDomains['domains'][$domainId] === 3);
             }, ARRAY_FILTER_USE_BOTH);
 
             // Only keep the ids for search purpose
@@ -141,13 +154,11 @@ class Step16Disciplines extends AbstractStepAction
                 if (true === $errors) {
                     $this->disciplinesSpentWithExp = $this->resetDisciplines();
                 } else {
-                    $this->disciplinesSpentWithExp = [
+                    $this->updateCharacterStep([
                         'disciplines' => $disciplinesValues,
                         'remainingExp' => $remainingExp,
                         'remainingBonusPoints' => $remainingBonusPoints,
-                    ];
-
-                    $this->updateCharacterStep($this->disciplinesSpentWithExp);
+                    ]);
 
                     return $this->nextStep();
                 }

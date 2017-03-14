@@ -10,8 +10,7 @@ services:
 
     corahnrin_generator.steps.step_03:
         class: CorahnRin\CorahnRinBundle\Step\Step03Birthplace
-        arguments:
-            - '%esterenmaps.tile_size%'
+        arguments: [ '%esterenmaps.tile_size%' ]
         tags: [{ name: pierstoval_character_step }]
 
     corahnrin_generator.steps.step_04:
@@ -56,24 +55,22 @@ services:
 
     corahnrin_generator.steps.step_14:
         class: CorahnRin\CorahnRinBundle\Step\Step14UseDomainBonuses
-        arguments:
-            - '@corahnrin_generator.domains_calculator'
+        arguments: [ '@corahnrin_generator.domains_calculator' ]
         tags: [{ name: pierstoval_character_step }]
 
     corahnrin_generator.steps.step_15:
         class: CorahnRin\CorahnRinBundle\Step\Step15DomainsSpendExp
-        arguments:
-            - '@corahnrin_generator.domains_calculator'
+        arguments: [ '@corahnrin_generator.domains_calculator' ]
         tags: [{ name: pierstoval_character_step }]
 
     corahnrin_generator.steps.step_16:
         class: CorahnRin\CorahnRinBundle\Step\Step16Disciplines
-        arguments:
-            - '@corahnrin_generator.domains_calculator'
+        arguments: [ '@corahnrin_generator.domains_calculator' ]
         tags: [{ name: pierstoval_character_step }]
 
     corahnrin_generator.steps.step_17:
         class: CorahnRin\CorahnRinBundle\Step\Step17CombatArts
+        arguments: [ '@corahnrin_generator.domains_calculator' ]
         tags: [{ name: pierstoval_character_step }]
 
     corahnrin_generator.steps.step_18:

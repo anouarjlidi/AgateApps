@@ -10,7 +10,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @ORM\Table(name="combat_arts")
  * @Gedmo\SoftDeleteable(fieldName="deleted")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="CorahnRin\CorahnRinBundle\Repository\CombatArtsRepository")
  */
 class CombatArts
 {
@@ -50,13 +50,6 @@ class CombatArts
      * @ORM\Column(name="melee", type="boolean")
      */
     private $melee;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="xp", type="smallint")
-     */
-    private $xp;
 
     /**
      * @var Books
@@ -221,34 +214,6 @@ class CombatArts
     public function getMelee()
     {
         return $this->melee;
-    }
-
-    /**
-     * Set xp.
-     *
-     * @param int $xp
-     *
-     * @return CombatArts
-     *
-     * @codeCoverageIgnore
-     */
-    public function setXp($xp)
-    {
-        $this->xp = $xp;
-
-        return $this;
-    }
-
-    /**
-     * Get xp.
-     *
-     * @return int
-     *
-     * @codeCoverageIgnore
-     */
-    public function getXp()
-    {
-        return $this->xp;
     }
 
     /**
