@@ -19,8 +19,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Weapons.
  *
  * @ORM\Table(name="weapons")
- * @Gedmo\SoftDeleteable(fieldName="deleted")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="CorahnRin\CorahnRinBundle\Repository\WeaponsRepository")
  */
 class Weapons
 {
@@ -65,7 +64,7 @@ class Weapons
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=3)
+     * @ORM\Column(type="string", length=5)
      */
     protected $availability;
 
@@ -79,30 +78,9 @@ class Weapons
     /**
      * @var int
      *
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(name="weapon_range", type="smallint")
      */
     protected $range;
-
-    /**
-     * @var \Datetime
-     * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(type="datetime", nullable=false)
-     */
-    protected $created;
-
-    /**
-     * @var \Datetime
-     * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(type="datetime", nullable=false)
-     */
-    protected $updated;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="deleted", type="datetime", nullable=true)
-     */
-    protected $deleted;
 
     /**
      * Get id.
@@ -324,89 +302,5 @@ class Weapons
     public function getRange()
     {
         return $this->range;
-    }
-
-    /**
-     * Set created.
-     *
-     * @param \DateTime $created
-     *
-     * @return Weapons
-     *
-     * @codeCoverageIgnore
-     */
-    public function setCreated($created)
-    {
-        $this->created = $created;
-
-        return $this;
-    }
-
-    /**
-     * Get created.
-     *
-     * @return \DateTime
-     *
-     * @codeCoverageIgnore
-     */
-    public function getCreated()
-    {
-        return $this->created;
-    }
-
-    /**
-     * Set updated.
-     *
-     * @param \DateTime $updated
-     *
-     * @return Weapons
-     *
-     * @codeCoverageIgnore
-     */
-    public function setUpdated($updated)
-    {
-        $this->updated = $updated;
-
-        return $this;
-    }
-
-    /**
-     * Get updated.
-     *
-     * @return \DateTime
-     *
-     * @codeCoverageIgnore
-     */
-    public function getUpdated()
-    {
-        return $this->updated;
-    }
-
-    /**
-     * Set deleted.
-     *
-     * @param \DateTime $deleted
-     *
-     * @return Weapons
-     *
-     * @codeCoverageIgnore
-     */
-    public function setDeleted($deleted)
-    {
-        $this->deleted = $deleted;
-
-        return $this;
-    }
-
-    /**
-     * Get deleted.
-     *
-     * @return \DateTime
-     *
-     * @codeCoverageIgnore
-     */
-    public function getDeleted()
-    {
-        return $this->deleted;
     }
 }

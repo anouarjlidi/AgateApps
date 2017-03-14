@@ -19,7 +19,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @ORM\Table(name="armors")
  * @Gedmo\SoftDeleteable(fieldName="deleted")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="CorahnRin\CorahnRinBundle\Repository\ArmorsRepository")
  */
 class Armors
 {

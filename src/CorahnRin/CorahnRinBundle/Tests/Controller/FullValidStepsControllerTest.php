@@ -65,7 +65,11 @@ class FullValidStepsControllerTest extends WebTestCase
         $crawler = $client->request('GET', '/fr/character/generate/'.$routeUri);
 
         // If it's not 200, it certainly session is invalid.
-        static::assertSame(200, $client->getResponse()->getStatusCode(), 'Could not execute step request...');
+        $statusCode = $client->getResponse()->getStatusCode();
+        $errorBlock = $crawler->filter('title');
+        $msg = 'Could not execute step request...';
+        $msg .= $errorBlock->count() ? ("\n".$errorBlock->text()) : '' ;
+        static::assertSame(200, $statusCode, $msg);
 
         // Prepare form values.
         $form = $crawler->filter('#generator_form')->form();
@@ -73,7 +77,11 @@ class FullValidStepsControllerTest extends WebTestCase
         // Sometimes, form can't be submitted properly,
         // like with "orientation" step.
         if ($formValues) {
-            $form->setValues($formValues);
+            try {
+                $form->setValues($formValues);
+            } catch (\Exception $e) {
+                $this->fail($e->getMessage()."\nWith values:\n".str_replace("\n", '', var_export($formValues, true)));
+            }
         }
 
         // Here, if the redirection is made for the next step, it means everything's valid.
@@ -89,7 +97,7 @@ class FullValidStepsControllerTest extends WebTestCase
 
         // We also make sure that the session has been correctly updated.
         $character = $session->get('character');
-        static::assertSame($expectedSessionValue, $character[$stepName], 'Character values are not equal to session ones...');
+        static::assertSame($expectedSessionValue, $character[$stepName], 'Character values are not equal to session ones in step "'.$stepName.'"...');
     }
 
     public static function provideValidSteps()

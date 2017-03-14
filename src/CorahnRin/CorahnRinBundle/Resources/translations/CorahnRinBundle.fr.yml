@@ -106,6 +106,14 @@ disciplines_spend_exp:
         que pour vos domaines principaux et secondaires, qui dépendent de votre métier (vous pouvez
         les consulter à l'étape 2 si besoin).
 
+equipment:
+    base_elements:
+        title: 'Éléments d''équipement'
+        description: 'Vous avez la possibilité de choisir quelques objets à ajouter à votre inventaire. Ne soyez pas trop gourmand !'
+    weapons:
+        title: 'Armes'
+    armors:
+        title: 'Armures'
 steps:
     next: 'Étape suivante'
     reset: 'Réinitialiser cette étape'

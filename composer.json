@@ -84,7 +84,7 @@
             "@symfony-scripts",
             "node --version && yarn -V && yarn install",
             "node node_modules/gulp/bin/gulp.js dump --prod",
-            "php bin/console doctrine:schema:validate --env=prod || echo 'Doctrine schema not valid, please make sure it is correct.'"
+            "php bin/console doctrine:schema:validate || echo 'Doctrine schema not valid, please make sure it is correct.'"
         ],
         "post-update-cmd": [
             "@symfony-scripts"

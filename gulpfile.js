@@ -177,7 +177,8 @@ var config = {
         "js/step_14_use_domain_bonuses.js": ["src/CorahnRin/CorahnRinBundle/Resources/public/generator/js/step_14_use_domain_bonuses.js"],
         "js/step_15_domains_spend_exp.js": ["src/CorahnRin/CorahnRinBundle/Resources/public/generator/js/step_15_domains_spend_exp.js"],
         "js/step_16_disciplines.js": ["src/CorahnRin/CorahnRinBundle/Resources/public/generator/js/step_16_disciplines.js"],
-        "js/step_17_combat_arts.js": ["src/CorahnRin/CorahnRinBundle/Resources/public/generator/js/step_17_combat_arts.js"]
+        "js/step_17_combat_arts.js": ["src/CorahnRin/CorahnRinBundle/Resources/public/generator/js/step_17_combat_arts.js"],
+        "js/step_18_equipment.js": ["src/CorahnRin/CorahnRinBundle/Resources/public/generator/js/step_18_equipment.js"]
     }
 };
 

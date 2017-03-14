@@ -169,16 +169,16 @@
     form_values:
         ost: 2
         domains:
-            2:  1 # Combat au contact
+            2:  2 # Combat au contact
             5:  1 # Milieu naturel
             15: 2 # Voyage
-            16: 2 # Érudition
+            16: 1 # Érudition
             13: 3 # SCience
 
     session_value:
         domains:
             1:  5 # Artisanat
-            2:  1 # Combat au contact
+            2:  2 # Combat au contact
             3:  0
             4:  0
             5:  1 # Milieu naturel
@@ -192,7 +192,7 @@
             13: 3 # Science
             14: 0
             15: 2 # Voyage
-            16: 2 # Érudition
+            16: 1 # Érudition
         ost: 2
         scholar: null
 
@@ -201,7 +201,7 @@
     form_values:
         domains_bonuses:
             1:  0
-            2:  0
+            2:  1 # Combat au contact
             3:  0
             4:  0
             5:  0
@@ -214,12 +214,12 @@
             12: 0
             13: 0
             14: 0
-            15: 1 # Voyage
+            15: 0
             16: 1 # Érudition
     session_value:
         domains:
             1:  0
-            2:  0
+            2:  1 # Combat au contact
             3:  0
             4:  0
             5:  0
@@ -232,7 +232,7 @@
             12: 0
             13: 0
             14: 0
-            15: 1 # Voyage
+            15: 0
             16: 1 # Érudition
         remaining: 2
 
@@ -258,22 +258,22 @@
             16: 0
     session_value:
         domains:
-            1:  0
+            1:  ~
             2:  1 # Combat au contact
-            3:  0
-            4:  0
+            3:  ~
+            4:  ~
             5:  2 # Milieu naturel
-            6:  0
-            7:  0
-            8:  0
-            9:  0
-            10: 0
-            11: 0
-            12: 0
-            13: 0
-            14: 0
-            15: 0
-            16: 0
+            6:  ~
+            7:  ~
+            8:  ~
+            9:  ~
+            10: ~
+            11: ~
+            12: ~
+            13: ~
+            14: ~
+            15: ~
+            16: ~
         remainingExp: 50
 
 16_disciplines:
@@ -293,17 +293,36 @@
         remainingExp: 25
         remainingBonusPoints: 0
 
-# TODO
 17_combat_arts:
     next_step: 18_equipment
-    form_values: ~
-    session_value: ~
+    form_values:
+        combat_arts_spend_exp:
+            '1': 'on' # Attaque sournoise
+    session_value:
+        combatArts:
+            1:  true
+        remainingExp: 5
 
-# TODO
 18_equipment:
     next_step: 19_description
-    form_values: ~
-    session_value: ~
+    form_values:
+        armors:
+            '9': '9' # Armure de plaque
+        weapons:
+            '5': '5' # Arbalète
+        equipment:
+            # Test escaping
+            - |
+                   Livre<a></a>
+
+                   de  règles
+    session_value:
+        armors:
+            9: true
+        weapons:
+            5: true
+        equipment:
+            - 'Livre de règles'
 
 # TODO
 19_description:
