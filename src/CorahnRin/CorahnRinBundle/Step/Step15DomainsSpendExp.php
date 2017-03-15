@@ -91,7 +91,7 @@ class Step15DomainsSpendExp extends AbstractStepAction
                         break;
                     }
 
-                    $domainsValues[$id] = (int) $value;
+                    $domainsValues[$id] = '0' === $value ? null : (int) $value;
 
                     $remainingExp -= ($value * 10);
                 }
@@ -127,7 +127,7 @@ class Step15DomainsSpendExp extends AbstractStepAction
         ];
 
         foreach ($this->allDomains as $id => $value) {
-            $this->domainsSpentWithExp['domains'][$id] = 0;
+            $this->domainsSpentWithExp['domains'][$id] = null;
         }
     }
 

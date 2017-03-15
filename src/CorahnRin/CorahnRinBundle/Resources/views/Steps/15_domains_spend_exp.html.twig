@@ -33,10 +33,11 @@
             <div class="row">
             {% for id, domain in domains_chunk %}
 
-                {% set value = domains_base_values[id] %}
+                {% set base_value = domains_base_values[id] %}
+                {% set value = domains_spent_with_exp[id] %}
 
                 <div class="col s3 domain hoverable" data-domain-id="{{ id }}">
-                    <input type="hidden" name="domains_spend_exp[{{ id }}]" id="domains_{{ id }}" data-base-value="{{ value }}" value="{{ domains_spent_with_exp[id] }}">
+                    <input type="hidden" name="domains_spend_exp[{{ id }}]" id="domains_{{ id }}" data-base-value="{{ base_value }}" value="{{ value|default(0) }}">
                     <h5>
                         {{ domain.name }}
                     </h5>
@@ -46,8 +47,8 @@
                             {% set selected = i == value %}
 
                             {% set disabled =
-                                i < value
-                                or value == 5
+                                i < base_value
+                                or base_value == 5
                             %}
 
                             {#
@@ -55,7 +56,7 @@
                                 This will be the one that will receive the event listeners.
                             #}
                             {% set class -%}
-                                {{- value == i ? ' active' -}}
+                                {{- (value is null and base_value == i) or (value is not null and value == i) ? ' active' -}}
                                 {{- disabled ? ' disabled' : ' domain-change' -}}
                             {%- endset %}
                             <button type="button" data-change="{{ i }}" data-domain-id="{{ id }}" class="domain_button_value btn btn-inverse {{ class }}">
