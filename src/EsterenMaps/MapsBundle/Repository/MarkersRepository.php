@@ -1,18 +1,24 @@
 <?php
 
+/**
+ * This file is part of the corahn_rin package.
+ *
+ * (c) Alexandre Rock Ancelet <alex@orbitale.io>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace EsterenMaps\MapsBundle\Repository;
 
 use EsterenMaps\MapsBundle\Entity\Markers;
-use EsterenMaps\MapsBundle\Entity\TransportTypes;
 use Orbitale\Component\DoctrineTools\BaseEntityRepository as BaseRepository;
-use EsterenMaps\MapsBundle\Entity\Maps;
 
 /**
  * MarkersRepository.
  */
 class MarkersRepository extends BaseRepository
 {
-
     /**
      * @param array $ids
      *
