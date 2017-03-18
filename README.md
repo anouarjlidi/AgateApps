@@ -1,7 +1,5 @@
 
-[![Run Status](https://api.shippable.com/projects/586269ede18a291000c26672/badge?branch=master)](https://app.shippable.com/projects/586269ede18a291000c26672)
 [![CircleCI](https://circleci.com/gh/Pierstoval/corahn_rin.svg?style=svg&circle-token=9dd9f3351a54a5f47ce078a4ad2ce589dedec8d7)](https://circleci.com/gh/Pierstoval/corahn_rin)
-[![Coverage](https://api.shippable.com/projects/586269ede18a291000c26672/coverageBadge?branch=master)](https://app.shippable.com/projects/586269ede18a291000c26672)
 
 
 Esteren full portal
