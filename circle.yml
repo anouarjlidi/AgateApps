@@ -8,7 +8,7 @@ machine:
         SYMFONY_ENV: test
         SYMFONY_DEBUG: 1
         PATH: "${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin"
-        PHPUNIT_PARAMETERS: ' --log-junit $CIRCLE_TEST_REPORTS/phpunit/junit.xml --coverage-clover $CIRCLE_TEST_REPORT/phpunit/clover.xml '
+        PHPUNIT_PARAMETERS: ' --log-junit "${CIRCLE_TEST_REPORTS}/phpunit/junit.xml" --coverage-clover "${CIRCLE_TEST_REPORT}/phpunit/clover.xml" '
 
 dependencies:
     override:
@@ -23,7 +23,7 @@ dependencies:
 
 test:
     override:
-        - 'composer install --classmap-authoritative --no-interaction --no-scripts'
+        - 'composer install --no-interaction --no-scripts'
         - './tests/ci/ci.bash'
     post:
         - 'bash <(curl -s https://codecov.io/bash) -f $CIRCLE_TEST_REPORT/phpunit/clover.xml'
