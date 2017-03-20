@@ -85,27 +85,29 @@ if [[ -z "$PHPUNIT_PARAMETERS" ]]; then
 fi
 
 if [ -f ./vendor/bin/phpunit ]; then
+    echo "$echoPrefix Using vendor PHPUnit"
     phpunit_script="./vendor/bin/phpunit"
 else
+    echo "$echoPrefix Using Symfony's simple PHPUnit"
     phpunit_script="./vendor/bin/simple-phpunit"
 fi
 
 echo "$echoPrefix====================================================="
-echo "[TESTS] PHPUnit"
+echo "$echoPrefix[TESTS] PHPUnit"
 test_command ${phpunit_script} ${PHPUNIT_PARAMETERS}
 
 echo "$echoPrefix====================================================="
-echo "[TESTS] Behat"
+echo "$echoPrefix[TESTS] Behat"
 test_command ./vendor/bin/behat
 
 echo "$echoPrefix====================================================="
-echo "[TESTS] Symfony linters & security"
+echo "$echoPrefix[TESTS] Symfony linters & security"
 test_command php bin/console security:check
 test_command php bin/console lint:twig app/Resources src
 test_command php bin/console lint:yaml app/config
 test_command php bin/console lint:yaml src
-php bin/console debug:translation --only-missing --all fr
-php bin/console debug:translation --only-missing --all en
+#php bin/console debug:translation --only-missing --all fr
+#php bin/console debug:translation --only-missing --all en
 
 if [ -f app/config/parameters.yml.backup ]; then
     echo "$echoPrefix====================================================="

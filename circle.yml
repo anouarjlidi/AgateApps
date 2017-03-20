@@ -4,17 +4,17 @@ machine:
     node:
         version: v6.1.0
     environment:
+        PROJECT_DIR: '${HOME}/${CIRCLE_PROJECT_REPONAME}'
         CODECOV_TOKEN: 5b127f85-7030-411d-8f65-8f371c6eac0b
         SYMFONY_ENV: test
         SYMFONY_DEBUG: 1
-        PATH: "${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin"
-        PHPUNIT_PARAMETERS: ' --log-junit "${CIRCLE_TEST_REPORTS}/phpunit/junit.xml" --coverage-clover "${CIRCLE_TEST_REPORT}/phpunit/clover.xml" '
+        PATH: "${PATH}:${PROJECT_DIR}/node_modules/.bin"
+        PHPUNIT_PARAMETERS: ' --log-junit "${CIRCLE_TEST_REPORTS}/phpunit/junit.xml" --coverage-clover "${CIRCLE_ARTIFACTS}/phpunit/clover.xml" --coverage-html "${CIRCLE_ARTIFACTS}/phpunit/html" '
 
 dependencies:
     override:
         - '[[ -d "vendor" ]] || mkdir vendor'
         - '[[ -d "~/.composer/cache" ]] || mkdir -p ~/.composer/cache'
-        - 'mkdir -p $CIRCLE_TEST_REPORTS/phpunit'
         - 'echo "date.timezone = Europe/Paris" >> /opt/circleci/php/$(phpenv global)/etc/php.ini'
     cache_directories:
         - '~/.composer'
@@ -23,7 +23,9 @@ dependencies:
 
 test:
     override:
+        - '[[ -d "${CIRCLE_TEST_REPORTS}/phpunit" ]] || mkdir -p "${CIRCLE_TEST_REPORTS}/phpunit"'
+        - '[[ -d "${CIRCLE_ARTIFACTS}/phpunit" ]] || mkdir -p "${CIRCLE_ARTIFACTS}/phpunit"'
         - 'composer install --no-interaction --no-scripts'
         - './tests/ci/ci.bash'
     post:
-        - 'bash <(curl -s https://codecov.io/bash) -f $CIRCLE_TEST_REPORT/phpunit/clover.xml'
+        - 'bash <(curl -s https://codecov.io/bash) -f "${CIRCLE_ARTIFACTS}/phpunit/clover.xml" '
