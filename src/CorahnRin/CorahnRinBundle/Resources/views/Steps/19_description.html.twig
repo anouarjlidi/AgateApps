@@ -1,4 +1,46 @@
 {% extends '@CorahnRin/Steps/step_base.html.twig' %}
 
 {% block step_content %}
+
+    {% set female = constant('\\CorahnRin\\CorahnRinBundle\\Entity\\Characters::FEMALE') %}
+    {% set male = constant('\\CorahnRin\\CorahnRinBundle\\Entity\\Characters::MALE') %}
+
+    <div class="row">
+        <div class="input-field col s6">
+            <input type="text" id="character_name" name="details[name]" value="{{ details.name }}">
+            <label for="character_name">{{ 'description.name'|trans({}, 'CorahnRinBundle') }}</label>
+        </div>
+
+        <div class="input-field col s6">
+            <input type="text" name="details[player_name]" id="player" value="{{ details.player_name }}">
+            <label for="player">{{ 'description.player_name'|trans({}, 'CorahnRinBundle') }}</label>
+        </div>
+    </div>
+
+    <h6>{{ 'description.sex'|trans({}, 'CorahnRinBundle') }}</h6>
+    <p>
+        <input type="radio" name="details[sex]" id="sex_female" {{ details.sex is defined and details.sex == female ? 'checked' }} value="{{ female }}">
+        <label for="sex_female">{{ 'description.female'|trans({}, 'CorahnRinBundle') }}</label>
+
+        <input type="radio" name="details[sex]" id="sex_male" {{ details.sex is defined and details.sex == male ? 'checked' }} value="{{ male }}">
+        <label for="sex_male">{{ 'description.male'|trans({}, 'CorahnRinBundle') }}</label>
+    </p>
+
+    <div class="input-field">
+        <input type="text" name="details[description]" id="description" value="{{ details.description }}">
+        <label for="description">{{ 'description.character_description'|trans({}, 'CorahnRinBundle') }}</label>
+    </div>
+
+    <div class="row">
+        <div class="input-field col s6">
+            <textarea id="story" class="resize-vertical" name="details[story]">{{ details.story }}</textarea>
+            <label for="story">{{ 'description.character_story'|trans({}, 'CorahnRinBundle') }}</label>
+        </div>
+
+        <div class="input-field col s6">
+            <textarea id="facts" class="resize-vertical" name="details[facts]">{{ details.facts }}</textarea>
+            <label for="facts">{{ 'description.character_notable_facts'|trans({}, 'CorahnRinBundle') }}</label>
+        </div>
+    </div>
+
 {% endblock %}

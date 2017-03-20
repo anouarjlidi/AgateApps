@@ -114,6 +114,25 @@ equipment:
         title: 'Armes'
     armors:
         title: 'Armures'
+
+description:
+    name: 'Nom du personnage'
+    male: 'Homme'
+    female: 'Femme'
+    player_name: 'Nom du joueur'
+    character_description: 'Description physique'
+    character_story: 'Histoire'
+    character_notable_facts: 'Faits notables'
+    sex: 'Sexe'
+    errors:
+        name: 'Le nom du personnage est obligatoire'
+        player_name: 'Le nom du joueur est obligatoire'
+        sex: 'Le sexe du personnage est obligatoire'
+        name_too_long: 'Le nom ne doit pas contenir plus de 100 caractères'
+        description: 'La description ne doit pas contenir plus de 255 caractères'
+        story: 'L''histoire ne doit pas contenir plus de 65535 caractères'
+        facts: 'Les faits notables ne doivent pas contenir plus de 65535 caractères'
 steps:
     next: 'Étape suivante'
     reset: 'Réinitialiser cette étape'
+

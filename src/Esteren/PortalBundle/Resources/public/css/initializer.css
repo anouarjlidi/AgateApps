@@ -91,3 +91,7 @@ section:empty
 {
     display: none;
 }
+
+textarea.resize-vertical {
+    resize: vertical;
+}

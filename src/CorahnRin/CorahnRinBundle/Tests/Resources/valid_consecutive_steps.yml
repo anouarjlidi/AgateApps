@@ -324,11 +324,23 @@
         equipment:
             - 'Livre de règles'
 
-# TODO
 19_description:
     next_step: 20_finish
-    form_values: ~
-    session_value: ~
+    form_values:
+        details:
+            name: A
+            player_name: B
+            sex: 'character.sex.female'
+            description: ''
+            story: ''
+            facts: ''
+    session_value:
+        name: A
+        player_name: B
+        sex: 'character.sex.female'
+        description: ''
+        story: ''
+        facts: ''
 
 # TODO
 20_finish:
