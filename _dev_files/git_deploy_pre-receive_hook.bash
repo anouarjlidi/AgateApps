@@ -31,7 +31,7 @@ workingtree="/home/esteren/www/portal.esteren.org/www"
 read -d '' success_tag_script << SCRIPT
     export SYMFONY_ENV=prod && \
     export SYMFONY_DEBUG=0 && \
-    composer install --optimize-autoloader --classmap-authoritative --no-dev --apcu-autoloader && \
+    composer install --optimize-autoloader --no-dev --apcu-autoloader && \
     php bin/console cache:clear && \
     php bin/console doctrine:schema:update --dump-sql --complete --force
 SCRIPT
