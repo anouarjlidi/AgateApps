@@ -14,6 +14,7 @@ namespace CorahnRin\CorahnRinBundle\SheetsManagers;
 use CorahnRin\CorahnRinBundle\Entity\Characters;
 use CorahnRin\CorahnRinBundle\PDF\PDF;
 use Pierstoval\Bundle\CharacterManagerBundle\Model\CharacterInterface;
+use Pierstoval\Bundle\CharacterManagerBundle\SheetsManagers\SheetsManagerInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 class PdfManager implements SheetsManagerInterface
