@@ -8,7 +8,6 @@ parameters:
     database_user:     ~
     database_password: ~
     database_driver:   ~
-    database_path:     ~
 
     database_host_legacy:     ~
     database_port_legacy:     ~

@@ -6,16 +6,21 @@ machine:
     environment:
         PROJECT_DIR: '${HOME}/${CIRCLE_PROJECT_REPONAME}'
         CODECOV_TOKEN: 5b127f85-7030-411d-8f65-8f371c6eac0b
+        PATH: "${PATH}:${PROJECT_DIR}/node_modules/.bin"
+
+        # Used by PHPUnit
         SYMFONY_ENV: test
         SYMFONY_DEBUG: 1
-        PATH: "${PATH}:${PROJECT_DIR}/node_modules/.bin"
-        PHPUNIT_PARAMETERS: ' --log-junit "${CIRCLE_TEST_REPORTS}/phpunit/junit.xml" --coverage-clover "${CIRCLE_ARTIFACTS}/phpunit/clover.xml" --coverage-html "${CIRCLE_ARTIFACTS}/phpunit/html" '
+        RECREATE_DB: 1
 
 dependencies:
     override:
         - '[[ -d "vendor" ]] || mkdir vendor'
         - '[[ -d "~/.composer/cache" ]] || mkdir -p ~/.composer/cache'
         - 'echo "date.timezone = Europe/Paris" >> /opt/circleci/php/$(phpenv global)/etc/php.ini'
+        - 'composer config -l'
+        - 'cp tests/ci/parameters.yml app/config/parameters.yml'
+        - 'yarn'
     cache_directories:
         - '~/.composer'
         - '~/.cache/yarn'
@@ -23,9 +28,13 @@ dependencies:
 
 test:
     override:
-        - '[[ -d "${CIRCLE_TEST_REPORTS}/phpunit" ]] || mkdir -p "${CIRCLE_TEST_REPORTS}/phpunit"'
-        - '[[ -d "${CIRCLE_ARTIFACTS}/phpunit" ]] || mkdir -p "${CIRCLE_ARTIFACTS}/phpunit"'
-        - 'composer install --no-interaction --no-scripts'
-        - './tests/ci/ci.bash'
+        - 'composer install --no-interaction'
+        - 'php bin/symfony_requirements'
+        - './vendor/bin/behat'
+        - './vendor/bin/phpunit --log-junit "${CIRCLE_TEST_REPORTS}/phpunit/junit.xml" --coverage-clover "${CIRCLE_ARTIFACTS}/phpunit/clover.xml" --coverage-html "${CIRCLE_ARTIFACTS}/phpunit/html"'
+        - 'php bin/console security:check'
+        - 'php bin/console lint:twig app/Resources src'
+        - 'php bin/console lint:yaml app/config'
+        - 'php bin/console lint:yaml src'
     post:
         - 'bash <(curl -s https://codecov.io/bash) -f "${CIRCLE_ARTIFACTS}/phpunit/clover.xml" '

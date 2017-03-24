@@ -71,7 +71,7 @@ export RECREATE_DB=1
 
 echo "$echoPrefix====================================================="
 echo "$echoPrefix Install Composer dependencies"
-php composer.phar install --classmap-authoritative --no-interaction --no-scripts || exit 130
+php composer.phar install --no-interaction --no-scripts || exit 130
 
 echo "$echoPrefix====================================================="
 echo "$echoPrefix Testing environment capabilities and Symfony requirements"
@@ -94,7 +94,19 @@ fi
 
 echo "$echoPrefix====================================================="
 echo "$echoPrefix[TESTS] PHPUnit"
-test_command ${phpunit_script} ${PHPUNIT_PARAMETERS}
+# Don't wrap PHPUnit in test_command because it seems to bug in some CIs...
+${phpunit_script} ${PHPUNIT_PARAMETERS}
+
+phpunitExitCode=$?
+
+if [[ 0 != ${phpunitExitCode} ]]; then
+    read -d '' errors << CNT
+${echoPrefix} ${errors}
+${echoPrefix}
+${echoPrefix} [ERROR] [Command] ${phpunit_script} ${PHPUNIT_PARAMETERS}
+${echoPrefix}         [Message] PHPUnit has not been successful
+CNT
+fi
 
 echo "$echoPrefix====================================================="
 echo "$echoPrefix[TESTS] Behat"
