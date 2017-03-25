@@ -4,7 +4,6 @@ corahnrin_characters:
     host:     '%esteren_domains.corahnrin%'
 
 corahnrin_steps:
-    resource: "@PierstovalCharacterManagerBundle/Controller/StepController.php"
-    type:     annotation
+    resource: "@PierstovalCharacterManagerBundle/Resources/config/routing.yml"
     prefix:   /character
     host:     '%esteren_domains.corahnrin%'

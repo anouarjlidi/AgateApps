@@ -26,9 +26,9 @@ class Step01People extends AbstractStepAction
                 $this->updateCharacterStep($peopleId);
 
                 return $this->nextStep();
-            } else {
-                $this->flashMessage('Veuillez indiquer un peuple correct.');
             }
+
+            $this->flashMessage('Veuillez indiquer un peuple correct.');
         }
 
         return $this->renderCurrentStep([
