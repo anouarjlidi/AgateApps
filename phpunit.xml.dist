@@ -27,6 +27,7 @@
             <directory>./src/CorahnRin/CorahnRinBundle/Tests</directory>
             <directory>./src/Esteren/PortalBundle/Tests</directory>
             <directory>./src/EsterenMaps/MapsBundle/Tests</directory>
+            <exclude>./vendor</exclude>
         </testsuite>
     </testsuites>
 
@@ -67,6 +68,8 @@
                 <directory>./src/*Bundle/Tests</directory>
                 <directory>./src/*/*Bundle/Tests</directory>
                 <directory>./src/*/Bundle/*Bundle/Tests</directory>
+
+                <directory>./vendor</directory>
             </exclude>
         </whitelist>
     </filter>
