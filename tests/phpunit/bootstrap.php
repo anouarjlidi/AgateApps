@@ -44,6 +44,7 @@ if (NO_RECREATE_DB) {
  */
 function runCommand($cmd) {
     $process = new Process($cmd);
+    $process->setTimeout(180);
     $process->run(function ($type, $buffer) {
         if (Process::ERR === $type) {
             echo 'ERROR > '.$buffer;
@@ -58,6 +59,7 @@ function runCommand($cmd) {
 
 if (!NO_CLEAR_CACHE) {
     runCommand('php '.$rootDir.'/bin/console cache:clear --no-warmup');
+    runCommand('php '.$rootDir.'/bin/console cache:warmup');
 }
 
 $fs = new Filesystem();

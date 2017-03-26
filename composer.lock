@@ -2157,16 +2157,16 @@
         },
         {
             "name": "pierstoval/character_manager",
-            "version": "v0.3.2",
+            "version": "v0.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Pierstoval/CharacterManagerBundle.git",
-                "reference": "88c10abc31136d896ad3a5e99550486e02fb0030"
+                "reference": "433ea280db3efd1f36fe8b5f7a1dae9a0b29cd47"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Pierstoval/CharacterManagerBundle/zipball/88c10abc31136d896ad3a5e99550486e02fb0030",
-                "reference": "88c10abc31136d896ad3a5e99550486e02fb0030",
+                "url": "https://api.github.com/repos/Pierstoval/CharacterManagerBundle/zipball/433ea280db3efd1f36fe8b5f7a1dae9a0b29cd47",
+                "reference": "433ea280db3efd1f36fe8b5f7a1dae9a0b29cd47",
                 "shasum": ""
             },
             "require": {
@@ -2203,7 +2203,7 @@
                 "game",
                 "symfony"
             ],
-            "time": "2017-03-26T14:04:34+00:00"
+            "time": "2017-03-26T20:37:46+00:00"
         },
         {
             "name": "psr/cache",

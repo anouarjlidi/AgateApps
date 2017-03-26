@@ -15,7 +15,8 @@ use Symfony\Component\Yaml\Yaml;
 use Tests\WebTestCase;
 
 /**
- * @see CorahnRin\CorahnRinBundle\Controller\GeneratorController
+ * The goal here is to create one single character to make sure the whole step process is working correctly.
+ * Specific steps tests and validations are made in the "Step" namespace, so check the directory next to this one.
  */
 class FullValidStepsControllerTest extends WebTestCase
 {
@@ -28,8 +29,12 @@ class FullValidStepsControllerTest extends WebTestCase
 
         $client->request('GET', '/fr/character/generate');
 
-        static::assertTrue($client->getResponse()
-            ->isRedirect('/fr/character/generate/01_people'), 'Could not check that generator index redirects to first step');
+        static::assertSame(302, $client->getResponse()->getStatusCode());
+
+        static::assertTrue(
+            $client->getResponse()->isRedirect('/fr/character/generate/01_people'),
+            'Could not check that generator index redirects to first step'
+        );
     }
 
     /**
@@ -104,6 +109,7 @@ class FullValidStepsControllerTest extends WebTestCase
     {
         $file = file_get_contents(__DIR__.'/../Resources/valid_consecutive_steps.yml');
 
+        /** @var array[] $steps */
         $steps = Yaml::parse($file);
 
         $previous = [];
