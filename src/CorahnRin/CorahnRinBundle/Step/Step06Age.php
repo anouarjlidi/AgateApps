@@ -24,9 +24,8 @@ class Step06Age extends AbstractStepAction
                 $this->updateCharacterStep($age);
 
                 return $this->nextStep();
-            } else {
-                $this->flashMessage('L\'âge doit être compris entre 16 et 35 ans.');
             }
+            $this->flashMessage('L\'âge doit être compris entre 16 et 35 ans.');
         }
 
         return $this->renderCurrentStep([
