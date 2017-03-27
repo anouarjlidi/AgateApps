@@ -11,6 +11,8 @@
 
 namespace CorahnRin\CorahnRinBundle\Step;
 
+use CorahnRin\CorahnRinBundle\Entity\Ways;
+
 class Step08Ways extends AbstractStepAction
 {
     /**
@@ -22,20 +24,8 @@ class Step08Ways extends AbstractStepAction
 
         $waysValues = $this->getCharacterProperty();
 
-        if (null === $waysValues) {
-            if ($this->request->isMethod('POST')) {
-                foreach ($this->request->request->get('ways') as $id => $value) {
-                    $value = (int) $value;
-                    if (array_key_exists($id, $ways) && $value >= 1 && $value <= 5) {
-                        $waysValues[$id] = $value;
-                    }
-                }
-            }
-            foreach ($ways as $id => $way) {
-                if (!isset($waysValues[$id])) {
-                    $waysValues[$id] = 1;
-                }
-            }
+        if (!$waysValues) {
+            $waysValues = $this->resetWays($ways);
         }
 
         if ($this->request->isMethod('POST')) {
@@ -94,11 +84,28 @@ class Step08Ways extends AbstractStepAction
 
                 return $this->nextStep();
             }
+
+            $waysValues = $this->resetWays($ways);
         }
 
         return $this->renderCurrentStep([
             'ways_values' => $waysValues,
             'ways_list'   => $ways,
         ]);
+    }
+
+    /**
+     * @param Ways[] $ways
+     * @return array
+     */
+    private function resetWays(array $ways = [])
+    {
+        $values = [];
+
+        foreach ($ways as $way) {
+            $values[$way->getId()] = 1;
+        }
+
+        return $values;
     }
 }
