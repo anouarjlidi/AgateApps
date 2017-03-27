@@ -16,7 +16,7 @@ class Step07SetbacksTest extends AbstractStepTest
     /**
      * Used to check how many times we process tests that have a certain amount of randomness.
      */
-    const RANDOMNESS_COUNT = 75;
+    const RANDOMNESS_COUNT = 100;
 
     public function testNoSetback()
     {
@@ -36,7 +36,9 @@ class Step07SetbacksTest extends AbstractStepTest
     {
         $tests = [];
 
-        for ($i = 1; $i <= static::RANDOMNESS_COUNT; $i++) {
+        $count = ((int) getenv('STEP7_RANDOMNESS_COUNT')) ?: static::RANDOMNESS_COUNT;
+
+        for ($i = 1; $i <= $count; $i++) {
             $tests['randomness_'.$i] = [$i];
         }
 
