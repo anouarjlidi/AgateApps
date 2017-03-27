@@ -16,6 +16,19 @@ use Tests\WebTestCase;
 abstract class AbstractStepTest extends WebTestCase
 {
     /**
+     * {@inheritdoc}
+     */
+    protected function getClient($host = null, array $kernelOptions = [], $tokenRoles = null, array $server = [])
+    {
+        if (null === $host) {
+            $host = 'corahnrin.esteren.dev';
+        }
+
+        return parent::getClient($host, $kernelOptions, $tokenRoles, $server);
+    }
+
+
+    /**
      * @return string
      */
     protected function getStepName()
@@ -36,7 +49,7 @@ abstract class AbstractStepTest extends WebTestCase
      */
     protected function submitAction(array $sessionValues = [], array $formValues = [], $queryString = '')
     {
-        $client = $this->getClient('corahnrin.esteren.dev', [], ['ROLE_MANAGER']);
+        $client = $this->getClient();
 
         // We need a simple session to be sure it's updated when submitting form.
         $session = $client->getContainer()->get('session');

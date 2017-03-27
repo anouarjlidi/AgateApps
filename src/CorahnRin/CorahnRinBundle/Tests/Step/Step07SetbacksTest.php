@@ -16,7 +16,7 @@ class Step07SetbacksTest extends AbstractStepTest
     /**
      * Used to check how many times we process tests that have a certain amount of randomness.
      */
-    const RANDOMNESS_COUNT = 50;
+    const RANDOMNESS_COUNT = 75;
 
     public function testNoSetback()
     {
@@ -158,7 +158,7 @@ class Step07SetbacksTest extends AbstractStepTest
 
     public function testAgeNotDefinedRedirectsToStepOne()
     {
-        $client = $this->getClient('corahnrin.esteren.dev', [], ['ROLE_MANAGER']);
+        $client = $this->getClient();
 
         $client->request('GET', '/fr/character/generate/'.$this->getStepName());
 
@@ -168,6 +168,55 @@ class Step07SetbacksTest extends AbstractStepTest
         $crawler = $client->followRedirect();
         static::assertEquals(
             "L'étape \"07 Setbacks\" dépend de \"06 Age\", mais celle-ci n'est pas présente\ndans le personnage en cours de création...",
+            trim($crawler->filter('#flash-messages > .card-panel.error')->text())
+        );
+    }
+
+    public function testManualWithValidSetbacks()
+    {
+        $client = $this->getClient();
+
+        $session = $client->getContainer()->get('session');
+        $session->set('character', ['06_age' => 21]);
+        $session->save();
+
+        $crawler = $client->request('GET', '/fr/character/generate/'.$this->getStepName().'?manual=');
+        $form = $crawler->filter('#generator_form')->form()
+            ->disableValidation()
+            ->setValues([
+                'setbacks_value' => [2, 3]
+            ])
+        ;
+
+        $client->submit($form);
+
+        static::assertSame(302, $client->getResponse()->getStatusCode());
+        static::assertTrue($client->getResponse()->isRedirect('/fr/character/generate/08_ways'));
+        static::assertSame([2 => ['id' => 2, 'avoided' => false], 3 => ['id' => 3, 'avoided' => false]], $session->get('character')[$this->getStepName()]);
+    }
+
+    public function testManualWithInValidSetbacks()
+    {
+        $client = $this->getClient();
+
+        $session = $client->getContainer()->get('session');
+        $session->set('character', ['06_age' => 21]);
+        $session->save();
+
+        $crawler = $client->request('GET', '/fr/character/generate/'.$this->getStepName().'?manual=');
+
+        $form = $crawler->filter('#generator_form')->form()
+            ->disableValidation()
+            ->setValues([
+                'setbacks_value' => [1, 10] // 1 and 10 exists, but they cannot be chosen with manual setup
+            ])
+        ;
+
+        $crawler = $client->submit($form);
+
+        static::assertSame(200, $client->getResponse()->getStatusCode());
+        static::assertEquals(
+            'Veuillez entrer des revers correct(s).',
             trim($crawler->filter('#flash-messages > .card-panel.error')->text())
         );
     }
