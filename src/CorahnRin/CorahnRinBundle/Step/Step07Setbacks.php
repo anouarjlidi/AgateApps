@@ -74,7 +74,10 @@ class Step07Setbacks extends AbstractStepAction
                 $anyWrongSetbackId = false;
 
                 foreach ($setbacksValue as $id) {
-                    if (!array_key_exists((int)$id, $this->setbacks)) {
+                    if (
+                        !array_key_exists((int)$id, $this->setbacks) // Setback has to exist
+                        || in_array((int) $id, [1, 10], true)        // If manually set, setback cannot be good/bad luck
+                    ) {
                         $anyWrongSetbackId = true;
                     }
                 }
