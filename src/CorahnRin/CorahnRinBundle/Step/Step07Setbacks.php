@@ -42,13 +42,13 @@ class Step07Setbacks extends AbstractStepAction
 
         // Setbacks number depends on the age, according to the books.
         $this->setbacksNumber = 0;
-        if ($age > 20) {
+        if ($age >= 21) {
             ++$this->setbacksNumber;
         }
-        if ($age > 25) {
+        if ($age >= 26) {
             ++$this->setbacksNumber;
         }
-        if ($age > 30) {
+        if ($age >= 31) {
             ++$this->setbacksNumber;
         }
 
@@ -125,11 +125,9 @@ class Step07Setbacks extends AbstractStepAction
             // Roll the dice. (shuffle all setbacks and get the first found)
             shuffle($setbacksDiceList);
 
+            // Disable setback so we don't have it twice
             /** @var Setbacks $diceResult */
-            $diceResult = $setbacksDiceList[0];
-
-            // Disable unlucky setback so we don't have it twice
-            unset($setbacksDiceList[0]);
+            $diceResult = array_shift($setbacksDiceList);
 
             if ($diceResult->getId() === 1) {
                 // Unlucky!
@@ -167,8 +165,7 @@ class Step07Setbacks extends AbstractStepAction
 
                 // Now we determine which setback was avoided
                 shuffle($setbacksDiceList);
-                $diceResult = $setbacksDiceList[0];
-                unset($setbacksDiceList[0]);
+                $diceResult = array_shift($setbacksDiceList);
 
                 // Then add it and mark it as avoided
                 $setbacksValue[$diceResult->getId()] = ['id' => $diceResult->getId(), 'avoided' => true];

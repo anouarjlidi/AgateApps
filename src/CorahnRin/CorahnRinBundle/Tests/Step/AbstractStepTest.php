@@ -30,10 +30,11 @@ abstract class AbstractStepTest extends WebTestCase
     /**
      * @param array $sessionValues
      * @param array $formValues
+     * @param string $queryString
      *
      * @return StepActionTestResult
      */
-    protected function submitAction(array $sessionValues = [], array $formValues = [])
+    protected function submitAction(array $sessionValues = [], array $formValues = [], $queryString = '')
     {
         $client = $this->getClient('corahnrin.esteren.dev', [], ['ROLE_MANAGER']);
 
@@ -43,7 +44,7 @@ abstract class AbstractStepTest extends WebTestCase
         $session->save();
 
         // Make the request.
-        $crawler = $client->request('GET', '/fr/character/generate/' . $this->getStepName());
+        $crawler = $client->request('GET', '/fr/character/generate/' . $this->getStepName() . $queryString);
 
         // If it's not 200, it certainly session is invalid.
         $statusCode = $client->getResponse()->getStatusCode();
