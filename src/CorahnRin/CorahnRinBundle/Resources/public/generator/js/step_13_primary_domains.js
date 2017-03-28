@@ -74,7 +74,7 @@
         if (scholarElement && scholarElement.value) {
             numberOfCompleted++;
             d.getElementById('scholarDisplay').innerHTML = '1';
-        } else {
+        } else if (scholarElement && !scholarElement.value) {
             d.getElementById('scholarDisplay').innerHTML = '0';
         }
 
