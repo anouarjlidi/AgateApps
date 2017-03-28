@@ -342,8 +342,4 @@
         story: ''
         facts: ''
 
-# TODO
-20_finish:
-    next_step: ~
-    form_values: ~
-    session_value: ~
+20_finish: ~
