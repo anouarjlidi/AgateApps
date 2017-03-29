@@ -33,7 +33,7 @@ use UserBundle\Entity\User;
  *
  * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity(repositoryClass="CorahnRin\CorahnRinBundle\Repository\CharactersRepository")
- * @ORM\Table(name="characters",uniqueConstraints={@ORM\UniqueConstraint(name="idcUnique", columns={"nameSlug", "user_id"})})
+ * @ORM\Table(name="characters",uniqueConstraints={@ORM\UniqueConstraint(name="idcUnique", columns={"name_slug", "user_id"})})
  */
 class Characters extends BaseCharacter
 {
@@ -52,7 +52,7 @@ class Characters extends BaseCharacter
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=255, nullable=false)
+     * @ORM\Column(name="name", type="string", length=255, nullable=false)
      * @Assert\NotBlank()
      */
     protected $name;
@@ -60,7 +60,7 @@ class Characters extends BaseCharacter
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=255, nullable=false)
+     * @ORM\Column(name="name_slug", type="string", length=255, nullable=false)
      * @Gedmo\Slug(fields={"name"},unique=false)
      * @Assert\NotBlank()
      */
@@ -69,7 +69,7 @@ class Characters extends BaseCharacter
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=255, nullable=false)
+     * @ORM\Column(name="player_name", type="string", length=255, nullable=false)
      * @Assert\NotBlank()
      */
     protected $playerName;
@@ -77,35 +77,35 @@ class Characters extends BaseCharacter
     /**
      * @var int
      *
-     * @ORM\Column(type="smallint", nullable=false, options={"default":0})
+     * @ORM\Column(name="status", type="smallint", nullable=false, options={"default":0})
      */
     protected $status;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=1, nullable=false)
+     * @ORM\Column(name="sex", type="string", length=1, nullable=false)
      */
     protected $sex;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="text")
+     * @ORM\Column(name="description", type="text")
      */
     protected $description;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="text")
+     * @ORM\Column(name="story", type="text")
      */
     protected $story;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="text")
+     * @ORM\Column(name="facts", type="text")
      */
     protected $facts;
 
@@ -126,28 +126,21 @@ class Characters extends BaseCharacter
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=30)
+     * @ORM\Column(name="orientation", type="string", length=30)
      */
     protected $orientation;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=80, nullable=true)
-     */
-    protected $jobCustom;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=25)
+     * @ORM\Column(name="geo_living", type="string", length=25)
      */
     protected $geoLiving;
 
     /**
      * @var int
      *
-     * @ORM\Column(type="smallint", options={"default":0})
+     * @ORM\Column(name="trauma", type="smallint", options={"default":0})
      * @Assert\NotNull()
      * @Assert\GreaterThanOrEqual(value=0)
      */
@@ -156,7 +149,7 @@ class Characters extends BaseCharacter
     /**
      * @var int
      *
-     * @ORM\Column(type="smallint", options={"default":0})
+     * @ORM\Column(name="trauma_permanent", type="smallint", options={"default":0})
      * @Assert\NotNull()
      * @Assert\GreaterThanOrEqual(value=0)
      */
@@ -165,7 +158,7 @@ class Characters extends BaseCharacter
     /**
      * @var int
      *
-     * @ORM\Column(type="smallint", options={"default":0})
+     * @ORM\Column(name="hardening", type="smallint", options={"default":0})
      * @Assert\NotNull()
      * @Assert\GreaterThanOrEqual(value=0)
      */
@@ -174,7 +167,7 @@ class Characters extends BaseCharacter
     /**
      * @var int
      *
-     * @ORM\Column(type="smallint", nullable=false)
+     * @ORM\Column(name="age", type="smallint", nullable=false)
      * @Assert\NotNull()
      * @Assert\GreaterThanOrEqual(value=0)
      */
@@ -183,7 +176,7 @@ class Characters extends BaseCharacter
     /**
      * @var int
      *
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(name="mental_resist", type="smallint")
      * @Assert\NotNull()
      * @Assert\GreaterThanOrEqual(value=0)
      */
@@ -192,7 +185,7 @@ class Characters extends BaseCharacter
     /**
      * @var int
      *
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(name="health", type="smallint")
      * @Assert\NotNull()
      * @Assert\GreaterThanOrEqual(value=0)
      */
@@ -201,7 +194,7 @@ class Characters extends BaseCharacter
     /**
      * @var int
      *
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(name="max_health", type="smallint")
      * @Assert\NotNull()
      * @Assert\GreaterThanOrEqual(value=0)
      */
@@ -210,16 +203,16 @@ class Characters extends BaseCharacter
     /**
      * @var int
      *
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(name="stamina", type="smallint")
      * @Assert\NotNull()
      * @Assert\GreaterThanOrEqual(value=0)
      */
     protected $stamina;
 
     /**
-     * @var bool
+     * @var int
      *
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(name="survival", type="smallint")
      * @Assert\NotNull()
      * @Assert\GreaterThanOrEqual(value=0)
      */
@@ -237,7 +230,7 @@ class Characters extends BaseCharacter
     /**
      * @var int
      *
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(name="defense", type="smallint")
      * @Assert\NotNull()
      * @Assert\GreaterThanOrEqual(value=0)
      */
@@ -246,7 +239,7 @@ class Characters extends BaseCharacter
     /**
      * @var int
      *
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(name="rindath", type="smallint")
      * @Assert\NotNull()
      * @Assert\GreaterThanOrEqual(value=0)
      */
@@ -255,7 +248,7 @@ class Characters extends BaseCharacter
     /**
      * @var int
      *
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(name="exaltation", type="smallint")
      * @Assert\NotNull()
      * @Assert\GreaterThanOrEqual(value=0)
      */
@@ -264,7 +257,7 @@ class Characters extends BaseCharacter
     /**
      * @var int
      *
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(name="experience_actual", type="smallint")
      * @Assert\NotNull()
      * @Assert\GreaterThanOrEqual(value=0)
      */
@@ -273,7 +266,7 @@ class Characters extends BaseCharacter
     /**
      * @var int
      *
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(name="experience_spent", type="smallint")
      * @Assert\NotNull()
      * @Assert\GreaterThanOrEqual(value=0)
      */
@@ -725,30 +718,6 @@ class Characters extends BaseCharacter
     }
 
     /**
-     * @param string $jobCustom
-     *
-     * @return Characters
-     *
-     * @codeCoverageIgnore
-     */
-    public function setJobCustom($jobCustom)
-    {
-        $this->jobCustom = $jobCustom;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     *
-     * @codeCoverageIgnore
-     */
-    public function getJobCustom()
-    {
-        return $this->jobCustom;
-    }
-
-    /**
      * @param string $geoLiving
      *
      * @return Characters
@@ -965,7 +934,7 @@ class Characters extends BaseCharacter
     }
 
     /**
-     * @param bool $survival
+     * @param int $survival
      *
      * @return Characters
      *
@@ -979,7 +948,7 @@ class Characters extends BaseCharacter
     }
 
     /**
-     * @return bool
+     * @return int
      *
      * @codeCoverageIgnore
      */
