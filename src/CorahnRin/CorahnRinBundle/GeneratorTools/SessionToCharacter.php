@@ -15,8 +15,10 @@ use Behat\Transliterator\Transliterator;
 use CorahnRin\CorahnRinBundle\Entity\Avantages;
 use CorahnRin\CorahnRinBundle\Entity\CharacterProperties\CharAdvantages;
 use CorahnRin\CorahnRinBundle\Entity\CharacterProperties\CharDisciplines;
+use CorahnRin\CorahnRinBundle\Entity\CharacterProperties\CharDomains;
 use CorahnRin\CorahnRinBundle\Entity\CharacterProperties\CharSetbacks;
 use CorahnRin\CorahnRinBundle\Entity\CharacterProperties\CharWays;
+use CorahnRin\CorahnRinBundle\Entity\CharacterProperties\Money;
 use CorahnRin\CorahnRinBundle\Entity\Characters;
 use CorahnRin\CorahnRinBundle\Entity\Domains;
 use CorahnRin\CorahnRinBundle\Entity\Setbacks;
@@ -64,10 +66,16 @@ final class SessionToCharacter
      */
     private $em;
 
-    public function __construct(StepActionResolver $resolver, EntityManager $em)
+    /**
+     * @var DomainsCalculator
+     */
+    private $domainsCalculator;
+
+    public function __construct(StepActionResolver $resolver, DomainsCalculator $domainsCalculator, EntityManager $em)
     {
         $this->resolver = $resolver;
         $this->em = $em;
+        $this->domainsCalculator = $domainsCalculator;
     }
 
     /**
@@ -111,6 +119,8 @@ final class SessionToCharacter
         $this->setCombatArts($character, $values);
         $this->setEquipment($character, $values);
         $this->setDescription($character, $values);
+        $this->setExp($character, $values);
+        $this->setMoney($character, $values);
         $this->setDomains($character, $values);
         $this->setPrecalculatedValues($character, $values);
 
@@ -262,6 +272,13 @@ final class SessionToCharacter
     private function setEquipment(Characters $character, array $values)
     {
         $character->setInventory($values['18_equipment']['equipment']);
+
+        foreach ($values['18_equipment']['armors'] as $id => $value) {
+            $character->addArmor($this->getRepository('CorahnRinBundle:Armors')->find($id));
+        }
+        foreach ($values['18_equipment']['weapons'] as $id => $value) {
+            $character->addWeapon($this->getRepository('CorahnRinBundle:Weapons')->find($id));
+        }
     }
 
     private function setDescription(Characters $character, array $values)
@@ -284,13 +301,135 @@ final class SessionToCharacter
         $character->setNameSlug($slug);
     }
 
-    private function setDomains($character, $values)
+    private function setExp(Characters $character, array $values)
     {
-        // TODO
+        $character->setExperienceActual((int) $values['17_combat_arts']['remainingExp']);
+        $character->setExperienceSpent(0);
     }
 
-    private function setPrecalculatedValues($character, $values)
+    private function setMoney(Characters $character, array $values)
     {
-        // TODO
+        $money = new Money();
+
+        //TODO: Manage "poor" disadvantage
+
+        $character->setMoney($money);
+    }
+
+    private function setDomains(Characters $character, array $values)
+    {
+        $domainsBaseValues = $this->domainsCalculator->calculateFromGeneratorData(
+            $this->domains,
+            $values['05_social_class']['domains'],
+            $values['13_primary_domains']['ost'],
+            $values['13_primary_domains']['scholar'] ?: null,
+            $character->getGeoLiving(),
+            $values['13_primary_domains']['domains'],
+            $values['14_use_domain_bonuses']['domains']
+        );
+
+        $finalDomainsValues = $this->domainsCalculator->calculateFinalValues(
+            $this->domains,
+            $domainsBaseValues,
+            array_map(function($e) { return (int) $e; }, $values['15_domains_spend_exp']['domains'])
+        );
+
+        $bonuses = array_fill_keys(array_keys($this->domains), 0);
+        $maluses = array_fill_keys(array_keys($this->domains), 0);
+
+        foreach ($character->getAdvantages() as $charAdvantage) {
+            $adv = $charAdvantage->getAdvantage();
+            if (!trim($adv->getBonusdisc())) {
+                continue;
+            }
+            $bonusDiscs = explode(',', $adv->getBonusdisc());
+            dump($adv->getBonusdisc());
+            foreach ($bonusDiscs as $bonus) {
+                if (!$bonus) {
+                    continue;
+                }
+                if (isset($this->domains[$bonus])) {
+                    if ($adv->getIsDesv()) {
+                        $maluses[$bonus] += $charAdvantage->getValue();
+                    } else {
+                        $bonuses[$bonus] += $charAdvantage->getValue();
+                    }
+                } else {
+                    $disadvantageRatio = $adv->getIsDesv() ? -1 : 1;
+                    switch ($bonus) {
+                        case Avantages::BONUS_RESM;
+                            $character->setMentalResistBonus($character->getMentalResistBonus() + ($charAdvantage->getValue() * $disadvantageRatio));
+                            break;
+                        case Avantages::BONUS_BLESS:
+                            $character->setMaxHealth($character->getMaxHealth() + ($charAdvantage->getValue() * $disadvantageRatio));
+                            $character->setHealth($character->getHealth() + ($charAdvantage->getValue() * $disadvantageRatio));
+                            break;
+                        case Avantages::BONUS_VIG;
+                            $character->setStamina($character->getStamina() + ($charAdvantage->getValue() * $disadvantageRatio));
+                            break;
+                        case Avantages::BONUS_TRAU:
+                            $character->setTrauma($character->getTrauma() + $charAdvantage->getValue());
+                            break;
+                        case Avantages::BONUS_DEF;
+                            $character->setDefenseBonus($character->getDefenseBonus() + ($charAdvantage->getValue() * $disadvantageRatio));
+                            break;
+                        case Avantages::BONUS_RAP;
+                            $character->setSpeedBonus($character->getSpeedBonus() + ($charAdvantage->getValue() * $disadvantageRatio));
+                            break;
+                        case Avantages::BONUS_SUR;
+                            $character->setSurvival($character->getSurvival() + ($charAdvantage->getValue() * $disadvantageRatio));
+                            break;
+                        case Avantages::BONUS_100G;
+                            $character->getMoney()->addFrost(100);
+                            break;
+                        case Avantages::BONUS_20G;
+                            $character->getMoney()->addFrost(20);
+                            break;
+                        case Avantages::BONUS_50G;
+                            $character->getMoney()->addFrost(50);
+                            break;
+                        case Avantages::BONUS_50A;
+                            $character->getMoney()->addAzure(50);
+                            break;
+                        case Avantages::BONUS_20A;
+                            $character->getMoney()->addAzure(20);
+                            break;
+                        default:
+                            throw new \RuntimeException("Invalid bonus $bonus");
+                    }
+                }
+            }
+        }
+
+        foreach ($finalDomainsValues as $id => $value) {
+            $charDomain = new CharDomains();
+            $charDomain->setCharacter($character);
+            $charDomain->setDomain($this->domains[$id]);
+            $charDomain->setScore($value);
+            $charDomain->setBonus($bonuses[$id]);
+            $charDomain->setMalus($maluses[$id]);
+            $character->addDomain($charDomain);
+        }
+    }
+
+    private function setPrecalculatedValues(Characters $character, array $values)
+    {
+        $rindathMax =
+            $character->getWay(1)->getScore()
+            + $character->getWay(2)->getScore()
+            + $character->getWay(3)->getScore()
+        ;
+        if ($sigilRann = $character->getDiscipline('Sigil Rann')) {
+            $rindathMax += (($sigilRann->getScore() - 5) * 5);
+        }
+        $character->setRindathMax($rindathMax);
+        $character->setRindath($rindathMax);
+
+        $exaltationMax = $character->getWay(5)->getScore() * 3;
+        if ($miracles = $character->getDiscipline('Miracles')) {
+            $exaltationMax += (($miracles->getScore() - 5) * 5);
+        }
+        $character->setExaltationMax($exaltationMax);
+        $character->setExaltation($exaltationMax);
     }
 }

@@ -49,21 +49,21 @@ class Money
      * @param int  $ember
      * @param int  $azure
      * @param int  $frost
-     * @param bool $recalculate
+     * @param bool $flatten
      */
-    public function __construct($ember, $azure, $frost, $recalculate = false)
+    public function __construct($ember = 0, $azure = 0, $frost = 0, $flatten = false)
     {
         $this->ember = (int) $ember;
         $this->azure = (int) $azure;
         $this->frost = (int) $frost;
 
-        if ($recalculate) {
-            $this->recalculate();
+        if ($flatten) {
+            $this->flatten();
         }
     }
 
     /**
-     * @return mixed
+     * @return int
      *
      * @codeCoverageIgnore
      */
@@ -73,7 +73,21 @@ class Money
     }
 
     /**
-     * @param mixed $frost
+     * @param int $frost
+     *
+     * @return $this
+     *
+     * @codeCoverageIgnore
+     */
+    public function addFrost($frost)
+    {
+        $this->frost += $frost;
+
+        return $this;
+    }
+
+    /**
+     * @param int $frost
      *
      * @codeCoverageIgnore
      */
@@ -83,7 +97,7 @@ class Money
     }
 
     /**
-     * @return mixed
+     * @return int
      *
      * @codeCoverageIgnore
      */
@@ -93,7 +107,21 @@ class Money
     }
 
     /**
-     * @param mixed $azure
+     * @param int $azure
+     *
+     * @return $this
+     *
+     * @codeCoverageIgnore
+     */
+    public function addAzure($azure)
+    {
+        $this->azure += $azure;
+
+        return $this;
+    }
+
+    /**
+     * @param int $azure
      *
      * @codeCoverageIgnore
      */
@@ -103,7 +131,7 @@ class Money
     }
 
     /**
-     * @return mixed
+     * @return int
      *
      * @codeCoverageIgnore
      */
@@ -113,19 +141,37 @@ class Money
     }
 
     /**
-     * @param mixed $ember
+     * @param int $ember
+     *
+     * @return $this
+     *
+     * @codeCoverageIgnore
+     */
+    public function addEmber($ember)
+    {
+        $this->ember += $ember;
+
+        return $this;
+    }
+
+    /**
+     * @param int $ember
+     *
+     * @return $this
      *
      * @codeCoverageIgnore
      */
     public function setEmber($ember)
     {
         $this->ember = $ember;
+
+        return $this;
     }
 
     /**
      * @return Money
      */
-    public function recalculate()
+    public function flatten()
     {
         // TODO
 

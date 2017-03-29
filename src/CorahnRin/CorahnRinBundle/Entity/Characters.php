@@ -25,7 +25,6 @@ use Doctrine\ORM\Mapping as ORM;
 use EsterenMaps\MapsBundle\Entity\Zones;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Pierstoval\Bundle\CharacterManagerBundle\Entity\Character as BaseCharacter;
-use Symfony\Component\Validator\Constraints as Assert;
 use UserBundle\Entity\User;
 
 /**
@@ -53,7 +52,6 @@ class Characters extends BaseCharacter
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=false)
-     * @Assert\NotBlank()
      */
     protected $name;
 
@@ -62,7 +60,6 @@ class Characters extends BaseCharacter
      *
      * @ORM\Column(name="name_slug", type="string", length=255, nullable=false)
      * @Gedmo\Slug(fields={"name"},unique=false)
-     * @Assert\NotBlank()
      */
     protected $nameSlug;
 
@@ -70,7 +67,6 @@ class Characters extends BaseCharacter
      * @var string
      *
      * @ORM\Column(name="player_name", type="string", length=255, nullable=false)
-     * @Assert\NotBlank()
      */
     protected $playerName;
 
@@ -131,9 +127,9 @@ class Characters extends BaseCharacter
     protected $orientation;
 
     /**
-     * @var string
+     * @var GeoEnvironments
      *
-     * @ORM\Column(name="geo_living", type="string", length=25)
+     * @ORM\ManyToOne(targetEntity="CorahnRin\CorahnRinBundle\Entity\GeoEnvironments")
      */
     protected $geoLiving;
 
@@ -141,8 +137,6 @@ class Characters extends BaseCharacter
      * @var int
      *
      * @ORM\Column(name="trauma", type="smallint", options={"default":0})
-     * @Assert\NotNull()
-     * @Assert\GreaterThanOrEqual(value=0)
      */
     protected $trauma = 0;
 
@@ -150,8 +144,6 @@ class Characters extends BaseCharacter
      * @var int
      *
      * @ORM\Column(name="trauma_permanent", type="smallint", options={"default":0})
-     * @Assert\NotNull()
-     * @Assert\GreaterThanOrEqual(value=0)
      */
     protected $traumaPermanent = 0;
 
@@ -159,8 +151,6 @@ class Characters extends BaseCharacter
      * @var int
      *
      * @ORM\Column(name="hardening", type="smallint", options={"default":0})
-     * @Assert\NotNull()
-     * @Assert\GreaterThanOrEqual(value=0)
      */
     protected $hardening = 0;
 
@@ -168,8 +158,6 @@ class Characters extends BaseCharacter
      * @var int
      *
      * @ORM\Column(name="age", type="smallint", nullable=false)
-     * @Assert\NotNull()
-     * @Assert\GreaterThanOrEqual(value=0)
      */
     protected $age;
 
@@ -177,100 +165,120 @@ class Characters extends BaseCharacter
      * @var int
      *
      * @ORM\Column(name="mental_resist", type="smallint")
-     * @Assert\NotNull()
-     * @Assert\GreaterThanOrEqual(value=0)
      */
-    protected $mentalResist;
+    protected $mentalResist = 0;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="mental_resist_bonus", type="smallint")
+     */
+    protected $mentalResistBonus = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(name="health", type="smallint")
-     * @Assert\NotNull()
-     * @Assert\GreaterThanOrEqual(value=0)
      */
-    protected $health;
+    protected $health = 19;
 
     /**
      * @var int
      *
      * @ORM\Column(name="max_health", type="smallint")
-     * @Assert\NotNull()
-     * @Assert\GreaterThanOrEqual(value=0)
      */
-    protected $maxHealth;
+    protected $maxHealth = 19;
 
     /**
      * @var int
      *
      * @ORM\Column(name="stamina", type="smallint")
-     * @Assert\NotNull()
-     * @Assert\GreaterThanOrEqual(value=0)
      */
-    protected $stamina;
+    protected $stamina = 10;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="stamina_bonus", type="smallint")
+     */
+    protected $staminaBonus = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(name="survival", type="smallint")
-     * @Assert\NotNull()
-     * @Assert\GreaterThanOrEqual(value=0)
      */
-    protected $survival;
+    protected $survival = 3;
 
     /**
      * @var int
      *
-     * @ORM\Column(type="smallint")
-     * @Assert\NotNull()
-     * @Assert\GreaterThanOrEqual(value=0)
+     * @ORM\Column(name="speed", type="smallint")
      */
-    protected $speed;
+    protected $speed = 0;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="speed_bonus", type="smallint")
+     */
+    protected $speedBonus = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(name="defense", type="smallint")
-     * @Assert\NotNull()
-     * @Assert\GreaterThanOrEqual(value=0)
      */
-    protected $defense;
+    protected $defense = 0;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="defense_bonus", type="smallint")
+     */
+    protected $defenseBonus = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(name="rindath", type="smallint")
-     * @Assert\NotNull()
-     * @Assert\GreaterThanOrEqual(value=0)
      */
-    protected $rindath;
+    protected $rindath = 0;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="rindathMax", type="smallint")
+     */
+    protected $rindathMax = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(name="exaltation", type="smallint")
-     * @Assert\NotNull()
-     * @Assert\GreaterThanOrEqual(value=0)
      */
-    protected $exaltation;
+    protected $exaltation = 0;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="exaltation_max", type="smallint")
+     */
+    protected $exaltationMax = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(name="experience_actual", type="smallint")
-     * @Assert\NotNull()
-     * @Assert\GreaterThanOrEqual(value=0)
      */
-    protected $experienceActual;
+    protected $experienceActual = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(name="experience_spent", type="smallint")
-     * @Assert\NotNull()
-     * @Assert\GreaterThanOrEqual(value=0)
      */
-    protected $experienceSpent;
+    protected $experienceSpent = 0;
 
     /**
      * @var Peoples
@@ -718,13 +726,13 @@ class Characters extends BaseCharacter
     }
 
     /**
-     * @param string $geoLiving
+     * @param GeoEnvironments $geoLiving
      *
      * @return Characters
      *
      * @codeCoverageIgnore
      */
-    public function setGeoLiving($geoLiving)
+    public function setGeoLiving(GeoEnvironments $geoLiving)
     {
         $this->geoLiving = $geoLiving;
 
@@ -732,7 +740,7 @@ class Characters extends BaseCharacter
     }
 
     /**
-     * @return string
+     * @return GeoEnvironments
      *
      * @codeCoverageIgnore
      */
@@ -862,6 +870,24 @@ class Characters extends BaseCharacter
     }
 
     /**
+     * @return int
+     */
+    public function getMentalResistBonus()
+    {
+        return $this->mentalResistBonus;
+    }
+
+    /**
+     * @param int $mentalResistBonus
+     * @return Characters
+     */
+    public function setMentalResistBonus($mentalResistBonus)
+    {
+        $this->mentalResistBonus = $mentalResistBonus;
+        return $this;
+    }
+
+    /**
      * @param int $health
      *
      * @return Characters
@@ -934,6 +960,22 @@ class Characters extends BaseCharacter
     }
 
     /**
+     * @return int
+     */
+    public function getStaminaBonus()
+    {
+        return $this->staminaBonus;
+    }
+
+    /**
+     * @param int $staminaBonus
+     */
+    public function setStaminaBonus($staminaBonus)
+    {
+        $this->staminaBonus = $staminaBonus;
+    }
+
+    /**
      * @param int $survival
      *
      * @return Characters
@@ -982,6 +1024,24 @@ class Characters extends BaseCharacter
     }
 
     /**
+     * @return int
+     */
+    public function getSpeedBonus()
+    {
+        return $this->speedBonus;
+    }
+
+    /**
+     * @param int $speedBonus
+     * @return Characters
+     */
+    public function setSpeedBonus($speedBonus)
+    {
+        $this->speedBonus = $speedBonus;
+        return $this;
+    }
+
+    /**
      * @param int $defense
      *
      * @return Characters
@@ -1003,6 +1063,22 @@ class Characters extends BaseCharacter
     public function getDefense()
     {
         return $this->defense;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDefenseBonus()
+    {
+        return $this->defenseBonus;
+    }
+
+    /**
+     * @param int $defenseBonus
+     */
+    public function setDefenseBonus($defenseBonus)
+    {
+        $this->defenseBonus = $defenseBonus;
     }
 
     /**
@@ -1030,6 +1106,25 @@ class Characters extends BaseCharacter
     }
 
     /**
+     * @return int
+     */
+    public function getRindathMax()
+    {
+        return $this->rindathMax;
+    }
+
+    /**
+     * @param int $rindathMax
+     *
+     * @return Characters
+     */
+    public function setRindathMax($rindathMax)
+    {
+        $this->rindathMax = $rindathMax;
+        return $this;
+    }
+
+    /**
      * @param int $exaltation
      *
      * @return Characters
@@ -1051,6 +1146,24 @@ class Characters extends BaseCharacter
     public function getExaltation()
     {
         return $this->exaltation;
+    }
+
+    /**
+     * @return int
+     */
+    public function getExaltationMax()
+    {
+        return $this->exaltationMax;
+    }
+
+    /**
+     * @param int $exaltationMax
+     * @return Characters
+     */
+    public function setExaltationMax($exaltationMax)
+    {
+        $this->exaltationMax = $exaltationMax;
+        return $this;
     }
 
     /**
@@ -1925,7 +2038,7 @@ class Characters extends BaseCharacter
         foreach ($this->ways as $charWay) {
             if (
                 $charWay instanceof CharWays &&
-                $charWay->getWay()->getShortName() === $shortName
+                ($charWay->getWay()->getShortName() === $shortName || $charWay->getWay()->getId() === $shortName)
             ) {
                 return $charWay;
             }

@@ -15,5 +15,6 @@ services:
         public: false
         arguments:
             - '@pierstoval.character_manager.step_action_resolver'
+            - '@corahnrin_generator.domains_calculator'
             - '@doctrine.orm.entity_manager'
 

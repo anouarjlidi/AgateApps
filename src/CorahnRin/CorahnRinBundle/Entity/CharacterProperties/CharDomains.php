@@ -45,11 +45,25 @@ class CharDomains
     /**
      * @var int
      *
-     * @ORM\Column(type="integer")
+     * @ORM\Column(name="score", type="smallint")
      * @Assert\NotNull()
      * @Assert\GreaterThanOrEqual(value=0)
      */
     protected $score;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="bonus", type="smallint", options={"default": 0})
+     */
+    protected $bonus = 0;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="malus", type="smallint", options={"default": 0})
+     */
+    protected $malus = 0;
 
     /**
      * Set score.
@@ -77,6 +91,44 @@ class CharDomains
     public function getScore()
     {
         return $this->score;
+    }
+
+    /**
+     * @return int
+     */
+    public function getBonus()
+    {
+        return $this->bonus;
+    }
+
+    /**
+     * @param int $bonus
+     * @return CharDomains
+     */
+    public function setBonus($bonus)
+    {
+        $this->bonus = $bonus;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMalus()
+    {
+        return $this->malus;
+    }
+
+    /**
+     * @param int $malus
+     *
+     * @return CharDomains
+     */
+    public function setMalus($malus)
+    {
+        $this->malus = $malus;
+        return $this;
     }
 
     /**
