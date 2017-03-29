@@ -10,7 +10,11 @@
     {% if not can_have_combat_arts  %}
 
         <div class="card-panel teal lighten-4">
-            {{ 'combat_arts_spend_exp.no_exp_or_bonus_points'|trans({}, 'CorahnRinBundle') }}
+            {% if exp_max < 20 %}
+                {{ 'combat_arts_spend_exp.not_enough_exp'|trans({}, 'CorahnRinBundle') }}
+            {% elseif close_combat < 5 or shooting_and_throwing < 5 %}
+                {{ 'combat_arts_spend_exp.domains_not_enough'|trans({}, 'CorahnRinBundle') }}
+            {% endif %}
         </div>
 
     {% else %}

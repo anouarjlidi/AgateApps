@@ -1,5 +1,6 @@
 errors:
     incorrect_values: 'Certaines valeurs envoyées sont incorrectes, veuillez recommencer (et sans tricher).'
+    character_not_complete: 'Le personnage ne semble pas terminé... Veuillez vérifier toutes les valeurs à chaque étape et recommencez.'
 
 jobs:
     modal:
@@ -135,4 +136,9 @@ description:
 steps:
     next: 'Étape suivante'
     reset: 'Réinitialiser cette étape'
-
+combat_arts_spend_exp:
+    domains_not_enough: |
+        Vos domaines "Combat au contact" et "Tir et lancer" ne sont pas suffisants pour obtenir des arts de combat
+    not_enough_exp: 'Vous n''avez pas assez d''expérience pour bénéficier d''arts de combat'
+    explanation: 'Vous pouvez ici choisir des arts de combat, chacun coûte 20XP'
+    remaining: 'Expérience :'
