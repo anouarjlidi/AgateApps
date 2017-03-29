@@ -22,6 +22,7 @@ use CorahnRin\CorahnRinBundle\Exception\CharactersException;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use EsterenMaps\MapsBundle\Entity\Zones;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Pierstoval\Bundle\CharacterManagerBundle\Entity\Character as BaseCharacter;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -32,7 +33,7 @@ use UserBundle\Entity\User;
  *
  * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity(repositoryClass="CorahnRin\CorahnRinBundle\Repository\CharactersRepository")
- * @ORM\Table(name="characters",uniqueConstraints={@ORM\UniqueConstraint(name="idcUnique", columns={"name", "user_id"})})
+ * @ORM\Table(name="characters",uniqueConstraints={@ORM\UniqueConstraint(name="idcUnique", columns={"nameSlug", "user_id"})})
  */
 class Characters extends BaseCharacter
 {
@@ -111,7 +112,7 @@ class Characters extends BaseCharacter
     /**
      * @var array
      *
-     * @ORM\Column(type="array")
+     * @ORM\Column(name="inventory", type="simple_array")
      */
     protected $inventory;
 
@@ -286,46 +287,53 @@ class Characters extends BaseCharacter
     protected $people;
 
     /**
-     * @var Armors[]
+     * @var Armors[]|ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="CorahnRin\CorahnRinBundle\Entity\Armors")
      */
     protected $armors;
 
     /**
-     * @var Artifacts[]
+     * @var Artifacts[]|ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="CorahnRin\CorahnRinBundle\Entity\Artifacts")
      */
     protected $artifacts;
 
     /**
-     * @var Miracles[]
+     * @var Miracles[]|ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="CorahnRin\CorahnRinBundle\Entity\Miracles")
      */
     protected $miracles;
 
     /**
-     * @var Ogham[]
+     * @var Ogham[]|ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="CorahnRin\CorahnRinBundle\Entity\Ogham")
      */
     protected $ogham;
 
     /**
-     * @var Weapons[]
+     * @var Weapons[]|ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="CorahnRin\CorahnRinBundle\Entity\Weapons")
      */
     protected $weapons;
 
     /**
+     * @var CombatArts[]|ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="CorahnRin\CorahnRinBundle\Entity\CombatArts")
+     */
+    protected $combatArts;
+
+    /**
      * @var SocialClasses
      *
      * @ORM\ManyToOne(targetEntity="CorahnRin\CorahnRinBundle\Entity\SocialClasses", fetch="EAGER")
      */
-    protected $socialClasses;
+    protected $socialClass;
 
     /**
      * @var Domains
@@ -346,7 +354,7 @@ class Characters extends BaseCharacter
      *
      * @ORM\ManyToOne(targetEntity="CorahnRin\CorahnRinBundle\Entity\Disorders")
      */
-    protected $disorder;
+    protected $mentalDisorder;
 
     /**
      * @var Jobs
@@ -356,11 +364,11 @@ class Characters extends BaseCharacter
     protected $job;
 
     /**
-     * @var Regions
+     * @var Zones
      *
-     * @ORM\ManyToOne(targetEntity="CorahnRin\CorahnRinBundle\Entity\Regions", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="EsterenMaps\MapsBundle\Entity\Zones", fetch="EAGER")
      */
-    protected $region;
+    protected $birthPlace;
 
     /**
      * @var Traits
@@ -461,6 +469,7 @@ class Characters extends BaseCharacter
         $this->miracles    = new ArrayCollection();
         $this->ogham       = new ArrayCollection();
         $this->weapons     = new ArrayCollection();
+        $this->combatArts  = new ArrayCollection();
         $this->advantages  = new ArrayCollection();
         $this->domains     = new ArrayCollection();
         $this->disciplines = new ArrayCollection();
@@ -1390,15 +1399,49 @@ class Characters extends BaseCharacter
     }
 
     /**
-     * @param SocialClasses $socialClasses
+     * @param CombatArts $combatArt
+     *
+     * @return Characters
+     */
+    public function addCombatArt(CombatArts $combatArt)
+    {
+        $this->combatArts[] = $combatArt;
+
+        return $this;
+    }
+
+    /**
+     * @param CombatArts $combatArt
+     *
+     * @return Characters
+     */
+    public function removeCombatArt(CombatArts $combatArt)
+    {
+        $this->combatArts->removeElement($combatArt);
+
+        return $this;
+    }
+
+    /**
+     * @return CombatArts[]
+     *
+     * @codeCoverageIgnore
+     */
+    public function getCombatArts()
+    {
+        return $this->combatArts;
+    }
+
+    /**
+     * @param SocialClasses $socialClass
      *
      * @return Characters
      *
      * @codeCoverageIgnore
      */
-    public function setSocialClasses(SocialClasses $socialClasses = null)
+    public function setSocialClass(SocialClasses $socialClass = null)
     {
-        $this->socialClasses = $socialClasses;
+        $this->socialClass = $socialClass;
 
         return $this;
     }
@@ -1408,9 +1451,9 @@ class Characters extends BaseCharacter
      *
      * @codeCoverageIgnore
      */
-    public function getSocialClasses()
+    public function getSocialClass()
     {
-        return $this->socialClasses;
+        return $this->socialClass;
     }
 
     /**
@@ -1462,15 +1505,15 @@ class Characters extends BaseCharacter
     }
 
     /**
-     * @param Disorders $disorder
+     * @param Disorders $mentalDisorder
      *
      * @return Characters
      *
      * @codeCoverageIgnore
      */
-    public function setDisorder(Disorders $disorder = null)
+    public function setMentalDisorder(Disorders $mentalDisorder = null)
     {
-        $this->disorder = $disorder;
+        $this->mentalDisorder = $mentalDisorder;
 
         return $this;
     }
@@ -1480,9 +1523,9 @@ class Characters extends BaseCharacter
      *
      * @codeCoverageIgnore
      */
-    public function getDisorder()
+    public function getMentalDisorder()
     {
-        return $this->disorder;
+        return $this->mentalDisorder;
     }
 
     /**
@@ -1510,27 +1553,27 @@ class Characters extends BaseCharacter
     }
 
     /**
-     * @param Regions $region
+     * @param Zones $birthPlace
      *
      * @return Characters
      *
      * @codeCoverageIgnore
      */
-    public function setRegion(Regions $region = null)
+    public function setBirthPlace(Zones $birthPlace = null)
     {
-        $this->region = $region;
+        $this->birthPlace = $birthPlace;
 
         return $this;
     }
 
     /**
-     * @return Regions
+     * @return Zones
      *
      * @codeCoverageIgnore
      */
-    public function getRegion()
+    public function getBirthPlace()
     {
-        return $this->region;
+        return $this->birthPlace;
     }
 
     /**
@@ -1687,6 +1730,8 @@ class Characters extends BaseCharacter
      * @param CharWays $way
      *
      * @return Characters
+     *
+     * @codeCoverageIgnore
      */
     public function addWay(CharWays $way)
     {

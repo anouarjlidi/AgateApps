@@ -3,8 +3,17 @@ services:
     corahnrin_generator.pdf_manager:
         class: CorahnRin\CorahnRinBundle\SheetsManagers\PdfManager
         arguments:
-            sheets_folder: "%kernel.root_dir%/../src/CorahnRin/CorahnRinBundle/Resources/pdf_sources"
-            translator: "@translator"
+            - "%kernel.root_dir%/../src/CorahnRin/CorahnRinBundle/Resources/pdf_sources"
+            - "@translator"
 
     corahnrin_generator.domains_calculator:
         class: CorahnRin\CorahnRinBundle\GeneratorTools\DomainsCalculator
+        public: false
+
+    corahnrin_generator.session_to_character:
+        class: CorahnRin\CorahnRinBundle\GeneratorTools\SessionToCharacter
+        public: false
+        arguments:
+            - '@pierstoval.character_manager.step_action_resolver'
+            - '@doctrine.orm.entity_manager'
+

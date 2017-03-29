@@ -46,6 +46,13 @@ class CharWays
      */
     protected $score;
 
+    public function __construct(Characters $character, Ways $way, $score)
+    {
+        $this->setWay($way);
+        $this->setScore($score);
+        $this->setCharacter($character);
+    }
+
     /**
      * Set character.
      *
@@ -56,10 +63,6 @@ class CharWays
     public function setCharacter(Characters $character)
     {
         $this->character = $character;
-
-        if (!$character->getWay($this->way->getShortName())) {
-            $character->addWay($this);
-        }
 
         return $this;
     }

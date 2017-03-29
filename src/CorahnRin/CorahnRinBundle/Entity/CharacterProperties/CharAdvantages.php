@@ -45,24 +45,24 @@ class CharAdvantages
     /**
      * @var bool
      *
-     * @ORM\Column(type="integer")
+     * @ORM\Column(name="value", type="integer")
      * @Assert\NotNull()
      * @Assert\GreaterThanOrEqual(value=0)
      */
-    protected $doubleValue;
+    protected $value;
 
     /**
      * Set doubleValue.
      *
-     * @param int $doubleValue
+     * @param int $value
      *
      * @return CharAdvantages
      *
      * @codeCoverageIgnore
      */
-    public function setDoubleValue($doubleValue)
+    public function setValue($value)
     {
-        $this->doubleValue = $doubleValue;
+        $this->value = $value;
 
         return $this;
     }
@@ -74,9 +74,9 @@ class CharAdvantages
      *
      * @codeCoverageIgnore
      */
-    public function getDoubleValue()
+    public function getValue()
     {
-        return $this->doubleValue;
+        return $this->value;
     }
 
     /**

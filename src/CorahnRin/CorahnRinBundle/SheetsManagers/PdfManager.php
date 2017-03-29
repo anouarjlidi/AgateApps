@@ -161,7 +161,7 @@ class PdfManager implements SheetsManagerInterface
         $av = [];
         foreach ($character->getAdvantages() as $v) {
             if (!$v->getAdvantage()->getIsDesv()) {
-                $av[] = $translator->trans($v->getAdvantage()->getName()).($v->getDoubleValue() > 1 ? '    x'.$v->getDoubleValue() : '');
+                $av[] = $translator->trans($v->getAdvantage()->getName()).($v->getValue() > 1 ? '    x'.$v->getValue() : '');
             }
         }
         if (isset($av[0])) {
@@ -179,7 +179,7 @@ class PdfManager implements SheetsManagerInterface
         $dv = [];
         foreach ($character->getAdvantages() as $v) {
             if ($v->getAdvantage()->getIsDesv()) {
-                $dv[] = $translator->trans($v->getAdvantage()->getName()).($v->getDoubleValue() > 1 ? '    x'.$v->getDoubleValue() : '');
+                $dv[] = $translator->trans($v->getAdvantage()->getName()).($v->getValue() > 1 ? '    x'.$v->getValue() : '');
             }
         }
         if (isset($dv[0])) {
@@ -431,7 +431,7 @@ class PdfManager implements SheetsManagerInterface
         $str = $translator->trans($character->getRegion()->getName()).' - '.$translator->trans('Milieu').' '.$translator->trans($character->getGeoLiving());
         $pdf->textline($str, 557, 86, $p['caro'], 14);
 
-        $pdf->textline($character->getSocialClasses()->getName(), 557, 114, $p['caro'], 14, true);
+        $pdf->textline($character->getSocialClass()->getName(), 557, 114, $p['caro'], 14, true);
 
         if ($character->getSetbacks()) {
             $rev = [];
@@ -482,7 +482,7 @@ class PdfManager implements SheetsManagerInterface
         $pdf->textline($character->getOrientation(), 645, 877, $p['carbold'], 18, true);
 
         //Désordre mental
-        $pdf->textline($character->getDisorder()->getName(), 195, 674, $p['carbold'], 21, true);
+        $pdf->textline($character->getMentalDisorder()->getName(), 195, 674, $p['carbold'], 21, true);
 
         //Qualité et défaut
         $pdf->textline($translator->trans('Qualité').' : '.$translator->trans($character->getQuality()->getName()), 270, 940, $p['carbold'], 21);

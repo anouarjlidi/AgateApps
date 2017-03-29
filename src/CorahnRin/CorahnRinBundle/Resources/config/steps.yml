@@ -64,4 +64,4 @@ services:
 
     corahnrin_generator.steps.step_20:
         class: CorahnRin\CorahnRinBundle\Step\Step20Finish
-
+        arguments: [ '@corahnrin_generator.session_to_character' ]

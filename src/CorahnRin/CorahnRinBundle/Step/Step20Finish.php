@@ -11,16 +11,39 @@
 
 namespace CorahnRin\CorahnRinBundle\Step;
 
+use CorahnRin\CorahnRinBundle\Exception\CharactersException;
+use CorahnRin\CorahnRinBundle\GeneratorTools\SessionToCharacter;
+
 class Step20Finish extends AbstractStepAction
 {
+    /**
+     * @var SessionToCharacter
+     */
+    private $sessionToCharacter;
+
+    public function __construct(SessionToCharacter $sessionToCharacter)
+    {
+        $this->sessionToCharacter = $sessionToCharacter;
+    }
+
     /**
      * {@inheritdoc}
      */
     public function execute()
     {
-        // TODO: Implement execute() method.
+        $this->updateCharacterStep([]);
+
+        $character = null;
+
+        try {
+            $character = $this->sessionToCharacter->createCharacterFromGeneratorValues($this->getCurrentCharacter());
+        } catch (CharactersException $e) {
+            $this->flashMessage('errors.character_not_complete');
+            $this->goToStep(1);
+        }
 
         return $this->renderCurrentStep([
+            'character' => $character,
         ]);
     }
 }

@@ -50,15 +50,13 @@ class CharSetbacks
     protected $isAvoided = false;
 
     /**
-     * Set character.
-     *
-     * @param int $character
+     * @param Characters $character
      *
      * @return CharSetbacks
      *
      * @codeCoverageIgnore
      */
-    public function setCharacter($character)
+    public function setCharacter(Characters $character)
     {
         $this->character = $character;
 
@@ -66,8 +64,6 @@ class CharSetbacks
     }
 
     /**
-     * Get character.
-     *
      * @return Characters
      *
      * @codeCoverageIgnore
@@ -78,8 +74,6 @@ class CharSetbacks
     }
 
     /**
-     * Set setback.
-     *
      * @param Setbacks $setback
      *
      * @return CharSetbacks
@@ -94,8 +88,6 @@ class CharSetbacks
     }
 
     /**
-     * Get setback.
-     *
      * @return Setbacks
      *
      * @codeCoverageIgnore
@@ -106,8 +98,6 @@ class CharSetbacks
     }
 
     /**
-     * Set isAvoided.
-     *
      * @param bool $isAvoided
      *
      * @return CharSetbacks
@@ -122,13 +112,11 @@ class CharSetbacks
     }
 
     /**
-     * Get isAvoided.
-     *
      * @return bool
      *
      * @codeCoverageIgnore
      */
-    public function getIsAvoided()
+    public function isAvoided()
     {
         return $this->isAvoided;
     }
