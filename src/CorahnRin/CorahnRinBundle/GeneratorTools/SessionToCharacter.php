@@ -103,6 +103,7 @@ final class SessionToCharacter
 
         $character = new Characters();
 
+        $character->setCreated(new \DateTime());
         $this->setPeople($character, $values);
         $this->setJob($character, $values);
         $this->setBirthPlace($character, $values);
