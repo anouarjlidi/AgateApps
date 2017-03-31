@@ -33,7 +33,7 @@ class CharactersRepository extends BaseRepository
                 ->leftJoin('characters.job', 'job')->addSelect('job')
                 ->leftJoin('characters.ways', 'ways')->addSelect('ways')
                 ->leftJoin('characters.people', 'people')->addSelect('people')
-                ->leftJoin('characters.region', 'region')->addSelect('region')
+                ->leftJoin('characters.birthPlace', 'birthplace')->addSelect('birthplace')
                 ->leftJoin('characters.armors', 'armors')->addSelect('armors')
                 ->leftJoin('characters.weapons', 'weapons')->addSelect('weapons')
                 ->leftJoin('characters.artifacts', 'artifacts')->addSelect('artifacts')
@@ -65,19 +65,18 @@ class CharactersRepository extends BaseRepository
             ->from($this->_entityName, 'characters')
             ->leftJoin('characters.job', 'job')->addSelect('job')
             ->leftJoin('characters.people', 'people')->addSelect('people')
-            ->leftJoin('characters.region', 'region')->addSelect('region')
+            ->leftJoin('characters.birthPlace', 'birthplace')->addSelect('birthplace')
         ;
 
         if (null !== $searchField && null !== $order) {
             if ($searchField === 'job') {
                 $qb
                     ->addOrderBy('job.name', $order)
-                    ->addOrderBy('characters.jobCustom', $order)
                 ;
             } elseif ($searchField === 'people') {
                 $qb->orderBy('people.name');
-            } elseif ($searchField === 'region') {
-                $qb->orderBy('region.name');
+            } elseif ($searchField === 'birthplace') {
+                $qb->orderBy('birthplace.name');
             } else {
                 $qb->orderBy('characters.'.$searchField, $order);
             }

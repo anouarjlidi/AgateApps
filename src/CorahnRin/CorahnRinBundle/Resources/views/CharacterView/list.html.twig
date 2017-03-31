@@ -55,14 +55,14 @@
             </a>
         </th>
 		<th>
-            {% set order = link_data.search_field == 'region' ? order_swaped : link_data.order %}
-            <a href="{{ path('corahnrin_characters_list',link_data|merge({'search_field': 'region','order': order})) }}" class="btn btn-link">
-                {% if link_data.search_field == 'region' %}
+            {% set order = link_data.search_field == 'birthplace' ? order_swaped : link_data.order %}
+            <a href="{{ path('corahnrin_characters_list',link_data|merge({'search_field': 'birthplace','order': order})) }}" class="btn btn-link">
+                {% if link_data.search_field == 'birthplace' %}
                     <span class="glyphicon-half icon-chevron-{{ link_data.order == 'asc' ? 'up' : 'down' }}"></span>
                     <strong class="text-underline text-black">
                 {% endif %}
                 {{ 'Région de naissance' | trans }}
-                {% if link_data.search_field == 'region' %}</strong>{% endif %}
+                {% if link_data.search_field == 'birthplace' %}</strong>{% endif %}
             </a>
         </th>
 	</tr>
@@ -73,13 +73,10 @@
 			<td>
                 {% if character.job %}
                     {{ character.job.name | trans }}
-                {% else %}
-                    ({{ 'Personnalisé' | trans }})
-                    {{ character.jobCustom | trans }}
                 {% endif %}
             </td>
 			<td>{{ character.people.name | trans }}</td>
-			<td>{{ character.region.name | trans }}</td>
+			<td>{{ character.birthplace.name | trans }}</td>
 		</tr>
 	{% endfor %}
 </table>
