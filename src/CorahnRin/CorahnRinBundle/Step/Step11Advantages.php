@@ -21,6 +21,11 @@ class Step11Advantages extends AbstractStepAction
     private $globalList;
 
     /**
+     * @var bool
+     */
+    private $hasError = false;
+
+    /**
      * {@inheritdoc}
      */
     public function execute()
@@ -37,33 +42,97 @@ class Step11Advantages extends AbstractStepAction
             $advantages    = array_map('intval', $this->request->request->get('advantages'));
             $disadvantages = array_map('intval', $this->request->request->get('disadvantages'));
 
-            $error = false;
+            $numberOfAdvantages = 0;
+            $numberOfUpgradedAdvantages = 0;
+            $numberOfUpgradedDisadvantages = 0;
+            $numberOfDisadvantages = 0;
 
             // First, validate all IDs
             foreach ($advantages as $id => $value) {
                 if (!array_key_exists($id, $this->globalList['advantages'])) {
-                    $error = true;
+                    $this->hasError = true;
+                    $this->flashMessage('Les avantages soumis sont incorrects.');
                     break;
                 }
-                if (!$value) {
+                if (0 === $value) {
                     // Dont put zero values in session, it's useless
                     unset($advantages[$id]);
+                    continue;
                 }
+
+                if (2 === $value) {
+                    if ($numberOfUpgradedAdvantages + 1 > 1) {
+                        $this->hasError = true;
+                        $this->flashMessage('Vous ne pouvez pas améliorer plus d\'un avantage');
+                    }
+                    $numberOfUpgradedAdvantages++;
+                }
+
+                if ($numberOfAdvantages + 1 > 4) {
+                    $this->hasError = true;
+                    $this->flashMessage('Vous ne pouvez pas avoir plus de 4 avantages.');
+                }
+                $numberOfAdvantages++;
             }
+
             foreach ($disadvantages as $id => $value) {
                 if (!array_key_exists($id, $this->globalList['disadvantages'])) {
-                    $error = true;
+                    $this->hasError = true;
+                    $this->flashMessage('Les désavantages soumis sont incorrects.');
                     break;
                 }
-                if (!$value) {
+                if (0 === $value) {
                     // Dont put zero values in session, it's useless
                     unset($disadvantages[$id]);
+                    continue;
+                }
+
+                if (2 === $value) {
+                    if ($numberOfUpgradedDisadvantages + 1 > 1) {
+                        $this->hasError = true;
+                        $this->flashMessage('Vous ne pouvez pas améliorer plus d\'un désavantage');
+                    }
+                    $numberOfUpgradedDisadvantages++;
+                }
+
+                if ($numberOfDisadvantages + 1 > 4) {
+                    $this->hasError = true;
+                    $this->flashMessage('Vous ne pouvez pas avoir plus de 4 désavantages.');
+                }
+                $numberOfDisadvantages++;
+            }
+
+            // Validate "Ally" advantage, that cannot be combined (because it's split in multiple advantages)
+            $allyIds = [1, 2, 3];
+            $count = 0;
+            foreach ($allyIds as $key) {
+                if (isset($advantages[$key]) && $advantages[$key]) {
+                    $count++;
+                    if ($count > 1) {
+                        $this->hasError = true;
+                        $this->flashMessage('Vous ne pouvez pas combiner plusieurs avantages "Allié".');
+                        break;
+                    }
                 }
             }
 
-            $experience = $this->calculateExperience($advantages, $disadvantages);
+            // Validate "Financial ease" advantage, that cannot be combined (because it's split in multiple advantages)
+            $financialEaseIds = [4, 5, 6, 7, 8];
+            $count = 0;
+            foreach ($financialEaseIds as $key) {
+                if (isset($advantages[$key]) && $advantages[$key]) {
+                    $count++;
+                    if ($count > 1) {
+                        $this->hasError = true;
+                        $this->flashMessage('Vous ne pouvez pas combiner plusieurs avantages "Aisance financière".');
+                        break;
+                    }
+                }
+            }
 
-            if (false === $error && $experience >= 0) {
+            $experience = $this->calculateExperience($advantages, $disadvantages, true);
+
+            if (false === $this->hasError && $experience >= 0) {
                 $this->updateCharacterStep([
                     'advantages'    => $advantages,
                     'disadvantages' => $disadvantages,
@@ -73,16 +142,8 @@ class Step11Advantages extends AbstractStepAction
                 return $this->nextStep();
             }
 
-            $this->flashMessage('Une erreur est survenue...');
-
-            if (true === $error) {
-                $this->flashMessage('Les avantages/désavantages soumis sont incorrects.');
-            }
             if ($experience < 0) {
                 $this->flashMessage('Vous n\'avez pas assez d\'expérience.');
-            }
-            if (false === $experience) {
-                $this->flashMessage('Vos désavantages vous donnent un gain d\'expérience supérieur à 80.');
             }
         }
 
@@ -114,13 +175,17 @@ class Step11Advantages extends AbstractStepAction
                 $experience += $value * $disadvantage->getXp();
             } elseif ($value === 1) {
                 $experience += $disadvantage->getXp();
-            } elseif ($value === 2) {
+            } elseif ($value === 2 && $disadvantage->getAugmentation()) {
                 $experience += floor($disadvantage->getXp() * 1.5);
-            } elseif ($value) {
-                throw new \RuntimeException('Non-handled case.');
+            } else {
+                $this->hasError = true;
+                $this->flashMessage('Une valeur incorrecte a été donnée à un désavantage.');
+                return 0;
             }
             if ($experience > 180 && $returnFalseOnError) {
-                return false;
+                $this->hasError = true;
+                $this->flashMessage('Vos désavantages vous donnent un gain d\'expérience supérieur à 80.');
+                return 0;
             }
         }
 
@@ -131,10 +196,12 @@ class Step11Advantages extends AbstractStepAction
             $advantage = $this->globalList['advantages'][$id];
             if ($value === 1) {
                 $experience -= $advantage->getXp();
-            } elseif ($value === 2) {
+            } elseif ($value === 2 && $advantage->getAugmentation()) {
                 $experience -= floor($advantage->getXp() * 1.5);
-            } elseif ($value) {
-                throw new \RuntimeException('Non-handled case.');
+            } else {
+                $this->hasError = true;
+                $this->flashMessage('Une valeur incorrecte a été donnée à un avantage.');
+                return 0;
             }
         }
 
