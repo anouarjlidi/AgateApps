@@ -45,11 +45,19 @@ class Step11Advantages extends AbstractStepAction
                     $error = true;
                     break;
                 }
+                if (!$value) {
+                    // Dont put zero values in session, it's useless
+                    unset($advantages[$id]);
+                }
             }
             foreach ($disadvantages as $id => $value) {
                 if (!array_key_exists($id, $this->globalList['disadvantages'])) {
                     $error = true;
                     break;
+                }
+                if (!$value) {
+                    // Dont put zero values in session, it's useless
+                    unset($disadvantages[$id]);
                 }
             }
 

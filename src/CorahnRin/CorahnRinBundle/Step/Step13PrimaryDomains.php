@@ -56,7 +56,8 @@ class Step13PrimaryDomains extends AbstractStepAction
     {
         $this->allDomains    = $this->em->getRepository('CorahnRinBundle:Domains')->findAllSortedByName();
         $this->job           = $this->em->getRepository('CorahnRinBundle:Jobs')->findWithDomains($this->getCharacterProperty('02_job'));
-        $this->scholar       = 1 === $this->getCharacterProperty('11_advantages')['advantages'][23]; // Scholar is advantage 23.
+        $advantages = $this->getCharacterProperty('11_advantages')['advantages'];
+        $this->scholar       = isset($advantages[23]) && 1 === $advantages[23]; // Scholar is advantage 23.
 
         // This makes sure that session is not polluted with wrong data.
         $sessionValue = $this->getCharacterProperty() ?: [
