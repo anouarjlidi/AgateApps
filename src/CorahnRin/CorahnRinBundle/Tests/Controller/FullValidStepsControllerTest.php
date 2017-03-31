@@ -138,7 +138,7 @@ class FullValidStepsControllerTest extends WebTestCase
             $previous[] = $step;
 
             // Hehe, saves memory!
-            yield $data;
+            yield $stepName => $data;
         }
     }
 }
