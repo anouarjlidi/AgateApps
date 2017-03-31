@@ -51,7 +51,6 @@
             <directory>./src</directory>
             <exclude>
                 <directory>./src/CorahnRin/CorahnRinBundle/PDF</directory><!-- External library cannot be tested -->
-                <directory>./src/Pierstoval/Bundle/CharacterManagerBundle</directory><!-- Tested in its own repo -->
 
                 <directory>./src/*Bundle/Resources</directory>
                 <directory>./src/*/*Bundle/Resources</directory>
