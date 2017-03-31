@@ -39,7 +39,7 @@ class Step07SetbacksTest extends AbstractStepTest
         $count = ((int) getenv('STEP7_RANDOMNESS_COUNT')) ?: static::RANDOMNESS_COUNT;
 
         for ($i = 1; $i <= $count; $i++) {
-            $tests['randomness_'.$i] = [$i];
+        $tests['Random test #'.$i] = [$i];
         }
 
         return $tests;
