@@ -50,9 +50,9 @@ class Step10Orientation extends AbstractStepAction
                 $this->updateCharacterStep($orientation);
 
                 return $this->nextStep();
-            } else {
-                $this->flashMessage('L\'orientation de la personnalité est incorrecte, veuillez vérifier.', null, 'error');
             }
+
+            $this->flashMessage('L\'orientation de la personnalité est incorrecte, veuillez vérifier.', 'error');
         }
 
         return $this->renderCurrentStep([
