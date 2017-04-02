@@ -2112,15 +2112,22 @@ class Characters extends BaseCharacter
      */
     public function getPotential()
     {
-        $creativity = (int) $this->getWay('cre')->getScore();
-        if ($creativity === 1) {
-            return 1;
-        } elseif ($creativity >= 2 && $creativity <= 4) {
-            return 2;
-        } elseif ($creativity === 5) {
-            return 3;
-        } else {
-            throw new CharactersException('Le calcul du potentiel du personnage a renvoyé une erreur');
+        $creativity = $this->getWay('cre')->getScore();
+
+        switch ($creativity) {
+            case 1:
+                return 1;
+                break;
+            case 2:
+            case 3:
+            case 4:
+                return 2;
+            break;
+            case 5:
+                return 3;
+                break;
+            default:
+                throw new CharactersException('Le calcul du potentiel du personnage a renvoyé une erreur');
         }
     }
 
