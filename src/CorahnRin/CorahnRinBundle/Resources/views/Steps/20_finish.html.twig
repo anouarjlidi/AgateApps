@@ -1,5 +1,6 @@
 {% extends '@CorahnRin/Steps/step_base.html.twig' %}
 
 {% block step_content %}
-    {{ dump(character) }}
+    {#{{ dump(character) }}#}
+    <pre style="font-size: 0.8em;line-height: 1em;">{{ serialized_character }}</pre>
 {% endblock %}
