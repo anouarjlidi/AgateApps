@@ -71,7 +71,6 @@ class JobsFixtures extends AbstractFixture
                 'description'      => 'Quel que soit son domaine, l\'artisan est un manuel qualifié.
 Forgeron, cuisinier, architecte, cordonnier, bûcheron, sculpteur, joailler ; les artisans couvrent un grand nombre de spécialités.
 Dans les cités où est implantée la magience, on trouve aussi des réparateurs d\'artefacts et des ouvriers spécialisés travaillant dans les usines.',
-                'created'          => \DateTime::createFromFormat('Y-m-d H:i:s', '2014-04-09 08:56:43'),
                 'domainPrimary'    => $domain1,
                 'book'             => $book2,
                 'domainsSecondary' => [
@@ -85,7 +84,6 @@ Dans les cités où est implantée la magience, on trouve aussi des réparateurs
                 'description'      => 'Le statut de barde est hautement honorifique et les plus puissants monarques s\'entourent de ces artistes qui ont de véritables rôles d\'éminence grise.
 Artiste, acrobate, musicien, bouffon, le barde peut revêtir différents rôles.
 Il peut également être connu sous d\'autres noms, comme les poètes aveugles filidh ou les étranges céilli de l\'archipel des Tri-Sweszörs.',
-                'created'          => \DateTime::createFromFormat('Y-m-d H:i:s', '2014-04-09 08:56:43'),
                 'domainPrimary'    => $domain12,
                 'book'             => $book2,
                 'domainsSecondary' => [
@@ -99,7 +97,6 @@ Il peut également être connu sous d\'autres noms, comme les poètes aveugles f
                 'description'      => 'Il nourrit la communauté du produit de ses longues expéditions, qui durent parfois plusieurs jours.
 L\'expansion des villes a vu l\'apparition de chasseurs d\'un genre nouveau comme les ratiers.
 D\'autres, comme les Enfants de Neven, dédient leur existence à la traque des feondas.',
-                'created'          => \DateTime::createFromFormat('Y-m-d H:i:s', '2014-04-09 08:56:43'),
                 'domainPrimary'    => $domain5,
                 'book'             => $book2,
                 'domainsSecondary' => [
@@ -112,7 +109,6 @@ D\'autres, comme les Enfants de Neven, dédient leur existence à la traque des 
                 'name'             => 'Chevalier',
                 'description'      => 'Ces hommes et ces femmes font partie de la noblesse et appartiennent le plus souvent à un ordre de chevalerie comme les Hilderins ou les Ronces.
 Certains sont des chevaliers errants, derniers héritiers d\'une famille noble ; d\'autres, les vassaux d\'un puissant seigneur.',
-                'created'          => \DateTime::createFromFormat('Y-m-d H:i:s', '2014-04-09 08:56:43'),
                 'domainPrimary'    => $domain2,
                 'book'             => $book2,
                 'domainsSecondary' => [
@@ -125,7 +121,6 @@ Certains sont des chevaliers errants, derniers héritiers d\'une famille noble ;
                 'name'             => 'Combattant',
                 'description'      => 'Il peut être soldat ou mercenaire, champion de justice, bagarreur de taverne ou détrousseur des rues sombres, etc.
 Il se spécialise dans les armes de contact.',
-                'created'          => \DateTime::createFromFormat('Y-m-d H:i:s', '2014-04-09 08:56:43'),
                 'domainPrimary'    => $domain2,
                 'book'             => $book2,
                 'domainsSecondary' => [
@@ -137,7 +132,6 @@ Il se spécialise dans les armes de contact.',
                 'id'               => 6,
                 'name'             => 'Commerçant',
                 'description'      => 'Marchand ambulant ou tenancier d\'une échoppe bien achalandée, le commerçant peut négocier bien des marchandises.',
-                'created'          => \DateTime::createFromFormat('Y-m-d H:i:s', '2014-04-09 08:56:43'),
                 'domainPrimary'    => $domain11,
                 'book'             => $book2,
                 'domainsSecondary' => [
@@ -151,7 +145,6 @@ Il se spécialise dans les armes de contact.',
                 'description'      => 'Représentant de la nature, il peut entrer en contact avec les esprits et leur demander d\'accomplir des tâches particulières.
 Il est le gardien des anciennes traditions péninsulaires et il est souvent considéré avec respect.
 Les apprentis Demorthèn sont appelés Ionnthèn.',
-                'created'          => \DateTime::createFromFormat('Y-m-d H:i:s', '2014-04-09 08:56:43'),
                 'domainPrimary'    => $domain6,
                 'book'             => $book2,
                 'domainsSecondary' => [
@@ -164,7 +157,6 @@ Les apprentis Demorthèn sont appelés Ionnthèn.',
                 'name'             => 'Érudit',
                 'description'      => 'Passionnés par le savoir, les recherches, les érudits sont souvent employés comme scribes, professeurs ou bibliothécaires.
 Généralement, un érudit possède un domaine de connaissance de prédilection, comme la théologie, magience, science, etc.',
-                'created'          => \DateTime::createFromFormat('Y-m-d H:i:s', '2014-04-09 08:56:43'),
                 'domainPrimary'    => $domain16,
                 'book'             => $book2,
                 'domainsSecondary' => [
@@ -177,7 +169,6 @@ Généralement, un érudit possède un domaine de connaissance de prédilection,
                 'name'             => 'Espion',
                 'description'      => 'N\'importe qui, qu\'il soit un conseiller haut placé ou un simple mendiant, peut jouer un double rôle, amassant des informations pour le compte d\'un commanditaire.
 Le domaine secondaire peut être choisi librement pour coller à la fausse identité de l\'espion.',
-                'created'          => \DateTime::createFromFormat('Y-m-d H:i:s', '2014-04-09 08:56:43'),
                 'domainPrimary'    => $domain8,
                 'book'             => $book2,
                 'domainsSecondary' => [],
@@ -186,7 +177,6 @@ Le domaine secondaire peut être choisi librement pour coller à la fausse ident
                 'id'               => 10,
                 'name'             => 'Explorateur',
                 'description'      => 'Aventurier et casse-cou, l\'explorateur est passionné par le voyage, fuyant souvent la pauvreté ou la monotonie de son lieu de naissance.',
-                'created'          => \DateTime::createFromFormat('Y-m-d H:i:s', '2014-04-09 08:56:43'),
                 'domainPrimary'    => $domain10,
                 'book'             => $book2,
                 'domainsSecondary' => [
@@ -200,7 +190,6 @@ Le domaine secondaire peut être choisi librement pour coller à la fausse ident
                 'description'      => 'Habitant généralement dans les grandes villes, les investigateurs proposent leurs services pour mener l\'enquête.
 Chaque investigateur a son style : certains sont versés dans l\'occultisme, d\'autres dans la science, la magience ou encore la médecine.
 De ce fait, le choix du domaine secondaire est libre.',
-                'created'          => \DateTime::createFromFormat('Y-m-d H:i:s', '2014-04-09 08:56:43'),
                 'domainPrimary'    => $domain8,
                 'book'             => $book2,
                 'domainsSecondary' => [],
@@ -211,7 +200,6 @@ De ce fait, le choix du domaine secondaire est libre.',
                 'description'   => 'En Tri-Kazel, on les nomme souvent par le terme dédaigneux de "Daedemorthys".
 Malgré cette mauvaise réputation, leur science a pour but général l\'amélioration des conditions de vie de l\'humanité.
 Un magientiste diplômé est un scientör, alors qu\'un élève en cours de formation est un inceptus.',
-                'created'       => \DateTime::createFromFormat('Y-m-d H:i:s', '2014-04-09 08:56:43'),
                 'domainPrimary' => $domain4,
                 'book'          => $book2,
                 'domainsSecondary' => [
@@ -223,7 +211,6 @@ Un magientiste diplômé est un scientör, alors qu\'un élève en cours de form
                 'id'            => 13,
                 'name'          => 'Malandrin',
                 'description'   => 'Voleur, cambrioleur, tire-laine ; les moyens illégaux pour gagner sa vie sont assez nombreux pour attirer du monde, et ce malgré les risques.',
-                'created'       => \DateTime::createFromFormat('Y-m-d H:i:s', '2014-04-09 08:56:43'),
                 'domainPrimary' => $domain3,
                 'book'          => $book2,
                 'domainsSecondary' => [
@@ -238,7 +225,6 @@ Un magientiste diplômé est un scientör, alors qu\'un élève en cours de form
 De nouvelles techniques tout-à-fait efficaces proviennent désormais des universités des grandes villes.
 Certains médecins, les aliénistes, s\'attachent à soigner les troubles psychiques en se référant aux travaux du professeur continental Ernst Zigger.
 D\'autres, comme les apothicaires, sont spécialisés dans l\'herboristerie.',
-                'created'       => \DateTime::createFromFormat('Y-m-d H:i:s', '2014-04-09 08:56:43'),
                 'domainPrimary' => $domain13,
                 'book'          => $book2,
                 'domainsSecondary' => [
@@ -250,7 +236,6 @@ D\'autres, comme les apothicaires, sont spécialisés dans l\'herboristerie.',
                 'id'            => 15,
                 'name'          => 'Occultiste',
                 'description'   => 'Passionnés d\'ésotérisme, les occultistes sont souvent des universitaires ayant un grand intérêt pour ce domaine dénigré par les autres branches de la science.',
-                'created'       => \DateTime::createFromFormat('Y-m-d H:i:s', '2014-04-09 08:56:43'),
                 'domainPrimary' => $domain7,
                 'book'          => $book2,
                 'domainsSecondary' => [
@@ -262,7 +247,6 @@ D\'autres, comme les apothicaires, sont spécialisés dans l\'herboristerie.',
                 'id'            => 16,
                 'name'          => 'Paysan',
                 'description'   => 'Qu\'il cultive la terre ou élève des animaux, il participe à la vie de la communauté en la nourrissant.',
-                'created'       => \DateTime::createFromFormat('Y-m-d H:i:s', '2014-04-09 08:56:43'),
                 'domainPrimary' => $domain5,
                 'book'          => $book2,
                 'domainsSecondary' => [
@@ -276,7 +260,6 @@ D\'autres, comme les apothicaires, sont spécialisés dans l\'herboristerie.',
                 'description'   => 'Voyageur, messager, porteur de nouvelles mais aussi de colis, le varigal est un lien entre les communautés éparses de Tri-Kazel.
 Passant l\'essentiel de sa vie sur les chemins, il est généralement bien accueilli quand il arrive dans un village.
 Proches de la nature, les varigaux sont souvent les alliés des demorthèn.',
-                'created'       => \DateTime::createFromFormat('Y-m-d H:i:s', '2014-04-09 08:56:43'),
                 'domainPrimary' => $domain15,
                 'book'          => $book2,
                 'domainsSecondary' => [
@@ -294,7 +277,6 @@ Lui connaît les probabilités et les mathématiques, de sorte qu\'il sache pré
 nsi gagner des sommes considérables au jeu.
 Il ne s\'agit pas simplement de piécettes, mais bien d\'obtenir de plus puissants qu\'ils soient prêts à parier leur maison ou la main de leur fille, ou n\'importe quel "bien" de valeur d\'ailleurs.
 L\'astuce remplace la force du guerrier pour monter dans la société et se faire une place au soleil.',
-                'created'       => \DateTime::createFromFormat('Y-m-d H:i:s', '2014-04-09 08:56:43'),
                 'domainPrimary' => $domain12,
                 'book'          => $book2,
                 'domainsSecondary' => [
@@ -305,7 +287,6 @@ L\'astuce remplace la force du guerrier pour monter dans la société et se fair
                 'id'            => 20,
                 'name'          => 'Moine du Temple',
                 'description'   => '',
-                'created'       => \DateTime::createFromFormat('Y-m-d H:i:s', '2014-04-09 08:56:43'),
                 'domainPrimary' => $domain9,
                 'book'          => $book2,
                 'domainsSecondary' => [
@@ -317,7 +298,6 @@ L\'astuce remplace la force du guerrier pour monter dans la société et se fair
                 'id'            => 21,
                 'name'          => 'Clerc du Temple',
                 'description'   => '',
-                'created'       => \DateTime::createFromFormat('Y-m-d H:i:s', '2014-04-09 08:56:43'),
                 'domainPrimary' => $domain9,
                 'book'          => $book2,
                 'domainsSecondary' => [
@@ -328,7 +308,6 @@ L\'astuce remplace la force du guerrier pour monter dans la société et se fair
                 'id'            => 22,
                 'name'          => 'Prêtre du Temple',
                 'description'   => '',
-                'created'       => \DateTime::createFromFormat('Y-m-d H:i:s', '2014-04-09 08:56:43'),
                 'domainPrimary' => $domain9,
                 'book'          => $book2,
                 'domainsSecondary' => [
@@ -340,7 +319,6 @@ L\'astuce remplace la force du guerrier pour monter dans la société et se fair
                 'id'            => 23,
                 'name'          => 'Vecteur du Temple',
                 'description'   => '',
-                'created'       => \DateTime::createFromFormat('Y-m-d H:i:s', '2014-04-09 08:56:43'),
                 'domainPrimary' => $domain9,
                 'book'          => $book2,
                 'domainsSecondary' => [
@@ -352,7 +330,6 @@ L\'astuce remplace la force du guerrier pour monter dans la société et se fair
                 'id'            => 24,
                 'name'          => 'Sigire du Temple',
                 'description'   => '',
-                'created'       => \DateTime::createFromFormat('Y-m-d H:i:s', '2014-04-09 08:56:43'),
                 'domainPrimary' => $domain9,
                 'book'          => $book2,
                 'domainsSecondary' => [
@@ -363,7 +340,6 @@ L\'astuce remplace la force du guerrier pour monter dans la société et se fair
                 'id'            => 25,
                 'name'          => 'Chevalier lame du Temple',
                 'description'   => '',
-                'created'       => \DateTime::createFromFormat('Y-m-d H:i:s', '2014-04-09 08:56:43'),
                 'domainPrimary' => $domain9,
                 'book'          => $book2,
                 'domainsSecondary' => [
@@ -379,7 +355,6 @@ Le rôle de la Dàmàthair est de créer les liens de la communauté passée, ac
 ang afin de plus tard ne former qu\'un seul rempart contre ce qui peut se trouver à l\'extérieur.
 Si les habitants de Tri-Kazel ont une capacité d\'entraide si importante (surtout dans les montagnes) c\'est parce qu\'on leur enseigne qu\'ils ne sont qu\'une seule entité qui ne peut survivre qu\'en vivant ensemble.
 La damathair principale d\'une communauté est très attachée à celle-ci et ne la quittera que pour cas de force majeure. Mais il arrive qu\'elle ait une ou plusieurs jeunes assistantes qui n\'ont pas encore fixé leur vocation définitive et peuvent se tourner vers un autre métier. Inversement, il arrive qu\'une varigale, une vectrice (en Gwidre) ou même une militaire choisisse de s\'établir comme damathair. Ces changements de trajectoire sont à discuter entre le joueur et le MJ, du moment qu\'ils respectent la cohérence du personnage.',
-                'created'       => \DateTime::createFromFormat('Y-m-d H:i:s', '2014-04-09 08:56:43'),
                 'domainPrimary' => $domain11,
                 'book'          => $book13,
                 'domainsSecondary' => [
@@ -392,7 +367,6 @@ La damathair principale d\'une communauté est très attachée à celle-ci et ne
                 'name'          => 'Combattant à distance',
                 'description'   => 'Il peut être soldat ou mercenaire, champion de justice, bagarreur de taverne ou détrousseur des rues sombres, etc.
 Il se spécialise dans les armes à distance',
-                'created'       => \DateTime::createFromFormat('Y-m-d H:i:s', '2014-04-09 08:56:43'),
                 'domainPrimary' => $domain14,
                 'book'          => $book2,
                 'domainsSecondary' => [

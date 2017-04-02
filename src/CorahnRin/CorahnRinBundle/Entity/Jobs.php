@@ -13,13 +13,11 @@ namespace CorahnRin\CorahnRinBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Jobs.
  *
  * @ORM\Table(name="jobs")
- * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity(repositoryClass="CorahnRin\CorahnRinBundle\Repository\JobsRepository")
  */
 class Jobs
@@ -48,6 +46,13 @@ class Jobs
     protected $description;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="daily_salary", type="integer", options={"default": "0"})
+     */
+    protected $dailySalary = 0;
+
+    /**
      * @var Books
      *
      * @ORM\ManyToOne(targetEntity="Books",fetch="EAGER")
@@ -67,27 +72,6 @@ class Jobs
      * @ORM\ManyToMany(targetEntity="Domains")
      */
     protected $domainsSecondary;
-
-    /**
-     * @var \Datetime
-     * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(type="datetime", nullable=false)
-     */
-    protected $created;
-
-    /**
-     * @var \Datetime
-     * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(type="datetime", nullable=false)
-     */
-    protected $updated;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="deleted", type="datetime", nullable=true)
-     */
-    protected $deleted;
 
     /**
      * Constructor.
@@ -180,59 +164,27 @@ class Jobs
     }
 
     /**
-     * Set created.
+     * @return int
      *
-     * @param \DateTime $created
+     * @codeCoverageIgnore
+     */
+    public function getDailySalary()
+    {
+        return $this->dailySalary;
+    }
+
+    /**
+     * @param int $dailySalary
      *
      * @return Jobs
      *
      * @codeCoverageIgnore
      */
-    public function setCreated($created)
+    public function setDailySalary($dailySalary)
     {
-        $this->created = $created;
+        $this->dailySalary = $dailySalary;
 
         return $this;
-    }
-
-    /**
-     * Get created.
-     *
-     * @return \DateTime
-     *
-     * @codeCoverageIgnore
-     */
-    public function getCreated()
-    {
-        return $this->created;
-    }
-
-    /**
-     * Set updated.
-     *
-     * @param \DateTime $updated
-     *
-     * @return Jobs
-     *
-     * @codeCoverageIgnore
-     */
-    public function setUpdated($updated)
-    {
-        $this->updated = $updated;
-
-        return $this;
-    }
-
-    /**
-     * Get updated.
-     *
-     * @return \DateTime
-     *
-     * @codeCoverageIgnore
-     */
-    public function getUpdated()
-    {
-        return $this->updated;
     }
 
     /**
@@ -349,33 +301,5 @@ class Jobs
     public function getDomainsSecondary()
     {
         return $this->domainsSecondary;
-    }
-
-    /**
-     * Set deleted.
-     *
-     * @param \DateTime $deleted
-     *
-     * @return Jobs
-     *
-     * @codeCoverageIgnore
-     */
-    public function setDeleted($deleted)
-    {
-        $this->deleted = $deleted;
-
-        return $this;
-    }
-
-    /**
-     * Get deleted.
-     *
-     * @return \DateTime
-     *
-     * @codeCoverageIgnore
-     */
-    public function getDeleted()
-    {
-        return $this->deleted;
     }
 }
