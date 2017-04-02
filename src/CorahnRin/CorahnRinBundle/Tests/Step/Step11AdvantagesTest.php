@@ -197,30 +197,40 @@ class Step11AdvantagesTest extends AbstractStepTest
 
     public function testIncorrectAdvantageId()
     {
-        $result = $this->submitAction([], [
+        $client = $this->getClient();
+
+        $session = $client->getContainer()->get('session');
+        $session->set('character', []);
+        $session->save();
+
+        $crawler = $client->request('POST', '/fr/character/generate/'.$this->getStepName(), [
             'advantages' => [
                 99999 => 1,
             ],
             'disadvantages' => [],
         ]);
 
-        static::assertSame(200, $result->getResponse()->getStatusCode(), json_encode($result->getSession()->get('character')));
-        static::assertSame(1, $result->getCrawler()->filter('#flash-messages > .card-panel.error')->count());
-        static::assertSame('Les avantages soumis sont incorrects.', trim($result->getCrawler()->filter('#flash-messages > .card-panel.error')->text()));
+        static::assertSame(200, $client->getResponse()->getStatusCode(), static::getErrorFromCrawler($crawler));
+        static::assertEquals('Les avantages soumis sont incorrects.', trim($crawler->filter('#flash-messages > .card-panel.error')->text()));
     }
 
     public function testIncorrectDisadvantageId()
     {
-        $result = $this->submitAction([], [
+        $client = $this->getClient();
+
+        $session = $client->getContainer()->get('session');
+        $session->set('character', []);
+        $session->save();
+
+        $crawler = $client->request('POST', '/fr/character/generate/'.$this->getStepName(), [
             'advantages' => [],
             'disadvantages' => [
                 99999 => 1,
             ],
         ]);
 
-        static::assertSame(200, $result->getResponse()->getStatusCode(), json_encode($result->getSession()->get('character')));
-        static::assertSame(1, $result->getCrawler()->filter('#flash-messages > .card-panel.error')->count());
-        static::assertSame('Les désavantages soumis sont incorrects.', trim($result->getCrawler()->filter('#flash-messages > .card-panel.error')->text()));
+        static::assertSame(200, $client->getResponse()->getStatusCode(), static::getErrorFromCrawler($crawler));
+        static::assertEquals('Les désavantages soumis sont incorrects.', trim($crawler->filter('#flash-messages > .card-panel.error')->text()));
     }
 
     public function testCannotHaveMoreThan4Advantages()
@@ -257,5 +267,36 @@ class Step11AdvantagesTest extends AbstractStepTest
         static::assertSame(200, $result->getResponse()->getStatusCode(), json_encode($result->getSession()->get('character')));
         static::assertSame(1, $result->getCrawler()->filter('#flash-messages > .card-panel.error')->count());
         static::assertSame('Vous ne pouvez pas avoir plus de 4 désavantages.', trim($result->getCrawler()->filter('#flash-messages > .card-panel.error')->text()));
+    }
+
+    /**
+     * @dataProvider provideFinancialEaseForPoor
+     */
+    public function testPoorCannotUseFinancialEase($values)
+    {
+        $client = $this->getClient();
+
+        $session = $client->getContainer()->get('session');
+        $session->set('character', ['07_setbacks' => [9 => ['id' => 9, 'avoided' => false]]]);
+        $session->save();
+
+        $crawler = $client->request('POST', '/fr/character/generate/'.$this->getStepName(), [
+            'advantages' => $values,
+            'disadvantages' => [],
+        ]);
+
+        static::assertSame(200, $client->getResponse()->getStatusCode(), static::getErrorFromCrawler($crawler));
+        static::assertEquals('Vous ne pouvez pas choisir "Avantage financier" si votre personnage a le revers "Pauvre".', trim($crawler->filter('#flash-messages > .card-panel.error')->text()));
+    }
+
+    public function provideFinancialEaseForPoor()
+    {
+        return [
+            [[4 => 1]],
+            [[5 => 1]],
+            [[6 => 1]],
+            [[7 => 1]],
+            [[8 => 1]],
+        ];
     }
 }

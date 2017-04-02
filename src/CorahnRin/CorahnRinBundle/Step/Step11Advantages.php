@@ -35,12 +35,26 @@ class Step11Advantages extends AbstractStepAction
         $currentStepValue = $this->getCharacterProperty();
         $advantages       = isset($currentStepValue['advantages']) ? $currentStepValue['advantages'] : [];
         $disadvantages    = isset($currentStepValue['disadvantages']) ? $currentStepValue['disadvantages'] : [];
+        $setbacks         = $this->getCharacterProperty('07_setbacks');
+        $isPoor           = isset($setbacks[9]) && !$setbacks[9]['avoided'];
+
+        if ($isPoor) {
+            // If character is poor, we don't allow him to have "Financial ease" advantages
+            unset(
+                $this->globalList['advantages'][4],
+                $this->globalList['advantages'][5],
+                $this->globalList['advantages'][6],
+                $this->globalList['advantages'][7],
+                $this->globalList['advantages'][8]
+            );
+        }
 
         $experience = $this->calculateExperience($advantages, $disadvantages);
 
         if ($this->request->isMethod('POST')) {
-            $advantages    = array_map('intval', $this->request->request->get('advantages'));
-            $disadvantages = array_map('intval', $this->request->request->get('disadvantages'));
+            $intval = function ($e) { return (int)$e; };
+            $advantages    = array_map($intval, $this->request->request->get('advantages'));
+            $disadvantages = array_map($intval, $this->request->request->get('disadvantages'));
 
             $numberOfAdvantages = 0;
             $numberOfUpgradedAdvantages = 0;
@@ -49,6 +63,12 @@ class Step11Advantages extends AbstractStepAction
 
             // First, validate all IDs
             foreach ($advantages as $id => $value) {
+                if ($isPoor && in_array($id, [4, 5, 6, 7, 8], true)) {
+                    $this->hasError = true;
+                    $this->flashMessage('Vous ne pouvez pas choisir "Avantage financier" si votre personnage a le revers "Pauvre".');
+                    break;
+                }
+
                 if (!array_key_exists($id, $this->globalList['advantages'])) {
                     $this->hasError = true;
                     $this->flashMessage('Les avantages soumis sont incorrects.');
@@ -130,7 +150,9 @@ class Step11Advantages extends AbstractStepAction
                 }
             }
 
-            $experience = $this->calculateExperience($advantages, $disadvantages, true);
+            if (false === $this->hasError) {
+                $experience = $this->calculateExperience($advantages, $disadvantages, true);
+            }
 
             if (false === $this->hasError && $experience >= 0) {
                 $this->updateCharacterStep([
@@ -140,10 +162,6 @@ class Step11Advantages extends AbstractStepAction
                 ]);
 
                 return $this->nextStep();
-            }
-
-            if ($experience < 0) {
-                $this->flashMessage('Vous n\'avez pas assez d\'expérience.');
             }
         }
 
@@ -177,7 +195,7 @@ class Step11Advantages extends AbstractStepAction
                 $experience += $disadvantage->getXp();
             } elseif ($value === 2 && $disadvantage->getAugmentation()) {
                 $experience += floor($disadvantage->getXp() * 1.5);
-            } else {
+            } elseif ($value) {
                 $this->hasError = true;
                 $this->flashMessage('Une valeur incorrecte a été donnée à un désavantage.');
                 return 0;
@@ -198,11 +216,15 @@ class Step11Advantages extends AbstractStepAction
                 $experience -= $advantage->getXp();
             } elseif ($value === 2 && $advantage->getAugmentation()) {
                 $experience -= floor($advantage->getXp() * 1.5);
-            } else {
+            } elseif ($value) {
                 $this->hasError = true;
                 $this->flashMessage('Une valeur incorrecte a été donnée à un avantage.');
                 return 0;
             }
+        }
+
+        if ($experience < 0) {
+            $this->flashMessage('Vous n\'avez pas assez d\'expérience.');
         }
 
         return $experience;
