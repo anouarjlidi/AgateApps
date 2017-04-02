@@ -2194,4 +2194,44 @@ class Characters extends BaseCharacter
 
         return $attack;
     }
+
+    /**
+     * @param int $id
+     *
+     * @return bool
+     */
+    public function hasAdvantage($id)
+    {
+        $id = (int) $id;
+
+        foreach ($this->advantages as $advantage) {
+            if ($advantage->getAdvantage()->getId() === $id) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param int $id
+     * @param bool $falseIfAvoided
+     *
+     * @return bool
+     */
+    public function hasSetback($id, $falseIfAvoided = true)
+    {
+        $id = (int) $id;
+
+        foreach ($this->setbacks as $setback) {
+            if ($setback->getSetback()->getId() === $id) {
+                if (true === $falseIfAvoided && $setback->isAvoided()) {
+                    continue;
+                }
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
