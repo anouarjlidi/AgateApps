@@ -110,11 +110,14 @@ disciplines_spend_exp:
 equipment:
     base_elements:
         title: 'Éléments d''équipement'
-        description: 'Vous avez la possibilité de choisir quelques objets à ajouter à votre inventaire. Ne soyez pas trop gourmand !'
+        description: 'Vous avez la possibilité de choisir quelques objets à ajouter à votre inventaire.'
     weapons:
         title: 'Armes'
     armors:
         title: 'Armures'
+    reminder_if_poor: |
+        Rappel : Votre personnage a le désavantage "Pauvreté", ce qui signifie que vous devez limiter le nombre d'éléments
+        d'équipements de votre personnage, ne l'oubliez pas !
 
 description:
     name: 'Nom du personnage'

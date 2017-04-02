@@ -20,6 +20,8 @@ class Step18Equipment extends AbstractStepAction
     {
         $weapons = $this->em->getRepository('CorahnRinBundle:Weapons')->findAllSortedByName();
         $armors = $this->em->getRepository('CorahnRinBundle:Armors')->findAllSortedByName();
+        $setbacks         = $this->getCharacterProperty('07_setbacks');
+        $isPoor           = isset($setbacks[9]) && !$setbacks[9]['avoided'];
 
         $currentStep = $this->getCharacterProperty() ?: $this->resetEquipment();
 
@@ -69,6 +71,7 @@ class Step18Equipment extends AbstractStepAction
         return $this->renderCurrentStep([
             'armors' => $armors,
             'weapons' => $weapons,
+            'is_poor' => $isPoor,
             'selected_armors' => $currentStep['armors'],
             'selected_weapons' => $currentStep['weapons'],
             'equipment' => $currentStep['equipment'],
