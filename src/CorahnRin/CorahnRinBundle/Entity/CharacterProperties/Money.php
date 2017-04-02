@@ -21,7 +21,6 @@ class Money
     protected static $name          = 'Daol';
     protected static $names         = ['Braise', 'Azur', 'Givre'];
     protected static $names_literal = ['Daol%s% de Braise', 'Daol%s% d\'Azur', 'Daol%s% de Givre'];
-    protected static $ratio         = [10, 10, 10];
     protected static $values        = ['Braise' => 0, 'Azur' => 0, 'Givre' => 0];
 
     /**
@@ -58,7 +57,7 @@ class Money
         $this->frost = (int) $frost;
 
         if ($flatten) {
-            $this->flatten();
+            $this->reallocate();
         }
     }
 
@@ -169,11 +168,39 @@ class Money
     }
 
     /**
+     * Take all lower moneys to reallocate them to the higher money.
+     *
+     * @return Money
+     */
+    public function reallocate()
+    {
+        while ($this->ember > 10) {
+            $this->azure++;
+            $this->ember -= 10;
+        }
+
+        while ($this->azure > 10) {
+            $this->frost++;
+            $this->azure -= 10;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Take all high moneys and put them in the "ember" part
+     *
      * @return Money
      */
     public function flatten()
     {
-        // TODO
+        $this->ember =
+            $this->ember +
+            ($this->azure * 10) +
+            ($this->frost * 100);
+
+        $this->azure = 0;
+        $this->frost = 0;
 
         return $this;
     }
