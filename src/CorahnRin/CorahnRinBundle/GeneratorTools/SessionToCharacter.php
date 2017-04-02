@@ -312,7 +312,23 @@ final class SessionToCharacter
     {
         $money = new Money();
 
-        //TODO: Manage "poor" disadvantage
+        $salary = $character->getJob()->getDailySalary();
+        if ($salary > 0) {
+            if (!$character->hasSetback(9)) {
+                // Use salary only if job defines one AND character is not poor
+                $money->addEmber(30 * $salary);
+                $money->reallocate();
+            }
+        } else {
+            // If salary is not set in job, character has 2d10 azure daols
+            $azure = mt_rand(1, 10) + mt_rand(1, 10);
+            if ($character->hasSetback(9)) {
+                // If character is poor, he has half money
+                $azure = (int) floor($azure / 2);
+            }
+            $money->addAzure($azure);
+            $money->reallocate();
+        }
 
         $character->setMoney($money);
     }
