@@ -360,7 +360,6 @@ final class SessionToCharacter
                 continue;
             }
             $bonusDiscs = explode(',', $adv->getBonusdisc());
-            dump($adv->getBonusdisc());
             foreach ($bonusDiscs as $bonus) {
                 if (!$bonus) {
                     continue;

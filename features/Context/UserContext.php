@@ -45,7 +45,6 @@ class UserContext implements Context, KernelAwareContext
         $sortedHeaders = $headers;
         sort($sortedHeaders);
         if ($sortedHeaders !== ['email', 'password', 'username']) {
-            dump($sortedHeaders);
             throw new \InvalidArgumentException('Users can only have email, username and password fields');
         }
 

@@ -191,9 +191,6 @@ SQL;
             ;
 
             // FIXME
-            if ($this->io->isVerbose()) {
-                dump($arrayCharacter, $jsonCharacter, 'OK');
-            }
             exit;
         }
     }
@@ -221,7 +218,6 @@ SQL;
                 );
 
                 // FIXME
-                dump($whichUser);
                 exit;
             } else {
                 $this->io->warning([
