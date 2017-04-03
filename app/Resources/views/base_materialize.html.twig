@@ -123,18 +123,23 @@
                             <div class="col l6 s12">
                                 <h5>{{ 'footer.about'|trans }}</h5>
                                 <p>
-                                    {{ 'footer.about_text'|trans }}
+                                    {{ 'footer.about_text'|trans|raw }}
                                 </p>
                             </div>
                             <div class="col l4 offset-l2 s12">
                                 <h5>{{ 'footer.links'|trans }}</h5>
                                 <ul>
                                     <li><a href="{{ path('contact') }}">{{ 'footer.contact'|trans }}</a></li>
-                                    <li><a href="#">{{ 'footer.subscribe'|trans }}</a></li>
-                                    <li><a href="http://agate-rpg.blogspot.frr/">{{ 'footer.agate_rpg'|trans }}</a></li>
+                                    <li><a href="http://agate-rpg.blogspot.fr/">{{ 'footer.agate_rpg'|trans }}</a></li>
                                     {% if app.request.locale == 'fr' %}
                                     <li><a href="{{ path('legal_mentions') }}">{{ 'footer.legal_mentions'|trans }}</a></li>
                                     {% endif %}
+                                </ul>
+                                <h5>{{ 'footer.social_networks'|trans }}</h5>
+                                <ul>
+                                    <li><a href="https://www.facebook.com/pages/Les-Ombres-dEsteren/257938482620">Facebook</a></li>
+                                    <li><a href="https://www.instagram.com/esteren_official/">Instagram</a></li>
+                                    <li><a href="https://twitter.com/esterenofficiel">Twitter</a></li>
                                 </ul>
                             </div>
                         </div>

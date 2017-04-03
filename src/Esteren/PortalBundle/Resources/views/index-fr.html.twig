@@ -45,23 +45,23 @@
                 <div class="col s12 m3">
                     <div class="bl">
                         <h2 class="center" style="color: #E25822;"><img src="{{ asset('img/d10.svg') }}" alt="d10"></h2>
-                        <h5 class="center">Jeu de rôle<br><small>(bientôt un nouveau portail dédié !)</small></h5>
+                        <h5 class="center">Jeu de rôle</h5>
                         <p class="light">Découvrez la gamme de jeu de rôle et toutes les publications parues à ce jour.</p>
                     </div>
                 </div>
                 <div class="col s12 m3 hoverable">
-                    <a href="https://soundcloud.com/esteren" class="bl">
+                    <a href="https://esteren.bandcamp.com/" class="bl">
                         <h2 class="center" style="color: #E27822;"><span class="fa fa-music">&nbsp;</span></h2>
                         <h5 class="center">Musique</h5>
-                        <p class="light">Écoutez des extraits des trois albums sur Soundcloud et bientôt sur Bandcamp.</p>
+                        <p class="light">Écoutez des extraits des trois albums sur Bandcamp.</p>
                     </a>
                 </div>
-                <div class="col s12 m3">
-                    <div class="bl">
+                <div class="col s12 m3 hoverable">
+                    <a href="http://ombresdesteren.blogspot.fr/search/label/jeu%20vid%C3%A9o" class="bl">
                         <h2 class="center" style="color: #E29822;"><span class="fa fa-gamepad">&nbsp;</span></h2>
-                        <h5 class="center">Jeu vidéo <small>(bientôt !)</small></h5>
+                        <h5 class="center">Jeu vidéo</h5>
                         <p class="light">Echappez aux Griffes du Seigneur Sorcier ou suivez le développement de l'Héritage des Mac Lyr.</p>
-                    </div>
+                    </a>
                 </div>
                 <div class="col s12 m3">
                     <div class="bl">
@@ -74,7 +74,7 @@
 
             <div class="row">
                 <div class="col s12 m3 hoverable">
-                    <a href="https://blog.esteren.org/" class="bl">
+                    <a href="http://blog.esteren.org/" class="bl">
                         <h2 class="center" style="color: #E2B822;"><span class="fa fa-rss">&nbsp;</span></h2>
                         <h5 class="center">Blog</h5>
                         <p class="light">Suivez les actualités du projet, nouvelles illustrations et carnet de bord des auteurs.</p>
@@ -94,12 +94,12 @@
                         <p class="light">Commandez en ligne, profitez d’offres exclusives et soutenez directement les créateurs.</p>
                     </a>
                 </div>
-                <div class="col s12 m3">
-                    <div class="bl">
+                <div class="col s12 m3 hoverable">
+                    <a href="http://ombresdesteren.blogspot.fr/2014/10/la-rose-noire-arrive-en-magasin-le-31.html" class="bl">
                         <h2 class="center" style="color: #E25822;"><span class="fa fa-hand-grab-o">&nbsp;</span></h2>
-                        <h5 class="center">Jeu de société <small>(bientôt !)</small></h5>
+                        <h5 class="center">Jeu de société</h5>
                         <p class="light">Survivez à la Rose Noire, quelque part entre Résistance, le Cluedo et les Loups-Garous de Thiercelieux.</p>
-                    </div>
+                    </a>
                 </div>
             </div>
 
@@ -119,17 +119,17 @@
                     </a>
                 </div>
                 <div class="col s12 m3 hoverable">
-                    <a href="https://www.facebook.com/LesOmbresdEsteren/" class="bl">
-                        <h2 class="center" style="color: #E29822;"><span class="fa fa-share-alt-square">&nbsp;</span></h2>
-                        <h5 class="center">Réseaux sociaux</h5>
-                        <p class="light">Retrouvez les Ombres d'Esteren sur Facebook, Twitter et Instagram.</p>
+                    <a href="http://eepurl.com/bJci6b" class="bl">
+                        <h2 class="center" style="color: #E29822;"><span class="fa fa-envelope">&nbsp;</span></h2>
+                        <h5 class="center">Mailing-list</h5>
+                        <p class="light">Inscrivez-vous à la mailing list et soyez prévenu au lancement du prochain financement participatif.</p>
                     </a>
                 </div>
                 <div class="col s12 m3 hoverable">
                     <a href="https://www.dropbox.com/sh/bp2kfgn43ueu6ru/AAAZytOXUADMlVpQdEG-Ttl1a" class="bl">
                         <h2 class="center" style="color: #E2B822;"><span class="fa fa-dropbox">&nbsp;</span></h2>
                         <h5 class="center">Ressources</h5>
-                        <p class="light">Téléchargez vos ressources sur la Dropbox et dans la Bibliothèque des Mac Lyr conçue par la communauté.</p>
+                        <p class="light">Téléchargez de nombreuses ressources sur la page Dropbox du projet.</p>
                     </a>
                 </div>
             </div>
@@ -137,6 +137,7 @@
         </div>
     </div>
 
+    {# Disabled 2017-04-03 because found useful by Nel. I keep the code in case we need another kind of parallax container
     <div class="parallax-container valign-wrapper">
         <div class="section no-pad-bot">
             <div class="container">
@@ -149,6 +150,7 @@
         </div>
         <div class="parallax"><img src="{{ asset('img/Esteren_stones.jpg') }}" alt="Les Ombres d'Esteren : cercle de pierres"></div>
     </div>
+    #}
 
     <div class="container">
         <div class="section">
@@ -190,36 +192,3 @@
     {% endspaceless %}
 
 {% endblock %}
-
-{#
-These are all the colors I tried until we found a "final decision".
-But still, it can be changed again...
-
-/*$('#content .section .fa').eq(0).css('color', '#D49E17');
- $('#content .section .fa').eq(1).css('color', '#DE9218');
- $('#content .section .fa').eq(2).css('color', '#C7711F');
- $('#content .section .fa').eq(3).css('color', '#DE5B18');
- $('#content .section .fa').eq(4).css('color', '#D43B17');
- $('#content .section .fa').eq(5).css('color', '#B26206');
- $('#content .section .fa').eq(6).css('color', '#FFC27C');
- $('#content .section .fa').eq(7).css('color', '#FF9011');
- $('#content .section .fa').eq(8).css('color', '#5A98B2');
- $('#content .section .fa').eq(9).css('color', '#9AE1FE');
- $('#content .section .fa').eq(10).css('color', '#BDEBFF');
- $('#content .section .fa').css('color', 'goldenrod');*/
-
-$('#content .section .fa').eq(0).css('color', '#E25822');
-$('#content .section .fa').eq(1).css('color', '#E27822');
-$('#content .section .fa').eq(2).css('color', '#E29822');
-$('#content .section .fa').eq(3).css('color', '#E2B822');
-
-$('#content .section .fa').eq(4).css('color', '#E2B822');
-$('#content .section .fa').eq(5).css('color', '#E29822');
-$('#content .section .fa').eq(6).css('color', '#E27822');
-$('#content .section .fa').eq(7).css('color', '#E25822');
-
-$('#content .section .fa').eq(8).css('color', '#E25822');
-$('#content .section .fa').eq(9).css('color', '#E27822');
-$('#content .section .fa').eq(10).css('color', '#E29822');
-$('#content .section .fa').eq(11).css('color', '#E2B822');
-#}

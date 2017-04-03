@@ -12,22 +12,26 @@ links:
     admin: 'Admin panel'
     menu: 'Menu'
 footer:
-    rights: 'Agate RPG, All rights reserved'
+    rights: 'Agate Studio, All rights reserved'
     brand: 'Design &amp; development: Pierstoval'
     version: 'Version'
     links: 'Links'
     contact: 'Contact the team'
     subscribe: 'Subscribe to the newsletter'
-    agate_rpg: 'Agate RPG'
+    agate_rpg: 'Agate Studio'
+    social_networks: 'Social networks'
     about: 'About'
     about_text: >
-        Shadows of Esteren is an independent project founded in 2006. The first book
-        was published in France in 2010 and then in the USA in 2012. Innovative project,
+        Shadows of Esteren is a project created by Agate studio. This horrific and gothic medieval universe,
+        inspired by Celtic legends, is divided into several supports: tabletop role-playing game, board game,
+        video game and music.
+        <br>
+        The first book was published in France in 2010 and then in the USA in 2012. Innovative project,
         pionneer in the crossmedia world, Esteren is the first french project to have won
         a dozen of prizes in the USA including four Ennie Awards in 2013 and 2016.
 
 register_optin: >
-    I grant Agate Éditions and its partners to do nothing with my data. <small>Anyway, Agate Éditions
+    I grant Agate Studio and its partners to do nothing with my data. <small>Anyway, Agate Studio
     will not do anything with these data, they're used only to make the website work properly for you,
     so we will never spread your data anywhere to anyone, nor sell them, nothing. These are your
     property.</small>
