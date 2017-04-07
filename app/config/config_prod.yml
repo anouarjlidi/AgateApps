@@ -14,18 +14,11 @@ monolog:
         console:
             type:  console
 
-        # Get ALL error logs and put them in a file
+        # Get ALL error logs and put them to stderr for heroku
         main:
-            type:           rotating_file
-            path:           '%kernel.logs_dir%/%kernel.environment%.all.log'
+            type:           stream
+            path:           'php://stderr'
             level:          info
-
-        # Get all security logs (login, logout, etc.) and put them in a file
-        security:
-            type:           rotating_file
-            path:           '%kernel.logs_dir%/%kernel.environment%.auth.log'
-            level:          info
-            channels:       security
 
         # All "error" are sent into another file, including 404 for example
         main_error:
@@ -34,24 +27,14 @@ monolog:
             handler:        streamed_error
         streamed_error:
             type:           rotating_file
-            path:           '%kernel.logs_dir%/%kernel.environment%.error.log'
+            path:           '%kernel.logs_dir%/%kernel.environment%.log'
             level:          debug
 
         ## For any "critical", we send an email
         main_critical:
             type:           fingers_crossed
             action_level:   critical
-            handler:        grouped_critical
-            include_stacktraces: true
-        grouped_critical:
-            type:           group
-            members:        [streamed_critical, buffered_critical]
-            include_stacktraces: true
-        streamed_critical:
-            type:           rotating_file
-            max_files:      60
-            path:           '%kernel.logs_dir%/%kernel.environment%.critical.log'
-            level:          info
+            handler:        buffered_critical
             include_stacktraces: true
         buffered_critical:
             type:           buffer
