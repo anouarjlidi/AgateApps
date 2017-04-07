@@ -89,6 +89,9 @@
         ],
         "post-update-cmd": [
             "@symfony-scripts"
+        ],
+        "compile": [
+            "cp web/.htaccess.dist web/.htaccess"
         ]
     },
     "config": {
