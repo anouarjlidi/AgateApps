@@ -22,6 +22,8 @@ parameters:
         en: en
     locales_regex: 'fr|en'
 
+    esteren_domain: '%env(ESTEREN_DOMAIN)%'
+
     # Definition of all subdomains used in the app
     esteren_domains.cookie_domain:      '.%esteren_domain%'
     esteren_domains.portal:       'portal.%esteren_domain%'
@@ -51,18 +53,25 @@ doctrine:
         connections:
             default:
                 driver:   pdo_mysql
-                host:     '%database_host%'
-                dbname:   '%database_name%'
-                user:     '%database_user%'
-                password: '%database_password%'
-                charset:  UTF8
+                host:     '%env(DATABASE_HOST)%'
+                dbname:   '%env(DATABASE_NAME)%'
+                user:     '%env(DATABASE_USER)%'
+                password: '%env(DATABASE_PASSWORD)%'
+                server_version: '%env(DATABASE_VERSION)%'
+                charset:  utf8mb4
+                default_table_options:
+                    charset: utf8mb4
+                    collate: utf8mb4_unicode_ci
             legacy:
-                driver:   pdo_mysql
-                host:     '%database_host_legacy%'
-                dbname:   '%database_name_legacy%'
-                user:     '%database_user_legacy%'
-                password: '%database_password_legacy%'
-                charset:  UTF8
+                driver:    pdo_mysql
+                host:      '%env(DATABASE_HOST_LEGACY)%'
+                dbname:    '%env(DATABASE_NAME_LEGACY)%'
+                user:      '%env(DATABASE_USER_LEGACY)%'
+                password:  '%env(DATABASE_PASSWORD_LEGACY)%'
+                server_version: '%env(DATABASE_VERSION_LEGACY)%'
+                charset:   utf8
+                logging:   false
+                profiling: false
 
 framework:
     translator:      { fallbacks: '%locales%' } # Activate translator

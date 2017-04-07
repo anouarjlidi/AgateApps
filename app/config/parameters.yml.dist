@@ -2,17 +2,19 @@
 # Set parameters here that may be different on each deployment target of the app, e.g. development, staging, production.
 # http://symfony.com/doc/current/best_practices/configuration.html#infrastructure-related-configuration
 parameters:
-    database_host:     127.0.0.1
-    database_port:     ~
-    database_name:     esteren_portal
-    database_user:     esteren_portal
-    database_password: ~
+    env(DATABASE_HOST):     127.0.0.1
+    env(DATABASE_PORT):     ~
+    env(DATABASE_NAME):     esteren_portal
+    env(DATABASE_USER):     esteren_portal
+    env(DATABASE_PASSWORD): ~
+    env(DATABASE_VERSION):  ~
 
-    database_host_legacy:     127.0.0.1
-    database_port_legacy:     null
-    database_name_legacy:     esteren_legacy
-    database_user_legacy:     root
-    database_password_legacy: null
+    env(DATABASE_HOST_LEGACY):      127.0.0.1
+    env(DATABASE_PORT_LEGACY):      ~
+    env(DATABASE_NAME_LEGACY):      esteren_legacy
+    env(DATABASE_USER_LEGACY):      root
+    env(DATABASE_PASSWORD_LEGACY):  ~
+    env(DATABASE_VERSION_LEGACY):   ~
 
     mailer_transport:  smtp
     mailer_host:       127.0.0.1
@@ -24,4 +26,4 @@ parameters:
 
     magick_binaries_path: /usr/bin
 
-    esteren_domain:    esteren.org
+    env(ESTEREN_DOMAIN):    esteren.org
