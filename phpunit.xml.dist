@@ -44,6 +44,10 @@
         <ini name="error_reporting" value="-1" />
         <ini name="zend.enable_gc" value="0" />
         <env name="SYMFONY_ENV" value="test" />
+        <env name="SYMFONY_DEBUG" value="0" />
+        <!-- You can uncomment this if you want less tests for Step 7 random tests, which is 100 by default
+        <env name="STEP7_RANDOMNESS_COUNT" value="1" />
+        -->
     </php>
 
     <filter>

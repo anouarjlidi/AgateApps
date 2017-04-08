@@ -1,7 +1,20 @@
 # CI file
 # To be used, it automatically sets up database and domain names.
-# Parameters are overriden in the config_test.yml file, but not all of them.
+# As we use sqlite specificly in "config_test.yml", we just add null values here for almost everything.
 parameters:
+    env(DATABASE_HOST): ~
+    env(DATABASE_PORT): ~
+    env(DATABASE_NAME): db_test.db
+    env(DATABASE_USER): ~
+    env(DATABASE_PASSWORD): ~
+    env(DATABASE_VERSION): ~
+
+    env(DATABASE_HOST_LEGACY): ~
+    env(DATABASE_PORT_LEGACY): ~
+    env(DATABASE_NAME_LEGACY): db_test_legacy.db
+    env(DATABASE_USER_LEGACY): ~
+    env(DATABASE_PASSWORD_LEGACY): ~
+    env(DATABASE_VERSION_LEGACY): ~
 
     mailer_transport: ~
     mailer_host: ~
@@ -12,3 +25,5 @@ parameters:
     secret:            ThisTokenIsNotSoSecretChangeIt
 
     magick_binaries_path: /usr/bin
+
+    env(ESTEREN_DOMAIN): esteren.dev

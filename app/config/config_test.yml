@@ -22,16 +22,8 @@ doctrine:
     dbal:
         connections:
             default:
-                driver:   pdo_sqlite
-                dbname:   db_test.db
-                charset:  UTF8
-                path:     '%kernel.root_dir%/../build/database_test.db'
+                driver: pdo_sqlite
+                path:   '%kernel.root_dir%/../build/database_test.db'
             legacy:
-                driver:   pdo_sqlite
-                dbname:   db_test_legacy.db
-                charset:  UTF8
-                path:     '%kernel.root_dir%/../build/database_test_legacy.db'
-
-# Force these domain names to be used in the tests
-parameters:
-    esteren_domain: esteren.dev
+                driver: pdo_sqlite
+                path:   '%kernel.root_dir%/../build/database_test_legacy.db'
