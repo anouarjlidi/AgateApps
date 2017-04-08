@@ -83,23 +83,20 @@
         ],
         "post-install-cmd": [
             "@symfony-scripts",
-            "node --version && yarn -V && yarn install",
-            "node node_modules/gulp/bin/gulp.js dump --prod",
             "php bin/console doctrine:schema:validate || echo 'Doctrine schema not valid, please make sure it is correct.'"
         ],
         "post-update-cmd": [
             "@symfony-scripts"
         ],
         "compile": [
+            "node node_modules/gulp/bin/gulp.js dump --prod",
             "cp web/.htaccess.dist web/.htaccess",
+            "php bin/console doctrine:schema:update --dump-sql --force",
             "php bin/console esterenmaps:map:generate-tiles 1"
         ]
     },
     "config": {
-        "autoloader-suffix": "EsterenPortal",
-        "platform": {
-            "php": "5.6"
-        }
+        "autoloader-suffix": "EsterenPortal"
     },
     "extra": {
         "symfony-app-dir": "app",
