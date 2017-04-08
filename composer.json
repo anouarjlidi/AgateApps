@@ -91,7 +91,8 @@
             "@symfony-scripts"
         ],
         "compile": [
-            "cp web/.htaccess.dist web/.htaccess"
+            "cp web/.htaccess.dist web/.htaccess",
+            "php bin/console esterenmaps:map:generate-tiles 1"
         ]
     },
     "config": {
