@@ -7,9 +7,9 @@
 
 {% block step_content %}
     <div>
-        <p class="card-panel teal lighten-3">{{ 'equipment.base_elements.description'|trans({}, 'CorahnRinBundle') }}</p>
+        <p class="card-panel teal darken-3">{{ 'equipment.base_elements.description'|trans({}, 'CorahnRinBundle') }}</p>
         {% if is_poor %}
-            <p class="card-panel red lighten-3">{{ 'equipment.reminder_if_poor'|trans({}, 'CorahnRinBundle') }}</p>
+            <p class="card-panel materialize-red darken-4">{{ 'equipment.reminder_if_poor'|trans({}, 'CorahnRinBundle') }}</p>
         {% endif %}
     </div>
     <div>

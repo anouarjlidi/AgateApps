@@ -8,16 +8,16 @@
     <div class="row">
         <div class="input-field col s6">
             <input type="text" id="character_name" name="details[name]" value="{{ details.name }}">
-            <label for="character_name">{{ 'description.name'|trans({}, 'CorahnRinBundle') }}</label>
+            <label for="character_name"><span class="text-red">*&nbsp;</span>{{ 'description.name'|trans({}, 'CorahnRinBundle') }}</label>
         </div>
 
         <div class="input-field col s6">
             <input type="text" name="details[player_name]" id="player" value="{{ details.player_name }}">
-            <label for="player">{{ 'description.player_name'|trans({}, 'CorahnRinBundle') }}</label>
+            <label for="player"><span class="text-red">*&nbsp;</span>{{ 'description.player_name'|trans({}, 'CorahnRinBundle') }}</label>
         </div>
     </div>
 
-    <h6>{{ 'description.sex'|trans({}, 'CorahnRinBundle') }}</h6>
+    <h6><span class="text-red">*&nbsp;</span>{{ 'description.sex'|trans({}, 'CorahnRinBundle') }}</h6>
     <p>
         <input type="radio" name="details[sex]" id="sex_female" {{ details.sex is defined and details.sex == female ? 'checked' }} value="{{ female }}">
         <label for="sex_female">{{ 'description.female'|trans({}, 'CorahnRinBundle') }}</label>

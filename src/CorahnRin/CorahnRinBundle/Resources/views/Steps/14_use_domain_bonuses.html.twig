@@ -9,13 +9,13 @@
 
     {% if not bonus_max %}
 
-        <div class="card-panel teal lighten-4">
+        <div class="card-panel teal darken-4">
             {{ 'domains_bonuses.no_bonus_point'|trans({}, 'CorahnRinBundle') }}
         </div>
 
     {% else %}
 
-        <div class="card-panel teal lighten-4">
+        <div class="card-panel teal darken-4">
             {{ 'domains_bonuses.explanation'|trans({}, 'CorahnRinBundle')|raw }}
             <br>
             <i class="fa fa-hand-o-right teal-text text-darken-3"></i>&nbsp;
@@ -23,7 +23,7 @@
 
         </div>
 
-        <div class="card-panel blue lighten-4">
+        <div class="card-panel blue-grey darken-3">
 
             {{ 'domains_bonuses.remaining'|trans({}, 'CorahnRinBundle') }}
 

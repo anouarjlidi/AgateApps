@@ -9,17 +9,17 @@
 
     {% if exp_max < 10 %}
 
-        <div class="card-panel teal lighten-4">
+        <div class="card-panel teal darken-4">
             {{ 'domains_spend_exp.no_exp'|trans({}, 'CorahnRinBundle') }}
         </div>
 
     {% else %}
 
-        <div class="card-panel teal lighten-4">
+        <div class="card-panel teal darken-4">
             {{ 'domains_spend_exp.explanation'|trans({}, 'CorahnRinBundle')|raw }}
         </div>
 
-        <div class="card-panel blue lighten-4">
+        <div class="card-panel blue-grey darken-4">
 
             {{ 'domains_spend_exp.remaining'|trans({}, 'CorahnRinBundle') }}
 

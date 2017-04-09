@@ -9,7 +9,7 @@
 
     {% if not can_have_combat_arts  %}
 
-        <div class="card-panel teal lighten-4">
+        <div class="card-panel teal darken-4">
             {% if exp_max < 20 %}
                 {{ 'combat_arts_spend_exp.not_enough_exp'|trans({}, 'CorahnRinBundle') }}
             {% elseif close_combat < 5 or shooting_and_throwing < 5 %}
@@ -19,11 +19,11 @@
 
     {% else %}
 
-        <div class="card-panel teal lighten-4">
+        <div class="card-panel teal darken-4">
             {{ 'combat_arts_spend_exp.explanation'|trans({}, 'CorahnRinBundle')|raw }}
         </div>
 
-        <div class="card-panel blue lighten-4">
+        <div class="card-panel blue-grey darken-4">
             {{ 'combat_arts_spend_exp.remaining'|trans({}, 'CorahnRinBundle') }}
             <div class="bonus_points_element chip bordered" id="exp_points">
                 <span id="remaining_exp_points" class="text-black">{{ exp_value }}</span>&nbsp;/<span id="max_exp_points" class="text-black">{{ exp_max }}</span>

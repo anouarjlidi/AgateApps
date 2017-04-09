@@ -9,17 +9,17 @@
 
     {% if exp_max < 25  %}
 
-        <div class="card-panel teal lighten-4">
+        <div class="card-panel teal darken-4">
             {{ 'disciplines_spend_exp.no_exp_or_bonus_points'|trans({}, 'CorahnRinBundle') }}
         </div>
 
     {% else %}
 
-        <div class="card-panel teal lighten-4">
+        <div class="card-panel teal darken-4">
             {{ 'disciplines_spend_exp.explanation'|trans({}, 'CorahnRinBundle')|raw }}
         </div>
 
-        <div class="card-panel blue lighten-4">
+        <div class="card-panel blue-grey darken-4">
             {{ 'disciplines_spend_exp.remaining'|trans({}, 'CorahnRinBundle') }}
             <div class="bonus_points_element chip bordered" id="exp_points">
                 <span id="remaining_exp_points" class="text-black">{{ exp_value }}</span>&nbsp;/<span id="max_exp_points" class="text-black">{{ exp_max }}</span>
