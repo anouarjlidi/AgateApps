@@ -236,7 +236,7 @@ const hasCss    = GulpfileHelpers.objectSize(config.css) > 0;
 const hasJs     = GulpfileHelpers.objectSize(config.js) > 0;
 
 // Required extensions
-var gulp       = require('gulp');
+var gulp       = require('gulp4');
 var gulpif     = require('gulp-if');
 var watch      = require('gulp-watch');
 var concat     = require('gulp-concat');
@@ -254,7 +254,7 @@ var imagemin = hasImages ? require('gulp-imagemin') : function(){ return {}; };
 /**
  * Dumps the LESS assets
  */
-gulp.task('less', function() {
+gulp.task('less', function(done) {
     "use strict";
 
     let list = config.less,
@@ -278,12 +278,14 @@ gulp.task('less', function() {
             console.info("       > "+assets[i]);
         }
     }
+
+    pipes ? pipes.on('end', function(){done();}) : done();
 });
 
 /**
  * Dumps the SASS assets
  */
-gulp.task('sass', function() {
+gulp.task('sass', function(done) {
     "use strict";
 
     let list = config.sass,
@@ -307,13 +309,15 @@ gulp.task('sass', function() {
             console.info("       > "+assets[i]);
         }
     }
+
+    pipes ? pipes.on('end', function(){done();}) : done();
 });
 
 /**
  * Simply copy files into another directory.
  * Useful for simple "dist" files from node_modules directory, for example.
  */
-gulp.task('copy', function() {
+gulp.task('copy', function(done) {
     "use strict";
 
     let list = config.copy,
@@ -333,13 +337,15 @@ gulp.task('copy', function() {
             console.info("       > "+assets[i]);
         }
     }
+
+    pipes ? pipes.on('end', function(){done();}) : done();
 });
 
 /**
  * Compress images.
  * Thanks to @docteurklein.
  */
-gulp.task('images', function() {
+gulp.task('images', function(done) {
     "use strict";
 
     let list = config.images,
@@ -365,12 +371,14 @@ gulp.task('images', function() {
             console.info("       > "+assets[i]);
         }
     }
+
+    pipes ? pipes.on('end', function(){done();}) : done();
 });
 
 /**
  * Dumps the CSS assets.
  */
-gulp.task('css', function() {
+gulp.task('css', function(done) {
     "use strict";
 
     let list = config.css,
@@ -393,12 +401,14 @@ gulp.task('css', function() {
             console.info("       > "+assets[i]);
         }
     }
+
+    pipes ? pipes.on('end', function(){done();}) : done();
 });
 
 /**
  * Dumps the JS assets
  */
-gulp.task('js', function() {
+gulp.task('js', function(done) {
     "use strict";
 
     let list = config.js,
@@ -421,12 +431,21 @@ gulp.task('js', function() {
             console.info("       > "+assets[i]);
         }
     }
+
+    pipes ? pipes.on('end', function(){done();}) : done();
 });
+
+/**
+ * Runs all the needed commands to dump all assets and manifests
+ */
+gulp.task('dump', gulp.series('images', 'copy', 'less', 'sass', 'css', 'js', function(done){
+    done();
+}));
 
 /**
  * Will watch for files and run "dump" for each modification
  */
-gulp.task('watch', ['dump'], function() {
+gulp.task('watch', gulp.series('dump', gulp.parallel(function(done) {
     "use strict";
 
     let files_less = [],
@@ -472,41 +491,31 @@ gulp.task('watch', ['dump'], function() {
     }
 
     if (other_files_to_watch.length) {
-        gulp.watch(other_files_to_watch, ['dump']).on('change', callback);
+        gulp.watch(other_files_to_watch, gulp.parallel('dump')).on('change', callback);
     }
     if (hasImages) {
-        gulp.watch(files_images, ['images']).on('change', callback);
+        gulp.watch(files_images, gulp.parallel('images')).on('change', callback);
     }
     if (hasLess) {
-        gulp.watch(files_less, ['less']).on('change', callback);
+        gulp.watch(files_less, gulp.parallel('less')).on('change', callback);
     }
     if (hasSass) {
-        gulp.watch(files_sass, ['sass']).on('change', callback);
+        gulp.watch(files_sass, gulp.parallel('sass')).on('change', callback);
     }
     if (hasCss) {
-        gulp.watch(files_css, ['css']).on('change', callback);
+        gulp.watch(files_css, gulp.parallel('css')).on('change', callback);
     }
     if (hasJs) {
-        gulp.watch(files_js, ['js']).on('change', callback);
+        gulp.watch(files_js, gulp.parallel('js')).on('change', callback);
     }
-});
 
-/**
- * Runs all the needed commands to dump all assets and manifests
- */
-var dumpTasks = [];
-if (hasImages) { dumpTasks.push('images'); }
-if (hasCopy) { dumpTasks.push('copy'); }
-if (hasLess) { dumpTasks.push('less'); }
-if (hasSass) { dumpTasks.push('sass'); }
-if (hasCss) { dumpTasks.push('css'); }
-if (hasJs) { dumpTasks.push('js'); }
-gulp.task('dump', dumpTasks);
+    done();
+})));
 
 /**
  * Small user guide
  */
-gulp.task('default', function(){
+gulp.task('default', function(done){
     console.info("");
     console.info("usage: gulp [command] [--prod]");
     console.info("");
@@ -523,6 +532,7 @@ gulp.task('default', function(){
     console.info("    dump         Executes all the above commands.");
     console.info("    watch        Executes 'dump', then watches all sources, and dumps all assets once any file is updated.");
     console.info("");
+    done();
 });
 
 // Gulpfile with a single var as configuration.

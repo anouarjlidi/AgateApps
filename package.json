@@ -8,9 +8,9 @@
         "url": "https://github.com/Pierstoval/corahn_rin"
     },
     "dependencies": {
-        "bootstrap": "^3.3.7",
-        "font-awesome": "^4.7.0",
-        "gulp": "^3.9",
+        "bootstrap": "^3.3",
+        "font-awesome": "^4.7",
+        "gulp4": "^4.0",
         "gulp-clean-css": "^3.0",
         "gulp-concat": "^2.6",
         "gulp-if": "^2.0",
@@ -20,7 +20,7 @@
         "gulp-sourcemaps": "^2.4",
         "gulp-uglyfly": "^1.4",
         "gulp-watch": "^4.3",
-        "jquery": "^3.1.1",
+        "jquery": "^3.1",
         "leaflet": "^0.7",
         "materialize-css": "^0.98"
     },
