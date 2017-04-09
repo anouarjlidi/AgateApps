@@ -1,3 +1,4 @@
+@charset "UTF-8";
 
 // Mixins
 // @import "../../../../../../node_modules/materialize-css/sass/components/prefixer";
@@ -14,11 +15,13 @@
 
 // components
 @import "../../../../../../node_modules/materialize-css/sass/components/global";
+@import "../../../../../../node_modules/materialize-css/sass/components/badges";
 @import "../../../../../../node_modules/materialize-css/sass/components/icons-material-design";
 @import "../../../../../../node_modules/materialize-css/sass/components/grid";
 @import "../../../../../../node_modules/materialize-css/sass/components/navbar";
 @import "../../../../../../node_modules/materialize-css/sass/components/roboto";
 @import "../../../../../../node_modules/materialize-css/sass/components/typography";
+@import "../../../../../../node_modules/materialize-css/sass/components/transitions";
 @import "../../../../../../node_modules/materialize-css/sass/components/cards";
 @import "../../../../../../node_modules/materialize-css/sass/components/toast";
 @import "../../../../../../node_modules/materialize-css/sass/components/tabs";
@@ -36,6 +39,8 @@
 @import "../../../../../../node_modules/materialize-css/sass/components/preloader";
 @import "../../../../../../node_modules/materialize-css/sass/components/slider";
 @import "../../../../../../node_modules/materialize-css/sass/components/carousel";
+@import "../../../../../../node_modules/materialize-css/sass/components/tapTarget";
+@import "../../../../../../node_modules/materialize-css/sass/components/pulse";
 @import "../../../../../../node_modules/materialize-css/sass/components/date_picker/default";
 @import "../../../../../../node_modules/materialize-css/sass/components/date_picker/default.date";
 @import "../../../../../../node_modules/materialize-css/sass/components/date_picker/default.time";
