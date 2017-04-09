@@ -2,7 +2,7 @@ machine:
     php:
         version: 7.1.3
     node:
-        version: v6.1.0
+        version: v6.10.2
     environment:
         PROJECT_DIR: '${HOME}/${CIRCLE_PROJECT_REPONAME}'
         CODECOV_TOKEN: 5b127f85-7030-411d-8f65-8f371c6eac0b
