@@ -89,7 +89,7 @@
             "@symfony-scripts"
         ],
         "compile": [
-            "node node_modules/gulp/bin/gulp.js dump --prod",
+            "node node_modules/gulp4/bin/gulp.js dump --prod",
             "cp web/.htaccess.dist web/.htaccess",
             "php bin/console doctrine:schema:update --dump-sql --force",
             "php bin/console esterenmaps:map:generate-tiles 1"
