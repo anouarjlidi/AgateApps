@@ -10,7 +10,23 @@
 * [Corahn Rin / Character manager](character_manager.md)
 * [Deploy](deploy.md)
 
-# Deploy the project
+# Deploy on heroku
+
+Add heroku as new remote for your git repository:
+
+```bash
+$ git remote add heroku https://git.heroku.com/corahn-rin.git
+```
+
+Push the branch you want to put on production by pushing to heroku:
+
+```bash
+$ git push heroku master
+```
+
+# Deploy on dedicated server
+
+## Deploy the project
 
 A `post-receive` script has been set up on the production server, inside a bare
 repo that mirrors this actual repository.
@@ -25,7 +41,7 @@ As Composer is set up in [composer.json](../composer.json) automatically in the
 `post-install-cmd` script to clear the cache, install npm dependencies and dump
 assets, there is nearly nothing else to do to deploy the project.
 
-## Setup deploy environment
+### Setup deploy environment
 
 To deploy from your machine, set up your local repository with this remote:
 
@@ -36,7 +52,7 @@ $ git remote add prod ssh://my_ssh_user@188.165.206.57:2010/var/www/portal.ester
 The ssh user `my_ssh_user` should obviously be replaced by your own ssh user.
 This user must have the right to access and push to this repository.
 
-## Deploy
+### Deploy
 
 **Note:** Deployment can only be made based on a **tag**.
 
