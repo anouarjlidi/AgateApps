@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "1e5aa98d124a736fb30961222b520c8b",
+    "content-hash": "640b38066110171a6110cbcc58d683ca",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -1283,16 +1283,16 @@
         },
         {
             "name": "javiereguiluz/easyadmin-bundle",
-            "version": "v1.16.8",
+            "version": "v1.16.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/javiereguiluz/EasyAdminBundle.git",
-                "reference": "063125ad8a9246044feada864393226f55527ea7"
+                "reference": "129d3f33b23668c5829106118c1fb1b677365756"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/javiereguiluz/EasyAdminBundle/zipball/063125ad8a9246044feada864393226f55527ea7",
-                "reference": "063125ad8a9246044feada864393226f55527ea7",
+                "url": "https://api.github.com/repos/javiereguiluz/EasyAdminBundle/zipball/129d3f33b23668c5829106118c1fb1b677365756",
+                "reference": "129d3f33b23668c5829106118c1fb1b677365756",
                 "shasum": ""
             },
             "require": {
@@ -1365,7 +1365,7 @@
                 "backend",
                 "generator"
             ],
-            "time": "2017-04-01T08:20:39+00:00"
+            "time": "2017-04-08T18:35:00+00:00"
         },
         {
             "name": "jdorn/sql-formatter",
@@ -3298,20 +3298,21 @@
         },
         {
             "name": "twig/twig",
-            "version": "v1.33.0",
+            "version": "v2.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "05cf49921b13f6f01d3cfdf9018cfa7a8086fd5a"
+                "reference": "9718186a5df85a4f7917e78d3ffcabc204c75d25"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/05cf49921b13f6f01d3cfdf9018cfa7a8086fd5a",
-                "reference": "05cf49921b13f6f01d3cfdf9018cfa7a8086fd5a",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/9718186a5df85a4f7917e78d3ffcabc204c75d25",
+                "reference": "9718186a5df85a4f7917e78d3ffcabc204c75d25",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.2.7"
+                "php": "^7.0",
+                "symfony/polyfill-mbstring": "~1.0"
             },
             "require-dev": {
                 "psr/container": "^1.0",
@@ -3321,7 +3322,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.33-dev"
+                    "dev-master": "2.3-dev"
                 }
             },
             "autoload": {
@@ -3356,7 +3357,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2017-03-22T15:40:09+00:00"
+            "time": "2017-03-22T15:41:51+00:00"
         },
         {
             "name": "willdurand/jsonp-callback-validator",
@@ -5760,8 +5761,5 @@
     "platform": {
         "php": ">=5.6.0"
     },
-    "platform-dev": [],
-    "platform-overrides": {
-        "php": "5.6"
-    }
+    "platform-dev": []
 }
