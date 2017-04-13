@@ -127,7 +127,7 @@ class Routes implements ClearerEntityInterface
     /**
      * @var Factions
      *
-     * @ORM\ManyToOne(targetEntity="Factions", inversedBy="routes", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="Factions", inversedBy="routes")
      * @ORM\JoinColumn(name="faction_id", nullable=true)
      * @Serializer\Expose
      */
@@ -136,7 +136,7 @@ class Routes implements ClearerEntityInterface
     /**
      * @var RoutesTypes
      *
-     * @ORM\ManyToOne(targetEntity="RoutesTypes", inversedBy="routes", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="RoutesTypes", inversedBy="routes")
      * @ORM\JoinColumn(name="route_type_id", nullable=false)
      * @Serializer\Expose
      */

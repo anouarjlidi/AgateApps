@@ -77,7 +77,7 @@ class Disciplines
 
     /**
      * @var Books
-     * @ORM\ManyToOne(targetEntity="Books", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="Books")
      * @ORM\JoinColumn(nullable=false)
      */
     protected $book;

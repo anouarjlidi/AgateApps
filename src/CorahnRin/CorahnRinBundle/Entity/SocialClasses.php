@@ -64,7 +64,7 @@ class SocialClasses
     /**
      * @var Domains[]
      *
-     * @ORM\ManyToMany(targetEntity="Domains", fetch="EAGER")
+     * @ORM\ManyToMany(targetEntity="Domains")
      */
     protected $domains;
 

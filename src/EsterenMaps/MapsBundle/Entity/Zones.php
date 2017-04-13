@@ -68,7 +68,7 @@ class Zones implements ClearerEntityInterface
     /**
      * @var Maps
      *
-     * @ORM\ManyToOne(targetEntity="Maps", inversedBy="zones", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="Maps", inversedBy="zones")
      * @ORM\JoinColumn(name="map_id", nullable=false)
      */
     protected $map;
@@ -76,7 +76,7 @@ class Zones implements ClearerEntityInterface
     /**
      * @var Factions
      *
-     * @ORM\ManyToOne(targetEntity="Factions", inversedBy="zones", fetch="EAGER", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="Factions", inversedBy="zones")
      * @ORM\JoinColumn(name="faction_id", nullable=true)
      * @Serializer\Expose
      */
@@ -85,7 +85,7 @@ class Zones implements ClearerEntityInterface
     /**
      * @var ZonesTypes
      *
-     * @ORM\ManyToOne(targetEntity="ZonesTypes", inversedBy="zones", fetch="EAGER", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="ZonesTypes", inversedBy="zones")
      * @ORM\JoinColumn(name="zone_type_id", nullable=false)
      * @Serializer\Expose
      */

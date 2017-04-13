@@ -49,14 +49,14 @@ class GeoEnvironments
     /**
      * @var int
      *
-     * @ORM\ManyToOne(targetEntity="Books", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="Books")
      */
     protected $book;
 
     /**
      * @var int
      *
-     * @ORM\ManyToOne(targetEntity="Domains", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="Domains")
      */
     protected $domain;
 
