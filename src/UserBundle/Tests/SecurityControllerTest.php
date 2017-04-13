@@ -51,8 +51,12 @@ class SecurityControllerTest extends WebTestCase
 
         $crawler = $client->request('GET', '/fr/register/');
 
+        $formNode = $crawler->filter('form.fos_user_registration_register');
+
+        static::assertEquals(1, $formNode->count(), 'Form wasn\'t found in the request');
+
         /** @var Form $form */
-        $form = $crawler->filter('form.fos_user_registration_register')->form();
+        $form = $formNode->form();
 
         // Fill registration form
         $form['fos_user_registration_form[username]'] = static::USER_NAME;
