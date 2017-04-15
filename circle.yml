@@ -28,7 +28,7 @@ dependencies:
 
 test:
     override:
-        - 'composer install --no-interaction'
+        - 'composer install --no-interaction --ignore-platform-reqs'
         - 'php bin/symfony_requirements'
         - './vendor/bin/behat'
         - './vendor/bin/phpunit --log-junit "${CIRCLE_TEST_REPORTS}/phpunit/junit.xml" --coverage-clover "${CIRCLE_ARTIFACTS}/phpunit/clover.xml" --coverage-html "${CIRCLE_ARTIFACTS}/phpunit/html"'
