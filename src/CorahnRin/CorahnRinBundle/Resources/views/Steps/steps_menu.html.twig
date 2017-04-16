@@ -2,9 +2,6 @@
 
 {% macro menu_items(current_step, steps, mobile) %}
     {% set previous = null %}
-    {% set mobile = mobile ? true : false %}
-
-    {% set collection_class = mobile ? '' : 'collection-item w100p' %}
 
     {% for stepName, loop_step in steps %}
         {% set is_superior_to_current = current_step.step >= loop_step.step %}
@@ -12,19 +9,21 @@
         {% set is_last_undefined_step = (previous and current_character[loop_step.name] is not defined and current_character[previous.name] is defined) %}
 
         {% if is_superior_to_current or is_defined_step or is_last_undefined_step %}
-            <li class="{{ collection_class }} step_available{% if current_step and current_step.step == loop_step.step %} active{% endif %}">
+            <li class=" step_available{% if current_step and current_step.step == loop_step.step %} active{% endif %}">
                 <a href="{{ path('pierstoval_character_generator_step', {'requestStep': stepName}) }}" class="bl">
                     {{ current_step.step == loop_step.step ? '&raquo;' }} {{ loop_step.step }}. {{ loop_step.label | trans }}
                 </a>
             </li>
         {% else %}
-            <li class="{{ collection_class }}">{{ loop_step.step }}. {{ loop_step.label | trans }}</li>
+            <li>
+                <span>{{ loop_step.step }}. {{ loop_step.label | trans }}</span>
+            </li>
         {% endif %}
 
         {% set previous = loop_step %}
     {% endfor %}
     {% if app.session.get('step') > 1 %}
-        <li class="{{ collection_class }}">
+        <li>
             <a href="{{ path('pierstoval_character_generator_reset') }}">{{ 'steps.reset' | trans({}, 'CorahnRinBundle') }}</a>
         </li>
     {% endif %}
@@ -33,11 +32,11 @@
 {% import _self as macros %}
 
 <nav>
-    <a href="#" data-activates="steps-side" class="right button-collapse"><i class="fa fa-bars"></i> {{ 'menu.steps'|trans({}, 'CorahnRinBundle') }}</a>
-    <ul class="collection hide-on-med-and-down">
-        {{ macros.menu_items(current_step, steps, false) }}
-    </ul>
+    <a href="#" data-activates="steps-side" class="right button-collapse text-l"><i class="fa fa-bars"></i> {{ 'menu.steps'|trans({}, 'CorahnRinBundle') }}</a>
     <ul class="side-nav" id="steps-side">
         {{ macros.menu_items(current_step, steps, true) }}
     </ul>
+    <div class="step_progress progress">
+        <div class="determinate" style="width: {{ (100 * current_step.step / (steps|length)) }}%"></div>
+    </div>
 </nav>

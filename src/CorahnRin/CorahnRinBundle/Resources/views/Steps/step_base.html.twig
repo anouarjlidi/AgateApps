@@ -10,33 +10,30 @@
 {% endblock %}
 
 {% block content_for_layout %}
-    <div class="row">
-        {% block step_menu %}
-        <div class="col l3 s12 step_menu">
+    {% block step_menu %}
+        <div class="step_menu">
             {{ include('@CorahnRin/Steps/steps_menu.html.twig', {
                 'steps': steps,
                 'current_step': current_step
             }) }}
         </div>
-        {% endblock %}
-        <div class="col l9 s12 step_module">
-            <h1>{{ 'steps.step' | trans({}, 'CorahnRinBundle') }} {{ current_step.step }} : {{ current_step.label | trans }}</h1>
+    {% endblock %}
+    <div class="step_module">
+        <h1>{{ 'steps.step' | trans({}, 'CorahnRinBundle') }} {{ current_step.step }} : {{ current_step.label | trans }}</h1>
 
-            {{ include('_flash_messages.html.twig') }}
+        {{ include('_flash_messages.html.twig') }}
 
-            <form class="{% block form_class '' %}" name="generator_form" id="generator_form" method="post" action="{{ path('pierstoval_character_generator_step', {'requestStep': current_step.name}) }}">
-                <div id="generator_{{ current_step.name }}">
-                    <div>
-                        <button type="submit" id="submit_btn" class="btn btn-inverse left">{{ 'steps.next' | trans({}, 'CorahnRinBundle') }}</button>
-                        <a href="{{ path('pierstoval_character_generator_reset_step', {'requestStep': current_step.name}) }}" class="btn right red lighten-3">{{ 'steps.reset'|trans({}, 'CorahnRinBundle') }}</a>
-                    </div>
-                    <hr class="clearfix" />
-                    {% block step_content %}
-                    {% endblock %}
-                    <div class="clearfix"></div>
+        <form class="{% block form_class '' %}" name="generator_form" id="generator_form" method="post" action="{{ path('pierstoval_character_generator_step', {'requestStep': current_step.name}) }}">
+            <div id="generator_{{ current_step.name }}">
+                <div>
+                    <button type="submit" id="submit_btn" class="btn btn-inverse left">{{ 'steps.next' | trans({}, 'CorahnRinBundle') }}</button>
+                    <a href="{{ path('pierstoval_character_generator_reset_step', {'requestStep': current_step.name}) }}" class="btn right red lighten-3">{{ 'steps.reset'|trans({}, 'CorahnRinBundle') }}</a>
                 </div>
-            </form>
-        </div>
+                <div class="clearfix"></div>
+                {% block step_content %}{% endblock %}
+                <div class="clearfix"></div>
+            </div>
+        </form>
     </div>
 {% endblock %}
 

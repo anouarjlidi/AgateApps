@@ -46,6 +46,8 @@ ul.list-bullet > li
 *.text-center { text-align: center !important; }
 
 *.text-m { font-size: 1.2em !important; }
+*.text-l { font-size: 1.4em !important; }
+*.text-xl { font-size: 1.6em !important; }
 
 *.bg-gold      { background-color: goldenrod !important; }
 
@@ -56,7 +58,7 @@ ul.list-bullet > li
 
 /* Helpers */
 
-.m0 { margin: 0; }
+.m0 { margin: 0 !important; }
 
 .mw50 { max-width:  50px; }
 
@@ -80,7 +82,7 @@ ul.list-bullet > li
 .ml10 { margin-left: 10px; }
 .ml20 { margin-left: 20px; }
 
-.mt5  { margin-top: 5px; }
+.mt5  { margin-top: 5px !important; }
 .mt10 { margin-top: 10px; }
 .mt15 { margin-top: 15px; }
 

@@ -1,0 +1,62 @@
+
+// Load fontawesome variables so that we can also use icons for custom use
+@import "../../../../../../../node_modules/font-awesome/less/variables";
+
+.character_details {
+    .row {
+        margin: 0;
+        padding: 0;
+        border-bottom: solid 1px;
+    }
+    .row, hr {
+        border-color: #444;
+    }
+    .col {
+        height: inherit;
+    }
+    .character_name {
+        font-size: 3em;
+        border-bottom: solid 4px #555;
+        padding-bottom: 8px;
+        text-transform: capitalize;
+        text-shadow: 0 0 30px #999, 2px 2px 1px #000;
+    }
+    h2, h3, h4, h5, h6 {
+        margin: 1.1rem 0.8em;
+    }
+    h1 {
+        font-size: 2em;
+    }
+    h2 {
+        font-size: 1.8em;
+        text-align: center;
+        position: relative;
+        z-index: 2;
+        /**
+         * Todo: add waves to titles so it can look like character sheet
+         */
+    }
+    h3 {
+        font-size: 1.6em;
+    }
+    h4 {
+        font-size: 1.4em;
+        &.health {
+            margin: 2px 0;
+            padding: 0;
+        }
+    }
+    h5 {
+        font-size: 1.2em;
+    }
+    h5 {
+        font-size: 1em;
+    }
+    &, p {
+        font-size: 0.8em;
+    }
+    ul.list-bullet h4 {
+        display: inline-block;
+        margin: 0 0 0 -12px;
+    }
+}

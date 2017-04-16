@@ -17,6 +17,7 @@ use CorahnRin\CorahnRinBundle\Entity\CharacterProperties\CharDomains;
 use CorahnRin\CorahnRinBundle\Entity\CharacterProperties\CharFlux;
 use CorahnRin\CorahnRinBundle\Entity\CharacterProperties\CharSetbacks;
 use CorahnRin\CorahnRinBundle\Entity\CharacterProperties\CharWays;
+use CorahnRin\CorahnRinBundle\Entity\CharacterProperties\HealthCondition;
 use CorahnRin\CorahnRinBundle\Entity\CharacterProperties\Money;
 use CorahnRin\CorahnRinBundle\Entity\Traits\CharacterGettersSetters;
 use CorahnRin\CorahnRinBundle\Exception\CharactersException;
@@ -178,18 +179,18 @@ class Characters extends BaseCharacter
     protected $mentalResistBonus = 0;
 
     /**
-     * @var int
+     * @var HealthCondition
      *
-     * @ORM\Column(name="health", type="smallint")
+     * @ORM\Embedded(class="CorahnRin\CorahnRinBundle\Entity\CharacterProperties\HealthCondition", columnPrefix="health_")
      */
-    protected $health = 19;
+    protected $health;
 
     /**
-     * @var int
+     * @var HealthCondition
      *
-     * @ORM\Column(name="max_health", type="smallint")
+     * @ORM\Embedded(class="CorahnRin\CorahnRinBundle\Entity\CharacterProperties\HealthCondition", columnPrefix="max_health_")
      */
-    protected $maxHealth = 19;
+    protected $maxHealth;
 
     /**
      * @var int

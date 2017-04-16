@@ -186,4 +186,12 @@ class CharDomains
     {
         return $this->domain;
     }
+
+    /**
+     * @return int
+     */
+    public function getTotalScore()
+    {
+        return $this->score + $this->character->getWay($this->getDomain()->getWay()->getShortName())->getScore();
+    }
 }

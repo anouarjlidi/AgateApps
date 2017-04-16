@@ -18,6 +18,7 @@ use CorahnRin\CorahnRinBundle\Entity\CharacterProperties\CharDisciplines;
 use CorahnRin\CorahnRinBundle\Entity\CharacterProperties\CharDomains;
 use CorahnRin\CorahnRinBundle\Entity\CharacterProperties\CharSetbacks;
 use CorahnRin\CorahnRinBundle\Entity\CharacterProperties\CharWays;
+use CorahnRin\CorahnRinBundle\Entity\CharacterProperties\HealthCondition;
 use CorahnRin\CorahnRinBundle\Entity\CharacterProperties\Money;
 use CorahnRin\CorahnRinBundle\Entity\Characters;
 use CorahnRin\CorahnRinBundle\Entity\Domains;
@@ -121,9 +122,9 @@ final class SessionToCharacter
         $this->setEquipment($character, $values);
         $this->setDescription($character, $values);
         $this->setExp($character, $values);
-        $this->setMoney($character, $values);
+        $this->setMoney($character);
         $this->setDomains($character, $values);
-        $this->setPrecalculatedValues($character, $values);
+        $this->setPrecalculatedValues($character);
 
         return $character;
     }
@@ -308,7 +309,7 @@ final class SessionToCharacter
         $character->setExperienceSpent(0);
     }
 
-    private function setMoney(Characters $character, array $values)
+    private function setMoney(Characters $character)
     {
         $money = new Money();
 
@@ -321,7 +322,7 @@ final class SessionToCharacter
             }
         } else {
             // If salary is not set in job, character has 2d10 azure daols
-            $azure = mt_rand(1, 10) + mt_rand(1, 10);
+            $azure = random_int(1, 10) + random_int(1, 10);
             if ($character->hasSetback(9)) {
                 // If character is poor, he has half money
                 $azure = (int) floor($azure / 2);
@@ -354,6 +355,8 @@ final class SessionToCharacter
         $bonuses = array_fill_keys(array_keys($this->domains), 0);
         $maluses = array_fill_keys(array_keys($this->domains), 0);
 
+        $health = new HealthCondition();
+
         foreach ($character->getAdvantages() as $charAdvantage) {
             $adv = $charAdvantage->getAdvantage();
             if (!trim($adv->getBonusdisc())) {
@@ -377,8 +380,19 @@ final class SessionToCharacter
                             $character->setMentalResistBonus($character->getMentalResistBonus() + ($charAdvantage->getScore() * $disadvantageRatio));
                             break;
                         case Avantages::BONUS_BLESS:
-                            $character->setMaxHealth($character->getMaxHealth() + ($charAdvantage->getScore() * $disadvantageRatio));
-                            $character->setHealth($character->getHealth() + ($charAdvantage->getScore() * $disadvantageRatio));
+                            $score = $charAdvantage->getScore();
+                            switch (true) {
+                                case $score >= 1:
+                                    $health->setBad($health->getBad() + 1);
+                                case $score >= 2:
+                                    $health->setCritical($health->getCritical() + 1);
+                                    break;
+                                case $score <= -1:
+                                    $health->setOkay($health->getOkay() - 1);
+                                case $score <= -2:
+                                    $health->setCritical($health->getCritical() - 1);
+                                    break;
+                            }
                             break;
                         case Avantages::BONUS_VIG;
                             $character->setStamina($character->getStamina() + ($charAdvantage->getScore() * $disadvantageRatio));
@@ -417,6 +431,9 @@ final class SessionToCharacter
             }
         }
 
+        $character->setHealth($health);
+        $character->setMaxHealth(clone $health);
+
         foreach ($finalDomainsValues as $id => $value) {
             $charDomain = new CharDomains();
             $charDomain->setCharacter($character);
@@ -428,8 +445,9 @@ final class SessionToCharacter
         }
     }
 
-    private function setPrecalculatedValues(Characters $character, array $values)
+    private function setPrecalculatedValues(Characters $character)
     {
+        // Rindath
         $rindathMax =
             $character->getWay(1)->getScore()
             + $character->getWay(2)->getScore()
@@ -441,6 +459,7 @@ final class SessionToCharacter
         $character->setRindathMax($rindathMax);
         $character->setRindath($rindathMax);
 
+        // Exaltation
         $exaltationMax = $character->getWay(5)->getScore() * 3;
         if ($miracles = $character->getDiscipline('Miracles')) {
             $exaltationMax += (($miracles->getScore() - 5) * 5);

@@ -42,6 +42,10 @@ class Step20Finish extends AbstractStepAction
             $this->goToStep(1);
         }
 
+        if (function_exists('dump')) {
+            dump($character);
+        }
+
         return $this->renderCurrentStep([
             'character' => $character,
         ]);

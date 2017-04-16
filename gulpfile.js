@@ -85,6 +85,9 @@ var config = {
         ],
         "css/generator.css": [
             "src/CorahnRin/CorahnRinBundle/Resources/public/generator/css/main_steps.less"
+        ],
+        "css/character_details.css": [
+            "src/CorahnRin/CorahnRinBundle/Resources/public/generator/css/character_details.less"
         ]
     },
 

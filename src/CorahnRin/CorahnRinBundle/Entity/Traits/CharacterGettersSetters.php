@@ -20,6 +20,7 @@ use CorahnRin\CorahnRinBundle\Entity\CharacterProperties\CharDomains;
 use CorahnRin\CorahnRinBundle\Entity\CharacterProperties\CharFlux;
 use CorahnRin\CorahnRinBundle\Entity\CharacterProperties\CharSetbacks;
 use CorahnRin\CorahnRinBundle\Entity\CharacterProperties\CharWays;
+use CorahnRin\CorahnRinBundle\Entity\CharacterProperties\HealthCondition;
 use CorahnRin\CorahnRinBundle\Entity\CharacterProperties\Money;
 use CorahnRin\CorahnRinBundle\Entity\CombatArts;
 use CorahnRin\CorahnRinBundle\Entity\Disorders;
@@ -456,13 +457,13 @@ trait CharacterGettersSetters
     }
 
     /**
-     * @param int $health
+     * @param HealthCondition $health
      *
      * @return $this
      *
      * @codeCoverageIgnore
      */
-    public function setHealth($health)
+    public function setHealth(HealthCondition $health)
     {
         $this->health = $health;
 
@@ -470,7 +471,7 @@ trait CharacterGettersSetters
     }
 
     /**
-     * @return int
+     * @return HealthCondition
      *
      * @codeCoverageIgnore
      */
@@ -480,13 +481,13 @@ trait CharacterGettersSetters
     }
 
     /**
-     * @param int $maxHealth
+     * @param HealthCondition $maxHealth
      *
      * @return $this
      *
      * @codeCoverageIgnore
      */
-    public function setMaxHealth($maxHealth)
+    public function setMaxHealth(HealthCondition $maxHealth)
     {
         $this->maxHealth = $maxHealth;
 
@@ -494,7 +495,7 @@ trait CharacterGettersSetters
     }
 
     /**
-     * @return int
+     * @return HealthCondition
      *
      * @codeCoverageIgnore
      */

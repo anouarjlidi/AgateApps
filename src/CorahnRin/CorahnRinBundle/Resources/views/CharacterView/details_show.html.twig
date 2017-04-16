@@ -1,0 +1,114 @@
+
+<div class="character_details">
+    <h2>{{ 'character.details'|trans({}, 'CorahnRinBundle') }}&nbsp;:</h2>
+    <h2 class="character_name">{{ character.name }}</h2>
+    <div class="row">
+        <div class="col l8">
+            <h3>
+                {{ 'character.name'|trans({}, 'CorahnRinBundle') }}&nbsp;:
+                {{ character.name }}
+            </h3>
+        </div>
+        <div class="col l4">
+            <h3>
+                {{ 'character.player_name'|trans({}, 'CorahnRinBundle') }}&nbsp;:
+                {{ character.playerName }}
+            </h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col l3"><h3>{{ 'character.sex_title'|trans({}, 'CorahnRinBundle') }}&nbsp;:&nbsp;{{ character.sex|trans({}, 'CorahnRinBundle') }}</h3></div>
+        <div class="col l2"><h3>{{ 'character.age'|trans({}, 'CorahnRinBundle') }}&nbsp;:&nbsp;{{ character.age }}</h3></div>
+        <div class="col l3"><h3>{{ 'character.people'|trans({}, 'CorahnRinBundle') }}&nbsp;:&nbsp;{{ character.people.name }}</h3></div>
+        <div class="col l4"><h3>{{ 'character.job'|trans({}, 'CorahnRinBundle') }}&nbsp;:&nbsp;{{ character.job.name }}</h3></div>
+    </div>
+    <div class="row">
+        <div class="col l4">
+            <h3>{{ 'character.ways'|trans({}, 'CorahnRinBundle') }}</h3>
+            {% for charWay in character.ways %}
+                <h4>{{ charWay.way.name }} <span class="right">{{ charWay.score }}</span></h4>
+            {% endfor %}
+        </div>
+        <div class="col l4">
+            <h3>{{ 'character.advantages'|trans({}, 'CorahnRinBundle') }}</h3>
+            {% for charAdvantage in character.advantages %}
+                {% if loop.first %}<ul class="list-bullet">{% endif %}
+                <li><h4>
+                        {{ charAdvantage.advantage.name }}&nbsp;
+                        {{ charAdvantage.score > 1 ? ('(x'~charAdvantage.score~')') }}
+                    </h4></li>
+                {% if loop.last %}</ul>{% endif %}
+            {% endfor %}
+            <hr>
+            <h3>{{ 'character.disadvantages'|trans({}, 'CorahnRinBundle') }}</h3>
+            {% for charAdvantage in character.disadvantages %}
+                {% if loop.first %}<ul class="list-bullet">{% endif %}
+                <li><h4>
+                        {{ charAdvantage.advantage.name }}&nbsp;
+                        {{ charAdvantage.score > 1 ? ('(x'~charAdvantage.score~')') }}
+                    </h4></li>
+                {% if loop.last %}</ul>{% endif %}
+            {% endfor %}
+        </div>
+        <div class="col l4">
+            <h3>{{ 'character.health_state'|trans({}, 'CorahnRinBundle') }}</h3>
+            ({{ 'character.max_health'|trans({}, 'CorahnRinBundle') }}&nbsp;: {{ character.maxHealth.sum }})
+            <h4 class="health">
+                {{ 'character.health.good'|trans({}, 'CorahnRinBundle') }}&nbsp;:
+                <span class="right">
+                    {{ character.health.good }}&nbsp;/&nbsp;{{ character.maxHealth.good }}
+                </span>
+            </h4>
+            <h4 class="health">
+                {{ 'character.health.okay'|trans({}, 'CorahnRinBundle') }}&nbsp;(-1)&nbsp;:
+                <span class="right">
+                    {{ character.health.okay }}&nbsp;/&nbsp;{{ character.maxHealth.okay }}
+                </span>
+            </h4>
+            <h4 class="health">
+                {{ 'character.health.bad'|trans({}, 'CorahnRinBundle') }}&nbsp;(-2)&nbsp;:
+                <span class="right">
+                    {{ character.health.bad }}&nbsp;/&nbsp;{{ character.maxHealth.bad }}
+                </span>
+            </h4>
+            <h4 class="health">
+                {{ 'character.health.critical'|trans({}, 'CorahnRinBundle') }}&nbsp;(-3)&nbsp;:
+                <span class="right">
+                    {{ character.health.critical }}&nbsp;/&nbsp;{{ character.maxHealth.critical }}
+                </span>
+            </h4>
+            <h4 class="health">
+                {{ 'character.health.agony'|trans({}, 'CorahnRinBundle') }}&nbsp;:
+                <span class="right">
+                    {{ character.health.agony ? 1 : 0 }}&nbsp;/&nbsp;{{ character.maxHealth.agony ? 1 : 0 }}
+                </span>
+            </h4>
+            <hr>
+            <div class="right">
+                <h4 class="mt5">{{ 'character.stamina'|trans({}, 'CorahnRinBundle') }}<span class="ml10 right">{{ character.stamina }}</span></h4>
+                <h4 class="mt5">{{ 'character.survival'|trans({}, 'CorahnRinBundle') }}<span class="ml10 right">{{ character.survival }}</span></h4>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <h2>{{ 'character.domains'|trans({}, 'CorahnRinBundle') }}</h2>
+        {% for domains in character.domains|batch(4) %}
+            <div class="row">
+                {% for charDomain in domains %}
+                    <div class="col s3">
+                        <h3>
+                            {{ charDomain.domain.name }}
+                        </h3>
+                        <h4 class="text-xl">
+                            {%- for i in 1..5 -%}
+                                {%- if charDomain.score >= i %}●{% else %}<span class="grey-text text-darken-3">o</span>{% endif -%}
+                            {%- endfor %}&nbsp;&plus;&nbsp;<small>({{ charDomain.domain.way.shortName|capitalize }}) {{ character.way(charDomain.domain.way.id).score -}}</small>
+                            <span class="right">&equals;&nbsp;{{ charDomain.totalScore }}</span>
+                        </h4>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
