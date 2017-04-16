@@ -44,7 +44,7 @@ use UserBundle\Entity\User;
  * @property ArrayCollection|Ogham[] $ogham
  * @property ArrayCollection|Weapons[] $weapons
  * @property ArrayCollection|CombatArts[] $combatArts
- * @property ArrayCollection|CharAdvantages[] $advantages
+ * @property ArrayCollection|CharAdvantages[] $charAdvantages
  * @property ArrayCollection|CharDomains[] $domains
  * @property ArrayCollection|CharDisciplines[] $disciplines
  * @property ArrayCollection|CharWays[] $ways
@@ -1279,9 +1279,9 @@ trait CharacterGettersSetters
      *
      * @return $this
      */
-    public function addAdvantage(CharAdvantages $advantage)
+    public function addCharAdvantage(CharAdvantages $advantage)
     {
-        $this->advantages[] = $advantage;
+        $this->charAdvantages[] = $advantage;
 
         return $this;
     }
@@ -1291,9 +1291,9 @@ trait CharacterGettersSetters
      *
      * @return $this
      */
-    public function removeAdvantage(CharAdvantages $advantage)
+    public function removeCharAdvantage(CharAdvantages $advantage)
     {
-        $this->advantages->removeElement($advantage);
+        $this->charAdvantages->removeElement($advantage);
 
         return $this;
     }
@@ -1303,9 +1303,9 @@ trait CharacterGettersSetters
      *
      * @codeCoverageIgnore
      */
-    public function getAdvantages()
+    public function getCharAdvantages()
     {
-        return $this->advantages;
+        return $this->charAdvantages;
     }
 
     /**

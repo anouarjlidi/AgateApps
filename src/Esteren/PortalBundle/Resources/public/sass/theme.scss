@@ -19,6 +19,14 @@ form textarea {
     border-right: none transparent;
 }
 
+a.button-collapse {
+    padding-left: 25px;
+    padding-right: 25px;
+    &:hover {
+        background: rgba(255, 255, 255, 0.1);
+    }
+}
+
 .btn.disable_tags {
     line-height: 2em;
     font-size: 0.8em;

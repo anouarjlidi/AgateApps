@@ -161,7 +161,7 @@ class PdfManager implements SheetsManagerInterface
         $av = [];
         foreach ($character->getAdvantages() as $v) {
             if (!$v->getAdvantage()->getIsDesv()) {
-                $av[] = $translator->trans($v->getAdvantage()->getName()).($v->getValue() > 1 ? '    x'.$v->getValue() : '');
+                $av[] = $translator->trans($v->getAdvantage()->getName()).($v->getScore() > 1 ? '    x'.$v->getScore() : '');
             }
         }
         if (isset($av[0])) {
@@ -179,7 +179,7 @@ class PdfManager implements SheetsManagerInterface
         $dv = [];
         foreach ($character->getAdvantages() as $v) {
             if ($v->getAdvantage()->getIsDesv()) {
-                $dv[] = $translator->trans($v->getAdvantage()->getName()).($v->getValue() > 1 ? '    x'.$v->getValue() : '');
+                $dv[] = $translator->trans($v->getAdvantage()->getName()).($v->getScore() > 1 ? '    x'.$v->getScore() : '');
             }
         }
         if (isset($dv[0])) {

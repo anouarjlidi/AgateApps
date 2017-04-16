@@ -26,6 +26,12 @@
     margin-bottom: 10px;
 }
 
+ul.list-bullet,
+ul.list-bullet > li
+{
+    list-style: disc inside;
+}
+
 .position-static { position: static !important; }
 
 /* Text colors */
@@ -49,6 +55,8 @@
 .text-underline { text-decoration: underline; }
 
 /* Helpers */
+
+.m0 { margin: 0; }
 
 .mw50 { max-width:  50px; }
 

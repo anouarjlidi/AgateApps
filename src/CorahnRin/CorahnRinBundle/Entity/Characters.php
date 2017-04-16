@@ -392,7 +392,7 @@ class Characters extends BaseCharacter
      *
      * @ORM\OneToMany(targetEntity="CorahnRin\CorahnRinBundle\Entity\CharacterProperties\CharAdvantages", mappedBy="character")
      */
-    protected $advantages;
+    protected $charAdvantages;
 
     /**
      * @var CharDomains[]
@@ -467,18 +467,18 @@ class Characters extends BaseCharacter
      */
     public function __construct()
     {
-        $this->armors      = new ArrayCollection();
-        $this->artifacts   = new ArrayCollection();
-        $this->miracles    = new ArrayCollection();
-        $this->ogham       = new ArrayCollection();
-        $this->weapons     = new ArrayCollection();
-        $this->combatArts  = new ArrayCollection();
-        $this->advantages  = new ArrayCollection();
-        $this->domains     = new ArrayCollection();
-        $this->disciplines = new ArrayCollection();
-        $this->ways        = new ArrayCollection();
-        $this->flux        = new ArrayCollection();
-        $this->setbacks    = new ArrayCollection();
+        $this->armors         = new ArrayCollection();
+        $this->artifacts      = new ArrayCollection();
+        $this->miracles       = new ArrayCollection();
+        $this->ogham          = new ArrayCollection();
+        $this->weapons        = new ArrayCollection();
+        $this->combatArts     = new ArrayCollection();
+        $this->charAdvantages = new ArrayCollection();
+        $this->domains        = new ArrayCollection();
+        $this->disciplines    = new ArrayCollection();
+        $this->ways           = new ArrayCollection();
+        $this->flux           = new ArrayCollection();
+        $this->setbacks       = new ArrayCollection();
     }
 
     /*-------------------------------------------------*/
@@ -487,24 +487,36 @@ class Characters extends BaseCharacter
     /*-------------------------------------------------*/
     /*-------------------------------------------------*/
 
-    public function createFromGenerator(array $data)
+    /**
+     * @return CharAdvantages[]
+     */
+    public function getAdvantages()
     {
-        $character = new static();
+        $advantages = [];
 
-        $mandatoryFields = [
-            'name',
-        ];
-
-        foreach ($mandatoryFields as $field) {
-            if (!array_key_exists($field, $data)) {
-                throw new \InvalidArgumentException('Field "'.$field.'" is not defined in data.');
+        foreach ($this->charAdvantages as $charAdvantage) {
+            if (!$charAdvantage->getAdvantage()->getIsDesv()) {
+                $advantages[] = $charAdvantage;
             }
-            $this->$field = $data[$field];
         }
 
-        //TODO: add logic
+        return $advantages;
+    }
 
-        return $character;
+    /**
+     * @return CharAdvantages[]
+     */
+    public function getDisadvantages()
+    {
+        $advantages = [];
+
+        foreach ($this->charAdvantages as $charAdvantage) {
+            if ($charAdvantage->getAdvantage()->getIsDesv()) {
+                $advantages[] = $charAdvantage;
+            }
+        }
+
+        return $advantages;
     }
 
     /**

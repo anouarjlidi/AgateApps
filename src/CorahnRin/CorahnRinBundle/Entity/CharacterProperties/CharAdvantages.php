@@ -45,24 +45,24 @@ class CharAdvantages
     /**
      * @var bool
      *
-     * @ORM\Column(name="value", type="integer")
+     * @ORM\Column(name="score", type="integer")
      * @Assert\NotNull()
      * @Assert\GreaterThanOrEqual(value=0)
      */
-    protected $value;
+    protected $score;
 
     /**
      * Set doubleValue.
      *
-     * @param int $value
+     * @param int $score
      *
      * @return CharAdvantages
      *
      * @codeCoverageIgnore
      */
-    public function setValue($value)
+    public function setScore($score)
     {
-        $this->value = $value;
+        $this->score = $score;
 
         return $this;
     }
@@ -74,9 +74,9 @@ class CharAdvantages
      *
      * @codeCoverageIgnore
      */
-    public function getValue()
+    public function getScore()
     {
-        return $this->value;
+        return $this->score;
     }
 
     /**

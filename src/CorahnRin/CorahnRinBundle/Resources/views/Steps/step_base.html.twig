@@ -11,15 +11,16 @@
 
 {% block content_for_layout %}
     <div class="row">
-        <div class="col l3 step_menu">
-            {#{{ dump(current_character) }}#}
-            {{ include('@CorahnRin/Steps/menu.html.twig', {
+        {% block step_menu %}
+        <div class="col l3 s12 step_menu">
+            {{ include('@CorahnRin/Steps/steps_menu.html.twig', {
                 'steps': steps,
                 'current_step': current_step
             }) }}
         </div>
-        <div class="col l9 step_module">
-            <h1>{{ 'Étape' | trans }} {{ current_step.step }} : {{ current_step.label | trans }}</h1>
+        {% endblock %}
+        <div class="col l9 s12 step_module">
+            <h1>{{ 'steps.step' | trans({}, 'CorahnRinBundle') }} {{ current_step.step }} : {{ current_step.label | trans }}</h1>
 
             {{ include('_flash_messages.html.twig') }}
 
@@ -32,6 +33,7 @@
                     <hr class="clearfix" />
                     {% block step_content %}
                     {% endblock %}
+                    <div class="clearfix"></div>
                 </div>
             </form>
         </div>

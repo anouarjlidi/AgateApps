@@ -228,8 +228,8 @@ final class SessionToCharacter
             $charAdvantage = new CharAdvantages();
             $charAdvantage->setCharacter($character);
             $charAdvantage->setAdvantage($this->advantages[$id]);
-            $charAdvantage->setValue($value);
-            $character->addAdvantage($charAdvantage);
+            $charAdvantage->setScore($value);
+            $character->addCharAdvantage($charAdvantage);
         }
 
         foreach ($values['11_advantages']['disadvantages'] as $id => $value) {
@@ -239,8 +239,8 @@ final class SessionToCharacter
             $charAdvantage = new CharAdvantages();
             $charAdvantage->setCharacter($character);
             $charAdvantage->setAdvantage($this->advantages[$id]);
-            $charAdvantage->setValue($value);
-            $character->addAdvantage($charAdvantage);
+            $charAdvantage->setScore($value);
+            $character->addCharAdvantage($charAdvantage);
         }
     }
 
@@ -366,34 +366,34 @@ final class SessionToCharacter
                 }
                 if (isset($this->domains[$bonus])) {
                     if ($adv->getIsDesv()) {
-                        $maluses[$bonus] += $charAdvantage->getValue();
+                        $maluses[$bonus] += $charAdvantage->getScore();
                     } else {
-                        $bonuses[$bonus] += $charAdvantage->getValue();
+                        $bonuses[$bonus] += $charAdvantage->getScore();
                     }
                 } else {
                     $disadvantageRatio = $adv->getIsDesv() ? -1 : 1;
                     switch ($bonus) {
                         case Avantages::BONUS_RESM;
-                            $character->setMentalResistBonus($character->getMentalResistBonus() + ($charAdvantage->getValue() * $disadvantageRatio));
+                            $character->setMentalResistBonus($character->getMentalResistBonus() + ($charAdvantage->getScore() * $disadvantageRatio));
                             break;
                         case Avantages::BONUS_BLESS:
-                            $character->setMaxHealth($character->getMaxHealth() + ($charAdvantage->getValue() * $disadvantageRatio));
-                            $character->setHealth($character->getHealth() + ($charAdvantage->getValue() * $disadvantageRatio));
+                            $character->setMaxHealth($character->getMaxHealth() + ($charAdvantage->getScore() * $disadvantageRatio));
+                            $character->setHealth($character->getHealth() + ($charAdvantage->getScore() * $disadvantageRatio));
                             break;
                         case Avantages::BONUS_VIG;
-                            $character->setStamina($character->getStamina() + ($charAdvantage->getValue() * $disadvantageRatio));
+                            $character->setStamina($character->getStamina() + ($charAdvantage->getScore() * $disadvantageRatio));
                             break;
                         case Avantages::BONUS_TRAU:
-                            $character->setTrauma($character->getTrauma() + $charAdvantage->getValue());
+                            $character->setTrauma($character->getTrauma() + $charAdvantage->getScore());
                             break;
                         case Avantages::BONUS_DEF;
-                            $character->setDefenseBonus($character->getDefenseBonus() + ($charAdvantage->getValue() * $disadvantageRatio));
+                            $character->setDefenseBonus($character->getDefenseBonus() + ($charAdvantage->getScore() * $disadvantageRatio));
                             break;
                         case Avantages::BONUS_RAP;
-                            $character->setSpeedBonus($character->getSpeedBonus() + ($charAdvantage->getValue() * $disadvantageRatio));
+                            $character->setSpeedBonus($character->getSpeedBonus() + ($charAdvantage->getScore() * $disadvantageRatio));
                             break;
                         case Avantages::BONUS_SUR;
-                            $character->setSurvival($character->getSurvival() + ($charAdvantage->getValue() * $disadvantageRatio));
+                            $character->setSurvival($character->getSurvival() + ($charAdvantage->getScore() * $disadvantageRatio));
                             break;
                         case Avantages::BONUS_100G;
                             $character->getMoney()->addFrost(100);

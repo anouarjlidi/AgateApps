@@ -44,7 +44,6 @@ class Step20Finish extends AbstractStepAction
 
         return $this->renderCurrentStep([
             'character' => $character,
-            'serialized_character' => json_encode($this->getCurrentCharacter(), 480),
         ]);
     }
 }
