@@ -93,7 +93,6 @@
             "@symfony-scripts"
         ],
         "compile": [
-            "env ",
             "cd node_modules/node-sass && node scripts/build -f",
             "node node_modules/gulp4/bin/gulp.js dump --prod",
             "cp web/.htaccess.dist web/.htaccess",
