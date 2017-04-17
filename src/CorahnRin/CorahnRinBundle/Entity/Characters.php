@@ -40,6 +40,20 @@ class Characters extends BaseCharacter
     const FEMALE = 'character.sex.female';
     const MALE   = 'character.sex.male';
 
+    const COMBAT_ATTITUDE_STANDARD  = 'character.combat_attitude.standard';
+    const COMBAT_ATTITUDE_OFFENSIVE = 'character.combat_attitude.offensive';
+    const COMBAT_ATTITUDE_DEFENSIVE = 'character.combat_attitude.defensive';
+    const COMBAT_ATTITUDE_QUICK     = 'character.combat_attitude.quick';
+    const COMBAT_ATTITUDE_MOVEMENT  = 'character.combat_attitude.movement';
+
+    const COMBAT_ATTITUDES = [
+        self::COMBAT_ATTITUDE_STANDARD,
+        self::COMBAT_ATTITUDE_OFFENSIVE,
+        self::COMBAT_ATTITUDE_DEFENSIVE,
+        self::COMBAT_ATTITUDE_QUICK,
+        self::COMBAT_ATTITUDE_MOVEMENT,
+    ];
+
     use CharacterGettersSetters;
 
     /**
@@ -491,7 +505,7 @@ class Characters extends BaseCharacter
     /**
      * @return CharAdvantages[]
      */
-    public function getAdvantages()
+    public function getAdvantages(): array
     {
         $advantages = [];
 
@@ -507,7 +521,7 @@ class Characters extends BaseCharacter
     /**
      * @return CharAdvantages[]
      */
-    public function getDisadvantages()
+    public function getDisadvantages(): array
     {
         $advantages = [];
 
@@ -525,7 +539,7 @@ class Characters extends BaseCharacter
      *
      * @return string
      */
-    public function getConscience()
+    public function getConscience(): string
     {
         return $this->getWay('rai')->getScore() + $this->getWay('ide')->getScore();
     }
@@ -535,7 +549,7 @@ class Characters extends BaseCharacter
      *
      * @return string
      */
-    public function getInstinct()
+    public function getInstinct(): string
     {
         return $this->getWay('cre')->getScore() + $this->getWay('com')->getScore();
     }
@@ -547,7 +561,7 @@ class Characters extends BaseCharacter
      *
      * @return CharDomains|null
      */
-    public function getDomain($id)
+    public function getDomain($id): ?CharacterProperties\CharDomains
     {
         foreach ($this->domains as $charDomain) {
             $domain = $charDomain->getDomain();
@@ -563,11 +577,33 @@ class Characters extends BaseCharacter
     }
 
     /**
+     * @param int|Domains $domain
+     *
+     * @return CharDisciplines[]
+     */
+    public function getDisciplineFromDomain($domain): array
+    {
+        if ($domain instanceof Domains) {
+            $domain = $domain->getId();
+        }
+
+        $disciplines = [];
+
+        foreach ($this->disciplines as $discipline) {
+            if ($discipline->getDomain()->getId() === $domain) {
+                $disciplines[] = $discipline;
+            }
+        }
+
+        return $disciplines;
+    }
+
+    /**
      * @param string $shortName
      *
      * @return CharWays|null
      */
-    public function getWay($shortName)
+    public function getWay($shortName): ?CharacterProperties\CharWays
     {
         foreach ($this->ways as $charWay) {
             if (
@@ -586,7 +622,7 @@ class Characters extends BaseCharacter
      *
      * @return CharDisciplines|null
      */
-    public function getDiscipline($id)
+    public function getDiscipline($id): ?CharacterProperties\CharDisciplines
     {
         foreach ($this->disciplines as $charDiscipline) {
             $discipline = $charDiscipline->getDiscipline();
@@ -606,7 +642,7 @@ class Characters extends BaseCharacter
      *
      * @return int
      */
-    public function getBaseDefense()
+    public function getBaseDefense(): int
     {
         $rai = $this->getWay('rai')->getScore();
         $emp = $this->getWay('emp')->getScore();
@@ -615,11 +651,34 @@ class Characters extends BaseCharacter
     }
 
     /**
+     * @param string $attitude
+     * @return int|null
+     */
+    public function getTotalDefense($attitude = self::COMBAT_ATTITUDE_STANDARD): ?int
+    {
+        $this->validateCombatAttitude($attitude);
+
+        $defense = $this->getBaseDefense() + $this->defense + $this->defenseBonus;
+
+        switch ($attitude) {
+            case self::COMBAT_ATTITUDE_DEFENSIVE:
+            case self::COMBAT_ATTITUDE_MOVEMENT:
+                $defense += $this->getPotential();
+                break;
+            case self::COMBAT_ATTITUDE_OFFENSIVE:
+                $defense -= $this->getPotential();
+                break;
+        }
+
+        return $defense;
+    }
+
+    /**
      * Base speed is calculated from "Combativity" and "Empathy".
      *
      * @return int
      */
-    public function getBaseSpeed()
+    public function getBaseSpeed(): int
     {
         $com = $this->getWay('com')->getScore();
         $emp = $this->getWay('emp')->getScore();
@@ -628,11 +687,28 @@ class Characters extends BaseCharacter
     }
 
     /**
+     * @param string $attitude
+     * @return int|null
+     */
+    public function getTotalSpeed($attitude = self::COMBAT_ATTITUDE_STANDARD): ?int
+    {
+        $this->validateCombatAttitude($attitude);
+
+        $speed = $this->getBaseSpeed() + $this->speed + $this->speedBonus;
+
+        if (self::COMBAT_ATTITUDE_QUICK === $attitude) {
+            $speed += $this->getPotential();
+        }
+
+        return $speed;
+    }
+
+    /**
      * Base mental resistance is calculated from "Conviction".
      *
      * @return int
      */
-    public function getBaseMentalResist()
+    public function getBaseMentalResist(): int
     {
         $ide = $this->getWay('ide')->getScore();
 
@@ -644,7 +720,7 @@ class Characters extends BaseCharacter
      *
      * @throws CharactersException
      */
-    public function getPotential()
+    public function getPotential(): ?int
     {
         $creativity = $this->getWay('cre')->getScore();
 
@@ -673,7 +749,7 @@ class Characters extends BaseCharacter
      *
      * @return int
      */
-    public function getMeleeAttackScore($discipline = null, $potentialOperator = '')
+    public function getMeleeAttackScore($discipline = null, $potentialOperator = ''): int
     {
         return $this->getAttackScore('melee', $discipline, $potentialOperator);
     }
@@ -684,14 +760,16 @@ class Characters extends BaseCharacter
      *
      * @param string     $type
      * @param int|string $discipline
-     * @param string     $potentialOperator Can be "+" or "-".
+     * @param string     $attitude
      *
      * @throws CharactersException
      *
      * @return int
      */
-    public function getAttackScore($type = 'melee', $discipline = null, $potentialOperator = '')
+    public function getAttackScore($type = 'melee', $discipline = null, $attitude = self::COMBAT_ATTITUDE_STANDARD): int
     {
+        $this->validateCombatAttitude($attitude);
+
         // Récupération du score de voie
         $way = $this->getWay('com')->getScore();
 
@@ -701,7 +779,7 @@ class Characters extends BaseCharacter
         } elseif ($type === 'ranged') {
             $domain_id = 14;
         } else {
-            throw new CharactersException('Vous devez indiquer un type d\'attaque entre "melee" et "ranged".');
+            throw new CharactersException('Attack can only be "melee" or "ranged".');
         }
 
         $domain_id = (int) $domain_id;
@@ -722,15 +800,16 @@ class Characters extends BaseCharacter
 
         $attack = $way + $domain;
 
-        if ($potentialOperator === '+') {
-            $attack += $this->getPotential();
-        } elseif ($potentialOperator === '-') {
-            $attack -= $this->getPotential();
-        } else {
-            throw new \InvalidArgumentException(sprintf(
-                'Wrong potential operator specified: "%s" or "%s" expected, "%s" given.',
-                '+', '-', $potentialOperator
-            ));
+        switch ($attitude) {
+            case self::COMBAT_ATTITUDE_OFFENSIVE:
+                $attack += $this->getPotential();
+                break;
+            case self::COMBAT_ATTITUDE_DEFENSIVE:
+                $attack -= $this->getPotential();
+                break;
+            case self::COMBAT_ATTITUDE_MOVEMENT:
+                $attack = 0;
+                break;
         }
 
         return $attack;
@@ -741,11 +820,11 @@ class Characters extends BaseCharacter
      *
      * @return bool
      */
-    public function hasAdvantage($id)
+    public function hasAdvantage($id): bool
     {
         $id = (int) $id;
 
-        foreach ($this->advantages as $advantage) {
+        foreach ($this->charAdvantages as $advantage) {
             if ($advantage->getAdvantage()->getId() === $id) {
                 return true;
             }
@@ -760,7 +839,7 @@ class Characters extends BaseCharacter
      *
      * @return bool
      */
-    public function hasSetback($id, $falseIfAvoided = true)
+    public function hasSetback($id, $falseIfAvoided = true): bool
     {
         $id = (int) $id;
 
@@ -774,5 +853,15 @@ class Characters extends BaseCharacter
         }
 
         return false;
+    }
+
+    /**
+     * @param string $attitude
+     */
+    private function validateCombatAttitude(string $attitude): void
+    {
+        if (!in_array($attitude, self::COMBAT_ATTITUDES, true)) {
+            throw new \InvalidArgumentException("Combat attitude is invalid, $attitude given.");
+        }
     }
 }
