@@ -148,6 +148,37 @@ menu:
     steps: 'Étapes'
 
 character:
+    orientation:
+        instinctive: |
+            L'Instinct concerne toute l'énergie pulsionnelle d'un être vivant. Cet Aspect regroupe notamment les
+            instincts de survie et d'autoconservation ainsi que tout ce qui a trait à la sexualité.
+        rational: |
+            Cet Aspect rend compte de l'importance de la rationalité pour le PJ, de son ancrage dans la réalité,
+            de sa capacité de logique et de réflexion, et de sa solidité.
+    sex:
+        female: 'Femme'
+        male: 'Homme'
+    combat_attitude:
+        standard: 'Standard'
+        offensive: 'Offensive'
+        defensive: 'Défensive'
+        quick: 'Rapide'
+        movement: 'Mouvement'
+        sheet_explanation: |
+            Pour l'attaque, le premier score correspond au domaine "Combat au Contact", et le deuxième correspond
+            au domaine "Tir et Lancer", sans prise en compte d'une quelconque discipline.
+    health:
+        good: 'Bon'
+        okay: 'Moyen'
+        bad: 'Grave'
+        critical: 'Critique'
+        agony: 'Agonie'
+    combat:
+        atk: 'Att'
+        def: 'Def'
+        spd: 'Rap'
+    weapon:
+        dmg: 'dom.'
     details: 'Détails du personnage'
     domains: 'Domaines'
     name: 'Nom'
@@ -163,15 +194,10 @@ character:
     max_health: 'Santé maximale'
     stamina: 'Vigueur'
     survival: 'Survie'
-    orientation:
-        instinctive: 'L''Instinct concerne toute l''énergie pulsionnelle d''un être vivant. Cet Aspect regroupe notamment les instincts de survie et d''autoconservation ainsi que tout ce qui a trait à la sexualité.'
-        rational: 'Cet Aspect rend compte de l''importance de la rationalité pour le PJ, de son ancrage dans la réalité, de sa capacité de logique et de réflexion, et de sa solidité.'
-    sex:
-        female: 'Femme'
-        male: 'Homme'
-    health:
-        good: 'Bon'
-        okay: 'Moyen'
-        bad: 'Grave'
-        critical: 'Critique'
-        agony: 'Agonie'
+    disciplines: 'Disciplines'
+    combat_attitudes: 'Attitudes de combat'
+    weapons: 'Armes'
+    defense: 'Défense'
+    speed: 'Rapidité'
+    armors: 'Armures'
+    potential: 'Potentiel'

@@ -7,6 +7,21 @@
         margin: 0;
         padding: 0;
         border-bottom: solid 1px;
+        &.main {
+            margin-bottom: 45px;
+            border: none 0 transparent;
+            -webkit-transition: -webkit-box-shadow 0.4s;
+            -moz-transition: -moz-box-shadow 0.4s;
+            transition: box-shadow 0.4s;
+            -webkit-box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+            -moz-box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+            &:hover {
+                -webkit-box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+                -moz-box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+                box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+            }
+        }
     }
     .row, hr {
         border-color: #444;
@@ -21,7 +36,7 @@
         text-transform: capitalize;
         text-shadow: 0 0 30px #999, 2px 2px 1px #000;
     }
-    h2, h3, h4, h5, h6 {
+    h2, h3, h4, h5, h6, p {
         margin: 1.1rem 0.8em;
     }
     h1 {
@@ -49,11 +64,11 @@
     h5 {
         font-size: 1.2em;
     }
-    h5 {
+    h6 {
         font-size: 1em;
     }
     &, p {
-        font-size: 0.8em;
+        font-size: 0.9em;
     }
     ul.list-bullet h4 {
         display: inline-block;
