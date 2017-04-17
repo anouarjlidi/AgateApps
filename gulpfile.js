@@ -19,8 +19,10 @@ var config = {
      *     ]
      */
     "copy": {
+        "fonts/roboto": [
+            "node_modules/materialize-css/dist/fonts/roboto/*"
+        ],
         "fonts/": [
-            "node_modules/materialize-css/dist/fonts/*",
             "node_modules/font-awesome/fonts/*",
             "node_modules/bootstrap/dist/fonts/*"
         ],
