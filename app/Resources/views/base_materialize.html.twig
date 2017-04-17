@@ -147,7 +147,7 @@
                     <div class="footer-copyright">
                         <div class="container">
                             <p class="left">
-                            {{ 'footer.version' | trans }} {{ version_code }} ({{ version_date|localizeddate(time_format='none', locale=app.request.locale) }})
+                            {{ 'footer.version' | trans }} {{ version_code|replace({'v':''}) }} ({{ version_date|localizeddate(time_format='short', locale=app.request.locale) }})
                             <br>
                             Copyright &copy; 2012-{{ 'now'|date('Y') }} {{ 'footer.rights' | trans }}
                             &ndash;

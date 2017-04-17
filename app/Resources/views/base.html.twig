@@ -159,7 +159,7 @@
         {% block footer %}
         <footer id="footer">
             <div class="container">
-                <p class="text-muted text-center">{{ 'footer.version' | trans }} {{ version_code }} ({{ version_date|localizeddate(time_format='none') }})</p>
+                <p class="text-muted text-center">{{ 'footer.version' | trans }} {{ version_code|replace({'v':''}) }} ({{ version_date|localizeddate(time_format='short', locale=app.request.locale) }})</p>
                 <p class="text-muted text-center">Copyright &copy; 2012 - {{ 'now'|date('Y') }} {{ 'footer.rights' | trans }}</p>
                 <p class="text-muted text-center">{{ 'footer.brand' | trans | raw }}</p>
             </div>
