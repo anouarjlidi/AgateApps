@@ -99,6 +99,10 @@
             "cp web/.htaccess.dist web/.htaccess",
             "php bin/console doctrine:schema:update --dump-sql --force",
             "php bin/console esterenmaps:map:generate-tiles 1"
+        ],
+        "warmup": [
+            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache"
         ]
     },
     "config": {
