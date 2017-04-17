@@ -7,8 +7,8 @@ imports:
 
 parameters:
     # The version code is always the last version that was put in production
-    env(HEROKU_RELEASE_VERSION): '0.12.6'
-    env(HEROKU_RELEASE_CREATED_AT): '2017-04-16'
+    env(HEROKU_RELEASE_VERSION): '0.12.7'
+    env(HEROKU_RELEASE_CREATED_AT): '2017-04-17'
     version_code: '%env(HEROKU_RELEASE_VERSION)%'
     version_date: '%env(HEROKU_RELEASE_CREATED_AT)%'
     locale: fr
