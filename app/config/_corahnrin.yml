@@ -1,6 +1,7 @@
 
 # Use PierstovalCharacterManager to setup CorahnRin's character generator.
 # This bundle has to be standalone as much as possible, to only use config and/or override.
+# Services are in "src/CorahnRin/CorahnRinBundle/Resources/config/steps.yml"
 pierstoval_character_manager:
     character_class: 'CorahnRin\CorahnRinBundle\Entity\Characters'
     steps:

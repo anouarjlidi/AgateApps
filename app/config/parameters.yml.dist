@@ -16,10 +16,10 @@ parameters:
     env(DATABASE_PASSWORD_LEGACY):  ~
     env(DATABASE_VERSION_LEGACY):   ~
 
-    mailer_transport:  smtp
-    mailer_host:       127.0.0.1
-    mailer_user:       ~
-    mailer_password:   ~
+    env(MAILER_TRANSPORT):  smtp
+    env(MAILER_HOST):       127.0.0.1
+    env(MAILER_USER):       ~
+    env(MAILER_PASSWORD):   ~
 
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
