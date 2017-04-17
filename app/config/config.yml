@@ -133,6 +133,7 @@ swiftmailer:
     host:      '%env(MAILER_HOST)%'
     username:  '%env(MAILER_USER)%'
     password:  '%env(MAILER_PASSWORD)%'
+    port:      '%env(MAILER_PORT)%'
     spool:     { type: memory }
 
 # Doctrine extensions

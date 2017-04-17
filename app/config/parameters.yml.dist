@@ -20,6 +20,7 @@ parameters:
     env(MAILER_HOST):       127.0.0.1
     env(MAILER_USER):       ~
     env(MAILER_PASSWORD):   ~
+    env(MAILER_PORT):       ~
 
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
