@@ -28,7 +28,7 @@ class CharAdvantages
      * @var Characters
      *
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="CorahnRin\CorahnRinBundle\Entity\Characters", inversedBy="advantages")
+     * @ORM\ManyToOne(targetEntity="CorahnRin\CorahnRinBundle\Entity\Characters", inversedBy="charAdvantages")
      * @Assert\NotNull()
      */
     protected $character;
