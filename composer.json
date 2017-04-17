@@ -93,7 +93,7 @@
             "@symfony-scripts"
         ],
         "compile": [
-            "bash env",
+            "env ",
             "cd node_modules/node-sass && node scripts/build -f",
             "node node_modules/gulp4/bin/gulp.js dump --prod",
             "cp web/.htaccess.dist web/.htaccess",
@@ -101,8 +101,8 @@
             "php bin/console esterenmaps:map:generate-tiles 1"
         ],
         "warmup": [
-            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache"
+            "php bin/console cache:clear --no-warmup",
+            "php bin/console cache:warmup"
         ]
     },
     "config": {

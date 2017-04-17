@@ -41,6 +41,13 @@ if (false === $debug && 'prod' === $environment) {
 }
 
 $request = Request::createFromGlobals();
+
+if (getenv('HEROKU') === '1') {
+    Request::setTrustedProxies(array($request->server->get('REMOTE_ADDR')));
+    Request::setTrustedHeaderName(Request::HEADER_FORWARDED, null);
+    Request::setTrustedHeaderName(Request::HEADER_CLIENT_HOST, null);
+}
+
 $response = $kernel->handle($request);
 $response->send();
 $kernel->terminate($request, $response);
