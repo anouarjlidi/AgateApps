@@ -1,0 +1,22 @@
+
+<div class="main row">
+    <div class="col s8">
+        <h2>{{ 'character.equipment'|trans({}, 'CorahnRinBundle') }}</h2>
+
+        <div class="row">
+            {% for item in character.inventory %}
+                <div class="col s3"><h3>{{ item }}</h3></div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="col s4">
+        <h2>{{ 'character.treasures'|trans({}, 'CorahnRinBundle') }}</h2>
+
+        <ul>
+            {% for item in character.treasures %}
+                <li><h3>{{ item }}</h3></li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>

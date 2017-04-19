@@ -130,6 +130,13 @@ class Characters extends BaseCharacter
     protected $inventory;
 
     /**
+     * @var array
+     *
+     * @ORM\Column(name="treasures", type="simple_array")
+     */
+    protected $treasures;
+
+    /**
      * @var Money
      *
      * @ORM\Embedded(class="CorahnRin\CorahnRinBundle\Entity\CharacterProperties\Money", columnPrefix="daol_")
@@ -713,6 +720,14 @@ class Characters extends BaseCharacter
         $ide = $this->getWay('ide')->getScore();
 
         return $ide + 5;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTotalMentalResist(): int
+    {
+        return $this->getBaseMentalResist() + $this->mentalResist + $this->mentalResistBonus;
     }
 
     /**

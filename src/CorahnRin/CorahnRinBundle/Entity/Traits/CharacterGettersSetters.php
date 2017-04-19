@@ -247,6 +247,30 @@ trait CharacterGettersSetters
     }
 
     /**
+     * @return array
+     *
+     * @codeCoverageIgnore
+     */
+    public function getTreasures()
+    {
+        return $this->treasures;
+    }
+
+    /**
+     * @param array $treasures
+     *
+     * @return $this
+     *
+     * @codeCoverageIgnore
+     */
+    public function setTreasures(array $treasures)
+    {
+        $this->treasures = $treasures;
+
+        return $this;
+    }
+
+    /**
      * @param Money $money
      *
      * @return $this
@@ -1528,5 +1552,4 @@ trait CharacterGettersSetters
     {
         return $this->game;
     }
-
 }

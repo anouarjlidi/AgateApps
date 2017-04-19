@@ -18,10 +18,19 @@
         </div>
     </div>
 
+    {# First page #}
     {{ include('@CorahnRin/CharacterView/details/details.html.twig') }}
     {{ include('@CorahnRin/CharacterView/details/ways_advantages_health.html.twig') }}
     {{ include('@CorahnRin/CharacterView/details/domains.html.twig') }}
+
+    {# Second page #}
     {{ include('@CorahnRin/CharacterView/details/weapons_attitudes_defense.html.twig') }}
+    {{ include('@CorahnRin/CharacterView/details/equipment_tresures.html.twig') }}
+    {{ include('@CorahnRin/CharacterView/details/mystical_attributes.html.twig') }}
+
+    {# Third page #}
+    {{ include('@CorahnRin/CharacterView/details/history.html.twig') }}
+    {{ include('@CorahnRin/CharacterView/details/sanity.html.twig') }}
 
 </div>
 

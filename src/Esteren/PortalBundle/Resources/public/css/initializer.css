@@ -47,6 +47,9 @@ ul.list-bullet > li
 *.text-center { text-align: center !important; }
 *.text-right { text-align: right !important; }
 
+*.text-xxs { font-size: 0.6em !important; }
+*.text-xs { font-size: 0.8em !important; }
+*.text-sm { font-size: 1em !important; }
 *.text-m { font-size: 1.2em !important; }
 *.text-l { font-size: 1.4em !important; }
 *.text-xl { font-size: 1.6em !important; }
@@ -58,6 +61,9 @@ ul.list-bullet > li
 
 /* Text format */
 .text-underline { text-decoration: underline !important; }
+
+.lhn { line-height: normal !important; }
+.lh1em { line-height: 1em !important; }
 
 /* Helpers */
 
@@ -75,6 +81,7 @@ ul.list-bullet > li
 .w220 { width: 220px !important; }
 .w240 { width: 240px !important; }
 
+.p0 { padding: 0 !important; }
 .p15 { padding: 15px !important; }
 
 .pl15 { padding-left: 15px !important; }

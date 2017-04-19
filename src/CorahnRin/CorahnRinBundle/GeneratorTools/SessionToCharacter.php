@@ -357,16 +357,13 @@ final class SessionToCharacter
 
         $health = new HealthCondition();
 
-        foreach ($character->getAdvantages() as $charAdvantage) {
+        foreach ($character->getCharAdvantages() as $charAdvantage) {
             $adv = $charAdvantage->getAdvantage();
             if (!trim($adv->getBonusdisc())) {
                 continue;
             }
-            $bonusDiscs = explode(',', $adv->getBonusdisc());
+            $bonusDiscs = preg_split('~,~', $adv->getBonusdisc(), -1, PREG_SPLIT_NO_EMPTY);
             foreach ($bonusDiscs as $bonus) {
-                if (!$bonus) {
-                    continue;
-                }
                 if (isset($this->domains[$bonus])) {
                     if ($adv->getIsDesv()) {
                         $maluses[$bonus] += $charAdvantage->getScore();
@@ -398,7 +395,7 @@ final class SessionToCharacter
                             $character->setStamina($character->getStamina() + ($charAdvantage->getScore() * $disadvantageRatio));
                             break;
                         case Avantages::BONUS_TRAU:
-                            $character->setTrauma($character->getTrauma() + $charAdvantage->getScore());
+                            $character->setTraumaPermanent($character->getTraumaPermanent() + $charAdvantage->getScore());
                             break;
                         case Avantages::BONUS_DEF;
                             $character->setDefenseBonus($character->getDefenseBonus() + ($charAdvantage->getScore() * $disadvantageRatio));

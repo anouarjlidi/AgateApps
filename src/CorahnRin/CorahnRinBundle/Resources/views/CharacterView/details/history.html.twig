@@ -1,0 +1,46 @@
+
+<div class="main row">
+    <div class="col s12">
+        <div class="row">
+            <div class="col s4"><h2>{{ 'character.history'|trans({}, 'CorahnRinBundle') }}</h2></div>
+            <div class="col s8">
+                <div class="row">
+                    <div class="col s6">
+                        <h3 class="text-m">
+                            {{ 'character.birthplace'|trans({}, 'CorahnRinBundle') }}&nbsp;:
+                            {{ character.birthplace.name }}
+                        </h3>
+                    </div>
+                    <div class="col s6">
+                        <h3 class="text-m">
+                            {{ 'character.social_class'|trans({}, 'CorahnRinBundle') }}&nbsp;:
+                            {{ character.socialClass.name }}
+                        </h3>
+                    </div>
+                </div>
+
+                <h3>
+                    {{ 'character.setbacks'|trans({}, 'CorahnRinBundle') }}&nbsp;:
+                </h3>
+                {% for charSetback in character.setbacks if not charSetback.isAvoided%}
+                    <h4 class="ib">
+                        {{ charSetback.setback.name }}
+                    </h4>
+                {% else %}
+                    <h4>N/A</h4>
+                {% endfor %}
+
+                {% for charSetback in character.setbacks if charSetback.isAvoided%}
+                    <h4 class="ib">
+                        {{ charSetback.setback.name }}
+                        {{ 'character.setback_avoided'|trans({}, 'CorahnRinBundle') }}
+                    </h4>
+                {% else %}
+                    <h4>N/A</h4>
+                {% endfor %}
+            </div>
+
+            <p class="story">{{ character.story }}</p>
+        </div>
+    </div>
+</div>
