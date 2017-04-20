@@ -15,10 +15,10 @@ use FOS\UserBundle\Doctrine\UserManager;
 use FOS\UserBundle\Security\UserProvider;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -34,6 +34,26 @@ final class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
     const USERNAME_OR_EMAIL_FORM_FIELD = '_username_or_email';
     const PASSWORD_FORM_FIELD = '_password';
     const SECURITY_REFERER_PARAMETER = '_security_referer';
+
+    const PROVIDER_KEY = 'main'; // Firewall name
+
+    const LOGIN_ROUTE = 'fos_user_security_login';
+
+    const NO_REFERER_ROUTES = [
+        self::LOGIN_ROUTE,
+        'fos_user_security_check',
+        'fos_user_security_register',
+        'fos_user_security_logout',
+        'fos_user_registration_register',
+        'fos_user_registration_check_email',
+        'fos_user_registration_confirm',
+        'fos_user_registration_confirmed',
+        'fos_user_resetting_request',
+        'fos_user_resetting_send_email',
+        'fos_user_resetting_check_email',
+        'fos_user_resetting_reset',
+        'fos_user_change_password',
+    ];
 
     /**
      * @var RouterInterface
@@ -59,9 +79,25 @@ final class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
     /**
      * {@inheritdoc}
      */
+    public function start(Request $request, AuthenticationException $authException = null)
+    {
+        if ($request->hasSession()) {
+            if (in_array($request->attributes->get('_route'), static::NO_REFERER_ROUTES, true)) {
+                $this->removeTargetPath($request->getSession(), static::PROVIDER_KEY);
+            } else {
+                $this->saveTargetPath($request->getSession(), static::PROVIDER_KEY, $request->getUri());
+            }
+        }
+
+        return parent::start($request, $authException);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     protected function getLoginUrl()
     {
-        return $this->router->generate('fos_user_security_login');
+        return $this->router->generate(static::LOGIN_ROUTE);
     }
 
     /**
@@ -77,14 +113,6 @@ final class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
         $request->getSession()->set(Security::LAST_USERNAME, $usernameOrEmail);
         $password = $request->request->get(self::PASSWORD_FORM_FIELD);
 
-        $referer = $request->headers->get('referer');
-
-        if ($referer && !preg_match('~login|register|check~iUu', $referer)) {
-            $request->getSession()->set(self::SECURITY_REFERER_PARAMETER, $referer);
-        } else {
-            $request->getSession()->set(self::SECURITY_REFERER_PARAMETER, null);
-        }
-
         return new UsernamePasswordCredentials(
             $usernameOrEmail,
             $password
@@ -95,7 +123,7 @@ final class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
      * {@inheritdoc}
      *
      * @param UsernamePasswordCredentials $credentials
-     * @param UserProvider $userProvider
+     * @param UserProvider                $userProvider
      */
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
@@ -106,7 +134,7 @@ final class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
      * {@inheritdoc}
      *
      * @param UsernamePasswordCredentials $credentials
-     * @param UserInterface|User $user
+     * @param UserInterface|User          $user
      */
     public function checkCredentials($credentials, UserInterface $user)
     {
@@ -125,18 +153,14 @@ final class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        $session = $request->getSession();
-
         // if the user hit a secure page and start() was called, this was
         // the URL they were on, and probably where you want to redirect to
-        if ($session instanceof SessionInterface) {
-            $targetPath = $session->get(self::SECURITY_REFERER_PARAMETER)
-                ? : $session->get('_security.' . $providerKey . '.target_path');
+        if ($request->hasSession()) {
+            $targetPath = $this->getTargetPath($request->getSession(), $providerKey) ?: $this->router->generate('root');
         } else {
             $targetPath = $this->router->generate('root');
         }
 
         return new RedirectResponse($targetPath);
     }
-
 }
