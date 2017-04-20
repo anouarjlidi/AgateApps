@@ -477,7 +477,7 @@ class PdfManager implements SheetsManagerInterface
         }
 
         //Orientation
-        $pdf->textline($character->getConscience(), 271, 878, $p['carbold'], 21);
+        $pdf->textline($character->getConsciousness(), 271, 878, $p['carbold'], 21);
         $pdf->textline($character->getInstinct(), 420, 878, $p['carbold'], 21);
         $pdf->textline($character->getOrientation(), 645, 877, $p['carbold'], 18, true);
 

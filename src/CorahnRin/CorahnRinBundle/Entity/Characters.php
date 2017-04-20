@@ -546,7 +546,7 @@ class Characters extends BaseCharacter
      *
      * @return string
      */
-    public function getConscience(): string
+    public function getConsciousness(): string
     {
         return $this->getWay('rai')->getScore() + $this->getWay('ide')->getScore();
     }
