@@ -48,3 +48,6 @@
 
 # NodeJS components
 /node_modules/
+
+# Heroku specific
+/app/config/config_heroku.yml
