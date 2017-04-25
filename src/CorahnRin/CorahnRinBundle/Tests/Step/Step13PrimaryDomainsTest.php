@@ -44,13 +44,41 @@ class Step13PrimaryDomainsTest extends AbstractStepTest
         ];
     }
 
-    public function testVarigal()
+    public function testVarigalHasTwoDomainsWithScore3()
     {
         $client = $this->getStepClient(18); // Varigal id in fixtures
 
         $crawler = $client->request('GET', '/fr/character/generate/'.$this->getStepName());
 
+        static::assertCount(15, $crawler->filter('[data-change="1"].domain-change'));
+        static::assertCount(15, $crawler->filter('[data-change="2"].domain-change'));
         static::assertCount(2, $crawler->filter('[data-change="3"].domain-change'));
+        static::assertCount(16, $crawler->filter('[data-change="5"].disabled'));
+    }
+
+    public function testSpyHasAllDomainsWithScore3()
+    {
+        $client = $this->getStepClient(9); // Spy id in fixtures
+
+        $crawler = $client->request('GET', '/fr/character/generate/'.$this->getStepName());
+
+        // 15 because domain 8 (Perception) is already set to score 5
+        static::assertCount(15, $crawler->filter('[data-change="1"].domain-change'));
+        static::assertCount(15, $crawler->filter('[data-change="2"].domain-change'));
+        static::assertCount(15, $crawler->filter('[data-change="3"].domain-change'));
+        static::assertCount(16, $crawler->filter('[data-change="5"].disabled'));
+    }
+
+    public function testSubmitNoDomain()
+    {
+        $client = $this->getStepClient(1); // Artisan id in fixtures
+
+        $crawler = $client->request('GET', '/fr/character/generate/'.$this->getStepName());
+
+        static::assertCount(15, $crawler->filter('[data-change="1"].domain-change'));
+        static::assertCount(15, $crawler->filter('[data-change="2"].domain-change'));
+        static::assertCount(2, $crawler->filter('[data-change="3"].domain-change'));
+        static::assertCount(16, $crawler->filter('[data-change="5"].disabled'));
     }
 
     /**
