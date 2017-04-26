@@ -137,6 +137,14 @@ class Step13PrimaryDomains extends AbstractStepAction
         /** @var int[] $domainsValues */
         $domainsValues = (array) array_map(function($i){return (int) $i;}, $this->request->request->get('domains'));
 
+        foreach ($this->allDomains as $id => $domain) {
+            // Allow sending partial requests with only some of the few domains.
+            // Strictness is nice, but sometimes, being a bit more flexible is cool to lighten our tests :D
+            if (!array_key_exists($id, $domainsValues)) {
+                $domainsValues[$id] = 0;
+            }
+        }
+
         // There should be twice 1 and 2, and once 3.
         // We don't take 5 in account because it can never be replaced.
         $numberOf1 = 0;
@@ -150,7 +158,9 @@ class Step13PrimaryDomains extends AbstractStepAction
                 $this->flashMessage('Les domaines envoyés sont invalides.');
             }
 
-            if (!in_array($domainValue, [1, 2, 3], true)) {
+            if (!in_array($domainValue, [0, 1, 2, 3], true)) {
+                $this->flashMessage('Le score d\'un domaine ne peut être que de 0, 1, 2 ou 3. Le score 5 est choisi par défaut en fonction de votre métier.');
+                $error              = true;
                 $domainsValues[$id] = 0;
                 $domainValue        = 0;
             }
