@@ -79,6 +79,135 @@ class Step13PrimaryDomainsTest extends AbstractStepTest
         static::assertCount(15, $crawler->filter('[data-change="2"].domain-change'));
         static::assertCount(2, $crawler->filter('[data-change="3"].domain-change'));
         static::assertCount(16, $crawler->filter('[data-change="5"].disabled'));
+
+        $form = $crawler->filter('#generator_form')->form();
+
+        $crawler = $client->submit($form);
+
+        $flashMessagesNode = $crawler->filter('#flash-messages');
+
+        static::assertCount(1, $flashMessagesNode);
+
+        $flashText = $flashMessagesNode->text();
+
+        static::assertContains('La valeur 1 doit être sélectionnée deux fois.', $flashText);
+        static::assertContains('La valeur 2 doit être sélectionnée deux fois.', $flashText);
+        static::assertContains('La valeur 3 doit être sélectionnée.', $flashText);
+    }
+
+    public function testSubmitInvalidDomain()
+    {
+        $client = $this->getStepClient(1); // Artisan id in fixtures
+
+        $crawler = $client->request('POST', '/fr/character/generate/'.$this->getStepName(), [
+            'domains' => [
+                '99999999' => 1,
+            ]
+        ]);
+
+        $flashMessagesNode = $crawler->filter('#flash-messages');
+
+        static::assertCount(1, $flashMessagesNode);
+
+        $flashText = $flashMessagesNode->text();
+
+        static::assertContains('Les domaines envoyés sont invalides.', $flashText);
+    }
+
+    public function testWrongValueForSecondaryDomain()
+    {
+        $client = $this->getStepClient(1); // Artisan id in fixtures
+
+        $crawler = $client->request('GET', '/fr/character/generate/'.$this->getStepName());
+
+        $form = $crawler->filter('#generator_form')->form();
+
+        $form->setValues([
+            'domains' => [
+                '3' => 3, // Close combat is not one of Artisan's secondary domains
+            ],
+        ]);
+
+        $crawler = $client->submit($form);
+
+        $flashMessagesNode = $crawler->filter('#flash-messages');
+
+        static::assertCount(1, $flashMessagesNode);
+
+        static::assertContains('La valeur 3 ne peut être donnée qu\'à l\'un des domaines de prédilection du métier choisi.', $flashMessagesNode->text());
+    }
+
+    public function testWrongValueForAnyDomain()
+    {
+        $client = $this->getStepClient(1); // Artisan id in fixtures
+
+        $crawler = $client->request('GET', '/fr/character/generate/'.$this->getStepName());
+
+        $form = $crawler->filter('#generator_form')->form();
+
+        $form->setValues([
+            'domains' => [
+                '2' => 9999,
+            ],
+        ]);
+
+        $crawler = $client->submit($form);
+
+        $flashMessagesNode = $crawler->filter('#flash-messages');
+
+        static::assertCount(1, $flashMessagesNode);
+
+        static::assertContains('Le score d\'un domaine ne peut être que de 0, 1, 2 ou 3. Le score 5 est choisi par défaut en fonction de votre métier.', $flashMessagesNode->text());
+    }
+
+    public function testSelectScore1MoreThanTwice()
+    {
+        $client = $this->getStepClient(1); // Artisan id in fixtures
+
+        $crawler = $client->request('GET', '/fr/character/generate/'.$this->getStepName());
+
+        $form = $crawler->filter('#generator_form')->form();
+
+        $form->setValues([
+            'domains' => [
+                '2' => 1,
+                '3' => 1,
+                '4' => 1,
+            ],
+        ]);
+
+        $crawler = $client->submit($form);
+
+        $flashMessagesNode = $crawler->filter('#flash-messages');
+
+        static::assertCount(1, $flashMessagesNode);
+
+        static::assertContains('La valeur 1 ne peut être donnée que deux fois.', $flashMessagesNode->text());
+    }
+
+    public function testSelectScore2MoreThanTwice()
+    {
+        $client = $this->getStepClient(1); // Artisan id in fixtures
+
+        $crawler = $client->request('GET', '/fr/character/generate/'.$this->getStepName());
+
+        $form = $crawler->filter('#generator_form')->form();
+
+        $form->setValues([
+            'domains' => [
+                '2' => 2,
+                '3' => 2,
+                '4' => 2,
+            ],
+        ]);
+
+        $crawler = $client->submit($form);
+
+        $flashMessagesNode = $crawler->filter('#flash-messages');
+
+        static::assertCount(1, $flashMessagesNode);
+
+        static::assertContains('La valeur 2 ne peut être donnée que deux fois.', $flashMessagesNode->text());
     }
 
     /**
