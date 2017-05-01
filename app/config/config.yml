@@ -50,7 +50,6 @@ framework:
         # Add cookie domain as trusted host because requests are made with CORS.
         - '%esteren_domains.cookie_domain%$'
         #- 127.0.0.1 # To add in dev mode if needed
-    trusted_proxies: ~
     session:
         # http://symfony.com/doc/current/reference/configuration/framework.html#handler-id
         handler_id:  session.handler.native_file

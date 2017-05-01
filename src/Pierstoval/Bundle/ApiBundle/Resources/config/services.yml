@@ -9,6 +9,6 @@ services:
     pierstoval.api.listener:
         class: Pierstoval\Bundle\ApiBundle\Listeners\JsonResponseListener
         arguments:
-            kernelEnvironment: "%kernel.environment%"
+            - "%kernel.environment%"
         tags:
             - { name: kernel.event_subscriber }
