@@ -113,10 +113,8 @@ class FullValidStepsControllerTest extends WebTestCase
 
     public static function provideValidSteps()
     {
-        $file = file_get_contents(__DIR__.'/../Resources/valid_consecutive_steps.yml');
-
         /** @var array[] $steps */
-        $steps = Yaml::parse($file);
+        $steps = require __DIR__.'/../Resources/valid_consecutive_steps.php';
 
         $previous = [];
 
@@ -137,7 +135,6 @@ class FullValidStepsControllerTest extends WebTestCase
             ];
             $previous[] = $step;
 
-            // Hehe, saves memory!
             yield $stepName => $data;
         }
     }
