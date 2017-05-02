@@ -109,10 +109,6 @@ CNT
 fi
 
 echo "$echoPrefix====================================================="
-echo "$echoPrefix[TESTS] Behat"
-test_command ./vendor/bin/behat
-
-echo "$echoPrefix====================================================="
 echo "$echoPrefix[TESTS] Symfony linters & security"
 test_command php bin/console security:check
 test_command php bin/console lint:twig app/Resources src

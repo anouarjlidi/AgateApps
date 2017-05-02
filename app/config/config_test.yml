@@ -7,8 +7,6 @@ framework:
         storage_id: session.storage.mock_file
     profiler:
         collect: false
-    trusted_hosts:
-        - localhost # Mostly for behat
 
 web_profiler:
     toolbar: false

@@ -56,8 +56,9 @@ Tests are located in the associated bundles, but global configuration is in the 
 
 The bootstrap file and the default `WebTestCase` class are located in the `tests/phpunit/` directory.
 
-For now, there's only PHPUnit, but maybe one day there'll be `behat` or `phpspec` tests to be runned, this is why there
- is another directory level to allow this more easily.
+For now, there's only PHPUnit.
+
+There's a CI script located in `tests/ci/ci.bash` that should be runned on CI servers.
 
 ## Users
 
