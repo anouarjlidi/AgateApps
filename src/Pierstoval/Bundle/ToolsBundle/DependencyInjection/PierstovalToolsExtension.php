@@ -33,10 +33,5 @@ class PierstovalToolsExtension extends Extension
     {
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
-
-        // compile commonly used classes
-        $this->addClassesToCompile([
-            JsonExtension::class,
-        ]);
     }
 }

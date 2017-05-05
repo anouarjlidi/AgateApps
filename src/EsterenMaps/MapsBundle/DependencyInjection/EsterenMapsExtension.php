@@ -38,10 +38,6 @@ class EsterenMapsExtension extends Extension
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
-
-        $this->addClassesToCompile([
-            MapsExtension::class,
-        ]);
     }
 
     public function getAlias()
