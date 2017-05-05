@@ -36,7 +36,7 @@
         "ext-gd": "*",
         "ext-apcu": "*",
         "ext-iconv": "*",
-        "symfony/symfony": "3.3.x@beta",
+        "symfony/symfony": "3.2.*",
         "doctrine/orm": "^2.5",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/doctrine-cache-bundle": "^1.2",
@@ -57,7 +57,7 @@
         "stof/doctrine-extensions-bundle": "^1.2",
         "twig/extensions": "^1.4",
 
-        "orbitale/cms-bundle": "^2.0.2",
+        "orbitale/cms-bundle": "^3.0",
         "orbitale/entity-merger": "^0.5",
         "orbitale/doctrine-tools": "^0.5.3",
         "orbitale/imagemagick-php": "^1.6",
@@ -90,16 +90,20 @@
             "cd node_modules/node-sass && node scripts/build -f",
             "node node_modules/gulp4/bin/gulp.js dump --prod",
             "cp web/.htaccess.dist web/.htaccess",
+            "rm web/config.php",
             "php bin/console doctrine:schema:update --dump-sql --force",
             "php bin/console esterenmaps:map:generate-tiles 1"
         ],
         "warmup": [
-            "php bin/console cache:clear --no-warmup",
-            "php bin/console cache:warmup"
+            "php bin/console cache:clear --no-warmup --env=prod",
+            "php bin/console cache:warmup --env=prod"
         ]
     },
     "config": {
-        "autoloader-suffix": "EsterenPortal"
+        "autoloader-suffix": "EsterenPortal",
+        "platform": {
+            "php": "7.1"
+        }
     },
     "extra": {
         "symfony-app-dir": "app",
