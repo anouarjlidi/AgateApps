@@ -9,6 +9,10 @@ parameters:
     # The version code is always the last version that was put in production
     env(HEROKU_RELEASE_VERSION): '0.12.11'
     env(HEROKU_RELEASE_CREATED_AT): '2017-04-27'
+
+    database_url: '%env(DATABASE_URL)%'
+    database_url_legacy: '%env(DATABASE_URL_LEGACY)%'
+
     version_code: '%env(HEROKU_RELEASE_VERSION)%'
     version_date: '%env(HEROKU_RELEASE_CREATED_AT)%'
     locale: fr
@@ -106,22 +110,14 @@ doctrine:
         connections:
             default:
                 driver:   pdo_mysql
-                host:     '%env(DATABASE_HOST)%'
-                dbname:   '%env(DATABASE_NAME)%'
-                user:     '%env(DATABASE_USER)%'
-                password: '%env(DATABASE_PASSWORD)%'
-                server_version: '%env(DATABASE_VERSION)%'
+                url:      '%database_url%'
                 charset:  utf8mb4
                 default_table_options:
                     charset: utf8mb4
                     collate: utf8mb4_unicode_ci
             legacy:
                 driver:    pdo_mysql
-                host:      '%env(DATABASE_HOST_LEGACY)%'
-                dbname:    '%env(DATABASE_NAME_LEGACY)%'
-                user:      '%env(DATABASE_USER_LEGACY)%'
-                password:  '%env(DATABASE_PASSWORD_LEGACY)%'
-                server_version: '%env(DATABASE_VERSION_LEGACY)%'
+                url:      '%database_url_legacy%'
                 charset:   utf8
                 logging:   false
                 profiling: false
