@@ -185,9 +185,9 @@
 {{ include('_google_analytics.html.twig') }}
 
 {% block javascripts %}
-    <script type="text/javascript" src="{{ path('pierstoval_tools_assets_jstranslations', {"_locale": app.request.locale}) }}"></script>
     <script type="text/javascript" src="{{ asset('js/jquery.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/global_mat.js') }}"></script>
+    <script type="text/javascript" src="{{ path('pierstoval_tools_assets_jstranslations', {"_locale": app.request.locale}) }}"></script>
 {% endblock %}
 
 </body>
