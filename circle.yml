@@ -5,7 +5,6 @@ machine:
         version: v6.10.2
     environment:
         PROJECT_DIR: '${HOME}/${CIRCLE_PROJECT_REPONAME}'
-        CODECOV_TOKEN: 5b127f85-7030-411d-8f65-8f371c6eac0b
         PATH: "${PATH}:${PROJECT_DIR}/node_modules/.bin"
 
         # Used by PHPUnit
