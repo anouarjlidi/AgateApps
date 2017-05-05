@@ -40,6 +40,6 @@ test:
 deployment:
     release:
         tag: /^v\d+\.\d+\.\d+$/
-        owner: circleci
+        owner: pierstoval
         heroku:
           appname: corahn-rin
