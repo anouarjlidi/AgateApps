@@ -36,3 +36,10 @@ test:
         - 'php bin/console lint:yaml src'
     post:
         - 'bash <(curl -s https://codecov.io/bash) -f "${CIRCLE_ARTIFACTS}/phpunit/clover.xml" '
+
+deployment:
+    release:
+        tag: /^v\d+\.\d+\.\d+$/
+        owner: circleci
+        heroku:
+          appname: corahn-rin
