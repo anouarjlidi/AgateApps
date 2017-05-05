@@ -32,7 +32,6 @@ if (true === $debug) {
 }
 
 $kernel = new AppKernel($environment, $debug);
-$kernel->loadClassCache();
 
 if (false === $debug && 'prod' === $environment) {
     $kernel = new AppCache($kernel);
@@ -43,6 +42,7 @@ if (false === $debug && 'prod' === $environment) {
 $request = Request::createFromGlobals();
 
 if (getenv('HEROKU') === '1') {
+//    Request::setTrustedProxies([$request->server->get('REMOTE_ADDR')], Request::HEADER_FORWARDED | Request::HEADER_X_FORWARDED_HOST);
     Request::setTrustedProxies(array($request->server->get('REMOTE_ADDR')));
     Request::setTrustedHeaderName(Request::HEADER_FORWARDED, null);
     Request::setTrustedHeaderName(Request::HEADER_CLIENT_HOST, null);
