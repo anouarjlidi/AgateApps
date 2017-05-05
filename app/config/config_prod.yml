@@ -14,33 +14,32 @@ monolog:
         console:
             type:  console
 
-        # Get ALL error logs and put them to stderr for heroku
         main:
+            type:         fingers_crossed
+            action_level: critical
+            handler:      grouped
+
+        grouped:
+            type:    group
+            members: [streamed, mailed]
+
+        # Get ALL error logs and put them to stderr for heroku
+        streamed:
             type:           stream
             path:           'php://stderr'
             level:          info
 
-        # All "error" are sent into another file, including 404 for example
-        main_error:
-            type:           fingers_crossed
-            action_level:   error
-            handler:        streamed_error
-        streamed_error:
-            type:           rotating_file
-            path:           '%kernel.logs_dir%/%kernel.environment%.log'
-            level:          debug
-
         ## For any "critical", we send an email
-        main_critical:
+        mailed:
             type:           fingers_crossed
             action_level:   critical
-            handler:        buffered_critical
+            handler:        mail_buffer
             include_stacktraces: true
-        buffered_critical:
+        mail_buffer:
             type:           buffer
-            handler:        swift_critical
+            handler:        mail_sender
             include_stacktraces: true
-        swift_critical:
+        mail_sender:
             type:           swift_mailer
             from_email:     no-reply@pierstoval.com
             to_email:       pierstoval+esterenprod@gmail.com
