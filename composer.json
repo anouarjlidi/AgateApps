@@ -100,10 +100,7 @@
         ]
     },
     "config": {
-        "autoloader-suffix": "EsterenPortal",
-        "platform": {
-            "php": "7.1"
-        }
+        "autoloader-suffix": "EsterenPortal"
     },
     "extra": {
         "symfony-app-dir": "app",
