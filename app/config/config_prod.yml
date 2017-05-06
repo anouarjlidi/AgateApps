@@ -29,7 +29,7 @@ monolog:
             path:           'php://stderr'
             level:          info
 
-        ## For any "critical", we send an email
+        # For any "critical", we send an email
         mailed:
             type:           fingers_crossed
             action_level:   critical
