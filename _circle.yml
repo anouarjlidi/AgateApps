@@ -1,16 +1,19 @@
+#
+# This is the OLD file for CircleCI 1.0
+# We're now using CircleCI 2.0, so use ".circleci/config.yml" file instead of this one.
+#
+
 machine:
     php:
         version: 7.1.3
     node:
         version: v6.10.2
     environment:
-        PROJECT_DIR: '${HOME}/${CIRCLE_PROJECT_REPONAME}'
-        PATH: "${PATH}:${PROJECT_DIR}/node_modules/.bin"
-
-        # Used by PHPUnit
-        SYMFONY_ENV: test
+        PROJECT_DIR:   '${HOME}/${CIRCLE_PROJECT_REPONAME}'
+        PATH:          '${PATH}:${PROJECT_DIR}/node_modules/.bin'
+        SYMFONY_ENV:   test
         SYMFONY_DEBUG: 1
-        RECREATE_DB: 1
+        RECREATE_DB:   1    # Used by PHPUnit
 
 dependencies:
     override:

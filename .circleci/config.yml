@@ -1,0 +1,114 @@
+version: 2
+
+jobs:
+    build:
+        docker:
+            - image: php:7.1
+
+        working_directory: ~/app
+
+        environment:
+            SYMFONY_ENV:   test
+            SYMFONY_DEBUG: 1
+            RECREATE_DB:   1
+
+        steps:
+            - run:
+                name: 'Install Composer'
+                command: |
+                    apt-get update
+                    apt-get -y install g++ git unzip zlib1g-dev libicu-dev libicu52 libpng-dev libjpeg-dev libmariadbd-dev
+
+            - checkout
+
+            - run:
+                name: 'Install necessary PHP extensions'
+                command: |
+                    docker-php-ext-install pdo pdo_mysql intl mbstring gd iconv
+
+            - run:
+                name: 'Install apcu'
+                command: |
+                    echo '' | pecl install -f apcu
+                    echo "extension=apcu.so" > /usr/local/etc/php/conf.d/apcu.ini
+#            - run: docker-php-ext-configure pdo pdo_mysql intl mbstring gd iconv
+
+            - run:
+                name: 'Install Composer'
+                command: |
+                    php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+                    php -r "copy('https://composer.github.io/installer.sig', 'composer-setup.sig');"
+                    php -r "if (hash_file('SHA384', 'composer-setup.php') === trim(file_get_contents('composer-setup.sig'))) { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+                    php composer-setup.php
+                    php -r "unlink('composer-setup.php');"
+
+            - run:
+                name: 'Install Nodejs & Yarn'
+                command: |
+                    curl -sL https://deb.nodesource.com/setup_6.x | bash -
+                    apt-get install -y build-essential nodejs
+                    curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+                    echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+                    apt-get update && apt-get install yarn
+                    export PATH=$PATH:$PWD/node_modules/.bin
+
+            - restore_cache:
+                keys:
+                    - composer-cache-{{ checksum "composer.lock" }}
+                    - yarn-cache-{{ checksum "yarn.lock" }}
+
+            - run:
+                name: 'Show config'
+                command: |
+                    php --ini
+                    php composer.phar config -l
+
+            - run:
+                name: 'Prepare environment'
+                command: |
+                    echo "date.timezone = Europe/Paris" > /usr/local/etc/php/conf.d/custom.ini
+                    echo "short_open_tag = off" >> /usr/local/etc/php/conf.d/custom.ini
+                    echo "apcu.enable_cli = 1" >> /usr/local/etc/php/conf.d/custom.ini
+
+                    cp tests/ci/parameters.yml app/config/parameters.yml
+                    cat phpunit.xml.dist | sed -e 's/\(<!--%\)\|\(%-->\)//g' > phpunit.xml
+
+            - run:
+               name: 'Install Project Dependencies'
+               command: |
+                    php composer.phar install --no-interaction --no-suggest --ignore-platform-reqs
+                    yarn install
+
+            - run:
+               name: 'Execute tests'
+               command: |
+                    node node_modules/gulp4/bin/gulp.js dump --prod --verbose
+                    php bin/symfony_requirements
+
+                    vendor/bin/phpunit --log-junit "${CIRCLE_TEST_REPORTS}/phpunit/junit.xml" --coverage-clover "build/logs/phpunit/clover.xml" --coverage-html "build/logs/phpunit/html"
+                    php bin/console security:check
+                    php bin/console lint:twig app/Resources src
+                    php bin/console lint:yaml app/config
+                    php bin/console lint:yaml src
+
+            - store_test_results:
+               path: /tmp/test-results
+
+            - save_cache:
+                key: composer-deps-cache-{{ checksum "composer.lock" }}
+                paths:
+                    - ~/.composer/cache
+
+            - save_cache:
+                key: composer-cache
+                paths:
+                    - vendor
+
+            - save_cache:
+                key: yarn-cache-{{ checksum "yarn.lock" }}
+                paths:
+                    - node_modules
+
+            - run:
+                name: 'Send coverage'
+                command: 'bash <(curl -s https://codecov.io/bash) -f "build/logs/phpunit/phpunit/clover.xml"'
