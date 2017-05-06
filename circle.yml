@@ -27,6 +27,7 @@ dependencies:
 
 test:
     override:
+        - 'node node_modules/gulp4/bin/gulp.js dump --prod --verbose'
         - 'composer install --no-interaction --no-suggest --ignore-platform-reqs'
         - 'php bin/symfony_requirements'
         - './vendor/bin/phpunit --log-junit "${CIRCLE_TEST_REPORTS}/phpunit/junit.xml" --coverage-clover "${CIRCLE_ARTIFACTS}/phpunit/clover.xml" --coverage-html "${CIRCLE_ARTIFACTS}/phpunit/html"'
