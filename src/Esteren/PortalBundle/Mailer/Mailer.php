@@ -45,6 +45,8 @@ final class Mailer
 
         $swiftMessage
             ->setSubject($subject)
+            ->setContentType('text/html')
+            ->setCharset('utf-8')
             ->setFrom($message->getEmail())
             ->setTo('pierstoval+esterenportal@gmail.com')
             ->setBody($this->templating->render('@EsterenPortal/email/contact_email.html.twig', [
