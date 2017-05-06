@@ -21,14 +21,14 @@ if (false === $debug) {
     include_once __DIR__.'/../var/bootstrap.php.cache';
 }
 
-try {
-    $apcLoader = new ApcClassLoader('EsterenApp', $loader);
-    $apcLoader->register(true);
-    $loader = $apcLoader;
-} catch (Exception $e) {}
-
 if (true === $debug) {
     Debug::enable();
+} else {
+    try {
+        $apcLoader = new ApcClassLoader('EsterenApp', $loader);
+        $apcLoader->register(true);
+        $loader = $apcLoader;
+    } catch (Exception $e) {}
 }
 
 $kernel = new AppKernel($environment, $debug);
