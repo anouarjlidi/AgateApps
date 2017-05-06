@@ -1,9 +1,9 @@
 corahnrin_characters:
-    resource: "@CorahnRinBundle/Controller/"
+    resource: '@CorahnRinBundle/Controller/'
     type:     annotation
     host:     '%esteren_domains.corahnrin%'
 
 corahnrin_steps:
-    resource: "@PierstovalCharacterManagerBundle/Resources/config/routing.yml"
+    resource: '@PierstovalCharacterManagerBundle/Resources/config/routing.yml'
     prefix:   /character
     host:     '%esteren_domains.corahnrin%'

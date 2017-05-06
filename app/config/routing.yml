@@ -1,9 +1,3 @@
-# Be careful to manually prefix the local to all your new routes.
-
-# First we load the different other config files with the same configuration
-fos:         { resource: "routing/fos.yml",         prefix: "/{_locale}/", defaults: { _locale: "%locale%" }, requirements: { _locale: "^(?:%locales_regex%)$" } }
-corahnrin:   { resource: "routing/corahnrin.yml",   prefix: "/{_locale}/", defaults: { _locale: "%locale%" }, requirements: { _locale: "^(?:%locales_regex%)$" } }
-esterenmaps: { resource: "routing/esterenmaps.yml", prefix: "/{_locale}/", defaults: { _locale: "%locale%" }, requirements: { _locale: "^(?:%locales_regex%)$" } }
 
 # Root comes after all portals and redirects to default locale permanently
 root:
@@ -12,37 +6,13 @@ root:
         _controller: FrameworkBundle:Redirect:urlRedirect
         path: '/%locale%/'
         permanent: true
+    schemes: [https]
 
-#-----------------------------------
-# Pierstoval bundles relative routing
-pierstoval_tools:
-    resource:     "@PierstovalToolsBundle/Controller/"
-    type:         annotation
-    prefix:       /{_locale}/
-    defaults:     { _locale: '%locale%' }
-    requirements: { _locale: '^(%locales_regex%)$' }
-    host:         '%esteren_domains.portal%'
-
-pierstoval_api:
-    resource:     "@PierstovalApiBundle/Controller/"
-    type:         annotation
-    prefix:       /{_locale}/
-    defaults:     { _locale: '%locale%' }
-    requirements: { _locale: '^(%locales_regex%)$' }
-    host:         '%esteren_domains.api%'
-
-#-----------------------------------
-# Admin relative Routing
-application_admin:
-    resource:     "@AdminBundle/Controller"
-    type:         annotation
-    prefix:       /{_locale}/
-    defaults:     { _locale: '%locale%' }
-    requirements: { _locale: '^(%locales_regex%)$' }
-    host:         '%esteren_domains.backoffice%'
-
-#-----------------------------------
-# Portal routing. MUST be at the end, because it's an OrbitaleCms routing,
-#   and therefore has many dynamic urls that will come as "fallback" to any other
-#   application routing.
-portal: { resource: "routing/portal.yml", prefix: "/{_locale}", defaults: { _locale: "%locale%" }, requirements: { _locale: "^(?:%locales_regex%)$" } }
+main:
+    resource: routing/_main.yml
+    schemes: [https]
+    prefix: '/{_locale}/'
+    defaults:
+        _locale: '%locale%'
+    requirements:
+        _locale: '^(?:%locales_regex%)$'

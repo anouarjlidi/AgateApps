@@ -1,27 +1,27 @@
 
 portal_home:
-    resource: "@EsterenPortalBundle/Controller/HomeController.php"
+    resource: '@EsterenPortalBundle/Controller/HomeController.php'
     type:     annotation
     host:     '%esteren_domains.portal%'
 
 legal_mentions:
-    resource: "@EsterenPortalBundle/Controller/LegalMentionsController.php"
+    resource: '@EsterenPortalBundle/Controller/LegalMentionsController.php'
     type:     annotation
     host:     '%esteren_domains.portal%'
 
 contact:
-    resource: "@EsterenPortalBundle/Controller/ContactController.php"
+    resource: '@EsterenPortalBundle/Controller/ContactController.php'
     type:     annotation
 
 orbitale_cms_category:
-    resource: "@OrbitaleCmsBundle/Resources/config/routing/categories.yaml"
+    resource: '@OrbitaleCmsBundle/Resources/config/routing/categories.yaml'
     prefix:   /category/
 
 portal:
-    resource: "@OrbitaleCmsBundle/Resources/config/routing/pages.yaml"
+    resource: '@OrbitaleCmsBundle/Resources/config/routing/pages.yaml'
     prefix:   /
     defaults:
         domainName: '%esteren_domains.portal%'
-        slugs: ""
+        slugs: ''
     requirements:
-        domainName: "^(?:%esteren_domains.portal%|%esteren_domains.games%|%esteren_domains.corahnrin%)$"
+        domainName: '^(?:%esteren_domains.portal%|%esteren_domains.games%|%esteren_domains.corahnrin%)$'

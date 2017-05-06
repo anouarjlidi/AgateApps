@@ -12,6 +12,7 @@ _errors:
 
 _main:
     resource: routing.yml
+    schemes: [http]
 
 _dev:
     resource: routing/dev.yml

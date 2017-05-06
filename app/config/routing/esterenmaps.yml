@@ -1,8 +1,8 @@
 esterenmaps:
-    resource: "@EsterenMapsBundle/Controller/"
+    resource: '@EsterenMapsBundle/Controller/'
     type:     annotation
 
 esterenmaps_api:
-    resource: "@EsterenMapsBundle/Controller/Api/"
+    resource: '@EsterenMapsBundle/Controller/Api/'
     type:     annotation
     host:     '%esteren_domains.api%'

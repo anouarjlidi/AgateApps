@@ -1,0 +1,37 @@
+# Be careful to manually prefix the local to all your new routes.
+
+# First we load the different other config files with the same configuration
+fos:
+    resource: 'fos.yml'
+
+corahnrin:
+    resource: 'corahnrin.yml'
+
+esterenmaps:
+    resource: 'esterenmaps.yml'
+
+#-----------------------------------
+# Pierstoval bundles relative routing
+pierstoval_tools:
+    resource:     '@PierstovalToolsBundle/Controller/'
+    type:         annotation
+    host:         '%esteren_domains.portal%'
+
+pierstoval_api:
+    resource:     '@PierstovalApiBundle/Controller/'
+    type:         annotation
+    host:         '%esteren_domains.api%'
+
+#-----------------------------------
+# Admin relative Routing
+application_admin:
+    resource:     '@AdminBundle/Controller'
+    type:         annotation
+    host:         '%esteren_domains.backoffice%'
+
+#-----------------------------------
+# Portal routing. MUST be at the end, because it's an OrbitaleCms routing,
+#   and therefore has many dynamic urls that will come as 'fallback' to any other
+#   application routing.
+portal:
+    resource: 'portal.yml'
