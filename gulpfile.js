@@ -362,12 +362,10 @@ gulp.task('images', function(done) {
         assets = list[assets_output];
         pipes = gulp
             .src(assets)
-            .pipe(imagemin({
-                optimizationLevel: 7,
-                progressive: true,
-                interlaced: true,
-                verbose: true
-            }))
+            .pipe(imagemin([
+                imagemin.jpegtran({progressive: true}),
+                imagemin.optipng({optimizationLevel: 7})
+            ]))
             .pipe(gulp.dest(outputDir + assets_output))
         ;
 
@@ -455,6 +453,7 @@ gulp.task('watch', gulp.series('dump', gulp.parallel(function(done) {
 
     let files_less = [],
         files_images = [],
+        files_copy = [],
         files_css = [],
         files_sass = [],
         files_js = [],
@@ -470,6 +469,10 @@ gulp.task('watch', gulp.series('dump', gulp.parallel(function(done) {
     GulpfileHelpers.objectForEach(config.images, function(key, images){
         files_images.push(images);
         files_to_watch.push(images);
+    });
+    GulpfileHelpers.objectForEach(config.copy, function(key, copy){
+        files_copy.push(copy);
+        files_to_watch.push(copy);
     });
     GulpfileHelpers.objectForEach(config.less, function(key, less){
         files_less.push(less);
@@ -500,6 +503,9 @@ gulp.task('watch', gulp.series('dump', gulp.parallel(function(done) {
     }
     if (hasImages) {
         gulp.watch(files_images, gulp.parallel('images')).on('change', callback);
+    }
+    if (hasCopy) {
+        gulp.watch(files_copy, gulp.parallel('copy')).on('change', callback);
     }
     if (hasLess) {
         gulp.watch(files_less, gulp.parallel('less')).on('change', callback);
