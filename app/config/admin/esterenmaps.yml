@@ -185,12 +185,12 @@ easy_admin:
             list:
                 actions:
                     - '-delete'
-                fields: [ id, name, slug, { property: speed, format: "%.2f" }, description ]
+                fields: [ id, name, slug, { property: speed, format: '%.2f' }, description ]
             form:
                 fields:
                   - name
                   - slug
-                  - { property: speed, help: "(Km/h)" }
+                  - { property: speed, help: '(Km/h)' }
                   - description
                   - property: transportsModifiers
                     type: 'Symfony\Component\Form\Extension\Core\Type\CollectionType'

@@ -10,7 +10,7 @@ easy_admin:
         max_results: 50
 
     design:
-        brand_color: "rgb(88, 88, 216)"
+        brand_color: 'rgb(88, 88, 216)'
 
         assets:
             css:
@@ -18,28 +18,28 @@ easy_admin:
                 - 'css/admin.css'
 
         form_theme:
-            - "form/easyadmin_form_theme.html.twig"
+            - 'form/easyadmin_form_theme.html.twig'
 
         menu:
-            - { label: "admin.menu.site" }
-            - { entity: "Pages", icon: "file-text" }
+            - { label: 'admin.menu.site' }
+            - { entity: 'Pages', icon: 'file-text' }
 
-            - { label: "admin.menu.esterenmaps" }
-            - { entity: "Maps", icon: "map" }
-            - { entity: "Factions", icon: "flag" }
+            - { label: 'admin.menu.esterenmaps' }
+            - { entity: 'Maps', icon: 'map' }
+            - { entity: 'Factions', icon: 'flag' }
 
-            - label: "admin.menu.esterenmaps_data"
+            - label: 'admin.menu.esterenmaps_data'
               children:
-                  - { entity: "Markers" }
-                  - { entity: "Routes" }
-                  - { entity: "Zones" }
+                  - { entity: 'Markers' }
+                  - { entity: 'Routes' }
+                  - { entity: 'Zones' }
 
-            - label: "admin.menu.types"
+            - label: 'admin.menu.types'
               children:
-                  - { entity: "MarkersTypes" }
-                  - { entity: "RoutesTypes" }
-                  - { entity: "ZonesTypes" }
-                  - { entity: "TransportTypes" }
+                  - { entity: 'MarkersTypes' }
+                  - { entity: 'RoutesTypes' }
+                  - { entity: 'ZonesTypes' }
+                  - { entity: 'TransportTypes' }
 
 # This is to be kept until these entities will be managed in EasyAdmin
 parameters:
@@ -70,7 +70,7 @@ parameters:
                 fields: [ id, name, description ]
             form:
                 fields: [ name, description ]
-        "Combat Arts":
+        'Combat Arts':
             class: CorahnRin\CorahnRinBundle\Entity\CombatArts
             list:
                 fields: [ id, name, ranged, melee, xp ]
@@ -106,7 +106,7 @@ parameters:
                 fields: [ id, name, oghamType, book ]
             form:
                 fields: [ name, oghamType, book ]
-        "Ogham types":
+        'Ogham types':
             class: CorahnRin\CorahnRinBundle\Entity\OghamTypes
             list:
                 fields: [ id, name, description ]
