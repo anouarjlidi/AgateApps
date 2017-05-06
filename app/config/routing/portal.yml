@@ -12,6 +12,7 @@ legal_mentions:
 contact:
     resource: '@EsterenPortalBundle/Controller/ContactController.php'
     type:     annotation
+    host:     '%esteren_domains.portal%'
 
 orbitale_cms_category:
     resource: '@OrbitaleCmsBundle/Resources/config/routing/categories.yaml'
