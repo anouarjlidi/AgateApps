@@ -10,19 +10,19 @@
     "dependencies": {
         "bootstrap": "^3.3",
         "font-awesome": "^4.7",
-        "gulp4": "^4.0",
         "gulp-clean-css": "^3.0",
         "gulp-concat": "^2.6",
         "gulp-if": "^2.0",
-        "gulp-imagemin": "^3.1",
+        "gulp-imagemin": "^3.2",
         "gulp-less": "^3.3",
         "gulp-sass": "^3.1",
-        "gulp-sourcemaps": "^2.4",
+        "gulp-sourcemaps": "^2.6.0",
         "gulp-uglyfly": "^1.4",
         "gulp-watch": "^4.3",
+        "gulp4": "^4.0",
         "jquery": "^3.1",
         "leaflet": "^0.7",
-        "materialize-css": "^0.98"
+        "materialize-css": "^0.98.2"
     },
     "contributors": [
         {
