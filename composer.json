@@ -87,6 +87,7 @@
             "@symfony-scripts"
         ],
         "compile": [
+            "cd node_modules/node-sass && node scripts/build -f",
             "node node_modules/gulp4/bin/gulp.js dump --prod --verbose",
             "cp web/.htaccess.dist web/.htaccess",
             "rm web/config.php",
