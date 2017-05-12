@@ -1,0 +1,28 @@
+
+user_security:
+    resource: '@UserBundle/Controller/SecurityController.php'
+    type: annotation
+
+user_login_check:
+    path: /login_check
+    methods: ['POST']
+
+user_logout:
+    path: /logout
+    methods: ['GET', 'POST']
+
+user_profile:
+    resource: '@UserBundle/Controller/ProfileController.php'
+    type: annotation
+
+user_registration:
+    resource: '@UserBundle/Controller/RegistrationController.php'
+    type: annotation
+
+user_resetting:
+    resource: '@UserBundle/Controller/ResettingController.php'
+    type: annotation
+
+change_password:
+    resource: '@UserBundle/Controller/ChangePasswordController.php'
+    type: annotation

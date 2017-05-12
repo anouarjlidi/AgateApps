@@ -7,3 +7,33 @@ services:
     user.provider.username_or_email:
         class: UserBundle\Security\Provider\UsernameOrEmailProvider
         autowire: true
+
+    user.util.canonicalizer:
+        class: UserBundle\Util\Canonicalizer
+
+    user.repository:
+        class: UserBundle\Repository\UserRepository
+        factory: ['@doctrine.orm.default_entity_manager', 'getRepository']
+        arguments:
+            - UserBundle\Entity\User
+        calls:
+            - ['setCanonicalizer', ['@user.util.canonicalizer']]
+
+    user.form.type.registration:
+        class: UserBundle\Form\Type\RegistrationFormType
+        autowire: true
+        tags: [{ name: form.type }]
+
+    user.form.type.profile:
+        class: UserBundle\Form\Type\ProfileFormType
+        autowire: true
+        tags: [{ name: form.type }]
+
+    user.mailer:
+        class: UserBundle\Mailer\UserMailer
+        autowire: true
+        arguments:
+            - '%email_sender%'
+
+    user.util.token_generator:
+        class: UserBundle\Util\TokenGenerator

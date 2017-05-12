@@ -32,6 +32,8 @@ parameters:
     esteren_domains.api:             'api.%esteren_domain%'
     esteren_domains.backoffice:     'back.%esteren_domain%'
 
+    email_sender: 'no-reply@%esteren_domain%'
+
     google_tags:
         analytics:   'UA-43812649-5'
         tag_manager: 'GTM-T5PQWF'
@@ -181,15 +183,6 @@ ivory_ck_editor:
                 - { name: 'styles',      items: [ 'Styles', 'Format' ] }
                 - { name: 'document',    items: [ 'Source', '-' ] }
                 - { name: 'about',       items: [ 'About' ] }
-
-# Base FOSUser integration
-fos_user:
-    db_driver:     orm
-    firewall_name: main
-    user_class:    UserBundle\Entity\User
-    from_email:
-        address: 'no-reply@%esteren_domain%'
-        sender_name: 'Esteren team'
 
 # This allows using the default layout for Pages and Categories
 # See: https://github.com/Orbitale/CmsBundle

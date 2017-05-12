@@ -1,0 +1,7 @@
+{% extends "@User/layout.html.twig" %}
+
+{% trans_default_domain 'UserBundle' %}
+
+{% block content_for_layout %}
+    <p>{{ 'registration.check_email'|trans({'%email%': user.email}) }}</p>
+{% endblock content_for_layout %}

@@ -37,22 +37,21 @@ final class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
 
     const PROVIDER_KEY = 'main'; // Firewall name
 
-    const LOGIN_ROUTE = 'fos_user_security_login';
+    const LOGIN_ROUTE = 'user_login';
 
     const NO_REFERER_ROUTES = [
         self::LOGIN_ROUTE,
-        'fos_user_security_check',
-        'fos_user_security_register',
-        'fos_user_security_logout',
-        'fos_user_registration_register',
-        'fos_user_registration_check_email',
-        'fos_user_registration_confirm',
-        'fos_user_registration_confirmed',
-        'fos_user_resetting_request',
-        'fos_user_resetting_send_email',
-        'fos_user_resetting_check_email',
-        'fos_user_resetting_reset',
-        'fos_user_change_password',
+        'user_login_check',
+        'user_register',
+        'user_logout',
+        'user_check_email',
+        'user_registration_confirm',
+        'user_registration_confirmed',
+        'user_resetting_request',
+        'user_resetting_send_email',
+        'user_resetting_check_email',
+        'user_resetting_reset',
+        'user_change_password',
     ];
 
     /**
@@ -64,16 +63,11 @@ final class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
      * @var UserPasswordEncoderInterface
      */
     private $encoder;
-    /**
-     * @var UserManager
-     */
-    private $userManager;
 
-    public function __construct(UserManager $userManager, RouterInterface $router, UserPasswordEncoderInterface $encoder)
+    public function __construct(RouterInterface $router, UserPasswordEncoderInterface $encoder)
     {
         $this->router = $router;
         $this->encoder = $encoder;
-        $this->userManager = $userManager;
     }
 
     /**
@@ -105,7 +99,7 @@ final class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
      */
     public function getCredentials(Request $request)
     {
-        if ($request->getPathInfo() !== $this->router->generate('fos_user_security_check')) {
+        if ($request->getPathInfo() !== $this->router->generate('user_login_check')) {
             return null;
         }
 
@@ -139,11 +133,8 @@ final class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
     public function checkCredentials($credentials, UserInterface $user)
     {
         if (!$this->encoder->isPasswordValid($user, $credentials->getPassword())) {
-            throw new BadCredentialsException();
+            throw new BadCredentialsException('Bad credentials.');
         }
-
-        $user->setLastLogin(new \DateTime());
-        $this->userManager->updateUser($user);
 
         return true;
     }
@@ -160,6 +151,9 @@ final class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
         } else {
             $targetPath = $this->router->generate('root');
         }
+
+        // Make sure username is not stored for next login
+        $request->getSession()->remove(Security::LAST_USERNAME);
 
         return new RedirectResponse($targetPath);
     }

@@ -70,7 +70,7 @@ security:
                 domain:         '%esteren_domains.cookie_domain%'
             logout:
                 invalidate_session: false
-                path:           fos_user_security_logout
+                path:           user_logout
                 target:         root
             guard:
                 authenticators:

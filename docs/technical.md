@@ -62,11 +62,9 @@ There's a CI script located in `tests/ci/ci.bash` that should be runned on CI se
 
 ## Users
 
-Users are managed with [FOSUserBundle](https://github.com/FriendsOfSymfony/FOSUserBundle).
+Users are managed with our custom `UserBundle`.
 
-A simple `UsersBundle` exists to contain some fixtures and the `User` entity to be used in the whole application.
-It's important to note that this bundle **extends FOSUserBundle**, because in the future we might need to tweak/override
- the behavior of some FormTypes or controllers (because there's a project of merging users from different platforms).
+Most of its logic is based on `FOSUserBundle`, but we removed it for good, so we don't depend on it at all.
  
 ### Security
 

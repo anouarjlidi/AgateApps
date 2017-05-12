@@ -1,8 +1,8 @@
 # Be careful to manually prefix the local to all your new routes.
 
 # First we load the different other config files with the same configuration
-fos:
-    resource: 'fos.yml'
+user:
+    resource: 'user.yml'
 
 corahnrin:
     resource: 'corahnrin.yml'

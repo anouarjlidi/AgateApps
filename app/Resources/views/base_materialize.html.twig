@@ -72,9 +72,9 @@
                                         {% block menu_locale %}{% endblock %}
                                         {% block menu_security %}
                                             {% if app.user.username is not defined %}
-                                                <li><a href="{{ path('fos_user_security_login') }}">{{ 'layout.login' | trans({}, 'FOSUserBundle') }}</a></li>
+                                                <li><a class="login_link" href="{{ path('user_login') }}">{{ 'layout.login' | trans({}, 'UserBundle') }}</a></li>
                                             {% else %}
-                                                <li><a href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout' | trans({}, 'FOSUserBundle')|trim }} [ {{ app.user.username|trim }} ]</a></li>
+                                                <li><a class="logout_link" href="{{ path('user_logout') }}">{{ 'layout.logout' | trans({}, 'UserBundle')|trim }} [ {{ app.user.username|trim }} ]</a></li>
                                                 {% if is_granted('ROLE_MANAGER') %}
                                                     <li><a href="{{ path('easyadmin') }}">{{ 'links.admin' | trans }}</a></li>
                                                 {% endif %}
@@ -101,10 +101,6 @@
                     {% block flash_messages %}
                         {{ include('_flash_messages.html.twig') }}
                     {% endblock %}
-
-                    {#{% block orbitale_cms_breadcrumbs %}{% endblock %}#}
-
-                    {% block fos_user_content %}{% endblock %}
 
                     {% block content_for_layout %}{% endblock %}
 

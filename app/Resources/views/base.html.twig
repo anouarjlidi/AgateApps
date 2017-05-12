@@ -90,9 +90,9 @@
                                 {% endblock %}
                                 {% block menu_security %}
                                     {% if app.user.username is not defined %}
-                                        <li><a href="{{ path('fos_user_security_login') }}">{{ 'layout.login' | trans({}, 'FOSUserBundle') }}</a></li>
+                                        <li><a href="{{ path('user_login') }}">{{ 'layout.login' | trans({}, 'UserBundle') }}</a></li>
                                     {% else %}
-                                        <li><a href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout' | trans({}, 'FOSUserBundle') }} [ {{ app.user.username }} ]</a></li>
+                                        <li><a href="{{ path('user_logout') }}">{{ 'layout.logout' | trans({}, 'UserBundle') }} [ {{ app.user.username }} ]</a></li>
                                         {% if is_granted('ROLE_MANAGER') %}
                                             <li><a href="{{ path('easyadmin') }}">{{ 'links.admin' | trans }}</a></li>
                                         {% endif %}
@@ -120,10 +120,10 @@
                     {% set translation_domain = 'messages.flash' %}
 
                     {% set class = key %}
-                    {% if 'fos_user_' in class %}
-                        {# Sometimes, FOSUser can send specific error keys #}
-                        {% set class = (class | replace({'fos_user_': ''})) %}
-                        {% set translation_domain = 'FOSUserBundle' %}
+                    {% if 'user_' in class %}
+                        {# Sometimes, UserBundle can send specific error keys #}
+                        {% set class = (class | replace({'user_': ''})) %}
+                        {% set translation_domain = 'UserBundle' %}
                     {% endif %}
                     {% if 'error' == class %}
                         {# Fit bootstrap's needs #}
@@ -144,8 +144,6 @@
             <div id="content">
 
                 {% block orbitale_cms_breadcrumbs %}{% endblock %}
-
-                {% block fos_user_content %}{% endblock %}
 
                 {% block content_for_layout %}{% endblock %}
 

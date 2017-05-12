@@ -39,7 +39,7 @@ The only difference is that the dist file contains comments about what it does, 
     ServerAlias api.esteren.dev
     ServerAlias maps.esteren.dev
     ServerAlias corahnrin.esteren.dev
-    ServerAlias www.esteren.dev
+    ServerAlias portal.esteren.dev
     ServerAlias back.esteren.dev
     ServerAlias games.esteren.dev
     ServerAlias portal.esteren.dev
@@ -126,7 +126,7 @@ server {
         api.esteren.dev
         maps.esteren.dev
         corahnrin.esteren.dev
-        www.esteren.dev
+        portal.esteren.dev
         back.esteren.dev
         games.esteren.dev
         portal.esteren.dev

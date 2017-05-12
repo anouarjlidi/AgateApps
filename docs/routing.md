@@ -20,7 +20,7 @@
 
 The routing load order is the following:
 
-* FOSUser, which are loaded globally for every domain
+* User, which are loaded globally for every domain
 * CorahnRin (character manager), under `%esteren_domains.corahnrin%` host.
 * Esteren Maps, under `%esteren_domains.esterenmaps%` host.
 * Root (the `/` route), which simply redirects to `/%locale%/` to handle the route for all subdomains.

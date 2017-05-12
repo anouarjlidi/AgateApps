@@ -5,11 +5,11 @@
 
         {% if loop.first %}<div id="flash-messages">{% endif %}
 
-        {% set translation_domain = 'messages.flash' %}
+        {% set translation_domain = 'messages' %}
 
-        {% if 'fos_user_' in key %}
-            {# Sometimes, FOSUser can send specific error messages #}
-            {% set translation_domain = 'FOSUserBundle' %}
+        {% if 'user_' in key %}
+            {# Sometimes, UserBundle can send specific error messages #}
+            {% set translation_domain = 'UserBundle' %}
         {% endif %}
 
         {% set class = get_flash_class(key) %}

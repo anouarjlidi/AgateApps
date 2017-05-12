@@ -1,0 +1,14 @@
+{% extends "@User/layout.html.twig" %}
+
+{% trans_default_domain 'UserBundle' %}
+
+{% block content_for_layout %}
+
+    {{ form_start(form, { 'action': path('user_profile_edit'), 'attr': { 'class': 'user_profile_edit' } }) }}
+    {{ form_widget(form) }}
+    <div>
+        <input type="submit" value="{{ 'profile.edit.submit'|trans }}" />
+    </div>
+    {{ form_end(form) }}
+
+{% endblock content_for_layout %}

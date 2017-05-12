@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "0c2c0c18d8a7894cb35bd8ac1ace234c",
+    "content-hash": "fa5b2caba2fe8412e84e41de9fa0e76f",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -986,6 +986,63 @@
             "time": "2015-12-06T13:20:24+00:00"
         },
         {
+            "name": "egulias/email-validator",
+            "version": "2.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/egulias/EmailValidator.git",
+                "reference": "bc31baa11ea2883e017f0a10d9722ef9d50eac1c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/bc31baa11ea2883e017f0a10d9722ef9d50eac1c",
+                "reference": "bc31baa11ea2883e017f0a10d9722ef9d50eac1c",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/lexer": "^1.0.1",
+                "php": ">= 5.5"
+            },
+            "require-dev": {
+                "dominicsayers/isemail": "dev-master",
+                "phpunit/phpunit": "^4.8.0",
+                "satooshi/php-coveralls": "dev-master"
+            },
+            "suggest": {
+                "ext-intl": "PHP Internationalization Libraries are required to use the SpoofChecking validation"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Egulias\\EmailValidator\\": "EmailValidator"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Eduardo Gulias Davis"
+                }
+            ],
+            "description": "A library for validating emails against several RFCs",
+            "homepage": "https://github.com/egulias/EmailValidator",
+            "keywords": [
+                "email",
+                "emailvalidation",
+                "emailvalidator",
+                "validation",
+                "validator"
+            ],
+            "time": "2017-01-30T22:07:36+00:00"
+        },
+        {
             "name": "friendsofsymfony/rest-bundle",
             "version": "1.7.7",
             "target-dir": "FOS/RestBundle",
@@ -1070,83 +1127,6 @@
                 "rest"
             ],
             "time": "2015-12-29T16:02:50+00:00"
-        },
-        {
-            "name": "friendsofsymfony/user-bundle",
-            "version": "v2.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/FriendsOfSymfony/FOSUserBundle.git",
-                "reference": "2e0243e9e8a3ca0dab753fc5f2e79b4b3093ac9a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/2e0243e9e8a3ca0dab753fc5f2e79b4b3093ac9a",
-                "reference": "2e0243e9e8a3ca0dab753fc5f2e79b4b3093ac9a",
-                "shasum": ""
-            },
-            "require": {
-                "paragonie/random_compat": "^1 || ^2",
-                "php": "^5.5.9 || ^7.0",
-                "symfony/form": "^2.7 || ^3.0",
-                "symfony/framework-bundle": "^2.7 || ^3.0",
-                "symfony/security-bundle": "^2.7 || ^3.0",
-                "symfony/templating": "^2.7 || ^3.0",
-                "symfony/twig-bundle": "^2.7 || ^3.0",
-                "twig/twig": "^1.28 || ^2.0"
-            },
-            "conflict": {
-                "doctrine/doctrine-bundle": "<1.3",
-                "symfony/doctrine-bridge": "<2.7"
-            },
-            "require-dev": {
-                "doctrine/doctrine-bundle": "^1.3",
-                "friendsofphp/php-cs-fixer": "^1.11",
-                "phpunit/phpunit": "~4.8|~5.0",
-                "swiftmailer/swiftmailer": "^4.3 || ^5.0",
-                "symfony/console": "^2.7 || ^3.0",
-                "symfony/phpunit-bridge": "^2.7 || ^3.0",
-                "symfony/validator": "^2.7 || ^3.0",
-                "symfony/yaml": "^2.7 || ^3.0"
-            },
-            "type": "symfony-bundle",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "FOS\\UserBundle\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Christophe Coevoet",
-                    "email": "stof@notk.org"
-                },
-                {
-                    "name": "FriendsOfSymfony Community",
-                    "homepage": "https://github.com/friendsofsymfony/FOSUserBundle/contributors"
-                },
-                {
-                    "name": "Thibault Duplessis",
-                    "email": "thibault.duplessis@gmail.com"
-                }
-            ],
-            "description": "Symfony FOSUserBundle",
-            "homepage": "http://friendsofsymfony.github.com",
-            "keywords": [
-                "User management"
-            ],
-            "time": "2017-03-29T13:21:34+00:00"
         },
         {
             "name": "gedmo/doctrine-extensions",
@@ -1501,16 +1481,16 @@
         },
         {
             "name": "jms/serializer",
-            "version": "1.6.2",
+            "version": "1.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/schmittjoh/serializer.git",
-                "reference": "b8683d206e7297f54034f67a877f966c14dc12ea"
+                "reference": "4fad8bbbe76e05de3b79ffa3db027058ed3813ff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmittjoh/serializer/zipball/b8683d206e7297f54034f67a877f966c14dc12ea",
-                "reference": "b8683d206e7297f54034f67a877f966c14dc12ea",
+                "url": "https://api.github.com/repos/schmittjoh/serializer/zipball/4fad8bbbe76e05de3b79ffa3db027058ed3813ff",
+                "reference": "4fad8bbbe76e05de3b79ffa3db027058ed3813ff",
                 "shasum": ""
             },
             "require": {
@@ -1549,7 +1529,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.6-dev"
+                    "dev-master": "1.8-dev"
                 }
             },
             "autoload": {
@@ -1559,7 +1539,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "Apache2"
+                "Apache-2.0"
             ],
             "authors": [
                 {
@@ -1576,25 +1556,24 @@
                 "serialization",
                 "xml"
             ],
-            "time": "2017-04-17T15:27:46+00:00"
+            "time": "2017-05-15T08:35:42+00:00"
         },
         {
             "name": "jms/serializer-bundle",
-            "version": "1.4.0",
-            "target-dir": "JMS/SerializerBundle",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/schmittjoh/JMSSerializerBundle.git",
-                "reference": "fdd73dbc8642940084deda2a96fa5db62d0f2384"
+                "reference": "90373f0ed225b204bed66cc3f6837746c5902ac5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmittjoh/JMSSerializerBundle/zipball/fdd73dbc8642940084deda2a96fa5db62d0f2384",
-                "reference": "fdd73dbc8642940084deda2a96fa5db62d0f2384",
+                "url": "https://api.github.com/repos/schmittjoh/JMSSerializerBundle/zipball/90373f0ed225b204bed66cc3f6837746c5902ac5",
+                "reference": "90373f0ed225b204bed66cc3f6837746c5902ac5",
                 "shasum": ""
             },
             "require": {
-                "jms/serializer": "^1.6",
+                "jms/serializer": "^1.7",
                 "php": ">=5.4.0",
                 "phpoption/phpoption": "^1.1.0",
                 "symfony/framework-bundle": "~2.3|~3.0"
@@ -1621,19 +1600,26 @@
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.4-dev"
+                    "dev-master": "2.x-dev"
                 }
             },
             "autoload": {
-                "psr-0": {
-                    "JMS\\SerializerBundle": ""
-                }
+                "psr-4": {
+                    "JMS\\SerializerBundle\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "Apache2"
+                "Apache-2.0"
             ],
             "authors": [
+                {
+                    "name": "Asmir Mustafic",
+                    "email": "goetas@gmail.com"
+                },
                 {
                     "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com"
@@ -1648,7 +1634,7 @@
                 "serialization",
                 "xml"
             ],
-            "time": "2017-04-10T12:31:39+00:00"
+            "time": "2017-05-17T10:26:43+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -2372,16 +2358,16 @@
         },
         {
             "name": "sensio/distribution-bundle",
-            "version": "v5.0.19",
+            "version": "v5.0.20",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioDistributionBundle.git",
-                "reference": "654c4fa3d11448c8005400a244987896243a990a"
+                "reference": "4b019d4c0bd64438c42e4b6b0726085b409be8d9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/654c4fa3d11448c8005400a244987896243a990a",
-                "reference": "654c4fa3d11448c8005400a244987896243a990a",
+                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/4b019d4c0bd64438c42e4b6b0726085b409be8d9",
+                "reference": "4b019d4c0bd64438c42e4b6b0726085b409be8d9",
                 "shasum": ""
             },
             "require": {
@@ -2420,20 +2406,20 @@
                 "configuration",
                 "distribution"
             ],
-            "time": "2017-04-23T22:28:23+00:00"
+            "time": "2017-05-11T16:21:03+00:00"
         },
         {
             "name": "sensio/framework-extra-bundle",
-            "version": "v3.0.25",
+            "version": "v3.0.26",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioFrameworkExtraBundle.git",
-                "reference": "472b339cf0c82f3a033b29f85d9d9cada3cd1a9c"
+                "reference": "6d6cbe971554f0a2cc84965850481eb04a2a0059"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioFrameworkExtraBundle/zipball/472b339cf0c82f3a033b29f85d9d9cada3cd1a9c",
-                "reference": "472b339cf0c82f3a033b29f85d9d9cada3cd1a9c",
+                "url": "https://api.github.com/repos/sensiolabs/SensioFrameworkExtraBundle/zipball/6d6cbe971554f0a2cc84965850481eb04a2a0059",
+                "reference": "6d6cbe971554f0a2cc84965850481eb04a2a0059",
                 "shasum": ""
             },
             "require": {
@@ -2490,7 +2476,7 @@
                 "annotations",
                 "controllers"
             ],
-            "time": "2017-03-21T23:34:44+00:00"
+            "time": "2017-05-11T17:01:57+00:00"
         },
         {
             "name": "sensiolabs/security-checker",
@@ -2600,29 +2586,30 @@
         },
         {
             "name": "swiftmailer/swiftmailer",
-            "version": "v5.4.7",
+            "version": "v6.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/swiftmailer/swiftmailer.git",
-                "reference": "56db4ed32a6d5c9824c3ecc1d2e538f663f47eb4"
+                "reference": "74e20ce4dad5011fb2c2cedefb76b2237f123c0e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/56db4ed32a6d5c9824c3ecc1d2e538f663f47eb4",
-                "reference": "56db4ed32a6d5c9824c3ecc1d2e538f663f47eb4",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/74e20ce4dad5011fb2c2cedefb76b2237f123c0e",
+                "reference": "74e20ce4dad5011fb2c2cedefb76b2237f123c0e",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.3"
+                "egulias/email-validator": "~2.0",
+                "php": ">=7.0.0"
             },
             "require-dev": {
                 "mockery/mockery": "~0.9.1",
-                "symfony/phpunit-bridge": "~3.2"
+                "symfony/phpunit-bridge": "~3.3@dev"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "5.4-dev"
+                    "dev-master": "6.0-dev"
                 }
             },
             "autoload": {
@@ -2650,7 +2637,7 @@
                 "mail",
                 "mailer"
             ],
-            "time": "2017-04-20T17:32:18+00:00"
+            "time": "2017-05-19T19:50:13+00:00"
         },
         {
             "name": "symfony/monolog-bundle",
@@ -3051,21 +3038,21 @@
         },
         {
             "name": "symfony/swiftmailer-bundle",
-            "version": "v2.5.4",
+            "version": "v2.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/swiftmailer-bundle.git",
-                "reference": "8ab32ce31a7156621fb92e0466586186beb89759"
+                "reference": "c481f1f012a7c1a84f05287fd3e93b9b73d7b953"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/swiftmailer-bundle/zipball/8ab32ce31a7156621fb92e0466586186beb89759",
-                "reference": "8ab32ce31a7156621fb92e0466586186beb89759",
+                "url": "https://api.github.com/repos/symfony/swiftmailer-bundle/zipball/c481f1f012a7c1a84f05287fd3e93b9b73d7b953",
+                "reference": "c481f1f012a7c1a84f05287fd3e93b9b73d7b953",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.2",
-                "swiftmailer/swiftmailer": ">=4.2.0,~5.0",
+                "swiftmailer/swiftmailer": ">=4.2.0|~5.0|~6.0",
                 "symfony/config": "~2.7|~3.0",
                 "symfony/dependency-injection": "~2.7|~3.0",
                 "symfony/http-kernel": "~2.7|~3.0"
@@ -3073,7 +3060,7 @@
             "require-dev": {
                 "symfony/console": "~2.7|~3.0",
                 "symfony/framework-bundle": "~2.7|~3.0",
-                "symfony/phpunit-bridge": "~2.7|~3.0",
+                "symfony/phpunit-bridge": "~3.3@dev",
                 "symfony/yaml": "~2.7|~3.0"
             },
             "suggest": {
@@ -3082,7 +3069,7 @@
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.5-dev"
+                    "dev-master": "2.6-dev"
                 }
             },
             "autoload": {
@@ -3106,7 +3093,7 @@
             ],
             "description": "Symfony SwiftmailerBundle",
             "homepage": "http://symfony.com",
-            "time": "2017-03-21T21:47:36+00:00"
+            "time": "2017-05-19T20:23:33+00:00"
         },
         {
             "name": "symfony/symfony",
@@ -4361,23 +4348,23 @@
         },
         {
             "name": "sebastian/diff",
-            "version": "1.4.1",
+            "version": "1.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/diff.git",
-                "reference": "13edfd8706462032c2f52b4b862974dd46b71c9e"
+                "reference": "3c7d21999e815cdfac70c6c7d79d3a9cb1bc7bc2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/diff/zipball/13edfd8706462032c2f52b4b862974dd46b71c9e",
-                "reference": "13edfd8706462032c2f52b4b862974dd46b71c9e",
+                "url": "https://api.github.com/repos/sebastianbergmann/diff/zipball/3c7d21999e815cdfac70c6c7d79d3a9cb1bc7bc2",
+                "reference": "3c7d21999e815cdfac70c6c7d79d3a9cb1bc7bc2",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.3"
+                "php": "^5.3.3 || ^7.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "~4.8"
+                "phpunit/phpunit": "^4.8.35 || ^5.7 || ^6.0"
             },
             "type": "library",
             "extra": {
@@ -4409,7 +4396,7 @@
             "keywords": [
                 "diff"
             ],
-            "time": "2015-12-08T07:14:41+00:00"
+            "time": "2017-05-18T13:44:30+00:00"
         },
         {
             "name": "sebastian/environment",

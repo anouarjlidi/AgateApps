@@ -9,10 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace UserBundle;
+namespace UserBundle\Util;
 
-use Symfony\Component\HttpKernel\Bundle\Bundle;
-
-class UserBundle extends Bundle
+final class TokenGenerator
 {
+    public function generateToken()
+    {
+        return rtrim(strtr(base64_encode(random_bytes(32)), '+/', '-_'), '=');
+    }
 }

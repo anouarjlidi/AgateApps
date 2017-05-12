@@ -17,10 +17,11 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
-use FOS\UserBundle\Doctrine\UserManager;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 use UserBundle\Entity\User;
+use UserBundle\Util\Canonicalizer;
 
 final class UsersFixtures extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
@@ -28,16 +29,20 @@ final class UsersFixtures extends AbstractFixture implements OrderedFixtureInter
      * @var ObjectManager
      */
     private $manager;
-
     /**
      * @var ContainerInterface
      */
     private $container;
 
     /**
-     * @var UserManager
+     * @var PasswordEncoderInterface
      */
-    private $userManager;
+    protected $passwordEncoder;
+
+    /**
+     * @var Canonicalizer
+     */
+    protected $canonicalizer;
 
     /**
      * Get the order of this fixture.
@@ -67,7 +72,8 @@ final class UsersFixtures extends AbstractFixture implements OrderedFixtureInter
         /** @var EntityRepository $repo */
         $repo = $this->manager->getRepository('UserBundle:User');
 
-        $this->userManager = $this->container->get('fos_user.user_manager');
+        $this->canonicalizer = $this->container->get('user.util.canonicalizer');
+        $this->passwordEncoder = $this->container->get('security.password_encoder');
 
         $this->fixtureObject($repo, 1, 'Pierstoval', 'pierstoval@gmail.com', 'admin', true);
 
@@ -78,12 +84,13 @@ final class UsersFixtures extends AbstractFixture implements OrderedFixtureInter
 
     public function fixtureObject(EntityRepository $repo, $id, $name, $email, $password, $superAdmin)
     {
-        $obj       = null;
+        $user      = null;
         $newObject = false;
         $addRef    = false;
+
         if ($id) {
-            $obj = $repo->find($id);
-            if ($obj) {
+            $user = $repo->find($id);
+            if ($user) {
                 $addRef = true;
             } else {
                 $newObject = true;
@@ -91,31 +98,31 @@ final class UsersFixtures extends AbstractFixture implements OrderedFixtureInter
         } else {
             $newObject = true;
         }
+
         if ($newObject === true) {
-            /** @var User $obj */
-            $obj = $this->userManager->createUser();
-            if (!($obj instanceof User)) {
-                throw new \RuntimeException('Error : User class should be "'.User::class.'", got "'.get_class($obj).'" instead.');
-            }
-            $obj
-                ->setId($id)
-                ->setUsername($name)
-                ->setEmail($email)
-                ->setPlainPassword($password ?: $email)
-                ->setSuperAdmin($superAdmin)
-                ->setEnabled(true)
-            ;
+            $user = new User();
+
+            $user->setId($id);
+            $user->setUsername($name);
+            $user->setEmail($email);
+            $user->setPlainPassword($password ?: $email);
+            $user->setSuperAdmin($superAdmin);
+            $user->setEmailCanonical($this->canonicalizer->canonicalize($user->getEmail()));
+            $user->setUsernameCanonical($this->canonicalizer->canonicalize($user->getUsername()));
+            $user->setPassword($this->passwordEncoder->encodePassword($user, $user->getPlainPassword()));
+            $user->setEmailConfirmed(true);
 
             if ($id) {
                 /** @var ClassMetadataInfo $metadata */
-                $metadata = $this->manager->getClassMetaData(get_class($obj));
+                $metadata = $this->manager->getClassMetadata(get_class($user));
                 $metadata->setIdGeneratorType(ClassMetadata::GENERATOR_TYPE_NONE);
             }
-            $this->manager->persist($obj);
+
+            $this->manager->persist($user);
             $addRef = true;
         }
-        if ($addRef === true && $obj) {
-            $this->addReference('corahnrin-user-'.$id, $obj);
+        if ($addRef === true && $user) {
+            $this->addReference('corahnrin-user-'.$id, $user);
         }
     }
 }

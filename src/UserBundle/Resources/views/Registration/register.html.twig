@@ -1,6 +1,10 @@
-{% trans_default_domain 'FOSUserBundle' %}
+{% extends "@User/layout.html.twig" %}
 
-{{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'id': 'form_login', 'class': 'fos_user_registration_register'}}) }}
+{% trans_default_domain 'UserBundle' %}
+
+{% block content_for_layout %}
+
+    {{ form_start(form, {'method': 'post', 'action': path('user_register'), 'attr': {'id': 'form_login', 'class': 'user_registration_register'}}) }}
 
     <h2>{{ 'layout.register' | trans }}</h2>
 
@@ -17,4 +21,6 @@
         <input class="btn btn-default" type="submit" value="{{ 'registration.submit'|trans }}" />
     </div>
 
-{{ form_end(form) }}
+    {{ form_end(form) }}
+
+{% endblock content_for_layout %}

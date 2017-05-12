@@ -25,6 +25,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use UserBundle\Entity\User;
+use UserBundle\Repository\UserRepository;
 
 class ImportLegacyCharactersCommand extends ContainerAwareCommand
 {
@@ -49,7 +50,7 @@ class ImportLegacyCharactersCommand extends ContainerAwareCommand
     private $input;
 
     /**
-     * @var UserManager
+     * @var UserRepository
      */
     private $userManager;
 
@@ -95,7 +96,7 @@ class ImportLegacyCharactersCommand extends ContainerAwareCommand
         // Defining specific properties for this class
         $this->input       = $input;
         $this->io          = new SymfonyStyle($input, $output);
-        $this->userManager = $container->get('fos_user.user_manager');
+        $this->userManager = $container->get('user.repository');
         $doctrine          = $container->get('doctrine');
         $this->em          = $doctrine->getManager();
         $this->legacyCnx   = $doctrine->getConnection('legacy');
@@ -205,8 +206,8 @@ SQL;
     {
         $user = null;
 
-        $userByUsername = $username ? $this->userManager->findUserByUsername($username) : null;
-        $userByEmail    = $email ? $this->userManager->findUserByEmail($email) : null;
+        $userByUsername = $username ? $this->userManager->findOneBy(['username' => $username]) : null;
+        $userByEmail    = $email ? $this->userManager->findOneBy(['email' => $email]) : null;
 
         if ($userByEmail && $userByUsername && $userByEmail->getId() !== $userByUsername->getId()) {
             if ($this->input->isInteractive()) {
@@ -229,15 +230,15 @@ SQL;
         } elseif ($userByEmail || $userByUsername) {
             $user = $userByEmail ?: $userByUsername;
         } else {
-            $user = $this->userManager->createUser();
+            $user = new User();
 
             $user
                 ->setUsername($username)
                 ->setEmail($email)
-                ->setPlainPassword(openssl_random_pseudo_bytes(255))
+                ->setPlainPassword($this->getContainer()->get('user.util.token_generator')->generateToken())
             ;
 
-            $this->userManager->updateUser($user, false);
+            $this->em->persist($user);
         }
 
         return $user;
