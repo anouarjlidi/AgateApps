@@ -168,7 +168,6 @@ ivory_ck_editor:
     input_sync: true
     default_config: base_config
     jquery: true
-    jquery_path: ''
     configs:
         base_config:
             language: '%locale%'
