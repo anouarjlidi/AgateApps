@@ -1,13 +1,5 @@
 'Bad credentials.': 'Nom d''utilisateur ou mot de passe invalide.'
-Pages: 'Pages'
-admin:
-    cms:
-        pages: 'Pages'
-    menu:
-        site: 'Site'
-        types: 'Types de référence'
-        transports: 'Transport'
-ID: 'ID'
+
 links:
     admin: 'Administration'
     menu: 'Menu'

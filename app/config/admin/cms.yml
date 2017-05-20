@@ -12,26 +12,27 @@ easy_admin:
                 actions:
                     - { name: 'admin_page_preview', label: 'page.preview.admin_link', icon: 'search', type: route }
                 fields:
-                    - id
-                    - parent
-                    - title
-                    - slug
-                    - tree
-                    - host
-                    - locale
-                    - { property: homepage, type: boolean }
-                    - { property: enabled, type: boolean }
+                    - { property: id, label: 'admin.entities.id' }
+                    - { property: parent, label: 'admin.entities.pages.parent' }
+                    - { property: title, label: 'admin.entities.pages.title' }
+                    - { property: slug, label: 'admin.entities.pages.slug' }
+                    - { property: tree, label: 'admin.entities.pages.tree' }
+                    - { property: host, label: 'admin.entities.pages.host' }
+                    - { property: locale, label: 'admin.entities.pages.locale' }
+                    - { property: homepage, label: 'admin.entities.pages.homepage', type: boolean }
+                    - { property: enabled, label: 'admin.entities.pages.enabled', type: boolean }
 
             form:
                 fields:
-
                     # Right panel with general informations
-                    - { type: 'group', css_class: 'col-sm-8' }
-                    - title
-                    - slug
-                    - { property: content, type: ckeditor }
+                    - { type: 'group', css_class: 'col-sm-7' }
+                    - { type: 'section', label: 'admin.sections.general' }
+                    - { property: title, label: 'admin.entities.pages.title' }
+                    - { property: slug, label: 'admin.entities.pages.slug' }
+                    - { property: content, label: 'admin.entities.pages.content', type: ckeditor }
 
                     - property: host
+                      label: 'admin.entities.pages.host'
                       type: choice
                       type_options:
                           choices:
@@ -40,36 +41,37 @@ easy_admin:
                               '%esteren_domains.corahnrin%': '%esteren_domains.corahnrin%'
 
                     - property: locale
+                      label: 'admin.entities.pages.locale'
                       type: choice
                       type_options:
                           choices: '%locales%'
+                          choice_translation_domain: Languages
 
-                    - homepage
-                    - enabled
-                    - showTitle
+                    - { property: homepage, label: 'admin.entities.pages.homepage' }
+                    - { property: enabled, label: 'admin.entities.pages.enabled' }
+                    - { property: showTitle, label: 'admin.entities.pages.show_title' }
 
                     # Left panel with other sections
-                    - { type: 'group', css_class: 'col-sm-4 right' }
+                    - { type: 'group', css_class: 'col-sm-5 right' }
 
-                    - { type: 'section', label: 'SEO' }
-                    - metaDescription
-                    - metaTitle
-                    - metaKeywords
+                    - { type: 'section', label: 'admin.sections.seo' }
+                    - { property: metaDescription, label: 'admin.entities.pages.meta_description' }
+                    - { property: metaTitle, label: 'admin.entities.pages.meta_title' }
+                    - { property: metaKeywords, label: 'admin.entities.pages.meta_keywords' }
 
-                    - { type: 'section', label: 'Design' }
+                    - { type: 'section', label: 'admin.sections.design' }
                     - property: template
+                      label: 'admin.entities.pages.template'
                       type: choice
                       type_options:
-                          required: false
-                          placeholder: '-'
-                          empty_data: null
+                          required: true
                           choices:
                               'templates.base': 'base.html.twig'
                               'templates.material': 'base_materialize.html.twig'
-                    - css
-                    - js
-                    - containerCssClass
+                    - { property: css, label: 'admin.entities.pages.css' }
+                    - { property: js, label: 'admin.entities.pages.js' }
+                    - { property: containerCssClass, label: 'admin.entities.pages.container_css_class' }
 
-                    - { type: 'section', label: 'Associations' }
-                    - category
-                    - parent
+                    - { type: 'section', label: 'admin.sections.associations' }
+                    - { property: category, label: 'admin.entities.pages.category' }
+                    - { property: parent, label: 'admin.entities.pages.parent' }

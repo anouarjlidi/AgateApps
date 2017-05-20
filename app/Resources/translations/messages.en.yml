@@ -1,13 +1,5 @@
 'Bad credentials.': 'User name or password invalid.'
-Pages: 'Pages'
-admin:
-    cms:
-        pages: 'Pages'
-    menu:
-        site: 'Site'
-        types: 'Reference types'
-        transports: 'Transports'
-ID: 'ID'
+
 links:
     admin: 'Admin panel'
     menu: 'Menu'

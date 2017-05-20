@@ -1,3 +1,39 @@
+Pages: Pages
+
 admin:
     links:
         back_to_site: 'Retour au site'
+    cms:
+        pages: 'Pages'
+    menu:
+        site: 'Site'
+        types: 'Types de référence'
+        transports: 'Transport'
+
+    sections:
+        general: Informations générales
+        associations: Associations
+        design: Design
+        seo: Référencement
+
+    entities:
+        id: 'ID'
+        pages:
+            category: 'Catégorie'
+            container_css_class: 'Classe CSS container'
+            content: 'Contenu'
+            css: 'CSS'
+            enabled: 'Active'
+            homepage: 'Page d''accueil'
+            host: 'Nom de domaine'
+            js: 'Javascript'
+            locale: 'Langue'
+            meta_description: 'Meta description'
+            meta_keywords: 'Meta keywords'
+            meta_title: 'Meta title'
+            parent: 'Parent'
+            show_title: 'Montrer le titre'
+            slug: 'URL'
+            template: 'Template'
+            title: 'Title'
+            tree: 'URL finale'
