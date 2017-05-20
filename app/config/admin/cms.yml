@@ -12,10 +12,10 @@ easy_admin:
                 actions:
                     - { name: 'admin_page_preview', label: 'page.preview.admin_link', icon: 'search', type: route }
                 fields:
-                    - { property: id, label: 'admin.entities.id' }
+                    - { property: id, label: 'admin.entities.common.id' }
                     - { property: parent, label: 'admin.entities.pages.parent' }
                     - { property: title, label: 'admin.entities.pages.title' }
-                    - { property: slug, label: 'admin.entities.pages.slug' }
+                    - { property: slug, label: 'admin.entities.common.slug' }
                     - { property: tree, label: 'admin.entities.pages.tree' }
                     - { property: host, label: 'admin.entities.pages.host' }
                     - { property: locale, label: 'admin.entities.pages.locale' }
@@ -28,7 +28,7 @@ easy_admin:
                     - { type: 'group', css_class: 'col-sm-7' }
                     - { type: 'section', label: 'admin.sections.general' }
                     - { property: title, label: 'admin.entities.pages.title' }
-                    - { property: slug, label: 'admin.entities.pages.slug' }
+                    - { property: slug, label: 'admin.entities.common.slug' }
                     - { property: content, label: 'admin.entities.pages.content', type: ckeditor }
 
                     - property: host

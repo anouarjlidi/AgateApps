@@ -7,9 +7,17 @@ easy_admin:
             label: admin.maps.factions
             class: EsterenMaps\MapsBundle\Entity\Factions
             list:
-                fields: [ id, name, description, book ]
+                fields:
+                    - { property: id, label: 'admin.entities.common.id' }
+                    - { property: name, label: 'admin.entities.common.name' }
+                    - { property: description, label: 'admin.entities.common.description' }
+                    - { property: book, label: 'admin.entities.common.book' }
+
             form:
-                fields: [ name, description, book ]
+                fields:
+                    - { property: name, label: 'admin.entities.common.name' }
+                    - { property: description, label: 'admin.entities.common.description' }
+                    - { property: book, label: 'admin.entities.common.book' }
 
         Maps:
             label: admin.maps.maps
@@ -20,37 +28,37 @@ easy_admin:
                     - { name: admin_esterenmaps_maps_maps_editInteractive, type: route, label: actions.interactive  }
                     - '-delete'
                 fields:
-                    - id
-                    - name
-                    - nameSlug
-                    - maxZoom
-                    - startZoom
-                    - startX
-                    - startY
+                    - { property: id, label: 'admin.entities.common.id' }
+                    - { property: name, label: 'admin.entities.common.name' }
+                    - { property: nameSlug, label: 'admin.entities.common.nameSlug' }
+                    - { property: maxZoom, label: 'admin.entities.factions.maxZoom' }
+                    - { property: startZoom, label: 'admin.entities.factions.startZoom' }
+                    - { property: startX, label: 'admin.entities.factions.startX' }
+                    - { property: startY, label: 'admin.entities.factions.startY' }
             new:
                 fields:
-                    - name
-                    - nameSlug
-                    - image
-                    - description
-                    - maxZoom
-                    - bounds
-                    - startZoom
-                    - startX
-                    - startY
-                    - coordinatesRatio
+                    - { property: name, label: 'admin.entities.common.name' }
+                    - { property: nameSlug, label: 'admin.entities.common.nameSlug' }
+                    - { property: image, label: 'admin.entities.factions.image' }
+                    - { property: description, label: 'admin.entities.common.description' }
+                    - { property: maxZoom, label: 'admin.entities.factions.maxZoom' }
+                    - { property: bounds, label: 'admin.entities.factions.bounds' }
+                    - { property: startZoom, label: 'admin.entities.factions.startZoom' }
+                    - { property: startX, label: 'admin.entities.factions.startX' }
+                    - { property: startY, label: 'admin.entities.factions.startY' }
+                    - { property: coordinatesRatio, label: 'admin.entities.factions.coordinatesRatio' }
             edit:
                 fields:
-                    - name
-                    - { property: nameSlug, type_options: { disabled: true, required: false } }
-                    - { property: image,    type_options: { disabled: true, required: false } }
-                    - description
-                    - maxZoom
-                    - bounds
-                    - startZoom
-                    - startX
-                    - startY
-                    - coordinatesRatio
+                    - { property: name, label: 'admin.entities.common.name' }
+                    - { property: nameSlug, label: 'admin.entities.common.nameSlug', type_options: { disabled: true, required: false } }
+                    - { property: image, label: 'admin.entities.factions.image', type_options: { disabled: true, required: false } }
+                    - { property: description, label: 'admin.entities.common.description' }
+                    - { property: maxZoom, label: 'admin.entities.factions.maxZoom' }
+                    - { property: bounds, label: 'admin.entities.factions.bounds' }
+                    - { property: startZoom, label: 'admin.entities.factions.startZoom' }
+                    - { property: startX, label: 'admin.entities.factions.startX' }
+                    - { property: startY, label: 'admin.entities.factions.startY' }
+                    - { property: coordinatesRatio, label: 'admin.entities.factions.coordinatesRatio' }
 
         Markers:
             label: admin.maps.markers

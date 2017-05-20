@@ -17,7 +17,14 @@ admin:
         seo: Référencement
 
     entities:
-        id: 'ID'
+        common:
+            id: 'ID'
+            name: 'Name'
+            nameSlug: 'Nom d''URL'
+            slug: 'URL'
+            description: 'Description'
+            book: 'Livre'
+
         pages:
             category: 'Catégorie'
             container_css_class: 'Classe CSS container'
@@ -33,7 +40,15 @@ admin:
             meta_title: 'Meta title'
             parent: 'Parent'
             show_title: 'Montrer le titre'
-            slug: 'URL'
             template: 'Template'
             title: 'Title'
             tree: 'URL finale'
+
+        factions:
+            maxZoom: 'Zoom maximum'
+            startZoom: 'Zoom de départ'
+            startX: 'Position "X" de départ'
+            startY: 'Position "Y" de départ'
+            image: 'Image utilisée'
+            bounds: 'Limites des coordonnées'
+            coordinatesRatio: 'Ratio du calcul de distance'
