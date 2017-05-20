@@ -21,6 +21,8 @@ easy_admin:
             - 'form/easyadmin_form_theme.html.twig'
 
         menu:
+            - { label: 'admin.links.back_to_site', route: 'portal_home' }
+
             - { label: 'admin.menu.site' }
             - { entity: 'Pages', icon: 'file-text' }
 
