@@ -11,6 +11,7 @@
 
 namespace AdminBundle\Controller;
 
+use Doctrine\ORM\QueryBuilder;
 use JavierEguiluz\Bundle\EasyAdminBundle\Controller\AdminController as BaseAdminController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -28,5 +29,12 @@ class AdminController extends BaseAdminController
     public function indexAction(Request $request)
     {
         return parent::indexAction($request);
+    }
+
+    protected function joinBooks(QueryBuilder $qb): QueryBuilder
+    {
+        $qb->leftJoin('entity.book', 'book')->addSelect('book');
+
+        return $qb;
     }
 }

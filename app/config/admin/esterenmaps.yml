@@ -6,6 +6,7 @@ easy_admin:
         Factions:
             label: admin.maps.factions
             class: EsterenMaps\MapsBundle\Entity\Factions
+            controller: EsterenMaps\MapsBundle\Controller\Admin\BaseMapAdminController
             list:
                 fields:
                     - { property: id, label: 'admin.entities.common.id' }
@@ -22,6 +23,7 @@ easy_admin:
         Maps:
             label: admin.maps.maps
             class: EsterenMaps\MapsBundle\Entity\Maps
+            controller: EsterenMaps\MapsBundle\Controller\Admin\BaseMapAdminController
             list:
                 actions:
                     - edit
@@ -63,6 +65,7 @@ easy_admin:
         Markers:
             label: admin.maps.markers
             class: EsterenMaps\MapsBundle\Entity\Markers
+            controller: EsterenMaps\MapsBundle\Controller\Admin\BaseMapAdminController
             list:
                 actions:
                     - '-delete'
@@ -97,6 +100,7 @@ easy_admin:
         MarkersTypes:
             label: admin.maps.markers_types
             class: EsterenMaps\MapsBundle\Entity\MarkersTypes
+            controller: EsterenMaps\MapsBundle\Controller\Admin\BaseMapAdminController
             list:
                 actions:
                     - '-delete'
@@ -111,6 +115,7 @@ easy_admin:
         Routes:
             label: admin.maps.routes
             class: EsterenMaps\MapsBundle\Entity\Routes
+            controller: EsterenMaps\MapsBundle\Controller\Admin\BaseMapAdminController
             list:
                 actions:
                     - '-delete'
@@ -137,6 +142,7 @@ easy_admin:
         RoutesTypes:
             label: admin.maps.routes_types
             class: EsterenMaps\MapsBundle\Entity\RoutesTypes
+            controller: EsterenMaps\MapsBundle\Controller\Admin\BaseMapAdminController
             list:
                 actions:
                     - '-delete'
@@ -147,30 +153,34 @@ easy_admin:
         Zones:
             label: admin.maps.zones
             class: EsterenMaps\MapsBundle\Entity\Zones
+            controller: EsterenMaps\MapsBundle\Controller\Admin\BaseMapAdminController
             list:
                 actions:
                     - '-delete'
                 fields:
-                    - id
-                    - name
-                    - description
-                    - zoneType
-                    - map
-                    - faction
+                    - { property: id, label: 'admin.entities.common.id' }
+                    - { property: name, label: 'admin.entities.common.name' }
+                    - { property: description, label: 'admin.entities.common.description' }
+                    - { property: zoneType, label: 'ZonesTypes' }
+                    - { property: map, label: 'Maps' }
+                    - { property: faction, label: 'Factions' }
             form:
                 fields:
                     - property: name
+                      label: 'admin.entities.common.name'
                       type_options:
                           required: true
-                    - description
-                    - zoneType
-                    - faction
+                    - { property: description, label: 'admin.entities.common.description' }
+                    - { property: zoneType, label: 'ZonesTypes' }
+                    - { property: faction, label: 'Factions' }
                     - property: coordinates
+                      label: 'admin.entities.common.coordinates'
                       type_options:
                           disabled: true
                           required: false
                           attr: { readonly: readonly }
                     - property: map
+                      label: 'Maps'
                       type_options:
                           disabled: true
                           required: false
@@ -179,12 +189,21 @@ easy_admin:
         ZonesTypes:
             label: admin.maps.zones_types
             class: EsterenMaps\MapsBundle\Entity\ZonesTypes
+            controller: EsterenMaps\MapsBundle\Controller\Admin\BaseMapAdminController
             list:
                 actions:
                     - '-delete'
-                fields: [ id, name, color, parent, zones ]
+                fields:
+                    - { property: id, label: 'admin.entities.common.id' }
+                    - { property: name, label: 'admin.entities.common.name' }
+                    - { property: color, label: 'admin.entities.common.color' }
+                    - { property: parent, label: 'admin.entities.zones_types.parent' }
+                    - { property: zones, label: 'admin.entities.zones_types.zones' }
             form:
-                fields: [ name, color, parent ]
+                fields:
+                    - { property: name, label: 'admin.entities.common.name' }
+                    - { property: color, label: 'admin.entities.common.color' }
+                    - { property: parent, label: 'admin.entities.zones_types.parent' }
 
         TransportTypes:
             label: admin.maps.transports_types
@@ -193,14 +212,20 @@ easy_admin:
             list:
                 actions:
                     - '-delete'
-                fields: [ id, name, slug, { property: speed, format: '%.2f' }, description ]
+                fields:
+                    - { property: id, label: 'admin.entities.common.id' }
+                    - { property: name, label: 'admin.entities.common.name' }
+                    - { property: slug, label: 'admin.entities.common.slug' }
+                    - { property: speed, label: 'admin.entities.transports.speed', format: '%.2f' }
+                    - { property: description, label: 'admin.entities.common.description' }
             form:
                 fields:
-                  - name
-                  - slug
-                  - { property: speed, help: '(Km/h)' }
-                  - description
-                  - property: transportsModifiers
-                    type: 'Symfony\Component\Form\Extension\Core\Type\CollectionType'
-                    type_options:
-                        entry_type: 'EsterenMaps\MapsBundle\Form\TransportModifiersType'
+                    - { property: name, label: 'admin.entities.common.name' }
+                    - { property: slug, label: 'admin.entities.common.slug' }
+                    - { property: speed, label: 'admin.entities.transports.speed', help: '(Km/h)' }
+                    - { property: description, label: 'admin.entities.common.description' }
+                    - property: transportsModifiers
+                      label: 'admin.entities.transports.modifiers'
+                      type: 'Symfony\Component\Form\Extension\Core\Type\CollectionType'
+                      type_options:
+                          entry_type: 'EsterenMaps\MapsBundle\Form\TransportModifiersType'

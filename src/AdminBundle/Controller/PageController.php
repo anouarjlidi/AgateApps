@@ -15,7 +15,6 @@ use Esteren\PortalBundle\Entity\Page;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * @Security("has_role('ROLE_ADMIN_MANAGE_SITE')")

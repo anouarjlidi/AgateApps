@@ -12,9 +12,12 @@
 namespace EsterenMaps\MapsBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Range;
 
 /**
  * This FormType is used in EasyAdmin mostly.
@@ -27,13 +30,21 @@ class TransportModifiersType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('percentage')
+            ->add('percentage', NumberType::class, [
+                'label' => 'admin.entities.transports.percentage',
+                'constraints' => [
+                    new Range(['min' => -200, 'max' => 200])
+                ],
+            ])
             ->add('routeType', TextType::class, [
                 'disabled' => true,
+                'label' => 'RouteTypes',
                 'attr'     => ['read_only' => true],
                 'required' => false,
             ])
-            ->add('positiveRatio')
+            ->add('positiveRatio', CheckboxType::class, [
+                'label' => 'admin.entities.transports.positive_ratio',
+            ])
         ;
     }
 

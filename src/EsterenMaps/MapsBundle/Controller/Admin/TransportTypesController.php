@@ -11,24 +11,12 @@
 
 namespace EsterenMaps\MapsBundle\Controller\Admin;
 
-use AdminBundle\Controller\AdminController;
 use EsterenMaps\MapsBundle\Entity\TransportModifiers;
 use EsterenMaps\MapsBundle\Entity\TransportTypes;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Form\FormBuilder;
-use Symfony\Component\HttpFoundation\Request;
 
-class TransportTypesController extends AdminController
+class TransportTypesController extends BaseMapAdminController
 {
-    /**
-     * @Route("/", name="easyadmin")
-     * {@inheritdoc}
-     */
-    public function indexAction(Request $request)
-    {
-        return parent::indexAction($request);
-    }
-
     /**
      * Creates the form builder of the form used to create or edit the given entity.
      *

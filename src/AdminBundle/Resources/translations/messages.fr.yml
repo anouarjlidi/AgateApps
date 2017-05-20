@@ -1,4 +1,10 @@
-Pages: Pages
+Pages: 'Page'
+ZonesTypes: 'Type de zone'
+TransportTypes: 'Moyen de transport'
+RouteTypes: 'Type de route'
+Factions: 'Faction'
+Zones: 'Zone'
+'(Km/h)': '(Km/h)'
 
 admin:
     links:
@@ -24,6 +30,8 @@ admin:
             slug: 'URL'
             description: 'Description'
             book: 'Livre'
+            color: 'Couleur'
+            coordinates: 'Coordonnées'
 
         pages:
             category: 'Catégorie'
@@ -52,3 +60,13 @@ admin:
             image: 'Image utilisée'
             bounds: 'Limites des coordonnées'
             coordinatesRatio: 'Ratio du calcul de distance'
+
+        zones_types:
+            parent: 'Zone parente'
+            zones: 'Zones associées'
+
+        transports:
+            speed: 'Vitesse moyenne'
+            modifiers: 'Modificateurs de vitesse'
+            percentage: 'Pourcentage'
+            positive_ratio: 'Ratio positif (augmente la vitesse)'
