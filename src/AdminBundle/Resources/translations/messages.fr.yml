@@ -1,11 +1,3 @@
-Pages: 'Page'
-ZonesTypes: 'Type de zone'
-TransportTypes: 'Moyen de transport'
-RouteTypes: 'Type de route'
-Factions: 'Faction'
-Zones: 'Zone'
-'(Km/h)': '(Km/h)'
-
 admin:
     links:
         back_to_site: 'Retour au site'
@@ -15,12 +7,26 @@ admin:
         site: 'Site'
         types: 'Types de référence'
         transports: 'Transport'
+        esterenmaps: Esteren Maps
+        esterenmaps_data: Données
 
     sections:
         general: Informations générales
         associations: Associations
         design: Design
         seo: Référencement
+
+    maps:
+        markers: Marqueurs
+        routes: Routes
+        zones: Zones
+        factions: Factions
+        maps: Cartes
+        markers_types: Types de marqueurs
+        routes_types: Types de routes
+        zones_types: Types de zones
+        transports_types: Moyens de transport
+        transportsModifiers: Modificateurs de vitesse
 
     entities:
         common:
@@ -70,3 +76,15 @@ admin:
             modifiers: 'Modificateurs de vitesse'
             percentage: 'Pourcentage'
             positive_ratio: 'Ratio positif (augmente la vitesse)'
+
+        routes:
+            distance: 'Distance'
+            markerStart: 'Marqueur de départ'
+            markerEnd: 'Marqueur de fin'
+            guarded: 'La route est gardée par des Chevaliers Ronces ou d''autres groupes'
+
+        markers:
+            latitude: 'Latitude'
+            longitude: 'Longitude'
+            altitude: 'Altitude'
+            web_icon: 'Icône'

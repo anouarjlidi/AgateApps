@@ -1,3 +1,16 @@
+Pages: 'Page'
+ZonesTypes: 'Zones type'
+TransportTypes: 'Transport type'
+RoutesTypes: 'Route type'
+RouteTypes: 'Route type'
+Factions: 'Faction'
+Zones: 'Zones'
+Routes: 'Routes'
+Markers: 'Markers'
+MarkersTypes: 'Marker type'
+MarkerType: 'Marker type'
+'(Km/h)': '(Km/h)'
+
 actions:
     interactive: Interactive edit
 Maps: Maps
@@ -5,18 +18,3 @@ maps:
     list: Maps list
     view: View map
     none: No map
-admin:
-    menu:
-        esterenmaps: Esteren Maps
-        esterenmaps_data: Données
-    maps:
-        markers: Markers
-        routes: Routes
-        zones: Zones
-        factions: Factions
-        maps: Maps
-        markers_types: Markers types
-        routes_types: Routes types
-        zones_types: Zones types
-        transports_types: Transports
-        transportsModifiers: Transports speed modifiers

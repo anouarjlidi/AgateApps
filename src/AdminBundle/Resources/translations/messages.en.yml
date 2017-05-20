@@ -1,11 +1,3 @@
-Pages: 'Page'
-ZonesTypes: 'Zones type'
-TransportTypes: 'Transport type'
-RouteTypes: 'Route type'
-Factions: 'Faction'
-Zones: 'Zones'
-'(Km/h)': '(Km/h)'
-
 admin:
     links:
         back_to_site: 'Back to website'
@@ -15,12 +7,26 @@ admin:
         site: 'Site'
         types: 'Reference types'
         transports: 'Transports'
+        esterenmaps: Esteren Maps
+        esterenmaps_data: Données
 
     sections:
         general: General information
         associations: Associations
         design: Design
         seo: SEO
+
+    maps:
+        markers: Markers
+        routes: Routes
+        zones: Zones
+        factions: Factions
+        maps: Maps
+        markers_types: Markers types
+        routes_types: Routes types
+        zones_types: Zones types
+        transports_types: Transports
+        transportsModifiers: Transports speed modifiers
 
     entities:
         common:
@@ -69,3 +75,15 @@ admin:
             modifiers: 'Speed modifiers'
             percentage: 'Percentage'
             positive_ratio: 'Positive ratio (rises speed)'
+
+        routes:
+            distance: 'Distance'
+            markerStart: 'Start marker'
+            markerEnd: 'End marker'
+            guarded: 'Route is guarded by Brambles Knights or other groups'
+
+        markers:
+            latitude: 'Latitude'
+            longitude: 'Longitude'
+            altitude: 'Altitude'
+            web_icon: 'Icon'
