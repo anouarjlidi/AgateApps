@@ -39,10 +39,10 @@ var config = {
      *     "src/AppBundle/Resources/public/less/*.less"
      */
     "files_to_watch": [
-        "src/Esteren/PortalBundle/Resources/public/less/*.less",
-        "src/Esteren/PortalBundle/Resources/public/css/*.css",
-        "src/Esteren/PortalBundle/Resources/public/sass/*.scss",
-        "src/Esteren/PortalBundle/Resources/public/sass/theme_components/*.scss",
+        "src/Esteren/PortalBundle/Resources/assets/less/*.less",
+        "src/Esteren/PortalBundle/Resources/assets/css/*.css",
+        "src/Esteren/PortalBundle/Resources/assets/sass/*.scss",
+        "src/Esteren/PortalBundle/Resources/assets/sass/theme_components/*.scss",
         "src/CorahnRin/CorahnRinBundle/Resources/public/generator/css/*.less"
     ],
 
@@ -60,6 +60,9 @@ var config = {
         ],
         "img/generator": [
             "src/CorahnRin/CorahnRinBundle/Resources/public/img/*"
+        ],
+        "img/agate": [
+            "src/AgateBundle/Resources/assets/images/*"
         ]
     },
 
@@ -77,7 +80,7 @@ var config = {
             "node_modules/font-awesome/less/font-awesome.less"
         ],
         "css/global.css": [
-            "src/Esteren/PortalBundle/Resources/public/less/_main.less"
+            "src/Esteren/PortalBundle/Resources/assets/less/_main.less"
         ],
         "css/maps_lib.css": [
             "src/EsterenMaps/MapsBundle/Resources/public/less/maps.less"
@@ -103,7 +106,7 @@ var config = {
      */
     "sass": {
         "css/global_mat.css": [
-            "src/Esteren/PortalBundle/Resources/public/sass/main.scss"
+            "src/Esteren/PortalBundle/Resources/assets/sass/main.scss"
         ]
     },
 
@@ -117,7 +120,7 @@ var config = {
      */
     "css": {
         "css/initializer.css": [
-            "src/Esteren/PortalBundle/Resources/public/css/initializer.css"
+            "src/Esteren/PortalBundle/Resources/assets/css/initializer.css"
         ]
     },
 
@@ -143,13 +146,13 @@ var config = {
             "node_modules/bootstrap/js/popover.js",
             "node_modules/bootstrap/js/transition.js",
             "node_modules/bootstrap/js/tab.js",
-            "src/Esteren/PortalBundle/Resources/public/js/corahn_rin.js",
-            "src/Esteren/PortalBundle/Resources/public/js/helpers.js"
+            "src/Esteren/PortalBundle/Resources/assets/js/corahn_rin.js",
+            "src/Esteren/PortalBundle/Resources/assets/js/helpers.js"
         ],
         "js/global_mat.js": [
             "node_modules/materialize-css/dist/js/materialize.js",
-            "src/Esteren/PortalBundle/Resources/public/js/helpers.js",
-            "src/Esteren/PortalBundle/Resources/public/js/global_mat.js"
+            "src/Esteren/PortalBundle/Resources/assets/js/helpers.js",
+            "src/Esteren/PortalBundle/Resources/assets/js/global_mat.js"
         ],
         "js/maps_lib.js": [
             "node_modules/leaflet/dist/leaflet-src.js",

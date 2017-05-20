@@ -10,6 +10,11 @@ corahnrin:
 esterenmaps:
     resource: 'esterenmaps.yml'
 
+agate:
+    resource: "@AgateBundle/Controller/"
+    type: annotation
+    host: '%agate_domains.portal%'
+
 #-----------------------------------
 # Pierstoval bundles relative routing
 pierstoval_tools:

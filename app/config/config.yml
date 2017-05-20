@@ -21,18 +21,16 @@ parameters:
         en: en
     locales_regex: 'fr|en'
 
-    esteren_domain: '%env(ESTEREN_DOMAIN)%'
-
     # Definition of all subdomains used in the app
-    esteren_domains.cookie_domain:      '.%esteren_domain%'
-    esteren_domains.portal:       'portal.%esteren_domain%'
-    esteren_domains.esterenmaps:    'maps.%esteren_domain%'
-    esteren_domains.corahnrin: 'corahnrin.%esteren_domain%'
-    esteren_domains.games:         'games.%esteren_domain%'
-    esteren_domains.api:             'api.%esteren_domain%'
-    esteren_domains.backoffice:     'back.%esteren_domain%'
+    esteren_domains.cookie_domain:      '.%env(ESTEREN_DOMAIN)%'
+    esteren_domains.portal:       'portal.%env(ESTEREN_DOMAIN)%'
+    esteren_domains.esterenmaps:    'maps.%env(ESTEREN_DOMAIN)%'
+    esteren_domains.corahnrin: 'corahnrin.%env(ESTEREN_DOMAIN)%'
+    esteren_domains.games:         'games.%env(ESTEREN_DOMAIN)%'
+    esteren_domains.api:             'api.%env(ESTEREN_DOMAIN)%'
+    esteren_domains.backoffice:     'back.%env(ESTEREN_DOMAIN)%'
 
-    email_sender: 'no-reply@%esteren_domain%'
+    agate_domains.portal:                  '%env(AGATE_DOMAIN)%'
 
     google_tags:
         analytics:   'UA-43812649-5'
@@ -54,13 +52,15 @@ framework:
     default_locale:  '%locale%'
     trusted_hosts:
         - '%esteren_domains.cookie_domain%$'
+        - '%env(AGATE_DOMAIN)%$'
     session:
         # http://symfony.com/doc/current/reference/configuration/framework.html#handler-id
-        handler_id:  session.handler.native_file
-        save_path:   '%kernel.root_dir%/../var/sessions/%kernel.environment%'
+        handler_id:      session.handler.native_file
+        save_path:       '%kernel.root_dir%/../var/sessions/%kernel.environment%'
         enabled:         true
-        cookie_domain:   '%esteren_domains.cookie_domain%'
-        name:            EsterenPortal
+        cookie_secure:   true
+        cookie_httponly: true
+        name:            AgateApps
         cookie_lifetime: 8640000
         gc_maxlifetime:  86400
     http_method_override: true

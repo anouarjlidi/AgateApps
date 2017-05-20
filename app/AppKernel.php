@@ -26,6 +26,7 @@ class AppKernel extends Kernel
             // Application global
             new UserBundle\UserBundle(),
             new AdminBundle\AdminBundle(),
+            new AgateBundle\AgateBundle(),
 
             // Corahn-Rin
             new Pierstoval\Bundle\CharacterManagerBundle\PierstovalCharacterManagerBundle(),

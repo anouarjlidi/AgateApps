@@ -17,6 +17,9 @@
 /web/bundles/
 /composer.phar
 
+# Heroku specific
+/app/config/config_heroku.yml
+
 # Esteren Maps
 /web/maps_tiles/*
 !/web/maps_tiles/empty.jpg
@@ -36,10 +39,14 @@
 /web/fonts/*
 /web/img/generator/*
 /web/img/markerstypes/*
+/web/img/agate/*
+
+# Automatically created directories
 !/web/js/.gitkeep
 !/web/css/.gitkeep
 !/web/img/generator/.gitkeep
 !/web/img/markerstypes/.gitkeep
+!/web/img/agate/.gitkeep
 !/web/uploads/.gitkeep
 !/web/fonts/.gitkeep
 
@@ -48,6 +55,3 @@
 
 # NodeJS components
 /node_modules/
-
-# Heroku specific
-/app/config/config_heroku.yml

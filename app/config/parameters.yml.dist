@@ -16,4 +16,5 @@ parameters:
 
     magick_binaries_path: /usr/bin
 
+    env(AGATE_DOMAIN):      studio-agate.fr
     env(ESTEREN_DOMAIN):    esteren.org
