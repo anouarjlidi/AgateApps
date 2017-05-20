@@ -1,16 +1,6 @@
 
-portal_home:
-    resource: '@EsterenPortalBundle/Controller/HomeController.php'
-    type:     annotation
-    host:     '%esteren_domains.portal%'
-
-legal_mentions:
-    resource: '@EsterenPortalBundle/Controller/LegalMentionsController.php'
-    type:     annotation
-    host:     '%esteren_domains.portal%'
-
-contact:
-    resource: '@EsterenPortalBundle/Controller/ContactController.php'
+esteren_portal:
+    resource: '@EsterenPortalBundle/Controller/'
     type:     annotation
     host:     '%esteren_domains.portal%'
 
@@ -18,7 +8,7 @@ orbitale_cms_category:
     resource: '@OrbitaleCmsBundle/Resources/config/routing/categories.yaml'
     prefix:   /category/
 
-portal:
+portal_cms:
     resource: '@OrbitaleCmsBundle/Resources/config/routing/pages.yaml'
     prefix:   /
     defaults:
