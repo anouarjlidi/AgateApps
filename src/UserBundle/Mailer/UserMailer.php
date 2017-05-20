@@ -12,6 +12,7 @@
 namespace UserBundle\Mailer;
 
 use Symfony\Bridge\Twig\TwigEngine;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 use UserBundle\Entity\User;
@@ -23,9 +24,9 @@ final class UserMailer
     private $router;
     private $sender;
 
-    public function __construct(string $sender, \Swift_Mailer $mailer, TwigEngine $templating, RouterInterface $router)
+    public function __construct(RequestStack $requestStack, \Swift_Mailer $mailer, TwigEngine $templating, RouterInterface $router)
     {
-        $this->sender = $sender;
+        $this->sender = 'no-reply@'.$requestStack->getMasterRequest()->getHost();
         $this->templating = $templating;
         $this->mailer = $mailer;
         $this->router = $router;
@@ -34,6 +35,7 @@ final class UserMailer
     public function sendResettingEmailMessage(User $user): void
     {
         $url = $this->router->generate('user_resetting_reset', array('token' => $user->getConfirmationToken()), UrlGeneratorInterface::ABSOLUTE_URL);
+
         $rendered = $this->templating->render('@User/Resetting/email.txt.twig', array(
             'user' => $user,
             'confirmationUrl' => $url,
@@ -49,7 +51,9 @@ final class UserMailer
         $subject = array_shift($renderedLines);
         $body = implode("\n", $renderedLines);
 
-        $message = \Swift_Message::newInstance()
+        $message = new \Swift_Message();
+
+        $message
             ->setSubject($subject)
             ->setFrom($this->sender)
             ->setTo($toEmail)

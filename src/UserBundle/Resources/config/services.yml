@@ -32,8 +32,6 @@ services:
     user.mailer:
         class: UserBundle\Mailer\UserMailer
         autowire: true
-        arguments:
-            - '%email_sender%'
 
     user.util.token_generator:
         class: UserBundle\Util\TokenGenerator
