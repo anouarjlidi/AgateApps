@@ -8,6 +8,7 @@ jobs:
         working_directory: ~/app
 
         environment:
+            NODE_ENV:      production
             SYMFONY_ENV:   test
             SYMFONY_DEBUG: 1
             RECREATE_DB:   1
@@ -80,16 +81,23 @@ jobs:
                     yarn install
 
             - run:
-               name: 'Execute tests'
+               name: 'Execute node tests'
                command: |
                     node node_modules/gulp4/bin/gulp.js dump --prod --verbose
-                    php bin/symfony_requirements
 
-                    vendor/bin/phpunit --log-junit "${CIRCLE_TEST_REPORTS}/phpunit/junit.xml" --coverage-clover "build/logs/phpunit/clover.xml" --coverage-html "build/logs/phpunit/html"
+            - run:
+               name: 'Execute Linting tests'
+               command: |
+                    php bin/symfony_requirements
                     php bin/console security:check
                     php bin/console lint:twig app/Resources src
                     php bin/console lint:yaml app/config
                     php bin/console lint:yaml src
+
+            - run:
+               name: 'Execute PHPUnit tests'
+               command: |
+                    vendor/bin/phpunit --log-junit "${CIRCLE_TEST_REPORTS}/phpunit/junit.xml" --coverage-clover "build/logs/phpunit/clover.xml" --coverage-html "build/logs/phpunit/html"
 
             - store_test_results:
                path: /tmp/test-results
