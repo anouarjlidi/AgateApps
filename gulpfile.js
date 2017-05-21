@@ -372,9 +372,11 @@ gulp.task('images', function(done) {
         pipes = gulp
             .src(assets)
             .pipe(imagemin([
+                imagemin.gifsicle({interlaced: true}),
                 imagemin.jpegtran({progressive: true}),
-                imagemin.optipng({optimizationLevel: 7})
-            ]))
+                imagemin.optipng({optimizationLevel: 7}),
+                imagemin.svgo({plugins: [{removeViewBox: true}]})
+            ], { verbose: true }))
             .pipe(gulp.dest(outputDir + assets_output))
         ;
 
