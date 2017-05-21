@@ -107,6 +107,12 @@ var config = {
     "sass": {
         "css/global_mat.css": [
             "src/Esteren/PortalBundle/Resources/assets/sass/main.scss"
+        ],
+        "css/agate.css": [
+            "src/AgateBundle/Resources/assets/sass/theme.scss"
+        ],
+        "css/white_layout.css": [
+            "src/Esteren/PortalBundle/Resources/assets/sass/white_layout.scss"
         ]
     },
 

@@ -1,21 +1,9 @@
-{% extends 'base_materialize.html.twig' %}
+{% extends '@Agate/agate-layout.html.twig' %}
 
 {% block stylesheets -%}
     {{- parent() -}}
     <style type="text/css">.sr-only {position: absolute;width: 1px;height: 1px;margin: -1px;padding: 0;overflow: hidden;clip: rect(0,0,0,0);border: 0;}</style>
 {%- endblock %}
-
-{% block content_layout_class '' %}
-
-{% block title %}
-    Agate Studio
-{% endblock %}
-
-{% block menu_brand_link %}
-    <a href="{{ path('agate_portal_home') }}" class="brand-logo position-static left" title="{{ 'home' | trans({}, 'OrbitaleCms') }}">
-        <img id="esteren_logo" src="{{ asset('img/agate/logo_agate_studio.png') }}" alt="{{ 'home' | trans({}, 'OrbitaleCms') }}">
-    </a>
-{% endblock %}
 
 {% block content_for_layout %}
 
@@ -26,191 +14,110 @@
     <div id="index-banner" class="parallax-container valign-wrapper">
         <div class="section no-pad-bot">
             <div class="container">
-                <h2 class="header center white-text text-shadow-black-10">Portail Esteren</h2>
+                <h2 class="header center white-text text-shadow-black-10">Le retour de la 7e Mer en France !</h2>
                 <div class="row center">
                     <h3 class="header col s12 light white-text text-shadow-black-10 text-xl">
-                        Un nouveau portail pour le site des Ombres d'Esteren
+                        <strong>Participez au financement participatif sur Ulule</strong>
                     </h3>
                 </div>
                 <div class="row center">
-                    <a href="http://ombresdesteren.blogspot.fr/2017/04/nouveau-portail-pour-esteren.html" class="btn-large waves-effect waves-light bg-gold">
+                    <a href="https://fr.ulule.com/7e-mer/" class="btn-large waves-effect waves-light bg-gold">
                         En savoir plus
                     </a>
                 </div>
             </div>
         </div>
         <div class="parallax">
-            {#<img src="https://www.esteren.org/gold_ennie_esteren.jpg" alt="Un nouvel Ennie award pour Les Ombres d'Esteren !">#}
-            <img src="{{ asset('img/Esteren_stones.jpg') }}" alt="Les Ombres d'Esteren : cercle de pierres">
+            <img src="{{ asset('img/agate/Agate_7th_Sea.jpg') }}" alt="Jeu de rôle 7e Mer">
         </div>
     </div>
 
     <div class="container">
         <div class="section">
 
+            <h2 class="center">Nos jeux de rôle&nbsp;:</h2>
+
             <div class="row">
-                <div class="col s12 m3 hoverable">
-                    <a href="http://ombresdesteren.blogspot.fr/2017/04/gamme-jeu-de-role.html" class="bl">
-                        <div class="portal_subtitle center" style="color: #E25822;"><img src="{{ asset('img/d10.svg') }}" alt="d10"></div>
-                        <h3 class="center text-xxl">Jeu de rôle</h3>
-                        <p class="light">Découvrez la gamme de jeu de rôle et toutes les publications parues à ce jour.</p>
+                <div class="col s12 m4 hoverable">
+                    <a href="http://www.esteren.org/" class="bl portal-link">
+                        <img class="center" src="{{ asset('img/agate/Esteren_monolith_o.jpg') }}" alt="Les Ombres d'Esteren">
+                        <h3 class="center text-xxl">Les Ombres d'Esteren</h3>
                     </a>
                 </div>
-                <div class="col s12 m3 hoverable">
-                    <a href="https://esteren.bandcamp.com/" class="bl">
-                        <div class="portal_subtitle center" style="color: #E27822;"><span class="fa fa-music">&nbsp;</span></div>
-                        <h3 class="center text-xxl">Musique</h3>
-                        <p class="light">Écoutez des extraits des trois albums sur Bandcamp.</p>
+                <div class="col s12 m4 hoverable">
+                    <a href="http://www.dragons-jdr.blogspot.fr/" class="bl portal-link">
+                        <img class="center" src="{{ asset('img/agate/dragon_bg.jpg') }}" alt="Dragons">
+                        <h3 class="center text-xxl">Dragons</h3>
                     </a>
                 </div>
-                <div class="col s12 m3 hoverable">
-                    <a href="https://www.esteren.org/forum/" class="bl">
-                        <div class="portal_subtitle center" style="color: #E29822;"><span class="fa fa-users">&nbsp;</span></div>
-                        <h3 class="center text-xxl">Forum</h3>
-                        <p class="light">Rejoignez une communauté de 1000 meneurs de jeu et partagez vos créations.</p>
-                    </a>
-                </div>
-                <div class="col s12 m3 hoverable">
-                    <a href="https://shop.esteren.org/" class="bl">
-                        <div class="portal_subtitle center" style="color: #E2B822;"><span class="fa fa-shopping-bag">&nbsp;</span></div>
-                        <h3 class="center text-xxl">Boutique</h3>
-                        <p class="light">Commandez en ligne, profitez d'offres exclusives et soutenez directement les créateurs.</p>
+                <div class="col s12 m4 hoverable">
+                    <a href="http://www.facebook.com/vampirelerequiem/" class="bl portal-link">
+                        <img class="center" src="{{ asset('img/agate/Vampire_Requiem.jpg') }}" alt="Vampire : Le Requiem">
+                        <h3 class="center text-xxl">Vampire&nbsp;: Le Requiem</h3>
                     </a>
                 </div>
             </div>
-
             <div class="row">
-                <div class="col s12 m3 hoverable">
-                    <a href="http://blog.esteren.org/" class="bl">
-                        <div class="portal_subtitle center" style="color: #E2B822;"><span class="fa fa-rss">&nbsp;</span></div>
-                        <h3 class="center text-xxl">Blog</h3>
-                        <p class="light">Suivez les actualités du projet, nouvelles illustrations et carnet de bord des auteurs.</p>
+                <div class="col s12 m4 offset-m1 hoverable">
+                    <a href="http://www.facebook.com/7thSeaVF/" class="bl portal-link">
+                        <img class="center" src="{{ asset('img/agate/Agate_7th_Sea.jpg') }}" alt="7th Sea">
+                        <h3 class="center text-xxl">7th Sea</h3>
                     </a>
                 </div>
-                <div class="col s12 m3 hoverable">
-                    <a href="http://ombresdesteren.blogspot.fr/search/label/jeu%20vid%C3%A9o" class="bl">
-                        <div class="portal_subtitle center" style="color: #E29822;"><span class="fa fa-gamepad">&nbsp;</span></div>
-                        <h3 class="center text-xxl">Jeu vidéo</h3>
-                        <p class="light">Echappez aux Griffes du Seigneur Sorcier ou suivez le développement de l'Héritage des Mac Lyr.</p>
-                    </a>
+
+                <div class="col s12 m4 offset-m1 hoverable">
+                    <div class="bl portal-link">
+                        <img class="center" src="{{ asset('img/agate/Vermine.jpg') }}" alt="Vermine">
+                        <h3 class="center text-xxl">Vermine<br><small>(bientôt...😉)</small></h3>
+                    </div>
                 </div>
-                <div class="col s12 m3 hoverable">
-                    <a href="http://ombresdesteren.blogspot.fr/2016/08/publication-hantises-le-recueil-de.html" class="bl">
-                        <div class="portal_subtitle center" style="color: #E27822;"><span class="fa fa-book">&nbsp;</span></div>
-                        <h3 class="center text-xxl">Littérature</h3>
-                        <p class="light">Plongez dans les légendes occultes de Tri-Kazel avec le premier recueil de nouvelles&nbsp;: Hantises.</p>
-                    </a>
-                </div>
-                <div class="col s12 m3 hoverable">
-                    <a href="http://ombresdesteren.blogspot.fr/2014/10/la-rose-noire-arrive-en-magasin-le-31.html" class="bl">
-                        <div class="portal_subtitle center" style="color: #E25822;"><span class="fa fa-hand-grab-o">&nbsp;</span></div>
-                        <h3 class="center text-xxl">Jeu de société</h3>
-                        <p class="light">Survivez à la Rose Noire, quelque part entre Résistance, le Cluedo et les Loups-Garous de Thiercelieux.</p>
+            </div>
+            <div class="row">
+                <div class="col s12 m6 offset-m3 hoverable">
+                    <a href="http://agate-rpg.blogspot.fr/" class="bl portal-link">
+                        <div class="portal_subtitle center" style="color: black;"><span class="fa fa-share-alt">&nbsp;</span></div>
+                        <h3 class="center text-xxl">Retrouvez-nous également sur le blog du Studio Agate</h3>
                     </a>
                 </div>
             </div>
-
             <div class="row">
-                <div class="col s12 m3 hoverable">
-                    <a href="https://www.google.com/maps/d/viewer?mid=1wdFjK4OsYcQpwiASe9AVhkGNPbQ" class="bl">
-                        <div class="portal_subtitle center" style="color: #E25822;"><span class="fa fa-map">&nbsp;</span></div>
-                        <h3 class="center text-xxl">Esteren Tour</h3>
-                        <p class="light">Rencontrez l'équipe pendant l'une des dates de la tournée initiée en 2010.</p>
-                    </a>
-                </div>
-                <div class="col s12 m3 hoverable">
-                    <a href="https://maps.esteren.org/fr/map-tri-kazel" class="bl">
-                        <div class="portal_subtitle center" style="color: #E27822;"><span class="fa fa-map-marker">&nbsp;</span></div>
-                        <h3 class="center text-xxl">Esteren Maps</h3>
-                        <p class="light">Voyagez avec ce logiciel qui calculera votre prochain itinéraire sur la carte de Tri-Kazel.</p>
-                    </a>
-                </div>
-                <div class="col s12 m3 hoverable">
-                    <a href="http://eepurl.com/bJci6b" class="bl">
-                        <div class="portal_subtitle center" style="color: #E29822;"><span class="fa fa-envelope">&nbsp;</span></div>
-                        <h3 class="center text-xxl">Mailing-list</h3>
-                        <p class="light">Inscrivez-vous à la mailing list et soyez prévenu au lancement du prochain financement participatif.</p>
-                    </a>
-                </div>
-                <div class="col s12 m3 hoverable">
-                    <a href="https://www.dropbox.com/sh/bp2kfgn43ueu6ru/AAAZytOXUADMlVpQdEG-Ttl1a" class="bl">
-                        <div class="portal_subtitle center" style="color: #E2B822;"><span class="fa fa-dropbox">&nbsp;</span></div>
-                        <h3 class="center text-xxl">Ressources</h3>
-                        <p class="light">Téléchargez de nombreuses ressources sur la page Dropbox du projet.</p>
+                <div class="col s12 m6 offset-m3 hoverable">
+                    <a href="{{ path('contact') }}" class="bl portal-link">
+                        <div class="portal_subtitle center" style="color: black;"><span class="fa fa-envelope-o">&nbsp;</span></div>
+                        <h3 class="center text-xxl">{{ 'footer.contact'|trans }}</h3>
                     </a>
                 </div>
             </div>
 
         </div>
     </div>
-
-    {# Disabled 2017-04-03 because found useful by Nel. I keep the code in case we need another kind of parallax container
 
     <div class="parallax-container valign-wrapper">
-        <div class="section no-pad-bot">
-            <div class="container">
-                <div class="row center">
-                    <h4 class="header col s12 light">
-                        Un univers médiéval horrifique et gothique inspiré par les légendes celtes
-                    </h4>
-                </div>
-            </div>
-        </div>
-        <div class="parallax"><img src="{{ asset('img/Esteren_stones.jpg') }}" alt="Les Ombres d'Esteren : cercle de pierres"></div>
-    </div>
-
-    <div class="container">
-        <div class="section">
-            <div class="row">
-                <div class="col s12 center">
-                    <h4>Entrez dans les ombres</h4>
-                    <p class="left-align">
-                        L'univers des Ombres d'Esteren possède une part de fantastique qui se
-                        veut discrète, derrière une façade sobre et réaliste.<br>Les Hommes font face à un quotidien
-                        rude et à une menace surnaturelle, tapie dans l'ombre.
-                    </p>
-                    <p class="left-align">
-                        Axé sur des scénarios d'enquête et de survie, Les Ombres d'Esteren est un jeu de rôle
-                        privilégiant l'ambiance et les interactions entre les joueurs.
-                    </p><p class="left-align">
-                        Cette ambiance particulière puise dans plusieurs sources d'inspirations : la
-                        rudesse et le romantisme du film Braveheart de Mel Gibson, l'univers de Tim Burton et en
-                        particulier celui de Sleepy Hollow, Nausicaä de la vallée du vent et Princesse Mononoke d'Hayao
-                        Miyazaki ainsi que Berserk, le manga de Kentaro Miura.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    #}
-
-    <div class="container">
-        <div class="video-container portal-video">
-            <iframe src="//player.vimeo.com/video/113587824" frameborder="0" allowfullscreen></iframe>
-        </div>
+        <div class="parallax"><img src="{{ asset('img/agate/esteren_dearg_front.jpg') }}" alt="Les Ombres d'Esteren : Arven en train de marcher"></div>
     </div>
 
     <div class="container">
         <div class="section">
             <div class="row">
                 <div class="col s12 center text-m">
-                    <h2 id="decouvrir-esteren">Découvrez les Ombres d'Esteren</h2>
+                    <h2 id="decouvrir-esteren">Qui sommes-nous ?</h2>
                     <p class="left-align">
-                        Les Ombres d'Esteren est un univers médiéval horrifique et gothique, inspiré par les légendes
-                        celtes. Il se décline sur plusieurs supports dont le jeu de rôle sur table, la musique, le jeu
-                        de société ou encore le jeu vidéo.
+                        Notre studio est spécialisé dans le transmedia, l'écriture de scénarios et la création de mondes
+                        imaginaires.
+                        <br>
+                        Nous produisons des livres de jeux de rôle, des albums de musique ou encore des jeux vidéos.
+                        <br>
+                        Nos créations cumulent une dizaine de prix à l’international.
                     </p>
                     <p class="left-align">
-                        Si vous découvrez le jeu de rôle sur table et souhaitez lancer votre première partie, vou
-                        pouvez <strong>télécharger librement</strong> le
-                        <a href="https://www.dropbox.com/s/3c3zrwy643z0qgw/Esteren_Livre_0_Prologue.pdf">Livre 0 – Prologue</a>.
-                        Ce premier ouvrage de la gamme contient tout ce qu'il faut pour jouer&nbsp;: présentation de l'univers
-                        et abrégé du système sur 6 pages chacun, 6 personnages prétirés et 3 scénarios pour des meneurs
-                        de jeu de niveau débutant, intermédiaire et confirmé.
+                        Nous traduisons et publions également des licences de grands jeux avec notre label d'édition
+                        <strong>Agate RPG</strong>.
                     </p>
                     <p class="left-align">
-                        Bon voyage dans les Ombres...
+                        Le studio est basé en France et se compose de plusieurs membres permanents (leur profil a une petite étoile) et de nombreux freelance partout dans le monde qui participent à nos projets.
+                        <br>
+                        Vous souhaitez envoyer votre candidature ou faire appel nos services ?
+                        <a href="{{ path('contact') }}">Contactez-nous</a>.
                     </p>
                 </div>
             </div>
@@ -220,8 +127,6 @@
     <div class="parallax-container valign-wrapper">
         <div class="parallax"><img src="{{ asset('img/Esteren_Arven_marche.jpg') }}" alt="Les Ombres d'Esteren : Arven en train de marcher"></div>
     </div>
-
-    <iframe style="resize: both;overflow: auto; width: 100%; height: 450px;" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/users/35988611&color=ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false"></iframe>
 
     {% endspaceless %}
 

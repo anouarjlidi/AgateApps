@@ -1,0 +1,27 @@
+{% extends 'base_materialize.html.twig' %}
+
+{% block stylesheets -%}
+    {{- parent() -}}
+    <link rel="stylesheet" href="{{ asset('css/white_layout.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('css/agate.css') }}" type="text/css">
+{%- endblock %}
+
+{# Disable login on this page because for now it's not useful #}
+{% block menu_security '' %}
+
+{% block menu_brand_link %}
+    <a href="{{ path('agate_portal_home') }}" class="brand-logo position-static left" title="{{ 'home' | trans({}, 'OrbitaleCms') }}">
+        <img id="esteren_logo" src="{{ asset('img/agate/logo_agate_studio.png') }}" alt="{{ 'home' | trans({}, 'OrbitaleCms') }}">
+    </a>
+{% endblock %}
+
+{% block content_layout_class '' %}
+
+{% block title %}
+    Agate Studio
+{% endblock %}
+
+
+{% block footer_about %}
+    <img src="{{ asset('img/agate/logo_agate_studio_big.png') }}" alt="Logo Studio Agate" style="max-height: 250px;">
+{% endblock %}
