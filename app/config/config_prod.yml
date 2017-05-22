@@ -1,10 +1,6 @@
 imports:
     - { resource: config.yml }
 
-framework:
-    assets:
-        base_urls: ['//cdn.esteren.org']
-
 doctrine:
     orm:
         metadata_cache_driver: apc
