@@ -58,7 +58,6 @@ framework:
         handler_id:      session.handler.native_file
         save_path:       '%kernel.root_dir%/../var/sessions/%kernel.environment%'
         enabled:         true
-        cookie_secure:   true
         cookie_httponly: true
         name:            AgateApps
         cookie_lifetime: 8640000
