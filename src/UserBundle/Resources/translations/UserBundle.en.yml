@@ -30,14 +30,18 @@ registration:
     email:
         subject: 'Welcome %username%!'
         message: |
-            Hello %username%!
+            Hello <strong>%username%</strong>!
 
-            To finish activating your account - please visit %confirmationUrl%
+            To validate your e-mail address, please <a href="%confirmationUrl%">click this link</a>.
 
-            This link can only be used once to validate your account.
+            If the link does not work, please copy this URL and paste it in your web browser:
+            %confirmationUrl%
+
+            This link can be used only once to activate your account
 
             Regards,
-            the Team.
+
+            Agate Studio team
 
 resetting:
     check_email: |
@@ -55,12 +59,16 @@ resetting:
     email:
         subject: 'Reset Password'
         message: |
-            Hello %username%!
+            Hello <strong>%username%</strong>!
 
-            To reset your password - please visit %confirmationUrl%
+            To reset your password, please <a href="%confirmationUrl%">click this link</a>.
+
+            If the link does not work, please copy this URL and paste it in your web browser:
+            %confirmationUrl%
 
             Regards,
-            the Team.
+
+            Agate Studio team
 
 # Global strings
 layout:

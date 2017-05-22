@@ -36,10 +36,13 @@ class RegistrationController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $user->setPassword($this->get('security.password_encoder')->encodePassword($user, $user->getPlainPassword()));
             $user->setConfirmationToken($this->get('user.util.token_generator')->generateToken());
+            $user->setEmailConfirmed(false);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
+
+            $this->get('user.mailer')->sendRegistrationEmail($user);
 
             $this->addFlash('success', $this->get('translator')->trans('registration.confirmed', ['%username%' => $user->getUsername()], 'UserBundle'));
 
@@ -79,10 +82,10 @@ class RegistrationController extends Controller
     }
 
     /**
-     * @Route("/register/confirm/{token}", name="user_registration_confirm", requirements={"token": "\w+"})
+     * @Route("/register/confirm/{token}", name="user_registration_confirm", requirements={"token": ".+"})
      * @Method("GET")
      */
-    public function confirmAction(string $token)
+    public function confirmAction(string $token, string $_locale)
     {
         /** @var User|null $user */
         $user = $this->get('user.repository')->findOneBy(['confirmationToken' => $token]);
@@ -92,11 +95,14 @@ class RegistrationController extends Controller
         }
 
         $user->setConfirmationToken(null);
+        $user->setEmailConfirmed(true);
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($user);
         $em->flush();
 
-        return $this->redirectToRoute('user_registration_confirmed');
+        $this->addFlash('success', $this->get('translator')->trans('registration.confirmed', ['%username%' => $user->getUsername()], 'UserBundle'));
+
+        return $this->redirect('/'.$_locale);
     }
 }

@@ -1,0 +1,17 @@
+{% extends '@EsterenPortal/email/email_layout_internal.html.twig' %}
+
+{% trans_default_domain 'UserBundle' %}
+
+{% import '@EsterenPortal/email/macro/macros.html.twig' as macros %}
+
+{% set textMessage %}
+    {{ 'registration.email.subject'|trans({'%username%': user.username}) }}
+{% endset %}
+
+{% block title (textMessage|striptags) %}
+
+{% block content %}
+    {% set message = 'registration.email.message'|trans({'%username%': user.username, '%confirmationUrl%': confirmationUrl})|nl2br %}
+    {{ macros.text(message) }}
+{% endblock %}
+

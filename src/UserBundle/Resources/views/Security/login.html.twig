@@ -9,7 +9,7 @@
 {% block content_for_layout %}
     <div class="row">
         <form class="col s6 offset-s3" action="{{ path("user_login_check") }}" method="post" id="form_login">
-            <h3>{{ 'layout.login' | trans }}</h3>
+            <h2>{{ 'layout.login' | trans }}</h2>
 
             <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
 

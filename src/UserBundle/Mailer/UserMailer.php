@@ -15,6 +15,7 @@ use Symfony\Bridge\Twig\TwigEngine;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 use UserBundle\Entity\User;
 
 final class UserMailer
@@ -23,13 +24,37 @@ final class UserMailer
     private $mailer;
     private $router;
     private $sender;
+    private $translator;
 
-    public function __construct(RequestStack $requestStack, \Swift_Mailer $mailer, TwigEngine $templating, RouterInterface $router)
+    public function __construct(RequestStack $requestStack, \Swift_Mailer $mailer, TwigEngine $templating, RouterInterface $router, TranslatorInterface $translator)
     {
         $this->sender = 'no-reply@'.$requestStack->getMasterRequest()->getHost();
         $this->templating = $templating;
         $this->mailer = $mailer;
         $this->router = $router;
+        $this->translator = $translator;
+    }
+
+    public function sendRegistrationEmail(User $user)
+    {
+        $url = $this->router->generate('user_registration_confirm', array('token' => $user->getConfirmationToken()), UrlGeneratorInterface::ABSOLUTE_URL);
+
+        $rendered = $this->templating->render('@User/Registration/email.html.twig', array(
+            'user' => $user,
+            'confirmationUrl' => $url,
+        ));
+
+        $message = new \Swift_Message();
+
+        $message
+            ->setSubject($this->translator->trans('registration.email.subject', ['%username%' => $user->getUsername()], 'UserBundle'))
+            ->setFrom($this->sender)
+            ->setContentType('text/html')
+            ->setTo($user->getEmail())
+            ->setBody($rendered)
+        ;
+
+        $this->mailer->send($message);
     }
 
     public function sendResettingEmailMessage(User $user): void

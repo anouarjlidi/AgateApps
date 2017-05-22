@@ -30,14 +30,18 @@ registration:
     email:
         subject: 'Bienvenue %username% !'
         message: |
-            Bonjour %username% !
+            Bonjour <strong>%username%</strong> !
 
-            Pour valider votre compte utilisateur, merci de vous rendre sur %confirmationUrl%
+            Pour valider votre adresse e-mail, merci de <a href="%confirmationUrl%">cliquer sur ce lien</a>.
+
+            Si le lien ne fonctionne pas, copiez cette URL et collez-la dans votre navigateur :
+            %confirmationUrl%
 
             Ce lien ne peut être utilisé qu'une seule fois pour valider votre compte.
 
             Cordialement,
-            L'équipe
+
+            L'équipe Agate
 
 resetting:
     check_email: |
@@ -55,12 +59,16 @@ resetting:
     email:
         subject: 'Réinitialisation de votre mot de passe'
         message: |
-            Bonjour %username% !
+            Bonjour <strong>%username%</strong> !
 
-            Pour réinitialiser votre mot de passe, merci de vous rendre sur %confirmationUrl%
+            Pour réinitialiser votre mot de passe , merci de <a href="%confirmationUrl%">cliquer sur ce lien</a>.
+
+            Si le lien ne fonctionne pas, copiez cette URL et collez-la dans votre navigateur :
+            %confirmationUrl%
 
             Cordialement,
-            L'équipe
+
+            L'équipe Agate
 
 # Global strings
 layout:
