@@ -96,7 +96,7 @@
             "node node_modules/gulp4/bin/gulp.js sass --prod --verbose",
             "node node_modules/gulp4/bin/gulp.js css --prod --verbose",
             "node node_modules/gulp4/bin/gulp.js js --prod --verbose",
-            "cp web/.htaccess.dist web/.htaccess",
+            "cp _dev_files/prod.php.ini web/.user.ini",
             "rm web/config.php",
             "php bin/console doctrine:schema:update --dump-sql --force",
             "php bin/console esterenmaps:map:generate-tiles 1"
