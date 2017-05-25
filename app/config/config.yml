@@ -38,8 +38,9 @@ parameters:
 
 framework:
     #esi:             ~
-    translator:      { fallbacks: ['%locale%'] }
-    secret:          '%secret%'
+    translator:
+        fallbacks: ['%locale%']
+    secret:          '%env(SYMFONY_SECRET)%'
     router:
         resource: '%kernel.root_dir%/config/routing.yml'
         strict_requirements: ~
@@ -228,15 +229,3 @@ fos_rest:
         rules:
             - { path: '^/((%locales_regex%)/)?api', priorities: ['json', 'html'], fallback_format: json, prefer_extension: true }
             - { path: '^/', priorities: [ 'html', '*/*'], fallback_format: ~, prefer_extension: true }
-
-# JSON beautifier in JMS serializer
-jms_serializer:
-    visitors:
-        json:
-            # Corresponds to these constants:
-            options:
-                - JSON_NUMERIC_CHECK
-                - JSON_UNESCAPED_SLASHES      # PHP 5.4+
-                - JSON_UNESCAPED_UNICODE      # PHP 5.4+
-                - JSON_PRETTY_PRINT           # PHP 5.4+
-                - JSON_PRESERVE_ZERO_FRACTION # PHP 5.6+

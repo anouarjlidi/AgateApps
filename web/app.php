@@ -28,7 +28,8 @@ if (true === $debug) {
         $apcLoader = new ApcClassLoader('EsterenApp', $loader);
         $apcLoader->register(true);
         $loader = $apcLoader;
-    } catch (Exception $e) {}
+    } catch (Exception $e) {
+    }
 }
 
 $kernel = new AppKernel($environment, $debug);
@@ -44,7 +45,7 @@ $request = Request::createFromGlobals();
 
 if (getenv('HEROKU') === '1') {
 //    Request::setTrustedProxies([$request->server->get('REMOTE_ADDR')], Request::HEADER_FORWARDED | Request::HEADER_X_FORWARDED_HOST);
-    Request::setTrustedProxies(array($request->server->get('REMOTE_ADDR')));
+    Request::setTrustedProxies([$request->server->get('REMOTE_ADDR')]);
     Request::setTrustedHeaderName(Request::HEADER_FORWARDED, null);
     Request::setTrustedHeaderName(Request::HEADER_CLIENT_HOST, null);
 }

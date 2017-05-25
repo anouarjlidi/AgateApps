@@ -22,5 +22,17 @@ monolog:
             type: console
             channels: ['!event', '!doctrine']
 
+# JSON beautifier in JMS serializer
+jms_serializer:
+    visitors:
+        json:
+            # Corresponds to these constants:
+            options:
+                - JSON_NUMERIC_CHECK
+                - JSON_UNESCAPED_SLASHES
+                - JSON_UNESCAPED_UNICODE
+                - JSON_PRETTY_PRINT
+                - JSON_PRESERVE_ZERO_FRACTION
+
 #swiftmailer:
 #    delivery_addresses: ['me@example.com']
