@@ -11,3 +11,13 @@ html {
     margin-left: auto;
     margin-right: auto;
 }
+
+.team-list {
+    dt, dl {
+        float: left;
+    }
+    dt {
+        width: 100px;
+        font-weight: bold;
+    }
+}
