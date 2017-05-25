@@ -11,7 +11,7 @@ parameters:
     env(MAILER_PASSWORD):   ~
 
     # A secret key that's used to generate certain security-related tokens
-    env(SYMFONY_SECRET):     65165d7sqf6s5d46zq5r4gtq6s5df7g4sq68d5gt7qzzer
+    env(SYMFONY_SECRET):    65165d7sqf6s5d46zq5r4gtq6s5df7g4sq68d5gt7qzzer
 
     magick_binaries_path: /usr/bin
 

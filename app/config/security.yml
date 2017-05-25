@@ -64,7 +64,7 @@ security:
             pattern:            ^/
             anonymous:          ~
             remember_me:
-                secret:         '%secret%'
+                secret:         '%env(SYMFONY_SECRET)%'
                 path:           /
                 name:           EsterenRememberMe
                 domain:         '%esteren_domains.cookie_domain%'
