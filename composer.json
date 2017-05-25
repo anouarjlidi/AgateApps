@@ -90,12 +90,7 @@
             "yarn --production",
             "cd node_modules/node-sass && yarn --production && node scripts/build -f",
             "cd node_modules/optipng-bin && yarn --production",
-            "node node_modules/gulp4/bin/gulp.js copy --prod --verbose",
-            "node node_modules/gulp4/bin/gulp.js images --prod --verbose",
-            "node node_modules/gulp4/bin/gulp.js less --prod --verbose",
-            "node node_modules/gulp4/bin/gulp.js sass --prod --verbose",
-            "node node_modules/gulp4/bin/gulp.js css --prod --verbose",
-            "node node_modules/gulp4/bin/gulp.js js --prod --verbose",
+            "node node_modules/gulp4/bin/gulp.js dump --prod --verbose",
             "rm web/config.php",
             "php bin/console doctrine:schema:update --dump-sql --force",
             "php bin/console esterenmaps:map:generate-tiles 1"
