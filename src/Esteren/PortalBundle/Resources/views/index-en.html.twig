@@ -1,0 +1,184 @@
+{% extends 'base_materialize.html.twig' %}
+
+{% block stylesheets -%}
+    {{- parent() -}}
+    <style type="text/css">.sr-only {position: absolute;width: 1px;height: 1px;margin: -1px;padding: 0;overflow: hidden;clip: rect(0,0,0,0);border: 0;}</style>
+{%- endblock %}
+
+{% block content_layout_class '' %}
+
+{% block title %}
+    Les Ombres d'Esteren
+{% endblock %}
+
+{% block content_for_layout %}
+
+    {% spaceless %}
+
+    <h1 class="sr-only">Welcome to the new Shadows of Esteren's portal!</h1>
+
+    <div id="index-banner" class="parallax-container valign-wrapper">
+        <div class="section no-pad-bot">
+            <div class="container">
+                <h2 class="header center white-text text-shadow-black-10">Esteren Portal</h2>
+                <div class="row center">
+                    <h3 class="header col s12 light white-text text-shadow-black-10 text-xl">
+                        A brand new portal for Shadows of Esteren's website!
+                    </h3>
+                </div>
+                <div class="row center">
+                    <a href="http://shadowsofesteren.blogspot.fr/{# TODO #}" class="btn-large waves-effect waves-light bg-gold">
+                        See more
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="parallax">
+            <img src="{{ asset('img/Esteren_stones.jpg') }}" alt="Shadows of Esteren: Stones circle">
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="section">
+
+            {# First line #}
+            <div class="row">
+                <div class="col s12 m3 hoverable">
+                    <a href="https://www.esteren.org/forum/viewtopic.php?f=2&t=244&p=4208#p4208" class="bl">
+                        <div class="portal_subtitle center" style="color: #E25822;"><img src="{{ asset('img/d10.svg') }}" alt="d10"></div>
+                        <h3 class="center text-xxl">Role-playing game</h3>
+                        <p>Discover the RPG game and all already published contents.</p>
+                    </a>
+                </div>
+                <div class="col s12 m3 hoverable">
+                    <a href="https://esteren.bandcamp.com/" class="bl">
+                        <div class="portal_subtitle center" style="color: #E27822;"><span class="fa fa-music">&nbsp;</span></div>
+                        <h3 class="center text-xxl">Music</h3>
+                        <p>Listen tracks from the three music albums on Bandcamp.</p>
+                    </a>
+                </div>
+                <div class="col s12 m3 hoverable">
+                    <a href="https://www.esteren.org/forum/" class="bl">
+                        <div class="portal_subtitle center" style="color: #E29822;"><span class="fa fa-users">&nbsp;</span></div>
+                        <h3 class="center text-xxl">Forum</h3>
+                        <p>Join a community of more than 1000 game leaders and even more players and share your creations.</p>
+                    </a>
+                </div>
+                <div class="col s12 m3 hoverable">
+                    {#<a href="https://shop.esteren.org/" class="bl">#}
+                        <div class="portal_subtitle center" style="color: #E2B822;"><span class="fa fa-shopping-bag">&nbsp;</span></div>
+                        <h3 class="center text-xxl">Shop <small>(soon...)</small></h3>
+                        <p>Prder online, find special offers and support authors and creators.</p>
+                    {#</a>#}
+                </div>
+            </div>
+
+            {# Second line #}
+            <div class="row">
+                <div class="col s12 m3 hoverable">
+                    <a href="http://shadowsofesteren.blogspot.fr/" class="bl">
+                        <div class="portal_subtitle center" style="color: #E2B822;"><span class="fa fa-rss">&nbsp;</span></div>
+                        <h3 class="center text-xxl">Blog</h3>
+                        <p>Follow projects work, new illustrations, and authors log books.</p>
+                    </a>
+                </div>
+                <div class="col s12 m3 hoverable">
+                    <a href="http://shadowsofesteren.blogspot.fr/search?q=%22video+game%22" class="bl">
+                        <div class="portal_subtitle center" style="color: #E29822;"><span class="fa fa-gamepad">&nbsp;</span></div>
+                        <h3 class="center text-xxl">Video Game</h3>
+                        <p>Escape the Claws of the Witch Lord, or follow the development of The Mac Lyr's Legacy</p>
+                    </a>
+                </div>
+                <div class="col s12 m3 hoverable">
+                    <a href="http://shadowsofesteren.blogspot.fr/2015/11/the-black-moon-handbook-is-on.html" class="bl">
+                        <div class="portal_subtitle center" style="color: #E27822;"><span class="fa fa-book">&nbsp;</span></div>
+                        <h3 class="center text-xxl">Literature</h3>
+                        <p>Go down dark legends of Tri-Kazel with our first collection of stories: Hauntings</p>
+                    </a>
+                </div>
+                <div class="col s12 m3 hoverable">
+                    {#<a href="http://ombresdesteren.blogspot.fr/2014/10/la-rose-noire-arrive-en-magasin-le-31.html" class="bl">#}
+                        <div class="portal_subtitle center" style="color: #E25822;"><span class="fa fa-hand-grab-o">&nbsp;</span></div>
+                        <h3 class="center text-xxl">Tabletop games</h3>
+                        <p>Survive during the Black Rose, a deduction table top game for 4 to 5 players.</p>
+                    {#</a>#}
+                </div>
+            </div>
+
+            {# Third line #}
+            <div class="row">
+                <div class="col s12 m3 hoverable">
+                    <a href="https://www.google.com/maps/d/viewer?mid=1wdFjK4OsYcQpwiASe9AVhkGNPbQ" class="bl">
+                        <div class="portal_subtitle center" style="color: #E25822;"><span class="fa fa-map">&nbsp;</span></div>
+                        <h3 class="center text-xxl">Esteren Tour</h3>
+                        <p>Meet the team during an event of the tour that has started in 2010</p>
+                    </a>
+                </div>
+                <div class="col s12 m3 hoverable">
+                    <a href="https://maps.esteren.org/fr/map-tri-kazel" class="bl">
+                        <div class="portal_subtitle center" style="color: #E27822;"><span class="fa fa-map-marker">&nbsp;</span></div>
+                        <h3 class="center text-xxl">Esteren Maps</h3>
+                        <p>Travel with this web application that will calculate your next route on Tri-Kazel map.</p>
+                    </a>
+                </div>
+                <div class="col s12 m3 hoverable">
+                    <a href="http://eepurl.com/bJci6b{# TODO #}" class="bl">
+                        <div class="portal_subtitle center" style="color: #E29822;"><span class="fa fa-envelope">&nbsp;</span></div>
+                        <h3 class="center text-xxl">Mailing-list</h3>
+                        <p>Subscribe to the newsletter and be notified of next events or crowdfunding campaigns.</p>
+                    </a>
+                </div>
+                <div class="col s12 m3 hoverable">
+                    <a href="https://www.dropbox.com/sh/bp2kfgn43ueu6ru/AAAZytOXUADMlVpQdEG-Ttl1a" class="bl">
+                        <div class="portal_subtitle center" style="color: #E2B822;"><span class="fa fa-dropbox">&nbsp;</span></div>
+                        <h3 class="center text-xxl">Resources</h3>
+                        <p>Download many resources on the project's Dropbox page.</p>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="black">
+        <div class="container">
+            <div class="video-container portal-video">
+                <iframe src="//player.vimeo.com/video/113587824" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="section">
+            <div class="row">
+                <div class="col s12 center" style="color: #b8b8ff;">
+                    <h2 class="text-xxxl">Discover Shadows of Esteren</h2>
+                    <p class="left-align">
+                        Shadows of Esteren is a horrific and gothic medieval universe, inspired by celtic legends.
+                        It is divided in multiple supports, like table-top RPG, music, table-top games or video games.
+                    </p>
+                    <p class="left-align">
+                        If you are discovering Esteren and wish to launch your very first game, you can <strong>download
+                        the free</strong>
+                        <a href="https://www.esteren.org/shadows_of_esteren/download/Shadows_of_Esteren_Book_0_Prologue.pdf" style="color: white;">Book 0 – Prologue</a>.
+                        This first book of the line contains everything you need to play: a presentation of the universe
+                        on six pages, 6 pre-built characters and 3 scenarios for game leaders of various experience:
+                        either beginner, intermediate or advanced levels.
+                    </p>
+                    <p class="left-align">
+                        Safe journey in the Shadows...
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="parallax-container valign-wrapper">
+        <div class="parallax"><img src="{{ asset('img/Esteren_Arven_marche.jpg') }}" alt="Shadows of Esteren: Arven walking"></div>
+    </div>
+
+    <iframe style="resize: both;overflow: auto; width: 100%; height: 450px;" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/users/35988611&color=ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false"></iframe>
+
+    {% endspaceless %}
+
+{% endblock %}
