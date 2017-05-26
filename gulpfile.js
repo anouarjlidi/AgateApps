@@ -63,6 +63,9 @@ var config = {
         ],
         "img/agate": [
             "src/AgateBundle/Resources/assets/images/*"
+        ],
+        "img/": [
+            "src/Esteren/PortalBundle/Resources/assets/images/*"
         ]
     },
 

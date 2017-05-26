@@ -40,6 +40,10 @@
 /web/img/generator/*
 /web/img/markerstypes/*
 /web/img/agate/*
+/web/img/esteren_portal/*
+/web/img/*.jpg
+/web/img/*.png
+/web/img/*.ico
 
 # Automatically created directories
 !/web/js/.gitkeep
