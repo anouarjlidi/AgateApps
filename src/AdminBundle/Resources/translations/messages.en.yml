@@ -33,6 +33,7 @@ admin:
             id: 'ID'
             name: 'Name'
             nameSlug: 'URL name'
+            slug: 'URL'
             description: 'Description'
             book: 'Book'
             color: 'Color'
