@@ -32,7 +32,7 @@ class HomeControllerTest extends WebTestCase
         static::assertSame('Bienvenue sur le nouveau portail du Studio Agate', trim($crawler->filter('#content h1')->text()));
     }
 
-    public function testIndexWithNonSupportedHomepage()
+    public function testIndexWithEnglishHomepage()
     {
         parent::resetDatabase();
 

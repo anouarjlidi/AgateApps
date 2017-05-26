@@ -32,15 +32,20 @@ class PortalControllerTest extends WebTestCase
         static::assertSame('Bienvenue sur le nouveau portail des Ombres d\'Esteren', trim($crawler->filter('#content h1')->text()));
     }
 
-    public function testIndexWithNonSupportedHomepage()
+    public function testIndexWithEnglishHomepage()
     {
         parent::resetDatabase();
 
         $client = $this->getClient('portal.esteren.dev');
 
-        $client->request('GET', '/en/');
+        $crawler = $client->request('GET', '/en/');
 
         // Ensures that portal homepage is managed in a controller and not in the CMS
-        static::assertSame(404, $client->getResponse()->getStatusCode());
+        static::assertSame('portal_home', $client->getRequest()->attributes->get('_route'));
+
+        static::assertSame(200, $client->getResponse()->getStatusCode());
+
+        // Check <h1> content only, this will be our "regression point" for homepage (now that it's static and no more in the CMS)
+        static::assertSame('Welcome to the new Shadows of Esteren\'s portal!', trim($crawler->filter('#content h1')->text()));
     }
 }
