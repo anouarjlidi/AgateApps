@@ -1,6 +1,10 @@
 {%- if locale is not defined -%}
     {%- set locale = app.request.locale -%}
 {%- endif -%}
+{%- set facebook_url = locale == 'en'
+    ? 'https://www.facebook.com/ShadowsOfEsteren/'
+    : 'https://www.facebook.com/pages/Les-Ombres-dEsteren/257938482620'
+-%}
 <!DOCTYPE html>
 <html id="corahnrin" lang="{{ app.request.locale|default(app.request.defaultLocale)|default('fr') }}">
 <head>
@@ -140,7 +144,7 @@
                                 {% block footer_social_networks %}
                                     <h2>{{ 'footer.social_networks'|trans }}</h2>
                                     <ul>
-                                        <li><a href="https://www.facebook.com/pages/Les-Ombres-dEsteren/257938482620">Facebook</a></li>
+                                        <li><a href="{{ facebook_url }}">Facebook</a></li>
                                         <li><a href="https://www.instagram.com/esteren_official/">Instagram</a></li>
                                         <li><a href="https://twitter.com/esterenofficiel">Twitter</a></li>
                                     </ul>
