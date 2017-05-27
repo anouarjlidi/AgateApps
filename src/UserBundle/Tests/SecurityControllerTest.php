@@ -169,7 +169,7 @@ class SecurityControllerTest extends WebTestCase
         $user = $container->get('user.provider.username_or_email')->loadUserByUsername(static::USER_NAME);
         static::setToken($client, $user, $user->getRoles());
 
-        $crawler = $client->request('GET', '/fr/profile/edit');
+        $crawler = $client->request('GET', '/fr/profile');
 
         // Fill the "edit profile" form
         $form = $crawler->filter('form.user_profile_edit')->form();
