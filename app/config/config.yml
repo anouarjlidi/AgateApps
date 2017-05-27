@@ -86,6 +86,7 @@ twig:
         esteren_domains_api: '%esteren_domains.api%'
         esteren_domains_cookie_domain: '%esteren_domains.cookie_domain%'
         esteren_domains_games: '%esteren_domains.games%'
+        agate_domains_portal: '%agate_domains.portal%'
     form_themes:
         - 'bootstrap_3_layout.html.twig'
         - 'form/ckeditor_widget.html.twig'
