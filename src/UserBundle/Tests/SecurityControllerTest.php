@@ -113,7 +113,7 @@ class SecurityControllerTest extends WebTestCase
 
         // Check user is authenticated
         static::assertGreaterThanOrEqual(1, $crawler->filter('a.logout_link')->count());
-        static::assertSame('Déconnexion [ '.static::USER_NAME.' ]', trim($crawler->filter('a.logout_link')->text()));
+        static::assertSame('Déconnexion', trim($crawler->filter('a.logout_link')->text()));
 
         $crawler->clear();
     }
