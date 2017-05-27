@@ -95,7 +95,7 @@ class ResettingController extends Controller
 
             $this->addFlash('success', $this->get('translator')->trans('resetting.flash.success', [], 'UserBundle'));
 
-            return new RedirectResponse($this->generateUrl('user_profile'));
+            return new RedirectResponse($this->generateUrl('user_profile_edit'));
         }
 
         return $this->render('@User/Resetting/reset.html.twig', array(

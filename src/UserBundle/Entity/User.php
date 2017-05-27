@@ -102,6 +102,20 @@ class User implements UserInterface, \Serializable
     protected $roles;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="ulule_id", type="string", nullable=true)
+     */
+    private $ululeId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ulule_api_token", type="string", nullable=true)
+     */
+    private $ululeApiToken;
+
+    /**
      * User constructor.
      */
     public function __construct()
@@ -298,6 +312,30 @@ class User implements UserInterface, \Serializable
     public function getConfirmationToken(): ?string
     {
         return $this->confirmationToken;
+    }
+
+    public function getUluleId(): ?string
+    {
+        return $this->ululeId;
+    }
+
+    public function setUluleId(string $ululeId = null): User
+    {
+        $this->ululeId = $ululeId;
+
+        return $this;
+    }
+
+    public function getUluleApiToken(): ?string
+    {
+        return $this->ululeApiToken;
+    }
+
+    public function setUluleApiToken(string $ululeApiToken = null): User
+    {
+        $this->ululeApiToken = $ululeApiToken;
+
+        return $this;
     }
 
     public function serialize()

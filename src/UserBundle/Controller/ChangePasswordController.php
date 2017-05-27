@@ -45,7 +45,7 @@ class ChangePasswordController extends Controller
 
             $this->addFlash('success', $this->get('translator')->trans('change_password.flash.success', [], 'UserBundle'));
 
-            return $this->redirectToRoute('user_profile');
+            return $this->redirectToRoute('user_profile_edit');
         }
 
         return $this->render('@User/ChangePassword/change_password.html.twig', array(

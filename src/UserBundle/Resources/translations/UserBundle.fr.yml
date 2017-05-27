@@ -11,6 +11,8 @@ profile:
         email: 'Adresse e-mail'
     edit:
         submit: 'Mettre à jour'
+        general_information: 'Informations générales'
+        ulule_connect: 'Connecter mon compte Ulule'
     flash:
         updated: 'Le profil a été mis à jour.'
 
@@ -77,13 +79,21 @@ layout:
     register: Inscription
     logged_in_as: 'Connecté en tant que %username%'
     profile: 'Mon profil'
+    edit_profile: 'Modifier mon profil'
 
 form:
     group_name: 'Nom du groupe'
     username: 'Nom d''utilisateur'
     email: 'Adresse e-mail'
-    current_password: 'Mot de passe actuel'
+    current_password: 'Veuillez indiquer votre mot de passe actuel'
     password: 'Mot de passe'
     password_confirmation: 'Répéter le mot de passe'
     new_password: 'Nouveau mot de passe'
     new_password_confirmation: 'Répéter le nouveau mot de passe'
+    ulule_username: 'Pseudo Ulule'
+    ulule_api_token: 'Clé API Ulule'
+    ulule_api_explanation: 'Explication http://www.ulule.com/settings/privacy/'
+    ulule_disconnect: 'Déconnecter mon compte Ulule'
+    error:
+        need_api_token: 'Si vous spécifiez le nom d''utilisateur Ulule, vous devez spécifier la clé d''API'
+        ulule_credentials_invalid: 'Les identifiants de connexion à Ulule sont invalides'

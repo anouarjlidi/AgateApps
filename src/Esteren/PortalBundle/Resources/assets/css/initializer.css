@@ -55,6 +55,7 @@ ul.list-bullet > li
 *.text-xl { font-size: 1.6em !important; }
 *.text-xxl { font-size: 1.8em !important; }
 *.text-3xl { font-size: 2em !important; }
+*.text-4xl { font-size: 2.4em !important; }
 
 *.bg-gold      { background-color: goldenrod !important; }
 

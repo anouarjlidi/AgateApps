@@ -1,0 +1,4 @@
+services:
+    user.connect.ulule:
+        class: UserBundle\ConnectApi\UluleClient
+        autowire: true

@@ -1,14 +1,36 @@
 {% extends "@User/layout.html.twig" %}
 
+{% form_theme form 'form/form_theme_materialize.html.twig' %}
+
 {% trans_default_domain 'UserBundle' %}
 
 {% block content_for_layout %}
 
-    {{ form_start(form, { 'action': path('user_profile_edit'), 'attr': { 'class': 'user_profile_edit' } }) }}
-    {{ form_widget(form) }}
-    <div>
-        <input type="submit" value="{{ 'profile.edit.submit'|trans }}" />
-    </div>
-    {{ form_end(form) }}
+    <h1 class="center text-4xl">{{ 'layout.edit_profile'|trans }}</h1>
 
+    {{ form_start(form, { 'action': path('user_profile_edit'), 'attr': { 'class': 'user_profile_edit' } }) }}
+        {{ form_errors(form) }}
+        <div class="row">
+            <div class="col s4">
+                <h2 class="text-xxl">{{ 'profile.edit.general_information'|trans }}</h2>
+                {{ form_row(form.username) }}
+                {{ form_row(form.email) }}
+                {{ form_row(form.currentPassword) }}
+            </div>
+
+            <div class="col s4">
+                <h2 class="text-xxl">{{ 'profile.edit.ulule_connect'|trans }}</h2>
+                {% if app.user.ululeId %}
+                    <p class="text-l green-text">
+                        <i class="fa fa-arrow-right"></i>
+                        Connecté <i class="fa fa-check"></i>
+                    </p>
+                {% endif %}
+                {{ form_row(form.disconnectUlule) }}
+                {{ form_row(form.ululeUsername) }}
+                {{ form_row(form.ululeApiToken) }}
+            </div>
+        </div>
+        <button class="btn bl mid" type="submit">{{ 'profile.edit.submit'|trans }}</button>
+    {{ form_end(form) }}
 {% endblock content_for_layout %}

@@ -11,6 +11,8 @@ profile:
         email: Email
     edit:
         submit: Update
+        general_information: 'General information'
+        ulule_connect: 'Connect my Ulule account'
     flash:
         updated: 'The profile has been updated.'
 
@@ -77,13 +79,21 @@ layout:
     register: Register
     logged_in_as: 'Logged in as %username%'
     profile: 'My profile'
+    edit_profile: 'Edit my profile'
 
 form:
     group_name: 'Group name'
     username: Username
     email: Email
-    current_password: 'Current password'
+    current_password: 'Please fill your current password'
     password: Password
     password_confirmation: 'Repeat password'
     new_password: 'New password'
     new_password_confirmation: 'Repeat new password'
+    ulule_username: 'Ulule nickname'
+    ulule_api_token: 'Ulule API key'
+    ulule_api_explanation: 'Explanation http://www.ulule.com/settings/privacy/'
+    ulule_disconnect: 'Disconnect my Ulule account'
+    error:
+        need_api_token: 'If you specify Ulule username, you must fill the API token too'
+        ulule_credentials_invalid: 'Ulule credentials are invalid'
