@@ -175,7 +175,7 @@ class SecurityControllerTest extends WebTestCase
         $form = $crawler->filter('form.user_profile_edit')->form();
         $form['profile_form[username]'] = static::USER_NAME_AFTER_UPDATE;
         $form['profile_form[email]'] = $user->getEmail();
-        $form['profile_form[current_password]'] = 'newPassword';
+        $form['profile_form[currentPassword]'] = 'newPassword';
 
         $client->submit($form);
 
