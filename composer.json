@@ -62,7 +62,7 @@
         "orbitale/doctrine-tools": "^0.5.3",
         "orbitale/imagemagick-php": "^1.6",
         "pierstoval/character_manager": "^0.4",
-        "guzzlehttp/guzzle": "6.2"
+        "guzzlehttp/guzzle": "^6.2.1"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
