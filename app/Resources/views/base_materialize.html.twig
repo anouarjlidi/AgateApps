@@ -74,17 +74,9 @@
                                 <ul class="right hide-on-med-and-down">
                                     {% block menu_right_content %}
                                         {% block menu_locale %}{% endblock %}
-                                        {% block menu_security %}
-                                            {% if app.user.username is not defined %}
-                                                <li><a class="login_link" href="{{ path('user_login') }}">{{ 'layout.login' | trans({}, 'UserBundle') }}</a></li>
-                                                <li><a class="register_link" href="{{ path('user_register') }}">{{ 'layout.register' | trans({}, 'UserBundle') }}</a></li>
-                                            {% else %}
-                                                <li><a class="logout_link" href="{{ path('user_logout') }}">{{ 'layout.logout' | trans({}, 'UserBundle')|trim }} [ {{ app.user.username|trim }} ]</a></li>
-                                                {% if is_granted('ROLE_MANAGER') %}
-                                                    <li><a href="{{ path('easyadmin') }}">{{ 'links.admin' | trans }}</a></li>
-                                                {% endif %}
-                                            {% endif %}
-                                        {% endblock %}
+                                    {% endblock %}
+                                    {% block menu_security %}
+                                        {{ include('_menu_security.html.twig', {'dropdown': true}) }}
                                     {% endblock %}
                                 </ul>
                             {% endblock %}
@@ -92,6 +84,9 @@
                             <ul id="nav-mobile" class="side-nav">
                                 {{ block('menu_left_content') }}
                                 {{ block('menu_right_content') }}
+                                {% block menu_security_mobile %}
+                                    {{ include('_menu_security.html.twig', {'dropdown': false}) }}
+                                {% endblock %}
                             </ul>
                             <a href="#" data-activates="nav-mobile" class="button-collapse right text-white" title="{{ 'links.menu'|trans }}"><i class="fa fa-bars text-white"></i> Menu</a>
                         </div>

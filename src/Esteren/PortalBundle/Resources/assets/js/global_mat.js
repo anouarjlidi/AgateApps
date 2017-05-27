@@ -25,6 +25,11 @@
         $('select').material_select();
     }
 
+    // Automatically activate dropdowns if there are some
+    if (d.querySelector('.dropdown-button')) {
+        $('.dropdown-button').dropdown();
+    }
+
     // Manage the "disable tags" cookie CNIL requirement
     if (d.querySelector('button.disable_tags')) {
         d.addEventListener('click', function(e){
