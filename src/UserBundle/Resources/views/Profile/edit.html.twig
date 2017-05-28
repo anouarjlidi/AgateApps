@@ -29,6 +29,12 @@
                 {{ form_row(form.disconnectUlule) }}
                 {{ form_row(form.ululeUsername) }}
                 {{ form_row(form.ululeApiToken) }}
+                {% if not app.user.ululeId %}
+                    <p>
+                        {{ 'form.ulule_api_explanation'|trans({}, 'UserBundle')|raw }}
+                        <a href="http://www.ulule.com/settings/privacy/">http://www.ulule.com/settings/privacy/</a>
+                    </p>
+                {% endif %}
             </div>
         </div>
         <button class="btn bl mid" type="submit">{{ 'profile.edit.submit'|trans }}</button>

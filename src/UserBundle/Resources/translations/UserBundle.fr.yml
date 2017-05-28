@@ -92,7 +92,7 @@ form:
     new_password_confirmation: 'Répéter le nouveau mot de passe'
     ulule_username: 'Pseudo Ulule'
     ulule_api_token: 'Clé API Ulule'
-    ulule_api_explanation: 'Explication http://www.ulule.com/settings/privacy/'
+    ulule_api_explanation: 'Pour obtenir votre clé d''API, rendez-vous sur votre profil Ulule à l''adresse suivante :'
     ulule_disconnect: 'Déconnecter mon compte Ulule'
     error:
         need_api_token: 'Si vous spécifiez le nom d''utilisateur Ulule, vous devez spécifier la clé d''API'

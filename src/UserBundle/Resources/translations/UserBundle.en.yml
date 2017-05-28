@@ -92,7 +92,7 @@ form:
     new_password_confirmation: 'Repeat new password'
     ulule_username: 'Ulule nickname'
     ulule_api_token: 'Ulule API key'
-    ulule_api_explanation: 'Explanation http://www.ulule.com/settings/privacy/'
+    ulule_api_explanation: 'To get your API key, go to your Ulule profile at this address:'
     ulule_disconnect: 'Disconnect my Ulule account'
     error:
         need_api_token: 'If you specify Ulule username, you must fill the API token too'
