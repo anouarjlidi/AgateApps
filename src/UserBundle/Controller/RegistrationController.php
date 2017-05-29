@@ -11,6 +11,7 @@
 
 namespace UserBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Response;
 use UserBundle\Entity\User;
 use UserBundle\Form\Type\RegistrationFormType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -26,8 +27,12 @@ class RegistrationController extends Controller
      * @Route("/register", name="user_register")
      * @Method({"GET", "POST"})
      */
-    public function registerAction(Request $request)
+    public function registerAction(Request $request): Response
     {
+        if ($this->getUser()) {
+            return $this->redirectToRoute('user_profile_edit');
+        }
+
         $user = new User();
 
         $form = $this->createForm(RegistrationFormType::class, $user);

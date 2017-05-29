@@ -14,7 +14,6 @@ namespace UserBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -47,7 +46,7 @@ class ProfileController extends Controller
 
             $this->addFlash('success', $this->get('translator')->trans('profile.flash.updated', [], 'UserBundle'));
 
-            return new RedirectResponse($this->generateUrl('user_profile_edit'));
+            return $this->redirectToRoute('user_profile_edit');
         }
 
         return $this->render('@User/Profile/edit.html.twig', array(
