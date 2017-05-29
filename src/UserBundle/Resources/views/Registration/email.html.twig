@@ -11,7 +11,7 @@
 {% block title (textMessage|striptags) %}
 
 {% block content %}
-    {% set message = 'registration.email.message'|trans({'%username%': user.username, '%confirmationUrl%': confirmationUrl})|nl2br %}
+    {% set message = ('registration.email.message'|trans({'%username%': user.username, '%confirmationUrl%': confirmationUrl})|raw|nl2br) %}
     {{ macros.text(message) }}
 {% endblock %}
 
