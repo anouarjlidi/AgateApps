@@ -19,37 +19,52 @@ class SecurityControllerTest extends WebTestCase
     const USER_NAME = 'test_user';
     const USER_NAME_AFTER_UPDATE = 'user_updated';
 
-    public function testForbiddenAdmin()
+    public function provideLocales()
+    {
+        return [
+            'fr' => ['fr'],
+            'en' => ['en'],
+        ];
+    }
+
+    /**
+     * @dataProvider provideLocales
+     */
+    public function testForbiddenAdmin(string $locale)
     {
         $client = $this->getClient('back.esteren.dev', [], 'ROLE_USER');
 
-        $client->request('GET', '/fr/');
+        $client->request('GET', "/$locale/");
 
         static::assertSame(403, $client->getResponse()->getStatusCode());
     }
 
-    public function testAllowedAdmin()
+    /**
+     * @dataProvider provideLocales
+     */
+    public function testAllowedAdmin(string $locale)
     {
         $client = $this->getClient('back.esteren.dev', [], 'ROLE_ADMIN');
 
-        $client->request('GET', '/fr/');
+        $client->request('GET', "/$locale/");
 
         static::assertSame(302, $client->getResponse()->getStatusCode());
-        static::assertContains('/fr/?action=list&entity=Page', $client->getResponse()->headers->get('Location'));
+        static::assertContains("/$locale/?action=list&entity=Page", $client->getResponse()->headers->get('Location'));
         $client->followRedirect();
         static::assertSame(200, $client->getResponse()->getStatusCode());
     }
 
     /**
      * Test registration action
+     * @dataProvider provideLocales
      */
-    public function testRegister()
+    public function testRegister(string $locale)
     {
         static::resetDatabase();
 
         $client = $this->getClient('portal.esteren.dev');
 
-        $crawler = $client->request('GET', '/fr/register');
+        $crawler = $client->request('GET', "/$locale/register");
 
         $formNode = $crawler->filter('form.user_registration_register');
 
@@ -59,8 +74,8 @@ class SecurityControllerTest extends WebTestCase
         $form = $formNode->form();
 
         // Fill registration form
-        $form['registration_form[username]'] = static::USER_NAME;
-        $form['registration_form[email]'] = 'test@local.host.dev';
+        $form['registration_form[username]'] = static::USER_NAME.$locale;
+        $form['registration_form[email]'] = "test-$locale@local.dev";
         $form['registration_form[plainPassword]'] = 'fakePassword';
 
         // Submit form
@@ -68,13 +83,13 @@ class SecurityControllerTest extends WebTestCase
 
         // Check redirection was made correctly to the Profile page
         static::assertTrue($client->getResponse()->isRedirection(), 'Is not redirection');
-        static::assertTrue($client->getResponse()->isRedirect('/fr/login'), 'Does not redirect to login page');
+        static::assertTrue($client->getResponse()->isRedirect("/$locale/login"), 'Does not redirect to login page');
 
         $crawler->clear();
         $crawler = $client->followRedirect();
 
         // Check flash messages are correct
-        $flashUserCreated = $client->getKernel()->getContainer()->get('translator')->trans('registration.confirmed', ['%username%' => static::USER_NAME], 'UserBundle');
+        $flashUserCreated = $client->getKernel()->getContainer()->get('translator')->trans('registration.confirmed', ['%username%' => static::USER_NAME.$locale], 'UserBundle');
         static::assertContains($flashUserCreated, $crawler->filter('#layout #flash-messages')->html());
 
         $crawler->clear();
@@ -82,12 +97,13 @@ class SecurityControllerTest extends WebTestCase
 
     /**
      * @depends testRegister
+     * @dataProvider provideLocales
      */
-    public function testLogin()
+    public function testLogin(string $locale)
     {
         $client = $this->getClient('portal.esteren.dev');
 
-        $crawler = $client->request('GET', '/fr/login');
+        $crawler = $client->request('GET', "/$locale/login");
 
         $formNode = $crawler->filter('form#form_login');
 
@@ -97,7 +113,7 @@ class SecurityControllerTest extends WebTestCase
         $form = $formNode->form();
 
         // Fill registration form
-        $form['_username_or_email'] = static::USER_NAME;
+        $form['_username_or_email'] = static::USER_NAME.$locale;
         $form['_password'] = 'fakePassword';
 
         // Submit form
@@ -105,7 +121,7 @@ class SecurityControllerTest extends WebTestCase
 
         // Check redirection was made correctly to the Profile page
         static::assertTrue($client->getResponse()->isRedirection(), 'Is not redirection');
-        static::assertTrue($client->getResponse()->isRedirect('/'), 'Does not redirect to root page');
+        static::assertTrue($client->getResponse()->isRedirect("/$locale"), 'Does not redirect to root page');
 
         $crawler->clear();
         $client->followRedirects(true);
@@ -113,22 +129,24 @@ class SecurityControllerTest extends WebTestCase
 
         // Check user is authenticated
         static::assertGreaterThanOrEqual(1, $crawler->filter('a.logout_link')->count());
-        static::assertSame('Déconnexion', trim($crawler->filter('a.logout_link')->text()));
+        $logoutText = $client->getKernel()->getContainer()->get('translator')->trans('layout.logout', [], 'UserBundle');
+        static::assertSame($logoutText, trim($crawler->filter('a.logout_link')->text()));
 
         $crawler->clear();
     }
 
     /**
      * @depends testLogin
+     * @dataProvider provideLocales
      */
-    public function testChangePassword()
+    public function testChangePassword(string $locale)
     {
         $client = $this->getClient('portal.esteren.dev');
         $container = $client->getKernel()->getContainer();
-        $user = $container->get('user.provider.username_or_email')->loadUserByUsername(static::USER_NAME);
+        $user = $container->get('user.provider.username_or_email')->loadUserByUsername(static::USER_NAME.$locale);
         static::setToken($client, $user, $user->getRoles());
 
-        $crawler = $client->request('GET', '/fr/profile/change-password');
+        $crawler = $client->request('GET', "/$locale/profile/change-password");
 
         // Fill "change password" form
         $form = $crawler->filter('form.user_change_password')->form();
@@ -140,7 +158,7 @@ class SecurityControllerTest extends WebTestCase
 
         // Check that it redirects to profile page
         static::assertSame(302, $client->getResponse()->getStatusCode());
-        static::assertTrue($client->getResponse()->isRedirect('/fr/profile'));
+        static::assertTrue($client->getResponse()->isRedirect("/$locale/profile"));
 
         $crawler->clear();
         $crawler = $client->followRedirect();
@@ -152,7 +170,7 @@ class SecurityControllerTest extends WebTestCase
         static::assertContains($flashPasswordChanged, $crawler->filter('#layout #flash-messages')->html());
 
         // Now check that new password is correctly saved in database
-        $user = $container->get('user.provider.username_or_email')->loadUserByUsername(static::USER_NAME);
+        $user = $container->get('user.provider.username_or_email')->loadUserByUsername(static::USER_NAME.$locale);
         $encoder = $container->get('security.encoder_factory')->getEncoder($user);
         static::assertTrue($encoder->isPasswordValid($user->getPassword(), 'newPassword', $user->getSalt()));
 
@@ -161,19 +179,20 @@ class SecurityControllerTest extends WebTestCase
 
     /**
      * @depends testChangePassword
+     * @dataProvider provideLocales
      */
-    public function testEditProfile()
+    public function testEditProfile(string $locale)
     {
         $client = $this->getClient('portal.esteren.dev');
         $container = $client->getKernel()->getContainer();
-        $user = $container->get('user.provider.username_or_email')->loadUserByUsername(static::USER_NAME);
+        $user = $container->get('user.provider.username_or_email')->loadUserByUsername(static::USER_NAME.$locale);
         static::setToken($client, $user, $user->getRoles());
 
-        $crawler = $client->request('GET', '/fr/profile');
+        $crawler = $client->request('GET', "/$locale/profile");
 
         // Fill the "edit profile" form
         $form = $crawler->filter('form.user_profile_edit')->form();
-        $form['profile_form[username]'] = static::USER_NAME_AFTER_UPDATE;
+        $form['profile_form[username]'] = static::USER_NAME_AFTER_UPDATE.$locale;
         $form['profile_form[email]'] = $user->getEmail();
         $form['profile_form[currentPassword]'] = 'newPassword';
 
@@ -181,7 +200,7 @@ class SecurityControllerTest extends WebTestCase
 
         // Check that form submission redirects to same page
         static::assertSame(302, $client->getResponse()->getStatusCode());
-        static::assertTrue($client->getResponse()->isRedirect('/fr/profile'));
+        static::assertTrue($client->getResponse()->isRedirect("/$locale/profile"));
         $crawler->clear();
         $crawler = $client->followRedirect();
 
@@ -194,19 +213,20 @@ class SecurityControllerTest extends WebTestCase
 
     /**
      * @depends testEditProfile
+     * @dataProvider provideLocales
      */
-    public function testResetPasswordRequest()
+    public function testResetPasswordRequest(string $locale)
     {
         $client = $this->getClient('portal.esteren.dev');
         $container = $client->getKernel()->getContainer();
-        $user = $container->get('user.provider.username_or_email')->loadUserByUsername(static::USER_NAME_AFTER_UPDATE);
+        $user = $container->get('user.provider.username_or_email')->loadUserByUsername(static::USER_NAME_AFTER_UPDATE.$locale);
         static::setToken($client, $user, $user->getRoles());
 
-        $crawler = $client->request('GET', '/fr/resetting/request');
+        $crawler = $client->request('GET', "/$locale/resetting/request");
 
         $form = $crawler->filter('form.user_resetting_request')->form();
 
-        $form['username'] = static::USER_NAME_AFTER_UPDATE;
+        $form['username'] = static::USER_NAME_AFTER_UPDATE.$locale;
         $client->submit($form);
         static::assertSame(302, $client->getResponse()->getStatusCode());
         $crawler->clear();
@@ -214,13 +234,16 @@ class SecurityControllerTest extends WebTestCase
 
         // This message contains informations about user resetting token TTL.
         // This information is set in the User ResettingController and must be copied here just for testing.
-        // We are testing in french.
-        $emailSentMessage = 'Un e-mail a été envoyé. Il contient un lien sur lequel il vous faudra cliquer pour réinitialiser votre mot de passe.';
-
-        static::assertContains($emailSentMessage, $crawler->filter('#content')->html());
+        $emailSentMessage = $client->getKernel()->getContainer()->get('translator')->trans('resetting.check_email', [], 'UserBundle');
+        $emailSentMessage = nl2br($emailSentMessage, false);
+        $emailSentMessage = trim($emailSentMessage);
+        $emailSentMessage = preg_replace('~((\r)?\n)+~', '', $emailSentMessage);
+        $crawlerContent = trim($crawler->filter('#content')->html());
+        $crawlerContent = preg_replace('~((\r)?\n)+~', '', $crawlerContent);
+        static::assertContains($emailSentMessage, $crawlerContent);
 
         $crawler->clear();
-        $crawler = $client->request('GET', '/fr/resetting/reset/'.$user->getConfirmationToken());
+        $crawler = $client->request('GET', "/$locale/resetting/reset/".$user->getConfirmationToken());
 
         $form = $crawler->filter('form.user_resetting_reset')->form();
 
