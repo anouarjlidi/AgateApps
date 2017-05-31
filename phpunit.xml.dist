@@ -44,7 +44,16 @@
         <ini name="zend.enable_gc" value="0" />
         <env name="SYMFONY_ENV" value="test" />
         <env name="SYMFONY_DEBUG" value="0" />
-        <!-- You can uncomment this if you want less tests for Step 7 random tests, which is 100 by default
+        <!-- Uncomment this if you do not need to refresh the whole cache between runs
+        <env name="NO_CLEAR_CACHE" value="1" />
+        -->
+        <!-- Uncomment this if you don't want to reset the database between runs (implicitly enables NO_CLEAR_CACHE)
+        <env name="NO_RECREATE_DB" value="1" />
+        -->
+        <!-- Uncomment this if you want to force database recreation between runs
+        <env name="RECREATE_DB" value="1" />
+        -->
+        <!-- Uncomment this if you want less tests for Step 7 random tests, which is 100 by default
         <env name="STEP7_RANDOMNESS_COUNT" value="1" />
         -->
     </php>
