@@ -21,6 +21,14 @@ use Symfony\Component\HttpFoundation\Session\Session;
 class ContactController extends Controller
 {
     /**
+     * @Route("/err500", name="err500")
+     */
+    public function err500Action()
+    {
+        throw new \Exception('Exception test');
+    }
+
+    /**
      * @Route("/contact", name="contact")
      */
     public function contactAction(Request $request)
