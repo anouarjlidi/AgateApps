@@ -1,50 +1,9 @@
 version: 2
 
 jobs:
-    build-js:
+    build:
         docker:
-            - image: circleci/node:6
-
-        working_directory: ~/app
-
-        environment:
-            NODE_ENV: production
-
-        steps:
-            - checkout
-
-            - run:
-                name: 'Install Nodejs & Yarn'
-                command: |
-                    # curl -sL https://deb.nodesource.com/setup_6.x | bash -
-                    # apt-get install -y build-essential nodejs
-                    # curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
-                    # echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
-                    # apt-get update && apt-get install yarn
-                    # export PATH=$PATH:$PWD/node_modules/.bin
-
-            - restore_cache:
-                keys:
-                    - yarn-cache-{{ checksum "yarn.lock" }}
-
-            - run:
-               name: 'Install Yarn Dependencies'
-               command: |
-                    yarn install
-
-            - run:
-               name: 'Execute node tests'
-               command: |
-                    node tests/nodejs/test_gulp_dump.js
-
-            - save_cache:
-                key: yarn-cache-{{ checksum "yarn.lock" }}
-                paths:
-                    - node_modules
-
-    build-php:
-        docker:
-            - image: circleci/php:7.1
+            - image: php:7.1
 
         working_directory: ~/app
 
@@ -84,9 +43,20 @@ jobs:
                     php composer-setup.php
                     php -r "unlink('composer-setup.php');"
 
+            - run:
+                name: 'Install Nodejs & Yarn'
+                command: |
+                    curl -sL https://deb.nodesource.com/setup_6.x | bash -
+                    apt-get install -y build-essential nodejs
+                    curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+                    echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+                    apt-get update && apt-get install yarn
+                    export PATH=$PATH:$PWD/node_modules/.bin
+
             - restore_cache:
                 keys:
                     - composer-cache-{{ checksum "composer.lock" }}
+                    - yarn-cache-{{ checksum "yarn.lock" }}
 
             - run:
                 name: 'Show config'
@@ -105,9 +75,15 @@ jobs:
                     cat phpunit.xml.dist | sed -e 's/\(<!--%\)\|\(%-->\)//g' > phpunit.xml
 
             - run:
-               name: 'Install Composer Dependencies'
+               name: 'Install Project Dependencies'
                command: |
-                    php composer.phar install --no-interaction --no-suggest --ignore-platform-reqs --no-progress
+                    php composer.phar install --no-interaction --no-suggest --ignore-platform-reqs
+                    yarn install
+
+            - run:
+               name: 'Execute node tests'
+               command: |
+                    node tests/nodejs/test_gulp_dump.js dump --prod --verbose
 
             - run:
                name: 'Execute Linting tests'
@@ -135,6 +111,11 @@ jobs:
                 key: composer-cache
                 paths:
                     - vendor
+
+            - save_cache:
+                key: yarn-cache-{{ checksum "yarn.lock" }}
+                paths:
+                    - node_modules
 
             - run:
                 name: 'Send coverage'
