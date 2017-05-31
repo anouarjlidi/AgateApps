@@ -31,22 +31,22 @@
         ]
     },
     "require": {
-        "php": ">=5.6.0",
+        "php": "^7.1",
         "ext-intl": "*",
         "ext-mbstring": "*",
         "ext-gd": "*",
         "ext-apcu": "*",
         "ext-iconv": "*",
-        "symfony/symfony": "3.2.*",
+        "symfony/symfony": "3.3.*",
         "doctrine/orm": "^2.5",
         "doctrine/doctrine-bundle": "^1.6",
-        "doctrine/doctrine-cache-bundle": "^1.2",
+        "doctrine/doctrine-cache-bundle": "^1.3",
         "symfony/swiftmailer-bundle": "^3.0",
-        "symfony/monolog-bundle": "^3.0.2",
-        "symfony/polyfill-apcu": "^1.0",
-        "sensio/distribution-bundle": "^5.0",
+        "symfony/monolog-bundle": "^3.1",
+        "symfony/polyfill-apcu": "^1.3",
+        "sensio/distribution-bundle": "^5.0.19",
         "sensio/framework-extra-bundle": "^3.0.2",
-        "incenteev/composer-parameter-handler": "^2.0",
+        "incenteev/composer-parameter-handler": "^2.1",
 
         "jms/serializer": "^1.6",
         "jms/serializer-bundle": "^2.0",
@@ -55,7 +55,7 @@
         "egeloen/ckeditor-bundle": "^5.0",
         "javiereguiluz/easyadmin-bundle": "^1.16",
         "stof/doctrine-extensions-bundle": "^1.2",
-        "twig/extensions": "^1.4",
+        "twig/extensions": "^1.5",
 
         "orbitale/cms-bundle": "^3.0",
         "orbitale/entity-merger": "^0.5",
@@ -65,11 +65,11 @@
         "guzzlehttp/guzzle": "^6.2.1"
     },
     "require-dev": {
-        "sensio/generator-bundle": "^3.0",
+        "sensio/generator-bundle": "^3.1",
         "symfony/phpunit-bridge": "^3.2",
         "doctrine/doctrine-fixtures-bundle": "^2.3",
         "pierstoval/web-test-case": "^0.1.3",
-        "phpunit/phpunit": "^5.7|6.0"
+        "phpunit/phpunit": "^5.7|^6.0"
     },
     "scripts": {
         "symfony-scripts": [

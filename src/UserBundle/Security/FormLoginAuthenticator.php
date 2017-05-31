@@ -146,12 +146,12 @@ final class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
     {
         $defaultUrl = rtrim($this->router->generate('root'), '/').'/'.($request->getLocale() ?: 'fr');
 
-        // if the user hit a secure page and start() was called, this was
+        $targetPath = $defaultUrl;
+
+        // If the user hit a secure page and start() was called, this was
         // the URL they were on, and probably where you want to redirect to
         if ($request->hasSession()) {
             $targetPath = $this->getTargetPath($request->getSession(), $providerKey) ?: $defaultUrl;
-        } else {
-            $targetPath = $defaultUrl;
         }
 
         // Make sure username is not stored for next login
