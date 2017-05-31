@@ -33,7 +33,6 @@ if (true === $debug) {
 }
 
 $kernel = new AppKernel($environment, $debug);
-$kernel->loadClassCache(); // To remove when SF4 comes
 
 if (false === $debug && 'prod' === $environment) {
     $kernel = new AppCache($kernel);
