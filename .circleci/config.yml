@@ -56,6 +56,7 @@ jobs:
             - restore_cache:
                 keys:
                     - composer-cache-{{ checksum "composer.lock" }}
+                    - composer-vendor-{{ checksum "composer.lock" }}
                     - yarn-cache-{{ checksum "yarn.lock" }}
 
             - run:
@@ -103,12 +104,12 @@ jobs:
                path: /tmp/test-results
 
             - save_cache:
-                key: composer-deps-cache-{{ checksum "composer.lock" }}
+                key: composer-cache-{{ checksum "composer.lock" }}
                 paths:
                     - ~/.composer/cache
 
             - save_cache:
-                key: composer-cache
+                key: composer-vendor-{{ checksum "composer.lock" }}
                 paths:
                     - vendor
 
