@@ -43,7 +43,7 @@
 /web/img/esteren_portal/*
 /web/img/*.jpg
 /web/img/*.png
-/web/img/*.ico
+/web/img/*.svg
 
 # Automatically created directories
 !/web/js/.gitkeep
