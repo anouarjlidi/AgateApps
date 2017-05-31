@@ -89,7 +89,7 @@
         ],
         "compile": [
             "yarn --production",
-            "cd node_modules/node-sass && yarn --production && node scripts/build -f",
+            "cd node_modules/node-sass && node scripts/build -f",
             "cd node_modules/optipng-bin && yarn --production",
             "node node_modules/gulp4/bin/gulp.js dump --prod --verbose",
             "rm web/config.php",
