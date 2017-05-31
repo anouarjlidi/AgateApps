@@ -15,24 +15,23 @@ jobs:
 
         steps:
             - run:
-                name: 'Install Composer'
+                name: 'Install necessary system packages'
                 command: |
                     apt-get update
-                    apt-get -y install g++ git unzip zlib1g-dev libicu-dev libicu52 libpng-dev libjpeg-dev libmariadbd-dev
+                    apt-get -y install g++ git unzip zlib1g-dev libicu-dev libicu52 libpng-dev libjpeg-dev
 
             - checkout
 
             - run:
                 name: 'Install necessary PHP extensions'
                 command: |
-                    docker-php-ext-install pdo pdo_mysql intl mbstring gd iconv
+                    docker-php-ext-install pdo intl mbstring gd iconv
 
             - run:
                 name: 'Install apcu'
                 command: |
                     echo '' | pecl install -f apcu
                     echo "extension=apcu.so" > /usr/local/etc/php/conf.d/apcu.ini
-#            - run: docker-php-ext-configure pdo pdo_mysql intl mbstring gd iconv
 
             - run:
                 name: 'Install Composer'
@@ -56,7 +55,6 @@ jobs:
             - restore_cache:
                 keys:
                     - composer-cache-{{ checksum "composer.lock" }}
-                    - composer-vendor-{{ checksum "composer.lock" }}
                     - yarn-cache-{{ checksum "yarn.lock" }}
 
             - run:
@@ -98,20 +96,12 @@ jobs:
             - run:
                name: 'Execute PHPUnit tests'
                command: |
-                    vendor/bin/phpunit --log-junit "${CIRCLE_TEST_REPORTS}/phpunit/junit.xml" --coverage-clover "build/logs/phpunit/clover.xml" --coverage-html "build/logs/phpunit/html"
-
-            - store_test_results:
-               path: /tmp/test-results
+                    vendor/bin/phpunit
 
             - save_cache:
                 key: composer-cache-{{ checksum "composer.lock" }}
                 paths:
                     - ~/.composer/cache
-
-            - save_cache:
-                key: composer-vendor-{{ checksum "composer.lock" }}
-                paths:
-                    - vendor
 
             - save_cache:
                 key: yarn-cache-{{ checksum "yarn.lock" }}
@@ -120,4 +110,7 @@ jobs:
 
             - run:
                 name: 'Send coverage'
-                command: 'bash <(curl -s https://codecov.io/bash) -f "build/logs/phpunit/phpunit/clover.xml"'
+                command: 'bash <(curl -s https://codecov.io/bash) -f "build/log/clover.xml"'
+
+            - store_artifacts:
+                path: build/log
