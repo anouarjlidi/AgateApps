@@ -30,7 +30,6 @@ module.exports = [
     // Image script
     "web/img/agate/Agate_7th_Sea.jpg",
     "web/img/agate/esteren_dearg_front.jpg",
-    "web/img/agate/logo_agate_studio.png",
     "web/img/agate/logo_agate_studio_big.png",
     "web/img/agate/logo_agate_studio_stone.png",
     "web/img/agate/logo_agate_studio_words.png",
@@ -39,7 +38,6 @@ module.exports = [
     "web/img/agate/Portal_Esteren_logo.png",
     "web/img/agate/Portal_logo_agate_studio_stone.png",
     "web/img/agate/Portal_Vampire_Requiem_Logo.png",
-    "web/img/agate/Portal_Vermine.jpg",
     "web/img/background-image.jpg",
     "web/img/d10.svg",
     "web/img/Esteren_Arven_marche.jpg",
