@@ -41,7 +41,7 @@ monolog:
             include_stacktraces: true
         mail_sender:
             type:           swift_mailer
-            from_email:     no-reply@pierstoval.com
+            from_email:     no-reply@esteren.org
             to_email:       pierstoval+esterenprod@gmail.com
             subject:        An Error Occurred!
             level:          debug
