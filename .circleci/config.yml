@@ -72,7 +72,7 @@ jobs:
                     echo "apcu.enable_cli = 1" >> /usr/local/etc/php/conf.d/custom.ini
 
                     cp tests/ci/parameters.yml app/config/parameters.yml
-                    cp .env.dist .env
+                    cp tests/.env .env
                     cat phpunit.xml.dist | sed -e 's/\(<!--%\)\|\(%-->\)//g' > phpunit.xml
 
             - run:

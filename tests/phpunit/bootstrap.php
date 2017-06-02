@@ -31,6 +31,8 @@ if (!file_exists($file)) {
 /** @var Composer\Autoload\ClassLoader $autoload */
 $autoload = require $file;
 
+(new \Symfony\Component\Dotenv\Dotenv())->load(__DIR__.'/../.env');
+
 $input = new ArgvInput();
 
 if (NO_RECREATE_DB) {
