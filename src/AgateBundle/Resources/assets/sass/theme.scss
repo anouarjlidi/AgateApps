@@ -4,12 +4,23 @@ html {
     }
 }
 
-.portal-link img {
-    display: block;
-    max-height: 200px;
-    margin-top: 10px;
-    margin-left: auto;
-    margin-right: auto;
+.portal-link {
+    text-align: center;
+    img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+.verminepic {
+    position: relative;
+    span {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+    }
 }
 
 .team-list {
