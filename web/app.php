@@ -1,7 +1,7 @@
 <?php
 
-use Symfony\Component\ClassLoader\ApcClassLoader;
 use Symfony\Component\Debug\Debug;
+use Symfony\Component\Dotenv\Dotenv;
 use Symfony\Component\HttpFoundation\Request;
 
 // If you don't want to setup permissions the proper way, just uncomment the following PHP line
@@ -22,14 +22,8 @@ if (false === $debug) {
 }
 
 if (true === $debug) {
+    (new Dotenv())->load(__DIR__.'/../.env');
     Debug::enable();
-} else {
-    try {
-        $apcLoader = new ApcClassLoader('EsterenApp', $loader);
-        $apcLoader->register(true);
-        $loader = $apcLoader;
-    } catch (Exception $e) {
-    }
 }
 
 $kernel = new AppKernel($environment, $debug);

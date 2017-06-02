@@ -16,6 +16,7 @@
 /vendor/
 /web/bundles/
 /composer.phar
+.env
 
 # Heroku specific
 /app/config/config_heroku.yml
@@ -55,7 +56,7 @@
 !/web/fonts/.gitkeep
 
 # This directory is used only by LeafletJS defaults, we're not sure we won't ever use it...
-/web/images/*
+/web/images
 
 # NodeJS components
 /node_modules/

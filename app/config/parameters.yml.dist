@@ -2,19 +2,4 @@
 # Set parameters here that may be different on each deployment target of the app, e.g. development, staging, production.
 # http://symfony.com/doc/current/best_practices/configuration.html#infrastructure-related-configuration
 parameters:
-    env(DATABASE_URL):        mysql://esteren_portal:password_portal@127.0.0.1:3306/esteren_portal?serverVersion=5.7
-    env(DATABASE_URL_LEGACY): mysql://esteren_legacy:password_legacy@127.0.0.1:3306/esteren_legacy?serverVersion=5.7
-
-    env(MAILER_TRANSPORT):  smtp
-    env(MAILER_HOST):       127.0.0.1
-    env(MAILER_USER):       ~
-    env(MAILER_PASSWORD):   ~
-    env(MAILER_PORT):       ~
-
-    # A secret key that's used to generate certain security-related tokens
-    env(SYMFONY_SECRET):    ThisTokenIsNotSoSecretChangeIt
-
     magick_binaries_path: /usr/bin
-
-    env(AGATE_DOMAIN):      studio-agate.fr
-    env(ESTEREN_DOMAIN):    esteren.org
