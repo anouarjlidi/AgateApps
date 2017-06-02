@@ -16,7 +16,7 @@
 /vendor/
 /web/bundles/
 /composer.phar
-.env
+/.env
 
 # Heroku specific
 /app/config/config_heroku.yml
