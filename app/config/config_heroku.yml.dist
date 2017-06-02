@@ -1,8 +1,0 @@
-imports:
-    - { resource: config_dev.yml }
-
-# Copy this file to "config_heroku.yml" if needed
-# And replace all these env vars to the ones from your DB instance
-# This allows manipulation of MySQL on production (fixtures reset, etc.) in case of
-parameters:
-    env(DATABASE_URL): 'mysql://jawsdb_user:jawsdb_password@jawsdb_host:3306/jawsdb_dbname?serverVersion=jawsdb_server_version'
