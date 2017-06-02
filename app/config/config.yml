@@ -1,5 +1,6 @@
 imports:
     - { resource: parameters.yml }
+    - { resource: _domains.yml }
     - { resource: security.yml }
     - { resource: _corahnrin.yml }
     - { resource: _easy_admin.yml }
@@ -21,17 +22,6 @@ parameters:
         en: en
     locales_regex: 'fr|en'
 
-    # Definition of all subdomains used in the app
-    esteren_domains.cookie_domain:      '.%env(ESTEREN_DOMAIN)%'
-    esteren_domains.portal:       'portal.%env(ESTEREN_DOMAIN)%'
-    esteren_domains.esterenmaps:    'maps.%env(ESTEREN_DOMAIN)%'
-    esteren_domains.corahnrin: 'corahnrin.%env(ESTEREN_DOMAIN)%'
-    esteren_domains.games:         'games.%env(ESTEREN_DOMAIN)%'
-    esteren_domains.api:             'api.%env(ESTEREN_DOMAIN)%'
-    esteren_domains.backoffice:     'back.%env(ESTEREN_DOMAIN)%'
-
-    agate_domains.portal:                  '%env(AGATE_DOMAIN)%'
-
     google_tags:
         analytics:   'UA-43812649-5'
         tag_manager: 'GTM-T5PQWF'
@@ -52,7 +42,7 @@ framework:
         engines: ['twig']
     default_locale:  '%locale%'
     trusted_hosts:
-        - '%esteren_domains.cookie_domain%$'
+        - '%env(ESTEREN_DOMAIN)%$'
         - '%env(AGATE_DOMAIN)%$'
     session:
         # http://symfony.com/doc/current/reference/configuration/framework.html#handler-id
@@ -79,14 +69,6 @@ twig:
         version_date: '%version_date%'
         locales: '%locales%'
         locales_regex: '%locales_regex%'
-        esteren_domains_corahnrin: '%esteren_domains.corahnrin%'
-        esteren_domains_esterenmaps: '%esteren_domains.esterenmaps%'
-        esteren_domains_portal: '%esteren_domains.portal%'
-        esteren_domains_backoffice: '%esteren_domains.backoffice%'
-        esteren_domains_api: '%esteren_domains.api%'
-        esteren_domains_cookie_domain: '%esteren_domains.cookie_domain%'
-        esteren_domains_games: '%esteren_domains.games%'
-        agate_domains_portal: '%agate_domains.portal%'
     form_themes:
         - 'bootstrap_3_layout.html.twig'
         - 'form/ckeditor_widget.html.twig'

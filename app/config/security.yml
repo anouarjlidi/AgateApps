@@ -67,7 +67,6 @@ security:
                 secret:         '%env(SYMFONY_SECRET)%'
                 path:           /
                 name:           EsterenRememberMe
-                domain:         '%esteren_domains.cookie_domain%'
             logout:
                 invalidate_session: false
                 path:           user_logout

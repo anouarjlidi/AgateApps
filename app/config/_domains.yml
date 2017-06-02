@@ -1,0 +1,24 @@
+# Definition of all subdomains used in the app
+
+parameters:
+    esteren_domains.portal:       'portal.%env(ESTEREN_DOMAIN)%'
+    esteren_domains.esterenmaps:    'maps.%env(ESTEREN_DOMAIN)%'
+    esteren_domains.corahnrin: 'corahnrin.%env(ESTEREN_DOMAIN)%'
+    esteren_domains.games:         'games.%env(ESTEREN_DOMAIN)%'
+    esteren_domains.api:             'api.%env(ESTEREN_DOMAIN)%'
+    esteren_domains.backoffice:     'back.%env(ESTEREN_DOMAIN)%'
+
+    agate_domains.portal:              'www.%env(AGATE_DOMAIN)%'
+
+    vermine_domains.portal:          'www.%env(VERMINE_DOMAIN)%'
+
+twig:
+    globals:
+        esteren_domains_corahnrin: '%esteren_domains.corahnrin%'
+        esteren_domains_esterenmaps: '%esteren_domains.esterenmaps%'
+        esteren_domains_portal: '%esteren_domains.portal%'
+        esteren_domains_backoffice: '%esteren_domains.backoffice%'
+        esteren_domains_api: '%esteren_domains.api%'
+        esteren_domains_games: '%esteren_domains.games%'
+        agate_domains_portal: '%agate_domains.portal%'
+        vermine_domains_portal: '%vermine_domains.portal%'
