@@ -78,7 +78,7 @@ jobs:
             - run:
                name: 'Install Project Dependencies'
                command: |
-                    php composer.phar install --no-interaction --no-suggest --ignore-platform-reqs
+                    php composer.phar install --no-interaction --no-suggest --ignore-platform-reqs --no-progress
                     yarn install
 
             - run:
