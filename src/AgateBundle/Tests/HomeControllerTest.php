@@ -19,7 +19,7 @@ class HomeControllerTest extends WebTestCase
     {
         parent::resetDatabase();
 
-        $client = $this->getClient('studio-agate.dev');
+        $client = $this->getClient('www.studio-agate.dev');
 
         $crawler = $client->request('GET', '/fr/');
 
@@ -36,7 +36,7 @@ class HomeControllerTest extends WebTestCase
     {
         parent::resetDatabase();
 
-        $client = $this->getClient('studio-agate.dev');
+        $client = $this->getClient('www.studio-agate.dev');
 
         $client->request('GET', '/en/');
 
