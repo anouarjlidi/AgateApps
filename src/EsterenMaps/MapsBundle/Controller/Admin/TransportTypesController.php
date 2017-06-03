@@ -25,7 +25,7 @@ class TransportTypesController extends BaseMapAdminController
      *
      * @return FormBuilder
      */
-    public function createTransportTypesEntityFormBuilder(TransportTypes $entity, $view)
+    protected function createTransportTypesEntityFormBuilder(TransportTypes $entity, $view)
     {
         // Get IDs in the entity and try to retrieve non-existing transport ids.
         $routesTypesIds = array_reduce(

@@ -15,21 +15,21 @@ use AdminBundle\Controller\AdminController;
 
 class BaseMapAdminController extends AdminController
 {
-    public function createMarkersListQueryBuilder($entityClass, $sortDirection, $sortField = null, $dqlFilter = null)
+    protected function createMarkersListQueryBuilder($entityClass, $sortDirection, $sortField = null, $dqlFilter = null)
     {
         $qb = parent::createListQueryBuilder($entityClass, $sortDirection, $sortField, $dqlFilter);
 
         return $qb->leftJoin('entity.markerType', 'type')->addSelect('type');
     }
 
-    public function createMarkersTypesListQueryBuilder($entityClass, $sortDirection, $sortField = null, $dqlFilter = null)
+    protected function createMarkersTypesListQueryBuilder($entityClass, $sortDirection, $sortField = null, $dqlFilter = null)
     {
         $qb = parent::createListQueryBuilder($entityClass, $sortDirection, $sortField, $dqlFilter);
 
         return $qb->leftJoin('entity.markers', 'markers')->addSelect('markers');
     }
 
-    public function createRoutesListQueryBuilder($entityClass, $sortDirection, $sortField = null, $dqlFilter = null)
+    protected function createRoutesListQueryBuilder($entityClass, $sortDirection, $sortField = null, $dqlFilter = null)
     {
         $qb = parent::createListQueryBuilder($entityClass, $sortDirection, $sortField, $dqlFilter);
 
@@ -40,14 +40,14 @@ class BaseMapAdminController extends AdminController
         ;
     }
 
-    public function createRoutesTypesListQueryBuilder($entityClass, $sortDirection, $sortField = null, $dqlFilter = null)
+    protected function createRoutesTypesListQueryBuilder($entityClass, $sortDirection, $sortField = null, $dqlFilter = null)
     {
         $qb = parent::createListQueryBuilder($entityClass, $sortDirection, $sortField, $dqlFilter);
 
         return $qb->leftJoin('entity.routes', 'routes')->addSelect('routes');
     }
 
-    public function createZonesListQueryBuilder($entityClass, $sortDirection, $sortField = null, $dqlFilter = null)
+    protected function createZonesListQueryBuilder($entityClass, $sortDirection, $sortField = null, $dqlFilter = null)
     {
         $qb = parent::createListQueryBuilder($entityClass, $sortDirection, $sortField, $dqlFilter);
 
@@ -58,14 +58,14 @@ class BaseMapAdminController extends AdminController
         ;
     }
 
-    public function createZonesTypesListQueryBuilder($entityClass, $sortDirection, $sortField = null, $dqlFilter = null)
+    protected function createZonesTypesListQueryBuilder($entityClass, $sortDirection, $sortField = null, $dqlFilter = null)
     {
         $qb = parent::createListQueryBuilder($entityClass, $sortDirection, $sortField, $dqlFilter);
 
         return $qb->leftJoin('entity.zones', 'zones')->addSelect('zones');
     }
 
-    public function createFactionsListQueryBuilder($entityClass, $sortDirection, $sortField = null, $dqlFilter = null)
+    protected function createFactionsListQueryBuilder($entityClass, $sortDirection, $sortField = null, $dqlFilter = null)
     {
         $qb = parent::createListQueryBuilder($entityClass, $sortDirection, $sortField, $dqlFilter);
 

@@ -289,7 +289,7 @@ class FPDF {
 
     public function Error($msg) {
         // Fatal error
-        die('<b>FPDF error:</b> '.$msg);
+        throw new \RuntimeException('<b>FPDF error:</b> '.$msg);
     }
 
     public function Open() {
@@ -2088,7 +2088,7 @@ class FPDF {
         $prevint = false;
         foreach ($range as $k => $ws) {
             $cws = count($ws);
-            if (($k == $nextk) AND (!$prevint) AND ((!isset($ws['interval'])) OR ($cws < 4))) {
+            if (($k == $nextk) && (!$prevint) && ((!isset($ws['interval'])) || ($cws < 4))) {
                 if (isset($range[$k]['interval'])) {
                     unset($range[$k]['interval']);
                 }

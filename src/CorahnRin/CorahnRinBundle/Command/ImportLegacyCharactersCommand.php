@@ -192,7 +192,7 @@ SQL;
             ;
 
             // FIXME
-            exit;
+            throw new \RuntimeException('Fix me');
         }
     }
 
@@ -219,7 +219,7 @@ SQL;
                 );
 
                 // FIXME
-                exit;
+                throw new \RuntimeException('Fix me');
             } else {
                 $this->io->warning([
                     'Passed conflicting usernames:',
