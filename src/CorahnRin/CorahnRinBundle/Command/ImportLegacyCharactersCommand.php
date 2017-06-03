@@ -17,7 +17,6 @@ use CorahnRin\CorahnRinBundle\Entity\Games;
 use CorahnRin\CorahnRinBundle\Entity\Ways;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManager;
-use FOS\UserBundle\Doctrine\UserManager;
 use Orbitale\Component\DoctrineTools\BaseEntityRepository;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;

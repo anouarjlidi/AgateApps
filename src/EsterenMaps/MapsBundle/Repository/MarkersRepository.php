@@ -11,7 +11,6 @@
 
 namespace EsterenMaps\MapsBundle\Repository;
 
-use EsterenMaps\MapsBundle\Entity\Markers;
 use Orbitale\Component\DoctrineTools\BaseEntityRepository as BaseRepository;
 
 /**
@@ -22,9 +21,9 @@ class MarkersRepository extends BaseRepository
     /**
      * @param array $ids
      *
-     * @return array[]|Markers[]
+     * @return array[]
      */
-    public function findByIds(array $ids)
+    public function findByIdsArray(array $ids)
     {
         return $this->_em
             ->createQuery("

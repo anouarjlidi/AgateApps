@@ -97,12 +97,13 @@ class MapTilesCommand extends ContainerAwareCommand
         }
 
         try {
-            for ($i = 0; $i <= $map->getMaxZoom(); ++$i) {
+            $maxZoom = $map->getMaxZoom();
+            for ($i = 0; $i <= $maxZoom; ++$i) {
                 $io->comment('Processing extraction for zoom value '.$i);
                 $tilesManager->generateTiles($i, true, $map);
             }
         } catch (\Exception $e) {
-            throw new \RuntimeException('Error while processing extraction for zoom value "'.(isset($i) ? $i : '0').'".', 1, $e);
+            throw new \RuntimeException('Error while processing extraction for zoom value "'.($i ?? '0').'".', 1, $e);
         }
 
         return 0;

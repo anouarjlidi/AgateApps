@@ -104,7 +104,7 @@ class CharSetbacks
      *
      * @codeCoverageIgnore
      */
-    public function setIsAvoided($isAvoided)
+    public function setAvoided($isAvoided)
     {
         $this->isAvoided = $isAvoided;
 

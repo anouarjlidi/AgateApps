@@ -180,7 +180,7 @@ class DirectionsManager
 
         $routesIds     = array_values($paths);
         $markersArray  = $this->entityManager->getRepository('EsterenMapsBundle:Markers')
-            ->findByIds(array_keys($paths))
+            ->findByIdsArray(array_keys($paths))
         ;
         $routesArray   = $this->entityManager->getRepository('EsterenMapsBundle:Routes')
             ->findByIds($routesIds, true, true)

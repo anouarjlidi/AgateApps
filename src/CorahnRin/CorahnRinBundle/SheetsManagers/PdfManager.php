@@ -160,7 +160,7 @@ class PdfManager implements SheetsManagerInterface
         // Advantages and disadvantages
         $av = [];
         foreach ($character->getAdvantages() as $v) {
-            if (!$v->getAdvantage()->getIsDesv()) {
+            if (!$v->getAdvantage()->isDesv()) {
                 $av[] = $translator->trans($v->getAdvantage()->getName()).($v->getScore() > 1 ? '    x'.$v->getScore() : '');
             }
         }
@@ -178,7 +178,7 @@ class PdfManager implements SheetsManagerInterface
         }
         $dv = [];
         foreach ($character->getAdvantages() as $v) {
-            if ($v->getAdvantage()->getIsDesv()) {
+            if ($v->getAdvantage()->isDesv()) {
                 $dv[] = $translator->trans($v->getAdvantage()->getName()).($v->getScore() > 1 ? '    x'.$v->getScore() : '');
             }
         }
@@ -300,15 +300,16 @@ class PdfManager implements SheetsManagerInterface
         } else {
             $pdf->SetTextColor(0x22, 0x11, 0x4);
         }
-        if ($character->getDefense()) {
-            for ($i = 1; $i <= $character->getDefense(); ++$i) {
+        if ($charDef = $character->getDefense()) {
+            for ($i = 1; $i <= $charDef; ++$i) {
                 $off = $i > 5 ? 12 : 0;
                 $pdf->textline('●', 767 + ($i - 1) * 27.6 + $off, 136, $p['arial'], 30);
             }
         }
 
         //Rapidité améliorée
-        for ($i = 1; $i <= $character->getSpeed(); ++$i) {
+        $charSpeed = $character->getSpeed();
+        for ($i = 1; $i <= $charSpeed; ++$i) {
             $pdf->textline('●', 767 + ($i - 1) * 27.6, 219, $p['arial'], 30);
         }
 
@@ -332,7 +333,7 @@ class PdfManager implements SheetsManagerInterface
         if ($character->getAdvantages()) {
             $i = 0;
             foreach ($character->getAdvantages() as $v) {
-                if ($v->getAdvantage()->getIsCombatArt()) {
+                if ($v->getAdvantage()->isCombatArt()) {
                     $pdf->textline($v->getAdvantage()->getName(), 448, 1026 + ($i * 44), $p['carbold'], 20, true);
                     ++$i;
                 }

@@ -29,7 +29,7 @@ class DirectionsController extends Controller
      * @Method("GET")
      * @ParamConverter(name="from", class="EsterenMapsBundle:Markers", options={"id": "from"})
      * @ParamConverter(name="to", class="EsterenMapsBundle:Markers", options={"id": "to"})
-     * @-Cache(public=true, maxage=3600)
+     * @Cache(public=true, maxage=3600)
      *
      * @param Maps    $map
      * @param Markers $from
@@ -45,7 +45,7 @@ class DirectionsController extends Controller
         $code = 200;
 
         $transportId = $request->query->get('transport');
-        $transport   = $this->getDoctrine()->getRepository('EsterenMapsBundle:TransportTypes')->findOneBy(['id' => $transportId]);
+        $transport   = $this->getDoctrine()->getRepository(TransportTypes::class)->findOneBy(['id' => $transportId]);
 
         $hoursPerDay = $request->query->get('hours_per_day', 7);
 

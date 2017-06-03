@@ -26,7 +26,7 @@ class TraitsRepository extends BaseRepository
         $qualities = $flaws = [];
         foreach ($list as $id => $element) {
             if ($element instanceof Traits) {
-                if (!$element->getIsQuality()) {
+                if (!$element->isQuality()) {
                     $flaws[$id] = $element;
                 } else {
                     $qualities[$id] = $element;
@@ -53,7 +53,7 @@ class TraitsRepository extends BaseRepository
         ];
 
         foreach ($traits as $trait) {
-            if ($trait->getIsQuality()) {
+            if ($trait->isQuality()) {
                 $list['qualities'][$trait->getId()] = $trait;
             } else {
                 $list['flaws'][$trait->getId()] = $trait;

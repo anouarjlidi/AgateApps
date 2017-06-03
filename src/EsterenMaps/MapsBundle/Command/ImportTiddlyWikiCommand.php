@@ -145,7 +145,7 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
             $data = mb_convert_encoding($data, 'UTF-8');
         }
 
-        if (!$data) {
+        if (!$data || !is_string($data)) {
             throw new \InvalidArgumentException('Tiddly wiki content could not be retrieved.');
         }
 
@@ -208,12 +208,10 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
             $this->routes['existing']
         );
 
-        $uow = $this->em->getUnitOfWork();
-
-        $uow->computeChangeSets();
+        $this->uow->computeChangeSets();
 
         foreach ($allData as $object) {
-            $changesets   = $uow->getEntityChangeSet($object);
+            $changesets   = $this->uow->getEntityChangeSet($object);
             $changesetsNb = 0;
             $class        = get_class($object);
 

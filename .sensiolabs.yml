@@ -6,6 +6,7 @@ pre_composer_script: |
     export SYMFONY_DEBUG=1
 
     # Do what you need to setup your project
+    rm web/config.php
     cp app/config/parameters.yml.dist app/config/parameters.yml
     cp .env.dist .env
 
@@ -19,6 +20,11 @@ post_composer_script: |
 
 exclude_patterns:
     - src/CorahnRin/CorahnRinBundle/PDF/FPDF.php
+    - src/CorahnRin/CorahnRinBundle/SheetsManagers/PdfManager.php
+    - src/CorahnRin/CorahnRinBundle/Command/ImportLegacyCharactersCommand.php
     - bin/symfony_requirements
-    - web/config.php
     - web/app_*.php
+
+rules:
+    symfony.form.form_type_not_in_type_form_folder:
+        enabled: false

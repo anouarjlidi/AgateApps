@@ -123,7 +123,7 @@ class DisordersWays
      *
      * @codeCoverageIgnore
      */
-    public function setIsMajor($isMajor)
+    public function setMajor($isMajor)
     {
         $this->isMajor = $isMajor;
 

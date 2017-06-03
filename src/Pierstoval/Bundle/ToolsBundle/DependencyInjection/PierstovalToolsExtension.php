@@ -11,7 +11,6 @@
 
 namespace Pierstoval\Bundle\ToolsBundle\DependencyInjection;
 
-use Pierstoval\Bundle\ToolsBundle\Twig\JsonExtension;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader;

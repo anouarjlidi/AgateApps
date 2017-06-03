@@ -56,7 +56,6 @@ services:
         arguments:
             - "%esterenmaps.output_directory%"
             - "%magick_binaries_path%"
-            - "@doctrine.orm.entity_manager"
             - "@kernel"
 
     esterenmaps.directions_manager:

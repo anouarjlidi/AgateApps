@@ -185,7 +185,7 @@ class Traits
      *
      * @codeCoverageIgnore
      */
-    public function setIsQuality($isQuality)
+    public function setQuality($isQuality)
     {
         $this->isQuality = $isQuality;
 
@@ -199,7 +199,7 @@ class Traits
      *
      * @codeCoverageIgnore
      */
-    public function getIsQuality()
+    public function isQuality()
     {
         return $this->isQuality;
     }
@@ -213,7 +213,7 @@ class Traits
      *
      * @codeCoverageIgnore
      */
-    public function setIsMajor($isMajor)
+    public function setMajor($isMajor)
     {
         $this->isMajor = $isMajor;
 

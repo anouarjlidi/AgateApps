@@ -19,3 +19,4 @@ CorahnRin\CorahnRinBundle\Entity\Weapons:
             - NotNull: ~
             - Choice: { choices: ["CO", "FR", "RA", "EX"] }
             - Type: string
+

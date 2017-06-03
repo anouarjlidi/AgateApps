@@ -517,7 +517,7 @@ class Characters extends BaseCharacter
         $advantages = [];
 
         foreach ($this->charAdvantages as $charAdvantage) {
-            if (!$charAdvantage->getAdvantage()->getIsDesv()) {
+            if (!$charAdvantage->getAdvantage()->isDesv()) {
                 $advantages[] = $charAdvantage;
             }
         }
@@ -533,7 +533,7 @@ class Characters extends BaseCharacter
         $advantages = [];
 
         foreach ($this->charAdvantages as $charAdvantage) {
-            if ($charAdvantage->getAdvantage()->getIsDesv()) {
+            if ($charAdvantage->getAdvantage()->isDesv()) {
                 $advantages[] = $charAdvantage;
             }
         }

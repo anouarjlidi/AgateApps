@@ -319,7 +319,7 @@ class Avantages
      *
      * @codeCoverageIgnore
      */
-    public function setIsDesv($isDesv)
+    public function setDesv($isDesv)
     {
         $this->isDesv = $isDesv;
 
@@ -333,7 +333,7 @@ class Avantages
      *
      * @codeCoverageIgnore
      */
-    public function getIsDesv()
+    public function isDesv()
     {
         return $this->isDesv;
     }
@@ -347,7 +347,7 @@ class Avantages
      *
      * @codeCoverageIgnore
      */
-    public function setIsCombatArt($isCombatArt)
+    public function setCombatArt($isCombatArt)
     {
         $this->isCombatArt = $isCombatArt;
 
@@ -361,7 +361,7 @@ class Avantages
      *
      * @codeCoverageIgnore
      */
-    public function getIsCombatArt()
+    public function isCombatArt()
     {
         return $this->isCombatArt;
     }

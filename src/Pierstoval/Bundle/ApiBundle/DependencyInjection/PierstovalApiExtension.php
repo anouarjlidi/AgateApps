@@ -11,7 +11,6 @@
 
 namespace Pierstoval\Bundle\ApiBundle\DependencyInjection;
 
-use Pierstoval\Bundle\ApiBundle\Listeners\JsonResponseListener;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader;

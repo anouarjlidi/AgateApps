@@ -27,7 +27,7 @@ class AvantagesRepository extends BaseRepository
 
         foreach ($list as $element) {
             $id = $element->getId();
-            if ($element->getIsDesv()) {
+            if ($element->isDesv()) {
                 $disadvantages[$id] = $element;
             } else {
                 $advantages[$id] = $element;

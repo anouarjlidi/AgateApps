@@ -81,7 +81,7 @@ BUT, one can set the `forcedDistance` field, so if it is set, it forces (wow...)
 This cache can be cleared like any other cache by the `bin/console cache:clear` command, depending on your environment.
 
 But it is also **automatically** cleared when you update any Maps-related entity, or any class implementing the
- `ClearerEntityInterface` interface.
+ `EntityToClear` interface.
  
 Check the [CacheClearSubscriber](../src/EsterenMaps/MapsBundle/DoctrineListeners/CacheClearSubscriber.php) class for
  more information

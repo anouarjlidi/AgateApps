@@ -196,7 +196,7 @@ final class SessionToCharacter
             $charSetback = new CharSetbacks();
             $charSetback->setCharacter($character);
             $charSetback->setSetback($this->setbacks[$id]);
-            $charSetback->setIsAvoided($details['avoided']);
+            $charSetback->setAvoided($details['avoided']);
             $character->addSetback($charSetback);
         }
     }
@@ -365,13 +365,13 @@ final class SessionToCharacter
             $bonusDiscs = preg_split('~,~', $adv->getBonusdisc(), -1, PREG_SPLIT_NO_EMPTY);
             foreach ($bonusDiscs as $bonus) {
                 if (isset($this->domains[$bonus])) {
-                    if ($adv->getIsDesv()) {
+                    if ($adv->isDesv()) {
                         $maluses[$bonus] += $charAdvantage->getScore();
                     } else {
                         $bonuses[$bonus] += $charAdvantage->getScore();
                     }
                 } else {
-                    $disadvantageRatio = $adv->getIsDesv() ? -1 : 1;
+                    $disadvantageRatio = $adv->isDesv() ? -1 : 1;
                     switch ($bonus) {
                         case Avantages::BONUS_RESM;
                             $character->setMentalResistBonus($character->getMentalResistBonus() + ($charAdvantage->getScore() * $disadvantageRatio));

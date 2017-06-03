@@ -2151,8 +2151,9 @@ class FPDF {
             $this->_out('/DecodeParms <<'.$info['dp'].'>>');
         if (isset($info['trns']) && is_array($info['trns'])) {
             $trns = '';
-            for ($i = 0; $i < count($info['trns']); $i++)
-                $trns .= $info['trns'][$i].' '.$info['trns'][$i].' ';
+            foreach ($info['trns'] as $i => $cnt) {
+                $trns .= $cnt.' '.$cnt.' ';
+            }
             $this->_out('/Mask ['.$trns.']');
         }
         if (isset($info['smask']))
