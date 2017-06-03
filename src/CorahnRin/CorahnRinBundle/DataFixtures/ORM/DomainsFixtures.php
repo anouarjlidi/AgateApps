@@ -52,27 +52,27 @@ class DomainsFixtures extends AbstractFixture implements OrderedFixtureInterface
         $way4 = $this->getReference('corahnrin-way-4');
         $way5 = $this->getReference('corahnrin-way-5');
 
-        $this->fixtureObject($repo, 1, $way2, 'Artisanat', '', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null);
-        $this->fixtureObject($repo, 2, $way1, 'Combat au Contact', '', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null);
-        $this->fixtureObject($repo, 3, $way3, 'Discrétion', '', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null);
-        $this->fixtureObject($repo, 4, $way4, 'Magience', '', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null);
-        $this->fixtureObject($repo, 5, $way3, 'Milieu Naturel', '', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null);
-        $this->fixtureObject($repo, 6, $way3, 'Mystères Demorthèn', '', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null);
-        $this->fixtureObject($repo, 7, $way4, 'Occultisme', '', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null);
-        $this->fixtureObject($repo, 8, $way4, 'Perception', '', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null);
-        $this->fixtureObject($repo, 9, $way5, 'Prière', '', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null);
-        $this->fixtureObject($repo, 10, $way1, 'Prouesses', '', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null);
-        $this->fixtureObject($repo, 11, $way3, 'Relation', '', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null);
-        $this->fixtureObject($repo, 12, $way2, 'Représentation', '', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null);
-        $this->fixtureObject($repo, 13, $way4, 'Science', '', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null);
-        $this->fixtureObject($repo, 14, $way1, 'Tir et Lancer', '', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null);
-        $this->fixtureObject($repo, 15, $way3, 'Voyage', '', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null);
-        $this->fixtureObject($repo, 16, $way4, 'Érudition', '', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null);
+        $this->fixtureObject($repo, 1, $way2, 'Artisanat', '');
+        $this->fixtureObject($repo, 2, $way1, 'Combat au Contact', '');
+        $this->fixtureObject($repo, 3, $way3, 'Discrétion', '');
+        $this->fixtureObject($repo, 4, $way4, 'Magience', '');
+        $this->fixtureObject($repo, 5, $way3, 'Milieu Naturel', '');
+        $this->fixtureObject($repo, 6, $way3, 'Mystères Demorthèn', '');
+        $this->fixtureObject($repo, 7, $way4, 'Occultisme', '');
+        $this->fixtureObject($repo, 8, $way4, 'Perception', '');
+        $this->fixtureObject($repo, 9, $way5, 'Prière', '');
+        $this->fixtureObject($repo, 10, $way1, 'Prouesses', '');
+        $this->fixtureObject($repo, 11, $way3, 'Relation', '');
+        $this->fixtureObject($repo, 12, $way2, 'Représentation', '');
+        $this->fixtureObject($repo, 13, $way4, 'Science', '');
+        $this->fixtureObject($repo, 14, $way1, 'Tir et Lancer', '');
+        $this->fixtureObject($repo, 15, $way3, 'Voyage', '');
+        $this->fixtureObject($repo, 16, $way4, 'Érudition', '');
 
         $this->manager->flush();
     }
 
-    public function fixtureObject(EntityRepository $repo, $id, $way, $name, $description, $created, $updated, $deleted = null)
+    public function fixtureObject(EntityRepository $repo, $id, $way, $name, $description)
     {
         $obj       = null;
         $newObject = false;
@@ -93,9 +93,6 @@ class DomainsFixtures extends AbstractFixture implements OrderedFixtureInterface
                 ->setName($name)
                 ->setDescription($description)
                 ->setWay($way)
-                ->setCreated($created ? new \Datetime($created) : new \Datetime())
-                ->setUpdated($updated ? new \Datetime($updated) : null)
-                ->setDeleted($deleted ? new \Datetime($deleted) : null)
             ;
             if ($id) {
                 /** @var ClassMetadata $metadata */

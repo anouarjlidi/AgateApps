@@ -11,19 +11,20 @@
 
 namespace CorahnRin\CorahnRinBundle\Entity;
 
+use CorahnRin\CorahnRinBundle\Entity\Traits\HasBook;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Disciplines.
  *
  * @ORM\Table(name="disciplines")
- * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity(repositoryClass="CorahnRin\CorahnRinBundle\Repository\DisciplinesRepository")
  */
 class Disciplines
 {
+    use HasBook;
+
     /**
      * @var int
      *
@@ -53,34 +54,6 @@ class Disciplines
      * @ORM\Column(type="string", length=40)
      */
     protected $rank;
-
-    /**
-     * @var \Datetime
-     * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(type="datetime", nullable=false)
-     */
-    protected $created;
-
-    /**
-     * @var \Datetime
-     * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(type="datetime", nullable=false)
-     */
-    protected $updated;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="deleted", type="datetime", nullable=true)
-     */
-    protected $deleted;
-
-    /**
-     * @var Books
-     * @ORM\ManyToOne(targetEntity="Books")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    protected $book;
 
     /**
      * @var Domains[]
@@ -212,90 +185,6 @@ class Disciplines
     }
 
     /**
-     * Set created.
-     *
-     * @param \DateTime $created
-     *
-     * @return Disciplines
-     *
-     * @codeCoverageIgnore
-     */
-    public function setCreated($created)
-    {
-        $this->created = $created;
-
-        return $this;
-    }
-
-    /**
-     * Get created.
-     *
-     * @return \DateTime
-     *
-     * @codeCoverageIgnore
-     */
-    public function getCreated()
-    {
-        return $this->created;
-    }
-
-    /**
-     * Set updated.
-     *
-     * @param \DateTime $updated
-     *
-     * @return Disciplines
-     *
-     * @codeCoverageIgnore
-     */
-    public function setUpdated($updated)
-    {
-        $this->updated = $updated;
-
-        return $this;
-    }
-
-    /**
-     * Get updated.
-     *
-     * @return \DateTime
-     *
-     * @codeCoverageIgnore
-     */
-    public function getUpdated()
-    {
-        return $this->updated;
-    }
-
-    /**
-     * Set book.
-     *
-     * @param Books $book
-     *
-     * @return Disciplines
-     *
-     * @codeCoverageIgnore
-     */
-    public function setBook(Books $book = null)
-    {
-        $this->book = $book;
-
-        return $this;
-    }
-
-    /**
-     * Get book.
-     *
-     * @return Books
-     *
-     * @codeCoverageIgnore
-     */
-    public function getBook()
-    {
-        return $this->book;
-    }
-
-    /**
      * Add domains.
      *
      * @param Domains $domains
@@ -329,33 +218,5 @@ class Disciplines
     public function getDomains()
     {
         return $this->domains;
-    }
-
-    /**
-     * Set deleted.
-     *
-     * @param \DateTime $deleted
-     *
-     * @return Disciplines
-     *
-     * @codeCoverageIgnore
-     */
-    public function setDeleted($deleted)
-    {
-        $this->deleted = $deleted;
-
-        return $this;
-    }
-
-    /**
-     * Get deleted.
-     *
-     * @return \DateTime
-     *
-     * @codeCoverageIgnore
-     */
-    public function getDeleted()
-    {
-        return $this->deleted;
     }
 }

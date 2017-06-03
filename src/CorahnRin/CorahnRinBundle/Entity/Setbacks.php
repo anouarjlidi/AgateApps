@@ -11,18 +11,19 @@
 
 namespace CorahnRin\CorahnRinBundle\Entity;
 
+use CorahnRin\CorahnRinBundle\Entity\Traits\HasBook;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Setbacks.
  *
  * @ORM\Table(name="setbacks")
- * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity()
  */
 class Setbacks
 {
+    use HasBook;
+
     /**
      * @var int
      *
@@ -52,34 +53,6 @@ class Setbacks
      * @ORM\Column(type="string", length=50)
      */
     protected $malus;
-
-    /**
-     * @var \Datetime
-     * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(type="datetime", nullable=false)
-     */
-    protected $created;
-
-    /**
-     * @var \Datetime
-     * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(type="datetime", nullable=false)
-     */
-    protected $updated;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="deleted", type="datetime", nullable=true)
-     */
-    protected $deleted;
-
-    /**
-     * @var Books
-     *
-     * @ORM\ManyToOne(targetEntity="Books",fetch="EAGER")
-     */
-    protected $book;
 
     /**
      * Get id.
@@ -164,62 +137,6 @@ class Setbacks
     }
 
     /**
-     * Set created.
-     *
-     * @param \DateTime $created
-     *
-     * @return Setbacks
-     *
-     * @codeCoverageIgnore
-     */
-    public function setCreated($created)
-    {
-        $this->created = $created;
-
-        return $this;
-    }
-
-    /**
-     * Get created.
-     *
-     * @return \DateTime
-     *
-     * @codeCoverageIgnore
-     */
-    public function getCreated()
-    {
-        return $this->created;
-    }
-
-    /**
-     * Set updated.
-     *
-     * @param \DateTime $updated
-     *
-     * @return Setbacks
-     *
-     * @codeCoverageIgnore
-     */
-    public function setUpdated($updated)
-    {
-        $this->updated = $updated;
-
-        return $this;
-    }
-
-    /**
-     * Get updated.
-     *
-     * @return \DateTime
-     *
-     * @codeCoverageIgnore
-     */
-    public function getUpdated()
-    {
-        return $this->updated;
-    }
-
-    /**
      * Set malus.
      *
      * @param string $malus
@@ -245,57 +162,5 @@ class Setbacks
     public function getMalus()
     {
         return $this->malus;
-    }
-
-    /**
-     * Set deleted.
-     *
-     * @param \DateTime $deleted
-     *
-     * @return Setbacks
-     *
-     * @codeCoverageIgnore
-     */
-    public function setDeleted($deleted)
-    {
-        $this->deleted = $deleted;
-
-        return $this;
-    }
-
-    /**
-     * Get deleted.
-     *
-     * @return \DateTime
-     *
-     * @codeCoverageIgnore
-     */
-    public function getDeleted()
-    {
-        return $this->deleted;
-    }
-
-    /**
-     * @param Books $book
-     *
-     * @return $this
-     *
-     * @codeCoverageIgnore
-     */
-    public function setBook(Books $book)
-    {
-        $this->book = $book;
-
-        return $this;
-    }
-
-    /**
-     * @return Books
-     *
-     * @codeCoverageIgnore
-     */
-    public function getBook()
-    {
-        return $this->book;
     }
 }

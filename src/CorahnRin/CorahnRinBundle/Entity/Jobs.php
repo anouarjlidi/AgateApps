@@ -11,6 +11,7 @@
 
 namespace CorahnRin\CorahnRinBundle\Entity;
 
+use CorahnRin\CorahnRinBundle\Entity\Traits\HasBook;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -22,6 +23,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Jobs
 {
+    use HasBook;
+
     /**
      * @var int
      *
@@ -51,13 +54,6 @@ class Jobs
      * @ORM\Column(name="daily_salary", type="integer", options={"default": "0"})
      */
     protected $dailySalary = 0;
-
-    /**
-     * @var Books
-     *
-     * @ORM\ManyToOne(targetEntity="Books",fetch="EAGER")
-     */
-    protected $book;
 
     /**
      * @var Domains
@@ -185,34 +181,6 @@ class Jobs
         $this->dailySalary = $dailySalary;
 
         return $this;
-    }
-
-    /**
-     * Set book.
-     *
-     * @param Books $book
-     *
-     * @return Jobs
-     *
-     * @codeCoverageIgnore
-     */
-    public function setBook(Books $book = null)
-    {
-        $this->book = $book;
-
-        return $this;
-    }
-
-    /**
-     * Get book.
-     *
-     * @return Books
-     *
-     * @codeCoverageIgnore
-     */
-    public function getBook()
-    {
-        return $this->book;
     }
 
     /**

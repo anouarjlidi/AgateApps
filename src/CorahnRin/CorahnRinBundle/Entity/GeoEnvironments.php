@@ -11,18 +11,19 @@
 
 namespace CorahnRin\CorahnRinBundle\Entity;
 
+use CorahnRin\CorahnRinBundle\Entity\Traits\HasBook;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * GeoEnvironments.
  *
  * @ORM\Table(name="geo_environments")
- * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity()
  */
 class GeoEnvironments
 {
+    use HasBook;
+
     /**
      * @var int
      *
@@ -49,37 +50,9 @@ class GeoEnvironments
     /**
      * @var int
      *
-     * @ORM\ManyToOne(targetEntity="Books")
-     */
-    protected $book;
-
-    /**
-     * @var int
-     *
      * @ORM\ManyToOne(targetEntity="Domains")
      */
     protected $domain;
-
-    /**
-     * @var \Datetime
-     * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(type="datetime", nullable=false)
-     */
-    protected $created;
-
-    /**
-     * @var \Datetime
-     * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(type="datetime", nullable=false)
-     */
-    protected $updated;
-
-    /**
-     * @var \Datetime
-     *
-     * @ORM\Column(name="deleted", type="datetime", nullable=true)
-     */
-    protected $deleted;
 
     /**
      * Get id.
@@ -164,34 +137,6 @@ class GeoEnvironments
     }
 
     /**
-     * Set book.
-     *
-     * @param int $book
-     *
-     * @return GeoEnvironments
-     *
-     * @codeCoverageIgnore
-     */
-    public function setBook($book)
-    {
-        $this->book = $book;
-
-        return $this;
-    }
-
-    /**
-     * Get book.
-     *
-     * @return int
-     *
-     * @codeCoverageIgnore
-     */
-    public function getBook()
-    {
-        return $this->book;
-    }
-
-    /**
      * Set domain.
      *
      * @param int $domain
@@ -217,89 +162,5 @@ class GeoEnvironments
     public function getDomain()
     {
         return $this->domain;
-    }
-
-    /**
-     * Set created.
-     *
-     * @param \DateTime $created
-     *
-     * @return GeoEnvironments
-     *
-     * @codeCoverageIgnore
-     */
-    public function setCreated($created)
-    {
-        $this->created = $created;
-
-        return $this;
-    }
-
-    /**
-     * Get created.
-     *
-     * @return \DateTime
-     *
-     * @codeCoverageIgnore
-     */
-    public function getCreated()
-    {
-        return $this->created;
-    }
-
-    /**
-     * Set updated.
-     *
-     * @param \DateTime $updated
-     *
-     * @return GeoEnvironments
-     *
-     * @codeCoverageIgnore
-     */
-    public function setUpdated($updated)
-    {
-        $this->updated = $updated;
-
-        return $this;
-    }
-
-    /**
-     * Get updated.
-     *
-     * @return \DateTime
-     *
-     * @codeCoverageIgnore
-     */
-    public function getUpdated()
-    {
-        return $this->updated;
-    }
-
-    /**
-     * Set deleted.
-     *
-     * @param \DateTime $deleted
-     *
-     * @return GeoEnvironments
-     *
-     * @codeCoverageIgnore
-     */
-    public function setDeleted($deleted)
-    {
-        $this->deleted = $deleted;
-
-        return $this;
-    }
-
-    /**
-     * Get deleted.
-     *
-     * @return \DateTime
-     *
-     * @codeCoverageIgnore
-     */
-    public function getDeleted()
-    {
-        return $this->deleted;
     }
 }

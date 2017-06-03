@@ -11,18 +11,19 @@
 
 namespace CorahnRin\CorahnRinBundle\Entity;
 
+use CorahnRin\CorahnRinBundle\Entity\Traits\HasBook;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * CombatArts.
  *
  * @ORM\Table(name="combat_arts")
- * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity(repositoryClass="CorahnRin\CorahnRinBundle\Repository\CombatArtsRepository")
  */
 class CombatArts
 {
+    use HasBook;
+
     /**
      * @var int
      *
@@ -59,33 +60,6 @@ class CombatArts
      * @ORM\Column(name="melee", type="boolean")
      */
     private $melee;
-
-    /**
-     * @var Books
-     * @ORM\ManyToOne(targetEntity="Books")
-     */
-    protected $book;
-
-    /**
-     * @var \Datetime
-     * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(type="datetime", nullable=false)
-     */
-    protected $created;
-
-    /**
-     * @var \Datetime
-     * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(type="datetime", nullable=false)
-     */
-    protected $updated;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="deleted", type="datetime", nullable=true)
-     */
-    protected $deleted;
 
     /**
      * Get id.
@@ -223,117 +197,5 @@ class CombatArts
     public function getMelee()
     {
         return $this->melee;
-    }
-
-    /**
-     * Set book.
-     *
-     * @param Books $book
-     *
-     * @return CombatArts
-     *
-     * @codeCoverageIgnore
-     */
-    public function setBook(Books $book = null)
-    {
-        $this->book = $book;
-
-        return $this;
-    }
-
-    /**
-     * Get book.
-     *
-     * @return Books
-     *
-     * @codeCoverageIgnore
-     */
-    public function getBook()
-    {
-        return $this->book;
-    }
-
-    /**
-     * Set created.
-     *
-     * @param \DateTime $created
-     *
-     * @return CombatArts
-     *
-     * @codeCoverageIgnore
-     */
-    public function setCreated($created)
-    {
-        $this->created = $created;
-
-        return $this;
-    }
-
-    /**
-     * Get created.
-     *
-     * @return \DateTime
-     *
-     * @codeCoverageIgnore
-     */
-    public function getCreated()
-    {
-        return $this->created;
-    }
-
-    /**
-     * Set updated.
-     *
-     * @param \DateTime $updated
-     *
-     * @return CombatArts
-     *
-     * @codeCoverageIgnore
-     */
-    public function setUpdated($updated)
-    {
-        $this->updated = $updated;
-
-        return $this;
-    }
-
-    /**
-     * Get updated.
-     *
-     * @return \DateTime
-     *
-     * @codeCoverageIgnore
-     */
-    public function getUpdated()
-    {
-        return $this->updated;
-    }
-
-    /**
-     * Set deleted.
-     *
-     * @param \DateTime $deleted
-     *
-     * @return CombatArts
-     *
-     * @codeCoverageIgnore
-     */
-    public function setDeleted($deleted)
-    {
-        $this->deleted = $deleted;
-
-        return $this;
-    }
-
-    /**
-     * Get deleted.
-     *
-     * @return \DateTime
-     *
-     * @codeCoverageIgnore
-     */
-    public function getDeleted()
-    {
-        return $this->deleted;
     }
 }

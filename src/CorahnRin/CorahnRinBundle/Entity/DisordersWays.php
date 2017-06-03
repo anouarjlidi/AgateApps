@@ -18,7 +18,6 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * DisordersWays.
  *
  * @ORM\Table(name="disorders_ways")
- * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity()
  */
 class DisordersWays
@@ -45,13 +44,6 @@ class DisordersWays
      * @ORM\Column(type="boolean", options={"default":0})
      */
     protected $isMajor = 0;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="deleted", type="datetime", nullable=true)
-     */
-    protected $deleted;
 
     public function __toString()
     {
@@ -138,33 +130,5 @@ class DisordersWays
     public function isMajor()
     {
         return $this->isMajor;
-    }
-
-    /**
-     * Set deleted.
-     *
-     * @param \DateTime $deleted
-     *
-     * @return DisordersWays
-     *
-     * @codeCoverageIgnore
-     */
-    public function setDeleted($deleted)
-    {
-        $this->deleted = $deleted;
-
-        return $this;
-    }
-
-    /**
-     * Get deleted.
-     *
-     * @return \DateTime
-     *
-     * @codeCoverageIgnore
-     */
-    public function getDeleted()
-    {
-        return $this->deleted;
     }
 }

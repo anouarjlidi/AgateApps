@@ -91,9 +91,6 @@ class Games
      */
     protected $deleted;
 
-    /**
-     * Constructor.
-     */
     public function __construct()
     {
         $this->characters = new ArrayCollection();

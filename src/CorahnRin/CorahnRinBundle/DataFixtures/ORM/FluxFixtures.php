@@ -46,16 +46,16 @@ class FluxFixtures extends AbstractFixture implements OrderedFixtureInterface
 
         $repo = $this->manager->getRepository('CorahnRinBundle:Flux');
 
-        $this->fixtureObject($repo, 1, 'Végétal', '', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null);
-        $this->fixtureObject($repo, 2, 'Minéral', '', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null);
-        $this->fixtureObject($repo, 3, 'Organique', '', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null);
-        $this->fixtureObject($repo, 4, 'Fossile', '', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null);
-        $this->fixtureObject($repo, 5, 'M', '', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null);
+        $this->fixtureObject($repo, 1, 'Végétal', '');
+        $this->fixtureObject($repo, 2, 'Minéral', '');
+        $this->fixtureObject($repo, 3, 'Organique', '');
+        $this->fixtureObject($repo, 4, 'Fossile', '');
+        $this->fixtureObject($repo, 5, 'M', '');
 
         $this->manager->flush();
     }
 
-    public function fixtureObject(EntityRepository $repo, $id, $name, $description, $created, $updated, $deleted = null)
+    public function fixtureObject(EntityRepository $repo, $id, $name, $description)
     {
         $obj       = null;
         $newObject = false;
@@ -75,9 +75,6 @@ class FluxFixtures extends AbstractFixture implements OrderedFixtureInterface
             $obj->setId($id)
                 ->setName($name)
                 ->setDescription($description)
-                ->setCreated($created ? new \Datetime($created) : new \Datetime())
-                ->setUpdated($updated ? new \Datetime($updated) : null)
-                ->setDeleted($deleted ? new \Datetime($deleted) : null)
             ;
             if ($id) {
                 /** @var ClassMetadata $metadata */

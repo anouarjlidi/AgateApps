@@ -44,19 +44,20 @@ class GeoEnvironmentsFixtures extends AbstractFixture implements OrderedFixtureI
     {
         $this->manager = $manager;
 
+        /** @var EntityRepository $repo */
         $repo = $this->manager->getRepository('CorahnRinBundle:GeoEnvironments');
 
         $book     = $this->getReference('corahnrin-book-2');
         $domain5  = $this->getReference('corahnrin-domain-5');
         $domain11 = $this->getReference('corahnrin-domain-11');
 
-        $this->fixtureObject($repo, 1, $domain5, 'Rural', 'Votre personnage est issu d\'une campagne ou d\'un lieu relativement isolé.', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null, $book);
-        $this->fixtureObject($repo, 2, $domain11, 'Urbain', 'Votre personnage a vécu longtemps dans une ville, suffisamment pour qu\'il ait adopté les codes de la ville dans son mode de vie.', '2014-04-09 08:56:43', '2014-04-09 08:56:43', null, $book);
+        $this->fixtureObject($repo, 1, $domain5, 'Rural', 'Votre personnage est issu d\'une campagne ou d\'un lieu relativement isolé.', $book);
+        $this->fixtureObject($repo, 2, $domain11, 'Urbain', 'Votre personnage a vécu longtemps dans une ville, suffisamment pour qu\'il ait adopté les codes de la ville dans son mode de vie.', $book);
 
         $this->manager->flush();
     }
 
-    public function fixtureObject(EntityRepository $repo, $id, $domain, $name, $description, $created, $updated, $deleted = null, $book)
+    public function fixtureObject(EntityRepository $repo, $id, $domain, $name, $description, $book)
     {
         $obj       = null;
         $newObject = false;
@@ -78,9 +79,6 @@ class GeoEnvironmentsFixtures extends AbstractFixture implements OrderedFixtureI
                 ->setDomain($domain)
                 ->setBook($book)
                 ->setDescription($description)
-                ->setCreated($created ? new \Datetime($created) : new \Datetime())
-                ->setUpdated($updated ? new \Datetime($updated) : null)
-                ->setDeleted($deleted ? new \Datetime($deleted) : null)
             ;
             if ($id) {
                 /** @var ClassMetadata $metadata */
