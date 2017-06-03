@@ -12,7 +12,7 @@
 namespace EsterenMaps\MapsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use EsterenMaps\MapsBundle\Cache\EntityToClear;
+use EsterenMaps\MapsBundle\Cache\EntityToClearInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
@@ -28,7 +28,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity()
  * @ExclusionPolicy("all")
  */
-class TransportModifiers implements EntityToClear
+class TransportModifiers implements EntityToClearInterface
 {
     use TimestampableEntity;
     use SoftDeleteableEntity;
