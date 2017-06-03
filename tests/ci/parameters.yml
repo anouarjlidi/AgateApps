@@ -2,18 +2,5 @@
 # To be used, it automatically sets up database and domain names.
 # As we use sqlite specificly in "config_test.yml", we just add null values here for almost everything.
 parameters:
-    env(DATABASE_URL):        ~
-    env(DATABASE_URL_LEGACY): ~
-
-    env(MAILER_TRANSPORT):  smtp
-    env(MAILER_HOST):       127.0.0.1
-    env(MAILER_USER):       ~
-    env(MAILER_PASSWORD):   ~
-
     # A secret key that's used to generate certain security-related tokens
-    env(SYMFONY_SECRET):    65165d7sqf6s5d46zq5r4gtq6s5df7g4sq68d5gt7qzzer
-
     magick_binaries_path: /usr/bin
-
-    env(AGATE_DOMAIN): studio-agate.dev
-    env(ESTEREN_DOMAIN): esteren.dev
