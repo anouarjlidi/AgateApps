@@ -5,9 +5,9 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
-define('NO_RECREATE_DB', getenv('NO_RECREATE_DB'));
-define('NO_CLEAR_CACHE', getenv('NO_CLEAR_CACHE'));
-define('RECREATE_DB', getenv('RECREATE_DB'));
+define('NO_RECREATE_DB', (bool) getenv('NO_RECREATE_DB') ?: false);
+define('CLEAR_CACHE', (bool) getenv('CLEAR_CACHE') ?: true);
+define('RECREATE_DB', (bool) getenv('RECREATE_DB') ?: false);
 
 if (!getenv('SYMFONY_ENV')) {
     putenv('SYMFONY_ENV=test');
@@ -35,10 +35,6 @@ $autoload = require $file;
 
 $input = new ArgvInput();
 
-if (NO_RECREATE_DB) {
-    return;
-}
-
 /**
  * Execute a command.
  *
@@ -59,12 +55,27 @@ function runCommand($cmd) {
     }
 }
 
-if (!NO_CLEAR_CACHE) {
+if (!CLEAR_CACHE) {
     runCommand('php '.$rootDir.'/bin/console cache:clear --no-warmup');
     runCommand('php '.$rootDir.'/bin/console cache:warmup');
 }
 
 $fs = new Filesystem();
+
+if (RECREATE_DB) {
+    $fs->remove(DATABASE_REFERENCE_FILE);
+    $fs->remove(DATABASE_TEST_FILE);
+}
+
+if ($fs->exists(DATABASE_REFERENCE_FILE)) {
+    // Reset database everytime
+    $fs->copy(DATABASE_REFERENCE_FILE, DATABASE_TEST_FILE, true);
+    return;
+}
+
+if (NO_RECREATE_DB && file_exists($rootDir.'/build/database_reference.db')) {
+    return;
+}
 
 // Remove build dir files
 if (!is_dir($rootDir.'/build')) {
@@ -73,11 +84,6 @@ if (!is_dir($rootDir.'/build')) {
 
 if ($fs->exists(DATABASE_TEST_FILE)) {
     $fs->remove(DATABASE_TEST_FILE);
-}
-
-if (!RECREATE_DB && $fs->exists(DATABASE_REFERENCE_FILE)) {
-    $fs->copy(DATABASE_REFERENCE_FILE, DATABASE_TEST_FILE);
-    return;
 }
 
 runCommand('php '.$rootDir.'/bin/console doctrine:database:create');

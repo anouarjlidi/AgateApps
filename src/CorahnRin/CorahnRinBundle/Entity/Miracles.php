@@ -50,9 +50,9 @@ class Miracles
     /**
      * @var bool
      *
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(name="is_major", type="boolean")
      */
-    protected $isMajor;
+    protected $major;
 
     /**
      * Get id.
@@ -111,15 +111,15 @@ class Miracles
     /**
      * Set isMajor.
      *
-     * @param bool $isMajor
+     * @param bool $major
      *
      * @return Miracles
      *
      * @codeCoverageIgnore
      */
-    public function setMajor($isMajor)
+    public function setMajor($major)
     {
-        $this->isMajor = $isMajor;
+        $this->major = $major;
 
         return $this;
     }
@@ -131,7 +131,7 @@ class Miracles
      */
     public function isMajor()
     {
-        return $this->isMajor;
+        return $this->major;
     }
 
     /**

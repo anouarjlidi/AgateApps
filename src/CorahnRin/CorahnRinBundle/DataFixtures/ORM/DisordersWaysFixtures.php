@@ -47,110 +47,110 @@ class DisordersWaysFixtures extends AbstractFixture
             [
                 'disorder' => $this->getReference('corahnrin-disorder-1'),
                 'way'      => $this->getReference('corahnrin-way-1'),
-                'isMajor'  => true,
+                'major'    => true,
             ],
 
             // 2 - Exaltation
             [
                 'disorder' => $this->getReference('corahnrin-disorder-2'),
                 'way'      => $this->getReference('corahnrin-way-1'),
-                'isMajor'  => true,
+                'major'    => true,
             ],
             [
                 'disorder' => $this->getReference('corahnrin-disorder-2'),
                 'way'      => $this->getReference('corahnrin-way-5'),
-                'isMajor'  => false,
+                'major'    => false,
             ],
 
             // 3 - Mélancolie
             [
                 'disorder' => $this->getReference('corahnrin-disorder-3'),
                 'way'      => $this->getReference('corahnrin-way-5'),
-                'isMajor'  => true,
+                'major'    => true,
             ],
             [
                 'disorder' => $this->getReference('corahnrin-disorder-3'),
                 'way'      => $this->getReference('corahnrin-way-1'),
-                'isMajor'  => false,
+                'major'    => false,
             ],
             [
                 'disorder' => $this->getReference('corahnrin-disorder-3'),
                 'way'      => $this->getReference('corahnrin-way-4'),
-                'isMajor'  => false,
+                'major'    => false,
             ],
 
             // 4 - Hallucination
             [
                 'disorder' => $this->getReference('corahnrin-disorder-4'),
                 'way'      => $this->getReference('corahnrin-way-2'),
-                'isMajor'  => true,
+                'major'    => true,
             ],
             [
                 'disorder' => $this->getReference('corahnrin-disorder-4'),
                 'way'      => $this->getReference('corahnrin-way-3'),
-                'isMajor'  => true,
+                'major'    => true,
             ],
 
             // 5 - Confusion mentale
             [
                 'disorder' => $this->getReference('corahnrin-disorder-5'),
                 'way'      => $this->getReference('corahnrin-way-2'),
-                'isMajor'  => true,
+                'major'    => true,
             ],
             [
                 'disorder' => $this->getReference('corahnrin-disorder-5'),
                 'way'      => $this->getReference('corahnrin-way-4'),
-                'isMajor'  => false,
+                'major'    => false,
             ],
 
             // 6 - Mimétisme
             [
                 'disorder' => $this->getReference('corahnrin-disorder-6'),
                 'way'      => $this->getReference('corahnrin-way-2'),
-                'isMajor'  => false,
+                'major'    => false,
             ],
 
             // 7 - Obsession
             [
                 'disorder' => $this->getReference('corahnrin-disorder-7'),
                 'way'      => $this->getReference('corahnrin-way-4'),
-                'isMajor'  => true,
+                'major'    => true,
             ],
             [
                 'disorder' => $this->getReference('corahnrin-disorder-7'),
                 'way'      => $this->getReference('corahnrin-way-2'),
-                'isMajor'  => false,
+                'major'    => false,
             ],
 
             // 8 - Hystérie
             [
                 'disorder' => $this->getReference('corahnrin-disorder-8'),
                 'way'      => $this->getReference('corahnrin-way-3'),
-                'isMajor'  => true,
+                'major'    => true,
             ],
 
             // 9 - Mysticisme
             [
                 'disorder' => $this->getReference('corahnrin-disorder-9'),
                 'way'      => $this->getReference('corahnrin-way-3'),
-                'isMajor'  => true,
+                'major'    => true,
             ],
             [
                 'disorder' => $this->getReference('corahnrin-disorder-9'),
                 'way'      => $this->getReference('corahnrin-way-5'),
-                'isMajor'  => true,
+                'major'    => true,
             ],
 
             // 10 - Paranoïa
             [
                 'disorder' => $this->getReference('corahnrin-disorder-10'),
                 'way'      => $this->getReference('corahnrin-way-4'),
-                'isMajor'  => true,
+                'major'    => true,
             ],
             [
                 'disorder' => $this->getReference('corahnrin-disorder-10'),
                 'way'      => $this->getReference('corahnrin-way-3'),
-                'isMajor'  => false,
+                'major'    => false,
             ],
         ];
     }

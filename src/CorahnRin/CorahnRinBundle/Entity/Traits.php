@@ -13,7 +13,6 @@ namespace CorahnRin\CorahnRinBundle\Entity;
 
 use CorahnRin\CorahnRinBundle\Entity\Traits\HasBook;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Traits.
@@ -58,9 +57,9 @@ class Traits
     /**
      * @var bool
      *
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(name="is_major", type="boolean")
      */
-    protected $isMajor;
+    protected $major;
 
     /**
      * @var Ways
@@ -182,15 +181,15 @@ class Traits
     /**
      * Set isMajor.
      *
-     * @param bool $isMajor
+     * @param bool $major
      *
      * @return Traits
      *
      * @codeCoverageIgnore
      */
-    public function setMajor($isMajor)
+    public function setMajor($major)
     {
-        $this->isMajor = $isMajor;
+        $this->major = $major;
 
         return $this;
     }
@@ -202,7 +201,7 @@ class Traits
      */
     public function isMajor()
     {
-        return $this->isMajor;
+        return $this->major;
     }
 
     /**

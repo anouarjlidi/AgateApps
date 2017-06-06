@@ -11,7 +11,6 @@
 
 namespace AdminBundle\Tests;
 
-use Doctrine\ORM\EntityManager;
 use Esteren\PortalBundle\Entity\Page;
 
 class PagesAdminTest extends AbstractEasyAdminTest
@@ -37,7 +36,7 @@ class PagesAdminTest extends AbstractEasyAdminTest
      */
     public function provideListingFields()
     {
-        return array(
+        return [
             'id',
             'parent',
             'title',
@@ -47,7 +46,7 @@ class PagesAdminTest extends AbstractEasyAdminTest
             'locale',
             'homepage',
             'enabled',
-        );
+        ];
     }
 
     /**
@@ -55,10 +54,8 @@ class PagesAdminTest extends AbstractEasyAdminTest
      */
     public function provideNewFormData()
     {
-        static::resetDatabase();
-
         return [
-            'title'           => 'Testing new page',
+            'title'           => 'Testing new page '.uniqid('Page', true),
             'content'         => 'This is a page to test the "new" form.',
             'metaDescription' => null,
             'metaTitle'       => null,
@@ -79,10 +76,21 @@ class PagesAdminTest extends AbstractEasyAdminTest
      */
     public function provideEditFormData()
     {
-        static::resetDatabase();
+        static::bootKernel();
+
+        $pageId = static::$kernel
+            ->getContainer()
+            ->get('doctrine')
+            ->getManager()
+            ->getRepository('EsterenPortalBundle:Page')
+            ->findOneBy([])
+            ->getId()
+        ;
+
+        static::$kernel->shutdown();
 
         return [
-            'id'              => 1,
+            'id'              => $pageId,
             'title'           => 'Testing new page',
             'content'         => 'This is a page to test the "new" form.',
             'metaDescription' => null,
@@ -105,20 +113,17 @@ class PagesAdminTest extends AbstractEasyAdminTest
     {
         static::bootKernel();
 
-        /** @var EntityManager $em */
-        $em = static::$kernel
+        $pageId = static::$kernel
             ->getContainer()
             ->get('doctrine')
             ->getManager()
-        ;
-
-        $page = $em
             ->getRepository('EsterenPortalBundle:Page')
             ->findOneBy([])
+            ->getId()
         ;
 
         static::$kernel->shutdown();
 
-        return $page->getId();
+        return $pageId;
     }
 }

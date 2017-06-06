@@ -48,7 +48,7 @@
         <!-- Uncomment this if you do not need to refresh the whole cache between runs
         <env name="NO_CLEAR_CACHE" value="1" />
         -->
-        <!-- Uncomment this if you don't want to reset the database between runs (implicitly enables NO_CLEAR_CACHE)
+        <!-- Uncomment this if you don't want to reset the database between runs
         <env name="NO_RECREATE_DB" value="1" />
         -->
         <!-- Uncomment this if you want to force database recreation between runs

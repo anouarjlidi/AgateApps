@@ -89,7 +89,7 @@ class TraitsRepository extends BaseRepository
                 throw new \Exception('Error in ways values. Must be equivalent to this : array( [WAY_ID] => [WAY_VALUE] )');
             }
             if ($id >= 4 || $id <= 2) {
-                $qb->orWhere('w.id = :way'.$id.' AND t.isMajor = :way'.$id.'major')
+                $qb->orWhere('w.id = :way'.$id.' AND t.major = :way'.$id.'major')
                    ->setParameter(':way'.$id, $id)
                    ->setParameter(':way'.$id.'major', $value >= 4)
                 ;

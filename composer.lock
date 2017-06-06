@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "e068f7f0acb7f98934ff94c5e1053dc2",
+    "content-hash": "979a260ac0d65576f4a685e3476cdbc2",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -4714,16 +4714,16 @@
         },
         {
             "name": "pierstoval/web-test-case",
-            "version": "v0.1.4",
+            "version": "v0.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Pierstoval/PHPUnitWebTestCase.git",
-                "reference": "27ee4ba9f734fd2baf1c4dff034475f006d01544"
+                "reference": "9960b21bb27a5507bd40829482222437ecb614cb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Pierstoval/PHPUnitWebTestCase/zipball/27ee4ba9f734fd2baf1c4dff034475f006d01544",
-                "reference": "27ee4ba9f734fd2baf1c4dff034475f006d01544",
+                "url": "https://api.github.com/repos/Pierstoval/PHPUnitWebTestCase/zipball/9960b21bb27a5507bd40829482222437ecb614cb",
+                "reference": "9960b21bb27a5507bd40829482222437ecb614cb",
                 "shasum": ""
             },
             "require": {
@@ -4745,7 +4745,7 @@
                     "email": "pierstoval@gmail.com"
                 }
             ],
-            "time": "2017-04-02T18:33:56+00:00"
+            "time": "2017-06-06T13:27:11+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",

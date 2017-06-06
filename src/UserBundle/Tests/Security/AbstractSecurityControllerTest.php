@@ -9,29 +9,25 @@
  * file that was distributed with this source code.
  */
 
-namespace UserBundle\Tests;
+namespace UserBundle\Tests\Security;
 
 use Symfony\Component\DomCrawler\Form;
 use Tests\WebTestCase;
 
-class SecurityControllerTest extends WebTestCase
+abstract class AbstractSecurityControllerTest extends WebTestCase
 {
     const USER_NAME = 'test_user';
     const USER_NAME_AFTER_UPDATE = 'user_updated';
 
-    public function provideLocales()
-    {
-        return [
-            'fr' => ['fr'],
-            'en' => ['en'],
-        ];
-    }
+    abstract protected function getLocale(): string;
 
     /**
      * @dataProvider provideLocales
      */
-    public function testForbiddenAdmin(string $locale)
+    public function testForbiddenAdmin()
     {
+        $locale = $this->getLocale();
+
         $client = $this->getClient('back.esteren.dev', [], 'ROLE_USER');
 
         $client->request('GET', "/$locale/");
@@ -42,8 +38,10 @@ class SecurityControllerTest extends WebTestCase
     /**
      * @dataProvider provideLocales
      */
-    public function testAllowedAdmin(string $locale)
+    public function testAllowedAdmin()
     {
+        $locale = $this->getLocale();
+
         $client = $this->getClient('back.esteren.dev', [], 'ROLE_ADMIN');
 
         $client->request('GET', "/$locale/");
@@ -58,8 +56,10 @@ class SecurityControllerTest extends WebTestCase
      * Test registration action
      * @dataProvider provideLocales
      */
-    public function testRegister(string $locale)
+    public function testRegister()
     {
+        $locale = $this->getLocale();
+
         static::resetDatabase();
 
         $client = $this->getClient('portal.esteren.dev');
@@ -80,10 +80,10 @@ class SecurityControllerTest extends WebTestCase
 
         // Submit form
         $crawler = $client->submit($form);
+        $response = $client->getResponse();
 
         // Check redirection was made correctly to the Profile page
-        static::assertTrue($client->getResponse()->isRedirection(), 'Is not redirection');
-        static::assertTrue($client->getResponse()->isRedirect("/$locale/login"), 'Does not redirect to login page');
+        static::assertTrue($response->isRedirect("/$locale/login"), "Does not redirect to login page.\n".$response->getContent());
 
         $crawler->clear();
         $crawler = $client->followRedirect();
@@ -99,8 +99,10 @@ class SecurityControllerTest extends WebTestCase
      * @depends testRegister
      * @dataProvider provideLocales
      */
-    public function testLogin(string $locale)
+    public function testLogin()
     {
+        $locale = $this->getLocale();
+
         $client = $this->getClient('portal.esteren.dev');
 
         $crawler = $client->request('GET', "/$locale/login");
@@ -119,9 +121,10 @@ class SecurityControllerTest extends WebTestCase
         // Submit form
         $crawler = $client->submit($form);
 
+        $response = $client->getResponse();
+
         // Check redirection was made correctly to the Profile page
-        static::assertTrue($client->getResponse()->isRedirection(), 'Is not redirection');
-        static::assertTrue($client->getResponse()->isRedirect("/$locale"), 'Does not redirect to root page');
+        static::assertTrue($response->isRedirect("/$locale"), 'Does not redirect to root page ("'.$response->headers->get('location').'" instead)');
 
         $crawler->clear();
         $client->followRedirects(true);
@@ -139,8 +142,10 @@ class SecurityControllerTest extends WebTestCase
      * @depends testLogin
      * @dataProvider provideLocales
      */
-    public function testChangePassword(string $locale)
+    public function testChangePassword()
     {
+        $locale = $this->getLocale();
+
         $client = $this->getClient('portal.esteren.dev');
         $container = $client->getKernel()->getContainer();
         $user = $container->get('user.provider.username_or_email')->loadUserByUsername(static::USER_NAME.$locale);
@@ -181,8 +186,10 @@ class SecurityControllerTest extends WebTestCase
      * @depends testChangePassword
      * @dataProvider provideLocales
      */
-    public function testEditProfile(string $locale)
+    public function testEditProfile()
     {
+        $locale = $this->getLocale();
+
         $client = $this->getClient('portal.esteren.dev');
         $container = $client->getKernel()->getContainer();
         $user = $container->get('user.provider.username_or_email')->loadUserByUsername(static::USER_NAME.$locale);
@@ -215,8 +222,10 @@ class SecurityControllerTest extends WebTestCase
      * @depends testEditProfile
      * @dataProvider provideLocales
      */
-    public function testResetPasswordRequest(string $locale)
+    public function testResetPasswordRequest()
     {
+        $locale = $this->getLocale();
+
         $client = $this->getClient('portal.esteren.dev');
         $container = $client->getKernel()->getContainer();
         $user = $container->get('user.provider.username_or_email')->loadUserByUsername(static::USER_NAME_AFTER_UPDATE.$locale);

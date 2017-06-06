@@ -42,7 +42,7 @@ class DisordersWays
      *
      * @ORM\Column(type="boolean", options={"default":0})
      */
-    protected $isMajor = 0;
+    protected $major = 0;
 
     public function __toString()
     {
@@ -108,15 +108,15 @@ class DisordersWays
     /**
      * Set isMajor.
      *
-     * @param bool $isMajor
+     * @param bool $major
      *
      * @return DisordersWays
      *
      * @codeCoverageIgnore
      */
-    public function setMajor($isMajor)
+    public function setMajor($major)
     {
-        $this->isMajor = $isMajor;
+        $this->major = $major;
 
         return $this;
     }
@@ -128,6 +128,6 @@ class DisordersWays
      */
     public function isMajor()
     {
-        return $this->isMajor;
+        return $this->major;
     }
 }
