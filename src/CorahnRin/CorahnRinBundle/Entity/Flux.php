@@ -102,4 +102,28 @@ class Flux
     {
         return $this->name;
     }
+
+    /**
+     * @return string
+     *
+     * @codeCoverageIgnore
+     */
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     *
+     * @return Flux
+     *
+     * @codeCoverageIgnore
+     */
+    public function setDescription(string $description): Flux
+    {
+        $this->description = $description;
+
+        return $this;
+    }
 }
