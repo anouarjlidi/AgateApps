@@ -84,7 +84,7 @@ jobs:
             - run:
                name: 'Execute node tests'
                command: |
-                    node tests/nodejs/test_gulp_dump.js dump --prod --verbose
+                    node tests/nodejs/test_gulp_dump.js
 
             - run:
                name: 'Execute Linting tests'
