@@ -42,13 +42,18 @@ final class PortalMailer
             ->setCharset('utf-8')
             ->setFrom($message->getEmail())
             ->setTo('pierstoval+newportal@gmail.com')
-            ->addCc('nelyhann+newportal@gmail.com', 'Nelyhann')
             ->addCc('iris.d.automne+newportal@gmail.com', 'Iris')
             ->setBody($this->templating->render('@EsterenPortal/email/contact_email.html.twig', [
                 'ip'      => $ip,
                 'message' => $message,
             ]))
         ;
+
+        if ('fr' === $message->getLocale()) {
+            $swiftMessage->addCc('lesombresdesteren@gmail.com', 'Les Ombres d\'Esteren');
+        } elseif ('en' === $message->getLocale()) {
+            $swiftMessage->addCc('shadowsofesteren@gmail.com', 'Shadows of Esteren');
+        }
 
         return $this->mailer->send($swiftMessage);
     }

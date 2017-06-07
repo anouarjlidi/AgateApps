@@ -16,74 +16,67 @@ class ContactMessage
     /**
      * @var string
      */
-    private $name;
+    private $name = '';
 
     /**
      * @var string
      */
-    private $email;
+    private $email = '';
 
     /**
      * @var string
      */
-    private $message;
+    private $message = '';
 
     /**
-     * @return string
+     * @var string
      */
-    public function getName()
+    private $locale = 'fr';
+
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     *
-     * @return ContactMessage
-     */
-    public function setName($name)
+    public function setName(string $name): ContactMessage
     {
         $this->name = strip_tags((string) $name);
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
 
-    /**
-     * @param string $email
-     *
-     * @return ContactMessage
-     */
-    public function setEmail($email)
+    public function setEmail(string $email): ContactMessage
     {
         $this->email = strip_tags((string) $email);
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getMessage()
+    public function getMessage(): string
     {
         return $this->message;
     }
 
-    /**
-     * @param string $message
-     *
-     * @return ContactMessage
-     */
-    public function setMessage($message)
+    public function setMessage(string $message): ContactMessage
     {
         $this->message = strip_tags((string) $message);
+
+        return $this;
+    }
+
+    public function getLocale(): string
+    {
+        return $this->locale;
+    }
+
+    public function setLocale(string $locale): ContactMessage
+    {
+        $this->locale = $locale;
 
         return $this;
     }
