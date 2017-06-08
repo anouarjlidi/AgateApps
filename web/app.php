@@ -15,7 +15,7 @@ $debug       = (getenv('SYMFONY_DEBUG') !== false) ? (bool) getenv('SYMFONY_DEBU
 /**
  * @var Composer\Autoload\ClassLoader
  */
-$loader = require __DIR__.'/../app/autoload.php';
+$loader = require __DIR__.'/../vendor/autoload.php';
 
 if (false === $debug) {
     include_once __DIR__.'/../var/bootstrap.php.cache';

@@ -23,7 +23,7 @@ define('BUILD_DIR', $rootDir.'/build');
 define('DATABASE_TEST_FILE', $rootDir.'/build/database_test.db');
 define('DATABASE_REFERENCE_FILE', $rootDir.'/build/database_reference.db');
 
-$file = $rootDir.'/app/autoload.php';
+$file = $rootDir.'/vendor/autoload.php';
 if (!file_exists($file)) {
     throw new RuntimeException('Install dependencies to run test suite.');
 }
