@@ -11,8 +11,6 @@
 
 namespace UserBundle\Security;
 
-use FOS\UserBundle\Doctrine\UserManager;
-use FOS\UserBundle\Security\UserProvider;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;
@@ -26,6 +24,7 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 use UserBundle\Entity\User;
+use UserBundle\Security\Provider\UsernameOrEmailProvider;
 
 final class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
 {
@@ -117,7 +116,7 @@ final class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
      * {@inheritdoc}
      *
      * @param UsernamePasswordCredentials $credentials
-     * @param UserProvider                $userProvider
+     * @param UsernameOrEmailProvider     $userProvider
      */
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
