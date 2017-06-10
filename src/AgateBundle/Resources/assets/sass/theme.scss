@@ -23,12 +23,13 @@ html {
     }
 }
 
-.team-list {
-    dt, dl {
-        float: left;
-    }
-    dt {
-        width: 100px;
-        font-weight: bold;
+.team-member {
+    h3 {
+        img {
+            max-height: 100px;
+        }
+        span, img {
+            vertical-align: middle;
+        }
     }
 }

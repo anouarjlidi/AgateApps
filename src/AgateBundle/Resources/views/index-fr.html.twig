@@ -131,25 +131,48 @@
                 <div class="row">
                     <div class="col s12 center text-m">
                         <h2 id="decouvrir-esteren">L'équipe</h2>
-                        <dl class="team-list left-align">
-                            <dt>Asami</dt>
-                            <dd>Maquettiste, graphiste et illustratrice, aussi surnommée "MacGyver".</dd>
+                        {% set team = {
+                            'Asami': {
+                                icon: 'img/agate/team/clovis.png',
+                                details: 'Maquettiste, graphiste et illustratrice, aussi surnommée "MacGyver".'
+                            },
+                            'Clovis': {
+                                icon: 'img/agate/team/clovis.png',
+                                details: 'Traducteur multifonction et coordinateur de la version anglaise des Ombres d\'Esteren.'
+                            },
+                            'Gawain': {
+                                icon: 'img/agate/team/clovis.png',
+                                details: 'Studio, illustrateur senior, Gawain aime aussi se balader seul en pleine nature.'
+                            },
+                            'Iris': {
+                                icon: 'img/agate/team/clovis.png',
+                                details: 'Auteure et illustratrice, coordinatrice de la gamme Dragons, grande prêtresse de Redmine.'
+                            },
+                            'Pierstoval': {
+                                icon: 'img/agate/team/clovis.png',
+                                details: 'Webmaster &amp; développeur web du studio, né sur un clavier, créateur des applications Esteren Maps et Corahn-Rin.'
+                            },
+                            'Nel': {
+                                icon: 'img/agate/team/clovis.png',
+                                details: 'Auteur et illustrateur, actuel directeur du studio et amateur de grimaces.'
+                            }
+                        } %}
 
-                            <dt>Clovis</dt>
-                            <dd>Traducteur multifonction et coordinateur de la version anglaise des Ombres d'Esteren.</dd>
-
-                            <dt>Gawain</dt>
-                            <dd>Studio, illustrateur senior, Gawain aime aussi se balader seul en pleine nature.</dd>
-
-                            <dt>Iris</dt>
-                            <dd>Auteure et illustratrice, coordinatrice de la gamme Dragons, grande prêtresse de Redmine.</dd>
-
-                            <dt>Pierstoval</dt>
-                            <dd>Webmaster &amp; développeur web du studio, né sur un clavier, créateur des applications Esteren Maps et Corahn-Rin.</dd>
-
-                            <dt>Nel</dt>
-                            <dd>Auteur et illustrateur, actuel directeur du studio et amateur de grimaces.</dd>
-                        </dl>
+                        {% for members in team|batch(3) %}
+                            <div class="row">
+                                {% for name, member in members %}
+                                    <div class="col m4">
+                                        <div class="card-panel team-member text-left bl">
+                                            <h3 class="text-xxl">
+                                                <img src="{{ asset(member.icon) }}" alt="{{ name }}" class="circle">
+                                                <span>{{ name }}</span>
+                                            </h3>
+                                            <p>{{ member.details|raw }}</p>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
