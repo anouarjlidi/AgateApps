@@ -8,6 +8,7 @@
 
 {# Disable login on this page because for now it's not useful #}
 {% block menu_security '' %}
+{% block menu_security_mobile '' %}
 
 {% block menu_brand_link %}
     <a href="{{ path('agate_portal_home') }}" class="brand-logo position-static left" title="{{ 'home' | trans({}, 'OrbitaleCms') }}">

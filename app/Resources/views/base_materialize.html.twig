@@ -88,7 +88,11 @@
                                     {{ include('_menu_security.html.twig', {'dropdown': false}) }}
                                 {% endblock %}
                             </ul>
-                            <a href="#" data-activates="nav-mobile" class="button-collapse right text-white" title="{{ 'links.menu'|trans }}"><i class="fa fa-bars text-white"></i> Menu</a>
+                            {% if block('menu_security_mobile')|trim|length %}
+                                <a href="#" data-activates="nav-mobile" class="button-collapse right text-white" title="{{ 'links.menu'|trans }}">
+                                    <i class="fa fa-bars text-white"></i> Menu
+                                </a>
+                            {% endif %}
                         </div>
                     </nav>
                 {% endspaceless %}
