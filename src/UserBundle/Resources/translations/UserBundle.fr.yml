@@ -97,3 +97,10 @@ form:
     error:
         need_api_token: 'Si vous spécifiez le nom d''utilisateur Ulule, vous devez spécifier la clé d''API'
         ulule_credentials_invalid: 'Les identifiants de connexion à Ulule sont invalides'
+
+crowdfunding:
+    my_projects: 'Mes projets soutenus'
+    sync_projects: 'Synchroniser mes projets'
+    no_project_warning: |
+        Nous n'avons aucune information sur vos projects, ou vous n'avez pas encore contribué.<br>
+        Vous pouvez synchroniser vos projets si vous avez contribué et que les projets ne sont pas affichés ici.

@@ -12,9 +12,11 @@
 namespace UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
+use UserBundle\Entity\Crowdfunding\Contribution;
 
 /**
  * @ORM\Entity(repositoryClass="UserBundle\Repository\UserRepository")
@@ -111,9 +113,23 @@ class User implements UserInterface, \Serializable
     /**
      * @var string
      *
+     * @ORM\Column(name="ulule_username", type="string", nullable=true)
+     */
+    private $ululeUsername;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="ulule_api_token", type="string", nullable=true)
      */
     private $ululeApiToken;
+
+    /**
+     * @var Contribution[]|ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="UserBundle\Entity\Crowdfunding\Contribution", mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $contributions;
 
     /**
      * User constructor.
@@ -121,6 +137,7 @@ class User implements UserInterface, \Serializable
     public function __construct()
     {
         $this->roles = [static::ROLE_DEFAULT];
+        $this->contributions = new ArrayCollection();
     }
 
     public function __toString()
@@ -326,6 +343,18 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
+    public function getUluleUsername(): ?string
+    {
+        return $this->ululeUsername;
+    }
+
+    public function setUluleUsername(string $ululeUsername = null): User
+    {
+        $this->ululeUsername = $ululeUsername;
+
+        return $this;
+    }
+
     public function getUluleApiToken(): ?string
     {
         return $this->ululeApiToken;
@@ -334,6 +363,32 @@ class User implements UserInterface, \Serializable
     public function setUluleApiToken(string $ululeApiToken = null): User
     {
         $this->ululeApiToken = $ululeApiToken;
+
+        return $this;
+    }
+
+    /**
+     * @return ArrayCollection|Contribution[]
+     */
+    public function getContributions(): iterable
+    {
+        return $this->contributions;
+    }
+
+    public function addContribution(Contribution $contribution): self
+    {
+        $this->contributions[] = $contribution;
+
+        if (!$contribution->getUser()) {
+            $contribution->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeContribution(Contribution $contribution): self
+    {
+        $this->contributions->removeElement($contribution);
 
         return $this;
     }
@@ -365,5 +420,16 @@ class User implements UserInterface, \Serializable
             $this->emailCanonical,
             $this->password,
         ] = $data;
+    }
+
+    public function getContributionById(string $id): ?Contribution
+    {
+        foreach ($this->contributions as $contribution) {
+            if ($contribution->getId() === $id) {
+                return $contribution;
+            }
+        }
+
+        return null;
     }
 }

@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use UserBundle\Entity\User;
 use UserBundle\Form\Type\ProfileFormType;
+use UserBundle\Form\Type\UluleConnectType;
 
 class ProfileController extends Controller
 {
@@ -34,23 +35,16 @@ class ProfileController extends Controller
             throw new AccessDeniedException('This user does not have access to this section.');
         }
 
-        $form = $this->createForm(ProfileFormType::class, $user);
+        $editProfileForm  = $this->createForm(ProfileFormType::class, $user);
+        $ululeConnectForm = $this->createForm(UluleConnectType::class, $user);
 
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-
-            $em->persist($user);
-            $em->flush();
-
-            $this->addFlash('success', $this->get('translator')->trans('profile.flash.updated', [], 'UserBundle'));
-
-            return $this->redirectToRoute('user_profile_edit');
+        if ($response = $this->get('user.form.handler.profile')->handle($request, $editProfileForm, $ululeConnectForm)) {
+            return $response;
         }
 
         return $this->render('@User/Profile/edit.html.twig', [
-            'form' => $form->createView(),
+            'form_edit_profile' => $editProfileForm->createView(),
+            'form_ulule_connect' => $ululeConnectForm->createView(),
         ]);
     }
 }

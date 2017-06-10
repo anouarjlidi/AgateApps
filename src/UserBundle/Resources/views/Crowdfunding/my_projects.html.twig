@@ -1,0 +1,24 @@
+{% extends '@User/layout.html.twig' %}
+
+{% trans_default_domain 'UserBundle' %}
+
+{% block title %}
+    {{ 'crowdfunding.my_projects' | trans }} - {{ parent() }}
+{% endblock %}
+
+{% block content_for_layout %}
+    {% for contribution in user.contributions %}
+        <div>
+            {{ contribution.project.name }}
+        </div>
+    {% else %}
+        <div class="card-panel yellow darken-4 message">
+            {{ 'crowdfunding.no_project_warning'|trans|raw }}
+        </div>
+    {% endfor %}
+
+    <form action="{{ path('cf_my_projects') }}" method="post">
+        <input type="hidden" name="sync" value="1">
+        <button class="btn bl mid" type="submit">{{ 'crowdfunding.sync_projects'|trans }}</button>
+    </form>
+{% endblock %}

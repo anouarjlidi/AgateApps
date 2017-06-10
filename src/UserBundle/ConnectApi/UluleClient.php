@@ -11,17 +11,29 @@
 
 namespace UserBundle\ConnectApi;
 
-use GuzzleHttp\Exception\ClientException;
+use Doctrine\ORM\EntityManager;
 use Psr\Log\LoggerInterface;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 use UserBundle\ConnectApi\Model\UluleUser;
+use UserBundle\Entity\User;
 
-final class UluleClient extends AbstractApiClient
+class UluleClient extends AbstractApiClient
 {
     public const ENDPOINT = 'https://api.ulule.com/v1/';
+    public const ULULE_PROJECTS = [
+        8021,  // Esteren - Dearg
+        10861, // Esteren - Voyages
+        23423, // Esteren - Occultisme
+        28873, // Vampire - Requiem
+        30600, // Vampire - Requiem (2)
+        34243, // Dragons
+        51014, // 7e mer
+    ];
 
     private $logger;
 
-    public function __construct(LoggerInterface $logger)
+    public function __construct(LoggerInterface $logger, EntityManager $em)
     {
         $this->logger = $logger;
     }
@@ -29,6 +41,84 @@ final class UluleClient extends AbstractApiClient
     public function getEndpoint(): string
     {
         return static::ENDPOINT;
+    }
+
+    public function getClientFromUser(User $user, array $options = []): Client
+    {
+        if (!$user->getUluleApiToken() || !$user->getUluleUsername()) {
+            throw new \InvalidArgumentException('User must have an API Token and username to get his/her projects');
+        }
+
+        $options['base_uri'] = $this->getEndpoint();
+
+        if (!isset($options['headers'])) {
+            $options['headers'] = [];
+        }
+
+        $options['headers']['Authorization'] = 'ApiKey '.$user->getUluleUsername().':'.$user->getUluleApiToken();
+
+        return $this->client = new Client($options);
+    }
+
+    public function getUserProjects(User $user): array
+    {
+        $client = $this->getClientFromUser($user);
+
+        $ululeProjects = [];
+
+        $queryString = '?limit=50';
+
+        do {
+            $response = $client->request('GET', 'users/'.$user->getUluleId().'/projects'.$queryString.'&state=supported');
+
+            $data = (string) $response->getBody();
+
+            $json = json_decode($data, true);
+
+            if (!$json || ($json && !isset($json['projects']))) {
+                throw new \RuntimeException('Ulule sent a wrong response when retrieving user projects');
+            }
+
+            foreach ($json['projects'] as $project) {
+                $ululeProjects[$project['id']] = $project;
+            }
+
+            $queryString = $json['meta']['next'];
+        } while ($queryString);
+
+        return $ululeProjects;
+    }
+
+    public function getUserOrders(User $user): array
+    {
+        $client = $this->getClientFromUser($user);
+
+        $queryString = '?limit=50';
+
+        $orders = [];
+
+        do {
+            $response = $client->request(
+                'GET',
+                'users/'.$user->getUluleId().'/orders'.$queryString.''
+            );
+
+            $data = (string)$response->getBody();
+
+            $json = json_decode($data, true);
+
+            if (!$json || ($json && !isset($json['orders']))) {
+                throw new \RuntimeException('Ulule sent a wrong response when retrieving user projects');
+            }
+
+            foreach ($json['orders'] as $order) {
+                $orders[$order['id']] = $order;
+            }
+
+            $queryString = $json['meta']['next'];
+        } while ($queryString);
+
+        return $orders;
     }
 
     public function basicApiTokenConnect(string $username, string $token): ?UluleUser
@@ -64,4 +154,5 @@ final class UluleClient extends AbstractApiClient
 
         return new UluleUser($json, $token);
     }
+
 }

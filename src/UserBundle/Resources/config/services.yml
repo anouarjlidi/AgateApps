@@ -27,6 +27,15 @@ services:
         autowire: true
         tags: [{ name: form.type }]
 
+    user.form.type.ulule_connect:
+        class: UserBundle\Form\Type\UluleConnectType
+        autowire: true
+        tags: [{ name: form.type }]
+
+    user.form.handler.profile:
+        class: UserBundle\Form\Handler\ProfileHandler
+        autowire: true
+
     user.mailer:
         class: UserBundle\Mailer\UserMailer
         autowire: true

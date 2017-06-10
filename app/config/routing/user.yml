@@ -1,3 +1,6 @@
+crowdfunding:
+    resource: '@UserBundle/Controller/Crowdfunding/'
+    type: annotation
 
 user_security:
     resource: '@UserBundle/Controller/SecurityController.php'

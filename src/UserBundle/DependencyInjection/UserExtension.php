@@ -26,5 +26,6 @@ final class UserExtension extends Extension
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
         $loader->load('connect_api.yml');
+        $loader->load('crowdfunding.yml');
     }
 }

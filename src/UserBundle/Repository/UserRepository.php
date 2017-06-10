@@ -49,4 +49,16 @@ class UserRepository extends BaseEntityRepository
     {
         return $this->findOneBy(['confirmationToken' => $token]);
     }
+
+    public function findOneWithProjects(int $id): ?User
+    {
+        return $this->createQueryBuilder('user')
+            ->leftJoin('user.contributions', 'contribution')->addSelect('contribution')
+            ->leftJoin('contribution.project', 'project')->addSelect('project')
+            ->leftJoin('contribution.rewards', 'reward')->addSelect('reward')
+            ->leftJoin('reward.variants', 'variant')->addSelect('variant')
+            ->where('user.id = :id')->setParameter('id', $id)
+            ->getQuery()->getOneOrNullResult()
+        ;
+    }
 }
