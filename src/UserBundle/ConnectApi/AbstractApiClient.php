@@ -22,8 +22,8 @@ abstract class AbstractApiClient implements ApiClientInterface
 
     public function getClient(array $options = []): Client
     {
-        return $this->client = new Client([
-            'base_uri' => $this->getEndpoint(),
-        ]);
+        $options['base_uri'] = $this->getEndpoint();
+
+        return $this->client = new Client($options);
     }
 }
