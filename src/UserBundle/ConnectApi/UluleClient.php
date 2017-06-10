@@ -26,6 +26,11 @@ final class UluleClient extends AbstractApiClient
         $this->logger = $logger;
     }
 
+    public function getEndpoint(): string
+    {
+        return static::ENDPOINT;
+    }
+
     public function basicApiTokenConnect(string $username, string $token): ?UluleUser
     {
         $client = $this->getClient();
@@ -58,10 +63,5 @@ final class UluleClient extends AbstractApiClient
         }
 
         return new UluleUser($json, $token);
-    }
-
-    public function getEndpoint(): string
-    {
-        return static::ENDPOINT;
     }
 }
