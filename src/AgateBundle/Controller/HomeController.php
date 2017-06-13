@@ -10,14 +10,16 @@ class HomeController extends Controller
     /**
      * @Route("/", name="agate_portal_home")
      */
-    public function indexAction($_locale)
+    public function indexAction()
     {
-        $template = '@Agate/index-'.$_locale.'.html.twig';
+        return $this->render('@Agate/home/agate-portal.html.twig');
+    }
 
-        if (!$this->get('templating')->exists($template)) {
-            throw $this->createNotFoundException();
-        }
-
-        return $this->render($template);
+    /**
+     * @Route("/team", name="agate_team")
+     */
+    public function teamAction()
+    {
+        return $this->render('@Agate/home/team.html.twig');
     }
 }

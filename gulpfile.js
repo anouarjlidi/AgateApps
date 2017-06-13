@@ -62,7 +62,11 @@ var config = {
             "src/CorahnRin/CorahnRinBundle/Resources/public/img/*"
         ],
         "img/agate": [
-            "src/AgateBundle/Resources/assets/images/*"
+            "src/AgateBundle/Resources/assets/images/*.jpg",
+            "src/AgateBundle/Resources/assets/images/*.png"
+        ],
+        "img/agate/team": [
+            "src/AgateBundle/Resources/assets/images/team/*"
         ],
         "img/": [
             "src/Esteren/PortalBundle/Resources/assets/images/*"

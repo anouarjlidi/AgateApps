@@ -1,0 +1,58 @@
+team:
+    main_title: L'Équipe du studio Agate
+    permanent_members: Le studio Agate est composé de six membres permanents.
+    friends: Nos amis
+    friends_text: |
+        Nous travaillons avec de nombreux auteurs, illustrateurs et créatifs freelance qui participent à nos projets.
+    friends_thanks: |
+        Un grand merci à toutes les personnes qui ont un jour ou l'autre participé à nos projets, nous ont soutenu, les
+        playtesteurs, les volontaires sur la tournée, les membres de la communauté... merci !
+    members:
+        # Permanent members
+        asami:
+            name: Asami
+            details: Maquettiste, graphiste et illustratrice.
+        clovis:
+            name: Clovis
+            details: Traducteur et coordinateur de la version anglaise des Ombres d'Esteren.
+        gawain:
+            name: Gawain
+            details: Illustrateur senior du studio.
+        iris:
+            name: Iris
+            details: Auteure et illustratrice, coordinatrice de la gamme Dragons.
+        pierstoval:
+            name: Pierstoval
+            details: Webmaster &amp; développeur web du studio.
+        nel:
+            name: Nel
+            details: Auteur et illustrateur, coordinateur du studio et de la version française des Ombres d'Esteren.
+
+        # Friends
+        akae:
+            name: Olivier "Akae" Sanfilippo
+            details: Illustrateur et cartographe du studio.
+        ben:
+            name: Benjamin Diebling
+            details: Auteur sur Dragons et réalisateur.
+        chane:
+            name: Chane
+            details: Illustratrice sur les gammes Esteren et Dragons.
+        chris:
+            name: Chris
+            details: Peintre, illustrateur sur les gammes Esteren et Dragons.
+        clarisse_may:
+            name: Clarisse Mây
+            details: Compositrice, interprète sur l'album Adeliane
+        francois_rousselot:
+            name: François Rousselot
+            details: Chef d'orchestre, compositeur de l'album Adeliane.
+        ginl:
+            name: GinL
+            details: Illustratrice et maquettiste de la gamme Dragons.
+        julien_blondel:
+            name: Julien Blondel
+            details: Auteur et coordinateur de la gamme Vermine 2047.
+        nico_jamme:
+            name: Nico Jamme
+            details: Illustrateur sur les gammes Esteren et Dragons.

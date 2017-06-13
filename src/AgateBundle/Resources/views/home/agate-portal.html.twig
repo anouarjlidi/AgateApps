@@ -95,8 +95,10 @@
                 <div class="col s12 center text-m">
                     <h2 id="decouvrir-esteren">Qui sommes-nous ?</h2>
                     <p class="left-align">
-                        Basé en France, notre studio est spécialisé dans le transmedia, l'écriture de scénarios et la
-                        création de mondes imaginaires.<br>
+                        Basé en France, notre studio est composé de <a href="{{ path('agate_team') }}">six membres permanents</a>.
+                        Nous sommes spécialisés dans la création de mondes imaginaires, l'écriture de scénarios et le
+                        transmedia.
+                        <br>
                         Nous produisons des livres de jeux de rôle, des albums de musique ou encore des jeux vidéos qui
                         cumulent une dizaine de prix à l'international.<br>
                         Nous traduisons et publions également des licences de grands jeux avec notre label d'édition
@@ -117,59 +119,6 @@
     <div class="parallax-container valign-wrapper">
         <div class="parallax"><img src="{{ asset('img/Esteren_Arven_marche.jpg') }}" alt="Les Ombres d'Esteren : Arven en train de marcher"></div>
     </div>
-
-        <div class="container">
-            <div class="section">
-                <div class="row">
-                    <div class="col s12 center text-m">
-                        <h2 id="decouvrir-esteren">L'équipe</h2>
-                        {% set team = {
-                            'Asami': {
-                                icon: 'img/agate/team/clovis.png',
-                                details: 'Maquettiste, graphiste et illustratrice, aussi surnommée "MacGyver".'
-                            },
-                            'Clovis': {
-                                icon: 'img/agate/team/clovis.png',
-                                details: 'Traducteur multifonction et coordinateur de la version anglaise des Ombres d\'Esteren.'
-                            },
-                            'Gawain': {
-                                icon: 'img/agate/team/clovis.png',
-                                details: 'Illustrateur senior du studio, Gawain aime aussi se balader seul en pleine nature.'
-                            },
-                            'Iris': {
-                                icon: 'img/agate/team/clovis.png',
-                                details: 'Auteure et illustratrice, coordinatrice de la gamme Dragons, grande prêtresse de Redmine.'
-                            },
-                            'Pierstoval': {
-                                icon: 'img/agate/team/clovis.png',
-                                details: 'Webmaster &amp; développeur web du studio, né sur un clavier, créateur des applications Esteren Maps et Corahn-Rin.'
-                            },
-                            'Nel': {
-                                icon: 'img/agate/team/clovis.png',
-                                details: 'Auteur et illustrateur, actuel capitaine du studio et amateur de grimaces.'
-                            }
-                        } %}
-
-                        {% for members in team|batch(3) %}
-                            <div class="row">
-                                {% for name, member in members %}
-                                    <div class="col m4">
-                                        <div class="card-panel team-member text-left bl">
-                                            <h3 class="text-xxl">
-                                                <img src="{{ asset(member.icon) }}" alt="{{ name }}" class="circle">
-                                                <span>{{ name }}</span>
-                                            </h3>
-                                            <p>{{ member.details|raw }}</p>
-                                        </div>
-                                    </div>
-                                {% endfor %}
-                            </div>
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-        </div>
-
     {% endspaceless %}
 
 {% endblock %}
