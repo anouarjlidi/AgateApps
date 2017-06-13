@@ -1,3 +1,6 @@
+portal:
+    title: 'Bienvenue sur le nouveau portail du Studio Agate'
+
 team:
     main_title: L'Équipe du studio Agate
     permanent_members: Le studio Agate est composé de six membres permanents.
@@ -56,3 +59,4 @@ team:
         nico_jamme:
             name: Nico Jamme
             details: Illustrateur sur les gammes Esteren et Dragons.
+

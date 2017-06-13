@@ -1,58 +1,61 @@
+portal:
+    title: 'Welcome to the new Studio Agate portal'
+
 team:
-    main_title: Agate Studio team
-    permanent_members: The studio is composed of six permanent members
+    main_title: The Studio Agate team
+    permanent_members: The studio gathers six permanent members
     friends: Our friends
     friends_text: |
-        We work with several authors, illustrators and freelancers who participate to our projects.
+        We work with several authors, illustrators, and freelancers who occasionally participate in our projects.
     friends_thanks: |
-        A big thank you to all the people who some day participated in our projects, supported us, playtested our games,
-        the volunteers during the tour, the members of the community... thank you!
+        A big thank you to everyone who contributed to building our projects and keeping them alive:
+        supporters, playtesters, backers, volunteers, community members... thank you!
     members:
         # Permanent members
         asami:
             name: Asami
-            details: Maquettiste, graphiste et illustratrice.
+            details: Layout artist, graphic designer, and illustrator.
         clovis:
             name: Clovis
-            details: Traducteur et coordinateur de la version anglaise des Ombres d'Esteren.
+            details: Translator and coordinator for the English version of the Shadows of Esteren series.
         gawain:
             name: Gawain
-            details: Illustrateur senior du studio.
+            details: Head illustrator.
         iris:
             name: Iris
-            details: Auteure et illustratrice, coordinatrice de la gamme Dragons.
+            details: Author and illustrator, coordinator for the Dragons series.
         pierstoval:
             name: Pierstoval
-            details: Webmaster &amp; développeur web du studio.
+            details: Webmaster & web developer.
         nel:
             name: Nel
-            details: Auteur et illustrateur, coordinateur du studio et de la version française des Ombres d'Esteren.
+            details: Author and illustrator, coordinator for the studio and the French version of the Shadows of Esteren series.
 
         # Friends
         akae:
             name: Olivier "Akae" Sanfilippo
-            details: Illustrateur et cartographe du studio.
+            details: Illustrator and mapmaker.
         ben:
             name: Benjamin Diebling
-            details: Auteur sur Dragons et réalisateur.
+            details: Author and developer for Dragons.
         chane:
             name: Chane
-            details: Illustratrice sur les gammes Esteren et Dragons.
+            details: Illustrator for the Esteren and Dragons series.
         chris:
             name: Chris
-            details: Peintre, illustrateur sur les gammes Esteren et Dragons.
+            details: Painter and illustrator for the Esteren and Dragons series.
         clarisse_may:
             name: Clarisse Mây
-            details: Compositrice, interprète sur l'album Adeliane
+            details: Composer and singer for the album Adeliane.
         francois_rousselot:
             name: François Rousselot
-            details: Chef d'orchestre, compositeur de l'album Adeliane.
+            details: Conductor and composer for the album Adeliane.
         ginl:
             name: GinL
-            details: Illustratrice et maquettiste de la gamme Dragons.
+            details: Illustrator and layout artist for the Dragons series.
         julien_blondel:
             name: Julien Blondel
-            details: Auteur et coordinateur de la gamme Vermine 2047.
+            details: Author and coordinator for the Vermine 2047 series.
         nico_jamme:
             name: Nico Jamme
-            details: Illustrateur sur les gammes Esteren et Dragons.
+            details: Illustrator for the Esteren and Dragons series.

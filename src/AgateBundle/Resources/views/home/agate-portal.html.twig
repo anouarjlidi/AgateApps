@@ -1,5 +1,7 @@
 {% extends '@Agate/agate-layout.html.twig' %}
 
+{% trans_default_domain 'AgateBundle' %}
+
 {% block stylesheets -%}
     {{- parent() -}}
     <style type="text/css">.sr-only {position: absolute;width: 1px;height: 1px;margin: -1px;padding: 0;overflow: hidden;clip: rect(0,0,0,0);border: 0;}</style>
@@ -9,7 +11,7 @@
 
     {% spaceless %}
 
-    <h1 class="sr-only">Bienvenue sur le nouveau portail du Studio Agate</h1>
+    <h1 class="sr-only">{{ 'portal.title'|trans }}</h1>
 
     <div id="index-banner" class="parallax-container valign-wrapper">
         <div class="section no-pad-bot">
