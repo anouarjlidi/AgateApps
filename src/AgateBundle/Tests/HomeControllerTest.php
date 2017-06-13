@@ -17,6 +17,8 @@ class HomeControllerTest extends WebTestCase
 {
     public function testIndexWithFrenchHomepage()
     {
+        parent::resetDatabase();
+
         $client = $this->getClient('www.studio-agate.dev');
 
         $crawler = $client->request('GET', '/fr/');
@@ -32,16 +34,13 @@ class HomeControllerTest extends WebTestCase
 
     public function testIndexWithEnglishHomepage()
     {
+        parent::resetDatabase();
+
         $client = $this->getClient('www.studio-agate.dev');
 
-        $crawler = $client->request('GET', '/fr/');
+        $client->request('GET', '/en/');
 
         // Ensures that portal homepage is managed in a controller and not in the CMS
-        static::assertSame('agate_portal_home', $client->getRequest()->attributes->get('_route'));
-
-        static::assertSame(200, $client->getResponse()->getStatusCode());
-
-        // Check <h1> content only, this will be our "regression point" for homepage (now that it's static and no more in the CMS)
-        static::assertSame('Welcome to the new Studio Agate portal', trim($crawler->filter('#content h1')->text()));
+        static::assertSame(404, $client->getResponse()->getStatusCode());
     }
 }
