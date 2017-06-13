@@ -14,7 +14,9 @@ team:
             details: Layout artist, graphic designer, and illustrator.
         clovis:
             name: Clovis
-            details: Translator and coordinator for the English version of the Shadows of Esteren series.
+            details: |
+                Translator and coordinator for the English version of the Shadows of Esteren series, Vampire Requiem and
+                french version of 7th Sea.
         gawain:
             name: Gawain
             details: Head illustrator.
@@ -46,7 +48,7 @@ team:
             details: Composer and singer for the album Adeliane.
         francois_rousselot:
             name: François Rousselot
-            details: Conductor and composer for the album Adeliane.
+            details: Conductor for the album Dearg and composer for the album Adeliane.
         ginl:
             name: GinL
             details: Illustrator and layout artist for the Dragons series.

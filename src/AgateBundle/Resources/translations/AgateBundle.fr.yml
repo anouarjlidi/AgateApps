@@ -14,7 +14,7 @@ team:
             details: Maquettiste, graphiste et illustratrice.
         clovis:
             name: Clovis
-            details: Traducteur et coordinateur de la version anglaise des Ombres d'Esteren.
+            details: Traducteur et coordinateur de la version anglaise des Ombres d'Esteren, de Vampire Requiem et 7e Mer.
         gawain:
             name: Gawain
             details: Illustrateur senior du studio.
@@ -43,10 +43,10 @@ team:
             details: Peintre, illustrateur sur les gammes Esteren et Dragons.
         clarisse_may:
             name: Clarisse Mây
-            details: Compositrice, interprète sur l'album Adeliane
+            details: Compositrice, interprète sur l'album Adeliane.
         francois_rousselot:
             name: François Rousselot
-            details: Chef d'orchestre, compositeur de l'album Adeliane.
+            details: Chef d'orchestre pour l'album Dearg et compositeur de l'album Adeliane.
         ginl:
             name: GinL
             details: Illustratrice et maquettiste de la gamme Dragons.
