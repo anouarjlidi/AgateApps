@@ -367,9 +367,14 @@ class Step13PrimaryDomainsTest extends AbstractStepTest
 
         $crawler = $client->request('GET', '/fr/character/generate/'.$this->getStepName());
 
-        $client->submit($crawler->filter('#generator_form')->form(), $submitted);
+        $crawler = $client->submit($crawler->filter('#generator_form')->form(), $submitted);
 
-        static::assertTrue($client->getResponse()->isRedirect('/fr/character/generate/14_use_domain_bonuses'));
+        $error = 'Unknown error when evaluating valid domains with dataset.';
+        if ($crawler->filter('#flash-messages')->count()) {
+            $error .= "\n".trim($crawler->filter('#flash-messages')->text());
+        }
+
+        static::assertTrue($client->getResponse()->isRedirect('/fr/character/generate/14_use_domain_bonuses'), $error);
 
         // Make sure not submitted scholar is still taken in account
         if (!array_key_exists('scholar', $submitted)) {
@@ -629,145 +634,125 @@ class Step13PrimaryDomainsTest extends AbstractStepTest
                     'domains' => [1, 1, 2, 2, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 3],
                 ]
             ],
-
-            /* TODO: Add more!
-            0 => [
+            31 => [
                 10, // Explorateur
                 [
                     'ost' => 2,
-                    //            1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16
-                    'domains' => [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    'domains' => [1, 1, 2, 2, 3, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0],
                 ]
             ],
-            0 => [
+            32 => [
+                10, // Explorateur
+                [
+                    'ost' => 2,
+                    'domains' => [1, 1, 2, 2, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 3, 0],
+                ]
+            ],
+            33 => [
                 11, // Investigateur
                 [
                     'ost' => 2,
-                    //            1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16
-                    'domains' => [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    'domains' => [3, 1, 1, 2, 2, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0],
                 ]
             ],
-            0 => [
-                12, // Magientiste
+            34 => [
+                11, // Investigateur
                 [
                     'ost' => 2,
-                    //            1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16
-                    'domains' => [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    'domains' => [1, 3, 1, 2, 2, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0],
                 ]
             ],
-            0 => [
-                13, // Malandrin
+            35 => [
+                11, // Investigateur
                 [
                     'ost' => 2,
-                    //            1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16
-                    'domains' => [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    'domains' => [1, 1, 3, 2, 2, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0],
                 ]
             ],
-            0 => [
-                14, // Médecin
+            36 => [
+                11, // Investigateur
                 [
                     'ost' => 2,
-                    //            1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16
-                    'domains' => [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    'domains' => [1, 1, 2, 3, 2, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0],
                 ]
             ],
-            0 => [
-                15, // Occultiste
+            37 => [
+                11, // Investigateur
                 [
                     'ost' => 2,
-                    //            1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16
-                    'domains' => [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    'domains' => [1, 1, 2, 2, 3, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0],
                 ]
             ],
-            0 => [
-                16, // Paysan
+            38 => [
+                11, // Investigateur
                 [
                     'ost' => 2,
-                    //            1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16
-                    'domains' => [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    'domains' => [1, 1, 2, 2, 0, 3, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0],
                 ]
             ],
-            0 => [
-                18, // Varigal
+            39 => [
+                11, // Investigateur
                 [
                     'ost' => 2,
-                    //            1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16
-                    'domains' => [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    'domains' => [1, 1, 2, 2, 0, 0, 3, 5, 0, 0, 0, 0, 0, 0, 0, 0],
                 ]
             ],
-            0 => [
-                19, // Joueur professionnel
+            40 => [
+                11, // Investigateur
                 [
                     'ost' => 2,
-                    //            1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16
-                    'domains' => [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    'domains' => [1, 1, 2, 2, 0, 0, 0, 5, 3, 0, 0, 0, 0, 0, 0, 0],
                 ]
             ],
-            0 => [
-                20, // Moine du Temple
+            41 => [
+                11, // Investigateur
                 [
                     'ost' => 2,
-                    //            1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16
-                    'domains' => [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    'domains' => [1, 1, 2, 2, 0, 0, 0, 5, 0, 3, 0, 0, 0, 0, 0, 0],
                 ]
             ],
-            0 => [
-                21, // Clerc du Temple
+            42 => [
+                11, // Investigateur
                 [
                     'ost' => 2,
-                    //            1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16
-                    'domains' => [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    'domains' => [1, 1, 2, 2, 0, 0, 0, 5, 0, 0, 3, 0, 0, 0, 0, 0],
                 ]
             ],
-            0 => [
-                22, // Prêtre du Temple
+            43 => [
+                11, // Investigateur
                 [
                     'ost' => 2,
-                    //            1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16
-                    'domains' => [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    'domains' => [1, 1, 2, 2, 0, 0, 0, 5, 0, 0, 0, 3, 0, 0, 0, 0],
                 ]
             ],
-            0 => [
-                23, // Vecteur du Temple
+            44 => [
+                11, // Investigateur
                 [
                     'ost' => 2,
-                    //            1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16
-                    'domains' => [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    'domains' => [1, 1, 2, 2, 0, 0, 0, 5, 0, 0, 0, 0, 3, 0, 0, 0],
                 ]
             ],
-            0 => [
-                24, // Sigire du Temple
+            45 => [
+                11, // Investigateur
                 [
                     'ost' => 2,
-                    //            1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16
-                    'domains' => [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    'domains' => [1, 1, 2, 2, 0, 0, 0, 5, 0, 0, 0, 0, 0, 3, 0, 0],
                 ]
             ],
-            0 => [
-                25, // Chevalier lame du Temple
+            46 => [
+                11, // Investigateur
                 [
                     'ost' => 2,
-                    //            1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16
-                    'domains' => [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    'domains' => [1, 1, 2, 2, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 3, 0],
                 ]
             ],
-            0 => [
-                26, // Dàmàthair
+            47 => [
+                11, // Investigateur
                 [
                     'ost' => 2,
-                    //            1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16
-                    'domains' => [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    'domains' => [1, 1, 2, 2, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 3],
                 ]
             ],
-            0 => [
-                27, // Combattant à distance
-                [
-                    'ost' => 2,
-                    //            1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16
-                    'domains' => [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                ]
-            ],
-            */
         ];
 
         // Shifts all keys with +1 so we have real ids.
@@ -788,7 +773,7 @@ class Step13PrimaryDomainsTest extends AbstractStepTest
      *
      * @return Client
      */
-    protected function getStepClient($jobId = 1, $scholar = false)
+    private function getStepClient($jobId = 1, $scholar = false)
     {
         $client = $this->getClient();
         $client->restart();
