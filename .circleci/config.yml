@@ -56,7 +56,9 @@ jobs:
             - restore_cache:
                 keys:
                     - composer-cache-{{ checksum "composer.lock" }}
+                    - composer-cache-{{ .Branch }}
                     - yarn-cache-{{ checksum "yarn.lock" }}
+                    - yarn-cache-{{ .Branch }}
 
             - run:
                 name: 'Show config'
@@ -106,7 +108,17 @@ jobs:
                     - ~/.composer/cache
 
             - save_cache:
+                key: composer-cache-{{ .Branch }}
+                paths:
+                    - ~/.composer/cache
+
+            - save_cache:
                 key: yarn-cache-{{ checksum "yarn.lock" }}
+                paths:
+                    - node_modules
+
+            - save_cache:
+                key: yarn-cache-{{ .Branch }}
                 paths:
                     - node_modules
 
