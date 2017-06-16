@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace AgateBundle\Tests;
+namespace AgateBundle\Tests\Controller;
 
 use Tests\WebTestCase;
 

@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Esteren\PortalBundle\Form;
+namespace AgateBundle\Form;
 
-use Esteren\PortalBundle\Model\ContactMessage;
+use AgateBundle\Model\ContactMessage;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;

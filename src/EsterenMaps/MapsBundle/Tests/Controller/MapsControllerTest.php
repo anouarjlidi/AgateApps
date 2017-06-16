@@ -30,12 +30,12 @@ class MapsControllerTest extends WebTestCase
         $crawler = $client->request('GET', '/fr/');
 
         $article = $crawler->filter('.maps-list article');
-        static::assertGreaterThanOrEqual(1, $article->count(), print_r($client->getResponse()->getContent(), true));
+        static::assertGreaterThanOrEqual(1, $article->count(), 'Failed to validate map present in LISTING');
 
         $link = $article->filter('a')->link();
 
         $crawler = $client->click($link);
 
-        static::assertSame(1, $crawler->filter('#map_wrapper')->count(), print_r($client->getResponse()->getContent(), true));
+        static::assertCount(1, $crawler->filter('#map_wrapper'), 'Map link does not redirect to map view, or map view is broken');
     }
 }

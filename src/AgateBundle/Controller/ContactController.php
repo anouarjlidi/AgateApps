@@ -11,8 +11,8 @@
 
 namespace AgateBundle\Controller;
 
-use Esteren\PortalBundle\Form\ContactType;
-use Esteren\PortalBundle\Model\ContactMessage;
+use AgateBundle\Form\ContactType;
+use AgateBundle\Model\ContactMessage;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;

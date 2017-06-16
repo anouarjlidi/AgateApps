@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Esteren\PortalBundle\Model;
+namespace AgateBundle\Model;
 
 class ContactMessage
 {

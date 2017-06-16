@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Esteren\PortalBundle\Tests;
+namespace AgateBundle\Tests\Controller;
 
 use Symfony\Bundle\SwiftmailerBundle\DataCollector\MessageDataCollector;
 use Tests\WebTestCase;
@@ -20,7 +20,7 @@ class ContactControllerTest extends WebTestCase
     {
         parent::resetDatabase();
 
-        $client = $this->getClient('portal.esteren.dev');
+        $client = $this->getClient('www.studio-agate.dev');
 
         $crawler = $client->request('GET', '/fr/contact');
 
@@ -66,5 +66,4 @@ class ContactControllerTest extends WebTestCase
         static::assertSame($data['email'], key($message->getFrom()));
         static::assertContains($data['message'], $message->getBody());
     }
-
 }
