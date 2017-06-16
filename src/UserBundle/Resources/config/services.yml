@@ -8,16 +8,14 @@ services:
         class: UserBundle\Security\Provider\UsernameOrEmailProvider
         autowire: true
 
-    user.util.canonicalizer:
-        class: UserBundle\Util\Canonicalizer
+    UserBundle\Util\Canonicalizer: ~
 
-    user.repository:
-        class: UserBundle\Repository\UserRepository
+    UserBundle\Repository\UserRepository:
         factory: ['@doctrine.orm.default_entity_manager', 'getRepository']
         arguments:
             - UserBundle\Entity\User
         calls:
-            - ['setCanonicalizer', ['@user.util.canonicalizer']]
+            - ['setCanonicalizer', ['@UserBundle\Util\Canonicalizer']]
 
     user.form.type.registration:
         class: UserBundle\Form\Type\RegistrationFormType

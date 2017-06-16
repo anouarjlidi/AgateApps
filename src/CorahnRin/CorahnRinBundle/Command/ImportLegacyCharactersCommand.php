@@ -95,7 +95,7 @@ class ImportLegacyCharactersCommand extends ContainerAwareCommand
         // Defining specific properties for this class
         $this->input       = $input;
         $this->io          = new SymfonyStyle($input, $output);
-        $this->userManager = $container->get('user.repository');
+        $this->userManager = $container->get(UserRepository::class);
         $doctrine          = $container->get('doctrine');
         $this->em          = $doctrine->getManager();
         $this->legacyCnx   = $doctrine->getConnection('legacy');

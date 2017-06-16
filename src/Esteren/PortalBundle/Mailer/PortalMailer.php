@@ -12,14 +12,14 @@
 namespace Esteren\PortalBundle\Mailer;
 
 use Esteren\PortalBundle\Model\ContactMessage;
-use Symfony\Bundle\TwigBundle\TwigEngine;
+use Symfony\Component\Templating\EngineInterface;
 
 final class PortalMailer
 {
     private $templating;
     private $mailer;
 
-    public function __construct(\Swift_Mailer $mailer, TwigEngine $templating)
+    public function __construct(\Swift_Mailer $mailer, EngineInterface $templating)
     {
         $this->templating = $templating;
         $this->mailer = $mailer;

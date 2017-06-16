@@ -20,6 +20,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Security;
+use UserBundle\Repository\UserRepository;
 
 class RegistrationController extends Controller
 {
@@ -75,7 +76,7 @@ class RegistrationController extends Controller
         }
 
         $session->remove('user_send_confirmation_email/email');
-        $user = $this->get('user.repository')->findOneByEmail($email);
+        $user = $this->get(UserRepository::class)->findOneByEmail($email);
 
         if (null === $user) {
             throw new NotFoundHttpException(sprintf('The user with email "%s" does not exist', $email));
@@ -93,7 +94,7 @@ class RegistrationController extends Controller
     public function confirmAction(string $token, string $_locale)
     {
         /** @var User|null $user */
-        $user = $this->get('user.repository')->findOneBy(['confirmationToken' => $token]);
+        $user = $this->get(UserRepository::class)->findOneBy(['confirmationToken' => $token]);
 
         if (null === $user) {
             throw new NotFoundHttpException(sprintf('The user with confirmation token "%s" does not exist', $token));

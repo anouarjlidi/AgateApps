@@ -11,25 +11,22 @@
 
 namespace UserBundle\Security\Provider;
 
-use Doctrine\ORM\EntityManager;
 use UserBundle\Entity\User;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
+use UserBundle\Repository\UserRepository;
 
-final class UsernameOrEmailProvider implements UserProviderInterface
+class UsernameOrEmailProvider implements UserProviderInterface
 {
     const USER_CLASS = User::class;
 
-    /**
-     * @var EntityManager
-     */
-    private $entityManager;
+    private $userRepository;
 
-    public function __construct(EntityManager $entityManager)
+    public function __construct(UserRepository $userRepository)
     {
-        $this->entityManager = $entityManager;
+        $this->userRepository = $userRepository;
     }
 
     /**
@@ -37,7 +34,7 @@ final class UsernameOrEmailProvider implements UserProviderInterface
      */
     public function loadUserByUsername($username)
     {
-        return $this->entityManager->getRepository('UserBundle:User')->findByUsernameOrEmail($username);
+        return $this->userRepository->findByUsernameOrEmail($username);
     }
 
     /**
@@ -49,7 +46,7 @@ final class UsernameOrEmailProvider implements UserProviderInterface
             throw new UnsupportedUserException(sprintf('Expected an instance of %s, but got "%s".', static::USER_CLASS, get_class($user)));
         }
 
-        if (null === $reloadedUser = $this->entityManager->find('UserBundle:User', $user->getId())) {
+        if (null === $reloadedUser = $this->userRepository->find($user->getId())) {
             throw new UsernameNotFoundException(sprintf('User with ID "%s" could not be reloaded.', $user->getId()));
         }
 

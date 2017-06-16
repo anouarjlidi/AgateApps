@@ -72,7 +72,7 @@ final class UsersFixtures extends AbstractFixture implements OrderedFixtureInter
         /** @var EntityRepository $repo */
         $repo = $this->manager->getRepository('UserBundle:User');
 
-        $this->canonicalizer = $this->container->get('user.util.canonicalizer');
+        $this->canonicalizer = $this->container->get(Canonicalizer::class);
         $this->passwordEncoder = $this->container->get('security.password_encoder');
 
         $this->fixtureObject($repo, 1, 'Pierstoval', 'pierstoval@gmail.com', 'admin', true);

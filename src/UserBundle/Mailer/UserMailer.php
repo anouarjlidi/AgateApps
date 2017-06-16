@@ -11,10 +11,10 @@
 
 namespace UserBundle\Mailer;
 
-use Symfony\Bridge\Twig\TwigEngine;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Templating\EngineInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 use UserBundle\Entity\User;
 
@@ -26,7 +26,7 @@ final class UserMailer
     private $sender;
     private $translator;
 
-    public function __construct(RequestStack $requestStack, \Swift_Mailer $mailer, TwigEngine $templating, RouterInterface $router, TranslatorInterface $translator)
+    public function __construct(RequestStack $requestStack, \Swift_Mailer $mailer, EngineInterface $templating, RouterInterface $router, TranslatorInterface $translator)
     {
         $this->sender = 'no-reply@'.$requestStack->getMasterRequest()->getHost();
         $this->templating = $templating;

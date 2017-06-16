@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use UserBundle\Form\Type\ResettingFormType;
+use UserBundle\Repository\UserRepository;
 
 /**
  * @Route("/resetting")
@@ -41,7 +42,7 @@ class ResettingController extends Controller
     {
         $username = $request->request->get('username');
 
-        $user = $this->get('user.repository')->findOneByEmail($username);
+        $user = $this->get(UserRepository::class)->findOneByEmail($username);
 
         if (null !== $user) {
             if (null === $user->getConfirmationToken()) {
@@ -76,7 +77,7 @@ class ResettingController extends Controller
      */
     public function resetAction(Request $request, $token)
     {
-        $user = $this->get('user.repository')->findByConfirmationToken($token);
+        $user = $this->get(UserRepository::class)->findByConfirmationToken($token);
 
         if (null === $user) {
             throw new NotFoundHttpException(sprintf('The user with "confirmation token" does not exist for value "%s"', $token));
