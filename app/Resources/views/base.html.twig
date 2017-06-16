@@ -72,32 +72,28 @@
                         {% block menu_right %}
                         <ul class="nav navbar-nav navbar-right">
                             {% block menu_right_content %}
-                                {% block menu_locale %}
-                                    <li class="dropdown">
-                                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ 'lang' | trans({}, 'Languages') }} [{{ locale|upper }}] <b class="caret"></b></a>
-                                        <ul class="dropdown-menu">
-                                            {% set route_name = app.request.attributes.get('_route') %}
-                                            {% set route_params = app.request.attributes.get('_route_params') %}
-                                            {% for loc in locales %}
-                                                {% if loc == locale %}
-                                                    <li class="active"><a>{{ loc | trans({}, 'Languages') }}</a></li>
-                                                {% else %}
-                                                    <li><a href="{{ path(route_name, ((route_params|default({}, 'Languages')) | merge({'_locale':loc})) ) }}">{{ loc | trans({}, 'Languages') }}</a></li>
-                                                {% endif %}
-                                            {% endfor %}
-                                        </ul>
-                                    </li>
-                                {% endblock %}
-                                {% block menu_right %}
-                                    {% if app.user.username is not defined %}
-                                        <li><a href="{{ path('user_login') }}">{{ 'layout.login' | trans({}, 'UserBundle') }}</a></li>
-                                    {% else %}
-                                        <li><a href="{{ path('user_logout') }}">{{ 'layout.logout' | trans({}, 'UserBundle') }} [ {{ app.user.username }} ]</a></li>
-                                        {% if is_granted('ROLE_MANAGER') %}
-                                            <li><a href="{{ path('easyadmin') }}">{{ 'links.admin' | trans }}</a></li>
-                                        {% endif %}
+                                <li class="dropdown">
+                                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ 'lang' | trans({}, 'Languages') }} [{{ locale|upper }}] <b class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                        {% set route_name = app.request.attributes.get('_route') %}
+                                        {% set route_params = app.request.attributes.get('_route_params') %}
+                                        {% for loc in locales %}
+                                            {% if loc == locale %}
+                                                <li class="active"><a>{{ loc | trans({}, 'Languages') }}</a></li>
+                                            {% else %}
+                                                <li><a href="{{ path(route_name, ((route_params|default({}, 'Languages')) | merge({'_locale':loc})) ) }}">{{ loc | trans({}, 'Languages') }}</a></li>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                                {% if app.user.username is not defined %}
+                                    <li><a href="{{ path('user_login') }}">{{ 'layout.login' | trans({}, 'UserBundle') }}</a></li>
+                                {% else %}
+                                    <li><a href="{{ path('user_logout') }}">{{ 'layout.logout' | trans({}, 'UserBundle') }} [ {{ app.user.username }} ]</a></li>
+                                    {% if is_granted('ROLE_MANAGER') %}
+                                        <li><a href="{{ path('easyadmin') }}">{{ 'links.admin' | trans }}</a></li>
                                     {% endif %}
-                                {% endblock %}
+                                {% endif %}
                             {% endblock %}
                         </ul>
                         {% endblock %}
