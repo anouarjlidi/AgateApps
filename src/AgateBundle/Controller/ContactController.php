@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Esteren\PortalBundle\Controller;
+namespace AgateBundle\Controller;
 
 use Esteren\PortalBundle\Form\ContactType;
 use Esteren\PortalBundle\Model\ContactMessage;
@@ -47,7 +47,7 @@ class ContactController extends Controller
             $this->get('logger')->error('Error when sending email', $this->get('jms_serializer')->serialize($message, 'json'));
         }
 
-        return $this->render('@EsterenPortal/contact.html.twig', [
+        return $this->render('@Agate/contact.html.twig', [
             'form'       => $form->createView(),
             'mail_error' => $form->getErrors(true, true)->count(),
         ]);

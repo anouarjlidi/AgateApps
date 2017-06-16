@@ -73,23 +73,22 @@
                             {% block menu_right %}
                                 <ul class="right hide-on-med-and-down">
                                     {% block menu_right_content %}
-                                        {% block menu_locale %}{% endblock %}
-                                    {% endblock %}
-                                    {% block menu_security %}
-                                        {{ include('_menu_security.html.twig', {'dropdown': true}) }}
+                                        {{ include('_menu_right.html.twig', {'dropdown': true}) }}
                                     {% endblock %}
                                 </ul>
                             {% endblock %}
 
-                            <ul id="nav-mobile" class="side-nav">
-                                {{ block('menu_left_content') }}
-                                {{ block('menu_right_content') }}
-                                {% block menu_security_mobile %}
-                                    {{ include('_menu_security.html.twig', {'dropdown': false}) }}
-                                {% endblock %}
-                            </ul>
-                            {% if block('menu_security_mobile')|trim|length %}
-                                <a href="#" data-activates="nav-mobile" class="button-collapse right text-white" title="{{ 'links.menu'|trans }}">
+                            {% block menu_right_mobile %}
+                                <ul id="nav-mobile" class="side-nav">
+                                    {% block menu_right_mobile_content %}
+                                        {{ block('menu_left_content') }}
+                                        {{ block('menu_right_content') }}
+                                        {{ include('_menu_right.html.twig', {'dropdown': false}) }}
+                                    {% endblock %}
+                                </ul>
+                            {% endblock %}
+                            {% if block('menu_right_mobile')|trim|length %}
+                                <a href="#" id="nav-mobile-link" data-activates="nav-mobile" class="button-collapse right" title="{{ 'links.menu'|trans }}">
                                     <i class="fa fa-bars text-white"></i> Menu
                                 </a>
                             {% endif %}
@@ -132,10 +131,10 @@
                                 {% block footer_links %}
                                     <h2>{{ 'footer.links'|trans }}</h2>
                                     <ul>
-                                        <li><a href="{{ path('contact') }}">{{ 'footer.contact'|trans }}</a></li>
                                         <li><a href="http://agate-rpg.blogspot.fr/">{{ 'footer.agate_rpg_blog'|trans }}</a></li>
-                                        <li><a href="https://www.google.com/maps/d/viewer?mid=1wdFjK4OsYcQpwiASe9AVhkGNPbQ">{{ 'footer.meet_the_team'|trans }}</a></li>
+                                        <li><a href="{{ path('contact') }}">{{ 'footer.contact'|trans }}</a></li>
                                         <li><a href="{{ path('agate_team') }}">{{ 'footer.team'|trans }}</a></li>
+                                        <li><a href="https://www.google.com/maps/d/viewer?mid=1wdFjK4OsYcQpwiASe9AVhkGNPbQ">{{ 'footer.meet_the_team'|trans }}</a></li>
                                         {% if app.request.locale == 'fr' %}
                                             <li><a href="{{ path('legal_mentions') }}">{{ 'footer.legal_mentions'|trans }}</a></li>
                                         {% endif %}

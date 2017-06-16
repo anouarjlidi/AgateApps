@@ -1,3 +1,6 @@
+contact:
+    send_message: 'Send us a message'
+
 team:
     main_title: The Studio Agate team
     permanent_members: The studio gathers six permanent members

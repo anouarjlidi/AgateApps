@@ -88,7 +88,7 @@
                                         </ul>
                                     </li>
                                 {% endblock %}
-                                {% block menu_security %}
+                                {% block menu_right %}
                                     {% if app.user.username is not defined %}
                                         <li><a href="{{ path('user_login') }}">{{ 'layout.login' | trans({}, 'UserBundle') }}</a></li>
                                     {% else %}

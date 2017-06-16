@@ -1,8 +1,8 @@
 {% spaceless %}
 
-{% extends '@EsterenPortal/email/email_layout_internal.html.twig' %}
+{% extends '@Agate/email/email_layout_internal.html.twig' %}
 
-{% import '@EsterenPortal/email/macro/macros.html.twig' as macros %}
+{% import '@Agate/email/_macros.html.twig' as macros %}
 
 {# For demonstration only #}
 {% if message is not defined and app.environment == 'dev' and app.debug %}

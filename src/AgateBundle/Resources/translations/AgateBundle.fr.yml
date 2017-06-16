@@ -1,3 +1,6 @@
+contact:
+    send_message: 'Envoyez-nous un message'
+
 team:
     main_title: L'Équipe du studio Agate
     permanent_members: Le studio Agate est composé de six membres permanents.

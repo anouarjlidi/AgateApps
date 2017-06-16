@@ -7,8 +7,13 @@
 {%- endblock %}
 
 {# Disable login on this page because for now it's not useful #}
-{% block menu_security '' %}
-{% block menu_security_mobile '' %}
+{% block menu_right_content %}
+    {{ include('@Agate/_menu_right.html.twig') }}
+{% endblock %}
+
+{% block menu_right_mobile_content %}
+    {{ block('menu_right_content') }}
+{% endblock %}
 
 {% block menu_brand_link %}
     <a href="{{ path('agate_portal_home') }}" class="brand-logo position-static left" title="{{ 'home' | trans({}, 'OrbitaleCms') }}">
@@ -21,6 +26,8 @@
 {% block title %}
     Studio Agate
 {% endblock %}
+
+{% block footer_social_networks '' %}
 
 {% block footer_about %}
     <img src="{{ asset('img/agate/logo_agate_studio_big.png') }}" alt="Logo Studio Agate" style="max-height: 250px;">
