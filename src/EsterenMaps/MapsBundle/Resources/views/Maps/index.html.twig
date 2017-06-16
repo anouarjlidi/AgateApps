@@ -7,11 +7,13 @@
 
     <section class="row maps-list">
     {% for map in list %}
-        <article class="col-sm-4">
+        <article class="col s4">
             <header><h2>{{ map.name }}</h2></header>
             <p>{{ map.description }}</p>
             <footer>
-                <a href="{{ url('esterenmaps_maps_maps_view', {'nameSlug':map.nameSlug}) }}" title="{{ 'maps.view' | trans }} : {{ map.name | trans }}" class="btn btn-default"><i class="fa fa-eye"></i> {{ 'maps.view' | trans }}</a>
+                <a href="{{ url('esterenmaps_maps_maps_view', {'nameSlug':map.nameSlug}) }}" title="{{ 'maps.view' | trans }} : {{ map.name | trans }}" class="btn btn-default">
+                    <i class="fa fa-eye"></i> {{ 'maps.view' | trans }}
+                </a>
             </footer>
         </article>
         {% else %}

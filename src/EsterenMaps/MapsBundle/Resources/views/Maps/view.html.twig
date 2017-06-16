@@ -1,18 +1,17 @@
-{% extends '@EsterenMaps/layout.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}{{ 'entities.maps.single_view' | trans({}, 'EsterenMaps') }} {{ map.name }} - {{ parent() }}{% endblock %}
 
+{% block menus '' %}
 {% block footer '' %}
 
 {% block layout %}
-    {% block menus %}{{ parent() }}{% endblock %}
     <div id="map_wrapper">
         <div id="maps_admin_container">
             {{ include('@EsterenMaps/menu/show_hide.html.twig') }}
         </div>
         <div id="esterenmap_sidebar"></div>
         <div id="map"></div>
-        <div id="inputs_container"></div>
     </div>
 {% endblock %}
 

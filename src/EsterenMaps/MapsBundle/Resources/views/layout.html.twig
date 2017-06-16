@@ -1,9 +1,12 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_materialize.html.twig' %}
 
 {% block menu_left_content %}
-    <li class="dropdown">
-        <a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ 'entities.maps.title' | trans({}, 'EsterenMaps') }} <b class="caret"></b></a>
-        <ul class="dropdown-menu">
+    <li>
+        <a href="#" class="dropdown-button" data-activates="maps-dropdown">
+            {{ 'entities.maps.title' | trans({}, 'EsterenMaps') }}
+            <span class="fa fa-caret-down"></span>
+        </a>
+        <ul id="maps-dropdown" class="dropdown-content">
             {% for map in get_menu_maps() %}
                 <li>
                     <a href="{{ path('esterenmaps_maps_maps_view', {'nameSlug': map.nameSlug}) }}">{{ map.name }}</a>

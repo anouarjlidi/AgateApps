@@ -402,14 +402,15 @@
         } else {
             var footer = d.getElementById('footer');
             var navigation = d.getElementById('navigation');
-            var map_edit_menu = d.getElementById('map_edit_menu');
-            $(d.getElementById(this._mapOptions.container)).height(
-                  $(w).height()
+            var maps_admin_container = d.getElementById('maps_admin_container');
+            height =
+                $(w).height()
                 - (footer ? $(footer).outerHeight(true) : 0)
                 - (navigation ? $(navigation).outerHeight(true) : 0)
-                - (map_edit_menu ? $(map_edit_menu).outerHeight(true) : 0)
-                //- 40
-            );
+                - (maps_admin_container ? $(maps_admin_container).outerHeight(true) : 0)
+                - 10
+            ;
+            $(d.getElementById(this._mapOptions.container)).height(height);
         }
         return this;
     };
