@@ -11,7 +11,7 @@
 
 namespace UserBundle\Tests\Security;
 
-class SecurityControllerTestFR extends AbstractSecurityControllerTest
+class SecurityControllerFRTest extends AbstractSecurityControllerTest
 {
     protected function getLocale(): string
     {

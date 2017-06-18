@@ -21,9 +21,6 @@ abstract class AbstractSecurityControllerTest extends WebTestCase
 
     abstract protected function getLocale(): string;
 
-    /**
-     * @dataProvider provideLocales
-     */
     public function testForbiddenAdmin()
     {
         $locale = $this->getLocale();
@@ -35,9 +32,6 @@ abstract class AbstractSecurityControllerTest extends WebTestCase
         static::assertSame(403, $client->getResponse()->getStatusCode());
     }
 
-    /**
-     * @dataProvider provideLocales
-     */
     public function testAllowedAdmin()
     {
         $locale = $this->getLocale();
@@ -52,10 +46,6 @@ abstract class AbstractSecurityControllerTest extends WebTestCase
         static::assertSame(200, $client->getResponse()->getStatusCode());
     }
 
-    /**
-     * Test registration action
-     * @dataProvider provideLocales
-     */
     public function testRegister()
     {
         $locale = $this->getLocale();
@@ -97,7 +87,6 @@ abstract class AbstractSecurityControllerTest extends WebTestCase
 
     /**
      * @depends testRegister
-     * @dataProvider provideLocales
      */
     public function testLogin()
     {
@@ -140,7 +129,6 @@ abstract class AbstractSecurityControllerTest extends WebTestCase
 
     /**
      * @depends testLogin
-     * @dataProvider provideLocales
      */
     public function testChangePassword()
     {
@@ -184,7 +172,6 @@ abstract class AbstractSecurityControllerTest extends WebTestCase
 
     /**
      * @depends testChangePassword
-     * @dataProvider provideLocales
      */
     public function testEditProfile()
     {
@@ -220,7 +207,6 @@ abstract class AbstractSecurityControllerTest extends WebTestCase
 
     /**
      * @depends testEditProfile
-     * @dataProvider provideLocales
      */
     public function testResetPasswordRequest()
     {
