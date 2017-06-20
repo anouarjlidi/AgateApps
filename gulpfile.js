@@ -257,6 +257,7 @@ const hasCss    = GulpfileHelpers.objectSize(config.css) > 0;
 const hasJs     = GulpfileHelpers.objectSize(config.js) > 0;
 
 // Required extensions
+var fs         = require('fs');
 var gulp       = require('gulp4');
 var gulpif     = require('gulp-if');
 var watch      = require('gulp-watch');
@@ -269,6 +270,38 @@ var sourcemaps = require('gulp-sourcemaps');
 var less     = hasLess   ? require('gulp-less')     : function(){ return {}; };
 var sass     = hasSass   ? require('gulp-sass')     : function(){ return {}; };
 var imagemin = hasImages ? require('gulp-imagemin') : function(){ return {}; };
+
+/************** Files checks **************/
+
+var erroredFiles = [];
+
+var checkCallback = function(key, values) {
+    values.forEach(function(fileName) {
+        try {
+            // Remove wildcards
+            fileName = fileName.replace(/(?:(?:\*\.\w{2,4}(?:$|\/))|(?:\/\*+(?:$|\/)))/gi, '');
+            fs.statSync(fileName);
+        } catch (e) {
+            if (e.code === 'ENOENT' || (e.message && e.message.match(/no such file/i)) || String(e).match(/no such file/i)) {
+                erroredFiles.push(fileName);
+            } else {
+                throw e;
+            }
+        }
+    })
+};
+
+GulpfileHelpers.objectForEach(config.css, checkCallback);
+GulpfileHelpers.objectForEach(config.js, checkCallback);
+GulpfileHelpers.objectForEach(config.images, checkCallback);
+GulpfileHelpers.objectForEach(config.copy, checkCallback);
+GulpfileHelpers.objectForEach(config.sass, checkCallback);
+GulpfileHelpers.objectForEach(config.less, checkCallback);
+
+if (erroredFiles.length) {
+    process.stderr.write("\nMissing files: \n"+erroredFiles.join("\n")+"\n");
+    process.exit(1);
+}
 
 /*************** Gulp tasks ***************/
 
