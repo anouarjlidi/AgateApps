@@ -7,8 +7,16 @@ team:
     friends_text: |
         Nous travaillons avec de nombreux auteurs, illustrateurs et créatifs freelance qui participent à nos projets.
     friends_thanks: |
-        Un grand merci à toutes les personnes qui ont un jour ou l'autre participé à nos projets, nous ont soutenu, les
-        playtesteurs, les volontaires sur la tournée, les membres de la communauté... merci !
+        Un grand merci à toutes les personnes qui participent ou qui ont un jour ou l'autre participé à nos projets,
+        Benjamin Loomes de Syrinscape, Ludo "Elenyl" et Nico du dème de Naxos, Jenny Bendel, les compositeurs Delphine
+        Bois, Jure Peternel, Cyrille et Guillaume Aufaure, Loïc et Ed de la Brasserie de l'Etre, Jim Searcy et les
+        équipes de Studio 2 Publishing, Ingo, Thibaud et l'équipe de Gastronogeek, Fred Pinson, l'association
+        Forgesonges, Aurel et Quang de Blue Pill, Marc Gueroult, Dragon Etoile et Tchernopuss, Ynis, Pénombre, Arnaud,
+        Jean et les équipes d'Ulule, Doudou Lacrouts et ses équipes, Kathie, Aude-Lise, Kherveen, Ikaar, Cédric, Patrice
+        et les équipes de Iello. Merci à celles et ceux qui nous ont soutenus et qui continuent à le faire, les
+        playtesteurs, tous les relecteurs qui font un travail décisif, les volontaires sur la tournée, les boutiques,
+        les membres de la communauté sans qui nous ne serions rien et bien sûr nos amis, nos familles... MERCI !
+
     members:
         # Permanent members
         asami:
@@ -36,7 +44,7 @@ team:
             details: Illustrateur et cartographe du studio.
         ben:
             name: Benjamin Diebling
-            details: Auteur sur Dragons et réalisateur.
+            details: Auteur sur la gamme Dragons et réalisateur.
         chane:
             name: Chane
             details: Illustratrice sur les gammes Esteren et Dragons.
@@ -56,7 +64,7 @@ team:
             name: Julien Blondel
             details: Auteur et coordinateur de la gamme Vermine 2047.
         nico_jamme:
-            name: Nico Jamme
+            name: Nicolas Jamme
             details: Illustrateur sur les gammes Esteren et Dragons.
         dominique_atlan:
             name: Dominique Atlan

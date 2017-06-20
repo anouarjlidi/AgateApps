@@ -7,8 +7,16 @@ team:
     friends_text: |
         We work with several authors, illustrators, and freelancers who occasionally participate in our projects.
     friends_thanks: |
-        A big thank you to everyone who contributed to building our projects and keeping them alive:
-        supporters, playtesters, backers, volunteers, community members... thank you!
+        A big thank you to everyone who participate or eventually participated to our projects, Benjamin Loomes of
+        Syrinscape, Ludo "Elenyl" and Nico du dème de Naxos, Jenny Bendel, composers Delphine Bois, Jure Peternel,
+        Cyrille and Guillaume Aufaure, Loïc and Ed de la Brasserie de l'Etre, Jim Searcy and Studio 2 Publishing teams,
+        Ingo, Thibaud and Gastronogeek team, Fred Pinson, Forgesonges association, Aurel and Quang from Blue Pill, Marc
+        Gueroult, Dragon Etoile and Tchernopuss, Ynis, Pénombre, Arnaud, Jean and Ulule teams, Doudou Lacrouts and his
+        teams, Kathie, Aude-Lise, Kherveen, Ikaar, Cédric, Patrice and Iello teams.
+        Thans to everyone who supported us and continue to do so, playtesters, all proof readers that make a very
+        crucial job, volunteers during the tour, shops, members of the community without whom we would be nothing, and
+        of course our friends, family... THANK YOU!
+
     members:
         # Permanent members
         asami:
@@ -38,7 +46,7 @@ team:
             details: Illustrator and mapmaker.
         ben:
             name: Benjamin Diebling
-            details: Author and developer for Dragons.
+        details: Author for the Dragons series and movie director.
         chane:
             name: Chane
             details: Illustrator for the Esteren and Dragons series.
@@ -58,7 +66,7 @@ team:
             name: Julien Blondel
             details: Author and coordinator for the Vermine 2047 series.
         nico_jamme:
-            name: Nico Jamme
+            name: Nicolas Jamme
             details: Illustrator for the Esteren and Dragons series.
         dominique_atlan:
             name: Dominique Atlan

@@ -25,11 +25,6 @@
 
 {% import _self as macros %}
 
-{% block stylesheets -%}
-    {{- parent() -}}
-    <style type="text/css">.sr-only {position: absolute;width: 1px;height: 1px;margin: -1px;padding: 0;overflow: hidden;clip: rect(0,0,0,0);border: 0;}</style>
-{%- endblock %}
-
 {% block content_for_layout %}
     {% spaceless %}
 
@@ -100,7 +95,7 @@
                         {% endfor %}
 
                         <div class="card green lighten-5">
-                            <div class="card-content">
+                            <div class="card-content text-xs">
                                 {{ 'team.friends_thanks'|trans }}
                             </div>
                         </div>
