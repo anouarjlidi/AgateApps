@@ -4,7 +4,6 @@ contact:
 team:
     main_title: The Studio Agate team
     permanent_members: The studio gathers six permanent members
-    friends: Our friends
     friends_text: |
         We work with several authors, illustrators, and freelancers who occasionally participate in our projects.
     friends_thanks: |
@@ -61,3 +60,22 @@ team:
         nico_jamme:
             name: Nico Jamme
             details: Illustrator for the Esteren and Dragons series.
+        dominique_atlan:
+            name: Dominique Atlan
+            details: Accountant and legal advisor.
+        sebastien_chedal:
+            name: Sebastien Chedal
+            details: Game designer, author of the Black Rose.
+        dref:
+            name: Dref
+            details: Proof-reader
+        lison:
+            name: Lison
+            details: Animator and illustrator for the Dragons game.
+        valentin:
+            name: Valentin
+            details: Distributor in the cinema industry and co-founder of Studio Agate.
+        david_camus:
+            name: David Camus
+            details: Literary Agent.
+

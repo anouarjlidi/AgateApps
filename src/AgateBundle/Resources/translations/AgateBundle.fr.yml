@@ -4,7 +4,6 @@ contact:
 team:
     main_title: L'Équipe du studio Agate
     permanent_members: Le studio Agate est composé de six membres permanents.
-    friends: Nos amis
     friends_text: |
         Nous travaillons avec de nombreux auteurs, illustrateurs et créatifs freelance qui participent à nos projets.
     friends_thanks: |
@@ -59,4 +58,22 @@ team:
         nico_jamme:
             name: Nico Jamme
             details: Illustrateur sur les gammes Esteren et Dragons.
+        dominique_atlan:
+            name: Dominique Atlan
+            details: Comptable et conseillère juridique.
+        sebastien_chedal:
+            name: Sebastien Chedal
+            details: Game designer, auteur de la Rose Noire.
+        dref:
+            name: Dref
+            details: Relecteur
+        lison:
+            name: Lison
+            details: Animatrice et illustratrice sur la gamme Dragons.
+        valentin:
+            name: Valentin
+            details: Distributeur dans le cinéma et co-fondateur du Studio Agate.
+        david_camus:
+            name: David Camus
+            details: Agent littéraire.
 

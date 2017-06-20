@@ -2,17 +2,18 @@
 
 {% trans_default_domain 'AgateBundle' %}
 
-{% macro teamMember(name, length) %}
+{% macro teamMember(name, length, index) %}
     {% set grid_class -%}
-        m4 {% if length == 2 and loop.index0 == 0 -%}
+        m4 {% if length == 2 and index == 0 -%}
             offset-m2
-        {%- elseif length == 1 and loop.index0 == 0 -%}
+        {%- elseif length == 1 and index == 0 -%}
             offset-m4
         {%- endif -%}
     {%- endset %}
     <div class="col {{ grid_class }}">
         {% set fullName = ('team.members.'~(name|lower)~'.name')|trans %}
         <div class="card-panel team-member">
+            {# Images are stored in AgateBundle/Resources/assets/team/ #}
             <img src="{{ asset('img/agate/team/'~name~'.jpg') }}" alt="{{ fullName }}" class="circle">
             <h3 class="text-l">
                 {{ fullName }}
@@ -61,34 +62,39 @@
                             <div class="row">
                                 {% set length = members|length %}
                                 {% for name in members %}
-                                    {{ macros.teamMember(name, length) }}
+                                    {{ macros.teamMember(name, length, loop.index0) }}
                                 {% endfor %}
                             </div>
                         {% endfor %}
                     </div>
                 </div>
-
+                <div class="divider"></div>
                 <div class="row">
                     <div class="col s12 center text-m">
-                        <h2>{{ 'team.friends'|trans }}</h2>
-                        <p>{{ 'team.friends_text'|trans }}</p>
+                        <h2 class="text-l">{{ 'team.friends_text'|trans }}</h2>
                         {% set teamMembers = [
-                            'akae',
+                            'dominique_atlan',
                             'ben',
+                            'julien_blondel',
+                            'david_camus',
                             'chane',
+                            'sebastien_chedal',
                             'chris',
+                            'dref',
+                            'ginl',
+                            'nico_jamme',
+                            'lison',
                             'clarisse_may',
                             'francois_rousselot',
-                            'ginl',
-                            'julien_blondel',
-                            'nico_jamme'
+                            'akae',
+                            'valentin'
                         ] %}
 
                         {% for members in teamMembers|batch(3) %}
                             <div class="row">
                                 {% set length = members|length %}
                                 {% for name in members %}
-                                    {{ macros.teamMember(name, length) }}
+                                    {{ macros.teamMember(name, length, loop.index0) }}
                                 {% endfor %}
                             </div>
                         {% endfor %}
