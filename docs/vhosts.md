@@ -23,11 +23,8 @@ This is the reason why you need to set both `SYMFONY_ENV` and `SYMFONY_DEBUG` va
 
 # Apache vhost
 
-**Note:** Symfony's `.htaccess` file should be written in the vhost instead of in a `.htaccess` file for performances
-reasons.
-
-But if you like, you can uncomment the "Symfony conf" part in the virtual host and use the `.htaccess` file by renaming
-the `web/.htaccess.dist` file.
+**Note:** Symfony's `.htaccess` file has been removed because it should be written in the vhost instead of in a
+ `.htaccess` file for performances reasons.
 
 The only difference is that the dist file contains comments about what it does, whereas the vhost does not, that's all.
 
@@ -35,29 +32,31 @@ The only difference is that the dist file contains comments about what it does, 
 <VirtualHost *:80>
 
     # Change domain names if needed
-    ServerName esteren.dev
-    ServerAlias api.esteren.dev
-    ServerAlias maps.esteren.dev
+    ServerName            esteren.dev
+    ServerAlias       www.esteren.dev
+    ServerAlias       api.esteren.dev
+    ServerAlias      maps.esteren.dev
+    ServerAlias      back.esteren.dev
+    ServerAlias     games.esteren.dev
+    ServerAlias    portal.esteren.dev
     ServerAlias corahnrin.esteren.dev
-    ServerAlias portal.esteren.dev
-    ServerAlias back.esteren.dev
-    ServerAlias games.esteren.dev
-    ServerAlias portal.esteren.dev
+    ServerAlias  www.studio-agate.dev
+    ServerAlias   www.vermine2047.dev
 
     DocumentRoot /var/www/corahn_rin/web
 
-    # Dev
-    SetEnv SYMFONY_ENV dev
-    SetEnv SYMFONY_DEBUG 1
-
-    # Prod
-    SetEnv SYMFONY_ENV prod
-    SetEnv SYMFONY_DEBUG 0
+    # Change env vars if needed
+    SetEnv SYMFONY_ENV   dev
+    SetEnv SYMFONY_DEBUG   1
 
     <Directory /var/www/corahn_rin/web>
 
+        # Uncomment if using php with cgi
+        #AddHandler php-cgi .php
+        #Action php-cgi /php-fcgi/php56
+
         AllowOverride all
-        Options Indexes FollowSymLinks MultiViews
+        Options Indexes FollowSymLinks MultiViews ExecCGI
         Require all granted
 
         ########################
@@ -66,7 +65,7 @@ The only difference is that the dist file contains comments about what it does, 
         # Here starts Symfony's .htaccess config.
         # Put it in the vhost for maximum performance.
         # For more info, check web/.htaccess.dist default file.
-        # > https://github.com/symfony/symfony-standard/blob/3.1/web/.htaccess
+        # > https://github.com/symfony/symfony-standard/blob/2.8/web/.htaccess
         DirectoryIndex app.php
         <IfModule mod_negotiation.c>
             Options -MultiViews
@@ -78,15 +77,20 @@ The only difference is that the dist file contains comments about what it does, 
             RewriteRule ^(.*) - [E=BASE:%1]
 
             RewriteCond %{HTTP:Authorization} .
-            RewriteRule ^ - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+            RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 
             RewriteCond %{ENV:REDIRECT_STATUS} ^$
-            RewriteRule ^app\.php(?:/(.*)|$) %{ENV:BASE}/$1 [R=301,L]
+            RewriteRule ^app\.php(/(.*)|$) %{ENV:BASE}/$2 [R=302,L]
 
             RewriteCond %{REQUEST_FILENAME} -f
-            RewriteRule ^ - [L]
+            RewriteRule .? - [L]
 
-            RewriteRule ^ %{ENV:BASE}/app.php [L]
+            # Avoids getting 404 errors for missing map tiles.
+            RewriteCond %{REQUEST_URI} maps_tiles/ [NC]
+            RewriteCond %{REQUEST_FILENAME} !-f
+            RewriteRule .? %{ENV:BASE}/maps_tiles/empty.jpg [L,R=302]
+
+            RewriteRule .? %{ENV:BASE}/app.php [L]
         </IfModule>
         <IfModule !mod_rewrite.c>
             <IfModule mod_alias.c>
@@ -113,25 +117,27 @@ First you need to set up your php-fpm configuration and make it work.
 [Check the reference](http://symfony.com/doc/current/cookbook/configuration/web_server_configuration.html#nginx) on
 Symfony documentation if you need.
 
-**Note:** be sure that the `fastcgi_pass` points to the right socket.
-
-**Important:** You must remove one `location` block of `DEV` or `PROD` depending on your environment.
+**Note:** be sure that the `fastcgi_pass` points to the right socket/host.
 
 ```nginx
 server {
 
     # Change domain names if needed
     server_name
-        esteren.dev
-        api.esteren.dev
-        maps.esteren.dev
-        corahnrin.esteren.dev
-        portal.esteren.dev
-        back.esteren.dev
-        games.esteren.dev
-        portal.esteren.dev
+        www.studio-agate.dev
+         www.vermine2047.dev
+                 esteren.dev
+             www.esteren.dev
+             api.esteren.dev
+            maps.esteren.dev
+            back.esteren.dev
+           games.esteren.dev
+          portal.esteren.dev
+       corahnrin.esteren.dev
     ;
 
+    # Change the directory to what you need.
+    # Also change logs dir at the bottom of this file.
     root /var/www/corahn_rin/web;
 
     # Avoids getting 404 errors for missing map tiles.
@@ -145,9 +151,10 @@ server {
     env SYMFONY_DEBUG=1;
     location / {
         # try to serve file directly, fallback to app.php
-        try_files $uri /app_dev.php$is_args$args;
+        try_files $uri /app.php$is_args$args;
     }
     location ~ ^/(app_dev|config)\.php(/|$) {
+
         # Check your fastcgi path depending on your environment
         fastcgi_pass unix:/var/run/php5-fpm.sock; # With FPM socket
         #fastcgi_pass 127.0.0.1:9000;             # With FastCGI / FPM classic
@@ -167,42 +174,10 @@ server {
     }
     # end DEV
 
-    # PROD
-    # Remove this part when using for dev
-    env SYMFONY_ENV=prod;
-    env SYMFONY_DEBUG=0;
-    location / {
-        # try to serve file directly, fallback to app.php
-        try_files $uri /app.php$is_args$args;
-    }
-    location ~ ^/app\.php(/|$) {
-        # Check your fastcgi path depending on your environment
-        fastcgi_pass unix:/var/run/php5-fpm.sock; # With FPM socket
-        #fastcgi_pass 127.0.0.1:9000;             # With FastCGI / FPM classic
-
-        fastcgi_split_path_info ^(.+\.php)(/.*)$;
-        include fastcgi_params;
-
-        # When you are using symlinks to link the document root to the
-        # current version of your application, you should pass the real
-        # application path instead of the path to the symlink to PHP
-        # FPM.
-        # Otherwise, PHP's OPcache may not properly detect changes to
-        # your PHP files (see https://github.com/zendtech/ZendOptimizerPlus/issues/126
-        # for more information).
-        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
-        fastcgi_param DOCUMENT_ROOT $realpath_root;
-        # Prevents URIs that include the front controller. This will 404:
-        # http://domain.tld/app.php/some-path
-        # Remove the internal directive to allow URIs like this
-        internal;
-    }
-    # end PROD
-
     # return 404 for all other php files not matching the front controller
     # this prevents access to other php files you don't want to be accessible.
     location ~ \.php$ {
-      return 404;
+        return 404;
     }
 
     # Logs are added automatically to Symfony's log dir

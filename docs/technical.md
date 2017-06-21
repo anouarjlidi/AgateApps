@@ -27,28 +27,13 @@ With [OrbitaleCmsBundle](https://github.com/Orbitale/CmsBundle), a very simple C
 ## Backoffice
 
 The backoffice is powered by [EasyAdminBundle](https://github.com/javiereguiluz/EasyAdminBundle).
-Its configuration resides in [app/config/_easyadmin.yml](../app/config/_easyadmin.yml) and
- [app/config/admin](../app/config/admin).
-An `AdminBundle` exists only to store the `AdminController` which allows complete override of any of EasyAdmin's feature.
+Its configuration resides in [app/config/_easy_admin.yml](../app/config/_easyadmin.yml) and
+ [app/config/admin/](../app/config/admin/) directory.
+An `AdminBundle` exists only to store the `AdminController` which allows complete override of any of EasyAdmin's feature
+(it also registers the `admin` directory as resource files so container is recompiled when one changes).
 
 [IvoryCKEditorBundle](https://github.com/egeloen/IvoryCKEditorBundle) is installed and configured in the `Page` entity
  to use a WYSIWYG.
-
-## Maximal configuration evolutivity (a bit exaggerating, though)
-
-You may notice that the classic `app/config/config.yml` is left **unchanged** compared to Symfony standard edition.
-All application-related config is written in [app/config/_app.yml](../app/config/_app.yml).
-
-Why?
-
-Because there is nothing in the Standard edition that facilitates new versions upgrade, so all that's possible to upgrade
- the Standard Edition is a dirty copy/paste. Having files unchanged makes the diffs easier when upgrading.
-
-Be careful that `config_dev.yml` and `config_prod.yml` files **must** import `_app.yml` instead of `config.yml`.
-This way, the base config is left unchanged, and `config.yml` is included **after** `_app.yml`.
-
-Some pretty spaces are also added in `AppKernel.php` and `composer.json` to separate Symfony's default configuration to
- the application specific config.
 
 ## Tests
 
@@ -69,7 +54,5 @@ Most of its logic is based on `FOSUserBundle`, but we removed it for good, so we
 ### Security
 
 Now all security authenticators have to be created in this bundle as a Guard Authenticator.
- 
-**Note:** I wish to get rid of `FOSUserBundle` one day, because we will need different types of authentication.
-At least we could have the model and the user provider, but it could be much better to have a fully custom user
- management system.
+
+Only one authenticator is needed for now, but some may be added in the future for _"Login with ..."_ login capabilities.

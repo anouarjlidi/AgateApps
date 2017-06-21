@@ -14,33 +14,41 @@
 
 > ## Note
 > As said in the [Readme](../README.md#subdomains), domains **must** be configured.
-> To be able to debug APIs, don't forget to set up your `allowed_origins` configuration options in `app/config/_app.yml`.
-
-## Multiple files
-
-The routing load order is the following:
-
-* User, which are loaded globally for every domain
-* CorahnRin (character manager), under `%esteren_domains.corahnrin%` host.
-* Esteren Maps, under `%esteren_domains.esterenmaps%` host.
-* Root (the `/` route), which simply redirects to `/%locale%/` to handle the route for all subdomains.
-* PierstovalTools' `AssetsController`, which allows loading a javascript file containing translations (and caching it).
- Also available for all subdomains.
-* PierstovalApi's webservices, all loaded under the `%esteren_domains.api%` host.
-* Admin routes, under `%esteren_domains.backoffice%` host.
-* Front-office routes, like the contact form, legal mentions, etc.
-* All other portals, they lie under all subdomains and are managed by OrbitaleCmsBundle ([view below](#cms)).
 
 ## Locale
 
-All routes are manually prepended with the locale.
+All routes are automatically prepended with the locale.
 You **must** be aware of this when creating new routes, because every part of the app has to be translated.
+
+You can check the [routing.yml](app/config/routing.yml) and [routing/_main.yml](app/config/routing/_main.yml).
+
+Base routing file only loads the `root` route and the `_main.yml` which loads all other routes
 
 If something has to be specific to one locale, make sure your route has a requirement for this locale.
 
 **Note:** Nested requirements don't work in Symfony. It means that if in `routing.yml` you import a file **with** 
  requirements like `_locale: %regexp%`, you **cannot** have other requirements in the Route annotation. Yml file will
  prevail.
+
+## HTTPS
+
+The whole `dev` environment is under `http`, and `prod` is under `https`, so you can't test prod locally without
+ removing configuration in `config_dev.yml` or `config_prod.yml`.
+
+## Multiple files
+
+The routing load order is the following:
+
+* Root (the `/` route), which simply redirects to `/%locale%/` to handle the route for all subdomains.
+* User, which are loaded globally for every domain
+* CorahnRin (character manager), under `%esteren_domains.corahnrin%` host.
+* Esteren Maps, under `%esteren_domains.esterenmaps%` host.
+* Agate portal, under `%agate_domains.portal%` host.
+* PierstovalTools' `AssetsController`, which allows loading a javascript file containing translations (and caching it).
+ Also available for all subdomains.
+* PierstovalApi's webservices, all loaded under the `%esteren_domains.api%` host.
+* Admin routes, under `%esteren_domains.backoffice%` host.
+* All other portals, they lie under all subdomains and are managed by OrbitaleCmsBundle ([view below](#cms)).
 
 ## CMS
 

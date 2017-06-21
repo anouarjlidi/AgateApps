@@ -9,14 +9,13 @@ This project is a full-stack Symfony application.
 
 It was created in September 2013 with Symfony 2.3, but the different concepts and reflections started in March 2013.
 
-Now it's on Symfony 3!
-
 Since, it has followed all Symfony updates, and has been refactored countless times.
 
 It contains multiple apps:
 
 * The Esteren portal.
 * The Games portal.
+* Agate portal, and other portals like Vermine, mostly as static pages.
 * Esteren Maps, an application that allows users to navigate in the different configured maps, calculate directions and
  imagine scenarios based on travels.
 * Corahn-Rin, this is the V2 of the first [Corahn-Rin project](https://github.com/Esteren/CorahnRinV1). The goal of this
@@ -35,13 +34,14 @@ It contains multiple apps:
 
 ## Pre-requisites
 
-* PHP 5.6+
+* PHP 7.1+
 * NodeJS 6.0+ and `yarn` accessible globally.
 * Imagemagick accessible globally or at least from the app, mostly `convert` and `identify` binaries.
 
 ## Install
 
 ```bash
+$ cp .env.dist .env
 $ composer install
 $ bin/console doctrine:database:create
 $ bin/console doctrine:schema:create
@@ -65,7 +65,7 @@ Check the [Esteren Maps](docs/maps.md#tiles-generation) documentation for this.
 
 You need to be sure that your webserver listens to every domain name set up in the application.
 
-You can configure the main domain in `parameters.yml`, let's check the default at [parameters.yml.dist file](app/config/parameters.yml).
+You can configure the main domain in `.env`, let's check the default at [.env.dist file](/.env.dist).
 
 There are a lot of subdomains that are linked to this application, so make sure each and anyone of them
 is well listened by your webserver: you can set up the app on both Nginx and Apache, thanks to the
@@ -81,10 +81,12 @@ Be sure that your `C:\Windows\System32\drivers\etc\hosts` file contains redirect
 #### Linux and OSX
 
 Install [dnsmasq](https://fr.wikipedia.org/wiki/Dnsmasq) if not already installed, and you can use
- [this config file example](https://github.com/Pierstoval/dotfiles/blob/master/etc/dnsmasq.d/localhost.dev) to
- configure your machine to redirect every `*.dev` HTTP request to your local machine.
+ `address=/dev/127.0.0.1` as basic configuration to tell your machine to resolve every `*.dev` host to your local
+ machine.
  
-This is easier for you then to just create a vhost with all `esteren.dev` subdomains.
+This is easier for you then to just create a vhost with all `esteren.dev` or `studio-agate.dev` subdomains.
+
+Or you can just edit the `/etc/hosts` and add an entry to resolve `.dev` domains as local, one by one. 
 
 ### Fixtures (if you don't have a proper database export to be imported)
 
@@ -104,12 +106,14 @@ flexibility and is based only on one config variable (similar to Grunt).
 
 You can use `gulp watch` when you are working with assets so they're compiled on-change.
 
+Note that we're using Gulp 4, so you should either install it globally, or just run `./node_modules/.bin/gulp4` to use.
+
 ## Tests
 
 To run the tests, just run phpunit:
 
 ```bash
-$ phpunit
+$ ./vendor/bin/phpunit
 ```
 
 ### Use the database for tests
@@ -121,19 +125,22 @@ $ NO_RECREATE_DB=1 phpunit
 ```
 
 If you are using the database, there will be a first Sqlite file written after creating the schema and importing
-the fixtures, and this file will serve as a reference for all tests until deleted.<br>
+the fixtures, and this file will serve as a reference for all tests until deleted.
 If you want, you can force the tests to rewrite the whole database by using this environment variable:
 
 ```bash
 $ RECREATE_DB=1 phpunit
 ```
 
+Read the [bootstrap.php](tests/phpunit/bootstrap.php) file to see these env vars in use. 
+
+
 ### CI
 
-We are using [Shippable CI](https://app.shippable.com/projects/586269ede18a291000c26672/status/) and also
- [CircleCI](https://circleci.com/gh/Pierstoval/corahn_rin). 
+We are using [CircleCI](https://circleci.com/gh/Pierstoval/AgateApps). 
 
 A [tests/ci/ci.bash](tests/ci/ci.bash) file has been created and it executes everything we need, based on some env vars.
+ But it does not work for now. So we're using [.circleci/config.yml](.circleci/config.yml) file to configure CI properly.
 
 ## Issues tracking
 
