@@ -27,6 +27,6 @@ class FeondBeerControllerTest extends WebTestCase
 
         static::assertSame(200, $client->getResponse()->getStatusCode());
 
-        static::assertStringStartsWith('La bière du Féond', trim($crawler->filter('#content h3#article-1')->text()));
+        static::assertStringStartsWith('La bière du Féond', trim($crawler->filter('title')->text()));
     }
 }
