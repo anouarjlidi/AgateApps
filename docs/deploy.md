@@ -10,15 +10,9 @@
 * [Corahn Rin / Character manager](character_manager.md)
 * [Deploy](deploy.md)
 
-# Deploy on heroku
+# Heroku
 
-## Automatic deploy
-
-The `prod` branch is configured on Heroku to be deployed automatically when a push is made to it and when CI succeeds.
-
-Nothing to do there, just push to the `prod` branch and it will deploy a few minutes later.
-
-## Deploy manually
+App is hosted on [Heroku](https://www.heroku.com/), and deploys can be made only manually from command-line.
 
 Add heroku as new remote for your git repository:
 
