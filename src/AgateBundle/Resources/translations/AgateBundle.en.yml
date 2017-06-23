@@ -12,10 +12,11 @@ team:
         Cyrille and Guillaume Aufaure, Loïc and Ed de la Brasserie de l'Etre, Jim Searcy and Studio 2 Publishing teams,
         Ingo, Thibaud and Gastronogeek team, Fred Pinson, Forgesonges association, Aurel and Quang from Blue Pill, Marc
         Gueroult, Dragon Etoile and Tchernopuss, Ynis, Pénombre, Arnaud, Jean and Ulule teams, Doudou Lacrouts and his
-        teams, Kathie, Aude-Lise, Kherveen, Ikaar, Cédric, Patrice and Iello teams.
+        teams, Kathie, Aude-Lise, Kherveen, Ikaar, Cédric, Patrice and Iello teams.<br>
         Thans to everyone who supported us and continue to do so, playtesters, all proof readers that make a very
         crucial job, volunteers during the tour, shops, members of the community without whom we would be nothing, and
-        of course our friends, family... THANK YOU!
+        of course our friends, family...<br>
+        THANK YOU!
 
     members:
         # Permanent members
@@ -75,7 +76,7 @@ team:
             name: Sebastien Chedal
             details: Game designer, author of the Black Rose.
         dref:
-            name: Dref
+            name: Frédéric "Dref" Leroy
             details: Proof-reader
         lison:
             name: Lison

@@ -13,9 +13,11 @@ team:
         équipes de Studio 2 Publishing, Ingo, Thibaud et l'équipe de Gastronogeek, Fred Pinson, l'association
         Forgesonges, Aurel et Quang de Blue Pill, Marc Gueroult, Dragon Etoile et Tchernopuss, Ynis, Pénombre, Arnaud,
         Jean et les équipes d'Ulule, Doudou Lacrouts et ses équipes, Kathie, Aude-Lise, Kherveen, Ikaar, Cédric, Patrice
-        et les équipes de Iello. Merci à celles et ceux qui nous ont soutenus et qui continuent à le faire, les
-        playtesteurs, tous les relecteurs qui font un travail décisif, les volontaires sur la tournée, les boutiques,
-        les membres de la communauté sans qui nous ne serions rien et bien sûr nos amis, nos familles... MERCI !
+        et les équipes de Iello.<br>
+        Merci à celles et ceux qui nous ont soutenus et qui continuent à le faire, les playtesteurs, tous les relecteurs
+        qui font un travail décisif, les volontaires sur la tournée, les boutiques, les membres de la communauté sans
+        qui nous ne serions rien et bien sûr nos amis, nos familles...<br>
+        MERCI !
 
     members:
         # Permanent members
@@ -73,7 +75,7 @@ team:
             name: Sebastien Chedal
             details: Game designer, auteur de la Rose Noire.
         dref:
-            name: Dref
+            name: Frédéric "Dref" Leroy
             details: Relecteur
         lison:
             name: Lison
