@@ -39,25 +39,48 @@ use EsterenMaps\MapsBundle\Entity\Zones;
 use UserBundle\Entity\User;
 
 /**
- * @property ArrayCollection|Armors[] $armors
- * @property ArrayCollection|Artifacts[] $artifacts
- * @property ArrayCollection|Miracles[] $miracles
- * @property ArrayCollection|Ogham[] $ogham
- * @property ArrayCollection|Weapons[] $weapons
- * @property ArrayCollection|CombatArts[] $combatArts
- * @property ArrayCollection|CharAdvantages[] $charAdvantages
- * @property ArrayCollection|CharDomains[] $domains
- * @property ArrayCollection|CharDisciplines[] $disciplines
- * @property ArrayCollection|CharWays[] $ways
- * @property ArrayCollection|CharFlux[] $flux
- * @property ArrayCollection|CharSetbacks[] $setbacks
+ * @codeCoverageIgnore
  */
 trait CharacterGettersSetters
 {
+    /** @var ArrayCollection|Armors[] */
+    protected $armors;
+
+    /** @var ArrayCollection|Artifacts[] */
+    protected $artifacts;
+
+    /** @var ArrayCollection|Miracles[] */
+    protected $miracles;
+
+    /** @var ArrayCollection|Ogham[] */
+    protected $ogham;
+
+    /** @var ArrayCollection|Weapons[] */
+    protected $weapons;
+
+    /** @var ArrayCollection|CombatArts[] */
+    protected $combatArts;
+
+    /** @var ArrayCollection|CharAdvantages[] */
+    protected $charAdvantages;
+
+    /** @var ArrayCollection|CharDomains[] */
+    protected $domains;
+
+    /** @var ArrayCollection|CharDisciplines[] */
+    protected $disciplines;
+
+    /** @var ArrayCollection|CharWays[] */
+    protected $ways;
+
+    /** @var ArrayCollection|CharFlux[] */
+    protected $flux;
+
+    /** @var ArrayCollection|CharSetbacks[] */
+    protected $setbacks;
+
     /**
      * @return int
-     *
-     * @codeCoverageIgnore
      */
     public function getId()
     {
@@ -68,8 +91,6 @@ trait CharacterGettersSetters
      * @param int $id
      *
      * @return $this
-     *
-     * @codeCoverageIgnore
      */
     public function setId($id)
     {
@@ -82,8 +103,6 @@ trait CharacterGettersSetters
      * @param string $playerName
      *
      * @return $this
-     *
-     * @codeCoverageIgnore
      */
     public function setPlayerName($playerName)
     {
@@ -94,8 +113,6 @@ trait CharacterGettersSetters
 
     /**
      * @return string
-     *
-     * @codeCoverageIgnore
      */
     public function getPlayerName()
     {
@@ -106,8 +123,6 @@ trait CharacterGettersSetters
      * @param int $status
      *
      * @return $this
-     *
-     * @codeCoverageIgnore
      */
     public function setStatus($status)
     {
@@ -118,8 +133,6 @@ trait CharacterGettersSetters
 
     /**
      * @return int
-     *
-     * @codeCoverageIgnore
      */
     public function getStatus()
     {
@@ -130,8 +143,6 @@ trait CharacterGettersSetters
      * @param string $sex
      *
      * @return $this
-     *
-     * @codeCoverageIgnore
      */
     public function setSex($sex)
     {
@@ -142,8 +153,6 @@ trait CharacterGettersSetters
 
     /**
      * @return string
-     *
-     * @codeCoverageIgnore
      */
     public function getSex()
     {
@@ -154,8 +163,6 @@ trait CharacterGettersSetters
      * @param string $description
      *
      * @return $this
-     *
-     * @codeCoverageIgnore
      */
     public function setDescription($description)
     {
@@ -166,8 +173,6 @@ trait CharacterGettersSetters
 
     /**
      * @return string
-     *
-     * @codeCoverageIgnore
      */
     public function getDescription()
     {
@@ -178,8 +183,6 @@ trait CharacterGettersSetters
      * @param string $story
      *
      * @return $this
-     *
-     * @codeCoverageIgnore
      */
     public function setStory($story)
     {
@@ -190,8 +193,6 @@ trait CharacterGettersSetters
 
     /**
      * @return string
-     *
-     * @codeCoverageIgnore
      */
     public function getStory()
     {
@@ -202,8 +203,6 @@ trait CharacterGettersSetters
      * @param string $facts
      *
      * @return $this
-     *
-     * @codeCoverageIgnore
      */
     public function setFacts($facts)
     {
@@ -214,8 +213,6 @@ trait CharacterGettersSetters
 
     /**
      * @return string
-     *
-     * @codeCoverageIgnore
      */
     public function getFacts()
     {
@@ -226,8 +223,6 @@ trait CharacterGettersSetters
      * @param array $inventory
      *
      * @return $this
-     *
-     * @codeCoverageIgnore
      */
     public function setInventory($inventory)
     {
@@ -238,8 +233,6 @@ trait CharacterGettersSetters
 
     /**
      * @return array
-     *
-     * @codeCoverageIgnore
      */
     public function getInventory()
     {
@@ -248,8 +241,6 @@ trait CharacterGettersSetters
 
     /**
      * @return array
-     *
-     * @codeCoverageIgnore
      */
     public function getTreasures()
     {
@@ -260,8 +251,6 @@ trait CharacterGettersSetters
      * @param array $treasures
      *
      * @return $this
-     *
-     * @codeCoverageIgnore
      */
     public function setTreasures(array $treasures)
     {
@@ -274,8 +263,6 @@ trait CharacterGettersSetters
      * @param Money $money
      *
      * @return $this
-     *
-     * @codeCoverageIgnore
      */
     public function setMoney(Money $money)
     {
@@ -286,8 +273,6 @@ trait CharacterGettersSetters
 
     /**
      * @return Money
-     *
-     * @codeCoverageIgnore
      */
     public function getMoney()
     {
@@ -298,8 +283,6 @@ trait CharacterGettersSetters
      * @param string $orientation
      *
      * @return $this
-     *
-     * @codeCoverageIgnore
      */
     public function setOrientation($orientation)
     {
@@ -310,8 +293,6 @@ trait CharacterGettersSetters
 
     /**
      * @return string
-     *
-     * @codeCoverageIgnore
      */
     public function getOrientation()
     {
@@ -322,8 +303,6 @@ trait CharacterGettersSetters
      * @param GeoEnvironments $geoLiving
      *
      * @return $this
-     *
-     * @codeCoverageIgnore
      */
     public function setGeoLiving(GeoEnvironments $geoLiving)
     {
@@ -334,8 +313,6 @@ trait CharacterGettersSetters
 
     /**
      * @return GeoEnvironments
-     *
-     * @codeCoverageIgnore
      */
     public function getGeoLiving()
     {
@@ -346,8 +323,6 @@ trait CharacterGettersSetters
      * @param int $trauma
      *
      * @return $this
-     *
-     * @codeCoverageIgnore
      */
     public function setTrauma($trauma)
     {
@@ -358,8 +333,6 @@ trait CharacterGettersSetters
 
     /**
      * @return int
-     *
-     * @codeCoverageIgnore
      */
     public function getTrauma()
     {
@@ -370,8 +343,6 @@ trait CharacterGettersSetters
      * @param int $traumaPermanent
      *
      * @return $this
-     *
-     * @codeCoverageIgnore
      */
     public function setTraumaPermanent($traumaPermanent)
     {
@@ -382,8 +353,6 @@ trait CharacterGettersSetters
 
     /**
      * @return int
-     *
-     * @codeCoverageIgnore
      */
     public function getTraumaPermanent()
     {
@@ -394,8 +363,6 @@ trait CharacterGettersSetters
      * @param int $hardening
      *
      * @return $this
-     *
-     * @codeCoverageIgnore
      */
     public function setHardening($hardening)
     {
@@ -406,8 +373,6 @@ trait CharacterGettersSetters
 
     /**
      * @return int
-     *
-     * @codeCoverageIgnore
      */
     public function getHardening()
     {
@@ -418,8 +383,6 @@ trait CharacterGettersSetters
      * @param int $age
      *
      * @return $this
-     *
-     * @codeCoverageIgnore
      */
     public function setAge($age)
     {
@@ -430,8 +393,6 @@ trait CharacterGettersSetters
 
     /**
      * @return int
-     *
-     * @codeCoverageIgnore
      */
     public function getAge()
     {
@@ -442,8 +403,6 @@ trait CharacterGettersSetters
      * @param int $mentalResist
      *
      * @return $this
-     *
-     * @codeCoverageIgnore
      */
     public function setMentalResist($mentalResist)
     {
@@ -454,8 +413,6 @@ trait CharacterGettersSetters
 
     /**
      * @return int
-     *
-     * @codeCoverageIgnore
      */
     public function getMentalResist()
     {
@@ -484,8 +441,6 @@ trait CharacterGettersSetters
      * @param HealthCondition $health
      *
      * @return $this
-     *
-     * @codeCoverageIgnore
      */
     public function setHealth(HealthCondition $health)
     {
@@ -496,8 +451,6 @@ trait CharacterGettersSetters
 
     /**
      * @return HealthCondition
-     *
-     * @codeCoverageIgnore
      */
     public function getHealth()
     {
@@ -508,8 +461,6 @@ trait CharacterGettersSetters
      * @param HealthCondition $maxHealth
      *
      * @return $this
-     *
-     * @codeCoverageIgnore
      */
     public function setMaxHealth(HealthCondition $maxHealth)
     {
@@ -520,8 +471,6 @@ trait CharacterGettersSetters
 
     /**
      * @return HealthCondition
-     *
-     * @codeCoverageIgnore
      */
     public function getMaxHealth()
     {
@@ -532,8 +481,6 @@ trait CharacterGettersSetters
      * @param int $stamina
      *
      * @return $this
-     *
-     * @codeCoverageIgnore
      */
     public function setStamina($stamina)
     {
@@ -544,8 +491,6 @@ trait CharacterGettersSetters
 
     /**
      * @return int
-     *
-     * @codeCoverageIgnore
      */
     public function getStamina()
     {
@@ -572,8 +517,6 @@ trait CharacterGettersSetters
      * @param int $survival
      *
      * @return $this
-     *
-     * @codeCoverageIgnore
      */
     public function setSurvival($survival)
     {
@@ -584,8 +527,6 @@ trait CharacterGettersSetters
 
     /**
      * @return int
-     *
-     * @codeCoverageIgnore
      */
     public function getSurvival()
     {
@@ -596,8 +537,6 @@ trait CharacterGettersSetters
      * @param int $speed
      *
      * @return $this
-     *
-     * @codeCoverageIgnore
      */
     public function setSpeed($speed)
     {
@@ -608,8 +547,6 @@ trait CharacterGettersSetters
 
     /**
      * @return int
-     *
-     * @codeCoverageIgnore
      */
     public function getSpeed()
     {
@@ -638,8 +575,6 @@ trait CharacterGettersSetters
      * @param int $defense
      *
      * @return $this
-     *
-     * @codeCoverageIgnore
      */
     public function setDefense($defense)
     {
@@ -650,8 +585,6 @@ trait CharacterGettersSetters
 
     /**
      * @return int
-     *
-     * @codeCoverageIgnore
      */
     public function getDefense()
     {
@@ -678,8 +611,6 @@ trait CharacterGettersSetters
      * @param int $rindath
      *
      * @return $this
-     *
-     * @codeCoverageIgnore
      */
     public function setRindath($rindath)
     {
@@ -690,8 +621,6 @@ trait CharacterGettersSetters
 
     /**
      * @return int
-     *
-     * @codeCoverageIgnore
      */
     public function getRindath()
     {
@@ -721,8 +650,6 @@ trait CharacterGettersSetters
      * @param int $exaltation
      *
      * @return $this
-     *
-     * @codeCoverageIgnore
      */
     public function setExaltation($exaltation)
     {
@@ -733,8 +660,6 @@ trait CharacterGettersSetters
 
     /**
      * @return int
-     *
-     * @codeCoverageIgnore
      */
     public function getExaltation()
     {
@@ -763,8 +688,6 @@ trait CharacterGettersSetters
      * @param int $experienceActual
      *
      * @return $this
-     *
-     * @codeCoverageIgnore
      */
     public function setExperienceActual($experienceActual)
     {
@@ -775,8 +698,6 @@ trait CharacterGettersSetters
 
     /**
      * @return int
-     *
-     * @codeCoverageIgnore
      */
     public function getExperienceActual()
     {
@@ -787,8 +708,6 @@ trait CharacterGettersSetters
      * @param int $experienceSpent
      *
      * @return $this
-     *
-     * @codeCoverageIgnore
      */
     public function setExperienceSpent($experienceSpent)
     {
@@ -799,8 +718,6 @@ trait CharacterGettersSetters
 
     /**
      * @return int
-     *
-     * @codeCoverageIgnore
      */
     public function getExperienceSpent()
     {
@@ -811,8 +728,6 @@ trait CharacterGettersSetters
      * @param \DateTime $created
      *
      * @return $this
-     *
-     * @codeCoverageIgnore
      */
     public function setCreated($created)
     {
@@ -823,8 +738,6 @@ trait CharacterGettersSetters
 
     /**
      * @return \DateTime
-     *
-     * @codeCoverageIgnore
      */
     public function getCreated()
     {
@@ -835,8 +748,6 @@ trait CharacterGettersSetters
      * @param \DateTime $updated
      *
      * @return $this
-     *
-     * @codeCoverageIgnore
      */
     public function setUpdated($updated)
     {
@@ -847,8 +758,6 @@ trait CharacterGettersSetters
 
     /**
      * @return \DateTime
-     *
-     * @codeCoverageIgnore
      */
     public function getUpdated()
     {
@@ -859,8 +768,6 @@ trait CharacterGettersSetters
      * @param \DateTime $deleted
      *
      * @return $this
-     *
-     * @codeCoverageIgnore
      */
     public function setDeleted(\DateTime $deleted = null)
     {
@@ -871,8 +778,6 @@ trait CharacterGettersSetters
 
     /**
      * @return \DateTime
-     *
-     * @codeCoverageIgnore
      */
     public function getDeleted()
     {
@@ -883,8 +788,6 @@ trait CharacterGettersSetters
      * @param Peoples $people
      *
      * @return $this
-     *
-     * @codeCoverageIgnore
      */
     public function setPeople(Peoples $people = null)
     {
@@ -895,8 +798,6 @@ trait CharacterGettersSetters
 
     /**
      * @return Peoples
-     *
-     * @codeCoverageIgnore
      */
     public function getPeople()
     {
@@ -929,8 +830,6 @@ trait CharacterGettersSetters
 
     /**
      * @return Armors[]
-     *
-     * @codeCoverageIgnore
      */
     public function getArmors()
     {
@@ -963,8 +862,6 @@ trait CharacterGettersSetters
 
     /**
      * @return Artifacts[]
-     *
-     * @codeCoverageIgnore
      */
     public function getArtifacts()
     {
@@ -997,8 +894,6 @@ trait CharacterGettersSetters
 
     /**
      * @return Miracles[]
-     *
-     * @codeCoverageIgnore
      */
     public function getMiracles()
     {
@@ -1031,8 +926,6 @@ trait CharacterGettersSetters
 
     /**
      * @return Ogham[]
-     *
-     * @codeCoverageIgnore
      */
     public function getOgham()
     {
@@ -1065,8 +958,6 @@ trait CharacterGettersSetters
 
     /**
      * @return Weapons[]
-     *
-     * @codeCoverageIgnore
      */
     public function getWeapons()
     {
@@ -1099,8 +990,6 @@ trait CharacterGettersSetters
 
     /**
      * @return CombatArts[]
-     *
-     * @codeCoverageIgnore
      */
     public function getCombatArts()
     {
@@ -1111,8 +1000,6 @@ trait CharacterGettersSetters
      * @param SocialClasses $socialClass
      *
      * @return $this
-     *
-     * @codeCoverageIgnore
      */
     public function setSocialClass(SocialClasses $socialClass = null)
     {
@@ -1123,8 +1010,6 @@ trait CharacterGettersSetters
 
     /**
      * @return SocialClasses
-     *
-     * @codeCoverageIgnore
      */
     public function getSocialClass()
     {
@@ -1135,8 +1020,6 @@ trait CharacterGettersSetters
      * @param Domains $socialClassDomain1
      *
      * @return $this
-     *
-     * @codeCoverageIgnore
      */
     public function setSocialClassDomain1(Domains $socialClassDomain1 = null)
     {
@@ -1147,8 +1030,6 @@ trait CharacterGettersSetters
 
     /**
      * @return Domains
-     *
-     * @codeCoverageIgnore
      */
     public function getSocialClassDomain1()
     {
@@ -1159,8 +1040,6 @@ trait CharacterGettersSetters
      * @param Domains $socialClassDomain2
      *
      * @return $this
-     *
-     * @codeCoverageIgnore
      */
     public function setSocialClassDomain2(Domains $socialClassDomain2 = null)
     {
@@ -1171,8 +1050,6 @@ trait CharacterGettersSetters
 
     /**
      * @return Domains
-     *
-     * @codeCoverageIgnore
      */
     public function getSocialClassDomain2()
     {
@@ -1183,8 +1060,6 @@ trait CharacterGettersSetters
      * @param Disorders $mentalDisorder
      *
      * @return $this
-     *
-     * @codeCoverageIgnore
      */
     public function setMentalDisorder(Disorders $mentalDisorder = null)
     {
@@ -1195,8 +1070,6 @@ trait CharacterGettersSetters
 
     /**
      * @return Disorders
-     *
-     * @codeCoverageIgnore
      */
     public function getMentalDisorder()
     {
@@ -1207,8 +1080,6 @@ trait CharacterGettersSetters
      * @param Jobs $job
      *
      * @return $this
-     *
-     * @codeCoverageIgnore
      */
     public function setJob(Jobs $job = null)
     {
@@ -1219,8 +1090,6 @@ trait CharacterGettersSetters
 
     /**
      * @return Jobs
-     *
-     * @codeCoverageIgnore
      */
     public function getJob()
     {
@@ -1231,8 +1100,6 @@ trait CharacterGettersSetters
      * @param Zones $birthPlace
      *
      * @return $this
-     *
-     * @codeCoverageIgnore
      */
     public function setBirthPlace(Zones $birthPlace = null)
     {
@@ -1243,8 +1110,6 @@ trait CharacterGettersSetters
 
     /**
      * @return Zones
-     *
-     * @codeCoverageIgnore
      */
     public function getBirthPlace()
     {
@@ -1255,8 +1120,6 @@ trait CharacterGettersSetters
      * @param Traits $flaw
      *
      * @return $this
-     *
-     * @codeCoverageIgnore
      */
     public function setFlaw(Traits $flaw = null)
     {
@@ -1267,8 +1130,6 @@ trait CharacterGettersSetters
 
     /**
      * @return Traits
-     *
-     * @codeCoverageIgnore
      */
     public function getFlaw()
     {
@@ -1279,8 +1140,6 @@ trait CharacterGettersSetters
      * @param Traits $quality
      *
      * @return $this
-     *
-     * @codeCoverageIgnore
      */
     public function setQuality(Traits $quality = null)
     {
@@ -1291,8 +1150,6 @@ trait CharacterGettersSetters
 
     /**
      * @return Traits
-     *
-     * @codeCoverageIgnore
      */
     public function getQuality()
     {
@@ -1325,8 +1182,6 @@ trait CharacterGettersSetters
 
     /**
      * @return CharAdvantages[]
-     *
-     * @codeCoverageIgnore
      */
     public function getCharAdvantages()
     {
@@ -1359,8 +1214,6 @@ trait CharacterGettersSetters
 
     /**
      * @return CharDomains[]
-     *
-     * @codeCoverageIgnore
      */
     public function getDomains()
     {
@@ -1393,8 +1246,6 @@ trait CharacterGettersSetters
 
     /**
      * @return CharDisciplines[]
-     *
-     * @codeCoverageIgnore
      */
     public function getDisciplines()
     {
@@ -1405,8 +1256,6 @@ trait CharacterGettersSetters
      * @param CharWays $way
      *
      * @return $this
-     *
-     * @codeCoverageIgnore
      */
     public function addWay(CharWays $way)
     {
@@ -1429,8 +1278,6 @@ trait CharacterGettersSetters
 
     /**
      * @return CharWays[]|ArrayCollection
-     *
-     * @codeCoverageIgnore
      */
     public function getWays()
     {
@@ -1463,8 +1310,6 @@ trait CharacterGettersSetters
 
     /**
      * @return CharFlux[]
-     *
-     * @codeCoverageIgnore
      */
     public function getFlux()
     {
@@ -1497,8 +1342,6 @@ trait CharacterGettersSetters
 
     /**
      * @return CharSetbacks[]|ArrayCollection
-     *
-     * @codeCoverageIgnore
      */
     public function getSetbacks()
     {
@@ -1509,8 +1352,6 @@ trait CharacterGettersSetters
      * @param User $user
      *
      * @return $this
-     *
-     * @codeCoverageIgnore
      */
     public function setUser(User $user = null)
     {
@@ -1521,8 +1362,6 @@ trait CharacterGettersSetters
 
     /**
      * @return User
-     *
-     * @codeCoverageIgnore
      */
     public function getUser()
     {
@@ -1533,8 +1372,6 @@ trait CharacterGettersSetters
      * @param Games $game
      *
      * @return $this
-     *
-     * @codeCoverageIgnore
      */
     public function setGame(Games $game = null)
     {
@@ -1545,8 +1382,6 @@ trait CharacterGettersSetters
 
     /**
      * @return Games
-     *
-     * @codeCoverageIgnore
      */
     public function getGame()
     {
