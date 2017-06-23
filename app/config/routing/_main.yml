@@ -15,6 +15,11 @@ agate:
     type: annotation
     host: '%agate_domains.portal%'
 
+esteren_portal:
+    resource: '@EsterenPortalBundle/Controller/'
+    type: annotation
+    host: '%esteren_domains.portal%'
+
 #-----------------------------------
 # Pierstoval bundles relative routing
 pierstoval_tools:

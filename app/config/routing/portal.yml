@@ -1,9 +1,4 @@
 
-esteren_portal:
-    resource: '@EsterenPortalBundle/Controller/'
-    type:     annotation
-    host:     '%esteren_domains.portal%'
-
 orbitale_cms_category:
     resource: '@OrbitaleCmsBundle/Resources/config/routing/categories.yaml'
     prefix:   /category/
