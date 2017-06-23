@@ -38,3 +38,5 @@ Disallow: /en/maps/image/
 Disallow: /en/maps/tile/
 Disallow: /en/character/generate
 Disallow: /en/character/reset*
+
+Disallow: /img/feond-beer/*

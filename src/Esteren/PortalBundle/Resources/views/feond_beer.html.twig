@@ -1,0 +1,41 @@
+{% extends 'base_materialize.html.twig' %}
+
+{% trans_default_domain 'EsterenPortal' %}
+
+{% block body_params %}class="feond-beer"{% endblock %}
+{% block html_params block('body_params') %}
+{% block menus '' %}
+{% block footer '' %}
+
+{% block more_headers %}
+    <style type="text/css">
+        html.feond-beer {
+            background: url('{{ asset('img/feond-beer/feond-beer-background.jpg') }}') no-repeat center center fixed;
+            background-size: cover;
+        }
+    </style>
+{% endblock %}
+
+{% block title %}
+    {{ 'feond_beer.title'|trans }}
+{% endblock %}
+
+{% block content_for_layout %}
+    <div class="row">
+        <div class="col m5">
+            <h1 class="m0">
+                <img class="right" src="{{ asset('img/feond-beer/feond-beer.png') }}" alt="Feond beer">
+            </h1>
+        </div>
+        <div class="col m6">
+            <h2 class="m0 text-xl text-center" style="word-wrap: normal;">
+                <span class="hide-on-small-only">
+                    <img src="{{ asset('img/feond-beer/feond-beer-logo.png') }}" alt="Feond beer logo"><br>
+                </span>
+                Esteren Imperial Dark Saison
+            </h2>
+
+            {{ 'feond_beer.text'|trans({'%path%': url('portal_home')})|raw }}
+        </div>
+    </div>
+{% endblock %}
