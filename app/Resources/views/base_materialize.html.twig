@@ -6,7 +6,7 @@
     : 'https://www.facebook.com/pages/Les-Ombres-dEsteren/257938482620'
 -%}
 <!DOCTYPE html>
-<html id="corahnrin" lang="{{ app.request.locale|default(app.request.defaultLocale)|default('fr') }}">
+<html id="corahnrin" lang="{{ app.request.locale|default(app.request.defaultLocale)|default('fr') }}" {% block html_params %}{% endblock %}>
 <head>
     {%- spaceless %}
 
@@ -41,7 +41,7 @@
     {% endspaceless -%}
 </head>
 
-<body>
+<body {% block body_params %}{% endblock %}>
 
 {{ include('_google_tag_manager.html.twig') }}
 
