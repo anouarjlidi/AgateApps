@@ -4,11 +4,15 @@
     line-height: 0;
     height: auto;
     color: rgba(255, 255, 255, .9);
-}
 
-.parallax-container .section {
-    width: 100%;
-    padding-bottom: 0;
+    .parallax img {
+        max-width: none;
+    }
+
+    .section {
+        width: 100%;
+        padding-bottom: 0;
+    }
 }
 
 @media only screen and (max-width: #{$medium-screen}) {
