@@ -130,6 +130,9 @@ var config = {
     "css": {
         "css/initializer.css": [
             "src/Esteren/PortalBundle/Resources/assets/css/initializer.css"
+        ],
+        "css/feond-beer.css": [
+            "src/Esteren/PortalBundle/Resources/assets/css/feond-beer.css"
         ]
     },
 

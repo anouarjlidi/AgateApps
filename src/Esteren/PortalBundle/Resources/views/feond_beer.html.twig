@@ -2,18 +2,13 @@
 
 {% trans_default_domain 'EsterenPortal' %}
 
-{% block body_params %}class="feond-beer"{% endblock %}
-{% block html_params block('body_params') %}
+{% block html_params %}class="feond-beer"{% endblock %}
 {% block menus '' %}
 {% block footer '' %}
+{% block wrapper_class 'valign-wrapper' %}
 
 {% block more_headers %}
-    <style type="text/css">
-        html.feond-beer {
-            background: url('{{ asset('img/feond-beer/feond-beer-background.jpg') }}') no-repeat center center fixed;
-            background-size: cover;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('css/feond-beer.css') }}" type="text/css">
 {% endblock %}
 
 {% block title %}
@@ -27,10 +22,10 @@
                 <img class="right" src="{{ asset('img/feond-beer/feond-beer.png') }}" alt="Feond beer">
             </h1>
         </div>
-        <div class="col m6">
+        <div class="col m6 grey-text text-lighten-2">
             <h2 class="m0 text-xl text-center" style="word-wrap: normal;">
                 <span class="hide-on-small-only">
-                    <img src="{{ asset('img/feond-beer/feond-beer-logo.png') }}" alt="Feond beer logo"><br>
+                    <img class="feond-beer-logo" src="{{ asset('img/feond-beer/feond-beer-logo.png') }}" alt="Feond beer logo"><br>
                 </span>
                 Esteren Imperial Dark Saison
             </h2>
