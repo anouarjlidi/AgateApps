@@ -43,7 +43,7 @@ var config = {
         "src/Esteren/PortalBundle/Resources/assets/css/*.css",
         "src/Esteren/PortalBundle/Resources/assets/sass/*.scss",
         "src/Esteren/PortalBundle/Resources/assets/sass/theme_components/*.scss",
-        "src/CorahnRin/CorahnRinBundle/Resources/public/generator/css/*.less"
+        "src/CorahnRin/CorahnRinBundle/Resources/assets/generator/css/*.less"
     ],
 
     /**
@@ -56,10 +56,10 @@ var config = {
      */
     "images": {
         "img/markerstypes": [
-            "src/EsterenMaps/MapsBundle/Resources/public/img/markerstypes/*"
+            "src/EsterenMaps/MapsBundle/Resources/assets/img/markerstypes/*"
         ],
         "img/generator": [
-            "src/CorahnRin/CorahnRinBundle/Resources/public/img/*"
+            "src/CorahnRin/CorahnRinBundle/Resources/assets/img/*"
         ],
         "img/agate": [
             "src/AgateBundle/Resources/assets/images/**"
@@ -86,16 +86,16 @@ var config = {
             "src/Esteren/PortalBundle/Resources/assets/less/_main.less"
         ],
         "css/maps_lib.css": [
-            "src/EsterenMaps/MapsBundle/Resources/public/less/maps.less"
+            "src/EsterenMaps/MapsBundle/Resources/assets/less/maps.less"
         ],
         "css/admin.css": [
-            "src/AdminBundle/Resources/public/less/admin.less"
+            "src/AdminBundle/Resources/assets/less/admin.less"
         ],
         "css/generator.css": [
-            "src/CorahnRin/CorahnRinBundle/Resources/public/generator/css/main_steps.less"
+            "src/CorahnRin/CorahnRinBundle/Resources/assets/generator/css/main_steps.less"
         ],
         "css/character_details.css": [
-            "src/CorahnRin/CorahnRinBundle/Resources/public/generator/css/character_details.less"
+            "src/CorahnRin/CorahnRinBundle/Resources/assets/generator/css/character_details.less"
         ]
     },
 
@@ -170,35 +170,35 @@ var config = {
             "node_modules/leaflet/dist/leaflet-src.js",
             "./web/components/leaflet-sidebar/src/L.Control.Sidebar.js",
             "./web/components/leaflet-draw/dist/leaflet.draw-src.js",
-            "src/EsterenMaps/MapsBundle/Resources/public/js/EsterenMap/1_EsterenMap.js",
-            "src/EsterenMaps/MapsBundle/Resources/public/js/EsterenMap/1_EsterenMap.load.js",
-            "src/EsterenMaps/MapsBundle/Resources/public/js/EsterenMap/2_EsterenMap_CRS_XY.js",
-            "src/EsterenMaps/MapsBundle/Resources/public/js/EsterenMap/2_EsterenMap_directions.js",
-            "src/EsterenMaps/MapsBundle/Resources/public/js/EsterenMap/2_EsterenMap_LatLngBounds.js",
-            "src/EsterenMaps/MapsBundle/Resources/public/js/EsterenMap/3_EsterenMap_ActivateLeafletDraw.js",
-            "src/EsterenMaps/MapsBundle/Resources/public/js/EsterenMap/3_EsterenMap_options.js",
-            "src/EsterenMaps/MapsBundle/Resources/public/js/EsterenMap/4_EsterenMap_addMarker.js",
-            "src/EsterenMaps/MapsBundle/Resources/public/js/EsterenMap/4_EsterenMap_addPolygon.js",
-            "src/EsterenMaps/MapsBundle/Resources/public/js/EsterenMap/4_EsterenMap_addPolyline.js",
-            "src/EsterenMaps/MapsBundle/Resources/public/js/EsterenMap/4_EsterenMap_filters.js",
-            "src/EsterenMaps/MapsBundle/Resources/public/js/EsterenMap/4_EsterenMap_search_engine.js",
-            "src/EsterenMaps/MapsBundle/Resources/public/js/EsterenMap/5_EsterenMap_mapEdit.js"
+            "src/EsterenMaps/MapsBundle/Resources/assets/js/EsterenMap/1_EsterenMap.js",
+            "src/EsterenMaps/MapsBundle/Resources/assets/js/EsterenMap/1_EsterenMap.load.js",
+            "src/EsterenMaps/MapsBundle/Resources/assets/js/EsterenMap/2_EsterenMap_CRS_XY.js",
+            "src/EsterenMaps/MapsBundle/Resources/assets/js/EsterenMap/2_EsterenMap_directions.js",
+            "src/EsterenMaps/MapsBundle/Resources/assets/js/EsterenMap/2_EsterenMap_LatLngBounds.js",
+            "src/EsterenMaps/MapsBundle/Resources/assets/js/EsterenMap/3_EsterenMap_ActivateLeafletDraw.js",
+            "src/EsterenMaps/MapsBundle/Resources/assets/js/EsterenMap/3_EsterenMap_options.js",
+            "src/EsterenMaps/MapsBundle/Resources/assets/js/EsterenMap/4_EsterenMap_addMarker.js",
+            "src/EsterenMaps/MapsBundle/Resources/assets/js/EsterenMap/4_EsterenMap_addPolygon.js",
+            "src/EsterenMaps/MapsBundle/Resources/assets/js/EsterenMap/4_EsterenMap_addPolyline.js",
+            "src/EsterenMaps/MapsBundle/Resources/assets/js/EsterenMap/4_EsterenMap_filters.js",
+            "src/EsterenMaps/MapsBundle/Resources/assets/js/EsterenMap/4_EsterenMap_search_engine.js",
+            "src/EsterenMaps/MapsBundle/Resources/assets/js/EsterenMap/5_EsterenMap_mapEdit.js"
         ],
         "js/generator.js": [
-            "src/CorahnRin/CorahnRinBundle/Resources/public/generator/js/main_steps.js"
+            "src/CorahnRin/CorahnRinBundle/Resources/assets/generator/js/main_steps.js"
         ],
-        "js/step_03_birthplace.js": ["src/CorahnRin/CorahnRinBundle/Resources/public/generator/js/step_03_birthplace.js"],
+        "js/step_03_birthplace.js": ["src/CorahnRin/CorahnRinBundle/Resources/assets/generator/js/step_03_birthplace.js"],
         "js/step_11_advantages.js": [
-            "src/CorahnRin/CorahnRinBundle/Resources/public/generator/js/step_11_advantage_class.js",
-            "src/CorahnRin/CorahnRinBundle/Resources/public/generator/js/step_11_functions.js",
-            "src/CorahnRin/CorahnRinBundle/Resources/public/generator/js/step_11_advantages_process.js"
+            "src/CorahnRin/CorahnRinBundle/Resources/assets/generator/js/step_11_advantage_class.js",
+            "src/CorahnRin/CorahnRinBundle/Resources/assets/generator/js/step_11_functions.js",
+            "src/CorahnRin/CorahnRinBundle/Resources/assets/generator/js/step_11_advantages_process.js"
         ],
-        "js/step_13_primary_domains.js": ["src/CorahnRin/CorahnRinBundle/Resources/public/generator/js/step_13_primary_domains.js"],
-        "js/step_14_use_domain_bonuses.js": ["src/CorahnRin/CorahnRinBundle/Resources/public/generator/js/step_14_use_domain_bonuses.js"],
-        "js/step_15_domains_spend_exp.js": ["src/CorahnRin/CorahnRinBundle/Resources/public/generator/js/step_15_domains_spend_exp.js"],
-        "js/step_16_disciplines.js": ["src/CorahnRin/CorahnRinBundle/Resources/public/generator/js/step_16_disciplines.js"],
-        "js/step_17_combat_arts.js": ["src/CorahnRin/CorahnRinBundle/Resources/public/generator/js/step_17_combat_arts.js"],
-        "js/step_18_equipment.js": ["src/CorahnRin/CorahnRinBundle/Resources/public/generator/js/step_18_equipment.js"]
+        "js/step_13_primary_domains.js": ["src/CorahnRin/CorahnRinBundle/Resources/assets/generator/js/step_13_primary_domains.js"],
+        "js/step_14_use_domain_bonuses.js": ["src/CorahnRin/CorahnRinBundle/Resources/assets/generator/js/step_14_use_domain_bonuses.js"],
+        "js/step_15_domains_spend_exp.js": ["src/CorahnRin/CorahnRinBundle/Resources/assets/generator/js/step_15_domains_spend_exp.js"],
+        "js/step_16_disciplines.js": ["src/CorahnRin/CorahnRinBundle/Resources/assets/generator/js/step_16_disciplines.js"],
+        "js/step_17_combat_arts.js": ["src/CorahnRin/CorahnRinBundle/Resources/assets/generator/js/step_17_combat_arts.js"],
+        "js/step_18_equipment.js": ["src/CorahnRin/CorahnRinBundle/Resources/assets/generator/js/step_18_equipment.js"]
     }
 };
 

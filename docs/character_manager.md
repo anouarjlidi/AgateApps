@@ -60,4 +60,4 @@ Step actions can be defined either as simple classes or as services.
     `@CorahnRin/Steps/{stepName}.html.twig`. It should extend the `@CorahnRin/Steps/step_base.html.twig` template.
 6. Tons of javascript helpers are developed with a "standard" policy to be able to reproduce similar behavior through
   similar steps (choosing with hovered-divs or buttons instead of checkboxes, etc.). They are compiled in the root gulpfile.<br>
-  Check the [main_steps.js](src/CorahnRin/CorahnRinBundle/Resources/public/generator/js/main_steps.js) file for more info.
+  Check the [main_steps.js](../src/CorahnRin/CorahnRinBundle/Resources/assets/generator/js/main_steps.js) file for more info.

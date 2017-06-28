@@ -99,7 +99,7 @@ class PdfManager implements SheetsManagerInterface
             ],
         ];
         foreach ($p as $key => $v) {
-            $file            = __DIR__.'/../Resources/public/fonts/'.$v['file'];
+            $file            = __DIR__.'/../Resources/assets/fonts/'.$v['file'];
             $p[$key]['file'] = $file;
             $pdf->AddFont($v['name'], '', $file, true);
         }
