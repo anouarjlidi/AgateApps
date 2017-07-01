@@ -13,7 +13,6 @@ esterenmaps:
 agate:
     resource: "@AgateBundle/Controller/"
     type: annotation
-    host: '%agate_domains.portal%'
 
 esteren_portal:
     resource: '@EsterenPortalBundle/Controller/'

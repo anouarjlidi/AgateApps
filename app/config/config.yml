@@ -44,6 +44,7 @@ framework:
     trusted_hosts:
         - '%env(ESTEREN_DOMAIN)%$'
         - '%env(AGATE_DOMAIN)%$'
+        - '%env(VERMINE_DOMAIN)%$'
     session:
         # http://symfony.com/doc/current/reference/configuration/framework.html#handler-id
         handler_id:      session.handler.native_file
