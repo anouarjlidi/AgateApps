@@ -1,14 +1,12 @@
 <?php
 
 $finder = PhpCsFixer\Finder::create()
-    ->exclude(
-        [
-            'src/CorahnRin/CorahnRinBundle/PDF/FPDF.php',
-            'src/CorahnRin/CorahnRinBundle/PDF/PDF.php',
-            'src/CorahnRin/CorahnRinBundle/SheetsManagers/PdfManager.php',
-            'src/CorahnRin/CorahnRinBundle/Command/ImportLegacyCharactersCommand.php',
-        ]
-    )
+    ->exclude([
+        'vendor',
+    ])
+    ->notPath('src/CorahnRin/CorahnRinBundle/PDF/FPDF.php')
+    ->notPath('src/CorahnRin/CorahnRinBundle/PDF/PDF.php')
+    ->notPath('src/CorahnRin/CorahnRinBundle/SheetsManagers/PdfManager.php')
     ->in(__DIR__.'/src/')
 ;
 
@@ -49,7 +47,7 @@ return PhpCsFixer\Config::create()
         ]
     )
     ->setRiskyAllowed(true)
-    ->setFinder($finder)
     ->setIndent('    ')
     ->setLineEnding("\n")
+    ->setFinder($finder)
 ;
