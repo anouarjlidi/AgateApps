@@ -28,7 +28,7 @@ class CharDisciplines
     /**
      * @var Characters
      *
-     * @ORM\Id
+     * @ORM\Id()
      * @ORM\ManyToOne(targetEntity="CorahnRin\CorahnRinBundle\Entity\Characters", inversedBy="disciplines")
      * @Assert\NotNull()
      */
@@ -37,7 +37,7 @@ class CharDisciplines
     /**
      * @var Disciplines
      *
-     * @ORM\Id
+     * @ORM\Id()
      * @ORM\ManyToOne(targetEntity="CorahnRin\CorahnRinBundle\Entity\Disciplines")
      * @Assert\NotNull()
      */
@@ -46,7 +46,7 @@ class CharDisciplines
     /**
      * @var Domains
      *
-     * @ORM\Id
+     * @ORM\Id()
      * @ORM\ManyToOne(targetEntity="CorahnRin\CorahnRinBundle\Entity\Domains")
      * @Assert\NotNull()
      */

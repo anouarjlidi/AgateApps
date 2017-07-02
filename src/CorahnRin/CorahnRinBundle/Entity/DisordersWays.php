@@ -24,7 +24,7 @@ class DisordersWays
     /**
      * @var Disorders
      *
-     * @ORM\Id
+     * @ORM\Id()
      * @ORM\ManyToOne(targetEntity="Disorders", inversedBy="ways")
      */
     protected $disorder;
@@ -32,7 +32,7 @@ class DisordersWays
     /**
      * @var Ways
      *
-     * @ORM\Id
+     * @ORM\Id()
      * @ORM\ManyToOne(targetEntity="Ways")
      */
     protected $way;
@@ -40,7 +40,7 @@ class DisordersWays
     /**
      * @var bool
      *
-     * @ORM\Column(type="boolean", options={"default":0})
+     * @ORM\Column(type="boolean", options={"default": 0})
      */
     protected $major = 0;
 

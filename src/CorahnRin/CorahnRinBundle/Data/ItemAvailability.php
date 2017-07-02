@@ -13,10 +13,10 @@ namespace CorahnRin\CorahnRinBundle\Data;
 
 final class ItemAvailability implements DataInterface
 {
-    const COMMON = 'CO';
-    const FREQUENT = 'FR';
-    const RARE = 'RA';
-    const EXCEPTIONAL = 'EX';
+    public const COMMON      = 'CO';
+    public const FREQUENT    = 'FR';
+    public const RARE        = 'RA';
+    public const EXCEPTIONAL = 'EX';
 
     private function __construct()
     {

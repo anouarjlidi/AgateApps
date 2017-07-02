@@ -151,7 +151,7 @@ final class DirectionRoute
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isGuarded()
     {

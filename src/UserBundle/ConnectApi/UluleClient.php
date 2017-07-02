@@ -17,7 +17,7 @@ use UserBundle\ConnectApi\Model\UluleUser;
 
 final class UluleClient extends AbstractApiClient
 {
-    const ENDPOINT = 'https://api.ulule.com/v1/';
+    public const ENDPOINT = 'https://api.ulule.com/v1/';
 
     private $logger;
 

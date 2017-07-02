@@ -102,7 +102,7 @@ class Step13PrimaryDomainsTest extends AbstractStepTest
         $crawler = $client->request('POST', '/fr/character/generate/'.$this->getStepName(), [
             'domains' => [
                 '99999999' => 1,
-            ]
+            ],
         ]);
 
         $flashMessagesNode = $crawler->filter('#flash-messages');
@@ -194,7 +194,7 @@ class Step13PrimaryDomainsTest extends AbstractStepTest
 
         $form->setValues([
             'domains' => [
-                '9' => 5, // Artisan's main job (crafting, id #1 in fixtures) should have a score of Five
+                '9'  => 5, // Artisan's main job (crafting, id #1 in fixtures) should have a score of Five
                 '10' => 5,
                 '11' => 5,
             ],
@@ -310,7 +310,7 @@ class Step13PrimaryDomainsTest extends AbstractStepTest
         $client = $this->getStepClient(1); // Artisan id in fixtures
 
         $crawler = $client->request('POST', '/fr/character/generate/'.$this->getStepName(), [
-            'ost' => 99999999,
+            'ost'     => 99999999,
             'domains' => [],
         ]);
 
@@ -402,7 +402,7 @@ class Step13PrimaryDomainsTest extends AbstractStepTest
          * 13 => Science
          * 14 => Tir et Lancer
          * 15 => Voyage
-         * 16 => Érudition
+         * 16 => Érudition.
          *
          * If "true" is specified under domains, it means "scholar" advantage is present.
          * Helper for domains:
@@ -412,346 +412,346 @@ class Step13PrimaryDomainsTest extends AbstractStepTest
             0 => [
                 1, // Artisan
                 [
-                    'ost' => 2,
+                    'ost'     => 2,
                     'domains' => [5, 2, 2, 1, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 1],
-                ]
+                ],
             ],
             1 => [
                 1, // Artisan
                 [
-                    'ost' => 2,
+                    'ost'     => 2,
                     'domains' => [5, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 1],
-                ]
+                ],
             ],
 
             2 => [
                 2, // Barde
                 [
-                    'ost' => 2,
+                    'ost'     => 2,
                     'domains' => [1, 1, 2, 2, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 3, 0],
-                ]
+                ],
             ],
             3 => [
                 2, // Barde
                 [
-                    'ost' => 2,
+                    'ost'     => 2,
                     'domains' => [1, 1, 2, 2, 0, 0, 0, 0, 0, 0, 3, 5, 0, 0, 0, 0],
-                ]
+                ],
             ],
 
             4 => [
                 3, // Chasseur
                 [
-                    'ost' => 2,
+                    'ost'     => 2,
                     'domains' => [0, 0, 0, 0, 5, 1, 1, 2, 2, 0, 0, 0, 0, 3, 0, 0],
-                ]
+                ],
             ],
             5 => [
                 3, // Chasseur
                 [
-                    'ost' => 2,
+                    'ost'     => 2,
                     'domains' => [0, 3, 0, 0, 5, 1, 1, 2, 2, 0, 0, 0, 0, 0, 0, 0],
-                ]
+                ],
             ],
 
             6 => [
                 4, // Chevalier
                 [
-                    'ost' => 2,
+                    'ost'     => 2,
                     'domains' => [0, 5, 1, 1, 2, 2, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0],
-                ]
+                ],
             ],
             7 => [
                 4, // Chevalier
                 [
-                    'ost' => 2,
+                    'ost'     => 2,
                     'domains' => [0, 5, 1, 1, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0],
-                ]
+                ],
             ],
 
             8 => [
                 5, // Combattant
                 [
-                    'ost' => 2,
+                    'ost'     => 2,
                     'domains' => [0, 5, 0, 1, 1, 2, 2, 0, 0, 3, 0, 0, 0, 0, 0, 0],
-                ]
+                ],
             ],
             9 => [
                 5, // Combattant
                 [
-                    'ost' => 2,
+                    'ost'     => 2,
                     'domains' => [0, 5, 0, 1, 1, 2, 2, 0, 0, 0, 0, 0, 0, 3, 0, 0],
-                ]
+                ],
             ],
 
             10 => [
                 6, // Commerçant
                 [
-                    'ost' => 2,
+                    'ost'     => 2,
                     'domains' => [3, 1, 1, 2, 2, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0],
-                ]
+                ],
             ],
             11 => [
                 6, // Commerçant
                 [
-                    'ost' => 2,
+                    'ost'     => 2,
                     'domains' => [0, 1, 1, 2, 2, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 3],
-                ]
+                ],
             ],
 
             12 => [
                 7, // Demorthèn
                 [
-                    'ost' => 2,
+                    'ost'     => 2,
                     'domains' => [0, 0, 0, 0, 3, 5, 1, 1, 2, 2, 0, 0, 0, 0, 0, 0],
-                ]
+                ],
             ],
             13 => [
                 7, // Demorthèn
                 [
-                    'ost' => 2,
+                    'ost'     => 2,
                     'domains' => [0, 0, 0, 0, 0, 5, 1, 1, 2, 2, 0, 0, 0, 0, 0, 3],
-                ]
+                ],
             ],
 
             14 => [
                 8, // Érudit
                 [
-                    'ost' => 2,
+                    'ost'     => 2,
                     'domains' => [1, 1, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 5],
-                ]
+                ],
             ],
             15 => [
                 8, // Érudit
                 [
-                    'ost' => 2,
+                    'ost'     => 2,
                     'domains' => [1, 1, 2, 2, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 5],
-                ]
+                ],
             ],
 
             16 => [
                 9, // Espion
                 [
-                    'ost' => 2,
+                    'ost'     => 2,
                     'domains' => [3, 1, 2, 2, 1, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0],
-                ]
+                ],
             ],
             17 => [
                 9, // Espion
                 [
-                    'ost' => 2,
+                    'ost'     => 2,
                     'domains' => [1, 3, 2, 2, 1, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0],
-                ]
+                ],
             ],
             18 => [
                 9, // Espion
                 [
-                    'ost' => 2,
+                    'ost'     => 2,
                     'domains' => [1, 1, 3, 2, 2, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0],
-                ]
+                ],
             ],
             19 => [
                 9, // Espion
                 [
-                    'ost' => 2,
+                    'ost'     => 2,
                     'domains' => [1, 1, 2, 3, 2, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0],
-                ]
+                ],
             ],
             20 => [
                 9, // Espion
                 [
-                    'ost' => 2,
+                    'ost'     => 2,
                     'domains' => [1, 1, 2, 2, 3, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0],
-                ]
+                ],
             ],
             21 => [
                 9, // Espion
                 [
-                    'ost' => 2,
+                    'ost'     => 2,
                     'domains' => [1, 1, 2, 2, 0, 3, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0],
-                ]
+                ],
             ],
             22 => [
                 9, // Espion
                 [
-                    'ost' => 2,
+                    'ost'     => 2,
                     'domains' => [1, 1, 2, 2, 0, 0, 3, 5, 0, 0, 0, 0, 0, 0, 0, 0],
-                ]
+                ],
             ],
             23 => [
                 9, // Espion
                 [
-                    'ost' => 2,
+                    'ost'     => 2,
                     'domains' => [1, 1, 2, 2, 0, 0, 0, 5, 3, 0, 0, 0, 0, 0, 0, 0],
-                ]
+                ],
             ],
             24 => [
                 9, // Espion
                 [
-                    'ost' => 2,
+                    'ost'     => 2,
                     'domains' => [1, 1, 2, 2, 0, 0, 0, 5, 0, 3, 0, 0, 0, 0, 0, 0],
-                ]
+                ],
             ],
             25 => [
                 9, // Espion
                 [
-                    'ost' => 2,
+                    'ost'     => 2,
                     'domains' => [1, 1, 2, 2, 0, 0, 0, 5, 0, 0, 3, 0, 0, 0, 0, 0],
-                ]
+                ],
             ],
             26 => [
                 9, // Espion
                 [
-                    'ost' => 2,
+                    'ost'     => 2,
                     'domains' => [1, 1, 2, 2, 0, 0, 0, 5, 0, 0, 0, 3, 0, 0, 0, 0],
-                ]
+                ],
             ],
             27 => [
                 9, // Espion
                 [
-                    'ost' => 2,
+                    'ost'     => 2,
                     'domains' => [1, 1, 2, 2, 0, 0, 0, 5, 0, 0, 0, 0, 3, 0, 0, 0],
-                ]
+                ],
             ],
             28 => [
                 9, // Espion
                 [
-                    'ost' => 2,
+                    'ost'     => 2,
                     'domains' => [1, 1, 2, 2, 0, 0, 0, 5, 0, 0, 0, 0, 0, 3, 0, 0],
-                ]
+                ],
             ],
             29 => [
                 9, // Espion
                 [
-                    'ost' => 2,
+                    'ost'     => 2,
                     'domains' => [1, 1, 2, 2, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 3, 0],
-                ]
+                ],
             ],
             30 => [
                 9, // Espion
                 [
-                    'ost' => 2,
+                    'ost'     => 2,
                     'domains' => [1, 1, 2, 2, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 3],
-                ]
+                ],
             ],
             31 => [
                 10, // Explorateur
                 [
-                    'ost' => 2,
+                    'ost'     => 2,
                     'domains' => [1, 1, 2, 2, 3, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0],
-                ]
+                ],
             ],
             32 => [
                 10, // Explorateur
                 [
-                    'ost' => 2,
+                    'ost'     => 2,
                     'domains' => [1, 1, 2, 2, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 3, 0],
-                ]
+                ],
             ],
             33 => [
                 11, // Investigateur
                 [
-                    'ost' => 2,
+                    'ost'     => 2,
                     'domains' => [3, 1, 1, 2, 2, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0],
-                ]
+                ],
             ],
             34 => [
                 11, // Investigateur
                 [
-                    'ost' => 2,
+                    'ost'     => 2,
                     'domains' => [1, 3, 1, 2, 2, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0],
-                ]
+                ],
             ],
             35 => [
                 11, // Investigateur
                 [
-                    'ost' => 2,
+                    'ost'     => 2,
                     'domains' => [1, 1, 3, 2, 2, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0],
-                ]
+                ],
             ],
             36 => [
                 11, // Investigateur
                 [
-                    'ost' => 2,
+                    'ost'     => 2,
                     'domains' => [1, 1, 2, 3, 2, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0],
-                ]
+                ],
             ],
             37 => [
                 11, // Investigateur
                 [
-                    'ost' => 2,
+                    'ost'     => 2,
                     'domains' => [1, 1, 2, 2, 3, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0],
-                ]
+                ],
             ],
             38 => [
                 11, // Investigateur
                 [
-                    'ost' => 2,
+                    'ost'     => 2,
                     'domains' => [1, 1, 2, 2, 0, 3, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0],
-                ]
+                ],
             ],
             39 => [
                 11, // Investigateur
                 [
-                    'ost' => 2,
+                    'ost'     => 2,
                     'domains' => [1, 1, 2, 2, 0, 0, 3, 5, 0, 0, 0, 0, 0, 0, 0, 0],
-                ]
+                ],
             ],
             40 => [
                 11, // Investigateur
                 [
-                    'ost' => 2,
+                    'ost'     => 2,
                     'domains' => [1, 1, 2, 2, 0, 0, 0, 5, 3, 0, 0, 0, 0, 0, 0, 0],
-                ]
+                ],
             ],
             41 => [
                 11, // Investigateur
                 [
-                    'ost' => 2,
+                    'ost'     => 2,
                     'domains' => [1, 1, 2, 2, 0, 0, 0, 5, 0, 3, 0, 0, 0, 0, 0, 0],
-                ]
+                ],
             ],
             42 => [
                 11, // Investigateur
                 [
-                    'ost' => 2,
+                    'ost'     => 2,
                     'domains' => [1, 1, 2, 2, 0, 0, 0, 5, 0, 0, 3, 0, 0, 0, 0, 0],
-                ]
+                ],
             ],
             43 => [
                 11, // Investigateur
                 [
-                    'ost' => 2,
+                    'ost'     => 2,
                     'domains' => [1, 1, 2, 2, 0, 0, 0, 5, 0, 0, 0, 3, 0, 0, 0, 0],
-                ]
+                ],
             ],
             44 => [
                 11, // Investigateur
                 [
-                    'ost' => 2,
+                    'ost'     => 2,
                     'domains' => [1, 1, 2, 2, 0, 0, 0, 5, 0, 0, 0, 0, 3, 0, 0, 0],
-                ]
+                ],
             ],
             45 => [
                 11, // Investigateur
                 [
-                    'ost' => 2,
+                    'ost'     => 2,
                     'domains' => [1, 1, 2, 2, 0, 0, 0, 5, 0, 0, 0, 0, 0, 3, 0, 0],
-                ]
+                ],
             ],
             46 => [
                 11, // Investigateur
                 [
-                    'ost' => 2,
+                    'ost'     => 2,
                     'domains' => [1, 1, 2, 2, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 3, 0],
-                ]
+                ],
             ],
             47 => [
                 11, // Investigateur
                 [
-                    'ost' => 2,
+                    'ost'     => 2,
                     'domains' => [1, 1, 2, 2, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 3],
-                ]
+                ],
             ],
         ];
 
@@ -759,7 +759,7 @@ class Step13PrimaryDomainsTest extends AbstractStepTest
         // They're in the correct order now. Just remember them, and add comments in case of
         foreach ($tests as $k => $test) {
             for ($i = 16; $i > 0; $i--) {
-                $tests[$k][1]['domains'][(string) $i] = (int) $test[1]['domains'][$i-1];
+                $tests[$k][1]['domains'][(string) $i] = (int) $test[1]['domains'][$i - 1];
             }
             unset($tests[$k][1]['domains'][0]);
         }
@@ -780,10 +780,10 @@ class Step13PrimaryDomainsTest extends AbstractStepTest
 
         $session = $client->getContainer()->get('session');
         $session->set('character', [
-            '02_job' => $jobId,
-            '08_ways' => [1, 2, 3, 4, 5],
+            '02_job'        => $jobId,
+            '08_ways'       => [1, 2, 3, 4, 5],
             '11_advantages' => [
-                'advantages' => $scholar ? [23 => 1] : [],
+                'advantages'    => $scholar ? [23 => 1] : [],
                 'disadvantages' => [],
             ],
         ]);

@@ -26,7 +26,7 @@ class CharWays
     /**
      * @var Characters
      *
-     * @ORM\Id
+     * @ORM\Id()
      * @ORM\ManyToOne(targetEntity="CorahnRin\CorahnRinBundle\Entity\Characters", inversedBy="ways")
      */
     protected $character;
@@ -34,7 +34,7 @@ class CharWays
     /**
      * @var Ways
      *
-     * @ORM\Id
+     * @ORM\Id()
      * @ORM\ManyToOne(targetEntity="CorahnRin\CorahnRinBundle\Entity\Ways")
      */
     protected $way;

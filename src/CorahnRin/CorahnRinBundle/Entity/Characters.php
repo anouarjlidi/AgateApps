@@ -33,20 +33,20 @@ use UserBundle\Entity\User;
  *
  * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity(repositoryClass="CorahnRin\CorahnRinBundle\Repository\CharactersRepository")
- * @ORM\Table(name="characters",uniqueConstraints={@ORM\UniqueConstraint(name="idcUnique", columns={"name_slug", "user_id"})})
+ * @ORM\Table(name="characters", uniqueConstraints={@ORM\UniqueConstraint(name="idcUnique", columns={"name_slug", "user_id"})})
  */
 class Characters extends BaseCharacter
 {
-    const FEMALE = 'character.sex.female';
-    const MALE   = 'character.sex.male';
+    public const FEMALE = 'character.sex.female';
+    public const MALE   = 'character.sex.male';
 
-    const COMBAT_ATTITUDE_STANDARD  = 'character.combat_attitude.standard';
-    const COMBAT_ATTITUDE_OFFENSIVE = 'character.combat_attitude.offensive';
-    const COMBAT_ATTITUDE_DEFENSIVE = 'character.combat_attitude.defensive';
-    const COMBAT_ATTITUDE_QUICK     = 'character.combat_attitude.quick';
-    const COMBAT_ATTITUDE_MOVEMENT  = 'character.combat_attitude.movement';
+    public const COMBAT_ATTITUDE_STANDARD  = 'character.combat_attitude.standard';
+    public const COMBAT_ATTITUDE_OFFENSIVE = 'character.combat_attitude.offensive';
+    public const COMBAT_ATTITUDE_DEFENSIVE = 'character.combat_attitude.defensive';
+    public const COMBAT_ATTITUDE_QUICK     = 'character.combat_attitude.quick';
+    public const COMBAT_ATTITUDE_MOVEMENT  = 'character.combat_attitude.movement';
 
-    const COMBAT_ATTITUDES = [
+    public const COMBAT_ATTITUDES = [
         self::COMBAT_ATTITUDE_STANDARD,
         self::COMBAT_ATTITUDE_OFFENSIVE,
         self::COMBAT_ATTITUDE_DEFENSIVE,
@@ -60,7 +60,7 @@ class Characters extends BaseCharacter
      * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
-     * @ORM\Id
+     * @ORM\Id()
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
@@ -76,7 +76,7 @@ class Characters extends BaseCharacter
      * @var string
      *
      * @ORM\Column(name="name_slug", type="string", length=255, nullable=false)
-     * @Gedmo\Slug(fields={"name"},unique=false)
+     * @Gedmo\Slug(fields={"name"}, unique=false)
      */
     protected $nameSlug;
 
@@ -167,7 +167,7 @@ class Characters extends BaseCharacter
     /**
      * @var int
      *
-     * @ORM\Column(name="trauma_permanent", type="smallint", options={"default":0})
+     * @ORM\Column(name="trauma_permanent", type="smallint", options={"default": 0})
      */
     protected $traumaPermanent = 0;
 
@@ -659,6 +659,7 @@ class Characters extends BaseCharacter
 
     /**
      * @param string $attitude
+     *
      * @return int|null
      */
     public function getTotalDefense($attitude = self::COMBAT_ATTITUDE_STANDARD): ?int
@@ -695,6 +696,7 @@ class Characters extends BaseCharacter
 
     /**
      * @param string $attitude
+     *
      * @return int|null
      */
     public function getTotalSpeed($attitude = self::COMBAT_ATTITUDE_STANDARD): ?int
@@ -849,7 +851,7 @@ class Characters extends BaseCharacter
     }
 
     /**
-     * @param int $id
+     * @param int  $id
      * @param bool $falseIfAvoided
      *
      * @return bool
@@ -863,6 +865,7 @@ class Characters extends BaseCharacter
                 if (true === $falseIfAvoided && $setback->isAvoided()) {
                     continue;
                 }
+
                 return true;
             }
         }

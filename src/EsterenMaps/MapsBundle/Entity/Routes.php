@@ -24,7 +24,7 @@ use JMS\Serializer\Annotation as Serializer;
  *
  * @ORM\Table(name="maps_routes")
  * @ORM\Entity(repositoryClass="EsterenMaps\MapsBundle\Repository\RoutesRepository")
- * @ORM\HasLifecycleCallbacks
+ * @ORM\HasLifecycleCallbacks()
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  * @Serializer\ExclusionPolicy("all")
  */
@@ -37,9 +37,9 @@ class Routes implements EntityToClearInterface
      * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
-     * @ORM\Id
+     * @ORM\Id()
      * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @Serializer\Expose
+     * @Serializer\Expose()
      */
     protected $id;
 
@@ -47,7 +47,7 @@ class Routes implements EntityToClearInterface
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=true)
-     * @Serializer\Expose
+     * @Serializer\Expose()
      */
     protected $name;
 
@@ -55,7 +55,7 @@ class Routes implements EntityToClearInterface
      * @var string
      *
      * @ORM\Column(name="description", type="text", nullable=true)
-     * @Serializer\Expose
+     * @Serializer\Expose()
      */
     protected $description;
 
@@ -63,15 +63,15 @@ class Routes implements EntityToClearInterface
      * @var string
      *
      * @ORM\Column(name="coordinates", type="text")
-     * @Serializer\Expose
+     * @Serializer\Expose()
      */
     protected $coordinates = '';
 
     /**
      * @var int
      *
-     * @ORM\Column(name="distance", type="float", precision=12, scale=6, options={"default":0})
-     * @Serializer\Expose
+     * @ORM\Column(name="distance", type="float", precision=12, scale=6, options={"default": 0})
+     * @Serializer\Expose()
      */
     protected $distance = 0;
 
@@ -79,7 +79,7 @@ class Routes implements EntityToClearInterface
      * @var int
      *
      * @ORM\Column(name="forced_distance", type="float", precision=12, scale=6, nullable=true)
-     * @Serializer\Expose
+     * @Serializer\Expose()
      */
     protected $forcedDistance;
 
@@ -87,7 +87,7 @@ class Routes implements EntityToClearInterface
      * @var bool
      *
      * @ORM\Column(name="guarded", type="boolean")
-     * @Serializer\Expose
+     * @Serializer\Expose()
      */
     protected $guarded = false;
 
@@ -103,7 +103,7 @@ class Routes implements EntityToClearInterface
      *
      * @ORM\ManyToOne(targetEntity="Markers", inversedBy="routesStart")
      * @ORM\JoinColumn(name="marker_start_id", nullable=true)
-     * @Serializer\Expose
+     * @Serializer\Expose()
      */
     protected $markerStart;
 
@@ -112,7 +112,7 @@ class Routes implements EntityToClearInterface
      *
      * @ORM\ManyToOne(targetEntity="Markers", inversedBy="routesEnd")
      * @ORM\JoinColumn(name="marker_end_id", nullable=true)
-     * @Serializer\Expose
+     * @Serializer\Expose()
      */
     protected $markerEnd;
 
@@ -129,7 +129,7 @@ class Routes implements EntityToClearInterface
      *
      * @ORM\ManyToOne(targetEntity="Factions", inversedBy="routes")
      * @ORM\JoinColumn(name="faction_id", nullable=true)
-     * @Serializer\Expose
+     * @Serializer\Expose()
      */
     protected $faction;
 
@@ -138,7 +138,7 @@ class Routes implements EntityToClearInterface
      *
      * @ORM\ManyToOne(targetEntity="RoutesTypes", inversedBy="routes")
      * @ORM\JoinColumn(name="route_type_id", nullable=false)
-     * @Serializer\Expose
+     * @Serializer\Expose()
      */
     protected $routeType;
 
@@ -537,8 +537,8 @@ class Routes implements EntityToClearInterface
     /**
      * Réinitialise correctement les informations de la route.
      *
-     * @ORM\PrePersist
-     * @ORM\PreUpdate
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
      *
      * @return Routes
      */
@@ -583,10 +583,9 @@ class Routes implements EntityToClearInterface
             $this->distance = $this->forcedDistance;
 
             return $this->forcedDistance;
-        } else {
+        }
             // Else, we force the null value
             $this->forcedDistance = null;
-        }
 
         $distance = 0;
         $points   = json_decode($this->coordinates, true);
@@ -619,6 +618,7 @@ class Routes implements EntityToClearInterface
         /**
          * The "substr" trick truncates the numbers, else mysql 5.7 would throw a warning.
          * This parameter should depend on the "precision" specified in the $distance property.
+         *
          * @see Routes::$distance
          */
         $floatPrecision = 12;

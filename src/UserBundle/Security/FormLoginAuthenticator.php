@@ -30,15 +30,15 @@ final class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
 {
     use TargetPathTrait;
 
-    const USERNAME_OR_EMAIL_FORM_FIELD = '_username_or_email';
-    const PASSWORD_FORM_FIELD = '_password';
-    const SECURITY_REFERER_PARAMETER = '_security_referer';
+    public const USERNAME_OR_EMAIL_FORM_FIELD = '_username_or_email';
+    public const PASSWORD_FORM_FIELD          = '_password';
+    public const SECURITY_REFERER_PARAMETER   = '_security_referer';
 
-    const PROVIDER_KEY = 'main'; // Firewall name
+    public const PROVIDER_KEY = 'main'; // Firewall name
 
-    const LOGIN_ROUTE = 'user_login';
+    public const LOGIN_ROUTE = 'user_login';
 
-    const NO_REFERER_ROUTES = [
+    public const NO_REFERER_ROUTES = [
         self::LOGIN_ROUTE,
         'user_login_check',
         'user_register',
@@ -65,7 +65,7 @@ final class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
 
     public function __construct(RouterInterface $router, UserPasswordEncoderInterface $encoder)
     {
-        $this->router = $router;
+        $this->router  = $router;
         $this->encoder = $encoder;
     }
 

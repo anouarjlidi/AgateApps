@@ -401,6 +401,5 @@ Il se spécialise dans les armes à distance',
                 ],
             ],
         ];
-
     }
 }

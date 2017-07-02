@@ -75,7 +75,7 @@ class Step07Setbacks extends AbstractStepAction
 
                 foreach ($setbacksValue as $id) {
                     if (
-                        !array_key_exists((int)$id, $this->setbacks) // Setback has to exist
+                        !array_key_exists((int) $id, $this->setbacks) // Setback has to exist
                         || in_array((int) $id, [1, 10], true)        // If manually set, setback cannot be good/bad luck
                     ) {
                         $anyWrongSetbackId = true;
@@ -85,7 +85,7 @@ class Step07Setbacks extends AbstractStepAction
                 if (!$anyWrongSetbackId) {
                     $finalSetbacks = [];
                     foreach ($setbacksValue as $id) {
-                        $finalSetbacks[$id] = ['id' => (int)$id, 'avoided' => false];
+                        $finalSetbacks[$id] = ['id' => (int) $id, 'avoided' => false];
                     }
                     $this->updateCharacterStep($finalSetbacks);
 
@@ -124,7 +124,6 @@ class Step07Setbacks extends AbstractStepAction
         // A loop is made through all steps until enough setbacks have been set.
         $loopIterator = $this->setbacksNumber;
         while ($loopIterator > 0) {
-
             // Roll the dice. (shuffle all setbacks and get the first found)
             shuffle($setbacksDiceList);
 

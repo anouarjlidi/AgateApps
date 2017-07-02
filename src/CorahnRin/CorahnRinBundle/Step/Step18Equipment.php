@@ -18,20 +18,20 @@ class Step18Equipment extends AbstractStepAction
      */
     public function execute()
     {
-        $weapons = $this->em->getRepository('CorahnRinBundle:Weapons')->findAllSortedByName();
-        $armors = $this->em->getRepository('CorahnRinBundle:Armors')->findAllSortedByName();
-        $setbacks         = $this->getCharacterProperty('07_setbacks');
-        $isPoor           = isset($setbacks[9]) && !$setbacks[9]['avoided'];
+        $weapons  = $this->em->getRepository('CorahnRinBundle:Weapons')->findAllSortedByName();
+        $armors   = $this->em->getRepository('CorahnRinBundle:Armors')->findAllSortedByName();
+        $setbacks = $this->getCharacterProperty('07_setbacks');
+        $isPoor   = isset($setbacks[9]) && !$setbacks[9]['avoided'];
 
         $currentStep = $this->getCharacterProperty() ?: $this->resetEquipment();
 
         if ($this->request->isMethod('POST')) {
-            $postedArmors = (array) $this->request->get('armors', []);
-            $postedWeapons = (array) $this->request->get('weapons', []);
+            $postedArmors    = (array) $this->request->get('armors', []);
+            $postedWeapons   = (array) $this->request->get('weapons', []);
             $postedEquipment = (array) $this->request->get('equipment', []);
 
             // Remove all entries
-            $currentStep['armors'] = [];
+            $currentStep['armors']  = [];
             $currentStep['weapons'] = [];
 
             $errors = false;
@@ -54,27 +54,28 @@ class Step18Equipment extends AbstractStepAction
                 $currentStep['weapons'][(int) $id] = true;
             }
 
-            $postedEquipment = array_map(function($e) {
+            $postedEquipment = array_map(function ($e) {
                 return trim(preg_replace('~\s\s+~', ' ', strip_tags($e))); // Escape entries
             }, $postedEquipment);
             $postedEquipment = array_unique($postedEquipment); // Remove duplicate entries
-            $postedEquipment = array_filter($postedEquipment, function($e){return !empty($e);}); // Remove empty entries
+            $postedEquipment = array_filter($postedEquipment, function ($e) {return !empty($e); }); // Remove empty entries
 
             $currentStep['equipment'] = $postedEquipment;
 
             if (false === $errors) {
                 $this->updateCharacterStep($currentStep);
+
                 return $this->nextStep();
             }
         }
 
         return $this->renderCurrentStep([
-            'armors' => $armors,
-            'weapons' => $weapons,
-            'is_poor' => $isPoor,
-            'selected_armors' => $currentStep['armors'],
+            'armors'           => $armors,
+            'weapons'          => $weapons,
+            'is_poor'          => $isPoor,
+            'selected_armors'  => $currentStep['armors'],
             'selected_weapons' => $currentStep['weapons'],
-            'equipment' => $currentStep['equipment'],
+            'equipment'        => $currentStep['equipment'],
         ]);
     }
 
@@ -84,8 +85,8 @@ class Step18Equipment extends AbstractStepAction
     private function resetEquipment()
     {
         return [
-            'armors' => [],
-            'weapons' => [],
+            'armors'    => [],
+            'weapons'   => [],
             'equipment' => [],
         ];
     }

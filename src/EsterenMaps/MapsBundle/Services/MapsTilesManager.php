@@ -144,9 +144,8 @@ class MapsTilesManager
         }
 
         if (!isset($this->identifications[$zoom])) {
-
             // Calcul des ratios et du nombre maximum de vignettes
-            $crop_unit = pow(2, $this->map->getMaxZoom() - $zoom) * $this->tile_size;
+            $crop_unit = 2 ** ($this->map->getMaxZoom() - $zoom) * $this->tile_size;
 
             $max_tiles_x = ceil($this->img_width / $crop_unit) - 1;
             $max_tiles_y = ceil($this->img_height / $crop_unit) - 1;
@@ -184,7 +183,7 @@ class MapsTilesManager
 
         $max = $this->map->getMaxZoom();
 
-        $ratio = 1 / (pow(2, $max - $zoom)) * 100;
+        $ratio = 1 / (2 ** ($max - $zoom)) * 100;
 
         $output_scheme = $this->outputDirectory.'/temp_tiles/'.$this->map->getId().'/'.$zoom.'.jpg';
         $output_final  = $this->outputDirectory.'/'.$this->map->getId().'/'.$zoom.'/{x}/{y}.jpg';

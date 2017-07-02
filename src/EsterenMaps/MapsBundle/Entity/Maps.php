@@ -39,9 +39,9 @@ class Maps
      * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
-     * @ORM\Id
+     * @ORM\Id()
      * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @Expose
+     * @Expose()
      */
     protected $id;
 
@@ -49,7 +49,7 @@ class Maps
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=false, unique=true)
-     * @Expose
+     * @Expose()
      */
     protected $name;
 
@@ -58,7 +58,7 @@ class Maps
      *
      * @Gedmo\Slug(fields={"name"})
      * @ORM\Column(type="string", length=255, nullable=false, unique=true)
-     * @Expose
+     * @Expose()
      */
     protected $nameSlug;
 
@@ -74,47 +74,47 @@ class Maps
      * @var string
      *
      * @ORM\Column(name="description", type="text", nullable=true)
-     * @Expose
+     * @Expose()
      */
     protected $description;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="max_zoom", type="smallint", options={"default":1})
+     * @ORM\Column(name="max_zoom", type="smallint", options={"default": 1})
      * @Assert\Range(
-     *      min = 1,
-     *      max = 50
+     *     min=1,
+     *     max=50
      * )
-     * @Expose
+     * @Expose()
      */
     protected $maxZoom = 10;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="start_zoom", type="smallint", options={"default":1})
+     * @ORM\Column(name="start_zoom", type="smallint", options={"default": 1})
      * @Assert\Range(
-     *      min = 1,
-     *      max = 10
+     *     min=1,
+     *     max=10
      * )
-     * @Expose
+     * @Expose()
      */
     protected $startZoom = 10;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="start_x", type="smallint", options={"default":1})
-     * @Expose
+     * @ORM\Column(name="start_x", type="smallint", options={"default": 1})
+     * @Expose()
      */
     protected $startX = 0;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="start_y", type="smallint", options={"default":1})
-     * @Expose
+     * @ORM\Column(name="start_y", type="smallint", options={"default": 1})
+     * @Expose()
      */
     protected $startY = 0;
 
@@ -127,8 +127,8 @@ class Maps
     /**
      * @var int
      *
-     * @ORM\Column(name="coordinates_ratio", type="smallint", options={"default":1})
-     * @Expose
+     * @ORM\Column(name="coordinates_ratio", type="smallint", options={"default": 1})
+     * @Expose()
      */
     protected $coordinatesRatio = 1;
 
@@ -136,7 +136,7 @@ class Maps
      * @var Routes[]|ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="Routes", mappedBy="map")
-     * @Expose
+     * @Expose()
      */
     protected $routes;
 
@@ -144,7 +144,7 @@ class Maps
      * @var Markers[]|ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="Markers", mappedBy="map")
-     * @Expose
+     * @Expose()
      */
     protected $markers;
 
@@ -152,7 +152,7 @@ class Maps
      * @var Zones[]|ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="Zones", mappedBy="map")
-     * @Expose
+     * @Expose()
      */
     protected $zones;
 

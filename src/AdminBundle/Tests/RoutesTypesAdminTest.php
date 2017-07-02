@@ -15,7 +15,6 @@ use EsterenMaps\MapsBundle\Entity\RoutesTypes;
 
 class RoutesTypesAdminTest extends AbstractEasyAdminTest
 {
-
     /**
      * {@inheritdoc}
      */
@@ -37,12 +36,12 @@ class RoutesTypesAdminTest extends AbstractEasyAdminTest
      */
     public function provideListingFields()
     {
-        return array(
+        return [
             'id',
             'name',
             'color',
             'routes',
-        );
+        ];
     }
 
     /**

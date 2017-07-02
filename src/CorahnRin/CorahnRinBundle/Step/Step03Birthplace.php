@@ -39,9 +39,8 @@ class Step03Birthplace extends AbstractStepAction
                 $this->updateCharacterStep($regionValue);
 
                 return $this->nextStep();
-            } else {
-                $this->flashMessage('Veuillez choisir une région de naissance correcte.');
             }
+            $this->flashMessage('Veuillez choisir une région de naissance correcte.');
         }
 
         return $this->renderCurrentStep([

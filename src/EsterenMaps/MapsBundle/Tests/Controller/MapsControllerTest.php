@@ -25,7 +25,7 @@ class MapsControllerTest extends WebTestCase
     {
         $client = $this->getClient('maps.esteren.dev');
 
-        static::setToken($client, 'map_allowed', array('ROLE_MAPS_VIEW'));
+        static::setToken($client, 'map_allowed', ['ROLE_MAPS_VIEW']);
 
         $crawler = $client->request('GET', '/fr/');
 

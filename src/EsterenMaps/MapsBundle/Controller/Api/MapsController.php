@@ -24,9 +24,9 @@ class MapsController extends Controller
 {
     /**
      * @Route("/maps/settings/{id}.{_format}",
-     *      requirements={"id":"\d+","_format":"json"},
-     *      defaults={"_format":"json"},
-     *      name="esterenmaps_api_maps_settings_distant"
+     *     requirements={"id": "\d+", "_format": "json"},
+     *     defaults={"_format": "json"},
+     *     name="esterenmaps_api_maps_settings_distant"
      * )
      * @Method("GET")
      */

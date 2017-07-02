@@ -26,9 +26,8 @@ class Step04Geo extends AbstractStepAction
                 $this->updateCharacterStep($geoEnvironmentId);
 
                 return $this->nextStep();
-            } else {
-                $this->flashMessage('Veuillez indiquer un lieu de vie géographique correct.');
             }
+            $this->flashMessage('Veuillez indiquer un lieu de vie géographique correct.');
         }
 
         return $this->renderCurrentStep([

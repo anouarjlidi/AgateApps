@@ -119,7 +119,7 @@ class Step08WaysTest extends AbstractStepTest
     {
         $client = $this->getClient();
 
-        $crawler = $client->request('POST', '/fr/character/generate/' . $this->getStepName(), [
+        $crawler = $client->request('POST', '/fr/character/generate/'.$this->getStepName(), [
             'ways' => [
                 '10' => 1,
                 '20' => 1,

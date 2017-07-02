@@ -32,7 +32,7 @@ class Step12MentalDisorderTest extends AbstractStepTest
                 3 => 3,
                 4 => 2,
                 5 => 1,
-            ]
+            ],
         ], [
             'gen-div-choice' => 1,
         ]);
@@ -51,7 +51,7 @@ class Step12MentalDisorderTest extends AbstractStepTest
                 3 => 3,
                 4 => 2,
                 5 => 1,
-            ]
+            ],
         ], [
             'gen-div-choice' => 0,
         ]);
@@ -72,7 +72,7 @@ class Step12MentalDisorderTest extends AbstractStepTest
                 3 => 3,
                 4 => 2,
                 5 => 1,
-            ]
+            ],
         ], [
             'gen-div-choice' => 999999,
         ]);

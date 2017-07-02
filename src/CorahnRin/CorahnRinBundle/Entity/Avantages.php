@@ -22,18 +22,18 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Avantages
 {
-    const BONUS_100G  = '100g';
-    const BONUS_50G   = '50g';
-    const BONUS_20G   = '20g';
-    const BONUS_50A   = '50a';
-    const BONUS_20A   = '20a';
-    const BONUS_RESM  = 'resm';
-    const BONUS_BLESS = 'bless';
-    const BONUS_VIG   = 'vig';
-    const BONUS_TRAU  = 'trau';
-    const BONUS_DEF   = 'def';
-    const BONUS_RAP   = 'rap';
-    const BONUS_SUR   = 'sur';
+    public const BONUS_100G  = '100g';
+    public const BONUS_50G   = '50g';
+    public const BONUS_20G   = '20g';
+    public const BONUS_50A   = '50a';
+    public const BONUS_20A   = '20a';
+    public const BONUS_RESM  = 'resm';
+    public const BONUS_BLESS = 'bless';
+    public const BONUS_VIG   = 'vig';
+    public const BONUS_TRAU  = 'trau';
+    public const BONUS_DEF   = 'def';
+    public const BONUS_RAP   = 'rap';
+    public const BONUS_SUR   = 'sur';
 
     /**
      * Scholar advantage domain bonuses.
@@ -42,7 +42,7 @@ class Avantages
      * 13: Science.
      * 16: Erudition.
      */
-    const BONUS_SCHOLAR_DOMAINS = [4, 7, 13, 16];
+    public const BONUS_SCHOLAR_DOMAINS = [4, 7, 13, 16];
 
     use HasBook;
 
@@ -50,7 +50,7 @@ class Avantages
      * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
-     * @ORM\Id
+     * @ORM\Id()
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;

@@ -32,8 +32,7 @@ final class DirectionsRouteHydrator extends AbstractHydrator
         /** @var DirectionRoute[] $results */
         $results = [];
 
-        foreach($this->_stmt->fetchAll(\PDO::FETCH_ASSOC) as $row) {
-
+        foreach ($this->_stmt->fetchAll(\PDO::FETCH_ASSOC) as $row) {
             $routeId = $this->getRowValue($row, 'route.id');
 
             if (!array_key_exists($routeId, $results)) {
@@ -71,7 +70,7 @@ final class DirectionsRouteHydrator extends AbstractHydrator
      */
     private function initializeMappingAssociations()
     {
-        $owners = $this->_rsm->columnOwnerMap;
+        $owners        = $this->_rsm->columnOwnerMap;
         $mappingFields = $this->_rsm->fieldMappings;
 
         $finalMapping = [];

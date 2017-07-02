@@ -35,5 +35,4 @@ class DefaultEasyAdminTest extends WebTestCase
         static::assertSame('EasyAdmin', $crawler->filter('meta[name="generator"]')->attr('content'));
         static::assertGreaterThanOrEqual(1, $crawler->filter('#main.content .table-responsive tbody tr[data-id]')->count());
     }
-
 }

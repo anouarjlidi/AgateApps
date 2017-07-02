@@ -38,9 +38,9 @@ class TransportTypes implements EntityToClearInterface
      * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
-     * @ORM\Id
+     * @ORM\Id()
      * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @Expose
+     * @Expose()
      */
     protected $id;
 
@@ -48,7 +48,7 @@ class TransportTypes implements EntityToClearInterface
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=false, unique=true)
-     * @Expose
+     * @Expose()
      * @Assert\NotBlank()
      */
     protected $name;
@@ -58,7 +58,7 @@ class TransportTypes implements EntityToClearInterface
      *
      * @Gedmo\Slug(fields={"name"})
      * @ORM\Column(name="slug", type="string", length=255, nullable=false, unique=true)
-     * @Expose
+     * @Expose()
      */
     protected $slug;
 
@@ -66,7 +66,7 @@ class TransportTypes implements EntityToClearInterface
      * @var string
      *
      * @ORM\Column(name="description", type="text", nullable=true)
-     * @Expose
+     * @Expose()
      */
     protected $description;
 
@@ -76,7 +76,7 @@ class TransportTypes implements EntityToClearInterface
      * @ORM\Column(name="speed", type="decimal", scale=4, precision=8, nullable=false)
      * @Assert\NotNull()
      * @Assert\Range(max="10000", min="-10000")
-     * @Expose
+     * @Expose()
      */
     protected $speed;
 

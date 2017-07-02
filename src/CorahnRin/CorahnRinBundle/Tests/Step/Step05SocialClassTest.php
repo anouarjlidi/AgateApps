@@ -17,13 +17,13 @@ class Step05SocialClassTest extends AbstractStepTest
     {
         $result = $this->submitAction([], [
             'gen-div-choice' => 1,
-            'domains' => [5, 8],
+            'domains'        => [5, 8],
         ]);
 
         static::assertSame(302, $result->getResponse()->getStatusCode());
         static::assertTrue($result->getResponse()->isRedirect('/fr/character/generate/06_age'));
         static::assertSame([$this->getStepName() => [
-            'id' => 1,
+            'id'      => 1,
             'domains' => ['5' => 5, '8' => 8],
         ]], $result->getSession()->get('character'));
     }
@@ -45,7 +45,7 @@ class Step05SocialClassTest extends AbstractStepTest
     {
         $result = $this->submitAction([], [
             'gen-div-choice' => 1,
-            'domains' => [11, 16],
+            'domains'        => [11, 16],
         ]);
 
         $crawler = $result->getCrawler();
@@ -59,7 +59,7 @@ class Step05SocialClassTest extends AbstractStepTest
     {
         $result = $this->submitAction([], [
             'gen-div-choice' => 1,
-            'domains' => [5],
+            'domains'        => [5],
         ]);
 
         $crawler = $result->getCrawler();

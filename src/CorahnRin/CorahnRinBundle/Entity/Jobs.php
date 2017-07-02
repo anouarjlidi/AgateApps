@@ -29,7 +29,7 @@ class Jobs
      * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
-     * @ORM\Id
+     * @ORM\Id()
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
@@ -44,7 +44,7 @@ class Jobs
     /**
      * @var string
      *
-     * @ORM\Column(type="text",nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     protected $description;
 
@@ -58,7 +58,7 @@ class Jobs
     /**
      * @var Domains
      *
-     * @ORM\ManyToOne(targetEntity="Domains",fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="Domains", fetch="EAGER")
      */
     protected $domainPrimary;
 

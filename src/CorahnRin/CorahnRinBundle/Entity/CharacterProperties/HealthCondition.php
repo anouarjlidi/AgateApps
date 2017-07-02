@@ -55,11 +55,11 @@ class HealthCondition
 
     public function __construct(int $good = 5, int $okay = 5, int $bad = 4, int $critical = 4, int $agony = 1)
     {
-        $this->good = $good;
-        $this->okay = $okay;
-        $this->bad = $bad;
+        $this->good     = $good;
+        $this->okay     = $okay;
+        $this->bad      = $bad;
         $this->critical = $critical;
-        $this->agony = $agony;
+        $this->agony    = $agony;
     }
 
     /**
@@ -82,6 +82,7 @@ class HealthCondition
 
     /**
      * @param int $good
+     *
      * @return HealthCondition
      *
      * @codeCoverageIgnore
@@ -89,6 +90,7 @@ class HealthCondition
     public function setGood(int $good): HealthCondition
     {
         $this->good = $good;
+
         return $this;
     }
 
@@ -104,6 +106,7 @@ class HealthCondition
 
     /**
      * @param int $okay
+     *
      * @return HealthCondition
      *
      * @codeCoverageIgnore
@@ -111,6 +114,7 @@ class HealthCondition
     public function setOkay(int $okay): HealthCondition
     {
         $this->okay = $okay;
+
         return $this;
     }
 
@@ -126,6 +130,7 @@ class HealthCondition
 
     /**
      * @param int $bad
+     *
      * @return HealthCondition
      *
      * @codeCoverageIgnore
@@ -133,6 +138,7 @@ class HealthCondition
     public function setBad(int $bad): HealthCondition
     {
         $this->bad = $bad;
+
         return $this;
     }
 
@@ -148,6 +154,7 @@ class HealthCondition
 
     /**
      * @param int $critical
+     *
      * @return HealthCondition
      *
      * @codeCoverageIgnore
@@ -155,6 +162,7 @@ class HealthCondition
     public function setCritical(int $critical): HealthCondition
     {
         $this->critical = $critical;
+
         return $this;
     }
 
@@ -170,6 +178,7 @@ class HealthCondition
 
     /**
      * @param bool $agony
+     *
      * @return HealthCondition
      *
      * @codeCoverageIgnore
@@ -177,6 +186,7 @@ class HealthCondition
     public function setAgony(bool $agony): HealthCondition
     {
         $this->agony = $agony;
+
         return $this;
     }
 }

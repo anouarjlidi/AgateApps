@@ -65,9 +65,10 @@ abstract class AbstractEasyAdminTest extends WebTestCase
      * To be sure the test works, you might need to add fixtures with proper ID forced in the database.
      * Return "false" if you don't want to test "delete" form.
      *
-     * @return integer
+     * @return int
      */
-    public function provideIdToDelete() {
+    public function provideIdToDelete()
+    {
         return false;
     }
 
@@ -83,6 +84,7 @@ abstract class AbstractEasyAdminTest extends WebTestCase
         // Allows a cleaner phpunit output.
         if (false === $wishedColumns) {
             static::assertTrue(true);
+
             return;
         }
 
@@ -130,6 +132,7 @@ abstract class AbstractEasyAdminTest extends WebTestCase
         // Allows a cleaner phpunit output.
         if (false === $expectedData) {
             static::assertTrue(true);
+
             return;
         }
 
@@ -183,17 +186,17 @@ abstract class AbstractEasyAdminTest extends WebTestCase
 
         foreach ($expectedData as $field => $expectedValue) {
             $methodExists = false;
-            $methodName = null;
+            $methodName   = null;
 
             if (method_exists($lastEntity, 'get'.ucfirst($field))) {
                 $methodExists = true;
-                $methodName = 'get'.ucfirst($field);
-            } elseif(method_exists($lastEntity, 'is'.ucfirst($field))) {
+                $methodName   = 'get'.ucfirst($field);
+            } elseif (method_exists($lastEntity, 'is'.ucfirst($field))) {
                 $methodExists = true;
-                $methodName = 'is'.ucfirst($field);
-            } elseif(method_exists($lastEntity, 'has'.ucfirst($field))) {
+                $methodName   = 'is'.ucfirst($field);
+            } elseif (method_exists($lastEntity, 'has'.ucfirst($field))) {
                 $methodExists = true;
-                $methodName = 'has'.ucfirst($field);
+                $methodName   = 'has'.ucfirst($field);
             }
 
             if ($methodExists) {
@@ -216,6 +219,7 @@ abstract class AbstractEasyAdminTest extends WebTestCase
         // Allows a cleaner phpunit output.
         if (false === $data) {
             static::assertTrue(true);
+
             return;
         }
 
@@ -225,6 +229,7 @@ abstract class AbstractEasyAdminTest extends WebTestCase
 
         if (!array_key_exists('id', $data)) {
             static::fail('You must specify an ID in the "provideEditFormData" method.');
+
             return;
         }
 
@@ -283,6 +288,7 @@ abstract class AbstractEasyAdminTest extends WebTestCase
         // Allows a cleaner phpunit output.
         if (false === $id) {
             static::assertTrue(true);
+
             return;
         }
 
@@ -319,7 +325,6 @@ abstract class AbstractEasyAdminTest extends WebTestCase
         } else {
             static::assertFalse((bool) $object, $this->getEntityName());
         }
-
     }
 
     /**
@@ -340,7 +345,7 @@ abstract class AbstractEasyAdminTest extends WebTestCase
         if (0 === count($tokenRoles)) {
             $tokenRoles[] = 'ROLE_ADMIN';
         }
+
         return parent::getClient($host, $kernelOptions, is_array($tokenRoles) ? $tokenRoles : [$tokenRoles]);
     }
-
 }

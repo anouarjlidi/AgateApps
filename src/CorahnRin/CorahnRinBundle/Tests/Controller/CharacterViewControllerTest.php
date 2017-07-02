@@ -24,7 +24,7 @@ class CharacterViewControllerTest extends WebTestCase
      */
     public function testList()
     {
-        $client = $this->getClient('corahnrin.esteren.dev', array(), array('ROLE_MANAGER'));
+        $client = $this->getClient('corahnrin.esteren.dev', [], ['ROLE_MANAGER']);
 
         $crawler = $client->request('GET', '/fr/characters/');
 
@@ -37,7 +37,7 @@ class CharacterViewControllerTest extends WebTestCase
      */
     public function testView404()
     {
-        $client = $this->getClient('corahnrin.esteren.dev', array(), array('ROLE_MANAGER'));
+        $client = $this->getClient('corahnrin.esteren.dev', [], ['ROLE_MANAGER']);
 
         $client->request('GET', '/fr/characters/9999999-aaaaaaaa');
 
@@ -49,10 +49,10 @@ class CharacterViewControllerTest extends WebTestCase
      */
     public function testView()
     {
-        $client = $this->getClient('corahnrin.esteren.dev', array(), array('ROLE_MANAGER'));
+        $client = $this->getClient('corahnrin.esteren.dev', [], ['ROLE_MANAGER']);
 
         /**
-         * @var Characters|null $char
+         * @var Characters|null
          */
         $char = $client->getContainer()->get('doctrine')->getRepository('CorahnRinBundle:Characters')->find(608);
 
@@ -65,5 +65,4 @@ class CharacterViewControllerTest extends WebTestCase
         static::assertSame(200, $client->getResponse()->getStatusCode());
         static::assertSame(1, $crawler->filter('h2.char-name')->count());
     }
-
 }

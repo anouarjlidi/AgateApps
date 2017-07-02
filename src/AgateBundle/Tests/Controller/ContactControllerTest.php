@@ -29,8 +29,8 @@ class ContactControllerTest extends WebTestCase
         $form = $crawler->filter('#content .container form')->form();
 
         $data = [
-            'name' => 'username',
-            'email' => 'test@local.host',
+            'name'    => 'username',
+            'email'   => 'test@local.host',
             'message' => 'a message for testing purpose',
         ];
 

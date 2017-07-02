@@ -15,5 +15,4 @@ use Orbitale\Component\DoctrineTools\BaseEntityRepository;
 
 class PeopleRepository extends BaseEntityRepository
 {
-
 }

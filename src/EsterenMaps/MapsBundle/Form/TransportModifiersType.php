@@ -31,14 +31,14 @@ class TransportModifiersType extends AbstractType
     {
         $builder
             ->add('percentage', NumberType::class, [
-                'label' => 'admin.entities.transports.percentage',
+                'label'       => 'admin.entities.transports.percentage',
                 'constraints' => [
-                    new Range(['min' => -200, 'max' => 200])
+                    new Range(['min' => -200, 'max' => 200]),
                 ],
             ])
             ->add('routeType', TextType::class, [
                 'disabled' => true,
-                'label' => 'RouteTypes',
+                'label'    => 'RouteTypes',
                 'attr'     => ['read_only' => true],
                 'required' => false,
             ])

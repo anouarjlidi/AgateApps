@@ -54,7 +54,6 @@ class JsonResponseListener implements EventSubscriberInterface
         $controller = $event->getRequest()->attributes->get('_controller');
 
         if (strpos($controller, 'Pierstoval\Bundle\ApiBundle\Controller\ApiController') !== false) {
-
             // Stops any other kernel.exception listener to occur
             $event->stopPropagation();
 

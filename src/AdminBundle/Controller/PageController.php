@@ -28,7 +28,7 @@ class PageController extends Controller
     {
         return $this->render('easy_admin/Pages/preview.html.twig', [
             'pages' => [],
-            'page' => $page,
+            'page'  => $page,
         ]);
     }
 }

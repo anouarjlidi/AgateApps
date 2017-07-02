@@ -25,7 +25,7 @@ use Symfony\Component\HttpFoundation\Request;
 class DirectionsController extends Controller
 {
     /**
-     * @Route("/maps/directions/{id}/{from}/{to}", name="esterenmaps_directions", requirements={"id":"\d+", "from":"\d+", "to":"\d+"})
+     * @Route("/maps/directions/{id}/{from}/{to}", name="esterenmaps_directions", requirements={"id": "\d+", "from": "\d+", "to": "\d+"})
      * @Method("GET")
      * @ParamConverter(name="from", class="EsterenMapsBundle:Markers", options={"id": "from"})
      * @ParamConverter(name="to", class="EsterenMapsBundle:Markers", options={"id": "to"})

@@ -16,5 +16,4 @@ namespace EsterenMaps\MapsBundle\Cache;
  */
 interface EntityToClearInterface
 {
-
 }

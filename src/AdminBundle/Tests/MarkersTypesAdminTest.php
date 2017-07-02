@@ -15,7 +15,6 @@ use EsterenMaps\MapsBundle\Entity\MarkersTypes;
 
 class MarkersTypesAdminTest extends AbstractEasyAdminTest
 {
-
     /**
      * {@inheritdoc}
      */
@@ -37,12 +36,12 @@ class MarkersTypesAdminTest extends AbstractEasyAdminTest
      */
     public function provideListingFields()
     {
-        return array(
+        return [
             'id',
             'name',
             'webIcon',
             'markers',
-        );
+        ];
     }
 
     /**

@@ -98,7 +98,6 @@ class RefreshDataCommand extends ContainerAwareCommand
                 $changesets = $uow->getEntityChangeSet($route);
 
                 if (array_key_exists('distance', $changesets)) {
-
                     // Change all "NaN" to the value of $nanAs if specified.
                     if (null !== $nanAs) {
                         $changesets['distance'] = array_map(function ($e) use ($nanAs) {

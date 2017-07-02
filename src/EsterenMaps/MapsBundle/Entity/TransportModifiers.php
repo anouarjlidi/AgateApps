@@ -23,7 +23,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * TransportModifiers.
  *
- * @ORM\Table(name="maps_routes_transports", uniqueConstraints={@ORM\UniqueConstraint(name="unique_route_transport",columns={"route_type_id", "transport_type_id"})})
+ * @ORM\Table(name="maps_routes_transports", uniqueConstraints={@ORM\UniqueConstraint(name="unique_route_transport", columns={"route_type_id", "transport_type_id"})})
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  * @ORM\Entity()
  * @ExclusionPolicy("all")
@@ -37,9 +37,9 @@ class TransportModifiers implements EntityToClearInterface
      * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
-     * @ORM\Id
+     * @ORM\Id()
      * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @Expose
+     * @Expose()
      */
     protected $id;
 
@@ -58,7 +58,7 @@ class TransportModifiers implements EntityToClearInterface
      * @ORM\ManyToOne(targetEntity="EsterenMaps\MapsBundle\Entity\TransportTypes", inversedBy="transportsModifiers")
      * @ORM\JoinColumn(name="transport_type_id", nullable=false)
      * @Assert\NotNull()
-     * @Expose
+     * @Expose()
      */
     protected $transportType;
 
@@ -68,7 +68,7 @@ class TransportModifiers implements EntityToClearInterface
      * @ORM\Column(name="percentage", type="decimal", scale=6, precision=9, nullable=false, options={"default": "100"})
      * @Assert\NotNull()
      * @Assert\Range(max="100", min="0")
-     * @Expose
+     * @Expose()
      */
     protected $percentage = 100;
 
@@ -83,9 +83,9 @@ class TransportModifiers implements EntityToClearInterface
 
     public function __toString()
     {
-        return (string)$this->transportType .
-            ' - ' . $this->routeType .
-            ' (' . ($this->positiveRatio ? 1 : -1) . $this->percentage . '%)';
+        return (string) $this->transportType.
+            ' - '.$this->routeType.
+            ' ('.($this->positiveRatio ? 1 : -1).$this->percentage.'%)';
     }
 
     /**

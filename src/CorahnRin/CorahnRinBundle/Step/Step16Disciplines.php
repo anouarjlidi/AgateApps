@@ -61,9 +61,9 @@ class Step16Disciplines extends AbstractStepAction
     {
         $this->allDomains = $this->em->getRepository('CorahnRinBundle:Domains')->findAllSortedByName();
 
-        $primaryDomains = $this->getCharacterProperty('13_primary_domains');
-        $useDomainBonuses = $this->getCharacterProperty('14_use_domain_bonuses');
-        $this->remainingBonusPoints = $useDomainBonuses['remaining'];
+        $primaryDomains                = $this->getCharacterProperty('13_primary_domains');
+        $useDomainBonuses              = $this->getCharacterProperty('14_use_domain_bonuses');
+        $this->remainingBonusPoints    = $useDomainBonuses['remaining'];
         $this->expRemainingFromDomains = $this->getCharacterProperty('15_domains_spend_exp')['remainingExp'];
 
         // Can only have disciplines if have bonuses to spend OR remaining experience.
@@ -72,10 +72,9 @@ class Step16Disciplines extends AbstractStepAction
         $availableDomainsForDisciplines = [];
 
         if ($canHaveDisciplines) {
-
             $socialClassValues = $this->getCharacterProperty('05_social_class')['domains'];
-            $domainBonuses = $this->getCharacterProperty('14_use_domain_bonuses');
-            $geoEnvironment = $this->em->find('CorahnRinBundle:GeoEnvironments', $this->getCharacterProperty('04_geo'));
+            $domainBonuses     = $this->getCharacterProperty('14_use_domain_bonuses');
+            $geoEnvironment    = $this->em->find('CorahnRinBundle:GeoEnvironments', $this->getCharacterProperty('04_geo'));
 
             // Calculate final values from previous steps
             $domainsBaseValues = $this->domainsCalculator->calculateFromGeneratorData(
@@ -91,7 +90,7 @@ class Step16Disciplines extends AbstractStepAction
             $finalDomainsValues = $this->domainsCalculator->calculateFinalValues(
                 $this->allDomains,
                 $domainsBaseValues,
-                array_map(function($e) { return (int) $e; }, $this->getCharacterProperty('15_domains_spend_exp')['domains'])
+                array_map(function ($e) { return (int) $e; }, $this->getCharacterProperty('15_domains_spend_exp')['domains'])
             );
 
             // Disciplines can be acquired only for domains with 5 points, and only for primary or secondary domains.
@@ -114,9 +113,9 @@ class Step16Disciplines extends AbstractStepAction
 
         // Manage form submit
         if ($this->request->isMethod('POST')) {
-
             if (!$canHaveDisciplines) {
                 $this->updateCharacterStep($this->disciplinesSpentWithExp);
+
                 return $this->nextStep();
             }
 
@@ -164,15 +163,14 @@ class Step16Disciplines extends AbstractStepAction
                     $this->disciplinesSpentWithExp = $this->resetDisciplines();
                 } else {
                     $this->updateCharacterStep([
-                        'disciplines' => $disciplinesValues,
-                        'remainingExp' => $remainingExp,
+                        'disciplines'          => $disciplinesValues,
+                        'remainingExp'         => $remainingExp,
                         'remainingBonusPoints' => $remainingBonusPoints,
                     ]);
 
                     return $this->nextStep();
                 }
             }
-
         }
 
         // Get disciplines sorted by domain name
@@ -191,22 +189,22 @@ class Step16Disciplines extends AbstractStepAction
         }
 
         return $this->renderCurrentStep([
-            'all_domains' => $this->allDomains,
-            'available_domains' => $availableDomainsForDisciplines,
-            'all_disciplines' => $disciplinesSortedByDomains,
+            'all_domains'                => $this->allDomains,
+            'available_domains'          => $availableDomainsForDisciplines,
+            'all_disciplines'            => $disciplinesSortedByDomains,
             'disciplines_spent_with_exp' => $this->disciplinesSpentWithExp['disciplines'],
-            'bonus_max' => $this->remainingBonusPoints,
-            'bonus_value' => $this->disciplinesSpentWithExp['remainingBonusPoints'],
-            'exp_max' => $this->expRemainingFromDomains,
-            'exp_value' => $this->disciplinesSpentWithExp['remainingExp'],
+            'bonus_max'                  => $this->remainingBonusPoints,
+            'bonus_value'                => $this->disciplinesSpentWithExp['remainingBonusPoints'],
+            'exp_max'                    => $this->expRemainingFromDomains,
+            'exp_value'                  => $this->disciplinesSpentWithExp['remainingExp'],
         ]);
     }
 
     private function resetDisciplines()
     {
         return $this->disciplinesSpentWithExp = [
-            'disciplines' => [],
-            'remainingExp' => $this->expRemainingFromDomains,
+            'disciplines'          => [],
+            'remainingExp'         => $this->expRemainingFromDomains,
             'remainingBonusPoints' => $this->remainingBonusPoints,
         ];
     }

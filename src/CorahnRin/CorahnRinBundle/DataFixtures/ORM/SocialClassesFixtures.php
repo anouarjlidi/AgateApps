@@ -47,9 +47,9 @@ class SocialClassesFixtures extends AbstractFixture implements OrderedFixtureInt
         /** @var EntityRepository $repo */
         $repo = $this->manager->getRepository('CorahnRinBundle:SocialClasses');
 
-        $domain1 = $this->getReference('corahnrin-domain-1');
-        $domain2 = $this->getReference('corahnrin-domain-2');
-        $domain5 = $this->getReference('corahnrin-domain-5');
+        $domain1  = $this->getReference('corahnrin-domain-1');
+        $domain2  = $this->getReference('corahnrin-domain-2');
+        $domain5  = $this->getReference('corahnrin-domain-5');
         $domain8  = $this->getReference('corahnrin-domain-8');
         $domain9  = $this->getReference('corahnrin-domain-9');
         $domain10 = $this->getReference('corahnrin-domain-10');

@@ -31,7 +31,7 @@ final class StepActionTestResult
     public function __construct(Crawler $crawler, Client $client)
     {
         $this->crawler = $crawler;
-        $this->client = $client;
+        $this->client  = $client;
     }
 
     /**

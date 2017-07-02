@@ -12,7 +12,6 @@
 namespace CorahnRin\CorahnRinBundle\Entity\Traits;
 
 use CorahnRin\CorahnRinBundle\Entity\Books;
-
 use Doctrine\ORM\Mapping as ORM;
 
 trait HasBook

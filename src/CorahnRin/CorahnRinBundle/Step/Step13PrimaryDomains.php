@@ -54,10 +54,10 @@ class Step13PrimaryDomains extends AbstractStepAction
      */
     public function execute()
     {
-        $this->allDomains    = $this->em->getRepository('CorahnRinBundle:Domains')->findAllSortedByName();
-        $this->job           = $this->em->getRepository('CorahnRinBundle:Jobs')->findWithDomains($this->getCharacterProperty('02_job'));
-        $advantages          = $this->getCharacterProperty('11_advantages')['advantages'];
-        $this->scholar       = isset($advantages[23]) && 1 === $advantages[23]; // Scholar is advantage 23.
+        $this->allDomains = $this->em->getRepository('CorahnRinBundle:Domains')->findAllSortedByName();
+        $this->job        = $this->em->getRepository('CorahnRinBundle:Jobs')->findWithDomains($this->getCharacterProperty('02_job'));
+        $advantages       = $this->getCharacterProperty('11_advantages')['advantages'];
+        $this->scholar    = isset($advantages[23]) && 1 === $advantages[23]; // Scholar is advantage 23.
 
         // This makes sure that session is not polluted with wrong data.
         $this->resetStep();
@@ -79,7 +79,7 @@ class Step13PrimaryDomains extends AbstractStepAction
         ];
 
         // Setup the number of domains set depending on their "value"
-        foreach  ($this->domainsValues['domains'] as $value) {
+        foreach ($this->domainsValues['domains'] as $value) {
             if ($value >= 1 && $value <= 3) {
                 $numberOf[$value]++;
             }
@@ -148,7 +148,7 @@ class Step13PrimaryDomains extends AbstractStepAction
 
         $error = false;
 
-        $domainsValues = array_map(function($v){return (int)$v;}, $domainsValues);
+        $domainsValues = array_map(function ($v) {return (int) $v; }, $domainsValues);
 
         foreach ($domainsValues as $id => $domainValue) {
             if (!array_key_exists($id, $this->allDomains)) {
@@ -156,7 +156,6 @@ class Step13PrimaryDomains extends AbstractStepAction
             }
 
             if (!in_array($domainValue, [0, 1, 2, 3, 5], true)) {
-
                 $this->flashMessage('Le score d\'un domaine ne peut être que de 0, 1, 2 ou 3. Le score 5 est choisi par défaut en fonction de votre métier.');
                 $error              = true;
                 $domainsValues[$id] = 0;
@@ -245,13 +244,14 @@ class Step13PrimaryDomains extends AbstractStepAction
     /**
      * Makes sure that the "scholar" value is respected.
      *
-     * @return bool False if any error occurs.
+     * @return bool false if any error occurs
      */
     private function checkScholar()
     {
         // Don't manage scholar value if don't have the advantage.
         if (false === $this->scholar) {
             $this->domainsValues['scholar'] = null;
+
             return true;
         }
 
@@ -265,10 +265,12 @@ class Step13PrimaryDomains extends AbstractStepAction
             $this->domainsValues['scholar'] = null;
             if (!$keyExists) {
                 $this->flashMessage('Le domaine spécifié pour l\'avantage "Lettré" n\'est pas valide.');
+
                 return false;
             }
         } elseif (!$id) {
             $this->flashMessage('Veuillez spécifier un domaine pour l\'avantage "Lettré".');
+
             return false;
         } else {
             $this->domainsValues['scholar'] = $id;
@@ -280,7 +282,7 @@ class Step13PrimaryDomains extends AbstractStepAction
     /**
      * Makes sure the "ost" domain is valid.
      *
-     * @return bool False if any error occurs.
+     * @return bool false if any error occurs
      */
     private function checkOst()
     {
@@ -307,13 +309,13 @@ class Step13PrimaryDomains extends AbstractStepAction
     {
         $sessionValue = $this->getCharacterProperty() ?: [
             'domains' => [],
-            'ost' => 2,
+            'ost'     => 2,
             'scholar' => null,
         ];
 
         $this->domainsValues = [
             'domains' => $sessionValue['domains'],
-            'ost' => $sessionValue['ost'],
+            'ost'     => $sessionValue['ost'],
             'scholar' => $sessionValue['scholar'],
         ];
 

@@ -37,8 +37,8 @@ class ProfileFormType extends AbstractType
     public function __construct(Canonicalizer $canonicalizer, UluleClient $ululeClient, TranslatorInterface $translator)
     {
         $this->canonicalizer = $canonicalizer;
-        $this->ululeClient = $ululeClient;
-        $this->translator = $translator;
+        $this->ululeClient   = $ululeClient;
+        $this->translator    = $translator;
     }
 
     /**
@@ -80,7 +80,7 @@ class ProfileFormType extends AbstractType
             ])
         ;
 
-        /**
+        /*
          * Form events
          */
         $builder

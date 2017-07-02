@@ -15,7 +15,6 @@ use EsterenMaps\MapsBundle\Entity\Factions;
 
 class FactionsAdminTest extends AbstractEasyAdminTest
 {
-
     /**
      * {@inheritdoc}
      */
@@ -37,12 +36,12 @@ class FactionsAdminTest extends AbstractEasyAdminTest
      */
     public function provideListingFields()
     {
-        return array(
+        return [
             'id',
             'name',
             'description',
             'book',
-        );
+        ];
     }
 
     /**

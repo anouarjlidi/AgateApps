@@ -18,7 +18,7 @@ final class UluleUser
 
     public function __construct(array $clientResult)
     {
-        $this->id = $clientResult['id'];
+        $this->id       = $clientResult['id'];
         $this->username = $clientResult['username'];
     }
 

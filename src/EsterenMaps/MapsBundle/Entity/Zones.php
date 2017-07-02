@@ -34,10 +34,10 @@ class Zones implements EntityToClearInterface
     /**
      * @var int
      *
-     * @ORM\Id
+     * @ORM\Id()
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @Serializer\Expose
+     * @Serializer\Expose()
      */
     protected $id;
 
@@ -45,7 +45,7 @@ class Zones implements EntityToClearInterface
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=false, unique=true)
-     * @Serializer\Expose
+     * @Serializer\Expose()
      */
     protected $name;
 
@@ -53,7 +53,7 @@ class Zones implements EntityToClearInterface
      * @var string
      *
      * @ORM\Column(name="description", type="text", nullable=true)
-     * @Serializer\Expose
+     * @Serializer\Expose()
      */
     protected $description;
 
@@ -61,7 +61,7 @@ class Zones implements EntityToClearInterface
      * @var string
      *
      * @ORM\Column(name="coordinates", type="text")
-     * @Serializer\Expose
+     * @Serializer\Expose()
      */
     protected $coordinates = '';
 
@@ -78,7 +78,7 @@ class Zones implements EntityToClearInterface
      *
      * @ORM\ManyToOne(targetEntity="Factions", inversedBy="zones")
      * @ORM\JoinColumn(name="faction_id", nullable=true)
-     * @Serializer\Expose
+     * @Serializer\Expose()
      */
     protected $faction;
 
@@ -87,7 +87,7 @@ class Zones implements EntityToClearInterface
      *
      * @ORM\ManyToOne(targetEntity="ZonesTypes", inversedBy="zones")
      * @ORM\JoinColumn(name="zone_type_id", nullable=false)
-     * @Serializer\Expose
+     * @Serializer\Expose()
      */
     protected $zoneType;
 

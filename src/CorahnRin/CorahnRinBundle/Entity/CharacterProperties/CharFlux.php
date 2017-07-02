@@ -27,7 +27,7 @@ class CharFlux
     /**
      * @var Characters
      *
-     * @ORM\Id
+     * @ORM\Id()
      * @ORM\ManyToOne(targetEntity="CorahnRin\CorahnRinBundle\Entity\Characters", inversedBy="flux")
      * @Assert\NotNull()
      */
@@ -37,7 +37,7 @@ class CharFlux
      * @var Flux
      *
      * @ORM\Column(type="integer")
-     * @ORM\Id
+     * @ORM\Id()
      * @ORM\ManyToOne(targetEntity="CorahnRin\CorahnRinBundle\Entity\Flux")
      * @Assert\NotNull()
      */

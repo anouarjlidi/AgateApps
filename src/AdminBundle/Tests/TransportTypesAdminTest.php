@@ -15,7 +15,6 @@ use EsterenMaps\MapsBundle\Entity\TransportTypes;
 
 class TransportTypesAdminTest extends AbstractEasyAdminTest
 {
-
     /**
      * {@inheritdoc}
      */
@@ -37,13 +36,13 @@ class TransportTypesAdminTest extends AbstractEasyAdminTest
      */
     public function provideListingFields()
     {
-        return array(
+        return [
             'id',
             'name',
             'slug',
             'speed',
             'description',
-        );
+        ];
     }
 
     /**

@@ -63,7 +63,6 @@ class MapTilesCommand extends ContainerAwareCommand
             if (!$map) {
                 $maps_list = [];
                 if ($list === null) {
-
                     /* @var Maps[] $list */
                     $maps_list = $repo->findAllRoot('id');
 

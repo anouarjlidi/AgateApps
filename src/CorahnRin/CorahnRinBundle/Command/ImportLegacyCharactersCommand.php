@@ -100,7 +100,7 @@ class ImportLegacyCharactersCommand extends ContainerAwareCommand
         $this->em          = $doctrine->getManager();
         $this->legacyCnx   = $doctrine->getConnection('legacy');
 
-        $sql = <<<SQL
+        $sql = <<<'SQL'
 
     SELECT
 
@@ -219,13 +219,12 @@ SQL;
 
                 // FIXME
                 throw new \RuntimeException('Fix me');
-            } else {
-                $this->io->warning([
-                    'Passed conflicting usernames:',
-                    $userByEmail->getId().' / '.$userByEmail->getUsername().' / '.$userByEmail->getEmail().PHP_EOL,
-                    $userByUsername->getId().' / '.$userByUsername->getUsername().' / '.$userByUsername->getEmail(),
-                ]);
             }
+            $this->io->warning([
+                'Passed conflicting usernames:',
+                $userByEmail->getId().' / '.$userByEmail->getUsername().' / '.$userByEmail->getEmail().PHP_EOL,
+                $userByUsername->getId().' / '.$userByUsername->getUsername().' / '.$userByUsername->getEmail(),
+            ]);
         } elseif ($userByEmail || $userByUsername) {
             $user = $userByEmail ?: $userByUsername;
         } else {

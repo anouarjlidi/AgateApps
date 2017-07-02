@@ -24,8 +24,8 @@ class Step09Traits extends AbstractStepAction
 
         $traits = $this->getCharacterProperty();
 
-        $quality = isset($traits['quality']) ? $traits['quality'] : null;
-        $flaw    = isset($traits['flaw']) ? $traits['flaw'] : null;
+        $quality = $traits['quality'] ?? null;
+        $flaw    = $traits['flaw'] ?? null;
 
         if ($this->request->isMethod('POST')) {
             $quality = (int) $this->request->request->get('quality');
@@ -41,9 +41,8 @@ class Step09Traits extends AbstractStepAction
                 ]);
 
                 return $this->nextStep();
-            } else {
-                $this->flashMessage('Les traits de caractère choisis sont incorrects.');
             }
+            $this->flashMessage('Les traits de caractère choisis sont incorrects.');
         }
 
         return $this->renderCurrentStep([

@@ -27,7 +27,6 @@ abstract class AbstractStepTest extends WebTestCase
         return parent::getClient($host, $kernelOptions, $tokenRoles, $server);
     }
 
-
     /**
      * @return string
      */
@@ -35,14 +34,14 @@ abstract class AbstractStepTest extends WebTestCase
     {
         return preg_replace_callback('~^CorahnRin\\\\CorahnRinBundle\\\\Tests\\\\Step\\\\Step(.+)Test$~isUu', function ($matches) {
             return preg_replace_callback('~[A-Z]~', function ($matches) {
-                return '_' . strtolower($matches[0]);
+                return '_'.strtolower($matches[0]);
             }, $matches[1]);
         }, static::class);
     }
 
     /**
-     * @param array $sessionValues
-     * @param array $formValues
+     * @param array  $sessionValues
+     * @param array  $formValues
      * @param string $queryString
      *
      * @return StepActionTestResult
@@ -57,13 +56,14 @@ abstract class AbstractStepTest extends WebTestCase
         $session->save();
 
         // Make the request.
-        $crawler = $client->request('GET', '/fr/character/generate/' . $this->getStepName() . $queryString);
+        $crawler = $client->request('GET', '/fr/character/generate/'.$this->getStepName().$queryString);
 
         // If it's not 200, it certainly session is invalid.
         $statusCode = $client->getResponse()->getStatusCode();
         $errorBlock = $crawler->filter('title');
+
         $msg = 'Could not execute step request...';
-        $msg .= $errorBlock->count() ? ("\n" . $errorBlock->text()) : (' For step "' . $this->getStepName() . '"');
+        $msg .= $errorBlock->count() ? ("\n".$errorBlock->text()) : (' For step "'.$this->getStepName().'"');
         static::assertSame(200, $statusCode, $msg);
 
         // Prepare form values.
@@ -78,7 +78,7 @@ abstract class AbstractStepTest extends WebTestCase
                     ->setValues($formValues)
                 ;
             } catch (\Exception $e) {
-                $this->fail($e->getMessage() . "\nWith values:\n" . preg_replace('~  +~', ' ', str_replace(["\r", "\n"], ' ', json_encode($formValues))));
+                $this->fail($e->getMessage()."\nWith values:\n".preg_replace('~  +~', ' ', str_replace(["\r", "\n"], ' ', json_encode($formValues))));
             }
         }
 
@@ -87,5 +87,4 @@ abstract class AbstractStepTest extends WebTestCase
         // Here, if the redirection is made for the next step, it means everything's valid.
         return new StepActionTestResult($crawler, $client);
     }
-
 }

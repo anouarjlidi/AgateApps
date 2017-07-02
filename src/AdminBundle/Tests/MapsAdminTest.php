@@ -15,7 +15,6 @@ use EsterenMaps\MapsBundle\Entity\Maps;
 
 class MapsAdminTest extends AbstractEasyAdminTest
 {
-
     /**
      * {@inheritdoc}
      */
@@ -37,7 +36,7 @@ class MapsAdminTest extends AbstractEasyAdminTest
      */
     public function provideListingFields()
     {
-        return array(
+        return [
             'id',
             'name',
             'nameSlug',
@@ -45,7 +44,7 @@ class MapsAdminTest extends AbstractEasyAdminTest
             'startZoom',
             'startX',
             'startY',
-        );
+        ];
     }
 
     /**

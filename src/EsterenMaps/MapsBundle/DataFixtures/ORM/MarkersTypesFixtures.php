@@ -48,7 +48,6 @@ class MarkersTypesFixtures extends AbstractFixture
     protected function getObjects()
     {
         return [
-
             [
                 'id'          => 1,
                 'name'        => 'Cité',

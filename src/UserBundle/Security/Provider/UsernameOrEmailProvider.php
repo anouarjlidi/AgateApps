@@ -20,7 +20,7 @@ use UserBundle\Repository\UserRepository;
 
 class UsernameOrEmailProvider implements UserProviderInterface
 {
-    const USER_CLASS = User::class;
+    public const USER_CLASS = User::class;
 
     private $userRepository;
 

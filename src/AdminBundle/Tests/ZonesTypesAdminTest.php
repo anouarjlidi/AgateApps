@@ -15,7 +15,6 @@ use EsterenMaps\MapsBundle\Entity\ZonesTypes;
 
 class ZonesTypesAdminTest extends AbstractEasyAdminTest
 {
-
     /**
      * {@inheritdoc}
      */
@@ -37,13 +36,13 @@ class ZonesTypesAdminTest extends AbstractEasyAdminTest
      */
     public function provideListingFields()
     {
-        return array(
+        return [
             'id',
             'name',
             'color',
             'parent',
             'zones',
-        );
+        ];
     }
 
     /**

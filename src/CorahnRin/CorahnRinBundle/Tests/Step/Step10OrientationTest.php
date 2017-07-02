@@ -34,7 +34,7 @@ class Step10OrientationTest extends AbstractStepTest
                 3 => 3,
                 4 => 2,
                 5 => 1,
-            ]
+            ],
         ]);
 
         static::assertSame(302, $result->getResponse()->getStatusCode());
@@ -51,7 +51,7 @@ class Step10OrientationTest extends AbstractStepTest
                 3 => 3,
                 4 => 4,
                 5 => 5,
-            ]
+            ],
         ]);
 
         static::assertSame(302, $result->getResponse()->getStatusCode());
@@ -68,7 +68,7 @@ class Step10OrientationTest extends AbstractStepTest
                 3 => 1,
                 4 => 4,
                 5 => 3,
-            ]
+            ],
         ], $values = [
             'gen-div-choice' => Orientation::INSTINCTIVE,
         ]);
@@ -87,7 +87,7 @@ class Step10OrientationTest extends AbstractStepTest
                 3 => 1,
                 4 => 4,
                 5 => 3,
-            ]
+            ],
         ], $values = [
             'gen-div-choice' => Orientation::RATIONAL,
         ]);
@@ -106,7 +106,7 @@ class Step10OrientationTest extends AbstractStepTest
                 3 => 1,
                 4 => 4,
                 5 => 3,
-            ]
+            ],
         ], $values = [
             'gen-div-choice' => 'INVALID',
         ]);

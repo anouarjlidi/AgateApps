@@ -18,7 +18,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Traits.
  *
  * @ORM\Entity(repositoryClass="CorahnRin\CorahnRinBundle\Repository\TraitsRepository")
- * @ORM\Table(name="traits",uniqueConstraints={@ORM\UniqueConstraint(name="idxUnique", columns={"name", "way_id"})})
+ * @ORM\Table(name="traits", uniqueConstraints={@ORM\UniqueConstraint(name="idxUnique", columns={"name", "way_id"})})
  */
 class Traits
 {
@@ -28,7 +28,7 @@ class Traits
      * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
-     * @ORM\Id
+     * @ORM\Id()
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;

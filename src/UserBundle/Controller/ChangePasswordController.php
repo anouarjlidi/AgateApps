@@ -48,8 +48,8 @@ class ChangePasswordController extends Controller
             return $this->redirectToRoute('user_profile_edit');
         }
 
-        return $this->render('@User/ChangePassword/change_password.html.twig', array(
+        return $this->render('@User/ChangePassword/change_password.html.twig', [
             'form' => $form->createView(),
-        ));
+        ]);
     }
 }

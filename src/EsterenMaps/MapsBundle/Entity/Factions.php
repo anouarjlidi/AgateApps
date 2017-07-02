@@ -36,10 +36,10 @@ class Factions
     /**
      * @var int
      *
-     * @ORM\Id
+     * @ORM\Id()
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @Expose
+     * @Expose()
      */
     protected $id;
 
@@ -47,7 +47,7 @@ class Factions
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=false, unique=true)
-     * @Expose
+     * @Expose()
      */
     protected $name;
 
@@ -55,7 +55,7 @@ class Factions
      * @var string
      *
      * @ORM\Column(name="description", type="text", nullable=true)
-     * @Expose
+     * @Expose()
      */
     protected $description;
 

@@ -426,7 +426,7 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
      */
     private function updateOneObject($object, $data)
     {
-        $data['created'] = DateTime::createFromFormat('YmdHisu', isset($data['created']) ? $data['created'] : date('YmdHisu'));
+        $data['created'] = DateTime::createFromFormat('YmdHisu', $data['created'] ?? date('YmdHisu'));
 
         $object
             ->setId(is_numeric($data['id']) ? $data['id'] : null)

@@ -37,9 +37,9 @@ class ZonesTypes implements EntityToClearInterface
      * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
-     * @ORM\Id
+     * @ORM\Id()
      * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @Expose
+     * @Expose()
      */
     protected $id;
 
@@ -47,7 +47,7 @@ class ZonesTypes implements EntityToClearInterface
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=false, unique=true)
-     * @Expose
+     * @Expose()
      */
     protected $name;
 
@@ -55,7 +55,7 @@ class ZonesTypes implements EntityToClearInterface
      * @var string
      *
      * @ORM\Column(name="description", type="text", nullable=true)
-     * @Expose
+     * @Expose()
      */
     protected $description;
 
@@ -63,7 +63,7 @@ class ZonesTypes implements EntityToClearInterface
      * @var string
      *
      * @ORM\Column(name="color", type="string", length=75, nullable=true)
-     * @Expose
+     * @Expose()
      */
     protected $color;
 

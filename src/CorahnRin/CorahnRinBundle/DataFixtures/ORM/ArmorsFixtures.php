@@ -58,11 +58,11 @@ class ArmorsFixtures extends AbstractFixture implements OrderedFixtureInterface
         $this->fixtureObject($repo, 7, 'Cuirasse en roseau', '', 2, 10, 'RA', $book);
         $this->fixtureObject($repo, 8, 'Cuirasse continentale', ' en lamelles, cuir et métal', 3, 100, 'RA', $book);
         $this->fixtureObject($repo, 9, 'Armure de plaques', '', 4, 300, 'EX', $book);
-        $this->fixtureObject($repo, 10, 'Cagoule de cuir', ' (Chaque armure est fournie avec le casque. Ne pas le porter suscite un malus de 1 au score de Protection, minimum 1)', 0, 4, 'FR',  $book);
-        $this->fixtureObject($repo, 11, 'Cagoule de mailles', ' (Chaque armure est fournie avec le casque. Ne pas le porter suscite un malus de 1 au score de Protection, minimum 1)', 0, 8, 'CO',  $book);
-        $this->fixtureObject($repo, 12, 'Casque Osag', ' (Chaque armure est fournie avec le casque. Ne pas le porter suscite un malus de 1 au score de Protection, minimum 1)', 0, 10, 'FR',  $book);
-        $this->fixtureObject($repo, 13, 'Casque ouvert', ' (Chaque armure est fournie avec le casque. Ne pas le porter suscite un malus de 1 au score de Protection, minimum 1)', 0, 20, 'CO',  $book);
-        $this->fixtureObject($repo, 14, 'Heaume', ' (Chaque armure est fournie avec le casque. Ne pas le porter suscite un malus de 1 au score de Protection, minimum 1)', 0, 40, 'RA',  $book);
+        $this->fixtureObject($repo, 10, 'Cagoule de cuir', ' (Chaque armure est fournie avec le casque. Ne pas le porter suscite un malus de 1 au score de Protection, minimum 1)', 0, 4, 'FR', $book);
+        $this->fixtureObject($repo, 11, 'Cagoule de mailles', ' (Chaque armure est fournie avec le casque. Ne pas le porter suscite un malus de 1 au score de Protection, minimum 1)', 0, 8, 'CO', $book);
+        $this->fixtureObject($repo, 12, 'Casque Osag', ' (Chaque armure est fournie avec le casque. Ne pas le porter suscite un malus de 1 au score de Protection, minimum 1)', 0, 10, 'FR', $book);
+        $this->fixtureObject($repo, 13, 'Casque ouvert', ' (Chaque armure est fournie avec le casque. Ne pas le porter suscite un malus de 1 au score de Protection, minimum 1)', 0, 20, 'CO', $book);
+        $this->fixtureObject($repo, 14, 'Heaume', ' (Chaque armure est fournie avec le casque. Ne pas le porter suscite un malus de 1 au score de Protection, minimum 1)', 0, 40, 'RA', $book);
         $this->fixtureObject($repo, 15, 'Pavois du temple', 'gravé du symbole de l\'Unique', 1, 20, 'CO', $book);
 
         $this->manager->flush();

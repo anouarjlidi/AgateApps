@@ -24,12 +24,12 @@ class Step05SocialClass extends AbstractStepAction
 
         $currentStepCharacterValue = $this->getCharacterProperty();
 
-        $selectedDomains = isset($currentStepCharacterValue['domains']) ? $currentStepCharacterValue['domains'] : [];
+        $selectedDomains = $currentStepCharacterValue['domains'] ?? [];
 
         $domainId1 = (int) array_shift($selectedDomains);
         $domainId2 = (int) array_shift($selectedDomains);
 
-        $socialClassId = isset($currentStepCharacterValue['id']) ? $currentStepCharacterValue['id'] : null;
+        $socialClassId = $currentStepCharacterValue['id'] ?? null;
 
         if ($this->request->isMethod('POST')) {
             $socialClassId   = (int) $this->request->request->get('gen-div-choice');

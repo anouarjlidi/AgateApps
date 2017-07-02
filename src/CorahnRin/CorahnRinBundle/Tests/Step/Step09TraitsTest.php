@@ -32,10 +32,10 @@ class Step09TraitsTest extends AbstractStepTest
                 3 => 3,
                 4 => 4,
                 5 => 5,
-            ]
+            ],
         ], $values = [
             'quality' => 6,
-            'flaw' => 64,
+            'flaw'    => 64,
         ]);
 
         static::assertSame(302, $result->getResponse()->getStatusCode());
@@ -52,10 +52,10 @@ class Step09TraitsTest extends AbstractStepTest
                 3 => 3,
                 4 => 4,
                 5 => 5,
-            ]
+            ],
         ], $values = [
             'quality' => 0,
-            'flaw' => 0,
+            'flaw'    => 0,
         ]);
 
         static::assertSame(200, $result->getResponse()->getStatusCode());

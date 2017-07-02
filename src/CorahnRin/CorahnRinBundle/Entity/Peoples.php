@@ -28,7 +28,7 @@ class Peoples
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
+     * @ORM\Id()
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
@@ -43,7 +43,7 @@ class Peoples
     /**
      * @var string
      *
-     * @ORM\Column(type="text",nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     protected $description;
 

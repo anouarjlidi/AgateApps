@@ -30,7 +30,7 @@ use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 /**
- * @Route("/", requirements={"serviceName":"([a-zA-Z0-9\._]?)+"})
+ * @Route("/", requirements={"serviceName": "([a-zA-Z0-9\._]?)+"})
  */
 class ApiController extends FOSRestController
 {
@@ -153,9 +153,9 @@ class ApiController extends FOSRestController
 
         if ($id && $em->getRepository($service['entity'])->find($id)) {
             throw new \InvalidArgumentException('"PUT" method is used to insert new data. If you want to merge object, use the "POST" method instead.');
-        } else {
-            $em->persist($object);
         }
+
+        $em->persist($object);
 
         $em->flush();
 
@@ -281,12 +281,9 @@ class ApiController extends FOSRestController
                     'Available services : %services%',
                     ['%service%' => $serviceName, '%services%' => implode(', ', array_keys($this->services))]
                 ), 1);
-            } else {
-                throw new \InvalidArgumentException($this->get('translator')->trans('Unrecognized service %service%', ['%service%' => $serviceName]), 1);
             }
+            throw new \InvalidArgumentException($this->get('translator')->trans('Unrecognized service %service%', ['%service%' => $serviceName]), 1);
         }
-
-        return;
     }
 
     /**
@@ -476,31 +473,33 @@ class ApiController extends FOSRestController
         if ($field === '_id') {
             // Check for identifier
             return (int) (array_values($metadata->getIdentifierValues($object))[0]);
-        } else {
-            // Check for any other field
-            $service = $this->getService($field, false);
-            if ($service) {
-                return $this
-                    ->getDoctrine()->getManager()
-                    ->getRepository($service['entity'])
-                    ->findBy([
-                        $metadata->getAssociationMappedByTargetField($field) => $this->getPropertyValue('_id', $object),
-                    ])
-                    ;
-            }
-            if ($metadata->hasField($field) || $metadata->hasAssociation($field)) {
-                $reflectionProperty = $metadata->getReflectionClass()->getProperty($field);
-                $reflectionProperty->setAccessible(true);
-
-                $data = $reflectionProperty->getValue($object);
-                if ($data instanceof PersistentCollection) {
-                    $data = $data->getValues();
-                }
-
-                return $data;
-            } else {
-                throw new \Exception('Field "'.$field.'" does not exist in "'.(new \ReflectionClass($object))->getShortName().'" object');
-            }
         }
+
+        // Check for any other field
+        $service = $this->getService($field, false);
+
+        if ($service) {
+            return $this
+                ->getDoctrine()->getManager()
+                ->getRepository($service['entity'])
+                ->findBy([
+                    $metadata->getAssociationMappedByTargetField($field) => $this->getPropertyValue('_id', $object),
+                ])
+            ;
+        }
+
+        if ($metadata->hasField($field) || $metadata->hasAssociation($field)) {
+            $reflectionProperty = $metadata->getReflectionClass()->getProperty($field);
+            $reflectionProperty->setAccessible(true);
+
+            $data = $reflectionProperty->getValue($object);
+            if ($data instanceof PersistentCollection) {
+                $data = $data->getValues();
+            }
+
+            return $data;
+        }
+
+        throw new \Exception('Field "'.$field.'" does not exist in "'.(new \ReflectionClass($object))->getShortName().'" object');
     }
 }

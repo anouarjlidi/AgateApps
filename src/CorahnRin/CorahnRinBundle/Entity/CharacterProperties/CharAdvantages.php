@@ -27,7 +27,7 @@ class CharAdvantages
     /**
      * @var Characters
      *
-     * @ORM\Id
+     * @ORM\Id()
      * @ORM\ManyToOne(targetEntity="CorahnRin\CorahnRinBundle\Entity\Characters", inversedBy="charAdvantages")
      * @Assert\NotNull()
      */
@@ -36,7 +36,7 @@ class CharAdvantages
     /**
      * @var Avantages
      *
-     * @ORM\Id
+     * @ORM\Id()
      * @ORM\ManyToOne(targetEntity="CorahnRin\CorahnRinBundle\Entity\Avantages")
      * @Assert\NotNull()
      */

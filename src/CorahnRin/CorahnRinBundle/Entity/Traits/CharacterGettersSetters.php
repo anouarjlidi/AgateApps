@@ -11,7 +11,6 @@
 
 namespace CorahnRin\CorahnRinBundle\Entity\Traits;
 
-
 use CorahnRin\CorahnRinBundle\Entity\Armors;
 use CorahnRin\CorahnRinBundle\Entity\Artifacts;
 use CorahnRin\CorahnRinBundle\Entity\CharacterProperties\CharAdvantages;
@@ -429,11 +428,13 @@ trait CharacterGettersSetters
 
     /**
      * @param int $mentalResistBonus
+     *
      * @return $this
      */
     public function setMentalResistBonus($mentalResistBonus)
     {
         $this->mentalResistBonus = $mentalResistBonus;
+
         return $this;
     }
 
@@ -563,11 +564,13 @@ trait CharacterGettersSetters
 
     /**
      * @param int $speedBonus
+     *
      * @return $this
      */
     public function setSpeedBonus($speedBonus)
     {
         $this->speedBonus = $speedBonus;
+
         return $this;
     }
 
@@ -643,6 +646,7 @@ trait CharacterGettersSetters
     public function setRindathMax($rindathMax)
     {
         $this->rindathMax = $rindathMax;
+
         return $this;
     }
 
@@ -676,11 +680,13 @@ trait CharacterGettersSetters
 
     /**
      * @param int $exaltationMax
+     *
      * @return $this
      */
     public function setExaltationMax($exaltationMax)
     {
         $this->exaltationMax = $exaltationMax;
+
         return $this;
     }
 

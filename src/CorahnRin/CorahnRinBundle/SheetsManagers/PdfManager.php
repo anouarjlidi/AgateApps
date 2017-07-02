@@ -267,7 +267,7 @@ class PdfManager implements SheetsManagerInterface
             if ($i > 4) {
                 break;
             }
-            $pdf->textline($v->getName(), 123, 151 + $i * 43, $p['times'], 14, true);//Affichage de l'arme
+            $pdf->textline($v->getName(), 123, 151 + $i * 43, $p['times'], 14, true); // Affichage de l'arme
             $pdf->textline($v->getDamage(), 370, 157 + $i * 43 - 2, $p['caro'], 20);
             ++$i;
         }

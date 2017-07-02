@@ -27,7 +27,7 @@ class CharSetbacks
     /**
      * @var Characters
      *
-     * @ORM\Id
+     * @ORM\Id()
      * @ORM\ManyToOne(targetEntity="CorahnRin\CorahnRinBundle\Entity\Characters", inversedBy="setbacks")
      * @Assert\NotNull()
      */
@@ -36,7 +36,7 @@ class CharSetbacks
     /**
      * @var Setbacks
      *
-     * @ORM\Id
+     * @ORM\Id()
      * @ORM\ManyToOne(targetEntity="CorahnRin\CorahnRinBundle\Entity\Setbacks")
      * @Assert\NotNull()
      */

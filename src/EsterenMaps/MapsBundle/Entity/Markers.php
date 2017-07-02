@@ -37,10 +37,10 @@ class Markers implements EntityToClearInterface
     /**
      * @var int
      *
-     * @ORM\Id
+     * @ORM\Id()
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @Serializer\Expose
+     * @Serializer\Expose()
      */
     protected $id;
 
@@ -48,7 +48,7 @@ class Markers implements EntityToClearInterface
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=false, unique=true)
-     * @Serializer\Expose
+     * @Serializer\Expose()
      */
     protected $name;
 
@@ -56,7 +56,7 @@ class Markers implements EntityToClearInterface
      * @var string
      *
      * @ORM\Column(name="description", type="text", nullable=true)
-     * @Serializer\Expose
+     * @Serializer\Expose()
      */
     protected $description;
 
@@ -64,7 +64,7 @@ class Markers implements EntityToClearInterface
      * @var string
      *
      * @ORM\Column(name="altitude", type="string", length=255, nullable=true)
-     * @Serializer\Expose
+     * @Serializer\Expose()
      */
     protected $altitude;
 
@@ -72,7 +72,7 @@ class Markers implements EntityToClearInterface
      * @var string
      *
      * @ORM\Column(name="latitude", type="string", length=255, nullable=true)
-     * @Serializer\Expose
+     * @Serializer\Expose()
      */
     protected $latitude;
 
@@ -80,7 +80,7 @@ class Markers implements EntityToClearInterface
      * @var string
      *
      * @ORM\Column(name="longitude", type="string", length=255, nullable=true)
-     * @Serializer\Expose
+     * @Serializer\Expose()
      */
     protected $longitude;
 
@@ -89,7 +89,7 @@ class Markers implements EntityToClearInterface
      *
      * @ORM\ManyToOne(targetEntity="Factions", inversedBy="markers")
      * @ORM\JoinColumn(name="faction_id", nullable=true)
-     * @Serializer\Expose
+     * @Serializer\Expose()
      */
     protected $faction;
 
@@ -106,7 +106,7 @@ class Markers implements EntityToClearInterface
      *
      * @ORM\ManyToOne(targetEntity="MarkersTypes", inversedBy="markers")
      * @ORM\JoinColumn(name="marker_type_id", nullable=false)
-     * @Serializer\Expose
+     * @Serializer\Expose()
      * @Assert\NotBlank()
      * @Assert\Valid()
      */
@@ -128,7 +128,7 @@ class Markers implements EntityToClearInterface
 
     /**
      * @var Routes
-     * @Serializer\Expose
+     * @Serializer\Expose()
      * @Serializer\Type("EsterenMaps\MapsBundle\Entity\Routes")
      */
     public $route;
@@ -560,8 +560,8 @@ class Markers implements EntityToClearInterface
     }
 
     /**
-     * @ORM\PrePersist
-     * @ORM\PreUpdate
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
      */
     public function updateRoutesCoordinates()
     {

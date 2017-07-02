@@ -23,7 +23,6 @@ use Symfony\Component\DependencyInjection\Loader;
  */
 class EsterenPortalExtension extends Extension
 {
-
     /**
      * Loads a specific configuration.
      *

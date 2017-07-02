@@ -38,10 +38,11 @@ class Configuration implements ConfigurationInterface
                     ->example('168')
                     ->validate()
                     ->always()
-                        ->then(function($value) {
+                        ->then(function ($value) {
                             if (!is_numeric($value)) {
                                 throw new InvalidConfigurationException('Tile size must be a valid integer.');
                             }
+
                             return (int) $value;
                         })
                     ->end()

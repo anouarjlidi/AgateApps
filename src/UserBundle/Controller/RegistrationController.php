@@ -57,9 +57,9 @@ class RegistrationController extends Controller
             return $this->redirectToRoute('user_login');
         }
 
-        return $this->render('@User/Registration/register.html.twig', array(
+        return $this->render('@User/Registration/register.html.twig', [
             'form' => $form->createView(),
-        ));
+        ]);
     }
 
     /**
@@ -82,13 +82,13 @@ class RegistrationController extends Controller
             throw new NotFoundHttpException(sprintf('The user with email "%s" does not exist', $email));
         }
 
-        return $this->render('@User/Registration/check_email.html.twig', array(
+        return $this->render('@User/Registration/check_email.html.twig', [
             'user' => $user,
-        ));
+        ]);
     }
 
     /**
-     * @Route("/register/confirm/{token}", name="user_registration_confirm", requirements={"token": ".+"})
+     * @Route("/register/confirm/{token}", name="user_registration_confirm", requirements={"token" : ".+"})
      * @Method("GET")
      */
     public function confirmAction(string $token, string $_locale)

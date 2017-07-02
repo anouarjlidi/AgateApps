@@ -21,12 +21,12 @@ class Step19Description extends AbstractStepAction
     public function execute()
     {
         $details = array_merge([
-            'name' => '',
+            'name'        => '',
             'player_name' => '',
-            'sex' => Characters::FEMALE,
+            'sex'         => Characters::FEMALE,
             'description' => '',
-            'story' => '',
-            'facts' => '',
+            'story'       => '',
+            'facts'       => '',
         ], $this->getCharacterProperty() ?: []);
 
         if ($this->request->isMethod('POST')) {
@@ -39,7 +39,7 @@ class Step19Description extends AbstractStepAction
                 $this->flashMessage('description.errors.sex');
             }
 
-            $baseKeys = array_keys($details);
+            $baseKeys   = array_keys($details);
             $postedKeys = array_keys($newDetails);
             sort($baseKeys);
             sort($postedKeys);
@@ -51,7 +51,8 @@ class Step19Description extends AbstractStepAction
 
             if (false === $errors) {
                 if (!in_array($newDetails['sex'], [
-                    Characters::MALE, Characters::FEMALE
+                    Characters::MALE,
+                    Characters::FEMALE,
                 ], true)) {
                     $errors = true;
                     $this->flashMessage('errors.incorrect_values');

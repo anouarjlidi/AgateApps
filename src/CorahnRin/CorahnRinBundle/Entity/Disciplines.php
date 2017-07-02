@@ -29,7 +29,7 @@ class Disciplines
      * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
-     * @ORM\Id
+     * @ORM\Id()
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
@@ -44,7 +44,7 @@ class Disciplines
     /**
      * @var string
      *
-     * @ORM\Column(type="text",nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     protected $description;
 
@@ -60,9 +60,9 @@ class Disciplines
      *
      * @ORM\ManyToMany(targetEntity="Domains", inversedBy="disciplines")
      * @ORM\JoinTable(name="disciplines_domains",
-     *      joinColumns={@ORM\JoinColumn(name="discipline_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="domain_id", referencedColumnName="id")}
-     *  )
+     *     joinColumns={@ORM\JoinColumn(name="discipline_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="domain_id", referencedColumnName="id")}
+     * )
      */
     protected $domains;
 

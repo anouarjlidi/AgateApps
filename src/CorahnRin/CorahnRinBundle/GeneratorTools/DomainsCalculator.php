@@ -41,26 +41,25 @@ final class DomainsCalculator
      *
      * If $domainsBonuses IS provided, then it will add the correct bonuses if some domains exceed 5 points.
      *
-     * @param Domains[] $allDomains
-     * @param array $socialClasses
-     * @param int $ost
-     * @param int $scholar
+     * @param Domains[]       $allDomains
+     * @param array           $socialClasses
+     * @param int             $ost
+     * @param int             $scholar
      * @param GeoEnvironments $geoEnv
-     * @param array $primaryDomains
-     * @param array $domainsBonuses
+     * @param array           $primaryDomains
+     * @param array           $domainsBonuses
      *
      * @return int[]
      */
     public function calculateFromGeneratorData($allDomains, array $socialClasses, $ost, $scholar = null, GeoEnvironments $geoEnv, array $primaryDomains, array $domainsBonuses = null)
     {
-        $this->bonus = 0;
+        $this->bonus                  = 0;
         $this->finalCalculatedDomains = [];
 
-        /**
+        /*
          * Step 13 primary domains and step 14 bonuses
          */
         foreach ($allDomains as $id => $domain) {
-
             // First, validate arguments.
             if (!($domain instanceof Domains) || $domain->getId() !== $id) {
                 throw new \InvalidArgumentException(sprintf(
@@ -76,12 +75,12 @@ final class DomainsCalculator
                 ));
             }
 
-            /**
+            /*
              * Step 13 primary domains
              */
             $this->finalCalculatedDomains[$id] = $primaryDomains[$id];
 
-            /**
+            /*
              * Step 14 domain bonuses (if set)
              */
             if (null !== $domainsBonuses) {
@@ -95,7 +94,7 @@ final class DomainsCalculator
             }
         }
 
-        /**
+        /*
          * Ost service
          */
         if (!array_key_exists($ost, $allDomains)) {
@@ -106,7 +105,7 @@ final class DomainsCalculator
         }
         $this->addValueToDomain($ost);
 
-        /**
+        /*
          * "Scholar" advantage
          */
         if (null !== $scholar) {
@@ -119,12 +118,12 @@ final class DomainsCalculator
             $this->addValueToDomain($scholar);
         }
 
-        /**
+        /*
          * Geo environment
          */
         $this->addValueToDomain($geoEnv->getId());
 
-        /**
+        /*
          * Social classes
          */
         foreach ($socialClasses as $id) {
@@ -154,8 +153,8 @@ final class DomainsCalculator
      * Mostly used in step 16 to calculate disciplines and in step 17 to check if combat arts are available.
      *
      * @param Domains[] $allDomains
-     * @param int[] $domainsBaseValues
-     * @param int[] $domainsSpendExp
+     * @param int[]     $domainsBaseValues
+     * @param int[]     $domainsSpendExp
      *
      * @return int[]
      */
@@ -164,7 +163,6 @@ final class DomainsCalculator
         $finalValues = [];
 
         foreach ($allDomains as $id => $domain) {
-
             // First, validate arguments.
             if (!($domain instanceof Domains) || $domain->getId() !== $id) {
                 throw new \InvalidArgumentException(sprintf(

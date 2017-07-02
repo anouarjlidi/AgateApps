@@ -49,8 +49,8 @@ class ProfileController extends Controller
             return $this->redirectToRoute('user_profile_edit');
         }
 
-        return $this->render('@User/Profile/edit.html.twig', array(
+        return $this->render('@User/Profile/edit.html.twig', [
             'form' => $form->createView(),
-        ));
+        ]);
     }
 }

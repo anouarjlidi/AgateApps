@@ -24,7 +24,7 @@ class Step11AdvantagesTest extends AbstractStepTest
                 31 => 1,
                 47 => 1,
                 48 => 1,
-            ]
+            ],
         ]);
 
         static::assertSame(302, $result->getResponse()->getStatusCode());
@@ -47,12 +47,12 @@ class Step11AdvantagesTest extends AbstractStepTest
     {
         $result = $this->submitAction([], [
             'advantages' => [
-                3 => 1,
-                8 => 1,
+                3  => 1,
+                8  => 1,
                 10 => 2,
                 15 => 1,
             ],
-            'disadvantages' => []
+            'disadvantages' => [],
         ]);
 
         static::assertSame(200, $result->getResponse()->getStatusCode());
@@ -63,7 +63,7 @@ class Step11AdvantagesTest extends AbstractStepTest
     public function testTooMuchExpHasBeenGained()
     {
         $result = $this->submitAction([], [
-            'advantages' => [],
+            'advantages'    => [],
             'disadvantages' => [
                 44 => 1,
                 46 => 2,
@@ -83,7 +83,7 @@ class Step11AdvantagesTest extends AbstractStepTest
     public function testCannotChoseAllyMultipleTimes($values)
     {
         $result = $this->submitAction([], [
-            'advantages' => $values,
+            'advantages'    => $values,
             'disadvantages' => [
                 // This is to have enough exp to maybe buy them all
                 43 => 1,
@@ -107,10 +107,10 @@ class Step11AdvantagesTest extends AbstractStepTest
     {
         // Test all "Ally" advantage possibilities so we're sure every case is covered
         return [
-            [[ 1=>1, 2=>1, 3=>1 ]],
-            [[ 1=>1, 3=>1 ]],
-            [[ 1=>1, 2=>1 ]],
-            [[ 2=>1, 3=>1 ]],
+            [[1=>1, 2=>1, 3=>1]],
+            [[1=>1, 3=>1]],
+            [[1=>1, 2=>1]],
+            [[2=>1, 3=>1]],
         ];
     }
 
@@ -120,7 +120,7 @@ class Step11AdvantagesTest extends AbstractStepTest
     public function testCannotChoseFinancialEaseMultipleTimes($values)
     {
         $result = $this->submitAction([], [
-            'advantages' => $values,
+            'advantages'    => $values,
             'disadvantages' => [
                 // This is to have enough exp to maybe buy them all
                 43 => 1,
@@ -145,23 +145,23 @@ class Step11AdvantagesTest extends AbstractStepTest
         // Test all "FinancialEase" advantage possibilities so we're sure every case is covered
         return [
             // Four choices
-            [[ 4=>1, 5=>1, 6=>1, 7=>1 ]],
-            [[ 4=>1, 5=>1, 6=>1, 8=>1 ]],
-            [[ 4=>1, 5=>1, 7=>1, 8=>1 ]],
-            [[ 4=>1, 6=>1, 7=>1, 8=>1 ]],
-            [[ 5=>1, 6=>1, 7=>1, 8=>1 ]],
+            [[4=>1, 5=>1, 6=>1, 7=>1]],
+            [[4=>1, 5=>1, 6=>1, 8=>1]],
+            [[4=>1, 5=>1, 7=>1, 8=>1]],
+            [[4=>1, 6=>1, 7=>1, 8=>1]],
+            [[5=>1, 6=>1, 7=>1, 8=>1]],
 
             // Three choices
-            [[ 4=>1, 5=>1, 6=>1 ]],
-            [[ 4=>1, 5=>1, 7=>1 ]],
-            [[ 4=>1, 6=>1, 7=>1 ]],
-            [[ 5=>1, 6=>1, 7=>1 ]],
-            [[ 4=>1, 5=>1, 8=>1 ]],
-            [[ 4=>1, 6=>1, 8=>1 ]],
-            [[ 5=>1, 6=>1, 8=>1 ]],
-            [[ 4=>1, 7=>1, 8=>1 ]],
-            [[ 5=>1, 7=>1, 8=>1 ]],
-            [[ 6=>1, 7=>1, 8=>1 ]],
+            [[4=>1, 5=>1, 6=>1]],
+            [[4=>1, 5=>1, 7=>1]],
+            [[4=>1, 6=>1, 7=>1]],
+            [[5=>1, 6=>1, 7=>1]],
+            [[4=>1, 5=>1, 8=>1]],
+            [[4=>1, 6=>1, 8=>1]],
+            [[5=>1, 6=>1, 8=>1]],
+            [[4=>1, 7=>1, 8=>1]],
+            [[5=>1, 7=>1, 8=>1]],
+            [[6=>1, 7=>1, 8=>1]],
 
             // TODO: Create real truth table for this, it's a bit insane or now
         ];
@@ -184,7 +184,7 @@ class Step11AdvantagesTest extends AbstractStepTest
     public function testIncorrectDisadvantageValue()
     {
         $result = $this->submitAction([], [
-            'advantages' => [],
+            'advantages'    => [],
             'disadvantages' => [
                 48 => 2,
             ],
@@ -223,7 +223,7 @@ class Step11AdvantagesTest extends AbstractStepTest
         $session->save();
 
         $crawler = $client->request('POST', '/fr/character/generate/'.$this->getStepName(), [
-            'advantages' => [],
+            'advantages'    => [],
             'disadvantages' => [
                 99999 => 1,
             ],
@@ -237,8 +237,8 @@ class Step11AdvantagesTest extends AbstractStepTest
     {
         $result = $this->submitAction([], [
             'advantages' => [
-                1 => 1,
-                4 => 1,
+                1  => 1,
+                4  => 1,
                 19 => 1,
                 29 => 1,
                 30 => 1,
@@ -254,7 +254,7 @@ class Step11AdvantagesTest extends AbstractStepTest
     public function testCannotHaveMoreThan4Disadvantages()
     {
         $result = $this->submitAction([], [
-            'advantages' => [],
+            'advantages'    => [],
             'disadvantages' => [
                 41 => 1,
                 43 => 1,
@@ -281,7 +281,7 @@ class Step11AdvantagesTest extends AbstractStepTest
         $session->save();
 
         $crawler = $client->request('POST', '/fr/character/generate/'.$this->getStepName(), [
-            'advantages' => $values,
+            'advantages'    => $values,
             'disadvantages' => [],
         ]);
 

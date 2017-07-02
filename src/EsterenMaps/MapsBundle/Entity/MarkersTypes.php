@@ -36,9 +36,9 @@ class MarkersTypes implements EntityToClearInterface
      * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
-     * @ORM\Id
+     * @ORM\Id()
      * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @Serializer\Expose
+     * @Serializer\Expose()
      */
     protected $id;
 
@@ -46,7 +46,7 @@ class MarkersTypes implements EntityToClearInterface
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=false, unique=true)
-     * @Serializer\Expose
+     * @Serializer\Expose()
      */
     protected $name;
 
@@ -54,7 +54,7 @@ class MarkersTypes implements EntityToClearInterface
      * @var string
      *
      * @ORM\Column(name="description", type="text", nullable=true)
-     * @Serializer\Expose
+     * @Serializer\Expose()
      */
     protected $description;
 
@@ -68,28 +68,28 @@ class MarkersTypes implements EntityToClearInterface
     /**
      * @var int
      * @ORM\Column(name="icon_width", type="integer")
-     * @Serializer\Expose
+     * @Serializer\Expose()
      */
     protected $iconWidth = 0;
 
     /**
      * @var int
      * @ORM\Column(name="icon_height", type="integer")
-     * @Serializer\Expose
+     * @Serializer\Expose()
      */
     protected $iconHeight = 0;
 
     /**
      * @var int
      * @ORM\Column(name="icon_center_x", type="integer", nullable=true)
-     * @Serializer\Expose
+     * @Serializer\Expose()
      */
     protected $iconCenterX;
 
     /**
      * @var int
      * @ORM\Column(name="icon_center_y", type="integer", nullable=true)
-     * @Serializer\Expose
+     * @Serializer\Expose()
      */
     protected $iconCenterY;
 

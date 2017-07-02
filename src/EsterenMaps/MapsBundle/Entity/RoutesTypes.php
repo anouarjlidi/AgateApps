@@ -36,9 +36,9 @@ class RoutesTypes implements EntityToClearInterface
      * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
-     * @ORM\Id
+     * @ORM\Id()
      * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @Serializer\Expose
+     * @Serializer\Expose()
      */
     protected $id;
 
@@ -46,7 +46,7 @@ class RoutesTypes implements EntityToClearInterface
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=false, unique=true)
-     * @Serializer\Expose
+     * @Serializer\Expose()
      */
     protected $name;
 
@@ -54,7 +54,7 @@ class RoutesTypes implements EntityToClearInterface
      * @var string
      *
      * @ORM\Column(name="description", type="text", nullable=true)
-     * @Serializer\Expose
+     * @Serializer\Expose()
      */
     protected $description;
 
@@ -62,7 +62,7 @@ class RoutesTypes implements EntityToClearInterface
      * @var string
      *
      * @ORM\Column(name="color", type="string", length=75, nullable=true)
-     * @Serializer\Expose
+     * @Serializer\Expose()
      */
     protected $color;
 
@@ -81,7 +81,7 @@ class RoutesTypes implements EntityToClearInterface
     /**
      * @var TransportModifiers[]
      * @ORM\OneToMany(targetEntity="EsterenMaps\MapsBundle\Entity\TransportModifiers", mappedBy="routeType")
-     * @Serializer\Expose
+     * @Serializer\Expose()
      */
     protected $transports;
 

@@ -30,7 +30,7 @@ class OriginChecker
     public function __construct(array $allowedOrigins, $debug)
     {
         $this->allowedOrigins = $allowedOrigins;
-        $this->debug = (bool)$debug;
+        $this->debug          = (bool) $debug;
     }
 
     /**
@@ -48,7 +48,7 @@ class OriginChecker
 
         // Allows automatically the current server to allow internal requests
         $allowedOrigins[] = $request->server->get('SERVER_ADDR');
-        $host = $request->getHost();
+        $host             = $request->getHost();
         if (!in_array($host, $allowedOrigins, true)) {
             $allowedOrigins[] = $host;
         }

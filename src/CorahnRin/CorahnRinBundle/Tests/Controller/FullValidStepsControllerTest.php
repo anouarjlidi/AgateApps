@@ -11,7 +11,6 @@
 
 namespace CorahnRin\CorahnRinBundle\Tests\Controller;
 
-use Symfony\Component\Yaml\Yaml;
 use Tests\WebTestCase;
 
 /**
@@ -53,6 +52,7 @@ class FullValidStepsControllerTest extends WebTestCase
         if ($stepName === '20_finish') {
             // Finished generation. Session to Character will be tested somewhere else
             static::assertTrue(true);
+
             return;
         }
 
@@ -78,8 +78,9 @@ class FullValidStepsControllerTest extends WebTestCase
         // If it's not 200, it certainly session is invalid.
         $statusCode = $client->getResponse()->getStatusCode();
         $errorBlock = $crawler->filter('title');
+
         $msg = 'Could not execute step request...';
-        $msg .= $errorBlock->count() ? ("\n".$errorBlock->text()) : '' ;
+        $msg .= $errorBlock->count() ? ("\n".$errorBlock->text()) : '';
         static::assertSame(200, $statusCode, $msg);
 
         // Prepare form values.
@@ -125,6 +126,7 @@ class FullValidStepsControllerTest extends WebTestCase
                 $step['route_uri'] = $stepName;
             }
             $step['step'] = $stepName;
+
             $data = [
                 $stepName,
                 $step['route_uri'],
@@ -133,6 +135,7 @@ class FullValidStepsControllerTest extends WebTestCase
                 $step['session_value'],
                 $previous,
             ];
+
             $previous[] = $step;
 
             yield $stepName => $data;

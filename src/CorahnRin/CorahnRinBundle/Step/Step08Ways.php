@@ -96,6 +96,7 @@ class Step08Ways extends AbstractStepAction
 
     /**
      * @param Ways[] $ways
+     *
      * @return array
      */
     private function resetWays(array $ways = [])

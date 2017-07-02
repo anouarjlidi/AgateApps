@@ -35,22 +35,22 @@ final class SessionToCharacter
     /**
      * @var Ways[]
      */
-    protected $ways;
+    private $ways;
 
     /**
      * @var Domains[]
      */
-    protected $domains;
+    private $domains;
 
     /**
      * @var Setbacks[]
      */
-    protected $setbacks;
+    private $setbacks;
 
     /**
      * @var Avantages[]
      */
-    protected $advantages;
+    private $advantages;
 
     /**
      * @var BaseEntityRepository[]
@@ -74,8 +74,8 @@ final class SessionToCharacter
 
     public function __construct(StepActionResolver $resolver, DomainsCalculator $domainsCalculator, EntityManager $em)
     {
-        $this->resolver = $resolver;
-        $this->em = $em;
+        $this->resolver          = $resolver;
+        $this->em                = $em;
         $this->domainsCalculator = $domainsCalculator;
     }
 
@@ -93,7 +93,7 @@ final class SessionToCharacter
         $this->prepareNecessaryVariables();
 
         $generatorKeys = array_keys($values);
-        $stepsKeys = array_keys($steps);
+        $stepsKeys     = array_keys($steps);
 
         sort($generatorKeys);
         sort($stepsKeys);
@@ -149,9 +149,9 @@ final class SessionToCharacter
      */
     private function prepareNecessaryVariables()
     {
-        $this->ways = $this->getRepository('CorahnRinBundle:Ways')->findAll();
-        $this->setbacks = $this->getRepository('CorahnRinBundle:Setbacks')->findAll('_primary');
-        $this->domains = $this->getRepository('CorahnRinBundle:Domains')->findAll('_primary');
+        $this->ways       = $this->getRepository('CorahnRinBundle:Ways')->findAll();
+        $this->setbacks   = $this->getRepository('CorahnRinBundle:Setbacks')->findAll('_primary');
+        $this->domains    = $this->getRepository('CorahnRinBundle:Domains')->findAll('_primary');
         $this->advantages = $this->getRepository('CorahnRinBundle:Avantages')->findAll('_primary');
     }
 
@@ -295,6 +295,7 @@ final class SessionToCharacter
 
         // Make sure slug is unique by just adding a number to it
         $charRepo = $this->getRepository('CorahnRinBundle:Characters');
+
         $i = 0;
         do {
             $slug = Transliterator::transliterate($details['name']).($i ? '_'.$i : '');
@@ -349,7 +350,7 @@ final class SessionToCharacter
         $finalDomainsValues = $this->domainsCalculator->calculateFinalValues(
             $this->domains,
             $domainsBaseValues,
-            array_map(function($e) { return (int) $e; }, $values['15_domains_spend_exp']['domains'])
+            array_map(function ($e) { return (int) $e; }, $values['15_domains_spend_exp']['domains'])
         );
 
         $bonuses = array_fill_keys(array_keys($this->domains), 0);
@@ -373,7 +374,7 @@ final class SessionToCharacter
                 } else {
                     $disadvantageRatio = $adv->isDesv() ? -1 : 1;
                     switch ($bonus) {
-                        case Avantages::BONUS_RESM;
+                        case Avantages::BONUS_RESM:
                             $character->setMentalResistBonus($character->getMentalResistBonus() + ($charAdvantage->getScore() * $disadvantageRatio));
                             break;
                         case Avantages::BONUS_BLESS:
@@ -391,34 +392,34 @@ final class SessionToCharacter
                                     break;
                             }
                             break;
-                        case Avantages::BONUS_VIG;
+                        case Avantages::BONUS_VIG:
                             $character->setStamina($character->getStamina() + ($charAdvantage->getScore() * $disadvantageRatio));
                             break;
                         case Avantages::BONUS_TRAU:
                             $character->setTraumaPermanent($character->getTraumaPermanent() + $charAdvantage->getScore());
                             break;
-                        case Avantages::BONUS_DEF;
+                        case Avantages::BONUS_DEF:
                             $character->setDefenseBonus($character->getDefenseBonus() + ($charAdvantage->getScore() * $disadvantageRatio));
                             break;
-                        case Avantages::BONUS_RAP;
+                        case Avantages::BONUS_RAP:
                             $character->setSpeedBonus($character->getSpeedBonus() + ($charAdvantage->getScore() * $disadvantageRatio));
                             break;
-                        case Avantages::BONUS_SUR;
+                        case Avantages::BONUS_SUR:
                             $character->setSurvival($character->getSurvival() + ($charAdvantage->getScore() * $disadvantageRatio));
                             break;
-                        case Avantages::BONUS_100G;
+                        case Avantages::BONUS_100G:
                             $character->getMoney()->addFrost(100);
                             break;
-                        case Avantages::BONUS_20G;
+                        case Avantages::BONUS_20G:
                             $character->getMoney()->addFrost(20);
                             break;
-                        case Avantages::BONUS_50G;
+                        case Avantages::BONUS_50G:
                             $character->getMoney()->addFrost(50);
                             break;
-                        case Avantages::BONUS_50A;
+                        case Avantages::BONUS_50A:
                             $character->getMoney()->addAzure(50);
                             break;
-                        case Avantages::BONUS_20A;
+                        case Avantages::BONUS_20A:
                             $character->getMoney()->addAzure(20);
                             break;
                         default:

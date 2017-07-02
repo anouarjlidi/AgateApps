@@ -33,7 +33,7 @@ class Resources
      * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
-     * @ORM\Id
+     * @ORM\Id()
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     protected $id;
@@ -77,7 +77,6 @@ class Resources
     {
         return $this->name;
     }
-
 
     /**
      * Get id.

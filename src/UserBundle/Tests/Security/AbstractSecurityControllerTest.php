@@ -16,8 +16,8 @@ use Tests\WebTestCase;
 
 abstract class AbstractSecurityControllerTest extends WebTestCase
 {
-    const USER_NAME = 'test_user';
-    const USER_NAME_AFTER_UPDATE = 'user_updated';
+    public const USER_NAME              = 'test_user';
+    public const USER_NAME_AFTER_UPDATE = 'user_updated';
 
     abstract protected function getLocale(): string;
 
@@ -64,12 +64,12 @@ abstract class AbstractSecurityControllerTest extends WebTestCase
         $form = $formNode->form();
 
         // Fill registration form
-        $form['registration_form[username]'] = static::USER_NAME.$locale;
-        $form['registration_form[email]'] = "test-$locale@local.dev";
+        $form['registration_form[username]']      = static::USER_NAME.$locale;
+        $form['registration_form[email]']         = "test-$locale@local.dev";
         $form['registration_form[plainPassword]'] = 'fakePassword';
 
         // Submit form
-        $crawler = $client->submit($form);
+        $crawler  = $client->submit($form);
         $response = $client->getResponse();
 
         // Check redirection was made correctly to the Profile page
@@ -105,7 +105,7 @@ abstract class AbstractSecurityControllerTest extends WebTestCase
 
         // Fill registration form
         $form['_username_or_email'] = static::USER_NAME.$locale;
-        $form['_password'] = 'fakePassword';
+        $form['_password']          = 'fakePassword';
 
         // Submit form
         $crawler = $client->submit($form);
@@ -134,17 +134,18 @@ abstract class AbstractSecurityControllerTest extends WebTestCase
     {
         $locale = $this->getLocale();
 
-        $client = $this->getClient('portal.esteren.dev');
+        $client    = $this->getClient('portal.esteren.dev');
         $container = $client->getKernel()->getContainer();
-        $user = $container->get('user.provider.username_or_email')->loadUserByUsername(static::USER_NAME.$locale);
+        $user      = $container->get('user.provider.username_or_email')->loadUserByUsername(static::USER_NAME.$locale);
         static::setToken($client, $user, $user->getRoles());
 
         $crawler = $client->request('GET', "/$locale/profile/change-password");
 
         // Fill "change password" form
         $form = $crawler->filter('form.user_change_password')->form();
-        $form['change_password_form[current_password]'] = 'fakePassword';
-        $form['change_password_form[plainPassword][first]'] = 'newPassword';
+
+        $form['change_password_form[current_password]']      = 'fakePassword';
+        $form['change_password_form[plainPassword][first]']  = 'newPassword';
         $form['change_password_form[plainPassword][second]'] = 'newPassword';
 
         $client->submit($form);
@@ -163,7 +164,7 @@ abstract class AbstractSecurityControllerTest extends WebTestCase
         static::assertContains($flashPasswordChanged, $crawler->filter('#layout #flash-messages')->html());
 
         // Now check that new password is correctly saved in database
-        $user = $container->get('user.provider.username_or_email')->loadUserByUsername(static::USER_NAME.$locale);
+        $user    = $container->get('user.provider.username_or_email')->loadUserByUsername(static::USER_NAME.$locale);
         $encoder = $container->get('security.encoder_factory')->getEncoder($user);
         static::assertTrue($encoder->isPasswordValid($user->getPassword(), 'newPassword', $user->getSalt()));
 
@@ -177,17 +178,18 @@ abstract class AbstractSecurityControllerTest extends WebTestCase
     {
         $locale = $this->getLocale();
 
-        $client = $this->getClient('portal.esteren.dev');
+        $client    = $this->getClient('portal.esteren.dev');
         $container = $client->getKernel()->getContainer();
-        $user = $container->get('user.provider.username_or_email')->loadUserByUsername(static::USER_NAME.$locale);
+        $user      = $container->get('user.provider.username_or_email')->loadUserByUsername(static::USER_NAME.$locale);
         static::setToken($client, $user, $user->getRoles());
 
         $crawler = $client->request('GET', "/$locale/profile");
 
         // Fill the "edit profile" form
         $form = $crawler->filter('form.user_profile_edit')->form();
-        $form['profile_form[username]'] = static::USER_NAME_AFTER_UPDATE.$locale;
-        $form['profile_form[email]'] = $user->getEmail();
+
+        $form['profile_form[username]']        = static::USER_NAME_AFTER_UPDATE.$locale;
+        $form['profile_form[email]']           = $user->getEmail();
         $form['profile_form[currentPassword]'] = 'newPassword';
 
         $client->submit($form);
@@ -212,9 +214,9 @@ abstract class AbstractSecurityControllerTest extends WebTestCase
     {
         $locale = $this->getLocale();
 
-        $client = $this->getClient('portal.esteren.dev');
+        $client    = $this->getClient('portal.esteren.dev');
         $container = $client->getKernel()->getContainer();
-        $user = $container->get('user.provider.username_or_email')->loadUserByUsername(static::USER_NAME_AFTER_UPDATE.$locale);
+        $user      = $container->get('user.provider.username_or_email')->loadUserByUsername(static::USER_NAME_AFTER_UPDATE.$locale);
         static::setToken($client, $user, $user->getRoles());
 
         $crawler = $client->request('GET', "/$locale/resetting/request");
@@ -233,8 +235,8 @@ abstract class AbstractSecurityControllerTest extends WebTestCase
         $emailSentMessage = nl2br($emailSentMessage, false);
         $emailSentMessage = trim($emailSentMessage);
         $emailSentMessage = preg_replace('~((\r)?\n)+~', '', $emailSentMessage);
-        $crawlerContent = trim($crawler->filter('#content')->html());
-        $crawlerContent = preg_replace('~((\r)?\n)+~', '', $crawlerContent);
+        $crawlerContent   = trim($crawler->filter('#content')->html());
+        $crawlerContent   = preg_replace('~((\r)?\n)+~', '', $crawlerContent);
         static::assertContains($emailSentMessage, $crawlerContent);
 
         $crawler->clear();

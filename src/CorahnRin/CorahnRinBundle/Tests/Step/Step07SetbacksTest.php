@@ -16,18 +16,18 @@ class Step07SetbacksTest extends AbstractStepTest
     /**
      * Used to check how many times we process tests that have a certain amount of randomness.
      */
-    const RANDOMNESS_COUNT = 100;
+    public const RANDOMNESS_COUNT = 100;
 
     public function testNoSetback()
     {
         $result = $this->submitAction([
-            '06_age' => 20
+            '06_age' => 20,
         ], []);
 
         static::assertSame(302, $result->getResponse()->getStatusCode());
         static::assertTrue($result->getResponse()->isRedirect('/fr/character/generate/08_ways'));
         static::assertSame([
-            '06_age' => 20,
+            '06_age'             => 20,
             $this->getStepName() => [],
         ], $result->getSession()->get('character'));
     }
@@ -51,13 +51,15 @@ class Step07SetbacksTest extends AbstractStepTest
     public function testAgeProvideAtLeastOneSetback()
     {
         $result = $this->submitAction([
-            '06_age' => 21
+            '06_age' => 21,
         ], []);
 
         static::assertSame(302, $result->getResponse()->getStatusCode());
         static::assertTrue($result->getResponse()->isRedirect('/fr/character/generate/08_ways'));
         $setbacks = $result->getSession()->get('character')[$this->getStepName()];
+
         $nb = count($setbacks);
+
         switch ($nb) {
             case 1:
                 static::assertFalse(current($setbacks)['avoided']);
@@ -82,13 +84,15 @@ class Step07SetbacksTest extends AbstractStepTest
     public function testAgeProvideAtLeastTwoSetbacks()
     {
         $result = $this->submitAction([
-            '06_age' => 26
+            '06_age' => 26,
         ], []);
 
         static::assertSame(302, $result->getResponse()->getStatusCode());
         static::assertTrue($result->getResponse()->isRedirect('/fr/character/generate/08_ways'));
         $setbacks = $result->getSession()->get('character')[$this->getStepName()];
+
         $nb = count($setbacks);
+
         switch ($nb) {
             case 2:
                 static::assertFalse(current($setbacks)['avoided']);
@@ -122,14 +126,16 @@ class Step07SetbacksTest extends AbstractStepTest
     public function testAgeProvideAtLeastThreeSetbacks()
     {
         $result = $this->submitAction([
-            '06_age' => 31
+            '06_age' => 31,
         ], []);
 
         static::assertSame(302, $result->getResponse()->getStatusCode());
         static::assertTrue($result->getResponse()->isRedirect('/fr/character/generate/08_ways'));
-        $setbacks = $result->getSession()->get('character')[$this->getStepName()];
+        $setbacks     = $result->getSession()->get('character')[$this->getStepName()];
         $baseSetbacks = $setbacks;
+
         $nb = count($setbacks);
+
         switch ($nb) {
             case 3:
                 static::assertFalse(current($setbacks)['avoided']);
@@ -154,7 +160,7 @@ class Step07SetbacksTest extends AbstractStepTest
                 static::assertArrayHasKey(1, $setbacks, json_encode($baseSetbacks)); // Bad luck
                 break;
             default:
-                static::fail('The amount of setbacks "' . $nb . '" is invalid'.json_encode($baseSetbacks));
+                static::fail('The amount of setbacks "'.$nb.'" is invalid'.json_encode($baseSetbacks));
         }
     }
 
@@ -183,10 +189,10 @@ class Step07SetbacksTest extends AbstractStepTest
         $session->save();
 
         $crawler = $client->request('GET', '/fr/character/generate/'.$this->getStepName().'?manual=');
-        $form = $crawler->filter('#generator_form')->form()
+        $form    = $crawler->filter('#generator_form')->form()
             ->disableValidation()
             ->setValues([
-                'setbacks_value' => [2, 3]
+                'setbacks_value' => [2, 3],
             ])
         ;
 
@@ -210,7 +216,7 @@ class Step07SetbacksTest extends AbstractStepTest
         $form = $crawler->filter('#generator_form')->form()
             ->disableValidation()
             ->setValues([
-                'setbacks_value' => [1, 10] // 1 and 10 exists, but they cannot be chosen with manual setup
+                'setbacks_value' => [1, 10], // 1 and 10 exists, but they cannot be chosen with manual setup
             ])
         ;
 

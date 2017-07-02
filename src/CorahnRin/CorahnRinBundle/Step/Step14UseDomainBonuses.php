@@ -56,9 +56,9 @@ class Step14UseDomainBonuses extends AbstractStepAction
     {
         $this->allDomains = $this->em->getRepository('CorahnRinBundle:Domains')->findAllSortedByName();
 
-        $step13Domains = $this->getCharacterProperty('13_primary_domains');
+        $step13Domains     = $this->getCharacterProperty('13_primary_domains');
         $socialClassValues = $this->getCharacterProperty('05_social_class')['domains'];
-        $geoEnvironment = $this->em->find('CorahnRinBundle:GeoEnvironments', $this->getCharacterProperty('04_geo'));
+        $geoEnvironment    = $this->em->find('CorahnRinBundle:GeoEnvironments', $this->getCharacterProperty('04_geo'));
 
         $this->domainsCalculatedValues = $this->domainsCalculator->calculateFromGeneratorData(
             $this->allDomains,
@@ -81,7 +81,7 @@ class Step14UseDomainBonuses extends AbstractStepAction
         // If "mentor ally" is selected, then the character has a bonus to one domain.
         // Thanks to him! :D
         $advantages = $this->getCharacterProperty('11_advantages');
-        $mentor = isset($advantages['advantages'][2]) ? $advantages['advantages'][2] : 0;
+        $mentor     = $advantages['advantages'][2] ?? 0;
         $this->bonus += $mentor; // $mentor can be 0 or 1 only so no problem with this operation.
 
         /** @var int $age */
@@ -94,9 +94,8 @@ class Step14UseDomainBonuses extends AbstractStepAction
 
         // Manage form submit
         if ($this->request->isMethod('POST')) {
-
             if (0 === $this->bonus) {
-                $finalArray = $this->resetBonuses();
+                $finalArray              = $this->resetBonuses();
                 $finalArray['remaining'] = $this->bonus;
                 $this->updateCharacterStep($finalArray);
 
@@ -107,12 +106,12 @@ class Step14UseDomainBonuses extends AbstractStepAction
             $postedValues = $this->request->request->get('domains_bonuses');
 
             $remainingPoints = $bonusValue;
-            $spent = 0;
+            $spent           = 0;
 
             $error = false;
 
             foreach (array_keys($characterBonuses['domains']) as $id) {
-                $value = isset($postedValues[$id]) ? $postedValues[$id] : null;
+                $value = $postedValues[$id] ?? null;
                 if (!array_key_exists($id, $postedValues) || !in_array($postedValues[$id], ['0', '1'], true)) {
                     // If there is any error, we do nothing.
                     $this->flashMessage('errors.incorrect_values');
@@ -150,11 +149,11 @@ class Step14UseDomainBonuses extends AbstractStepAction
         }
 
         return $this->renderCurrentStep([
-            'all_domains' => $this->allDomains,
-            'domains_values' => $this->domainsCalculatedValues,
+            'all_domains'     => $this->allDomains,
+            'domains_values'  => $this->domainsCalculatedValues,
             'domains_bonuses' => $characterBonuses,
-            'bonus_max' => $this->bonus,
-            'bonus_value' => $bonusValue,
+            'bonus_max'       => $this->bonus,
+            'bonus_value'     => $bonusValue,
         ]);
     }
 
@@ -164,7 +163,7 @@ class Step14UseDomainBonuses extends AbstractStepAction
     private function resetBonuses()
     {
         $domainsBonuses = [
-            'domains' => [],
+            'domains'   => [],
             'remaining' => 0,
         ];
 

@@ -34,9 +34,8 @@ class Step02Job extends AbstractStepAction
                 $this->updateCharacterStep($jobValue);
 
                 return $this->nextStep();
-            } else {
-                $this->flashMessage('Veuillez entrer un métier correct.');
             }
+            $this->flashMessage('Veuillez entrer un métier correct.');
         }
 
         return $this->renderCurrentStep([

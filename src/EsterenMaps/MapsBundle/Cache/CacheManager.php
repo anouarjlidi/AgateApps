@@ -20,7 +20,7 @@ use Symfony\Component\Cache\CacheItem;
  */
 class CacheManager
 {
-    const CACHE_NAME = 'esterenmaps';
+    public const CACHE_NAME = 'esterenmaps';
 
     /**
      * In seconds, how much time will the cache be saved in cache service.
@@ -35,13 +35,13 @@ class CacheManager
     private $cacheAdapter;
 
     /**
-     * @param int           $cacheTTL
-     * @param AdapterInterface  $cacheAdapter
+     * @param int              $cacheTTL
+     * @param AdapterInterface $cacheAdapter
      */
     public function __construct($cacheTTL, AdapterInterface $cacheAdapter)
     {
-        $this->cacheTTL      = $cacheTTL;
-        $this->cacheAdapter  = $cacheAdapter;
+        $this->cacheTTL     = $cacheTTL;
+        $this->cacheAdapter = $cacheAdapter;
     }
 
     /**

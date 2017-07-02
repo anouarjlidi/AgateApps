@@ -22,13 +22,13 @@ final class PortalMailer
     public function __construct(\Swift_Mailer $mailer, EngineInterface $templating)
     {
         $this->templating = $templating;
-        $this->mailer = $mailer;
+        $this->mailer     = $mailer;
     }
 
     /**
      * @param ContactMessage $message
-     * @param string $subject
-     * @param string $ip
+     * @param string         $subject
+     * @param string         $ip
      *
      * @return int
      */

@@ -52,7 +52,7 @@ class ResettingController extends Controller
             $this->get('user.mailer')->sendResettingEmailMessage($user);
         }
 
-        return new RedirectResponse($this->generateUrl('user_resetting_check_email', array('username' => $username)));
+        return new RedirectResponse($this->generateUrl('user_resetting_check_email', ['username' => $username]));
     }
 
     /**
@@ -99,9 +99,9 @@ class ResettingController extends Controller
             return new RedirectResponse($this->generateUrl('user_profile_edit'));
         }
 
-        return $this->render('@User/Resetting/reset.html.twig', array(
+        return $this->render('@User/Resetting/reset.html.twig', [
             'token' => $token,
-            'form' => $form->createView(),
-        ));
+            'form'  => $form->createView(),
+        ]);
     }
 }

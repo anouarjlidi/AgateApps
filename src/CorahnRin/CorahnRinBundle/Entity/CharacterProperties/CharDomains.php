@@ -27,7 +27,7 @@ class CharDomains
     /**
      * @var Characters
      *
-     * @ORM\Id
+     * @ORM\Id()
      * @ORM\ManyToOne(targetEntity="CorahnRin\CorahnRinBundle\Entity\Characters", inversedBy="domains")
      * @Assert\NotNull()
      */
@@ -36,7 +36,7 @@ class CharDomains
     /**
      * @var Domains
      *
-     * @ORM\Id
+     * @ORM\Id()
      * @ORM\ManyToOne(targetEntity="CorahnRin\CorahnRinBundle\Entity\Domains")
      * @Assert\NotNull()
      */
@@ -103,6 +103,7 @@ class CharDomains
 
     /**
      * @param int $bonus
+     *
      * @return CharDomains
      */
     public function setBonus($bonus)
@@ -128,6 +129,7 @@ class CharDomains
     public function setMalus($malus)
     {
         $this->malus = $malus;
+
         return $this;
     }
 

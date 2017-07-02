@@ -33,8 +33,8 @@ class Step11Advantages extends AbstractStepAction
         $this->globalList = $this->em->getRepository('CorahnRinBundle:Avantages')->findAllDifferenciated();
 
         $currentStepValue = $this->getCharacterProperty();
-        $advantages       = isset($currentStepValue['advantages']) ? $currentStepValue['advantages'] : [];
-        $disadvantages    = isset($currentStepValue['disadvantages']) ? $currentStepValue['disadvantages'] : [];
+        $advantages       = $currentStepValue['advantages'] ?? [];
+        $disadvantages    = $currentStepValue['disadvantages'] ?? [];
         $setbacks         = $this->getCharacterProperty('07_setbacks');
         $isPoor           = isset($setbacks[9]) && !$setbacks[9]['avoided'];
 
@@ -52,14 +52,14 @@ class Step11Advantages extends AbstractStepAction
         $experience = $this->calculateExperience($advantages, $disadvantages);
 
         if ($this->request->isMethod('POST')) {
-            $intval = function ($e) { return (int)$e; };
+            $intval = function ($e) { return (int) $e; };
             $advantages    = array_map($intval, $this->request->request->get('advantages'));
             $disadvantages = array_map($intval, $this->request->request->get('disadvantages'));
 
-            $numberOfAdvantages = 0;
-            $numberOfUpgradedAdvantages = 0;
+            $numberOfAdvantages            = 0;
+            $numberOfUpgradedAdvantages    = 0;
             $numberOfUpgradedDisadvantages = 0;
-            $numberOfDisadvantages = 0;
+            $numberOfDisadvantages         = 0;
 
             // First, validate all IDs
             foreach ($advantages as $id => $value) {
@@ -124,7 +124,9 @@ class Step11Advantages extends AbstractStepAction
 
             // Validate "Ally" advantage, that cannot be combined (because it's split in multiple advantages)
             $allyIds = [1, 2, 3];
+
             $count = 0;
+
             foreach ($allyIds as $key) {
                 if (isset($advantages[$key]) && $advantages[$key]) {
                     $count++;
@@ -138,7 +140,9 @@ class Step11Advantages extends AbstractStepAction
 
             // Validate "Financial ease" advantage, that cannot be combined (because it's split in multiple advantages)
             $financialEaseIds = [4, 5, 6, 7, 8];
+
             $count = 0;
+
             foreach ($financialEaseIds as $key) {
                 if (isset($advantages[$key]) && $advantages[$key]) {
                     $count++;
@@ -198,11 +202,13 @@ class Step11Advantages extends AbstractStepAction
             } elseif ($value) {
                 $this->hasError = true;
                 $this->flashMessage('Une valeur incorrecte a été donnée à un désavantage.');
+
                 return 0;
             }
             if ($experience > 180 && $returnFalseOnError) {
                 $this->hasError = true;
                 $this->flashMessage('Vos désavantages vous donnent un gain d\'expérience supérieur à 80.');
+
                 return 0;
             }
         }
@@ -219,6 +225,7 @@ class Step11Advantages extends AbstractStepAction
             } elseif ($value) {
                 $this->hasError = true;
                 $this->flashMessage('Une valeur incorrecte a été donnée à un avantage.');
+
                 return 0;
             }
         }

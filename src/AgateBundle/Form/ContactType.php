@@ -46,7 +46,7 @@ class ContactType extends AbstractType
     {
         $resolver->setDefaults([
             'translation_domain' => 'contact',
-            'data_class' => ContactMessage::class,
+            'data_class'         => ContactMessage::class,
         ]);
     }
 }

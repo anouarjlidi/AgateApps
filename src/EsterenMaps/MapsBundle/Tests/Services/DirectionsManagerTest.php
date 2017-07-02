@@ -22,11 +22,11 @@ class DirectionsManagerTest extends WebTestCase
     /**
      * @dataProvider provideWorkingDirections
      *
-     * @param array   $expectedData
-     * @param integer $map
-     * @param string  $from
-     * @param string  $to
-     * @param null    $transport
+     * @param array  $expectedData
+     * @param int    $map
+     * @param string $from
+     * @param string $to
+     * @param null   $transport
      */
     public function testWorkingDirections(array $expectedData, $map, $from, $to, $transport = null)
     {
@@ -43,13 +43,13 @@ class DirectionsManagerTest extends WebTestCase
         $directions = $maps->getDirectionsManager();
 
         /** @var Maps $map */
-        $map  = $em->getRepository('EsterenMapsBundle:Maps')->findOneBy(['nameSlug' => $map]);
+        $map = $em->getRepository('EsterenMapsBundle:Maps')->findOneBy(['nameSlug' => $map]);
 
         /** @var Markers $from */
         $from = $em->getRepository('EsterenMapsBundle:Markers')->findOneBy(['name' => $from]);
 
         /** @var Markers $to */
-        $to   = $em->getRepository('EsterenMapsBundle:Markers')->findOneBy(['name' => $to]);
+        $to = $em->getRepository('EsterenMapsBundle:Markers')->findOneBy(['name' => $to]);
 
         if ($transport) {
             $transport = $em->getRepository('EsterenMapsBundle:TransportTypes')->findOneBy(['slug' => $transport]);

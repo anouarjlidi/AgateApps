@@ -31,7 +31,7 @@ class SecurityController extends Controller
         /** @var $session Session */
         $session = $request->getSession();
 
-        $authErrorKey = Security::AUTHENTICATION_ERROR;
+        $authErrorKey    = Security::AUTHENTICATION_ERROR;
         $lastUsernameKey = Security::LAST_USERNAME;
 
         // get the error if any (works with forward and redirect -- see below)
@@ -57,11 +57,11 @@ class SecurityController extends Controller
             ? $this->get('security.csrf.token_manager')->getToken('authenticate')->getValue()
             : null;
 
-        return $this->render('@User/Security/login.html.twig', array(
-            'last_username' => $lastUsername,
-            'csrf_token' => $csrfToken,
+        return $this->render('@User/Security/login.html.twig', [
+            'last_username'       => $lastUsername,
+            'csrf_token'          => $csrfToken,
             'username_form_field' => FormLoginAuthenticator::USERNAME_OR_EMAIL_FORM_FIELD,
             'password_form_field' => FormLoginAuthenticator::PASSWORD_FORM_FIELD,
-        ));
+        ]);
     }
 }

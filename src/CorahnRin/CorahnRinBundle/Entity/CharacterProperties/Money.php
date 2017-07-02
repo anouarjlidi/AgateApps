@@ -188,7 +188,7 @@ class Money
     }
 
     /**
-     * Take all high moneys and put them in the "ember" part
+     * Take all high moneys and put them in the "ember" part.
      *
      * @return Money
      */

@@ -24,14 +24,14 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class User implements UserInterface, \Serializable
 {
-    const ROLE_DEFAULT = 'ROLE_USER';
-    const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
+    public const ROLE_DEFAULT     = 'ROLE_USER';
+    public const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
 
     use TimestampableEntity;
 
     /**
      * @var int
-     * @ORM\Id
+     * @ORM\Id()
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -125,7 +125,7 @@ class User implements UserInterface, \Serializable
 
     public function __toString()
     {
-        return (string)$this->getUsername();
+        return (string) $this->getUsername();
     }
 
     public function addRole($role): User
@@ -340,7 +340,7 @@ class User implements UserInterface, \Serializable
 
     public function serialize()
     {
-        return serialize(array(
+        return serialize([
             $this->id,
             $this->username,
             $this->usernameCanonical,
@@ -348,7 +348,7 @@ class User implements UserInterface, \Serializable
             $this->emailCanonical,
             $this->password,
             implode(',', $this->getRoles()),
-        ));
+        ]);
     }
 
     public function unserialize($serialized)
@@ -365,4 +365,5 @@ class User implements UserInterface, \Serializable
             $this->emailCanonical,
             $this->password,
         ] = $data;
-}}
+    }
+}

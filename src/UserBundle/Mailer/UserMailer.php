@@ -28,21 +28,21 @@ final class UserMailer
 
     public function __construct(RequestStack $requestStack, \Swift_Mailer $mailer, EngineInterface $templating, RouterInterface $router, TranslatorInterface $translator)
     {
-        $this->sender = 'no-reply@'.$requestStack->getMasterRequest()->getHost();
+        $this->sender     = 'no-reply@'.$requestStack->getMasterRequest()->getHost();
         $this->templating = $templating;
-        $this->mailer = $mailer;
-        $this->router = $router;
+        $this->mailer     = $mailer;
+        $this->router     = $router;
         $this->translator = $translator;
     }
 
     public function sendRegistrationEmail(User $user)
     {
-        $url = $this->router->generate('user_registration_confirm', array('token' => $user->getConfirmationToken()), UrlGeneratorInterface::ABSOLUTE_URL);
+        $url = $this->router->generate('user_registration_confirm', ['token' => $user->getConfirmationToken()], UrlGeneratorInterface::ABSOLUTE_URL);
 
-        $rendered = $this->templating->render('@User/Registration/email.html.twig', array(
-            'user' => $user,
+        $rendered = $this->templating->render('@User/Registration/email.html.twig', [
+            'user'            => $user,
             'confirmationUrl' => $url,
-        ));
+        ]);
 
         $message = new \Swift_Message();
 
@@ -59,12 +59,12 @@ final class UserMailer
 
     public function sendResettingEmailMessage(User $user): void
     {
-        $url = $this->router->generate('user_resetting_reset', array('token' => $user->getConfirmationToken()), UrlGeneratorInterface::ABSOLUTE_URL);
+        $url = $this->router->generate('user_resetting_reset', ['token' => $user->getConfirmationToken()], UrlGeneratorInterface::ABSOLUTE_URL);
 
-        $rendered = $this->templating->render('@User/Resetting/email.txt.twig', array(
-            'user' => $user,
+        $rendered = $this->templating->render('@User/Resetting/email.txt.twig', [
+            'user'            => $user,
             'confirmationUrl' => $url,
-        ));
+        ]);
 
         $this->sendEmailMessage($rendered, (string) $user->getEmail());
     }
@@ -73,8 +73,8 @@ final class UserMailer
     {
         // Render the email, use the first line as the subject, and the rest as the body
         $renderedLines = explode("\n", trim($renderedTemplate));
-        $subject = array_shift($renderedLines);
-        $body = implode("\n", $renderedLines);
+        $subject       = array_shift($renderedLines);
+        $body          = implode("\n", $renderedLines);
 
         $message = new \Swift_Message();
 
