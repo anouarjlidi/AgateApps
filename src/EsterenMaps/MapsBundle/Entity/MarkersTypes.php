@@ -17,7 +17,6 @@ use EsterenMaps\MapsBundle\Cache\EntityToClearInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
-use JMS\Serializer\Annotation as Serializer;
 
 /**
  * MarkersType.
@@ -25,7 +24,6 @@ use JMS\Serializer\Annotation as Serializer;
  * @ORM\Table(name="maps_markers_types")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  * @ORM\Entity()
- * @Serializer\ExclusionPolicy("all")
  */
 class MarkersTypes implements EntityToClearInterface
 {
@@ -38,24 +36,21 @@ class MarkersTypes implements EntityToClearInterface
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id()
      * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @Serializer\Expose()
-     */
+    */
     protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=false, unique=true)
-     * @Serializer\Expose()
-     */
+    */
     protected $name;
 
     /**
      * @var string
      *
      * @ORM\Column(name="description", type="text", nullable=true)
-     * @Serializer\Expose()
-     */
+    */
     protected $description;
 
     /**
@@ -68,29 +63,25 @@ class MarkersTypes implements EntityToClearInterface
     /**
      * @var int
      * @ORM\Column(name="icon_width", type="integer")
-     * @Serializer\Expose()
-     */
+    */
     protected $iconWidth = 0;
 
     /**
      * @var int
      * @ORM\Column(name="icon_height", type="integer")
-     * @Serializer\Expose()
-     */
+    */
     protected $iconHeight = 0;
 
     /**
      * @var int
      * @ORM\Column(name="icon_center_x", type="integer", nullable=true)
-     * @Serializer\Expose()
-     */
+    */
     protected $iconCenterX;
 
     /**
      * @var int
      * @ORM\Column(name="icon_center_y", type="integer", nullable=true)
-     * @Serializer\Expose()
-     */
+    */
     protected $iconCenterY;
 
     /**
@@ -253,8 +244,7 @@ class MarkersTypes implements EntityToClearInterface
 
     /**
      * @return string
-     * @Serializer\VirtualProperty()
-     */
+    */
     public function getWebIcon()
     {
         return '/img/markerstypes/'.$this->icon;

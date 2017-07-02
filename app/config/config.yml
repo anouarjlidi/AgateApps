@@ -182,34 +182,3 @@ orbitale_cms:
             host: '%esteren_domains.esterenmaps%'
         front:
             resource: 'cms_page_layout.html.twig'
-
-# Api services
-# TODO: Refactor this and use a better method to generate WS based on entities
-# TODO: Implement ApiPlatform
-pierstoval_api:
-    allowed_origins:
-        - '%esteren_domains.esterenmaps%'
-        - '%esteren_domains.corahnrin%'
-        - '%esteren_domains.backoffice%'
-        - '%esteren_domains.api%'
-#        - 127.0.0.1 # To add in dev mode if needed
-
-    services:
-        maps:           { entity: EsterenMaps\MapsBundle\Entity\Maps }
-        markers:        { entity: EsterenMaps\MapsBundle\Entity\Markers }
-        markerstypes:   { entity: EsterenMaps\MapsBundle\Entity\MarkersTypes }
-        routes:         { entity: EsterenMaps\MapsBundle\Entity\Routes }
-        routestypes:    { entity: EsterenMaps\MapsBundle\Entity\RoutesTypes }
-        zones:          { entity: EsterenMaps\MapsBundle\Entity\Zones }
-        zonestypes:     { entity: EsterenMaps\MapsBundle\Entity\ZonesTypes }
-        transports:     { entity: EsterenMaps\MapsBundle\Entity\TransportTypes }
-
-# TODO: remove FOSRest integration or refactor it
-# TODO: Implement ApiPlatform
-fos_rest:
-    param_fetcher_listener: true
-    body_listener: true
-    format_listener:
-        rules:
-            - { path: '^/((%locales_regex%)/)?api', priorities: ['json', 'html'], fallback_format: json, prefer_extension: true }
-            - { path: '^/', priorities: [ 'html', '*/*'], fallback_format: ~, prefer_extension: true }

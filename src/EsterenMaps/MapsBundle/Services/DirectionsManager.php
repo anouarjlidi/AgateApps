@@ -18,8 +18,7 @@ use EsterenMaps\MapsBundle\Entity\Markers;
 use EsterenMaps\MapsBundle\Entity\Routes;
 use EsterenMaps\MapsBundle\Entity\TransportTypes;
 use EsterenMaps\MapsBundle\Model\DirectionRoute;
-use JMS\Serializer\SerializationContext;
-use JMS\Serializer\Serializer;
+use Symfony\Component\Serializer\Serializer;
 use Symfony\Bundle\TwigBundle\TwigEngine;
 
 /**
@@ -95,7 +94,7 @@ class DirectionsManager
         } else {
             $directions = $this->doGetDirections($map, $start, $end, $hoursPerDay, $transportType);
 
-            $jsonString = $this->serializer->serialize($directions, 'json', $this->createSerializationContext());
+            $jsonString = $this->serializer->serialize($directions, 'json');
 
             // Make the directions a full array
             $directions               = json_decode($jsonString, true);
@@ -182,7 +181,7 @@ class DirectionsManager
             ->findByIdsArray(array_keys($paths))
         ;
         $routesArray = $this->entityManager->getRepository('EsterenMapsBundle:Routes')
-            ->findByIds($routesIds, true, true)
+            ->findByIds($routesIds, true)
         ;
         $routesObjects = $this->entityManager->getRepository('EsterenMapsBundle:Routes')
             ->findByIds($routesIds, false, false)
@@ -368,7 +367,7 @@ class DirectionsManager
             'path_view'       => null,
             'duration_raw'    => null,
             'duration_real'   => null,
-            'transport'       => json_decode($this->serializer->serialize($transport, 'json', $this->createSerializationContext()), true),
+            'transport'       => json_decode($this->serializer->serialize($transport, 'json'), true),
             'bounds'          => ['northEast' => $NE, 'southWest' => $SW],
             'total_distance'  => $distance,
             'number_of_steps' => count($directions) ? (count($directions) - 2) : 0,
@@ -381,24 +380,13 @@ class DirectionsManager
         $data['duration_real'] = ['days' => null, 'hours' => null];
 
         if ($transport) {
-            $data['duration_raw']  = $this->getTravelDuration($routes, $transport, $hoursPerDay, true);
+            $data['duration_raw']  = $this->getTravelDuration($routes, $transport, $hoursPerDay);
             $data['duration_real'] = $this->getTravelDuration($routes, $transport, $hoursPerDay, false);
         }
 
         $data['path_view'] = $this->templating->render('@EsterenMaps/Api/path_view.html.twig', $data);
 
         return $data;
-    }
-
-    /**
-     * @return SerializationContext
-     */
-    private function createSerializationContext()
-    {
-        $serializationContext = new SerializationContext();
-        $serializationContext->setSerializeNull(true);
-
-        return $serializationContext;
     }
 
     /**
@@ -430,7 +418,7 @@ class DirectionsManager
      * @param int            $hoursPerDay
      * @param bool           $raw
      *
-     * @return int[]|null
+     * @return int[]|string|null
      */
     private function getTravelDuration(array $routes, TransportTypes $transport, $hoursPerDay = 7, $raw = true)
     {

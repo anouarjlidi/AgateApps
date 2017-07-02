@@ -22,7 +22,7 @@ class AssetsController extends Controller
     /**
      * @Route("/js/translations.js", name="pierstoval_tools_assets_jstranslations")
      * @Method("GET")
-     * @Cache(maxage=86400, expires="+1 day")
+     * @Cache(maxage=86400, expires="+1 day", public=true)
      *
      * @param string $_locale
      *

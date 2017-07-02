@@ -17,8 +17,6 @@ use EsterenMaps\MapsBundle\Cache\EntityToClearInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
-use JMS\Serializer\Annotation\ExclusionPolicy;
-use JMS\Serializer\Annotation\Expose;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -27,7 +25,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="maps_transports_types")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  * @ORM\Entity()
- * @ExclusionPolicy("all")
  */
 class TransportTypes implements EntityToClearInterface
 {
@@ -40,16 +37,14 @@ class TransportTypes implements EntityToClearInterface
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id()
      * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @Expose()
-     */
+    */
     protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=false, unique=true)
-     * @Expose()
-     * @Assert\NotBlank()
+    * @Assert\NotBlank()
      */
     protected $name;
 
@@ -58,16 +53,14 @@ class TransportTypes implements EntityToClearInterface
      *
      * @Gedmo\Slug(fields={"name"})
      * @ORM\Column(name="slug", type="string", length=255, nullable=false, unique=true)
-     * @Expose()
-     */
+    */
     protected $slug;
 
     /**
      * @var string
      *
      * @ORM\Column(name="description", type="text", nullable=true)
-     * @Expose()
-     */
+    */
     protected $description;
 
     /**
@@ -76,8 +69,7 @@ class TransportTypes implements EntityToClearInterface
      * @ORM\Column(name="speed", type="decimal", scale=4, precision=8, nullable=false)
      * @Assert\NotNull()
      * @Assert\Range(max="10000", min="-10000")
-     * @Expose()
-     */
+    */
     protected $speed;
 
     /**

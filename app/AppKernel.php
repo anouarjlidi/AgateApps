@@ -16,10 +16,8 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
 
-            new FOS\RestBundle\FOSRestBundle(),
             new Nelmio\CorsBundle\NelmioCorsBundle(),
             new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
-            new JMS\SerializerBundle\JMSSerializerBundle(),
             new JavierEguiluz\Bundle\EasyAdminBundle\EasyAdminBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
 
@@ -40,7 +38,6 @@ class AppKernel extends Kernel
 
             // Pierstoval's tools
             new Orbitale\Bundle\CmsBundle\OrbitaleCmsBundle(),
-            new Pierstoval\Bundle\ApiBundle\PierstovalApiBundle(),
             new Pierstoval\Bundle\ToolsBundle\PierstovalToolsBundle(),
         ];
 

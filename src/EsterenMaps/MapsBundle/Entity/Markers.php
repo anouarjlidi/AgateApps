@@ -17,7 +17,6 @@ use EsterenMaps\MapsBundle\Cache\EntityToClearInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
-use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -27,7 +26,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\HasLifecycleCallbacks()
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  * @ORM\Entity(repositoryClass="EsterenMaps\MapsBundle\Repository\MarkersRepository")
- * @Serializer\ExclusionPolicy("all")
  */
 class Markers implements EntityToClearInterface
 {
@@ -40,48 +38,42 @@ class Markers implements EntityToClearInterface
      * @ORM\Id()
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @Serializer\Expose()
-     */
+    */
     protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=false, unique=true)
-     * @Serializer\Expose()
-     */
+    */
     protected $name;
 
     /**
      * @var string
      *
      * @ORM\Column(name="description", type="text", nullable=true)
-     * @Serializer\Expose()
-     */
+    */
     protected $description;
 
     /**
      * @var string
      *
      * @ORM\Column(name="altitude", type="string", length=255, nullable=true)
-     * @Serializer\Expose()
-     */
+    */
     protected $altitude;
 
     /**
      * @var string
      *
      * @ORM\Column(name="latitude", type="string", length=255, nullable=true)
-     * @Serializer\Expose()
-     */
+    */
     protected $latitude;
 
     /**
      * @var string
      *
      * @ORM\Column(name="longitude", type="string", length=255, nullable=true)
-     * @Serializer\Expose()
-     */
+    */
     protected $longitude;
 
     /**
@@ -89,8 +81,7 @@ class Markers implements EntityToClearInterface
      *
      * @ORM\ManyToOne(targetEntity="Factions", inversedBy="markers")
      * @ORM\JoinColumn(name="faction_id", nullable=true)
-     * @Serializer\Expose()
-     */
+    */
     protected $faction;
 
     /**
@@ -106,8 +97,7 @@ class Markers implements EntityToClearInterface
      *
      * @ORM\ManyToOne(targetEntity="MarkersTypes", inversedBy="markers")
      * @ORM\JoinColumn(name="marker_type_id", nullable=false)
-     * @Serializer\Expose()
-     * @Assert\NotBlank()
+    * @Assert\NotBlank()
      * @Assert\Valid()
      */
     protected $markerType;
@@ -128,8 +118,6 @@ class Markers implements EntityToClearInterface
 
     /**
      * @var Routes
-     * @Serializer\Expose()
-     * @Serializer\Type("EsterenMaps\MapsBundle\Entity\Routes")
      */
     public $route;
 

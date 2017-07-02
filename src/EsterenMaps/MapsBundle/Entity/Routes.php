@@ -17,7 +17,6 @@ use EsterenMaps\MapsBundle\Cache\EntityToClearInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
-use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Routes.
@@ -26,7 +25,6 @@ use JMS\Serializer\Annotation as Serializer;
  * @ORM\Entity(repositoryClass="EsterenMaps\MapsBundle\Repository\RoutesRepository")
  * @ORM\HasLifecycleCallbacks()
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
- * @Serializer\ExclusionPolicy("all")
  */
 class Routes implements EntityToClearInterface
 {
@@ -39,56 +37,49 @@ class Routes implements EntityToClearInterface
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id()
      * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @Serializer\Expose()
-     */
+    */
     protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=true)
-     * @Serializer\Expose()
-     */
+    */
     protected $name;
 
     /**
      * @var string
      *
      * @ORM\Column(name="description", type="text", nullable=true)
-     * @Serializer\Expose()
-     */
+    */
     protected $description;
 
     /**
      * @var string
      *
      * @ORM\Column(name="coordinates", type="text")
-     * @Serializer\Expose()
-     */
+    */
     protected $coordinates = '';
 
     /**
      * @var int
      *
      * @ORM\Column(name="distance", type="float", precision=12, scale=6, options={"default": 0})
-     * @Serializer\Expose()
-     */
+    */
     protected $distance = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(name="forced_distance", type="float", precision=12, scale=6, nullable=true)
-     * @Serializer\Expose()
-     */
+    */
     protected $forcedDistance;
 
     /**
      * @var bool
      *
      * @ORM\Column(name="guarded", type="boolean")
-     * @Serializer\Expose()
-     */
+    */
     protected $guarded = false;
 
     /**
@@ -103,8 +94,7 @@ class Routes implements EntityToClearInterface
      *
      * @ORM\ManyToOne(targetEntity="Markers", inversedBy="routesStart")
      * @ORM\JoinColumn(name="marker_start_id", nullable=true)
-     * @Serializer\Expose()
-     */
+    */
     protected $markerStart;
 
     /**
@@ -112,8 +102,7 @@ class Routes implements EntityToClearInterface
      *
      * @ORM\ManyToOne(targetEntity="Markers", inversedBy="routesEnd")
      * @ORM\JoinColumn(name="marker_end_id", nullable=true)
-     * @Serializer\Expose()
-     */
+    */
     protected $markerEnd;
 
     /**
@@ -129,8 +118,7 @@ class Routes implements EntityToClearInterface
      *
      * @ORM\ManyToOne(targetEntity="Factions", inversedBy="routes")
      * @ORM\JoinColumn(name="faction_id", nullable=true)
-     * @Serializer\Expose()
-     */
+    */
     protected $faction;
 
     /**
@@ -138,8 +126,7 @@ class Routes implements EntityToClearInterface
      *
      * @ORM\ManyToOne(targetEntity="RoutesTypes", inversedBy="routes")
      * @ORM\JoinColumn(name="route_type_id", nullable=false)
-     * @Serializer\Expose()
-     */
+    */
     protected $routeType;
 
     /**

@@ -17,8 +17,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
-use JMS\Serializer\Annotation\ExclusionPolicy as ExclusionPolicy;
-use JMS\Serializer\Annotation\Expose as Expose;
 
 /**
  * Factions.
@@ -26,7 +24,6 @@ use JMS\Serializer\Annotation\Expose as Expose;
  * @ORM\Table(name="maps_factions")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  * @ORM\Entity()
- * @ExclusionPolicy("all")
  */
 class Factions
 {
@@ -39,24 +36,21 @@ class Factions
      * @ORM\Id()
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @Expose()
-     */
+    */
     protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=false, unique=true)
-     * @Expose()
-     */
+    */
     protected $name;
 
     /**
      * @var string
      *
      * @ORM\Column(name="description", type="text", nullable=true)
-     * @Expose()
-     */
+    */
     protected $description;
 
     /**

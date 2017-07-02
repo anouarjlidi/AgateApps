@@ -13,6 +13,7 @@ namespace EsterenMaps\MapsBundle\Controller\Api;
 
 use Doctrine\ORM\EntityManager;
 use EsterenMaps\MapsBundle\Entity\Maps;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -20,6 +21,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
+/**
+ * @Cache(expires="+1 hour")
+ */
 class MapsController extends Controller
 {
     /**
@@ -29,6 +33,7 @@ class MapsController extends Controller
      *     name="esterenmaps_api_maps_settings_distant"
      * )
      * @Method("GET")
+     * @Cache(maxage=3600, expires="+1 hour", public=true)
      */
     public function settingsAction(Maps $map, Request $request)
     {
@@ -89,6 +94,7 @@ class MapsController extends Controller
     /**
      * @Route("/maps/ref-data", host="%esteren_domains.api%", name="esterenmaps_api_maps_filters_distant")
      * @Method("GET")
+     * @Cache(maxage=3600, expires="+1 hour", public=true)
      */
     public function mapRefDataAction(Request $request)
     {

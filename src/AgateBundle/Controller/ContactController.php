@@ -47,7 +47,7 @@ class ContactController extends Controller
 
             // Else, it means transport may had an error or something, so if no exception was thrown, we log this.
             $this->addFlash('error', $translator->trans('form.error', [], 'contact'));
-            $this->get('logger')->error('Error when sending email', $this->get('jms_serializer')->serialize($message, 'json'));
+            $this->get('logger')->error('Error when sending email', $this->get('serializer')->serialize($message, 'json'));
         }
 
         return $this->render('@Agate/contact.html.twig', [

@@ -90,11 +90,13 @@
                     var node = L.DomUtil.create('li', listsElementsClasses, list);
                     node.setAttribute('style', listsElementsStyles);
                     node.innerHTML =
-                        '<label for="markerType'+markerType.id+'">'
-                        +'<input id="markerType'+markerType.id+'" type="checkbox" class="leaflet-filter-checkbox" checked="checked" />'
-                        +'<img src="'+markerType.web_icon+'" class="ib" style="'+captionStyle+'">'
-                        +markerType.name
-                        +'</label>'
+                        '<div>'
+                            +'<input id="markerType'+markerType.id+'" type="checkbox" class="leaflet-filter-checkbox" checked="checked" />'
+                            +'<label for="markerType'+markerType.id+'">'
+                                +'<img src="'+markerType.web_icon+'" class="ib" style="'+captionStyle+'"> '
+                                +markerType.name
+                            +'</label>'
+                        +'</div>'
                     ;
                     nodesList.markersTypes.push(node);
                 });
@@ -108,11 +110,13 @@
                     var node = L.DomUtil.create('li', listsElementsClasses, list);
                     node.setAttribute('style', listsElementsStyles);
                     node.innerHTML =
-                        '<label for="routeType'+routeType.id+'">'
-                        +'<input id="routeType'+routeType.id+'" type="checkbox" class="leaflet-filter-checkbox" checked="checked" />'
-                        +'<span class="ib" style="'+captionStyle+' background: '+routeType.color+'"></span>'
-                        +routeType.name
-                        +'</label>'
+                        '<div>'
+                            +'<input id="routeType'+routeType.id+'" type="checkbox" class="leaflet-filter-checkbox" checked="checked" />'
+                            +'<label for="routeType'+routeType.id+'">'
+                                +'<span class="ib" style="'+captionStyle+' background: '+routeType.color+'"></span> '
+                                +routeType.name
+                            +'</label>'
+                        +'</div>'
                     ;
                     nodesList.routesTypes.push(node);
                 });
@@ -126,11 +130,13 @@
                     var node = L.DomUtil.create('li', listsElementsClasses, list);
                     node.setAttribute('style', listsElementsStyles);
                     node.innerHTML =
-                        '<label for="zoneType'+zoneType.id+'">'
-                        +'<input id="zoneType'+zoneType.id+'" type="checkbox" class="leaflet-filter-checkbox" checked="checked" />'
-                        +'<span class="ib" style="'+captionStyle+' background: '+zoneType.color+'"></span>'
-                        +zoneType.name
-                        +'</label>'
+                        '<div>'
+                            +'<input id="zoneType'+zoneType.id+'" type="checkbox" class="leaflet-filter-checkbox" checked="checked" />'
+                            +'<label for="zoneType'+zoneType.id+'">'
+                                +'<span class="ib" style="'+captionStyle+' background: '+zoneType.color+'"></span> '
+                                +zoneType.name
+                            +'</label>'
+                        +'</div>'
                     ;
                     nodesList.zonesTypes.push(node);
                 });
@@ -142,18 +148,18 @@
             // pour être sûr que des listeners ne sont pas "perdus" en route
 
             content = $('<div />')
-                .append($('<h3 />').text(filtersMsgTitle))
+                .append($('<h3 class="text-xxl" />').text(filtersMsgTitle))
                 .append($('<div class="row" />')
-                    .append($('<div class="col-sm-4" />')
-                        .append($('<h4 />').text(filtersMsgMarkersTypes))
+                    .append($('<div class="col s4" />')
+                        .append($('<h4 class="text-xxl" />').text(filtersMsgMarkersTypes))
                         .append(nodesList.markersTypesUL)
                     )
-                    .append($('<div class="col-sm-4" />')
-                        .append($('<h4 />').text(filtersMsgRoutesTypes))
+                    .append($('<div class="col s4" />')
+                        .append($('<h4 class="text-xxl" />').text(filtersMsgRoutesTypes))
                         .append(nodesList.routesTypesUL)
                     )
-                    .append($('<div class="col-sm-4" />')
-                        .append($('<h4 />').text(filtersMsgZonesTypes))
+                    .append($('<div class="col s4" />')
+                        .append($('<h4 class="text-xxl" />').text(filtersMsgZonesTypes))
                         .append(nodesList.zonesTypesUL)
                     )
                 )

@@ -11,23 +11,19 @@
 
 namespace EsterenMaps\MapsBundle\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
-use JMS\Serializer\Annotation\ExclusionPolicy;
-use JMS\Serializer\Annotation\Expose;
-use JMS\Serializer\Annotation\VirtualProperty;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Maps.
- *
  * @ORM\Table(name="maps")
- * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  * @ORM\Entity(repositoryClass="EsterenMaps\MapsBundle\Repository\MapsRepository")
- * @ExclusionPolicy("all")
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  * @Gedmo\Uploadable(allowOverwrite=true, filenameGenerator="SHA1")
  */
 class Maps
@@ -41,7 +37,6 @@ class Maps
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id()
      * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @Expose()
      */
     protected $id;
 
@@ -49,7 +44,6 @@ class Maps
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=false, unique=true)
-     * @Expose()
      */
     protected $name;
 
@@ -58,7 +52,6 @@ class Maps
      *
      * @Gedmo\Slug(fields={"name"})
      * @ORM\Column(type="string", length=255, nullable=false, unique=true)
-     * @Expose()
      */
     protected $nameSlug;
 
@@ -74,7 +67,6 @@ class Maps
      * @var string
      *
      * @ORM\Column(name="description", type="text", nullable=true)
-     * @Expose()
      */
     protected $description;
 
@@ -86,7 +78,6 @@ class Maps
      *     min=1,
      *     max=50
      * )
-     * @Expose()
      */
     protected $maxZoom = 10;
 
@@ -98,7 +89,6 @@ class Maps
      *     min=1,
      *     max=10
      * )
-     * @Expose()
      */
     protected $startZoom = 10;
 
@@ -106,7 +96,6 @@ class Maps
      * @var int
      *
      * @ORM\Column(name="start_x", type="smallint", options={"default": 1})
-     * @Expose()
      */
     protected $startX = 0;
 
@@ -114,7 +103,6 @@ class Maps
      * @var int
      *
      * @ORM\Column(name="start_y", type="smallint", options={"default": 1})
-     * @Expose()
      */
     protected $startY = 0;
 
@@ -128,31 +116,30 @@ class Maps
      * @var int
      *
      * @ORM\Column(name="coordinates_ratio", type="smallint", options={"default": 1})
-     * @Expose()
      */
     protected $coordinatesRatio = 1;
 
     /**
      * @var Routes[]|ArrayCollection
      *
+     * @MaxDepth(1)
      * @ORM\OneToMany(targetEntity="Routes", mappedBy="map")
-     * @Expose()
      */
     protected $routes;
 
     /**
      * @var Markers[]|ArrayCollection
      *
+     * @MaxDepth(1)
      * @ORM\OneToMany(targetEntity="Markers", mappedBy="map")
-     * @Expose()
      */
     protected $markers;
 
     /**
      * @var Zones[]|ArrayCollection
      *
+     * @MaxDepth(1)
      * @ORM\OneToMany(targetEntity="Zones", mappedBy="map")
-     * @Expose()
      */
     protected $zones;
 
@@ -698,7 +685,6 @@ class Maps
 
     /**
      * @return array
-     * @VirtualProperty()
      */
     public function getJsonBounds()
     {

@@ -16,8 +16,6 @@ use EsterenMaps\MapsBundle\Cache\EntityToClearInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
-use JMS\Serializer\Annotation\ExclusionPolicy;
-use JMS\Serializer\Annotation\Expose;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -26,7 +24,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="maps_routes_transports", uniqueConstraints={@ORM\UniqueConstraint(name="unique_route_transport", columns={"route_type_id", "transport_type_id"})})
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  * @ORM\Entity()
- * @ExclusionPolicy("all")
  */
 class TransportModifiers implements EntityToClearInterface
 {
@@ -39,8 +36,7 @@ class TransportModifiers implements EntityToClearInterface
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id()
      * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @Expose()
-     */
+    */
     protected $id;
 
     /**
@@ -58,8 +54,7 @@ class TransportModifiers implements EntityToClearInterface
      * @ORM\ManyToOne(targetEntity="EsterenMaps\MapsBundle\Entity\TransportTypes", inversedBy="transportsModifiers")
      * @ORM\JoinColumn(name="transport_type_id", nullable=false)
      * @Assert\NotNull()
-     * @Expose()
-     */
+    */
     protected $transportType;
 
     /**
@@ -68,8 +63,7 @@ class TransportModifiers implements EntityToClearInterface
      * @ORM\Column(name="percentage", type="decimal", scale=6, precision=9, nullable=false, options={"default": "100"})
      * @Assert\NotNull()
      * @Assert\Range(max="100", min="0")
-     * @Expose()
-     */
+    */
     protected $percentage = 100;
 
     /**
