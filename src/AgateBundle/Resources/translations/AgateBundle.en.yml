@@ -4,6 +4,11 @@ contact:
 menu:
     contact: 'Contact'
 
+vermine:
+    footer_message: Vermine 2047 is created by Julien Blondel
+    subscribe_label: Follow project's development and receive an e-mail when subscription launches.
+    subscribe_button: Subscribe
+
 team:
     main_title: The Studio Agate team
     permanent_members: The studio gathers six permanent members

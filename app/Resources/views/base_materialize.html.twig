@@ -154,10 +154,14 @@
                         <div class="container">
                             <p class="left">
                             {% block footer_text %}
-                                {{ 'footer.full_text'|trans({
-                                    '%year%': 'now'|date('Y'),
+                                {{ 'footer.version_text'|trans({
                                     '%version%': version_code|replace({'v':''}),
                                     '%version_date%': version_date|localizeddate('medium', 'short', locale=app.request.locale)
+                                })|raw }}
+                                <br>
+                                {{ 'footer.full_text'|trans({
+                                    '%year%': 'now'|date('Y'),
+                                    '%more%': '',
                                 })|raw }}
                             {% endblock %}
                             </p>

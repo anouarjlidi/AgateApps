@@ -4,9 +4,11 @@ links:
     admin: 'Administration'
     menu: 'Menu'
 footer:
+    version_text: |
+        Version %version% (%version_date%)
     full_text: |
-        Version %version% (%version_date%)<br>
         Copyright &copy; 2012-%year% Studio Agate, Tous droits réservés.
+        %more%
         &ndash; Design &amp; développement&nbsp;: Pierstoval &amp; Nel
     links: 'Liens'
     contact: 'Contacter l''équipe'

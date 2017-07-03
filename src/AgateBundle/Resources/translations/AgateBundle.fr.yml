@@ -1,6 +1,11 @@
 contact:
     send_message: 'Envoyez-nous un message'
 
+vermine:
+    footer_message: Vermine 2047 est une création de Julien Blondel
+    subscribe_label: Suivez le développement du projet et recevez un email au lancement de la souscription.
+    subscribe_button: Souscrire
+
 menu:
     contact: 'Contact'
 
