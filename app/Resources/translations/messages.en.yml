@@ -4,9 +4,10 @@ links:
     admin: 'Admin panel'
     menu: 'Menu'
 footer:
-    rights: 'Studio Agate, All rights reserved'
-    brand: 'Design &amp; development: Pierstoval &amp; Nel'
-    version: 'Version'
+    full_text: |
+        Version %version% (%version_date%)<br>
+        Copyright &copy; 2012-%year% Studio Agate, All rights reserved.
+        &ndash; Design &amp; development: Pierstoval &amp; Nel
     links: 'Links'
     contact: 'Contact the team'
     subscribe: 'Subscribe to the newsletter'

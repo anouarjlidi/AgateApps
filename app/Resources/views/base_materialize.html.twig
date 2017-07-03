@@ -153,11 +153,13 @@
                     <div class="footer-copyright">
                         <div class="container">
                             <p class="left">
-                            {{ 'footer.version' | trans }} {{ version_code|replace({'v':''}) }} ({{ version_date|localizeddate('medium', 'short', locale=app.request.locale) }})
-                            <br>
-                            Copyright &copy; 2012-{{ 'now'|date('Y') }} {{ 'footer.rights' | trans }}
-                            &ndash;
-                            {{ 'footer.brand' | trans | raw }}
+                            {% block footer_text %}
+                                {{ 'footer.full_text'|trans({
+                                    '%year%': 'now'|date('Y'),
+                                    '%version%': version_code|replace({'v':''}),
+                                    '%version_date%': version_date|localizeddate('medium', 'short', locale=app.request.locale)
+                                })|raw }}
+                            {% endblock %}
                             </p>
 
                             <p class="right light">
