@@ -10,19 +10,20 @@ footer:
     links: 'Links'
     contact: 'Contact the team'
     subscribe: 'Subscribe to the newsletter'
-    agate_rpg_blog: 'Blog du studio'
+    agate_rpg_blog: 'Studio Agate'
+    esteren_blog: 'Shadows of Esteren blog'
+    esteren_blog_link: 'http://shadowsofesteren.blogspot.fr'
     meet_the_team: 'Meet the team'
     team: 'The team'
-    legal_mentions: ''
+    legal_mentions: 'Legal terms'
     social_networks: 'Social networks'
     about: 'About'
     about_text: >
         Shadows of Esteren is the work of Studio Agate. It exists through various media: a tabletop role-play game,
         music, board games, and even video games.
         <br><br>
-        The first book of this series was published in France in 2010, then in the USA in 2012. An innovating
-        project with thriving transmedia content, Shadows of Esteren is the first French creation to have earned a
-        dozen awards in the USA, including four Ennie Awards in 2013 and 2016.
+        Innovative and crossmedia project, Shadows of Esteren is the first French creation of its kind to have obtained
+        a dozen of prices internationally, including four Ennie Awards at Indianapolis GenCon in 2013 and 2016.
 
 register_optin: >
     I grant Studio Agate and its partners to do nothing with my data. <small>Anyway, Studio Agate

@@ -1,3 +1,7 @@
+menu:
+    main:
+        agate_studio: 'Studio Agate'
+
 feond_beer:
     title: La bière du Féond
     text: |

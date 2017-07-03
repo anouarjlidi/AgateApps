@@ -1,6 +1,9 @@
 contact:
     send_message: 'Send us a message'
 
+menu:
+    contact: 'Contact'
+
 team:
     main_title: The Studio Agate team
     permanent_members: The studio gathers six permanent members
@@ -88,4 +91,3 @@ team:
         david_camus:
             name: David Camus
             details: Literary Agent.
-

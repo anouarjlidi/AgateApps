@@ -1,0 +1,14 @@
+{% extends 'base_materialize.html.twig' %}
+
+{% trans_default_domain 'EsterenPortal' %}
+
+{% block menu_right_content %}
+    <li><a href="http://agate-rpg.blogspot.fr/">{{ 'menu.main.agate_studio' | trans }}</a></li>
+    {{ parent() }}
+{% endblock %}
+
+{% block menu_right_mobile_content %}
+    <li><a href="http://agate-rpg.blogspot.fr/">{{ 'menu.main.agate_studio' | trans }}</a></li>
+    {{ parent() }}
+{% endblock %}
+
