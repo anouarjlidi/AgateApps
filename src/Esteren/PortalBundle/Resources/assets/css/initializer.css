@@ -120,3 +120,7 @@ section:empty
 textarea.resize-vertical {
     resize: vertical;
 }
+
+iframe {
+    border: 0 none transparent;
+}
