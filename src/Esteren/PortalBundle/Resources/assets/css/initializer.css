@@ -60,6 +60,7 @@ ul.list-bullet > li
 *.bg-gold      { background-color: goldenrod !important; }
 
 *.text-shadow-black-10 { text-shadow: 0 0 10px #000 !important; }
+*.text-shadow-black-10-stronger { text-shadow: 0 0 10px #000, 0 0 10px #000, 0 0 10px #000 !important; }
 
 /* Text format */
 .text-underline { text-decoration: underline !important; }
