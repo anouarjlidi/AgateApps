@@ -17,8 +17,6 @@ class FeondBeerControllerTest extends WebTestCase
 {
     public function testFeondBeerLandingPage()
     {
-        parent::resetDatabase();
-
         $client = $this->getClient('portal.esteren.dev');
 
         $crawler = $client->request('GET', '/fr/feond-beer');

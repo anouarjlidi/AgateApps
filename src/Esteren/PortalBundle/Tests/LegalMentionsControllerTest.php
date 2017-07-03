@@ -22,8 +22,6 @@ class LegalMentionsControllerTest extends WebTestCase
      */
     public function testLegalMentionsForAllowedLocales($locale)
     {
-        parent::resetDatabase();
-
         $client = $this->getClient('portal.esteren.dev');
 
         $crawler = $client->request('GET', '/'.$locale.'/legal');
@@ -49,8 +47,6 @@ class LegalMentionsControllerTest extends WebTestCase
      */
     public function testLegalMentionsWithNotAllowedLocales($locale)
     {
-        parent::resetDatabase();
-
         $client = $this->getClient('portal.esteren.dev');
 
         $client->request('GET', '/'.$locale.'/legal');
