@@ -112,7 +112,7 @@ var config = {
             "src/Esteren/PortalBundle/Resources/assets/sass/main.scss"
         ],
         "css/agate.css": [
-            "src/AgateBundle/Resources/assets/sass/theme.scss"
+            "src/AgateBundle/Resources/assets/sass/agate-theme.scss"
         ],
         "css/white_layout.css": [
             "src/Esteren/PortalBundle/Resources/assets/sass/white_layout.scss"

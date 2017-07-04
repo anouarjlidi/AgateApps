@@ -42,47 +42,63 @@ html {
     }
 }
 
-#vermine_container {
-    position: relative;
-    min-width: 480px;
-    section {
-        img {
-            position: relative;
+body#vermine {
+    background-size: cover;
+
+    #wrapper, #layout, #content {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+    }
+
+    footer {
+        font-size: 1em;
+    }
+
+    #vermine_container {
+        position: relative;
+        aside.aside-left {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            z-index: 0;
+            img {
+                max-width: 90px;
+            }
         }
-        article {
-            width: 100%;
+        aside.aside-right {
             position: absolute;
             bottom: 15px;
-            aside.aside-left {
-                position: absolute;
-                bottom: 0;
-                left: 0;
-                z-index: 0;
-                img {
-                    max-width: 120px;
-                }
+            right: 15px;
+            z-index: 0;
+            a {
+                font-size: 4em;
+                border-radius: 8px;
+                color: white;
+                background: #395999;
+                width: 70px;
+                height: 70px;
+                display: block;
+                padding: 0 0 0 25px;
             }
-            aside.aside-right {
-                position: absolute;
-                bottom: 15px;
-                right: 15px;
-                z-index: 0;
-                a {
-                    font-size: 4em;
-                    border-radius: 8px;
-                    color: white;
-                    background: #395999;
+        }
+    }
+}
+
+@media (max-width: 601px) {
+
+    body#vermine {
+        #vermine_container {
+            position: static;
+            aside.aside-left, aside.aside-right {
+                position: static;
+                display: inline-block;
+                margin: 0;
+                padding: 0;
+                &, & img {
                     width: 70px;
                     height: 70px;
-                    display: block;
-                    padding: 0 0 0 25px;
                 }
-            }
-            & > p, & > div {
-                position: relative;
-                margin: 0;
-                text-align: center;
-                z-index: 1;
             }
         }
     }
