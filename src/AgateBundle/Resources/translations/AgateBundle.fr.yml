@@ -1,20 +1,19 @@
 contact:
     send_message: 'Envoyez-nous un message'
 
+menu:
+    contact: 'Contact'
+
 vermine:
     footer_message: Vermine 2047 est une création de Julien Blondel
     subscribe_label: Suivez le développement du projet et recevez un email au lancement de la souscription.
     subscribe_button: Souscrire
 
-menu:
-    contact: 'Contact'
-
 team:
     main_title: L'Équipe du studio Agate
     permanent_members: Le studio Agate est composé de six membres permanents.
     friends_text: |
-        Nous travaillons avec de nombreux collaborateurs dont des auteurs, illustrateurs et créatifs freelance qui
-        participent à nos projets.
+        Nous travaillons avec de nombreux collaborateurs et créatifs freelance.
     friends_thanks: |
         Un grand merci à toutes les personnes qui participent ou qui ont un jour ou l'autre participé à nos projets,
         Benjamin Loomes de Syrinscape, Ludo "Elenyl" et Nico du dème de Naxos, Jenny Bendel, les compositeurs Delphine
@@ -35,30 +34,30 @@ team:
             details: Maquettiste, graphiste et illustratrice.
         clovis:
             name: Clovis
-            details: Traducteur et coordinateur de la version anglaise des Ombres d'Esteren, de Vampire Requiem et 7e Mer.
+            details: 'Traducteur et coordinateur de la version anglaise des Ombres d''Esteren, de Vampire : Le Requiem et 7e Mer.'
         gawain:
             name: Gawain
             details: Illustrateur senior du studio.
         iris:
             name: Iris
-            details: Auteure et illustratrice, coordinatrice de la gamme Dragons.
+            details: Auteure, illustratrice et coordinatrice de la gamme Dragons.
         pierstoval:
             name: Pierstoval
-            details: Webmaster &amp; développeur web du studio.
+            details: Webmaster et développeur web du studio.
         nel:
             name: Nel
-            details: Auteur et illustrateur, coordinateur du studio et de la version française des Ombres d'Esteren.
+            details: Auteur, coordinateur du studio et de la version française des Ombres d'Esteren.
 
         # Friends
         akae:
             name: Olivier "Akae" Sanfilippo
-            details: Illustrateur et cartographe du studio.
+            details: Illustrateur, cartographe.
         ben:
             name: Benjamin Diebling
-            details: Auteur sur la gamme Dragons et réalisateur.
+            details: Réalisateur, scénariste sur la gamme Dragons.
         chane:
             name: Chane
-            details: Illustratrice sur les gammes Esteren et Dragons.
+            details: Auteure, illustratrice sur les gammes Esteren et Dragons.
         chris:
             name: Chris
             details: Peintre, illustrateur sur les gammes Esteren et Dragons.
@@ -67,32 +66,34 @@ team:
             details: Compositrice, interprète sur l'album Adeliane.
         francois_rousselot:
             name: François Rousselot
-            details: Chef d'orchestre pour l'album Dearg et compositeur de l'album Adeliane.
+            details: Chef d'orchestre, orchestrateur de l'album Dearg, compositeur de l'album Adeliane.
         ginl:
             name: GinL
-            details: Illustratrice et maquettiste de la gamme Dragons.
+            details: Illustratrice, graphiste, maquettiste de la gamme Dragons.
+        jenny:
+            name: Jenny Bendel
+            details: Attachée de presse
         julien_blondel:
             name: Julien Blondel
-            details: Auteur et coordinateur de la gamme Vermine 2047.
+            details: Scénariste BD, auteur et coordinateur de la gamme Vermine 2047.
         nico_jamme:
             name: Nicolas Jamme
             details: Illustrateur sur les gammes Esteren et Dragons.
         dominique_atlan:
             name: Dominique Atlan
-            details: Comptable et conseillère juridique.
+            details: Comptable, conseillère juridique.
         sebastien_chedal:
             name: Sebastien Chedal
             details: Game designer, auteur de la Rose Noire.
         dref:
             name: Frédéric "Dref" Leroy
-            details: Relecteur
-        lison:
-            name: Lison
-            details: Animatrice et illustratrice sur la gamme Dragons.
+            details: Relecteur.
+#        lison:
+#            name: Lison
+#            details: Animatrice et illustratrice sur la gamme Dragons.
         valentin:
             name: Valentin
-            details: Distributeur dans le cinéma et co-fondateur du Studio Agate.
+            details: Distributeur dans le cinéma, co-fondateur du Studio Agate.
         david_camus:
             name: David Camus
-            details: Agent littéraire.
-
+            details: Auteur, traducteur, agent littéraire.

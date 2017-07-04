@@ -128,23 +128,21 @@
                                 {% block footer_links %}
                                     <h2>{{ 'footer.links'|trans }}</h2>
                                     <ul>
-                                        <li><a href="http://agate-rpg.blogspot.fr/">{{ 'footer.agate_rpg_blog'|trans }}</a></li>
-                                        <li><a href="{{ 'footer.esteren_blog_link'|trans }}">{{ 'footer.esteren_blog'|trans }}</a></li>
+                                    {% block footer_links_content %}
                                         <li><a href="{{ path('contact') }}">{{ 'footer.contact'|trans }}</a></li>
                                         {#<li><a href="{{ path('agate_team') }}">{{ 'footer.team'|trans }}</a></li>#}
                                         <li><a href="https://www.google.com/maps/d/viewer?mid=1wdFjK4OsYcQpwiASe9AVhkGNPbQ">{{ 'footer.meet_the_team'|trans }}</a></li>
                                         {% if app.request.locale == 'fr' %}
                                             <li><a href="{{ path('legal_mentions') }}">{{ 'footer.legal_mentions'|trans }}</a></li>
                                         {% endif %}
+                                    {% endblock %}
                                     </ul>
                                 {% endblock %}
 
                                 {% block footer_social_networks %}
                                     <h2>{{ 'footer.social_networks'|trans }}</h2>
                                     <ul>
-                                        <li><a href="{{ facebook_url }}">Facebook</a></li>
-                                        <li><a href="https://www.instagram.com/esteren_official/">Instagram</a></li>
-                                        <li><a href="https://twitter.com/esterenofficiel">Twitter</a></li>
+                                        {% block footer_social_networks_content %}{% endblock %}
                                     </ul>
                                 {% endblock %}
                             </div>

@@ -13,8 +13,7 @@ team:
     main_title: The Studio Agate team
     permanent_members: The studio gathers six permanent members
     friends_text: |
-        We work with several collaborators such as authors, illustrators, and freelancers who occasionally participate
-        in our projects.
+        We work with several collaborators and freelancers.
     friends_thanks: |
         A big thank you to everyone who participate or eventually participated to our projects, Benjamin Loomes of
         Syrinscape, Ludo "Elenyl" and Nico du dème de Naxos, Jenny Bendel, composers Delphine Bois, Jure Peternel,
@@ -35,31 +34,31 @@ team:
         clovis:
             name: Clovis
             details: |
-                Translator and coordinator for the English version of the Shadows of Esteren series, Vampire Requiem and
-                french version of 7th Sea.
+                Translator and coordinator for the English version of the Shadows of Esteren series, Vampire: The Requiem
+                and french version of 7th Sea.
         gawain:
             name: Gawain
             details: Head illustrator.
         iris:
             name: Iris
-            details: Author and illustrator, coordinator for the Dragons series.
+            details: Author, illustrator and coordinator for the Dragons series.
         pierstoval:
             name: Pierstoval
-            details: Webmaster & web developer.
+            details: Webmaster and web developer.
         nel:
             name: Nel
-            details: Author and illustrator, coordinator for the studio and the French version of the Shadows of Esteren series.
+            details: Author and coordinator for the studio and the French version of the Shadows of Esteren series.
 
         # Friends
         akae:
             name: Olivier "Akae" Sanfilippo
-            details: Illustrator and mapmaker.
+            details: Illustrator, mapmaker.
         ben:
             name: Benjamin Diebling
-            details: Author for the Dragons series and movie director.
+            details: Movie director, author for the Dragons series.
         chane:
             name: Chane
-            details: Illustrator for the Esteren and Dragons series.
+            details: Author, illustrator for the Esteren and Dragons series.
         chris:
             name: Chris
             details: Painter and illustrator for the Esteren and Dragons series.
@@ -68,31 +67,34 @@ team:
             details: Composer and singer for the album Adeliane.
         francois_rousselot:
             name: François Rousselot
-            details: Conductor for the album Dearg and composer for the album Adeliane.
+            details: Conductor for the Dearg album and composer for the Adeliane album.
         ginl:
             name: GinL
             details: Illustrator and layout artist for the Dragons series.
+        jenny:
+            name: Jenny Bendel
+            details: Press officer
         julien_blondel:
             name: Julien Blondel
-            details: Author and coordinator for the Vermine 2047 series.
+            details: Comic scriptwriter, author and coordinator for the Vermine 2047 series.
         nico_jamme:
             name: Nicolas Jamme
             details: Illustrator for the Esteren and Dragons series.
         dominique_atlan:
             name: Dominique Atlan
-            details: Accountant and legal advisor.
+            details: Accountant, legal advisor.
         sebastien_chedal:
             name: Sebastien Chedal
             details: Game designer, author of the Black Rose.
         dref:
             name: Frédéric "Dref" Leroy
             details: Proof-reader
-        lison:
-            name: Lison
-            details: Animator and illustrator for the Dragons game.
+#        lison:
+#            name: Lison
+#            details: Animator and illustrator for the Dragons game.
         valentin:
             name: Valentin
-            details: Distributor in the cinema industry and co-founder of Studio Agate.
+            details: Distributor in the cinema industry, co-founder of Studio Agate.
         david_camus:
             name: David Camus
-            details: Literary Agent.
+            details: Author, translator, literary Agent.

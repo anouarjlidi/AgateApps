@@ -2,6 +2,10 @@ menu:
     main:
         agate_studio: 'Studio Agate'
 
+footer:
+    esteren_blog: 'Shadows of Esteren blog'
+    esteren_blog_link: 'http://shadowsofesteren.blogspot.fr'
+
 feond_beer:
     title: La bière du Féond
     text: |
