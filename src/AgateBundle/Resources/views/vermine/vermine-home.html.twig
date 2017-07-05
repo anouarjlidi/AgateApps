@@ -10,6 +10,7 @@
 
 {% block body_params %}id="vermine"{% endblock %}
 
+{% block title 'Vermine 2047' %}
 {% block content_layout_class '' %}
 {% block menus '' %}
 {% block footer '' %}
@@ -31,26 +32,17 @@
                                 </div>
                             </div>
                         </form>
-                        <aside class="aside-left">
-                            <a href="{{ path('agate_portal_home') }}">
-                                <img src="{{ asset('img/agate/logo_agate_studio_stone.png') }}" alt="Studio Agate">
-                            </a>
-                        </aside>
-                        <aside class="aside-right">
-                            <a href="https://www.facebook.com/Vermine2047/">
-                                <i class="fa fa-facebook"></i>
-                            </a>
-                        </aside>
                     </div>
                 </article>
             </section>
         </div>
-        <footer class="center grey-text">
-            {{ 'footer.full_text'|trans({
-                '%year%': 'now'|date('Y'),
-                '%more%': 'vermine.footer_message'|trans({}, 'AgateBundle'),
-            }, 'messages')|raw }}
-        </footer>
     </div>
+    <footer class="center grey-text">
+        {{ 'footer.full_text'|trans({
+            '%year%': 'now'|date('Y'),
+            '%more%': 'vermine.footer_message'|trans,
+        }, 'messages')|raw }}
+        | {{ 'vermine.footer_follow_on_facebook'|trans|raw }}
+    </footer>
 
 {% endblock %}

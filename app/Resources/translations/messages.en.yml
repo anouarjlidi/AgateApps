@@ -7,7 +7,7 @@ footer:
     version_text: |
         Version %version% (%version_date%)
     full_text: |
-        Copyright &copy; 2012-%year% Studio Agate, All rights reserved.
+        Copyright &copy; 2012-%year% <a href="https://www.studio-agate.com/en/">Studio Agate</a>, All rights reserved.
         %more%
         &ndash; Design &amp; development: Pierstoval &amp; Nel
     links: 'Links'

@@ -8,6 +8,7 @@ vermine:
     footer_message: Vermine 2047 est une création de Julien Blondel
     subscribe_label: Suivez le développement du projet et recevez un email au lancement de la souscription.
     subscribe_button: Souscrire
+    footer_follow_on_facebook: '<a href="https://www.facebook.com/Vermine2047/">Suivre le projet sur Facebook</a>'
 
 team:
     main_title: L'Équipe du studio Agate
