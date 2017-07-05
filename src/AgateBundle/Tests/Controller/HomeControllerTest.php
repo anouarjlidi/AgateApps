@@ -17,8 +17,6 @@ class HomeControllerTest extends WebTestCase
 {
     public function testIndexWithFrenchHomepage()
     {
-        parent::resetDatabase();
-
         $client = $this->getClient('www.studio-agate.dev');
 
         $crawler = $client->request('GET', '/fr/');
@@ -34,8 +32,6 @@ class HomeControllerTest extends WebTestCase
 
     public function testIndexWithEnglishHomepage()
     {
-        parent::resetDatabase();
-
         $client = $this->getClient('www.studio-agate.dev');
 
         $client->request('GET', '/en/');

@@ -18,8 +18,6 @@ class ContactControllerTest extends WebTestCase
 {
     public function testValidContactForm()
     {
-        parent::resetDatabase();
-
         $client = $this->getClient('www.studio-agate.dev');
 
         $crawler = $client->request('GET', '/fr/contact');
@@ -65,5 +63,9 @@ class ContactControllerTest extends WebTestCase
         static::assertInstanceOf(\Swift_Message::class, $message);
         static::assertSame($data['email'], key($message->getFrom()));
         static::assertContains($data['message'], $message->getBody());
+
+        if ($collectedMessages > 1) {
+            static::markAsRisky();
+        }
     }
 }
