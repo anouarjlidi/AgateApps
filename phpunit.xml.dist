@@ -45,6 +45,7 @@
         <ini name="zend.enable_gc" value="0" />
         <env name="SYMFONY_ENV" value="test" />
         <env name="SYMFONY_DEBUG" value="0" />
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak_vendors" />
         <!-- Uncomment this if you do not need to refresh the whole cache between runs
         <env name="NO_CLEAR_CACHE" value="1" />
         -->
