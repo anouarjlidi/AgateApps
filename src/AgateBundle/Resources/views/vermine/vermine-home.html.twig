@@ -5,7 +5,7 @@
 {% block stylesheets -%}
     {{- block('stylesheets', 'base_materialize.html.twig') -}}
     <link rel="stylesheet" href="{{ asset('css/agate.css') }}" type="text/css">
-    <style type="text/css">html {background: url('{{ asset('img/agate/vermine/Vermine2047-home.jpg') }}') center center no-repeat;}html, body { height: 100%; }</style>
+    <style type="text/css">html {background: black url('{{ asset('img/agate/vermine/Vermine2047-Forest-background.jpg') }}') center center no-repeat;height: 100%;}</style>
 {%- endblock %}
 
 {% block body_params %}id="vermine"{% endblock %}
@@ -15,34 +15,32 @@
 {% block menus '' %}
 {% block footer '' %}
 
-{% block content_for_layout %}
-    <div class="container">
-        <div id="vermine_container" class="center">
-            <section>
-                <article>
-                    <div id="mc_embed_signup">
-                        <form action="//blogspot.us2.list-m&anage.com/subscribe/post?u=1f25b5ee4d564e9985f24ea9e&amp;id=28bf314581" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank">
-                            <div id="mc_embed_signup_scroll">
-                                <label for="mce-EMAIL" class="text-m">{{ 'vermine.subscribe_label'|trans }}</label>
-                                <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="{{ 'form.email'|trans({}, 'UserBundle') }}" required>
-                                {# real people should not fill this in and expect good things - do not remove this or risk form bot signups #}
-                                <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_1f25b5ee4d564e9985f24ea9e_28bf314581" tabindex="-1" value=""></div>
-                                <div class="clear">
-                                    <input type="submit" value="{{ 'vermine.subscribe_button'|trans }}" name="subscribe" id="mc-embedded-subscribe" class="button">
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </article>
-            </section>
-        </div>
-    </div>
-    <footer class="center grey-text">
-        {{ 'footer.full_text'|trans({
-            '%year%': 'now'|date('Y'),
-            '%more%': 'vermine.footer_message'|trans,
-        }, 'messages')|raw }}
-        &ndash; {{ 'vermine.footer_follow_on_facebook'|trans|raw }}
-    </footer>
+{% block body %}
+    <img id="vermine_logo" src="{{ asset('img/agate/vermine/Vermine2047-Logo-Text.png') }}" alt="Vermine 2047">
+    {{ parent() }}
+{% endblock %}
 
+{% block content_for_layout %}
+    <section id="vermine_container" class="center">
+        <article id="mc_embed_signup" class="container">
+            <form action="//blogspot.us2.list-m&anage.com/subscribe/post?u=1f25b5ee4d564e9985f24ea9e&amp;id=28bf314581" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank">
+                <div id="mc_embed_signup_scroll">
+                    <label for="mce-EMAIL" class="text-m">{{ 'vermine.subscribe_label'|trans }}</label>
+                    <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="{{ 'form.email'|trans({}, 'UserBundle') }}" required>
+                    {# real people should not fill this in and expect good things - do not remove this or risk form bot signups #}
+                    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_1f25b5ee4d564e9985f24ea9e_28bf314581" tabindex="-1" value=""></div>
+                    <div class="clear">
+                        <input type="submit" value="{{ 'vermine.subscribe_button'|trans }}" name="subscribe" id="mc-embedded-subscribe" class="button">
+                    </div>
+                </div>
+            </form>
+        </article>
+        <footer class="center grey-text">
+            {{ 'footer.full_text'|trans({
+                '%year%': 'now'|date('Y'),
+                '%more%': 'vermine.footer_message'|trans,
+            }, 'messages')|raw }}
+            &ndash; {{ 'vermine.footer_follow_on_facebook'|trans|raw }}
+        </footer>
+    </section>
 {% endblock %}

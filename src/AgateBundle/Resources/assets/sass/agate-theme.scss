@@ -45,6 +45,18 @@ html {
 body#vermine {
     background-size: cover;
 
+    img#vermine_logo {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        -o-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        max-width: 80%;
+    }
+
     #wrapper, #layout, #content {
         position: absolute;
         bottom: 0;
@@ -52,29 +64,49 @@ body#vermine {
     }
 
     footer {
+        padding-top: 10px;
         font-size: 1em;
+        text-shadow: 0 2px 5px #000, 0 2px 5px rgba(0, 0, 0, 0.75);
+        line-height: 1.3em;
+    }
+}
+
+// Materialize's $medium-screen-up
+@media (min-width: 768px) and (max-width: 993px) and (orientation: portrait) {
+    body#vermine img#vermine_logo {
+        top: 45%;
+    }
+}
+@media (max-width: 767px) and (orientation: portrait) {
+    body#vermine img#vermine_logo {
+        top: 35%;
+    }
+}
+@media (max-width: 767px) and (max-height: 400px) and (orientation: landscape) {
+    body#vermine img#vermine_logo {
+        top: 27.5%;
     }
 }
 
 /* MailChimp Form Embed Code - Horizontal Super Slim - 12/16/2015 v10.7
 Adapted from: http://blog.heyimcat.com/universal-signup-form/ */
-#mc_embed_signup form {text-align:center; padding:10px 0 10px 0;min-width: 280px;}
-.mc-field-group { display: inline-block; } /* positions input field horizontally */
-#mc_embed_signup input.email {transition: none; text-align: center;border: 1px solid #ABB0B2;  -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; color: #ccc; background-color: #303030; box-sizing:border-box; height:32px; padding: 0 0.4em; display: inline-block; margin: 0; width:350px; vertical-align:top;}
-#mc_embed_signup label {display:block; padding-bottom:10px; text-shadow: 0 2px 5px #000, 0 2px 5px #000;max-width: 500px;margin: 0 auto;}
+#mc_embed_signup form {text-align:center;min-width: 280px;}
+.mc-field-group {display: inline-block;} /* positions input field horizontally */
+#mc_embed_signup input.email {transition: none;text-align: center;border: 1px solid #ABB0B2; -webkit-border-radius: 3px;-moz-border-radius: 3px;border-radius: 3px;color: #ccc;background-color: #303030;box-sizing:border-box;height:32px;padding: 0 0.4em;display: inline-block;margin: 0;width:350px;vertical-align:top;}
+#mc_embed_signup label {display:block;padding-bottom:10px;text-shadow: 0 2px 5px #000, 0 2px 5px #000;max-width: 500px;margin: 0 auto;color: #ccc;}
 #mc_embed_signup .clear {display: inline-block;} /* positions button horizontally in line with input */
-#mc_embed_signup .button {font-size: 13px; border: none; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; letter-spacing: .03em; color: #eee; background-color: #777; box-sizing:border-box; height:32px; line-height:32px; padding:0 18px; display: inline-block; margin: 0;}
-#mc_embed_signup .button:hover {background-color:#555; cursor:pointer;}
-#mc_embed_signup div#mce-responses {float:left; top:-1.4em; padding:0 .5em 0 .5em; overflow:hidden; width:90%;margin: 0 5%; clear: both;}
-#mc_embed_signup div.response {margin:1em 0; padding:1em .5em .5em 0; float:left; top:-1.5em; z-index:1; width:80%;}
+#mc_embed_signup .button {font-size: 13px;border: none;-webkit-border-radius: 3px;-moz-border-radius: 3px;border-radius: 3px;letter-spacing: .03em;color: #eee;background-color: #777;box-sizing:border-box;height:32px;line-height:32px;padding:0 18px;display: inline-block;margin: 0;}
+#mc_embed_signup .button:hover {background-color:#555;cursor:pointer;}
+#mc_embed_signup div#mce-responses {float:left;top:-1.4em;padding:0 .5em 0 .5em;overflow:hidden;width:90%;margin: 0 5%;clear: both;}
+#mc_embed_signup div.response {margin:1em 0;padding:1em .5em .5em 0;float:left;top:-1.5em;z-index:1;width:80%;}
 #mc_embed_signup #mce-error-response {display:none;}
-#mc_embed_signup #mce-success-response {color:#529214; display:none;}
-#mc_embed_signup label.error {display:block; float:none; width:auto; margin-left:1.05em; text-align:left; padding:.5em 0;}
-@media (max-width: 768px) {
-    #mc_embed_signup_scroll { width: 280px; margin: 0 auto; }
-    #mc_embed_signup input.email { width: 100%; margin-bottom:5px;}
-    #mc_embed_signup .clear {display: block; width: 100%; }
-    #mc_embed_signup .button { width: 100%; }
-    #mc_embed_signup label { line-height: 1em; }
+#mc_embed_signup #mce-success-response {color:#529214;display:none;}
+#mc_embed_signup label.error {display:block;float:none;width:auto;margin-left:1.05em;text-align:left;padding:.5em 0;}
+@media (max-width: 600px) {
+    //#mc_embed_signup_scroll {width: 280px;margin: 0 auto;}
+    //#mc_embed_signup input.email {width: 100%;margin-bottom:5px;}
+    //#mc_embed_signup .clear {display: block;width: 100%;}
+    //#mc_embed_signup .button {width: 100%;}
+    //#mc_embed_signup label {line-height: 1em;}
 }
 /* End mailchimp code */

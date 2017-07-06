@@ -22,8 +22,8 @@
 
 .cursor-pointer:hover { cursor: pointer; }
 
-#layout {
-    margin-bottom: 10px;
+#page-footer {
+    margin-top: 10px;
 }
 
 ul.list-bullet,
