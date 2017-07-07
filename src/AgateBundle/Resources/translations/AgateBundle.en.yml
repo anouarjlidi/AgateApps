@@ -74,7 +74,7 @@ team:
             details: Illustrator and layout artist for the Dragons series.
         jenny:
             name: Jenny Bendel
-            details: Press officer
+            details: Press officer.
         julien_blondel:
             name: Julien Blondel
             details: Comic scriptwriter, author and coordinator for the Vermine 2047 series.
@@ -89,7 +89,7 @@ team:
             details: Game designer, author of the Black Rose.
         dref:
             name: Frédéric "Dref" Leroy
-            details: Proof-reader
+            details: Proof-reader.
 #        lison:
 #            name: Lison
 #            details: Animator and illustrator for the Dragons game.
