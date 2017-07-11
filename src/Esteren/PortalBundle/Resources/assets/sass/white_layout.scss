@@ -2,6 +2,9 @@ html
 {
     color: black;
     background-color: white;
+    a {
+        color: #45608f;
+    }
 }
 
 #page-footer {
@@ -12,7 +15,8 @@ html
 }
 
 nav ul a,
-.parallax-container
+.parallax-container,
+#nav-mobile-link
 {
     color: black;
 }

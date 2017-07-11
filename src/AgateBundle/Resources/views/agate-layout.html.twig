@@ -33,5 +33,10 @@
 {% block footer_social_networks '' %}
 
 {% block footer_about %}
-    <img src="{{ asset('img/agate/logo_agate_studio_big.png') }}" alt="Logo Studio Agate" style="max-height: 250px;">
+    {# Margin is half the margin of the h2 tag at the bottom-right of the footer #}
+    <div style="margin-top: 0.89rem;">
+        <a href="{{ path('agate_portal_home') }}">
+            <img src="{{ asset('img/agate/logo_agate_studio_big.png') }}" alt="Studio Agate" style="max-height: 150px;">
+        </a>
+    </div>
 {% endblock %}

@@ -117,12 +117,7 @@
                     <div class="container">
                         <div class="row">
                             <div class="col l6 s12">
-                                {% block footer_about %}
-                                    <h2>{{ 'footer.about'|trans }}</h2>
-                                    <p>
-                                        {{ 'footer.about_text'|trans|raw }}
-                                    </p>
-                                {% endblock %}
+                                {% block footer_about %}{% endblock %}
                             </div>
                             <div class="col l4 offset-l2 s12">
                                 {% block footer_links %}

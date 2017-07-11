@@ -9,12 +9,15 @@
  * file that was distributed with this source code.
  */
 
-namespace Esteren\PortalBundle\Controller;
+namespace AgateBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @Route(host="%agate_domains.portal%")
+ */
 class LegalMentionsController extends Controller
 {
     /**
@@ -30,6 +33,6 @@ class LegalMentionsController extends Controller
             throw $this->createNotFoundException();
         }
 
-        return $this->render('@EsterenPortal/legal/mentions_'.$_locale.'.html.twig');
+        return $this->render('@Agate/legal/mentions_'.$_locale.'.html.twig');
     }
 }

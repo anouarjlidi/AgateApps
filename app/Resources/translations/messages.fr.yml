@@ -13,19 +13,12 @@ footer:
     links: 'Liens'
     contact: 'Contacter l''équipe'
     subscribe: 'Inscription à la newsletter'
-    agate_rpg_blog: 'Studio Agate'
+    agate_rpg_blog: 'Blog du studio'
     meet_the_team: 'Rencontrer l''équipe'
     team: 'Qui sommes-nous ?'
     legal_mentions: 'Mentions légales'
     social_networks: 'Réseaux sociaux'
     about: 'À propos'
-    about_text: >
-         Les Ombres d'Esteren est un projet réalisé par le studio Agate. Le premier ouvrage de la gamme a été publié en
-         France en 2010 puis aux USA en 2012.
-         <br><br>
-         Projet innovant et transmedia, Les Ombres d'Esteren est la première création française du genre à avoir
-         remporté une dizaine de prix à l'international dont quatre Ennie Awards à la GenCon d'Indianapolis en 2013 et
-         2016.
 
 register_optin: >
     J'autorise le studio Agate et ses partenaires à ne rien faire de mes données. <small>De toute façon,

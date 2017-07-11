@@ -17,6 +17,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @Route(host="%agate_domains.portal%")
+ */
 class ContactController extends Controller
 {
     /**

@@ -5,6 +5,12 @@ menu:
 footer:
     esteren_blog: 'Shadows of Esteren blog'
     esteren_blog_link: 'http://shadowsofesteren.blogspot.fr'
+    about_text: >
+        Shadows of Esteren is the work of Studio Agate. It exists through various media: a tabletop role-play game,
+        music, board games, and even video games.
+        <br><br>
+        Innovative and crossmedia project, Shadows of Esteren is the first French creation of its kind to have obtained
+        a dozen of prices internationally, including four Ennie Awards at Indianapolis GenCon in 2013 and 2016.
 
 feond_beer:
     title: La bière du Féond
