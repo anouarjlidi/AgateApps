@@ -39,4 +39,33 @@ class MarkersRepository extends BaseRepository
             ->getArrayResult()
         ;
     }
+
+    public function findForApiByMap($mapId)
+    {
+        $query = $this->createQueryBuilder('marker')
+            ->select('
+                marker.id,
+                marker.name,
+                marker.description,
+                marker.altitude,
+                marker.latitude,
+                marker.longitude,
+                markerType.id as marker_type,
+                markerFaction.id as faction
+            ')
+            ->leftJoin('marker.map', 'map')
+            ->leftJoin('marker.markerType', 'markerType')
+            ->leftJoin('marker.faction', 'markerFaction')
+            ->where('map.id = :id')
+            ->setParameter('id', $mapId)
+            ->indexBy('marker', 'marker.id')
+            ->getQuery()
+        ;
+
+        $query->useQueryCache(true);
+        $query->useResultCache(true);
+        $query->setResultCacheLifetime(10);
+
+        return $query->getArrayResult();
+    }
 }

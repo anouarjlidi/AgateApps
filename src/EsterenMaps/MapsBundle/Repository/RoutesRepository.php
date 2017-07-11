@@ -107,4 +107,38 @@ class RoutesRepository extends BaseRepository
 
         return $result;
     }
+
+    public function findForApiByMap($mapId)
+    {
+        $query = $this->createQueryBuilder('route')
+            ->select('
+                route.id,
+                route.name,
+                route.description,
+                route.coordinates,
+                route.distance,
+                route.forcedDistance,
+                route.guarded,
+                markerStart.id as marker_start,
+                markerEnd.id as marker_end,
+                routeFaction.id as faction,
+                routeType.id as route_type
+            ')
+            ->leftJoin('route.map', 'map')
+            ->leftJoin('route.markerStart', 'markerStart')
+            ->leftJoin('route.markerEnd', 'markerEnd')
+            ->leftJoin('route.faction', 'routeFaction')
+            ->leftJoin('route.routeType', 'routeType')
+            ->where('map.id = :id')
+            ->setParameter('id', $mapId)
+            ->indexBy('route', 'route.id')
+            ->getQuery()
+        ;
+
+        $query->useQueryCache(true);
+        $query->useResultCache(true);
+        $query->setResultCacheLifetime(10);
+
+        return $query->getArrayResult();
+    }
 }

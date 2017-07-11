@@ -65,7 +65,7 @@ services:
         arguments:
             - "%kernel.debug%"
             - "@doctrine.orm.default_entity_manager"
-            - "@jms_serializer"
+            - "@serializer"
             - "@templating"
             - "@esterenmaps.cache"
 
@@ -87,3 +87,7 @@ services:
             - "@esterenmaps.cache"
         tags:
             - { name: kernel.cache_clearer }
+
+    esterenmaps.api.map:
+        class: EsterenMaps\MapsBundle\Api\MapApi
+        autowire: true

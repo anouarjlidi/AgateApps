@@ -17,15 +17,26 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * @Cache(expires="+1 hour")
+ * @Route(host="%esteren_domains.api%")
  */
 class MapsController extends Controller
 {
+    /**
+     * @Route("/maps/{id}", name="esterenmaps_api_maps_get", requirements={"id"="\d+"})
+     * @Method("GET")
+     */
+    public function getAction($id)
+    {
+        return new JsonResponse($this->get('esterenmaps.api.map')->getMap($id));
+    }
+
     /**
      * @Route("/maps/settings/{id}.{_format}",
      *     requirements={"id": "\d+", "_format": "json"},
