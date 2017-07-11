@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Esteren\PortalBundle\Tests;
+namespace AgateBundle\Tests;
 
 use Tests\WebTestCase;
 
@@ -22,7 +22,7 @@ class LegalMentionsControllerTest extends WebTestCase
      */
     public function testLegalMentionsForAllowedLocales($locale)
     {
-        $client = $this->getClient('portal.esteren.dev');
+        $client = $this->getClient('www.studio-agate.dev');
 
         $crawler = $client->request('GET', '/'.$locale.'/legal');
 
