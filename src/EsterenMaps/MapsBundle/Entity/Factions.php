@@ -23,7 +23,7 @@ use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
  *
  * @ORM\Table(name="maps_factions")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="EsterenMaps\MapsBundle\Repository\FactionsRepository")
  */
 class Factions
 {

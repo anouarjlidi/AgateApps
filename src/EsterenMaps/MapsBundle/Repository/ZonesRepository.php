@@ -29,14 +29,13 @@ class ZonesRepository extends BaseRepository
             ->leftJoin('zone.map', 'map')
             ->leftJoin('zone.faction', 'zoneFaction')
             ->leftJoin('zone.zoneType', 'zoneType')
+            ->indexBy('zone', 'zone.id')
             ->where('map.id = :id')
             ->setParameter('id', $mapId)
             ->getQuery()
         ;
 
-        $query->useQueryCache(true);
-        $query->useResultCache(true);
-        $query->setResultCacheLifetime(10);
+        $query->useResultCache(true, 3600);
 
         return $query->getArrayResult();
     }

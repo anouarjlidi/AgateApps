@@ -47,7 +47,6 @@ class MarkersRepository extends BaseRepository
                 marker.id,
                 marker.name,
                 marker.description,
-                marker.altitude,
                 marker.latitude,
                 marker.longitude,
                 markerType.id as marker_type,
@@ -62,9 +61,7 @@ class MarkersRepository extends BaseRepository
             ->getQuery()
         ;
 
-        $query->useQueryCache(true);
-        $query->useResultCache(true);
-        $query->setResultCacheLifetime(10);
+        $query->useResultCache(true, 3600);
 
         return $query->getArrayResult();
     }

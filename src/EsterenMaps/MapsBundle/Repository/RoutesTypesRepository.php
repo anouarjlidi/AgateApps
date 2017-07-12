@@ -37,4 +37,22 @@ class RoutesTypesRepository extends BaseRepository
             ->getResult()
         ;
     }
+
+    public function findForApi()
+    {
+        $query = $this->createQueryBuilder('route_type')
+            ->select('
+                route_type.id,
+                route_type.name,
+                route_type.description,
+                route_type.color
+            ')
+            ->indexBy('route_type', 'route_type.id')
+            ->getQuery()
+        ;
+
+        $query->useResultCache(true, 3600);
+
+        return $query->getArrayResult();
+    }
 }

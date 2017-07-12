@@ -117,7 +117,7 @@ class RoutesRepository extends BaseRepository
                 route.description,
                 route.coordinates,
                 route.distance,
-                route.forcedDistance,
+                route.forcedDistance as forced_distance,
                 route.guarded,
                 markerStart.id as marker_start,
                 markerEnd.id as marker_end,
@@ -135,9 +135,7 @@ class RoutesRepository extends BaseRepository
             ->getQuery()
         ;
 
-        $query->useQueryCache(true);
-        $query->useResultCache(true);
-        $query->setResultCacheLifetime(10);
+        $query->useResultCache(true, 3600);
 
         return $query->getArrayResult();
     }

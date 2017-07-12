@@ -68,9 +68,7 @@ class MapsRepository extends BaseEntityRepository
             ->getQuery()
         ;
 
-        $query->useQueryCache(true);
-        $query->useResultCache(true);
-        $query->setResultCacheLifetime(10);
+        $query->useResultCache(true, 3600);
 
         return $query->getOneOrNullResult($query::HYDRATE_ARRAY);
     }

@@ -84,10 +84,15 @@ services:
     esterenmaps.cache_clearer.directions:
         class: EsterenMaps\MapsBundle\Cache\DirectionsCacheClearer
         arguments:
-            - "@esterenmaps.cache"
+            - "@cache.app"
         tags:
             - { name: kernel.cache_clearer }
 
     esterenmaps.api.map:
         class: EsterenMaps\MapsBundle\Api\MapApi
         autowire: true
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@templating'
+            - '@cache.app'
+            - '%kernel.debug%'

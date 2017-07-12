@@ -23,7 +23,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
  *
  * @ORM\Table(name="maps_zones_types")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="EsterenMaps\MapsBundle\Repository\ZonesTypesRepository")
  */
 class ZonesTypes implements EntityToClearInterface
 {
