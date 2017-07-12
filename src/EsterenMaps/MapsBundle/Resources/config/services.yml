@@ -1,8 +1,6 @@
 parameters:
     esterenmaps.tile_size: 168
-    esterenmaps.output_directory: "%kernel.root_dir%/../web/maps_tiles/"
-    esterenmaps.directions.cache_dir: "%kernel.cache_dir%/esterenmaps/directions/"
-    esterenmaps.directions.cache_ttl: 3600
+    esterenmaps.output_directory: '%kernel.root_dir%/../web/maps_tiles/'
 
 services:
 
@@ -10,7 +8,7 @@ services:
     esterenmaps.twig.extension:
         class: EsterenMaps\MapsBundle\Twig\MapsExtension
         arguments:
-            - "@esterenmaps.doctrine.repository"
+            - '@esterenmaps.doctrine.repository.map'
         tags:
             - { name: twig.extension }
 
@@ -18,56 +16,55 @@ services:
     esterenmaps.cache:
         class: EsterenMaps\MapsBundle\Cache\CacheManager
         arguments:
-            - "%esterenmaps.directions.cache_ttl%"
-            - "@cache.app"
+            - '@cache.app'
 
     # Repository as service
-    esterenmaps.doctrine.repository:
+    esterenmaps.doctrine.repository.map:
         class: EsterenMaps\MapsBundle\Repository\MapsRepository
         factory:
-            - "@doctrine.orm.default_entity_manager"
-            - "getRepository"
+            - '@doctrine.orm.default_entity_manager'
+            - 'getRepository'
         arguments:
             - EsterenMaps\MapsBundle\Entity\Maps
 
     esterenmaps:
         class: EsterenMaps\MapsBundle\Services\MapsRegistry
         arguments:
-            - "@esterenmaps.directions_manager"
-            - "@esterenmaps.map_image_manager"
-            - "@esterenmaps.tiles_manager"
-            - "@esterenmaps.coordinates_manager"
+            - '@esterenmaps.directions_manager'
+            - '@esterenmaps.map_image_manager'
+            - '@esterenmaps.tiles_manager'
+            - '@esterenmaps.coordinates_manager'
 
     esterenmaps.tiles_manager:
         class: EsterenMaps\MapsBundle\Services\MapsTilesManager
         public: false
         lazy: true
         arguments:
-            - "%esterenmaps.output_directory%"
-            - "%esterenmaps.tile_size%"
-            - "%magick_binaries_path%"
-            - "@esterenmaps.map_image_manager"
-            - "@kernel"
+            - '%esterenmaps.output_directory%'
+            - '%esterenmaps.tile_size%'
+            - '%magick_binaries_path%'
+            - '@esterenmaps.map_image_manager'
+            - '@kernel'
 
     esterenmaps.map_image_manager:
         class: EsterenMaps\MapsBundle\Services\MapImageManager
         public: false
         lazy: true
         arguments:
-            - "%esterenmaps.output_directory%"
-            - "%magick_binaries_path%"
-            - "@kernel"
+            - '%esterenmaps.output_directory%'
+            - '%magick_binaries_path%'
+            - '@kernel'
 
     esterenmaps.directions_manager:
         class: EsterenMaps\MapsBundle\Services\DirectionsManager
         public: false
         lazy: true
         arguments:
-            - "%kernel.debug%"
-            - "@doctrine.orm.default_entity_manager"
-            - "@serializer"
-            - "@templating"
-            - "@esterenmaps.cache"
+            - '%kernel.debug%'
+            - '@doctrine.orm.default_entity_manager'
+            - '@serializer'
+            - '@templating'
+            - '@esterenmaps.cache'
 
     esterenmaps.coordinates_manager:
         class: EsterenMaps\MapsBundle\Services\CoordinatesManager
@@ -77,14 +74,14 @@ services:
     esterenmaps.doctrine_subscriber.cache_clear:
         class: EsterenMaps\MapsBundle\DoctrineListeners\CacheClearSubscriber
         arguments:
-            - "@esterenmaps.cache"
+            - '@esterenmaps.cache'
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 
-    esterenmaps.cache_clearer.directions:
-        class: EsterenMaps\MapsBundle\Cache\DirectionsCacheClearer
+    esterenmaps.cache_clearer:
+        class: EsterenMaps\MapsBundle\Cache\MapCacheClearer
         arguments:
-            - "@cache.app"
+            - '@esterenmaps.cache'
         tags:
             - { name: kernel.cache_clearer }
 
@@ -94,5 +91,5 @@ services:
         arguments:
             - '@doctrine.orm.entity_manager'
             - '@templating'
-            - '@cache.app'
+            - '@esterenmaps.cache'
             - '%kernel.debug%'

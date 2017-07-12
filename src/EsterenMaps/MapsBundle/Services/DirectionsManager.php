@@ -80,7 +80,7 @@ class DirectionsManager
     {
         $cacheHash = $this->generateDirectionHash($map, $start, $end, $transportType);
 
-        $cacheItem = $this->cache->getCacheItem();
+        $cacheItem = $this->cache->getItem('api.directions');
 
         // Get cache only in prod.
         if (
@@ -101,7 +101,10 @@ class DirectionsManager
             $directions['from_cache'] = false;
 
             // Save in the cache file
-            $this->cache->save($cacheHash, $jsonString);
+            $cacheData = $cacheItem->get() ?: [];
+            $cacheData[$cacheHash] = $jsonString;
+            $cacheItem->set($cacheData);
+            $this->cache->saveItem($cacheItem);
         }
 
         return $directions;

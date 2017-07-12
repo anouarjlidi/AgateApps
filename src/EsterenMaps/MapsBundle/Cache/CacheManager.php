@@ -11,6 +11,7 @@
 
 namespace EsterenMaps\MapsBundle\Cache;
 
+use Psr\Cache\CacheItemInterface;
 use Symfony\Component\Cache\Adapter\AdapterInterface;
 use Symfony\Component\Cache\CacheItem;
 
@@ -20,27 +21,12 @@ use Symfony\Component\Cache\CacheItem;
  */
 class CacheManager
 {
-    public const CACHE_NAME = 'esterenmaps';
+    public const CACHE_PREFIX = 'esterenmaps';
 
-    /**
-     * In seconds, how much time will the cache be saved in cache service.
-     *
-     * @var int
-     */
-    private $cacheTTL;
-
-    /**
-     * @var AdapterInterface
-     */
     private $cacheAdapter;
 
-    /**
-     * @param int              $cacheTTL
-     * @param AdapterInterface $cacheAdapter
-     */
-    public function __construct($cacheTTL, AdapterInterface $cacheAdapter)
+    public function __construct(AdapterInterface $cacheAdapter)
     {
-        $this->cacheTTL     = $cacheTTL;
         $this->cacheAdapter = $cacheAdapter;
     }
 
@@ -53,53 +39,49 @@ class CacheManager
     }
 
     /**
-     * @return CacheItem|null
+     * @param string $suffix
+     *
+     * @return null|CacheItem
      */
-    public function getCacheItem()
+    public function getItem($suffix = '')
     {
-        return $this->cacheAdapter->getItem(static::CACHE_NAME);
+        return $this->cacheAdapter->getItem(static::CACHE_PREFIX.'.'.ltrim($suffix, '.'));
     }
 
     /**
      * @param CacheItem $cacheItem
-     * @param string    $hash
+     * @param string    $key
      *
      * @return null|string
      */
-    public function getItemValue(CacheItem $cacheItem, $hash)
+    public function getItemValue(CacheItem $cacheItem, $key)
     {
         $cacheValue = $cacheItem->isHit() ? $cacheItem->get() : null;
 
-        return $cacheValue && is_array($cacheValue) && isset($cacheValue[$hash])
-            ? $cacheValue[$hash]
+        return $cacheValue && is_array($cacheValue) && isset($cacheValue[$key])
+            ? $cacheValue[$key]
             : null;
     }
 
-    /**
-     * @param string $hash
-     * @param string $value
-     *
-     * @return array|\Generator|null|\Traversable
-     */
-    public function save($hash, $value)
+    public function getValue($key)
     {
-        $expirationDate = new \DateTime();
-        $expirationDate->setTimestamp(time() + $this->cacheTTL);
+        $item = $this->getItem($key);
 
-        $item = $this->getCacheItem();
+        return $this->getItemValue($item, $key);
+    }
 
-        // Update expiration date
-        $item->expiresAt($expirationDate);
+    public function saveItem(CacheItemInterface $item): bool
+    {
+        return $this->cacheAdapter->save($item);
+    }
 
-        $cacheArray = $item->get() ?: [];
-        if (!is_array($cacheArray)) {
-            // Force cache corruption solve.
-            $cacheArray = [];
-        }
-        $cacheArray[$hash] = $value;
+    public function clear()
+    {
+        $itemsToDelete = [
+            static::CACHE_PREFIX.'.api.directions',
+            static::CACHE_PREFIX.'.api.maps',
+        ];
 
-        $item->set($cacheArray);
-
-        $this->cacheAdapter->save($item);
+        $this->cacheAdapter->deleteItems($itemsToDelete);
     }
 }

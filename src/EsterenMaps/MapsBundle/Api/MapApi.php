@@ -12,6 +12,7 @@
 namespace EsterenMaps\MapsBundle\Api;
 
 use Doctrine\ORM\EntityManager;
+use EsterenMaps\MapsBundle\Cache\CacheManager;
 use EsterenMaps\MapsBundle\Entity\Factions;
 use EsterenMaps\MapsBundle\Entity\Maps;
 use EsterenMaps\MapsBundle\Entity\Markers;
@@ -21,16 +22,17 @@ use EsterenMaps\MapsBundle\Entity\RoutesTypes;
 use EsterenMaps\MapsBundle\Entity\Zones;
 use EsterenMaps\MapsBundle\Entity\ZonesTypes;
 use Symfony\Bundle\TwigBundle\TwigEngine;
-use Symfony\Component\Cache\Adapter\AdapterInterface;
 
 class MapApi
 {
+    private const CACHE_PREFIX = 'api.map';
+
     private $em;
     private $cache;
     private $twig;
     private $debug;
 
-    public function __construct(EntityManager $em, TwigEngine $twig, AdapterInterface $cache, bool $debug)
+    public function __construct(EntityManager $em, TwigEngine $twig, CacheManager $cache, bool $debug)
     {
         $this->em = $em;
         $this->cache = $cache;
@@ -38,18 +40,33 @@ class MapApi
         $this->debug = $debug;
     }
 
+    public function getLastUpdateTime($id): ?\DateTime
+    {
+        return $this->cache->getValue(static::CACHE_PREFIX)[$id.'.date'] ?? null;
+    }
+
     public function getMap($id)
     {
-        $cacheItem = $this->cache->getItem('esterenmaps.api.map.'.$id);
+        $cacheItem = $this->cache->getItem(static::CACHE_PREFIX);
 
-        if (!$this->debug && $cacheItem->isHit()) {
-            return json_decode($cacheItem->get(), true);
+        $cacheItemData = $cacheItem->get() ?: [];
+
+        $cachedData = $this->cache->getItemValue($cacheItem, $id);
+
+        if (!$this->debug && $cachedData) {
+            return json_decode($cachedData, true);
         }
 
         $data = $this->doGetMap($id);
 
-        $cacheItem->set(json_encode($data));
-        $this->cache->save($cacheItem);
+        $expirationDate = new \DateTime('+10 minutes');
+
+        $cacheItemData[$id] = json_encode($data);
+        $cacheItemData[$id.'.date'] = $expirationDate;
+
+        $cacheItem->set($cacheItemData);
+        $cacheItem->expiresAt($expirationDate);
+        $this->cache->saveItem($cacheItem);
 
         return $data;
     }

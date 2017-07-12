@@ -29,12 +29,25 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 class MapsController extends Controller
 {
     /**
-     * @Route("/maps/{id}", name="esterenmaps_api_maps_get", requirements={"id"="\d+"})
+     * @Route("/maps/{id}", name="esterenmaps_api_map_get", requirements={"id"="\d+"})
      * @Method("GET")
      */
-    public function getAction($id)
+    public function getAction($id, Request $request)
     {
-        return new JsonResponse($this->get('esterenmaps.api.map')->getMap($id));
+        $mapApi = $this->get('esterenmaps.api.map');
+
+        $response = new JsonResponse();
+        $response->setLastModified($mapApi->getLastUpdateTime($id));
+
+        if ($response->isNotModified($request)) {
+            return $response;
+        }
+
+        $data = $mapApi->getMap($id);
+
+        $response->setData($data);
+
+        return $response;
     }
 
     /**

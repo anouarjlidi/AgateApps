@@ -40,8 +40,6 @@ class DirectionsController extends Controller
      */
     public function getDirectionsAction(Maps $map, Markers $from, Markers $to, Request $request)
     {
-        $this->get('pierstoval.api.origin_checker')->checkRequest($request);
-
         $code = 200;
 
         $transportId = $request->query->get('transport');

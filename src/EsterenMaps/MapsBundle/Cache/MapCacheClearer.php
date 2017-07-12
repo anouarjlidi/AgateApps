@@ -12,19 +12,18 @@
 namespace EsterenMaps\MapsBundle\Cache;
 
 use Symfony\Component\HttpKernel\CacheClearer\CacheClearerInterface;
-use Symfony\Component\Cache\Adapter\AdapterInterface;
 
 /**
  * Listener executed on cache:clear command to empty the Directions cache.
  */
-class DirectionsCacheClearer implements CacheClearerInterface
+class MapCacheClearer implements CacheClearerInterface
 {
     /**
      * @var CacheManager
      */
     private $cache;
 
-    public function __construct(AdapterInterface $cache)
+    public function __construct(CacheManager $cache)
     {
         $this->cache = $cache;
     }
@@ -36,6 +35,6 @@ class DirectionsCacheClearer implements CacheClearerInterface
      */
     public function clear($cacheDir)
     {
-        $this->cache->deleteItem(CacheManager::CACHE_NAME);
+        $this->cache->clear();
     }
 }
