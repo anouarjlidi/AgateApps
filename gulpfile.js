@@ -170,7 +170,7 @@ var config = {
         "js/maps_lib.js": [
             "node_modules/leaflet/dist/leaflet-src.js",
             "./web/components/leaflet-sidebar/src/L.Control.Sidebar.js",
-            "./web/components/leaflet-draw/dist/leaflet.draw-src.js",
+            "node_modules/leaflet-draw/dist/leaflet.draw-src.js",
             "src/EsterenMaps/MapsBundle/Resources/assets/js/EsterenMap/1_EsterenMap.js",
             "src/EsterenMaps/MapsBundle/Resources/assets/js/EsterenMap/1_EsterenMap.load.js",
             "src/EsterenMaps/MapsBundle/Resources/assets/js/EsterenMap/2_EsterenMap_CRS_XY.js",
