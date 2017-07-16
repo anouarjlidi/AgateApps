@@ -163,6 +163,7 @@ var config = {
         ],
         "js/global_mat.js": [
             "node_modules/materialize-css/dist/js/materialize.js",
+            "src/AgateBundle/Resources/assets/js/connect.js",
             "src/Esteren/PortalBundle/Resources/assets/js/helpers.js",
             "src/Esteren/PortalBundle/Resources/assets/js/global_mat.js"
         ],
