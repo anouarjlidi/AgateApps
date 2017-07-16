@@ -74,9 +74,9 @@
         messageElementId: 'esterenmap_message_element',
         imgUrl: '/bundles/esterenmaps/img',
         apiUrls: {
-            base: '/api/',
-            settings: '/api/maps/settings/',
-            tiles: '/api/maps/tile/{id}/{z}/{x}/{y}.jpg'
+            map: null,
+            directions: null,
+            tiles: null
         },
         loaderCallbacks: {},
         center: [0, 0],

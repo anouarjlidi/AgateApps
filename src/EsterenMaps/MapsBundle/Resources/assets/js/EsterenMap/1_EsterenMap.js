@@ -7,9 +7,7 @@
      * @constructor
      */
     var EsterenMap = function (userMapOptions) {
-
-        // Données utilisées dans le scope de la classe
-        var _this = this, ajaxD;
+        var _this = this;
 
         // Force CANVAS
         w.L_PREFER_CANVAS = true;
@@ -19,18 +17,18 @@
             return _this;
         }
 
-        if ( !(this instanceof EsterenMap) ) {
+        if (!(this instanceof EsterenMap)) {
             console.error('Wrong scope check, incorrect instance.');
             w.wrongInstance = this;
-            return _this;
+            return null;
         }
 
         if (!L) {
             console.error('Leaflet must be activated.');
-            return this;
+            return null;
         }
 
-        // Merge des options de base
+        // Merge base options
         if (userMapOptions){
             this._mapOptions = this.cloneObject(this._mapOptions, userMapOptions);
         }
@@ -256,13 +254,15 @@
         }
 
         return this._load({
-            url: ["maps","settings",this._mapOptions.id],
+            url: this._mapOptions.apiUrls.map,
             method: 'GET',
             data: data,
             callback: function(response){
+                console.info('success', response);
+                return;
                 //callback "success"
                 _this.mapAllowedElements.settings = false;// Désactive les settings une fois chargés
-                if (response.settings) {
+                if (response.map) {
                     _this._mapOptions = _this.cloneObject(_this._mapOptions, response.settings);
                     _this._initialize();
                 } else {
@@ -277,21 +277,7 @@
     };
 
     /**
-     * Récupère les options de l'objet EsterenMap
-     * @this {EsterenMap}
-     * @returns {Object} [this.mapOptions]
-     */
-    EsterenMap.prototype.options = function() {
-        if (!this._clonedOptions) {
-            this._mapOptions = this.cloneObject(this._mapOptions);
-            this._clonedOptions = true;
-        }
-        return this._mapOptions;
-    };
-
-    /**
-     * Renvoie un clone d'un objet passé en paramètre
-     * Si obj2 est spécifié, obj2 remplacera les données d'obj1
+     * Merge two objects into a new one.
      *
      * @param {object} obj1 Le premier objet
      * @param {object} [obj2] Le deuxième objet

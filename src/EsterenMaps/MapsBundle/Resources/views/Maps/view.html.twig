@@ -34,7 +34,6 @@
                 #}d.map = new EsterenMap({ {#
                     #}id: {{ map.id }},{#
                     #}apiUrls: { {#
-                        #}base: "{{ app.request.scheme }}://{{ esteren_domains_api }}/{{ app.request.locale }}",{#
                         #}map: "{{ url('esterenmaps_api_map_get', {"id":map.id}) }}",{#
                         #}directions: "{{ url('esterenmaps_directions', {
                             "id":map.id,
