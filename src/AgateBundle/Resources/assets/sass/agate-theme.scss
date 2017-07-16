@@ -84,7 +84,7 @@ body#vermine {
 Adapted from: http://blog.heyimcat.com/universal-signup-form/ */
 #mc_embed_signup form {text-align:center;min-width: 280px;}
 .mc-field-group {display: inline-block;} /* positions input field horizontally */
-#mc_embed_signup input.email {transition: none;text-align: center;border: 1px solid #ABB0B2; -webkit-border-radius: 3px;-moz-border-radius: 3px;border-radius: 3px;color: #ccc;background-color: #303030;box-sizing:border-box;height:32px;padding: 0 0.4em;display: inline-block;margin: 0;width:350px;vertical-align:top;}
+#mc_embed_signup input.email {transition: none;text-align: center;border: 1px solid #ABB0B2; -webkit-border-radius: 3px;-moz-border-radius: 3px;border-radius: 3px;color: #ccc;background-color: #303030;box-sizing:border-box;height:32px;padding: 0 0.4em;display: inline-block;margin: 0;width:350px;vertical-align:top;max-width: 100%;}
 #mc_embed_signup label {display:block;padding-bottom:10px;text-shadow: 0 2px 5px #000, 0 2px 5px #000;max-width: 500px;margin: 0 auto;color: #ccc;}
 #mc_embed_signup .clear {display: inline-block;} /* positions button horizontally in line with input */
 #mc_embed_signup .button {font-size: 13px;border: none;-webkit-border-radius: 3px;-moz-border-radius: 3px;border-radius: 3px;letter-spacing: .03em;color: #eee;background-color: #777;box-sizing:border-box;height:32px;line-height:32px;padding:0 18px;display: inline-block;margin: 0;}
