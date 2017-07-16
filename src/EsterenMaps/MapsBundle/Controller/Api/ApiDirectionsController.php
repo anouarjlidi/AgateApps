@@ -22,7 +22,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-class DirectionsController extends Controller
+class ApiDirectionsController extends Controller
 {
     /**
      * @Route("/maps/directions/{id}/{from}/{to}", name="esterenmaps_directions", requirements={"id": "\d+", "from": "\d+", "to": "\d+"})

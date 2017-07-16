@@ -22,7 +22,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
-class TilesController extends Controller
+class ApiTilesController extends Controller
 {
     /**
      * @Route("/maps/image/{id}", requirements={"id": "\d+"}, name="esterenmaps_generate_map_image")

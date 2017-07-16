@@ -26,7 +26,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
  * @Cache(expires="+1 hour")
  * @Route(host="%esteren_domains.api%")
  */
-class MapsController extends Controller
+class ApiMapsController extends Controller
 {
     /**
      * @Route("/maps/{id}", name="esterenmaps_api_map_get", requirements={"id"="\d+"})
