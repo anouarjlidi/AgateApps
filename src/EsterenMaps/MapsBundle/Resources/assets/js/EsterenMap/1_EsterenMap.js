@@ -251,7 +251,7 @@
         var _this = this;
         var data = {};
 
-        if (this._mapOptions.editMode == true) {
+        if (true === this._mapOptions.editMode) {
             data.editMode = 'true';
         }
 
@@ -273,83 +273,6 @@
                 //callback "Error"
                 console.error('Error while loading settings');
             }
-        });
-    };
-
-    EsterenMap.prototype.loadMarkers = function(){
-        var mapOptions = this._mapOptions;
-        return this._load({
-            url: ["maps",mapOptions.id,"markers"],
-            callback: mapOptions.loaderCallbacks.markers
-        });
-    };
-
-    EsterenMap.prototype.loadRoutes = function(){
-        return this._load({
-            url: ["maps", this._mapOptions.id, "routes"],
-            callback: this._mapOptions.loaderCallbacks.routes
-        });
-    };
-
-    EsterenMap.prototype.loadZones = function(){
-        return this._load({
-            url: ["maps", this._mapOptions.id, "zones"],
-            callback: this._mapOptions.loaderCallbacks.zones
-        });
-    };
-
-    EsterenMap.prototype.loadTransports = function(callback){
-        var _this = this;
-        if  (this._transports) {
-            if (callback) {
-                callback({"transports": this._refData['transports']});
-            }
-            return this._transports;
-        }
-        return this._load({
-            url: "transports",
-            type: "GET",
-            callback: function(response){
-                if (response.transports) {
-                    _this._transports = response.transports;
-                } else {
-                    console.warn('No transports could be loaded...');
-                }
-                if (callback) {
-                    callback(response);
-                }
-            }
-        });
-    };
-
-    EsterenMap.prototype.loadRefData = function(callback){
-        var _this = this,
-            refDataService = "ref-data",
-            finalCallback;
-
-        if (this._refData) {
-            // Si les données ont déjà été chargées, on va simplement exécuter callback
-            // Avec un tableau similaire
-            var d = {};
-            d[refDataService] = this.refData();
-            callback.call(this, d);
-            return this;
-        }
-
-        // Ici, on force la surcharge de l'argument "callback"
-        // Cela dans le but de permettre de définir les données de référence dans l'objet EsterenMap
-        // à partir du moment où elles l'ont été au moins une fois.
-        // Elles seront de facto rechargées, sans requête AJAX
-        finalCallback = function(response) {
-            _this._refData = response;
-            _this._markersTypes = response[refDataService].markersTypes;
-            _this._routesTypes = response[refDataService].routesTypes;
-            _this._zonesTypes = response[refDataService].zonesTypes;
-            callback.call(_this, response);
-        };
-        return this._load({
-            url: ["maps",refDataService],
-            callback: finalCallback
         });
     };
 
