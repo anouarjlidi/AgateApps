@@ -156,6 +156,8 @@ final class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
         // Make sure username is not stored for next login
         $request->getSession()->remove(Security::LAST_USERNAME);
 
+        $request->getSession()->set('log_other_domains', true);
+
         return new RedirectResponse($targetPath);
     }
 }
