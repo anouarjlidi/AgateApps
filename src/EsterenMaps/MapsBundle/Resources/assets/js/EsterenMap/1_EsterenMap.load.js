@@ -1,16 +1,17 @@
-(function($, w){
+(function($){
 
     /**
-     * Exécute une requête AJAX dans le but de récupérer des éléments liés à la map
-     * via l'API
+     * Executes an AJAX HTTP request to load elements.
+     * Mostly used as an enhanced wrapper around jQuery's $.ajax() function.
+     * The advantage is that all callbacks' "this" variable correspond to the EsterenMap object.
      *
-     * @param {object|string} parameters Le type d'élément à récupérer. Si plusieurs éléments sont indiqués dans un tableau, chacun sera validé à partir des options "allowedElement", cela créera une requête plus précise. Exemple : ["maps","routes"]. Des nombres sont autorisés pour récupérer un ID.
-     * @param {object|null} [data] les options à envoyer à l'objet AJAX
-     * @param {string|null} [method] La méthode HTTP. GET par défaut.
-     * @param {function|null} [callback] Une fonction de callback à envoyer à la méthode "success" de l'objet Ajax.
-     * @param {function|null} [callbackComplete] Idem que "callback" mais pour la méthode "complete"
-     * @param {function|null} [callbackError] Idem que "callback" mais pour la méthode "error"
-     * @returns {*}
+     * @param parameters                  Parameters to send to AJAX request.
+     * @param parameters.url              URL to load.
+     * @param parameters.data             Options to send as AJAX data.
+     * @param parameters.method           HTTP verb.
+     * @param parameters.callback         Called when HTTP request is successful (2xx HTTP code).
+     * @param parameters.callbackError    Called when HTTP requet fails.
+     * @param parameters.callbackComplete Called after every other XHR callback.
      */
     EsterenMap.prototype._load = function(parameters) {
         var url,
@@ -22,11 +23,14 @@
             callback,
             callbackComplete,
             callbackError,
-            url,
             _this = this,
-            mapOptions = this._mapOptions,
-            allowedMethods = ['GET', 'POST', 'PUT']
+            allowedMethods = ['GET']
         ;
+
+        if (this._mapOptions.editMode === true) {
+            allowedMethods.push('POST');
+            allowedMethods.push('PUT');
+        }
 
         if (!$.isPlainObject(parameters)) {
             console.error('Malformed load request.', parameters);
@@ -41,9 +45,9 @@
         callbackError = parameters.callbackError || null;
         url = parameters.url || null;
 
-        method = method ? method.toUpperCase() : "GET";
+        method = method ? method.toUpperCase() : 'GET';
         if (allowedMethods.indexOf(method) === -1) {
-            method = "GET";
+            method = 'GET';
             console.error('Wrong HTTP method for _load() method. Allowed : '+allowedMethods.join(', '));
             return false;
         }
@@ -51,39 +55,6 @@
         if (!data) {
             data = {};
         }
-
-        // D'abord, on autorise les chaînes de caractères avec des "/".
-        // Cela permet d'écrire des requêtes de ce type : EsterenMap._load('maps/1/markers')
-        // On le vérifiera comme un tableau.
-        if (typeof url === 'string' && url.indexOf('/') !== -1) {
-            url = url.split('/');
-        }
-
-        if (url && typeof url === 'string') {
-            // Dans le cas ou name est une chaîne de caractères,
-            // elle doit exister dans mapAllowedElements en tant que clé,
-            // et être passée à true (on peut la passer à "false" pour désactiver le chargement de certaines données)
-            url = url.toLowerCase();
-            if (this.mapAllowedElements[url] !== true) {
-                console.error('Éléments à charger incorrects.');
-                return false;
-            }
-        } else if (url && Object.prototype.toString.call( url ) === '[object Array]') {
-            // Sinon, name doit être obligatoirement un array.
-            if (this.mapAllowedElements[url[0]] !== true) {
-                console.error('Éléments à charger incorrects.');
-                return false;
-            }
-            url = url.join('/');
-        } else if (!url) {
-            console.error('Wrong url sent to EsterenMap dynamic loader.');
-            return false;
-        }
-
-        // On s'assure d'une sécurité maximale
-        url = url.toString();
-
-        url = mapOptions.apiUrls.base.replace(/\/$/gi, '') + '/' + url;
 
         ajaxObject = {
             url: url,
@@ -93,7 +64,7 @@
                 withCredentials: true
             },
             crossDomain: true,
-            contentType: method === 'GET' ? "application/x-www-form-urlencoded" : "application/json",
+            contentType: method === 'GET' ? 'application/x-www-form-urlencoded' : 'application/json',
             jsonp: false,
             data: method === 'GET' ? data : JSON.stringify(data ? data : {})
         };
@@ -126,7 +97,5 @@
         if (xhr_name) {
             this._xhr_saves[xhr_name] = xhr_object;
         }
-
-        return this;
     };
-})(jQuery, window);
+})(jQuery);
