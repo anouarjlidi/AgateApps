@@ -2301,7 +2301,7 @@ matchdep@^1.0.0:
     resolve "~1.1.6"
     stack-trace "0.0.9"
 
-materialize-css@^0.99.0:
+materialize-css@^0.99:
   version "0.99.0"
   resolved "https://registry.yarnpkg.com/materialize-css/-/materialize-css-0.99.0.tgz#a5d97ac65d171d5aa1bc6a1a19d984b5e17a9202"
   dependencies:
