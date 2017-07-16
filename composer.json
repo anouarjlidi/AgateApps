@@ -65,7 +65,7 @@
 
         "orbitale/cms-bundle": "^3.0",
         "orbitale/entity-merger": "^0.6",
-        "orbitale/doctrine-tools": "^0.5.3",
+        "orbitale/doctrine-tools": "^0.5.6",
         "orbitale/imagemagick-php": "^1.6",
         "pierstoval/character_manager": "^0.4",
         "guzzlehttp/guzzle": "^6.2.1"
