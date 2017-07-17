@@ -9,7 +9,7 @@ footer:
     full_text: |
         Copyright &copy; 2012-%year% <a href="https://www.studio-agate.com/en/">Studio Agate</a>, All rights reserved.
         %more%
-        &ndash; Design &amp; development: Pierstoval &amp; Nel
+        <br> Design &amp; development: Pierstoval &amp; Nel
     links: 'Links'
     contact: 'Contact the team'
     subscribe: 'Subscribe to the newsletter'
