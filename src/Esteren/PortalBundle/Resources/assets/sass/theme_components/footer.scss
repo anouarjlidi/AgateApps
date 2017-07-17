@@ -1,9 +1,11 @@
 footer#page-footer {
-    .footer-copyright {
-        height: auto;
-        line-height: inherit;
-    }
     h2 {
         font-size: 1.75em;
     }
+}
+
+.footer-copyright {
+    height: auto;
+    line-height: inherit;
+    font-size: 0.8em;
 }
