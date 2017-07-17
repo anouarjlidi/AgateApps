@@ -138,7 +138,7 @@ var config = {
 
     /**
      * All files from this section are just concatenated and dumped into a JS file.
-     * If using "--prod" in command line, will minify with "uglyflyjs".
+     * If using "--prod" in command line, will minify with "uglifyjs".
      * Example:
      *     "js/main.js": [
      *         "web/components/bootstrap/dist/bootstrap-src.js",
@@ -258,13 +258,13 @@ const hasJs     = GulpfileHelpers.objectSize(config.js) > 0;
 
 // Required extensions
 var fs         = require('fs');
+var pump       = require('pump');
 var gulp       = require('gulp4');
 var gulpif     = require('gulp-if');
 var watch      = require('gulp-watch');
 var concat     = require('gulp-concat');
-var uglyfly    = require('gulp-uglyfly');
+var uglify     = require('gulp-uglify');
 var cleancss   = require('gulp-clean-css');
-var sourcemaps = require('gulp-sourcemaps');
 
 // Load other extensions only when having specific components. Saves memory & time execution.
 var less     = hasLess   ? require('gulp-less')     : function(){ return {}; };
@@ -313,19 +313,22 @@ gulp.task('less', function(done) {
 
     let list = config.less,
         outputDir = config.output_directory+'/',
-        assets_output, assets, pipes, i, l
+        assets_output, assets, i, l,
+        outputCount = GulpfileHelpers.objectSize(list),
+        pipesDone = 0
     ;
+
     for (assets_output in list) {
         if (!list.hasOwnProperty(assets_output)) { continue; }
         assets = list[assets_output];
-        pipes = gulp
-            .src(assets)
-            .pipe(less())
-            .pipe(concat(assets_output))
-            .pipe(gulpif(isProd, cleancss()))
-            .pipe(concat(assets_output))
-            .pipe(gulp.dest(outputDir))
-        ;
+        pump([
+            gulp.src(assets),
+            less(),
+            concat(assets_output),
+            gulpif(isProd, cleancss()),
+            concat(assets_output),
+            gulp.dest(outputDir),
+        ], finalCallback);
 
         console.info(" [file+] "+assets_output+" >");
         for (i = 0, l = assets.length; i < l; i++) {
@@ -333,7 +336,12 @@ gulp.task('less', function(done) {
         }
     }
 
-    pipes ? pipes.on('end', function(){done();}) : done();
+    function finalCallback() {
+        pipesDone++;
+        if (outputCount === pipesDone) {
+            done();
+        }
+    }
 });
 
 /**
@@ -344,19 +352,22 @@ gulp.task('sass', function(done) {
 
     let list = config.sass,
         outputDir = config.output_directory+'/',
-        assets_output, assets, pipes, i, l
+        assets_output, assets, i, l,
+        outputCount = GulpfileHelpers.objectSize(list),
+        pipesDone = 0
     ;
+
     for (assets_output in list) {
         if (!list.hasOwnProperty(assets_output)) { continue; }
         assets = list[assets_output];
-        pipes = gulp
-            .src(assets)
-            .pipe(sass().on('error', sass.logError))
-            .pipe(concat(assets_output))
-            .pipe(gulpif(isProd, cleancss()))
-            .pipe(concat(assets_output))
-            .pipe(gulp.dest(outputDir))
-        ;
+        pump([
+            gulp.src(assets),
+            sass().on('error', sass.logError),
+            concat(assets_output),
+            gulpif(isProd, cleancss()),
+            concat(assets_output),
+            gulp.dest(outputDir)
+        ], finalCallback);
 
         console.info(" [file+] "+assets_output+" >");
         for (i = 0, l = assets.length; i < l; i++) {
@@ -364,7 +375,12 @@ gulp.task('sass', function(done) {
         }
     }
 
-    pipes ? pipes.on('end', function(){done();}) : done();
+    function finalCallback() {
+        pipesDone++;
+        if (outputCount === pipesDone) {
+            done();
+        }
+    }
 });
 
 /**
@@ -376,15 +392,18 @@ gulp.task('copy', function(done) {
 
     let list = config.copy,
         outputDir = config.output_directory+'/',
-        assets_output, assets, pipes, i, l
+        assets_output, assets, i, l,
+        outputCount = GulpfileHelpers.objectSize(list),
+        pipesDone = 0
     ;
+
     for (assets_output in list) {
         if (!list.hasOwnProperty(assets_output)) { continue; }
         assets = list[assets_output];
-        pipes = gulp
-            .src(assets)
-            .pipe(gulp.dest(outputDir + assets_output))
-        ;
+        pump([
+            gulp.src(assets),
+            gulp.dest(outputDir + assets_output)
+        ], finalCallback);
 
         console.info(" [file+] "+assets_output+" >");
         for (i = 0, l = assets.length; i < l; i++) {
@@ -392,7 +411,12 @@ gulp.task('copy', function(done) {
         }
     }
 
-    pipes ? pipes.on('end', function(){done();}) : done();
+    function finalCallback() {
+        pipesDone++;
+        if (outputCount === pipesDone) {
+            done();
+        }
+    }
 });
 
 /**
@@ -404,21 +428,24 @@ gulp.task('images', function(done) {
 
     let list = config.images,
         outputDir = config.output_directory+'/',
-        assets_output, assets, pipes, i, l
+        assets_output, assets, i, l,
+        outputCount = GulpfileHelpers.objectSize(list),
+        pipesDone = 0
     ;
+
     for (assets_output in list) {
         if (!list.hasOwnProperty(assets_output)) { continue; }
         assets = list[assets_output];
-        pipes = gulp
-            .src(assets)
-            .pipe(imagemin([
+        pump([
+            gulp.src(assets),
+            imagemin([
                 imagemin.gifsicle({interlaced: true}),
                 imagemin.jpegtran({progressive: true}),
                 imagemin.optipng({optimizationLevel: 7}),
                 imagemin.svgo({plugins: [{removeViewBox: true}]})
-            ], { verbose: true }))
-            .pipe(gulp.dest(outputDir + assets_output))
-        ;
+            ]),
+            gulp.dest(outputDir + assets_output),
+        ], finalCallback);
 
         console.info(" [file+] "+assets_output+" >");
         for (i = 0, l = assets.length; i < l; i++) {
@@ -426,7 +453,12 @@ gulp.task('images', function(done) {
         }
     }
 
-    pipes ? pipes.on('end', function(){done();}) : done();
+    function finalCallback() {
+        pipesDone++;
+        if (outputCount === pipesDone) {
+            done();
+        }
+    }
 });
 
 /**
@@ -437,18 +469,20 @@ gulp.task('css', function(done) {
 
     let list = config.css,
         outputDir = config.output_directory+'/',
-        assets_output, assets, pipes, i, l
+        assets_output, assets, i, l,
+        outputCount = GulpfileHelpers.objectSize(list),
+        pipesDone = 0
     ;
     for (assets_output in list) {
         if (!list.hasOwnProperty(assets_output)) { continue; }
         assets = list[assets_output];
-        pipes = gulp
-            .src(assets)
-            .pipe(concat(assets_output))
-            .pipe(gulpif(isProd, cleancss()))
-            .pipe(concat(assets_output))
-            .pipe(gulp.dest(outputDir))
-        ;
+        pump([
+            gulp.src(assets),
+            concat(assets_output),
+            gulpif(isProd, cleancss()),
+            concat(assets_output),
+            gulp.dest(outputDir)
+        ], finalCallback);
 
         console.info(" [file+] "+assets_output+" >");
         for (i = 0, l = assets.length; i < l; i++) {
@@ -456,7 +490,12 @@ gulp.task('css', function(done) {
         }
     }
 
-    pipes ? pipes.on('end', function(){done();}) : done();
+    function finalCallback() {
+        pipesDone++;
+        if (outputCount === pipesDone) {
+            done();
+        }
+    }
 });
 
 /**
@@ -467,18 +506,20 @@ gulp.task('js', function(done) {
 
     let list = config.js,
         outputDir = config.output_directory+'/',
-        assets_output, assets, pipes, i, l
+        assets_output, assets, i, l,
+        outputCount = GulpfileHelpers.objectSize(list),
+        pipesDone = 0
     ;
+
     for (assets_output in list) {
         if (!list.hasOwnProperty(assets_output)) { continue; }
         assets = list[assets_output];
-        pipes = gulp
-            .src(assets)
-            .pipe(sourcemaps.init())
-            .pipe(concat({path: assets_output, cwd: ''}))
-            .pipe(gulpif(isProd, uglyfly()))
-            .pipe(gulp.dest(outputDir))
-        ;
+        pump([
+            gulp.src(assets),
+            concat({path: assets_output, cwd: ''}),
+            gulpif(isProd, uglify()),
+            gulp.dest(outputDir)
+        ], finalCallback);
 
         console.info(" [file+] "+assets_output+" >");
         for (i = 0, l = assets.length; i < l; i++) {
@@ -486,7 +527,12 @@ gulp.task('js', function(done) {
         }
     }
 
-    pipes ? pipes.on('end', function(){done();}) : done();
+    function finalCallback() {
+        pipesDone++;
+        if (outputCount === pipesDone) {
+            done();
+        }
+    }
 });
 
 /**
@@ -582,7 +628,7 @@ gulp.task('default', function(done){
     console.info("usage: gulp [command] [--prod]");
     console.info("");
     console.info("Options:");
-    console.info("    --prod       If specified, will run clean-css and uglyfyjs when dumping the assets.");
+    console.info("    --prod       If specified, will run clean-css and uglify when dumping the assets.");
     console.info("");
     console.info("Commands:");
     console.info("    copy         Copy the sources in the `config.copy` into a destination folder.");
