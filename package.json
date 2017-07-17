@@ -20,7 +20,7 @@
         "gulp-watch": "^4.3",
         "gulp4": "^4.0",
         "jquery": "^3.1",
-        "leaflet": "^1.0",
+        "leaflet": "~1.0.3",
         "leaflet-draw": "^0.4",
         "materialize-css": "^0.99",
         "pump": "^1.0"
