@@ -30,23 +30,18 @@
         position: 'topleft'
     };
 
-    EsterenMap.prototype.mapAllowedElements = {
-        maps: true,
-        factions: true,
-        routes: true,
-        routestypes: true,
-        markers: true,
-        markerstypes: true,
-        zones: true,
-        zonestypes: true,
-        settings: true,
-        "ref-data": true,
-        transports: true
-    };
-
     EsterenMap.prototype._mapOptions = {
         id: 0,
         crs: 'XY',
+        data: {
+            map: null,
+            references: null,
+            templates: {
+                LeafletPopupMarkerBaseContent: '',
+                LeafletPopupPolygonBaseContent: '',
+                LeafletPopupPolylineBaseContent: ''
+            }
+        },
         editMode: false,
         showFilters: true,
         showDirections: true,
@@ -59,18 +54,6 @@
         sidebarContainer: 'esterenmap_sidebar',
         container: 'map',
         wrapper: 'map_wrapper',
-        loadedCallback: function () {
-            if (this._mapOptions.showMarkers) {
-                this.loadMarkers();
-            }
-            if (this._mapOptions.showRoutes) {
-                this.loadRoutes();
-            }
-            if (this._mapOptions.showZones) {
-                this.loadZones();
-            }
-            this.loadTransports();
-        },
         messageElementId: 'esterenmap_message_element',
         imgUrl: '/bundles/esterenmaps/img',
         apiUrls: {
@@ -83,9 +66,6 @@
         maxMarkerId: 1,
         maxPolylineId: 1,
         maxPolygonId: 1,
-        LeafletPopupMarkerBaseContent: '',
-        LeafletPopupPolygonBaseContent: '',
-        LeafletPopupPolylineBaseContent: '',
         LeafletPopupBaseOptions: {
             maxWidth: 350,
             minWidth: 280
