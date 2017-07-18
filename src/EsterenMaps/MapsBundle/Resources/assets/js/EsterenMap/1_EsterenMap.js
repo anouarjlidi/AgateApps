@@ -13,19 +13,15 @@
         w.L_PREFER_CANVAS = true;
 
         if (!userMapOptions.id) {
-            console.error('Map id must be defined');
-            return _this;
+            throw 'Map id must be defined';
         }
 
         if (!(this instanceof EsterenMap)) {
-            console.error('Wrong scope check, incorrect instance.');
-            w.wrongInstance = this;
-            return null;
+            throw 'Wrong scope check, incorrect instance.';
         }
 
         if (!L) {
-            console.error('Leaflet must be activated.');
-            return null;
+            throw 'Leaflet must be activated.';
         }
 
         // Merge base options
@@ -34,8 +30,7 @@
         }
 
         if (!d.getElementById(this._mapOptions.container)) {
-            console.error('Map could not initialize : wrong container id');
-            return this;
+            throw 'Map could not initialize : wrong container id';
         }
 
         this.loadSettings();
@@ -53,10 +48,10 @@
 
         var drawnItems,sidebar, _this = this, mapOptions;
 
-        if (this.initialized === true || d.initializedEsterenMap === true) {
-            console.error('Map already set.');
-            return false;
+        if (this.initialized || d.initializedEsterenMap) {
+            throw 'Map already initialized.';
         }
+
         this.initialized = true;
         d.initializedEsterenMap = true;
 
@@ -141,7 +136,7 @@
         ////////////////////////////////
         ////////// Mode édition ////////
         ////////////////////////////////
-        if (mapOptions.editMode == true) {
+        if (mapOptions.editMode === true) {
             this.activateLeafletDraw();
             this._map.on('click', function(){
                 _this.disableEditedElements();
@@ -158,10 +153,6 @@
             $(w).resize(function(){_this.resetHeight();});
         }
 
-        if (mapOptions.loadedCallback) {
-            mapOptions.loadedCallback.call(this);
-        }
-
         this._mapOptions = this.cloneObject(this._mapOptions);
 
         Object.freeze(this._mapOptions);
@@ -176,8 +167,7 @@
             if (this._messageElement) {
                 messageElement = this._messageElement;
             } else {
-                console.error('No correct element could be used to show a message.');
-                return;
+                throw 'No correct element could be used to show a message.';
             }
         }
 
@@ -261,17 +251,16 @@
                 console.info('success', response);
                 return;
                 //callback "success"
-                _this.mapAllowedElements.settings = false;// Désactive les settings une fois chargés
-                if (response.map) {
+                if (response.map && response.references && response.templates) {
                     _this._mapOptions = _this.cloneObject(_this._mapOptions, response.settings);
                     _this._initialize();
                 } else {
-                    console.error('Map couldn\'t initialize because settings response was not correct.');
+                    throw 'Map couldn\'t initialize because settings response was not correct.';
                 }
             },
             callbackError: function(){
                 //callback "Error"
-                console.error('Error while loading settings');
+                throw 'Error while loading settings';
             }
         });
     };
