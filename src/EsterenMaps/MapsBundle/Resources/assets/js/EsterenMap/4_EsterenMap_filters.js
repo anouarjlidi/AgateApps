@@ -13,9 +13,7 @@
 
         this._filtersControl = control;
 
-        this.loadRefData(function(){
-            control.addTo(this._map);
-        });
+        control.addTo(this._map);
 
         return this;
     };

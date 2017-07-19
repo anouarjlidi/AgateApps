@@ -308,13 +308,13 @@
                         return false;
                     });
                     $('#polyline_popup_type').off('change').on('change', function(){
-                        map._polylines[id]._esterenRoute.route_type = map.refData('routesTypes', this.value);
+                        map._polylines[id]._esterenRoute.route_type = map.reference('routesTypes', this.value);
                         if (this._timeout) { clearTimeout(this._timeout); }
                         this._timeout = setTimeout(function(){ map._polylines[id]._updateEM(); }, 1000);
                         return false;
                     });
                     $('#polyline_popup_faction').off('change').on('change', function(){
-                        map._polylines[id]._esterenRoute.faction = map.refData('factions', this.value);
+                        map._polylines[id]._esterenRoute.faction = map.reference('factions', this.value);
                         if (this._timeout) { clearTimeout(this._timeout); }
                         this._timeout = setTimeout(function(){ map._polylines[id]._updateEM(); }, 1000);
                         return false;
@@ -458,7 +458,7 @@
         } else {
             // Ici on tente de créer une nouvelle zone
             polyline._esterenRoute = this.esterenRoutePrototype;
-            polyline._esterenRoute.route_type = this.refData('routesTypes', 1);
+            polyline._esterenRoute.route_type = this.reference('routesTypes', 1);
         }
 
         // Création d'une popup

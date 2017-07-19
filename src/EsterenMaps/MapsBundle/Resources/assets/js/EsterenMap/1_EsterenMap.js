@@ -33,7 +33,7 @@
             throw 'Map could not initialize : wrong container id';
         }
 
-        this.loadSettings();
+        this.loadMapData();
 
         return this;
     };
@@ -212,12 +212,14 @@
         this._editedMarker = null;
     };
 
-    EsterenMap.prototype.refData = function(name, id) {
-        var data = this.cloneObject((this._refData['ref-data'] ? this._refData['ref-data'] : this._refData)), grep;
+    EsterenMap.prototype.reference = function(name, id) {
+        var data = this._mapOptions.data.references;
         if (name) {
             if (data[name]) {
                 if (!isNaN(id)) {
-                    grep = $.grep(data[name], function(element){return element.id == id;});
+                    grep = $.grep(data[name], function(element){
+                        return element.id === id;
+                    });
                     if (grep.length) {
                         data = grep[0];
                     } else {
@@ -232,12 +234,12 @@
                 data = null;
             }
         }
+
         return data;
     };
 
-    EsterenMap.prototype.loadSettings = function(){
+    EsterenMap.prototype.loadMapData = function(){
         var _this = this;
-        var data = {};
 
         if (true === this._mapOptions.editMode) {
             data.editMode = 'true';
@@ -248,11 +250,9 @@
             method: 'GET',
             data: data,
             callback: function(response){
-                console.info('success', response);
-                return;
                 //callback "success"
                 if (response.map && response.references && response.templates) {
-                    _this._mapOptions = _this.cloneObject(_this._mapOptions, response.settings);
+                    _this._mapOptions.data = _this._mapOptions;
                     _this._initialize();
                 } else {
                     throw 'Map couldn\'t initialize because settings response was not correct.';

@@ -10,8 +10,6 @@
     EsterenMap.prototype._editedPolyline = null;
     EsterenMap.prototype._editedPolygon = null;
 
-    EsterenMap.prototype._clonedOptions = false;
-
     EsterenMap.prototype._messageElement = null;
 
     EsterenMap.prototype._refData = false;
