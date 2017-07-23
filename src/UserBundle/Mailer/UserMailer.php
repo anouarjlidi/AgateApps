@@ -28,7 +28,7 @@ final class UserMailer
 
     public function __construct(RequestStack $requestStack, \Swift_Mailer $mailer, EngineInterface $templating, RouterInterface $router, TranslatorInterface $translator)
     {
-        $this->sender     = 'no-reply@'.$requestStack->getMasterRequest()->getHost();
+        $this->sender     = 'no-reply@'.($requestStack->getMasterRequest() ? $requestStack->getMasterRequest()->getHost() : 'studio-agate.com');
         $this->templating = $templating;
         $this->mailer     = $mailer;
         $this->router     = $router;

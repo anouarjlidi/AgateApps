@@ -9,12 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace Pierstoval\Bundle\ToolsBundle\Controller;
+namespace AgateBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class AssetsController extends Controller
@@ -22,21 +22,27 @@ class AssetsController extends Controller
     /**
      * @Route("/js/translations.js", name="pierstoval_tools_assets_jstranslations")
      * @Method("GET")
-     * @Cache(maxage=86400, expires="+1 day", public=true)
-     *
-     * @param string $_locale
-     *
-     * @return Response
      */
-    public function jsTranslationsAction($_locale)
+    public function jsTranslationsAction(Request $request, $_locale)
     {
         $response = new Response();
+
+        $response->setCache([
+            'etag' => sha1('js'.$_locale.$this->getParameter('version_code')),
+            'last_modified' => new \DateTime($this->getParameter('version_date')),
+            'max_age' => 600,
+            's_maxage' => 600,
+            'public' => true,
+        ]);
+
+        if ($response->isNotModified($request)) {
+            return $response;
+        }
+
         $response->headers->add(['Content-type' => 'application/javascript']);
 
-        $datas = [
+        return $this->render('@Agate/assets/js_translations.js.twig', [
             'locale' => $_locale,
-        ];
-
-        return $this->render('PierstovalToolsBundle:Assets:jsTranslations.js.twig', $datas, $response);
+        ], $response);
     }
 }

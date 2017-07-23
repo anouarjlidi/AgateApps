@@ -8,8 +8,8 @@ imports:
 
 parameters:
     # The version code is always the last version that was put in production
-    env(HEROKU_RELEASE_VERSION): '0.13.1'
-    env(HEROKU_RELEASE_CREATED_AT): '2017-05-21'
+    env(HEROKU_RELEASE_VERSION): 'v50'
+    env(HEROKU_RELEASE_CREATED_AT): '2017-07-18T10:53:10Z'
 
     database_url: '%env(DATABASE_URL)%'
     database_url_legacy: '%env(DATABASE_URL_LEGACY)%'
