@@ -43,7 +43,7 @@ final class PortalMailer
             ->setFrom($message->getEmail())
             ->setTo('pierstoval+newportal@gmail.com')
             ->addCc('iris.d.automne+newportal@gmail.com', 'Iris')
-            ->setBody($this->templating->render('@Agate/email/contact_email.html.twig', [
+            ->setBody($body = $this->templating->render('@Agate/email/contact_email.html.twig', [
                 'ip'      => $ip,
                 'message' => $message,
             ]))
