@@ -24,7 +24,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="maps_transports_types")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="EsterenMaps\MapsBundle\Repository\TransportTypesRepository")
  */
 class TransportTypes implements EntityToClearInterface
 {

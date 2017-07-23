@@ -1,20 +1,14 @@
 
     EsterenMap.prototype._map = null;
-    EsterenMap.prototype._sidebar = {};
-    EsterenMap.prototype._filtersControl = {};
-    EsterenMap.prototype._drawControl = {};
-    EsterenMap.prototype._drawnItems = {};
-    EsterenMap.prototype._tileLayer = {};
-    EsterenMap.prototype._xhr_saves = {};
+    EsterenMap.prototype._sidebar = null;
+    EsterenMap.prototype._filtersControl = null;
+    EsterenMap.prototype._drawControl = null;
+    EsterenMap.prototype._drawnItems = null;
+    EsterenMap.prototype._tileLayer = null;
+    EsterenMap.prototype._xhr_saves = null;
     EsterenMap.prototype._editedMarker = null;
     EsterenMap.prototype._editedPolyline = null;
     EsterenMap.prototype._editedPolygon = null;
-
-    EsterenMap.prototype._messageElement = null;
-
-    EsterenMap.prototype._refData = false;
-
-    EsterenMap.prototype._transports = false;
 
     EsterenMap.prototype._markers = {};
     EsterenMap.prototype._polygons = {};
@@ -53,7 +47,7 @@
         container: 'map',
         wrapper: 'map_wrapper',
         messageElementId: 'esterenmap_message_element',
-        imgUrl: '/bundles/esterenmaps/img',
+        imgUrl: '/img/',
         apiUrls: {
             map: null,
             directions: null,

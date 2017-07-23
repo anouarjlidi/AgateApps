@@ -19,9 +19,11 @@ use EsterenMaps\MapsBundle\Entity\Markers;
 use EsterenMaps\MapsBundle\Entity\MarkersTypes;
 use EsterenMaps\MapsBundle\Entity\Routes;
 use EsterenMaps\MapsBundle\Entity\RoutesTypes;
+use EsterenMaps\MapsBundle\Entity\TransportTypes;
 use EsterenMaps\MapsBundle\Entity\Zones;
 use EsterenMaps\MapsBundle\Entity\ZonesTypes;
 use Symfony\Bundle\TwigBundle\TwigEngine;
+use Symfony\Component\Asset\Packages;
 
 class MapApi
 {
@@ -31,13 +33,15 @@ class MapApi
     private $cache;
     private $twig;
     private $debug;
+    private $asset;
 
-    public function __construct(EntityManager $em, TwigEngine $twig, CacheManager $cache, bool $debug)
+    public function __construct(EntityManager $em, TwigEngine $twig, CacheManager $cache, Packages $asset, bool $debug)
     {
         $this->em = $em;
         $this->cache = $cache;
         $this->twig = $twig;
         $this->debug = $debug;
+        $this->asset = $asset;
     }
 
     public function getLastUpdateTime($id): ?\DateTime
@@ -90,6 +94,7 @@ class MapApi
         $data['references']['routes_types'] = $this->em->getRepository(RoutesTypes::class)->findForApi();
         $data['references']['zones_types'] = $this->em->getRepository(ZonesTypes::class)->findForApi();
         $data['references']['factions'] = $this->em->getRepository(Factions::class)->findForApi();
+        $data['references']['transports'] = $this->em->getRepository(TransportTypes::class)->findForApi();
 
         // Pre-compiled templates
         $data['templates']['LeafletPopupMarkerBaseContent'] = $this->twig->render('@EsterenMaps/Api/popupContentMarker.html.twig', [
@@ -128,6 +133,10 @@ class MapApi
                 $route['distance'] = $route['forced_distance'];
             }
             unset($route['forced_distance']);
+        }
+
+        foreach ($data['references']['markers_types'] as &$markerType) {
+            $markerType['icon'] = $this->asset->getUrl('img/markerstypes/'.$markerType['icon']);
         }
 
         return $data;

@@ -1,7 +1,7 @@
 (function($, L, d, w){
 
     EsterenMap.prototype.initFilters = function(){
-        var control, _this = this,
+        var control,
             mapOptions = this._mapOptions
         ;
 

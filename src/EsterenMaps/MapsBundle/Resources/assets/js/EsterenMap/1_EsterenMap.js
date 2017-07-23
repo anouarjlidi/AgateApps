@@ -46,29 +46,35 @@
      */
     EsterenMap.prototype._initialize = function() {
 
-        var drawnItems,sidebar, _this = this, mapOptions;
+        var sidebar, _this = this, mapOptions;
+
+        mapOptions = this._mapOptions;
 
         if (this.initialized || d.initializedEsterenMap) {
             throw 'Map already initialized.';
         }
 
+        if (!mapOptions.data.references) {
+            throw 'No references were set, map cannot be initialized';
+        }
+
         this.initialized = true;
         d.initializedEsterenMap = true;
 
-        // Formatage de l'url d'API qui doit utiliser l'ID de la map
-        this._mapOptions.apiUrls.tiles = this._mapOptions.apiUrls.tiles.replace('{id}', ''+this._mapOptions.id);
-        mapOptions = this._mapOptions;
-
-        // Reset du wrapper avant création de la map
-        // Force la redimension du wrapper lors de la redimension de la page
+        // Reset wrapper's height before creating the map.
+        // Forces wrapper's size when the page is resized too.
         if (mapOptions.autoResize) {
             this.resetHeight();
+            $(w).resize(_this.resetHeight);
         } else {
             this.resetHeight(mapOptions.containerHeight);
         }
 
         if (mapOptions.messageElementId) {
             this._messageElement = d.getElementById(mapOptions.messageElementId);
+            if (!this._messageElement) {
+                console.warn('Message element id "'+mapOptions.messageElementId+'" was not found.');
+            }
         }
 
         if (mapOptions.crs && !mapOptions.LeafletMapBaseOptions.crs && L.CRS[mapOptions.crs]) {
@@ -77,34 +83,18 @@
             console.warn('Could not find CRS "'+mapOptions.crs+'".');
         }
 
-        // Création de la map
-        this._map = L.map(mapOptions.container, mapOptions.LeafletMapBaseOptions);
+        // Create Leaflet map object.
+        this._map = L.map(mapOptions.container, this.cloneObject(mapOptions.LeafletMapBaseOptions, {
+            preferCanvas: false === mapOptions.editMode
+        }));
 
-        // Création du calque des tuiles
-        //this._tileLayer = L.tileLayer(mapOptions.apiUrls.tiles, mapOptions.LeafletLayerBaseOptions);
-        //this._map.addLayer(this._tileLayer);
-        this._tileLayer = L.tileLayer.canvas(mapOptions.LeafletLayerBaseOptions);
-        this._tileLayer.drawTile = function(canvas, tilePoint, zoom) {
-            var context = canvas.getContext('2d'),
-                img = document.createElement('img'),
-                imgUrl = mapOptions.apiUrls.tiles,
-                tileSize = mapOptions.LeafletLayerBaseOptions.tileSize,
-                x = tilePoint.x,
-                y = tilePoint.y
-            ;
-            imgUrl = imgUrl.replace('{x}', x);
-            imgUrl = imgUrl.replace('{y}', y);
-            imgUrl = imgUrl.replace('{z}', _this._map.getZoom());
-            img.src = imgUrl;
-            img.onload = function() {
-                context.drawImage(img, 0, 0, tileSize, tileSize, 0, 0, tileSize, tileSize);
-            };
-        };
+        // Create the layer that will show the tiles.
+        this._tileLayer = L.tileLayer(mapOptions.apiUrls.tiles, mapOptions.LeafletLayerBaseOptions);
         this._map.addLayer(this._tileLayer);
 
         L.Icon.Default.imagePath = mapOptions.imgUrl.replace(/\/$/gi, '');
 
-        // Ajout de la sidebar
+        // Add sidebar if configured.
         if (mapOptions.sidebarContainer && d.getElementById(mapOptions.sidebarContainer)) {
             sidebar = L.control.sidebar(mapOptions.sidebarContainer, {
                 position: 'right',
@@ -113,47 +103,41 @@
             });
             this._map.addControl(sidebar);
             this._map.on('click', function(){
+                // Hide the sidebar when user clicks on map.
                 sidebar.hide();
             });
             this._sidebar = sidebar;
         }
 
-        // Initialisation des filtres si demandé
         if (mapOptions.showFilters === true) {
+            // See EsterenMap_filters.js
             this.initFilters();
         }
 
-        // Initialisation du calcul d'itinéraire si demandé
         if (mapOptions.showDirections === true) {
+            // See EsterenMap_directions.js
             this.initDirections();
         }
 
-        // Initialize search engine
         if (mapOptions.showSearchEngine === true) {
+            // See EsterenMap_search_engine.js
             this.initSearch();
         }
 
+        if (mapOptions.showMarkers === true) {
+            // See EsterenMap_addMarkers.js
+            this.renderMarkers();
+        }
+
         ////////////////////////////////
-        ////////// Mode édition ////////
+        /////////// Edit mode //////////
         ////////////////////////////////
-        if (mapOptions.editMode === true) {
+        if (true === mapOptions.editMode) {
             this.activateLeafletDraw();
-            this._map.on('click', function(){
-                _this.disableEditedElements();
-            });
-        } else {
-            // Doit contenir les nouveaux éléments ajoutés à la carte
-            drawnItems = new L.LayerGroup();
-            this._map.addLayer(drawnItems);
-            this._drawnItems = drawnItems;
+            this._map.on('click', _this.disableEditedElements);
         }
 
-        // Force le resize à chaque redimension de la page
-        if (mapOptions.autoResize) {
-            $(w).resize(function(){_this.resetHeight();});
-        }
-
-        this._mapOptions = this.cloneObject(this._mapOptions);
+        this._mapOptions = this.cloneObject(mapOptions);
 
         Object.freeze(this._mapOptions);
     };
@@ -164,15 +148,15 @@
         disappearTimeout = disappearTimeout || 4000;
 
         if (!messageElement) {
-            if (this._messageElement) {
-                messageElement = this._messageElement;
+            if (this._mapOptions._messageElement) {
+                messageElement = this._mapOptions._messageElement;
             } else {
                 throw 'No correct element could be used to show a message.';
             }
         }
 
         element = d.createElement('div');
-        element.className = 'alert alert-sm ib h';
+        element.className = 'card-panel ib h';
         if (type) {
             element.className += ' alert-'+type;
         }
@@ -213,33 +197,26 @@
     };
 
     EsterenMap.prototype.reference = function(name, id) {
-        var data = this._mapOptions.data.references;
-        if (name) {
-            if (data[name]) {
-                if (!isNaN(id)) {
-                    grep = $.grep(data[name], function(element){
-                        return element.id === id;
-                    });
-                    if (grep.length) {
-                        data = grep[0];
-                    } else {
-                        console.warn('No ref data with id "'+id+'" in "'+name+'"');
-                        data = {};
-                    }
-                } else {
-                    data = data[name];
-                }
-            } else {
-                console.warn('No ref data with name "'+name+'"');
-                data = null;
-            }
+        var references = this._mapOptions.data.references, ref;
+
+        if (!name || !id) {
+            throw 'Please specify a reference name or id.';
         }
 
-        return data;
+        if (references[name]) {
+            if (ref = references[name][id]) {
+                return ref;
+            }
+            console.warn('No reference with id "'+id+'" in "'+name+'"');
+        } else {
+            console.warn('No reference with name "'+name+'"');
+        }
+
+        return null;
     };
 
     EsterenMap.prototype.loadMapData = function(){
-        var _this = this;
+        var _this = this, data = {};
 
         if (true === this._mapOptions.editMode) {
             data.editMode = 'true';
@@ -252,7 +229,7 @@
             callback: function(response){
                 //callback "success"
                 if (response.map && response.references && response.templates) {
-                    _this._mapOptions.data = _this._mapOptions;
+                    _this._mapOptions.data = response;
                     _this._initialize();
                 } else {
                     throw 'Map couldn\'t initialize because settings response was not correct.';

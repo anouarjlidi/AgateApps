@@ -92,4 +92,5 @@ services:
             - '@doctrine.orm.entity_manager'
             - '@templating'
             - '@esterenmaps.cache'
+            - '@assets.packages'
             - '%kernel.debug%'

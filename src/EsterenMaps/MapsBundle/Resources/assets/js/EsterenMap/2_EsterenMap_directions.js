@@ -37,6 +37,7 @@
             L.setOptions(this, options);
             L.Control.prototype.initialize.call(this, options);
             this.map(map);
+
             return this;
         },
 
@@ -47,8 +48,10 @@
                     return false;
                 }
                 this._esterenMap = map;
+
                 return this;
             }
+
             return this._esterenMap;
         },
 
@@ -157,13 +160,13 @@
                     li.parentElement.innerHTML = '';
                 }
             });
-            this._esterenMap.loadTransports(function(response){
-                var transportsOptions = '';
-                $.each(response.transports, function(i, e){
-                    transportsOptions += '<option value="' + e.id + '">' + e.name + '</option>';
-                });
-                $(_this._controlContent).find('#directions_transport').html(transportsOptions);
+
+            var transportsOptions = '';
+            $.each(map._mapOptions.data.references.transports, function(i, e){
+                transportsOptions += '<option value="' + e.id + '">' + e.name + '</option>';
             });
+            $(_this._controlContent).find('#directions_transport').html(transportsOptions);
+
             $(this._controlContent).find('#directions_start,#directions_end').on('keypress', function(event){
                 var $this = $(this),
                     html = '',
@@ -280,7 +283,7 @@
                 return false;
             });
 
-            this._cntSet= true;
+            this._cntSet = true;
 
             return this;
         },

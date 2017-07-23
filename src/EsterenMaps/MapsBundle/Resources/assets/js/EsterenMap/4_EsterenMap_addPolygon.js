@@ -225,7 +225,7 @@
         for (i in this._polygons) {
             if (this._polygons.hasOwnProperty(i)) {
                 this._map.removeLayer(this._polygons[i]);
-                this._drawnItems.removeLayer(this._polygons[i]);
+                this._polygons[i].remove();
             }
         }
 
@@ -332,7 +332,7 @@
             }
         }
 
-        this._drawnItems.addLayer(polygon);
+        polygon.addTo(this._map);
 
         option = 'zoneType'+(customUserOptions.polygonType?customUserOptions.polygonType:'1');
         if (polygon._path.dataset) {
@@ -344,6 +344,4 @@
 
         return this;
     };
-
-
 })(jQuery, L, document, window);

@@ -483,7 +483,7 @@
             }
         }
 
-        this._drawnItems.addLayer(polyline);
+        polyline.addTo(this._map);
 
         option = 'routeType'+(customUserOptions.polylineType?customUserOptions.polylineType:'1');
         if (polyline._path.dataset) {
