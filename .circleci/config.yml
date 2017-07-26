@@ -25,7 +25,7 @@ jobs:
             - run:
                 name: 'Install necessary PHP extensions'
                 command: |
-                    docker-php-ext-install pdo intl mbstring gd iconv
+                    docker-php-ext-install pdo intl mbstring gd iconv zip
 
             - run:
                 name: 'Install apcu'
