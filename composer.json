@@ -93,8 +93,7 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
         ],
         "post-install-cmd": [
-            "@symfony-scripts",
-            "php bin/console doctrine:schema:validate || echo 'Doctrine schema not valid, please make sure it is correct.'"
+            "@symfony-scripts"
         ],
         "post-update-cmd": [
             "@symfony-scripts"
@@ -106,6 +105,7 @@
             "node node_modules/gulp4/bin/gulp.js dump --prod --verbose",
             "rm web/config.php",
             "php bin/console doctrine:schema:update --dump-sql --force",
+            "php bin/console doctrine:schema:validate || echo 'Doctrine schema not valid, please make sure it is correct.'",
             "php bin/console esterenmaps:map:generate-tiles 1"
         ],
         "warmup": [
