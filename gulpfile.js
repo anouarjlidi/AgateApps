@@ -178,9 +178,9 @@ var config = {
             "src/EsterenMaps/MapsBundle/Resources/assets/js/EsterenMap/2_EsterenMap_LatLngBounds.js",
             "src/EsterenMaps/MapsBundle/Resources/assets/js/EsterenMap/3_EsterenMap_ActivateLeafletDraw.js",
             "src/EsterenMaps/MapsBundle/Resources/assets/js/EsterenMap/3_EsterenMap_options.js",
-            "src/EsterenMaps/MapsBundle/Resources/assets/js/EsterenMap/4_EsterenMap_addMarker.js",
-            "src/EsterenMaps/MapsBundle/Resources/assets/js/EsterenMap/4_EsterenMap_addPolygon.js",
-            "src/EsterenMaps/MapsBundle/Resources/assets/js/EsterenMap/4_EsterenMap_addPolyline.js",
+            "src/EsterenMaps/MapsBundle/Resources/assets/js/EsterenMap/4_EsterenMap_markers.js",
+            "src/EsterenMaps/MapsBundle/Resources/assets/js/EsterenMap/4_EsterenMap_polygons.js",
+            "src/EsterenMaps/MapsBundle/Resources/assets/js/EsterenMap/4_EsterenMap_polylines.js",
             "src/EsterenMaps/MapsBundle/Resources/assets/js/EsterenMap/4_EsterenMap_filters.js",
             "src/EsterenMaps/MapsBundle/Resources/assets/js/EsterenMap/4_EsterenMap_search_engine.js",
             "src/EsterenMaps/MapsBundle/Resources/assets/js/EsterenMap/5_EsterenMap_mapEdit.js"
