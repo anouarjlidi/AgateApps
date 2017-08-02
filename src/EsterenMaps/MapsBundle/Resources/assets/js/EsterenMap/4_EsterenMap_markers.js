@@ -15,7 +15,6 @@
         }
         this._sidebar.setContent(this._sidebarContent);
         this._sidebar.show();
-        return this;
     };
 
     L.Marker.prototype.hideSidebar = function(){
@@ -24,25 +23,11 @@
         }
         this._sidebar.hide();
         this._sidebar.setContent('');
-        return this;
-    };
-
-    L.Marker.prototype.toggleSidebar = function(){
-        if (!this._sidebar) {
-            return;
-        }
-        if (this._sidebar.isVisible()) {
-            this.hideSidebar();
-        } else {
-            this.showSidebar();
-        }
-        return this;
     };
 
     L.Marker.prototype.bindSidebar = function(sidebar, content){
         this._sidebar = sidebar;
         this._sidebarContent = content;
-        return this;
     };
 
     L.Marker.prototype.updateIcon = function(){
@@ -72,7 +57,7 @@
         for (i in routes) {
             if (routes.hasOwnProperty(i)) {
                 route = routes[i];
-                if (route._esterenRoute.marker_start && route._esterenRoute.marker_start.id == this._esterenMarker.id) {
+                if (route._esterenRoute.marker_start && route._esterenRoute.marker_start.id === this._esterenMarker.id) {
                     this._esterenRoutesStart[route._esterenRoute.id] = route;
                     route._esterenMarkerStart = this;
                 }
@@ -87,7 +72,7 @@
         for (i in routes) {
             if (routes.hasOwnProperty(i)) {
                 route = routes[i];
-                if (route._esterenRoute.marker_end && route._esterenRoute.marker_end.id == this._esterenMarker.id) {
+                if (route._esterenRoute.marker_end && route._esterenRoute.marker_end.id === this._esterenMarker.id) {
                     this._esterenRoutesEnd[route._esterenRoute.id] = route;
                     route._esterenMarkerEnd = this;
                 }
@@ -120,7 +105,7 @@
         var marker = this,
             msg = CONFIRM_DELETE || 'Supprimer ?',
             id = marker._esterenMarker ? marker._esterenMarker.id : null;
-        if (marker._esterenMap._mapOptions.editMode == true && id) {
+        if (marker._esterenMap._mapOptions.editMode === true && id) {
             if (confirm(msg)) {
                 marker._map.removeLayer(marker);
                 marker.fire('remove');
@@ -218,13 +203,13 @@
     EsterenMap.prototype.renderMarkers = function(){
         var markers, i, marker,
             mapOptions = this._mapOptions,
-            options = mapOptions.CustomMarkerBaseOptions,
+            baseOptions = mapOptions.CustomMarkerBaseOptions,
             leafletOptions = mapOptions.LeafletMarkerBaseOptions,
-            coords
+            options, coords
         ;
 
         if (mapOptions.editMode === true) {
-            options = this.cloneObject(options, mapOptions.CustomMarkerBaseOptionsEditMode);
+            baseOptions = this.cloneObject(baseOptions, mapOptions.CustomMarkerBaseOptionsEditMode);
             leafletOptions = this.cloneObject(leafletOptions, mapOptions.LeafletMarkerBaseOptionsEditMode);
         }
 
@@ -237,23 +222,24 @@
 
         if (markers = mapOptions.data.map.markers) {
             for (i in markers) {
-                if (markers.hasOwnProperty(i)) {
-                    marker = markers[i];
-                    coords = {
-                        lat: marker.latitude,
-                        lng: marker.longitude,
-                        altitude: marker.altitude
-                    };
+                if (!markers.hasOwnProperty(i)) { continue; }
+                marker = markers[i];
+                coords = {
+                    lat: marker.latitude,
+                    lng: marker.longitude,
+                    altitude: marker.altitude
+                };
 
-                    options.esterenMarker = marker;
-                    options.markerName = marker.name;
-                    options.markerType = marker.marker_type;
-                    options.markerFaction = marker.faction ? marker.faction : '';
+                options = this.cloneObject(baseOptions);
 
-                    this.addMarker(coords, leafletOptions, options);
-                }//endif (marker.hasOwnProperty)
-            }//endfor
-        }// endif
+                options.esterenMarker = marker;
+                options.markerName = marker.name;
+                options.markerType = marker.marker_type;
+                options.markerFaction = marker.faction ? marker.faction : '';
+
+                this.addMarker(coords, leafletOptions, options);
+            }
+        }
     };
 
     EsterenMap.prototype._mapOptions.LeafletMarkerBaseOptions = {

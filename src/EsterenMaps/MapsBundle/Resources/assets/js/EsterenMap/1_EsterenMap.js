@@ -9,9 +9,6 @@
     var EsterenMap = function (userMapOptions) {
         var _this = this;
 
-        // Force CANVAS
-        w.L_PREFER_CANVAS = true;
-
         if (!userMapOptions.id) {
             throw 'Map id must be defined';
         }
@@ -84,9 +81,7 @@
         }
 
         // Create Leaflet map object.
-        this._map = L.map(mapOptions.container, this.cloneObject(mapOptions.LeafletMapBaseOptions, {
-            preferCanvas: false === mapOptions.editMode
-        }));
+        this._map = L.map(mapOptions.container, mapOptions.LeafletMapBaseOptions);
 
         // Create the layer that will show the tiles.
         this._tileLayer = L.tileLayer(mapOptions.apiUrls.tiles, mapOptions.LeafletLayerBaseOptions);
@@ -125,8 +120,13 @@
         }
 
         if (mapOptions.showMarkers === true) {
-            // See EsterenMap_addMarkers.js
+            // See EsterenMap_markers.js
             this.renderMarkers();
+        }
+
+        if (mapOptions.showZones === true) {
+            // See EsterenMap_polygons.js
+            this.renderZones();
         }
 
         ////////////////////////////////

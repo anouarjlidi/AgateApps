@@ -5,28 +5,22 @@
     L.Polygon.prototype._esterenZone = {};
     L.Polygon.prototype._sidebar = {};
     L.Polygon.prototype._sidebarContent = '';
+
     L.Polygon.prototype.showSidebar = function(){
         this._sidebar.setContent(this._sidebarContent);
         this._sidebar.show();
         return this;
     };
+
     L.Polygon.prototype.hideSidebar = function(){
         this._sidebar.hide();
         this._sidebar.setContent('');
         return this;
     };
-    L.Polygon.prototype.toggleSidebar = function(){
-        if (this._sidebar.isVisible()) {
-            this.hideSidebar();
-        } else {
-            this.showSidebar();
-        }
-        return this;
-    };
+
     L.Polygon.prototype.bindSidebar = function(sidebar, content){
         this._sidebar = sidebar;
         this._sidebarContent = content;
-        return this;
     };
 
     L.Polygon.prototype.disableEditMode = function() {
@@ -35,12 +29,18 @@
     };
 
     L.Polygon.prototype.updateStyle = function(){
+        var node = this._map.getRenderer(this).getPane();
+
+        if (!node) {
+            throw 'No node found on this polygon.';
+        }
+
         // Change l'image de l'icône
-        this._path.setAttribute('fill', this._esterenZone.zone_type.color);
-        this._path.setAttribute('stroke', this._esterenZone.zone_type.color);
+        node.setAttribute('fill', this._esterenZone.zone_type.color);
+        node.setAttribute('stroke', this._esterenZone.zone_type.color);
 
         // Met à jour l'attribut "data" pour les filtres
-        $(this._path).attr('data-leaflet-object-type', 'zoneType'+this._esterenZone.zone_type.id);
+        $(node).attr('data-leaflet-object-type', 'zoneType'+this._esterenZone.zone_type.id);
 
     };
 
@@ -203,30 +203,20 @@
         }
     };
 
-    EsterenMap.prototype._mapOptions.loaderCallbacks.zonesTypes = function(response){
-        if (response['zonestypes'] && response['zonestypes'].length > 0) {
-            this._zonesTypes = response['zonestypes'];
-        } else {
-            console.error('Error while retrieving zones types');
-        }
-        return this;
-    };
-
-    EsterenMap.prototype._mapOptions.loaderCallbacks.zones = function(response){
+    EsterenMap.prototype.renderZones = function(){
         var zones, i, zone,
             finalOptions,finalLeafletOptions,
             mapOptions = this._mapOptions,
             popupContent = mapOptions.LeafletPopupPolygonBaseContent,
             options = mapOptions.CustomPolygonBaseOptions,
             leafletOptions = mapOptions.LeafletPolygonBaseOptions,
-            coords
+            zone_type, coords
         ;
 
         for (i in this._polygons) {
-            if (this._polygons.hasOwnProperty(i)) {
-                this._map.removeLayer(this._polygons[i]);
-                this._polygons[i].remove();
-            }
+            if (!this._polygons.hasOwnProperty(i)) { continue; }
+            this._map.removeLayer(this._polygons[i]);
+            this._polygons[i].remove();
         }
 
         if (mapOptions.editMode === true) {
@@ -234,45 +224,44 @@
             leafletOptions = this.cloneObject(leafletOptions, mapOptions.LeafletPolygonBaseOptionsEditMode);
         }
 
-        if (response['map.'+mapOptions.id+'.zones']) {
-            zones = response['map.'+mapOptions.id+'.zones'];
+        if (zones = mapOptions.data.map.zones) {
             for (i in zones) {
-                if (zones.hasOwnProperty(i)) {
-                    zone = zones[i];
-                    coords = (typeof zone.coordinates === 'string') ? JSON.parse(zone.coordinates ? zone.coordinates : "{}") : zone.coordinates;
-                    finalLeafletOptions = this.cloneObject(leafletOptions, {id:zone.id});
+                if (!zones.hasOwnProperty(i)) { continue; }
+                zone = zones[i];
+                coords = zone.coordinates;
+                finalLeafletOptions = this.cloneObject(leafletOptions, {id:zone.id});
 
-                    if (zone.zone_type && zone.zone_type.color) {
-                        finalLeafletOptions.color = zone.zone_type.color;
-                        finalLeafletOptions.fillColor = zone.zone_type.color;
-                    }
+                zone_type = this.reference('zones_types', zone.zone_type);
 
-                    finalOptions = this.cloneObject(options, {
-                        popupContent:popupContent,
-                        esterenZone: zone,
-                        polygonName: zone.name,
-                        polygonType: zone.zone_type ? zone.zone_type.id : null,
-                        polygonFaction: zone.faction ? zone.faction.id : ''
-                    });
-                    this.addPolygon(coords,
-                        finalLeafletOptions,
-                        finalOptions
-                    );
-                }//endif (polygon.hasOwnProperty)
+                if (zone_type.color) {
+                    finalLeafletOptions.color = zone_type.color;
+                    finalLeafletOptions.fillColor = zone_type.color;
+                }
+
+                finalOptions = this.cloneObject(options, {
+                    popupContent: popupContent,
+                    esterenZone: zone,
+                    polygonName: zone.name,
+                    polygonType: zone.zone_type,
+                    polygonFaction: zone.faction
+                });
+
+                this.addPolygon(coords,
+                    finalLeafletOptions,
+                    finalOptions
+                );
             }//endfor
         }// endif response
     };
 
     /**
-     * Ajoute une zone à la carte
      * @param latLng
      * @param leafletUserOptions
      * @param customUserOptions
      * @returns {EsterenMap}
      */
     EsterenMap.prototype.addPolygon = function(latLng, leafletUserOptions, customUserOptions) {
-        var _this = this,
-            mapOptions = this._mapOptions,
+        var mapOptions = this._mapOptions,
             className,
             id,
             option,
@@ -315,14 +304,11 @@
         if (!popupContent) {
             popupContent = mapOptions.LeafletPopupPolygonBaseContent;
         }
+
         if (popupContent && typeof popupContent === 'string') {
-            popupOptions = mapOptions.LeafletPopupBaseOptions;
-            if (typeof customUserOptions.popupOptions !== 'undefined') {
-                popupOptions = this.cloneObject(popupOptions, customUserOptions.popupOptions);
-            }
             polygon.bindSidebar(this._sidebar, popupContent);
         } else if (customUserOptions.popupContent && typeof customUserOptions.popupContent !== 'string') {
-            console.error('popupContent parameter must be a string.');
+            throw 'Popup content must be a string.';
         }
 
         // Application des events listeners
@@ -334,11 +320,8 @@
 
         polygon.addTo(this._map);
 
-        option = 'zoneType'+(customUserOptions.polygonType?customUserOptions.polygonType:'1');
-        if (polygon._path.dataset) {
-            polygon._path.dataset.leafletObjectType = option;
-        }
-        polygon._path.setAttribute('data-leaflet-object-type', option);
+        option = 'zoneType'+(customUserOptions.polygonType?customUserOptions.polygonType: '1');
+        this._map.getRenderer(polygon).getPane().setAttribute('data-leaflet-object-type', option);
 
         this._polygons[id] = polygon;
 
