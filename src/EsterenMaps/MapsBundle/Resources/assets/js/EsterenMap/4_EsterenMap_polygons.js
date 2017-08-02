@@ -147,8 +147,6 @@
                 content
             ;
 
-            console.info('polygon clicked', e);
-
             if (polygon._sidebar) {
                 content = parser.parseFromString(this._sidebarContent, 'text/html');
 

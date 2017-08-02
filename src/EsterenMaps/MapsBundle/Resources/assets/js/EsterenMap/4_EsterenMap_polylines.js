@@ -251,8 +251,11 @@
                 polyline.showSidebar(content.querySelector('body').innerHTML);
             }
 
-            e.preventDefault();
-            e.stopPropagation();
+            (e.originalEvent || e).stopImmediatePropagation();
+            (e.originalEvent || e).preventDefault();
+            (e.originalEvent || e).stopPropagation();
+
+            return false;
         }
     };
 
