@@ -140,20 +140,41 @@ server {
     # Also change logs dir at the bottom of this file.
     root /var/www/corahn_rin/web;
 
+    # Change this part when using for prod
+    env SYMFONY_ENV=dev;
+    env SYMFONY_DEBUG=1;
+
+    location ~ ^/(?:fr|en)/js/ {
+        # For JS generated files, they should be processed by Symfony, not by nginx
+        try_files $uri @rewriteapp;
+    }
+
+    # Uncomment this on production
+    #location ~* \.(?:css|js|jpg|jpeg|gif|png|ico|svg)$ {
+    #    if ($arg_assetv != '')  {
+    #        expires 1y;
+    #        access_log off;
+    #        add_header Cache-Control "public";
+    #    }
+    #}
+
     # Avoids getting 404 errors for missing map tiles.
     location ~ ^/maps_tiles {
         try_files $uri /maps_tiles/empty.jpg;
     }
 
-    # DEV
-    # Remove this part when using for prod
-    env SYMFONY_ENV=dev;
-    env SYMFONY_DEBUG=1;
     location / {
-        # try to serve file directly, fallback to app.php
-        try_files $uri /app.php$is_args$args;
+        # try to serve file directly, fallback to rewrite
+        try_files $uri @rewriteapp;
     }
-    location ~ ^/(app_dev|config)\.php(/|$) {
+
+    location @rewriteapp {
+        # rewrite all to app.php
+        rewrite ^(.*)$ /app.php/$1 last;
+    }
+
+    # Remove the "config" part in production
+    location ~ ^/(app|config)\.php(/|$) {
 
         # Check your fastcgi path depending on your environment
         fastcgi_pass unix:/var/run/php5-fpm.sock; # With FPM socket
@@ -172,7 +193,6 @@ server {
         fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
         fastcgi_param DOCUMENT_ROOT $realpath_root;
     }
-    # end DEV
 
     # return 404 for all other php files not matching the front controller
     # this prevents access to other php files you don't want to be accessible.
