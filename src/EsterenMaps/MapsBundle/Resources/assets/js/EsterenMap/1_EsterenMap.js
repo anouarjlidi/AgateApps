@@ -62,7 +62,7 @@
         // Forces wrapper's size when the page is resized too.
         if (mapOptions.autoResize) {
             this.resetHeight();
-            $(w).resize(_this.resetHeight);
+            $(w).resize(function(){_this.resetHeight();});
         } else {
             this.resetHeight(mapOptions.containerHeight);
         }
@@ -97,9 +97,11 @@
                 autoPan: false
             });
             this._map.addControl(sidebar);
-            this._map.on('click', function(){
+            this._map.on('click', function(e){
                 // Hide the sidebar when user clicks on map.
-                sidebar.hide();
+                if (e.originalEvent.target.id === mapOptions.container) {
+                    sidebar.hide();
+                }
             });
             this._sidebar = sidebar;
         }
@@ -127,6 +129,11 @@
         if (mapOptions.showZones === true) {
             // See EsterenMap_polygons.js
             this.renderZones();
+        }
+
+        if (mapOptions.showRoutes === true) {
+            // See EsterenMap_polylines.js
+            this.renderRoutes();
         }
 
         ////////////////////////////////
@@ -196,8 +203,30 @@
         this._editedMarker = null;
     };
 
-    EsterenMap.prototype.reference = function(name, id) {
+    EsterenMap.prototype.mapReference = function(name, id, defaultValue) {
+        var mapReferences = this._mapOptions.data.map, ref;
+
+        defaultValue = defaultValue || null;
+
+        if (!name || !id) {
+            throw 'Please specify a map reference name or id.';
+        }
+
+        if (mapReferences[name]) {
+            if (ref = mapReferences[name][id]) {
+                return ref;
+            }
+        } else {
+            console.warn('No map reference with name "'+name+'"');
+        }
+
+        return defaultValue;
+    };
+
+    EsterenMap.prototype.reference = function(name, id, defaultValue) {
         var references = this._mapOptions.data.references, ref;
+
+        defaultValue = defaultValue || null;
 
         if (!name || !id) {
             throw 'Please specify a reference name or id.';
@@ -207,12 +236,11 @@
             if (ref = references[name][id]) {
                 return ref;
             }
-            console.warn('No reference with id "'+id+'" in "'+name+'"');
         } else {
             console.warn('No reference with name "'+name+'"');
         }
 
-        return null;
+        return defaultValue;
     };
 
     EsterenMap.prototype.loadMapData = function(){
@@ -283,7 +311,7 @@
                 - (footer ? $(footer).outerHeight(true) : 0)
                 - (navigation ? $(navigation).outerHeight(true) : 0)
                 - (maps_admin_container ? $(maps_admin_container).outerHeight(true) : 0)
-                - 10
+                - 20
             ;
             $(d.getElementById(this._mapOptions.container)).height(height);
         }

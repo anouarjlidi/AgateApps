@@ -14,15 +14,8 @@
      * @param parameters.callbackComplete Called after every other XHR callback.
      */
     EsterenMap.prototype._load = function(parameters) {
-        var url,
-            xhr_object,
-            ajaxObject,
-            xhr_name,
-            data,
-            method,
-            callback,
-            callbackComplete,
-            callbackError,
+        var url, xhr_object, ajaxObject, xhr_name, data, method,
+            callback, callbackComplete, callbackError,
             _this = this,
             allowedMethods = ['GET']
         ;

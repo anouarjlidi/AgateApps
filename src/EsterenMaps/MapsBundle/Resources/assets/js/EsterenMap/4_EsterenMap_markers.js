@@ -365,7 +365,7 @@
             iconOptions = this.cloneObject(mapOptions.LeafletIconBaseOptions),
             parser = new DOMParser(),
             id,option,icon,iconHeight,iconWidth,initialIconHeight,initialIconWidth,
-            marker,popup,popupContent,popupOptions, markerType, xmlString, doc;
+            marker,popup,popupContent,popupOptions, markerType, doc;
 
         // Safety to be sure arguments are at least plain objects
         //   to avoid "cannot read property ... of undefined" errors.
