@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Response;
 class AssetsController extends Controller
 {
     /**
-     * @Route("/js/translations.js", name="pierstoval_tools_assets_jstranslations")
+     * @Route("/js/translations", name="pierstoval_tools_assets_jstranslations")
      * @Method("GET")
      */
     public function jsTranslationsAction(Request $request, $_locale)

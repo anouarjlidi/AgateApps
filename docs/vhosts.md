@@ -139,29 +139,30 @@ server {
     # Change the directory to what you need.
     # Also change logs dir at the bottom of this file.
     root /var/www/corahn_rin/web;
-
-    # Change this part when using for prod
+    
+    # Remove this part when using for prod
     env SYMFONY_ENV=dev;
     env SYMFONY_DEBUG=1;
 
-    location ~ ^/(?:fr|en)/js/ {
-        # For JS generated files, they should be processed by Symfony, not by nginx
-        try_files $uri @rewriteapp;
-    }
-
-    # Uncomment this on production
-    #location ~* \.(?:css|js|jpg|jpeg|gif|png|ico|svg)$ {
-    #    if ($arg_assetv != '')  {
-    #        expires 1y;
-    #        access_log off;
-    #        add_header Cache-Control "public";
-    #    }
-    #}
-
     # Avoids getting 404 errors for missing map tiles.
     location ~ ^/maps_tiles {
-        try_files $uri /maps_tiles/empty.jpg;
+        try_files $uri @rewritemaptiles;
     }
+
+    location @rewritemaptiles {
+        # rewrite all to app.php
+        rewrite ^(.*)$ /maps_tiles/empty.jpg last;
+    }
+
+    # Uncomment this in production
+    # Caches assets
+    #location ~* \.(?:css|js|jpg|jpeg|gif|png|ico|eot|ttf|woff2?|svg) {
+    #    if ($args ~ "assetv=")  {
+    #        expires 1y;
+    #        access_log off;
+    #        add_header Cache-Control "public" always;
+    #    }
+    #}
 
     location / {
         # try to serve file directly, fallback to rewrite
@@ -173,25 +174,9 @@ server {
         rewrite ^(.*)$ /app.php/$1 last;
     }
 
-    # Remove the "config" part in production
-    location ~ ^/(app|config)\.php(/|$) {
-
-        # Check your fastcgi path depending on your environment
-        fastcgi_pass unix:/var/run/php5-fpm.sock; # With FPM socket
-        #fastcgi_pass 127.0.0.1:9000;             # With FastCGI / FPM classic
-
-        fastcgi_split_path_info ^(.+\.php)(/.*)$;
-        include fastcgi_params;
-
-        # When you are using symlinks to link the document root to the
-        # current version of your application, you should pass the real
-        # application path instead of the path to the symlink to PHP
-        # FPM.
-        # Otherwise, PHP's OPcache may not properly detect changes to
-        # your PHP files (see https://github.com/zendtech/ZendOptimizerPlus/issues/126
-        # for more information).
-        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
-        fastcgi_param DOCUMENT_ROOT $realpath_root;
+    location ~ ^/app\.php(/|$) {
+        try_files @heroku-fcgi @heroku-fcgi;
+        internal;
     }
 
     # return 404 for all other php files not matching the front controller
