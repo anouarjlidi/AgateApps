@@ -1266,7 +1266,7 @@ graceful-fs@^4.0.0, graceful-fs@^4.1.2:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/graceful-readlink/-/graceful-readlink-1.0.1.tgz#4cafad76bc62f02fa039b2f94e9a3dd3a391a725"
 
-gulp-clean-css@^3.0:
+gulp-clean-css@^3.7:
   version "3.7.0"
   resolved "https://registry.yarnpkg.com/gulp-clean-css/-/gulp-clean-css-3.7.0.tgz#54b33526dc899930949fb37b4cacf851c5d5d93b"
   dependencies:
@@ -1840,7 +1840,7 @@ jpegtran-bin@^3.0.0:
     bin-wrapper "^3.0.0"
     logalot "^2.0.0"
 
-jquery@^3.1, jquery@^3.2.1:
+"jquery@^3.0.0 || ^2.1.4", jquery@^3.2:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.2.1.tgz#5c4d9de652af6cd0a770154a631bba12b015c787"
 
@@ -1925,11 +1925,11 @@ lcid@^1.0.0:
   dependencies:
     invert-kv "^1.0.0"
 
-leaflet-draw@^0.4:
+leaflet-draw@^0.4.10:
   version "0.4.10"
   resolved "https://registry.yarnpkg.com/leaflet-draw/-/leaflet-draw-0.4.10.tgz#a611a29925a32cde63638e891c3bfc93163e2f43"
 
-leaflet@~1.0.3:
+leaflet@1.0.*:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/leaflet/-/leaflet-1.0.3.tgz#1f401b98b45c8192134c6c8d69686253805007c8"
 
@@ -2208,12 +2208,12 @@ matchdep@^1.0.0:
     resolve "~1.1.6"
     stack-trace "0.0.9"
 
-materialize-css@^0.99:
-  version "0.99.0"
-  resolved "https://registry.yarnpkg.com/materialize-css/-/materialize-css-0.99.0.tgz#a5d97ac65d171d5aa1bc6a1a19d984b5e17a9202"
+materialize-css@^0.100.1:
+  version "0.100.1"
+  resolved "https://registry.yarnpkg.com/materialize-css/-/materialize-css-0.100.1.tgz#032c8114adc8be3908b6c6441cbc7c4163c059c7"
   dependencies:
     hammerjs "^2.0.8"
-    jquery "^3.2.1"
+    jquery "^3.0.0 || ^2.1.4"
 
 meow@^3.1.0, meow@^3.3.0, meow@^3.5.0, meow@^3.7.0:
   version "3.7.0"
@@ -2672,7 +2672,7 @@ pseudomap@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/pseudomap/-/pseudomap-1.0.2.tgz#f052a28da70e618917ef0a8ac34c1ae5a68286b3"
 
-pump@^1.0:
+pump@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/pump/-/pump-1.0.2.tgz#3b3ee6512f94f0e575538c17995f9f16990a5d51"
   dependencies:
