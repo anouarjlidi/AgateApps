@@ -621,7 +621,7 @@ class Characters extends BaseCharacter
             }
         }
 
-        return null;
+        throw new \InvalidArgumentException(sprintf('Undefined way "%s"', $shortName));
     }
 
     /**
