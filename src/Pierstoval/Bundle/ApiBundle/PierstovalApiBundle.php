@@ -11,8 +11,17 @@
 
 namespace Pierstoval\Bundle\ApiBundle;
 
+use Pierstoval\Bundle\ApiBundle\DependencyInjection\Compiler\SerializerPass;
+use Symfony\Component\DependencyInjection\Compiler\PassConfig;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class PierstovalApiBundle extends Bundle
 {
+    public function build(ContainerBuilder $container)
+    {
+        parent::build($container);
+
+        $container->addCompilerPass(new SerializerPass(), PassConfig::TYPE_OPTIMIZE);
+    }
 }
