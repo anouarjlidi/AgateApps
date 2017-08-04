@@ -79,7 +79,8 @@
         "symfony/web-profiler-bundle": "^3.3",
         "doctrine/doctrine-fixtures-bundle": "^2.3",
         "pierstoval/web-test-case": "^0.1.5",
-        "phpunit/phpunit": "^5.7|^6.0"
+        "phpunit/phpunit": "^5.7|^6.0",
+        "symfony/web-server-bundle": "^3.3"
     },
     "scripts": {
         "symfony-scripts": [
