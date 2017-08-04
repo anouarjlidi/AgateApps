@@ -13,7 +13,7 @@ namespace EsterenMaps\MapsBundle\Tests\Controller\Api;
 
 use Tests\WebTestCase;
 
-class MapsControllerTest extends WebTestCase
+class ApiMapsControllerTest extends WebTestCase
 {
     public function testMapInfo()
     {
