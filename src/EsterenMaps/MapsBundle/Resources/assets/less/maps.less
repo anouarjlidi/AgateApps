@@ -204,20 +204,27 @@
 }
 
 #leaflet-directions-control,
-#leaflet-search-control
-{
+#leaflet-filters-control,
+#leaflet-search-control {
     background: white;
     color: black;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     border-radius: 4px;
     padding: 0 10px 10px 10px;
+    margin-left: 12px;
     min-width: 30px;
     min-height: 30px;
     max-width: ~"calc(100% - 30px)";
     max-height: 300px;
     overflow: hidden;
-    overflow-y: auto;
+    -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.8);
+    -moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.8);
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.8);
+}
+#leaflet-directions-control,
+#leaflet-search-control
+{
     #directions_control_content {
         display: none;
     }
@@ -242,7 +249,7 @@
         min-width: 350px;
         min-height: 250px;
         overflow-x: hidden;
-        overflow-y: scroll;
+        overflow-y: auto;
         #directions_control_content,
         #directions_search_content
         {
@@ -329,4 +336,16 @@ Edit mode
     left: 2px;
     padding: 4px 7px;
     display: block;
+}
+
+/*
+ * Leaflet overrides
+ */
+.leaflet-touch .leaflet-control-layers, .leaflet-touch .leaflet-bar {
+    border: none;
+    background: white;
+    margin-left: 12px;
+    -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.8);
+    -moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.8);
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.8);
 }
