@@ -217,6 +217,7 @@
             if (this._markers.hasOwnProperty(i)) {
                 this._map.removeLayer(this._markers[i]);
                 this._markers[i].remove();
+                delete this._markers[i];
             }
         }
 
@@ -388,7 +389,7 @@
         }
 
         // Alt should contain the markers' ID
-        if (!leafletOptions.alt) {
+        if (!customUserOptions.esterenMarker || !customUserOptions.esterenMarker.id) {
             id = this._mapOptions.maxMarkerId;
         } else {
             id = customUserOptions.esterenMarker ? customUserOptions.esterenMarker.id : leafletUserOptions.alt;
