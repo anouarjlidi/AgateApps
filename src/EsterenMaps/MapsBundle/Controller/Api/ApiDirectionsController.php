@@ -48,17 +48,17 @@ class ApiDirectionsController extends Controller
         $hoursPerDay = $request->query->get('hours_per_day', 7);
 
         if (!$transport && $transportId) {
-            $directions = $this->getError($from, $to, $transportId, 'Transport not found.');
-            $code       = 404;
+            $output = $this->getError($from, $to, $transportId, 'Transport not found.');
+            $code   = 404;
         } else {
-            $directions = $this->get('esterenmaps')->getDirectionsManager()->getDirections($map, $from, $to, $hoursPerDay, $transport);
-            if (!count($directions)) {
-                $directions = $this->getError($from, $to);
-                $code       = 404;
+            $output = $this->get('esterenmaps')->getDirectionsManager()->getDirections($map, $from, $to, $hoursPerDay, $transport);
+            if (!count($output)) {
+                $output = $this->getError($from, $to);
+                $code   = 404;
             }
         }
 
-        return new JsonResponse($directions, $code);
+        return new JsonResponse($output, $code);
     }
 
     /**

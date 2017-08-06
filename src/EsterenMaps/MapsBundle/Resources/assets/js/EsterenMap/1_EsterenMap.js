@@ -99,7 +99,7 @@
             this._map.addControl(sidebar);
             this._map.on('click', function(e){
                 // Hide the sidebar when user clicks on map.
-                if (e.originalEvent.target.id === mapOptions.container) {
+                if ((e.originalEvent || e).target.id === mapOptions.container) {
                     sidebar.hide();
                 }
             });

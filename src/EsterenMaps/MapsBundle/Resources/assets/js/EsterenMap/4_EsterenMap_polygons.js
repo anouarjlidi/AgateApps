@@ -157,9 +157,9 @@
                 polygon.showSidebar(content.querySelector('body').innerHTML);
             }
 
-            (e.originalEvent || e).stopImmediatePropagation();
-            (e.originalEvent || e).preventDefault();
-            (e.originalEvent || e).stopPropagation();
+            L.DomEvent.stopPropagation(e);
+            L.DomEvent.stopImmediatePropagation(e);
+            L.DomEvent.preventDefault(e);
 
             return false;
         }

@@ -14,10 +14,6 @@
     EsterenMap.prototype._polygons = {};
     EsterenMap.prototype._polylines = {};
 
-    EsterenMap.prototype._markersTypes = {};
-    EsterenMap.prototype._routesTypes = {};
-    EsterenMap.prototype._zonesTypes = {};
-
     EsterenMap.prototype._directionsOptions = {
         position: 'topleft'
     };
