@@ -60,17 +60,22 @@
                 map = this._esterenMap,
                 markers = map._markers,
                 routes = map._polylines,
-                i, l, step, marker, route;
+                i, l, step, marker, route, routeElement
+            ;
+
             for (i = 0, l = path.length; i < l; i++) {
                 step = path[i];
                 marker = markers[step.id];
                 route = step.route ? routes[step.route.id] : null;
                 marker._icon.classList.add('selected');
-                if (route && !route._path.classList.contains('highlighted')) {
-                    route._path.setAttribute('stroke-width', parseInt(route._path.getAttribute('stroke-width')) * 2);
-                    route._oldColor = route._path.getAttribute('stroke');
-                    route._path.setAttribute('stroke', this._pathColor);
-                    route._path.classList.add('highlighted');
+                if (route) {
+                    routeElement = this._map.getRenderer(route).getPane();
+                    if (!routeElement.classList.contains('highlighted')) {
+                        routeElement.setAttribute('stroke-width', parseInt(routeElement.getAttribute('stroke-width')) * 2);
+                        route._oldColor = routeElement.getAttribute('stroke');
+                        routeElement.setAttribute('stroke', this._pathColor);
+                        routeElement.classList.add('highlighted');
+                    }
                 }
             }
         },
@@ -80,17 +85,22 @@
                 map = this._esterenMap,
                 markers = map._markers,
                 routes = map._polylines,
-                i, l, step, marker, route;
+                i, l, step, marker, route, routeElement
+            ;
+
             if (path && path.length) {
                 for (i = 0, l = path.length; i < l; i++) {
                     step = path[i];
                     marker = markers[step.id];
                     route = step.route ? routes[step.route.id] : null;
                     marker._icon.classList.remove('selected');
-                    if (route && route._path.classList.contains('highlighted')) {
-                        route._path.setAttribute('stroke-width', parseInt(route._path.getAttribute('stroke-width')) / 2);
-                        route._path.setAttribute('stroke', route._oldColor);
-                        route._path.classList.remove('highlighted');
+                    if (route) {
+                        routeElement = this._map.getRenderer(route).getPane();
+                        if (routeElement.classList.contains('highlighted')) {
+                            routeElement.setAttribute('stroke-width', parseInt(routeElement.getAttribute('stroke-width')) / 2);
+                            routeElement.setAttribute('stroke', route._oldColor);
+                            routeElement.classList.remove('highlighted');
+                        }
                     }
                 }
             }
@@ -98,20 +108,21 @@
         },
 
         createContent: function(){
-            var map = this._esterenMap, _this = this, message = '';;
-
             if (this._cntSet) {
                 console.error('Content has already been set for this direction panel.');
                 return false;
             }
 
             var content,
+                map = this._esterenMap,
+                message = '',
                 msgSend = typeof FORM_SUBMIT !== 'undefined' ? FORM_SUBMIT : 'Envoyer',
                 directionsMsgTitle = typeof MSG_CONTROL_DIRECTIONS_TITLE !== 'undefined' ? MSG_CONTROL_DIRECTIONS_TITLE : 'Calculer un itinéraire',
                 directionsMsgStart = typeof MSG_CONTROL_DIRECTIONS_START !== 'undefined' ? MSG_CONTROL_DIRECTIONS_START : 'Départ',
                 directionsMsgEnd = typeof MSG_CONTROL_DIRECTIONS_END !== 'undefined' ? MSG_CONTROL_DIRECTIONS_END : 'Arrivée',
                 directionsMsgTransport = typeof MSG_CONTROL_TRANSPORTS !== 'undefined' ? MSG_CONTROL_TRANSPORTS : 'Moyen de transport',
-                directionsMsgNotFound = typeof MSG_CONTROL_DIRECTIONS_MARKER_NOT_FOUND !== 'undefined' ? MSG_CONTROL_DIRECTIONS_MARKER_NOT_FOUND : 'Marqueur(s) non trouvé(s) :'
+                directionsMsgNotFound = typeof MSG_CONTROL_DIRECTIONS_MARKER_NOT_FOUND !== 'undefined' ? MSG_CONTROL_DIRECTIONS_MARKER_NOT_FOUND : 'Marqueur(s) non trouvé(s) :',
+                $controlContent = $(this._controlContent)
             ;
 
             // Ajout des différents noeuds à l'objet Content
@@ -121,38 +132,32 @@
             content =
             '<div>' +
                 '<div id="directions_wait_overlay"></div>' +
-                '<h3>' + directionsMsgTitle + '</h3>' +
-                '<form action="#" id="directions_form" class="form-horizontal">' +
-                    '<div class="form-group">' +
-                        '<label for="directions_start" class="col-xs-3 control-label">' + directionsMsgStart + '</label>' +
-                        '<div class="col-xs-9">' +
-                            '<input type="text" name="start" id="directions_start" placeholder="' + directionsMsgStart + '" class="form-control" />' +
-                            '<div class="directions_helper"></div>' +
-                        '</div>' +
+                '<h3 class="text-xxl">' + directionsMsgTitle + '</h3>' +
+                '<form action="#" id="directions_form">' +
+                    '<div class="input-field">' +
+                        '<input type="text" name="start" id="directions_start" />' +
+                        '<label for="directions_start">' + directionsMsgStart + '</label>' +
+                        '<div class="directions_helper"></div>' +
                     '</div>' +
-                    '<div class="form-group">' +
-                        '<label for="directions_end" class="col-xs-3 control-label">' + directionsMsgEnd + '</label>' +
-                        '<div class="col-xs-9">' +
-                            '<input type="text" name="end" id="directions_end" placeholder="' + directionsMsgEnd + '" class="form-control" />' +
-                            '<div class="directions_helper"></div>' +
-                        '</div>' +
+                    '<div class="input-field">' +
+                        '<input type="text" name="end" id="directions_end" />' +
+                        '<label for="directions_end">' + directionsMsgEnd + '</label>' +
+                        '<div class="directions_helper"></div>' +
                     '</div>' +
-                    '<div class="form-group">' +
-                        '<label for="transport" class="col-xs-3 control-label">' + directionsMsgTransport + '</label>' +
-                        '<div class="col-xs-9">' +
-                            '<select name="directions_transport" id="directions_transport" class="form-control"></select>' +
-                            '<div class="directions_helper"></div>' +
-                        '</div>' +
+                    '<div>' +
+                        '<h3 class="text-xxl">' + directionsMsgTransport + '</h3>' +
+                        '<div id="directions_transport"></div>' +
                     '</div>' +
-                    '<button class="btn btn-default" type="submit">' + msgSend + '</button>' +
+                    '<button class="btn" type="submit">' + msgSend + '</button>' +
                     '<div id="directions_message"></div>' +
                 '</div>' +
                 '</form>' +
             '</div>'
             ;
 
-            $(this._controlContent).html('').append(content);
-            $(this._controlContent).find('.directions_helper').on('click', function(e){
+            $controlContent.html('').append(content);
+
+            $controlContent.find('.directions_helper').on('click', function(e){
                 var input, li = e.target;
                 if (li.tagName.toLowerCase() === 'li') {
                     input = li.parentElement.parentElement.previousElementSibling;
@@ -163,63 +168,81 @@
 
             var transportsOptions = '';
             $.each(map._mapOptions.data.references.transports, function(i, e){
-                transportsOptions += '<option value="' + e.id + '">' + e.name + '</option>';
+                transportsOptions +=
+                    '<div>' +
+                        '<input name="directions_transport" type="radio" id="directions_transport_' + e.id + '" value="' + e.id + '">' +
+                        '<label for="directions_transport_' + e.id + '">' + e.name + '</label>' +
+                    '</div>'
+                ;
             });
-            $(_this._controlContent).find('#directions_transport').html(transportsOptions);
 
-            $(this._controlContent).find('#directions_start,#directions_end').on('keypress', function(event){
-                var $this = $(this),
-                    html = '',
-                    value = $this.val().trim(),
-                    keyCode = event.keyCode ? event.keyCode : event.which,
-                    directionsHelper = $this.next('.directions_helper'),
-                    marker;
+            $controlContent.find('#directions_transport').html(transportsOptions);
 
-                // If user entered a value, we create a list based on all markers.
-                // We are matching markers only with a regexp.
-                // Regexp curious users will be pleased to test this themselves... :D
-                if (value) {
-                    for (marker in map._markers) {
-                        if (map._markers.hasOwnProperty(marker)) {
+            $controlContent.find('#directions_start,#directions_end')
+                .on('keyup', function(){
+                    var $this = $(this),
+                        html = '',
+                        value = this.value.trim(),
+                        directionsHelper = $this.parent().find('.directions_helper'),
+                        marker;
+
+                    // If user entered a value, we create a list based on all markers.
+                    // We are matching markers only with a regexp.
+                    // Regexp curious users will be pleased to test this themselves... :D
+                    if (value) {
+                        for (marker in map._markers) {
+                            if (!map._markers.hasOwnProperty(marker)) { continue; }
                             marker = map._markers[marker]._esterenMarker;
                             if (marker.name.match(new RegExp(value, 'gi'))) {
                                 html += '<li data-marker-id="'+marker.id+'">'+marker.name+'</li>';
                             }
                         }
                     }
-                }
 
-                // And finally add the list to the directions helper.
-                if (html) {
-                    html = '<ul class="list-unstyled">'+html+'</ul>';
-                }
-                directionsHelper.html(html);
+                    // And finally add the list to the directions helper.
+                    if (html) {
+                        html = '<ul class="list-unstyled">'+html+'</ul>';
+                    }
 
-                // If pressed "enter", we click on the first element.
-                if (keyCode == 13) {
-                    directionsHelper.find('ul > li').first().click();
+                    directionsHelper.html(html);
+                })
+                .on('keypress', function(event){
+                    var keyCode = event.keyCode ? event.keyCode : event.which,
+                        directionsHelper = $(this).parent().find('.directions_helper')
+                    ;
 
-                    // Avoid submitting the form at the same time, most of the time it triggers errors.
-                    event.preventDefault();
-                    return false;
-                }
-            });
-            $(this._controlContent).find('#directions_form').on('submit', function(e){
+                    // If pressed "enter", we click on the first element.
+                    if (keyCode === 13) {
+                        directionsHelper.find('ul > li').first().click();
+
+                        // Avoid submitting the form at the same time, most of the time it triggers errors.
+                        L.DomEvent.preventDefault(event);
+                        return false;
+                    }
+                })
+            ;
+
+            $controlContent.find('#directions_form').on('submit', function(e){
                 var data = $(this).serializeArray(),
                     markers = map._markers,
                     control = map._directionsControl,
                     submitButton = this.querySelector('[type="submit"]'),
                     messageBox = d.getElementById('directions_message'),
+                    overlay = d.getElementById('directions_wait_overlay'),
+                    //directionsHelpers = this.querySelectorAll('.directions_helper'),
                     markerStart, markerEnd,
                     start = data.filter(function(e){return e.name==='start';})[0].value,
                     end = data.filter(function(e){return e.name==='end';})[0].value,
                     transport = data.filter(function(e){return e.name==='directions_transport';})[0].value
                 ;
+
                 if (submitButton.hasAttribute('disabled')) {
                     return false;
                 }
+
                 submitButton.setAttribute('disabled', 'disabled');
                 control.cleanDirections();
+
                 for (var marker in markers) {
                     if (markers.hasOwnProperty(marker)) {
                         marker = markers[marker]._esterenMarker;
@@ -234,8 +257,9 @@
                         }
                     }
                 }
+
                 if (markerStart && markerEnd) {
-                    d.getElementById('directions_wait_overlay').style.display = "block";
+                    overlay.style.display = "block";
                     map._load({
                         url: 'maps/directions/'+map._mapOptions.id+'/'+markerStart+'/'+markerEnd,
                         xhr_name: 'directions_calculate',
@@ -257,14 +281,18 @@
                         },
                         callbackComplete: function() {
                             submitButton.removeAttribute('disabled');
+                            overlay.style.display = '';
                         },
                         callbackError: function() {
                             submitButton.removeAttribute('disabled');
+                            overlay.style.display = '';
                         }
                     });
-                } else if (markerStart || markerEnd || start || end) {
+
+                    return;
+                }/* else if (markerStart || markerEnd || start || end) {
                     // If pressed "enter", we click on the first element.
-                    if (keyCode == 13) {
+                    if (e.keyCode === 13) {
                         directionsHelper.find('ul > li').first().click();
 
                         // Avoid submitting the form at the same time, most of the time it triggers errors.
@@ -278,8 +306,13 @@
                     if (!markerEnd && end) {
                         message += (message?', ':'') + end;
                     }
+
                     messageBox.innerHTML = directionsMsgNotFound + ' ' + message;
-                }
+                }*/
+
+                submitButton.removeAttribute('disabled');
+                overlay.style.display = '';
+
                 return false;
             });
 
@@ -323,15 +356,16 @@
             controlContent = L.DomUtil.create('div', 'leaflet-directions-control-content', controlDiv);
             controlContent.id = 'directions_control_content';
 
-            link = L.DomUtil.create('a', '', controlDiv);
+            link = L.DomUtil.create('a', 'map-control-toggle', controlDiv);
             link.id = 'leaflet-directions-toggle';
             link.style.backgroundImage = 'none';
             link.href = "#";
             link.innerHTML = '<i class="fa fa-location-arrow" style="font-size: 16px;"></i>';
-            link.title = textTitle;
+            link.setAttribute('data-tooltip', textTitle);
             $(link).tooltip({
-                "placement" : "right",
-                "container": "body"
+                "delay": 25,
+                "position" : "right",
+                "html": "true"
             });
 
             // Listener DirectionsControl
@@ -361,7 +395,8 @@
                 .on(this._controlDiv, 'touchstart', L.DomEvent.stopPropagation)
                 .on(this._controlDiv, 'dblclick', L.DomEvent.stopPropagation)
                 .on(this._controlDiv, 'mousewheel', L.DomEvent.stopPropagation)
-                .on(this._controlDiv, 'MozMousePixelScroll', L.DomEvent.stopPropagation);
+                .on(this._controlDiv, 'MozMousePixelScroll', L.DomEvent.stopPropagation)
+            ;
 
             return controlDiv;
         }

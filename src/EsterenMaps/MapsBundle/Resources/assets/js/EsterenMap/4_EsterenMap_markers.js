@@ -411,7 +411,7 @@
 
         markerType = marker._esterenMarker.marker_type;
         if (!isNaN(markerType)) {
-            markerType = this._mapOptions.data.references.markers_types[markerType];
+            markerType = this.reference('markers_types', markerType);
             if (!markerType) {
                 throw 'Undefined marker id '+marker._esterenMarker.marker_type;
             }

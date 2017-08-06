@@ -186,6 +186,14 @@
             link.children[0].classList.remove('icon-resize_small');
         },
 
+        toggle: function(){
+            if (!this._controlDiv.classList.contains('expanded')) {
+                this.show();
+            } else {
+                this.hide();
+            }
+        },
+
         onAdd: function () {
             var _this = this, controlDiv, link, textTitle, controlContent;
 
@@ -201,7 +209,7 @@
 
             controlContent = L.DomUtil.create('div', 'leaflet-filters-control-content', controlDiv);
 
-            link = L.DomUtil.create('a', '', controlDiv);
+            link = L.DomUtil.create('a', 'map-control-toggle', controlDiv);
             link.id = 'leaflet-filters-toggle';
             link.style.backgroundImage = 'none';
             link.href = "#";
@@ -216,13 +224,7 @@
             // Listener FiltersControl
             L.DomEvent
                 .addListener(link, 'click', function (e) {
-                    var controlDiv = d.getElementById('leaflet-filters-control');
-
-                    if (!controlDiv.classList.contains('expanded')) {
-                        _this.show();
-                    } else {
-                        _this.hide();
-                    }
+                    _this.toggle();
 
                     L.DomEvent.stopPropagation(e);
                     L.DomEvent.preventDefault(e);

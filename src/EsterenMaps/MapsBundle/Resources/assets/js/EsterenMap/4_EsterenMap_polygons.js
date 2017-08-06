@@ -158,7 +158,6 @@
             }
 
             L.DomEvent.stopPropagation(e);
-            L.DomEvent.stopImmediatePropagation(e);
             L.DomEvent.preventDefault(e);
 
             return false;

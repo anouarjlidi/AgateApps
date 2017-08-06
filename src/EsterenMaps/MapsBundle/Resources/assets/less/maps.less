@@ -203,6 +203,33 @@
     background-color: rgba(255, 255, 255, 0.7);
 }
 
+a.map-control-toggle {
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    width: 30px;
+    height: 30px;
+    .expanded & {
+        background-color: rgba(50, 50, 50, 0.1);
+        i.fa {
+            color: #f28f70;
+        }
+    }
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.15);
+    }
+    &#leaflet-directions-toggle,
+    &#leaflet-search-toggle
+    {
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: 6px 8px 5px;
+        display: block;
+        font-size: 13px;
+    }
+}
+
 #leaflet-directions-control,
 #leaflet-filters-control,
 #leaflet-search-control {
@@ -222,26 +249,24 @@
     -moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.8);
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.8);
 }
+
 #leaflet-directions-control,
 #leaflet-search-control
 {
-    #directions_control_content {
-        display: none;
-    }
+    #directions_control_content,
     #search_control_content {
         display: none;
-        padding-top: 25px;
+        padding-top: 30px;
+        h3 {
+            padding: 0;
+            margin: 0;
+        }
+    }
+    #search_control_content {
         #search_form {
             input {
                 padding-bottom: 0;
-                margin-bottom: 0;
-            }
-            label {
-                font-size: 1.3em;
-                color: black;
-                padding: 10px 0;
-                display: inline-block;
-                font-weight: bold;
+                margin-bottom: 10px;
             }
         }
     }
@@ -257,16 +282,7 @@
         }
     }
 }
-#leaflet-directions-toggle,
-#leaflet-search-toggle
-{
-    position: absolute;
-    top: 0;
-    left: 0;
-    padding: 6px 8px 5px;
-    display: block;
-    font-size: 13px;
-}
+
 .directions_helper ul,
 .search_helper ul
 {
@@ -283,6 +299,38 @@
             cursor: pointer;
         }
     }
+}
+
+#directions_form {
+    button[type="submit"] {
+        margin-top: 10px;
+    }
+}
+
+#directions_transport {
+    margin-top: 10px;
+    input {
+        margin-bottom: 0;
+    }
+    label[for^="directions_transport_"] {
+        pointer-events: auto;
+        color: #333;
+        width: 100%;
+        &:hover {
+            color: #000;
+            background: rgba(128, 128, 128, 0.1);
+        }
+    }
+}
+
+#directions_wait_overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(50, 50, 50, 0.4);
+    display: none;
 }
 
 /*
@@ -325,9 +373,9 @@ Edit mode
 }
 #leaflet-filters-toggle {
     position: absolute;
-    bottom: 2px;
-    left: 2px;
-    padding: 4px 7px;
+    bottom: 0;
+    left: 0;
+    padding: 7px 9px;
     display: block;
 }
 

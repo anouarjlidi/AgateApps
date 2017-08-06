@@ -70,7 +70,7 @@
             controlContent = L.DomUtil.create('div', 'leaflet-search-control-content', controlDiv);
             controlContent.id = 'search_control_content';
 
-            link = L.DomUtil.create('a', '', controlDiv);
+            link = L.DomUtil.create('a', 'map-control-toggle', controlDiv);
             link.id = 'leaflet-search-toggle';
             link.style.backgroundImage = 'none';
             link.href = "#";
@@ -148,7 +148,7 @@
                 if (event.keyCode === 27) {
                     this.value = "";
                     _control.unFocusSelectedElement();
-                    $this.next('.search_helper').html('');
+                    $this.parent().find('.search_helper').html('');
                     event.preventDefault();
                     return false;
                 }
@@ -174,7 +174,7 @@
                     html = '<ul class="list-unstyled">'+html+'</ul>';
                 }
 
-                $this.next('.search_helper').html(html);
+                $this.parent().find('.search_helper').html(html);
                 event.preventDefault();
                 return false;
             });
@@ -469,13 +469,12 @@
             content =
             '<div>' +
                 '<div id="maps_search_wait_overlay"></div>' +
-                '<form action="#" id="'+L.Control.Search.FORM_ID+'" class="form-horizontal">' +
-                    '<div class="form-group">' +
-                        '<div class="col-xs-12">' +
-                            '<label for="'+L.Control.Search.INPUT_QUERY_ID+'">' + searchMsgTitle + '</label>' +
-                            '<input type="text" name="'+L.Control.Search.INPUT_QUERY_ID+'" id="'+L.Control.Search.INPUT_QUERY_ID+'" placeholder="' + searchMsgPlaceholder + '" class="form-control" />' +
-                            '<div class="search_helper"></div>' +
-                        '</div>' +
+                '<form action="#" id="'+L.Control.Search.FORM_ID+'">' +
+                    '<h3 class="text-xxl">' + searchMsgTitle + '</h3>' +
+                    '<div class="input-field">' +
+                        '<input type="text" name="'+L.Control.Search.INPUT_QUERY_ID+'" id="'+L.Control.Search.INPUT_QUERY_ID+'" />' +
+                        '<label for="'+L.Control.Search.INPUT_QUERY_ID+'">' + searchMsgPlaceholder + '</label>' +
+                        '<div class="search_helper"></div>' +
                     '</div>' +
                     '<div id="'+L.Control.Search.BOX_MESSAGE_ID+'"></div>' +
                     '<button id="'+L.Control.Search.BUTTON_SUBMIT_ID+'" class="btn btn-default" type="button">' + msgSend + '</button>' +
