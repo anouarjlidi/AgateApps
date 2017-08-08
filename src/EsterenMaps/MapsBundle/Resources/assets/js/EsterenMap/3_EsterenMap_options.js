@@ -5,7 +5,7 @@
     EsterenMap.prototype._drawControl = null;
     EsterenMap.prototype._drawnItems = null;
     EsterenMap.prototype._tileLayer = null;
-    EsterenMap.prototype._xhr_saves = null;
+    EsterenMap.prototype._xhr_saves = {};
     EsterenMap.prototype._editedMarker = null;
     EsterenMap.prototype._editedPolyline = null;
     EsterenMap.prototype._editedPolygon = null;

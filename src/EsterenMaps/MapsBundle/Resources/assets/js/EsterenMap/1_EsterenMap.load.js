@@ -9,6 +9,7 @@
      * @param parameters.url              URL to load.
      * @param parameters.data             Options to send as AJAX data.
      * @param parameters.method           HTTP verb.
+     * @param parameters.xhr_name         The name of an XHR var stored in memory, to abort unfinished HTTP requests.
      * @param parameters.callback         Called when HTTP request is successful (2xx HTTP code).
      * @param parameters.callbackError    Called when HTTP requet fails.
      * @param parameters.callbackComplete Called after every other XHR callback.
