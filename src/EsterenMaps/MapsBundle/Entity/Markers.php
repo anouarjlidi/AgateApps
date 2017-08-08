@@ -27,7 +27,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  * @ORM\Entity(repositoryClass="EsterenMaps\MapsBundle\Repository\MarkersRepository")
  */
-class Markers implements EntityToClearInterface
+class Markers implements EntityToClearInterface, \JsonSerializable
 {
     use TimestampableEntity;
     use SoftDeleteableEntity;
@@ -559,5 +559,17 @@ class Markers implements EntityToClearInterface
         foreach ($this->routesEnd as $route) {
             $route->refresh();
         }
+    }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'description' => $this->description,
+            'altitude' => (float) $this->altitude,
+            'latitude' => (float) $this->latitude,
+            'longitude' => (float) $this->longitude,
+        ];
     }
 }

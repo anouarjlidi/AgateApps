@@ -18,28 +18,6 @@ use Orbitale\Component\DoctrineTools\BaseEntityRepository as BaseRepository;
  */
 class MarkersRepository extends BaseRepository
 {
-    /**
-     * @param array $ids
-     *
-     * @return array[]
-     */
-    public function findByIdsArray(array $ids)
-    {
-        return $this->_em
-            ->createQuery("
-                SELECT
-                marker, markerType, faction
-                FROM {$this->_entityName} marker
-                LEFT JOIN marker.markerType markerType
-                LEFT JOIN marker.faction faction
-                INDEX BY marker.id
-                WHERE marker.id IN (:ids)
-            ")
-            ->setParameter(':ids', $ids)
-            ->getArrayResult()
-        ;
-    }
-
     public function findForApiByMap($mapId)
     {
         $query = $this->createQueryBuilder('marker')

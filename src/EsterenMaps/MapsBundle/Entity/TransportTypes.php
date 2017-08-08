@@ -26,7 +26,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  * @ORM\Entity(repositoryClass="EsterenMaps\MapsBundle\Repository\TransportTypesRepository")
  */
-class TransportTypes implements EntityToClearInterface
+class TransportTypes implements EntityToClearInterface, \JsonSerializable
 {
     use TimestampableEntity;
     use SoftDeleteableEntity;
@@ -247,5 +247,16 @@ class TransportTypes implements EntityToClearInterface
     public function getTransportsModifiers()
     {
         return $this->transportsModifiers;
+    }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'slug' => $this->slug,
+            'description' => $this->description ?: null,
+            'speed' => (float) $this->speed,
+        ];
     }
 }

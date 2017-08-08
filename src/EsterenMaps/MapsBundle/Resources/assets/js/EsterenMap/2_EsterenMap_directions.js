@@ -69,9 +69,9 @@
                 route = step.route ? routes[step.route.id] : null;
                 marker._icon.classList.add('selected');
                 if (route) {
-                    routeElement = this._map.getRenderer(route).getPane();
+                    routeElement = route._path;
                     if (!routeElement.classList.contains('highlighted')) {
-                        routeElement.setAttribute('stroke-width', parseInt(routeElement.getAttribute('stroke-width')) * 2);
+                        routeElement.setAttribute('stroke-width', parseInt(routeElement.getAttribute('stroke-width')||1) * 2);
                         route._oldColor = routeElement.getAttribute('stroke');
                         routeElement.setAttribute('stroke', this._pathColor);
                         routeElement.classList.add('highlighted');
@@ -95,9 +95,9 @@
                     route = step.route ? routes[step.route.id] : null;
                     marker._icon.classList.remove('selected');
                     if (route) {
-                        routeElement = this._map.getRenderer(route).getPane();
+                        routeElement = route._path;
                         if (routeElement.classList.contains('highlighted')) {
-                            routeElement.setAttribute('stroke-width', parseInt(routeElement.getAttribute('stroke-width')) / 2);
+                            routeElement.setAttribute('stroke-width', parseInt(routeElement.getAttribute('stroke-width')||2) / 2);
                             routeElement.setAttribute('stroke', route._oldColor);
                             routeElement.classList.remove('highlighted');
                         }

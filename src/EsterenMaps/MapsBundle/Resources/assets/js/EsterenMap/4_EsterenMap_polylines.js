@@ -37,6 +37,16 @@
         this.editing.disable();
     };
 
+    //L.Polyline.prototype._path = function() {
+    //    var esterenRoute = this._esterenRoute;
+    //
+    //    if (esterenRoute && esterenRoute.id) {
+    //        return d.getElementById(this._map._mapOptions.container).querySelector('.drawn_polyline_'+esterenRoute.id);
+    //    }
+    //
+    //    return null;
+    //};
+
     L.Polyline.prototype.updateDetails = function() {
         var latlngs,
             esterenRoute = this._esterenRoute,
@@ -425,11 +435,8 @@
      */
     EsterenMap.prototype.addPolyline = function(latLng, leafletUserOptions, customUserOptions) {
         var mapOptions = this._mapOptions,
-            className,
-            id,
-            option,
             leafletOptions = mapOptions.LeafletPolylineBaseOptions,
-            polyline,popupContent
+            id, option, polyline, popupContent
         ;
 
         if (leafletUserOptions) {
@@ -448,9 +455,7 @@
 
         while (d.getElementById('polyline_'+id+'_name')) { id ++; }
 
-        className = 'drawn_polyline_'+id;
-
-        leafletOptions.className = className;
+        leafletOptions.className = 'drawn_polyline_'+id;
 
         polyline = L.polyline(latLng, leafletOptions);
 
@@ -485,7 +490,7 @@
         polyline.addTo(this._map);
 
         option = 'routeType'+(customUserOptions.polylineType?customUserOptions.polylineType:'1');
-        this._map.getRenderer(polyline).getPane().setAttribute('data-leaflet-object-type', option);
+        polyline._path.setAttribute('data-leaflet-object-type', option);
 
         this._polylines[id] = polyline;
 

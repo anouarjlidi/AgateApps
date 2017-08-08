@@ -59,12 +59,9 @@ services:
         class: EsterenMaps\MapsBundle\Services\DirectionsManager
         public: false
         lazy: true
+        autowire: true
         arguments:
-            - '%kernel.debug%'
-            - '@doctrine.orm.default_entity_manager'
-            - '@serializer'
-            - '@templating'
-            - '@esterenmaps.cache'
+            $debug: '%kernel.debug%'
 
     esterenmaps.coordinates_manager:
         class: EsterenMaps\MapsBundle\Services\CoordinatesManager

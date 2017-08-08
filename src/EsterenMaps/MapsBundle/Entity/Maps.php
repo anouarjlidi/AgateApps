@@ -11,9 +11,9 @@
 
 namespace EsterenMaps\MapsBundle\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use EsterenMaps\MapsBundle\Cache\EntityToClearInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
@@ -26,7 +26,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  * @Gedmo\Uploadable(allowOverwrite=true, filenameGenerator="SHA1")
  */
-class Maps
+class Maps implements EntityToClearInterface
 {
     use TimestampableEntity;
     use SoftDeleteableEntity;
