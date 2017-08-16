@@ -125,7 +125,6 @@
                                     <ul>
                                     {% block footer_links_content %}
                                         <li><a href="{{ path('contact') }}">{{ 'footer.contact'|trans }}</a></li>
-                                        {#<li><a href="{{ path('agate_team') }}">{{ 'footer.team'|trans }}</a></li>#}
                                         <li><a href="https://www.google.com/maps/d/viewer?mid=1wdFjK4OsYcQpwiASe9AVhkGNPbQ">{{ 'footer.meet_the_team'|trans }}</a></li>
                                         {% if app.request.locale == 'fr' %}
                                             <li><a href="{{ path('legal_mentions') }}">{{ 'footer.legal_mentions'|trans }}</a></li>

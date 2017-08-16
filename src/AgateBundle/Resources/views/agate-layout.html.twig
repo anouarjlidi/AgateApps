@@ -26,6 +26,7 @@
 {% endblock %}
 
 {% block footer_links_content %}
+    <li><a href="{{ path('agate_team') }}">{{ 'footer.team'|trans }}</a></li>
     <li><a href="http://agate-rpg.blogspot.fr/">{{ 'footer.agate_rpg_blog'|trans }}</a></li>
     {{ parent() }}
 {% endblock %}
