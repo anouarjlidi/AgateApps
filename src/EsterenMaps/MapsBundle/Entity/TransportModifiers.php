@@ -66,20 +66,11 @@ class TransportModifiers implements EntityToClearInterface
     */
     protected $percentage = 100;
 
-    /**
-     * @var bool
-     *
-     * @ORM\Column(name="positive_ratio", type="boolean", nullable=false, options={"default": "1"})
-     * @Assert\Type(type="boolean")
-     * @Assert\NotNull()
-     */
-    protected $positiveRatio = true;
-
     public function __toString()
     {
         return (string) $this->transportType.
             ' - '.$this->routeType.
-            ' ('.($this->positiveRatio ? 1 : -1).$this->percentage.'%)';
+            ' ('.$this->percentage.'%)';
     }
 
     /**
@@ -174,28 +165,6 @@ class TransportModifiers implements EntityToClearInterface
     public function setPercentage($percentage)
     {
         $this->percentage = $percentage;
-
-        return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isPositiveRatio()
-    {
-        return $this->positiveRatio;
-    }
-
-    /**
-     * @param bool $positiveRatio
-     *
-     * @return TransportModifiers
-     *
-     * @codeCoverageIgnore
-     */
-    public function setPositiveRatio($positiveRatio)
-    {
-        $this->positiveRatio = $positiveRatio;
 
         return $this;
     }
