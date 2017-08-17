@@ -1,52 +1,35 @@
 
     EsterenMap.prototype._map = null;
-    EsterenMap.prototype._sidebar = {};
-    EsterenMap.prototype._filtersControl = {};
-    EsterenMap.prototype._drawControl = {};
-    EsterenMap.prototype._drawnItems = {};
-    EsterenMap.prototype._tileLayer = {};
+    EsterenMap.prototype._sidebar = null;
+    EsterenMap.prototype._filtersControl = null;
+    EsterenMap.prototype._drawControl = null;
+    EsterenMap.prototype._drawnItems = null;
+    EsterenMap.prototype._tileLayer = null;
     EsterenMap.prototype._xhr_saves = {};
     EsterenMap.prototype._editedMarker = null;
     EsterenMap.prototype._editedPolyline = null;
     EsterenMap.prototype._editedPolygon = null;
 
-    EsterenMap.prototype._clonedOptions = false;
-
-    EsterenMap.prototype._messageElement = null;
-
-    EsterenMap.prototype._refData = false;
-
-    EsterenMap.prototype._transports = false;
-
     EsterenMap.prototype._markers = {};
     EsterenMap.prototype._polygons = {};
     EsterenMap.prototype._polylines = {};
-
-    EsterenMap.prototype._markersTypes = {};
-    EsterenMap.prototype._routesTypes = {};
-    EsterenMap.prototype._zonesTypes = {};
 
     EsterenMap.prototype._directionsOptions = {
         position: 'topleft'
     };
 
-    EsterenMap.prototype.mapAllowedElements = {
-        maps: true,
-        factions: true,
-        routes: true,
-        routestypes: true,
-        markers: true,
-        markerstypes: true,
-        zones: true,
-        zonestypes: true,
-        settings: true,
-        "ref-data": true,
-        transports: true
-    };
-
     EsterenMap.prototype._mapOptions = {
         id: 0,
         crs: 'XY',
+        data: {
+            map: null,
+            references: null,
+            templates: {
+                LeafletPopupMarkerBaseContent: '',
+                LeafletPopupPolygonBaseContent: '',
+                LeafletPopupPolylineBaseContent: ''
+            }
+        },
         editMode: false,
         showFilters: true,
         showDirections: true,
@@ -59,33 +42,18 @@
         sidebarContainer: 'esterenmap_sidebar',
         container: 'map',
         wrapper: 'map_wrapper',
-        loadedCallback: function () {
-            if (this._mapOptions.showMarkers) {
-                this.loadMarkers();
-            }
-            if (this._mapOptions.showRoutes) {
-                this.loadRoutes();
-            }
-            if (this._mapOptions.showZones) {
-                this.loadZones();
-            }
-            this.loadTransports();
-        },
         messageElementId: 'esterenmap_message_element',
-        imgUrl: '/bundles/esterenmaps/img',
+        imgUrl: '/img/',
         apiUrls: {
-            base: '/api/',
-            settings: '/api/maps/settings/',
-            tiles: '/api/maps/tile/{id}/{z}/{x}/{y}.jpg'
+            map: null,
+            directions: null,
+            tiles: null
         },
         loaderCallbacks: {},
         center: [0, 0],
         maxMarkerId: 1,
         maxPolylineId: 1,
         maxPolygonId: 1,
-        LeafletPopupMarkerBaseContent: '',
-        LeafletPopupPolygonBaseContent: '',
-        LeafletPopupPolylineBaseContent: '',
         LeafletPopupBaseOptions: {
             maxWidth: 350,
             minWidth: 280

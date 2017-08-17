@@ -16,7 +16,7 @@ use Symfony\Component\HttpKernel\CacheClearer\CacheClearerInterface;
 /**
  * Listener executed on cache:clear command to empty the Directions cache.
  */
-class DirectionsCacheClearer implements CacheClearerInterface
+class MapCacheClearer implements CacheClearerInterface
 {
     /**
      * @var CacheManager
@@ -35,6 +35,6 @@ class DirectionsCacheClearer implements CacheClearerInterface
      */
     public function clear($cacheDir)
     {
-        $this->cache->getAdapter()->deleteItem(CacheManager::CACHE_NAME);
+        $this->cache->clear();
     }
 }

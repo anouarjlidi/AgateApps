@@ -22,7 +22,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-class DirectionsController extends Controller
+class ApiDirectionsController extends Controller
 {
     /**
      * @Route("/maps/directions/{id}/{from}/{to}", name="esterenmaps_directions", requirements={"id": "\d+", "from": "\d+", "to": "\d+"})
@@ -40,8 +40,6 @@ class DirectionsController extends Controller
      */
     public function getDirectionsAction(Maps $map, Markers $from, Markers $to, Request $request)
     {
-        $this->get('pierstoval.api.origin_checker')->checkRequest($request);
-
         $code = 200;
 
         $transportId = $request->query->get('transport');
@@ -50,17 +48,17 @@ class DirectionsController extends Controller
         $hoursPerDay = $request->query->get('hours_per_day', 7);
 
         if (!$transport && $transportId) {
-            $directions = $this->getError($from, $to, $transportId, 'Transport not found.');
-            $code       = 404;
+            $output = $this->getError($from, $to, $transportId, 'Transport not found.');
+            $code   = 404;
         } else {
-            $directions = $this->get('esterenmaps')->getDirectionsManager()->getDirections($map, $from, $to, $hoursPerDay, $transport);
-            if (!count($directions)) {
-                $directions = $this->getError($from, $to);
-                $code       = 404;
+            $output = $this->get('esterenmaps')->getDirectionsManager()->getDirections($map, $from, $to, $hoursPerDay, $transport);
+            if (!count($output)) {
+                $output = $this->getError($from, $to);
+                $code   = 404;
             }
         }
 
-        return new JsonResponse($directions, $code);
+        return new JsonResponse($output, $code);
     }
 
     /**

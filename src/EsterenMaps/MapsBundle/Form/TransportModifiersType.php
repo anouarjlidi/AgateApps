@@ -42,9 +42,6 @@ class TransportModifiersType extends AbstractType
                 'attr'     => ['read_only' => true],
                 'required' => false,
             ])
-            ->add('positiveRatio', CheckboxType::class, [
-                'label' => 'admin.entities.transports.positive_ratio',
-            ])
         ;
     }
 

@@ -12,14 +12,13 @@
 namespace EsterenMaps\MapsBundle\Services;
 
 use Doctrine\ORM\EntityManager;
+use EsterenMaps\MapsBundle\Api\MapApi;
 use EsterenMaps\MapsBundle\Cache\CacheManager;
 use EsterenMaps\MapsBundle\Entity\Maps;
 use EsterenMaps\MapsBundle\Entity\Markers;
-use EsterenMaps\MapsBundle\Entity\Routes;
+use EsterenMaps\MapsBundle\Entity\TransportModifiers;
 use EsterenMaps\MapsBundle\Entity\TransportTypes;
-use EsterenMaps\MapsBundle\Model\DirectionRoute;
-use JMS\Serializer\SerializationContext;
-use JMS\Serializer\Serializer;
+use Symfony\Component\Serializer\Serializer;
 use Symfony\Bundle\TwigBundle\TwigEngine;
 
 /**
@@ -27,61 +26,35 @@ use Symfony\Bundle\TwigBundle\TwigEngine;
  */
 class DirectionsManager
 {
-    /**
-     * @var EntityManager
-     */
-    private $entityManager;
-
-    /**
-     * @var Serializer
-     */
-    private $serializer;
-
-    /**
-     * @var TwigEngine
-     */
-    private $templating;
-
-    /**
-     * @var bool
-     */
     private $debug;
-
-    /**
-     * @var CacheManager
-     */
+    private $entityManager;
+    private $serializer;
+    private $templating;
     private $cache;
+    private $mapApi;
 
-    /**
-     * @param bool          $debug
-     * @param EntityManager $entityManager
-     * @param Serializer    $serializer
-     * @param TwigEngine    $templating
-     * @param CacheManager  $cache
-     */
-    public function __construct($debug, EntityManager $entityManager, Serializer $serializer, TwigEngine $templating, CacheManager $cache)
+    public function __construct(
+        bool $debug,
+        MapApi $mapApi,
+        EntityManager $entityManager,
+        Serializer $serializer,
+        TwigEngine $templating,
+        CacheManager $cache
+    )
     {
         $this->debug         = $debug;
         $this->entityManager = $entityManager;
         $this->serializer    = $serializer;
         $this->templating    = $templating;
         $this->cache         = $cache;
+        $this->mapApi        = $mapApi;
     }
 
-    /**
-     * @param Maps           $map
-     * @param Markers        $start
-     * @param Markers        $end
-     * @param int            $hoursPerDay
-     * @param TransportTypes $transportType
-     *
-     * @return array
-     */
-    public function getDirections(Maps $map, Markers $start, Markers $end, $hoursPerDay = 7, TransportTypes $transportType = null)
+    public function getDirections(Maps $map, Markers $start, Markers $end, int $hoursPerDay = 7, TransportTypes $transportType = null): array
     {
         $cacheHash = $this->generateDirectionHash($map, $start, $end, $transportType);
 
-        $cacheItem = $this->cache->getCacheItem();
+        $cacheItem = $this->cache->getItem('api.directions');
 
         // Get cache only in prod.
         if (
@@ -95,131 +68,111 @@ class DirectionsManager
         } else {
             $directions = $this->doGetDirections($map, $start, $end, $hoursPerDay, $transportType);
 
-            $jsonString = $this->serializer->serialize($directions, 'json', $this->createSerializationContext());
-
-            // Make the directions a full array
-            $directions               = json_decode($jsonString, true);
-            $directions['from_cache'] = false;
-
             // Save in the cache file
-            $this->cache->save($cacheHash, $jsonString);
+            $cacheData = $cacheItem->get() ?: [];
+            $cacheData[$cacheHash] = json_encode($directions);
+            $cacheItem->set($cacheData);
+            $this->cache->saveItem($cacheItem);
+
+            $directions['from_cache'] = false;
         }
 
         return $directions;
     }
 
-    /**
-     * @param Maps           $map
-     * @param Markers        $start
-     * @param Markers        $end
-     * @param int            $hoursPerDay
-     * @param TransportTypes $transportType
-     *
-     * @return array
-     */
-    private function doGetDirections(Maps $map, Markers $start, Markers $end, $hoursPerDay = 7, TransportTypes $transportType = null)
+    private function doGetDirections(Maps $map, Markers $start, Markers $end, int $hoursPerDay = 7, TransportTypes $transportType = null): array
     {
-        /** @var DirectionRoute[] $routes */
-        $routes = $this->entityManager->getRepository('EsterenMapsBundle:Routes')->findForDirections($map, $transportType);
+        $data = $this->mapApi->getMap($map->getId());
+
+        // For performances & memory, let's remove this key, it's useless here.
+        unset($data['templates']);
 
         $nodes = [];
         $edges = [];
 
-        /*
-         * Reformat nodes and edges for a better use of the Dijkstra algorithm.
-         * We here have a list of "start" and "end" markers, and routes.
-         * We need nodes (markers) and edges (routes).
-         */
-        foreach ($routes as $route) {
-            $routeId = $route->getId();
+        // Reformat nodes and edges for a better use of the Dijkstra algorithm.
+        // We here have a list of "start" and "end" markers, and routes.
+        // We need nodes (markers) and edges (routes).
+        foreach ($data['map']['routes'] as $routeId => $route) {
+            $markerStartId = $route['marker_start'];
+            $markerEndId   = $route['marker_end'];
 
             // Create an edge based on a route.
             $edge = [
                 'id'       => $routeId,
-                'distance' => $route->getForcedDistance() ?: $route->getDistance(),
-                'start'    => $route->getMarkerStartId(),
-                'end'      => $route->getMarkerEndId(),
+                'distance' => $route['distance'],
+                'type'     => $route['route_type'],
+                'start'    => $markerStartId,
+                'end'      => $markerEndId,
             ];
 
             // Add nodes and edge.
-            if ($route->getMarkerStartId()) {
+            if ($markerStartId) {
                 // Set the start node if does not exist.
-                if (!array_key_exists($route->getMarkerStartId(), $nodes)) {
-                    $nodes[$route->getMarkerStartId()] = [
-                        'id'         => $route->getMarkerStartId(),
-                        'name'       => $route->getMarkerStartName(),
+                if (!array_key_exists($markerStartId, $nodes)) {
+                    $nodes[$markerStartId] = [
+                        'id'         => $markerStartId,
+                        'name'       => $data['map']['markers'][$markerStartId]['name'],
                         'neighbours' => [],
                     ];
                 }
 
-                $nodes[$route->getMarkerStartId()]['neighbours'][$routeId] = [
-                    'distance' => $route->getForcedDistance() ?: $route->getDistance(),
-                    'end'      => $route->getMarkerEndId(),
+                $nodes[$markerStartId]['neighbours'][$routeId] = [
+                    'distance' => $route['distance'],
+                    'end'      => $route['marker_end'],
                 ];
             }
-            if ($route->getMarkerEndId()) {
+            if ($markerEndId) {
                 // Set the end node if does not exist.
-                if (!array_key_exists($route->getMarkerEndId(), $nodes)) {
-                    $nodes[$route->getMarkerEndId()] = [
-                        'id'         => $route->getMarkerEndId(),
-                        'name'       => $route->getMarkerEndName(),
+                if (!array_key_exists($markerEndId, $nodes)) {
+                    $nodes[$markerEndId] = [
+                        'id'         => $markerEndId,
+                        'name'       => $data['map']['markers'][$markerEndId]['name'],
                         'neighbours' => [],
                     ];
                 }
 
-                $nodes[$route->getMarkerEndId()]['neighbours'][$routeId] = [
-                    'distance' => $route->getForcedDistance() ?: $route->getDistance(),
-                    'end'      => $route->getMarkerStartId(),
+                $nodes[$markerEndId]['neighbours'][$routeId] = [
+                    'distance' => $route['distance'],
+                    'end'      => $markerStartId,
                 ];
             }
             $edges[$routeId] = $edge;
         }
 
-        $paths = $this->dijkstra($nodes, $edges, (int) $start->getId(), (int) $end->getId());
+        $edges = $this->filterEdges($edges, $transportType);
+        $nodes = $this->filterNodes($nodes, $edges);
+
+        $paths = $this->dijkstra($nodes, $edges, $start->getId(), $end->getId());
 
         $routesIds    = array_values($paths);
-        $markersArray = $this->entityManager->getRepository('EsterenMapsBundle:Markers')
-            ->findByIdsArray(array_keys($paths))
-        ;
-        $routesArray = $this->entityManager->getRepository('EsterenMapsBundle:Routes')
-            ->findByIds($routesIds, true, true)
-        ;
-        $routesObjects = $this->entityManager->getRepository('EsterenMapsBundle:Routes')
-            ->findByIds($routesIds, false, false)
-        ;
-
-        $paths = $this->checkTransportType($paths, $routesObjects, $transportType);
+        $markersArray = array_filter($data['map']['markers'], function($marker) use ($paths) {
+            return array_key_exists($marker['id'], $paths);
+        });
+        $routesArray = array_filter($data['map']['routes'], function($route) use ($routesIds) {
+            return in_array($route['id'], $routesIds, true);
+        });
 
         $steps = [];
 
         // Remove unused fields
         foreach ($paths as $markerId => $routeId) {
-            $marker          = $markersArray[$markerId];
-            $marker['route'] = $routeId ? $routesArray[$routeId] : null;
+            $marker                        = $markersArray[$markerId];
+            $marker['route']               = $routeId ? $routesArray[$routeId] : null;
+            $marker['marker_type']         = $marker['marker_type'] ? $data['references']['markers_types'][$marker['marker_type']] : null;
+            $marker['faction']             = $marker['faction'] ? $data['references']['factions'][$marker['faction']] : null;
+            if (isset($marker['route'])) {
+                $marker['route']['faction']    = $marker['route']['faction'] ? $data['references']['factions'][$marker['route']['faction']] : null;
+                $marker['route']['route_type'] = $marker['route']['route_type'] ? $data['references']['routes_types'][$marker['route']['route_type']] : null;
+            }
             unset(
-                $marker['createdAt'],
-                $marker['updatedAt'],
-                $marker['deletedAt'],
-                $marker['faction']['createdAt'],
-                $marker['faction']['updatedAt'],
-                $marker['faction']['deletedAt'],
-                $marker['markerType']['createdAt'],
-                $marker['markerType']['updatedAt'],
-                $marker['markerType']['deletedAt'],
-                $marker['route']['createdAt'],
-                $marker['route']['updatedAt'],
-                $marker['route']['deletedAt'],
-                $marker['route']['routeType']['createdAt'],
-                $marker['route']['routeType']['updatedAt'],
-                $marker['route']['routeType']['deletedAt'],
-                $marker['route']['routeType']['transports'],
-                $marker['route']['markerStart'],
-                $marker['route']['markerEnd']
+                $marker['route']['marker_start'],
+                $marker['route']['marker_end']
             );
             $steps[] = $marker;
         }
 
-        return $this->getDataArray($start, $end, $steps, $routesObjects, $hoursPerDay, $transportType);
+        return $this->getDataArray($start, $end, $steps, $routesArray, $hoursPerDay, $transportType);
     }
 
     /**
@@ -230,15 +183,8 @@ class DirectionsManager
      * @see http://codereview.stackexchange.com/questions/75641/dijkstras-algorithm-in-php
      *
      * Return an array where keys are the markers IDs and values the values are route IDs.
-     *
-     * @param array[][] $nodes
-     * @param array[][] $edges
-     * @param int       $start
-     * @param int       $end
-     *
-     * @return int[]
      */
-    private function dijkstra(array $nodes, array $edges, $start, $end)
+    private function dijkstra(array $nodes, array $edges, int $start, int $end): array
     {
         /** @var array[][] $distances */
         $distances = [];
@@ -325,27 +271,24 @@ class DirectionsManager
         return $realPath;
     }
 
-    /**
-     * @param Markers        $from
-     * @param Markers        $to
-     * @param array[]        $directions
-     * @param Routes[]       $routes
-     * @param int            $hoursPerDay
-     * @param TransportTypes $transport
-     *
-     * @return array[]
-     */
-    private function getDataArray(Markers $from, Markers $to, array $directions, array $routes, $hoursPerDay = 7, TransportTypes $transport = null)
+    private function getDataArray(Markers $from, Markers $to, array $directions, array $routes, int $hoursPerDay = 7, TransportTypes $transport = null): array
     {
-        $distance = 0;
+        $distance = null;
         $NE       = [];
         $SW       = [];
 
         foreach ($directions as $step) {
-            $distance += ($step['route'] ? $step['route']['distance'] : 0);
+            if (!$step['route']) {
+                continue;
+            }
+
+            $distance += $step['route']['distance'];
+
             if ($step['route']) {
                 /** @var array $coords */
-                $coords = json_decode($step['route']['coordinates'], true);
+                $coords = $step['route']['coordinates'];
+
+                // Evaluate bounds
                 foreach ($coords as $latLng) {
                     if (!isset($NE['lat']) || ($NE['lat'] < $latLng['lat'])) {
                         $NE['lat'] = $latLng['lat'];
@@ -368,20 +311,20 @@ class DirectionsManager
             'path_view'       => null,
             'duration_raw'    => null,
             'duration_real'   => null,
-            'transport'       => json_decode($this->serializer->serialize($transport, 'json', $this->createSerializationContext()), true),
+            'transport'       => $transport ? $transport->jsonSerialize() : null,
             'bounds'          => ['northEast' => $NE, 'southWest' => $SW],
             'total_distance'  => $distance,
             'number_of_steps' => count($directions) ? (count($directions) - 2) : 0,
-            'start'           => $from,
-            'end'             => $to,
+            'start'           => $from->jsonSerialize(),
+            'end'             => $to->jsonSerialize(),
             'path'            => $directions,
         ];
 
-        $data['duration_raw']  = ['days' => null, 'hours' => null];
+        $data['duration_raw']  = null;
         $data['duration_real'] = ['days' => null, 'hours' => null];
 
         if ($transport) {
-            $data['duration_raw']  = $this->getTravelDuration($routes, $transport, $hoursPerDay, true);
+            $data['duration_raw']  = $this->getTravelDuration($routes, $transport, $hoursPerDay);
             $data['duration_real'] = $this->getTravelDuration($routes, $transport, $hoursPerDay, false);
         }
 
@@ -391,70 +334,105 @@ class DirectionsManager
     }
 
     /**
-     * @return SerializationContext
+     * Filter routes that are incompatible with this transport type
      */
-    private function createSerializationContext()
-    {
-        $serializationContext = new SerializationContext();
-        $serializationContext->setSerializeNull(true);
-
-        return $serializationContext;
-    }
-
-    /**
-     * @param array          $paths
-     * @param Routes[]       $routes
-     * @param TransportTypes $transportType
-     *
-     * @return array
-     */
-    private function checkTransportType(array $paths, array $routes, TransportTypes $transportType = null)
+    private function filterEdges(array $edges, TransportTypes $transportType = null): array
     {
         if (!$transportType) {
-            return $paths;
+            return $edges;
         }
 
+        $routesTypes = [];
+
+        foreach ($edges as $route) {
+            $routesTypes[$route['type']] = $route['type'];
+        }
+
+        $transportModifiers = $this->entityManager->getRepository(TransportModifiers::class)->findBy([
+            'routeType' => $routesTypes,
+            'transportType' => $transportType,
+        ]);
+
+        $routesTypesToDelete = [];
+
         // Check that the transport have a good value here
-        foreach ($routes as $route) {
-            if ($route->getRouteType()->getTransport($transportType)->getPercentage() <= 0) {
-                return [];
+        foreach ($transportModifiers as $modifier) {
+            if ($modifier->getPercentage() <= 0.00001) {
+                $id = $modifier->getRouteType()->getId();
+                $routesTypesToDelete[$id] = $id;
             }
         }
 
-        return $paths;
+        foreach ($edges as $k => $edge) {
+            if (array_key_exists($edge['type'], $routesTypesToDelete)) {
+                unset($edges[$k]);
+            }
+        }
+
+        return $edges;
     }
 
     /**
-     * @param Routes[]       $routes
-     * @param TransportTypes $transport
-     * @param int            $hoursPerDay
-     * @param bool           $raw
-     *
-     * @return int[]|null
+     * Filter markers that are not reachable via filtered routes
      */
-    private function getTravelDuration(array $routes, TransportTypes $transport, $hoursPerDay = 7, $raw = true)
+    private function filterNodes(array $nodes, array $edges): array
+    {
+        // Filter markers from filtered routes
+        foreach ($nodes as $k => $node) {
+            // Remove potential neighbours that are not reachable because of incompatible routes.
+            foreach ($node['neighbours'] as $edgeId => $n) {
+                if (!array_key_exists($edgeId, $edges)) {
+                    unset($nodes[$k]['neighbours'][$edgeId]);
+                }
+            }
+            // If a marker has no more neighbours, it can't be crossed, so remove it.
+            if (!count($node['neighbours'])) {
+                unset($nodes[$k]);
+            }
+        }
+
+        return $nodes;
+    }
+
+    /**
+     * @return int[]|string|null
+     */
+    private function getTravelDuration(array $routes, TransportTypes $transport, int $hoursPerDay = 7, bool $raw = true)
     {
         $total = 0;
 
+        // Get (again) the necessary transport modifiers for the final route.
+        $routesTypes = [];
         foreach ($routes as $route) {
-            $distance          = $route->getDistance();
+            $routesTypes[$route['route_type']] = $route['route_type'];
+        }
+        $transportModifiersUnsorted = $this->entityManager->getRepository(TransportModifiers::class)->findBy([
+            'routeType' => $routesTypes,
+            'transportType' => $transport,
+        ]);
+
+        /** @var TransportModifiers[][] $transportModifiers */
+        $transportModifiers = [];
+        foreach ($transportModifiersUnsorted as $transportModifier) {
+            $transportModifiers[$transportModifier->getRouteType()->getId()][] = $transportModifier;
+        }
+
+        foreach ($routes as $route) {
+            $distance          = $route['distance'];
             $transportModifier = null;
-            foreach ($route->getRouteType()->getTransports() as $routeTransport) {
-                if ($routeTransport->getTransportType()->getId() === $transport->getId()) {
-                    $transportModifier = $routeTransport;
+
+            foreach ($transportModifiers[$route['route_type']] as $modifier) {
+                if ($modifier->getTransportType()->getId() === $transport->getId()) {
+                    $transportModifier = $modifier;
+                    break;
                 }
             }
+
             if ($transportModifier) {
                 $percentage = (float) $transportModifier->getPercentage();
-                if ($transportModifier->isPositiveRatio()) {
-                    $speed = $transport->getSpeed() * ($percentage / 100);
-                } else {
-                    $speed = $transport->getSpeed() * ((100 - $percentage) / 100);
-                }
+                $speed = $transport->getSpeed() * ($percentage / 100);
                 $hours = $distance / $speed;
                 $total += $hours;
-            } else {
-                continue;
             }
         }
 

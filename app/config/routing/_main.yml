@@ -20,13 +20,6 @@ esteren_portal:
     host: '%esteren_domains.portal%'
 
 #-----------------------------------
-# Pierstoval bundles relative routing
-pierstoval_api:
-    resource:     '@PierstovalApiBundle/Controller/'
-    type:         annotation
-    host:         '%esteren_domains.api%'
-
-#-----------------------------------
 # Admin relative Routing
 application_admin:
     resource:     '@AdminBundle/Controller'

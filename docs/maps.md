@@ -25,10 +25,8 @@ The map settings and data are loaded by different calls to the `EsterenMap._load
 The stack is the following:
 
 1. `new EsterenMap(options)`: New object creation, setup base and some static options.
-2. `EsterenMap.loadSettings()`: Load the settings with Ajax by loading the `maps/settings/{id}` route.
+2. `EsterenMap.loadMapData()`: Load the settings with Ajax by loading the `maps/{id}` API route.
 3. `EsterenMap.initialize()`: This function sets up the different Leaflet layers and components.
-4. `EsterenMap._mapOptions.loadedCallback()`: By default, this function loads **markers**, **routes**, **zones** and
- **transports**.
  
 The `_load()` function is the one that communicates with web services defined in the API (check documentation).
 

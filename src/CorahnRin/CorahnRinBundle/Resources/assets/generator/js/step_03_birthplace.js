@@ -16,9 +16,6 @@
                 showRoutes: false,
                 autoResize: false,
                 LeafletPolygonBaseOptions: basePolygonOptions,
-                loadedCallback: function(){
-                    this.loadZones();
-                },
                 CustomPolygonBaseOptions: {
                     clickCallback: function(e){
                         var polygon = e.target,

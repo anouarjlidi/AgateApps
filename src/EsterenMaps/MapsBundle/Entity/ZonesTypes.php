@@ -17,16 +17,13 @@ use EsterenMaps\MapsBundle\Cache\EntityToClearInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
-use JMS\Serializer\Annotation\ExclusionPolicy;
-use JMS\Serializer\Annotation\Expose;
 
 /**
  * ZonesTypes.
  *
  * @ORM\Table(name="maps_zones_types")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
- * @ORM\Entity()
- * @ExclusionPolicy("all")
+ * @ORM\Entity(repositoryClass="EsterenMaps\MapsBundle\Repository\ZonesTypesRepository")
  */
 class ZonesTypes implements EntityToClearInterface
 {
@@ -39,32 +36,28 @@ class ZonesTypes implements EntityToClearInterface
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id()
      * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @Expose()
-     */
+    */
     protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=false, unique=true)
-     * @Expose()
-     */
+    */
     protected $name;
 
     /**
      * @var string
      *
      * @ORM\Column(name="description", type="text", nullable=true)
-     * @Expose()
-     */
+    */
     protected $description;
 
     /**
      * @var string
      *
      * @ORM\Column(name="color", type="string", length=75, nullable=true)
-     * @Expose()
-     */
+    */
     protected $color;
 
     /**

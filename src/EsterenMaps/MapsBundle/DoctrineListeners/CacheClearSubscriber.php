@@ -55,7 +55,7 @@ class CacheClearSubscriber implements EventSubscriber
 
         // Clear the map cache if the entity corresponds to a specific class.
         if ($entity instanceof EntityToClearInterface) {
-            $this->cacheService->getAdapter()->deleteItem(CacheManager::CACHE_NAME);
+            $this->cacheService->clear();
         }
     }
 }

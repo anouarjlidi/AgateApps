@@ -189,6 +189,19 @@
 {{ include('_google_analytics.html.twig') }}
 
 {% block javascripts %}
+    {% if app.session.has('connect_other_domains') %}
+        {{ include('@Agate/connect/connect_script.html.twig', {'domains': [
+            esteren_domains_corahnrin,
+            esteren_domains_esterenmaps,
+            esteren_domains_portal,
+            esteren_domains_backoffice,
+            esteren_domains_api,
+            esteren_domains_games,
+            agate_domains_portal,
+            vermine_domains_portal
+            ]}) }}
+        {{ app.session.remove('connect_other_domains') ? '' : '' }}
+    {% endif %}
     <script type="text/javascript" src="{{ asset('js/jquery.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/global_mat.js') }}"></script>
     <script type="text/javascript" src="{{ path('pierstoval_tools_assets_jstranslations', {'_locale': app.request.locale}) }}"></script>

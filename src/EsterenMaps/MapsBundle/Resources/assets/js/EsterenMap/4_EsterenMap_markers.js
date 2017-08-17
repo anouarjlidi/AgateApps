@@ -15,7 +15,6 @@
         }
         this._sidebar.setContent(this._sidebarContent);
         this._sidebar.show();
-        return this;
     };
 
     L.Marker.prototype.hideSidebar = function(){
@@ -24,33 +23,27 @@
         }
         this._sidebar.hide();
         this._sidebar.setContent('');
-        return this;
-    };
-
-    L.Marker.prototype.toggleSidebar = function(){
-        if (!this._sidebar) {
-            return;
-        }
-        if (this._sidebar.isVisible()) {
-            this.hideSidebar();
-        } else {
-            this.showSidebar();
-        }
-        return this;
     };
 
     L.Marker.prototype.bindSidebar = function(sidebar, content){
         this._sidebar = sidebar;
         this._sidebarContent = content;
-        return this;
     };
 
     L.Marker.prototype.updateIcon = function(){
-        // Change l'image de l'icône
-        this._icon.src = this._esterenMarker.marker_type.web_icon;
+        var markerType = this._esterenMarker.marker_type;
+        if (!isNaN(markerType)) {
+            markerType = this._mapOptions.data.references.markers_types[markerType];
+            if (!markerType) {
+                throw 'Undefined marker id '+this._esterenMarker.marker_type;
+            }
+        }
 
-        // Met à jour l'attribut "data" pour les filtres
-        $(this._icon).attr('data-leaflet-object-type', 'markerType'+this._esterenMarker.marker_type.id);
+        // Change icon image
+        this._icon.src = markerType.icon;
+
+        // Update "data" attribute for filters
+        this._icon.setAttribute('data-leaflet-object-type', 'markerType'+markerType.id);
     };
 
     L.Marker.prototype.disableEditMode = function() {
@@ -64,7 +57,7 @@
         for (i in routes) {
             if (routes.hasOwnProperty(i)) {
                 route = routes[i];
-                if (route._esterenRoute.marker_start && route._esterenRoute.marker_start.id == this._esterenMarker.id) {
+                if (route._esterenRoute.marker_start && route._esterenRoute.marker_start.id === this._esterenMarker.id) {
                     this._esterenRoutesStart[route._esterenRoute.id] = route;
                     route._esterenMarkerStart = this;
                 }
@@ -79,7 +72,7 @@
         for (i in routes) {
             if (routes.hasOwnProperty(i)) {
                 route = routes[i];
-                if (route._esterenRoute.marker_end && route._esterenRoute.marker_end.id == this._esterenMarker.id) {
+                if (route._esterenRoute.marker_end && route._esterenRoute.marker_end.id === this._esterenMarker.id) {
                     this._esterenRoutesEnd[route._esterenRoute.id] = route;
                     route._esterenMarkerEnd = this;
                 }
@@ -112,7 +105,7 @@
         var marker = this,
             msg = CONFIRM_DELETE || 'Supprimer ?',
             id = marker._esterenMarker ? marker._esterenMarker.id : null;
-        if (marker._esterenMap._mapOptions.editMode == true && id) {
+        if (marker._esterenMap._mapOptions.editMode === true && id) {
             if (confirm(msg)) {
                 marker._map.removeLayer(marker);
                 marker.fire('remove');
@@ -206,60 +199,52 @@
 
     /**
      * @this {EsterenMap}
-     * @param response
      */
-    EsterenMap.prototype._mapOptions.loaderCallbacks.markers = function(response){
+    EsterenMap.prototype.renderMarkers = function(){
         var markers, i, marker,
             mapOptions = this._mapOptions,
-            popupContent = mapOptions.LeafletPopupMarkerBaseContent,
-            options = mapOptions.CustomMarkerBaseOptions,
+            baseOptions = mapOptions.CustomMarkerBaseOptions,
             leafletOptions = mapOptions.LeafletMarkerBaseOptions,
-            coords
+            options, coords
         ;
 
         if (mapOptions.editMode === true) {
-            options = this.cloneObject(options, mapOptions.CustomMarkerBaseOptionsEditMode);
+            baseOptions = this.cloneObject(baseOptions, mapOptions.CustomMarkerBaseOptionsEditMode);
             leafletOptions = this.cloneObject(leafletOptions, mapOptions.LeafletMarkerBaseOptionsEditMode);
         }
 
         for (i in this._markers) {
             if (this._markers.hasOwnProperty(i)) {
                 this._map.removeLayer(this._markers[i]);
-                this._drawnItems.removeLayer(this._markers[i]);
+                this._markers[i].remove();
+                delete this._markers[i];
             }
         }
 
-        if (response['map.'+mapOptions.id+'.markers']) {
-            markers = response['map.'+mapOptions.id+'.markers'];
+        if (markers = mapOptions.data.map.markers) {
             for (i in markers) {
-                if (markers.hasOwnProperty(i)) {
-                    marker = markers[i];
-                    coords = {
-                        lat: marker.latitude,
-                        lng: marker.longitude,
-                        altitude: marker.altitude
-                    };
+                if (!markers.hasOwnProperty(i)) { continue; }
+                marker = markers[i];
+                coords = {
+                    lat: marker.latitude,
+                    lng: marker.longitude,
+                    altitude: marker.altitude
+                };
 
-                    options.popupContent = popupContent;
-                    options.esterenMarker = marker;
-                    options.markerName = marker.name;
-                    options.markerType = marker.marker_type.id;
-                    options.markerFaction = marker.faction ? marker.faction.id : '';
+                options = this.cloneObject(baseOptions);
 
-                    leafletOptions.alt = marker.id;
+                options.esterenMarker = marker;
+                options.markerName = marker.name;
+                options.markerType = marker.marker_type;
+                options.markerFaction = marker.faction ? marker.faction : '';
 
-                    this.addMarker(coords,
-                        leafletOptions,
-                        options
-                    );
-                }//endif (marker.hasOwnProperty)
-            }//endfor
-        }// endif response
+                this.addMarker(coords, leafletOptions, options);
+            }
+        }
     };
 
-
     EsterenMap.prototype._mapOptions.LeafletMarkerBaseOptions = {
-        clickable: true,
+        riseOnHover: true,
         draggable: false
     };
 
@@ -276,22 +261,16 @@
         popupIsSidebar: false,
         clickCallback: function(e){
             var marker = e.target,
-                changePopupContent = false,
                 esterenMarker = marker._esterenMarker
             ;
 
             if (marker._sidebar) {
-                marker.showSidebar();
-                changePopupContent =  marker._sidebar.isVisible();
-            } else {
-                //marker.togglePopup();
-                changePopupContent = marker.getPopup()._isOpen;
-            }
-
-            if (changePopupContent) {
-                d.getElementById('marker_popup_name').innerHTML = esterenMarker.name;
-                d.getElementById('marker_popup_type').innerHTML = esterenMarker.marker_type.name;
-                d.getElementById('marker_popup_faction').innerHTML = esterenMarker.faction ? esterenMarker.faction.name : '';
+                marker.toggle();
+                if (marker._sidebar.isVisible()) {
+                    d.getElementById('marker_popup_name').innerHTML = esterenMarker.name;
+                    d.getElementById('marker_popup_type').innerHTML = esterenMarker.marker_type.name;
+                    d.getElementById('marker_popup_faction').innerHTML = esterenMarker.faction ? esterenMarker.faction.name : '';
+                }
             }
         }
     };
@@ -330,12 +309,12 @@
                     return false;
                 });
                 $('#marker_popup_type').off('change').on('change', function(){
-                    map._markers[id]._esterenMarker.marker_type = map.refData('markersTypes', this.value);
+                    map._markers[id]._esterenMarker.marker_type = map.reference('markers_types', this.value);
                     map._markers[id]._updateEM();
                     return false;
                 });
                 $('#marker_popup_faction').off('change').on('change', function(){
-                    map._markers[id]._esterenMarker.faction = map.refData('factions', this.value);
+                    map._markers[id]._esterenMarker.faction = map.reference('factions', this.value);
                     map._markers[id]._updateEM();
                     return false;
                 });
@@ -360,7 +339,7 @@
         addCallback: function(e){
             var marker = e.target,
                 id = marker.options.alt;
-            if (marker._esterenMap.editMode == true && id) {
+            if (marker._esterenMap.editMode === true && id) {
                 if (d.getElementById('marker_'+id+'_deleted')) {
                     d.getElementById('marker_'+id+'_deleted').value = 'false';
                 } else {
@@ -382,12 +361,12 @@
      * @returns {EsterenMap}
      */
     EsterenMap.prototype.addMarker = function(latLng, leafletUserOptions, customUserOptions) {
-        var _this = this,
-            mapOptions = this._mapOptions,
+        var mapOptions = this._mapOptions,
             leafletOptions = this.cloneObject(mapOptions.LeafletMarkerBaseOptions),
             iconOptions = this.cloneObject(mapOptions.LeafletIconBaseOptions),
-            id,option,optionTag,icon,iconHeight,iconWidth,initialIconHeight,initialIconWidth,
-            marker,popup,popupContent,popupOptions, markerType;
+            parser = new DOMParser(),
+            id,option,icon,iconHeight,iconWidth,initialIconHeight,initialIconWidth,
+            marker,popup,popupContent,popupOptions, markerType, doc;
 
         // Safety to be sure arguments are at least plain objects
         //   to avoid "cannot read property ... of undefined" errors.
@@ -410,10 +389,10 @@
         }
 
         // Alt should contain the markers' ID
-        if (!leafletOptions.alt) {
+        if (!customUserOptions.esterenMarker || !customUserOptions.esterenMarker.id) {
             id = this._mapOptions.maxMarkerId;
         } else {
-            id = leafletOptions.alt;
+            id = customUserOptions.esterenMarker ? customUserOptions.esterenMarker.id : leafletUserOptions.alt;
         }
         while (d.getElementById('marker_'+id+'_name')) { id ++; }
 
@@ -424,45 +403,52 @@
         marker._esterenMap = this;
         if (customUserOptions.esterenMarker) {
             marker._esterenMarker = customUserOptions.esterenMarker;
-        } else {
-            // Ici on tente de créer un nouveau marqueur
+        } else if (mapOptions.editMode === true) {
+            // Let's try to create a new marker object, but only for edit mode
             marker._esterenMarker = this.esterenMarkerPrototype;
-            marker._esterenMarker.marker_type = this.refData('markersTypes', 1);
+            marker._esterenMarker.marker_type = this.reference('markers_types', 1);
         }
 
         markerType = marker._esterenMarker.marker_type;
-
-        // Création d'une popup
-        popupContent = customUserOptions.popupContent;
-        if (!popupContent) {
-            popupContent = mapOptions.LeafletPopupMarkerBaseContent;
-        }
-        if (popupContent && typeof popupContent === 'string') {
-            popupOptions = mapOptions.LeafletPopupBaseOptions;
-            if (typeof customUserOptions.popupOptions !== 'undefined') {
-                popupOptions = this.cloneObject(popupOptions, customUserOptions.popupOptions);
+        if (!isNaN(markerType)) {
+            markerType = this.reference('markers_types', markerType);
+            if (!markerType) {
+                throw 'Undefined marker id '+marker._esterenMarker.marker_type;
             }
-            if (customUserOptions.popupIsSidebar == true) {
+        }
+
+        // Create a popup
+        popupContent = mapOptions.data.templates.LeafletPopupMarkerBaseContent;
+
+        if (popupContent && typeof popupContent === 'string') {
+            popupOptions = this.cloneObject(mapOptions.LeafletPopupBaseOptions || {}, customUserOptions.popupOptions);
+            if (customUserOptions.popupIsSidebar === true) {
                 marker.bindSidebar(this._sidebar, popupContent);
             } else {
                 popup = L.popup(popupOptions);
-                popup.setContent(popupContent);
+                doc = parser.parseFromString(popupContent, 'text/html');
+                doc.getElementById('marker_popup_name').innerHTML = marker._esterenMarker.name;
+                doc.getElementById('marker_popup_type').innerHTML = this.reference('markers_types', marker._esterenMarker.marker_type).name;
+                marker._esterenMarker.faction
+                    ? doc.getElementById('marker_popup_faction').innerHTML = this.reference('factions', marker._esterenMarker.faction).name
+                    : doc.getElementById('marker_popup_faction').parentElement.innerHTML = '';
+                popup.setContent(doc.querySelector('body').innerHTML);
                 marker.bindPopup(popup);
             }
         } else if (customUserOptions.popupContent && typeof customUserOptions.popupContent !== 'string') {
-            console.error('popupContent parameter must be a string.');
+            throw 'popupContent parameter must be a string.';
         }
 
-        // Application des events listeners
+        // Add custom event listeners
         for (option in customUserOptions) {
             if (customUserOptions.hasOwnProperty(option) && option.match(/Callback$/)) {
                 marker.addEventListener(option.replace('Callback',''), customUserOptions[option]);
             }
         }
 
-        // Ajout de l'icône au cas où
-        if (markerType && markerType.web_icon) {
-            iconOptions.iconUrl = markerType.web_icon;
+        // Add the icon
+        if (markerType && markerType.icon) {
+            iconOptions.iconUrl = markerType.icon;
 
             initialIconWidth = markerType.icon_width;
             initialIconHeight = markerType.icon_height;
@@ -497,7 +483,7 @@
             }
         }
 
-        this._drawnItems.addLayer(marker);
+        marker.addTo(this._map);
 
         option = 'markerType'+(customUserOptions.markerType?customUserOptions.markerType:'1');
         if (marker._icon.dataset) {

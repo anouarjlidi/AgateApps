@@ -21,7 +21,7 @@ use Symfony\Component\Validator\Constraints\Type;
 
 /**
  * This form type is used to validate query parameters,
- *   when using the TilesController with the API to generate an image.
+ *   when using the ApiTilesController with the API to generate an image.
  */
 class MapImageType extends AbstractType
 {

@@ -16,15 +16,13 @@ use EsterenMaps\MapsBundle\Cache\EntityToClearInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
-use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Zones.
  *
  * @ORM\Table(name="maps_zones")
+ * @ORM\Entity(repositoryClass="EsterenMaps\MapsBundle\Repository\ZonesRepository")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
- * @ORM\Entity()
- * @Serializer\ExclusionPolicy("all")
  */
 class Zones implements EntityToClearInterface
 {
@@ -37,32 +35,28 @@ class Zones implements EntityToClearInterface
      * @ORM\Id()
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @Serializer\Expose()
-     */
+    */
     protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=false, unique=true)
-     * @Serializer\Expose()
-     */
+    */
     protected $name;
 
     /**
      * @var string
      *
      * @ORM\Column(name="description", type="text", nullable=true)
-     * @Serializer\Expose()
-     */
+    */
     protected $description;
 
     /**
      * @var string
      *
      * @ORM\Column(name="coordinates", type="text")
-     * @Serializer\Expose()
-     */
+    */
     protected $coordinates = '';
 
     /**
@@ -78,8 +72,7 @@ class Zones implements EntityToClearInterface
      *
      * @ORM\ManyToOne(targetEntity="Factions", inversedBy="zones")
      * @ORM\JoinColumn(name="faction_id", nullable=true)
-     * @Serializer\Expose()
-     */
+    */
     protected $faction;
 
     /**
@@ -87,8 +80,7 @@ class Zones implements EntityToClearInterface
      *
      * @ORM\ManyToOne(targetEntity="ZonesTypes", inversedBy="zones")
      * @ORM\JoinColumn(name="zone_type_id", nullable=false)
-     * @Serializer\Expose()
-     */
+    */
     protected $zoneType;
 
     public function __toString()

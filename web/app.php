@@ -22,7 +22,7 @@ if (false === $debug) {
 }
 
 if (true === $debug) {
-    (new Dotenv())->load(__DIR__.'/../.env');
+    (new Dotenv())->load(dirname(__DIR__).'/.env');
     Debug::enable();
 }
 

@@ -85,5 +85,4 @@ security:
         - { path: '^/(?:%locales_regex%)/profile',    roles: [ROLE_USER] }
         - { path: '^/(?:%locales_regex%)/characters', roles: [ROLE_USER] }
         - { path: '^/',                               host: '%esteren_domains.backoffice%',   role: ROLE_MANAGER }
-        - { path: '^/',                               host: '%esteren_domains.api%',          role: ROLE_MANAGER, methods: [POST, PUT, DELETE] }
         - { path: '^/',                               host: '%esteren_domains.esterenmaps%',  role: ROLE_USER }

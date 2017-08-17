@@ -17,8 +17,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
- * Class MapsController.
- *
  * @Route(host="%esteren_domains.esterenmaps%")
  */
 class MapsController extends Controller

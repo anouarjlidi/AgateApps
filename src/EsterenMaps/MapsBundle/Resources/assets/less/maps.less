@@ -10,7 +10,7 @@
 @web-dir: "../";
 
 @import (inline) "@{nodemodules-dir}/leaflet/dist/leaflet.css";
-@import (inline) "@{components-dir}/leaflet-draw/dist/leaflet.draw.css";
+@import (inline) "@{nodemodules-dir}/leaflet-draw/dist/leaflet.draw.css";
 @import (inline) "@{components-dir}/leaflet-sidebar/src/L.Control.Sidebar.css";
 
 #map {
@@ -203,33 +203,78 @@
     background-color: rgba(255, 255, 255, 0.7);
 }
 
+a.map-control-toggle {
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    width: 30px;
+    height: 30px;
+    .expanded & {
+        background-color: rgba(50, 50, 50, 0.1);
+        i.fa {
+            color: #f28f70;
+        }
+    }
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.15);
+    }
+    &#leaflet-directions-toggle,
+    &#leaflet-search-toggle
+    {
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: 6px 8px 5px;
+        display: block;
+        font-size: 13px;
+    }
+}
+
 #leaflet-directions-control,
-#leaflet-search-control
-{
+#leaflet-filters-control,
+#leaflet-search-control {
     background: white;
     color: black;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     border-radius: 4px;
     padding: 0 10px 10px 10px;
-    min-width: 27px;
-    min-height: 27px;
-    max-width: ~"calc(100% - 20px)";
+    margin-left: 12px;
+    min-width: 30px;
+    min-height: 30px;
+    max-width: ~"calc(100% - 30px)";
     max-height: 300px;
     overflow: hidden;
-    overflow-y: auto;
+    -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.8);
+    -moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.8);
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.8);
+}
+
+#leaflet-directions-control,
+#leaflet-search-control
+{
     #directions_control_content,
-    #search_control_content
-    {
+    #search_control_content {
         display: none;
+        padding-top: 30px;
+        h3 {
+            padding: 0;
+            margin: 0;
+        }
     }
     #search_control_content {
-        padding-top: 25px;
+        #search_form {
+            input {
+                padding-bottom: 0;
+                margin-bottom: 10px;
+            }
+        }
     }
     &.expanded {
         min-width: 350px;
+        min-height: 250px;
         overflow-x: hidden;
-        overflow-y: scroll;
+        overflow-y: auto;
         #directions_control_content,
         #directions_search_content
         {
@@ -237,25 +282,14 @@
         }
     }
 }
-#leaflet-directions-toggle,
-#leaflet-search-toggle
-{
-    position: absolute;
-    top: 0;
-    left: 0;
-    padding: 5px 0 0 6px;
-    display: block;
-    font-size: 13px;
-}
+
 .directions_helper ul,
 .search_helper ul
 {
-    position: absolute;
     z-index: 1;
-    right: 0;
     width: 100%;
-    padding-left: 15px;
     padding-right: 15px;
+    margin: 0 0 10px 0;
     li {
         background: #f6f6f6;
         padding: 1px 5px;
@@ -267,18 +301,46 @@
     }
 }
 
+#directions_form {
+    button[type="submit"] {
+        margin-top: 10px;
+    }
+}
+
+#directions_transport {
+    margin-top: 10px;
+    input {
+        margin-bottom: 0;
+    }
+    label[for^="directions_transport_"] {
+        pointer-events: auto;
+        color: #333;
+        width: 100%;
+        &:hover {
+            color: #000;
+            background: rgba(128, 128, 128, 0.1);
+        }
+    }
+}
+#directions_start,
+#directions_end {
+    margin: 0;
+}
+
+#directions_wait_overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(50, 50, 50, 0.4);
+    display: none;
+}
+
 /*
 Edit mode
 */
 #leaflet-filters-control {
-    background: white;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    border-radius: 4px;
-    padding: 0 10px 10px 10px;
-    min-width: 30px;
-    min-height: 30px;
-    max-width: 20px;
     .leaflet-filters-control-content {
         opacity: 0;
         width: 0;
@@ -303,6 +365,7 @@ Edit mode
     }
     &.expanded {
         max-width: ~"calc(100% - 20px)";
+        position: relative;
         .leaflet-filters-control-content {
             overflow-y: auto;
             width: 100%;
@@ -314,8 +377,20 @@ Edit mode
 }
 #leaflet-filters-toggle {
     position: absolute;
-    bottom: 2px;
-    left: 2px;
-    padding: 4px 7px;
+    bottom: 0;
+    left: 0;
+    padding: 7px 9px;
     display: block;
+}
+
+/*
+ * Leaflet overrides
+ */
+.leaflet-touch .leaflet-control-layers, .leaflet-touch .leaflet-bar {
+    border: none;
+    background: white;
+    margin-left: 12px;
+    -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.8);
+    -moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.8);
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.8);
 }

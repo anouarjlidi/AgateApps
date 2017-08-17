@@ -1,12 +1,11 @@
 
 <div id="map_edit_menu">
-
     <ul class="list-inline">
         {% if showZones is not defined or showZones is defined and showZones == true %}
         <li data-toggle="tooltip">
             <button data-toggle-class="btn-info btn-inverse" id="hide_zones" class="btn btn-info" type="button" title="{{ 'map.hide.zones'|trans({}, 'EsterenMaps') }}">
                 <span class="fa fa-eye"></span>
-                {{ 'map.hide.zones' | trans({}, 'EsterenMaps') }}
+                {{- 'map.hide.zones' | trans({}, 'EsterenMaps') -}}
             </button>
         </li>
         {% endif %}
@@ -15,7 +14,7 @@
         <li data-toggle="tooltip">
             <button data-toggle-class="btn-info btn-inverse" id="hide_routes" class="btn btn-info" type="button" title="{{ 'map.hide.routes'|trans({}, 'EsterenMaps') }}">
                 <span class="fa fa-eye"></span>
-                {{ 'map.hide.routes' | trans({}, 'EsterenMaps') }}
+                {{- 'map.hide.routes' | trans({}, 'EsterenMaps') -}}
             </button>
         </li>
         {% endif %}
@@ -24,11 +23,10 @@
         <li data-toggle="tooltip">
             <button data-toggle-class="btn-info btn-inverse" id="hide_markers" class="btn btn-info" type="button" title="{{ 'map.hide.markers'|trans({}, 'EsterenMaps') }}">
                 <span class="fa fa-eye"></span>
-                {{ 'map.hide.markers' | trans({}, 'EsterenMaps') }}
+                {{- 'map.hide.markers' | trans({}, 'EsterenMaps') -}}
             </button>
         </li>
         {% endif %}
         <li id="esterenmap_message_element"></li>
     </ul>
-
 </div>

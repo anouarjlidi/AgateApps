@@ -17,7 +17,6 @@ use EsterenMaps\MapsBundle\Cache\EntityToClearInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
-use JMS\Serializer\Annotation as Serializer;
 
 /**
  * RoutesTypes.
@@ -25,7 +24,6 @@ use JMS\Serializer\Annotation as Serializer;
  * @ORM\Table(name="maps_routes_types")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  * @ORM\Entity(repositoryClass="EsterenMaps\MapsBundle\Repository\RoutesTypesRepository")
- * @Serializer\ExclusionPolicy("all")
  */
 class RoutesTypes implements EntityToClearInterface
 {
@@ -38,32 +36,28 @@ class RoutesTypes implements EntityToClearInterface
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id()
      * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @Serializer\Expose()
-     */
+    */
     protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=false, unique=true)
-     * @Serializer\Expose()
-     */
+    */
     protected $name;
 
     /**
      * @var string
      *
      * @ORM\Column(name="description", type="text", nullable=true)
-     * @Serializer\Expose()
-     */
+    */
     protected $description;
 
     /**
      * @var string
      *
      * @ORM\Column(name="color", type="string", length=75, nullable=true)
-     * @Serializer\Expose()
-     */
+    */
     protected $color;
 
     /**
@@ -81,8 +75,7 @@ class RoutesTypes implements EntityToClearInterface
     /**
      * @var TransportModifiers[]
      * @ORM\OneToMany(targetEntity="EsterenMaps\MapsBundle\Entity\TransportModifiers", mappedBy="routeType")
-     * @Serializer\Expose()
-     */
+    */
     protected $transports;
 
     public function __toString()

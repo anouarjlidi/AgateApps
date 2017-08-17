@@ -1,7 +1,7 @@
 (function($, L, d, w){
 
     EsterenMap.prototype.initFilters = function(){
-        var control, _this = this,
+        var control,
             mapOptions = this._mapOptions
         ;
 
@@ -13,9 +13,7 @@
 
         this._filtersControl = control;
 
-        this.loadRefData(function(){
-            control.addTo(this._map);
-        });
+        control.addTo(this._map);
 
         return this;
     };
@@ -80,21 +78,23 @@
                     "zonesTypesUL": []
                 },
                 captionStyle = 'width: 12px; height: 12px; vertical-align: text-top; margin-right: 3px; margin-left: 3px;',
-                list
+                list, elements
             ;
 
             // ------------- MARKERS -------------
             list = L.DomUtil.create('ul', listsClasses);
-            if (this._esterenMap._markersTypes) {
-                $.each(this._esterenMap._markersTypes, function(index, markerType) {
+            if (elements = this._esterenMap._mapOptions.data.references.markers_types) {
+                $.each(elements, function(index, markerType) {
                     var node = L.DomUtil.create('li', listsElementsClasses, list);
                     node.setAttribute('style', listsElementsStyles);
                     node.innerHTML =
-                        '<label for="markerType'+markerType.id+'">'
-                        +'<input id="markerType'+markerType.id+'" type="checkbox" class="leaflet-filter-checkbox" checked="checked" />'
-                        +'<img src="'+markerType.web_icon+'" class="ib" style="'+captionStyle+'">'
-                        +markerType.name
-                        +'</label>'
+                        '<div>'
+                            +'<input id="markerType'+markerType.id+'" type="checkbox" class="leaflet-filter-checkbox" checked="checked" />'
+                            +'<label for="markerType'+markerType.id+'">'
+                                +'<img src="'+markerType.icon+'" class="ib" style="'+captionStyle+'"> '
+                                +markerType.name
+                            +'</label>'
+                        +'</div>'
                     ;
                     nodesList.markersTypes.push(node);
                 });
@@ -103,16 +103,18 @@
 
             // ------------- ROUTES -------------
             list = L.DomUtil.create('ul', listsClasses);
-            if (this._esterenMap._routesTypes) {
-                $.each(this._esterenMap._routesTypes, function(index, routeType) {
+            if (elements = this._esterenMap._mapOptions.data.references.routes_types) {
+                $.each(elements, function(index, routeType) {
                     var node = L.DomUtil.create('li', listsElementsClasses, list);
                     node.setAttribute('style', listsElementsStyles);
                     node.innerHTML =
-                        '<label for="routeType'+routeType.id+'">'
-                        +'<input id="routeType'+routeType.id+'" type="checkbox" class="leaflet-filter-checkbox" checked="checked" />'
-                        +'<span class="ib" style="'+captionStyle+' background: '+routeType.color+'"></span>'
-                        +routeType.name
-                        +'</label>'
+                        '<div>'
+                            +'<input id="routeType'+routeType.id+'" type="checkbox" class="leaflet-filter-checkbox" checked="checked" />'
+                            +'<label for="routeType'+routeType.id+'">'
+                                +'<span class="ib" style="'+captionStyle+' background: '+routeType.color+'"></span> '
+                                +routeType.name
+                            +'</label>'
+                        +'</div>'
                     ;
                     nodesList.routesTypes.push(node);
                 });
@@ -121,16 +123,18 @@
 
             // ------------- ZONES -------------
             list = L.DomUtil.create('ul', listsClasses);
-            if (this._esterenMap._zonesTypes) {
-                $.each(this._esterenMap._zonesTypes, function(index, zoneType) {
+            if (elements = this._esterenMap._mapOptions.data.references.zones_types) {
+                $.each(elements, function(index, zoneType) {
                     var node = L.DomUtil.create('li', listsElementsClasses, list);
                     node.setAttribute('style', listsElementsStyles);
                     node.innerHTML =
-                        '<label for="zoneType'+zoneType.id+'">'
-                        +'<input id="zoneType'+zoneType.id+'" type="checkbox" class="leaflet-filter-checkbox" checked="checked" />'
-                        +'<span class="ib" style="'+captionStyle+' background: '+zoneType.color+'"></span>'
-                        +zoneType.name
-                        +'</label>'
+                        '<div>'
+                            +'<input id="zoneType'+zoneType.id+'" type="checkbox" class="leaflet-filter-checkbox" checked="checked" />'
+                            +'<label for="zoneType'+zoneType.id+'">'
+                                +'<span class="ib" style="'+captionStyle+' background: '+zoneType.color+'"></span> '
+                                +zoneType.name
+                            +'</label>'
+                        +'</div>'
                     ;
                     nodesList.zonesTypes.push(node);
                 });
@@ -142,18 +146,18 @@
             // pour être sûr que des listeners ne sont pas "perdus" en route
 
             content = $('<div />')
-                .append($('<h3 />').text(filtersMsgTitle))
+                .append($('<h3 class="text-xxl" />').text(filtersMsgTitle))
                 .append($('<div class="row" />')
-                    .append($('<div class="col-sm-4" />')
-                        .append($('<h4 />').text(filtersMsgMarkersTypes))
+                    .append($('<div class="col s4" />')
+                        .append($('<h4 class="text-xxl" />').text(filtersMsgMarkersTypes))
                         .append(nodesList.markersTypesUL)
                     )
-                    .append($('<div class="col-sm-4" />')
-                        .append($('<h4 />').text(filtersMsgRoutesTypes))
+                    .append($('<div class="col s4" />')
+                        .append($('<h4 class="text-xxl" />').text(filtersMsgRoutesTypes))
                         .append(nodesList.routesTypesUL)
                     )
-                    .append($('<div class="col-sm-4" />')
-                        .append($('<h4 />').text(filtersMsgZonesTypes))
+                    .append($('<div class="col s4" />')
+                        .append($('<h4 class="text-xxl" />').text(filtersMsgZonesTypes))
                         .append(nodesList.zonesTypesUL)
                     )
                 )
@@ -182,6 +186,14 @@
             link.children[0].classList.remove('icon-resize_small');
         },
 
+        toggle: function(){
+            if (!this._controlDiv.classList.contains('expanded')) {
+                this.show();
+            } else {
+                this.hide();
+            }
+        },
+
         onAdd: function () {
             var _this = this, controlDiv, link, textTitle, controlContent;
 
@@ -190,37 +202,35 @@
                 return false;
             }
 
-            textTitle = (typeof(MSG_CONTROL_FILTERS_TITLE) !== 'undefined') ? MSG_CONTROL_FILTERS_TITLE : 'Filters';
+            textTitle = (typeof(MSG_CONTROL_FILTERS_TITLE) !== 'undefined') ? MSG_CONTROL_FILTERS_TITLE : 'MSG_CONTROL_FILTERS_TITLE';
 
             controlDiv = L.DomUtil.create('div', 'leaflet-draw-section leaflet-filters-control');
             controlDiv.id = "leaflet-filters-control";
 
             controlContent = L.DomUtil.create('div', 'leaflet-filters-control-content', controlDiv);
 
-            link = L.DomUtil.create('a', '', controlDiv);
+            link = L.DomUtil.create('a', 'map-control-toggle', controlDiv);
             link.id = 'leaflet-filters-toggle';
             link.style.backgroundImage = 'none';
             link.href = "#";
             link.innerHTML = '<i class="fa fa-filter" style="font-size: 15px;"></i>';
-            link.title = textTitle;
+            link.setAttribute('data-tooltip', textTitle);
             $(link).tooltip({
-                "placement" : "right",
-                "container": "body"
+                "delay": 25,
+                "position" : "right",
+                "html": "true"
             });
 
             // Listener FiltersControl
             L.DomEvent
-                .addListener(link, 'click', function () {
-                    var controlDiv = d.getElementById('leaflet-filters-control');
+                .addListener(link, 'click', function (e) {
+                    _this.toggle();
 
-                    if (!controlDiv.classList.contains('expanded')) {
-                        _this.show();
-                    } else {
-                        _this.hide();
-                    }
+                    L.DomEvent.stopPropagation(e);
+                    L.DomEvent.preventDefault(e);
+
                     return false;
                 })
-                .addListener(link, 'click', L.DomEvent.stopPropagation)
             ;
 
             // Listeners FiltersControl disable
@@ -247,13 +257,15 @@
         },
 
         setEvents: function(){
+            var controlContent = this._controlContent;
+
             if (this._lstnSet) {
                 console.error('Content has already been set for this filter panel.');
                 return false;
             }
-            var inputs = $(this._controlContent).find('input.leaflet-filter-checkbox');
+            var inputs = $(controlContent).find('input.leaflet-filter-checkbox');
 
-            inputs.on('change', function(){
+            inputs.on('change', function(e){
                 if (!d.getElementById('filtersStyle')) {
                     $('<style />').attr('id', 'filtersStyle').appendTo('head');
                 }
@@ -265,6 +277,10 @@
                     }
                 });
                 styleContainer.innerHTML = html;
+
+                // Dirty hack to make sure there is no ugly rendering bugs...
+                controlContent.style.position = 'static';
+                controlContent.style.position = 'relative';
             });
 
             this._lstnSet = true;

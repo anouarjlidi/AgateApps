@@ -1,0 +1,10 @@
+{% spaceless %}
+<script type="text/javascript">{#
+#}window._CP={#
+    #}[{#
+        #}{% for domain in domains -%}
+            "//{{ domain }}{{- path('connect', {'id': app.session.id}) -}}"{{ not loop.last?',' -}}
+        {%- endfor %}{#
+    #}];{#
+#}</script>
+{% endspaceless %}

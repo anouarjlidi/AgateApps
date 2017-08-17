@@ -62,7 +62,7 @@
                 return false;
             }
 
-            textTitle = (typeof(MSG_CONTROL_SEARCH_TITLE) !== 'undefined') ? MSG_CONTROL_SEARCH_TITLE : 'Calcul d\'itinéraire';
+            textTitle = (typeof(MSG_CONTROL_SEARCH_TITLE) !== 'undefined') ? MSG_CONTROL_SEARCH_TITLE : 'MSG_CONTROL_SEARCH_TITLE';
 
             controlDiv = L.DomUtil.create('div', 'leaflet-draw-section leaflet-search-control');
             controlDiv.id = "leaflet-search-control";
@@ -70,15 +70,16 @@
             controlContent = L.DomUtil.create('div', 'leaflet-search-control-content', controlDiv);
             controlContent.id = 'search_control_content';
 
-            link = L.DomUtil.create('a', '', controlDiv);
+            link = L.DomUtil.create('a', 'map-control-toggle', controlDiv);
             link.id = 'leaflet-search-toggle';
             link.style.backgroundImage = 'none';
             link.href = "#";
             link.innerHTML = '<i class="fa fa-search" style="font-size: 16px;"></i>';
-            link.title = textTitle;
+            link.setAttribute('data-tooltip', textTitle);
             $(link).tooltip({
-                "placement" : "right",
-                "container": "body"
+                "delay": 25,
+                "position" : "right",
+                "html": "true"
             });
 
             // Listener SearchControl
@@ -113,10 +114,16 @@
             return controlDiv;
         },
 
+        message: function(message){
+            var messageBox;
+            if (this._controlContent && (messageBox = this._controlContent.querySelector('#'+L.Control.Search.BOX_MESSAGE_ID))) {
+                messageBox.innerHTML = message;
+            }
+        },
+
         setEvents: function(){
-            var map = this._esterenMap,
-                _control = this,
-                searchMsgNotFound = typeof MSG_CONTROL_SEARCH_NOT_FOUND !== 'undefined' ? MSG_CONTROL_SEARCH_NOT_FOUND : 'Aucun élément trouvé.'
+            var _control = this,
+                searchMsgNotFound = typeof MSG_CONTROL_SEARCH_NOT_FOUND !== 'undefined' ? MSG_CONTROL_SEARCH_NOT_FOUND : 'MSG_CONTROL_SEARCH_NOT_FOUND'
             ;
 
             /**
@@ -141,7 +148,7 @@
                 if (event.keyCode === 27) {
                     this.value = "";
                     _control.unFocusSelectedElement();
-                    $this.next('.search_helper').html('');
+                    $this.parent().find('.search_helper').html('');
                     event.preventDefault();
                     return false;
                 }
@@ -167,7 +174,7 @@
                     html = '<ul class="list-unstyled">'+html+'</ul>';
                 }
 
-                $this.next('.search_helper').html(html);
+                $this.parent().find('.search_helper').html(html);
                 event.preventDefault();
                 return false;
             });
@@ -263,7 +270,7 @@
         },
 
         focusElement: function(element){
-            var map = this._esterenMap._map;
+            var map = this._esterenMap._map, path, bounds;
 
             if (this._selectedElement) {
                 this.unFocusSelectedElement();
@@ -274,26 +281,41 @@
                 element._icon.classList.add('selected');
                 map.setView(element.getLatLng(), map.getMaxZoom(), {animate: true});
             } else if (element._esterenRoute || element._esterenZone) {
+                path = map.getRenderer(element).getPane();
+
+                if (!path) {
+                    throw 'No path was found for this element.';
+                }
+
                 // Focus on the route or zone and add class to svg path
-                element._path.classList.add('highlighted');
+                path.classList.add('highlighted');
 
-                element._path.setAttribute('stroke-width', parseInt(element._path.getAttribute('stroke-width')) * 2);
-                element._oldColor = element._path.getAttribute('stroke');
-                element._path.setAttribute('stroke', this._pathColor);
+                path.setAttribute('stroke-width', parseInt(path.getAttribute('stroke-width')) * 2);
+                element._oldColor = path.getAttribute('stroke');
+                path.setAttribute('stroke', this._pathColor);
 
-                map.fitBounds(element.getLatLngs(), {animate: true});
+                bounds = L.latLngBounds(element.getLatLngs());
+
+                if (!bounds.isValid()) {
+                    this.message(typeof MSG_CONTROL_SEARCH_NOT_FOUND !== 'undefined' ? MSG_CONTROL_SEARCH_NOT_FOUND : 'MSG_CONTROL_SEARCH_NOT_FOUND');
+
+                    return;
+                }
+
+                map.fitBounds(bounds, {animate: true});
+            } else {
+                throw 'No element to focus on.';
             }
 
             this._selectedElement = element;
         },
 
         findByQuery: function(search_query) {
-
             search_query = search_query.trim();
 
             var searchRegexp = new RegExp(search_query, 'gi'),
                 map = this._esterenMap,
-                marker, polyline, polygon,
+                marker, polyline, polygon, bounds,
                 results = {
                     total: 0,
                     markers: [],
@@ -312,6 +334,9 @@
                 // Search in routes
                 for (polyline in map._polylines) {
                     if (map._polylines.hasOwnProperty(polyline) && map._polylines[polyline]._esterenRoute.name.match(searchRegexp)) {
+                        if (!L.latLngBounds(map._polylines[polyline].getLatLngs()).isValid()) {
+                            continue;
+                        }
                         results.total ++;
                         results.routes.push(map._polylines[polyline]);
                     }
@@ -319,6 +344,9 @@
                 // Search in zones
                 for (polygon in map._polygons) {
                     if (map._polygons.hasOwnProperty(polygon) && map._polygons[polygon]._esterenZone.name.match(searchRegexp)) {
+                        if (!L.latLngBounds(map._polygons[polygon].getLatLngs()).isValid()) {
+                            continue;
+                        }
                         results.total ++;
                         results.zones.push(map._polygons[polygon]);
                     }
@@ -391,7 +419,7 @@
          * Should disable selection for the selected element.
          */
         unFocusSelectedElement: function(){
-            var element = this._selectedElement;
+            var element = this._selectedElement, path;
 
             if (!element) {
                 return;
@@ -402,9 +430,15 @@
                 element._icon.classList.remove('selected');
             } else if (element._esterenRoute || element._esterenZone) {
                 // Remove class in svg path, and rollback the stroke color
-                element._path.setAttribute('stroke-width', parseInt(element._path.getAttribute('stroke-width')) / 2);
-                element._path.setAttribute('stroke', element._oldColor);
-                element._path.classList.remove('highlighted');
+                path = this._map.getRenderer(element).getPane();
+
+                if (!path) {
+                    throw 'No path was found for this element.';
+                }
+
+                path.setAttribute('stroke-width', parseInt(path.getAttribute('stroke-width')) / 2);
+                path.setAttribute('stroke', element._oldColor);
+                path.classList.remove('highlighted');
             }
         },
 
@@ -423,9 +457,9 @@
             }
 
             var content,
-                msgSend = typeof FORM_SUBMIT !== 'undefined' ? FORM_SUBMIT : 'Envoyer',
-                searchMsgTitle = typeof MSG_CONTROL_SEARCH_TITLE !== 'undefined' ? MSG_CONTROL_SEARCH_TITLE : 'Rechercher un élément sur la carte',
-                searchMsgPlaceholder = typeof MSG_CONTROL_SEARCH_PLACEHOLDER !== 'undefined' ? MSG_CONTROL_SEARCH_PLACEHOLDER : 'Rechercher'
+                msgSend = typeof FORM_SUBMIT !== 'undefined' ? FORM_SUBMIT : 'FORM_SUBMIT',
+                searchMsgTitle = typeof MSG_CONTROL_SEARCH_TITLE !== 'undefined' ? MSG_CONTROL_SEARCH_TITLE : 'MSG_CONTROL_SEARCH_TITLE',
+                searchMsgPlaceholder = typeof MSG_CONTROL_SEARCH_PLACEHOLDER !== 'undefined' ? MSG_CONTROL_SEARCH_PLACEHOLDER : 'MSG_CONTROL_SEARCH_PLACEHOLDER'
             ;
 
             // Ajout des différents noeuds à l'objet Content
@@ -435,16 +469,15 @@
             content =
             '<div>' +
                 '<div id="maps_search_wait_overlay"></div>' +
-                '<form action="#" id="'+L.Control.Search.FORM_ID+'" class="form-horizontal">' +
-                    '<div class="form-group">' +
-                        '<div class="col-xs-12">' +
-                            '<label for="">' + searchMsgTitle + '</label>' +
-                            '<input type="text" name="'+L.Control.Search.INPUT_QUERY_ID+'" id="'+L.Control.Search.INPUT_QUERY_ID+'" placeholder="' + searchMsgPlaceholder + '" class="form-control" />' +
-                            '<div class="search_helper"></div>' +
-                        '</div>' +
+                '<form action="#" id="'+L.Control.Search.FORM_ID+'">' +
+                    '<h3 class="text-xxl">' + searchMsgTitle + '</h3>' +
+                    '<div class="input-field">' +
+                        '<input type="text" name="'+L.Control.Search.INPUT_QUERY_ID+'" id="'+L.Control.Search.INPUT_QUERY_ID+'" />' +
+                        '<label for="'+L.Control.Search.INPUT_QUERY_ID+'">' + searchMsgPlaceholder + '</label>' +
+                        '<div class="search_helper"></div>' +
                     '</div>' +
-                    '<button id="'+L.Control.Search.BUTTON_SUBMIT_ID+'" class="btn btn-default" type="button">' + msgSend + '</button>' +
                     '<div id="'+L.Control.Search.BOX_MESSAGE_ID+'"></div>' +
+                    '<button id="'+L.Control.Search.BUTTON_SUBMIT_ID+'" class="btn btn-default" type="button">' + msgSend + '</button>' +
                 '</div>' +
                 '</form>' +
             '</div>'

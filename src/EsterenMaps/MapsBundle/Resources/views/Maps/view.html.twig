@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends '@EsterenMaps/maps-layout.html.twig' %}
 
 {% block title %}{{ 'entities.maps.single_view' | trans({}, 'EsterenMaps') }} {{ map.name }} - {{ parent() }}{% endblock %}
 
@@ -6,6 +6,7 @@
 {% block footer '' %}
 
 {% block layout %}
+    {% spaceless %}
     <div id="map_wrapper">
         <div id="maps_admin_container">
             {{ include('@EsterenMaps/menu/show_hide.html.twig') }}
@@ -13,6 +14,7 @@
         <div id="esterenmap_sidebar"></div>
         <div id="map"></div>
     </div>
+    {% endspaceless %}
 {% endblock %}
 
 {% block stylesheets %}
@@ -26,37 +28,36 @@
     {{ parent() }}
     <script type="text/javascript" src="{{ asset('js/maps_lib.js') }}"></script>
 
-    <script type="text/javascript">
-        (function(w, d){
-            try {
-                d.map = new EsterenMap({
-                    id: {{ map.id }},
-                    apiUrls: {
-                        base: "{{ app.request.scheme }}://{{ esteren_domains_api }}/{{ app.request.locale }}",
-                        settings: "{{ url('esterenmaps_api_maps_settings_distant', {"id":map.id}) }}",
-                        tiles: "{{ app.request.scheme }}://{{ esteren_domains_api }}{{ asset('maps_tiles/'~map.id~'/{z}/{y}/{x}.jpg') }}"
-                    },
-                    LeafletMapBaseOptions: {
-                        zoom: {{ map.startZoom }},
-                        maxZoom: {{ map.maxZoom }}
-                        {% if map.jsonBounds|length %},
-                        maxBounds: {{ map.bounds|raw }}
-                        {% endif %}
-                    },
-                    LeafletLayerBaseOptions: {
-                        maxZoom: {{ map.maxZoom }},
-                        maxNativeZoom: {{ map.maxZoom }},
-                        tileSize: {{ tile_size }}
-                        {# Have to wait until bounds are supported in CANVAS mode #}
-                        {#% if map.jsonBounds|length %},
-                        bounds: {{ map.bounds|raw }}
-                        {% endif %#}
-                    }
-                    {{ app.debug ? ',cacheTTL:0' }}
-                });
-            } catch (e) {
-                console.error(e);
-            }
-        })(window, document);
+    <script type="text/javascript"> {#
+        #}(function(w, d){ {#
+            #}try { {#
+                #}d.map = new EsterenMap({ {#
+                    #}id: {{ map.id }},{#
+                    #}apiUrls: { {#
+                        #}map: "{{ url('esterenmaps_api_map_get', {"id": map.id}) }}",{#
+                        #}directions: "{{ url('esterenmaps_directions', {
+                            "id": map.id,
+                            'from': '9999',
+                            'to': '8888'
+                        })|replace({'9999': '{from}', '8888': '{to}'}) }}",{#
+                        #}tiles: "{{ app.request.scheme }}://{{ esteren_domains_api }}{{ asset('maps_tiles/'~map.id~'/{z}/{y}/{x}.jpg') }}"{#
+                    #}},{#
+                    #}LeafletMapBaseOptions: { {#
+                        #}zoom: {{ map.startZoom }},{#
+                        #}maxZoom: {{ map.maxZoom }}{#
+                        #}{% if map.jsonBounds|length %},{#
+                        #}maxBounds: {{ map.bounds|raw }}{#
+                        #}{% endif %} {#
+                    #}},{#
+                    #}LeafletLayerBaseOptions: { {#
+                        #}maxZoom: {{ map.maxZoom }},{#
+                        #}maxNativeZoom: {{ map.maxZoom }},{#
+                        #}tileSize: {{ tile_size }} {#
+                    #}} {#
+                #}});{#
+            #}} catch (e) { {#
+                #}console.error(e);{#
+            #}}{#
+        #}})(window, document);
     </script>
 {% endblock %}

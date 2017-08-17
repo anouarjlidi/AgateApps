@@ -12,99 +12,40 @@
 namespace EsterenMaps\MapsBundle\Repository;
 
 use Doctrine\ORM\Query;
-use EsterenMaps\MapsBundle\Entity\Maps;
 use EsterenMaps\MapsBundle\Entity\Routes;
-use EsterenMaps\MapsBundle\Entity\TransportTypes;
-use EsterenMaps\MapsBundle\Hydrator\DirectionsRouteHydrator;
-use EsterenMaps\MapsBundle\Model\DirectionRoute;
 use Orbitale\Component\DoctrineTools\BaseEntityRepository as BaseRepository;
 
 class RoutesRepository extends BaseRepository
 {
-    /**
-     * @param Maps|int       $map
-     * @param TransportTypes $transportType
-     *
-     * @return DirectionRoute[]
-     */
-    public function findForDirections($map, TransportTypes $transportType = null)
+    public function findForApiByMap($mapId)
     {
-        $qb = $this
-            ->createQueryBuilder('route')
+        $query = $this->createQueryBuilder('route')
             ->select('
-                route,
-                routeType,
-                markerStart,
-                markerEnd,
-                transports,
-                transportType
+                route.id,
+                route.name,
+                route.description,
+                route.coordinates,
+                route.distance,
+                route.forcedDistance as forced_distance,
+                route.guarded,
+                markerStart.id as marker_start,
+                markerEnd.id as marker_end,
+                routeFaction.id as faction,
+                routeType.id as route_type
             ')
-            ->innerJoin('route.markerStart', 'markerStart')
-            ->innerJoin('route.markerEnd', 'markerEnd')
-            ->innerJoin('route.routeType', 'routeType')
-                ->innerJoin('routeType.transports', 'transports')
-                    ->innerJoin('transports.transportType', 'transportType')
+            ->leftJoin('route.map', 'map')
+            ->leftJoin('route.markerStart', 'markerStart')
+            ->leftJoin('route.markerEnd', 'markerEnd')
+            ->leftJoin('route.faction', 'routeFaction')
+            ->leftJoin('route.routeType', 'routeType')
+            ->where('map.id = :id')
+            ->setParameter('id', $mapId)
             ->indexBy('route', 'route.id')
-            ->where('route.map = :map')
-                ->setParameter('map', $map->getId())
+            ->getQuery()
         ;
 
-        // Prepare custom hydration system
-        $this->_em->getConfiguration()->addCustomHydrationMode('directions_route', DirectionsRouteHydrator::class);
+        $query->useResultCache(true, 3600);
 
-        /** @var DirectionRoute[] $directionRoutes */
-        $directionRoutes = $qb->getQuery()->getResult('directions_route');
-
-        if (null !== $transportType) {
-            // Remove each route on which current transport has speed equal to zero
-            foreach ($directionRoutes as $k => $directionRoute) {
-                foreach ($directionRoute->getTransports() as $resultTransport) {
-                    if (
-                        $resultTransport->getId() === $transportType->getId()
-                        && $resultTransport->getPercentage() === 0.0
-                    ) {
-                        unset($directionRoutes[$k]);
-                        break;
-                    }
-                }
-            }
-        }
-
-        return $directionRoutes;
-    }
-
-    /**
-     * @param array $ids
-     * @param bool  $sortByIds
-     * @param bool  $asArray
-     *
-     * @return array[]|Routes[]
-     */
-    public function findByIds(array $ids, $sortByIds = false, $asArray = true)
-    {
-        /** @var array[]|Routes[] $result */
-        $result = $this->_em
-            ->createQuery("
-                SELECT
-                route, routeType, transportsModifier
-                FROM {$this->_entityName} route
-                LEFT JOIN route.routeType routeType
-                    LEFT JOIN routeType.transports transportsModifier
-                        LEFT JOIN transportsModifier.transportType transportType
-                WHERE route.id IN (:ids)
-            ")
-            ->setParameter(':ids', $ids)
-            ->getResult($asArray ? Query::HYDRATE_ARRAY : Query::HYDRATE_OBJECT)
-        ;
-
-        if ($sortByIds) {
-            $a = [];
-            foreach ($result as $route) {
-                $a[$asArray ? $route['id'] : $route->getId()] = $route;
-            }
-            $result = $a;
-        }
-
-        return $result;
+        return $query->getArrayResult();
     }
 }

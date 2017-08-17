@@ -13,29 +13,25 @@ namespace EsterenMaps\MapsBundle\Repository;
 
 use Orbitale\Component\DoctrineTools\BaseEntityRepository as BaseRepository;
 
-/**
- * MarkersRepository.
- */
-class MarkersRepository extends BaseRepository
+class ZonesRepository extends BaseRepository
 {
     public function findForApiByMap($mapId)
     {
-        $query = $this->createQueryBuilder('marker')
+        $query = $this->createQueryBuilder('zone')
             ->select('
-                marker.id,
-                marker.name,
-                marker.description,
-                marker.latitude,
-                marker.longitude,
-                markerType.id as marker_type,
-                markerFaction.id as faction
+                zone.id,
+                zone.name,
+                zone.description,
+                zone.coordinates,
+                zoneFaction.id as faction,
+                zoneType.id as zone_type
             ')
-            ->leftJoin('marker.map', 'map')
-            ->leftJoin('marker.markerType', 'markerType')
-            ->leftJoin('marker.faction', 'markerFaction')
+            ->leftJoin('zone.map', 'map')
+            ->leftJoin('zone.faction', 'zoneFaction')
+            ->leftJoin('zone.zoneType', 'zoneType')
+            ->indexBy('zone', 'zone.id')
             ->where('map.id = :id')
             ->setParameter('id', $mapId)
-            ->indexBy('marker', 'marker.id')
             ->getQuery()
         ;
 
