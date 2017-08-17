@@ -254,9 +254,14 @@
 
                 content.getElementById('polyline_popup_name').innerHTML = esterenRoute.name;
                 content.getElementById('polyline_popup_type').innerHTML = this._esterenMap.reference('routes_types', esterenRoute.route_type).name;
-                content.getElementById('polyline_popup_faction').innerHTML = this._esterenMap.reference('factions', esterenRoute.faction, {name:''}).name;
                 content.getElementById('polyline_popup_markerStart').innerHTML = this._esterenMap.mapReference('markers', esterenRoute.marker_start, {name:''}).name;
                 content.getElementById('polyline_popup_markerEnd').innerHTML = this._esterenMap.mapReference('markers', esterenRoute.marker_end, {name:''}).name;
+                if (esterenRoute.faction) {
+                    content.getElementById('polyline_popup_faction').parentElement.style.display = 'auto';
+                    content.getElementById('polyline_popup_faction').innerHTML = this._esterenMap.reference('factions', esterenRoute.faction, {name:''}).name;
+                } else {
+                    content.getElementById('polyline_popup_faction').parentElement.style.display = 'none';
+                }
 
                 polyline.showSidebar(content.querySelector('body').innerHTML);
             }
