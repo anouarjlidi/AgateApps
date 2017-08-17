@@ -13,6 +13,7 @@ namespace EsterenMaps\MapsBundle\DataFixtures\ORM;
 
 use Orbitale\Component\DoctrineTools\AbstractFixture;
 use Pierstoval\Bundle\ToolsBundle\Doctrine\FixtureMetadataIdGeneratorTrait;
+use EsterenMaps\MapsBundle\Entity\MarkersTypes;
 
 class MarkersTypesFixtures extends AbstractFixture
 {
@@ -31,7 +32,7 @@ class MarkersTypesFixtures extends AbstractFixture
      */
     protected function getEntityClass()
     {
-        return 'EsterenMaps\MapsBundle\Entity\MarkersTypes';
+        return MarkersTypes::class;
     }
 
     /**
