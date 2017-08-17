@@ -273,15 +273,22 @@ class DirectionsManager
 
     private function getDataArray(Markers $from, Markers $to, array $directions, array $routes, int $hoursPerDay = 7, TransportTypes $transport = null): array
     {
-        $distance = 0;
+        $distance = null;
         $NE       = [];
         $SW       = [];
 
         foreach ($directions as $step) {
-            $distance += ($step['route'] ? $step['route']['distance'] : 0);
+            if (!$step['route']) {
+                continue;
+            }
+
+            $distance += $step['route']['distance'];
+
             if ($step['route']) {
                 /** @var array $coords */
                 $coords = $step['route']['coordinates'];
+
+                // Evaluate bounds
                 foreach ($coords as $latLng) {
                     if (!isset($NE['lat']) || ($NE['lat'] < $latLng['lat'])) {
                         $NE['lat'] = $latLng['lat'];
@@ -313,7 +320,7 @@ class DirectionsManager
             'path'            => $directions,
         ];
 
-        $data['duration_raw']  = ['days' => null, 'hours' => null];
+        $data['duration_raw']  = null;
         $data['duration_real'] = ['days' => null, 'hours' => null];
 
         if ($transport) {
@@ -423,11 +430,7 @@ class DirectionsManager
 
             if ($transportModifier) {
                 $percentage = (float) $transportModifier->getPercentage();
-                if ($transportModifier->isPositiveRatio()) {
-                    $speed = $transport->getSpeed() * ($percentage / 100);
-                } else {
-                    $speed = $transport->getSpeed() * ((100 - $percentage) / 100);
-                }
+                $speed = $transport->getSpeed() * ($percentage / 100);
                 $hours = $distance / $speed;
                 $total += $hours;
             }

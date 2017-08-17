@@ -58,23 +58,23 @@ class Markers implements EntityToClearInterface, \JsonSerializable
     /**
      * @var string
      *
-     * @ORM\Column(name="altitude", type="string", length=255, nullable=true)
+     * @ORM\Column(name="altitude", type="string", length=255, options={"default": 0})
     */
-    protected $altitude;
+    protected $altitude = 0;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="latitude", type="string", length=255, nullable=true)
+     * @ORM\Column(name="latitude", type="string", length=255, options={"default": 0})
     */
-    protected $latitude;
+    protected $latitude = 0;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="longitude", type="string", length=255, nullable=true)
+     * @ORM\Column(name="longitude", type="string", length=255, options={"default": 0})
     */
-    protected $longitude;
+    protected $longitude = 0;
 
     /**
      * @var Factions
