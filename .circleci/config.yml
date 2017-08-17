@@ -89,6 +89,12 @@ jobs:
                     node tests/nodejs/test_gulp_dump.js
 
             - run:
+               name: 'Fix temporary issues with Composer & SensioDistributionBundle'
+               command: |
+                    sed "s/require_once dirname.*;/require_once dirname(__FILE__).'\/..\/var\/\SymfonyRequirements.php';/" bin/symfony_requirements > tmp && mv tmp bin/symfony_requirements
+                    sed "s/require_once dirname.*;/require_once dirname(__FILE__).'\/..\/var\/\SymfonyRequirements.php';/" web/config.php > tmp && mv tmp web/config.php
+
+            - run:
                name: 'Execute Linting tests'
                command: |
                     php bin/symfony_requirements
