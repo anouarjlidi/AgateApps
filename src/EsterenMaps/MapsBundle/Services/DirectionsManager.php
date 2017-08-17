@@ -90,11 +90,9 @@ class DirectionsManager
         $nodes = [];
         $edges = [];
 
-        /*
-         * Reformat nodes and edges for a better use of the Dijkstra algorithm.
-         * We here have a list of "start" and "end" markers, and routes.
-         * We need nodes (markers) and edges (routes).
-         */
+        // Reformat nodes and edges for a better use of the Dijkstra algorithm.
+        // We here have a list of "start" and "end" markers, and routes.
+        // We need nodes (markers) and edges (routes).
         foreach ($data['map']['routes'] as $routeId => $route) {
             $markerStartId = $route['marker_start'];
             $markerEndId   = $route['marker_end'];
@@ -103,6 +101,7 @@ class DirectionsManager
             $edge = [
                 'id'       => $routeId,
                 'distance' => $route['distance'],
+                'type'     => $route['route_type'],
                 'start'    => $markerStartId,
                 'end'      => $markerEndId,
             ];
@@ -141,6 +140,9 @@ class DirectionsManager
             $edges[$routeId] = $edge;
         }
 
+        $edges = $this->filterEdges($edges, $transportType);
+        $nodes = $this->filterNodes($nodes, $edges);
+
         $paths = $this->dijkstra($nodes, $edges, $start->getId(), $end->getId());
 
         $routesIds    = array_values($paths);
@@ -150,8 +152,6 @@ class DirectionsManager
         $routesArray = array_filter($data['map']['routes'], function($route) use ($routesIds) {
             return in_array($route['id'], $routesIds, true);
         });
-
-        $paths = $this->checkTransportType($paths, $routesArray, $transportType);
 
         $steps = [];
 
@@ -327,22 +327,18 @@ class DirectionsManager
     }
 
     /**
-     * @param array          $paths
-     * @param array[]        $routes
-     * @param TransportTypes $transportType
-     *
-     * @return array
+     * Filter routes that are incompatible with this transport type
      */
-    private function checkTransportType(array $paths, array $routes, TransportTypes $transportType = null): array
+    private function filterEdges(array $edges, TransportTypes $transportType = null): array
     {
         if (!$transportType) {
-            return $paths;
+            return $edges;
         }
 
         $routesTypes = [];
 
-        foreach ($routes as $route) {
-            $routesTypes[$route['route_type']] = $route['route_type'];
+        foreach ($edges as $route) {
+            $routesTypes[$route['type']] = $route['type'];
         }
 
         $transportModifiers = $this->entityManager->getRepository(TransportModifiers::class)->findBy([
@@ -350,14 +346,45 @@ class DirectionsManager
             'transportType' => $transportType,
         ]);
 
+        $routesTypesToDelete = [];
+
         // Check that the transport have a good value here
         foreach ($transportModifiers as $modifier) {
-            if ($modifier->getPercentage() <= 0) {
-                return [];
+            if ($modifier->getPercentage() <= 0.00001) {
+                $id = $modifier->getRouteType()->getId();
+                $routesTypesToDelete[$id] = $id;
             }
         }
 
-        return $paths;
+        foreach ($edges as $k => $edge) {
+            if (array_key_exists($edge['type'], $routesTypesToDelete)) {
+                unset($edges[$k]);
+            }
+        }
+
+        return $edges;
+    }
+
+    /**
+     * Filter markers that are not reachable via filtered routes
+     */
+    private function filterNodes(array $nodes, array $edges): array
+    {
+        // Filter markers from filtered routes
+        foreach ($nodes as $k => $node) {
+            // Remove potential neighbours that are not reachable because of incompatible routes.
+            foreach ($node['neighbours'] as $edgeId => $n) {
+                if (!array_key_exists($edgeId, $edges)) {
+                    unset($nodes[$k]['neighbours'][$edgeId]);
+                }
+            }
+            // If a marker has no more neighbours, it can't be crossed, so remove it.
+            if (!count($node['neighbours'])) {
+                unset($nodes[$k]);
+            }
+        }
+
+        return $nodes;
     }
 
     /**
