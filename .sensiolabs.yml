@@ -2,12 +2,9 @@ php_version: 7.1
 
 pre_composer_script: |
     #!/bin/bash
-    export SYMFONY_ENV=test
-    export SYMFONY_DEBUG=1
-    rm web/config.php
     cp app/config/parameters.yml.dist app/config/parameters.yml
     cp tests/.env .env
-    cp .env .env.dist
+    cp tests/.env .env.dist
 
 post_composer_script: |
     #!/bin/bash
@@ -15,6 +12,7 @@ post_composer_script: |
     mkdir build/
     ./bin/console --env=test doctrine:database:create --no-interaction
     ./bin/console --env=test doctrine:schema:create --no-interaction
+    ./bin/console --env=test doctrine:fixtures-load --append --no-interaction
 
 exclude_patterns:
     - src/CorahnRin/CorahnRinBundle/PDF/FPDF.php
@@ -23,6 +21,7 @@ exclude_patterns:
     - src/CorahnRin/CorahnRinBundle/Command/ImportLegacyCharactersCommand.php
     - bin/symfony_requirements
     - web/app_*.php
+    - web/config.php
 
 rules:
     symfony.form.form_type_not_in_type_form_folder: { enabled: false }

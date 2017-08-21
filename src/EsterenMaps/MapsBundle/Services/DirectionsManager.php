@@ -18,7 +18,6 @@ use EsterenMaps\MapsBundle\Entity\Maps;
 use EsterenMaps\MapsBundle\Entity\Markers;
 use EsterenMaps\MapsBundle\Entity\TransportModifiers;
 use EsterenMaps\MapsBundle\Entity\TransportTypes;
-use Symfony\Component\Serializer\Serializer;
 use Symfony\Bundle\TwigBundle\TwigEngine;
 
 /**
@@ -28,7 +27,6 @@ class DirectionsManager
 {
     private $debug;
     private $entityManager;
-    private $serializer;
     private $templating;
     private $cache;
     private $mapApi;
@@ -37,14 +35,12 @@ class DirectionsManager
         bool $debug,
         MapApi $mapApi,
         EntityManager $entityManager,
-        Serializer $serializer,
         TwigEngine $templating,
         CacheManager $cache
     )
     {
         $this->debug         = $debug;
         $this->entityManager = $entityManager;
-        $this->serializer    = $serializer;
         $this->templating    = $templating;
         $this->cache         = $cache;
         $this->mapApi        = $mapApi;
