@@ -108,6 +108,13 @@ jobs:
                command: |
                     vendor/bin/phpunit
 
+            - run:
+               name: 'Prepare coverage & logs'
+               command: |
+                    zip -r build/log/coverage.zip build/log/report
+                    rm -rf build/log/report/*
+                    mv coverage.zip build/log/coverage.zip
+
             - save_cache:
                 key: composer-cache-{{ checksum "composer.lock" }}
                 paths:
@@ -127,10 +134,6 @@ jobs:
                 key: yarn-cache-{{ .Branch }}
                 paths:
                     - node_modules
-
-            - run:
-                name: 'Send coverage'
-                command: 'bash <(curl -s https://codecov.io/bash) -f "build/log/clover.xml"'
 
             - store_artifacts:
                 path: build/log
