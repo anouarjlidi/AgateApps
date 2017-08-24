@@ -70,10 +70,7 @@ class UluleProjectManagerTest extends WebTestCase
         ];
     }
 
-    /**
-     * @return UluleProjectManager|MockObject
-     */
-    private function getProjectManager(\Closure $clientConfiguration = null): UluleProjectManager
+    private function getProjectManager(?\Closure $clientConfiguration): UluleProjectManager
     {
         $kernel = static::$kernel ?: static::bootKernel();
 

@@ -196,7 +196,7 @@ abstract class AbstractSecurityControllerTest extends WebTestCase
 
         // Check that form submission redirects to same page
         static::assertSame(302, $client->getResponse()->getStatusCode());
-        static::assertTrue($client->getResponse()->isRedirect("/$locale/profile"));
+        static::assertTrue($client->getResponse()->isRedirect("/$locale/profile#edit_profile"));
         $crawler->clear();
         $crawler = $client->followRedirect();
 
