@@ -9,17 +9,17 @@
  * file that was distributed with this source code.
  */
 
-namespace UserBundle\ConnectApi\Model;
+namespace UserBundle\Model\Crowdfunding;
 
-final class UluleUser
+class UluleUser
 {
     private $id;
     private $username;
 
-    public function __construct(array $clientResult)
+    public function __construct(array $data)
     {
-        $this->id       = $clientResult['id'];
-        $this->username = $clientResult['username'];
+        $this->id       = $data['id'];
+        $this->username = $data['username'];
     }
 
     public function getId(): string

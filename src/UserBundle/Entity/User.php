@@ -16,7 +16,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
-use UserBundle\Entity\Crowdfunding\Contribution;
+use UserBundle\Model\Crowdfunding\Contribution;
 
 /**
  * @ORM\Entity(repositoryClass="UserBundle\Repository\UserRepository")
@@ -125,19 +125,11 @@ class User implements UserInterface, \Serializable
     private $ululeApiToken;
 
     /**
-     * @var Contribution[]|ArrayCollection
-     *
-     * @ORM\OneToMany(targetEntity="UserBundle\Entity\Crowdfunding\Contribution", mappedBy="user", cascade={"persist", "remove"})
-     */
-    private $contributions;
-
-    /**
      * User constructor.
      */
     public function __construct()
     {
         $this->roles = [static::ROLE_DEFAULT];
-        $this->contributions = new ArrayCollection();
     }
 
     public function __toString()
@@ -336,7 +328,7 @@ class User implements UserInterface, \Serializable
         return $this->ululeId;
     }
 
-    public function setUluleId(string $ululeId = null): User
+    public function setUluleId(?string $ululeId): User
     {
         $this->ululeId = $ululeId;
 
@@ -348,7 +340,7 @@ class User implements UserInterface, \Serializable
         return $this->ululeUsername;
     }
 
-    public function setUluleUsername(string $ululeUsername = null): User
+    public function setUluleUsername(?string $ululeUsername): User
     {
         $this->ululeUsername = $ululeUsername;
 
@@ -360,35 +352,9 @@ class User implements UserInterface, \Serializable
         return $this->ululeApiToken;
     }
 
-    public function setUluleApiToken(string $ululeApiToken = null): User
+    public function setUluleApiToken(?string $ululeApiToken): User
     {
         $this->ululeApiToken = $ululeApiToken;
-
-        return $this;
-    }
-
-    /**
-     * @return ArrayCollection|Contribution[]
-     */
-    public function getContributions(): iterable
-    {
-        return $this->contributions;
-    }
-
-    public function addContribution(Contribution $contribution): self
-    {
-        $this->contributions[] = $contribution;
-
-        if (!$contribution->getUser()) {
-            $contribution->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeContribution(Contribution $contribution): self
-    {
-        $this->contributions->removeElement($contribution);
 
         return $this;
     }
@@ -420,16 +386,5 @@ class User implements UserInterface, \Serializable
             $this->emailCanonical,
             $this->password,
         ] = $data;
-    }
-
-    public function getContributionById(string $id): ?Contribution
-    {
-        foreach ($this->contributions as $contribution) {
-            if ($contribution->getId() === $id) {
-                return $contribution;
-            }
-        }
-
-        return null;
     }
 }

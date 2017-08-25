@@ -11,17 +11,18 @@
 
 namespace UserBundle\ConnectApi;
 
-use Doctrine\ORM\EntityManager;
 use Psr\Log\LoggerInterface;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
-use UserBundle\ConnectApi\Model\UluleUser;
+use Psr\Cache\CacheItemPoolInterface;
+use UserBundle\Model\Crowdfunding\Project;
+use UserBundle\Model\Crowdfunding\UluleUser;
 use UserBundle\Entity\User;
 
 class UluleClient extends AbstractApiClient
 {
-    public const ENDPOINT = 'https://api.ulule.com/v1/';
-    public const ULULE_PROJECTS = [
+    private const ENDPOINT = 'https://api.ulule.com/v1/';
+    private const ULULE_PROJECTS = [
         8021,  // Esteren - Dearg
         10861, // Esteren - Voyages
         23423, // Esteren - Occultisme
@@ -32,10 +33,12 @@ class UluleClient extends AbstractApiClient
     ];
 
     private $logger;
+    private $cache;
 
-    public function __construct(LoggerInterface $logger, EntityManager $em)
+    public function __construct(LoggerInterface $logger, CacheItemPoolInterface $cache)
     {
         $this->logger = $logger;
+        $this->cache = $cache;
     }
 
     public function getEndpoint(): string
@@ -80,7 +83,10 @@ class UluleClient extends AbstractApiClient
             }
 
             foreach ($json['projects'] as $project) {
-                $ululeProjects[$project['id']] = $project;
+                if (!in_array($project['id'], static::ULULE_PROJECTS, true)) {
+                    continue;
+                }
+                $ululeProjects[$project['id']] = new Project($project);
             }
 
             $queryString = $json['meta']['next'];
@@ -152,7 +158,7 @@ class UluleClient extends AbstractApiClient
             return null;
         }
 
-        return new UluleUser($json, $token);
+        return new UluleUser($json);
     }
 
 }

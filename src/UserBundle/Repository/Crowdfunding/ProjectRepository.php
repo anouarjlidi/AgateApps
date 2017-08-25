@@ -12,7 +12,7 @@
 namespace UserBundle\Repository\Crowdfunding;
 
 use Orbitale\Component\DoctrineTools\BaseEntityRepository;
-use UserBundle\Entity\Crowdfunding\Project;
+use UserBundle\Model\Crowdfunding\Project;
 
 class ProjectRepository extends BaseEntityRepository
 {

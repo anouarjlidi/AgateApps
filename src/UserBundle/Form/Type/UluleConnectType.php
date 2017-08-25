@@ -59,9 +59,6 @@ class UluleConnectType extends AbstractType
                     $user->setUluleApiToken(null);
                     $user->setUluleUsername(null);
                     $user->setUluleId(null);
-                    foreach ($user->getContributions() as $contribution) {
-                        $user->removeContribution($contribution);
-                    }
 
                     return;
                 }

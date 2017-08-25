@@ -6,6 +6,7 @@ security:
         submit: 'Log in'
 
 profile:
+    go_back: 'Go back to my profile'
     show:
         username: Username
         email: Email

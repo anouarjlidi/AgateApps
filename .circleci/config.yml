@@ -18,7 +18,7 @@ jobs:
                 name: 'Install necessary system packages'
                 command: |
                     apt-get update
-                    apt-get -y install g++ git unzip zlib1g-dev libicu-dev libicu52 libpng-dev libjpeg-dev
+                    apt-get -y install g++ git zip unzip zlib1g-dev libicu-dev libicu52 libpng-dev libjpeg-dev
 
             - checkout
 
@@ -113,7 +113,6 @@ jobs:
                command: |
                     zip -r build/log/coverage.zip build/log/report
                     rm -rf build/log/report/*
-                    mv coverage.zip build/log/coverage.zip
 
             - save_cache:
                 key: composer-cache-{{ checksum "composer.lock" }}

@@ -75,16 +75,15 @@
                                 </ul>
                             {% endblock %}
 
-                            {% block menu_right_mobile %}
+                            {% block menu_mobile %}
                                 <ul id="nav-mobile" class="side-nav">
-                                    {% block menu_right_mobile_content %}
+                                    {% block menu_mobile_content %}
                                         {{ block('menu_left_content') }}
-                                        {{ block('menu_right_content') }}
                                         {{ include('_menu_right.html.twig', {'dropdown': false}) }}
                                     {% endblock %}
                                 </ul>
                             {% endblock %}
-                            {% if block('menu_right_mobile')|trim|length %}
+                            {% if block('menu_mobile')|trim|length %}
                                 <a href="#" id="nav-mobile-link" data-activates="nav-mobile" class="button-collapse right" title="{{ 'links.menu'|trans }}">
                                     <i class="fa fa-bars text-white"></i> Menu
                                 </a>

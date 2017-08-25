@@ -2,32 +2,26 @@
 
 namespace UserBundle\Controller\Crowdfunding;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use UserBundle\Entity\User;
+use UserBundle\ConnectApi\UluleClient;
 
 class MyProjectsController extends Controller
 {
     /**
      * @Route("/my_projects", name="cf_my_projects")
-     * @Security("is_granted('ROLE_USER')")
+     * @Method("GET")
+     * @Security("is_granted('ROLE_USER') and user.getUluleApiToken() and user.getUluleUsername()")
      */
-    public function myProjectsAction(Request $request): Response
+    public function myProjectsAction(): Response
     {
-        /** @var User $user */
-        $user = $this->getDoctrine()->getRepository(User::class)->findOneWithProjects($this->getUser()->getId());
-
-        if ($request->isMethod('POST') && $request->request->has('sync')) {
-            $ululeClient = $this->get('crowdfunding.project_manager.ulule');
-            $ululeClient->updateProjectsFromUser($user);
-            $ululeClient->updateUserContributions($user);
-        }
+        $projects = $this->get(UluleClient::class)->getUserProjects($this->getUser());
 
         return $this->render('@User/Crowdfunding/my_projects.html.twig', [
-            'user' => $user,
+            'projects' => $projects,
         ]);
     }
 }

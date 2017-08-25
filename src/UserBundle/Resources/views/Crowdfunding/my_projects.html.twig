@@ -7,18 +7,26 @@
 {% endblock %}
 
 {% block content_for_layout %}
-    {% for contribution in user.contributions %}
-        <div>
-            {{ contribution.project.name }}
+    <h1 class="text-3xl center">{{ 'crowdfunding.my_projects' | trans }} :</h1>
+    {% for list in projects|batch(4) %}
+        <div class="row">
+            {% for project in list %}
+            <div class="col m3">
+                <div class="card">
+                    <div class="project_item card-image" style="background-image: url({{ project.imageUrl }});">
+                        <span style=""></span>
+                    </div>
+                    <div class="card-content black-text p15">
+                        <h2 class="m0 card-title text-l text-center">{{ project.name }}</h2>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
         </div>
     {% else %}
         <div class="card-panel yellow darken-4 message">
             {{ 'crowdfunding.no_project_warning'|trans|raw }}
         </div>
     {% endfor %}
-
-    <form action="{{ path('cf_my_projects') }}" method="post">
-        <input type="hidden" name="sync" value="1">
-        <button class="btn bl mid" type="submit">{{ 'crowdfunding.sync_projects'|trans }}</button>
-    </form>
+    <a href="{{ path('user_profile_edit') }}">&raquo; {{ 'profile.go_back'|trans }}</a>
 {% endblock %}

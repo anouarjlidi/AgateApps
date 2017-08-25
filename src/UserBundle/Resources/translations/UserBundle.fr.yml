@@ -6,6 +6,7 @@ security:
         submit: Connexion
 
 profile:
+    go_back: 'Retourner à mon profil'
     show:
         username: 'Nom d''utilisateur'
         email: 'Adresse e-mail'

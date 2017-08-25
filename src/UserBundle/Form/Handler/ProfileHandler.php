@@ -71,20 +71,7 @@ final class ProfileHandler
             $user = $form->getData();
 
             $this->em->persist($user);
-
-            if ($form->get('disconnectUlule')->getData()) {
-                foreach ($user->getContributions() as $contribution) {
-                    $user->removeContribution($contribution);
-                    $this->em->remove($contribution);
-                }
-            }
-
             $this->em->flush();
-
-            if ($user->getUluleApiToken()) {
-                $this->ululeClient->updateProjectsFromUser($user);
-                $this->ululeClient->updateUserContributions($user);
-            }
 
             $this->addFlash('success', $this->translator->trans('profile.flash.updated', [], 'UserBundle'));
 
