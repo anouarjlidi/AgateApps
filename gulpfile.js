@@ -555,7 +555,7 @@ gulp.task('watch', gulp.series('dump', gulp.parallel(function(done) {
         files_sass = [],
         files_js = [],
         callback = function(event) {
-            console.log('File "' + event.path + '" updated');
+            console.log('File "' + event + '" updated');
         },
         other_files_to_watch = config.files_to_watch || [],
         files_to_watch = []
