@@ -65,32 +65,17 @@ class UluleClient extends AbstractApiClient
 
     public function getUserProjects(User $user): array
     {
-        $client = $this->getClientFromUser($user);
+        $cacheItem = $this->cache->getItem('ulule_projects.user_'.$user->getUluleId());
 
-        $ululeProjects = [];
+        if ($cacheItem->isHit() && $ululeProjects = $cacheItem->get()) {
+            return $ululeProjects;
+        }
 
-        $queryString = '?limit=50';
+        $ululeProjects = $this->doGetUserProjects($user);
 
-        do {
-            $response = $client->request('GET', 'users/'.$user->getUluleId().'/projects'.$queryString.'&state=supported');
-
-            $data = (string) $response->getBody();
-
-            $json = json_decode($data, true);
-
-            if (!$json || ($json && !isset($json['projects']))) {
-                throw new \RuntimeException('Ulule sent a wrong response when retrieving user projects');
-            }
-
-            foreach ($json['projects'] as $project) {
-                if (!in_array($project['id'], static::ULULE_PROJECTS, true)) {
-                    continue;
-                }
-                $ululeProjects[$project['id']] = new Project($project);
-            }
-
-            $queryString = $json['meta']['next'];
-        } while ($queryString);
+        $cacheItem->expiresAfter(3600);
+        $cacheItem->set($ululeProjects);
+        $this->cache->save($cacheItem);
 
         return $ululeProjects;
     }
@@ -159,6 +144,41 @@ class UluleClient extends AbstractApiClient
         }
 
         return new UluleUser($json);
+    }
+
+    /**
+     * @return Project[]
+     */
+    private function doGetUserProjects(User $user): array
+    {
+        $client = $this->getClientFromUser($user);
+
+        $ululeProjects = [];
+
+        $queryString = '?limit=50';
+
+        do {
+            $response = $client->request('GET', 'users/'.$user->getUluleId().'/projects'.$queryString.'&state=supported');
+
+            $data = (string) $response->getBody();
+
+            $json = json_decode($data, true);
+
+            if (!$json || ($json && !isset($json['projects']))) {
+                throw new \RuntimeException('Ulule sent a wrong response when retrieving user projects');
+            }
+
+            foreach ($json['projects'] as $project) {
+                if (!in_array($project['id'], static::ULULE_PROJECTS, true)) {
+                    continue;
+                }
+                $ululeProjects[$project['id']] = new Project($project);
+            }
+
+            $queryString = $json['meta']['next'];
+        } while ($queryString);
+
+        return $ululeProjects;
     }
 
 }
