@@ -14,8 +14,8 @@
                      data-input-value="{{ job.id }}"
                      data-target-node="job_value"
                 >
-                    <a class="modal-activator" href="#modal_job_{{ job.id }}">
-                        <img class="modal-img" src="{{ asset('img/generator/search.png') }}" title="{{ 'jobs.modal.details'|trans({}, 'CorahnRinBundle') }}">
+                    <a class="modal-trigger" href="#modal_job_{{ job.id }}" title="{{ 'jobs.modal.details'|trans({}, 'CorahnRinBundle') }}">
+                        <i class="fa fa-search modal-icon"></i>
                     </a>
                     {{ job.name | trans({}, 'CorahnRinBundle') }}
                 </div>
