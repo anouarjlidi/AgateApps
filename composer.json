@@ -83,11 +83,14 @@
         "symfony/web-server-bundle": "^3.3"
     },
     "scripts": {
+        "ckeditor": [
+            "php bin/console ckeditor:install --clear=keep --quiet && echo \"CKEditor installed\""
+        ],
         "symfony-scripts": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
-            "Ivory\\CKEditorBundle\\Composer\\CKEditorScriptHandler::install",
+            "@ckeditor",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
