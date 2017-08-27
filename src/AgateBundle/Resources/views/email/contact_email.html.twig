@@ -15,16 +15,16 @@
     {% set ip = '127.0.0.1' %}
 {% endif %}
 
-{% set textMessage %}
+{% set messageSubject %}
     {{ 'form.message_subject'|trans({'%name%': message.name}, 'contact') }}
 {% endset %}
 
-{% block title (textMessage|striptags) %}
+{% block title (messageSubject|striptags) %}
 
 {% block content %}
-    {{ macros.text(textMessage) }}
+    {{ macros.text(messageSubject) }}
     <hr>
-    {{ macros.text(message.message, 14, 'monospace') }}
+    {{ macros.text(message.message, 14, 'monospace')|nl2br }}
     <hr>
     {{ macros.link_btn_center('mailto:'~message.email, 'Répondre') }}
 {% endblock %}
