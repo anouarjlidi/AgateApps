@@ -88,6 +88,8 @@ pierstoval_character_manager:
         14_use_domain_bonuses:
             action: corahnrin_generator.steps.step_14
             depends_on:
+                - '04_geo'
+                - '05_social_class'
                 - '13_primary_domains'
             onchange_clear:
                 - '15_domains_spend_exp'
