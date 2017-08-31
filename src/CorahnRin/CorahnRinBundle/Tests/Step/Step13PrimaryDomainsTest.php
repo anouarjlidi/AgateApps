@@ -773,7 +773,7 @@ class Step13PrimaryDomainsTest extends AbstractStepTest
      *
      * @return Client
      */
-    private function getStepClient($jobId = 1, $scholar = false)
+    private function getStepClient(int $jobId, bool $scholar = false)
     {
         $client = $this->getClient();
         $client->restart();

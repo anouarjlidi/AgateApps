@@ -12,13 +12,14 @@
 namespace CorahnRin\CorahnRinBundle\Tests\Step;
 
 use Tests\WebTestCase;
+use Symfony\Bundle\FrameworkBundle\Client;
 
 abstract class AbstractStepTest extends WebTestCase
 {
     /**
      * {@inheritdoc}
      */
-    protected function getClient($host = null, array $kernelOptions = [], $tokenRoles = null, array $server = [])
+    protected function getClient($host = null, array $kernelOptions = [], $tokenRoles = null, array $server = []): Client
     {
         if (null === $host) {
             $host = 'corahnrin.esteren.dev';
@@ -27,10 +28,7 @@ abstract class AbstractStepTest extends WebTestCase
         return parent::getClient($host, $kernelOptions, $tokenRoles, $server);
     }
 
-    /**
-     * @return string
-     */
-    protected function getStepName()
+    protected function getStepName(): string
     {
         return preg_replace_callback('~^CorahnRin\\\\CorahnRinBundle\\\\Tests\\\\Step\\\\Step(.+)Test$~isUu', function ($matches) {
             return preg_replace_callback('~[A-Z]~', function ($matches) {
@@ -39,14 +37,7 @@ abstract class AbstractStepTest extends WebTestCase
         }, static::class);
     }
 
-    /**
-     * @param array  $sessionValues
-     * @param array  $formValues
-     * @param string $queryString
-     *
-     * @return StepActionTestResult
-     */
-    protected function submitAction(array $sessionValues = [], array $formValues = [], $queryString = '')
+    protected function submitAction(array $sessionValues = [], array $formValues = [], string $queryString = ''): StepActionTestResult
     {
         $client = $this->getClient();
 
