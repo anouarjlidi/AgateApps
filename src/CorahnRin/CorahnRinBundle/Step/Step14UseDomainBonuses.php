@@ -71,7 +71,7 @@ class Step14UseDomainBonuses extends AbstractStepAction
 
         $this->bonus = $this->domainsCalculator->getBonus();
 
-        /** @var int[] $characterBonuses */
+        /** @var int[][] $characterBonuses */
         $characterBonuses = $this->getCharacterProperty();
 
         if (null === $characterBonuses) {
@@ -112,7 +112,11 @@ class Step14UseDomainBonuses extends AbstractStepAction
 
             foreach (array_keys($characterBonuses['domains']) as $id) {
                 $value = $postedValues[$id] ?? null;
-                if (!array_key_exists($id, $postedValues) || !in_array($postedValues[$id], ['0', '1'], true)) {
+                if (
+                    !array_key_exists($id, $postedValues)
+                    || ($value && 5 === $this->domainsCalculatedValues[$id])
+                    || !in_array($postedValues[$id], ['0', '1'], true)
+                ) {
                     // If there is any error, we do nothing.
                     $this->flashMessage('errors.incorrect_values');
                     $error = true;
