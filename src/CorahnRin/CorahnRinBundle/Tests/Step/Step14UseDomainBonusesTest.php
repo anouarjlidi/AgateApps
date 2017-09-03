@@ -60,27 +60,27 @@ class Step14UseDomainBonusesTest extends AbstractStepTest
         $client->submit($form);
 
         static::assertTrue($client->getResponse()->isRedirect('/fr/character/generate/15_domains_spend_exp'));
-        static::assertEquals([
-            'domains' => [
-                1 => 0,
-                2 => 0,
-                3 => 0,
-                4 => 0,
-                5 => 0,
-                6 => 0,
-                7 => 0,
-                8 => 0,
-                9 => 0,
-                10 => 0,
-                11 => 0,
-                12 => 0,
-                13 => 0,
-                14 => 0,
-                15 => 0,
-                16 => 0,
-            ],
-            'remaining' => 1,
-        ], $client->getContainer()->get('session')->get('character')[$this->getStepName()]);
+        $this->assertSessionEquals([], 1, $client);
+    }
+
+    public function testPrimaryDomainThrowsError()
+    {
+        $client = $this->getClientWithRequirements($this->getValidRequirements());
+
+        $crawler = $client->request('GET', '/fr/character/generate/'.$this->getStepName());
+
+        static::assertEquals(200, $client->getResponse()->getStatusCode());
+
+        $form = $crawler->filter('#generator_form')->form();
+
+        $form['domains_bonuses[1]'] = 1;
+
+        $crawler = $client->submit($form);
+
+        // Redirection means error
+        static::assertSame(200, $client->getResponse()->getStatusCode());
+        $flashMessages = $crawler->filter('#flash-messages') ?: '';
+        static::assertContains('Certaines valeurs envoyées sont incorrectes, veuillez recommencer (et sans tricher).', $flashMessages ? trim($flashMessages->text()) : '');
     }
 
     /**
@@ -140,5 +140,38 @@ class Step14UseDomainBonusesTest extends AbstractStepTest
         $session->save();
 
         return $client;
+    }
+
+    private function assertSessionEquals(array $domains, int $remaining = 1, Client $client)
+    {
+        $finalDomains = [
+            1 => 0,
+            2 => 0,
+            3 => 0,
+            4 => 0,
+            5 => 0,
+            6 => 0,
+            7 => 0,
+            8 => 0,
+            9 => 0,
+            10 => 0,
+            11 => 0,
+            12 => 0,
+            13 => 0,
+            14 => 0,
+            15 => 0,
+            16 => 0,
+        ];
+
+        foreach ($domains as $id => $value) {
+            $finalDomains[$id] = $value;
+        }
+
+        $results = [
+            'domains' => $finalDomains,
+            'remaining' => $remaining,
+        ];
+
+        static::assertEquals($results, $client->getContainer()->get('session')->get('character')[$this->getStepName()]);
     }
 }
