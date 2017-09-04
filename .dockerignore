@@ -1,20 +1,20 @@
 # Non-used files
-node_modules
-/vendor
-/_dev_files
-/build
-/docker
-/tests
-/docs
+*/node_modules
+*/vendor
+*/_dev_files
+*/build
+*/docker
+*/tests
+*/docs
 
-/app/config/parameters.yml
+*/app/config/parameters.yml
 phpunit.xml
-/var
+*/var
 
 *.php~
 
-/web/bundles
-/web/js/*
-/web/css/*
-/web/uploads
-/web/img/markerstypes
+*/web/bundles
+*/web/js/*
+*/web/css/*
+*/web/uploads
+*/web/img/markerstypes

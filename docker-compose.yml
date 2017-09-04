@@ -19,6 +19,18 @@ services:
             - app
         volumes_from:
             - app
+        environment:
+            - DATABASE_URL="mysql://esteren_portal@db/esteren_portal?serverVersion=10.1.12-MariaDB"
+            - DATABASE_URL_LEGACY="mysql://esteren_legacy@db/esteren_legacy?serverVersion=10.1.12-MariaDB"
+            - MAILER_TRANSPORT=smtp
+            - MAILER_HOST=127.0.0.1
+            - MAILER_USER=""
+            - MAILER_PASSWORD=""
+            - MAILER_PORT=""
+            - SYMFONY_SECRET=ThisTokenIsDockerSecret
+            - AGATE_DOMAIN=studio-agate.dev
+            - ESTEREN_DOMAIN=esteren.dev
+            - VERMINE_DOMAIN=vermine2047.dev
 
     db:
         container_name: esteren_db
