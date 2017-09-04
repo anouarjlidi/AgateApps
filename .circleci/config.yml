@@ -32,8 +32,6 @@ jobs:
                 command: |
                     echo '' | pecl install -f apcu
                     echo "extension=apcu.so" > /usr/local/etc/php/conf.d/apcu.ini
-                # echo '' | pecl install -f apcu xdebug
-                # echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name 'xdebug.so')"  > /usr/local/etc/php/conf.d/xdebug.ini
 
             - run:
                 name: 'Install Composer'
@@ -90,12 +88,6 @@ jobs:
                     node tests/nodejs/test_gulp_dump.js
 
             - run:
-               name: 'Fix temporary issues with Composer & SensioDistributionBundle'
-               command: |
-                    sed "s/require_once dirname.*;/require_once dirname(__FILE__).'\/..\/var\/\SymfonyRequirements.php';/" bin/symfony_requirements > tmp && mv tmp bin/symfony_requirements
-                    sed "s/require_once dirname.*;/require_once dirname(__FILE__).'\/..\/var\/\SymfonyRequirements.php';/" web/config.php > tmp && mv tmp web/config.php
-
-            - run:
                name: 'Execute Linting tests'
                command: |
                     php bin/symfony_requirements
@@ -108,12 +100,6 @@ jobs:
                name: 'Execute PHPUnit tests'
                command: |
                     vendor/bin/phpunit
-
-            - run:
-               name: 'Prepare coverage & logs'
-               command: |
-                    rm -rf build/log/report/*
-               # zip -r build/log/coverage.zip build/log/report
 
             - save_cache:
                 key: composer-cache-{{ checksum "composer.lock" }}
@@ -134,6 +120,3 @@ jobs:
                 key: yarn-cache-{{ .Branch }}
                 paths:
                     - node_modules
-
-            - store_artifacts:
-                path: build/log
