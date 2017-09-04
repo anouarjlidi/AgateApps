@@ -3,7 +3,7 @@ version: 2
 jobs:
     build:
         docker:
-            - image: php:7.1
+            - image: pierstoval/studio-agate-portal
 
         working_directory: ~/app
 
@@ -14,43 +14,7 @@ jobs:
             RECREATE_DB:   1
 
         steps:
-            - run:
-                name: 'Install necessary system packages'
-                command: |
-                    apt-get update
-                    apt-get -y install g++ git zip unzip zlib1g-dev libicu-dev libicu52 libpng-dev libjpeg-dev
-
             - checkout
-
-            - run:
-                name: 'Install necessary PHP extensions'
-                command: |
-                    docker-php-ext-install pdo intl mbstring gd iconv zip
-
-            - run:
-                name: 'Install apcu'
-                command: |
-                    echo '' | pecl install -f apcu
-                    echo "extension=apcu.so" > /usr/local/etc/php/conf.d/apcu.ini
-
-            - run:
-                name: 'Install Composer'
-                command: |
-                    php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-                    php -r "copy('https://composer.github.io/installer.sig', 'composer-setup.sig');"
-                    php -r "if (hash_file('SHA384', 'composer-setup.php') === trim(file_get_contents('composer-setup.sig'))) { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
-                    php composer-setup.php
-                    php -r "unlink('composer-setup.php');"
-
-            - run:
-                name: 'Install Nodejs & Yarn'
-                command: |
-                    curl -sL https://deb.nodesource.com/setup_6.x | bash -
-                    apt-get install -y build-essential nodejs
-                    curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
-                    echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
-                    apt-get update && apt-get install yarn
-                    export PATH=$PATH:$PWD/node_modules/.bin
 
             - restore_cache:
                 keys:
@@ -63,7 +27,7 @@ jobs:
                 name: 'Show config'
                 command: |
                     php --ini
-                    php composer.phar config -l
+                    composer config -l
 
             - run:
                 name: 'Prepare environment'
@@ -79,7 +43,7 @@ jobs:
             - run:
                name: 'Install Project Dependencies'
                command: |
-                    php composer.phar install --no-interaction --no-suggest --ignore-platform-reqs --no-progress
+                    composer install --no-interaction --no-suggest --ignore-platform-reqs --no-progress
                     yarn install
 
             - run:
