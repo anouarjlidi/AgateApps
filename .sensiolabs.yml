@@ -12,7 +12,7 @@ post_composer_script: |
     mkdir build/
     ./bin/console --env=test doctrine:database:create --no-interaction
     ./bin/console --env=test doctrine:schema:create --no-interaction
-    ./bin/console --env=test doctrine:fixtures-load --append --no-interaction
+    ./bin/console --env=test doctrine:fixtures:load --append --no-interaction
 
 exclude_patterns:
     - src/CorahnRin/CorahnRinBundle/PDF/FPDF.php
