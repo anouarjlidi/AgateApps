@@ -18,7 +18,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Translation\TranslatorInterface;
-use UserBundle\ConnectApi\UluleClient;
 use UserBundle\Entity\User;
 
 final class ProfileHandler
@@ -26,18 +25,17 @@ final class ProfileHandler
     private $em;
     private $router;
     private $translator;
-    private $ululeClient;
+
     /**
      * @var Request
      */
     private $request;
 
-    public function __construct(EntityManager $em, RouterInterface $router, TranslatorInterface $translator, UluleClient $ululeClient)
+    public function __construct(EntityManager $em, RouterInterface $router, TranslatorInterface $translator)
     {
         $this->em = $em;
         $this->router = $router;
         $this->translator = $translator;
-        $this->ululeClient = $ululeClient;
     }
 
     public function handle(Request $request, Form $editProfileForm, Form $ululeConnectForm): ?Response
