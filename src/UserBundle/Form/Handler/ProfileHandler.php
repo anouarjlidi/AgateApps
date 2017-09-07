@@ -11,7 +11,7 @@
 
 namespace UserBundle\Form\Handler;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,7 +31,7 @@ final class ProfileHandler
      */
     private $request;
 
-    public function __construct(EntityManager $em, RouterInterface $router, TranslatorInterface $translator)
+    public function __construct(ObjectManager $em, RouterInterface $router, TranslatorInterface $translator)
     {
         $this->em = $em;
         $this->router = $router;

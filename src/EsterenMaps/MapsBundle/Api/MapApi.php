@@ -11,7 +11,7 @@
 
 namespace EsterenMaps\MapsBundle\Api;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\Common\Persistence\ObjectManager;
 use EsterenMaps\MapsBundle\Cache\CacheManager;
 use EsterenMaps\MapsBundle\Entity\Factions;
 use EsterenMaps\MapsBundle\Entity\Maps;
@@ -35,7 +35,7 @@ class MapApi
     private $debug;
     private $asset;
 
-    public function __construct(EntityManager $em, TwigEngine $twig, CacheManager $cache, Packages $asset, bool $debug)
+    public function __construct(ObjectManager $em, TwigEngine $twig, CacheManager $cache, Packages $asset, bool $debug)
     {
         $this->em = $em;
         $this->cache = $cache;
