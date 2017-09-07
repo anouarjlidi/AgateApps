@@ -11,14 +11,14 @@
 
 namespace EsterenMaps\MapsBundle\Services;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\Common\Persistence\ObjectManager;
 use EsterenMaps\MapsBundle\Api\MapApi;
 use EsterenMaps\MapsBundle\Cache\CacheManager;
 use EsterenMaps\MapsBundle\Entity\Maps;
 use EsterenMaps\MapsBundle\Entity\Markers;
 use EsterenMaps\MapsBundle\Entity\TransportModifiers;
 use EsterenMaps\MapsBundle\Entity\TransportTypes;
-use Symfony\Bundle\TwigBundle\TwigEngine;
+use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 
 /**
  * Uses Dijkstra algorithm to calculate a path between two markers.
@@ -34,8 +34,8 @@ class DirectionsManager
     public function __construct(
         bool $debug,
         MapApi $mapApi,
-        EntityManager $entityManager,
-        TwigEngine $templating,
+        ObjectManager $entityManager,
+        EngineInterface $templating,
         CacheManager $cache
     )
     {

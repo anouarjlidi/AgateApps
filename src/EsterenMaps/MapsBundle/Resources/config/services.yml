@@ -61,6 +61,8 @@ services:
         lazy: true
         autowire: true
         arguments:
+            $mapApi: '@esterenmaps.api.map'
+            $cache: '@esterenmaps.cache'
             $debug: '%kernel.debug%'
 
     esterenmaps.coordinates_manager:
