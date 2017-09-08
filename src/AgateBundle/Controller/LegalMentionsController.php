@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @Route(host="%agate_domains.portal%")
+ * @Route(host="%agate_domains.portal%", methods={"GET"})
  */
 class LegalMentionsController extends Controller
 {

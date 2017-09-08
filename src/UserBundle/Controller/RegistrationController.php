@@ -14,7 +14,6 @@ namespace UserBundle\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use UserBundle\Entity\User;
 use UserBundle\Form\Type\RegistrationFormType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,8 +24,7 @@ use UserBundle\Repository\UserRepository;
 class RegistrationController extends Controller
 {
     /**
-     * @Route("/register", name="user_register")
-     * @Method({"GET", "POST"})
+     * @Route("/register", name="user_register", methods={"GET", "POST"})
      */
     public function registerAction(Request $request): Response
     {
@@ -63,7 +61,7 @@ class RegistrationController extends Controller
     }
 
     /**
-     * @Route("/check-email", name="user_check_email")
+     * @Route("/check-email", name="user_check_email", methods={"GET"})
      */
     public function checkEmailAction(Request $request)
     {
@@ -88,8 +86,7 @@ class RegistrationController extends Controller
     }
 
     /**
-     * @Route("/register/confirm/{token}", name="user_registration_confirm", requirements={"token" : ".+"})
-     * @Method("GET")
+     * @Route("/register/confirm/{token}", name="user_registration_confirm", requirements={"token" : ".+"}, methods={"GET"})
      */
     public function confirmAction(string $token, string $_locale)
     {

@@ -24,7 +24,7 @@ use Symfony\Component\HttpFoundation\Response;
 class AdminMapsController extends Controller
 {
     /**
-     * @Route("/maps/edit-interactive/{id}", name="admin_esterenmaps_maps_maps_editInteractive")
+     * @Route("/maps/edit-interactive/{id}", name="admin_esterenmaps_maps_maps_editInteractive", methods={"GET"})
      */
     public function editAction(Maps $map): Response
     {

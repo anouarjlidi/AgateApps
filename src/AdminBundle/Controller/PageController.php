@@ -22,7 +22,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class PageController extends Controller
 {
     /**
-     * @Route("/page/preview/{id}", name="admin_page_preview")
+     * @Route("/page/preview/{id}", name="admin_page_preview", methods={"GET"})
      */
     public function indexAction(Page $page)
     {

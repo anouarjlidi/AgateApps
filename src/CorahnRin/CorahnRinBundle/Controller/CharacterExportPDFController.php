@@ -23,7 +23,8 @@ class CharacterExportPDFController extends Controller
      * @Route(
      *     "/characters/export/{id}-{nameSlug}.{_format}",
      *     name="corahnrin_character_export_pdf",
-     *     requirements={"_format": "pdf"}
+     *     requirements={"_format": "pdf"},
+     *     methods={"GET"}
      * )
      *
      * @param Characters $character
