@@ -39,4 +39,34 @@ class HomeControllerTest extends WebTestCase
         // Ensures that portal homepage is managed in a controller and not in the CMS
         static::assertSame(404, $client->getResponse()->getStatusCode());
     }
+
+    public function testFrenchTeamPage()
+    {
+        $client = $this->getClient('www.studio-agate.dev');
+
+        $crawler = $client->request('GET', '/fr/team');
+
+        // Ensures that portal homepage is managed in a controller and not in the CMS
+        static::assertSame('agate_team', $client->getRequest()->attributes->get('_route'));
+
+        static::assertSame(200, $client->getResponse()->getStatusCode());
+
+        // Check <h1> content only, this will be our "regression point" for homepage (now that it's static and no more in the CMS)
+        static::assertSame('L\'Équipe du studio Agate', trim($crawler->filter('#content h1')->text()));
+    }
+
+    public function testEnglishTeamPage()
+    {
+        $client = $this->getClient('www.studio-agate.dev');
+
+        $crawler = $client->request('GET', '/en/team');
+
+        // Ensures that portal homepage is managed in a controller and not in the CMS
+        static::assertSame('agate_team', $client->getRequest()->attributes->get('_route'));
+
+        static::assertSame(200, $client->getResponse()->getStatusCode());
+
+        // Check <h1> content only, this will be our "regression point" for homepage (now that it's static and no more in the CMS)
+        static::assertSame('The Studio Agate team', trim($crawler->filter('#content h1')->text()));
+    }
 }
