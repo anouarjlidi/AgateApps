@@ -64,6 +64,6 @@ class HomeController extends Controller
             return $response;
         }
 
-        return $this->render('@Agate/home/team.html.twig', $response);
+        return $this->render('@Agate/home/team.html.twig', [], $response);
     }
 }
