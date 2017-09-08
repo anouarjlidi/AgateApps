@@ -15,6 +15,7 @@ use EsterenMaps\MapsBundle\Entity\Maps;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @Security("has_role('ROLE_MANAGER')")
@@ -24,12 +25,8 @@ class AdminMapsController extends Controller
 {
     /**
      * @Route("/maps/edit-interactive/{id}", name="admin_esterenmaps_maps_maps_editInteractive")
-     *
-     * @param Maps $map
-     *
-     * @return array
      */
-    public function editAction(Maps $map)
+    public function editAction(Maps $map): Response
     {
         return $this->render('@EsterenMaps/AdminMaps/edit.html.twig', [
             'config'    => $this->container->getParameter('easyadmin.config'),

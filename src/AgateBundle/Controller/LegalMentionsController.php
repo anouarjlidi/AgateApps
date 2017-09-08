@@ -13,6 +13,7 @@ namespace AgateBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -22,17 +23,25 @@ class LegalMentionsController extends Controller
 {
     /**
      * @Route("/legal", name="legal_mentions")
-     *
-     * @param string $_locale
-     *
-     * @return Response
      */
-    public function legalMentionsAction($_locale)
+    public function legalMentionsAction(string $_locale, Request $request): Response
     {
+        $response = new Response();
+        $response->setCache([
+            'last_modified' => new \DateTime($this->getParameter('version_date')),
+            'max_age' => 600,
+            's_maxage' => 600,
+            'public' => true,
+        ]);
+
+        if ($response->isNotModified($request)) {
+            return $response;
+        }
+
         if ($_locale !== 'fr') {
             throw $this->createNotFoundException();
         }
 
-        return $this->render('@Agate/legal/mentions_'.$_locale.'.html.twig');
+        return $this->render('@Agate/legal/mentions_'.$_locale.'.html.twig', [], $response);
     }
 }
