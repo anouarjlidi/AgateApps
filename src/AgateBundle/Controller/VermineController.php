@@ -22,7 +22,7 @@ use Symfony\Component\HttpFoundation\Response;
 class VermineController extends Controller
 {
     /**
-     * @Route("/", name="vermine_portal_home")
+     * @Route("/", name="vermine_portal_home", methods={"GET"})
      */
     public function indexAction(Request $request): Response
     {

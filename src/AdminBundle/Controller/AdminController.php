@@ -23,7 +23,7 @@ use Symfony\Component\HttpFoundation\Request;
 class AdminController extends BaseAdminController
 {
     /**
-     * @Route("/", name="easyadmin")
+     * @Route("/", name="easyadmin", methods={"GET", "POST", "DELETE"})
      * {@inheritdoc}
      */
     public function indexAction(Request $request)

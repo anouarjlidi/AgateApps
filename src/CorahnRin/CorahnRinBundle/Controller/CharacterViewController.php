@@ -26,7 +26,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 class CharacterViewController extends Controller
 {
     /**
-     * @Route("/", name="corahnrin_characters_list")
+     * @Route("/", name="corahnrin_characters_list", methods={"GET"})
      *
      * @param Request $request
      *
@@ -67,7 +67,7 @@ class CharacterViewController extends Controller
     }
 
     /**
-     * @Route("/{id}-{nameSlug}", requirements={"id" = "\d+"}, name="corahnrin_characters_view")
+     * @Route("/{id}-{nameSlug}", requirements={"id" = "\d+"}, name="corahnrin_characters_view", methods={"GET"})
      *
      * @param Characters $character
      *

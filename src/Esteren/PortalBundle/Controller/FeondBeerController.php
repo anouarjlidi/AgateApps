@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 class FeondBeerController extends Controller
 {
     /**
-     * @Route("/feond-beer", name="esteren_portal_feond_beer")
+     * @Route("/feond-beer", name="esteren_portal_feond_beer", methods={"GET"})
      */
     public function feondBeerPortalAction(Request $request): Response
     {

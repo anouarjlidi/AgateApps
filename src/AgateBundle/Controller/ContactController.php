@@ -23,7 +23,7 @@ use Symfony\Component\HttpFoundation\Request;
 class ContactController extends Controller
 {
     /**
-     * @Route("/contact", name="contact")
+     * @Route("/contact", name="contact", methods={"GET", "POST"})
      */
     public function contactAction(Request $request, $_locale)
     {

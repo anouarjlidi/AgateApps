@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 class HomeController extends Controller
 {
     /**
-     * @Route("/", name="portal_home")
+     * @Route("/", name="portal_home", methods={"GET"})
      */
     public function indexAction(string $_locale, Request $request): Response
     {

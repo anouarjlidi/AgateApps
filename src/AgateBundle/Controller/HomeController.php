@@ -22,7 +22,7 @@ use Symfony\Component\HttpFoundation\Response;
 class HomeController extends Controller
 {
     /**
-     * @Route("/", name="agate_portal_home")
+     * @Route("/", name="agate_portal_home", methods={"GET"})
      */
     public function indexAction(string $_locale, Request $request): Response
     {
@@ -48,7 +48,7 @@ class HomeController extends Controller
     }
 
     /**
-     * @Route("/team", name="agate_team")
+     * @Route("/team", name="agate_team", methods={"GET"})
      */
     public function teamAction(Request $request): Response
     {

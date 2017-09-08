@@ -14,7 +14,6 @@ namespace EsterenMaps\MapsBundle\Controller\Api;
 use Doctrine\ORM\EntityManager;
 use EsterenMaps\MapsBundle\Entity\Maps;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -29,8 +28,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 class ApiMapsController extends Controller
 {
     /**
-     * @Route("/maps/{id}", name="esterenmaps_api_map_get", requirements={"id"="\d+"})
-     * @Method("GET")
+     * @Route("/maps/{id}", name="esterenmaps_api_map_get", requirements={"id"="\d+"}, methods={"GET"})
      */
     public function getAction($id, Request $request)
     {
@@ -54,9 +52,9 @@ class ApiMapsController extends Controller
      * @Route("/maps/settings/{id}.{_format}",
      *     requirements={"id": "\d+", "_format": "json"},
      *     defaults={"_format": "json"},
-     *     name="esterenmaps_api_maps_settings_distant"
+     *     name="esterenmaps_api_maps_settings_distant",
+     *     methods={"GET"}
      * )
-     * @Method("GET")
      * @Cache(maxage=3600, expires="+1 hour", public=true)
      */
     public function settingsAction(Maps $map, Request $request)
@@ -116,8 +114,7 @@ class ApiMapsController extends Controller
     }
 
     /**
-     * @Route("/maps/ref-data", host="%esteren_domains.api%", name="esterenmaps_api_maps_filters_distant")
-     * @Method("GET")
+     * @Route("/maps/ref-data", host="%esteren_domains.api%", name="esterenmaps_api_maps_filters_distant", methods={"GET"})
      * @Cache(maxage=3600, expires="+1 hour", public=true)
      */
     public function mapRefDataAction(Request $request)

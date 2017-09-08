@@ -14,7 +14,6 @@ namespace EsterenMaps\MapsBundle\Controller\Api;
 use EsterenMaps\MapsBundle\Form\MapImageType;
 use EsterenMaps\MapsBundle\Entity\Maps;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,9 +24,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class ApiTilesController extends Controller
 {
     /**
-     * @Route("/maps/image/{id}", requirements={"id": "\d+"}, name="esterenmaps_generate_map_image")
+     * @Route("/maps/image/{id}", requirements={"id": "\d+"}, name="esterenmaps_generate_map_image", methods={"GET"})
      * @Cache(expires="+1 day", public=true)
-     * @Method("GET")
      *
      * @param Request $request
      * @param Maps    $map
@@ -77,7 +75,7 @@ class ApiTilesController extends Controller
     }
 
     /**
-     * @Route("/maps/tile/{id}/{zoom}/{x}/{y}.jpg", requirements={"id": "\d+"}, name="esterenmaps_api_tiles")
+     * @Route("/maps/tile/{id}/{zoom}/{x}/{y}.jpg", requirements={"id": "\d+"}, name="esterenmaps_api_tiles", methods={"GET"})
      * @Cache(maxage="864000", expires="+10 days")
      *
      * @param Maps $map
