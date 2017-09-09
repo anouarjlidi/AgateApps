@@ -120,7 +120,7 @@ class Step16Disciplines extends AbstractStepAction
             }
 
             /** @var int[][] $disciplinesValues */
-            $disciplinesValues = $this->request->get('disciplines_spend_exp');
+            $disciplinesValues = $this->request->get('disciplines_spend_exp', []);
 
             if (!is_array($disciplinesValues)) {
                 $this->flashMessage('errors.incorrect_values');
