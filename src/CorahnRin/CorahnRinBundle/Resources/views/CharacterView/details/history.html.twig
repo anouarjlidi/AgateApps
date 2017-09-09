@@ -1,42 +1,43 @@
+{% trans_default_domain 'CorahnRinBundle' %}
 
 <div class="main row">
     <div class="col s12">
         <div class="row">
-            <div class="col s4"><h2 class="text-3xl text-left">{{ 'character.history'|trans({}, 'CorahnRinBundle') }}</h2></div>
+            <div class="col s4"><h2 class="text-3xl text-left">{{ 'character.history'|trans }}</h2></div>
             <div class="col s8">
                 <div class="row">
                     <div class="col s6">
                         <h3 class="text-m">
-                            {{ 'character.birthplace'|trans({}, 'CorahnRinBundle') }}&nbsp;:
+                            {{ 'character.birthplace'|trans }}&nbsp;:
                             {{ character.birthplace.name }}
                         </h3>
                     </div>
                     <div class="col s6">
                         <h3 class="text-m">
-                            {{ 'character.social_class'|trans({}, 'CorahnRinBundle') }}&nbsp;:
+                            {{ 'character.social_class'|trans }}&nbsp;:
                             {{ character.socialClass.name }}
                         </h3>
                     </div>
                 </div>
 
                 <h3 class="ib base">
-                    {{ 'character.setbacks'|trans({}, 'CorahnRinBundle') }}&nbsp;:
+                    {{ 'character.setbacks'|trans }}&nbsp;:
                 </h3>
                 {% for charSetback in character.setbacks if not charSetback.isAvoided%}
                     <h4 class="ib base">
                         {{ charSetback.setback.name }}
                     </h4>
                 {% else %}
-                    <h4 class="ib base">N/A</h4>
+                    <h4 class="ib base">&mdash;</h4>
                 {% endfor %}
 
                 {% for charSetback in character.setbacks if charSetback.isAvoided%}
                     <h4 class="ib base">
                         {{ charSetback.setback.name }}
-                        {{ 'character.setback_avoided'|trans({}, 'CorahnRinBundle') }}
+                        {{ 'character.setback_avoided'|trans }}
                     </h4>
                 {% else %}
-                    <h4 class="ib base">N/A</h4>
+                    <h4 class="ib base">&mdash;</h4>
                 {% endfor %}
             </div>
 

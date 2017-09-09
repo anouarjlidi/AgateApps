@@ -1,18 +1,20 @@
+{% trans_default_domain 'CorahnRinBundle' %}
 
+{% spaceless %}
 <div class="character_details">
-    <h2>{{ 'character.details'|trans({}, 'CorahnRinBundle') }}&nbsp;:</h2>
+    <h2>{{ 'character.details'|trans }}&nbsp;:</h2>
     <h2 class="character_name">{{ character.name }}</h2>
 
     <div class="row">
         <div class="col l8">
             <h3>
-                {{ 'character.name'|trans({}, 'CorahnRinBundle') }}&nbsp;:
+                {{ 'character.name'|trans }}&nbsp;:
                 {{ character.name }}
             </h3>
         </div>
         <div class="col l4">
             <h3>
-                {{ 'character.player_name'|trans({}, 'CorahnRinBundle') }}&nbsp;:
+                {{ 'character.player_name'|trans }}&nbsp;:
                 {{ character.playerName }}
             </h3>
         </div>
@@ -35,4 +37,4 @@
     {{ include('@CorahnRin/CharacterView/details/xp_notable_facts.html.twig') }}
 
 </div>
-
+{% endspaceless %}

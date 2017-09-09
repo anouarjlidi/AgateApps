@@ -1,41 +1,42 @@
+{% trans_default_domain 'CorahnRinBundle' %}
 
 <div class="main row">
     <div class="col s4">
-        <h2>{{ 'character.weapons'|trans({}, 'CorahnRinBundle') }}</h2>
+        <h2>{{ 'character.weapons'|trans }}</h2>
 
         <ul>
             {% for weapon in character.weapons %}
                 <li>
                     <h3>
                         {{ weapon.name }}
-                        <span class="right">{{ 'character.weapon.dmg'|trans({}, 'CorahnRinBundle') }}&nbsp;{{ weapon.damage }}</span>
+                        <span class="right">{{ 'character.weapon.dmg'|trans }}&nbsp;{{ weapon.damage }}</span>
                     </h3>
                 </li>
             {% endfor %}
         </ul>
 
-        <h3 class="text-xxl mt45">{{ 'character.potential'|trans({}, 'CorahnRinBundle') }}<span class="right">{{ character.potential }}</span></h3>
+        <h3 class="text-xxl mt45">{{ 'character.potential'|trans }}<span class="right">{{ character.potential }}</span></h3>
     </div>
 
     <div class="col s4">
-        <h2>{{ 'character.combat_attitudes'|trans({}, 'CorahnRinBundle') }}</h2>
+        <h2>{{ 'character.combat_attitudes'|trans }}</h2>
 
-        <p><i class="fa fa-hand-o-right blue-text"></i> {{ 'character.combat_attitude.sheet_explanation'|trans({}, 'CorahnRinBundle') }}</p>
+        <p><i class="fa fa-hand-o-right blue-text"></i> {{ 'character.combat_attitude.sheet_explanation'|trans }}</p>
 
         {% for attitude in constant('CorahnRin\\CorahnRinBundle\\Entity\\Characters::COMBAT_ATTITUDES') %}
-            <h3>{{ attitude|trans({}, 'CorahnRinBundle') }}</h3>
+            <h3>{{ attitude|trans }}</h3>
 
             <div class="row text-l">
                 <div class="col s4">
-                    {{ 'character.combat.atk'|trans({}, 'CorahnRinBundle') }}&nbsp;:
+                    {{ 'character.combat.atk'|trans }}&nbsp;:
                     {{ character.attackScore('melee', null, attitude) -}}&nbsp;/&nbsp;{{- character.attackScore('ranged', null, attitude) -}}
                 </div>
                 <div class="col s4">
-                    {{ 'character.combat.def'|trans({}, 'CorahnRinBundle') }}&nbsp;:
+                    {{ 'character.combat.def'|trans }}&nbsp;:
                     {{ character.totalDefense(attitude) }}
                 </div>
                 <div class="col s4">
-                    {{ 'character.combat.spd'|trans({}, 'CorahnRinBundle') }}&nbsp;:
+                    {{ 'character.combat.spd'|trans }}&nbsp;:
                     {{ character.totalSpeed(attitude) }}
                 </div>
             </div>
@@ -43,7 +44,7 @@
     </div>
 
     <div class="col s4">
-        <h2 class="text-left">{{ 'character.defense'|trans({}, 'CorahnRinBundle') }}&nbsp;:&nbsp;<br>
+        <h2 class="text-left">{{ 'character.defense'|trans }}&nbsp;:&nbsp;<br>
             {%- for i in 1..10 -%}
                 {%- if character.defense >= i %}●{% else %}<span class="grey-text text-darken-2">o</span>{% endif -%}
                 {%- if i == 5 -%}&nbsp;{% endif -%}
@@ -53,7 +54,7 @@
             <span class="right text-l">&equals;&nbsp;{{ character.totalDefense }}</span>
         </h2>
 
-        <h2 class="text-left">{{ 'character.speed'|trans({}, 'CorahnRinBundle') }}&nbsp;:&nbsp;<br>
+        <h2 class="text-left">{{ 'character.speed'|trans }}&nbsp;:&nbsp;<br>
             {%- for i in 1..5 -%}
                 {%- if character.speed >= i %}●{% else %}<span class="grey-text text-darken-2">o</span>{% endif -%}
             {%- endfor -%}
@@ -62,12 +63,12 @@
             <span class="right text-l">&equals;&nbsp;{{ character.totalSpeed }}</span>
         </h2>
 
-        <h2 class="text-left">{{ 'character.armors'|trans({}, 'CorahnRinBundle') }}&nbsp;:</h2>
+        <h2 class="text-left">{{ 'character.armors'|trans }}&nbsp;:</h2>
         <ul class="ml20">
             {% for armor in character.armors %}
                 <li>{{ armor.name }}&nbsp;(&plus;{{ armor.protection }})</li>
             {% else %}
-                <li>n/a</li>
+                <li>&mdash;</li>
             {% endfor %}
         </ul>
     </div>

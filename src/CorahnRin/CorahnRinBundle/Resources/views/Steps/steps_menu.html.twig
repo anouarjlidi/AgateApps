@@ -1,6 +1,7 @@
 {% set steps_length = steps|length %}
 
 {% macro menu_items(current_step, steps, mobile) %}
+    {% spaceless %}
     {% set previous = null %}
 
     {% for stepName, loop_step in steps %}
@@ -11,7 +12,7 @@
         {% if is_superior_to_current or is_defined_step or is_last_undefined_step %}
             <li class=" step_available{% if current_step and current_step.step == loop_step.step %} active{% endif %}">
                 <a href="{{ path('pierstoval_character_generator_step', {'requestStep': stepName}) }}" class="bl">
-                    {{ current_step.step == loop_step.step ? '&raquo;' }} {{ loop_step.step }}. {{ loop_step.label | trans }}
+                    {{- current_step.step == loop_step.step ? '&raquo;' }} {{ loop_step.step }}. {{ loop_step.label | trans -}}
                 </a>
             </li>
         {% else %}
@@ -27,6 +28,7 @@
             <a href="{{ path('pierstoval_character_generator_reset') }}">{{ 'steps.reset' | trans({}, 'CorahnRinBundle') }}</a>
         </li>
     {% endif %}
+    {% endspaceless %}
 {% endmacro %}
 
 {% import _self as macros %}

@@ -1,6 +1,7 @@
+{% trans_default_domain 'CorahnRinBundle' %}
 
 <div class="main row">
-    <h2>{{ 'character.domains'|trans({}, 'CorahnRinBundle') }}</h2>
+    <h2>{{ 'character.domains'|trans }}</h2>
     {% for domains in character.domains|batch(4) %}
         <div class="row">
             {% for charDomain in domains %}
@@ -19,7 +20,7 @@
 
                     {% set disciplines = character.disciplineFromDomain(charDomain.domain) %}
                     {% if disciplines|length %}
-                        <h4>{{ 'character.disciplines'|trans({}, 'CorahnRinBundle') }}&nbsp;:</h4>
+                        <h4>{{ 'character.disciplines'|trans }}&nbsp;:</h4>
                     {% endif %}
                     {% for charDiscipline in disciplines %}
                         <h5>

@@ -1,10 +1,11 @@
+{% trans_default_domain 'CorahnRinBundle' %}
 
 <div class="main row">
     <div class="col s12">
-        <h2 class="text-left">{{ 'character.sanity'|trans({}, 'CorahnRinBundle') }}</h2>
+        <h2 class="text-left">{{ 'character.sanity'|trans }}</h2>
 
         <h3>
-            {{- 'character.mental_resist'|trans({}, 'CorahnRinBundle') }}&nbsp;:&nbsp;
+            {{- 'character.mental_resist'|trans }}&nbsp;:&nbsp;
             {{- character.baseMentalResist -}}
             {%- if character.mentalResistBonus -%}
                 &nbsp;&plus;&nbsp;{{ character.mentalResistBonus -}}
@@ -16,15 +17,15 @@
             <thead>
                 <tr>
                     <th class="text-center">&nbsp;</th>
-                    <th class="text-center">{{ 'character.mental_disorders.balance'|trans({}, 'CorahnRinBundle') }}</th>
-                    <th class="text-center">{{ 'character.mental_disorders.symptom'|trans({}, 'CorahnRinBundle') }}</th>
-                    <th class="text-center">{{ 'character.mental_disorders.syndrome'|trans({}, 'CorahnRinBundle') }}</th>
-                    <th class="text-center">{{ 'character.mental_disorders.madness'|trans({}, 'CorahnRinBundle') }}</th>
+                    <th class="text-center">{{ 'character.mental_disorders.balance'|trans }}</th>
+                    <th class="text-center">{{ 'character.mental_disorders.symptom'|trans }}</th>
+                    <th class="text-center">{{ 'character.mental_disorders.syndrome'|trans }}</th>
+                    <th class="text-center">{{ 'character.mental_disorders.madness'|trans }}</th>
                 </tr>
             </thead>
             <tbody class="row">
                 <tr>
-                    <td>{{ 'character.trauma.title'|trans({}, 'CorahnRinBundle') }}</td>
+                    <td>{{ 'character.trauma.title'|trans }}</td>
                     {% set trauma = character.trauma %}
                     {% set perma = character.traumaPermanent %}
                     {% for i in 0..19 -%}
@@ -42,7 +43,7 @@
                     {%- endfor %}
                 </tr>
                 <tr>
-                    <td>{{ 'character.trauma.hardening'|trans({}, 'CorahnRinBundle') }}</td>
+                    <td>{{ 'character.trauma.hardening'|trans }}</td>
                     {% set hardening = character.hardening %}
                     {% for i in 0..19 -%}
                         {%- if loop.index0 is divisible by(5) %}<td class="text-center">{% endif -%}
@@ -59,9 +60,9 @@
             <tfoot class="text-xs">
                 <tr>
                     <td colspan="5" class="lh1em">
-                        <span class="text-l white-text">●</span> {{ 'character.trauma.permanent'|trans({}, 'CorahnRinBundle') }}
+                        <span class="text-l white-text">●</span> {{ 'character.trauma.permanent'|trans }}
                         <br>
-                        <span class="brown-text text-l">●</span> {{ 'character.trauma.curable'|trans({}, 'CorahnRinBundle') }}
+                        <span class="brown-text text-l">●</span> {{ 'character.trauma.curable'|trans }}
                     </td>
                 </tr>
             </tfoot>

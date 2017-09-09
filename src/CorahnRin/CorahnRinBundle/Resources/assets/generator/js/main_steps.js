@@ -294,34 +294,4 @@
     $('[data-dist-click]').on('click', function(){
         $('#'+this.getAttribute('data-target-node')).click();
     });
-
-    (function(){
-        var el, i,
-            l = d.querySelectorAll('[data-toggle="ui-slider"]'),
-            c = l.length;
-        /**
-         * Sliders UI
-         */
-        for (i = 0; i < c; i++) {
-            el = l[i];
-            $(el).slider({
-                'range': el.getAttribute('data-slider-range') ? el.getAttribute('data-slider-range') : 'min',
-                'value': el.getAttribute('data-slider-value') ? parseInt(el.getAttribute('data-slider-value')) : 0,
-                'min': el.getAttribute('data-slider-min') ? parseInt(el.getAttribute('data-slider-min')) : 0,
-                'max': el.getAttribute('data-slider-max') ? parseInt(el.getAttribute('data-slider-max')) : 0,
-                'slide': function (e, ui) {
-                    var id;
-                    id = $(e.target).attr('data-slider-label');
-                    if (id) {
-                        d.getElementById(id).innerHTML = ui.value;
-                    }
-                    id = $(e.target).attr('data-slider-input');
-                    if (id) {
-                        d.getElementById(id).value = ui.value;
-                    }
-                }
-            });
-        }
-    })();
-
 })(jQuery, document, window);
