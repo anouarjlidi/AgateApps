@@ -11,6 +11,7 @@
 
 namespace CorahnRin\CorahnRinBundle\Entity\Traits;
 
+use CorahnRin\CorahnRinBundle\Data\Orientation;
 use CorahnRin\CorahnRinBundle\Entity\Armors;
 use CorahnRin\CorahnRinBundle\Entity\Artifacts;
 use CorahnRin\CorahnRinBundle\Entity\CharacterProperties\CharAdvantages;
@@ -285,6 +286,13 @@ trait CharacterGettersSetters
      */
     public function setOrientation($orientation)
     {
+        if (!array_key_exists($orientation, Orientation::getData())) {
+            throw new \InvalidArgumentException(sprintf(
+                'Orientation must be one value in "%s", "%s" given.',
+                implode('", "', array_keys(Orientation::getData())), $orientation
+            ));
+        }
+
         $this->orientation = $orientation;
 
         return $this;
