@@ -30,6 +30,7 @@
                 LeafletPopupPolylineBaseContent: ''
             }
         },
+        loadCallback: null,
         editMode: false,
         showFilters: true,
         showDirections: true,

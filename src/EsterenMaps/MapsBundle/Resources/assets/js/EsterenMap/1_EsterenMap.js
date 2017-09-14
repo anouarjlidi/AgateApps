@@ -144,6 +144,10 @@
             this._map.on('click', _this.disableEditedElements);
         }
 
+        if (mapOptions.loadCallback && typeof mapOptions.loadCallback === 'function') {
+            mapOptions.loadCallback.apply(this);
+        }
+
         this._mapOptions = this.cloneObject(mapOptions);
 
         Object.freeze(this._mapOptions);
