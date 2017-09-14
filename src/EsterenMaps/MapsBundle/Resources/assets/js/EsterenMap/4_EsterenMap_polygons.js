@@ -308,7 +308,7 @@
         } else {
             // Ici on tente de créer une nouvelle zone
             polygon._esterenZone = this.esterenZonePrototype;
-            polygon._esterenZone.zone_type = this.reference('zonesTypes', 1);
+            polygon._esterenZone.zone_type = 1;
         }
 
         // Création d'une popup
@@ -332,8 +332,8 @@
 
         polygon.addTo(this._map);
 
-        option = 'zoneType'+(customUserOptions.polygonType?customUserOptions.polygonType: '1');
-        this._map.getRenderer(polygon).getPane().setAttribute('data-leaflet-object-type', option);
+        option = 'zoneType'+(typeof polygon._esterenZone.zone_type === 'object' ? polygon._esterenZone.zone_type.id : polygon._esterenZone.zone_type);
+        polygon._path.setAttribute('data-leaflet-object-type', option);
 
         this._polygons[id] = polygon;
 

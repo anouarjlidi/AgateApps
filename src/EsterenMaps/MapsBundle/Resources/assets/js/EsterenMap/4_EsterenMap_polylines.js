@@ -494,7 +494,7 @@
 
         polyline.addTo(this._map);
 
-        option = 'routeType'+(customUserOptions.polylineType?customUserOptions.polylineType:'1');
+        option = 'routeType'+(typeof polyline._esterenRoute.route_type === 'object' ? polyline._esterenRoute.route_type.id : polyline._esterenRoute.route_type);
         polyline._path.setAttribute('data-leaflet-object-type', option);
 
         this._polylines[id] = polyline;
