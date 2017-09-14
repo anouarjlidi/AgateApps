@@ -1,10 +1,10 @@
 /*
-* There here is YOUR config
-* This var is an example of the assets you can use in your own application.
-* The array KEYS correspond to the OUTPUT files/directories,
-* The array VALUES contain a LIST OF SOURCE FILES
-*/
-var config = {
+ * There here is YOUR config
+ * This var is an example of the assets you can use in your own application.
+ * The array KEYS correspond to the OUTPUT files/directories,
+ * The array VALUES contain a LIST OF SOURCE FILES
+ */
+const config = {
 
     // The base output directory for all your assets
     "output_directory": "web",
@@ -26,7 +26,7 @@ var config = {
             "node_modules/font-awesome/fonts/*",
             "node_modules/bootstrap/dist/fonts/*"
         ],
-        "images": [
+        "images/": [
             "node_modules/leaflet/dist/images/*"
         ]
     },
@@ -169,7 +169,7 @@ var config = {
         ],
         "js/maps_lib.js": [
             "node_modules/leaflet/dist/leaflet-src.js",
-            "./web/components/leaflet-sidebar/src/L.Control.Sidebar.js",
+            "web/components/leaflet-sidebar/src/L.Control.Sidebar.js",
             "node_modules/leaflet-draw/dist/leaflet.draw-src.js",
             "src/EsterenMaps/MapsBundle/Resources/assets/js/EsterenMap/1_EsterenMap.js",
             "src/EsterenMaps/MapsBundle/Resources/assets/js/EsterenMap/1_EsterenMap.load.js",
@@ -218,13 +218,14 @@ var GulpfileHelpers = {};
  */
 GulpfileHelpers.objectSize = function(object) {
     "use strict";
+    let size = 0;
 
-    let size = 0, key;
-    for (key in object) {
+    for (let key in object) {
         if (object.hasOwnProperty(key)) {
             size++;
         }
     }
+
     return size;
 };
 
@@ -235,13 +236,12 @@ GulpfileHelpers.objectSize = function(object) {
  */
 GulpfileHelpers.objectForEach = function(object, callback) {
     "use strict";
-
-    let key;
-    for (key in object) {
+    for (let key in object) {
         if (object.hasOwnProperty(key)) {
             callback.apply(object, [key, object[key]]);
         }
     }
+
     return object;
 };
 
@@ -257,19 +257,21 @@ const hasCss    = GulpfileHelpers.objectSize(config.css) > 0;
 const hasJs     = GulpfileHelpers.objectSize(config.js) > 0;
 
 // Required extensions
-var fs         = require('fs');
-var pump       = require('pump');
-var gulp       = require('gulp4');
-var gulpif     = require('gulp-if');
-var watch      = require('gulp-watch');
-var concat     = require('gulp-concat');
-var uglify     = require('gulp-uglify');
-var cleancss   = require('gulp-clean-css');
+const fs         = require('fs');
+const path       = require('path');
+const pump       = require('pump');
+const glob       = require('glob');
+const gulp       = require('gulp4');
+const gulpif     = require('gulp-if');
+const watch      = require('gulp-watch');
+const concat     = require('gulp-concat');
+const uglify     = require('gulp-uglify');
+const cleancss   = require('gulp-clean-css');
 
 // Load other extensions only when having specific components. Saves memory & time execution.
-var less     = hasLess   ? require('gulp-less')     : function(){ return {}; };
-var sass     = hasSass   ? require('gulp-sass')     : function(){ return {}; };
-var imagemin = hasImages ? require('gulp-imagemin') : function(){ return {}; };
+const less     = hasLess   ? require('gulp-less')     : function(){ return {}; };
+const sass     = hasSass   ? require('gulp-sass')     : function(){ return {}; };
+const imagemin = hasImages ? require('gulp-imagemin') : function(){ return {}; };
 
 /************** Files checks **************/
 
@@ -299,7 +301,7 @@ GulpfileHelpers.objectForEach(config.sass, checkCallback);
 GulpfileHelpers.objectForEach(config.less, checkCallback);
 
 if (erroredFiles.length) {
-    process.stderr.write("\nMissing files: \n"+erroredFiles.join("\n")+"\n");
+    process.stderr.write("\nMissing input files: \n"+erroredFiles.join("\n")+"\n");
     process.exit(1);
 }
 
@@ -330,7 +332,7 @@ gulp.task('less', function(done) {
             gulp.dest(outputDir),
         ], finalCallback);
 
-        console.info(" [file+] "+assets_output+" >");
+        console.info(" [file+] "+assets_output);
         for (i = 0, l = assets.length; i < l; i++) {
             console.info("       > "+assets[i]);
         }
@@ -369,7 +371,7 @@ gulp.task('sass', function(done) {
             gulp.dest(outputDir)
         ], finalCallback);
 
-        console.info(" [file+] "+assets_output+" >");
+        console.info(" [file+] "+assets_output);
         for (i = 0, l = assets.length; i < l; i++) {
             console.info("       > "+assets[i]);
         }
@@ -405,7 +407,7 @@ gulp.task('copy', function(done) {
             gulp.dest(outputDir + assets_output)
         ], finalCallback);
 
-        console.info(" [file+] "+assets_output+" >");
+        console.info(" [file+] "+assets_output);
         for (i = 0, l = assets.length; i < l; i++) {
             console.info("       > "+assets[i]);
         }
@@ -447,9 +449,9 @@ gulp.task('images', function(done) {
             gulp.dest(outputDir + assets_output),
         ], finalCallback);
 
-        console.info(" [file+] "+assets_output+" >");
+        console.info(" [file+] "+assets_output);
         for (i = 0, l = assets.length; i < l; i++) {
-            console.info("       > "+assets[i]);
+            console.info('       > '+assets[i]);
         }
     }
 
@@ -484,7 +486,7 @@ gulp.task('css', function(done) {
             gulp.dest(outputDir)
         ], finalCallback);
 
-        console.info(" [file+] "+assets_output+" >");
+        console.info(" [file+] "+assets_output);
         for (i = 0, l = assets.length; i < l; i++) {
             console.info("       > "+assets[i]);
         }
@@ -521,7 +523,7 @@ gulp.task('js', function(done) {
             gulp.dest(outputDir)
         ], finalCallback);
 
-        console.info(" [file+] "+assets_output+" >");
+        console.info(" [file+] "+assets_output);
         for (i = 0, l = assets.length; i < l; i++) {
             console.info("       > "+assets[i]);
         }
@@ -554,39 +556,26 @@ gulp.task('watch', gulp.series('dump', gulp.parallel(function(done) {
         files_css = [],
         files_sass = [],
         files_js = [],
+        files_to_watch = [],
+        other_files_to_watch = config.files_to_watch || [],
+        forEach = GulpfileHelpers.objectForEach,
+        push = (key, elements, appendTo) => {
+            appendTo.push(elements);
+            files_to_watch.push(elements);
+        },
         callback = function(event) {
             console.log('File "' + event + '" updated');
-        },
-        other_files_to_watch = config.files_to_watch || [],
-        files_to_watch = []
+        }
     ;
 
     console.info('Night gathers, and now my watch begins...');
 
-    GulpfileHelpers.objectForEach(config.images, function(key, images){
-        files_images.push(images);
-        files_to_watch.push(images);
-    });
-    GulpfileHelpers.objectForEach(config.copy, function(key, copy){
-        files_copy.push(copy);
-        files_to_watch.push(copy);
-    });
-    GulpfileHelpers.objectForEach(config.less, function(key, less){
-        files_less.push(less);
-        files_to_watch.push(less);
-    });
-    GulpfileHelpers.objectForEach(config.sass, function(key, sass){
-        files_sass.push(sass);
-        files_to_watch.push(sass);
-    });
-    GulpfileHelpers.objectForEach(config.css, function(key, css){
-        files_css.push(css);
-        files_to_watch.push(css);
-    });
-    GulpfileHelpers.objectForEach(config.js, function(key, js){
-        files_js.push(js);
-        files_to_watch.push(js);
-    });
+    forEach(config.images, (key, images) => { push(key, images, files_images); });
+    forEach(config.copy, (key, images) => { push(key, images, files_copy); });
+    forEach(config.less, (key, images) => { push(key, images, files_less); });
+    forEach(config.sass, (key, images) => { push(key, images, files_sass); });
+    forEach(config.css, (key, images) => { push(key, images, files_css); });
+    forEach(config.js, (key, images) => { push(key, images, files_js); });
 
     if (files_to_watch.length) {
         console.info('Watching file(s):');
@@ -620,6 +609,130 @@ gulp.task('watch', gulp.series('dump', gulp.parallel(function(done) {
     done();
 })));
 
+gulp.task('test', gulp.series('dump', function(done) {
+    "use strict";
+    let filesList = [];
+    let forEach = GulpfileHelpers.objectForEach;
+    let push = (key) => {
+        filesList.push(config.output_directory+'/'+key);
+    };
+
+    /**
+     * Retrieve files list.
+     */
+    forEach(config.less, push);
+    forEach(config.sass, push);
+    forEach(config.css, push);
+    forEach(config.js, push);
+
+    /**
+     * Retrieve files from globs or specific file names.
+     */
+    let pushFromDirectory = (outputDirName, elements) => {
+        let finalOutput = config.output_directory+'/'+outputDirName;
+
+        let cleanName = (outputDirectory, sourceName) => {
+            let cleanName = outputDirectory.replace(/\/\*+/gi, '');
+            // Clean up files and dirs so we can convert a "source" name into an "output dir related" name.
+            let replacedFileName = sourceName.replace(cleanName, '');
+            return (finalOutput+replacedFileName).replace('//', '/');
+        };
+
+        let cleanAndPush = (name, files) => {
+            files.forEach((sourceName) => {
+                let cleaned = cleanName(name, sourceName);
+                filesList.push(cleaned);
+            });
+        };
+
+        elements.forEach((name) => {
+            // Name is something like "node_modules/materialize-css/dist/fonts/*".
+            // We'll check for globs and direct files here to add them to files to watch for tests.
+            // This is more complex as we have to list all files in source dirs and compare them with output dir.
+            if (glob.hasMagic(name)) {
+                cleanAndPush(name, glob.sync(name, { nodir: true }));
+            } else {
+                let stat = fs.statSync(name);
+                if (stat.isFile()) {
+                    filesList.push(name);
+                } else if (stat.isDirectory()) {
+                    // Force glob search for directories
+                    cleanAndPush(name, glob.sync(name.replace(/\/+$/gi, '')+'/**', { nodir: true }));
+                } else {
+                    throw 'Could not find a way to handle source "'+name+'".';
+                }
+            }
+        });
+    };
+
+    forEach(config.images, pushFromDirectory);
+    forEach(config.copy, pushFromDirectory);
+
+    console.info('Check files that are not dumped according to config.');
+
+    let number = filesList.length;
+    let processedFiles = 0;
+    let valid = 0;
+    let invalid = [];
+
+    // Hack for "padding" strings
+    let numberLength = String(number).length;
+    let padString = '';
+    for (let i = 0; i < numberLength; i++) {
+        padString += ' ';
+    }
+
+    // Manual "left-pad"
+    let pad = (s, p) => { if (typeof p === 'undefined') { p = padString; } return String(p+s).slice(-p.length); };
+
+    filesList.forEach(function(file){
+        let fullPath = path.resolve(__dirname.replace(/\/$/, '')+'/'+file.replace(/^\/?/g, ''));
+        fs.access(fullPath, function(err){
+            if (!err) {
+                valid++;
+                process.stdout.write('.');
+            } else {
+                invalid.push(file);
+                process.stdout.write('F');
+            }
+
+            processedFiles++;
+
+            if (processedFiles % 50 === 0 && processedFiles !== number) {
+                process.stdout.write(' '+pad(processedFiles)+' / ' + number + ' (' + pad((Math.floor(100 * processedFiles / number)), '   ') + "%)\n");
+            }
+
+            if (processedFiles === number) {
+                let rest = 50 - (processedFiles % 50);
+                let spaces = '';
+                for (let i = 0; i < rest; i++) {
+                    spaces += ' ';
+                }
+                process.stdout.write(' '+spaces+valid+' / ' + processedFiles + " (100%)\n");
+
+                finish();
+            }
+        });
+    });
+
+    function finish() {
+        if (invalid.length) {
+            process.stdout.write("These files seem not to have been dumped by Gulp flow:\n");
+            invalid.forEach((file) => {
+                process.stdout.write(" > "+file+"\n");
+            });
+
+            done();
+            process.exit(1);
+
+            return;
+        }
+
+        done();
+        process.exit(0);
+    }
+}));
+
 /**
  * Small user guide
  */
@@ -639,6 +752,7 @@ gulp.task('default', function(done){
     console.info("    js           Dumps the sources in the `config.js` parameter from plain JS files.");
     console.info("    dump         Executes all the above commands.");
     console.info("    watch        Executes 'dump', then watches all sources, and dumps all assets once any file is updated.");
+    console.info("    test         Executes 'dump', then makes sure that all files in the sources directories are dumped correctly.");
     console.info("");
     done();
 });

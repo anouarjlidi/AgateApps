@@ -49,7 +49,7 @@ jobs:
             - run:
                name: 'Execute node tests'
                command: |
-                    node tests/nodejs/test_gulp_dump.js
+                    yarn gulp test
 
             - run:
                name: 'Execute Linting tests'
