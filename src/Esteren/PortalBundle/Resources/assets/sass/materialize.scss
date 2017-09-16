@@ -1,13 +1,10 @@
 @charset "UTF-8";
 
-// Mixins
-// @import "../../../../../../node_modules/materialize-css/sass/components/prefixer";
-@import "../../../../../../node_modules/materialize-css/sass/components/mixins";
+// Colors
 @import "../../../../../../node_modules/materialize-css/sass/components/color";
 
 // Variables;
 @import "../../../../../../node_modules/materialize-css/sass/components/variables";
-
 @import "materialize-override-variables";
 
 // Reset
