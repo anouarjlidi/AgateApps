@@ -2,17 +2,12 @@
 
 {% block stylesheets -%}
     {{- parent() -}}
-    <style type="text/css">
-        .sr-only {position: absolute;width: 1px;height: 1px;margin: -1px;padding: 0;overflow: hidden;clip: rect(0,0,0,0);border: 0;}
-        iframe#sc{resize: both;overflow: auto; width: 100%; height: 450px;}
-    </style>
+    <style type="text/css">.sr-only {position: absolute;width: 1px;height: 1px;margin: -1px;padding: 0;overflow: hidden;clip: rect(0,0,0,0);border: 0;}iframe#sc{resize: both;overflow: auto; width: 100%; height: 450px;}</style>
 {%- endblock %}
 
 {% block content_layout_class '' %}
 
-{% block title %}
-    Les Ombres d'Esteren
-{% endblock %}
+{% block title "Les Ombres d'Esteren" %}
 
 {% block content_for_layout %}
 
@@ -23,21 +18,21 @@
     <div id="index-banner" class="parallax-container valign-wrapper">
         <div class="section no-pad-bot">
             <div class="container">
-                <h2 class="header center white-text text-shadow-black-10">Bière du Feond</h2>
+                <h2 class="header center white-text text-shadow-black-10">Esteren Tour</h2>
                 <div class="row center">
                     <h3 class="header col s12 light white-text text-shadow-black-10-stronger text-xl">
-                        Découvrez une bière complexe créée par la Brasserie de l'Être
+                        Prochaines dates de la tournée
                     </h3>
                 </div>
                 <div class="row center">
-                    <a href="{{ path('esteren_portal_feond_beer') }}" class="btn-large waves-effect waves-light bg-gold">
+                    <a href="http://ombresdesteren.blogspot.fr/2017/08/de-retour-de-la-gen-con-50-et.html" class="btn-large waves-effect waves-light bg-gold">
                         En savoir plus
                     </a>
                 </div>
             </div>
         </div>
         <div class="parallax">
-            <img src="{{ asset('img/Portal_Feond_beer.jpg') }}" alt="Les Ombres d'Esteren : cercle de pierres">
+            <img src="{{ asset('img/Esteren_Gencon_2017.jpg') }}" alt="Les Ombres d'Esteren : L'équipe à la GenCon 2017">
         </div>
     </div>
 
