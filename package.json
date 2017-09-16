@@ -13,6 +13,7 @@
     "dependencies": {
         "bootstrap": "^3.3",
         "font-awesome": "^4.7",
+        "glob": "^7.0",
         "gulp-clean-css": "^3.7",
         "gulp-concat": "^2.6",
         "gulp-if": "^2.0",
@@ -22,7 +23,6 @@
         "gulp-uglify": "^3.0",
         "gulp-watch": "^4.3",
         "gulp4": "^4.0",
-        "glob": "^7.0",
         "jquery": "^3.2",
         "leaflet": "1.0.*",
         "leaflet-draw": "^0.4",
