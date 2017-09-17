@@ -1,26 +1,28 @@
 
 {# Flash messages #}
 {% spaceless %}
-    {% for key, messageList in app.session.flashbag.all %}
+    {% set flashes = app.session.flashbag.all %}
+    {% if flashes|length %}
+        <div id="flash-messages">
+        {% for key, messageList in flashes %}
 
-        {% if loop.first %}<div id="flash-messages">{% endif %}
+            {% set translation_domain = 'messages' %}
 
-        {% set translation_domain = 'messages' %}
+            {% if 'user_' in key %}
+                {# Sometimes, UserBundle can send specific error messages #}
+                {% set translation_domain = 'UserBundle' %}
+                {% set key = key|replace({"user_": ""}) %}
+            {% endif %}
 
-        {% if 'user_' in key %}
-            {# Sometimes, UserBundle can send specific error messages #}
-            {% set translation_domain = 'UserBundle' %}
-        {% endif %}
+            {% set class = get_flash_class(key) %}
 
-        {% set class = get_flash_class(key) %}
-
-        <div class="card-panel {{ class }} {{ key }}">
-            {% for message in messageList %}
-                {{ message | trans({}, translation_domain) | raw }}
-                {% if not loop.last %}<br />{% endif %}
-            {% endfor %}
+            <div class="card-panel {{ class }} {{ key }}">
+                {% for message in messageList %}
+                    {{ message | trans({}, translation_domain) | raw }}
+                    {% if not loop.last %}<br />{% endif %}
+                {% endfor %}
+            </div>
+        {% endfor %}
         </div>
-
-        {% if loop.last %}</div>{% endif %}
-    {% endfor %}
+    {% endif %}
 {% endspaceless %}
