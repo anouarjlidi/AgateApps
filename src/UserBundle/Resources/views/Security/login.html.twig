@@ -32,6 +32,10 @@
             <button class="btn waves-effect waves-light" type="submit">
                 {{ 'security.login.submit'|trans }}
             </button>
+
+            <a href="{{ path('user_resetting_request') }}" class="bl mt10">
+                {{ 'security.login.password_forgotten'|trans }}
+            </a>
         </form>
     </div>
 {% endblock content_for_layout %}
