@@ -4,7 +4,7 @@
 
 {% block content_for_layout %}
 <div class="row">
-    <form class="col s7 offset-s2" action="{{ path('user_resetting_send_email') }}" method="POST">
+    <form class="user_resetting_request col s7 offset-s2" action="{{ path('user_resetting_send_email') }}" method="POST">
         <h2>{{ 'resetting.request.submit' | trans }}</h2>
 
         <div class="row">

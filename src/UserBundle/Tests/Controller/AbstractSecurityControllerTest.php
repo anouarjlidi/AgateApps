@@ -232,11 +232,7 @@ abstract class AbstractSecurityControllerTest extends WebTestCase
         // This message contains informations about user resetting token TTL.
         // This information is set in the User ResettingController and must be copied here just for testing.
         $emailSentMessage = $client->getKernel()->getContainer()->get('translator')->trans('resetting.check_email', [], 'UserBundle');
-        $emailSentMessage = nl2br($emailSentMessage, false);
-        $emailSentMessage = trim($emailSentMessage);
-        $emailSentMessage = preg_replace('~((\r)?\n)+~', '', $emailSentMessage);
         $crawlerContent   = trim($crawler->filter('#content')->html());
-        $crawlerContent   = preg_replace('~((\r)?\n)+~', '', $crawlerContent);
         static::assertContains($emailSentMessage, $crawlerContent);
 
         $crawler->clear();
@@ -248,10 +244,11 @@ abstract class AbstractSecurityControllerTest extends WebTestCase
 
         $client->submit($form);
 
-        static::assertSame(302, $client->getResponse()->getStatusCode());
+        static::assertTrue($client->getResponse()->isRedirect("/$locale/login"));
         $crawler->clear();
         $crawler = $client->followRedirect();
         static::assertSame(1, $crawler->filter('.card-panel.success')->count());
+        static::assertSame($user->getUsername(), $crawler->filter('#username')->attr('value'));
 
         $crawler->clear();
     }
