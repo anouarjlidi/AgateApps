@@ -14,8 +14,6 @@ namespace EsterenMaps\MapsBundle\Controller\Api;
 use EsterenMaps\MapsBundle\Entity\Maps;
 use EsterenMaps\MapsBundle\Entity\Markers;
 use EsterenMaps\MapsBundle\Entity\TransportTypes;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -25,11 +23,13 @@ use Symfony\Component\HttpFoundation\Request;
 class ApiDirectionsController extends Controller
 {
     /**
-     * @Route("/maps/directions/{id}/{from}/{to}", name="esterenmaps_directions", requirements={"id": "\d+", "from": "\d+", "to": "\d+"})
-     * @Method("GET")
+     * @Route("/maps/directions/{id}/{from}/{to}",
+     *     name="esterenmaps_directions",
+     *     requirements={"id": "\d+", "from": "\d+", "to": "\d+"},
+     *     methods={"GET"}
+     * )
      * @ParamConverter(name="from", class="EsterenMapsBundle:Markers", options={"id": "from"})
      * @ParamConverter(name="to", class="EsterenMapsBundle:Markers", options={"id": "to"})
-     * @Cache(public=true, maxage=3600)
      *
      * @param Maps    $map
      * @param Markers $from
@@ -58,7 +58,17 @@ class ApiDirectionsController extends Controller
             }
         }
 
-        return new JsonResponse($output, $code);
+        $response = new JsonResponse($output, $code);
+
+        $response->setCache([
+            'etag' => sha1('js'.$map->getId().$from->getId().$to->getId().$transportId.$this->getParameter('version_code')),
+            'last_modified' => new \DateTime($this->getParameter('version_date')),
+            'max_age' => 600,
+            's_maxage' => 600,
+            'public' => true,
+        ]);
+
+        return $response;
     }
 
     /**

@@ -11,7 +11,6 @@
 
 namespace AgateBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,8 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 class AssetsController extends Controller
 {
     /**
-     * @Route("/js/translations", name="pierstoval_tools_assets_jstranslations", host="%agate_domains.portal%")
-     * @Method("GET")
+     * @Route("/js/translations", name="pierstoval_tools_assets_jstranslations", host="%agate_domains.portal%", methods={"GET"})
      */
     public function jsTranslationsAction(Request $request, $_locale)
     {

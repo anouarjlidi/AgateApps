@@ -12,7 +12,6 @@
 namespace EsterenMaps\MapsBundle\Controller;
 
 use EsterenMaps\MapsBundle\Entity\Maps;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,8 +23,7 @@ use Symfony\Component\HttpFoundation\Response;
 class MapsController extends Controller
 {
     /**
-     * @Route("/map-{nameSlug}")
-     * @Method("GET")
+     * @Route("/map-{nameSlug}", methods={"GET"})
      */
     public function viewAction(Maps $map, Request $request): Response
     {
@@ -53,8 +51,7 @@ class MapsController extends Controller
     }
 
     /**
-     * @Route("/")
-     * @Method("GET")
+     * @Route("/", methods={"GET"})
      */
     public function indexAction(Request $request): Response
     {

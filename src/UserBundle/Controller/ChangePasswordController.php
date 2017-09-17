@@ -11,7 +11,6 @@
 
 namespace UserBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,8 +22,7 @@ use UserBundle\Form\Type\ChangePasswordFormType;
 class ChangePasswordController extends Controller
 {
     /**
-     * @Route("/profile/change-password", name="user_change_password")
-     * @Method({"GET", "POST"})
+     * @Route("/profile/change-password", name="user_change_password", methods={"GET", "POST"})
      */
     public function changePasswordAction(Request $request): Response
     {

@@ -11,7 +11,6 @@
 
 namespace UserBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -27,8 +26,7 @@ use UserBundle\Repository\UserRepository;
 class ResettingController extends Controller
 {
     /**
-     * @Route("/request", name="user_resetting_request")
-     * @Method("GET")
+     * @Route("/request", name="user_resetting_request", methods={"GET"})
      */
     public function requestAction()
     {
@@ -36,8 +34,7 @@ class ResettingController extends Controller
     }
 
     /**
-     * @Route("/send-email", name="user_resetting_send_email")
-     * @Method("POST")
+     * @Route("/send-email", name="user_resetting_send_email", methods={"POST"})
      */
     public function sendEmailAction(Request $request)
     {
@@ -66,8 +63,7 @@ class ResettingController extends Controller
     }
 
     /**
-     * @Route("/reset/{token}", name="user_resetting_reset")
-     * @Method({"GET", "POST"})
+     * @Route("/reset/{token}", name="user_resetting_reset", methods={"GET", "POST"})
      */
     public function resetAction(Request $request, $token)
     {

@@ -11,7 +11,6 @@
 
 namespace UserBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,8 +22,7 @@ use UserBundle\Security\FormLoginAuthenticator;
 class SecurityController extends Controller
 {
     /**
-     * @Route("/login", name="user_login")
-     * @Method({"GET", "POST"})
+     * @Route("/login", name="user_login", methods={"GET", "POST"})
      */
     public function loginAction(Request $request)
     {

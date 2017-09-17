@@ -11,7 +11,6 @@
 
 namespace UserBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,8 +23,7 @@ use UserBundle\Form\Type\UluleConnectType;
 class ProfileController extends Controller
 {
     /**
-     * @Route("/profile", name="user_profile_edit")
-     * @Method({"GET", "POST"})
+     * @Route("/profile", name="user_profile_edit", methods={"GET", "POST"})
      */
     public function editAction(Request $request): Response
     {

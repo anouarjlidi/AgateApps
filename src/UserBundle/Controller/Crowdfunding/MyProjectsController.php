@@ -2,7 +2,6 @@
 
 namespace UserBundle\Controller\Crowdfunding;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -12,8 +11,7 @@ use UserBundle\ConnectApi\UluleClient;
 class MyProjectsController extends Controller
 {
     /**
-     * @Route("/my_projects", name="cf_my_projects")
-     * @Method("GET")
+     * @Route("/my_projects", name="cf_my_projects", methods={"GET"})
      * @Security("is_granted('ROLE_USER') and user.getUluleApiToken() and user.getUluleUsername()")
      */
     public function myProjectsAction(): Response
