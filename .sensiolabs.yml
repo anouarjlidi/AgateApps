@@ -27,4 +27,5 @@ exclude_patterns:
 rules:
     symfony.controller.missing_redirect_after_post: { enabled: false }
     symfony.form.form_type_not_in_type_form_folder: { enabled: false }
+    twig.template_too_complex: { enabled: false }
     task_todo_comment: { enabled: false }

@@ -56,7 +56,6 @@ class PageFixtures extends AbstractFixture
                 'host'     => null,
                 'enabled'  => true,
                 'homepage' => true,
-                'template' => 'base.html.twig',
             ],
             [
                 'title'    => 'Static page',
@@ -65,7 +64,6 @@ class PageFixtures extends AbstractFixture
                 'host'     => null,
                 'enabled'  => true,
                 'homepage' => false,
-                'template' => 'base.html.twig',
             ],
         ];
     }
