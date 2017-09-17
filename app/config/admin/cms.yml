@@ -60,14 +60,6 @@ easy_admin:
                     - { property: metaKeywords, label: 'admin.entities.pages.meta_keywords' }
 
                     - { type: 'section', label: 'admin.sections.design' }
-                    - property: template
-                      label: 'admin.entities.pages.template'
-                      type: choice
-                      type_options:
-                          required: true
-                          choices:
-                              'templates.base': 'base.html.twig'
-                              'templates.material': 'base_materialize.html.twig'
                     - { property: css, label: 'admin.entities.pages.css' }
                     - { property: js, label: 'admin.entities.pages.js' }
                     - { property: containerCssClass, label: 'admin.entities.pages.container_css_class' }

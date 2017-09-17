@@ -72,7 +72,6 @@ twig:
         locales_regex: '%locales_regex%'
     form_themes:
         - 'bootstrap_3_layout.html.twig'
-        - 'form/ckeditor_widget.html.twig'
 
 # Doctrine Configuration
 doctrine:

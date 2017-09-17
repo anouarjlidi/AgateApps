@@ -29,13 +29,6 @@ class Page extends BasePage
     protected $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="template", type="string", length=255, nullable=true)
-     */
-    protected $template;
-
-    /**
      * @var bool
      *
      * @ORM\Column(name="show_title", type="boolean", options={"default": "1"})
@@ -69,30 +62,6 @@ class Page extends BasePage
     public function setId($id)
     {
         $this->id = $id;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     *
-     * @codeCoverageIgnore
-     */
-    public function getTemplate()
-    {
-        return $this->template;
-    }
-
-    /**
-     * @param string $template
-     *
-     * @return Page
-     *
-     * @codeCoverageIgnore
-     */
-    public function setTemplate($template)
-    {
-        $this->template = $template;
 
         return $this;
     }

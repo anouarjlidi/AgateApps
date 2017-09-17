@@ -11,7 +11,6 @@
         "gulp": "node ./node_modules/gulp4/bin/gulp"
     },
     "dependencies": {
-        "bootstrap": "^3.3",
         "font-awesome": "^4.7",
         "glob": "^7.0",
         "gulp-clean-css": "^3.7",
