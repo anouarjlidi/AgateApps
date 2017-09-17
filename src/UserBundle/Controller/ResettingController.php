@@ -17,6 +17,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Core\Security;
 use UserBundle\Form\Type\ResettingFormType;
 use UserBundle\Repository\UserRepository;
 
@@ -42,33 +43,26 @@ class ResettingController extends Controller
     {
         $username = $request->request->get('username');
 
-        $user = $this->get(UserRepository::class)->findOneByEmail($username);
+        $user = $this->get(UserRepository::class)->findByUsernameOrEmail($username);
 
         if (null !== $user) {
             if (null === $user->getConfirmationToken()) {
                 $user->setConfirmationToken($this->get('user.util.token_generator')->generateToken());
             }
 
-            $this->get('user.mailer')->sendResettingEmailMessage($user);
+            try {
+                $this->get('user.mailer')->sendResettingEmailMessage($user);
+                $this->getDoctrine()->getManager()->flush();
+            } catch (\Exception $e) {
+                $this->addFlash('user_error', 'user_errors.resetting_email_failed');
+
+                return new RedirectResponse($this->generateUrl('user_resetting_request'));
+            }
         }
 
-        return new RedirectResponse($this->generateUrl('user_resetting_check_email', ['username' => $username]));
-    }
+        $this->addFlash('user_success', 'resetting.check_email');
 
-    /**
-     * @Route("/check-email", name="user_resetting_check_email")
-     * @Method("GET")
-     */
-    public function checkEmailAction(Request $request)
-    {
-        $username = $request->query->get('username');
-
-        if (empty($username)) {
-            // the user does not come from the sendEmail action
-            return new RedirectResponse($this->generateUrl('user_resetting_request'));
-        }
-
-        return $this->render('@User/Resetting/check_email.html.twig');
+        return new RedirectResponse($this->generateUrl('user_login'));
     }
 
     /**
@@ -77,7 +71,7 @@ class ResettingController extends Controller
      */
     public function resetAction(Request $request, $token)
     {
-        $user = $this->get(UserRepository::class)->findByConfirmationToken($token);
+        $user = $this->get(UserRepository::class)->findOneByConfirmationToken($token);
 
         if (null === $user) {
             throw new NotFoundHttpException(sprintf('The user with "confirmation token" does not exist for value "%s"', $token));
@@ -89,14 +83,13 @@ class ResettingController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-
-            $em->persist($user);
-            $em->flush();
+            $user->setConfirmationToken(null);
+            $this->getDoctrine()->getManager()->flush();
 
             $this->addFlash('success', $this->get('translator')->trans('resetting.flash.success', [], 'UserBundle'));
+            $request->getSession()->set(Security::LAST_USERNAME, $user->getUsername());
 
-            return new RedirectResponse($this->generateUrl('user_profile_edit'));
+            return new RedirectResponse($this->generateUrl('user_login'));
         }
 
         return $this->render('@User/Resetting/reset.html.twig', [

@@ -4,6 +4,7 @@ security:
         password: Password
         remember_me: 'Remember me'
         submit: 'Log in'
+        password_forgotten: 'Forgot password?'
 
 profile:
     go_back: 'Go back to my profile'
@@ -48,7 +49,8 @@ registration:
 
 resetting:
     check_email: |
-        An email has been sent. It contains a link you must click to reset your password.
+        If an account exists with this email address, an email has been sent. It contains a link you must click to reset
+        your password.<br>
 
         If you don't get an email check your spam folder or try again.
 
@@ -72,6 +74,11 @@ resetting:
             Regards,
 
             Studio Agate team
+    email_failed: |
+        An error occured when sending the email to reset your password. Our services have been informed. Please try
+        later.
+        <br><br>
+        Thanks for your understanding.
 
 # Global strings
 layout:

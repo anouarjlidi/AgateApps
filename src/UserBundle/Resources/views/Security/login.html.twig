@@ -39,3 +39,16 @@
         </form>
     </div>
 {% endblock content_for_layout %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        (function(d){
+            {%- if last_username -%}
+                d.getElementById('password').focus();
+            {%- else -%}
+                d.getElementById('username').focus();
+            {%- endif -%}
+        })(document);
+    </script>
+{% endblock %}

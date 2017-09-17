@@ -32,7 +32,7 @@ class UserRepository extends BaseEntityRepository
         return $this->createQueryBuilder('user')
             ->where('user.usernameCanonical = :usernameOrEmail')
             ->orWhere('user.emailCanonical = :usernameOrEmail')
-            ->setParameter('usernameOrEmail', mb_convert_case(trim($usernameOrEmail), MB_CASE_LOWER))
+            ->setParameter('usernameOrEmail', $this->canonicalizer->canonicalize($usernameOrEmail))
             ->getQuery()
             ->getOneOrNullResult()
         ;
@@ -45,20 +45,8 @@ class UserRepository extends BaseEntityRepository
         return $this->findOneBy(['emailCanonical' => $email]);
     }
 
-    public function findByConfirmationToken($token): ?User
+    public function findOneByConfirmationToken($token): ?User
     {
         return $this->findOneBy(['confirmationToken' => $token]);
-    }
-
-    public function findOneWithProjects(int $id): ?User
-    {
-        return $this->createQueryBuilder('user')
-            ->leftJoin('user.contributions', 'contribution')->addSelect('contribution')
-            ->leftJoin('contribution.project', 'project')->addSelect('project')
-            ->leftJoin('contribution.rewards', 'reward')->addSelect('reward')
-            ->leftJoin('reward.variants', 'variant')->addSelect('variant')
-            ->where('user.id = :id')->setParameter('id', $id)
-            ->getQuery()->getOneOrNullResult()
-        ;
     }
 }

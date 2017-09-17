@@ -4,6 +4,7 @@ security:
         password: 'Mot de passe'
         remember_me: 'Se souvenir de moi'
         submit: Connexion
+        password_forgotten: 'Mot de passe oublié ?'
 
 profile:
     go_back: 'Retourner à mon profil'
@@ -48,7 +49,8 @@ registration:
 
 resetting:
     check_email: |
-        Un e-mail a été envoyé. Il contient un lien sur lequel il vous faudra cliquer pour réinitialiser votre mot de passe.
+        Si un compte existe avec cette adresse e-mail, un e-mail a été envoyé contenant un lien sur lequel il vous
+        faudra cliquer pour réinitialiser votre mot de passe.<br>
 
         Si vous ne recevez pas un email, vérifiez votre dossier spam ou essayez à nouveau.
 
@@ -72,6 +74,10 @@ resetting:
             Cordialement,
 
             L'équipe Agate
+    email_failed: |
+        L'envoi de l'email de réinitialisation a échoué. Nos services en ont été informés. Merci de réessayer plus tard.
+        <br><br>
+        Merci de votre compréhension.
 
 # Global strings
 layout:
