@@ -1,17 +1,17 @@
 // Different state colors
-@dataChange0: #777;
-@dataChange1: hsl(hue(@btn-primary-bg), saturation(@btn-primary-bg) + 20%, lightness(@btn-primary-bg) + 35%);
-@dataChange2: hsl(hue(@state-success-bg), saturation(@state-success-bg) + 20%, lightness(@state-success-bg) - 10%);
-@dataChange3: hsl(hue(@state-danger-bg), saturation(@state-danger-bg) + 40%, lightness(@state-danger-bg) - 12%);
-@dataChange4: hsl(hue(@state-warning-bg), saturation(@state-warning-bg) + 40%, lightness(@state-warning-bg) - 12%);
-@dataChange5: #bb0000;
+$dataChange0: #777;
+$dataChange1: hsl(hue($primary-color), saturation($primary-color) + 20%, lightness($primary-color) + 35%);
+$dataChange2: hsl(hue($success-color), saturation($success-color) + 20%, lightness($success-color) - 10%);
+$dataChange3: hsl(hue($error-color), saturation($error-color) + 40%, lightness($error-color) - 12%);
+$dataChange4: hsl(hue($warning-color), saturation($warning-color) + 40%, lightness($warning-color) - 12%);
+$dataChange5: #bb0000;
 
-.domainValue0 { color: @dataChange0; }
-.domainValue1 { color: @dataChange1; }
-.domainValue2 { color: @dataChange2; }
-.domainValue3 { color: @dataChange3; }
-.domainValue4 { color: @dataChange4; }
-.domainValue5 { color: @dataChange5; }
+@mixin domainValue0() { color: $dataChange0; }
+@mixin domainValue1() { color: $dataChange1; }
+@mixin domainValue2() { color: $dataChange2; }
+@mixin domainValue3() { color: $dataChange3; }
+@mixin domainValue4() { color: $dataChange4; }
+@mixin domainValue5() { color: $dataChange5; }
 
 #generator_form {
     #information_table {
@@ -45,22 +45,22 @@
                 }
 
                 &[data-change="0"] {
-                    .domainValue0;
+                    @include domainValue0();
                 }
                 &[data-change="1"] {
-                    .domainValue1;
+                    @include domainValue1();
                 }
                 &[data-change="2"] {
-                    .domainValue2;
+                    @include domainValue2();
                 }
                 &[data-change="3"] {
-                    .domainValue3;
+                    @include domainValue3();
                 }
                 &[data-change="4"] {
-                    .domainValue4;
+                    @include domainValue4();
                 }
                 &[data-change="5"] {
-                    .domainValue5;
+                    @include domainValue5();
                 }
             }
         }

@@ -1,4 +1,3 @@
-
 #list_advantages .change_avdesv,
 #list_disadvantages .change_avdesv {
     -webkit-transition: background 400ms;
@@ -11,13 +10,13 @@
     line-height: normal;
 }
 
-@media (max-width: @screen-sm-max) {
+@media (max-width: #{$small-screen}) {
     #list_advantages {
         border-bottom: solid 1px black;
     }
 }
 
-@media (min-width: @screen-md-min) {
+@media (min-width: #{$medium-screen}) {
     #list_advantages {
         border-right: solid 1px black;
     }
@@ -36,13 +35,13 @@
             letter-spacing: 5px;
         }
         &.btn-state-1:before {
-            content: "@{fa-var-check-circle} ";
+            content: "\f058 ";
         }
         &.btn-state-2:before {
-            content: "@{fa-var-check-circle} @{fa-var-check-circle} ";
+            content: "\f058 \f058 ";
         }
         &.btn-state-3:before {
-            content: "@{fa-var-check-circle} @{fa-var-check-circle} @{fa-var-check-circle} ";
+            content: "\f058 \f058 \f058 ";
         }
     }
 

@@ -87,11 +87,8 @@ const config = {
         "css/admin.css": [
             "src/AdminBundle/Resources/assets/less/admin.less"
         ],
-        "css/generator.css": [
-            "src/CorahnRin/CorahnRinBundle/Resources/assets/generator/css/main_steps.less"
-        ],
         "css/character_details.css": [
-            "src/CorahnRin/CorahnRinBundle/Resources/assets/generator/css/character_details.less"
+            "src/CorahnRin/CorahnRinBundle/Resources/assets/generator/css/character_details.scss"
         ]
     },
 
@@ -109,6 +106,9 @@ const config = {
         ],
         "css/agate.css": [
             "src/AgateBundle/Resources/assets/sass/agate-theme.scss"
+        ],
+        "css/generator.css": [
+            "src/CorahnRin/CorahnRinBundle/Resources/assets/generator/css/main_steps.scss"
         ],
         "css/white_layout.css": [
             "src/Esteren/PortalBundle/Resources/assets/sass/white_layout.scss"
