@@ -23,8 +23,7 @@ const config = {
             "node_modules/materialize-css/dist/fonts/roboto/*"
         ],
         "fonts/": [
-            "node_modules/font-awesome/fonts/*",
-            "node_modules/bootstrap/dist/fonts/*"
+            "node_modules/font-awesome/fonts/*"
         ],
         "images/": [
             "node_modules/leaflet/dist/images/*"
@@ -82,9 +81,6 @@ const config = {
         "css/fa.css": [
             "node_modules/font-awesome/less/font-awesome.less"
         ],
-        "css/global.css": [
-            "src/Esteren/PortalBundle/Resources/assets/less/_main.less"
-        ],
         "css/maps_lib.css": [
             "src/EsterenMaps/MapsBundle/Resources/assets/less/maps.less"
         ],
@@ -108,7 +104,7 @@ const config = {
      *     ]
      */
     "sass": {
-        "css/global_mat.css": [
+        "css/global.css": [
             "src/Esteren/PortalBundle/Resources/assets/sass/main.scss"
         ],
         "css/agate.css": [
@@ -150,22 +146,10 @@ const config = {
             "node_modules/jquery/dist/jquery.js"
         ],
         "js/global.js": [
-            "node_modules/bootstrap/js/button.js",
-            "node_modules/bootstrap/js/collapse.js",
-            "node_modules/bootstrap/js/dropdown.js",
-            "node_modules/bootstrap/js/modal.js",
-            "node_modules/bootstrap/js/tooltip.js",
-            "node_modules/bootstrap/js/popover.js",
-            "node_modules/bootstrap/js/transition.js",
-            "node_modules/bootstrap/js/tab.js",
-            "src/Esteren/PortalBundle/Resources/assets/js/corahn_rin.js",
-            "src/Esteren/PortalBundle/Resources/assets/js/helpers.js"
-        ],
-        "js/global_mat.js": [
             "node_modules/materialize-css/dist/js/materialize.js",
             "src/AgateBundle/Resources/assets/js/connect.js",
             "src/Esteren/PortalBundle/Resources/assets/js/helpers.js",
-            "src/Esteren/PortalBundle/Resources/assets/js/global_mat.js"
+            "src/Esteren/PortalBundle/Resources/assets/js/global.js"
         ],
         "js/maps_lib.js": [
             "node_modules/leaflet/dist/leaflet-src.js",

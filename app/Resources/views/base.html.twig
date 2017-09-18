@@ -31,7 +31,7 @@
         {% block more_headers %}{% endblock %}
 
         {% block stylesheets %}
-            <link rel="stylesheet" href="{{ asset('css/global_mat.css') }}" type="text/css" />
+            <link rel="stylesheet" href="{{ asset('css/global.css') }}" type="text/css" />
             <link rel="stylesheet" href="{{ asset('css/initializer.css') }}" type="text/css" />
             <link rel="stylesheet" href="{{ asset('css/fa.css') }}" type="text/css" />
         {% endblock %}
@@ -202,7 +202,7 @@
         {{ app.session.remove('connect_other_domains') ? '' : '' }}
     {% endif %}
     <script type="text/javascript" src="{{ asset('js/jquery.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/global_mat.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/global.js') }}"></script>
     <script type="text/javascript" src="{{ path('pierstoval_tools_assets_jstranslations', {'_locale': app.request.locale}) }}"></script>
 {% endblock %}
 
