@@ -11,10 +11,10 @@
 
 namespace CorahnRin\CorahnRinBundle\Tests\Step;
 
-use Symfony\Bundle\FrameworkBundle\Client;
-
 class Step14UseDomainBonusesTest extends AbstractStepTest
 {
+    use StepsWithDomainsTrait;
+
     /**
      * @dataProvider provideInvalidDependencies
      */
@@ -83,95 +83,8 @@ class Step14UseDomainBonusesTest extends AbstractStepTest
         static::assertContains('Certaines valeurs envoyées sont incorrectes, veuillez recommencer (et sans tricher).', $flashMessages ? trim($flashMessages->text()) : '');
     }
 
-    /**
-     * These should be freely changed when inside a test, because bigger logics are needed sometimes.
-     * This method only guarantees a working base requirement.
-     *
-     * @return array
-     */
-    private function getValidRequirements(): array
+    public function testStep()
     {
-        return [
-            '04_geo' => 1,
-            '05_social_class' => [
-                'id' => 1,
-                'domains' => [
-                    5 => 5,
-                    8 => 8,
-                ],
-            ],
-            '06_age' => 16,
-            '11_advantages' => [
-                'advantages' => [],
-                'disadvantages' => [],
-                'remainingExp' => 100,
-            ],
-            '13_primary_domains' => [
-                'domains' => [
-                    1 => 5,
-                    2 => 2,
-                    3 => 0,
-                    4 => 0,
-                    5 => 1,
-                    6 => 0,
-                    7 => 0,
-                    8 => 0,
-                    9 => 0,
-                    10 => 0,
-                    11 => 0,
-                    12 => 0,
-                    13 => 3,
-                    14 => 0,
-                    15 => 2,
-                    16 => 1,
-                ],
-                'ost' => 2,
-                'scholar' => null,
-            ],
-        ];
-    }
-
-    private function getClientWithRequirements($requirements): Client
-    {
-        $client = parent::getClient();
-
-        $session = $client->getContainer()->get('session');
-        $session->set('character', $requirements);
-        $session->save();
-
-        return $client;
-    }
-
-    private function assertSessionEquals(array $domains, int $remaining = 1, Client $client)
-    {
-        $finalDomains = [
-            1 => 0,
-            2 => 0,
-            3 => 0,
-            4 => 0,
-            5 => 0,
-            6 => 0,
-            7 => 0,
-            8 => 0,
-            9 => 0,
-            10 => 0,
-            11 => 0,
-            12 => 0,
-            13 => 0,
-            14 => 0,
-            15 => 0,
-            16 => 0,
-        ];
-
-        foreach ($domains as $id => $value) {
-            $finalDomains[$id] = $value;
-        }
-
-        $results = [
-            'domains' => $finalDomains,
-            'remaining' => $remaining,
-        ];
-
-        static::assertEquals($results, $client->getContainer()->get('session')->get('character')[$this->getStepName()]);
+        static::markTestIncomplete();
     }
 }

@@ -13,6 +13,24 @@ namespace CorahnRin\CorahnRinBundle\Tests\Step;
 
 class Step15DomainsSpendExpTest extends AbstractStepTest
 {
+    use StepsWithDomainsTrait;
+
+    public function testStepDependency()
+    {
+        $client = parent::getClient();
+
+        $session = $client->getContainer()->get('session');
+        $session->set('character', []); // Varigal
+        $session->save();
+
+        $crawler = $client->request('GET', '/fr/character/generate/'.$this->getStepName());
+
+        $errorMessage = $crawler->filter('head title')->text();
+
+        static::assertSame(302, $client->getResponse()->getStatusCode(), $errorMessage);
+        static::assertTrue($client->getResponse()->isRedirect('/fr/character/generate'));
+    }
+
     public function testStep()
     {
         static::markTestIncomplete();
