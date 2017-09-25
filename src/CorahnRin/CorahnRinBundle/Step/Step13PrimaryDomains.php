@@ -118,8 +118,11 @@ class Step13PrimaryDomains extends AbstractStepAction
      */
     private function managePost()
     {
+        /** @var int $primaryDomainId */
+        $primaryDomainId = $this->job->getDomainPrimary()->getId();
+
         // Primary domain, impossible to change.
-        $this->domainsValues['domains'][$this->job->getDomainPrimary()->getId()] = 5;
+        $this->domainsValues['domains'][$primaryDomainId] = 5;
 
         if (!$this->request->isMethod('POST')) {
             return false;
@@ -153,6 +156,7 @@ class Step13PrimaryDomains extends AbstractStepAction
         foreach ($domainsValues as $id => $domainValue) {
             if (!array_key_exists($id, $this->allDomains)) {
                 $this->flashMessage('Les domaines envoyés sont invalides.');
+                unset($domainsValues[$id]);
             }
 
             if (!in_array($domainValue, [0, 1, 2, 3, 5], true)) {
@@ -162,13 +166,15 @@ class Step13PrimaryDomains extends AbstractStepAction
                 $domainValue        = 0;
             }
 
-            if (5 === $domainValue && $id !== $this->job->getDomainPrimary()->getId()) {
+            if (5 === $domainValue && $id !== $primaryDomainId) {
                 $this->flashMessage('Le score 5 ne peut pas être attribué à un autre domaine que celui défini par votre métier.');
                 $error = true;
+                $domainsValues[$id] = 0;
             }
-            if (5 !== $domainValue && $id === $this->job->getDomainPrimary()->getId()) {
+            if (5 !== $domainValue && $id === $primaryDomainId) {
                 $this->flashMessage('Le domaine principal doit avoir un score de 5, vous ne pouvez pas le changer car il est défini par votre métier.');
                 $error = true;
+                $domainsValues[$id] = 5;
             }
 
             // If value is 3, it must be for a secondary domain.
@@ -230,11 +236,9 @@ class Step13PrimaryDomains extends AbstractStepAction
         }
 
         // Reset again the primary domain, because impossible to change it.
-        $this->domainsValues['domains'][$this->job->getDomainPrimary()->getId()] = 5;
+        $this->domainsValues['domains'][$primaryDomainId] = 5;
 
-        if (true === $error) {
-            $this->resetStep();
-        } else {
+        if (false === $error) {
             $this->updateCharacterStep($this->domainsValues);
         }
 
@@ -322,5 +326,8 @@ class Step13PrimaryDomains extends AbstractStepAction
         foreach ($this->allDomains as $id => $domain) {
             $this->domainsValues['domains'][$id] = 0;
         }
+
+        // Reset again the primary domain, because impossible to change it.
+        $this->domainsValues['domains'][$this->job->getDomainPrimary()->getId()] = 5;
     }
 }
