@@ -24,7 +24,7 @@ class HomeController extends Controller
     /**
      * @Route("/", name="agate_portal_home", methods={"GET"})
      */
-    public function indexAction(string $_locale, Request $request): Response
+    public function indexAction(string $_locale, Request $request, string $_route): Response
     {
         $response = new Response();
         $response->setCache([
@@ -41,7 +41,7 @@ class HomeController extends Controller
         $template = '@Agate/home/index-'.$_locale.'.html.twig';
 
         if (!$this->get('templating')->exists($template)) {
-            throw $this->createNotFoundException();
+            return $this->redirectToRoute($_route, ['_locale' => 'fr']);
         }
 
         return $this->render($template, [], $response);
