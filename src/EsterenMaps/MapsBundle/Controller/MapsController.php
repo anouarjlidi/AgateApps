@@ -28,12 +28,14 @@ class MapsController extends Controller
     public function viewAction(Maps $map, Request $request): Response
     {
         $response = new Response();
-        $response->setCache([
-            'last_modified' => $map->getUpdatedAt(),
-            'max_age' => 600,
-            's_maxage' => 600,
-            'public' => true,
-        ]);
+        if (!$this->getParameter('kernel.debug')) {
+            $response->setCache([
+                'last_modified' => $map->getUpdatedAt(),
+                'max_age' => 600,
+                's_maxage' => 600,
+                'public' => true,
+            ]);
+        }
 
         if ($response->isNotModified($request)) {
             return $response;
@@ -71,12 +73,14 @@ class MapsController extends Controller
         }
 
         $response = new Response();
-        $response->setCache([
-            'last_modified' => $updatedAt,
-            'max_age' => 600,
-            's_maxage' => 600,
-            'public' => true,
-        ]);
+        if (!$this->getParameter('kernel.debug')) {
+            $response->setCache([
+                'last_modified' => $updatedAt,
+                'max_age'       => 600,
+                's_maxage'      => 600,
+                'public'        => true,
+            ]);
+        }
 
         if ($response->isNotModified($request)) {
             return $response;

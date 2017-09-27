@@ -49,7 +49,7 @@ class MapApi
         return $this->cache->getValue(static::CACHE_PREFIX)[$id.'.date'] ?? null;
     }
 
-    public function getMap($id)
+    public function getMap($id): array
     {
         $cacheItem = $this->cache->getItem(static::CACHE_PREFIX);
 
@@ -75,7 +75,7 @@ class MapApi
         return $data;
     }
 
-    private function doGetMap($id)
+    private function doGetMap($id): array
     {
         $data = [
             'map' => [],
@@ -114,7 +114,7 @@ class MapApi
         return $this->filterMapData($data);
     }
 
-    private function filterMapData(array $data)
+    private function filterMapData(array $data): array
     {
         $data['map']['bounds'] = json_decode($data['map']['bounds'], true);
 
@@ -142,7 +142,7 @@ class MapApi
         return $data;
     }
 
-    private function filterCoordinates($coordinates)
+    private function filterCoordinates($coordinates): array
     {
         foreach ($coordinates as &$coordinate) {
             $coordinate['lat'] = (float) $coordinate['lat'];

@@ -27,12 +27,14 @@ class LegalMentionsController extends Controller
     public function legalMentionsAction(string $_locale, Request $request): Response
     {
         $response = new Response();
-        $response->setCache([
-            'last_modified' => new \DateTime($this->getParameter('version_date')),
-            'max_age' => 600,
-            's_maxage' => 600,
-            'public' => true,
-        ]);
+        if (!$this->getParameter('kernel.debug')) {
+            $response->setCache([
+                'last_modified' => new \DateTime($this->getParameter('version_date')),
+                'max_age' => 600,
+                's_maxage' => 600,
+                'public' => true,
+            ]);
+        }
 
         if ($response->isNotModified($request)) {
             return $response;

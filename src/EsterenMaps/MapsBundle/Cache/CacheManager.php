@@ -30,31 +30,17 @@ class CacheManager
         $this->cacheAdapter = $cacheAdapter;
     }
 
-    /**
-     * @return AdapterInterface
-     */
-    public function getAdapter()
+    public function getAdapter(): AdapterInterface
     {
         return $this->cacheAdapter;
     }
 
-    /**
-     * @param string $suffix
-     *
-     * @return null|CacheItem
-     */
-    public function getItem($suffix = '')
+    public function getItem(string $suffix = ''): CacheItem
     {
         return $this->cacheAdapter->getItem(static::CACHE_PREFIX.'.'.ltrim($suffix, '.'));
     }
 
-    /**
-     * @param CacheItem $cacheItem
-     * @param string    $key
-     *
-     * @return null|string
-     */
-    public function getItemValue(CacheItem $cacheItem, $key)
+    public function getItemValue(CacheItem $cacheItem, string $key)
     {
         $cacheValue = $cacheItem->isHit() ? $cacheItem->get() : null;
 
@@ -75,7 +61,7 @@ class CacheManager
         return $this->cacheAdapter->save($item);
     }
 
-    public function clear()
+    public function clear(): void
     {
         $itemsToDelete = [
             static::CACHE_PREFIX.'.api.directions',

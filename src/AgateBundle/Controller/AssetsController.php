@@ -21,17 +21,18 @@ class AssetsController extends Controller
     /**
      * @Route("/js/translations", name="pierstoval_tools_assets_jstranslations", host="%agate_domains.portal%", methods={"GET"})
      */
-    public function jsTranslationsAction(Request $request, $_locale)
+    public function jsTranslationsAction(Request $request, $_locale): Response
     {
         $response = new Response();
-
-        $response->setCache([
-            'etag' => sha1('js'.$_locale.$this->getParameter('version_code')),
-            'last_modified' => new \DateTime($this->getParameter('version_date')),
-            'max_age' => 600,
-            's_maxage' => 600,
-            'public' => true,
-        ]);
+        if (!$this->getParameter('kernel.debug')) {
+            $response->setCache([
+                'etag'          => sha1('js'.$_locale.$this->getParameter('version_code')),
+                'last_modified' => new \DateTime($this->getParameter('version_date')),
+                'max_age'       => 600,
+                's_maxage'      => 600,
+                'public'        => true,
+            ]);
+        }
 
         if ($response->isNotModified($request)) {
             return $response;

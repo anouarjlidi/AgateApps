@@ -59,14 +59,15 @@ class ApiDirectionsController extends Controller
         }
 
         $response = new JsonResponse($output, $code);
-
-        $response->setCache([
-            'etag' => sha1('js'.$map->getId().$from->getId().$to->getId().$transportId.$this->getParameter('version_code')),
-            'last_modified' => new \DateTime($this->getParameter('version_date')),
-            'max_age' => 600,
-            's_maxage' => 600,
-            'public' => true,
-        ]);
+        if (!$this->getParameter('kernel.debug')) {
+            $response->setCache([
+                'etag'          => sha1('js'.$map->getId().$from->getId().$to->getId().$transportId.$this->getParameter('version_code')),
+                'last_modified' => new \DateTime($this->getParameter('version_date')),
+                'max_age'       => 600,
+                's_maxage'      => 600,
+                'public'        => true,
+            ]);
+        }
 
         return $response;
     }
