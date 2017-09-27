@@ -37,7 +37,8 @@ class HomeControllerTest extends WebTestCase
         $client->request('GET', '/en/');
 
         // Ensures that portal homepage is managed in a controller and not in the CMS
-        static::assertSame(404, $client->getResponse()->getStatusCode());
+        static::assertSame(302, $client->getResponse()->getStatusCode());
+        static::assertTrue($client->getResponse()->isRedirect('/fr/'));
     }
 
     public function testFrenchTeamPage()
