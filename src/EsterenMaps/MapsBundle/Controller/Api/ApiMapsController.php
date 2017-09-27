@@ -22,26 +22,26 @@ use Symfony\Component\HttpFoundation\Request;
 class ApiMapsController extends Controller
 {
     /**
-     * @Route("/maps/{mapId}", name="esterenmaps_api_map_get", requirements={"id"="\d+"}, methods={"GET"})
+     * @Route("/maps/{id}", name="esterenmaps_api_map_get", requirements={"id"="\d+"}, methods={"GET"})
      */
-    public function getAction(int $mapId, Request $request): JsonResponse
+    public function getAction(int $id, Request $request): JsonResponse
     {
         $mapApi = $this->get('esterenmaps.api.map');
 
         $response = new JsonResponse();
-        $response->setLastModified($mapApi->getLastUpdateTime($mapId));
+        $response->setLastModified($mapApi->getLastUpdateTime($id));
 
         if ($response->isNotModified($request)) {
             return $response;
         }
 
-        $data = $mapApi->getMap($mapId);
+        $data = $mapApi->getMap($id);
 
         $response->setData($data);
 
         if (!$this->getParameter('kernel.debug')) {
             $response->setCache([
-                'etag'          => sha1('map'.$mapId.$this->getParameter('version_code')),
+                'etag'          => sha1('map'.$id.$this->getParameter('version_code')),
                 'last_modified' => new \DateTime($mapApi),
                 'max_age'       => 600,
                 's_maxage'      => 600,
