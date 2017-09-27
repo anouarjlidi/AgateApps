@@ -42,7 +42,7 @@ class ApiMapsController extends Controller
         if (!$this->getParameter('kernel.debug')) {
             $response->setCache([
                 'etag'          => sha1('map'.$id.$this->getParameter('version_code')),
-                'last_modified' => new \DateTime($mapApi),
+                'last_modified' => new \DateTime($mapApi->getLastUpdateTime($id)),
                 'max_age'       => 600,
                 's_maxage'      => 600,
                 'public'        => true,
