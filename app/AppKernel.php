@@ -18,7 +18,7 @@ class AppKernel extends Kernel
 
             new Nelmio\CorsBundle\NelmioCorsBundle(),
             new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
-            new JavierEguiluz\Bundle\EasyAdminBundle\EasyAdminBundle(),
+            new EasyCorp\Bundle\EasyAdminBundle\EasyAdminBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
 
             // Application global
