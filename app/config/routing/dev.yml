@@ -1,16 +1,10 @@
 
 # A simple route used to manage and edit the template
-_bootstrap_theme:
+_materialize_theme:
     path:     /_theme
     defaults:
         _controller: FrameworkBundle:Template:template
         template:    _theme/theme.html.twig
-
-_materialize_theme:
-    path:     /_theme_mat
-    defaults:
-        _controller: FrameworkBundle:Template:template
-        template:    _theme/materialize.html.twig
 
 _email_contact:
     path:     /_email/contact
