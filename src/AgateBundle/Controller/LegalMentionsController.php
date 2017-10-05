@@ -32,7 +32,7 @@ class LegalMentionsController extends Controller
                 'last_modified' => new \DateTime($this->getParameter('version_date')),
                 'max_age' => 600,
                 's_maxage' => 600,
-                'public' => true,
+                'public' => $this->getUser() ? false : true,
             ]);
         }
 

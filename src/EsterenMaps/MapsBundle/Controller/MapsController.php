@@ -78,7 +78,7 @@ class MapsController extends Controller
                 'last_modified' => $updatedAt,
                 'max_age'       => 600,
                 's_maxage'      => 600,
-                'public'        => true,
+                'public'        => $this->getUser() ? false : true,
             ]);
         }
 
