@@ -30,7 +30,7 @@ class MapImageManager
         } else {
             $this->outputDirectory = $outputDirectory;
         }
-        $this->webDir = $kernel->getRootDir().'/../web';
+        $this->webDir = $kernel->getRootDir().'/../public';
     }
 
     /**

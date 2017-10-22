@@ -2,10 +2,8 @@ php_version: 7.1
 
 pre_composer_script: |
     #!/bin/bash
-    rm web/config.php
-    cp app/config/parameters.yml.dist app/config/parameters.yml
-    cp tests/.env .env
-    cp tests/.env .env.dist
+    cp tests/ci/.env .env
+    cp tests/ci/.env .env.dist
 
 post_composer_script: |
     #!/bin/bash
@@ -21,7 +19,7 @@ exclude_patterns:
     - src/CorahnRin/CorahnRinBundle/PDF/PDF.php
     - src/CorahnRin/CorahnRinBundle/SheetsManagers/PdfManager.php
     - src/CorahnRin/CorahnRinBundle/Command/ImportLegacyCharactersCommand.php
-    - web/app_*.php
+    - public/index.php
 
 rules:
     symfony.controller.missing_redirect_after_post: { enabled: false }

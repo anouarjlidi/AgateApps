@@ -7,7 +7,7 @@
 const config = {
 
     // The base output directory for all your assets
-    "output_directory": "web",
+    "output_directory": "public",
 
     /**
      * This option is used to simply copy files into a new directory.
@@ -153,7 +153,7 @@ const config = {
         ],
         "js/maps_lib.js": [
             "node_modules/leaflet/dist/leaflet-src.js",
-            "web/components/leaflet-sidebar/src/L.Control.Sidebar.js",
+            "public/components/leaflet-sidebar/src/L.Control.Sidebar.js",
             "node_modules/leaflet-draw/dist/leaflet.draw-src.js",
             "src/EsterenMaps/MapsBundle/Resources/assets/js/EsterenMap/1_EsterenMap.js",
             "src/EsterenMaps/MapsBundle/Resources/assets/js/EsterenMap/1_EsterenMap.load.js",

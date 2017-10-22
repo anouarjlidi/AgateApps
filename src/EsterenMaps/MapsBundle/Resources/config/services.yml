@@ -1,6 +1,6 @@
 parameters:
     esterenmaps.tile_size: 168
-    esterenmaps.output_directory: '%kernel.root_dir%/../web/maps_tiles/'
+    esterenmaps.output_directory: '%kernel.project_dir%/public/maps_tiles/'
 
 services:
 

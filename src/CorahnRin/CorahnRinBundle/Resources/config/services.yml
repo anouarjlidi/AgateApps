@@ -3,7 +3,7 @@ services:
     corahnrin_generator.pdf_manager:
         class: CorahnRin\CorahnRinBundle\SheetsManagers\PdfManager
         arguments:
-            - "%kernel.root_dir%/../src/CorahnRin/CorahnRinBundle/Resources/pdf_sources"
+            - "%kernel.project_dir%/src/CorahnRin/CorahnRinBundle/Resources/pdf_sources"
             - "@translator"
 
     corahnrin_generator.domains_calculator:

@@ -4,9 +4,9 @@ doctrine:
         connections:
             default:
                 driver: pdo_sqlite
-                path:   '%kernel.root_dir%/../build/database_test.db'
+                path:   '%kernel.project_dir%/build/database_test.db'
                 url:    ~
             legacy:
                 driver: pdo_sqlite
-                path:   '%kernel.root_dir%/../build/database_test_legacy.db'
+                path:   '%kernel.project_dir%/build/database_test_legacy.db'
                 url:    ~

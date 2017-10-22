@@ -20,7 +20,7 @@
 All routes are automatically prepended with the locale.
 You **must** be aware of this when creating new routes, because every part of the app has to be translated.
 
-You can check the [routing.yml](app/config/routing.yml) and [routing/_main.yml](app/config/routing/_main.yml).
+You can check the [routing/_main.yml](config/routing/_main.yml).
 
 Base routing file only loads the `root` route and the `_main.yml` which loads all other routes
 
