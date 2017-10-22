@@ -1,3 +1,33 @@
+/build/
+/composer.phar
+!/docker/
+
+# Esteren Maps
+/public/maps_tiles/*
+!/public/maps_tiles/empty.jpg
+
+# Apache is not default so htaccess shouldn't be versioned
+/public/.htaccess
+
+# Assets
+/public/js/*
+/public/css/*
+/public/uploads/*
+!/public/uploads/maps/.gitkeep
+!/public/uploads/maps/esteren*
+/public/fonts/*
+/public/img/*
+!/public/img/favicon.ico
+
+# Automatically created directories
+!/public/js/.gitkeep
+!/public/css/.gitkeep
+
+# This directory is used only by LeafletJS defaults, we're not sure we won't ever use it...
+/public/images
+
+# NodeJS components
+/node_modules/
 
 ###> symfony/framework-bundle ###
 .env
@@ -5,3 +35,11 @@
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
+
+###> symfony/phpunit-bridge ###
+/phpunit.xml
+###< symfony/phpunit-bridge ###
+
+###> symfony/web-server-bundle ###
+.web-server-pid
+###< symfony/web-server-bundle ###

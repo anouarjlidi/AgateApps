@@ -2,3 +2,19 @@ twig:
     paths: ['%kernel.project_dir%/templates']
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
+    form_themes:
+        - 'bootstrap_3_layout.html.twig'
+    globals:
+        version_code: '%version_code%'
+        version_date: '%version_date%'
+        locales: '%locales%'
+        locales_regex: '%locales_regex%'
+
+        esteren_domains_corahnrin: '%esteren_domains.corahnrin%'
+        esteren_domains_esterenmaps: '%esteren_domains.esterenmaps%'
+        esteren_domains_portal: '%esteren_domains.portal%'
+        esteren_domains_backoffice: '%esteren_domains.backoffice%'
+        esteren_domains_api: '%esteren_domains.api%'
+        esteren_domains_games: '%esteren_domains.games%'
+        agate_domains_portal: '%agate_domains.portal%'
+        vermine_domains_portal: '%vermine_domains.portal%'

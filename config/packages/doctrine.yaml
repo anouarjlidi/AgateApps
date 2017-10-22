@@ -1,14 +1,30 @@
 doctrine:
-    dbal:
-        url: '%env(DATABASE_URL)%'
     orm:
         auto_generate_proxy_classes: '%kernel.debug%'
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
-        mappings:
-            App:
-                is_bundle: false
-                type: annotation
-                dir: '%kernel.project_dir%/src/Entity'
-                prefix: 'App\Entity\'
-                alias: App
+
+        # Override the default repository to get some more good tools
+        default_repository_class: Orbitale\Component\DoctrineTools\BaseEntityRepository
+        filters:
+            # Activate SoftDeleteable for some entities
+            # There are some other filters down there
+            softdeleteable:
+                class: Gedmo\SoftDeleteable\Filter\SoftDeleteableFilter
+                enabled: true
+    dbal:
+        default_connection: default
+        connections:
+            default:
+                driver:   pdo_mysql
+                url:      '%database_url%'
+                charset:  utf8mb4
+                default_table_options:
+                    charset: utf8mb4
+                    collate: utf8mb4_unicode_ci
+            legacy:
+                driver:    pdo_mysql
+                url:      '%database_url_legacy%'
+                charset:   utf8
+                logging:   false
+                profiling: false

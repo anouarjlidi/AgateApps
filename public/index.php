@@ -1,6 +1,5 @@
 <?php
 
-use App\Kernel;
 use Symfony\Component\Debug\Debug;
 use Symfony\Component\Dotenv\Dotenv;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,6 +21,11 @@ if ($_SERVER['APP_DEBUG'] ?? false) {
 
 $kernel = new Kernel($_SERVER['APP_ENV'] ?? 'dev', $_SERVER['APP_DEBUG'] ?? false);
 $request = Request::createFromGlobals();
+
+if (getenv('HEROKU') === '1') {
+    Request::setTrustedProxies([$request->server->get('REMOTE_ADDR')], Request::HEADER_FORWARDED | Request::HEADER_X_FORWARDED_HOST);
+}
+
 $response = $kernel->handle($request);
 $response->send();
 $kernel->terminate($request, $response);

@@ -1,14 +1,26 @@
 framework:
-    secret: '%env(APP_SECRET)%'
-    #default_locale: en
-    #csrf_protection: ~
-    #http_method_override: true
-    #trusted_hosts: ~
-    # https://symfony.com/doc/current/reference/configuration/framework.html#handler-id
-    #session:
-    #    # The native PHP session handler will be used
-    #    handler_id: ~
     #esi: ~
     #fragments: ~
+    secret: '%env(APP_SECRET)%'
+    csrf_protection: ~
+    http_method_override: true
+    form: ~
+    validation: { enable_annotations: true }
     php_errors:
         log: true
+    assets:
+        version: '%version_code%'
+        version_format: '%%s?assetv=%%s'
+    trusted_hosts:
+        - '%env(ESTEREN_DOMAIN)%$'
+        - '%env(AGATE_DOMAIN)%$'
+        - '%env(VERMINE_DOMAIN)%$'
+    session:
+        # http://symfony.com/doc/current/reference/configuration/framework.html#handler-id
+        handler_id:      session.handler.native_file
+        save_path:       '%kernel.root_dir%/../var/sessions/%kernel.environment%'
+        enabled:         true
+        cookie_httponly: true
+        name:            AgateApps
+        cookie_lifetime: 8640000
+        gc_maxlifetime:  86400

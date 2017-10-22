@@ -1,8 +1,15 @@
 {
-    "type": "project",
+    "name": "esteren/esteren",
     "license": "proprietary",
+    "description": "Global Esteren project",
+    "type": "project",
     "require": {
-        "php": "^7.0.8",
+        "php": "^7.1",
+        "ext-intl": "*",
+        "ext-mbstring": "*",
+        "ext-gd": "*",
+        "ext-apcu": "*",
+        "ext-iconv": "*",
         "doctrine/doctrine-bundle": "^1.7",
         "doctrine/doctrine-cache-bundle": "^1.3",
         "doctrine/orm": "^2.5",
@@ -33,28 +40,57 @@
         "twig/extensions": "^1.5"
     },
     "require-dev": {
+        "ext-zip": "*",
+        "doctrine/doctrine-fixtures-bundle": "^2.4",
+        "phpunit/phpunit": "^6.4",
+        "pierstoval/web-test-case": "^0.1.7",
+        "symfony/browser-kit": "^3.3",
+        "symfony/css-selector": "^3.3",
+        "symfony/debug-bundle": "^3.3",
+        "symfony/dotenv": "^3.3",
         "symfony/flex": "^1.0",
-        "symfony/dotenv": "^3.3"
+        "symfony/phpunit-bridge": "^3.3",
+        "symfony/var-dumper": "^3.3",
+        "symfony/web-profiler-bundle": "^3.3",
+        "symfony/web-server-bundle": "^3.3"
     },
     "config": {
         "preferred-install": {
             "*": "dist"
         },
+        "autoloader-suffix": "EsterenPortal",
         "sort-packages": true
     },
     "autoload": {
         "psr-4": {
-            "App\\": "src/"
-        }
+            "AdminBundle\\": "src/AdminBundle",
+            "AgateBundle\\": "src/AgateBundle",
+            "CorahnRin\\": "src/CorahnRin",
+            "Esteren\\": "src/Esteren",
+            "EsterenMaps\\": "src/EsterenMaps",
+            "Pierstoval\\": "src/Pierstoval",
+            "UserBundle\\": "src/UserBundle"
+        },
+        "classmap": [
+            "src/Kernel.php"
+        ],
+        "exclude-from-classmap": [
+            "/src/*/vendor/",
+            "/src/*/*/vendor/"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
-            "App\\Tests\\": "tests/"
-        }
+            "Tests\\": "tests/phpunit/"
+        },
+        "files": [
+            "vendor/symfony/var-dumper/Resources/functions/dump.php"
+        ]
     },
     "scripts": {
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
+            "ckeditor": "@ckeditor",
             "assets:install --symlink --relative %PUBLIC_DIR%": "symfony-cmd",
             "security-checker security:check": "script"
         },
@@ -63,6 +99,22 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
+        ],
+        "ckeditor": [
+            "php bin/console ckeditor:install --clear=keep --quiet && echo \"CKEditor installed\""
+        ],
+        "compile": [
+            "yarn --production",
+            "cd node_modules/optipng-bin && yarn --production",
+            "node node_modules/gulp4/bin/gulp.js test --prod --verbose",
+            "rm web/config.php",
+            "php bin/console doctrine:schema:update --dump-sql --force",
+            "php bin/console doctrine:schema:validate || echo 'Doctrine schema not valid, please make sure it is correct.'",
+            "php bin/console esterenmaps:map:generate-tiles 1"
+        ],
+        "warmup": [
+            "php bin/console cache:clear --no-warmup",
+            "php bin/console cache:warmup"
         ]
     },
     "conflict": {
@@ -75,5 +127,35 @@
             "id": "01BWX3FPWM0F114CXPMK8WTWR6",
             "allow-contrib": true
         }
-    }
+    },
+    "authors": [
+        {
+            "name":     "Alex Rock Ancelet",
+            "email":    "pierstoval@gmail.com",
+            "homepage": "http://www.pierstoval.com",
+            "role":     "Lead Developer"
+        },
+        {
+            "name":     "Joelle \"Iris\" Deschamp",
+            "email":    "iris.d.automne@gmail.com",
+            "homepage": "http://iris-d-automne.over-blog.fr/",
+            "role":     "Tester, manager"
+        },
+        {
+            "name":     "Nelyhann",
+            "email":    "nelyhann@gmail.com",
+            "homepage": "http://www.esteren.org/",
+            "role":     "Chief Coordinator"
+        },
+        {
+            "name":     "Julie \"Evolena\" Bertrand",
+            "email":    "evo_lena@hotmail.com",
+            "role":     "Content contributor"
+        },
+        {
+            "name":     "Jonathan \"Ethilon\" Philippe",
+            "email":    "jonathan.philippe@ngow.fr",
+            "role":     "Content contributor"
+        }
+    ]
 }

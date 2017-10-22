@@ -1,6 +1,14 @@
+# This allows using the default layout for Pages and Categories
+# See: https://github.com/Orbitale/CmsBundle
 orbitale_cms:
-    page_class: App\Entity\Page
-    category_class: App\Entity\Category
-# Define your layout here if you need a custom layout for your CMS
-#    layouts:
-#         main: { resource: base.html.twig }
+    page_class:     Esteren\PortalBundle\Entity\Page
+    category_class: Esteren\PortalBundle\Entity\Category
+    layouts:
+        corahnrin:
+            resource: '@CorahnRin/layout.html.twig'
+            host: '%esteren_domains.corahnrin%'
+        maps:
+            resource: '@EsterenMaps/maps-layout.html.twig'
+            host: '%esteren_domains.esterenmaps%'
+        front:
+            resource: 'cms_page_layout.html.twig'

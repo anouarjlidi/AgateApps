@@ -1,0 +1,30 @@
+php_version: 7.1
+
+pre_composer_script: |
+    #!/bin/bash
+    rm web/config.php
+    cp app/config/parameters.yml.dist app/config/parameters.yml
+    cp tests/.env .env
+    cp tests/.env .env.dist
+
+post_composer_script: |
+    #!/bin/bash
+    source .env
+    php _dev_files/change_env_config.php
+    mkdir build/
+    ./bin/console --env=test doctrine:database:create --no-interaction
+    ./bin/console --env=test doctrine:schema:create --no-interaction
+    ./bin/console --env=test doctrine:fixtures:load --append --no-interaction
+
+exclude_patterns:
+    - src/CorahnRin/CorahnRinBundle/PDF/FPDF.php
+    - src/CorahnRin/CorahnRinBundle/PDF/PDF.php
+    - src/CorahnRin/CorahnRinBundle/SheetsManagers/PdfManager.php
+    - src/CorahnRin/CorahnRinBundle/Command/ImportLegacyCharactersCommand.php
+    - web/app_*.php
+
+rules:
+    symfony.controller.missing_redirect_after_post: { enabled: false }
+    symfony.form.form_type_not_in_type_form_folder: { enabled: false }
+    twig.template_too_complex: { enabled: false }
+    task_todo_comment: { enabled: false }

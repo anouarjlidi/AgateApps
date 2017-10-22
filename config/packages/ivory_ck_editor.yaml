@@ -1,9 +1,18 @@
 ivory_ck_editor:
-    default_config: simple_toolbar
+    input_sync: true
+    default_config: base_config
+    jquery: true
     configs:
-        simple_toolbar:
+        base_config:
+            language: '%locale%'
+            allowedContent: true
             toolbar:
-                - ['Bold', 'Italic', 'Strike', 'Link']
-                - ['BulletedList', 'NumberedList', '-', 'Outdent', 'Indent']
-                - ['Copy', 'Paste', 'PasteFromWord', '-', 'Undo', 'Redo']
-                - ['Source']
+                - { name: 'basicstyles', items: [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat' ] }
+                - { name: 'links',       items: [ 'Link', 'Unlink', 'Anchor' ] }
+                - { name: 'insert',      items: [ 'Image', 'Table', 'HorizontalRule', 'SpecialChar' ] }
+                - { name: 'tools',       items: [ 'Maximize' ] }
+                - '/'
+                - { name: 'paragraph',   items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote' ] }
+                - { name: 'styles',      items: [ 'Styles', 'Format' ] }
+                - { name: 'document',    items: [ 'Source', '-' ] }
+                - { name: 'about',       items: [ 'About' ] }
