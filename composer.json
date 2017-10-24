@@ -18,13 +18,13 @@
         "incenteev/composer-parameter-handler": "^2.1",
         "javiereguiluz/easyadmin-bundle": "^1.17",
         "nelmio/cors-bundle": "^1.5",
-        "orbitale/cms-bundle": "^3.0",
+        "orbitale/cms-bundle": "^3.0.5",
         "orbitale/doctrine-tools": "^0.5.6",
         "orbitale/entity-merger": "^0.6.0",
         "orbitale/imagemagick-php": "^1.6",
         "pierstoval/character_manager": "^0.5.0",
         "sensio/distribution-bundle": "^5.0",
-        "sensio/framework-extra-bundle": "^4.0|^5.0",
+        "sensio/framework-extra-bundle": "^5.0",
         "stof/doctrine-extensions-bundle": "^1.2",
         "symfony/console": "^3.3",
         "symfony/form": "^3.3",
@@ -89,7 +89,8 @@
     },
     "scripts": {
         "auto-scripts": {
-            "cache:clear": "symfony-cmd",
+            "cache:clear --no-warmup": "symfony-cmd",
+            "cache:warmup": "symfony-cmd",
             "ckeditor:install --clear=keep --quiet": "symfony-cmd",
             "assets:install --symlink --relative %PUBLIC_DIR%": "symfony-cmd",
             "security-checker security:check": "script"
