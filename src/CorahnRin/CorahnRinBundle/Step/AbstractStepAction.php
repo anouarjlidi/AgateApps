@@ -12,6 +12,7 @@
 namespace CorahnRin\CorahnRinBundle\Step;
 
 use Pierstoval\Bundle\CharacterManagerBundle\Action\StepAction;
+use Symfony\Component\HttpFoundation\Response;
 
 abstract class AbstractStepAction extends StepAction
 {
@@ -22,11 +23,11 @@ abstract class AbstractStepAction extends StepAction
      *
      * @param array $parameters
      *
-     * @return string
+     * @return Response
      *
      * @throws \Twig_Error
      */
-    protected function renderCurrentStep(array $parameters = [])
+    protected function renderCurrentStep(array $parameters = []): Response
     {
         // Default parameters always injected in template.
         // Not overridable, they're mandatory.
@@ -37,6 +38,6 @@ abstract class AbstractStepAction extends StepAction
         // Get template name
         $template = '@CorahnRin/Steps/'.$this->step->getName().'.html.twig';
 
-        return $this->templating->renderResponse($template, $parameters);
+        return new Response($this->twig->render($template, $parameters));
     }
 }
