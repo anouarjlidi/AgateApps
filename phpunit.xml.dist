@@ -44,14 +44,12 @@
 
     <testsuites>
         <testsuite name="Shadows of Esteren project test suite">
-            <directory>./phpunit/*</directory>
             <directory>./src/AdminBundle/Tests</directory>
             <directory>./src/AgateBundle/Tests</directory>
             <directory>./src/UserBundle/Tests</directory>
             <directory>./src/CorahnRin/CorahnRinBundle/Tests</directory>
             <directory>./src/Esteren/PortalBundle/Tests</directory>
             <directory>./src/EsterenMaps/MapsBundle/Tests</directory>
-            <exclude>./vendor</exclude>
         </testsuite>
     </testsuites>
 
