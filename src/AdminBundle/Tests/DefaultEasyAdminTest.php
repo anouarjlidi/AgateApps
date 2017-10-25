@@ -24,9 +24,9 @@ class DefaultEasyAdminTest extends WebTestCase
 
         $client = $this->getClient('back.esteren.dev', [], 'ROLE_ADMIN');
 
-        $client->request('GET', '/fr/');
+        $crawler = $client->request('GET', '/fr/');
 
-        static::assertSame(302, $client->getResponse()->getStatusCode(), print_r($client->getResponse()->getContent(), true));
+        static::assertSame(302, $client->getResponse()->getStatusCode(), $crawler->filter('title')->html());
         static::assertSame('/fr/?action=list&entity=Pages', $client->getResponse()->headers->get('Location'));
 
         $crawler = $client->followRedirect();
