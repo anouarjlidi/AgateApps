@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "0ecd9e392fa57b40f2a136103fe385b8",
+    "content-hash": "d30c85c447473b54258d284c1052f088",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -466,16 +466,16 @@
         },
         {
             "name": "doctrine/doctrine-bundle",
-            "version": "1.7.1",
+            "version": "1.7.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/DoctrineBundle.git",
-                "reference": "f8bff22d608224ed88e90b24e9d884cb10b389bb"
+                "reference": "41d6b7c9a1a37e08ab1c321193446c12d6afb5ed"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineBundle/zipball/f8bff22d608224ed88e90b24e9d884cb10b389bb",
-                "reference": "f8bff22d608224ed88e90b24e9d884cb10b389bb",
+                "url": "https://api.github.com/repos/doctrine/DoctrineBundle/zipball/41d6b7c9a1a37e08ab1c321193446c12d6afb5ed",
+                "reference": "41d6b7c9a1a37e08ab1c321193446c12d6afb5ed",
                 "shasum": ""
             },
             "require": {
@@ -543,7 +543,7 @@
                 "orm",
                 "persistence"
             ],
-            "time": "2017-09-29T15:26:21+00:00"
+            "time": "2017-10-24T15:58:25+00:00"
         },
         {
             "name": "doctrine/doctrine-cache-bundle",
@@ -1997,33 +1997,35 @@
         },
         {
             "name": "pierstoval/character_manager",
-            "version": "v0.5.0",
+            "version": "v0.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Pierstoval/CharacterManagerBundle.git",
-                "reference": "f774515b1b1f330e348da55286cc57b61418e7b7"
+                "reference": "286936ccece12ef659e2aa6e866845c41459196c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Pierstoval/CharacterManagerBundle/zipball/f774515b1b1f330e348da55286cc57b61418e7b7",
-                "reference": "f774515b1b1f330e348da55286cc57b61418e7b7",
+                "url": "https://api.github.com/repos/Pierstoval/CharacterManagerBundle/zipball/286936ccece12ef659e2aa6e866845c41459196c",
+                "reference": "286936ccece12ef659e2aa6e866845c41459196c",
                 "shasum": ""
             },
             "require": {
-                "doctrine/doctrine-bundle": "^1.6",
+                "doctrine/doctrine-bundle": "^1.6.8",
+                "doctrine/inflector": "^1.1",
                 "doctrine/orm": "^2.5",
                 "php": "^7.1",
-                "symfony/asset": "^3.0|^4.0",
-                "symfony/expression-language": "^3.0|^4.0",
-                "symfony/framework-bundle": "^3.0|^4.0",
-                "symfony/templating": "^3.0|^4.0",
-                "symfony/translation": "^3.0|^4.0",
-                "symfony/twig-bundle": "^3.0|^4.0",
-                "symfony/yaml": "^3.0|^4.0"
+                "symfony/asset": "^3.3|^4.0",
+                "symfony/expression-language": "^3.3|^4.0",
+                "symfony/framework-bundle": "^3.3|^4.0",
+                "symfony/translation": "^3.3|^4.0",
+                "symfony/twig-bridge": "^3.3|^4.0",
+                "symfony/twig-bundle": "^3.3|^4.0",
+                "symfony/yaml": "^3.3|^4.0",
+                "twig/twig": "^1.34|^2.4"
             },
             "require-dev": {
-                "phpunit/phpunit": "^5.0|^6.0",
-                "pierstoval/web-test-case": "^0.1"
+                "phpunit/phpunit": "^6.0",
+                "pierstoval/web-test-case": "^0.1.8"
             },
             "type": "symfony-bundle",
             "autoload": {
@@ -2049,7 +2051,7 @@
                 "game",
                 "symfony"
             ],
-            "time": "2017-10-20T18:53:52+00:00"
+            "time": "2017-10-25T14:49:40+00:00"
         },
         {
             "name": "psr/cache",
@@ -6228,23 +6230,23 @@
         },
         {
             "name": "pierstoval/web-test-case",
-            "version": "v0.1.7",
+            "version": "v0.1.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Pierstoval/PHPUnitWebTestCase.git",
-                "reference": "11e1dc4f7fa245c5644644874017b853a1a01d1a"
+                "reference": "2a6e300533d7d75bfe4101cbd8dbe2ec24f817a2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Pierstoval/PHPUnitWebTestCase/zipball/11e1dc4f7fa245c5644644874017b853a1a01d1a",
-                "reference": "11e1dc4f7fa245c5644644874017b853a1a01d1a",
+                "url": "https://api.github.com/repos/Pierstoval/PHPUnitWebTestCase/zipball/2a6e300533d7d75bfe4101cbd8dbe2ec24f817a2",
+                "reference": "2a6e300533d7d75bfe4101cbd8dbe2ec24f817a2",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.5.9",
                 "phpunit/phpunit": "^4.4|^5.0|^6.0",
-                "symfony/browser-kit": "^2.8|^3.0",
-                "symfony/framework-bundle": "^2.8|^3.0"
+                "symfony/browser-kit": "^2.8|^3.0|^4.0",
+                "symfony/framework-bundle": "^2.8|^3.0|^4.0"
             },
             "type": "library",
             "autoload": {
@@ -6259,7 +6261,7 @@
                     "email": "pierstoval@gmail.com"
                 }
             ],
-            "time": "2017-08-31T19:13:50+00:00"
+            "time": "2017-10-25T14:40:23+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
