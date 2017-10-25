@@ -35,29 +35,45 @@ class Kernel extends BaseKernel
     protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader)
     {
         $container->setParameter('container.autowiring.strict_mode', true);
+
         $confDir = dirname(__DIR__).'/config';
+
+        // Load packages files.
         $loader->load($confDir.'/packages/*'.self::CONFIG_EXTS, 'glob');
+
+        // Load packages environment-specific files.
         if (is_dir($confDir.'/packages/'.$this->environment)) {
             $loader->load($confDir.'/packages/'.$this->environment.'/**/*'.self::CONFIG_EXTS, 'glob');
         }
+
         $loader->load($confDir.'/app'.self::CONFIG_EXTS, 'glob');
     }
 
     protected function configureRoutes(RouteCollectionBuilder $routes)
     {
         $confDir = dirname(__DIR__).'/config';
-        if (is_dir($confDir.'/routes/'.$this->environment)) {
-            $this->wrapRoutesWithRequirements($routes->import($confDir.'/routes/'.$this->environment.'/**/*'.self::CONFIG_EXTS, '/', 'glob'));
-        }
-        $this->wrapRoutesWithRequirements($routes->import($confDir.'/routes/_main.yaml'));
-    }
 
-    private function wrapRoutesWithRequirements(RouteCollectionBuilder $builder)
-    {
-        $builder
+        // All routes are prefixed here, so...
+        $prefix = '/{_locale}/';
+
+        $routes
             ->setDefault('_locale', '%locale%')
             ->setRequirement('_locale', '^(?:%locales_regex%)$')
             ->setSchemes(['prod' === $this->environment ? 'https' : 'http'])
+        ;
+
+        // Load environment-specific routes that match "_{env}.{ext}"
+        if (file_exists($confDir.'/routes/_'.$this->environment.'.yaml')) {
+            $routes->import($confDir.'/routes/_'.$this->environment.'.yaml', $prefix, 'yaml');
+        }
+
+        // Load main router.
+        $routes->import($confDir.'/routes/_main.yaml', $prefix);
+
+        $routes
+            ->add('/', 'FrameworkBundle:Redirect:urlRedirect', 'root')
+            ->setDefault('path', '/'.$this->container->getParameter('locale'))
+            ->setMethods(['GET'])
         ;
     }
 }
