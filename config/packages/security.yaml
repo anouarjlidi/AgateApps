@@ -64,7 +64,7 @@ security:
             pattern:            ^/
             anonymous:          ~
             remember_me:
-                secret:         '%env(SYMFONY_SECRET)%'
+                secret:         '%env(APP_SECRET)%'
                 path:           /
                 name:           EsterenRememberMe
             logout:

@@ -27,7 +27,7 @@ services:
             - MAILER_USER=""
             - MAILER_PASSWORD=""
             - MAILER_PORT=""
-            - SYMFONY_SECRET=ThisTokenIsDockerSecret
+            - APP_SECRET=ThisTokenIsDockerSecret
             - AGATE_DOMAIN=studio-agate.dev
             - ESTEREN_DOMAIN=esteren.dev
             - VERMINE_DOMAIN=vermine2047.dev
