@@ -11,6 +11,7 @@
 
 namespace CorahnRin\CorahnRinBundle\Step;
 
+use Symfony\Component\HttpFoundation\Response;
 use CorahnRin\CorahnRinBundle\Exception\CharactersException;
 use CorahnRin\CorahnRinBundle\GeneratorTools\SessionToCharacter;
 
@@ -29,7 +30,7 @@ class Step20Finish extends AbstractStepAction
     /**
      * {@inheritdoc}
      */
-    public function execute()
+    public function execute(): Response
     {
         $this->updateCharacterStep([]);
 

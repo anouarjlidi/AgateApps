@@ -11,12 +11,14 @@
 
 namespace CorahnRin\CorahnRinBundle\Step;
 
+use Symfony\Component\HttpFoundation\Response;
+
 class Step06Age extends AbstractStepAction
 {
     /**
      * {@inheritdoc}
      */
-    public function execute()
+    public function execute(): Response
     {
         if ($this->request->isMethod('POST')) {
             $age = (int) $this->request->request->get('age');

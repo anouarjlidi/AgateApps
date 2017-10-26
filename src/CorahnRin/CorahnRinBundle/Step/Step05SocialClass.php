@@ -11,6 +11,7 @@
 
 namespace CorahnRin\CorahnRinBundle\Step;
 
+use Symfony\Component\HttpFoundation\Response;
 use CorahnRin\CorahnRinBundle\Entity\SocialClasses;
 
 class Step05SocialClass extends AbstractStepAction
@@ -18,7 +19,7 @@ class Step05SocialClass extends AbstractStepAction
     /**
      * {@inheritdoc}
      */
-    public function execute()
+    public function execute(): Response
     {
         $allSocialClasses = $this->em->getRepository('CorahnRinBundle:SocialClasses')->findAll(true);
 

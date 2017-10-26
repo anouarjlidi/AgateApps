@@ -11,12 +11,14 @@
 
 namespace CorahnRin\CorahnRinBundle\Step;
 
+use Symfony\Component\HttpFoundation\Response;
+
 class Step12MentalDisorder extends AbstractStepAction
 {
     /**
      * {@inheritdoc}
      */
-    public function execute()
+    public function execute(): Response
     {
         $disorderValue = $this->getCharacterProperty();
 

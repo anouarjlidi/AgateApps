@@ -1,7 +1,0 @@
-# http://symfony.com/doc/current/service_container.html
-
-services:
-    twig.intl_extension:
-        class: Twig_Extensions_Extension_Intl
-        tags:
-            - name: twig.extension

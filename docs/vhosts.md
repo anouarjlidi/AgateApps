@@ -43,13 +43,13 @@ The only difference is that the dist file contains comments about what it does, 
     ServerAlias  www.studio-agate.dev
     ServerAlias   www.vermine2047.dev
 
-    DocumentRoot /var/www/corahn_rin/web
+    DocumentRoot /var/www/corahn_rin/public
 
     # Change env vars if needed
     SetEnv SYMFONY_ENV   dev
     SetEnv SYMFONY_DEBUG   1
 
-    <Directory /var/www/corahn_rin/web>
+    <Directory /var/www/corahn_rin/public>
 
         # Uncomment if using php with cgi
         #AddHandler php-cgi .php
@@ -64,7 +64,7 @@ The only difference is that the dist file contains comments about what it does, 
 
         # Here starts Symfony's .htaccess config.
         # Put it in the vhost for maximum performance.
-        # For more info, check web/.htaccess.dist default file.
+        # For more info, check public/.htaccess.dist default file.
         # > https://github.com/symfony/symfony-standard/blob/2.8/web/.htaccess
         DirectoryIndex app.php
         <IfModule mod_negotiation.c>
@@ -138,7 +138,7 @@ server {
 
     # Change the directory to what you need.
     # Also change logs dir at the bottom of this file.
-    root /var/www/corahn_rin/web;
+    root /var/www/corahn_rin/public;
     
     # Remove this part when using for prod
     env SYMFONY_ENV=dev;

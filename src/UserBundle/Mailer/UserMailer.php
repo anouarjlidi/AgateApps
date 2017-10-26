@@ -14,22 +14,22 @@ namespace UserBundle\Mailer;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Templating\EngineInterface;
 use Symfony\Component\Translation\TranslatorInterface;
+use Twig\Environment;
 use UserBundle\Entity\User;
 
 final class UserMailer
 {
-    private $templating;
+    private $twig;
     private $mailer;
     private $router;
     private $sender;
     private $translator;
 
-    public function __construct(RequestStack $requestStack, \Swift_Mailer $mailer, EngineInterface $templating, RouterInterface $router, TranslatorInterface $translator)
+    public function __construct(RequestStack $requestStack, \Swift_Mailer $mailer, Environment $twig, RouterInterface $router, TranslatorInterface $translator)
     {
         $this->sender     = 'no-reply@'.($requestStack->getMasterRequest() ? $requestStack->getMasterRequest()->getHost() : 'studio-agate.com');
-        $this->templating = $templating;
+        $this->twig       = $twig;
         $this->mailer     = $mailer;
         $this->router     = $router;
         $this->translator = $translator;
@@ -39,7 +39,7 @@ final class UserMailer
     {
         $url = $this->router->generate('user_registration_confirm', ['token' => $user->getConfirmationToken()], UrlGeneratorInterface::ABSOLUTE_URL);
 
-        $rendered = $this->templating->render('@User/Registration/email.html.twig', [
+        $rendered = $this->twig->render('@User/Registration/email.html.twig', [
             'user'            => $user,
             'confirmationUrl' => $url,
         ]);
@@ -61,7 +61,7 @@ final class UserMailer
     {
         $url = $this->router->generate('user_resetting_reset', ['token' => $user->getConfirmationToken()], UrlGeneratorInterface::ABSOLUTE_URL);
 
-        $rendered = $this->templating->render('@User/Resetting/email.txt.twig', [
+        $rendered = $this->twig->render('@User/Resetting/email.txt.twig', [
             'user'            => $user,
             'confirmationUrl' => $url,
         ]);

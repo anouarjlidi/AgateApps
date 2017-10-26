@@ -11,12 +11,14 @@
 
 namespace CorahnRin\CorahnRinBundle\Step;
 
+use Symfony\Component\HttpFoundation\Response;
+
 class Step01People extends AbstractStepAction
 {
     /**
      * {@inheritdoc}
      */
-    public function execute()
+    public function execute(): Response
     {
         $peoples = $this->em->getRepository('CorahnRinBundle:Peoples')->findAll('id');
 

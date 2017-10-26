@@ -11,8 +11,8 @@
 
 namespace CorahnRin\CorahnRinBundle\Step;
 
-use CorahnRin\CorahnRinBundle\Entity\Disciplines;
-use CorahnRin\CorahnRinBundle\Entity\Domains;
+use Symfony\Component\HttpFoundation\Response;
+use CorahnRin\CorahnRinBundle\Entity\{Disciplines, Domains};
 use CorahnRin\CorahnRinBundle\GeneratorTools\DomainsCalculator;
 
 class Step16Disciplines extends AbstractStepAction
@@ -57,7 +57,7 @@ class Step16Disciplines extends AbstractStepAction
      *
      * @internal int[] $socialClassValues
      */
-    public function execute()
+    public function execute(): Response
     {
         $this->allDomains = $this->em->getRepository('CorahnRinBundle:Domains')->findAllSortedByName();
 

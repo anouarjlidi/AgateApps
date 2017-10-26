@@ -11,6 +11,7 @@
 
 namespace CorahnRin\CorahnRinBundle\Step;
 
+use Symfony\Component\HttpFoundation\Response;
 use CorahnRin\CorahnRinBundle\Entity\Avantages;
 
 class Step11Advantages extends AbstractStepAction
@@ -28,7 +29,7 @@ class Step11Advantages extends AbstractStepAction
     /**
      * {@inheritdoc}
      */
-    public function execute()
+    public function execute(): Response
     {
         $this->globalList = $this->em->getRepository('CorahnRinBundle:Avantages')->findAllDifferenciated();
 

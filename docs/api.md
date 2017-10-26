@@ -81,7 +81,7 @@ subdomain, usually `api.esteren.dev`.
 To manage non-GET HTTP requests, a full setup must be configured in your app.
 
 If you are developing locally, you won't be able to access the webservices "manually" because they're protected by
-[NelmioCorsBundle](https://github.com/nelmio/NelmioCorsBundle)'s configuration (check in `app/config/_app.yml`).
+[NelmioCorsBundle](https://github.com/nelmio/NelmioCorsBundle)'s configuration (check in `config/_app.yml`).
 
 For this, you will have to allow `127.0.0.1` as a valid origin.
 

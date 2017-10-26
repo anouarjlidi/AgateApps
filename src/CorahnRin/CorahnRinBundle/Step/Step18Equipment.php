@@ -11,12 +11,14 @@
 
 namespace CorahnRin\CorahnRinBundle\Step;
 
+use Symfony\Component\HttpFoundation\Response;
+
 class Step18Equipment extends AbstractStepAction
 {
     /**
      * {@inheritdoc}
      */
-    public function execute()
+    public function execute(): Response
     {
         $weapons  = $this->em->getRepository('CorahnRinBundle:Weapons')->findAllSortedByName();
         $armors   = $this->em->getRepository('CorahnRinBundle:Armors')->findAllSortedByName();

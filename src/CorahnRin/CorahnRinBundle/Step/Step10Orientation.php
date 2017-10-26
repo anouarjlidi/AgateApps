@@ -11,6 +11,7 @@
 
 namespace CorahnRin\CorahnRinBundle\Step;
 
+use Symfony\Component\HttpFoundation\Response;
 use CorahnRin\CorahnRinBundle\Data\Orientation;
 
 class Step10Orientation extends AbstractStepAction
@@ -18,7 +19,7 @@ class Step10Orientation extends AbstractStepAction
     /**
      * {@inheritdoc}
      */
-    public function execute()
+    public function execute(): Response
     {
         $orientation = $this->getCharacterProperty();
 

@@ -11,12 +11,14 @@
 
 namespace CorahnRin\CorahnRinBundle\Step;
 
+use Symfony\Component\HttpFoundation\Response;
+
 class Step04Geo extends AbstractStepAction
 {
     /**
      * {@inheritdoc}
      */
-    public function execute()
+    public function execute(): Response
     {
         $geoEnvironments = $this->em->getRepository('CorahnRinBundle:GeoEnvironments')->findAll(true);
 

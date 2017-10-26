@@ -1,6 +1,0 @@
-# CI file
-# To be used, it automatically sets up database and domain names.
-# As we use sqlite specificly in "config_test.yml", we just add null values here for almost everything.
-parameters:
-    # A secret key that's used to generate certain security-related tokens
-    magick_binaries_path: /usr/bin

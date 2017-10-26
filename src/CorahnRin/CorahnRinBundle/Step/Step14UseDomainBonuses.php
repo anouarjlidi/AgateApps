@@ -11,6 +11,7 @@
 
 namespace CorahnRin\CorahnRinBundle\Step;
 
+use Symfony\Component\HttpFoundation\Response;
 use CorahnRin\CorahnRinBundle\Entity\Domains;
 use CorahnRin\CorahnRinBundle\GeneratorTools\DomainsCalculator;
 
@@ -52,7 +53,7 @@ class Step14UseDomainBonuses extends AbstractStepAction
     /**
      * {@inheritdoc}
      */
-    public function execute()
+    public function execute(): Response
     {
         $this->allDomains = $this->em->getRepository('CorahnRinBundle:Domains')->findAllSortedByName();
 

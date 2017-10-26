@@ -11,6 +11,7 @@
 
 namespace CorahnRin\CorahnRinBundle\Step;
 
+use Symfony\Component\HttpFoundation\Response;
 use CorahnRin\CorahnRinBundle\Entity\CombatArts;
 use CorahnRin\CorahnRinBundle\GeneratorTools\DomainsCalculator;
 
@@ -39,7 +40,7 @@ class Step17CombatArts extends AbstractStepAction
     /**
      * {@inheritdoc}
      */
-    public function execute()
+    public function execute(): Response
     {
         $allDomains       = $this->em->getRepository('CorahnRinBundle:Domains')->findAllSortedByName();
         $this->combatArts = $this->em->getRepository('CorahnRinBundle:CombatArts')->findAllSortedByName();

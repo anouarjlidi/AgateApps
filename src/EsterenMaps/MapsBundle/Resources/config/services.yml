@@ -1,6 +1,6 @@
 parameters:
     esterenmaps.tile_size: 168
-    esterenmaps.output_directory: '%kernel.root_dir%/../web/maps_tiles/'
+    esterenmaps.output_directory: '%kernel.project_dir%/public/maps_tiles/'
 
 services:
 
@@ -61,9 +61,9 @@ services:
         lazy: true
         autowire: true
         arguments:
+            $debug: '%kernel.debug%'
             $mapApi: '@esterenmaps.api.map'
             $cache: '@esterenmaps.cache'
-            $debug: '%kernel.debug%'
 
     esterenmaps.coordinates_manager:
         class: EsterenMaps\MapsBundle\Services\CoordinatesManager
@@ -86,10 +86,9 @@ services:
 
     esterenmaps.api.map:
         class: EsterenMaps\MapsBundle\Api\MapApi
-        autowire: true
         arguments:
             - '@doctrine.orm.entity_manager'
-            - '@templating'
+            - '@twig'
             - '@esterenmaps.cache'
             - '@assets.packages'
             - '%kernel.debug%'

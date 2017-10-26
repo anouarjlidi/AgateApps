@@ -18,7 +18,7 @@ use EsterenMaps\MapsBundle\Entity\Maps;
 use EsterenMaps\MapsBundle\Entity\Markers;
 use EsterenMaps\MapsBundle\Entity\TransportModifiers;
 use EsterenMaps\MapsBundle\Entity\TransportTypes;
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
+use Twig\Environment;
 
 /**
  * Uses Dijkstra algorithm to calculate a path between two markers.
@@ -27,7 +27,7 @@ class DirectionsManager
 {
     private $debug;
     private $entityManager;
-    private $templating;
+    private $twig;
     private $cache;
     private $mapApi;
 
@@ -35,13 +35,13 @@ class DirectionsManager
         bool $debug,
         MapApi $mapApi,
         ObjectManager $entityManager,
-        EngineInterface $templating,
+        Environment $twig,
         CacheManager $cache
     )
     {
         $this->debug         = $debug;
         $this->entityManager = $entityManager;
-        $this->templating    = $templating;
+        $this->twig          = $twig;
         $this->cache         = $cache;
         $this->mapApi        = $mapApi;
     }
@@ -324,7 +324,7 @@ class DirectionsManager
             $data['duration_real'] = $this->getTravelDuration($routes, $transport, $hoursPerDay, false);
         }
 
-        $data['path_view'] = $this->templating->render('@EsterenMaps/Api/path_view.html.twig', $data);
+        $data['path_view'] = $this->twig->render('@EsterenMaps/Api/path_view.html.twig', $data);
 
         return $data;
     }

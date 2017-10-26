@@ -11,6 +11,7 @@
 
 namespace CorahnRin\CorahnRinBundle\Step;
 
+use Symfony\Component\HttpFoundation\Response;
 use CorahnRin\CorahnRinBundle\Entity\Setbacks;
 
 class Step07Setbacks extends AbstractStepAction
@@ -28,7 +29,7 @@ class Step07Setbacks extends AbstractStepAction
     /**
      * {@inheritdoc}
      */
-    public function execute()
+    public function execute(): Response
     {
         /* @var Setbacks[] $setbacks */
         $this->setbacks = $this->em->getRepository('CorahnRinBundle:Setbacks')->findAll(true);

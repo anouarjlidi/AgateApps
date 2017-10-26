@@ -22,8 +22,8 @@ use EsterenMaps\MapsBundle\Entity\RoutesTypes;
 use EsterenMaps\MapsBundle\Entity\TransportTypes;
 use EsterenMaps\MapsBundle\Entity\Zones;
 use EsterenMaps\MapsBundle\Entity\ZonesTypes;
-use Symfony\Bundle\TwigBundle\TwigEngine;
 use Symfony\Component\Asset\Packages;
+use Twig\Environment;
 
 class MapApi
 {
@@ -35,7 +35,7 @@ class MapApi
     private $debug;
     private $asset;
 
-    public function __construct(ObjectManager $em, TwigEngine $twig, CacheManager $cache, Packages $asset, bool $debug)
+    public function __construct(ObjectManager $em, Environment $twig, CacheManager $cache, Packages $asset, bool $debug)
     {
         $this->em = $em;
         $this->cache = $cache;

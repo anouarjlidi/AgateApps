@@ -11,9 +11,8 @@
 
 namespace CorahnRin\CorahnRinBundle\Step;
 
-use CorahnRin\CorahnRinBundle\Entity\Avantages;
-use CorahnRin\CorahnRinBundle\Entity\Domains;
-use CorahnRin\CorahnRinBundle\Entity\Jobs;
+use Symfony\Component\HttpFoundation\Response;
+use CorahnRin\CorahnRinBundle\Entity\{Avantages, Domains, Jobs};
 
 class Step13PrimaryDomains extends AbstractStepAction
 {
@@ -52,7 +51,7 @@ class Step13PrimaryDomains extends AbstractStepAction
     /**
      * {@inheritdoc}
      */
-    public function execute()
+    public function execute(): Response
     {
         $this->allDomains = $this->em->getRepository('CorahnRinBundle:Domains')->findAllSortedByName();
         $this->job        = $this->em->getRepository('CorahnRinBundle:Jobs')->findWithDomains($this->getCharacterProperty('02_job'));

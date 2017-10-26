@@ -11,6 +11,7 @@
 
 namespace CorahnRin\CorahnRinBundle\Step;
 
+use Symfony\Component\HttpFoundation\Response;
 use CorahnRin\CorahnRinBundle\Entity\Ways;
 
 class Step08Ways extends AbstractStepAction
@@ -18,7 +19,7 @@ class Step08Ways extends AbstractStepAction
     /**
      * {@inheritdoc}
      */
-    public function execute()
+    public function execute(): Response
     {
         $ways = $this->em->getRepository('CorahnRinBundle:Ways')->findAll(true);
 

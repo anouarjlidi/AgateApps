@@ -1,0 +1,8 @@
+web_profiler:
+    resource: "dev/web_profiler.yaml"
+
+templates:
+    resource: "dev/templates.yaml"
+
+twig:
+    resource: "dev/twig.yaml"

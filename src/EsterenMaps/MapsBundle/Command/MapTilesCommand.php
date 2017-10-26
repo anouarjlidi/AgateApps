@@ -87,12 +87,12 @@ class MapTilesCommand extends ContainerAwareCommand
 
         // This is a workaround to allow images to be stored with either global path or relative path
         if (!file_exists($map->getImage())) {
-            $img = $this->getContainer()->getParameter('kernel.root_dir').'/../web/'.$map->getImage();
+            $img = $this->getContainer()->getParameter('kernel.project_dir').'/public/'.$map->getImage();
             $map->setImage($img);
         }
 
         if (!file_exists($map->getImage())) {
-            throw new \RuntimeException('Map image cannot be found.');
+            throw new \RuntimeException(sprintf('Map image file "%s" cannot be found.', $img ?? $map->getImage()));
         }
 
         try {

@@ -11,6 +11,8 @@
 
 namespace CorahnRin\CorahnRinBundle\Step;
 
+use Symfony\Component\HttpFoundation\Response;
+
 class Step03Birthplace extends AbstractStepAction
 {
     /**
@@ -18,7 +20,7 @@ class Step03Birthplace extends AbstractStepAction
      */
     private $tileSize;
 
-    public function __construct($tileSize)
+    public function __construct(int $tileSize)
     {
         $this->tileSize = $tileSize;
     }
@@ -26,7 +28,7 @@ class Step03Birthplace extends AbstractStepAction
     /**
      * {@inheritdoc}
      */
-    public function execute()
+    public function execute(): Response
     {
         $regions = $this->em->getRepository('EsterenMapsBundle:Zones')->findAll(true);
 

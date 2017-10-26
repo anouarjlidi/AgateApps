@@ -39,7 +39,7 @@ class HomeController extends Controller
 
         $template = '@EsterenPortal/index-'.$_locale.'.html.twig';
 
-        if (!$this->get('templating')->exists($template)) {
+        if (!$this->get('twig')->getLoader()->exists($template)) {
             throw $this->createNotFoundException();
         }
 

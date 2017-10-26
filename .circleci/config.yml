@@ -3,6 +3,9 @@ version: 2
 jobs:
     build:
         docker:
+            # Docker build here:
+            # https://hub.docker.com/r/pierstoval/studio-agate-portal/
+            # https://github.com/StudioAgate/DockerPortalApp
             - image: pierstoval/studio-agate-portal
 
         working_directory: ~/app
@@ -26,6 +29,7 @@ jobs:
             - run:
                 name: 'Show config'
                 command: |
+                    pwd
                     php --ini
                     composer config -l
 
@@ -36,8 +40,7 @@ jobs:
                     echo "short_open_tag = off" >> /usr/local/etc/php/conf.d/custom.ini
                     echo "apcu.enable_cli = 1" >> /usr/local/etc/php/conf.d/custom.ini
 
-                    cp tests/ci/parameters.yml app/config/parameters.yml
-                    cp tests/.env .env
+                    cp tests/ci/.env .env
                     cp tests/ci/phpunit.xml ./phpunit.xml
 
             - run:
@@ -54,10 +57,9 @@ jobs:
             - run:
                name: 'Execute Linting tests'
                command: |
-                    php bin/symfony_requirements
                     php bin/console security:check
-                    php bin/console lint:twig app/Resources src
-                    php bin/console lint:yaml app/config
+                    php bin/console lint:twig templates src
+                    php bin/console lint:yaml config
                     php bin/console lint:yaml src
 
             - run:

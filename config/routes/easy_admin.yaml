@@ -1,0 +1,4 @@
+application_admin:
+    resource:     '@AdminBundle/Controller'
+    type:         annotation
+    host:         '%esteren_domains.backoffice%'
