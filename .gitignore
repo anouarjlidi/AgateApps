@@ -12,9 +12,6 @@
 # Assets
 /public/js/*
 /public/css/*
-/public/uploads/*
-!/public/uploads/maps/.gitkeep
-!/public/uploads/maps/esteren*
 /public/fonts/*
 /public/img/*
 !/public/img/favicon.ico
