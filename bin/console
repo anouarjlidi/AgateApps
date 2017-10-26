@@ -14,7 +14,7 @@ if (!class_exists(Application::class)) {
     throw new \RuntimeException('You need to add "symfony/framework-bundle" as a Composer dependency.');
 }
 
-if ($_SERVER['APP_DEBUG'] ?? false) {
+if ($_SERVER['APP_DEBUG'] ?? true) {
     (new Dotenv())->load(__DIR__.'/../.env');
 }
 

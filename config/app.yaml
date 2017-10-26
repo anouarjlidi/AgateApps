@@ -31,4 +31,4 @@ parameters:
 
     vermine_domains.portal:          'www.%env(VERMINE_DOMAIN)%'
 
-    magick_binaries_path: '%env(IMAGEMAGICK_BINARIES_PATH)'
+    magick_binaries_path: '%env(IMAGEMAGICK_BINARIES_PATH)%'
