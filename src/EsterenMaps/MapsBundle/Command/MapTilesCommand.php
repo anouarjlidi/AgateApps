@@ -92,7 +92,7 @@ class MapTilesCommand extends ContainerAwareCommand
         }
 
         if (!file_exists($map->getImage())) {
-            throw new \RuntimeException('Map image cannot be found.');
+            throw new \RuntimeException(sprintf('Map image file "%s" cannot be found.', $img ?? $map->getImage()));
         }
 
         try {
