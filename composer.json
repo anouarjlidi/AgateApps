@@ -102,9 +102,8 @@
             "@auto-scripts"
         ],
         "compile": [
-            "yarn --production",
             "cd node_modules/optipng-bin && yarn --production",
-            "node node_modules/gulp4/bin/gulp.js test --prod --verbose",
+            "yarn run gulp test --prod --verbose",
             "php bin/console doctrine:schema:update --dump-sql --force",
             "php bin/console doctrine:schema:validate || echo 'Doctrine schema not valid, please make sure it is correct.'",
             "php bin/console esterenmaps:map:generate-tiles 1"
