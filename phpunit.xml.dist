@@ -26,7 +26,7 @@
         <ini name="zend.enable_gc" value="0" />
         <env name="KERNEL_CLASS" value="Kernel" />
         <env name="APP_ENV" value="test" />
-        <env name="APP_DEBUG" value="1" />
+        <env name="APP_DEBUG" value="0" />
         <env name="APP_DEPRECATIONS_HELPER" value="weak_vendors" />
         <!-- Uncomment this if you do not need to refresh the whole cache between runs
         <env name="NO_CLEAR_CACHE" value="1" />

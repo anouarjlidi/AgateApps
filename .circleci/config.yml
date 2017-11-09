@@ -40,7 +40,6 @@ jobs:
                     echo "short_open_tag = off" >> /usr/local/etc/php/conf.d/custom.ini
                     echo "apcu.enable_cli = 1" >> /usr/local/etc/php/conf.d/custom.ini
 
-                    cp tests/ci/.env .env
                     cp tests/ci/phpunit.xml ./phpunit.xml
 
             - run:

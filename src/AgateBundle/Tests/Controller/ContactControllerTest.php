@@ -18,7 +18,7 @@ class ContactControllerTest extends WebTestCase
 {
     public function testValidContactForm()
     {
-        $client = $this->getClient('www.studio-agate.dev');
+        $client = $this->getClient('www.studio-agate.dev', ['debug' => true]);
 
         $crawler = $client->request('GET', '/fr/contact');
 

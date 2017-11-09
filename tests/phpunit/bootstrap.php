@@ -30,17 +30,9 @@ if (!file_exists($file)) {
 
 /** @var Composer\Autoload\ClassLoader $autoload */
 $autoload = require $file;
+unset($file);
 
-(new \Symfony\Component\Dotenv\Dotenv())->load(__DIR__.'/../ci/.env');
-
-$input = new ArgvInput();
-
-/**
- * Execute a command.
- *
- * @param string $cmd
- */
-function runCommand($cmd) {
+function runCommand(string $cmd): void {
     $process = new Process($cmd);
     $process->setTimeout(180);
     $process->run(function ($type, $buffer) {
@@ -91,3 +83,5 @@ runCommand('php '.$rootDir.'/bin/console doctrine:schema:create');
 runCommand('php '.$rootDir.'/bin/console doctrine:fixtures:load --append');
 
 $fs->copy(DATABASE_TEST_FILE, DATABASE_REFERENCE_FILE);
+
+unset($fs, $rootDir);

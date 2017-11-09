@@ -29,7 +29,7 @@ class DirectionsManagerTest extends WebTestCase
      */
     public function testWorkingDirections(array $expectedData, $map, $from, $to, $transport = null)
     {
-        static::bootKernel();
+        static::bootKernel(['debug' => true]);
 
         $container = static::$kernel->getContainer();
 

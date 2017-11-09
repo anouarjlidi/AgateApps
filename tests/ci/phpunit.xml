@@ -22,7 +22,7 @@
         <ini name="zend.enable_gc" value="0" />
         <env name="KERNEL_CLASS" value="Kernel" />
         <env name="APP_ENV" value="test" />
-        <env name="APP_DEBUG" value="1" />
+        <env name="APP_DEBUG" value="0" />
         <env name="APP_DEPRECATIONS_HELPER" value="weak_vendors" />
         <!-- Uncomment this if you do not need to refresh the whole cache between runs
         <env name="NO_CLEAR_CACHE" value="1" />
@@ -40,14 +40,12 @@
 
     <testsuites>
         <testsuite name="Shadows of Esteren project test suite">
-            <directory>./phpunit/*</directory>
             <directory>./src/AdminBundle/Tests</directory>
             <directory>./src/AgateBundle/Tests</directory>
             <directory>./src/UserBundle/Tests</directory>
             <directory>./src/CorahnRin/CorahnRinBundle/Tests</directory>
             <directory>./src/Esteren/PortalBundle/Tests</directory>
             <directory>./src/EsterenMaps/MapsBundle/Tests</directory>
-            <exclude>./vendor</exclude>
         </testsuite>
     </testsuites>
 
