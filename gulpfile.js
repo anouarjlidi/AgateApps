@@ -27,6 +27,10 @@ const config = {
         ],
         "images/": [
             "node_modules/leaflet/dist/images/*"
+        ],
+        // Painful, but if we don't want to modify leaflet-draw, must be done.
+        "css/images/": [
+            "node_modules/leaflet-draw/dist/images/*"
         ]
     },
 
