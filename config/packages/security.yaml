@@ -51,7 +51,7 @@ security:
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
-            pattern:  ^/(_(profiler|wdt)|css|images|img|fonts|map_tiles|uploads|components|bundles|js)/
+            pattern:  '^/(_(profiler|wdt)|css|images|img|fonts|map_tiles|uploads|components|bundles|js|(%locales_regex%)/js/translations)/'
             security: false
 
         # http://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
