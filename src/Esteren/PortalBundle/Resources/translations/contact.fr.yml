@@ -6,4 +6,4 @@ form:
     send: 'Envoyer'
     message_sent: 'Votre message a été envoyé, merci!'
     error: 'Une erreur est survenue lors de l''envoi du mail. Nos équipes ont été prévenues.'
-    message_subject: 'A private message has been sent by "%name%" via Esteren''s portal.'
+    message_subject: 'Un message privé vient d''être envoyé par "%name%" sur le portail Esteren.'
