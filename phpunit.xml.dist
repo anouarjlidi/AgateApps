@@ -25,9 +25,7 @@
         <ini name="error_reporting" value="-1" />
         <ini name="zend.enable_gc" value="0" />
         <env name="KERNEL_CLASS" value="Kernel" />
-        <env name="APP_ENV" value="test" />
-        <env name="APP_DEBUG" value="0" />
-        <env name="APP_DEPRECATIONS_HELPER" value="weak_vendors" />
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak_vendors" />
         <!-- Uncomment this if you do not need to refresh the whole cache between runs
         <env name="NO_CLEAR_CACHE" value="1" />
         -->
@@ -40,6 +38,20 @@
         <!-- Uncomment this if you want less tests for Step 7 random tests, which is 100 by default
         <env name="STEP7_RANDOMNESS_COUNT" value="1" />
         -->
+
+        <!-- ###+ symfony/framework-bundle ### -->
+        <env name="APP_ENV" value="dev"/>
+        <env name="APP_DEBUG" value="1"/>
+        <env name="APP_SECRET" value="54528f71f41df46312ac7a9029e74104"/>
+        <!-- ###- symfony/framework-bundle ### -->
+
+        <!-- ###+ doctrine/doctrine-bundle ### -->
+        <env name="DATABASE_URL" value=""/>
+        <!-- ###- doctrine/doctrine-bundle ### -->
+
+        <!-- ###+ symfony/swiftmailer-bundle ### -->
+        <env name="MAILER_URL" value="null://localhost"/>
+        <!-- ###- symfony/swiftmailer-bundle ### -->
     </php>
 
     <testsuites>
