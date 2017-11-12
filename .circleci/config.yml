@@ -40,8 +40,6 @@ jobs:
                     echo "short_open_tag = off" >> /usr/local/etc/php/conf.d/custom.ini
                     echo "apcu.enable_cli = 1" >> /usr/local/etc/php/conf.d/custom.ini
 
-                    cp tests/ci/phpunit.xml ./phpunit.xml
-
             - run:
                name: 'Install Project Dependencies'
                command: |
@@ -64,7 +62,7 @@ jobs:
             - run:
                name: 'Execute PHPUnit tests'
                command: |
-                    vendor/bin/phpunit
+                    vendor/bin/phpunit --log-junit=build/log/logfile.xml --coverage-text
 
             - save_cache:
                 key: composer-cache-{{ checksum "composer.lock" }}
