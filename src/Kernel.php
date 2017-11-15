@@ -53,29 +53,14 @@ class Kernel extends BaseKernel
     {
         $confDir = dirname(__DIR__).'/config';
 
-
         // Load environment-specific routes that match "_{env}.{ext}"
         if (file_exists($confDir.'/routes/_'.$this->environment.'.yaml')) {
             $routes->import($confDir.'/routes/_'.$this->environment.'.yaml', '', 'yaml');
         }
 
-        // Root route that redirects "/" to "/%locale%/"
-        // Needed here because else we would need another level of files to load routes...
-        $routes
-            ->add('/{_locale}', 'FrameworkBundle:Redirect:urlRedirect', 'root')
-            ->setDefault('path', '/%locale%/')
-            ->setDefault('permanent', false)
-            ->setDefault('_locale', '%locale%')
-            ->setDefault('scheme', 'prod' === $this->environment ? 'https' : 'http')
-            ->setRequirement('_locale', '^(?:%locales_regex%)$')
-            ->setMethods(['GET'])
-        ;
-
         // Load main router.
         $routes
-            ->import($confDir.'/routes/_main.yaml', '/{_locale}')
-            ->setDefault('_locale', '%locale%')
-            ->setRequirement('_locale', '^(?:%locales_regex%)$')
+            ->import($confDir.'/routes/_main.yaml')
             ->setSchemes(['prod' === $this->environment ? 'https' : 'http'])
         ;
     }

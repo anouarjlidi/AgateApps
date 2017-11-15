@@ -1,0 +1,29 @@
+# This file is wrapped by "main.yaml" in order to have every route prefixed with the locale.
+
+user:
+    resource: 'user.yaml'
+
+corahnrin:
+    resource: 'corahnrin.yaml'
+
+esterenmaps:
+    resource: 'esterenmaps.yaml'
+
+agate:
+    resource: "@AgateBundle/Controller/"
+    type: annotation
+
+esteren_portal:
+    resource: '@EsterenPortalBundle/Controller/'
+    type: annotation
+    host: '%esteren_domains.portal%'
+
+admin:
+    resource: 'easy_admin.yaml'
+
+#-----------------------------------
+# Portal routing. MUST be at the end, because it's an OrbitaleCms routing,
+#   and therefore has many dynamic urls that will come as 'fallback' to any other
+#   application routing.
+portal:
+    resource: 'portal.yaml'

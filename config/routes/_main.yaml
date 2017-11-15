@@ -1,28 +1,19 @@
-# First we load the different other config files with the same configuration
-user:
-    resource: 'user.yaml'
+# Root route that redirects "/" to "/%locale%/"
+root:
+    path: /{_locale}
+    defaults:
+        _controller: FrameworkBundle:Redirect:urlRedirect
+        path: '/%locale%/'
+        permanent: false
+        _locale: '%locale%'
+    requirements:
+        _locale: '^(?:%locales_regex%)$'
+    methods: ['GET']
 
-corahnrin:
-    resource: 'corahnrin.yaml'
-
-esterenmaps:
-    resource: 'esterenmaps.yaml'
-
-agate:
-    resource: "@AgateBundle/Controller/"
-    type: annotation
-
-esteren_portal:
-    resource: '@EsterenPortalBundle/Controller/'
-    type: annotation
-    host: '%esteren_domains.portal%'
-
-admin:
-    resource: 'easy_admin.yaml'
-
-#-----------------------------------
-# Portal routing. MUST be at the end, because it's an OrbitaleCms routing,
-#   and therefore has many dynamic urls that will come as 'fallback' to any other
-#   application routing.
-portal:
-    resource: 'portal.yaml'
+main:
+    resource: '_wrapped.yaml'
+    prefix: '/{_locale}/'
+    defaults:
+        _locale: '%locale%'
+    requirements:
+        _locale: '^(?:%locales_regex%)$'
