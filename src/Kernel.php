@@ -64,7 +64,7 @@ class Kernel extends BaseKernel
         $routes
             ->add('/{_locale}', 'FrameworkBundle:Redirect:urlRedirect', 'root')
             ->setDefault('path', '/%locale%/')
-            ->setDefault('permanent', true)
+            ->setDefault('permanent', false)
             ->setDefault('_locale', '%locale%')
             ->setDefault('scheme', 'prod' === $this->environment ? 'https' : 'http')
             ->setRequirement('_locale', '^(?:%locales_regex%)$')

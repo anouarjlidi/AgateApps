@@ -22,7 +22,7 @@ class PortalControllerTest extends WebTestCase
         $client->request('GET', '/');
         $res = $client->getResponse();
 
-        static::assertSame(301, $res->getStatusCode());
+        static::assertSame(302, $res->getStatusCode());
         static::assertSame('http://portal.esteren.dev/fr/', $res->headers->get('Location'));
     }
 
@@ -33,7 +33,7 @@ class PortalControllerTest extends WebTestCase
         $client->request('GET', '/fr');
         $res = $client->getResponse();
 
-        static::assertSame(301, $res->getStatusCode());
+        static::assertSame(302, $res->getStatusCode());
         static::assertSame('http://portal.esteren.dev/fr/', $res->headers->get('Location'));
     }
 
