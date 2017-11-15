@@ -19,7 +19,7 @@ use Symfony\Component\HttpKernel\CacheClearer\CacheClearerInterface;
 class MapCacheClearer implements CacheClearerInterface
 {
     /**
-     * @var CacheManager
+ * @var CacheManager
      */
     private $cache;
 

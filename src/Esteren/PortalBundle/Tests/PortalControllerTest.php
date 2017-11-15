@@ -15,6 +15,28 @@ use Tests\WebTestCase;
 
 class PortalControllerTest extends WebTestCase
 {
+    public function testRootRedirectsToIndex()
+    {
+        $client = $this->getClient('portal.esteren.dev');
+
+        $client->request('GET', '/');
+        $res = $client->getResponse();
+
+        static::assertSame(301, $res->getStatusCode());
+        static::assertSame('http://portal.esteren.dev/fr/', $res->headers->get('Location'));
+    }
+
+    public function testIndexWithoutSlashRedirectsWithASlash()
+    {
+        $client = $this->getClient('portal.esteren.dev');
+
+        $client->request('GET', '/fr');
+        $res = $client->getResponse();
+
+        static::assertSame(301, $res->getStatusCode());
+        static::assertSame('http://portal.esteren.dev/fr/', $res->headers->get('Location'));
+    }
+
     public function testIndexWithFrenchHomepage()
     {
         parent::resetDatabase();

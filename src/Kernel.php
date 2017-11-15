@@ -53,27 +53,30 @@ class Kernel extends BaseKernel
     {
         $confDir = dirname(__DIR__).'/config';
 
-        // All routes are prefixed here, so...
-        $prefix = '/{_locale}/';
-
-        $routes
-            ->setDefault('_locale', '%locale%')
-            ->setRequirement('_locale', '^(?:%locales_regex%)$')
-            ->setSchemes(['prod' === $this->environment ? 'https' : 'http'])
-        ;
 
         // Load environment-specific routes that match "_{env}.{ext}"
         if (file_exists($confDir.'/routes/_'.$this->environment.'.yaml')) {
-            $routes->import($confDir.'/routes/_'.$this->environment.'.yaml', $prefix, 'yaml');
+            $routes->import($confDir.'/routes/_'.$this->environment.'.yaml', '', 'yaml');
         }
 
-        // Load main router.
-        $routes->import($confDir.'/routes/_main.yaml', $prefix);
-
+        // Root route that redirects "/" to "/%locale%/"
+        // Needed here because else we would need another level of files to load routes...
         $routes
-            ->add('/', 'FrameworkBundle:Redirect:urlRedirect', 'root')
-            ->setDefault('path', '/'.$this->container->getParameter('locale'))
+            ->add('/{_locale}', 'FrameworkBundle:Redirect:urlRedirect', 'root')
+            ->setDefault('path', '/%locale%/')
+            ->setDefault('permanent', true)
+            ->setDefault('_locale', '%locale%')
+            ->setDefault('scheme', 'prod' === $this->environment ? 'https' : 'http')
+            ->setRequirement('_locale', '^(?:%locales_regex%)$')
             ->setMethods(['GET'])
+        ;
+
+        // Load main router.
+        $routes
+            ->import($confDir.'/routes/_main.yaml', '/{_locale}')
+            ->setDefault('_locale', '%locale%')
+            ->setRequirement('_locale', '^(?:%locales_regex%)$')
+            ->setSchemes(['prod' === $this->environment ? 'https' : 'http'])
         ;
     }
 }

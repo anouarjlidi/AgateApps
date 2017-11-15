@@ -15,6 +15,28 @@ use Tests\WebTestCase;
 
 class HomeControllerTest extends WebTestCase
 {
+    public function testRootRedirectsToIndex()
+    {
+        $client = $this->getClient('www.studio-agate.dev');
+
+        $client->request('GET', '/');
+        $res = $client->getResponse();
+
+        static::assertSame(301, $res->getStatusCode());
+        static::assertSame('http://www.studio-agate.dev/fr/', $res->headers->get('Location'));
+    }
+
+    public function testIndexWithoutSlashRedirectsWithASlash()
+    {
+        $client = $this->getClient('www.studio-agate.dev');
+
+        $client->request('GET', '/fr');
+        $res = $client->getResponse();
+
+        static::assertSame(301, $res->getStatusCode());
+        static::assertSame('http://www.studio-agate.dev/fr/', $res->headers->get('Location'));
+    }
+
     public function testIndexWithFrenchHomepage()
     {
         $client = $this->getClient('www.studio-agate.dev');

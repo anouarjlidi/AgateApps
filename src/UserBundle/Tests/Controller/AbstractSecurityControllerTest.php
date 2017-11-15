@@ -113,7 +113,13 @@ abstract class AbstractSecurityControllerTest extends WebTestCase
         $response = $client->getResponse();
 
         // Check redirection was made correctly to the Profile page
-        static::assertTrue($response->isRedirect("/$locale"), 'Does not redirect to root page ("'.$response->headers->get('location').'" instead)');
+        static::assertTrue($response->isRedirect(), 'Successful login does not redirect.');
+
+        if ($client->getRequest()->getLocale() === $client->getContainer()->getParameter('locale')) {
+            static::assertSame('/', $response->headers->get('Location'));
+        } else {
+            static::assertSame("/$locale/", $response->headers->get('Location'));
+        }
 
         $crawler->clear();
         $client->followRedirects(true);

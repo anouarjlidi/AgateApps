@@ -13,14 +13,30 @@ namespace EsterenMaps\MapsBundle\Tests\Controller;
 
 use Tests\WebTestCase;
 
-/**
- * @see \EsterenMaps\MapsBundle\Controller\MapsController
- */
 class MapsControllerTest extends WebTestCase
 {
-    /**
-     * @see MapsController::indexAction
-     */
+    public function testRootRedirectsToIndex()
+    {
+        $client = $this->getClient('maps.esteren.dev');
+
+        $client->request('GET', '/');
+        $res = $client->getResponse();
+
+        static::assertSame(302, $res->getStatusCode());
+        static::assertSame('/fr/login', $res->headers->get('Location'));
+    }
+
+    public function testIndexWithoutSlashRedirectsWithASlash()
+    {
+        $client = $this->getClient('maps.esteren.dev');
+
+        $client->request('GET', '/fr');
+        $res = $client->getResponse();
+
+        static::assertSame(302, $res->getStatusCode());
+        static::assertSame('/fr/login', $res->headers->get('Location'));
+    }
+
     public function testIndexAndViewLink()
     {
         $client = $this->getClient('maps.esteren.dev');

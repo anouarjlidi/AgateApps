@@ -32,13 +32,12 @@ final class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
 
     public const USERNAME_OR_EMAIL_FORM_FIELD = '_username_or_email';
     public const PASSWORD_FORM_FIELD          = '_password';
-    public const SECURITY_REFERER_PARAMETER   = '_security_referer';
 
-    public const PROVIDER_KEY = 'main'; // Firewall name
+    private const PROVIDER_KEY = 'main'; // Firewall name
 
-    public const LOGIN_ROUTE = 'user_login';
+    private const LOGIN_ROUTE = 'user_login';
 
-    public const NO_REFERER_ROUTES = [
+    private const NO_REFERER_ROUTES = [
         self::LOGIN_ROUTE,
         'user_login_check',
         'user_register',
@@ -53,20 +52,15 @@ final class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
         'user_change_password',
     ];
 
-    /**
-     * @var RouterInterface
-     */
     private $router;
-
-    /**
-     * @var UserPasswordEncoderInterface
-     */
     private $encoder;
+    private $defaultLocale;
 
-    public function __construct(RouterInterface $router, UserPasswordEncoderInterface $encoder)
+    public function __construct(RouterInterface $router, UserPasswordEncoderInterface $encoder, string $defaultLocale)
     {
         $this->router  = $router;
         $this->encoder = $encoder;
+        $this->defaultLocale = $defaultLocale;
     }
 
     /**
@@ -75,7 +69,7 @@ final class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
     public function start(Request $request, AuthenticationException $authException = null)
     {
         if ($request->hasSession()) {
-            if (in_array($request->attributes->get('_route'), static::NO_REFERER_ROUTES, true)) {
+            if (\in_array($request->attributes->get('_route'), static::NO_REFERER_ROUTES, true)) {
                 $this->removeTargetPath($request->getSession(), static::PROVIDER_KEY);
             } else {
                 $this->saveTargetPath($request->getSession(), static::PROVIDER_KEY, $request->getUri());
@@ -143,7 +137,7 @@ final class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        $defaultUrl = rtrim($this->router->generate('root'), '/').'/'.($request->getLocale() ?: 'fr');
+        $defaultUrl = rtrim($this->router->generate('root', ['_locale' => $request->getLocale() ?: $this->defaultLocale]), '/').'/';
 
         $targetPath = $defaultUrl;
 

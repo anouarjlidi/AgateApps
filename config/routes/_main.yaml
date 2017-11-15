@@ -1,5 +1,3 @@
-# Be careful to manually prefix the local to all your new routes.
-
 # First we load the different other config files with the same configuration
 user:
     resource: 'user.yaml'
