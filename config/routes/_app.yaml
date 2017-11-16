@@ -1,0 +1,50 @@
+# Root route that redirects "/" to "/%locale%/"
+root:
+    path: /{_locale}
+    defaults:
+        _controller: FrameworkBundle:Redirect:urlRedirect
+        path: '/%locale%/'
+        permanent: true
+        _locale: '%locale%'
+    requirements:
+        _locale: '^(?:%locales_regex%)$'
+    methods: ['GET']
+
+user:
+    resource: 'user.yaml'
+    prefix: '/{_locale}/'
+    defaults: { locale: '%locale%' }
+    requirements: { _locale: '^(?:%locales_regex%)$' }
+
+corahnrin:
+    resource: 'corahnrin.yaml'
+    prefix: '/{_locale}/'
+    defaults: { locale: '%locale%' }
+    requirements: { _locale: '^(?:%locales_regex%)$' }
+
+esterenmaps:
+    resource: 'esterenmaps.yaml'
+    prefix: '/{_locale}/'
+    defaults: { locale: '%locale%' }
+    requirements: { _locale: '^(?:%locales_regex%)$' }
+
+agate:
+    resource: "@AgateBundle/Controller/"
+    type: annotation
+    prefix: '/{_locale}/'
+    defaults: { locale: '%locale%' }
+    requirements: { _locale: '^(?:%locales_regex%)$' }
+
+esteren_portal:
+    resource: '@EsterenPortalBundle/Controller/'
+    type: annotation
+    host: '%esteren_domains.portal%'
+    prefix: '/{_locale}/'
+    defaults: { locale: '%locale%' }
+    requirements: { _locale: '^(?:%locales_regex%)$' }
+
+admin:
+    resource: 'easy_admin.yaml'
+    prefix: '/{_locale}/'
+    defaults: { locale: '%locale%' }
+    requirements: { _locale: '^(?:%locales_regex%)$' }

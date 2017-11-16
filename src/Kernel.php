@@ -54,14 +54,12 @@ class Kernel extends BaseKernel
         $confDir = dirname(__DIR__).'/config';
 
         // Load environment-specific routes that match "_{env}.{ext}"
+        // The advantage is that we can easily define routes in the order we want.
+        // And we want order...
         if (file_exists($confDir.'/routes/_'.$this->environment.'.yaml')) {
-            $routes->import($confDir.'/routes/_'.$this->environment.'.yaml', '', 'yaml');
+            $routes->import($confDir.'/routes/_'.$this->environment.'.yaml', null, 'yaml');
+        } else {
+            throw new \RuntimeException(sprintf('Route file for environment %s does not exist.', $this->environment));
         }
-
-        // Load main router.
-        $routes
-            ->import($confDir.'/routes/_main.yaml')
-            ->setSchemes(['prod' === $this->environment ? 'https' : 'http'])
-        ;
     }
 }

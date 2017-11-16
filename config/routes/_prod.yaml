@@ -1,0 +1,3 @@
+main:
+    resource: "_app.yaml"
+    schemes: [https]

@@ -6,3 +6,7 @@ templates:
 
 twig:
     resource: "dev/twig.yaml"
+
+main:
+    resource: "_app.yaml"
+    schemes: [http]

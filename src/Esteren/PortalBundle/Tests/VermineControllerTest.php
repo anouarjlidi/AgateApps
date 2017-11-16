@@ -15,6 +15,28 @@ use Tests\WebTestCase;
 
 class VermineControllerTest extends WebTestCase
 {
+    public function testRootRedirectsToIndex()
+    {
+        $client = $this->getClient('www.vermine2047.dev');
+
+        $client->request('GET', '/');
+        $res = $client->getResponse();
+
+        static::assertSame(301, $res->getStatusCode());
+        static::assertSame('http://www.vermine2047.dev/fr/', $res->headers->get('Location'));
+    }
+
+    public function testIndexWithoutSlashRedirectsWithASlash()
+    {
+        $client = $this->getClient('www.vermine2047.dev');
+
+        $client->request('GET', '/fr');
+        $res = $client->getResponse();
+
+        static::assertSame(301, $res->getStatusCode());
+        static::assertSame('http://www.vermine2047.dev/fr/', $res->headers->get('Location'));
+    }
+
     public function testVermineLandingPage()
     {
         $client = $this->getClient('www.vermine2047.dev');

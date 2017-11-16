@@ -27,8 +27,8 @@ if (!file_exists($file)) {
 $autoload = require $file;
 unset($file);
 
-function runCommand(string $cmd): void {
-    $process = new Process($cmd);
+$runCommand = function (string $cmd) use ($rootDir): void {
+    $process = new Process('php '.$rootDir.'/bin/console '.$cmd);
     $process->setTimeout(180);
     $process->run(function ($type, $buffer) {
         if (Process::ERR === $type) {
@@ -40,11 +40,11 @@ function runCommand(string $cmd): void {
     if (!$process->isSuccessful()) {
         throw new ProcessFailedException($process);
     }
-}
+};
 
-if (!CLEAR_CACHE) {
-    runCommand('php '.$rootDir.'/bin/console cache:clear --no-warmup');
-    runCommand('php '.$rootDir.'/bin/console cache:warmup');
+if (CLEAR_CACHE) {
+    $runCommand('cache:clear --no-warmup');
+    $runCommand('cache:warmup');
 }
 
 $fs = new Filesystem();
@@ -73,9 +73,9 @@ if ($fs->exists(DATABASE_TEST_FILE)) {
     $fs->remove(DATABASE_TEST_FILE);
 }
 
-runCommand('php '.$rootDir.'/bin/console doctrine:database:create');
-runCommand('php '.$rootDir.'/bin/console doctrine:schema:create');
-runCommand('php '.$rootDir.'/bin/console doctrine:fixtures:load --append');
+$runCommand('doctrine:database:create');
+$runCommand('doctrine:schema:create');
+$runCommand('doctrine:fixtures:load --append');
 
 $fs->copy(DATABASE_TEST_FILE, DATABASE_REFERENCE_FILE);
 
