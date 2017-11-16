@@ -23,8 +23,10 @@ $kernel = new Kernel($_SERVER['APP_ENV'] ?? 'dev', $_SERVER['APP_DEBUG'] ?? fals
 $request = Request::createFromGlobals();
 
 if (($_ENV['HEROKU'] ?? '0') === '1') {
-    fwrite(STDERR, $s='Using proxy for heroku', strlen($s)+1);
-    Request::setTrustedProxies([$request->server->get('REMOTE_ADDR')], Request::HEADER_FORWARDED | Request::HEADER_X_FORWARDED_HOST);
+    Request::setTrustedProxies(
+        [$request->server->get('REMOTE_ADDR')],
+        Request::HEADER_FORWARDED | Request::HEADER_X_FORWARDED_FOR | Request::HEADER_X_FORWARDED_HOST | Request::HEADER_X_FORWARDED_PROTO
+    );
 }
 
 $response = $kernel->handle($request);
