@@ -132,12 +132,6 @@ server {
     add_header X-Frame-Options "SAMEORIGIN";
     add_header Strict-Transport-Security "max-age=31536000; includeSubdomains; preload";
 
-    # Redirects HTTP to HTTPS.
-    # You can safely remove this in development.
-    # if ($scheme = http) {
-    #     return 301 https://$http_host$request_uri;
-    # }
-
     # Avoids getting 404 errors for missing map tiles.
     location ~ ^/maps_tiles {
         try_files $uri @rewritemaptiles;
