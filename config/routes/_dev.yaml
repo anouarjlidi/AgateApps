@@ -9,4 +9,3 @@ twig:
 
 main:
     resource: "_app.yaml"
-    schemes: [http]

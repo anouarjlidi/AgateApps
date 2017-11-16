@@ -1,14 +1,14 @@
 # Root route that redirects "/" to "/%locale%/"
-root:
-    path: /{_locale}
-    defaults:
-        _controller: FrameworkBundle:Redirect:urlRedirect
-        path: '/%locale%/'
-        permanent: true
-        _locale: '%locale%'
-    requirements:
-        _locale: '^(?:%locales_regex%)$'
-    methods: ['GET']
+#root:
+#    path: /{_locale}
+#    defaults:
+#        _controller: FrameworkBundle:Redirect:urlRedirect
+#        path: '/%locale%/'
+#        permanent: true
+#        _locale: '%locale%'
+#    requirements:
+#        _locale: '^(?:%locales_regex%)$'
+#    methods: ['GET']
 
 user:
     resource: 'user.yaml'
