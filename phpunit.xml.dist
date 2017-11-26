@@ -27,8 +27,6 @@
         <env name="KERNEL_CLASS" value="Kernel" />
 
         <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak_vendors" />
-        <env name="DATABASE_URL_LEGACY" value="" />
-        <env name="MAILER_URL" value="null://localhost" />
         <env name="IMAGEMAGICK_BINARIES_PATH" value="/usr/bin" />
         <env name="AGATE_DOMAIN" value="studio-agate.dev" />
         <env name="ESTEREN_DOMAIN" value="esteren.dev" />
@@ -56,6 +54,7 @@
 
         <!-- ###+ doctrine/doctrine-bundle ### -->
         <env name="DATABASE_URL" value=""/>
+        <env name="DATABASE_URL_LEGACY" value="" />
         <!-- ###- doctrine/doctrine-bundle ### -->
 
         <!-- ###+ symfony/swiftmailer-bundle ### -->
