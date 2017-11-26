@@ -109,35 +109,6 @@
         }
     };
 
-    L.Polyline.prototype.calcDistance = function() {
-        var distance = 0,
-            points = this._latlngs,
-            i = 0,
-            l = points.length,
-            current, next;
-
-        // Same behavior as in the PHP entity, we override the distance in case we're "forcing" the distance manually.
-        if (this._esterenRoute.forced_distance) {
-            this._esterenRoute.distance = this._esterenRoute.forced_distance;
-
-            return this._esterenRoute.forced_distance;
-        }
-
-        do {
-            current = points[i];
-            next = points[i+1];
-            if (next) {
-                distance += L.CRS.XY.distance(current.getLatLng(), next.getLatLng());
-            }
-            i++;
-        } while (i < l);
-        if (this._esterenRoute) {
-            this._esterenRoute.distance = distance;
-        }
-
-        return distance;
-    };
-
     L.Polyline.prototype._updateEM = function() {
         var baseRoute = this,
             esterenRoute = EsterenMap.prototype.cloneObject.call(null, this._esterenRoute || null),
@@ -145,6 +116,7 @@
             callbackMessage = '',
             callbackMessageType = 'success',
             id = esterenRoute.id || null;
+
         if (esterenRoute && this._map && !this.launched && esterenRoute.marker_start && esterenRoute.marker_end) {
             esterenRoute.map = esterenRoute.map || {id: this._esterenMap._mapOptions.id };
             esterenRoute.coordinates = JSON.stringify(this._latlngs ? this._latlngs : {});
@@ -154,7 +126,6 @@
             esterenRoute.faction = esterenRoute.faction || {};
             esterenRoute.guarded = !!esterenRoute.guarded;
             esterenRoute.forced_distance = esterenRoute.forced_distance || '';
-            this.calcDistance();
             this.launched = true;
             this._esterenMap._load({
                 url: "routes" + (id ? '/'+id : ''),
