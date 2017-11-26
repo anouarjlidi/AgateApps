@@ -70,3 +70,10 @@ admin:
     prefix: '/{_locale}/'
     defaults: { locale: '%locale%' }
     requirements: { _locale: '^(?:%locales_regex%)$' }
+
+# Loaded at the VERY END because we NEED this to be used as a fallback for all other routes.
+cms:
+    resource: 'orbitale_cms.yaml'
+    prefix: '/{_locale}/'
+    defaults: { locale: '%locale%' }
+    requirements: { _locale: '^(?:%locales_regex%)$' }
