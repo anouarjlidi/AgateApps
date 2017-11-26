@@ -20,12 +20,10 @@
                 <div id="maps_admin_container">
                     {% embed 'esteren_maps/menu/show_hide.html.twig' %}
                         {% block map_edit_menu %}
-                            <li data-toggle="tooltip">
-                                <button data-toggle-class="btn-info btn-inverse red lighten-5" id="hide_routes" class="btn btn-info" type="button" title="{{ 'admin.back_to_admin'|trans({}, 'EsterenMaps') }}">
-                                    <span class="fa fa-eye"></span>
-                                    {{- 'admin.back_to_admin' | trans({}, 'EsterenMaps') -}}
-                                </button>
-                            </li>
+                            <a href="{{ url('easyadmin', {'entity': 'Maps'}) }}" class="btn btn-small red lighten-5 black-text" type="button" title="{{ 'admin.back_to_admin'|trans({}, 'EsterenMaps') }}">
+                                <span class="fa fa-arrow-left"></span>
+                                {{ 'admin.back_to_admin' | trans({}, 'EsterenMaps') -}}
+                            </a>
                             {{ parent() }}
                         {% endblock %}
                     {% endembed %}
@@ -53,7 +51,7 @@
                     editMode: true,
                     showDirections: false,
                     apiUrls: {
-                        map: "{{ url('esterenmaps_api_map_get', {"id": map.id}) }}",
+                        map: "{{ url('esterenmaps_api_map_get_editmode', {"id": map.id}) }}",
                         directions: "{{ url('esterenmaps_directions', {
                             "id": map.id,
                             'from': '9999',
@@ -74,8 +72,7 @@
                         tileSize: {{ tile_size }}
                     },
                     cacheTTL: 0,
-                    autoResize: true,
-                    containerHeight: 'calc(100% - 180px)'
+                    autoResize: true
                 });
             } catch (e) {
                 console.error(e);
