@@ -27,27 +27,3 @@ if (!String.prototype.trim) {
         return this.replace(/^\s+|\s+$/g, '');
     };
 }
-
-/**
- * Merges two objects recursively
- * @param targetObject object
- * @param sourceObject object
- * @returns {*}
- */
-function mergeRecursive (targetObject, sourceObject) {
-    var property;
-    if (!targetObject) { targetObject = {}; }
-    if (!sourceObject) { sourceObject = {}; }
-    for (property in sourceObject) {
-        if (sourceObject.hasOwnProperty(property)) {
-            try {
-                targetObject[property] =
-                    (sourceObject[property].constructor == Object)
-                        ? this.mergeRecursive(targetObject[property], sourceObject[property])
-                        : sourceObject[property];
-            }
-            catch(e) { targetObject[property] = sourceObject[property]; }
-        }
-    }
-    return targetObject;
-}
