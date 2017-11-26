@@ -7,8 +7,6 @@
      * @constructor
      */
     var EsterenMap = function (userMapOptions) {
-        var _this = this;
-
         if (!userMapOptions.id) {
             throw 'Map id must be defined';
         }
@@ -91,7 +89,7 @@
 
         // Add sidebar if configured.
         if (mapOptions.sidebarContainer && d.getElementById(mapOptions.sidebarContainer)) {
-            sidebar = L.control.sidebar(mapOptions.sidebarContainer, {
+            sidebar = new L.Control.Sidebar(mapOptions.sidebarContainer, {
                 position: 'right',
                 closeButton: true,
                 autoPan: false
@@ -104,6 +102,9 @@
                 }
             });
             this._sidebar = sidebar;
+            sidebar.on('show', function(){
+                _enableJsComponents(sidebar._contentContainer);
+            });
         }
 
         if (mapOptions.showFilters === true) {
@@ -249,10 +250,6 @@
 
     EsterenMap.prototype.loadMapData = function(){
         var _this = this, data = {};
-
-        if (true === this._mapOptions.editMode) {
-            data.editMode = 'true';
-        }
 
         return this._load({
             url: this._mapOptions.apiUrls.map,
