@@ -22,7 +22,8 @@ Element.prototype.toggleClass = function (toggledClass) {
 };
 
 if (!String.prototype.trim) {
-    // Méthode .trim() pour toutes les chaînes de caractères
+    // .trim() for all string objects
+    console.warn('Applied .trim() polyfill.');
     String.prototype.trim = function(){
         return this.replace(/^\s+|\s+$/g, '');
     };
