@@ -1,6 +1,11 @@
-(function($, d){$(function(){
+window._enableJsComponents = null;
 
-    var enableJsComponents = function (context) {
+(function($, d){
+    "use strict";
+
+    function enableJsComponents(context) {
+        console.log('Resetting JS components in context:', context);
+
         // Automatically activate button collapse "side" navigation
         if (context.querySelector('.button-collapse')) {
             $('.button-collapse').sideNav();
@@ -26,17 +31,22 @@
             $('select').material_select();
         }
 
+        if (context.querySelector('.chips')) {
+            $('.chips').material_chip();
+        }
+
         // Automatically activate dropdowns if there are some
         if (context.querySelector('.dropdown-button')) {
             $('.dropdown-button').dropdown();
         }
-    };
+    }
 
     // Manage the "disable tags" cookie CNIL requirement
-    if (context.querySelector('button.disable_tags')) {
-        context.addEventListener('click', function(e){
+    var button = d.querySelector('button.disable_tags');
+    if (button) {
+        button.addEventListener('click', function(e){
             if (e.target.tagName.toLowerCase() === 'button' && e.target.className.match('disable_tags')) {
-                context.cookie = "disable_tags=1";
+                d.cookie = "disable_tags=1";
                 e.target.innerHTML = 'OK';
             }
         });
@@ -44,5 +54,5 @@
 
     enableJsComponents(d);
 
-    d.parentWindow.enableJsComponents = enableJsComponents;
-})})(jQuery, document);
+    window._enableJsComponents = enableJsComponents;
+})(jQuery, document);
