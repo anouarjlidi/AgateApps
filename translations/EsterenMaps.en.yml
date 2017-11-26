@@ -8,8 +8,10 @@ entities:
     maps:
         single_view: Map
         title: Maps
+
 admin:
     edit_map: Edit the map
+    back_to_admin: Back to administration
 
 travel:
     duration_estimated: Estimated travel duration
