@@ -295,7 +295,6 @@ const pump       = require('pump');
 const glob       = require('glob');
 const gulp       = require('gulp4');
 const gulpif     = require('gulp-if');
-const watch      = require('gulp-watch');
 const concat     = require('gulp-concat');
 const uglify     = require('gulp-uglify');
 const cleancss   = require('gulp-clean-css');
@@ -597,6 +596,34 @@ gulp.task('watch', gulp.series('dump', gulp.parallel(function(done) {
         },
         callback = function(event) {
             console.log('File "' + event + '" updated');
+
+            let envFile = __dirname + path.sep + '.env';
+            fs.exists(envFile, function(exists) {
+                if (!exists) {
+                    console.log('No env file.');
+                    done();
+                    return;
+                }
+
+                console.log('Opening env file ' + envFile);
+                fs.readFile(envFile, 'utf8', function(err, fileData){
+                    if (err) {
+                        return done();
+                    }
+
+                    if (!fileData.match('HEROKU_RELEASE_VERSION')) {
+                        fileData += "\nHEROKU_RELEASE_VERSION=\"v0\"\n";
+                    }
+
+                    fileData = fileData.replace(/HEROKU_RELEASE_VERSION=("?v?)(\d+)("?)/g, function(match, p1, versionNumber, p2) {
+                        console.log('Current version is ' + versionNumber + '. Upgrading to ' + (++versionNumber));
+
+                        return 'HEROKU_RELEASE_VERSION=' + p1 + versionNumber + p2;
+                    });
+
+                    fs.writeFile(envFile, fileData, done);
+                });
+            });
         }
     ;
 
