@@ -46,7 +46,7 @@ class Flux
 
     public function __toString()
     {
-        return $this->id.' - '.$this->name;
+        return $this->name;
     }
 
     /**

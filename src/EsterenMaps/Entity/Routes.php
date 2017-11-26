@@ -138,7 +138,7 @@ class Routes implements EntityToClearInterface
 
     public function __toString()
     {
-        return $this->id.' - '.$this->name;
+        return $this->name;
     }
 
     /**
