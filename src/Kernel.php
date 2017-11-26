@@ -10,21 +10,21 @@ class Kernel extends BaseKernel
 {
     use MicroKernelTrait;
 
-    const CONFIG_EXTS = '.{php,xml,yaml,yml}';
+    private const CONFIG_EXTS = '.{php,xml,yaml,yml}';
 
-    public function getCacheDir(): string
+    public function getCacheDir()
     {
-        return dirname(__DIR__).'/var/cache/'.$this->environment;
+        return $this->getProjectDir().'/var/cache/'.$this->environment;
     }
 
-    public function getLogDir(): string
+    public function getLogDir()
     {
-        return dirname(__DIR__).'/var/log';
+        return $this->getProjectDir().'/var/log';
     }
 
     public function registerBundles()
     {
-        $contents = require dirname(__DIR__).'/config/bundles.php';
+        $contents = require $this->getProjectDir().'/config/bundles.php';
         foreach ($contents as $class => $envs) {
             if (isset($envs['all']) || isset($envs[$this->environment])) {
                 yield new $class();
@@ -34,7 +34,10 @@ class Kernel extends BaseKernel
 
     protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader)
     {
-        $confDir = dirname(__DIR__).'/config';
+        $container->setParameter('container.autowiring.strict_mode', true);
+        $container->setParameter('container.dumper.inline_class_loader', true);
+
+        $confDir = $this->getProjectDir().'/config';
 
         // Load packages files.
         $loader->load($confDir.'/packages/*'.self::CONFIG_EXTS, 'glob');
@@ -49,15 +52,19 @@ class Kernel extends BaseKernel
 
     protected function configureRoutes(RouteCollectionBuilder $routes)
     {
-        $confDir = dirname(__DIR__).'/config';
+        $routesDir = $this->getProjectDir().'/config/routes';
+
+        $env = $this->environment;
+
+        $routeFile = "$routesDir/_$env.yaml";
 
         // Load environment-specific routes that match "_{env}.{ext}"
         // The advantage is that we can easily define routes in the order we want.
         // And we want order...
-        if (file_exists($confDir.'/routes/_'.$this->environment.'.yaml')) {
-            $routes->import($confDir.'/routes/_'.$this->environment.'.yaml', null, 'yaml');
+        if (file_exists($routeFile)) {
+            $routes->import($routeFile, null, 'yaml');
         } else {
-            throw new \RuntimeException(sprintf('Route file for environment %s does not exist.', $this->environment));
+            throw new \RuntimeException(sprintf('Route file for environment %s does not exist.', $env));
         }
     }
 }
