@@ -51,6 +51,7 @@
         <env name="APP_ENV" value="test"/>
         <env name="APP_DEBUG" value="0"/>
         <env name="APP_SECRET" value="54528f71f41df46312ac7a9029e74104"/>
+        <env name="SHELL_VERBOSITY" value="-1" />
         <!-- ###- symfony/framework-bundle ### -->
 
         <!-- ###+ doctrine/doctrine-bundle ### -->
