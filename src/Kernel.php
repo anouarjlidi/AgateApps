@@ -34,8 +34,6 @@ class Kernel extends BaseKernel
 
     protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader)
     {
-        $container->setParameter('container.autowiring.strict_mode', true);
-
         $confDir = dirname(__DIR__).'/config';
 
         // Load packages files.
