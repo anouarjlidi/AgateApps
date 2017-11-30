@@ -11,12 +11,17 @@
 
 namespace EsterenMaps\MapsBundle\Repository;
 
-use Doctrine\ORM\Query;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use EsterenMaps\MapsBundle\Entity\Routes;
-use Orbitale\Component\DoctrineTools\BaseEntityRepository as BaseRepository;
+use Doctrine\Common\Persistence\ManagerRegistry;
 
-class RoutesRepository extends BaseRepository
+class RoutesRepository extends ServiceEntityRepository
 {
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, Routes::class);
+    }
+
     public function findForApiByMap($mapId)
     {
         $query = $this->createQueryBuilder('route')

@@ -11,10 +11,17 @@
 
 namespace EsterenMaps\MapsBundle\Repository;
 
-use Orbitale\Component\DoctrineTools\BaseEntityRepository as BaseRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use EsterenMaps\MapsBundle\Entity\TransportTypes;
+use Doctrine\Common\Persistence\ManagerRegistry;
 
-class TransportTypesRepository extends BaseRepository
+class TransportTypesRepository extends ServiceEntityRepository
 {
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, TransportTypes::class);
+    }
+
     public function findForApi()
     {
         $query = $this->createQueryBuilder('transport_type')

@@ -14,14 +14,14 @@ namespace EsterenMaps\MapsBundle\Controller;
 use EsterenMaps\MapsBundle\Entity\Maps;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @Security("has_role('ROLE_MANAGER')")
  * @Route(host="%esteren_domains.backoffice%")
  */
-class AdminMapsController extends Controller
+class AdminMapsController extends AbstractController
 {
     /**
      * @Route("/maps/edit-interactive/{id}", name="admin_esterenmaps_maps_maps_editInteractive", methods={"GET"})

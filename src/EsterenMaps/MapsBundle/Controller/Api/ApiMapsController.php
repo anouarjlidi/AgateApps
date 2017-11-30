@@ -11,38 +11,49 @@
 
 namespace EsterenMaps\MapsBundle\Controller\Api;
 
+use EsterenMaps\MapsBundle\Api\MapApi;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\{
+    JsonResponse, Request
+};
 
 /**
  * @Route(host="%esteren_domains.api%")
  */
-class ApiMapsController extends Controller
+class ApiMapsController extends AbstractController
 {
+    private $debug;
+    private $api;
+    private $versionCode;
+
+    public function __construct(bool $debug, string $versionCode, MapApi $api)
+    {
+        $this->debug = $debug;
+        $this->api = $api;
+        $this->versionCode = $versionCode;
+    }
+
     /**
      * @Route("/maps/{id}", name="esterenmaps_api_map_get", requirements={"id"="\d+"}, methods={"GET"})
      */
     public function getAction(int $id, Request $request): JsonResponse
     {
-        $mapApi = $this->get('esterenmaps.api.map');
-
         $response = new JsonResponse();
-        $response->setLastModified($mapApi->getLastUpdateTime($id));
+        $response->setLastModified($this->api->getLastUpdateTime($id));
 
         if ($response->isNotModified($request)) {
             return $response;
         }
 
-        $data = $mapApi->getMap($id);
+        $data = $this->api->getMap($id);
 
         $response->setData($data);
 
-        if (!$this->getParameter('kernel.debug')) {
+        if (!$this->debug) {
             $response->setCache([
-                'etag'          => sha1('map'.$id.$this->getParameter('version_code')),
-                'last_modified' => new \DateTime($mapApi->getLastUpdateTime($id)),
+                'etag'          => sha1('map'.$id.$this->versionCode),
+                'last_modified' => new \DateTime($this->api->getLastUpdateTime($id)),
                 'max_age'       => 600,
                 's_maxage'      => 600,
                 'public'        => true,

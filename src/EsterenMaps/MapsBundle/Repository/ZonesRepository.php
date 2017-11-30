@@ -11,10 +11,17 @@
 
 namespace EsterenMaps\MapsBundle\Repository;
 
-use Orbitale\Component\DoctrineTools\BaseEntityRepository as BaseRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use EsterenMaps\MapsBundle\Entity\Zones;
+use Doctrine\Common\Persistence\ManagerRegistry;
 
-class ZonesRepository extends BaseRepository
+class ZonesRepository extends ServiceEntityRepository
 {
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, Zones::class);
+    }
+
     public function findForApiByMap($mapId)
     {
         $query = $this->createQueryBuilder('zone')

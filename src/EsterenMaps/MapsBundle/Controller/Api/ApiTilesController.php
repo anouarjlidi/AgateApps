@@ -11,28 +11,33 @@
 
 namespace EsterenMaps\MapsBundle\Controller\Api;
 
-use EsterenMaps\MapsBundle\Form\MapImageType;
 use EsterenMaps\MapsBundle\Entity\Maps;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
+use EsterenMaps\MapsBundle\Form\MapImageType;
+use EsterenMaps\MapsBundle\Services\MapsTilesManager;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Response;
 
-class ApiTilesController extends Controller
+class ApiTilesController extends AbstractController
 {
+    private $outputDirectory;
+    private $tilesManager;
+
+    public function __construct(
+        string $outputDirectory,
+        MapsTilesManager $tilesManager
+    ) {
+        $this->outputDirectory = $outputDirectory;
+        $this->tilesManager = $tilesManager;
+    }
+
     /**
      * @Route("/maps/image/{id}", requirements={"id": "\d+"}, name="esterenmaps_generate_map_image", methods={"GET"})
-     * @Cache(expires="+1 day", public=true)
-     *
-     * @param Request $request
-     * @param Maps    $map
-     *
-     * @return Response
      */
-    public function generateMapImageAction(Request $request, Maps $map)
+    public function generateMapImageAction(Request $request, Maps $map): Response
     {
         $form = $this->createForm(new MapImageType());
 
@@ -41,18 +46,22 @@ class ApiTilesController extends Controller
         if ($form->isValid()) {
             $data = $form->getData();
             try {
-                return new BinaryFileResponse(
-                    $this->get('esterenmaps')->getTilesManager()->setMap($map)->createImage($data['ratio'], $data['x'], $data['y'], $data['width'], $data['height'], $data['withImages']),
-                    200,
-                    ['Content-Type' => 'image/jpeg']
-                );
+                $image = $this->tilesManager->setMap($map)->createImage($data['ratio'], $data['x'], $data['y'], $data['width'], $data['height'], $data['withImages']);
+
+                $response = (new BinaryFileResponse(
+                        $image,
+                        200,
+                        ['Content-Type' => 'image/jpeg']
+                    ))
+                    ->setPublic()
+                    ->setExpires(new \DateTime('+1 day'))
+                ;
+
+                return $response;
             } catch (\Exception $e) {
                 $message = '';
                 do {
-                    if ($message) {
-                        $message .= "\n";
-                    }
-                    $message .= $e->getMessage();
+                    $message .= ($message ? "\n" : '').$e->getMessage();
                 } while ($e = $e->getPrevious());
 
                 return new JsonResponse([
@@ -62,7 +71,7 @@ class ApiTilesController extends Controller
             }
         } else {
             $messages = [];
-            foreach ($form->getErrors(true, true) as $error) {
+            foreach ($form->getErrors(true) as $error) {
                 $field      = $error->getOrigin()->getName();
                 $messages[] = $this->get('translator')->trans('field_error', ['%field%' => $field], 'validators').': '.$error->getMessage();
             }
@@ -76,25 +85,20 @@ class ApiTilesController extends Controller
 
     /**
      * @Route("/maps/tile/{id}/{zoom}/{x}/{y}.jpg", requirements={"id": "\d+"}, name="esterenmaps_api_tiles", methods={"GET"})
-     * @Cache(maxage="864000", expires="+10 days")
-     *
-     * @param Maps $map
-     * @param int  $zoom
-     * @param int  $x
-     * @param int  $y
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function tileAction(Maps $map, $zoom, $x, $y)
+    public function tileAction(Maps $map, int $zoom, int $x, int $y): Response
     {
-        $outputDirectory = $this->container->getParameter('esterenmaps.output_directory');
-
-        $file = $outputDirectory.$map->getId().'/'.(int) $zoom.'/'.(int) $x.'/'.(int) $y.'.jpg';
+        $file = $this->outputDirectory.$map->getId().'/'.(int) $zoom.'/'.(int) $x.'/'.(int) $y.'.jpg';
 
         if (!file_exists($file)) {
-            $file = $outputDirectory.'/empty.jpg';
+            $file = $this->outputDirectory.'/empty.jpg';
         }
 
-        return new BinaryFileResponse($file, 200, ['Content-Type' => 'image/jpeg']);
+        $response = (new BinaryFileResponse($file, 200, ['Content-Type' => 'image/jpeg']))
+            ->setMaxAge('864000')
+            ->setExpires(new \DateTime('+10 days'))
+        ;
+
+        return $response;
     }
 }
