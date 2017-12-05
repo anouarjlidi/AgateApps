@@ -12,7 +12,9 @@
 namespace CorahnRin\CorahnRinBundle\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Orbitale\Component\DoctrineTools\EntityRepositoryHelperTrait;
 
-class PeopleRepository extends ServiceEntityRepository
+class WaysRepository extends ServiceEntityRepository
 {
+    use EntityRepositoryHelperTrait;
 }

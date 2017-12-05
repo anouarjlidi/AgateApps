@@ -19,7 +19,9 @@ use Tests\WebTestCase as PiersTestCase;
 
 abstract class AbstractEasyAdminTest extends WebTestCase
 {
-    use PiersTestCase;
+    use PiersTestCase {
+        getClient as baseGetClient;
+    }
 
     /**
      * Returns the entity name in the backend.
@@ -345,10 +347,11 @@ abstract class AbstractEasyAdminTest extends WebTestCase
         if (null === $host) {
             $host = 'back.esteren.dev';
         }
+
         if (0 === count($tokenRoles)) {
             $tokenRoles[] = 'ROLE_ADMIN';
         }
 
-        return parent::getClient($host, $kernelOptions, is_array($tokenRoles) ? $tokenRoles : [$tokenRoles]);
+        return $this->baseGetClient($host, $kernelOptions, (array) $tokenRoles, $server);
     }
 }

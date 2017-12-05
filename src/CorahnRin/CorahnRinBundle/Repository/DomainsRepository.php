@@ -12,9 +12,9 @@
 namespace CorahnRin\CorahnRinBundle\Repository;
 
 use CorahnRin\CorahnRinBundle\Entity\Domains;
-use Orbitale\Component\DoctrineTools\BaseEntityRepository as BaseRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
-class DomainsRepository extends BaseRepository
+class DomainsRepository extends ServiceEntityRepository
 {
     /**
      * @return Domains[]

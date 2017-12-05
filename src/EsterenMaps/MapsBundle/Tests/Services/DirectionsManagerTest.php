@@ -11,11 +11,12 @@
 
 namespace EsterenMaps\MapsBundle\Tests\Services;
 
+use EsterenMaps\MapsBundle\Controller\Api\ApiDirectionsController;
 use EsterenMaps\MapsBundle\Entity\Maps;
 use EsterenMaps\MapsBundle\Entity\Markers;
 use EsterenMaps\MapsBundle\Entity\TransportTypes;
-use EsterenMaps\MapsBundle\Services\DirectionsManager;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\HttpFoundation\Request;
 use Tests\WebTestCase as PiersTestCase;
 
 class DirectionsManagerTest extends WebTestCase
@@ -39,7 +40,8 @@ class DirectionsManagerTest extends WebTestCase
 
         $em = $container->get('doctrine.orm.default_entity_manager');
 
-        $directions = $container->get(DirectionsManager::class);
+        /** @var ApiDirectionsController $directions */
+        $directions = $container->get(ApiDirectionsController::class);
 
         /** @var Maps $map */
         $map = $em->getRepository(Maps::class)->findOneBy(['nameSlug' => $map]);
@@ -52,11 +54,18 @@ class DirectionsManagerTest extends WebTestCase
         /** @var Markers $to */
         $to = $markersRepo->find($to);
 
+        $request = new Request();
+        $request->headers->addCacheControlDirective('no-cache');
+        $request->query->set('hours_per_day', 7);
+
         if ($transport) {
             $transport = $em->getRepository(TransportTypes::class)->findOneBy(['slug' => $transport]);
+            $request->query->set('transport', $transport->getId());
         }
 
-        $dirs = $directions->getDirections($map, $from, $to, 7, $transport);
+        $response = $directions->getDirectionsAction($map, $from, $to, $request);
+
+        $dirs = json_decode($response->getContent(), true);
 
         foreach ($expectedData as $key => $expectedValue) {
             static::assertArrayHasKey($key, $dirs);
@@ -147,12 +156,12 @@ class DirectionsManagerTest extends WebTestCase
                     ],
                     'bounds'          => [
                         'northEast' => [
-                            'lat' => 10.0,
-                            'lng' => 10.0,
+                            'lat' => 10,
+                            'lng' => 10,
                         ],
                         'southWest' => [
-                            'lat' => 0.0,
-                            'lng' => 0.0,
+                            'lat' => 0,
+                            'lng' => 0,
                         ],
                     ],
                 ],
@@ -175,12 +184,12 @@ class DirectionsManagerTest extends WebTestCase
                     ],
                     'bounds'          => [
                         'northEast' => [
-                            'lat' => 10.0,
-                            'lng' => 10.0,
+                            'lat' => 10,
+                            'lng' => 10,
                         ],
                         'southWest' => [
-                            'lat' => 0.0,
-                            'lng' => 0.0,
+                            'lat' => 0,
+                            'lng' => 0,
                         ],
                     ],
                 ],
@@ -203,12 +212,12 @@ class DirectionsManagerTest extends WebTestCase
                     ],
                     'bounds'          => [
                         'northEast' => [
-                            'lat' => 10.0,
-                            'lng' => 10.0,
+                            'lat' => 10,
+                            'lng' => 10,
                         ],
                         'southWest' => [
-                            'lat' => 0.0,
-                            'lng' => 0.0,
+                            'lat' => 0,
+                            'lng' => 0,
                         ],
                     ],
                 ],
@@ -223,7 +232,7 @@ class DirectionsManagerTest extends WebTestCase
                     'found'           => true,
                     'from_cache'      => false,
                     'number_of_steps' => 0,
-                    'total_distance'  => 300.0,
+                    'total_distance'  => 300,
                     'duration_raw'    => 'P0Y0M1DT13H30M0S',
                     'duration_real'   => [
                         'days' => 5,
@@ -231,12 +240,12 @@ class DirectionsManagerTest extends WebTestCase
                     ],
                     'bounds'          => [
                         'northEast' => [
-                            'lat' => 20.0,
-                            'lng' => 10.0,
+                            'lat' => 20,
+                            'lng' => 10,
                         ],
                         'southWest' => [
-                            'lat' => 0.0,
-                            'lng' => -10.0,
+                            'lat' => 0,
+                            'lng' => -10,
                         ],
                     ],
                 ],
@@ -251,7 +260,7 @@ class DirectionsManagerTest extends WebTestCase
                     'found'           => true,
                     'from_cache'      => false,
                     'number_of_steps' => 1,
-                    'total_distance'  => 350.0,
+                    'total_distance'  => 350,
                     'duration_raw'    => 'P0Y0M1DT19H45M0S',
                     'duration_real'   => [
                         'days' => 6,
@@ -259,12 +268,12 @@ class DirectionsManagerTest extends WebTestCase
                     ],
                     'bounds'          => [
                         'northEast' => [
-                            'lat' => 20.0,
-                            'lng' => 10.0,
+                            'lat' => 20,
+                            'lng' => 10,
                         ],
                         'southWest' => [
-                            'lat' => 0.0,
-                            'lng' => -10.0,
+                            'lat' => 0,
+                            'lng' => -10,
                         ],
                     ],
                 ],

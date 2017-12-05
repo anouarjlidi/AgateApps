@@ -6,7 +6,7 @@ services:
     _defaults:
         autowire: true
         autoconfigure: true
-#        public: false
+        public: false
         bind:
             $debug:           '%kernel.debug%'
             $imageMagickPath: '%magick_binaries_path%'
@@ -15,15 +15,12 @@ services:
             $versionCode:     '%version_code%'
             $versionDate:     '%version_date%'
 
+    EsterenMaps\MapsBundle\:
+        resource: '../../{Api,Cache,Repository,Services,Twig}'
+
     EsterenMaps\MapsBundle\Controller\:
         resource: '../../Controller'
         public: true
-
-    EsterenMaps\MapsBundle\Api\:        { resource: '../../Api' }
-    EsterenMaps\MapsBundle\Cache\:      { resource: '../../Cache' }
-    EsterenMaps\MapsBundle\Repository\: { resource: '../../Repository' }
-    EsterenMaps\MapsBundle\Services\:   { resource: '../../Services' }
-    EsterenMaps\MapsBundle\Twig\:       { resource: '../../Twig' }
 
     EsterenMaps\MapsBundle\DoctrineListeners\CacheClearSubscriber:
         tags: [{ name: doctrine.event_subscriber, connection: default }]

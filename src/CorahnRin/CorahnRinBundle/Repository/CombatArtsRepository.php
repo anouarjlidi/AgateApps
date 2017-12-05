@@ -12,9 +12,9 @@
 namespace CorahnRin\CorahnRinBundle\Repository;
 
 use CorahnRin\CorahnRinBundle\Entity\CombatArts;
-use Orbitale\Component\DoctrineTools\BaseEntityRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
-final class CombatArtsRepository extends BaseEntityRepository
+final class CombatArtsRepository extends ServiceEntityRepository
 {
     /**
      * @return CombatArts[]

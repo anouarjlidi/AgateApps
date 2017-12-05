@@ -12,9 +12,9 @@
 namespace CorahnRin\CorahnRinBundle\Repository;
 
 use CorahnRin\CorahnRinBundle\Entity\Jobs;
-use Orbitale\Component\DoctrineTools\BaseEntityRepository as BaseRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
-class JobsRepository extends BaseRepository
+class JobsRepository extends ServiceEntityRepository
 {
     /**
      * Renvoie la liste des métiers triés par livre associé.

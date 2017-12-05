@@ -18,7 +18,7 @@ use Doctrine\ORM\Mapping as ORM;
  * SocialClasses.
  *
  * @ORM\Table(name="social_class")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="CorahnRin\CorahnRinBundle\Repository\SocialClassesRepository")
  */
 class SocialClasses
 {

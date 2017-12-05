@@ -12,9 +12,9 @@
 namespace CorahnRin\CorahnRinBundle\Repository;
 
 use CorahnRin\CorahnRinBundle\Entity\Weapons;
-use Orbitale\Component\DoctrineTools\BaseEntityRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
-final class WeaponsRepository extends BaseEntityRepository
+final class WeaponsRepository extends ServiceEntityRepository
 {
     /**
      * @return Weapons[]

@@ -23,7 +23,7 @@ class DefaultEasyAdminTest extends WebTestCase
      */
     public function testIndex()
     {
-        parent::resetDatabase();
+        static::resetDatabase();
 
         $client = $this->getClient('back.esteren.dev', [], 'ROLE_ADMIN');
 

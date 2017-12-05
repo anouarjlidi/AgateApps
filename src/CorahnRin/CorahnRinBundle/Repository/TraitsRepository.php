@@ -13,10 +13,13 @@ namespace CorahnRin\CorahnRinBundle\Repository;
 
 use CorahnRin\CorahnRinBundle\Entity\Traits;
 use CorahnRin\CorahnRinBundle\Entity\Ways;
-use Orbitale\Component\DoctrineTools\BaseEntityRepository as BaseRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Orbitale\Component\DoctrineTools\EntityRepositoryHelperTrait;
 
-class TraitsRepository extends BaseRepository
+class TraitsRepository extends ServiceEntityRepository
 {
+    use EntityRepositoryHelperTrait;
+
     /**
      * @return Traits[][]
      */

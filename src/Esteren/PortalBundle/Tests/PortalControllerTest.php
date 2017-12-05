@@ -42,7 +42,7 @@ class PortalControllerTest extends WebTestCase
 
     public function testIndexWithFrenchHomepage()
     {
-        parent::resetDatabase();
+        static::resetDatabase();
 
         $client = $this->getClient('portal.esteren.dev');
 
@@ -59,7 +59,7 @@ class PortalControllerTest extends WebTestCase
 
     public function testIndexWithEnglishHomepage()
     {
-        parent::resetDatabase();
+        static::resetDatabase();
 
         $client = $this->getClient('portal.esteren.dev');
 

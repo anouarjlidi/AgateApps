@@ -14,12 +14,15 @@ namespace EsterenMaps\MapsBundle\Repository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use EsterenMaps\MapsBundle\Entity\Markers;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Orbitale\Component\DoctrineTools\EntityRepositoryHelperTrait;
 
 /**
  * MarkersRepository.
  */
 class MarkersRepository extends ServiceEntityRepository
 {
+    use EntityRepositoryHelperTrait;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Markers::class);

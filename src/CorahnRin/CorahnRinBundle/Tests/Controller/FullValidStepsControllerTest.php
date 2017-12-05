@@ -105,7 +105,7 @@ class FullValidStepsControllerTest extends WebTestCase
         // Parse better message to show in phpunit's output if there is an error in the submitted form.
         $msg = 'Request does not redirect to next step "'.$nextStep.'".';
         if ($crawler->filter('#flash-messages')->count()) {
-            $msg .= $crawler->filter('#flash-messages')->text();
+            $msg .= trim($crawler->filter('#flash-messages')->text());
         }
 
         static::assertTrue($client->getResponse()->isRedirect('/fr/character/generate/'.$nextStep), $msg);

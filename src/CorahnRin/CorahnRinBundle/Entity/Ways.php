@@ -17,7 +17,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Ways.
  *
  * @ORM\Table(name="ways")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="CorahnRin\CorahnRinBundle\Repository\WaysRepository")
  */
 class Ways
 {

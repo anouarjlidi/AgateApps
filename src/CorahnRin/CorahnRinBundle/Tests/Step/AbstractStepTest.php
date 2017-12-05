@@ -17,7 +17,9 @@ use Symfony\Bundle\FrameworkBundle\Client;
 
 abstract class AbstractStepTest extends WebTestCase
 {
-    use PiersTestCase;
+    use PiersTestCase {
+        getClient as baseGetClient;
+    }
 
     /**
      * {@inheritdoc}
@@ -28,7 +30,7 @@ abstract class AbstractStepTest extends WebTestCase
             $host = 'corahnrin.esteren.dev';
         }
 
-        return parent::getClient($host, $kernelOptions, $tokenRoles, $server);
+        return $this->baseGetClient($host, $kernelOptions, $tokenRoles, $server);
     }
 
     protected function getStepName(): string

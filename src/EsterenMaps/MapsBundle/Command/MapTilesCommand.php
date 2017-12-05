@@ -12,6 +12,7 @@
 namespace EsterenMaps\MapsBundle\Command;
 
 use EsterenMaps\MapsBundle\Entity\Maps;
+use EsterenMaps\MapsBundle\Services\MapsTilesManager;
 use Orbitale\Component\DoctrineTools\BaseEntityRepository;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
@@ -83,7 +84,7 @@ class MapTilesCommand extends ContainerAwareCommand
 
         $io->comment('Generating map tiles for "'.$map->getName().'"');
 
-        $tilesManager = $this->getContainer()->get('esterenmaps')->getTilesManager();
+        $tilesManager = $this->getContainer()->get(MapsTilesManager::class);
 
         // This is a workaround to allow images to be stored with either global path or relative path
         if (!file_exists($map->getImage())) {

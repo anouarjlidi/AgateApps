@@ -67,7 +67,7 @@ trait StepsWithDomainsTrait
     protected function getClientWithRequirements($requirements): Client
     {
         /** @var Client $client */
-        $client = parent::getClient();
+        $client = $this->getClient();
 
         /** @var Session $session */
         $session = $client->getContainer()->get('session');

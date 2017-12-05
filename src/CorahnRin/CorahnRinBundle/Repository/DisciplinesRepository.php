@@ -12,9 +12,9 @@
 namespace CorahnRin\CorahnRinBundle\Repository;
 
 use CorahnRin\CorahnRinBundle\Entity\Disciplines;
-use Orbitale\Component\DoctrineTools\BaseEntityRepository as BaseRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
-class DisciplinesRepository extends BaseRepository
+class DisciplinesRepository extends ServiceEntityRepository
 {
     /**
      * @param int[] $domainsIds

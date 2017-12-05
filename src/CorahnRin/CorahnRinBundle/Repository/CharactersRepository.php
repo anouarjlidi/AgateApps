@@ -12,10 +12,10 @@
 namespace CorahnRin\CorahnRinBundle\Repository;
 
 use CorahnRin\CorahnRinBundle\Entity\Characters;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
-use Orbitale\Component\DoctrineTools\BaseEntityRepository as BaseRepository;
 
-class CharactersRepository extends BaseRepository
+class CharactersRepository extends ServiceEntityRepository
 {
     /**
      * Get a Characters object with all its data.

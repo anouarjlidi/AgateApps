@@ -12,9 +12,9 @@
 namespace CorahnRin\CorahnRinBundle\Repository;
 
 use CorahnRin\CorahnRinBundle\Entity\Disorders;
-use Orbitale\Component\DoctrineTools\BaseEntityRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
-class DisordersRepository extends BaseEntityRepository
+class DisordersRepository extends ServiceEntityRepository
 {
     /**
      * @return Disorders[]

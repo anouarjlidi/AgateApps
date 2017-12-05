@@ -20,7 +20,7 @@ class Step14UseDomainBonusesTest extends AbstractStepTest
      */
     public function testStepDependency($dependencies)
     {
-        $client = parent::getClient();
+        $client = $this->getClient();
 
         $session = $client->getContainer()->get('session');
         $session->set('character', $dependencies); // Varigal

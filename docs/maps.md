@@ -32,16 +32,11 @@ The `_load()` function is the one that communicates with web services defined in
 
 ## Services
 
-To use the different services provided by the `EsterenMapsBundle`, you must load the registry like this:
+There are three main services in Esteren Maps that you can use:
 
-```php
-/**
- * @var EsterenMaps\MapsBundle\Services\Registry $esterenMaps
- */
-$esterenMaps = $this->container->get('esterenmaps');
-```
-
-Then, with auto-completion in IDEs you can retrieve all other services.
+* `EsterenMaps\MapsBundle\Services\DirectionsManager`, to manage itineraries calculations.
+* `EsterenMaps\MapsBundle\Services\MapImageManager`, not used yet, but it will allow generating a portion of the full map into a single image, with the routes and markers on it.
+* `EsterenMaps\MapsBundle\Services\MapsTilesManager`, to generate tiles for any map.
 
 ## Tiles generation
 

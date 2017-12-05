@@ -14,9 +14,12 @@ namespace EsterenMaps\MapsBundle\Repository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use EsterenMaps\MapsBundle\Entity\Zones;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Orbitale\Component\DoctrineTools\EntityRepositoryHelperTrait;
 
 class ZonesRepository extends ServiceEntityRepository
 {
+    use EntityRepositoryHelperTrait;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Zones::class);

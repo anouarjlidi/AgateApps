@@ -1,4 +1,11 @@
 services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    CorahnRin\CorahnRinBundle\:
+        resource: '../../{Repository}'
+        public: true
 
     corahnrin_generator.pdf_manager:
         class: CorahnRin\CorahnRinBundle\SheetsManagers\PdfManager
