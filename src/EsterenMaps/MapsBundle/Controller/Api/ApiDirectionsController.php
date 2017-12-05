@@ -61,9 +61,26 @@ class ApiDirectionsController extends AbstractController
         $code = 200;
 
         $transportId = $request->query->get('transport');
+        $hoursPerDay = $request->query->get('hours_per_day', 7);
         $transport   = $this->transportTypesRepository->findOneBy(['id' => $transportId]);
 
-        $hoursPerDay = $request->query->get('hours_per_day', 7);
+        $etag = sha1('js'.$map->getId().$from->getId().$to->getId().$transportId.$this->versionCode);
+        $lastModified = new \DateTime($this->versionDate);
+
+        $response = new JsonResponse();
+        if (!$this->debug || !$request->isNoCache()) {
+            $response->setCache([
+                'etag'          => $etag,
+                'last_modified' => $lastModified,
+                'max_age'       => 600,
+                's_maxage'      => 600,
+                'public'        => true,
+            ]);
+        }
+
+        if ($response->isNotModified($request)) {
+            return $response;
+        }
 
         if (!$transport && $transportId) {
             $output = $this->getError($from, $to, $transportId, 'Transport not found.');
@@ -76,16 +93,8 @@ class ApiDirectionsController extends AbstractController
             }
         }
 
-        $response = new JsonResponse($output, $code);
-        if (!$this->debug) {
-            $response->setCache([
-                'etag'          => sha1('js'.$map->getId().$from->getId().$to->getId().$transportId.$this->versionCode),
-                'last_modified' => new \DateTime($this->versionDate),
-                'max_age'       => 600,
-                's_maxage'      => 600,
-                'public'        => true,
-            ]);
-        }
+        $response->setData($output);
+        $response->setStatusCode($code);
 
         return $response;
     }
