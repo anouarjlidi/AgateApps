@@ -11,10 +11,13 @@
 
 namespace EsterenMaps\MapsBundle\Tests\Controller;
 
-use Tests\WebTestCase;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Tests\WebTestCase as PiersTestCase;
 
 class MapsControllerTest extends WebTestCase
 {
+    use PiersTestCase;
+
     public function testRootRedirectsToIndex()
     {
         $client = $this->getClient('maps.esteren.dev');
@@ -46,7 +49,7 @@ class MapsControllerTest extends WebTestCase
         $crawler = $client->request('GET', '/fr/');
 
         $article = $crawler->filter('.maps-list article');
-        static::assertGreaterThanOrEqual(1, $article->count(), 'Failed to validate map present in LISTING');
+        static::assertGreaterThanOrEqual(1, $article->count(), $crawler->filter('title')->text());
 
         $link = $article->filter('a')->link();
 

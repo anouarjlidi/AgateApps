@@ -12,10 +12,13 @@
 namespace AgateBundle\Tests\Controller;
 
 use Symfony\Bundle\SwiftmailerBundle\DataCollector\MessageDataCollector;
-use Tests\WebTestCase;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Tests\WebTestCase as PiersTestCase;
 
 class ContactControllerTest extends WebTestCase
 {
+    use PiersTestCase;
+
     public function testValidContactForm()
     {
         $client = $this->getClient('www.studio-agate.dev', ['debug' => true]);

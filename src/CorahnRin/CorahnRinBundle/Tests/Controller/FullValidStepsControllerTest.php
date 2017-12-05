@@ -11,7 +11,8 @@
 
 namespace CorahnRin\CorahnRinBundle\Tests\Controller;
 
-use Tests\WebTestCase;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Tests\WebTestCase as PiersTestCase;
 
 /**
  * The goal here is to create one single character to make sure the whole step process is working correctly.
@@ -19,6 +20,8 @@ use Tests\WebTestCase;
  */
 class FullValidStepsControllerTest extends WebTestCase
 {
+    use PiersTestCase;
+
     /**
      * @see StepController::indexAction
      */

@@ -14,10 +14,13 @@ namespace AdminBundle\Tests;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Component\DomCrawler\Crawler;
-use Tests\WebTestCase;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Tests\WebTestCase as PiersTestCase;
 
 abstract class AbstractEasyAdminTest extends WebTestCase
 {
+    use PiersTestCase;
+
     /**
      * Returns the entity name in the backend.
      *

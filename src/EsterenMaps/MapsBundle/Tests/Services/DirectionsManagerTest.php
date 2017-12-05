@@ -14,10 +14,14 @@ namespace EsterenMaps\MapsBundle\Tests\Services;
 use EsterenMaps\MapsBundle\Entity\Maps;
 use EsterenMaps\MapsBundle\Entity\Markers;
 use EsterenMaps\MapsBundle\Entity\TransportTypes;
-use Tests\WebTestCase;
+use EsterenMaps\MapsBundle\Services\DirectionsManager;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Tests\WebTestCase as PiersTestCase;
 
 class DirectionsManagerTest extends WebTestCase
 {
+    use PiersTestCase;
+
     /**
      * @dataProvider provideWorkingDirections
      *
@@ -35,7 +39,7 @@ class DirectionsManagerTest extends WebTestCase
 
         $em = $container->get('doctrine.orm.default_entity_manager');
 
-        $directions = $container->get('esterenmaps')->getDirectionsManager();
+        $directions = $container->get(DirectionsManager::class);
 
         /** @var Maps $map */
         $map = $em->getRepository(Maps::class)->findOneBy(['nameSlug' => $map]);

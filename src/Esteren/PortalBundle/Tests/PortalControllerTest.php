@@ -11,10 +11,13 @@
 
 namespace Esteren\PortalBundle\Tests;
 
-use Tests\WebTestCase;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Tests\WebTestCase as PiersTestCase;
 
 class PortalControllerTest extends WebTestCase
 {
+    use PiersTestCase;
+
     public function testRootRedirectsToIndex()
     {
         $client = $this->getClient('portal.esteren.dev');

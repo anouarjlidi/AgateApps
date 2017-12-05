@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "240fe82e5a9ffe25916c57e2c6ac35c4",
+    "content-hash": "e8ff758f0d72aa632c98ba165c41fedd",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -6357,23 +6357,23 @@
         },
         {
             "name": "pierstoval/web-test-case",
-            "version": "v0.1.8",
+            "version": "v0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Pierstoval/PHPUnitWebTestCase.git",
-                "reference": "2a6e300533d7d75bfe4101cbd8dbe2ec24f817a2"
+                "reference": "408954ea77df31750f30ada44c392959182c01f2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Pierstoval/PHPUnitWebTestCase/zipball/2a6e300533d7d75bfe4101cbd8dbe2ec24f817a2",
-                "reference": "2a6e300533d7d75bfe4101cbd8dbe2ec24f817a2",
+                "url": "https://api.github.com/repos/Pierstoval/PHPUnitWebTestCase/zipball/408954ea77df31750f30ada44c392959182c01f2",
+                "reference": "408954ea77df31750f30ada44c392959182c01f2",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.5.9",
-                "phpunit/phpunit": "^4.4|^5.0|^6.0",
-                "symfony/browser-kit": "^2.8|^3.0|^4.0",
-                "symfony/framework-bundle": "^2.8|^3.0|^4.0"
+                "php": "^7.1",
+                "symfony/browser-kit": "^2.8|^3.4|^4.0",
+                "symfony/framework-bundle": "^2.8|^3.4|^4.0",
+                "symfony/security-core": "^2.8|^3.4|^4.0"
             },
             "type": "library",
             "autoload": {
@@ -6382,13 +6382,17 @@
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
             "authors": [
                 {
                     "name": "Alex Rock Ancelet",
                     "email": "pierstoval@gmail.com"
                 }
             ],
-            "time": "2017-10-25T14:40:23+00:00"
+            "description": "A simple helper for Symfony WebTestCase",
+            "time": "2017-12-05T19:48:15+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",

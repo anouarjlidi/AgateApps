@@ -11,11 +11,14 @@
 
 namespace CorahnRin\CorahnRinBundle\Tests\Step;
 
-use Tests\WebTestCase;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Tests\WebTestCase as PiersTestCase;
 use Symfony\Bundle\FrameworkBundle\Client;
 
 abstract class AbstractStepTest extends WebTestCase
 {
+    use PiersTestCase;
+
     /**
      * {@inheritdoc}
      */

@@ -210,7 +210,7 @@ class Step11AdvantagesTest extends AbstractStepTest
             'disadvantages' => [],
         ]);
 
-        static::assertSame(200, $client->getResponse()->getStatusCode(), static::getErrorFromCrawler($crawler));
+        static::assertSame(200, $client->getResponse()->getStatusCode(), $crawler->filter('title')->text());
         static::assertEquals('Les avantages soumis sont incorrects.', trim($crawler->filter('#flash-messages > .card-panel.error')->text()));
     }
 
@@ -229,7 +229,7 @@ class Step11AdvantagesTest extends AbstractStepTest
             ],
         ]);
 
-        static::assertSame(200, $client->getResponse()->getStatusCode(), static::getErrorFromCrawler($crawler));
+        static::assertSame(200, $client->getResponse()->getStatusCode(), $crawler->filter('title')->text());
         static::assertEquals('Les désavantages soumis sont incorrects.', trim($crawler->filter('#flash-messages > .card-panel.error')->text()));
     }
 
@@ -285,7 +285,7 @@ class Step11AdvantagesTest extends AbstractStepTest
             'disadvantages' => [],
         ]);
 
-        static::assertSame(200, $client->getResponse()->getStatusCode(), static::getErrorFromCrawler($crawler));
+        static::assertSame(200, $client->getResponse()->getStatusCode(), $crawler->filter('title')->text());
         static::assertEquals('Vous ne pouvez pas choisir "Avantage financier" si votre personnage a le revers "Pauvre".', trim($crawler->filter('#flash-messages > .card-panel.error')->text()));
     }
 

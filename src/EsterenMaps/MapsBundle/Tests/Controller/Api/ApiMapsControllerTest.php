@@ -11,10 +11,13 @@
 
 namespace EsterenMaps\MapsBundle\Tests\Controller\Api;
 
-use Tests\WebTestCase;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Tests\WebTestCase as PiersTestCase;
 
 class ApiMapsControllerTest extends WebTestCase
 {
+    use PiersTestCase;
+
     public function testMapInfo()
     {
         $data = $this->getMapData();

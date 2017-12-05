@@ -11,10 +11,13 @@
 
 namespace AdminBundle\Tests;
 
-use Tests\WebTestCase;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Tests\WebTestCase as PiersTestCase;
 
 class DefaultEasyAdminTest extends WebTestCase
 {
+    use PiersTestCase;
+
     /**
      * Test backend homepage.
      */
