@@ -13,9 +13,15 @@ namespace CorahnRin\CorahnRinBundle\Repository;
 
 use CorahnRin\CorahnRinBundle\Entity\Domains;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 
 class DomainsRepository extends ServiceEntityRepository
 {
+    public function __construct(RegistryInterface $registry)
+    {
+        parent::__construct($registry, Domains::class);
+    }
+
     /**
      * @return Domains[]
      */

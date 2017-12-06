@@ -13,9 +13,15 @@ namespace CorahnRin\CorahnRinBundle\Repository;
 
 use CorahnRin\CorahnRinBundle\Entity\Weapons;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 
 final class WeaponsRepository extends ServiceEntityRepository
 {
+    public function __construct(RegistryInterface $registry)
+    {
+        parent::__construct($registry, Weapons::class);
+    }
+
     /**
      * @return Weapons[]
      */

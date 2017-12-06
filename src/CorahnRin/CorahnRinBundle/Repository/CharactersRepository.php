@@ -14,17 +14,16 @@ namespace CorahnRin\CorahnRinBundle\Repository;
 use CorahnRin\CorahnRinBundle\Entity\Characters;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 
 class CharactersRepository extends ServiceEntityRepository
 {
-    /**
-     * Get a Characters object with all its data.
-     *
-     * @param int $id
-     *
-     * @return Characters|null
-     */
-    public function findFetched($id)
+    public function __construct(RegistryInterface $registry)
+    {
+        parent::__construct($registry, Characters::class);
+    }
+
+    public function findFetched(int $id): ?Characters
     {
         return $this->_em
             ->createQueryBuilder()
@@ -43,7 +42,7 @@ class CharactersRepository extends ServiceEntityRepository
                 ->leftJoin('characters.disciplines', 'disciplines')->addSelect('disciplines')
                 ->leftJoin('characters.avantages', 'avantages')->addSelect('avantages')
             ->where('characters.id = :id')
-                ->setParameter('id', (int) $id)
+                ->setParameter('id', $id)
             ->getQuery()
             ->getOneOrNullResult()
         ;
@@ -57,7 +56,7 @@ class CharactersRepository extends ServiceEntityRepository
      *
      * @return QueryBuilder
      */
-    public function searchQueryBuilder($searchField = 'id', $order = null, $limit = null, $offset = null)
+    public function searchQueryBuilder(string $searchField = 'id', string $order = null, int $limit = null, int $offset = null): QueryBuilder
     {
         $qb = $this->_em
             ->createQueryBuilder()

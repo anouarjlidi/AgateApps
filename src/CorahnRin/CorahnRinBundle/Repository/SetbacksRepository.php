@@ -11,10 +11,17 @@
 
 namespace CorahnRin\CorahnRinBundle\Repository;
 
+use CorahnRin\CorahnRinBundle\Entity\Setbacks;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Orbitale\Component\DoctrineTools\EntityRepositoryHelperTrait;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 
 class SetbacksRepository extends ServiceEntityRepository
 {
     use EntityRepositoryHelperTrait;
+
+    public function __construct(RegistryInterface $registry)
+    {
+        parent::__construct($registry, Setbacks::class);
+    }
 }

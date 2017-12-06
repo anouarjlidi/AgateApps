@@ -15,10 +15,16 @@ use CorahnRin\CorahnRinBundle\Entity\Traits;
 use CorahnRin\CorahnRinBundle\Entity\Ways;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Orbitale\Component\DoctrineTools\EntityRepositoryHelperTrait;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 
 class TraitsRepository extends ServiceEntityRepository
 {
     use EntityRepositoryHelperTrait;
+
+    public function __construct(RegistryInterface $registry)
+    {
+        parent::__construct($registry, Traits::class);
+    }
 
     /**
      * @return Traits[][]
