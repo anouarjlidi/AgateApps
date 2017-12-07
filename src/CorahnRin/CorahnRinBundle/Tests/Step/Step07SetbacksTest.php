@@ -215,8 +215,10 @@ class Step07SetbacksTest extends AbstractStepTest
         $session->save();
 
         $crawler = $client->request('GET', '/fr/character/generate/'.$this->getStepName().'?manual=');
+        $formNode = $crawler->filter('#generator_form');
+        static::assertSame(1, $formNode->count());
 
-        $form = $crawler->filter('#generator_form')->form()
+        $form = $formNode->form()
             ->disableValidation()
             ->setValues([
                 'setbacks_value' => [1, 10], // 1 and 10 exists, but they cannot be chosen with manual setup
