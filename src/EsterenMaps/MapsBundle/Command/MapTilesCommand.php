@@ -13,7 +13,6 @@ namespace EsterenMaps\MapsBundle\Command;
 
 use EsterenMaps\MapsBundle\Entity\Maps;
 use EsterenMaps\MapsBundle\Services\MapsTilesManager;
-use Orbitale\Component\DoctrineTools\BaseEntityRepository;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -46,7 +45,7 @@ class MapTilesCommand extends ContainerAwareCommand
 
         $id = $input->hasArgument('id') ? $input->getArgument('id') : null;
 
-        /** @var BaseEntityRepository $repo */
+        /** @var EntityRepository $repo */
         $repo = $this->getContainer()->get('doctrine')->getManager()->getRepository('EsterenMapsBundle:Maps');
 
         $list = null;

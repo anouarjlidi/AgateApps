@@ -17,7 +17,7 @@ use CorahnRin\CorahnRinBundle\Entity\Games;
 use CorahnRin\CorahnRinBundle\Entity\Ways;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManager;
-use Orbitale\Component\DoctrineTools\BaseEntityRepository;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -59,7 +59,7 @@ class ImportLegacyCharactersCommand extends ContainerAwareCommand
     private $users = [];
 
     /**
-     * @var BaseEntityRepository[]
+     * @var EntityRepository[]
      */
     private $repositories = [];
 
@@ -245,7 +245,7 @@ SQL;
     /**
      * @param string $repoName
      *
-     * @return BaseEntityRepository
+     * @return EntityRepository
      */
     private function getRepository($repoName)
     {

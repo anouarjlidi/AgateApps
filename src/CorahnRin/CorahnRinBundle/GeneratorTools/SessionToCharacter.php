@@ -27,7 +27,6 @@ use CorahnRin\CorahnRinBundle\Entity\Ways;
 use CorahnRin\CorahnRinBundle\Exception\CharactersException;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
-use Orbitale\Component\DoctrineTools\BaseEntityRepository;
 use Pierstoval\Bundle\CharacterManagerBundle\Resolver\StepActionResolver;
 
 final class SessionToCharacter
@@ -53,7 +52,7 @@ final class SessionToCharacter
     private $advantages;
 
     /**
-     * @var BaseEntityRepository[]
+     * @var EntityRepository[]
      */
     private $repositories;
 
@@ -132,7 +131,7 @@ final class SessionToCharacter
     /**
      * @param string $class
      *
-     * @return BaseEntityRepository|EntityRepository
+     * @return EntityRepository
      */
     private function getRepository($class)
     {

@@ -11,12 +11,15 @@
 
 namespace UserBundle\Repository;
 
-use Orbitale\Component\DoctrineTools\BaseEntityRepository;
+use Doctrine\ORM\EntityRepository;
+use Orbitale\Component\DoctrineTools\EntityRepositoryHelperTrait;
 use UserBundle\Entity\User;
 use UserBundle\Util\Canonicalizer;
 
-class UserRepository extends BaseEntityRepository
+class UserRepository extends EntityRepository
 {
+    use EntityRepositoryHelperTrait;
+
     /**
      * @var Canonicalizer
      */
