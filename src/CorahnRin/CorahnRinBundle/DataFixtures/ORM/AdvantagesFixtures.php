@@ -31,7 +31,7 @@ class AdvantagesFixtures extends AbstractFixture implements OrderedFixtureInterf
      *
      * @return int
      */
-    public function getOrder()
+    public function getOrder(): int
     {
         return 2;
     }

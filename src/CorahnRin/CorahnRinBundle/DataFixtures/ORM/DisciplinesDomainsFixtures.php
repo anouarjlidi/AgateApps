@@ -36,7 +36,7 @@ class DisciplinesDomainsFixtures extends AbstractFixture implements OrderedFixtu
      *
      * @return int
      */
-    public function getOrder()
+    public function getOrder(): int
     {
         return 4;
     }

@@ -30,7 +30,7 @@ class SocialClassesFixtures extends AbstractFixture implements OrderedFixtureInt
      *
      * @return int
      */
-    public function getOrder()
+    public function getOrder(): int
     {
         return 4;
     }

@@ -20,7 +20,7 @@ trait FixtureMetadataIdGeneratorTrait
      *
      * We override this because the generator type sometimes depends on the DBMS.
      */
-    protected function setGeneratorBasedOnId(ClassMetadata $metadata, $id = null)
+    protected function setGeneratorBasedOnId(ClassMetadata $metadata, $id = null): void
     {
         if ($id) {
             $metadata->setIdGeneratorType(ClassMetadata::GENERATOR_TYPE_NONE);

@@ -23,7 +23,7 @@ class WeaponsFixtures extends AbstractFixture
     /**
      * {@inheritdoc}
      */
-    public function getOrder()
+    public function getOrder(): int
     {
         return 4;
     }
@@ -31,7 +31,7 @@ class WeaponsFixtures extends AbstractFixture
     /**
      * {@inheritdoc}
      */
-    protected function getEntityClass()
+    protected function getEntityClass(): string
     {
         return Weapons::class;
     }

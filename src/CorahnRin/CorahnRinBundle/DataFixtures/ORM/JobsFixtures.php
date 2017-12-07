@@ -24,7 +24,7 @@ class JobsFixtures extends AbstractFixture
      *
      * @return string
      */
-    protected function getEntityClass()
+    protected function getEntityClass(): string
     {
         return Jobs::class;
     }
@@ -34,7 +34,7 @@ class JobsFixtures extends AbstractFixture
      *
      * @return int
      */
-    public function getOrder()
+    public function getOrder(): int
     {
         return 4;
     }

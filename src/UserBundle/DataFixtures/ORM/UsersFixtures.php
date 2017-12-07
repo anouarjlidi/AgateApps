@@ -49,7 +49,7 @@ final class UsersFixtures extends AbstractFixture implements OrderedFixtureInter
      *
      * @return int
      */
-    public function getOrder()
+    public function getOrder(): int
     {
         return 0;
     }

@@ -22,7 +22,7 @@ class MapsFixtures extends AbstractFixture
     /**
      * {@inheritdoc}
      */
-    public function getOrder()
+    public function getOrder(): int
     {
         return 0;
     }
@@ -30,12 +30,12 @@ class MapsFixtures extends AbstractFixture
     /**
      * {@inheritdoc}
      */
-    protected function getEntityClass()
+    protected function getEntityClass(): string
     {
         return Maps::class;
     }
 
-    protected function getReferencePrefix()
+    protected function getReferencePrefix(): ?string
     {
         return 'esterenmaps-maps-';
     }

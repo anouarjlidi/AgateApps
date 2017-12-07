@@ -23,7 +23,7 @@ class ZonesTypesFixtures extends AbstractFixture
     /**
      * {@inheritdoc}
      */
-    public function getOrder()
+    public function getOrder(): int
     {
         return 0;
     }
@@ -31,7 +31,7 @@ class ZonesTypesFixtures extends AbstractFixture
     /**
      * {@inheritdoc}
      */
-    protected function getEntityClass()
+    protected function getEntityClass(): string
     {
         return 'EsterenMaps\MapsBundle\Entity\ZonesTypes';
     }
@@ -39,7 +39,7 @@ class ZonesTypesFixtures extends AbstractFixture
     /**
      * {@inheritdoc}
      */
-    protected function getReferencePrefix()
+    protected function getReferencePrefix(): ?string
     {
         return 'esterenmaps-zonestypes-';
     }

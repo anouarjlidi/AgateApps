@@ -26,7 +26,7 @@ class MarkersFixtures extends AbstractFixture
     /**
      * {@inheritdoc}
      */
-    public function getOrder()
+    public function getOrder(): int
     {
         return 3;
     }
@@ -34,7 +34,7 @@ class MarkersFixtures extends AbstractFixture
     /**
      * {@inheritdoc}
      */
-    protected function getEntityClass()
+    protected function getEntityClass(): string
     {
         return Markers::class;
     }
@@ -42,7 +42,7 @@ class MarkersFixtures extends AbstractFixture
     /**
      * {@inheritdoc}
      */
-    protected function getReferencePrefix()
+    protected function getReferencePrefix(): ?string
     {
         return 'esterenmaps-markers-';
     }
