@@ -34,13 +34,6 @@ jobs:
                     composer config -l
 
             - run:
-                name: 'Prepare environment'
-                command: |
-                    echo "date.timezone = Europe/Paris" > /usr/local/etc/php/conf.d/custom.ini
-                    echo "short_open_tag = off" >> /usr/local/etc/php/conf.d/custom.ini
-                    echo "apcu.enable_cli = 1" >> /usr/local/etc/php/conf.d/custom.ini
-
-            - run:
                name: 'Install Project Dependencies'
                command: |
                     composer install --no-interaction --no-suggest --ignore-platform-reqs --no-progress
