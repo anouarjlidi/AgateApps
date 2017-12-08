@@ -1,15 +1,16 @@
 services:
-    portal.twig.google_tags:
-        class: Esteren\PortalBundle\Twig\GoogleTagsExtension
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    Esteren\PortalBundle\Controller\:
+        resource: '../../Controller'
+        public: true
+
+    Esteren\PortalBundle\Twig\GoogleTagsExtension:
         arguments:
             - '%google_tags%'
             - '%kernel.debug%'
-        tags: [{ name: twig.extension }]
 
-    portal.twig.flash_colors:
-        class: Esteren\PortalBundle\Twig\FlashMessageColorsExtension
-        tags: [{ name: twig.extension }]
-
-    esteren_mailer:
-        class: Esteren\PortalBundle\Mailer\PortalMailer
-        autowire: true
+    Esteren\PortalBundle\Twig\FlashMessageColorsExtension: ~
+    Esteren\PortalBundle\Mailer\PortalMailer: ~
