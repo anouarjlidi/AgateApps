@@ -2,23 +2,22 @@ services:
     _defaults:
         autowire: true
         autoconfigure: true
+        public: false
 
-    CorahnRin\CorahnRinBundle\:
+    CorahnRin\CorahnRinBundle\Repository:
         resource: '../../{Repository}'
         public: true
 
-    corahnrin_generator.pdf_manager:
-        class: CorahnRin\CorahnRinBundle\SheetsManagers\PdfManager
+    CorahnRin\CorahnRinBundle\:
+        resource: '../../{GeneratorTools}'
+
+    CorahnRin\CorahnRinBundle\SheetsManagers\PdfManager:
         arguments:
-            - "%kernel.project_dir%/src/CorahnRin/CorahnRinBundle/Resources/pdf_sources"
-            - "@translator"
+            $sheetsFolder: "%kernel.project_dir%/src/CorahnRin/CorahnRinBundle/Resources/pdf_sources"
 
-    corahnrin_generator.domains_calculator:
-        class: CorahnRin\CorahnRinBundle\GeneratorTools\DomainsCalculator
-        public: false
+    CorahnRin\CorahnRinBundle\GeneratorTools\DomainsCalculator: ~
 
-    corahnrin_generator.session_to_character:
-        class: CorahnRin\CorahnRinBundle\GeneratorTools\SessionToCharacter
+    CorahnRin\CorahnRinBundle\GeneratorTools\SessionToCharacter:
         public: false
         arguments:
             - '@pierstoval.character_manager.step_action_resolver'
