@@ -3,23 +3,11 @@ services:
         autowire: true
         autoconfigure: true
         public: false
+        bind:
+            $sheetsFolder: '%kernel.project_dir%/src/CorahnRin/CorahnRinBundle/Resources/pdf_sources'
 
-    CorahnRin\CorahnRinBundle\Repository:
-        resource: '../../{Repository}'
-        public: true
+    # TODO: remove this when updating CharacterManagerBundle
+    Pierstoval\Bundle\CharacterManagerBundle\Resolver\StepActionResolver: '@pierstoval.character_manager.step_action_resolver'
 
     CorahnRin\CorahnRinBundle\:
-        resource: '../../{GeneratorTools}'
-
-    CorahnRin\CorahnRinBundle\SheetsManagers\PdfManager:
-        arguments:
-            $sheetsFolder: "%kernel.project_dir%/src/CorahnRin/CorahnRinBundle/Resources/pdf_sources"
-
-    CorahnRin\CorahnRinBundle\GeneratorTools\DomainsCalculator: ~
-
-    CorahnRin\CorahnRinBundle\GeneratorTools\SessionToCharacter:
-        public: false
-        arguments:
-            - '@pierstoval.character_manager.step_action_resolver'
-            - '@corahnrin_generator.domains_calculator'
-            - '@doctrine.orm.entity_manager'
+        resource: '../../{Repository,GeneratorTools,SheetsManagers}'

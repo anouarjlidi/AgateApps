@@ -15,7 +15,7 @@ use CorahnRin\CorahnRinBundle\Entity\Armors;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
-final class ArmorsRepository extends ServiceEntityRepository
+class ArmorsRepository extends ServiceEntityRepository
 {
     public function __construct(RegistryInterface $registry)
     {

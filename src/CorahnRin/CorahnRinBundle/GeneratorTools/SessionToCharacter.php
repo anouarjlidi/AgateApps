@@ -25,7 +25,7 @@ use CorahnRin\CorahnRinBundle\Entity\Domains;
 use CorahnRin\CorahnRinBundle\Entity\Setbacks;
 use CorahnRin\CorahnRinBundle\Entity\Ways;
 use CorahnRin\CorahnRinBundle\Exception\CharactersException;
-use Doctrine\ORM\EntityManager;
+use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityRepository;
 use Pierstoval\Bundle\CharacterManagerBundle\Resolver\StepActionResolver;
 
@@ -62,7 +62,7 @@ final class SessionToCharacter
     private $resolver;
 
     /**
-     * @var EntityManager
+     * @var ObjectManager
      */
     private $em;
 
@@ -71,7 +71,7 @@ final class SessionToCharacter
      */
     private $domainsCalculator;
 
-    public function __construct(StepActionResolver $resolver, DomainsCalculator $domainsCalculator, EntityManager $em)
+    public function __construct(StepActionResolver $resolver, DomainsCalculator $domainsCalculator, ObjectManager $em)
     {
         $this->resolver          = $resolver;
         $this->em                = $em;
