@@ -17,7 +17,7 @@ class Step15DomainsSpendExpTest extends AbstractStepTest
 
     public function testStepDependency()
     {
-        $client = parent::getClient();
+        $client = $this->getClient();
 
         $session = $client->getContainer()->get('session');
         $session->set('character', []); // Varigal

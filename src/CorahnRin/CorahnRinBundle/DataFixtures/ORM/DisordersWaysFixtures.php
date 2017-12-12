@@ -22,7 +22,7 @@ class DisordersWaysFixtures extends AbstractFixture
     /**
      * {@inheritdoc}
      */
-    public function getOrder()
+    public function getOrder(): int
     {
         return 3;
     }
@@ -30,12 +30,12 @@ class DisordersWaysFixtures extends AbstractFixture
     /**
      * {@inheritdoc}
      */
-    protected function getEntityClass()
+    protected function getEntityClass(): string
     {
         return DisordersWays::class;
     }
 
-    protected function getReferencePrefix()
+    protected function getReferencePrefix(): ?string
     {
         return false;
     }

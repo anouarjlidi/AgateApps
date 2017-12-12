@@ -11,16 +11,19 @@
 
 namespace AdminBundle\Tests;
 
-use Tests\WebTestCase;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Tests\WebTestCase as PiersTestCase;
 
 class DefaultEasyAdminTest extends WebTestCase
 {
+    use PiersTestCase;
+
     /**
      * Test backend homepage.
      */
     public function testIndex()
     {
-        parent::resetDatabase();
+        static::resetDatabase();
 
         $client = $this->getClient('back.esteren.dev', [], 'ROLE_ADMIN');
 

@@ -11,10 +11,17 @@
 
 namespace EsterenMaps\MapsBundle\Repository;
 
-use Orbitale\Component\DoctrineTools\BaseEntityRepository as BaseRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use EsterenMaps\MapsBundle\Entity\MarkersTypes;
+use Doctrine\Common\Persistence\ManagerRegistry;
 
-class MarkersTypesRepository extends BaseRepository
+class MarkersTypesRepository extends ServiceEntityRepository
 {
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, MarkersTypes::class);
+    }
+
     public function findForApi()
     {
         $query = $this->createQueryBuilder('marker_type')

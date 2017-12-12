@@ -11,10 +11,13 @@
 
 namespace AgateBundle\Tests\Controller;
 
-use Tests\WebTestCase;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Tests\WebTestCase as PiersTestCase;
 
 class HomeControllerTest extends WebTestCase
 {
+    use PiersTestCase;
+
     public function testRootRedirectsToIndex()
     {
         $client = $this->getClient('www.studio-agate.dev');

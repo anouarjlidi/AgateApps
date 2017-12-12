@@ -31,7 +31,7 @@ class SetbacksFixtures extends AbstractFixture implements OrderedFixtureInterfac
      *
      * @return int
      */
-    public function getOrder()
+    public function getOrder(): int
     {
         return 2;
     }

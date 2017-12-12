@@ -13,15 +13,40 @@ namespace EsterenMaps\MapsBundle\Controller\Api;
 
 use EsterenMaps\MapsBundle\Entity\Maps;
 use EsterenMaps\MapsBundle\Entity\Markers;
-use EsterenMaps\MapsBundle\Entity\TransportTypes;
+use EsterenMaps\MapsBundle\Repository\TransportTypesRepository;
+use EsterenMaps\MapsBundle\Services\DirectionsManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Translation\TranslatorInterface;
 
-class ApiDirectionsController extends Controller
+class ApiDirectionsController extends AbstractController
 {
+    private $debug;
+    private $versionCode;
+    private $versionDate;
+    private $transportTypesRepository;
+    private $directionsManager;
+    private $translator;
+
+    public function __construct(
+        bool $debug,
+        string $versionCode,
+        string $versionDate,
+        TransportTypesRepository $transportTypesRepository,
+        DirectionsManager $directionsManager,
+        TranslatorInterface $translator
+    ) {
+        $this->debug = $debug;
+        $this->versionCode = $versionCode;
+        $this->versionDate = $versionDate;
+        $this->transportTypesRepository = $transportTypesRepository;
+        $this->directionsManager = $directionsManager;
+        $this->translator = $translator;
+    }
+
     /**
      * @Route("/maps/directions/{id}/{from}/{to}",
      *     name="esterenmaps_directions",
@@ -30,61 +55,55 @@ class ApiDirectionsController extends Controller
      * )
      * @ParamConverter(name="from", class="EsterenMapsBundle:Markers", options={"id": "from"})
      * @ParamConverter(name="to", class="EsterenMapsBundle:Markers", options={"id": "to"})
-     *
-     * @param Maps    $map
-     * @param Markers $from
-     * @param Markers $to
-     * @param Request $request
-     *
-     * @return JsonResponse
      */
-    public function getDirectionsAction(Maps $map, Markers $from, Markers $to, Request $request)
+    public function getDirectionsAction(Maps $map, Markers $from, Markers $to, Request $request): JsonResponse
     {
         $code = 200;
 
         $transportId = $request->query->get('transport');
-        $transport   = $this->getDoctrine()->getRepository(TransportTypes::class)->findOneBy(['id' => $transportId]);
-
         $hoursPerDay = $request->query->get('hours_per_day', 7);
+        $transport   = $this->transportTypesRepository->findOneBy(['id' => $transportId]);
 
-        if (!$transport && $transportId) {
-            $output = $this->getError($from, $to, $transportId, 'Transport not found.');
-            $code   = 404;
-        } else {
-            $output = $this->get('esterenmaps')->getDirectionsManager()->getDirections($map, $from, $to, $hoursPerDay, $transport);
-            if (!count($output)) {
-                $output = $this->getError($from, $to);
-                $code   = 404;
-            }
-        }
+        $etag = sha1('js'.$map->getId().$from->getId().$to->getId().$transportId.$this->versionCode);
+        $lastModified = new \DateTime($this->versionDate);
 
-        $response = new JsonResponse($output, $code);
-        if (!$this->getParameter('kernel.debug')) {
+        $response = new JsonResponse();
+        if (!$this->debug || !$request->isNoCache()) {
             $response->setCache([
-                'etag'          => sha1('js'.$map->getId().$from->getId().$to->getId().$transportId.$this->getParameter('version_code')),
-                'last_modified' => new \DateTime($this->getParameter('version_date')),
+                'etag'          => $etag,
+                'last_modified' => $lastModified,
                 'max_age'       => 600,
                 's_maxage'      => 600,
                 'public'        => true,
             ]);
         }
 
+        if ($response->isNotModified($request)) {
+            return $response;
+        }
+
+        if (!$transport && $transportId) {
+            $output = $this->getError($from, $to, $transportId, 'Transport not found.');
+            $code   = 404;
+        } else {
+            $output = $this->directionsManager->getDirections($map, $from, $to, $hoursPerDay, $transport);
+            if (!count($output)) {
+                $output = $this->getError($from, $to);
+                $code   = 404;
+            }
+        }
+
+        $response->setData($output);
+        $response->setStatusCode($code);
+
         return $response;
     }
 
-    /**
-     * @param Markers $from
-     * @param Markers $to
-     * @param int     $transportId
-     * @param string  $message
-     *
-     * @return array
-     */
-    private function getError(Markers $from, Markers $to, $transportId = null, $message = 'No path found for this query.')
+    private function getError(Markers $from, Markers $to, int $transportId = null, string $message = 'No path found for this query.'): array
     {
         return [
             'error'   => true,
-            'message' => $this->get('translator')->trans($message),
+            'message' => $this->translator->trans($message),
             'query'   => [
                 'from'      => $from,
                 'to'        => $to,

@@ -11,13 +11,23 @@
 
 namespace EsterenMaps\MapsBundle\Repository;
 
-use Orbitale\Component\DoctrineTools\BaseEntityRepository as BaseRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use EsterenMaps\MapsBundle\Entity\Markers;
+use Doctrine\Common\Persistence\ManagerRegistry;
+use Orbitale\Component\DoctrineTools\EntityRepositoryHelperTrait;
 
 /**
  * MarkersRepository.
  */
-class MarkersRepository extends BaseRepository
+class MarkersRepository extends ServiceEntityRepository
 {
+    use EntityRepositoryHelperTrait;
+
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, Markers::class);
+    }
+
     public function findForApiByMap($mapId)
     {
         $query = $this->createQueryBuilder('marker')

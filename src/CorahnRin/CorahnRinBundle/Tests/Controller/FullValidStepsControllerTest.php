@@ -11,7 +11,8 @@
 
 namespace CorahnRin\CorahnRinBundle\Tests\Controller;
 
-use Tests\WebTestCase;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Tests\WebTestCase as PiersTestCase;
 
 /**
  * The goal here is to create one single character to make sure the whole step process is working correctly.
@@ -19,6 +20,8 @@ use Tests\WebTestCase;
  */
 class FullValidStepsControllerTest extends WebTestCase
 {
+    use PiersTestCase;
+
     /**
      * @see StepController::indexAction
      */
@@ -102,7 +105,7 @@ class FullValidStepsControllerTest extends WebTestCase
         // Parse better message to show in phpunit's output if there is an error in the submitted form.
         $msg = 'Request does not redirect to next step "'.$nextStep.'".';
         if ($crawler->filter('#flash-messages')->count()) {
-            $msg .= $crawler->filter('#flash-messages')->text();
+            $msg .= trim($crawler->filter('#flash-messages')->text());
         }
 
         static::assertTrue($client->getResponse()->isRedirect('/fr/character/generate/'.$nextStep), $msg);

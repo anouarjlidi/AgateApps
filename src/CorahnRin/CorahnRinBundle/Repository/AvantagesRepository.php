@@ -12,10 +12,19 @@
 namespace CorahnRin\CorahnRinBundle\Repository;
 
 use CorahnRin\CorahnRinBundle\Entity\Avantages;
-use Orbitale\Component\DoctrineTools\BaseEntityRepository as BaseRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Orbitale\Component\DoctrineTools\EntityRepositoryHelperTrait;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 
-class AvantagesRepository extends BaseRepository
+class AvantagesRepository extends ServiceEntityRepository
 {
+    use EntityRepositoryHelperTrait;
+
+    public function __construct(RegistryInterface $registry)
+    {
+        parent::__construct($registry, Avantages::class);
+    }
+
     /**
      * @return Avantages[][]
      */

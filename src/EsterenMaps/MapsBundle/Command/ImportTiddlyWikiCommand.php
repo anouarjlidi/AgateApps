@@ -23,7 +23,6 @@ use EsterenMaps\MapsBundle\Entity\Routes;
 use EsterenMaps\MapsBundle\Entity\RoutesTypes;
 use EsterenMaps\MapsBundle\Entity\Zones;
 use EsterenMaps\MapsBundle\Entity\ZonesTypes;
-use Orbitale\Component\DoctrineTools\BaseEntityRepository;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
@@ -409,7 +408,7 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
     /**
      * @param string $entityName
      *
-     * @return EntityRepository|BaseEntityRepository
+     * @return EntityRepository|EntityRepository
      */
     private function getRepository($entityName)
     {

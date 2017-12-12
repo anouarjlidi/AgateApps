@@ -22,7 +22,7 @@ class RoutesTypesFixtures extends AbstractFixture
     /**
      * {@inheritdoc}
      */
-    public function getOrder()
+    public function getOrder(): int
     {
         return 0;
     }
@@ -30,7 +30,7 @@ class RoutesTypesFixtures extends AbstractFixture
     /**
      * {@inheritdoc}
      */
-    protected function getEntityClass()
+    protected function getEntityClass(): string
     {
         return RoutesTypes::class;
     }
@@ -38,7 +38,7 @@ class RoutesTypesFixtures extends AbstractFixture
     /**
      * {@inheritdoc}
      */
-    protected function getReferencePrefix()
+    protected function getReferencePrefix(): ?string
     {
         return 'esterenmaps-routestypes-';
     }

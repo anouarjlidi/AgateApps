@@ -23,7 +23,7 @@ corahnrin:
     requirements: { _locale: '^(?:%locales_regex%)$' }
 
 esterenmaps:
-    resource: 'esterenmaps.yaml'
+    resource: '@EsterenMapsBundle/Resources/config/routing.yaml'
     prefix: '/{_locale}/'
     defaults: { locale: '%locale%' }
     requirements: { _locale: '^(?:%locales_regex%)$' }

@@ -12,6 +12,7 @@
 namespace CorahnRin\CorahnRinBundle\Controller;
 
 use CorahnRin\CorahnRinBundle\Entity\Characters;
+use CorahnRin\CorahnRinBundle\SheetsManagers\PdfManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,6 +20,13 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CharacterExportPDFController extends Controller
 {
+    private $pdfManager;
+
+    public function __construct(PdfManager $pdfManager)
+    {
+        $this->pdfManager = $pdfManager;
+    }
+
     /**
      * @Route(
      *     "/characters/export/{id}-{nameSlug}.{_format}",
@@ -55,7 +63,7 @@ class CharacterExportPDFController extends Controller
         // Generate the PDF if the file doesn't exist yet,
         // or if we're in debug mode.
         if (!file_exists($output_dir.$file_name) || $this->getParameter('kernel.debug')) {
-            $this->get('corahnrin_generator.pdf_manager')
+            $this->pdfManager
                 ->generateSheet($character, $printer_friendly)
                 ->Output($output_dir.$file_name, 'F')
             ;

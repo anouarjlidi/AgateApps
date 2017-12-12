@@ -22,7 +22,7 @@ class TransportModifiersFixtures extends AbstractFixture
     /**
      * {@inheritdoc}
      */
-    public function getOrder()
+    public function getOrder(): int
     {
         return 5;
     }
@@ -30,7 +30,7 @@ class TransportModifiersFixtures extends AbstractFixture
     /**
      * {@inheritdoc}
      */
-    protected function getEntityClass()
+    protected function getEntityClass(): string
     {
         return TransportModifiers::class;
     }

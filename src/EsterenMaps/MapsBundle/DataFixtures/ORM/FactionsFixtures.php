@@ -25,7 +25,7 @@ class FactionsFixtures extends AbstractFixture
      *
      * @return int
      */
-    public function getOrder()
+    public function getOrder(): int
     {
         return 2;
     }
@@ -33,7 +33,7 @@ class FactionsFixtures extends AbstractFixture
     /**
      * {@inheritdoc}
      */
-    protected function getEntityClass()
+    protected function getEntityClass(): string
     {
         return Factions::class;
     }
@@ -41,7 +41,7 @@ class FactionsFixtures extends AbstractFixture
     /**
      * {@inheritdoc}
      */
-    protected function getReferencePrefix()
+    protected function getReferencePrefix(): ?string
     {
         return 'esterenmaps-factions-';
     }

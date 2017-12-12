@@ -11,17 +11,17 @@
 
 namespace CorahnRin\CorahnRinBundle\Repository;
 
-use CorahnRin\CorahnRinBundle\Entity\Peoples;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use CorahnRin\CorahnRinBundle\Entity\GeoEnvironments;
 use Orbitale\Component\DoctrineTools\EntityRepositoryHelperTrait;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
-class PeopleRepository extends ServiceEntityRepository
+class GeoEnvironmentsRepository extends ServiceEntityRepository
 {
     use EntityRepositoryHelperTrait;
 
     public function __construct(RegistryInterface $registry)
     {
-        parent::__construct($registry, Peoples::class);
+        parent::__construct($registry, GeoEnvironments::class);
     }
 }

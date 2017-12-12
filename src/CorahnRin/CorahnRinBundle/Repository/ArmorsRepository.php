@@ -12,10 +12,16 @@
 namespace CorahnRin\CorahnRinBundle\Repository;
 
 use CorahnRin\CorahnRinBundle\Entity\Armors;
-use Orbitale\Component\DoctrineTools\BaseEntityRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 
-final class ArmorsRepository extends BaseEntityRepository
+class ArmorsRepository extends ServiceEntityRepository
 {
+    public function __construct(RegistryInterface $registry)
+    {
+        parent::__construct($registry, Armors::class);
+    }
+
     /**
      * @return Armors[]
      */

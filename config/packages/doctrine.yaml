@@ -5,7 +5,6 @@ doctrine:
         auto_mapping: true
 
         # Override the default repository to get some more good tools
-        default_repository_class: Orbitale\Component\DoctrineTools\BaseEntityRepository
         filters:
             # Activate SoftDeleteable for some entities
             # There are some other filters down there

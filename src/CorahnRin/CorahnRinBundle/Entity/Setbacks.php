@@ -18,7 +18,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Setbacks.
  *
  * @ORM\Table(name="setbacks")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="CorahnRin\CorahnRinBundle\Repository\SetbacksRepository")
  */
 class Setbacks
 {

@@ -12,10 +12,13 @@
 namespace UserBundle\Tests\Controller;
 
 use Symfony\Component\DomCrawler\Form;
-use Tests\WebTestCase;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Tests\WebTestCase as PiersTestCase;
 
 abstract class AbstractSecurityControllerTest extends WebTestCase
 {
+    use PiersTestCase;
+
     public const USER_NAME              = 'test_user';
     public const USER_NAME_AFTER_UPDATE = 'user_updated';
 

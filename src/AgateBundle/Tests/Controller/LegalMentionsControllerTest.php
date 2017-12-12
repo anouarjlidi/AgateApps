@@ -11,10 +11,13 @@
 
 namespace AgateBundle\Tests;
 
-use Tests\WebTestCase;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Tests\WebTestCase as PiersTestCase;
 
 class LegalMentionsControllerTest extends WebTestCase
 {
+    use PiersTestCase;
+
     /**
      * @param string $locale
      *

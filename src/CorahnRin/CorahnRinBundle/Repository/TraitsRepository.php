@@ -13,10 +13,19 @@ namespace CorahnRin\CorahnRinBundle\Repository;
 
 use CorahnRin\CorahnRinBundle\Entity\Traits;
 use CorahnRin\CorahnRinBundle\Entity\Ways;
-use Orbitale\Component\DoctrineTools\BaseEntityRepository as BaseRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Orbitale\Component\DoctrineTools\EntityRepositoryHelperTrait;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 
-class TraitsRepository extends BaseRepository
+class TraitsRepository extends ServiceEntityRepository
 {
+    use EntityRepositoryHelperTrait;
+
+    public function __construct(RegistryInterface $registry)
+    {
+        parent::__construct($registry, Traits::class);
+    }
+
     /**
      * @return Traits[][]
      */

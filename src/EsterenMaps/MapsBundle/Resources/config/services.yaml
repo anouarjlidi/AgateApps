@@ -1,0 +1,27 @@
+parameters:
+    esterenmaps.tile_size: 168
+    esterenmaps.output_directory: '%kernel.project_dir%/public/maps_tiles/'
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+        bind:
+            $debug:           '%kernel.debug%'
+            $imageMagickPath: '%magick_binaries_path%'
+            $outputDirectory: '%esterenmaps.output_directory%'
+            $tile_size:       '%esterenmaps.tile_size%'
+            $versionCode:     '%version_code%'
+            $versionDate:     '%version_date%'
+            $projectDir:      '%kernel.project_dir%'
+
+    EsterenMaps\MapsBundle\:
+        resource: '../../{Api,Cache,Command,Repository,Services,Twig}'
+
+    EsterenMaps\MapsBundle\Controller\:
+        resource: '../../Controller'
+        public: true
+
+    EsterenMaps\MapsBundle\DoctrineListeners\CacheClearSubscriber:
+        tags: [{ name: doctrine.event_subscriber, connection: default }]

@@ -12,13 +12,16 @@
 namespace CorahnRin\CorahnRinBundle\Tests\Controller;
 
 use CorahnRin\CorahnRinBundle\Entity\Characters;
-use Tests\WebTestCase;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Tests\WebTestCase as PiersTestCase;
 
 /**
  * @see \CorahnRin\CorahnRinBundle\Controller\CharacterViewController
  */
 class CharacterViewControllerTest extends WebTestCase
 {
+    use PiersTestCase;
+
     /**
      * @see CharacterViewController::listAction
      */

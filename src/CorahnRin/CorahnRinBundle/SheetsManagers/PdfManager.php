@@ -29,7 +29,7 @@ class PdfManager implements SheetsManagerInterface
      */
     private $sheetsFolder;
 
-    public function __construct($sheetsFolder, TranslatorInterface $translator)
+    public function __construct(string $sheetsFolder, TranslatorInterface $translator)
     {
         $this->translator   = $translator;
         $this->sheetsFolder = $sheetsFolder;

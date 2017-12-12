@@ -16,12 +16,11 @@ use Symfony\Component\HttpKernel\KernelInterface;
 
 class MapImageManager
 {
-    /**
-     * @var string
-     */
     private $webDir;
+    private $magickPath;
+    private $outputDirectory;
 
-    public function __construct($outputDirectory, $imageMagickPath, KernelInterface $kernel)
+    public function __construct(string $outputDirectory, string $imageMagickPath, KernelInterface $kernel)
     {
         $outputDirectory  = rtrim($outputDirectory, '\\/');
         $this->magickPath = rtrim($imageMagickPath, '\\/').DIRECTORY_SEPARATOR;

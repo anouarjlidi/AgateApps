@@ -13,12 +13,15 @@ namespace UserBundle\Tests\ConnectApi;
 
 use Psr\Log\NullLogger;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
-use Tests\WebTestCase;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Tests\WebTestCase as PiersTestCase;
 use UserBundle\ConnectApi\UluleClient;
 use UserBundle\Entity\User;
 
 class UluleClientTest extends WebTestCase
 {
+    use PiersTestCase;
+
     protected static $clientResults;
 
     public function testUluleClientProjects()

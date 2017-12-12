@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "240fe82e5a9ffe25916c57e2c6ac35c4",
+    "content-hash": "25b4fba9fdfe94d2968d17b0c85e0133",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -1717,26 +1717,25 @@
         },
         {
             "name": "orbitale/doctrine-tools",
-            "version": "v0.5.6",
+            "version": "v0.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Orbitale/DoctrineTools.git",
-                "reference": "0a3cbd2d06f579a417b03489f23f9e0f7198f496"
+                "reference": "5c58211134d28a40c85bc3dd6b07756d1de54851"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Orbitale/DoctrineTools/zipball/0a3cbd2d06f579a417b03489f23f9e0f7198f496",
-                "reference": "0a3cbd2d06f579a417b03489f23f9e0f7198f496",
+                "url": "https://api.github.com/repos/Orbitale/DoctrineTools/zipball/5c58211134d28a40c85bc3dd6b07756d1de54851",
+                "reference": "5c58211134d28a40c85bc3dd6b07756d1de54851",
                 "shasum": ""
             },
             "require": {
-                "doctrine/orm": "~2.3",
-                "php": ">=5.3.0"
+                "doctrine/orm": "^2.5",
+                "php": "^7.1"
             },
             "require-dev": {
-                "doctrine/data-fixtures": "~1.0",
-                "phpunit/phpunit": "~4.4",
-                "satooshi/php-coveralls": "~0.6"
+                "doctrine/data-fixtures": "^1.0",
+                "phpunit/phpunit": "^6.0"
             },
             "suggest": {
                 "doctrine/data-fixtures": "To use the nice AbstractFixture class",
@@ -1769,7 +1768,7 @@
                 "repository",
                 "tools"
             ],
-            "time": "2017-07-13T11:14:16+00:00"
+            "time": "2017-12-07T22:26:00+00:00"
         },
         {
             "name": "orbitale/entity-merger",
@@ -6357,23 +6356,23 @@
         },
         {
             "name": "pierstoval/web-test-case",
-            "version": "v0.1.8",
+            "version": "v0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Pierstoval/PHPUnitWebTestCase.git",
-                "reference": "2a6e300533d7d75bfe4101cbd8dbe2ec24f817a2"
+                "reference": "408954ea77df31750f30ada44c392959182c01f2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Pierstoval/PHPUnitWebTestCase/zipball/2a6e300533d7d75bfe4101cbd8dbe2ec24f817a2",
-                "reference": "2a6e300533d7d75bfe4101cbd8dbe2ec24f817a2",
+                "url": "https://api.github.com/repos/Pierstoval/PHPUnitWebTestCase/zipball/408954ea77df31750f30ada44c392959182c01f2",
+                "reference": "408954ea77df31750f30ada44c392959182c01f2",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.5.9",
-                "phpunit/phpunit": "^4.4|^5.0|^6.0",
-                "symfony/browser-kit": "^2.8|^3.0|^4.0",
-                "symfony/framework-bundle": "^2.8|^3.0|^4.0"
+                "php": "^7.1",
+                "symfony/browser-kit": "^2.8|^3.4|^4.0",
+                "symfony/framework-bundle": "^2.8|^3.4|^4.0",
+                "symfony/security-core": "^2.8|^3.4|^4.0"
             },
             "type": "library",
             "autoload": {
@@ -6382,13 +6381,17 @@
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
             "authors": [
                 {
                     "name": "Alex Rock Ancelet",
                     "email": "pierstoval@gmail.com"
                 }
             ],
-            "time": "2017-10-25T14:40:23+00:00"
+            "description": "A simple helper for Symfony WebTestCase",
+            "time": "2017-12-05T19:48:15+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",

@@ -25,9 +25,8 @@ use CorahnRin\CorahnRinBundle\Entity\Domains;
 use CorahnRin\CorahnRinBundle\Entity\Setbacks;
 use CorahnRin\CorahnRinBundle\Entity\Ways;
 use CorahnRin\CorahnRinBundle\Exception\CharactersException;
-use Doctrine\ORM\EntityManager;
+use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityRepository;
-use Orbitale\Component\DoctrineTools\BaseEntityRepository;
 use Pierstoval\Bundle\CharacterManagerBundle\Resolver\StepActionResolver;
 
 final class SessionToCharacter
@@ -53,7 +52,7 @@ final class SessionToCharacter
     private $advantages;
 
     /**
-     * @var BaseEntityRepository[]
+     * @var EntityRepository[]
      */
     private $repositories;
 
@@ -63,7 +62,7 @@ final class SessionToCharacter
     private $resolver;
 
     /**
-     * @var EntityManager
+     * @var ObjectManager
      */
     private $em;
 
@@ -72,7 +71,7 @@ final class SessionToCharacter
      */
     private $domainsCalculator;
 
-    public function __construct(StepActionResolver $resolver, DomainsCalculator $domainsCalculator, EntityManager $em)
+    public function __construct(StepActionResolver $resolver, DomainsCalculator $domainsCalculator, ObjectManager $em)
     {
         $this->resolver          = $resolver;
         $this->em                = $em;
@@ -132,7 +131,7 @@ final class SessionToCharacter
     /**
      * @param string $class
      *
-     * @return BaseEntityRepository|EntityRepository
+     * @return EntityRepository
      */
     private function getRepository($class)
     {

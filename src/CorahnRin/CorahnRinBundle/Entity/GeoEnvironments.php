@@ -18,7 +18,7 @@ use Doctrine\ORM\Mapping as ORM;
  * GeoEnvironments.
  *
  * @ORM\Table(name="geo_environments")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="CorahnRin\CorahnRinBundle\Repository\GeoEnvironmentsRepository")
  */
 class GeoEnvironments
 {

@@ -11,10 +11,17 @@
 
 namespace EsterenMaps\MapsBundle\Repository;
 
-use Orbitale\Component\DoctrineTools\BaseEntityRepository as BaseRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Persistence\ManagerRegistry;
+use EsterenMaps\MapsBundle\Entity\Factions;
 
-class FactionsRepository extends BaseRepository
+class FactionsRepository extends ServiceEntityRepository
 {
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, Factions::class);
+    }
+
     public function findForApi()
     {
         $query = $this->createQueryBuilder('faction')

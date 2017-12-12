@@ -31,7 +31,7 @@ class PeoplesFixtures extends AbstractFixture implements OrderedFixtureInterface
      *
      * @return int
      */
-    public function getOrder()
+    public function getOrder(): int
     {
         return 2;
     }

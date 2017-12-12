@@ -30,7 +30,7 @@ class GeoEnvironmentsFixtures extends AbstractFixture implements OrderedFixtureI
      *
      * @return int
      */
-    public function getOrder()
+    public function getOrder(): int
     {
         return 4;
     }

@@ -13,6 +13,7 @@ namespace AgateBundle\Controller;
 
 use AgateBundle\Form\ContactType;
 use AgateBundle\Model\ContactMessage;
+use Esteren\PortalBundle\Mailer\PortalMailer;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,6 +23,13 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ContactController extends Controller
 {
+    private $mailer;
+
+    public function __construct(PortalMailer $mailer)
+    {
+        $this->mailer = $mailer;
+    }
+
     /**
      * @Route("/contact", name="contact", methods={"GET", "POST"})
      */
@@ -39,7 +47,7 @@ class ContactController extends Controller
             $subject = $translator->trans('form.message_subject', ['%name%' => $message->getName()], 'contact');
 
             // If message succeeds, we redirect
-            if ($this->get('esteren_mailer')->sendContactMail($message, $subject, $request->getClientIp())) {
+            if ($this->mailer->sendContactMail($message, $subject, $request->getClientIp())) {
                 $this->addFlash('success', $translator->trans('form.message_sent', [], 'contact'));
 
                 return $this->redirectToRoute('contact');

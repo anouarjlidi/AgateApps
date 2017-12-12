@@ -11,11 +11,17 @@
 
 namespace EsterenMaps\MapsBundle\Repository;
 
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use EsterenMaps\MapsBundle\Entity\RoutesTypes;
-use Orbitale\Component\DoctrineTools\BaseEntityRepository as BaseRepository;
+use Doctrine\Common\Persistence\ManagerRegistry;
 
-class RoutesTypesRepository extends BaseRepository
+class RoutesTypesRepository extends ServiceEntityRepository
 {
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, RoutesTypes::class);
+    }
+
     /**
      * @param array $ids
      *

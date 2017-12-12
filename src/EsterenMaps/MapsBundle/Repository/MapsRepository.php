@@ -11,11 +11,20 @@
 
 namespace EsterenMaps\MapsBundle\Repository;
 
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use EsterenMaps\MapsBundle\Entity\Maps;
-use Orbitale\Component\DoctrineTools\BaseEntityRepository;
+use Doctrine\Common\Persistence\ManagerRegistry;
+use Orbitale\Component\DoctrineTools\EntityRepositoryHelperTrait;
 
-class MapsRepository extends BaseEntityRepository
+class MapsRepository extends ServiceEntityRepository
 {
+    use EntityRepositoryHelperTrait;
+
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, Maps::class);
+    }
+
     /**
      * @return Maps[]
      */
