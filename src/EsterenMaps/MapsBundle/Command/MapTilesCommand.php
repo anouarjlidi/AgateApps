@@ -11,21 +11,36 @@
 
 namespace EsterenMaps\MapsBundle\Command;
 
+use Doctrine\Common\Persistence\ObjectManager;
 use EsterenMaps\MapsBundle\Entity\Maps;
+use EsterenMaps\MapsBundle\Repository\MapsRepository;
 use EsterenMaps\MapsBundle\Services\MapsTilesManager;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-class MapTilesCommand extends ContainerAwareCommand
+class MapTilesCommand extends Command
 {
+    protected static $defaultName = 'esterenmaps:map:generate-tiles';
+
+    private $projectDir;
+    private $em;
+    private $tilesManager;
+
+    public function __construct(string $projectDir, ObjectManager $em, MapsTilesManager $tilesManager)
+    {
+        parent::__construct(static::$defaultName);
+        $this->projectDir = $projectDir;
+        $this->em = $em;
+        $this->tilesManager = $tilesManager;
+    }
+
     protected function configure()
     {
         $this
-            ->setName('esterenmaps:map:generate-tiles')
             ->setDescription('Generate all tiles for a specific map.')
             ->setHelp('This command is used to generate a tile image for one of your maps.'."\n"
                 .'You can specify the id of the map by adding it as an argument, or as an option with "-i x" or "--i=x" where "x" is the map id'."\n"
@@ -45,8 +60,8 @@ class MapTilesCommand extends ContainerAwareCommand
 
         $id = $input->hasArgument('id') ? $input->getArgument('id') : null;
 
-        /** @var EntityRepository $repo */
-        $repo = $this->getContainer()->get('doctrine')->getManager()->getRepository('EsterenMapsBundle:Maps');
+        /** @var MapsRepository $repo */
+        $repo = $this->em->getRepository('EsterenMapsBundle:Maps');
 
         $list = null;
 
@@ -83,11 +98,9 @@ class MapTilesCommand extends ContainerAwareCommand
 
         $io->comment('Generating map tiles for "'.$map->getName().'"');
 
-        $tilesManager = $this->getContainer()->get(MapsTilesManager::class);
-
         // This is a workaround to allow images to be stored with either global path or relative path
         if (!file_exists($map->getImage())) {
-            $img = $this->getContainer()->getParameter('kernel.project_dir').'/public/'.$map->getImage();
+            $img = $this->projectDir.'/public/'.$map->getImage();
             $map->setImage($img);
         }
 
@@ -99,7 +112,7 @@ class MapTilesCommand extends ContainerAwareCommand
             $maxZoom = $map->getMaxZoom();
             for ($i = 0; $i <= $maxZoom; ++$i) {
                 $io->comment('Processing extraction for zoom value '.$i);
-                $tilesManager->generateTiles($i, true, $map);
+                $this->tilesManager->generateTiles($i, true, $map);
             }
         } catch (\Exception $e) {
             throw new \RuntimeException('Error while processing extraction for zoom value "'.($i ?? '0').'".', 1, $e);

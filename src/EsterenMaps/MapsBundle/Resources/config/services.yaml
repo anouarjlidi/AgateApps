@@ -14,9 +14,10 @@ services:
             $tile_size:       '%esterenmaps.tile_size%'
             $versionCode:     '%version_code%'
             $versionDate:     '%version_date%'
+            $projectDir:      '%kernel.project_dir%'
 
     EsterenMaps\MapsBundle\:
-        resource: '../../{Api,Cache,Repository,Services,Twig}'
+        resource: '../../{Api,Cache,Command,Repository,Services,Twig}'
 
     EsterenMaps\MapsBundle\Controller\:
         resource: '../../Controller'
