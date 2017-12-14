@@ -31,7 +31,7 @@ class ApiRouteType extends AbstractType
             ->add('name', TextType::class)
         ;
 
-        if (!$options['display_coordinates']) {
+        if ($options['display_coordinates']) {
             $builder->add('coordinates', TextareaType::class, [
                 'constraints' => [
                     new Constraints\NotBlank(),
