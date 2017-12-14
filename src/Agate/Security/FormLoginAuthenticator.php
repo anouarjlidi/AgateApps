@@ -100,7 +100,6 @@ final class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
      */
     public function getCredentials(Request $request)
     {
-
         $usernameOrEmail = $request->request->get(self::USERNAME_OR_EMAIL_FORM_FIELD);
         $request->getSession()->set(Security::LAST_USERNAME, $usernameOrEmail);
         $password = $request->request->get(self::PASSWORD_FORM_FIELD);
