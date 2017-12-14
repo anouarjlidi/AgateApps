@@ -73,24 +73,22 @@ class ApiMapsController extends AbstractController
             throw $this->createNotFoundException();
         }
 
-        $mapApi = $this->get('esterenmaps.api.map');
-
         $response = new JsonResponse();
 
-        $response->setLastModified($mapApi->getLastUpdateTime($id));
+        $response->setLastModified($this->api->getLastUpdateTime($id));
 
         if ($response->isNotModified($request)) {
             return $response;
         }
 
-        $data = $mapApi->getMap($id, true);
+        $data = $this->api->getMap($id, true);
 
         $response->setData($data);
 
-        if (!$this->getParameter('kernel.debug')) {
+        if (!$this->debug) {
             $response->setCache([
-                'etag'          => sha1('map'.$id.$this->getParameter('version_code')),
-                'last_modified' => new \DateTime($mapApi->getLastUpdateTime($id)),
+                'etag'          => sha1('map'.$id.$this->versionCode),
+                'last_modified' => new \DateTime($this->api->getLastUpdateTime($id)),
                 'max_age'       => 600,
                 's_maxage'      => 600,
                 'public'        => true,
