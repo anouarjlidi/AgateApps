@@ -44,38 +44,34 @@
 
     <script type="text/javascript">
         (function(w, d){
-            try {
-                d.map = new EsterenMap({
-                    id: {{ map.id }},
-                    editMode: true,
-                    showDirections: false,
-                    apiUrls: {
-                        map: "{{ url('esterenmaps_api_map_get_editmode', {"id": map.id}) }}",
-                        directions: "{{ url('esterenmaps_directions', {
-                            "id": map.id,
-                            'from': '9999',
-                            'to': '8888'
-                        })|replace({'9999': '{from}', '8888': '{to}'}) }}",
-                        tiles: "{{ app.request.scheme }}://{{ esteren_domains_api }}{{ asset('maps_tiles/'~map.id~'/{z}/{y}/{x}.jpg') }}"
-                    },
-                    LeafletMapBaseOptions: {
-                        zoom: {{ map.startZoom }},
-                        maxZoom: {{ map.maxZoom }}
-                        {% if map.jsonBounds|length %},
-                        maxBounds: {{ map.bounds|raw }}
-                        {% endif %}
-                    },
-                    LeafletLayerBaseOptions: {
-                        maxZoom: {{ map.maxZoom }},
-                        maxNativeZoom: {{ map.maxZoom }},
-                        tileSize: {{ tile_size }}
-                    },
-                    cacheTTL: 0,
-                    autoResize: true
-                });
-            } catch (e) {
-                console.error(e);
-            }
+            d.map = new EsterenMap({
+                id: {{ map.id }},
+                editMode: true,
+                showDirections: false,
+                apiUrls: {
+                    map: "{{ url('esterenmaps_api_map_get_editmode', {"id": map.id}) }}",
+                    directions: "{{ url('esterenmaps_directions', {
+                        "id": map.id,
+                        'from': '9999',
+                        'to': '8888'
+                    })|replace({'9999': '{from}', '8888': '{to}'}) }}",
+                    tiles: "{{ app.request.scheme }}://{{ esteren_domains_api }}{{ asset('maps_tiles/'~map.id~'/{z}/{y}/{x}.jpg') }}"
+                },
+                LeafletMapBaseOptions: {
+                    zoom: {{ map.startZoom }},
+                    maxZoom: {{ map.maxZoom }}
+                    {% if map.jsonBounds|length %},
+                    maxBounds: {{ map.bounds|raw }}
+                    {% endif %}
+                },
+                LeafletLayerBaseOptions: {
+                    maxZoom: {{ map.maxZoom }},
+                    maxNativeZoom: {{ map.maxZoom }},
+                    tileSize: {{ tile_size }}
+                },
+                cacheTTL: 0,
+                autoResize: true
+            });
         })(window, document);
     </script>
 {% endblock %}
