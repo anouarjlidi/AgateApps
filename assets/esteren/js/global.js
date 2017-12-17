@@ -4,8 +4,6 @@ window._enableJsComponents = null;
     "use strict";
 
     function enableJsComponents(context) {
-        console.log('Resetting JS components in context:', context);
-
         // Automatically activate button collapse "side" navigation
         if (context.querySelector('.button-collapse')) {
             $('.button-collapse').sideNav();
