@@ -8,6 +8,7 @@
     L.Polyline.prototype._sidebar = null;
     L.Polyline.prototype._sidebarContent = '';
     L.Polyline.prototype._oldColor = '';
+    L.Polyline.prototype.options.editing = null;
 
     L.Polyline.prototype.showSidebar = function(content){
         if (!this._sidebar) {
@@ -251,7 +252,13 @@
                 id = polyline.options.className.replace('drawn_polyline_',''),
                 collectionStart, collectionEnd, markers, $markersStart, $markersEnd
             ;
+
             map.disableEditedElements();
+
+            if (polyline.editing.enabled()) {
+                return;
+            }
+
             polyline.editing.enable();
             polyline.showSidebar();
 
@@ -378,6 +385,11 @@
         if (mapOptions.editMode === true) {
             options = this.cloneObject(options, mapOptions.CustomPolylineBaseOptionsEditMode);
             leafletOptions = this.cloneObject(leafletOptions, mapOptions.LeafletPolylineBaseOptionsEditMode);
+            // Fix for Leaflet-draw searching for this property when using edit mode
+            if (!leafletOptions.editing) {
+                leafletOptions.editing = {};
+            }
+            leafletOptions.editing.className = leafletOptions.className;
         }
 
         if (routes = mapOptions.data.map.routes) {

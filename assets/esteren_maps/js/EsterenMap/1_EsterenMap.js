@@ -98,7 +98,8 @@
             this._map.on('click', function(e){
                 // Hide the sidebar when user clicks on map.
                 if ((e.originalEvent || e).target.id === mapOptions.container) {
-                    sidebar.hide();
+                    sidebar.hide(e);
+                    _this.disableEditedElements();
                 }
             });
             this._sidebar = sidebar;
@@ -142,7 +143,6 @@
         ////////////////////////////////
         if (true === mapOptions.editMode) {
             this.activateLeafletDraw();
-            this._map.on('click', _this.disableEditedElements);
         }
 
         if (mapOptions.loadCallback && typeof mapOptions.loadCallback === 'function') {
@@ -192,20 +192,18 @@
     };
 
     EsterenMap.prototype.disableEditedElements = function(){
-
         if (this._editedPolygon) {
             this._editedPolygon.disableEditMode();
+            this._editedPolygon = null;
         }
         if (this._editedPolyline) {
             this._editedPolyline.disableEditMode();
+            this._editedPolyline = null;
         }
         if (this._editedMarker) {
             this._editedMarker.disableEditMode();
+            this._editedMarker = null;
         }
-
-        this._editedPolygon = null;
-        this._editedPolyline = null;
-        this._editedMarker = null;
     };
 
     EsterenMap.prototype.mapReference = function(name, id, defaultValue) {
