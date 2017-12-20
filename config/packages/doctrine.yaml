@@ -17,6 +17,11 @@ doctrine:
                 dir: '%kernel.project_dir%/src/CorahnRin/Entity/'
                 is_bundle: false
                 prefix: CorahnRin
+            esteren:
+                type: annotation
+                dir: '%kernel.project_dir%/src/Esteren/Entity/'
+                is_bundle: false
+                prefix: Esteren
     dbal:
         default_connection: default
         connections:

@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Esteren\PortalBundle\Twig;
+namespace Esteren\Twig;
 
 class GoogleTagsExtension extends \Twig_Extension
 {

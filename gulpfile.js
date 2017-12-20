@@ -38,10 +38,10 @@ const config = {
      *     "src/AppBundle/Resources/public/less/*.less"
      */
     "files_to_watch": [
-        "src/Esteren/PortalBundle/Resources/assets/less/*.less",
-        "src/Esteren/PortalBundle/Resources/assets/css/*.css",
-        "src/Esteren/PortalBundle/Resources/assets/sass/*.scss",
-        "src/Esteren/PortalBundle/Resources/assets/sass/theme_components/*.scss",
+        "assets/esteren/less/*.less",
+        "assets/esteren/css/*.css",
+        "assets/esteren/sass/*.scss",
+        "assets/esteren/sass/theme_components/*.scss",
         "assets/corahn_rin/generator/css/*.less"
     ],
 
@@ -64,7 +64,7 @@ const config = {
             "assets/agate/images/**"
         ],
         "img/": [
-            "src/Esteren/PortalBundle/Resources/assets/images/**"
+            "assets/esteren/images/**"
         ]
     },
 
@@ -102,7 +102,7 @@ const config = {
      */
     "sass": {
         "css/global.css": [
-            "src/Esteren/PortalBundle/Resources/assets/sass/main.scss"
+            "assets/esteren/sass/main.scss"
         ],
         "css/agate.css": [
             "assets/agate/sass/agate-theme.scss"
@@ -111,7 +111,7 @@ const config = {
             "assets/corahn_rin/generator/css/main_steps.scss"
         ],
         "css/white_layout.css": [
-            "src/Esteren/PortalBundle/Resources/assets/sass/white_layout.scss"
+            "assets/esteren/sass/white_layout.scss"
         ]
     },
 
@@ -125,10 +125,10 @@ const config = {
      */
     "css": {
         "css/initializer.css": [
-            "src/Esteren/PortalBundle/Resources/assets/css/initializer.css"
+            "assets/esteren/css/initializer.css"
         ],
         "css/feond-beer.css": [
-            "src/Esteren/PortalBundle/Resources/assets/css/feond-beer.css"
+            "assets/esteren/css/feond-beer.css"
         ]
     },
 
@@ -148,8 +148,8 @@ const config = {
         "js/global.js": [
             "node_modules/materialize-css/dist/js/materialize.js",
             "assets/agate/js/connect.js",
-            "src/Esteren/PortalBundle/Resources/assets/js/helpers.js",
-            "src/Esteren/PortalBundle/Resources/assets/js/global.js"
+            "assets/esteren/js/helpers.js",
+            "assets/esteren/js/global.js"
         ],
         "js/maps_lib.js": [
             "node_modules/leaflet/dist/leaflet-src.js",

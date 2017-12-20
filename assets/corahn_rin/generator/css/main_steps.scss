@@ -1,8 +1,8 @@
 @charset "UTF-8";
 
-@import "../../../../../../../node_modules/materialize-css/sass/components/color";
-@import "../../../../../../../node_modules/materialize-css/sass/components/variables";
-@import "../../../../../../Esteren/PortalBundle/Resources/assets/sass/materialize-override-variables";
+@import "../../../../node_modules/materialize-css/sass/components/color";
+@import "../../../../node_modules/materialize-css/sass/components/variables";
+@import "../../../esteren/sass/materialize-override-variables";
 
 #generator_form {
     .btn {

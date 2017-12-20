@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Esteren\PortalBundle\Twig;
+namespace Esteren\Twig;
 
 class FlashMessageColorsExtension extends \Twig_Extension
 {

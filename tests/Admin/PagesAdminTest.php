@@ -11,7 +11,7 @@
 
 namespace Tests\Admin;
 
-use Esteren\PortalBundle\Entity\Page;
+use Esteren\Entity\Page;
 
 class PagesAdminTest extends AbstractEasyAdminTest
 {
@@ -81,7 +81,7 @@ class PagesAdminTest extends AbstractEasyAdminTest
             ->getContainer()
             ->get('doctrine')
             ->getManager()
-            ->getRepository('EsterenPortalBundle:Page')
+            ->getRepository(Page::class)
             ->findOneBy([])
             ->getId()
         ;
@@ -116,7 +116,7 @@ class PagesAdminTest extends AbstractEasyAdminTest
             ->getContainer()
             ->get('doctrine')
             ->getManager()
-            ->getRepository('EsterenPortalBundle:Page')
+            ->getRepository(Page::class)
             ->findOneBy([])
             ->getId()
         ;

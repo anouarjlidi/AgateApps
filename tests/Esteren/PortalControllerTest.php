@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Esteren\PortalBundle\Tests;
+namespace Tests\Esteren;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Tests\WebTestCase as PiersTestCase;

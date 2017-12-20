@@ -13,7 +13,7 @@ namespace Agate\Controller;
 
 use Agate\Form\ContactType;
 use Agate\Model\ContactMessage;
-use Esteren\PortalBundle\Mailer\PortalMailer;
+use Agate\Mailer\PortalMailer;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;

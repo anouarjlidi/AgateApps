@@ -11,7 +11,7 @@
 
 namespace Admin\Controller;
 
-use Esteren\PortalBundle\Entity\Page;
+use Esteren\Entity\Page;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Response;

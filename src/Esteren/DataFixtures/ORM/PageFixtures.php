@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Esteren\PortalBundle\DataFixtures\ORM;
+namespace Esteren\DataFixtures\ORM;
 
-use Esteren\PortalBundle\Entity\Page;
+use Esteren\Entity\Page;
 use Orbitale\Component\DoctrineTools\AbstractFixture;
 use Pierstoval\Bundle\ToolsBundle\Doctrine\FixtureMetadataIdGeneratorTrait;
 

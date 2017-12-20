@@ -69,7 +69,7 @@
             <directory>./tests/Agate</directory>
             <directory>./tests/CorahnRin</directory>
             <directory>./src/UserBundle/Tests</directory>
-            <directory>./src/Esteren/PortalBundle/Tests</directory>
+            <directory>./tests/Esteren</directory>
             <directory>./src/EsterenMaps/MapsBundle/Tests</directory>
         </testsuite>
     </testsuites>

@@ -1,8 +1,8 @@
 # This allows using the default layout for Pages and Categories
 # See: https://github.com/Orbitale/CmsBundle
 orbitale_cms:
-    page_class:     Esteren\PortalBundle\Entity\Page
-    category_class: Esteren\PortalBundle\Entity\Category
+    page_class:     Esteren\Entity\Page
+    category_class: Esteren\Entity\Category
     layouts:
         corahnrin:
             resource: 'corahn_rin/layout.html.twig'

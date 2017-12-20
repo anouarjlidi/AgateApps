@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Esteren\PortalBundle\Controller;
+namespace Esteren\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -37,7 +37,7 @@ class HomeController extends Controller
             return $response;
         }
 
-        $template = '@EsterenPortal/index-'.$_locale.'.html.twig';
+        $template = 'esteren/index-'.$_locale.'.html.twig';
 
         if (!$this->get('twig')->getLoader()->exists($template)) {
             throw $this->createNotFoundException();

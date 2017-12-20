@@ -42,17 +42,21 @@ services:
         autoconfigure: true
         public: false
         bind:
+            $debug: '%kernel.debug%'
             $sheetsFolder: '%kernel.project_dir%/src/CorahnRin/Resources/pdf_sources'
+            $googleTags: '%google_tags%'
 
-    Admin\Controller\:
-        resource: '../src/Admin/Controller'
+    Admin\:
+        resource: '../src/Admin/{Controller}'
 
-    Agate\Controller\:
-        resource: '../src/Agate/Controller'
-
+    Agate\:
+        resource: '../src/Agate/{Controller,Mailer}'
 
     # TODO: remove this when updating CharacterManagerBundle
     Pierstoval\Bundle\CharacterManagerBundle\Resolver\StepActionResolver: '@pierstoval.character_manager.step_action_resolver'
 
     CorahnRin\:
-        resource: '../src/CorahnRin/{Repository,GeneratorTools,SheetsManagers}'
+        resource: '../src/CorahnRin/{Controller,Repository,GeneratorTools,SheetsManagers}'
+
+    Esteren\:
+        resource: '../src/Esteren/{Controller,Twig}'

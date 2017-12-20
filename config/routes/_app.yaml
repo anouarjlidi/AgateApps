@@ -36,7 +36,7 @@ agate:
     requirements: { _locale: '^(?:%locales_regex%)$' }
 
 esteren_portal:
-    resource: '@EsterenPortalBundle/Controller/'
+    resource: '../../src/Esteren/Controller/'
     type: annotation
     host: '%esteren_domains.portal%'
     prefix: '/{_locale}/'

@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Esteren\PortalBundle\Controller;
+namespace Esteren\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -37,6 +37,6 @@ class FeondBeerController extends Controller
             return $response;
         }
 
-        return $this->render('@EsterenPortal/feond_beer.html.twig', [], $response);
+        return $this->render('esteren/feond_beer.html.twig', [], $response);
     }
 }

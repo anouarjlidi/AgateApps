@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Esteren\PortalBundle\Mailer;
+namespace Agate\Mailer;
 
 use Agate\Model\ContactMessage;
 use Twig\Environment;

@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Esteren\PortalBundle\Entity;
+namespace Esteren\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Orbitale\Bundle\CmsBundle\Entity\Page as BasePage;
