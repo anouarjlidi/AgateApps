@@ -1,0 +1,44 @@
+{% extends 'corahn_rin/layout.html.twig' %}
+
+{% block flash_messages '' %}
+
+{% block title %}{{ 'Générateur' | trans }} - {{ current_step.name | trans }} - {{ parent() }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/generator.css') }}" type="text/css" />
+{% endblock %}
+
+{% block content_for_layout %}
+    {% block step_menu %}
+        <div class="step_menu">
+            {{ include('corahn_rin/Steps/steps_menu.html.twig', {
+                'steps': steps,
+                'current_step': current_step
+            }) }}
+        </div>
+    {% endblock %}
+    <div class="step_module">
+        <h1>{{ 'steps.step' | trans({}, 'corahn_rin') }} {{ current_step.step }} : {{ current_step.label | trans }}</h1>
+
+        {{ include('_flash_messages.html.twig') }}
+
+        <form class="{% block form_class '' %}" name="generator_form" id="generator_form" method="post" action="{{ path('pierstoval_character_generator_step', {'requestStep': current_step.name}) }}">
+            <div id="generator_{{ current_step.name }}">
+                <div>
+                    <button type="submit" id="submit_btn" class="btn btn-inverse left">{{ 'steps.next' | trans({}, 'corahn_rin') }}</button>
+                    <a href="{{ path('pierstoval_character_generator_reset_step', {'requestStep': current_step.name}) }}" class="btn right red lighten-3">{{ 'steps.reset'|trans({}, 'corahn_rin') }}</a>
+                </div>
+                <div class="clearfix"></div>
+                {% block step_content %}{% endblock %}
+                <div class="clearfix"></div>
+            </div>
+        </form>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/maps_lib.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/generator.js') }}"></script>
+{% endblock %}

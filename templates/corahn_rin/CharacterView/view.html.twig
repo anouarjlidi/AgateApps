@@ -1,0 +1,12 @@
+{% extends 'corahn_rin/layout.html.twig' %}
+
+{% block title %}{{'Visualiser un personnage'}} : {{ character.name }} - {{ parent() }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/character_details.css') }}" type="text/css">
+{% endblock %}
+
+{% block content_for_layout %}
+    {{ include('corahn_rin/CharacterView/details_show.html.twig', {'character': character}) }}
+{% endblock %}

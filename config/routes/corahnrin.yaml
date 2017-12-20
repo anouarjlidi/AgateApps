@@ -1,5 +1,5 @@
 corahnrin_characters:
-    resource: '@CorahnRinBundle/Controller/'
+    resource: '../../src/CorahnRin/Controller/'
     type:     annotation
     host:     '%esteren_domains.corahnrin%'
 

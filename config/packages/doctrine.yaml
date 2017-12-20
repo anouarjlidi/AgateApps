@@ -11,6 +11,12 @@ doctrine:
             softdeleteable:
                 class: Gedmo\SoftDeleteable\Filter\SoftDeleteableFilter
                 enabled: true
+        mappings:
+            corahn_rin:
+                type: annotation
+                dir: '%kernel.project_dir%/src/CorahnRin/Entity/'
+                is_bundle: false
+                prefix: CorahnRin
     dbal:
         default_connection: default
         connections:

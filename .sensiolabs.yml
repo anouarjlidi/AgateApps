@@ -14,10 +14,10 @@ post_composer_script: |
     ./bin/console --env=test doctrine:fixtures:load --append --no-interaction
 
 exclude_patterns:
-    - src/CorahnRin/CorahnRinBundle/PDF/FPDF.php
-    - src/CorahnRin/CorahnRinBundle/PDF/PDF.php
-    - src/CorahnRin/CorahnRinBundle/SheetsManagers/PdfManager.php
-    - src/CorahnRin/CorahnRinBundle/Command/ImportLegacyCharactersCommand.php
+    - src/CorahnRin/PDF/FPDF.php
+    - src/CorahnRin/PDF/PDF.php
+    - src/CorahnRin/SheetsManagers/PdfManager.php
+    - src/CorahnRin/Command/ImportLegacyCharactersCommand.php
     - public/index.php
 
 rules:

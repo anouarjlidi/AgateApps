@@ -41,9 +41,18 @@ services:
         autowire: true
         autoconfigure: true
         public: false
+        bind:
+            $sheetsFolder: '%kernel.project_dir%/src/CorahnRin/Resources/pdf_sources'
 
     Admin\Controller\:
         resource: '../src/Admin/Controller'
 
     Agate\Controller\:
         resource: '../src/Agate/Controller'
+
+
+    # TODO: remove this when updating CharacterManagerBundle
+    Pierstoval\Bundle\CharacterManagerBundle\Resolver\StepActionResolver: '@pierstoval.character_manager.step_action_resolver'
+
+    CorahnRin\:
+        resource: '../src/CorahnRin/{Repository,GeneratorTools,SheetsManagers}'

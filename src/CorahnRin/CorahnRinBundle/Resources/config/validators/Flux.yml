@@ -1,5 +1,0 @@
-CorahnRin\CorahnRinBundle\Entity\Flux:
-    properties:
-        name:
-            - NotBlank: ~
-            - Type: string

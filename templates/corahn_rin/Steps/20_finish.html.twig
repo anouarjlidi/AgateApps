@@ -1,0 +1,10 @@
+{% extends 'corahn_rin/Steps/step_base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/character_details.css') }}" type="text/css">
+{% endblock %}
+
+{% block step_content %}
+    {{ include('corahn_rin/CharacterView/details_show.html.twig', {'character': character}) }}
+{% endblock %}

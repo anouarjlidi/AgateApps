@@ -19,7 +19,7 @@ It's composed of two bundles:
 * **PierstovalCharacterManagerBundle** is a "standard" implementation of a character manager. It does not have
 logic, but proposes a `Character` class, interfaces and abstract classes to be overriden in the application.<br>
 :information_source: **Note:** Try to be as much "standard" as you can: this generator **must** be usable for another game.
-* **CorahnRinBundle** implements the character manager class, stores all entities specific to Shadows of Esteren
+* **corahn_rin** implements the character manager class, stores all entities specific to Shadows of Esteren
 game. Everything non-standard should be here.
 
 ## Configuration
@@ -32,7 +32,7 @@ The class **must** extend the Model provided in the bundle.
 
 The character manager and generator relies under the `%esteren_domains.corahnrin%` domain.
 
-Some routes are imported from the `PierstovalCharacterManagerBundle`, some in `CorahnRinBundle`.
+Some routes are imported from the `PierstovalCharacterManagerBundle`, some in `corahn_rin`.
 
 ## Steps
 
@@ -40,7 +40,7 @@ When you create a character, there are tons of steps to create it.
 
 Each step must be defined in a class that have to implement the `StepActionInterface` interface provided by the bundle.
 **Note:** An abstract `StepAction` class can be used too, it already implements the interface and defines basic behaviors.
-In the `CorahnRinBundle`, another abstract class extends the base one, to implement other common behaviors. Ideally, it could be good to get rid of so many abstract classes and have only one in `PierstovalCharacterManagerBundle`...
+In the `corahn_rin`, another abstract class extends the base one, to implement other common behaviors. Ideally, it could be good to get rid of so many abstract classes and have only one in `PierstovalCharacterManagerBundle`...
 
 Step actions can be defined either as simple classes or as services.
 
@@ -57,7 +57,7 @@ Step actions can be defined either as simple classes or as services.
   * Some methods are used to retrieve data from the character and/or update the character itself.
   * A `nextStep()` method allows redirection to next step.
   * A `renderCurrentStep($params)` method allows automatic step twig template resolution with this pattern:
-    `@CorahnRin/Steps/{stepName}.html.twig`. It should extend the `@CorahnRin/Steps/step_base.html.twig` template.
+    `corahn_rin/Steps/{stepName}.html.twig`. It should extend the `corahn_rin/Steps/step_base.html.twig` template.
 6. Tons of javascript helpers are developed with a "standard" policy to be able to reproduce similar behavior through
   similar steps (choosing with hovered-divs or buttons instead of checkboxes, etc.). They are compiled in the root gulpfile.<br>
-  Check the [main_steps.js](../src/CorahnRin/CorahnRinBundle/Resources/assets/generator/js/main_steps.js) file for more info.
+  Check the [main_steps.js](../src/CorahnRin/Resources/assets/generator/js/main_steps.js) file for more info.

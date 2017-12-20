@@ -1,0 +1,74 @@
+{% trans_default_domain 'corahn_rin' %}
+
+<div class="main row">
+    <div class="col l4">
+        <h3>{{ 'character.ways'|trans }}</h3>
+        {% for charWay in character.ways %}
+            <h4>{{ charWay.way.name }} <span class="right">{{ charWay.score }}</span></h4>
+        {% endfor %}
+    </div>
+    <div class="col l4">
+        <h3>{{ 'character.advantages'|trans }}</h3>
+        {% for charAdvantage in character.advantages %}
+            {% if loop.first %}<ul class="list-bullet adv_list">{% endif -%}
+            <li>
+                <h4>
+                    {{- charAdvantage.advantage.name -}}&nbsp;
+                    {{- charAdvantage.score > 1 ? ('(x'~charAdvantage.score~')') -}}
+                </h4>
+            </li>
+            {%- if loop.last %}</ul>{% endif -%}
+        {%- endfor %}
+        <hr>
+        <h3>{{ 'character.disadvantages'|trans }}</h3>
+        {% for charAdvantage in character.disadvantages -%}
+            {%- if loop.first %}<ul class="list-bullet adv_list">{% endif -%}
+            <li>
+                <h4>
+                    {{- charAdvantage.advantage.name -}}&nbsp;
+                    {{- charAdvantage.score > 1 ? ('(x'~charAdvantage.score~')') -}}
+                </h4>
+            </li>
+            {%- if loop.last %}</ul>{% endif -%}
+        {%- endfor %}
+    </div>
+    <div class="col l4">
+        <h3>{{ 'character.health_state'|trans }}</h3>
+        ({{ 'character.max_health'|trans }}&nbsp;: {{ character.maxHealth.sum }})
+        <h4 class="health">
+            {{ 'character.health.good'|trans }}&nbsp;:
+            <span class="right">
+                {{ character.health.good }}&nbsp;/&nbsp;{{ character.maxHealth.good }}
+            </span>
+        </h4>
+        <h4 class="health">
+            {{ 'character.health.okay'|trans }}&nbsp;(-1)&nbsp;:
+            <span class="right">
+                {{ character.health.okay }}&nbsp;/&nbsp;{{ character.maxHealth.okay }}
+            </span>
+        </h4>
+        <h4 class="health">
+            {{ 'character.health.bad'|trans }}&nbsp;(-2)&nbsp;:
+            <span class="right">
+                {{ character.health.bad }}&nbsp;/&nbsp;{{ character.maxHealth.bad }}
+            </span>
+        </h4>
+        <h4 class="health">
+            {{ 'character.health.critical'|trans }}&nbsp;(-3)&nbsp;:
+            <span class="right">
+                {{ character.health.critical }}&nbsp;/&nbsp;{{ character.maxHealth.critical }}
+            </span>
+        </h4>
+        <h4 class="health">
+            {{ 'character.health.agony'|trans }}&nbsp;:
+            <span class="right">
+                {{ character.health.agony ? 1 : 0 }}&nbsp;/&nbsp;{{ character.maxHealth.agony ? 1 : 0 }}
+            </span>
+        </h4>
+        <hr>
+        <div class="right">
+            <h4 class="mt5">{{ 'character.stamina'|trans }}<span class="ml10 right">{{ character.stamina }}</span></h4>
+            <h4 class="mt5">{{ 'character.survival'|trans }}<span class="ml10 right">{{ character.survival }}</span></h4>
+        </div>
+    </div>
+</div>

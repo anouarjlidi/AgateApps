@@ -5,7 +5,7 @@ orbitale_cms:
     category_class: Esteren\PortalBundle\Entity\Category
     layouts:
         corahnrin:
-            resource: '@CorahnRin/layout.html.twig'
+            resource: 'corahn_rin/layout.html.twig'
             host: '%esteren_domains.corahnrin%'
         maps:
             resource: '@EsterenMaps/maps-layout.html.twig'

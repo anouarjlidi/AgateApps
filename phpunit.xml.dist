@@ -67,8 +67,8 @@
         <testsuite name="Shadows of Esteren project test suite">
             <directory>./tests/Admin</directory>
             <directory>./tests/Agate</directory>
+            <directory>./tests/CorahnRin</directory>
             <directory>./src/UserBundle/Tests</directory>
-            <directory>./src/CorahnRin/CorahnRinBundle/Tests</directory>
             <directory>./src/Esteren/PortalBundle/Tests</directory>
             <directory>./src/EsterenMaps/MapsBundle/Tests</directory>
         </testsuite>
@@ -78,7 +78,7 @@
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory>./src</directory>
             <exclude>
-                <directory>./src/CorahnRin/CorahnRinBundle/PDF</directory><!-- External library cannot be tested -->
+                <directory>./src/CorahnRin/PDF</directory><!-- External library cannot be tested -->
 
                 <directory>./src/*Bundle/Resources</directory>
                 <directory>./src/*/*Bundle/Resources</directory>

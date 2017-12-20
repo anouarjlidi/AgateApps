@@ -1,0 +1,42 @@
+{% trans_default_domain 'corahn_rin' %}
+
+<div class="main row">
+    <div class="col s8">
+        <h2 class="text-3xl text-left">{{ 'character.personality'|trans }}</h2>
+
+        <div class="row">
+            <div class="col s4">
+                <h3 class="text-m">
+                    {{ 'character.consciousness'|trans }}&nbsp;:
+                    {{ character.consciousness }}
+                </h3>
+            </div>
+            <div class="col s4">
+                <h3 class="text-m">
+                    {{ 'character.instinct'|trans }}&nbsp;:
+                    {{ character.instinct }}
+                </h3>
+            </div>
+            <div class="col s4">
+                <h3 class="text-m">
+                    {{ 'character.orientation.title'|trans }}&nbsp;:
+                    {{ (character.orientation~'_title')|trans }}
+                </h3>
+            </div>
+        </div>
+
+        <h3 class="text-left">{{ 'character.personality_traits'|trans }}&nbsp;:</h3>
+        <p class="text-l mb15">{{ character.flaw.name }}, {{ character.quality.name }}</p>
+    </div>
+
+    <div class="col s4">
+        <h2>{{ 'character.faults'|trans }}</h2>
+
+        {% for charWay in character.ways %}
+            <h3>
+                {{ charWay.way.fault }}
+                <span class="right">{{ charWay.score }}</span>
+            </h3>
+        {% endfor %}
+    </div>
+</div>

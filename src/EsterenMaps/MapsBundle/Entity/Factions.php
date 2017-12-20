@@ -11,7 +11,7 @@
 
 namespace EsterenMaps\MapsBundle\Entity;
 
-use CorahnRin\CorahnRinBundle\Entity\Books;
+use CorahnRin\Entity\Books;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -74,7 +74,7 @@ class Factions
     /**
      * @var Books
      *
-     * @ORM\ManyToOne(targetEntity="CorahnRin\CorahnRinBundle\Entity\Books")
+     * @ORM\ManyToOne(targetEntity="CorahnRin\Entity\Books")
      * @ORM\JoinColumn(name="book_id", nullable=false)
      */
     protected $book;

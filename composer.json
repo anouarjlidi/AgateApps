@@ -83,7 +83,9 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\Admin\\": "tests/Admin"
+            "Tests\\Admin\\": "tests/Admin",
+            "Tests\\Agate\\": "tests/Agate",
+            "Tests\\CorahnRin\\": "tests/CorahnRin"
         },
         "files": [
             "vendor/symfony/var-dumper/Resources/functions/dump.php"

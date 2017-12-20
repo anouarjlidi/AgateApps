@@ -42,7 +42,7 @@ const config = {
         "src/Esteren/PortalBundle/Resources/assets/css/*.css",
         "src/Esteren/PortalBundle/Resources/assets/sass/*.scss",
         "src/Esteren/PortalBundle/Resources/assets/sass/theme_components/*.scss",
-        "src/CorahnRin/CorahnRinBundle/Resources/assets/generator/css/*.less"
+        "assets/corahn_rin/generator/css/*.less"
     ],
 
     /**
@@ -58,7 +58,7 @@ const config = {
             "src/EsterenMaps/MapsBundle/Resources/assets/img/markerstypes/*"
         ],
         "img/generator": [
-            "src/CorahnRin/CorahnRinBundle/Resources/assets/img/*"
+            "assets/corahn_rin/img/*"
         ],
         "img/agate": [
             "assets/agate/images/**"
@@ -88,7 +88,7 @@ const config = {
             "assets/admin.less"
         ],
         "css/character_details.css": [
-            "src/CorahnRin/CorahnRinBundle/Resources/assets/generator/css/character_details.scss"
+            "assets/corahn_rin/generator/css/character_details.scss"
         ]
     },
 
@@ -108,7 +108,7 @@ const config = {
             "assets/agate/sass/agate-theme.scss"
         ],
         "css/generator.css": [
-            "src/CorahnRin/CorahnRinBundle/Resources/assets/generator/css/main_steps.scss"
+            "assets/corahn_rin/generator/css/main_steps.scss"
         ],
         "css/white_layout.css": [
             "src/Esteren/PortalBundle/Resources/assets/sass/white_layout.scss"
@@ -170,20 +170,20 @@ const config = {
             "src/EsterenMaps/MapsBundle/Resources/assets/js/EsterenMap/5_EsterenMap_mapEdit.js"
         ],
         "js/generator.js": [
-            "src/CorahnRin/CorahnRinBundle/Resources/assets/generator/js/main_steps.js"
+            "assets/corahn_rin/generator/js/main_steps.js"
         ],
-        "js/step_03_birthplace.js": ["src/CorahnRin/CorahnRinBundle/Resources/assets/generator/js/step_03_birthplace.js"],
+        "js/step_03_birthplace.js": ["assets/corahn_rin/generator/js/step_03_birthplace.js"],
         "js/step_11_advantages.js": [
-            "src/CorahnRin/CorahnRinBundle/Resources/assets/generator/js/step_11_advantage_class.js",
-            "src/CorahnRin/CorahnRinBundle/Resources/assets/generator/js/step_11_functions.js",
-            "src/CorahnRin/CorahnRinBundle/Resources/assets/generator/js/step_11_advantages_process.js"
+            "assets/corahn_rin/generator/js/step_11_advantage_class.js",
+            "assets/corahn_rin/generator/js/step_11_functions.js",
+            "assets/corahn_rin/generator/js/step_11_advantages_process.js"
         ],
-        "js/step_13_primary_domains.js": ["src/CorahnRin/CorahnRinBundle/Resources/assets/generator/js/step_13_primary_domains.js"],
-        "js/step_14_use_domain_bonuses.js": ["src/CorahnRin/CorahnRinBundle/Resources/assets/generator/js/step_14_use_domain_bonuses.js"],
-        "js/step_15_domains_spend_exp.js": ["src/CorahnRin/CorahnRinBundle/Resources/assets/generator/js/step_15_domains_spend_exp.js"],
-        "js/step_16_disciplines.js": ["src/CorahnRin/CorahnRinBundle/Resources/assets/generator/js/step_16_disciplines.js"],
-        "js/step_17_combat_arts.js": ["src/CorahnRin/CorahnRinBundle/Resources/assets/generator/js/step_17_combat_arts.js"],
-        "js/step_18_equipment.js": ["src/CorahnRin/CorahnRinBundle/Resources/assets/generator/js/step_18_equipment.js"]
+        "js/step_13_primary_domains.js": ["assets/corahn_rin/generator/js/step_13_primary_domains.js"],
+        "js/step_14_use_domain_bonuses.js": ["assets/corahn_rin/generator/js/step_14_use_domain_bonuses.js"],
+        "js/step_15_domains_spend_exp.js": ["assets/corahn_rin/generator/js/step_15_domains_spend_exp.js"],
+        "js/step_16_disciplines.js": ["assets/corahn_rin/generator/js/step_16_disciplines.js"],
+        "js/step_17_combat_arts.js": ["assets/corahn_rin/generator/js/step_17_combat_arts.js"],
+        "js/step_18_equipment.js": ["assets/corahn_rin/generator/js/step_18_equipment.js"]
     }
 };
 

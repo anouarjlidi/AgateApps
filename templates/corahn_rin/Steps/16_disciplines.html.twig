@@ -1,0 +1,58 @@
+{% extends 'corahn_rin/Steps/step_base.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/step_16_disciplines.js') }}"></script>
+{% endblock %}
+
+{% block step_content %}
+
+    {% if exp_max < 25  %}
+
+        <div class="card-panel teal darken-4">
+            {{ 'disciplines_spend_exp.no_exp_or_bonus_points'|trans({}, 'corahn_rin') }}
+        </div>
+
+    {% else %}
+
+        <div class="card-panel teal darken-4">
+            {{ 'disciplines_spend_exp.explanation'|trans({}, 'corahn_rin')|raw }}
+        </div>
+
+        <div class="card-panel blue-grey darken-4">
+            {{ 'disciplines_spend_exp.remaining'|trans({}, 'corahn_rin') }}
+            <div class="bonus_points_element chip bordered" id="exp_points">
+                <span id="remaining_exp_points" class="text-black">{{ exp_value }}</span>&nbsp;/<span id="max_exp_points" class="text-black">{{ exp_max }}</span>
+            </div>
+            <br>
+            {{ 'disciplines_spend_exp.remaining_bonus_points'|trans({}, 'corahn_rin') }}
+            <div class="bonus_points_element chip bordered" id="bonus_points">
+                <span id="remaining_bonus_points" class="text-black">{{ bonus_value }}</span>&nbsp;/<span id="max_bonus_points" class="text-black">{{ bonus_max }}</span>
+            </div>
+        </div>
+
+        {% for domain_id, disciplines in all_disciplines %}
+
+            <h5>
+                {{ all_domains[domain_id].name }}
+            </h5>
+
+            <div class="row">
+            {% for id, discipline in disciplines %}
+
+                {% set value = disciplines_spent_with_exp[domain_id][id]|default(0) %}
+
+                <div class="col s3">
+                    {% set input_id = 'dse_'~domain_id~'_'~id %}
+                    <input type="checkbox" id="{{ input_id }}" name="disciplines_spend_exp[{{ domain_id }}][{{ id }}]" data-discipline-id="{{ id }}" data-domain-id="{{ domain_id }}" class="filled-in" {{ value ? ' checked' }}>
+                    <label for="{{ input_id }}">{{ discipline.name }}</label>
+                </div>
+
+            {% endfor %}
+            </div>
+
+        {% endfor %}
+
+    {% endif %}{# end if bonus value #}
+
+{% endblock %}
