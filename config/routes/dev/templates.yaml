@@ -4,10 +4,10 @@ _materialize_theme:
     path:     /_theme
     defaults:
         _controller: FrameworkBundle:Template:template
-        template:    _theme/theme.html.twig
+        template:    _theme/materialize.html.twig
 
 _email_contact:
     path:     /_email/contact
     defaults:
         _controller: FrameworkBundle:Template:template
-        template:    '@EsterenPortal/email/contact_email.html.twig'
+        template:    '@Agate/email/contact_email.html.twig'
