@@ -17,7 +17,7 @@
                 </header>
                 <p>{{ socialClass.description | trans({}, 'CorahnRinBundle') | raw }}</p>
                 <div class="divchoice-inside"{{ socialClass_value == socialClass.id ? ' style="display:block;"' : '' }}>
-                    <p>{{ 'domain.add_to_two_others' | trans({}, 'CorahnRinBundle') }} :</p>
+                    <p>{{ 'domain.add_to_two_others' | trans({}, 'CorahnRinBundle') }}</p>
                     <div data-toggle="buttons" data-max-buttons="2">
                         {% for domain in socialClass.domains %}
                         <label for="button_{{ socialClass.id }}_{{ domain.id }}" class="btn {{ socialClassDomains[domain.id] is defined ? ' active' : '' }}">

@@ -12,30 +12,30 @@ jobs:
         details: 'Voir les détails'
 
 geo_environments:
-    bonus: 'Offre un bonus de +1 au domaine suivant :'
+    bonus: 'Offre un bonus de +1 au domaine suivant :'
 
 domain:
     primary: 'Domaine primaire'
     secondary: 'Domaine secondaire'
     manual: 'Au choix'
-    add_to_two_others: '+1 dans deux domaine parmi les suivants'
+    add_to_two_others: '+1 dans deux domaine parmi les suivants :'
 
 age:
     select: 'Sélectionnez l''âge de votre personnage'
-    min_max: 'Minimum : 16, maximum : 35'
+    min_max: 'Minimum : 16, maximum : 35'
 
 setback:
     avoided: 'Évité'
-    avoided_long: 'Par chance, votre personnage a évité ce revers !'
+    avoided_long: 'Par chance, votre personnage a évité ce revers !'
     none: 'Votre personnage n''a aucun revers.'
     question:
-        manual: 'Voulez-vous déterminer les revers manuellement ?'
-        auto: 'Voulez-vous déterminer les revers automatiquement ?'
+        manual: 'Voulez-vous déterminer les revers manuellement ?'
+        auto: 'Voulez-vous déterminer les revers automatiquement ?'
     drawn: 'Les revers tirés sont indiqués par le symbole "%symbol%".'
-    quantity : 'Votre personnage a <span class="badge fln blue text-black lighten-3">%age%</span> ans, il a donc au moins <span class="label label-warning">%count%</span> revers.'
+    quantity: 'Votre personnage a <span class="badge fln blue text-black lighten-3">%age%</span> ans, il a donc au moins <span class="label label-warning">%count%</span> revers.'
 
 ways:
-    total: 'Total :'
+    total: 'Total :'
     explanation: >
         Les voies sont comprises entre 1 et 5, et la somme totale des voies doit être égale à 15.
         <br>
@@ -71,21 +71,21 @@ primary_domains:
     scholar_button: >
         Votre personnage possède l'avantage "Lettré", par conséquent vous pouvez obtenir un bonus de +1 à ce domaine grâce à cet avantage.
     info_table:
-        numberOf1: 'Nombre de domaines avec le score "1"'
-        numberOf2: 'Nombre de domaines avec le score "2"'
-        numberOf3: 'Nombre de domaines avec le score "3"'
-    numberOfScholar: 'Domaine pour l''avantage "Lettré"'
+        number_of_1: 'Nombre de domaines avec le score "1"'
+        number_of_2: 'Nombre de domaines avec le score "2"'
+        number_of_3: 'Nombre de domaines avec le score "3"'
+    number_of_scholar: 'Domaine pour l''avantage "Lettré"'
     scholar_button_use: 'Utiliser l''avantage "Lettré"'
     ost_button_title: 'Service militaire'
 
 domains_bonuses:
     explanation: 'D''après les informations fournies, votre personnage bénéficie d''un certain nombre de points bonus que vous pouvez répartir dans différents domaines.'
-    remaining: 'Points bonus restants :'
+    remaining: 'Points bonus restants :'
     explanation_disciplines: 'Sachez que vous pouvez <strong>conserver jusqu''à 2 points</strong> pour <strong>obtenir des disciplines</strong> dans les étapes suivantes.'
     errors:
         more_than_two: >
             Il vous reste actuellement <strong>%count%</strong> points à dépenser.<br>
-            Sachez que s'il vous reste plus de deux points, tous les points au-delà seront <strong>perdus</strong> !<br>
+            Sachez que s'il vous reste plus de deux points, tous les points au-delà seront <strong>perdus</strong> !<br>
             Ainsi, nous vous recommandons de les utiliser, et d'en garder deux pour obtenir des disciplines dans les étapes suivantes.
         too_many_points: 'Vous avez utilisé %spent% points bonus alors que vous aviez droit à %base% points, veuillez recommencer.'
     no_bonus_point: 'Vous ne disposez pas de points bonus'
@@ -116,8 +116,8 @@ equipment:
     armors:
         title: 'Armures'
     reminder_if_poor: |
-        Rappel : Votre personnage a le désavantage "Pauvreté", ce qui signifie que vous devez limiter le nombre d'éléments
-        d'équipements de votre personnage, ne l'oubliez pas !
+        Rappel : Votre personnage a le désavantage "Pauvreté", ce qui signifie que vous devez limiter le nombre d'éléments
+        d'équipements de votre personnage, ne l'oubliez pas !
 
 description:
     name: 'Nom du personnage'
@@ -142,7 +142,7 @@ combat_arts_spend_exp:
         Vos domaines "Combat au contact" et "Tir et lancer" ne sont pas suffisants pour obtenir des arts de combat
     not_enough_exp: 'Vous n''avez pas assez d''expérience pour bénéficier d''arts de combat'
     explanation: 'Vous pouvez ici choisir des arts de combat, chacun coûte 20XP'
-    remaining: 'Expérience :'
+    remaining: 'Expérience :'
 
 menu:
     steps: 'Étapes'
@@ -218,7 +218,7 @@ character:
     birthplace: 'Lieu de naissance'
     social_class: 'Classe sociale'
     setbacks: 'Revers'
-    setback_avoided: '(a été évité !)'
+    setback_avoided: '(a été évité !)'
     sanity: 'Santé mentale'
     mental_resist: 'Résistance mentale'
     mental_disorders:

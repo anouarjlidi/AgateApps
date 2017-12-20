@@ -1,0 +1,246 @@
+errors:
+    incorrect_values: 'Certain values are incorrect. Please try again (and don''t cheat!).'
+    character_not_complete: 'The character seems not to be finished... Please check all values at each step and try again.'
+
+steps:
+    step: 'Step'
+    next: 'Next step'
+    reset: 'Reset current step'
+
+jobs:
+    modal:
+        details: 'View details'
+
+geo_environments:
+    bonus: 'Offers a +1 bonus to following domain:'
+
+domain:
+    primary: 'Primary domain'
+    secondary: 'Secondary domain'
+    manual: 'Manual choice'
+    add_to_two_others: '+1 to two domain among the following:'
+
+age:
+    select: 'Select your character''s age'
+    min_max: 'Minimum: 16, maximum: 35'
+
+setback:
+    avoided: 'Avoided'
+    avoided_long: 'By luck, your character avoided this setback!'
+    none: 'Your character does not have any setback.'
+    question:
+        manual: 'Do you want to set the setbacks manually?'
+        auto: 'Do you want to set the setbacks automatically?'
+    drawn: 'Automatically assigned setbacks are indicated by the symbol "%symbol%".'
+    quantity: >
+        {1} Your character is <span class="badge fln blue text-black lighten-3">%age%</span> years old, therefore he has at least <span class="label label-warning">%count%</span> setback.
+        |[2,Inf[ Your character is <span class="badge fln blue text-black lighten-3">%age%</span> years old, therefore he has at least <span class="label___ label-warning">%count%</span> setbacks.
+
+ways:
+    total: 'Total:'
+    explanation: >
+        Ways have a score between 1 and 5, and the total sum must equal 15.
+        <br>
+        For ideal values, you can simply allocate the values 1, 2, 3, 4 and 5 to your ways.
+
+advantages:
+    choose_multiple_times: 'Advantages / disadvantages marked with the symbol <span class="text-red">*</span> can be selected multiple times.'
+    title: 'Advantages'
+    xp_cost: 'Cost in XP'
+    details: 'Advantages cost experience'
+disadvantages:
+    title: 'Disavdantages'
+    xp_gain: 'Gain in XP'
+    details: 'Disadvantages make you gain experience'
+
+experience: 'Experience'
+
+mental_disorders:
+    text: 'You can choose a mental disorder, it will determine the way you character behave when he is shocked, frightened or taken by surprise.'
+
+traits:
+    qualities: 'Qualities'
+    flaws: 'Flaws'
+
+primary_domains:
+    explanation: >
+        You must define which are the primary and secondary domains of skills of your character.<br>
+        Each score can be allocated only once, here are the ones you have chosen:
+    additionnal_options: 'Additionnal options'
+    ost_service_button: >
+        Domain bonus acquired after Ost service (military service).<br>
+        If your character did not go for Ost service, you can select another domain.
+    scholar_button: >
+        Your character has the "Scholar" advantage, therefore can have a +1 bonus to this domain.
+    info_table:
+        number_of_1: 'Number of domains with score "1"'
+        number_of_2: 'Number of domains with score "2"'
+        number_of_3: 'Number of domains with score "3"'
+    number_of_scholar: 'Domain for "Scholar" advantage'
+    scholar_button_use: 'Use the "Scholar" advantage'
+    ost_button_title: 'Military service'
+
+domains_bonuses:
+    explanation: '___D''après les informations fournies, votre personnage bénéficie d''un certain nombre de points bonus que vous pouvez répartir dans différents domaines.'
+    remaining: '___Points bonus restants :'
+    explanation_disciplines: '___Sachez que vous pouvez <strong>conserver jusqu''à 2 points</strong> pour <strong>obtenir des disciplines</strong> dans les étapes suivantes.'
+    errors:
+        more_than_two: >
+            ___Il vous reste actuellement <strong>%count%</strong> points à dépenser.<br>
+            Sachez que s'il vous reste plus de deux points, tous les points au-delà seront <strong>perdus</strong> !<br>
+            Ainsi, nous vous recommandons de les utiliser, et d'en garder deux pour obtenir des disciplines dans les étapes suivantes.
+        too_many_points: '___Vous avez utilisé %spent% points bonus alors que vous aviez droit à %base% points, veuillez recommencer.'
+    no_bonus_point: '___Vous ne disposez pas de points bonus'
+
+domains_spend_exp:
+    no_exp: '___Vous n''avez plus assez de points d''expérience à pour améliorer vos domaines.'
+    remaining: '___Expérience restante :'
+    explanation: >
+        ___Vous pouvez dépenser de l'expérience pour améliorer vos domaines.<br>
+        <strong>Chaque point supplémentaire coûte 10XP</strong>
+
+disciplines_spend_exp:
+    no_exp_or_bonus_points: '___Il ne vous reste pas assez de points bonus ou d''expérience pour obtenir des disciplines'
+    remaining: '___Expérience restante'
+    remaining_bonus_points: '___Points bonus restants'
+    explanation: >
+        ___Vous pouvez dépenser de l'expérience pour obtenir des disciplines.<br>
+        <strong>Chaque discipline coûte 25XP</strong>, et celles-ci ne peuvent être acquises
+        que pour vos domaines principaux et secondaires, qui dépendent de votre métier (vous pouvez
+        les consulter à l'étape 2 si besoin).
+
+equipment:
+    base_elements:
+        title: '___Éléments d''équipement'
+        description: '___Vous avez la possibilité de choisir quelques objets à ajouter à votre inventaire.'
+    weapons:
+        title: '___Armes'
+    armors:
+        title: '___Armures'
+    reminder_if_poor: |
+        ___Rappel : Votre personnage a le désavantage "Pauvreté", ce qui signifie que vous devez limiter le nombre d'éléments
+        d'équipements de votre personnage, ne l'oubliez pas !
+
+description:
+    name: '___Nom du personnage'
+    male: '___Homme'
+    female: '___Femme'
+    player_name: '___Nom du joueur'
+    character_description: '___Description physique'
+    character_story: '___Histoire'
+    character_notable_facts: '___Faits notables'
+    sex: '___Sexe'
+    errors:
+        name: '___Le nom du personnage est obligatoire'
+        player_name: '___Le nom du joueur est obligatoire'
+        sex: '___Le sexe du personnage est obligatoire'
+        name_too_long: '___Le nom ne doit pas contenir plus de 100 caractères'
+        description: '___La description ne doit pas contenir plus de 255 caractères'
+        story: '___L''histoire ne doit pas contenir plus de 65535 caractères'
+        facts: '___Les faits notables ne doivent pas contenir plus de 65535 caractères'
+
+combat_arts_spend_exp:
+    domains_not_enough: |
+        ___Vos domaines "Combat au contact" et "Tir et lancer" ne sont pas suffisants pour obtenir des arts de combat
+    not_enough_exp: '___Vous n''avez pas assez d''expérience pour bénéficier d''arts de combat'
+    explanation: '___Vous pouvez ici choisir des arts de combat, chacun coûte 20XP'
+    remaining: 'Experience:'
+
+menu:
+    steps: 'Steps'
+
+character:
+    orientation:
+        instinctive: |
+            ___L'Instinct concerne toute l'énergie pulsionnelle d'un être vivant. Cet Aspect regroupe notamment les
+            instincts de survie et d'autoconservation ainsi que tout ce qui a trait à la sexualité.
+        rational: |
+            ___Cet Aspect rend compte de l'importance de la rationalité pour le PJ, de son ancrage dans la réalité,
+            de sa capacité de logique et de réflexion, et de sa solidité.
+        instinctive_title: Instinctive
+        rational_title: Rational
+        title: 'Orientation'
+    sex:
+        female: '___Femme'
+        male: '___Homme'
+    combat_attitude:
+        standard: '___Standard'
+        offensive: '___Offensive'
+        defensive: '___Défensive'
+        quick: '___Rapide'
+        movement: '___Mouvement'
+        sheet_explanation: |
+            ___Pour l'attaque, le premier score correspond au domaine "Combat au Contact", et le deuxième correspond
+            au domaine "Tir et Lancer", sans prise en compte d'une quelconque discipline.
+    health:
+        good: '___Bon'
+        okay: '___Moyen'
+        bad: '___Grave'
+        critical: '___Critique'
+        agony: '___Agonie'
+    combat:
+        atk: '___Att'
+        def: '___Def'
+        spd: '___Rap'
+    weapon:
+        dmg: '___dom.'
+    miracles:
+        minor: '___Miracles mineurs'
+        major: '___Miracles majeurs'
+    details: '___Détails du personnage'
+    domains: '___Domaines'
+    name: '___Nom'
+    player_name: '___Joueur'
+    job: '___Métier'
+    sex_title: '___Sexe'
+    age: '___Âge'
+    people: '___Peuple'
+    ways: '___Voies'
+    advantages: '___Avantages'
+    disadvantages: '___Désavantages'
+    health_state: '___État de santé'
+    max_health: '___Santé maximale'
+    stamina: '___Vigueur'
+    survival: '___Survie'
+    disciplines: '___Disciplines'
+    combat_attitudes: '___Attitudes de combat'
+    weapons: '___Armes'
+    defense: '___Défense'
+    speed: '___Rapidité'
+    armors: '___Armures'
+    potential: '___Potentiel'
+    equipment: '___Équipement'
+    treasures: '___Trésors et objets précieux'
+    flux: '___Flux'
+    exaltation: '___Exaltation'
+    rindath: '___Rindath'
+    rindath_score: '___Score'
+    exaltation_score: '___Score'
+    history: '___Histoire'
+    birthplace: '___Lieu de naissance'
+    social_class: '___Classe sociale'
+    setbacks: '___Revers'
+    setback_avoided: '___(a été évité !)'
+    sanity: '___Santé mentale'
+    mental_resist: '___Résistance mentale'
+    mental_disorders:
+        balance: '___Équilibre'
+        symptom: '___Symptôme'
+        syndrome: '___Syndrome'
+        madness: '___Folie'
+    trauma:
+        title: '___Trauma'
+        permanent: '___Trauma permanent'
+        curable: '___Trauma curable'
+        hardening: '___Endurcissement'
+    instinct: '___Instinct'
+    consciousness: '___Conscience'
+    personality: '___Personnalité'
+    personality_traits: '___Traits de caractère'
+    faults: '___Travers'
+    experience:
+        title: '___Points d''expérience'
+        actual: '___Restants'
+        spent: '___Dépensés'
+    notable_facts: '___Faits marquants'
+    ogham_list: '___Ogham à disposition'
