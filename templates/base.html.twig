@@ -189,7 +189,7 @@
 
 {% block javascripts %}
     {% if app.session.has('connect_other_domains') %}
-        {{ include('@Agate/connect/connect_script.html.twig', {'domains': [
+        {{ include('agate/connect/connect_script.html.twig', {'domains': [
             esteren_domains_corahnrin,
             esteren_domains_esterenmaps,
             esteren_domains_portal,

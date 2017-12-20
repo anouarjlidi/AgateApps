@@ -44,3 +44,6 @@ services:
 
     Admin\Controller\:
         resource: '../src/Admin/Controller'
+
+    Agate\Controller\:
+        resource: '../src/Agate/Controller'

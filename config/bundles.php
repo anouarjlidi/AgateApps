@@ -17,7 +17,6 @@ return [
     Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle::class => ['all' => true],
     Symfony\Bundle\TwigBundle\TwigBundle::class => ['all' => true],
     UserBundle\UserBundle::class => ['all' => true],
-    AgateBundle\AgateBundle::class => ['all' => true],
     CorahnRin\CorahnRinBundle\CorahnRinBundle::class => ['all' => true],
     Esteren\PortalBundle\EsterenPortalBundle::class => ['all' => true],
     EsterenMaps\MapsBundle\EsterenMapsBundle::class => ['all' => true],

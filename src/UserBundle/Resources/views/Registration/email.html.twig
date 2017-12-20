@@ -1,8 +1,8 @@
-{% extends '@Agate/email/email_layout_internal.html.twig' %}
+{% extends 'agate/email/email_layout_internal.html.twig' %}
 
 {% trans_default_domain 'UserBundle' %}
 
-{% import '@Agate/email/_macros.html.twig' as macros %}
+{% import 'agate/email/_macros.html.twig' as macros %}
 
 {% set textMessage %}
     {{ 'registration.email.subject'|trans({'%username%': user.username}) }}

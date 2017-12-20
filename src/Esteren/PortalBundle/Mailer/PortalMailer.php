@@ -11,7 +11,7 @@
 
 namespace Esteren\PortalBundle\Mailer;
 
-use AgateBundle\Model\ContactMessage;
+use Agate\Model\ContactMessage;
 use Twig\Environment;
 
 final class PortalMailer
@@ -44,7 +44,7 @@ final class PortalMailer
             ->setTo('pierstoval+newportal@gmail.com')
             ->addCc('cindy.studioagate+portal@gmail.com', 'Cindy Husson')
             ->addCc('nelyhann+portal@gmail.com', 'Les Ombres d\'Esteren')
-            ->setBody($this->twig->render('@Agate/email/contact_email.html.twig', [
+            ->setBody($this->twig->render('agate/email/contact_email.html.twig', [
                 'ip'      => $ip,
                 'message' => $message,
             ]))

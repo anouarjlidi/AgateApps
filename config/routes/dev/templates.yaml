@@ -10,4 +10,4 @@ _email_contact:
     path:     /_email/contact
     defaults:
         _controller: FrameworkBundle:Template:template
-        template:    '@Agate/email/contact_email.html.twig'
+        template:    'agate/email/contact_email.html.twig'

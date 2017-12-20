@@ -29,7 +29,7 @@ esterenmaps:
     requirements: { _locale: '^(?:%locales_regex%)$' }
 
 agate:
-    resource: "@AgateBundle/Controller/"
+    resource: '../../src/Agate/Controller/'
     type: annotation
     prefix: '/{_locale}/'
     defaults: { locale: '%locale%' }

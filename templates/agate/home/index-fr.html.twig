@@ -1,0 +1,118 @@
+{% extends 'agate/agate-layout.html.twig' %}
+
+{% block content_layout_class '' %}
+
+{% block content_for_layout %}
+
+    {% spaceless %}
+
+    <h1 class="sr-only">Bienvenue sur le nouveau portail du Studio Agate</h1>
+
+    <div id="index-banner" class="parallax-container valign-wrapper">
+        <div class="section no-pad-bot">
+            <div class="container">
+                <h2 class="header center white-text text-shadow-black-10">Précommandes 7e Mer</h2>
+                <div class="row center">
+                    <h2 class="header col s12 light white-text text-shadow-black-10 text-xl">
+                        <strong>Vous avez manqué la campagne Ulule ? Réservez le livre de base et les packs en édition limitée !</strong>
+                    </h2>
+                </div>
+                <div class="row center">
+                    <a href="https://7e-mer.backerkit.com/hosted_preorders" class="btn-large waves-effect waves-light bg-gold">
+                        Précommandes sur Backerkit
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="parallax">
+            <img src="{{ asset('img/agate/Portal_Screen-7th-Sea.jpg') }}" alt="Écran du maître, 7e Mer">
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="section">
+
+            <div class="row">
+                <div class="col s12 m4 hoverable">
+                    <a href="http://www.esteren.org/" class="bl portal-link">
+                        <h2 class="text-xxl">
+                            <img src="{{ asset('img/agate/Portal_Esteren_logo.png') }}" alt="Les Ombres d'Esteren">
+                        </h2>
+                        <p>Horreur gothique médiévale dans un univers romantique inspiré par les légendes celtes</p>
+                    </a>
+                </div>
+                <div class="col s12 m4 hoverable">
+                    <a href="http://www.dragons-jdr.blogspot.fr/" class="bl portal-link">
+                        <h2 class="text-xxl">
+                            <img src="{{ asset('img/agate/Portal_Dragons_logo.jpg') }}" alt="Dragons">
+                        </h2>
+                        <p>Univers basé sur les règles augmentées de la 5ème édition du plus mythique des JDR</p>
+                    </a>
+                </div>
+                <div class="col s12 m4 hoverable">
+                    <a href="{{ path('vermine_portal_home') }}" class="bl portal-link">
+                        <h2 class="text-xxl">
+                            <img src="{{ asset('img/agate/Portal_Vermine_logo.jpg') }}" alt="Vermine 2047">
+                        </h2>
+                        <p>Survie et chamanisme dans un monde post-apocalyptique où l'homme n'est plus qu'une simple proie</p>
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12 m4 offset-m1 hoverable">
+                    <a href="https://www.facebook.com/7eMer/" class="bl portal-link">
+                        <h2 class="text-xxl">
+                            <img src="{{ asset('img/agate/Portal_7e_Mer_Logo.png') }}" alt="7th Sea">
+                        </h2>
+                        <p>Aventure, piraterie et intrigue pour cet univers haut en couleurs fidèle au genre de cape et d'épée</p>
+                    </a>
+                </div>
+
+                <div class="col s12 m4 offset-m1 hoverable">
+                    <a href="http://www.facebook.com/vampirelerequiem/" class="bl portal-link">
+                        <h2 class="text-xxl">
+                            <img src="{{ asset('img/agate/Portal_Vampire_Requiem_Logo.png') }}" alt="Vampire : Le Requiem">
+                        </h2>
+                        <p>Cette nuit, vous devenez l'une des beautés damnées qui se cachent derrière notre monde ordinaire</p>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="parallax-container valign-wrapper">
+        <div class="parallax"><img src="{{ asset('img/agate/esteren_dearg_front.jpg') }}" alt="Les Ombres d'Esteren : Arven en train de marcher"></div>
+    </div>
+
+    <div class="container">
+        <div class="section">
+            <div class="row">
+                <div class="col s12 center text-m">
+                    <h2 id="decouvrir-esteren">Qui sommes-nous ?</h2>
+                    <p class="left-align">
+                        Basé en France, notre studio est composé de <a href="{{ path('agate_team') }}">six membres permanents</a>.
+                        Nous travaillons avec de nombreux auteurs, illustrateurs et créatifs freelance qui participent à
+                        nos projets. Notre studio est spécialisé dans la création de mondes imaginaires, l'écriture de
+                        scénarios et le transmedia. Nous produisons des livres de jeux de rôle, des albums de musique ou
+                        encore des jeux vidéos qui cumulent une dizaine de prix à l'international. Nous traduisons et
+                        publions également des licences de grands jeux avec notre label d'édition <strong>Agate RPG</strong>.
+                    </p>
+                    <p class="left-align">
+                        Vous pouvez suivre notre travail sur <a href="http://agate-rpg.blogspot.fr/">notre blog</a>.
+                    </p>
+                    <p class="left-align">
+                        Vous souhaitez envoyer votre candidature ou faire appel nos services ?
+                        <a href="{{ path('contact') }}">Contactez-nous</a>.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="parallax-container valign-wrapper">
+        <div class="parallax"><img src="{{ asset('img/Esteren_Arven_marche.jpg') }}" alt="Les Ombres d'Esteren : Arven en train de marcher"></div>
+    </div>
+    {% endspaceless %}
+
+{% endblock %}

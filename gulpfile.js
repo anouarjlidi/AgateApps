@@ -61,7 +61,7 @@ const config = {
             "src/CorahnRin/CorahnRinBundle/Resources/assets/img/*"
         ],
         "img/agate": [
-            "src/AgateBundle/Resources/assets/images/**"
+            "assets/agate/images/**"
         ],
         "img/": [
             "src/Esteren/PortalBundle/Resources/assets/images/**"
@@ -105,7 +105,7 @@ const config = {
             "src/Esteren/PortalBundle/Resources/assets/sass/main.scss"
         ],
         "css/agate.css": [
-            "src/AgateBundle/Resources/assets/sass/agate-theme.scss"
+            "assets/agate/sass/agate-theme.scss"
         ],
         "css/generator.css": [
             "src/CorahnRin/CorahnRinBundle/Resources/assets/generator/css/main_steps.scss"
@@ -147,7 +147,7 @@ const config = {
         ],
         "js/global.js": [
             "node_modules/materialize-css/dist/js/materialize.js",
-            "src/AgateBundle/Resources/assets/js/connect.js",
+            "assets/agate/js/connect.js",
             "src/Esteren/PortalBundle/Resources/assets/js/helpers.js",
             "src/Esteren/PortalBundle/Resources/assets/js/global.js"
         ],

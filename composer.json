@@ -66,7 +66,7 @@
     "autoload": {
         "psr-4": {
             "Admin\\": "src/Admin",
-            "AgateBundle\\": "src/AgateBundle",
+            "Agate\\": "src/Agate",
             "CorahnRin\\": "src/CorahnRin",
             "Esteren\\": "src/Esteren",
             "EsterenMaps\\": "src/EsterenMaps",

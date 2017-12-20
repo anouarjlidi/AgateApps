@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets -%}
+    {{- parent() -}}
+    <link rel="stylesheet" href="{{ asset('css/white_layout.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('css/agate.css') }}" type="text/css">
+{%- endblock %}
+
+{% block title %}
+    Studio Agate
+{% endblock %}
+
+{# Disable login on this page because for now it's not useful #}
+{% block menu_right_content %}
+    {{ include('agate/_menu_right.html.twig') }}
+{% endblock %}
+
+{% block menu_mobile_content %}
+    {{ block('menu_right_content') }}
+{% endblock %}
+
+{% block menu_brand_link %}
+    <a href="{{ path('agate_portal_home') }}" class="brand-logo position-static left" title="{{ 'home' | trans({}, 'OrbitaleCms') }}">
+        <img id="esteren_logo" src="{{ asset('img/agate/logo_agate_studio_words.png') }}" alt="{{ 'home' | trans({}, 'OrbitaleCms') }}">
+    </a>
+{% endblock %}
+
+{% block footer_links_content %}
+    <li><a href="{{ path('agate_team') }}">{{ 'footer.team'|trans }}</a></li>
+    <li><a href="http://agate-rpg.blogspot.fr/">{{ 'footer.agate_rpg_blog'|trans }}</a></li>
+    {{ parent() }}
+{% endblock %}
+
+{% block footer_social_networks '' %}
+
+{% block footer_about %}
+    {# Margin is half the margin of the h2 tag at the bottom-right of the footer #}
+    <div style="margin-top: 0.89rem;">
+        <a href="{{ path('agate_portal_home') }}">
+            <img src="{{ asset('img/agate/logo_agate_studio_big.png') }}" alt="Studio Agate" style="max-height: 150px;">
+        </a>
+    </div>
+{% endblock %}
