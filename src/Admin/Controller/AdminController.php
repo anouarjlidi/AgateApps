@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace AdminBundle\Controller;
+namespace Admin\Controller;
 
 use Doctrine\ORM\QueryBuilder;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AdminController as BaseAdminController;

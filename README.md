@@ -132,7 +132,7 @@ If you want, you can force the tests to rewrite the whole database by using this
 $ RECREATE_DB=1 phpunit
 ```
 
-Read the [bootstrap.php](tests/phpunit/bootstrap.php) file to see these env vars in use. 
+Read the [bootstrap.php](tests/bootstrap.php) file to see these env vars in use. 
 
 
 ### CI

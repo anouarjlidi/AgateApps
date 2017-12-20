@@ -9,18 +9,18 @@
  * file that was distributed with this source code.
  */
 
-namespace AdminBundle\Tests;
+namespace Tests\Admin;
 
-use EsterenMaps\MapsBundle\Entity\MarkersTypes;
+use EsterenMaps\MapsBundle\Entity\ZonesTypes;
 
-class MarkersTypesAdminTest extends AbstractEasyAdminTest
+class ZonesTypesAdminTest extends AbstractEasyAdminTest
 {
     /**
      * {@inheritdoc}
      */
     public function getEntityName()
     {
-        return 'MarkersTypes';
+        return 'ZonesTypes';
     }
 
     /**
@@ -28,7 +28,7 @@ class MarkersTypesAdminTest extends AbstractEasyAdminTest
      */
     public function getEntityClass()
     {
-        return MarkersTypes::class;
+        return ZonesTypes::class;
     }
 
     /**
@@ -39,8 +39,9 @@ class MarkersTypesAdminTest extends AbstractEasyAdminTest
         return [
             'id',
             'name',
-            'webIcon',
-            'markers',
+            'color',
+            'parent',
+            'zones',
         ];
     }
 

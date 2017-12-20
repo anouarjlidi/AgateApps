@@ -35,3 +35,12 @@ parameters:
     vermine_domains.portal:          'www.%env(VERMINE_DOMAIN)%'
 
     magick_binaries_path: '%env(IMAGEMAGICK_BINARIES_PATH)%'
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Admin\Controller\:
+        resource: '../src/Admin/Controller'

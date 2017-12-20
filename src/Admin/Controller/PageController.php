@@ -9,26 +9,34 @@
  * file that was distributed with this source code.
  */
 
-namespace AdminBundle\Controller;
+namespace Admin\Controller;
 
 use Esteren\PortalBundle\Entity\Page;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
+use Twig\Environment;
 
 /**
  * @Security("has_role('ROLE_ADMIN_MANAGE_SITE')")
  */
-class PageController extends Controller
+class PageController
 {
+    private $twig;
+
+    public function __construct(Environment $twig)
+    {
+        $this->twig = $twig;
+    }
+
     /**
      * @Route("/page/preview/{id}", name="admin_page_preview", methods={"GET"})
      */
-    public function indexAction(Page $page)
+    public function indexAction(Page $page): Response
     {
-        return $this->render('easy_admin/Pages/preview.html.twig', [
+        return new Response($this->twig->render('easy_admin/Pages/preview.html.twig', [
             'pages' => [],
             'page'  => $page,
-        ]);
+        ]));
     }
 }

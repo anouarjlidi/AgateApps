@@ -39,7 +39,7 @@ An `AdminBundle` exists only to store the `AdminController` which allows complet
 
 Tests are located in the associated bundles, but global configuration is in the root directory.
 
-The bootstrap file and the default `WebTestCase` class are located in the `tests/phpunit/` directory.
+The bootstrap file and the default `WebTestCase` class are located in the `tests/` directory.
 
 For now, there's only PHPUnit.
 

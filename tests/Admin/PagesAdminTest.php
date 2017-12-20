@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace AdminBundle\Tests;
+namespace Tests\Admin;
 
 use Esteren\PortalBundle\Entity\Page;
 

@@ -9,18 +9,18 @@
  * file that was distributed with this source code.
  */
 
-namespace AdminBundle\Tests;
+namespace Tests\Admin;
 
-use EsterenMaps\MapsBundle\Entity\TransportTypes;
+use EsterenMaps\MapsBundle\Entity\Maps;
 
-class TransportTypesAdminTest extends AbstractEasyAdminTest
+class MapsAdminTest extends AbstractEasyAdminTest
 {
     /**
      * {@inheritdoc}
      */
     public function getEntityName()
     {
-        return 'TransportTypes';
+        return 'Maps';
     }
 
     /**
@@ -28,7 +28,7 @@ class TransportTypesAdminTest extends AbstractEasyAdminTest
      */
     public function getEntityClass()
     {
-        return TransportTypes::class;
+        return Maps::class;
     }
 
     /**
@@ -39,9 +39,11 @@ class TransportTypesAdminTest extends AbstractEasyAdminTest
         return [
             'id',
             'name',
-            'slug',
-            'speed',
-            'description',
+            'nameSlug',
+            'maxZoom',
+            'startZoom',
+            'startX',
+            'startY',
         ];
     }
 

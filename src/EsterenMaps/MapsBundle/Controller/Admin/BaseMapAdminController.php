@@ -11,7 +11,7 @@
 
 namespace EsterenMaps\MapsBundle\Controller\Admin;
 
-use AdminBundle\Controller\AdminController;
+use Admin\Controller\AdminController;
 
 class BaseMapAdminController extends AdminController
 {

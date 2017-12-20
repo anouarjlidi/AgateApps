@@ -7,7 +7,7 @@
          stopOnFailure="false"
          colors="true"
          verbose="true"
-         bootstrap="./tests/phpunit/bootstrap.php"
+         bootstrap="./tests/bootstrap.php"
          beStrictAboutOutputDuringTests="true"
          beStrictAboutTodoAnnotatedTests="true"
          beStrictAboutResourceUsageDuringSmallTests="true"
@@ -65,7 +65,7 @@
 
     <testsuites>
         <testsuite name="Shadows of Esteren project test suite">
-            <directory>./src/AdminBundle/Tests</directory>
+            <directory>./tests/Admin</directory>
             <directory>./src/AgateBundle/Tests</directory>
             <directory>./src/UserBundle/Tests</directory>
             <directory>./src/CorahnRin/CorahnRinBundle/Tests</directory>

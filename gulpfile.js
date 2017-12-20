@@ -85,7 +85,7 @@ const config = {
             "src/EsterenMaps/MapsBundle/Resources/assets/less/maps.less"
         ],
         "css/admin.css": [
-            "src/AdminBundle/Resources/assets/less/admin.less"
+            "assets/admin.less"
         ],
         "css/character_details.css": [
             "src/CorahnRin/CorahnRinBundle/Resources/assets/generator/css/character_details.scss"
