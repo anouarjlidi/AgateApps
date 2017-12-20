@@ -35,7 +35,7 @@ use CorahnRin\Entity\SocialClasses;
 use CorahnRin\Entity\Traits;
 use CorahnRin\Entity\Weapons;
 use Doctrine\Common\Collections\ArrayCollection;
-use EsterenMaps\MapsBundle\Entity\Zones;
+use EsterenMaps\Entity\Zones;
 use UserBundle\Entity\User;
 
 /**

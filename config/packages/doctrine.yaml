@@ -22,6 +22,12 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Esteren/Entity/'
                 is_bundle: false
                 prefix: Esteren
+            esteren_maps:
+                type: annotation
+                dir: '%kernel.project_dir%/src/EsterenMaps/Entity/'
+                is_bundle: false
+                prefix: EsterenMaps
+
     dbal:
         default_connection: default
         connections:

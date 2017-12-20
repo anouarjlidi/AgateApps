@@ -1,4 +1,6 @@
+#
 # Root route that redirects "/" to "/%locale%/"
+#
 root:
     path: /{locale}
     defaults:
@@ -10,24 +12,38 @@ root:
         locale: '^(?:%locales_regex%)$'
     methods: ['GET']
 
+#
+# User
+#
 user:
     resource: 'user.yaml'
     prefix: '/{_locale}/'
     defaults: { locale: '%locale%' }
     requirements: { _locale: '^(?:%locales_regex%)$' }
 
+#
+# CorahnRin
+#
 corahnrin:
     resource: 'corahnrin.yaml'
     prefix: '/{_locale}/'
     defaults: { locale: '%locale%' }
     requirements: { _locale: '^(?:%locales_regex%)$' }
 
+#
+# Esteren Maps
+# Some controllers use a different domain name, check the @Route annotation on them to be sure.
+#
 esterenmaps:
-    resource: '@EsterenMapsBundle/Resources/config/routing.yaml'
+    resource: '../../src/EsterenMaps/Controller/'
+    type:     annotation
     prefix: '/{_locale}/'
     defaults: { locale: '%locale%' }
     requirements: { _locale: '^(?:%locales_regex%)$' }
 
+#
+# Agate portal
+#
 agate:
     resource: '../../src/Agate/Controller/'
     type: annotation
@@ -35,6 +51,9 @@ agate:
     defaults: { locale: '%locale%' }
     requirements: { _locale: '^(?:%locales_regex%)$' }
 
+#
+# Esteren portal
+#
 esteren_portal:
     resource: '../../src/Esteren/Controller/'
     type: annotation
@@ -43,6 +62,9 @@ esteren_portal:
     defaults: { locale: '%locale%' }
     requirements: { _locale: '^(?:%locales_regex%)$' }
 
+#
+# Admin
+#
 admin:
     resource: 'easy_admin.yaml'
     prefix: '/{_locale}/'

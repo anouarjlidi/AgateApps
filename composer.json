@@ -85,7 +85,9 @@
         "psr-4": {
             "Tests\\Admin\\": "tests/Admin",
             "Tests\\Agate\\": "tests/Agate",
-            "Tests\\CorahnRin\\": "tests/CorahnRin"
+            "Tests\\CorahnRin\\": "tests/CorahnRin",
+            "Tests\\Esteren\\": "tests/Esteren",
+            "Tests\\EsterenMaps\\": "tests/EsterenMaps"
         },
         "files": [
             "vendor/symfony/var-dumper/Resources/functions/dump.php"

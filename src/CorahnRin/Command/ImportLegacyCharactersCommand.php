@@ -15,10 +15,11 @@ use CorahnRin\Entity\CharacterProperties\CharWays;
 use CorahnRin\Entity\Characters;
 use CorahnRin\Entity\Games;
 use CorahnRin\Entity\Ways;
+use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\DBAL\Connection;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Bridge\Doctrine\ManagerRegistry;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -26,10 +27,15 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use UserBundle\Entity\User;
 use UserBundle\Repository\UserRepository;
 
-class ImportLegacyCharactersCommand extends ContainerAwareCommand
+class ImportLegacyCharactersCommand extends Command
 {
+    protected static $defaultName = 'corahnrin:legacy_import:characters';
+
+    private $managerRegistry;
+    private $userManager;
+
     /**
-     * @var EntityManager
+     * @var ObjectManager
      */
     private $em;
 
@@ -49,11 +55,6 @@ class ImportLegacyCharactersCommand extends ContainerAwareCommand
     private $input;
 
     /**
-     * @var UserRepository
-     */
-    private $userManager;
-
-    /**
      * @var User[]
      */
     private $users = [];
@@ -67,11 +68,18 @@ class ImportLegacyCharactersCommand extends ContainerAwareCommand
      * @var Games[]
      */
     private $games = [];
-
     /**
      * @var Ways[]
      */
     private $ways;
+
+    public function __construct(ManagerRegistry $managerRegistry, UserRepository $userManager)
+    {
+        $this->managerRegistry = $managerRegistry;
+        $this->userManager = $userManager;
+        parent::__construct(static::$defaultName);
+    }
+
 
     /**
      * {@inheritdoc}
@@ -79,7 +87,6 @@ class ImportLegacyCharactersCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('corahnrin:legacy_import:characters')
             ->addOption('strategy-existing', 's', InputOption::VALUE_OPTIONAL, '')
             ->setDescription('Create characters from the old database and insert them here.')
         ;
@@ -90,15 +97,11 @@ class ImportLegacyCharactersCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $container = $this->getContainer();
-
         // Defining specific properties for this class
         $this->input       = $input;
         $this->io          = new SymfonyStyle($input, $output);
-        $this->userManager = $container->get(UserRepository::class);
-        $doctrine          = $container->get('doctrine');
-        $this->em          = $doctrine->getManager();
-        $this->legacyCnx   = $doctrine->getConnection('legacy');
+        $this->em          = $this->managerRegistry->getManager();
+        $this->legacyCnx   = $this->managerRegistry->getConnection('legacy');
 
         $sql = <<<'SQL'
 
@@ -233,7 +236,7 @@ SQL;
             $user
                 ->setUsername($username)
                 ->setEmail($email)
-                ->setPlainPassword($this->getContainer()->get('user.util.token_generator')->generateToken())
+                ->setPlainPassword(uniqid($username.$email, true))
             ;
 
             $this->em->persist($user);

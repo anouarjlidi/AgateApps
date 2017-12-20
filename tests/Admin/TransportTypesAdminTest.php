@@ -11,7 +11,7 @@
 
 namespace Tests\Admin;
 
-use EsterenMaps\MapsBundle\Entity\TransportTypes;
+use EsterenMaps\Entity\TransportTypes;
 
 class TransportTypesAdminTest extends AbstractEasyAdminTest
 {

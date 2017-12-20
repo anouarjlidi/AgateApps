@@ -34,9 +34,9 @@ The `_load()` function is the one that communicates with web services defined in
 
 There are three main services in Esteren Maps that you can use:
 
-* `EsterenMaps\MapsBundle\Services\DirectionsManager`, to manage itineraries calculations.
-* `EsterenMaps\MapsBundle\Services\MapImageManager`, not used yet, but it will allow generating a portion of the full map into a single image, with the routes and markers on it.
-* `EsterenMaps\MapsBundle\Services\MapsTilesManager`, to generate tiles for any map.
+* `EsterenMaps\Services\DirectionsManager`, to manage itineraries calculations.
+* `EsterenMaps\Services\MapImageManager`, not used yet, but it will allow generating a portion of the full map into a single image, with the routes and markers on it.
+* `EsterenMaps\Services\MapsTilesManager`, to generate tiles for any map.
 
 ## Tiles generation
 
@@ -54,7 +54,7 @@ It will use [ImageMagick](http://www.imagemagick.org) and the [Orbitale ImageMag
 
 ## Directions
 
-Directions are calculated by the [DirectionsManager](../src/EsterenMaps/MapsBundle/Services/DirectionsManager.php).
+Directions are calculated by the [DirectionsManager](../src/EsterenMaps/Services/DirectionsManager.php).
 
 Each time a direction is asked by an end-user, it is cached to avoid consuming too much resource when resolving Dijkstra's
  algorithm to calculate the best direction.
@@ -76,5 +76,5 @@ This cache can be cleared like any other cache by the `bin/console cache:clear` 
 But it is also **automatically** cleared when you update any Maps-related entity, or any class implementing the
  `EntityToClearInterface` interface.
  
-Check the [CacheClearSubscriber](../src/EsterenMaps/MapsBundle/DoctrineListeners/CacheClearSubscriber.php) class for
+Check the [CacheClearSubscriber](../src/EsterenMaps/DoctrineListeners/CacheClearSubscriber.php) class for
  more information

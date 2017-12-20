@@ -11,7 +11,7 @@
 
 namespace Tests\Admin;
 
-use EsterenMaps\MapsBundle\Entity\Maps;
+use EsterenMaps\Entity\Maps;
 
 class MapsAdminTest extends AbstractEasyAdminTest
 {

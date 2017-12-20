@@ -23,7 +23,7 @@ use CorahnRin\Entity\Traits\CharacterGettersSetters;
 use CorahnRin\Exception\CharactersException;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use EsterenMaps\MapsBundle\Entity\Zones;
+use EsterenMaps\Entity\Zones;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Pierstoval\Bundle\CharacterManagerBundle\Entity\Character as BaseCharacter;
 use UserBundle\Entity\User;
@@ -391,7 +391,7 @@ class Characters extends BaseCharacter
     /**
      * @var Zones
      *
-     * @ORM\ManyToOne(targetEntity="EsterenMaps\MapsBundle\Entity\Zones")
+     * @ORM\ManyToOne(targetEntity="EsterenMaps\Entity\Zones")
      */
     protected $birthPlace;
 
@@ -607,10 +607,8 @@ class Characters extends BaseCharacter
 
     /**
      * @param string $shortName
-     *
-     * @return CharWays|null
      */
-    public function getWay($shortName): ?CharacterProperties\CharWays
+    public function getWay($shortName): CharacterProperties\CharWays
     {
         foreach ($this->ways as $charWay) {
             if (
@@ -626,10 +624,8 @@ class Characters extends BaseCharacter
 
     /**
      * @param int|string $id
-     *
-     * @return CharDisciplines|null
      */
-    public function getDiscipline($id): ?CharacterProperties\CharDisciplines
+    public function getDiscipline($id): CharacterProperties\CharDisciplines
     {
         foreach ($this->disciplines as $charDiscipline) {
             $discipline = $charDiscipline->getDiscipline();
@@ -657,12 +653,7 @@ class Characters extends BaseCharacter
         return $rai + $emp + 5;
     }
 
-    /**
-     * @param string $attitude
-     *
-     * @return int|null
-     */
-    public function getTotalDefense($attitude = self::COMBAT_ATTITUDE_STANDARD): ?int
+    public function getTotalDefense(string $attitude = self::COMBAT_ATTITUDE_STANDARD): int
     {
         $this->validateCombatAttitude($attitude);
 

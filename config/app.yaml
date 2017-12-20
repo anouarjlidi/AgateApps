@@ -36,15 +36,24 @@ parameters:
 
     magick_binaries_path: '%env(IMAGEMAGICK_BINARIES_PATH)%'
 
+    esterenmaps.tile_size: 168
+    esterenmaps.output_directory: '%kernel.project_dir%/public/maps_tiles/'
+
 services:
     _defaults:
         autowire: true
         autoconfigure: true
         public: false
         bind:
-            $debug: '%kernel.debug%'
-            $sheetsFolder: '%kernel.project_dir%/src/CorahnRin/Resources/pdf_sources'
-            $googleTags: '%google_tags%'
+            $debug:           '%kernel.debug%'
+            $googleTags:      '%google_tags%'
+            $imageMagickPath: '%magick_binaries_path%'
+            $outputDirectory: '%esterenmaps.output_directory%'
+            $projectDir:      '%kernel.project_dir%'
+            $sheetsFolder:    '%kernel.project_dir%/src/CorahnRin/Resources/pdf_sources'
+            $tileSize:        '%esterenmaps.tile_size%'
+            $versionCode:     '%version_code%'
+            $versionDate:     '%version_date%'
 
     Admin\:
         resource: '../src/Admin/{Controller}'
@@ -60,3 +69,9 @@ services:
 
     Esteren\:
         resource: '../src/Esteren/{Controller,Twig}'
+
+    EsterenMaps\:
+        resource: '../src/EsterenMaps/{Api,Cache,Command,Controller,Repository,Services,Twig}'
+
+    EsterenMaps\DoctrineListeners\CacheClearSubscriber:
+        tags: [{ name: doctrine.event_subscriber, connection: default }]

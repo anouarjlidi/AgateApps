@@ -11,7 +11,7 @@
 
 namespace Tests\Admin;
 
-use EsterenMaps\MapsBundle\Entity\MarkersTypes;
+use EsterenMaps\Entity\MarkersTypes;
 
 class MarkersTypesAdminTest extends AbstractEasyAdminTest
 {

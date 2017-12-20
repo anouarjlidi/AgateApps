@@ -11,7 +11,7 @@
 
 namespace Tests\Admin;
 
-use EsterenMaps\MapsBundle\Entity\ZonesTypes;
+use EsterenMaps\Entity\ZonesTypes;
 
 class ZonesTypesAdminTest extends AbstractEasyAdminTest
 {

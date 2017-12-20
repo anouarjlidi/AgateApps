@@ -55,7 +55,7 @@ const config = {
      */
     "images": {
         "img/markerstypes": [
-            "src/EsterenMaps/MapsBundle/Resources/assets/img/markerstypes/*"
+            "assets/esteren_maps/img/markerstypes/*"
         ],
         "img/generator": [
             "assets/corahn_rin/img/*"
@@ -82,7 +82,7 @@ const config = {
             "node_modules/font-awesome/less/font-awesome.less"
         ],
         "css/maps_lib.css": [
-            "src/EsterenMaps/MapsBundle/Resources/assets/less/maps.less"
+            "assets/esteren_maps/less/maps.less"
         ],
         "css/admin.css": [
             "assets/admin.less"
@@ -155,19 +155,19 @@ const config = {
             "node_modules/leaflet/dist/leaflet-src.js",
             "public/components/leaflet-sidebar/src/L.Control.Sidebar.js",
             "node_modules/leaflet-draw/dist/leaflet.draw-src.js",
-            "src/EsterenMaps/MapsBundle/Resources/assets/js/EsterenMap/1_EsterenMap.js",
-            "src/EsterenMaps/MapsBundle/Resources/assets/js/EsterenMap/1_EsterenMap.load.js",
-            "src/EsterenMaps/MapsBundle/Resources/assets/js/EsterenMap/2_EsterenMap_CRS_XY.js",
-            "src/EsterenMaps/MapsBundle/Resources/assets/js/EsterenMap/2_EsterenMap_directions.js",
-            "src/EsterenMaps/MapsBundle/Resources/assets/js/EsterenMap/2_EsterenMap_LatLngBounds.js",
-            "src/EsterenMaps/MapsBundle/Resources/assets/js/EsterenMap/3_EsterenMap_ActivateLeafletDraw.js",
-            "src/EsterenMaps/MapsBundle/Resources/assets/js/EsterenMap/3_EsterenMap_options.js",
-            "src/EsterenMaps/MapsBundle/Resources/assets/js/EsterenMap/4_EsterenMap_markers.js",
-            "src/EsterenMaps/MapsBundle/Resources/assets/js/EsterenMap/4_EsterenMap_polygons.js",
-            "src/EsterenMaps/MapsBundle/Resources/assets/js/EsterenMap/4_EsterenMap_polylines.js",
-            "src/EsterenMaps/MapsBundle/Resources/assets/js/EsterenMap/4_EsterenMap_filters.js",
-            "src/EsterenMaps/MapsBundle/Resources/assets/js/EsterenMap/4_EsterenMap_search_engine.js",
-            "src/EsterenMaps/MapsBundle/Resources/assets/js/EsterenMap/5_EsterenMap_mapEdit.js"
+            "assets/esteren_maps/js/EsterenMap/1_EsterenMap.js",
+            "assets/esteren_maps/js/EsterenMap/1_EsterenMap.load.js",
+            "assets/esteren_maps/js/EsterenMap/2_EsterenMap_CRS_XY.js",
+            "assets/esteren_maps/js/EsterenMap/2_EsterenMap_directions.js",
+            "assets/esteren_maps/js/EsterenMap/2_EsterenMap_LatLngBounds.js",
+            "assets/esteren_maps/js/EsterenMap/3_EsterenMap_ActivateLeafletDraw.js",
+            "assets/esteren_maps/js/EsterenMap/3_EsterenMap_options.js",
+            "assets/esteren_maps/js/EsterenMap/4_EsterenMap_markers.js",
+            "assets/esteren_maps/js/EsterenMap/4_EsterenMap_polygons.js",
+            "assets/esteren_maps/js/EsterenMap/4_EsterenMap_polylines.js",
+            "assets/esteren_maps/js/EsterenMap/4_EsterenMap_filters.js",
+            "assets/esteren_maps/js/EsterenMap/4_EsterenMap_search_engine.js",
+            "assets/esteren_maps/js/EsterenMap/5_EsterenMap_mapEdit.js"
         ],
         "js/generator.js": [
             "assets/corahn_rin/generator/js/main_steps.js"

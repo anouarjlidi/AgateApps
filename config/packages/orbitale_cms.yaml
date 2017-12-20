@@ -8,7 +8,7 @@ orbitale_cms:
             resource: 'corahn_rin/layout.html.twig'
             host: '%esteren_domains.corahnrin%'
         maps:
-            resource: '@EsterenMaps/maps-layout.html.twig'
+            resource: 'esteren_maps/maps-layout.html.twig'
             host: '%esteren_domains.esterenmaps%'
         front:
             resource: 'cms_page_layout.html.twig'
