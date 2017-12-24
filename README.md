@@ -45,7 +45,7 @@ $ cp .env.dist .env
 $ composer install
 $ bin/console doctrine:database:create
 $ bin/console doctrine:schema:create
-$ bin/console doctrine:fixtures:load --append
+$ bin/console doctrine:fixtures:load --append --fixtures=src/
 ```
 
 Composer is configured to install node dependencies and dump assets. See
@@ -93,7 +93,7 @@ Or you can just edit the `/etc/hosts` and add an entry to resolve `.dev` domains
 If you don't have a prod database export, load the fixtures in your database:
 
 ```bash
-$ bin/console doctrine:fixtures:load --append
+$ bin/console doctrine:fixtures:load --append --fixtures=src/
 ```
 
 ### Assets management

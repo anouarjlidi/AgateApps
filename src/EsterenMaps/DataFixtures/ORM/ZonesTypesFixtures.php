@@ -14,7 +14,7 @@ namespace EsterenMaps\DataFixtures\ORM;
 use Doctrine\Common\Persistence\ObjectManager;
 use EsterenMaps\Entity\ZonesTypes;
 use Orbitale\Component\DoctrineTools\AbstractFixture;
-use Pierstoval\Bundle\ToolsBundle\Doctrine\FixtureMetadataIdGeneratorTrait;
+use Agate\Doctrine\FixtureMetadataIdGeneratorTrait;
 
 class ZonesTypesFixtures extends AbstractFixture
 {

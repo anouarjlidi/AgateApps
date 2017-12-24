@@ -13,7 +13,7 @@ namespace EsterenMaps\DataFixtures\ORM;
 
 use EsterenMaps\Entity\Maps;
 use Orbitale\Component\DoctrineTools\AbstractFixture;
-use Pierstoval\Bundle\ToolsBundle\Doctrine\FixtureMetadataIdGeneratorTrait;
+use Agate\Doctrine\FixtureMetadataIdGeneratorTrait;
 
 class MapsFixtures extends AbstractFixture
 {

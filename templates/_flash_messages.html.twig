@@ -9,8 +9,8 @@
             {% set translation_domain = 'messages' %}
 
             {% if 'user_' in key %}
-                {# Sometimes, UserBundle can send specific error messages #}
-                {% set translation_domain = 'UserBundle' %}
+                {# Sometimes, user controllers can send specific error messages #}
+                {% set translation_domain = 'user' %}
                 {% set key = key|replace({"user_": ""}) %}
             {% endif %}
 

@@ -25,14 +25,7 @@ final class PortalMailer
         $this->mailer = $mailer;
     }
 
-    /**
-     * @param ContactMessage $message
-     * @param string         $subject
-     * @param string         $ip
-     *
-     * @return int
-     */
-    public function sendContactMail(ContactMessage $message, $subject, $ip = null)
+    public function sendContactMail(ContactMessage $message, string $subject, string $ip = null): int
     {
         $swiftMessage = new \Swift_Message();
 

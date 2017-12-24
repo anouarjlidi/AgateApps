@@ -47,10 +47,8 @@ There's a CI script located in `tests/ci/ci.bash` that should be runned on CI se
 
 ## Users
 
-Users are managed with our custom `UserBundle`.
+Users are managed with a port of some features from `FOSUserBundle` into the `Agate` namespace.
 
-Most of its logic is based on `FOSUserBundle`, but we removed it for good, so we don't depend on it at all.
- 
 ### Security
 
 Now all security authenticators have to be created in this bundle as a Guard Authenticator.

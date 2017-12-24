@@ -14,7 +14,7 @@ namespace CorahnRin\DataFixtures\ORM;
 use CorahnRin\Entity\Weapons;
 use CorahnRin\Data\ItemAvailability;
 use Orbitale\Component\DoctrineTools\AbstractFixture;
-use Pierstoval\Bundle\ToolsBundle\Doctrine\FixtureMetadataIdGeneratorTrait;
+use Agate\Doctrine\FixtureMetadataIdGeneratorTrait;
 
 class WeaponsFixtures extends AbstractFixture
 {

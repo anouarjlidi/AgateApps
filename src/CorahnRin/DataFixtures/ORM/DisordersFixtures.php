@@ -13,7 +13,7 @@ namespace CorahnRin\DataFixtures\ORM;
 
 use CorahnRin\Entity\Disorders;
 use Orbitale\Component\DoctrineTools\AbstractFixture;
-use Pierstoval\Bundle\ToolsBundle\Doctrine\FixtureMetadataIdGeneratorTrait;
+use Agate\Doctrine\FixtureMetadataIdGeneratorTrait;
 
 class DisordersFixtures extends AbstractFixture
 {

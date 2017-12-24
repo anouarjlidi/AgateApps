@@ -13,7 +13,7 @@ namespace Esteren\DataFixtures\ORM;
 
 use Esteren\Entity\Page;
 use Orbitale\Component\DoctrineTools\AbstractFixture;
-use Pierstoval\Bundle\ToolsBundle\Doctrine\FixtureMetadataIdGeneratorTrait;
+use Agate\Doctrine\FixtureMetadataIdGeneratorTrait;
 
 class PageFixtures extends AbstractFixture
 {

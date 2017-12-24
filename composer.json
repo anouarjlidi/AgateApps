@@ -69,9 +69,7 @@
             "Agate\\": "src/Agate",
             "CorahnRin\\": "src/CorahnRin",
             "Esteren\\": "src/Esteren",
-            "EsterenMaps\\": "src/EsterenMaps",
-            "Pierstoval\\": "src/Pierstoval",
-            "UserBundle\\": "src/UserBundle"
+            "EsterenMaps\\": "src/EsterenMaps"
         },
         "classmap": [
             "src/Kernel.php"

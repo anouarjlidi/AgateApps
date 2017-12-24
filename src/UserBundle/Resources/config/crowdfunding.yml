@@ -1,4 +1,0 @@
-services:
-    crowdfunding.project_manager.ulule:
-        class: UserBundle\Crowdfunding\UluleProjectManager
-        autowire: true

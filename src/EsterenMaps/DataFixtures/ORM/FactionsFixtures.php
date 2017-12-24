@@ -14,7 +14,7 @@ namespace EsterenMaps\DataFixtures\ORM;
 use CorahnRin\Entity\Books;
 use EsterenMaps\Entity\Factions;
 use Orbitale\Component\DoctrineTools\AbstractFixture;
-use Pierstoval\Bundle\ToolsBundle\Doctrine\FixtureMetadataIdGeneratorTrait;
+use Agate\Doctrine\FixtureMetadataIdGeneratorTrait;
 
 class FactionsFixtures extends AbstractFixture
 {

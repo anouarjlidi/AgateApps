@@ -12,6 +12,11 @@ doctrine:
                 class: Gedmo\SoftDeleteable\Filter\SoftDeleteableFilter
                 enabled: true
         mappings:
+            agate:
+                type: annotation
+                dir: '%kernel.project_dir%/src/Agate/Entity/'
+                is_bundle: false
+                prefix: Agate
             corahn_rin:
                 type: annotation
                 dir: '%kernel.project_dir%/src/CorahnRin/Entity/'

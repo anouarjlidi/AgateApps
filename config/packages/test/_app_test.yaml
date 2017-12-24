@@ -1,0 +1,7 @@
+services:
+    _defaults:
+        autoconfigure: true
+        autowire: true
+
+    Agate\Security\Provider\UsernameOrEmailProvider:
+        public: true

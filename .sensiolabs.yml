@@ -11,7 +11,7 @@ post_composer_script: |
     mkdir build/
     ./bin/console --env=test doctrine:database:create --no-interaction
     ./bin/console --env=test doctrine:schema:create --no-interaction
-    ./bin/console --env=test doctrine:fixtures:load --append --no-interaction
+    ./bin/console --env=test doctrine:fixtures:load --append --no-interaction --fixtures=src/
 
 exclude_patterns:
     - src/CorahnRin/PDF/FPDF.php

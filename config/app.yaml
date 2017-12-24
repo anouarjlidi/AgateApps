@@ -46,6 +46,7 @@ services:
         public: false
         bind:
             $debug:           '%kernel.debug%'
+            $defaultLocale:   '%locale%'
             $googleTags:      '%google_tags%'
             $imageMagickPath: '%magick_binaries_path%'
             $outputDirectory: '%esterenmaps.output_directory%'
@@ -59,7 +60,7 @@ services:
         resource: '../src/Admin/{Controller}'
 
     Agate\:
-        resource: '../src/Agate/{Controller,Mailer}'
+        resource: '../src/Agate/{Controller,ConnectApi,Form,Mailer,Provider,Repository,Security,Util}'
 
     # TODO: remove this when updating CharacterManagerBundle
     Pierstoval\Bundle\CharacterManagerBundle\Resolver\StepActionResolver: '@pierstoval.character_manager.step_action_resolver'
@@ -75,3 +76,7 @@ services:
 
     EsterenMaps\DoctrineListeners\CacheClearSubscriber:
         tags: [{ name: doctrine.event_subscriber, connection: default }]
+
+    user.mailer:
+        class: Agate\Mailer\UserMailer
+        autowire: true

@@ -26,7 +26,7 @@ use Doctrine\ORM\Mapping as ORM;
 use EsterenMaps\Entity\Zones;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Pierstoval\Bundle\CharacterManagerBundle\Entity\Character as BaseCharacter;
-use UserBundle\Entity\User;
+use Agate\Entity\User;
 
 /**
  * Characters.
@@ -453,7 +453,7 @@ class Characters extends BaseCharacter
 
     /**
      * @var User
-     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="Agate\Entity\User")
      */
     protected $user;
 

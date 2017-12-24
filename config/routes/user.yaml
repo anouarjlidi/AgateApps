@@ -1,9 +1,5 @@
 crowdfunding:
-    resource: '@UserBundle/Controller/Crowdfunding/'
-    type: annotation
-
-user_security:
-    resource: '@UserBundle/Controller/SecurityController.php'
+    resource: '../../src/Agate/Controller/Crowdfunding/'
     type: annotation
 
 user_login_check:
@@ -14,18 +10,6 @@ user_logout:
     path: /logout
     methods: ['GET', 'POST']
 
-user_profile:
-    resource: '@UserBundle/Controller/ProfileController.php'
-    type: annotation
-
-user_registration:
-    resource: '@UserBundle/Controller/RegistrationController.php'
-    type: annotation
-
-user_resetting:
-    resource: '@UserBundle/Controller/ResettingController.php'
-    type: annotation
-
-change_password:
-    resource: '@UserBundle/Controller/ChangePasswordController.php'
+user_security:
+    resource: '../../src/Agate/Controller/User/'
     type: annotation

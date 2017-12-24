@@ -75,7 +75,7 @@ if ($fs->exists(DATABASE_TEST_FILE)) {
 
 $runCommand('doctrine:database:create');
 $runCommand('doctrine:schema:create');
-$runCommand('doctrine:fixtures:load --append');
+$runCommand('doctrine:fixtures:load --append --fixtures=src/');
 
 $fs->copy(DATABASE_TEST_FILE, DATABASE_REFERENCE_FILE);
 

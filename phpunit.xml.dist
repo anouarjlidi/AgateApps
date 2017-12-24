@@ -68,7 +68,6 @@
             <directory>./tests/Admin</directory>
             <directory>./tests/Agate</directory>
             <directory>./tests/CorahnRin</directory>
-            <directory>./src/UserBundle/Tests</directory>
             <directory>./tests/Esteren</directory>
             <directory>./tests/EsterenMaps</directory>
         </testsuite>

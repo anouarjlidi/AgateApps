@@ -24,8 +24,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use UserBundle\Entity\User;
-use UserBundle\Repository\UserRepository;
+use Agate\Entity\User;
+use Agate\Repository\UserRepository;
 
 class ImportLegacyCharactersCommand extends Command
 {
