@@ -27,6 +27,12 @@ jobs:
                     - yarn-cache-{{ .Branch }}
 
             - run:
+                name: 'Install xdebug (necessary for code coverage)'
+                command: |
+                    pecl install xdebug
+                    docker-php-ext-enable xdebug
+
+            - run:
                 name: 'Show config'
                 command: |
                     pwd
