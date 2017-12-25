@@ -22,7 +22,7 @@ class AssetsController extends AbstractController
     private $versionCode;
     private $versionDate;
 
-    public function __construct(bool $debug, bool $versionCode, bool $versionDate)
+    public function __construct(bool $debug, string $versionCode, string $versionDate)
     {
         $this->debug = $debug;
         $this->versionCode = $versionCode;
