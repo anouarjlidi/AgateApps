@@ -12,13 +12,14 @@
 namespace CorahnRin\DataFixtures\ORM;
 
 use CorahnRin\Entity\Flux;
+use Doctrine\Bundle\FixturesBundle\ORMFixtureInterface;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
 
-class FluxFixtures extends AbstractFixture implements OrderedFixtureInterface
+class FluxFixtures extends AbstractFixture implements OrderedFixtureInterface, ORMFixtureInterface
 {
     /**
      * @var ObjectManager

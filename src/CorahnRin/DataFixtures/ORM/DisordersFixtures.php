@@ -12,10 +12,11 @@
 namespace CorahnRin\DataFixtures\ORM;
 
 use CorahnRin\Entity\Disorders;
+use Doctrine\Bundle\FixturesBundle\ORMFixtureInterface;
 use Orbitale\Component\DoctrineTools\AbstractFixture;
 use Agate\Doctrine\FixtureMetadataIdGeneratorTrait;
 
-class DisordersFixtures extends AbstractFixture
+class DisordersFixtures extends AbstractFixture implements ORMFixtureInterface
 {
     use FixtureMetadataIdGeneratorTrait;
 

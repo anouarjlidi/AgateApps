@@ -12,11 +12,12 @@
 namespace EsterenMaps\DataFixtures\ORM;
 
 use CorahnRin\Entity\Books;
+use Doctrine\Bundle\FixturesBundle\ORMFixtureInterface;
 use EsterenMaps\Entity\Factions;
 use Orbitale\Component\DoctrineTools\AbstractFixture;
 use Agate\Doctrine\FixtureMetadataIdGeneratorTrait;
 
-class FactionsFixtures extends AbstractFixture
+class FactionsFixtures extends AbstractFixture implements ORMFixtureInterface
 {
     use FixtureMetadataIdGeneratorTrait;
 

@@ -1,8 +1,9 @@
 <?php
 
+use Symfony\Bundle\FrameworkBundle\Console\Application;
+use Symfony\Component\Console\Input\StringInput;
+use Symfony\Component\Debug\Debug;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Process\Exception\ProcessFailedException;
-use Symfony\Component\Process\Process;
 
 define('NO_RECREATE_DB', (bool) getenv('NO_RECREATE_DB') ?: false);
 define('CLEAR_CACHE', (bool) getenv('CLEAR_CACHE') ?: true);
@@ -23,22 +24,22 @@ if (!file_exists($file)) {
     throw new RuntimeException('Install dependencies to run test suite.');
 }
 
-/** @var Composer\Autoload\ClassLoader $autoload */
-$autoload = require $file;
-unset($file);
+require $file;
 
-$runCommand = function (string $cmd) use ($rootDir): void {
-    $process = new Process('php '.$rootDir.'/bin/console '.$cmd);
-    $process->setTimeout(180);
-    $process->run(function ($type, $buffer) {
-        if (Process::ERR === $type) {
-            echo 'ERROR > '.$buffer;
-        } else {
-            echo $buffer;
-        }
-    });
-    if (!$process->isSuccessful()) {
-        throw new ProcessFailedException($process);
+if ($debug = ((bool) getenv('APP_DEBUG') ?: true)) {
+    Debug::enable();
+}
+$kernel = new Kernel(getenv('APP_ENV') ?: 'test', $debug);
+
+
+$runCommand = function (string $cmd) use ($kernel): void {
+    $application = new Application($kernel);
+    $application->setAutoExit(false);
+    $code = $application->run(new StringInput($cmd));
+    $kernel->shutdown();
+    unset($kernel); // Triggers kernel destruct
+    if ($code) {
+        throw new \RuntimeException(sprintf('Command %s failed with code "%d".', $cmd, $code));
     }
 };
 
@@ -75,8 +76,11 @@ if ($fs->exists(DATABASE_TEST_FILE)) {
 
 $runCommand('doctrine:database:create');
 $runCommand('doctrine:schema:create');
-$runCommand('doctrine:fixtures:load --append --fixtures=src/');
+$runCommand('doctrine:fixtures:load --append');
 
 $fs->copy(DATABASE_TEST_FILE, DATABASE_REFERENCE_FILE);
 
-unset($fs, $rootDir);
+$kernel->shutdown();
+
+// Unset everything so PHPUnit can't dump these globals.
+unset($rootDir, $file, $autoload, $kernel, $application, $runCommand, $fs);

@@ -11,6 +11,7 @@
 
 namespace Agate\DataFixtures\ORM;
 
+use Doctrine\Bundle\FixturesBundle\ORMFixtureInterface;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -23,7 +24,7 @@ use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 use Agate\Entity\User;
 use Agate\Util\Canonicalizer;
 
-final class UsersFixtures extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
+final class UsersFixtures extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface, ORMFixtureInterface
 {
     /**
      * @var ObjectManager

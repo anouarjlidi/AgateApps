@@ -11,12 +11,13 @@
 
 namespace EsterenMaps\DataFixtures\ORM;
 
+use Doctrine\Bundle\FixturesBundle\ORMFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use EsterenMaps\Entity\ZonesTypes;
 use Orbitale\Component\DoctrineTools\AbstractFixture;
 use Agate\Doctrine\FixtureMetadataIdGeneratorTrait;
 
-class ZonesTypesFixtures extends AbstractFixture
+class ZonesTypesFixtures extends AbstractFixture implements ORMFixtureInterface
 {
     use FixtureMetadataIdGeneratorTrait;
 

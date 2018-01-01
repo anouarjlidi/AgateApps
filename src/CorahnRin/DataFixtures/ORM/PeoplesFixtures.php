@@ -13,13 +13,14 @@ namespace CorahnRin\DataFixtures\ORM;
 
 use CorahnRin\Entity\Peoples;
 use CorahnRin\Entity\Books;
+use Doctrine\Bundle\FixturesBundle\ORMFixtureInterface;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
 
-class PeoplesFixtures extends AbstractFixture implements OrderedFixtureInterface
+class PeoplesFixtures extends AbstractFixture implements OrderedFixtureInterface, ORMFixtureInterface
 {
     /**
      * @var ObjectManager

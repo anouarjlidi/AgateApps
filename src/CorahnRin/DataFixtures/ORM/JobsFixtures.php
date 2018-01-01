@@ -12,10 +12,11 @@
 namespace CorahnRin\DataFixtures\ORM;
 
 use CorahnRin\Entity\Jobs;
+use Doctrine\Bundle\FixturesBundle\ORMFixtureInterface;
 use Orbitale\Component\DoctrineTools\AbstractFixture;
 use Agate\Doctrine\FixtureMetadataIdGeneratorTrait;
 
-class JobsFixtures extends AbstractFixture
+class JobsFixtures extends AbstractFixture implements ORMFixtureInterface
 {
     use FixtureMetadataIdGeneratorTrait;
 

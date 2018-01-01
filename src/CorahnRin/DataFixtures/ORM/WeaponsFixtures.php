@@ -13,10 +13,11 @@ namespace CorahnRin\DataFixtures\ORM;
 
 use CorahnRin\Entity\Weapons;
 use CorahnRin\Data\ItemAvailability;
+use Doctrine\Bundle\FixturesBundle\ORMFixtureInterface;
 use Orbitale\Component\DoctrineTools\AbstractFixture;
 use Agate\Doctrine\FixtureMetadataIdGeneratorTrait;
 
-class WeaponsFixtures extends AbstractFixture
+class WeaponsFixtures extends AbstractFixture implements ORMFixtureInterface
 {
     use FixtureMetadataIdGeneratorTrait;
 

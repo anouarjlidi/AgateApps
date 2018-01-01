@@ -11,12 +11,12 @@
 
 namespace EsterenMaps\DataFixtures\ORM;
 
-use EsterenMaps\Entity\Markers;
+use Doctrine\Bundle\FixturesBundle\ORMFixtureInterface;
 use Orbitale\Component\DoctrineTools\AbstractFixture;
 use Agate\Doctrine\FixtureMetadataIdGeneratorTrait;
 use EsterenMaps\Entity\Routes;
 
-class RoutesFixtures extends AbstractFixture
+class RoutesFixtures extends AbstractFixture implements ORMFixtureInterface
 {
     use FixtureMetadataIdGeneratorTrait;
 

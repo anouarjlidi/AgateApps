@@ -13,13 +13,14 @@ namespace CorahnRin\DataFixtures\ORM;
 
 use CorahnRin\Entity\Disciplines;
 use CorahnRin\Entity\Domains;
+use Doctrine\Bundle\FixturesBundle\ORMFixtureInterface;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 
-class DisciplinesDomainsFixtures extends AbstractFixture implements OrderedFixtureInterface
+class DisciplinesDomainsFixtures extends AbstractFixture implements OrderedFixtureInterface, ORMFixtureInterface
 {
     /**
      * @var EntityManager

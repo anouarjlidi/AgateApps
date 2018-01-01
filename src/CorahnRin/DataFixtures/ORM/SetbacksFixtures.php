@@ -13,13 +13,14 @@ namespace CorahnRin\DataFixtures\ORM;
 
 use CorahnRin\Entity\Setbacks;
 use CorahnRin\Entity\Books;
+use Doctrine\Bundle\FixturesBundle\ORMFixtureInterface;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
 
-class SetbacksFixtures extends AbstractFixture implements OrderedFixtureInterface
+class SetbacksFixtures extends AbstractFixture implements OrderedFixtureInterface, ORMFixtureInterface
 {
     /**
      * @var ObjectManager
