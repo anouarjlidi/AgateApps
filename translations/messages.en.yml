@@ -79,24 +79,16 @@ admin:
             color: 'Color'
             coordinates: 'Coordinates'
 
-        pages:
-            category: 'Category'
-            container_css_class: 'Container CSS class'
-            content: 'Content'
-            css: 'CSS'
-            enabled: 'Enabled'
-            homepage: 'Homepage'
-            host: 'Host'
-            js: 'Javascript'
+        portalElement:
+            buttonText: 'Button text'
+            image: 'Image'
             locale: 'Locale'
-            meta_description: 'Meta description'
-            meta_keywords: 'Meta keywords'
-            meta_title: 'Meta title'
-            parent: 'Parent'
-            show_title: 'Show title'
-            template: 'Template'
+            portal: 'Portal'
+            subtitle: 'Subtitle'
             title: 'Title'
-            tree: 'Tree'
+            image_help: |
+                A width of more than 1000px is recommended to avoid pixellisation.
+                If you do not update this field, the previous image will be kept.
 
         factions:
             maxZoom: 'Maximum zoom'
@@ -129,6 +121,7 @@ admin:
             altitude: 'Altitude'
             web_icon: 'Icon'
 
+PortalElement: Portal elements
 Pages: 'Page'
 ZonesTypes: 'Zones type'
 TransportTypes: 'Transport type'

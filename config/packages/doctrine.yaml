@@ -34,10 +34,10 @@ doctrine:
             default:
                 driver:   pdo_mysql
                 url:      '%database_url%'
-                charset:  utf8mb4
+                charset:  utf8
                 default_table_options:
-                    charset: utf8mb4
-                    collate: utf8mb4_unicode_ci
+                    charset: utf8
+                    collate: utf8_unicode_ci
             legacy:
                 driver:    pdo_mysql
                 url:      '%database_url_legacy%'

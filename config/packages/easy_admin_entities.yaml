@@ -1,0 +1,48 @@
+easy_admin:
+    entities:
+        PortalElement:
+            class: Agate\Entity\PortalElement
+            label: PortalElement
+            controller: Agate\Controller\Admin\PortalElementController
+            list:
+                fields:
+                    - { property: id, label: 'admin.entities.common.id' }
+                    - { property: portal, label: 'admin.entities.portalElement.portal' }
+                    - { property: locale, label: 'admin.entities.portalElement.locale' }
+                    - property: imageUrl
+                      label: 'admin.entities.portalElement.image'
+                    - { property: title, label: 'admin.entities.portalElement.title' }
+                    - { property: subtitle, label: 'admin.entities.portalElement.subtitle' }
+                    - { property: buttonText, label: 'admin.entities.portalElement.buttonText' }
+
+            form:
+                fields:
+                    - property: portal
+                      label: 'admin.entities.portalElement.portal'
+                      type: choice
+                      type_options:
+                          expanded: true
+                          choice_translation_domain: false
+                          choices:
+                              Agate: Agate
+                              Esteren: Esteren
+
+                    - property: locale
+                      label: 'admin.entities.portalElement.locale'
+                      type: choice
+                      type_options:
+                          expanded: true
+                          choices: '%locales%'
+                          choice_translation_domain: Languages
+
+                    - { property: title, label: 'admin.entities.portalElement.title' }
+                    - { property: subtitle, label: 'admin.entities.portalElement.subtitle' }
+                    - { property: buttonText, label: 'admin.entities.portalElement.buttonText' }
+
+                    - property: image
+                      type: file
+                      label: 'admin.entities.portalElement.image'
+                      help: 'admin.entities.portalElement.image_help'
+                      form_options:
+                          required: true
+                          mapped: false
