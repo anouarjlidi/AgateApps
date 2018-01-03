@@ -66,6 +66,14 @@ final class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
     /**
      * {@inheritdoc}
      */
+    public function supports(Request $request)
+    {
+        return $request->getPathInfo() === $this->router->generate('user_login_check');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function start(Request $request, AuthenticationException $authException = null)
     {
         if ($request->hasSession()) {
@@ -92,9 +100,6 @@ final class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
      */
     public function getCredentials(Request $request)
     {
-        if ($request->getPathInfo() !== $this->router->generate('user_login_check')) {
-            return null;
-        }
 
         $usernameOrEmail = $request->request->get(self::USERNAME_OR_EMAIL_FORM_FIELD);
         $request->getSession()->set(Security::LAST_USERNAME, $usernameOrEmail);

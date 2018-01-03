@@ -63,6 +63,7 @@ security:
         main:
             pattern:            ^/
             anonymous:          ~
+            logout_on_user_change: true # Todo: remove this when migrating to Symfony 4
             remember_me:
                 secret:         '%env(APP_SECRET)%'
                 path:           /
