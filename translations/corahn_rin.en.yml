@@ -148,6 +148,8 @@ combat_arts_spend_exp:
 
 menu:
     steps: 'Steps'
+    character_create: 'Create a character'
+    characters_list: 'Characters list'
 
 character:
     orientation:
@@ -244,3 +246,6 @@ character:
         spent: '___Dépensés'
     notable_facts: '___Faits marquants'
     ogham_list: '___Ogham à disposition'
+
+home:
+    title: 'Corahn-Rin, the character manager for Shadows of Esteren'

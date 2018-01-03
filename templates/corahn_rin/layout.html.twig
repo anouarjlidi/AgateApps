@@ -1,10 +1,12 @@
 {% extends 'base.html.twig' %}
 
+{% trans_default_domain 'corahn_rin' %}
+
 {% block menu_left_content %}
     <li {{ app.request.attributes.get('_route') == 'corahnrin_characters_list' ? 'class="selected"' }}>
-        <a href="{{ path('corahnrin_characters_list') }}">{{ 'Liste des personnages' | trans }}</a>
+        <a href="{{ path('corahnrin_characters_list') }}">{{ 'menu.characters_list' | trans }}</a>
     </li>
     <li {{ app.request.attributes.get('_route') == 'pierstoval_character_generator_step' ? 'class="selected"' }}>
-        <a href="{{ path('pierstoval_character_generator_index') }}">{{ 'Créer un personnage' | trans }}</a>
+        <a href="{{ path('pierstoval_character_generator_index') }}">{{ 'menu.character_create' | trans }}</a>
     </li>
 {% endblock %}

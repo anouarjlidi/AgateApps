@@ -146,6 +146,8 @@ combat_arts_spend_exp:
 
 menu:
     steps: 'Étapes'
+    character_create: 'Créer un personnage'
+    characters_list: 'Liste des personnages'
 
 character:
     orientation:
@@ -242,3 +244,6 @@ character:
         spent: 'Dépensés'
     notable_facts: 'Faits marquants'
     ogham_list: 'Ogham à disposition'
+
+home:
+    title: 'Corahn-Rin, le générateur de personnage pour Les Ombres d''Esteren'

@@ -1,0 +1,32 @@
+{% extends 'corahn_rin/layout.html.twig' %}
+
+{% trans_default_domain 'corahn_rin' %}
+
+{% block title -%}
+    {{ 'home.title'|trans }}
+{%- endblock %}
+
+
+{% block content_for_layout %}
+    <div class="hero-unit">
+        <h2 class="text-xxl">La plateforme de gestion de personnages pour &laquo; Les Ombres d'Esteren &raquo;</h2>
+
+        <p>Ce générateur permet de créer un personnage pour "Les Ombres d'Esteren", directement en ligne, mais également de modifier son contenu, d'assister &agrave; des parties et de dépenser ses points d'expérience, et plein d'autres choses encore.</p>
+
+        <ul>
+            <li>Plus besoin de se reporter au livre &agrave; chaque étape</li>
+            <li>Peu de valeurs chiffrée pour une immersion maximale dans le personnage</li>
+            <li>Tr&egrave;s simple : une étape, une information sur le personnage</li>
+            <li>La possibilité de revenir aux étapes précédentes</li>
+        </ul>
+
+        <p>Deux mots d'ordre : Lisez les instructions, et surtout <strong>immergez-vous dans les Ombres...</strong></p>
+
+        <p><a class="btn waves-effect waves-light blue blue-darken-4" href="{{ path('pierstoval_character_generator_index') }}">Commencer la création d'un personnage &raquo;</a></p>
+
+        <p class="card-panel orange darken-4">⚠️ Attention, la nouvelle version est en phase de tests <strong>alpha</strong>, ce qui veut dire que toute aide est la bienvenue pour indiquer des bugs ou améliorer l'expérience utilisateur !<br />
+            <br />
+            N'hésitez pas &agrave; venir le dire <a href="https://www.esteren.org/forum/viewtopic.php?f=4&amp;t=868&amp;p=45116#p45116">sur le forum officiel, dans le fil dédié</a> !</p>
+    </div>
+
+{% endblock %}
