@@ -3,6 +3,7 @@
 links:
     admin: 'Administration'
     menu: 'Menu'
+    home: 'Accueil'
 footer:
     version_text: |
         Version %version% (%version_date%)
@@ -47,10 +48,7 @@ cnil_disclaimer: |
 admin:
     links:
         back_to_site: 'Retour au site'
-    cms:
-        pages: 'Pages'
     menu:
-        site: 'Site'
         types: 'Types de référence'
         transports: 'Transport'
         esterenmaps: Esteren Maps

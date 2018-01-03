@@ -27,7 +27,6 @@ class VermineControllerTest extends WebTestCase
 
         $crawler = $client->request('GET', "/$locale/");
 
-        // Ensures that portal homepage is managed in a controller and not in the CMS
         static::assertSame('vermine_portal_home', $client->getRequest()->attributes->get('_route'));
 
         static::assertSame(200, $client->getResponse()->getStatusCode());

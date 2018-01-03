@@ -8,8 +8,5 @@ services:
     CorahnRin\DataFixtures\:
         resource: ../../../src/CorahnRin/DataFixtures/
 
-    Esteren\DataFixtures\:
-        resource: ../../../src/Esteren/DataFixtures/
-
     EsterenMaps\DataFixtures\:
         resource: ../../../src/EsterenMaps/DataFixtures/

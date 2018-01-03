@@ -48,28 +48,3 @@ The routing load order is the following:
  Also available for all subdomains.
 * PierstovalApi's webservices, all loaded under the `%esteren_domains.api%` host.
 * Admin routes, under `%esteren_domains.backoffice%` host.
-* All other portals, they lie under all subdomains and are managed by OrbitaleCmsBundle ([view below](#cms)).
-
-## CMS
-
-The [OrbitaleCmsBundle](https://github.com/Orbitale/CmsBundle) is plugged to every subdomain to be sure that a simple
- web portal is available for all websites. Mostly, it'll be used for the main and games portals, but with this config we
- might add static pages (promotions, etc.) to every website without harm.
-
-As a reminder, the routes of this bundle are so dynamic that they **must** be used as a fallback **after** all routes.
-
-As explained in the bundle's documentation, `/page/children/subchildren` tree-like routes can be used automatically with
- the controller, so to avoid any conflict, all other routes must be declared **before** Orbitale's CMS ones.
-
-### Homes
-
-As any portal will be handled by the CMS, you can create pages that will be used as homepages (if you trigger the `home`
- checkbox in the backend).
-
-You may encounter a `No homepage has been configured. Please check your existing pages or create a homepage in your
-application.` error, one day.
-
-It's verbose enough to explain you that no homepage is configured.
-
-You should then go to the backend and create a page, associate it (or not) to the so-requested subdomain (the portal, or
- any other configured domain) and publish the page. You should now see your homepage!

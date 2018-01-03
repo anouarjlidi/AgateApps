@@ -3,6 +3,7 @@
 links:
     admin: 'Admin panel'
     menu: 'Menu'
+    home: 'Home'
 footer:
     version_text: |
         Version %version% (%version_date%)
@@ -43,10 +44,7 @@ button:
 admin:
     links:
         back_to_site: 'Back to website'
-    cms:
-        pages: 'Pages'
     menu:
-        site: 'Site'
         types: 'Reference types'
         transports: 'Transports'
         esterenmaps: Esteren Maps

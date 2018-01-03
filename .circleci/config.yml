@@ -29,8 +29,7 @@ jobs:
             - run:
                 name: 'Install xdebug (necessary for code coverage)'
                 command: |
-                    pecl install xdebug
-                    docker-php-ext-enable xdebug
+                    [[ $CIRCLE_BRANCH == 'master' ]] && pecl install xdebug && docker-php-ext-enable xdebug
 
             - run:
                 name: 'Show config'
@@ -61,7 +60,10 @@ jobs:
             - run:
                name: 'Execute PHPUnit tests'
                command: |
-                    vendor/bin/phpunit --log-junit=build/log/logfile.xml --coverage-text
+                    set PARAMS=""
+                    [[ $CIRCLE_BRANCH == 'master' ]] && PARAMS="--coverage-text"
+
+                    vendor/bin/phpunit --log-junit=build/log/logfile.xml $PARAMS
 
             - save_cache:
                 key: composer-cache-{{ checksum "composer.lock" }}

@@ -19,11 +19,6 @@ we need the bundles to be the most standalone possible, so the views are kept in
 Only the base template and the EasyAdmin ([view below](#backoffice)) views are stored in `app/Resources/views`,
  as of the layout & includes and form themes.
 
-## CMS
-
-With [OrbitaleCmsBundle](https://github.com/Orbitale/CmsBundle), a very simple CMS is handled for every configured
- subdomains. Each can have its own CMS as long as every `Page` object is configured with the `host` property.
-
 ## Backoffice
 
 The backoffice is powered by [EasyAdminBundle](https://github.com/javiereguiluz/EasyAdminBundle).
@@ -31,9 +26,6 @@ Its configuration resides in [app/config/_easy_admin.yml](../app/config/_easyadm
  [app/config/admin/](../app/config/admin/) directory.
 An `AdminBundle` exists only to store the `AdminController` which allows complete override of any of EasyAdmin's feature
 (it also registers the `admin` directory as resource files so container is recompiled when one changes).
-
-[IvoryCKEditorBundle](https://github.com/egeloen/IvoryCKEditorBundle) is installed and configured in the `Page` entity
- to use a WYSIWYG.
 
 ## Tests
 

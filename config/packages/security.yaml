@@ -32,15 +32,11 @@ security:
         # Translator
         ROLE_ADMIN_TRANSLATOR:          ROLE_MANAGER
 
-        # Site manager (CMS)
-        ROLE_ADMIN_MANAGE_SITE:         ROLE_MANAGER
-
         # Admins
         ROLE_ADMIN:
             - ROLE_MANAGER
             - ROLE_ADMIN_GENERATOR
             - ROLE_ADMIN_MAPS
-            - ROLE_ADMIN_MANAGE_SITE
             - ROLE_ADMIN_TRANSLATOR
         ROLE_SUPER_ADMIN:
             - ROLE_BACKER_TRAVELS
