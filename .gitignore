@@ -10,11 +10,13 @@
 /public/.htaccess
 
 # Assets
-/public/js/*
-/public/css/*
-/public/fonts/*
-/public/img/*
+/public/js/
+/public/css/
+/public/fonts/
+/public/img/
 !/public/img/favicon.ico
+/public/uploads/
+!/public/uploads/maps/
 
 # Automatically created directories
 !/public/js/.gitkeep

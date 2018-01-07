@@ -1,5 +1,10 @@
 field_error: 'Erreur au niveau du paramètre "%field%"'
 
+portal_element:
+    image:
+        mandatory: 'Vous devez ajouter une image de fond pour ce portail.'
+        upload_error: 'Une erreur est survenue lors de la récupération de l''image. Veuillez réessayer avec une autre.'
+
 user:
     username:
         already_used: 'Le nom d''utilisateur est déjà utilisé.'

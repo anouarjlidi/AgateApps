@@ -92,11 +92,21 @@ class PortalElement
     private $buttonText;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="button_link", type="string")
+     *
+     * @Assert\NotBlank()
+     */
+    private $buttonLink;
+
+    /**
      * @var UploadedFile|null
      *
      * @Assert\Image(
      *     mimeTypes={"image/jpeg", "image/png"},
      *     minWidth=1000,
+     *     minRatio="1.3",
      *     allowPortrait=false,
      *     allowSquare=false,
      *     detectCorrupted=true
@@ -177,6 +187,18 @@ class PortalElement
     public function setButtonText(string $buttonText): self
     {
         $this->buttonText = $buttonText;
+
+        return $this;
+    }
+
+    public function getButtonLink(): string
+    {
+        return (string) $this->buttonLink;
+    }
+
+    public function setButtonLink(string $buttonLink): self
+    {
+        $this->buttonLink = $buttonLink;
 
         return $this;
     }

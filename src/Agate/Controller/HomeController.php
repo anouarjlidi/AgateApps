@@ -11,6 +11,8 @@
 
 namespace Agate\Controller;
 
+use Agate\Entity\PortalElement;
+use Agate\Exception\PortalElementNotFound;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,12 +26,21 @@ class HomeController extends Controller
     /**
      * @Route("/", name="agate_portal_home", methods={"GET"})
      */
-    public function indexAction(string $_locale, Request $request, string $_route): Response
+    public function indexAction(string $_locale, Request $request): Response
     {
+        $portalElement = $this->getDoctrine()->getRepository(PortalElement::class)->findOneBy([
+            'locale' => $_locale,
+            'portal' => 'agate',
+        ]);
+
+        if (!$portalElement) {
+            throw new PortalElementNotFound('agate', $_locale);
+        }
+
         $response = new Response();
         if (!$this->getParameter('kernel.debug')) {
             $response->setCache([
-                'last_modified' => new \DateTime($this->getParameter('version_date')),
+                'last_modified' => $portalElement->getUpdatedAt() ?: $portalElement->getCreatedAt(),
                 'max_age' => 600,
                 's_maxage' => 600,
                 'public' => $this->getUser() ? false : true,
@@ -42,11 +53,9 @@ class HomeController extends Controller
 
         $template = 'agate/home/index-'.$_locale.'.html.twig';
 
-        if (!$this->get('twig')->getLoader()->exists($template)) {
-            return $this->redirectToRoute($_route, ['_locale' => 'fr']);
-        }
-
-        return $this->render($template, [], $response);
+        return $this->render($template, [
+            'portal_element' => $portalElement,
+        ], $response);
     }
 
     /**

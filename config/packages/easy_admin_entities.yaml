@@ -10,12 +10,43 @@ easy_admin:
                     - { property: portal, label: 'admin.entities.portalElement.portal' }
                     - { property: locale, label: 'admin.entities.portalElement.locale' }
                     - property: imageUrl
+                      template: 'easy_admin/fields/portal_image.html.twig'
                       label: 'admin.entities.portalElement.image'
                     - { property: title, label: 'admin.entities.portalElement.title' }
                     - { property: subtitle, label: 'admin.entities.portalElement.subtitle' }
                     - { property: buttonText, label: 'admin.entities.portalElement.buttonText' }
 
-            form:
+            edit:
+                fields:
+                    - property: portal
+                      label: 'admin.entities.portalElement.portal'
+                      type: text
+                      type_options:
+                          disabled: true
+                          attr:
+                              readonly: readonly
+
+                    - property: locale
+                      label: 'admin.entities.portalElement.locale'
+                      type: text
+                      type_options:
+                          disabled: true
+                          attr:
+                              readonly: readonly
+
+                    - { property: title, label: 'admin.entities.portalElement.title' }
+                    - { property: subtitle, label: 'admin.entities.portalElement.subtitle' }
+                    - { property: buttonLink, label: 'admin.entities.portalElement.buttonLink' }
+                    - { property: buttonText, label: 'admin.entities.portalElement.buttonText' }
+
+                    - property: image
+                      type: file
+                      label: 'admin.entities.portalElement.image'
+                      help: 'admin.entities.portalElement.image_help'
+                      type_options:
+                          required: false
+
+            new:
                 fields:
                     - property: portal
                       label: 'admin.entities.portalElement.portal'
@@ -37,12 +68,13 @@ easy_admin:
 
                     - { property: title, label: 'admin.entities.portalElement.title' }
                     - { property: subtitle, label: 'admin.entities.portalElement.subtitle' }
+                    - { property: buttonLink, label: 'admin.entities.portalElement.buttonLink' }
                     - { property: buttonText, label: 'admin.entities.portalElement.buttonText' }
 
                     - property: image
                       type: file
                       label: 'admin.entities.portalElement.image'
                       help: 'admin.entities.portalElement.image_help'
-                      form_options:
+                      type_options:
                           required: true
                           mapped: false
