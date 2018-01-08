@@ -6,7 +6,7 @@ jobs:
             # Docker build here:
             # https://hub.docker.com/r/pierstoval/studio-agate-portal/
             # https://github.com/StudioAgate/DockerPortalApp
-            - image: pierstoval/studio-agate-portal
+            - image: pierstoval/studio-agate-portal:v0.2.0
 
         working_directory: ~/app
 
@@ -38,6 +38,8 @@ jobs:
                     php --ini
                     composer config -l
                     env
+                    node --version
+                    yarn --version
 
             - run:
                name: 'Install Project Dependencies'

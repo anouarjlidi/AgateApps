@@ -40,6 +40,6 @@
     ],
     "private": true,
     "engines": {
-        "node": "^6.9"
+        "node": "^9.3"
     }
 }
