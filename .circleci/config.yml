@@ -37,6 +37,7 @@ jobs:
                     pwd
                     php --ini
                     composer config -l
+                    env
 
             - run:
                name: 'Install Project Dependencies'
