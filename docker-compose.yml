@@ -2,15 +2,13 @@ version: '2'
 
 services:
     app:
-        container_name: esteren_php
-        build: .
+        image: 'pierstoval/studio-agate-portal:v0.2.0'
         volumes:
-            - /var/www/html
+            - .:/var/www/html
         links:
             - db
 
     nginx:
-        container_name: esteren_nginx
         build: ./docker/nginx/
         working_dir: /var/www/html/
         ports:
@@ -33,10 +31,9 @@ services:
             - VERMINE_DOMAIN=vermine2047.dev
 
     db:
-        container_name: esteren_db
         image: 'mariadb:10.1'
         ports:
-            - '3306:3306'
+            - '13306:3306'
         environment:
             MYSQL_ROOT_PASSWORD: esteren_portal
             MYSQL_DATABASE: esteren_portal
