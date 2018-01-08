@@ -40,6 +40,7 @@
     ],
     "private": true,
     "engines": {
-        "node": "^9.3"
+        "node": "^9.3",
+        "yarn": "^1.0"
     }
 }
