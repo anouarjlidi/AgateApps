@@ -8,6 +8,12 @@ services:
         links:
             - db
 
+    node:
+        image: node:9
+        volumes_from:
+            - app
+        command: 'yarn --cwd /var/www/html run gulp watch'
+
     nginx:
         build: ./docker/nginx/
         working_dir: /var/www/html/
