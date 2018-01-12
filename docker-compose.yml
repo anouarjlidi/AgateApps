@@ -1,17 +1,20 @@
 version: '2'
 
 services:
-    app:
+    php:
+        # Docker build here:
+        # https://hub.docker.com/r/pierstoval/studio-agate-portal/
+        # https://github.com/StudioAgate/DockerPortalApp
         image: 'pierstoval/studio-agate-portal:v0.2.0'
         volumes:
-            - .:/var/www/html
+            - ./:/var/www/html
         links:
             - db
 
     node:
         image: node:9
         volumes_from:
-            - app
+            - php
         command: 'yarn --cwd /var/www/html run gulp watch'
 
     nginx:
@@ -20,26 +23,14 @@ services:
         ports:
             - '8080:80'
         links:
-            - app
+            - php
         volumes_from:
-            - app
-        environment:
-            - DATABASE_URL="mysql://esteren_portal@db/esteren_portal?serverVersion=10.1.12-MariaDB"
-            - DATABASE_URL_LEGACY="mysql://esteren_legacy@db/esteren_legacy?serverVersion=10.1.12-MariaDB"
-            - MAILER_TRANSPORT=smtp
-            - MAILER_HOST=127.0.0.1
-            - MAILER_USER=""
-            - MAILER_PASSWORD=""
-            - MAILER_PORT=""
-            - APP_SECRET=ThisTokenIsDockerSecret
-            - AGATE_DOMAIN=studio-agate.dev
-            - ESTEREN_DOMAIN=esteren.dev
-            - VERMINE_DOMAIN=vermine2047.dev
+            - php
 
     db:
         image: 'mariadb:10.1'
         ports:
-            - '13306:3306'
+            - '3307:3306'
         environment:
             MYSQL_ROOT_PASSWORD: esteren_portal
             MYSQL_DATABASE: esteren_portal
