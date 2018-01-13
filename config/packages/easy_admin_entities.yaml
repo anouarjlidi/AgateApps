@@ -6,6 +6,8 @@ easy_admin:
             controller: Agate\Controller\Admin\PortalElementController
 
             list:
+                actions:
+                    - '-delete'
                 fields:
                     - { property: id, label: 'admin.entities.common.id' }
                     - { property: portal, label: 'admin.entities.portalElement.portal' }
