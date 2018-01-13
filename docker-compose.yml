@@ -10,6 +10,10 @@ services:
             - ./:/var/www/html
         links:
             - db
+        environment:
+            - AGATE_DOMAIN=studio-agate.piers
+            - ESTEREN_DOMAIN=esteren.piers
+            - VERMINE_DOMAIN=vermine2047.piers
 
     node:
         image: node:9
