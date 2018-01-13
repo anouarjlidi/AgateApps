@@ -27,11 +27,11 @@ class HomeController extends Controller
     {
         $portalElement = $this->getDoctrine()->getRepository(PortalElement::class)->findOneBy([
             'locale' => $_locale,
-            'portal' => 'agate',
+            'portal' => 'esteren',
         ]);
 
         if (!$portalElement) {
-            throw new PortalElementNotFound('agate', $_locale);
+            throw new PortalElementNotFound('esteren', $_locale);
         }
 
         $response = new Response();
