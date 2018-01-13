@@ -40,27 +40,24 @@ class HomeControllerTest extends WebTestCase
         static::assertSame('http://www.studio-agate.dev/fr/', $res->headers->get('Location'));
     }
 
-    public function testIndexWithFrenchHomepage()
+    /**
+     * @dataProvider provideHomepageData
+     */
+    public function testAgateHomepage(string $locale, string $expectedTitle)
     {
         $client = $this->getClient('www.studio-agate.dev');
 
-        $crawler = $client->request('GET', '/fr/');
+        $crawler = $client->request('GET', "/$locale/");
 
         static::assertSame('agate_portal_home', $client->getRequest()->attributes->get('_route'));
-
         static::assertSame(200, $client->getResponse()->getStatusCode(), trim($crawler->filter('title')->text()));
-
-        static::assertSame('Bienvenue sur le nouveau portail du Studio Agate', trim($crawler->filter('#content h1')->text()));
+        static::assertSame($expectedTitle, trim($crawler->filter('#content h1')->text()));
     }
 
-    public function testIndexWithEnglishHomepage()
+    public function provideHomepageData()
     {
-        $client = $this->getClient('www.studio-agate.dev');
-
-        $client->request('GET', '/en/');
-
-        static::assertSame(302, $client->getResponse()->getStatusCode());
-        static::assertTrue($client->getResponse()->isRedirect('/fr/'));
+        yield 'fr' => ['fr', 'Bienvenue sur le nouveau portail du Studio Agate'];
+        yield 'en' => ['en', 'Welcome to the new Studio Agate portal'];
     }
 
     public function testFrenchTeamPage()

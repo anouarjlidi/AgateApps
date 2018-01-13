@@ -81,5 +81,4 @@ services:
         tags: [{ name: doctrine.event_subscriber, connection: default }]
 
     user.mailer:
-        class: Agate\Mailer\UserMailer
-        autowire: true
+        alias: Agate\Mailer\UserMailer

@@ -120,7 +120,7 @@ abstract class AbstractEasyAdminTest extends WebTestCase
 
         $crawler = $client->request('GET', '/fr/?entity='.$this->getEntityName().'&action=list');
 
-        static::assertSame(200, $client->getResponse()->getStatusCode(), $this->getEntityName());
+        static::assertSame(200, $client->getResponse()->getStatusCode(), $this->getEntityName()."\n".$crawler->filter('title')->text());
 
         $count = $crawler->filter('#main table tr[data-id]')->count();
 
@@ -342,10 +342,14 @@ abstract class AbstractEasyAdminTest extends WebTestCase
      *
      * @return Client
      */
-    protected function getClient($host = null, array $kernelOptions = [], $tokenRoles = null, array $server = [])
+    protected function getClient($host = null, array $kernelOptions = [], $tokenRoles = [], array $server = [])
     {
         if (null === $host) {
             $host = 'back.esteren.dev';
+        }
+
+        if (is_string($tokenRoles)) {
+            $tokenRoles = [$tokenRoles];
         }
 
         if (0 === count($tokenRoles)) {

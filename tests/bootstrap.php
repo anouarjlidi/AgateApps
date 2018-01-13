@@ -11,6 +11,7 @@ define('RECREATE_DB', (bool) getenv('RECREATE_DB') ?: false);
 
 gc_disable();
 ini_set('memory_limit', -1);
+error_reporting(E_ALL);
 
 $rootDir = __DIR__.'/..';
 
@@ -29,6 +30,7 @@ require $file;
 if ($debug = ((bool) getenv('APP_DEBUG') ?: true)) {
     Debug::enable();
 }
+
 $kernel = new Kernel(getenv('APP_ENV') ?: 'test', $debug);
 
 
