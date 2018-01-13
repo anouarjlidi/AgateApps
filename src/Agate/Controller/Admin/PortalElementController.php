@@ -15,10 +15,7 @@ use Admin\Controller\AdminController;
 use Agate\Entity\PortalElement;
 use Behat\Transliterator\Transliterator;
 use League\Flysystem\FilesystemInterface;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormError;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class PortalElementController extends AdminController
 {
@@ -32,49 +29,42 @@ class PortalElementController extends AdminController
         $this->filesystem = $oneupFlysystem;
     }
 
-    public function createPortalElementEntityFormBuilder(PortalElement $portalElement, string $view): FormBuilderInterface
+//*
+    protected function preUpdatePortalElementEntity(PortalElement $portalElement)
     {
-        $formBuilder = parent::createEntityFormBuilder($portalElement, $view);
+        $this->uploadImageFile($portalElement, false);
+    }
 
-        if ($view === 'new') {
-            $formBuilder->get('image')->setRequired(true);
+    protected function prePersistPortalElementEntity(PortalElement $portalElement)
+    {
+        $this->uploadImageFile($portalElement, true);
+    }
+
+    protected function uploadImageFile(PortalElement $portalElement, bool $required): void
+    {
+        $image = $portalElement->getImage();
+
+        if ($required === true && !($image instanceof UploadedFile)) {
+            // Can happen only if user have hijacked the form. Exception is nice because it prevents flushing the db.
+            throw new \RuntimeException('File is mandatory.');
         }
 
-        $translator = $this->get('translator');
+        if ($image instanceof UploadedFile) {
+            $newname = 'portal_element_'
+                .Transliterator::urlize(pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME))
+                .uniqid('_pe', true) // "pe" for "portal element"
+                .'.'.$image->guessExtension()
+            ;
 
-        $formBuilder->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) use ($translator) {
-            /** @var PortalElement $portalElement */
-            $portalElement = $event->getData();
+            $stream = fopen($image->getRealPath(), 'rb');
 
-            $imageField = $event->getForm()->get('image');
+            $uploadResult = $this->filesystem->writeStream($newname, $stream, ['mimetype' => $image->getMimeType()]);
 
-            if (!$portalElement->image && !$portalElement->getImageUrl()) {
-                $imageField->addError(new FormError($translator->trans('portal_element.image.mandatory', [], 'validators')));
-
-                return;
+            if (false === $uploadResult) {
+                throw new \RuntimeException('An error occured when uploading the file.');
             }
 
-            if ($imageField->getData() && $imageField->isValid()) {
-                $newname = 'portal_element_'
-                    .Transliterator::urlize(pathinfo($portalElement->image->getClientOriginalName(), PATHINFO_FILENAME))
-                    .uniqid('_pe', true) // "pe" for "portal element"
-                    .'.'.$portalElement->image->guessExtension()
-                ;
-
-                $stream = fopen($portalElement->image->getRealPath(), 'rb');
-
-                $uploadResult = $this->filesystem->writeStream($newname, $stream, ['mimetype' => $portalElement->image->getMimeType()]);
-
-                if (false === $uploadResult) {
-                    $imageField->addError(new FormError($translator->trans('portal_element.image.upload_error', [], 'validators')));
-
-                    return;
-                }
-
-                $portalElement->setImageUrl($newname);
-            }
-        });
-
-        return $formBuilder;
+            $portalElement->setImageUrl($newname);
+        }
     }
 }

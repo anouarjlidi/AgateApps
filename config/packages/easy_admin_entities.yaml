@@ -4,6 +4,7 @@ easy_admin:
             class: Agate\Entity\PortalElement
             label: PortalElement
             controller: Agate\Controller\Admin\PortalElementController
+
             list:
                 fields:
                     - { property: id, label: 'admin.entities.common.id' }
@@ -15,6 +16,39 @@ easy_admin:
                     - { property: title, label: 'admin.entities.portalElement.title' }
                     - { property: subtitle, label: 'admin.entities.portalElement.subtitle' }
                     - { property: buttonText, label: 'admin.entities.portalElement.buttonText' }
+
+            new:
+                fields:
+                    - property: portal
+                      label: 'admin.entities.portalElement.portal'
+                      type: choice
+                      type_options:
+                          expanded: true
+                          choice_translation_domain: false
+                          choices:
+                              Agate: Agate
+                              Esteren: Esteren
+
+                    - property: locale
+                      label: 'admin.entities.portalElement.locale'
+                      type: choice
+                      type_options:
+                          expanded: true
+                          choices: '%locales%'
+                          choice_translation_domain: Languages
+
+                    - { property: title, label: 'admin.entities.portalElement.title' }
+                    - { property: subtitle, label: 'admin.entities.portalElement.subtitle' }
+                    - { property: buttonLink, label: 'admin.entities.portalElement.buttonLink' }
+                    - { property: buttonText, label: 'admin.entities.portalElement.buttonText' }
+
+                    - property: image
+                      type: file
+                      virtual: false
+                      label: 'admin.entities.portalElement.image'
+                      help: 'admin.entities.portalElement.image_help'
+                      type_options:
+                          required: true
 
             edit:
                 fields:
@@ -45,36 +79,3 @@ easy_admin:
                       help: 'admin.entities.portalElement.image_help'
                       type_options:
                           required: false
-
-            new:
-                fields:
-                    - property: portal
-                      label: 'admin.entities.portalElement.portal'
-                      type: choice
-                      type_options:
-                          expanded: true
-                          choice_translation_domain: false
-                          choices:
-                              Agate: Agate
-                              Esteren: Esteren
-
-                    - property: locale
-                      label: 'admin.entities.portalElement.locale'
-                      type: choice
-                      type_options:
-                          expanded: true
-                          choices: '%locales%'
-                          choice_translation_domain: Languages
-
-                    - { property: title, label: 'admin.entities.portalElement.title' }
-                    - { property: subtitle, label: 'admin.entities.portalElement.subtitle' }
-                    - { property: buttonLink, label: 'admin.entities.portalElement.buttonLink' }
-                    - { property: buttonText, label: 'admin.entities.portalElement.buttonText' }
-
-                    - property: image
-                      type: file
-                      label: 'admin.entities.portalElement.image'
-                      help: 'admin.entities.portalElement.image_help'
-                      type_options:
-                          required: true
-                          mapped: false

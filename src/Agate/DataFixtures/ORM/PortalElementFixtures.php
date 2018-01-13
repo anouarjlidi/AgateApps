@@ -12,9 +12,11 @@
 namespace Agate\DataFixtures\ORM;
 
 use Agate\Entity\PortalElement;
+use Doctrine\Bundle\FixturesBundle\ORMFixtureInterface;
+use Doctrine\ORM\Mapping\ClassMetadata;
 use Orbitale\Component\DoctrineTools\AbstractFixture;
 
-class PortalElementFixtures extends AbstractFixture
+final class PortalElementFixtures extends AbstractFixture implements ORMFixtureInterface
 {
     /**
      * {@inheritdoc}
@@ -24,6 +26,16 @@ class PortalElementFixtures extends AbstractFixture
         return PortalElement::class;
     }
 
+    protected function searchForMatchingIds(): bool
+    {
+        return false;
+    }
+
+    protected function setGeneratorBasedOnId(ClassMetadata $metadata, $id = null): void
+    {
+        $metadata->setIdGeneratorType(ClassMetadata::GENERATOR_TYPE_AUTO);
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -31,13 +43,41 @@ class PortalElementFixtures extends AbstractFixture
     {
         return [
             [
-                'host' => 'portal.esteren.dev',
+                'portal' => 'esteren',
                 'locale' => 'fr',
-                'imageUrl' => '',
-                'title' => '',
-                'subtitle' => '',
-                'buttonText' => '',
-            ]
+                'imageUrl' => 'maps/esteren_map.jpg',
+                'title' => 'Portail Esteren',
+                'subtitle' => 'sub',
+                'buttonText' => 'button',
+                'buttonLink' => '/',
+            ],
+            [
+                'portal' => 'esteren',
+                'locale' => 'en',
+                'imageUrl' => 'maps/esteren_map.jpg',
+                'title' => 'Esteren Portal',
+                'subtitle' => 'sub',
+                'buttonText' => 'button',
+                'buttonLink' => '/',
+            ],
+            [
+                'portal' => 'agate',
+                'locale' => 'fr',
+                'imageUrl' => 'maps/esteren_map.jpg',
+                'title' => 'Portail Agate',
+                'subtitle' => 'sub',
+                'buttonText' => 'button',
+                'buttonLink' => '/',
+            ],
+            [
+                'portal' => 'agate',
+                'locale' => 'en',
+                'imageUrl' => 'maps/esteren_map.jpg',
+                'title' => 'Agate Portal',
+                'subtitle' => 'sub',
+                'buttonText' => 'button',
+                'buttonLink' => '/',
+            ],
         ];
     }
 }

@@ -112,7 +112,7 @@ class PortalElement
      *     detectCorrupted=true
      * )
      */
-    public $image;
+    private $image;
 
     public function getId(): int
     {
@@ -199,6 +199,18 @@ class PortalElement
     public function setButtonLink(string $buttonLink): self
     {
         $this->buttonLink = $buttonLink;
+
+        return $this;
+    }
+
+    public function getImage(): ?UploadedFile
+    {
+        return $this->image;
+    }
+
+    public function setImage(?UploadedFile $image): self
+    {
+        $this->image = $image;
 
         return $this;
     }
