@@ -78,23 +78,7 @@
             <directory>./src</directory>
             <exclude>
                 <directory>./src/CorahnRin/PDF</directory><!-- External library cannot be tested -->
-
-                <directory>./src/*Bundle/Resources</directory>
-                <directory>./src/*/*Bundle/Resources</directory>
-                <directory>./src/*/Bundle/*Bundle/Resources</directory>
-
-                <directory>./src/*Bundle/DataFixtures</directory>
-                <directory>./src/*/*Bundle/DataFixtures</directory>
-                <directory>./src/*/Bundle/*Bundle/DataFixtures</directory>
-
-                <directory>./src/*Bundle/Command</directory>
-                <directory>./src/*/*Bundle/Command</directory>
-                <directory>./src/*/Bundle/*Bundle/Command</directory>
-
-                <directory>./src/*Bundle/Tests</directory>
-                <directory>./src/*/*Bundle/Tests</directory>
-                <directory>./src/*/Bundle/*Bundle/Tests</directory>
-
+                <directory>./src/*/DataFixtures</directory>
                 <directory>./vendor</directory>
             </exclude>
         </whitelist>
