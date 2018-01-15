@@ -29,7 +29,6 @@ class PortalElementController extends AdminController
         $this->filesystem = $oneupFlysystem;
     }
 
-//*
     protected function preUpdatePortalElementEntity(PortalElement $portalElement)
     {
         $this->uploadImageFile($portalElement, false);
