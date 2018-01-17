@@ -18,21 +18,21 @@
     <div id="index-banner" class="parallax-container valign-wrapper">
         <div class="section no-pad-bot">
             <div class="container">
-                <h2 class="header center white-text text-shadow-black-10">Shadows of Esteren: Dearg on Backerkit</h2>
+                <h2 class="header center white-text text-shadow-black-10">{{ portal_element.title }}</h2>
                 <div class="row center">
-                    <h3 class="header col s12 white-text text-shadow-black-10 text-xl">
-                        Pre-order the campaign DEARG, some previous books and limited edition items
-                    </h3>
+                    <h2 class="header col s12 light white-text text-shadow-black-10 text-xl">
+                        <strong>{{ portal_element.subtitle }}</strong>
+                    </h2>
                 </div>
                 <div class="row center">
-                    <a href="https://shadows-of-esteren-dearg.backerkit.com/hosted_preorders" class="btn-large waves-effect waves-light bg-gold">
-                        Late Pledge Now
+                    <a href="{{ portal_element.buttonLink }}" class="btn-large waves-effect waves-light bg-gold">
+                        {{ portal_element.buttonText }}
                     </a>
                 </div>
             </div>
         </div>
         <div class="parallax">
-            <img src="{{ asset('img/agate/esteren_dearg_front.jpg') }}" alt="Shadows of Esteren: Adeliane">
+            <img src="{{ asset(uploaded_asset_url(portal_element.imageUrl)) }}">
         </div>
     </div>
 
