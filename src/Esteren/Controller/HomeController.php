@@ -11,6 +11,8 @@
 
 namespace Esteren\Controller;
 
+use Agate\Entity\PortalElement;
+use Agate\Exception\PortalElementNotFound;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,13 +25,22 @@ class HomeController extends Controller
      */
     public function indexAction(string $_locale, Request $request): Response
     {
+        $portalElement = $this->getDoctrine()->getRepository(PortalElement::class)->findOneBy([
+            'locale' => $_locale,
+            'portal' => 'esteren',
+        ]);
+
+        if (!$portalElement) {
+            throw new PortalElementNotFound('esteren', $_locale);
+        }
+
         $response = new Response();
         if (!$this->getParameter('kernel.debug')) {
             $response->setCache([
-                'last_modified' => new \DateTime($this->getParameter('version_date')),
-                'max_age'       => 600,
-                's_maxage'      => 600,
-                'public'        => $this->getUser() ? false : true,
+                'last_modified' => $portalElement->getUpdatedAt() ?: $portalElement->getCreatedAt(),
+                'max_age' => 600,
+                's_maxage' => 600,
+                'public' => $this->getUser() ? false : true,
             ]);
         }
 
@@ -39,10 +50,8 @@ class HomeController extends Controller
 
         $template = 'esteren/index-'.$_locale.'.html.twig';
 
-        if (!$this->get('twig')->getLoader()->exists($template)) {
-            throw $this->createNotFoundException();
-        }
-
-        return $this->render($template, [], $response);
+        return $this->render($template, [
+            'portal_element' => $portalElement,
+        ], $response);
     }
 }

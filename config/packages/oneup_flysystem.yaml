@@ -1,0 +1,5 @@
+oneup_flysystem:
+    filesystems:
+        assets_fs:
+            adapter: assets_adapter # This assets_adapter MUST be set in ALL environments to work
+            mount: assets_fs

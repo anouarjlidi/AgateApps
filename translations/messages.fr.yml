@@ -83,24 +83,18 @@ admin:
             color: 'Couleur'
             coordinates: 'Coordonnées'
 
-        pages:
-            category: 'Catégorie'
-            container_css_class: 'Classe CSS container'
-            content: 'Contenu'
-            css: 'CSS'
-            enabled: 'Active'
-            homepage: 'Page d''accueil'
-            host: 'Nom de domaine'
-            js: 'Javascript'
+        portalElement:
+            buttonLink: 'URL du bouton'
+            buttonText: 'Texte du bouton'
+            image: 'Image'
             locale: 'Langue'
-            meta_description: 'Meta description'
-            meta_keywords: 'Meta keywords'
-            meta_title: 'Meta title'
-            parent: 'Parent'
-            show_title: 'Montrer le titre'
-            template: 'Template'
-            title: 'Title'
-            tree: 'URL finale'
+            portal: 'Portail'
+            subtitle: 'Sous-titre'
+            title: 'Titre'
+            image_help: |
+                Une largeur de plus de 1000px est recommandée pour éviter la pixellisation.
+                Un ratio largeur/hauteur d'image supérieur à 1.3 est nécessaire pour conserver le mouvement de la parallaxe.
+                Si vous ne modifiez pas ce champ, la précédente image sera conservée.
 
         factions:
             maxZoom: 'Zoom maximum'
@@ -133,6 +127,7 @@ admin:
             altitude: 'Altitude'
             web_icon: 'Icône'
 
+PortalElement: Éléments du portail
 Pages: 'Page'
 ZonesTypes: 'Type de zone'
 TransportTypes: 'Moyen de transport'

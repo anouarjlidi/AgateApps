@@ -65,36 +65,20 @@
 
     <testsuites>
         <testsuite name="Shadows of Esteren project test suite">
-            <directory>./tests/Admin</directory>
-            <directory>./tests/Agate</directory>
-            <directory>./tests/CorahnRin</directory>
-            <directory>./tests/Esteren</directory>
-            <directory>./tests/EsterenMaps</directory>
+            <directory>./tests/</directory>
         </testsuite>
     </testsuites>
+
+    <listeners>
+        <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
+    </listeners>
 
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory>./src</directory>
             <exclude>
                 <directory>./src/CorahnRin/PDF</directory><!-- External library cannot be tested -->
-
-                <directory>./src/*Bundle/Resources</directory>
-                <directory>./src/*/*Bundle/Resources</directory>
-                <directory>./src/*/Bundle/*Bundle/Resources</directory>
-
-                <directory>./src/*Bundle/DataFixtures</directory>
-                <directory>./src/*/*Bundle/DataFixtures</directory>
-                <directory>./src/*/Bundle/*Bundle/DataFixtures</directory>
-
-                <directory>./src/*Bundle/Command</directory>
-                <directory>./src/*/*Bundle/Command</directory>
-                <directory>./src/*/Bundle/*Bundle/Command</directory>
-
-                <directory>./src/*Bundle/Tests</directory>
-                <directory>./src/*/*Bundle/Tests</directory>
-                <directory>./src/*/Bundle/*Bundle/Tests</directory>
-
+                <directory>./src/*/DataFixtures</directory>
                 <directory>./vendor</directory>
             </exclude>
         </whitelist>

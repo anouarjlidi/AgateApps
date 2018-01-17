@@ -6,12 +6,11 @@ jobs:
             # Docker build here:
             # https://hub.docker.com/r/pierstoval/studio-agate-portal/
             # https://github.com/StudioAgate/DockerPortalApp
-            - image: pierstoval/studio-agate-portal
+            - image: pierstoval/studio-agate-portal:v0.2.1
 
         working_directory: ~/app
 
         environment:
-            NODE_ENV:      production
             SYMFONY_ENV:   test
             SYMFONY_DEBUG: 1
             RECREATE_DB:   1
@@ -22,14 +21,11 @@ jobs:
             - restore_cache:
                 keys:
                     - composer-cache-{{ checksum "composer.lock" }}
-                    - composer-cache-{{ .Branch }}
-                    - yarn-cache-{{ checksum "yarn.lock" }}
-                    - yarn-cache-{{ .Branch }}
 
             - run:
                 name: 'Install xdebug (necessary for code coverage)'
                 command: |
-                    [[ $CIRCLE_BRANCH == 'master' ]] && pecl install xdebug && docker-php-ext-enable xdebug
+                    [[ $CIRCLE_BRANCH == "master" ]] && pecl install xdebug && docker-php-ext-enable xdebug || echo "No xdebug needed"
 
             - run:
                 name: 'Show config'
@@ -37,17 +33,12 @@ jobs:
                     pwd
                     php --ini
                     composer config -l
+                    env
 
             - run:
                name: 'Install Project Dependencies'
                command: |
                     composer install --no-interaction --no-suggest --ignore-platform-reqs --no-progress
-                    yarn install
-
-            - run:
-               name: 'Execute node tests'
-               command: |
-                    yarn gulp test
 
             - run:
                name: 'Execute Linting tests'
@@ -60,8 +51,7 @@ jobs:
             - run:
                name: 'Execute PHPUnit tests'
                command: |
-                    set PARAMS=""
-                    [[ $CIRCLE_BRANCH == 'master' ]] && PARAMS="--coverage-text"
+                    [[ $CIRCLE_BRANCH == "master" ]] && PARAMS="--coverage-text" || PARAMS=""
 
                     vendor/bin/phpunit --log-junit=build/log/logfile.xml $PARAMS
 
@@ -70,17 +60,41 @@ jobs:
                 paths:
                     - ~/.composer/cache
 
-            - save_cache:
-                key: composer-cache-{{ .Branch }}
-                paths:
-                    - ~/.composer/cache
+    node_test:
+        docker:
+            - image: node:9
+
+        working_directory: ~/app
+
+        environment:
+            NODE_ENV: production
+
+        steps:
+            - checkout
+
+            - restore_cache:
+                keys:
+                    - yarn-cache-{{ checksum "yarn.lock" }}
+
+            - run:
+                name: 'Show config'
+                command: |
+                    pwd
+                    env
+                    node --version
+                    yarn --version
+
+            - run:
+               name: 'Install Project Dependencies'
+               command: |
+                    yarn install
+
+            - run:
+               name: 'Execute node tests'
+               command: |
+                    yarn gulp test --prod --verbose -LLLL
 
             - save_cache:
                 key: yarn-cache-{{ checksum "yarn.lock" }}
-                paths:
-                    - node_modules
-
-            - save_cache:
-                key: yarn-cache-{{ .Branch }}
                 paths:
                     - node_modules

@@ -1,5 +1,9 @@
 field_error: 'Error with the "%field%" parameter'
 
+portal_element:
+    image:
+        mandatory: 'You must specify an image for this portal.'
+
 user:
     username:
         already_used: 'The username is already used.'

@@ -30,7 +30,7 @@ class DefaultEasyAdminTest extends WebTestCase
         $crawler = $client->request('GET', '/fr/');
 
         static::assertSame(302, $client->getResponse()->getStatusCode(), $crawler->filter('title')->html());
-        static::assertSame('/fr/?action=list&entity=Factions', $client->getResponse()->headers->get('Location'));
+        static::assertSame('/fr/?action=list&entity=PortalElement', $client->getResponse()->headers->get('Location'));
 
         $crawler = $client->followRedirect();
 

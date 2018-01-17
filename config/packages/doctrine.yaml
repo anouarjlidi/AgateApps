@@ -12,21 +12,24 @@ doctrine:
                 class: Gedmo\SoftDeleteable\Filter\SoftDeleteableFilter
                 enabled: true
         mappings:
-            agate:
+            Agate:
                 type: annotation
                 dir: '%kernel.project_dir%/src/Agate/Entity/'
                 is_bundle: false
-                prefix: Agate
-            corahn_rin:
+                prefix: Agate\Entity
+                alias: Agate
+            CorahnRin:
                 type: annotation
                 dir: '%kernel.project_dir%/src/CorahnRin/Entity/'
                 is_bundle: false
-                prefix: CorahnRin
-            esteren_maps:
+                prefix: CorahnRin\Entity
+                alias: CorahnRin
+            EsterenMaps:
                 type: annotation
                 dir: '%kernel.project_dir%/src/EsterenMaps/Entity/'
                 is_bundle: false
-                prefix: EsterenMaps
+                prefix: EsterenMaps\Entity
+                alias: EsterenMaps
 
     dbal:
         default_connection: default
@@ -34,10 +37,10 @@ doctrine:
             default:
                 driver:   pdo_mysql
                 url:      '%database_url%'
-                charset:  utf8mb4
+                charset:  utf8
                 default_table_options:
-                    charset: utf8mb4
-                    collate: utf8mb4_unicode_ci
+                    charset: utf8
+                    collate: utf8_unicode_ci
             legacy:
                 driver:    pdo_mysql
                 url:      '%database_url_legacy%'

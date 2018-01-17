@@ -55,12 +55,15 @@ services:
             $tileSize:        '%esterenmaps.tile_size%'
             $versionCode:     '%version_code%'
             $versionDate:     '%version_date%'
+            $oneupFlysystem:  '@oneup_flysystem.assets_fs_filesystem'
+            $awsRegion:       '%aws_region%'
+            $awsBucket:       '%aws_bucket%'
 
     Admin\:
         resource: '../src/Admin/{Controller}'
 
     Agate\:
-        resource: '../src/Agate/{Controller,ConnectApi,Form,Mailer,Provider,Repository,Security,Util}'
+        resource: '../src/Agate/{Controller,ConnectApi,Form,Mailer,Provider,Repository,Security,Twig,Util}'
 
     # TODO: remove this when updating CharacterManagerBundle
     Pierstoval\Bundle\CharacterManagerBundle\Resolver\StepActionResolver: '@pierstoval.character_manager.step_action_resolver'
@@ -78,5 +81,4 @@ services:
         tags: [{ name: doctrine.event_subscriber, connection: default }]
 
     user.mailer:
-        class: Agate\Mailer\UserMailer
-        autowire: true
+        alias: Agate\Mailer\UserMailer
