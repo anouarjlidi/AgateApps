@@ -45,6 +45,8 @@ class HomeControllerTest extends WebTestCase
      */
     public function testAgateHomepage(string $locale, string $expectedTitle)
     {
+        static::resetDatabase();
+
         $client = $this->getClient('www.studio-agate.dev');
 
         $crawler = $client->request('GET', "/$locale/");

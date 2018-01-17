@@ -16,6 +16,8 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class PortalElementAdminTest extends AbstractEasyAdminTest
 {
+    private const TEMPFILE_REGEX = '~^portal_element_[a-z0-9_-]+_pe_[a-z0-9]+\.[0-9]+\.jpeg$~isUu';
+
     private $file;
 
     /**
@@ -41,6 +43,13 @@ class PortalElementAdminTest extends AbstractEasyAdminTest
         if ($this->file !== null && file_exists($this->file)) {
             unlink($this->file);
         }
+    }
+
+    public static function tearDownAfterClass()
+    {
+        parent::tearDownAfterClass();
+
+        static::resetDatabase();
     }
 
     public function testNewValidFileUpload()
@@ -71,7 +80,7 @@ class PortalElementAdminTest extends AbstractEasyAdminTest
         /** @var PortalElement $entity */
         $entity = $this->submitData($submitted, $expected, 'new');
 
-        static::assertRegExp('~^portal_element_\w+-tmp_pe_[a-z0-9]+\.[0-9]+\.jpeg$~isUu', $entity->getImageUrl(), $entity->getImageUrl());
+        static::assertRegExp(self::TEMPFILE_REGEX, $entity->getImageUrl(), $entity->getImageUrl());
 
         $filePath = static::$kernel->getContainer()->getParameter('kernel.project_dir').'/public/uploads/'.$entity->getImageUrl();
 
@@ -107,7 +116,7 @@ class PortalElementAdminTest extends AbstractEasyAdminTest
         /** @var PortalElement $entity */
         $entity = $this->submitData($submitted, $expected, 'edit');
 
-        static::assertRegExp('~^portal_element_\w+-tmp_pe_[a-z0-9]+\.[0-9]+\.jpeg$~isUu', $entity->getImageUrl(), $entity->getImageUrl());
+        static::assertRegExp(self::TEMPFILE_REGEX, $entity->getImageUrl(), $entity->getImageUrl());
 
         $filePath = static::$kernel->getContainer()->getParameter('kernel.project_dir').'/public/uploads/'.$entity->getImageUrl();
 
