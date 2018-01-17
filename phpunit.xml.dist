@@ -65,13 +65,13 @@
 
     <testsuites>
         <testsuite name="Shadows of Esteren project test suite">
-            <directory>./tests/Admin</directory>
-            <directory>./tests/Agate</directory>
-            <directory>./tests/CorahnRin</directory>
-            <directory>./tests/Esteren</directory>
-            <directory>./tests/EsterenMaps</directory>
+            <directory>./tests/</directory>
         </testsuite>
     </testsuites>
+
+    <listeners>
+        <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
+    </listeners>
 
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
