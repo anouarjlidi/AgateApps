@@ -119,6 +119,13 @@ class PortalElement
         return (int) $this->id;
     }
 
+    public function setId(int $id): self
+    {
+        $this->id = (int) $id;
+
+        return $this;
+    }
+
     public function getPortal(): string
     {
         return (string) $this->portal;
