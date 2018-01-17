@@ -43,6 +43,7 @@ final class PortalElementFixtures extends AbstractFixture implements ORMFixtureI
     {
         return [
             [
+                'id' => 1,
                 'portal' => 'esteren',
                 'locale' => 'fr',
                 'imageUrl' => 'maps/esteren_map.jpg',
@@ -52,6 +53,7 @@ final class PortalElementFixtures extends AbstractFixture implements ORMFixtureI
                 'buttonLink' => '/',
             ],
             [
+                'id' => 2,
                 'portal' => 'esteren',
                 'locale' => 'en',
                 'imageUrl' => 'maps/esteren_map.jpg',
@@ -61,6 +63,7 @@ final class PortalElementFixtures extends AbstractFixture implements ORMFixtureI
                 'buttonLink' => '/',
             ],
             [
+                'id' => 3,
                 'portal' => 'agate',
                 'locale' => 'fr',
                 'imageUrl' => 'maps/esteren_map.jpg',

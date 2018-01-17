@@ -12,21 +12,24 @@ doctrine:
                 class: Gedmo\SoftDeleteable\Filter\SoftDeleteableFilter
                 enabled: true
         mappings:
-            agate:
+            Agate:
                 type: annotation
                 dir: '%kernel.project_dir%/src/Agate/Entity/'
                 is_bundle: false
-                prefix: Agate
-            corahn_rin:
+                prefix: Agate\Entity
+                alias: Agate
+            CorahnRin:
                 type: annotation
                 dir: '%kernel.project_dir%/src/CorahnRin/Entity/'
                 is_bundle: false
-                prefix: CorahnRin
-            esteren_maps:
+                prefix: CorahnRin\Entity
+                alias: CorahnRin
+            EsterenMaps:
                 type: annotation
                 dir: '%kernel.project_dir%/src/EsterenMaps/Entity/'
                 is_bundle: false
-                prefix: EsterenMaps
+                prefix: EsterenMaps\Entity
+                alias: EsterenMaps
 
     dbal:
         default_connection: default

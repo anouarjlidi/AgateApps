@@ -124,9 +124,9 @@ class PortalElement
         return (string) $this->portal;
     }
 
-    public function setPortal(string $portal): self
+    public function setPortal(?string $portal): self
     {
-        $this->portal = $portal;
+        $this->portal = (string) $portal;
 
         return $this;
     }
@@ -136,9 +136,9 @@ class PortalElement
         return (string) $this->locale;
     }
 
-    public function setLocale(string $locale): self
+    public function setLocale(?string $locale): self
     {
-        $this->locale = $locale;
+        $this->locale = (string) $locale;
 
         return $this;
     }
@@ -148,9 +148,9 @@ class PortalElement
         return (string) $this->imageUrl;
     }
 
-    public function setImageUrl(string $imageUrl): self
+    public function setImageUrl(?string $imageUrl): self
     {
-        $this->imageUrl = $imageUrl;
+        $this->imageUrl = (string) $imageUrl;
 
         return $this;
     }
@@ -160,9 +160,9 @@ class PortalElement
         return (string) $this->title;
     }
 
-    public function setTitle(string $title): self
+    public function setTitle(?string $title): self
     {
-        $this->title = $title;
+        $this->title = (string) $title;
 
         return $this;
     }
@@ -172,9 +172,9 @@ class PortalElement
         return (string) $this->subtitle;
     }
 
-    public function setSubtitle(string $subtitle): self
+    public function setSubtitle(?string $subtitle): self
     {
-        $this->subtitle = $subtitle;
+        $this->subtitle = (string) $subtitle;
 
         return $this;
     }
@@ -184,9 +184,9 @@ class PortalElement
         return (string) $this->buttonText;
     }
 
-    public function setButtonText(string $buttonText): self
+    public function setButtonText(?string $buttonText): self
     {
-        $this->buttonText = $buttonText;
+        $this->buttonText = (string) $buttonText;
 
         return $this;
     }
@@ -196,9 +196,9 @@ class PortalElement
         return (string) $this->buttonLink;
     }
 
-    public function setButtonLink(string $buttonLink): self
+    public function setButtonLink(?string $buttonLink): self
     {
-        $this->buttonLink = $buttonLink;
+        $this->buttonLink = (string) $buttonLink;
 
         return $this;
     }

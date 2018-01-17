@@ -211,7 +211,7 @@ abstract class AbstractEasyAdminTest extends WebTestCase
         }
     }
 
-    private function submitData(array $dataToSubmit, array $expectedData, string $view)
+    protected function submitData(array $dataToSubmit, array $expectedData, string $view)
     {
         $id = $dataToSubmit['id'] ?? $expectedData['id'] ?? null;
         if ('edit' === $view && !$id) {
@@ -247,9 +247,18 @@ abstract class AbstractEasyAdminTest extends WebTestCase
 
         $crawler = $client->submit($form);
 
+        $response = $client->getResponse();
+
+        $message = '';
         // If redirects to list, it means it's correct, else it would redirect to "new" action.
-        static::assertSame(302, $client->getResponse()->getStatusCode(), "Not redirecting after submitting $view action ".$this->getEntityName());
-        static::assertSame('/fr/?action=list&entity='.$this->getEntityName(), $client->getResponse()->headers->get('location'), $this->getEntityName());
+        if (200 === $response->getStatusCode()) {
+            $errors = $crawler->filter('.error-block');
+            foreach ($errors as $error) {
+                $message .= "\n".trim($error->textContent);
+            }
+        }
+        static::assertSame(302, $response->getStatusCode(), "Not redirecting after submitting $view action ".$this->getEntityName().$message);
+        static::assertSame('/fr/?action=list&entity='.$this->getEntityName(), $response->headers->get('location'), $this->getEntityName());
 
         $crawler->clear();
         $client->followRedirect();
@@ -271,6 +280,8 @@ abstract class AbstractEasyAdminTest extends WebTestCase
             ;
         }
 
+        static::assertNotNull($lastEntity);
+
         foreach ($expectedData as $field => $expectedValue) {
             $methodExists = false;
             $methodName   = null;
@@ -290,9 +301,11 @@ abstract class AbstractEasyAdminTest extends WebTestCase
                 $valueToCompare = $lastEntity->$methodName();
                 static::assertSame($expectedValue, $valueToCompare, 'Error for class property '.$this->getEntityName().'::$'.$field);
             } else {
-                static::fail('Admin test for class property '.$this->getEntityName().'::$'.$field.' is incomplete because no getter exists...');
+                static::fail('No getter found for property '.$this->getEntityName().'::$'.$field.'.');
             }
         }
+
+        return $lastEntity;
     }
 
     /**

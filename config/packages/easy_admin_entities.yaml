@@ -28,8 +28,8 @@ easy_admin:
                           expanded: true
                           choice_translation_domain: false
                           choices:
-                              Agate: Agate
-                              Esteren: Esteren
+                              Agate: agate
+                              Esteren: esteren
 
                     - property: locale
                       label: 'admin.entities.portalElement.locale'
