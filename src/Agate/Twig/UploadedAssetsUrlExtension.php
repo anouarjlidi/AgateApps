@@ -34,7 +34,7 @@ class UploadedAssetsUrlExtension extends AbstractExtension
     public function assetUrl(string $assetName)
     {
         if ($this->awsBucket && $this->awsRegion) {
-            return 'aws';
+            return "https://{$this->awsRegion}.amazonaws.com/{$this->awsBucket}/assets/$assetName";
         } else {
             return '/uploads/'.$assetName;
         }

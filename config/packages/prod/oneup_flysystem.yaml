@@ -8,13 +8,12 @@ oneup_flysystem:
     adapters:
         assets_adapter:
             awss3v3:
-                client: app.s3
+                client: Aws\S3\S3Client
                 bucket: '%aws_bucket%'
                 prefix: assets
 
 services:
-    app.s3:
-        class: Aws\S3\S3Client
+    Aws\S3\S3Client:
         arguments:
             -
                 version: 'latest'
