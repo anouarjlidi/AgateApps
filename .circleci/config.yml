@@ -1,7 +1,7 @@
 version: 2
 
 jobs:
-    build:
+    php:
         docker:
             # Docker build here:
             # https://hub.docker.com/r/pierstoval/studio-agate-portal/
@@ -21,11 +21,6 @@ jobs:
             - restore_cache:
                 keys:
                     - composer-cache-{{ checksum "composer.lock" }}
-
-            - run:
-                name: 'Install xdebug (necessary for code coverage)'
-                command: |
-                    [[ $CIRCLE_BRANCH == "master" ]] && pecl install xdebug && docker-php-ext-enable xdebug || echo "No xdebug needed"
 
             - run:
                 name: 'Show config'
@@ -51,16 +46,14 @@ jobs:
             - run:
                name: 'Execute PHPUnit tests'
                command: |
-                    [[ $CIRCLE_BRANCH == "master" ]] && PARAMS="--coverage-text" || PARAMS=""
-
-                    vendor/bin/phpunit --log-junit=build/log/logfile.xml $PARAMS
+                    vendor/bin/phpunit --log-junit=build/log/logfile.xml
 
             - save_cache:
                 key: composer-cache-{{ checksum "composer.lock" }}
                 paths:
                     - ~/.composer/cache
 
-    node_test:
+    node:
         docker:
             - image: node:9
 
@@ -98,3 +91,10 @@ jobs:
                 key: yarn-cache-{{ checksum "yarn.lock" }}
                 paths:
                     - node_modules
+
+workflows:
+    version: 2
+    php_and_node:
+        jobs:
+            - php
+            - node
