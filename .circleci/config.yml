@@ -55,7 +55,7 @@ jobs:
 
     node:
         docker:
-            - image: node:9
+            - image: node:8
 
         working_directory: ~/app
 

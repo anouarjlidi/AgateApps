@@ -16,7 +16,7 @@ services:
             - VERMINE_DOMAIN=vermine2047.piers
 
     node:
-        image: node:9
+        image: node:8
         volumes_from:
             - php
         command: 'yarn --cwd /var/www/html run gulp watch'
