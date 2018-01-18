@@ -65,9 +65,6 @@ services:
     Agate\:
         resource: '../src/Agate/{Controller,ConnectApi,EventListener,Form,Mailer,Provider,Repository,Security,Twig,Util}'
 
-    # TODO: remove this when updating CharacterManagerBundle
-    Pierstoval\Bundle\CharacterManagerBundle\Resolver\StepActionResolver: '@pierstoval.character_manager.step_action_resolver'
-
     CorahnRin\:
         resource: '../src/CorahnRin/{Controller,Repository,GeneratorTools,SheetsManagers}'
 

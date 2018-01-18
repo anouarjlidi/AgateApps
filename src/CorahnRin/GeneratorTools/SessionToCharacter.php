@@ -40,7 +40,7 @@ use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityRepository;
 use EsterenMaps\Entity\Zones;
 use Orbitale\Component\DoctrineTools\EntityRepositoryHelperTrait;
-use Pierstoval\Bundle\CharacterManagerBundle\Resolver\StepActionResolver;
+use Pierstoval\Bundle\CharacterManagerBundle\Resolver\StepResolverInterface;
 
 final class SessionToCharacter
 {
@@ -70,7 +70,7 @@ final class SessionToCharacter
     private $repositories;
 
     /**
-     * @var StepActionResolver
+     * @var StepResolverInterface
      */
     private $resolver;
 
@@ -84,7 +84,7 @@ final class SessionToCharacter
      */
     private $domainsCalculator;
 
-    public function __construct(StepActionResolver $resolver, DomainsCalculator $domainsCalculator, ObjectManager $em)
+    public function __construct(StepResolverInterface $resolver, DomainsCalculator $domainsCalculator, ObjectManager $em)
     {
         $this->resolver          = $resolver;
         $this->em                = $em;

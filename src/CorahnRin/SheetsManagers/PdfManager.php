@@ -14,10 +14,10 @@ namespace CorahnRin\SheetsManagers;
 use CorahnRin\Entity\Characters;
 use CorahnRin\PDF\PDF;
 use Pierstoval\Bundle\CharacterManagerBundle\Model\CharacterInterface;
-use Pierstoval\Bundle\CharacterManagerBundle\SheetsManagers\SheetsManagerInterface;
+use Pierstoval\Bundle\CharacterManagerBundle\SheetsManagers\SheetGeneratorInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
-class PdfManager implements SheetsManagerInterface
+class PdfManager implements SheetGeneratorInterface
 {
     /**
      * @var TranslatorInterface
@@ -42,10 +42,8 @@ class PdfManager implements SheetsManagerInterface
 
     /**
      * {@inheritdoc}
-     *
-     * @return PDF
      */
-    public function generateSheet(CharacterInterface $character, $printer_friendly = false)
+    public function generateSheet(CharacterInterface $character, bool $printer_friendly = false): ?string
     {
         if (!($character instanceof Characters)) {
             throw new \InvalidArgumentException(sprintf(
@@ -62,6 +60,7 @@ class PdfManager implements SheetsManagerInterface
      * @param bool       $printer_friendly
      *
      * @return PDF
+     * @throws \CorahnRin\Exception\CharactersException
      */
     private function originalSheet(Characters $character, $printer_friendly = false)
     {

@@ -11,10 +11,10 @@
 
 namespace CorahnRin\Step;
 
-use Pierstoval\Bundle\CharacterManagerBundle\Action\StepAction;
+use Pierstoval\Bundle\CharacterManagerBundle\Action\AbstractStepAction as BaseAbstractStepAction;
 use Symfony\Component\HttpFoundation\Response;
 
-abstract class AbstractStepAction extends StepAction
+abstract class AbstractStepAction extends BaseAbstractStepAction
 {
     protected static $translationDomain = 'corahn_rin';
 

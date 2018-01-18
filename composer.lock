@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "583478343661db44e44e645a6aabf342",
+    "content-hash": "011eb1578cf8fc0d54db4ab56281879c",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -2170,36 +2170,42 @@
             "time": "2017-09-27T21:40:39+00:00"
         },
         {
-            "name": "pierstoval/character_manager",
-            "version": "v0.6.0",
+            "name": "pierstoval/character-manager",
+            "version": "v1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Pierstoval/CharacterManagerBundle.git",
-                "reference": "286936ccece12ef659e2aa6e866845c41459196c"
+                "reference": "38fa46f79515fbc8d97c6a1d88115d9c588f67c8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Pierstoval/CharacterManagerBundle/zipball/286936ccece12ef659e2aa6e866845c41459196c",
-                "reference": "286936ccece12ef659e2aa6e866845c41459196c",
+                "url": "https://api.github.com/repos/Pierstoval/CharacterManagerBundle/zipball/38fa46f79515fbc8d97c6a1d88115d9c588f67c8",
+                "reference": "38fa46f79515fbc8d97c6a1d88115d9c588f67c8",
                 "shasum": ""
             },
             "require": {
-                "doctrine/doctrine-bundle": "^1.6.8",
                 "doctrine/inflector": "^1.1",
-                "doctrine/orm": "^2.5",
                 "php": "^7.1",
-                "symfony/asset": "^3.3|^4.0",
-                "symfony/expression-language": "^3.3|^4.0",
-                "symfony/framework-bundle": "^3.3|^4.0",
-                "symfony/translation": "^3.3|^4.0",
-                "symfony/twig-bridge": "^3.3|^4.0",
-                "symfony/twig-bundle": "^3.3|^4.0",
-                "symfony/yaml": "^3.3|^4.0",
-                "twig/twig": "^1.34|^2.4"
+                "symfony/expression-language": "^3.4|^4.0",
+                "symfony/framework-bundle": "^3.4|^4.0"
             },
             "require-dev": {
+                "doctrine/doctrine-bundle": "^1.6.8",
+                "doctrine/orm": "^2.5",
                 "phpunit/phpunit": "^6.0",
-                "pierstoval/web-test-case": "^0.1.8"
+                "pierstoval/web-test-case": "^0.2.0",
+                "symfony/css-selector": "^3.4|^4.0",
+                "symfony/dom-crawler": "^3.4|^4.0",
+                "symfony/translation": "^3.4|^4.0",
+                "symfony/twig-bundle": "^3.4|^4.0",
+                "symfony/yaml": "^3.4|^4.0"
+            },
+            "suggest": {
+                "doctrine/doctrine-bundle": "To inject the object manager in steps and map your Character entities with the ORM",
+                "doctrine/orm": "To inject the object manager in steps and map your Character entities with the ORM",
+                "ocramius/proxy-manager": "To use lazy actions",
+                "symfony/translation": "To translate the messages instead of using the default keys",
+                "symfony/twig-bundle": "To use Twig templating engine in your actions"
             },
             "type": "symfony-bundle",
             "autoload": {
@@ -2214,7 +2220,7 @@
             "authors": [
                 {
                     "name": "Alex \"Pierstoval\" Rock Ancelet",
-                    "email": "alex.ancelet@gmail.com"
+                    "email": "pierstoval@gmail.com"
                 }
             ],
             "description": "Skeleton of a character manager for games",
@@ -2225,8 +2231,7 @@
                 "game",
                 "symfony"
             ],
-            "abandoned": "pierstoval/character-manager",
-            "time": "2017-10-25T14:49:40+00:00"
+            "time": "2018-01-18T22:09:18+00:00"
         },
         {
             "name": "psr/cache",

@@ -19,7 +19,7 @@
         </div>
     {% endblock %}
     <div class="step_module">
-        <h1>{{ 'steps.step' | trans({}, 'corahn_rin') }} {{ current_step.step }} : {{ current_step.label | trans }}</h1>
+        <h1>{{ 'steps.step' | trans({}, 'corahn_rin') }} {{ current_step.number }} : {{ current_step.label | trans }}</h1>
 
         {{ include('_flash_messages.html.twig') }}
 

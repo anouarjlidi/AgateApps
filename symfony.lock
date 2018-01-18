@@ -170,14 +170,8 @@
     "phpunit/phpunit-mock-objects": {
         "version": "4.0.4"
     },
-    "pierstoval/character_manager": {
-        "version": "0.5",
-        "recipe": {
-            "repo": "github.com/symfony/recipes-contrib",
-            "branch": "master",
-            "version": "0.5",
-            "ref": "f3223cfb6af047c8b9ba13c8491d10d98eb604df"
-        }
+    "pierstoval/character-manager": {
+        "version": "v1.1.0"
     },
     "pierstoval/web-test-case": {
         "version": "v0.1.8"
