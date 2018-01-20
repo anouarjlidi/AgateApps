@@ -24,7 +24,7 @@
         "orbitale/doctrine-tools": "^0.6.1",
         "orbitale/entity-merger": "^0.6.0",
         "orbitale/imagemagick-php": "^1.6",
-        "pierstoval/character-manager": "^1.1.1",
+        "pierstoval/character-manager": "^1.1.2",
         "sensio/distribution-bundle": "^5.0",
         "sensio/framework-extra-bundle": "^5.0",
         "stof/doctrine-extensions-bundle": "^1.2",
