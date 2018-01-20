@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Agate\Tests\Controller;
+namespace Tests\Agate\Controller\User;
 
 class SecurityControllerFRTest extends AbstractSecurityControllerTest
 {
