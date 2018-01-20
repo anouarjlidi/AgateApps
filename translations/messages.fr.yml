@@ -1,4 +1,7 @@
 'Bad credentials.': 'Nom d''utilisateur ou mot de passe invalide.'
+'Email not confirmed.': |
+    Votre adresse e-mail n'a pas été confirmée. Merci de vérifier votre boîte mail, et éventuellement le dossier "spams",
+    afin de pouvoir copier ou cliquer sur le lien vous permettant de confirmer votre adresse e-mail.
 
 links:
     admin: 'Administration'

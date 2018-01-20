@@ -1,4 +1,7 @@
 'Bad credentials.': 'User name or password invalid.'
+'Email not confirmed.': |
+    Your e-mail address has not yet been confirmed. Please check your email account and possibly the "spam" folder, so
+    you can copy or click on the link that will allow you to confirm your e-mail address.
 
 links:
     admin: 'Admin panel'

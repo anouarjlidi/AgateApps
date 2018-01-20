@@ -119,7 +119,13 @@ final class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
      */
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
-        return $userProvider->loadUserByUsername($credentials->getUsernameOrEmail());
+        $user = $userProvider->loadUserByUsername($credentials->getUsernameOrEmail());
+
+        if ($user && !$user->isEmailConfirmed()) {
+            throw new AuthenticationException('Email not confirmed.');
+        }
+
+        return $user;
     }
 
     /**
