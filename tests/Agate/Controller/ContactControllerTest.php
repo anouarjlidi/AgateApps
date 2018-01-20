@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Tests\AgateController;
+namespace Tests\Agate\Controller;
 
 use Symfony\Bundle\SwiftmailerBundle\DataCollector\MessageDataCollector;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
