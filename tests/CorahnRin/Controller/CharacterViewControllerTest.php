@@ -57,7 +57,7 @@ class CharacterViewControllerTest extends WebTestCase
         /**
          * @var Characters|null
          */
-        $char = $client->getContainer()->get('doctrine')->getRepository(\CorahnRin\Entity\Characters::class)->find(608);
+        $char = $client->getContainer()->get('doctrine')->getRepository(Characters::class)->find(608);
 
         if (!$char) {
             static::markTestIncomplete('No character available in the database to test the route.');
