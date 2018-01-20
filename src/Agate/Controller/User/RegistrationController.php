@@ -126,7 +126,7 @@ class RegistrationController extends AbstractController
         $em->persist($user);
         $em->flush();
 
-        $this->addFlash('success', $this->get('translator')->trans('registration.confirmed', ['%username%' => $user->getUsername()], 'user'));
+        $this->addFlash('success', $this->translator->trans('registration.confirmed', ['%username%' => $user->getUsername()], 'user'));
 
         return $this->redirect('/'.$_locale);
     }
