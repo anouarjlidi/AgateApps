@@ -21,7 +21,7 @@ class Step03BirthplaceTest extends AbstractStepTest
 
         static::assertSame(302, $result->getResponse()->getStatusCode());
         static::assertTrue($result->getResponse()->isRedirect('/fr/character/generate/04_geo'));
-        static::assertSame([$this->getStepName() => 1], $result->getSession()->get('character'));
+        static::assertSame([$this->getStepName() => 1], $result->getSession()->get('character.corahn_rin'));
     }
 
     public function testInvalidBirthplace()

@@ -23,7 +23,7 @@ class Step14UseDomainBonusesTest extends AbstractStepTest
         $client = $this->getClient();
 
         $session = $client->getContainer()->get('session');
-        $session->set('character', $dependencies); // Varigal
+        $session->set('character.corahn_rin', $dependencies); // Varigal
         $session->save();
 
         $crawler = $client->request('GET', '/fr/character/generate/'.$this->getStepName());

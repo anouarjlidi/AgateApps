@@ -48,7 +48,7 @@ abstract class AbstractStepTest extends WebTestCase
 
         // We need a simple session to be sure it's updated when submitting form.
         $session = $client->getContainer()->get('session');
-        $session->set('character', $sessionValues);
+        $session->set('character.corahn_rin', $sessionValues);
         $session->save();
 
         // Make the request.

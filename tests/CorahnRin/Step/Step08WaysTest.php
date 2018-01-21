@@ -28,7 +28,7 @@ class Step08WaysTest extends AbstractStepTest
 
         static::assertSame(302, $result->getResponse()->getStatusCode());
         static::assertTrue($result->getResponse()->isRedirect('/fr/character/generate/09_traits'));
-        static::assertSame([$this->getStepName() => $ways], $result->getSession()->get('character'));
+        static::assertSame([$this->getStepName() => $ways], $result->getSession()->get('character.corahn_rin'));
     }
 
     public function testWaysSumIsFiveOnly()

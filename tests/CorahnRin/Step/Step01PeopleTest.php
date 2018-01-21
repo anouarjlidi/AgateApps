@@ -21,7 +21,7 @@ class Step01PeopleTest extends AbstractStepTest
 
         static::assertSame(302, $result->getResponse()->getStatusCode());
         static::assertTrue($result->getResponse()->isRedirect('/fr/character/generate/02_job'));
-        static::assertSame([$this->getStepName() => 1], $result->getSession()->get('character'));
+        static::assertSame([$this->getStepName() => 1], $result->getSession()->get('character.corahn_rin'));
     }
 
     public function testInvalidPeople()

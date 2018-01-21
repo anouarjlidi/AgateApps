@@ -39,7 +39,7 @@ class Step12MentalDisorderTest extends AbstractStepTest
 
         static::assertSame(302, $result->getResponse()->getStatusCode());
         static::assertTrue($result->getResponse()->isRedirect('/fr/character/generate/13_primary_domains'));
-        static::assertSame(1, $result->getSession()->get('character')[$this->getStepName()]);
+        static::assertSame(1, $result->getSession()->get('character.corahn_rin')[$this->getStepName()]);
     }
 
     public function testEmptyValue()

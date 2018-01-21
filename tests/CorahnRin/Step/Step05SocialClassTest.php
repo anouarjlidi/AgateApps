@@ -25,7 +25,7 @@ class Step05SocialClassTest extends AbstractStepTest
         static::assertSame([$this->getStepName() => [
             'id'      => 1,
             'domains' => ['5' => 5, '8' => 8],
-        ]], $result->getSession()->get('character'));
+        ]], $result->getSession()->get('character.corahn_rin'));
     }
 
     public function testInvalidSocialClass()

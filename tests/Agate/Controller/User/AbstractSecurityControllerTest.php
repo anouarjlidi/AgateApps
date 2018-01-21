@@ -9,8 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Agate\Tests\Controller;
+namespace Tests\Agate\Controller\User;
 
+use Agate\Entity\User;
+use Agate\Repository\UserRepository;
 use Agate\Security\Provider\UsernameOrEmailProvider;
 use Symfony\Component\DomCrawler\Form;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -45,9 +47,47 @@ abstract class AbstractSecurityControllerTest extends WebTestCase
         $client->request('GET', "/$locale/");
 
         static::assertSame(302, $client->getResponse()->getStatusCode());
-        static::assertContains("/$locale/?action=list&entity=Page", $client->getResponse()->headers->get('Location'));
+        static::assertContains("/$locale/?action=list&entity=PortalElement", $client->getResponse()->headers->get('Location'));
         $client->followRedirect();
         static::assertSame(200, $client->getResponse()->getStatusCode());
+    }
+
+    public function testRegisterAndLoginWithoutConfirmingEmail()
+    {
+        static::resetDatabase();
+
+        $locale = $this->getLocale();
+
+        $user = new User();
+        $user
+            ->setUsername("test_user_confirm_$locale")
+            ->setUsernameCanonical("test_user_confirm_$locale")
+            ->setEmail("testconfirm$locale@local.to")
+            ->setEmailCanonical("testconfirm$locale@local.to")
+        ;
+
+        $client = $this->getClient('portal.esteren.dev');
+        $container = static::$kernel->getContainer();
+
+        $hashed = $container->get('security.password_encoder')->encodePassword($user, 'whatever');
+        $user->setPassword($hashed);
+
+        $em = $container->get('doctrine.orm.entity_manager');
+        $em->persist($user);
+        $em->flush();
+
+        $client->request('POST', "/$locale/login_check", [
+            '_username_or_email' => "test_user_confirm_$locale",
+            '_password' => 'whatever',
+        ]);
+
+        static::assertSame(302, $client->getResponse()->getStatusCode());
+        static::assertTrue($client->getResponse()->isRedirect("/$locale/login"));
+        $crawler = $client->followRedirect();
+
+        // Once redirected, we check the flash messages are correct
+        $flashPasswordChanged = $container->get('translator')->trans('Email not confirmed.');
+        static::assertContains($flashPasswordChanged, $crawler->filter('#layout #flash-messages')->html());
     }
 
     public function testRegister()
@@ -91,6 +131,30 @@ abstract class AbstractSecurityControllerTest extends WebTestCase
 
     /**
      * @depends testRegister
+     */
+    public function testConfirmEmail()
+    {
+        $locale = $this->getLocale();
+
+        $client = $this->getClient('portal.esteren.dev');
+
+        $user = $client->getContainer()->get(UserRepository::class)->findOneBy(['username' => static::USER_NAME.$locale]);
+
+        static::assertNotNull($user);
+
+        $client->request('GET', "/$locale/register/confirm/".$user->getConfirmationToken());
+
+        static::assertSame(302, $client->getResponse()->getStatusCode());
+        static::assertTrue($client->getResponse()->isRedirect("/$locale"));
+        static::assertNull($user->getConfirmationToken());
+        static::assertSame(
+            [$client->getContainer()->get('translator')->trans('registration.confirmed', ['%username%' => $user->getUsername()], 'user')],
+            $client->getContainer()->get('session')->getFlashBag()->get('success')
+        );
+    }
+
+    /**
+     * @depends testConfirmEmail
      */
     public function testLogin()
     {

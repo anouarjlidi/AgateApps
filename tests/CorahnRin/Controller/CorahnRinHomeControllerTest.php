@@ -9,12 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace Tests\AgateController;
+namespace Tests\Agate\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Tests\WebTestCase as PiersTestCase;
 
-class CorahnRinHomeController extends WebTestCase
+class CorahnRinHomeControllerTest extends WebTestCase
 {
     use PiersTestCase;
 

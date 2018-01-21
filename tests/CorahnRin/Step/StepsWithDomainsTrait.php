@@ -71,7 +71,7 @@ trait StepsWithDomainsTrait
 
         /** @var Session $session */
         $session = $client->getContainer()->get('session');
-        $session->set('character', $requirements);
+        $session->set('character.corahn_rin', $requirements);
         $session->save();
 
         return $client;
@@ -107,6 +107,6 @@ trait StepsWithDomainsTrait
             'remaining' => $remaining,
         ];
 
-        static::assertEquals($results, $client->getContainer()->get('session')->get('character')[$this->getStepName()]);
+        static::assertEquals($results, $client->getContainer()->get('session')->get('character.corahn_rin')[$this->getStepName()]);
     }
 }

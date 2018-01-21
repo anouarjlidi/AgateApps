@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Agate\Tests\ConnectApi;
+namespace Tests\Agate\ConnectApi;
 
 use Psr\Log\NullLogger;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;

@@ -68,11 +68,11 @@ class FullValidStepsControllerTest extends WebTestCase
         $session = $client->getContainer()->get('session');
 
         // Set previous steps value so we can "detach" each request to be standalone.
-        $character = $session->get('character', []);
+        $character = $session->get('character.corahn_rin', []);
         foreach ($previousSteps as $step) {
             $character[$step['step']] = $step['session_value'];
         }
-        $session->set('character', $character);
+        $session->set('character.corahn_rin', $character);
         $session->save();
 
         // Make the request.
@@ -111,7 +111,7 @@ class FullValidStepsControllerTest extends WebTestCase
         static::assertTrue($client->getResponse()->isRedirect('/fr/character/generate/'.$nextStep), $msg);
 
         // We also make sure that the session has been correctly updated.
-        $character = $session->get('character');
+        $character = $session->get('character.corahn_rin');
         static::assertSame($expectedSessionValue, $character[$stepName], 'Character values are not equal to session ones in step "'.$stepName.'"...');
     }
 
