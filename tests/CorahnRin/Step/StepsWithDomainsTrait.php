@@ -77,7 +77,7 @@ trait StepsWithDomainsTrait
         return $client;
     }
 
-    protected function assertSessionEquals(?array $domains, int $remaining = 1, Client $client)
+    protected function assertSessionEquals(array $domains, int $remaining = 1, Client $client)
     {
         $finalDomains = [
             1 => 0,
@@ -107,6 +107,6 @@ trait StepsWithDomainsTrait
             'remaining' => $remaining,
         ];
 
-        static::assertEquals($results, $client->getContainer()->get('session')->get('character')[$this->getStepName()]);
+        static::assertEquals($results, $client->getContainer()->get('session')->get('character.corahn_rin')[$this->getStepName()]);
     }
 }

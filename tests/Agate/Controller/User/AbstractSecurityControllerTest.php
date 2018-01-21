@@ -12,6 +12,7 @@
 namespace Tests\Agate\Controller\User;
 
 use Agate\Entity\User;
+use Agate\Repository\UserRepository;
 use Agate\Security\Provider\UsernameOrEmailProvider;
 use Symfony\Component\DomCrawler\Form;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -130,6 +131,30 @@ abstract class AbstractSecurityControllerTest extends WebTestCase
 
     /**
      * @depends testRegister
+     */
+    public function testConfirmEmail()
+    {
+        $locale = $this->getLocale();
+
+        $client = $this->getClient('portal.esteren.dev');
+
+        $user = $client->getContainer()->get(UserRepository::class)->findOneBy(['username' => static::USER_NAME.$locale]);
+
+        static::assertNotNull($user);
+
+        $client->request('GET', "/$locale/register/confirm/".$user->getConfirmationToken());
+
+        static::assertSame(302, $client->getResponse()->getStatusCode());
+        static::assertTrue($client->getResponse()->isRedirect("/$locale"));
+        static::assertNull($user->getConfirmationToken());
+        static::assertSame(
+            [$client->getContainer()->get('translator')->trans('registration.confirmed', ['%username%' => $user->getUsername()], 'user')],
+            $client->getContainer()->get('session')->getFlashBag()->get('success')
+        );
+    }
+
+    /**
+     * @depends testConfirmEmail
      */
     public function testLogin()
     {

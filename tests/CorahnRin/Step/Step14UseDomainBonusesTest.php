@@ -60,7 +60,7 @@ class Step14UseDomainBonusesTest extends AbstractStepTest
         $client->submit($form);
 
         static::assertTrue($client->getResponse()->isRedirect('/fr/character/generate/15_domains_spend_exp'));
-        $this->assertSessionEquals(null, 1, $client);
+        $this->assertSessionEquals([], 1, $client);
     }
 
     public function testPrimaryDomainThrowsError()
