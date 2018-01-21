@@ -9,16 +9,16 @@
  * file that was distributed with this source code.
  */
 
-namespace EsterenMaps\MapsBundle\Form;
+namespace EsterenMaps\Form;
 
-use EsterenMaps\MapsBundle\Constraints\Coordinates;
-use EsterenMaps\MapsBundle\Entity\Factions;
-use EsterenMaps\MapsBundle\Entity\Markers;
-use EsterenMaps\MapsBundle\Entity\Routes;
-use EsterenMaps\MapsBundle\Entity\RoutesTypes;
+use EsterenMaps\Constraints\Coordinates;
+use EsterenMaps\Entity\Factions;
+use EsterenMaps\Entity\Markers;
+use EsterenMaps\Entity\Routes;
+use EsterenMaps\Entity\RoutesTypes;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\{CheckboxType, NumberType, TextareaType, TextType};
+use Symfony\Component\Form\Extension\Core\Type\{CheckboxType, TextareaType, TextType};
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;

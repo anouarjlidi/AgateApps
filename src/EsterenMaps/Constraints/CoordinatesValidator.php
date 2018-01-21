@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace EsterenMaps\MapsBundle\Constraints;
+namespace EsterenMaps\Constraints;
 
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;

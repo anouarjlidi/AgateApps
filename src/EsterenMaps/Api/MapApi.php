@@ -22,7 +22,7 @@ use EsterenMaps\Entity\RoutesTypes;
 use EsterenMaps\Entity\TransportTypes;
 use EsterenMaps\Entity\Zones;
 use EsterenMaps\Entity\ZonesTypes;
-use EsterenMaps\MapsBundle\Form\ApiRouteType;
+use EsterenMaps\Form\ApiRouteType;
 use Symfony\Component\Asset\Packages;
 use Symfony\Component\Form\FormFactoryInterface;
 use Twig\Environment;
