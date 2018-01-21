@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "18b45852298e34034b35fdb9c03bcd36",
+    "content-hash": "f82d97d101a80f60c21aa56ca421e683",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -2171,16 +2171,16 @@
         },
         {
             "name": "pierstoval/character-manager",
-            "version": "v1.1.2",
+            "version": "v1.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Pierstoval/CharacterManagerBundle.git",
-                "reference": "74564541847d1ab160ffa15e7c379538c1bd0d3e"
+                "reference": "221f4a84e2f56ab95104a8c9e51b9853b23f2eec"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Pierstoval/CharacterManagerBundle/zipball/74564541847d1ab160ffa15e7c379538c1bd0d3e",
-                "reference": "74564541847d1ab160ffa15e7c379538c1bd0d3e",
+                "url": "https://api.github.com/repos/Pierstoval/CharacterManagerBundle/zipball/221f4a84e2f56ab95104a8c9e51b9853b23f2eec",
+                "reference": "221f4a84e2f56ab95104a8c9e51b9853b23f2eec",
                 "shasum": ""
             },
             "require": {
@@ -2231,7 +2231,7 @@
                 "game",
                 "symfony"
             ],
-            "time": "2018-01-20T16:07:04+00:00"
+            "time": "2018-01-20T20:00:13+00:00"
         },
         {
             "name": "psr/cache",
