@@ -21,7 +21,7 @@ class Step02JobTest extends AbstractStepTest
 
         static::assertSame(302, $result->getResponse()->getStatusCode());
         static::assertTrue($result->getResponse()->isRedirect('/fr/character/generate/03_birthplace'));
-        static::assertSame([$this->getStepName() => 1], $result->getSession()->get('character'));
+        static::assertSame([$this->getStepName() => 1], $result->getSession()->get('character.corahn_rin'));
     }
 
     public function testInvalidJob()

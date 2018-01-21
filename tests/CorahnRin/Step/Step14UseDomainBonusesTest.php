@@ -23,7 +23,7 @@ class Step14UseDomainBonusesTest extends AbstractStepTest
         $client = $this->getClient();
 
         $session = $client->getContainer()->get('session');
-        $session->set('character', $dependencies); // Varigal
+        $session->set('character.corahn_rin', $dependencies); // Varigal
         $session->save();
 
         $crawler = $client->request('GET', '/fr/character/generate/'.$this->getStepName());
@@ -60,7 +60,7 @@ class Step14UseDomainBonusesTest extends AbstractStepTest
         $client->submit($form);
 
         static::assertTrue($client->getResponse()->isRedirect('/fr/character/generate/15_domains_spend_exp'));
-        $this->assertSessionEquals([], 1, $client);
+        $this->assertSessionEquals(null, 1, $client);
     }
 
     public function testPrimaryDomainThrowsError()

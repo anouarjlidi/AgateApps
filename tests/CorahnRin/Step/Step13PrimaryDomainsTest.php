@@ -23,7 +23,7 @@ class Step13PrimaryDomainsTest extends AbstractStepTest
         $client = $this->getClient();
 
         $session = $client->getContainer()->get('session');
-        $session->set('character', $dependencies); // Varigal
+        $session->set('character.corahn_rin', $dependencies); // Varigal
         $session->save();
 
         $client->request('GET', '/fr/character/generate/'.$this->getStepName());
@@ -381,7 +381,7 @@ class Step13PrimaryDomainsTest extends AbstractStepTest
             $submitted['scholar'] = null;
         }
 
-        static::assertEquals($submitted, $client->getRequest()->getSession()->get('character')[$this->getStepName()]);
+        static::assertEquals($submitted, $client->getRequest()->getSession()->get('character.corahn_rin')[$this->getStepName()]);
     }
 
     public function provideValidDomainsData()
@@ -779,7 +779,7 @@ class Step13PrimaryDomainsTest extends AbstractStepTest
         $client->restart();
 
         $session = $client->getContainer()->get('session');
-        $session->set('character', [
+        $session->set('character.corahn_rin', [
             '02_job'        => $jobId,
             '08_ways'       => [1, 2, 3, 4, 5],
             '11_advantages' => [

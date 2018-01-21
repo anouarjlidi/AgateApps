@@ -39,7 +39,7 @@ class Step10OrientationTest extends AbstractStepTest
 
         static::assertSame(302, $result->getResponse()->getStatusCode());
         static::assertTrue($result->getResponse()->isRedirect('/fr/character/generate/11_advantages'));
-        static::assertSame(Orientation::INSTINCTIVE, $result->getSession()->get('character')[$this->getStepName()]);
+        static::assertSame(Orientation::INSTINCTIVE, $result->getSession()->get('character.corahn_rin')[$this->getStepName()]);
     }
 
     public function testValidRationalOrientation()
@@ -56,7 +56,7 @@ class Step10OrientationTest extends AbstractStepTest
 
         static::assertSame(302, $result->getResponse()->getStatusCode());
         static::assertTrue($result->getResponse()->isRedirect('/fr/character/generate/11_advantages'));
-        static::assertSame(Orientation::RATIONAL, $result->getSession()->get('character')[$this->getStepName()]);
+        static::assertSame(Orientation::RATIONAL, $result->getSession()->get('character.corahn_rin')[$this->getStepName()]);
     }
 
     public function testValidManualInstinctiveOrientation()
@@ -75,7 +75,7 @@ class Step10OrientationTest extends AbstractStepTest
 
         static::assertSame(302, $result->getResponse()->getStatusCode());
         static::assertTrue($result->getResponse()->isRedirect('/fr/character/generate/11_advantages'));
-        static::assertSame(Orientation::INSTINCTIVE, $result->getSession()->get('character')[$this->getStepName()]);
+        static::assertSame(Orientation::INSTINCTIVE, $result->getSession()->get('character.corahn_rin')[$this->getStepName()]);
     }
 
     public function testValidManualRationalOrientation()
@@ -94,7 +94,7 @@ class Step10OrientationTest extends AbstractStepTest
 
         static::assertSame(302, $result->getResponse()->getStatusCode());
         static::assertTrue($result->getResponse()->isRedirect('/fr/character/generate/11_advantages'));
-        static::assertSame(Orientation::RATIONAL, $result->getSession()->get('character')[$this->getStepName()]);
+        static::assertSame(Orientation::RATIONAL, $result->getSession()->get('character.corahn_rin')[$this->getStepName()]);
     }
 
     public function testInvalidManualOrientation()

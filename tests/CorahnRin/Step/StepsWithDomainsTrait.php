@@ -71,13 +71,13 @@ trait StepsWithDomainsTrait
 
         /** @var Session $session */
         $session = $client->getContainer()->get('session');
-        $session->set('character', $requirements);
+        $session->set('character.corahn_rin', $requirements);
         $session->save();
 
         return $client;
     }
 
-    protected function assertSessionEquals(array $domains, int $remaining = 1, Client $client)
+    protected function assertSessionEquals(?array $domains, int $remaining = 1, Client $client)
     {
         $finalDomains = [
             1 => 0,

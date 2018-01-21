@@ -29,7 +29,7 @@ class Step07SetbacksTest extends AbstractStepTest
         static::assertSame([
             '06_age'             => 20,
             $this->getStepName() => [],
-        ], $result->getSession()->get('character'));
+        ], $result->getSession()->get('character.corahn_rin'));
     }
 
     public function provideManyTestsToEnsureRandomness()
@@ -56,7 +56,7 @@ class Step07SetbacksTest extends AbstractStepTest
 
         static::assertSame(302, $result->getResponse()->getStatusCode());
         static::assertTrue($result->getResponse()->isRedirect('/fr/character/generate/08_ways'));
-        $setbacks = $result->getSession()->get('character')[$this->getStepName()];
+        $setbacks = $result->getSession()->get('character.corahn_rin')[$this->getStepName()];
 
         $nb = count($setbacks);
 
@@ -89,7 +89,7 @@ class Step07SetbacksTest extends AbstractStepTest
 
         static::assertSame(302, $result->getResponse()->getStatusCode());
         static::assertTrue($result->getResponse()->isRedirect('/fr/character/generate/08_ways'));
-        $setbacks = $result->getSession()->get('character')[$this->getStepName()];
+        $setbacks = $result->getSession()->get('character.corahn_rin')[$this->getStepName()];
 
         $nb = count($setbacks);
 
@@ -131,7 +131,7 @@ class Step07SetbacksTest extends AbstractStepTest
 
         static::assertSame(302, $result->getResponse()->getStatusCode());
         static::assertTrue($result->getResponse()->isRedirect('/fr/character/generate/08_ways'));
-        $setbacks     = $result->getSession()->get('character')[$this->getStepName()];
+        $setbacks     = $result->getSession()->get('character.corahn_rin')[$this->getStepName()];
         $baseSetbacks = $setbacks;
 
         $nb = count($setbacks);
@@ -175,7 +175,7 @@ class Step07SetbacksTest extends AbstractStepTest
         static::assertTrue($client->getResponse()->isRedirect('/fr/character/generate/01_people'));
         $crawler = $client->followRedirect();
         static::assertEquals(
-            "L'étape \"07 Setbacks\" dépend de \"06 Age\", mais celle-ci n'est pas présente\ndans le personnage en cours de création...",
+            'L\'étape "07 Setbacks" dépend de "06 Age", mais celle-ci n\'est pas présente dans le personnage en cours de création...',
             trim($crawler->filter('#flash-messages > .card-panel.error')->text())
         );
     }
@@ -185,7 +185,7 @@ class Step07SetbacksTest extends AbstractStepTest
         $client = $this->getClient();
 
         $session = $client->getContainer()->get('session');
-        $session->set('character', ['06_age' => 21]);
+        $session->set('character.corahn_rin', ['06_age' => 21]);
         $session->save();
 
         $crawler = $client->request('GET', '/fr/character/generate/'.$this->getStepName().'?manual=');
@@ -203,7 +203,7 @@ class Step07SetbacksTest extends AbstractStepTest
 
         static::assertSame(302, $client->getResponse()->getStatusCode());
         static::assertTrue($client->getResponse()->isRedirect('/fr/character/generate/08_ways'));
-        static::assertSame([2 => ['id' => 2, 'avoided' => false], 3 => ['id' => 3, 'avoided' => false]], $session->get('character')[$this->getStepName()]);
+        static::assertSame([2 => ['id' => 2, 'avoided' => false], 3 => ['id' => 3, 'avoided' => false]], $session->get('character.corahn_rin')[$this->getStepName()]);
     }
 
     public function testManualWithInValidSetbacks()
@@ -211,7 +211,7 @@ class Step07SetbacksTest extends AbstractStepTest
         $client = $this->getClient();
 
         $session = $client->getContainer()->get('session');
-        $session->set('character', ['06_age' => 21]);
+        $session->set('character.corahn_rin', ['06_age' => 21]);
         $session->save();
 
         $crawler = $client->request('GET', '/fr/character/generate/'.$this->getStepName().'?manual=');
