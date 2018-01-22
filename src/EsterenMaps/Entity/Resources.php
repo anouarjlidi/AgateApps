@@ -47,7 +47,7 @@ class Resources
 
     /**
      * @var Routes[]
-     * @ORM\ManyToMany(targetEntity="Routes", inversedBy="resources")
+     * @ORM\ManyToMany(targetEntity="Routes")
      */
     protected $routes;
 
