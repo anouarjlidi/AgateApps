@@ -52,9 +52,9 @@ class ApiRoutesController
     }
 
     /**
-     * @Route("/routes", name="maps_api_routes_post", methods={"POST"}, defaults={"_format": "json"})
+     * @Route("/routes", name="maps_api_routes_create", methods={"POST"}, defaults={"_format": "json"})
      */
-    public function post(Request $request): Response
+    public function create(Request $request): Response
     {
         $route = Routes::fromApi($this->getDataFromRequest($request));
 
@@ -62,9 +62,9 @@ class ApiRoutesController
     }
 
     /**
-     * @Route("/routes/{id}", name="maps_api_routes_put", methods={"PUT"}, defaults={"_format": "json"})
+     * @Route("/routes/{id}", name="maps_api_routes_update", methods={"POST"}, defaults={"_format": "json"})
      */
-    public function put(Routes $route, Request $request): Response
+    public function update(Routes $route, Request $request): Response
     {
         $route->updateFromApi($this->getDataFromRequest($request));
 
