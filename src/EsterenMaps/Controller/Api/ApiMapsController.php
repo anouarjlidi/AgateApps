@@ -35,7 +35,7 @@ class ApiMapsController extends AbstractController
     }
 
     /**
-     * @Route("/maps/{id}", name="esterenmaps_api_map_get", requirements={"id"="\d+"}, methods={"GET"})
+     * @Route("/maps/{id}", name="maps_api_maps_get", requirements={"id"="\d+"}, methods={"GET"})
      */
     public function getAction(int $id, Request $request): JsonResponse
     {
@@ -64,7 +64,7 @@ class ApiMapsController extends AbstractController
     }
 
     /**
-     * @Route("/maps/{id}/edit-mode", name="esterenmaps_api_map_get_editmode", requirements={"id"="\d+"}, methods={"GET"})
+     * @Route("/maps/{id}/edit-mode", name="maps_api_maps_get_editmode", requirements={"id"="\d+"}, methods={"GET"})
      */
     public function getEditModeAction(int $id, Request $request): JsonResponse
     {
