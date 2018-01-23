@@ -71,9 +71,6 @@ class Routes implements EntityToClearInterface
      * @var int
      *
      * @ORM\Column(name="distance", type="float", precision=12, scale=6, options={"default": 0})
-     *
-     * @Assert\Type("int")
-     * @Assert\NotBlank()
     */
     protected $distance = 0;
 
@@ -200,7 +197,6 @@ class Routes implements EntityToClearInterface
         $this->name = $data['name'];
         $this->description = $data['description'];
         $this->coordinates = $data['coordinates'];
-        $this->distance = $data['distance'];
         $this->forcedDistance = $data['forcedDistance'];
         $this->guarded = $data['guarded'];
         $this->map = $data['map'];
@@ -208,6 +204,10 @@ class Routes implements EntityToClearInterface
         $this->routeType = $data['routeType'];
         $this->markerStart = $data['markerStart'];
         $this->markerEnd = $data['markerEnd'];
+
+        if ($this->map && $this->coordinates) {
+            $this->calcDistance();
+        }
     }
 
     public function getId(): ?int
@@ -411,8 +411,9 @@ class Routes implements EntityToClearInterface
 
             return $this->forcedDistance;
         }
-            // Else, we force the null value
-            $this->forcedDistance = null;
+
+        // Else, we force the null value
+        $this->forcedDistance = null;
 
         $distance = 0;
         $points   = json_decode($this->coordinates, true);

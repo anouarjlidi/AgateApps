@@ -102,7 +102,7 @@
                     var msg = 'Could not make a request to '+(id?'update':'insert')+' a zone.';
                     console.error(msg);
                     callbackMessage = msg;
-                    callbackMessageType = 'danger';
+                    callbackMessageType = 'error';
                 },
                 callbackComplete: function(){
                     _this.launched = false;

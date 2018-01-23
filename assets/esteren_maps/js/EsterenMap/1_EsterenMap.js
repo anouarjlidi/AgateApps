@@ -160,17 +160,23 @@
         disappearTimeout = disappearTimeout || 4000;
 
         if (!messageElement) {
-            if (this._mapOptions._messageElement) {
-                messageElement = this._mapOptions._messageElement;
+            if (this._messageElement) {
+                messageElement = this._messageElement;
             } else {
                 throw 'No correct element could be used to show a message.';
             }
         }
 
-        element = d.createElement('div');
-        element.className = 'card-panel ib h';
-        if (type) {
-            element.className += ' alert-'+type;
+        element = d.createElement('li');
+        element.className = 'collection-item';
+
+        switch (type) {
+            case 'success':
+                element.className += ' green-text text-lighten-3';
+                break;
+            case 'error':
+                element.className += ' red-text text-lighten-3';
+                break;
         }
 
         element.innerHTML = message;

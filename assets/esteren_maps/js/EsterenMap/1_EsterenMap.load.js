@@ -63,6 +63,8 @@
             data: method === 'GET' ? data : JSON.stringify(data ? data : {})
         };
 
+        console.info(data, ajaxObject);
+
         // Apply the different callbacks
         if (typeof(callback) === 'function') {
             ajaxObject.success = function(response) {

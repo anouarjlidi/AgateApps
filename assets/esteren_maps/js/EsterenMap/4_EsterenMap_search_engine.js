@@ -297,7 +297,7 @@
                 bounds = L.latLngBounds(element.getLatLngs());
 
                 if (!bounds.isValid()) {
-                    this.message(typeof MSG_CONTROL_SEARCH_NOT_FOUND !== 'undefined' ? MSG_CONTROL_SEARCH_NOT_FOUND : 'MSG_CONTROL_SEARCH_NOT_FOUND');
+                    this.message(typeof MSG_CONTROL_SEARCH_NOT_FOUND !== 'undefined' ? MSG_CONTROL_SEARCH_NOT_FOUND : 'error');
 
                     return;
                 }

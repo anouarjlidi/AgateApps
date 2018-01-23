@@ -46,6 +46,7 @@
         messageElementId: 'esterenmap_message_element',
         imgUrl: '/img/',
         apiUrls: {
+            endpoint: null,
             map: null,
             directions: null,
             tiles: null

@@ -49,7 +49,7 @@
     //};
 
     L.Polyline.prototype.updateDetails = function() {
-        var latlngs,
+        var latlngs, route_type,
             esterenRoute = this._esterenRoute,
             esterenMarkerStart = esterenRoute.marker_start,
             esterenMarkerEnd = esterenRoute.marker_end,
@@ -57,13 +57,15 @@
             markerEnd = this._markerEnd ? this._markerEnd : (esterenMarkerEnd ? this._esterenMap._markers[esterenMarkerEnd.id] : null)
         ;
 
-        if (esterenRoute.route_type.color) {
+        route_type = this._esterenMap.reference('routes_types', esterenRoute.route_type);
+
+        if (route_type.color) {
             // Change l'image de l'icône
-            this._path.setAttribute('stroke', esterenRoute.route_type.color);
+            this._path.setAttribute('stroke', route_type.color);
         }
 
         // Met à jour l'attribut "data" pour les filtres
-        $(this._path).attr('data-leaflet-object-type', 'routeType'+esterenRoute.route_type.id);
+        $(this._path).attr('data-leaflet-object-type', 'routeType'+esterenRoute.route_type);
 
         latlngs = this.getLatLngs();
         if (markerStart) {
@@ -116,56 +118,52 @@
             _this = this,
             callbackMessage = '',
             callbackMessageType = 'success',
-            id = esterenRoute.id || null;
+            id = esterenRoute.id || null
+        ;
 
         if (esterenRoute && this._map && !this.launched && esterenRoute.marker_start && esterenRoute.marker_end) {
-            esterenRoute.map = esterenRoute.map || {id: this._esterenMap._mapOptions.id };
-            esterenRoute.coordinates = JSON.stringify(this._latlngs ? this._latlngs : {});
-            esterenRoute.route_type = { id: esterenRoute.route_type.id };
-            esterenRoute.marker_start = { id: esterenRoute.marker_start.id };
-            esterenRoute.marker_end = { id: esterenRoute.marker_end.id };
-            esterenRoute.faction = esterenRoute.faction || {};
-            esterenRoute.guarded = !!esterenRoute.guarded;
-            esterenRoute.forced_distance = esterenRoute.forced_distance || '';
             this.launched = true;
             this._esterenMap._load({
-                url: "routes" + (id ? '/'+id : ''),
-                method: id ? "POST" : "PUT", // Si on n'a pas d'ID, c'est qu'on crée une nouvelle route
+                url: this._esterenMap._mapOptions.apiUrls.endpoint.replace(/\/$/, '')+"/routes" + (id ? '/'+id : ''),
+                method: "POST",
                 data: {
-                    json: esterenRoute,
-                    mapping: {
-                        name: true,
-                        coordinates: true,
-                        map: true,
-                        distance: true,
-                        forced_distance: { objectField: 'forcedDistance' },
-                        route_type: { objectField: 'routeType' },
-                        marker_start: { objectField: 'markerStart' },
-                        marker_end: { objectField: 'markerEnd' },
-                        faction: true,
-                        guarded: true
-                    }
+                    map: this._esterenMap._mapOptions.id,
+                    coordinates: JSON.stringify(this._latlngs ? this._latlngs : {}),
+                    routeType: esterenRoute.route_type,
+                    markerStart: esterenRoute.marker_start,
+                    markerEnd: esterenRoute.marker_end,
+                    faction: esterenRoute.faction ? esterenRoute.faction : null,
+                    guarded: !!esterenRoute.guarded,
+                    forcedDistance: esterenRoute.forced_distance || null
                 },
                 callback: function(response) {
                     var map = this,
                         msg,
-                        route = response.newObject;
-                    if (!response.error) {
-                        if (route && route.id) {
-                            map._polylines[route.id] = baseRoute;
-                            map._polylines[route.id]._esterenRoute = route;
-                            map._polylines[route.id].updateDetails();
-                            callbackMessage = 'Route: ' + route.id + ' - ' + route.name;
-                        } else {
-                            msg = 'Zone retrieved by API does not have ID.';
-                            console.warn(msg);
-                            callbackMessage = response.message ? response.message : msg;
-                            callbackMessageType = 'warning';
-                        }
+                        route = response
+                    ;
+                    if (route && route.id) {
+                        // New object is available
+                        map._polylines[route.id] = baseRoute;
+                        map._polylines[route.id]._esterenRoute = {
+                            id: route.id,
+                            name: route.name,
+                            description: route.description,
+                            coordinates: route.coordinates,
+                            distance: route.distance,
+                            forced_distance: route.forcedDistance,
+                            guarded: route.guarded,
+                            marker_start: route.markerStart,
+                            marker_end: route.markerEnd,
+                            map: route.map,
+                            route_type: route.routeType,
+                            faction: route.faction,
+                        };
+                        map._polylines[route.id].updateDetails();
+                        callbackMessage = 'Route: ' + route.id + ' - ' + route.name;
                     } else {
                         msg = 'Api returned an error while attempting to '+(id?'update':'insert')+' a route.';
                         console.error(msg);
-                        callbackMessage = msg + '<br>' + (response.message ? response.message : 'Unknown error...');
+                        callbackMessage = msg + '<br>' + (response ? response.toString() : 'Unknown error...');
                         callbackMessageType = 'danger';
                     }
                 },
@@ -173,7 +171,7 @@
                     var msg = 'Could not make a request to '+(id?'update':'insert')+' a route.';
                     console.error(msg);
                     callbackMessage = msg;
-                    callbackMessageType = 'danger';
+                    callbackMessageType = 'error';
                 },
                 callbackComplete: function(){
                     _this.launched = false;
@@ -309,7 +307,7 @@
                 })
             ;
             $('#api_route_type')
-                .val(polyline._esterenRoute.route_type ? polyline._esterenRoute.route_type.id : '')
+                .val(polyline._esterenRoute.route_type ? polyline._esterenRoute.route_type : '')
                 .off('change').on('change', function(){
                     map._polylines[id]._esterenRoute.route_type = map.reference('routesTypes', this.value);
                     if (this._timeout) { clearTimeout(this._timeout); }
@@ -361,8 +359,8 @@
                 })
             ;
 
-            e.preventDefault();
-            e.stopPropagation();
+            (e.preventDefault ? e : e.originalEvent).preventDefault();
+            (e.stopPropagation ? e : e.originalEvent).stopPropagation();
         }
     };
 
@@ -408,7 +406,7 @@
                 finalOptions = this.cloneObject(options, {
                     esterenRoute: route,
                     polylineName: route.name,
-                    polylineType: route.route_type.id,
+                    polylineType: route.route_type,
                     polylineFaction: route.faction ? route.faction.id : '',
                     polylineMarkerStart: route.marker_start ? route.marker_start.id : '',
                     polylineMarkerEnd: route.marker_end ? route.marker_end.id : ''
@@ -494,7 +492,7 @@
 
         polyline.addTo(this._map);
 
-        option = 'routeType'+(typeof polyline._esterenRoute.route_type === 'object' ? polyline._esterenRoute.route_type.id : polyline._esterenRoute.route_type);
+        option = 'routeType'+polyline._esterenRoute.route_type;
         polyline._path.setAttribute('data-leaflet-object-type', option);
 
         this._polylines[id] = polyline;
