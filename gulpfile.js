@@ -229,6 +229,50 @@ GulpfileHelpers.objectForEach = function(object, callback) {
     return object;
 };
 
+/**
+ * Retrieve files from globs or specific file names.
+ */
+GulpfileHelpers.pushFromDirectory = (outputDirName, elements, filesList) => {
+    if (!filesList) {
+        filesList = [];
+    }
+
+    let finalOutput = config.output_directory+'/'+outputDirName;
+
+    let cleanName = (outputDirectory, sourceName) => {
+        let cleanName = outputDirectory.replace(/\/\*+/gi, '');
+        // Clean up files and dirs so we can convert a "source" name into an "output dir related" name.
+        let replacedFileName = sourceName.replace(cleanName, '');
+        return (finalOutput+replacedFileName).replace('//', '/');
+    };
+
+    let cleanAndPush = (name, files) => {
+        files.forEach((sourceName) => {
+            let cleaned = cleanName(name, sourceName);
+            filesList.push(cleaned);
+        });
+    };
+
+    elements.forEach((name) => {
+        // Name is something like "node_modules/materialize-css/dist/fonts/*".
+        // We'll check for globs and direct files here to add them to files to watch for tests.
+        // This is more complex as we have to list all files in source dirs and compare them with output dir.
+        if (glob.hasMagic(name)) {
+            cleanAndPush(name, glob.sync(name, { nodir: true }));
+        } else {
+            let stat = fs.statSync(name);
+            if (stat.isFile()) {
+                filesList.push(name);
+            } else if (stat.isDirectory()) {
+                // Force glob search for directories
+                cleanAndPush(name, glob.sync(name.replace(/\/+$/gi, '')+'/**', { nodir: true }));
+            } else {
+                throw 'Could not find a way to handle source "'+name+'".';
+            }
+        }
+    });
+};
+
 /*************** Global vars ***************/
 
 // These data are mostly used to introduce logic that will save memory and time.
@@ -593,7 +637,74 @@ gulp.task('watch', gulp.series('dump', gulp.parallel(function(done) {
     done();
 })));
 
-gulp.task('test', gulp.series('dump', function(done) {
+gulp.task('clean', function(done) {
+    "use strict";
+    let filesList = [];
+    let forEach   = GulpfileHelpers.objectForEach;
+    let push      = (key) => {
+        filesList.push(config.output_directory + '/' + key);
+    };
+    let pushFromDir = (outputDirName, elements) => {
+        GulpfileHelpers.pushFromDirectory(outputDirName, elements, filesList);
+    };
+
+    /**
+     * Retrieve files list.
+     */
+    forEach(config.less, push);
+    forEach(config.sass, push);
+    forEach(config.css, push);
+    forEach(config.js, push);
+    forEach(config.images, pushFromDir);
+    forEach(config.copy, pushFromDir);
+
+    console.info('Clean existing files.');
+
+    let number = filesList.length;
+    let processedFiles = 0;
+    let invalid = [];
+
+    filesList.forEach(function(file){
+        let fullPath = path.resolve(__dirname.replace(/\/$/, '')+'/'+file.replace(/^\/?/g, ''));
+        fs.unlink(fullPath, function(err){
+            processedFiles++;
+
+            if (err) {
+                if (err.code !== 'ENOENT') {
+                    invalid.push(fullPath+" ("+err+")");
+                }
+            } else {
+                process.stdout.write(' Removing '+file+"\n");
+            }
+
+            if (processedFiles === number) {
+                if (!invalid.length) {
+                    process.stdout.write("No files!\n");
+                }
+                finish();
+            }
+        });
+    });
+
+    function finish() {
+        if (invalid.length) {
+            process.stdout.write("These files seem not to have been correctly removed by Gulp flow:\n");
+            invalid.forEach((file) => {
+                process.stdout.write(" > "+file+"\n");
+            });
+
+            done();
+            process.exit(1);
+
+            return;
+        }
+
+        done();
+        process.exit(0);
+    }
+});
+
+gulp.task('test', gulp.series('clean', 'dump', function(done) {
     "use strict";
     let filesList = [];
     let forEach = GulpfileHelpers.objectForEach;
@@ -608,49 +719,8 @@ gulp.task('test', gulp.series('dump', function(done) {
     forEach(config.sass, push);
     forEach(config.css, push);
     forEach(config.js, push);
-
-    /**
-     * Retrieve files from globs or specific file names.
-     */
-    let pushFromDirectory = (outputDirName, elements) => {
-        let finalOutput = config.output_directory+'/'+outputDirName;
-
-        let cleanName = (outputDirectory, sourceName) => {
-            let cleanName = outputDirectory.replace(/\/\*+/gi, '');
-            // Clean up files and dirs so we can convert a "source" name into an "output dir related" name.
-            let replacedFileName = sourceName.replace(cleanName, '');
-            return (finalOutput+replacedFileName).replace('//', '/');
-        };
-
-        let cleanAndPush = (name, files) => {
-            files.forEach((sourceName) => {
-                let cleaned = cleanName(name, sourceName);
-                filesList.push(cleaned);
-            });
-        };
-
-        elements.forEach((name) => {
-            // Name is something like "node_modules/materialize-css/dist/fonts/*".
-            // We'll check for globs and direct files here to add them to files to watch for tests.
-            // This is more complex as we have to list all files in source dirs and compare them with output dir.
-            if (glob.hasMagic(name)) {
-                cleanAndPush(name, glob.sync(name, { nodir: true }));
-            } else {
-                let stat = fs.statSync(name);
-                if (stat.isFile()) {
-                    filesList.push(name);
-                } else if (stat.isDirectory()) {
-                    // Force glob search for directories
-                    cleanAndPush(name, glob.sync(name.replace(/\/+$/gi, '')+'/**', { nodir: true }));
-                } else {
-                    throw 'Could not find a way to handle source "'+name+'".';
-                }
-            }
-        });
-    };
-
-    forEach(config.images, pushFromDirectory);
-    forEach(config.copy, pushFromDirectory);
+    forEach(config.images, GulpfileHelpers.pushFromDirectory);
+    forEach(config.copy, GulpfileHelpers.pushFromDirectory);
 
     console.info('Check files that are not dumped according to config.');
 
@@ -729,6 +799,7 @@ gulp.task('default', function(done){
     console.info("");
     console.info("Commands:");
     console.info("    copy         Copy the sources in the `config.copy` into a destination folder.");
+    console.info("    clean        Cleans all configured destination files from expected output files.");
     console.info("    images       Dumps the sources in the `config.images` parameter from image files.");
     console.info("    less         Dumps the sources in the `config.less` parameter from LESS files.");
     console.info("    sass         Dumps the sources in the `config.sass` parameter from SCSS files.");
