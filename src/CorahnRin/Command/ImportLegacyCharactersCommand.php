@@ -15,13 +15,14 @@ use CorahnRin\Entity\CharacterProperties\CharWays;
 use CorahnRin\Entity\Characters;
 use CorahnRin\Entity\Games;
 use CorahnRin\Entity\Ways;
+use CorahnRin\Repository\WaysRepository;
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Agate\Entity\User;
@@ -29,55 +30,48 @@ use Agate\Repository\UserRepository;
 
 class ImportLegacyCharactersCommand extends Command
 {
-    protected static $defaultName = 'corahnrin:legacy_import:characters';
+    protected static $defaultName = 'corahnrin:legacy-import:characters';
 
     private $managerRegistry;
     private $userManager;
 
-    /**
-     * @var ObjectManager
-     */
+    /** @var ObjectManager */
     private $em;
 
-    /**
-     * @var Connection
-     */
-    private $legacyCnx;
+    /** @var Connection */
+    private $legacyConnection;
 
-    /**
-     * @var SymfonyStyle
-     */
+    /** @var SymfonyStyle */
     private $io;
 
-    /**
-     * @var InputInterface
-     */
+    /** @var InputInterface */
     private $input;
 
-    /**
-     * @var User[]
-     */
+    /** @var User[] */
     private $users = [];
 
-    /**
-     * @var EntityRepository[]
-     */
+    /** @var EntityRepository[] */
     private $repositories = [];
 
-    /**
-     * @var Games[]
-     */
+    /** @var Games[] */
     private $games = [];
-    /**
-     * @var Ways[]
-     */
-    private $ways;
 
-    public function __construct(ManagerRegistry $managerRegistry, UserRepository $userManager)
-    {
+    /** @var Ways[] */
+    private $ways;
+    /**
+     * @var WaysRepository
+     */
+    private $waysRepository;
+
+    public function __construct(
+        ManagerRegistry $managerRegistry,
+        UserRepository $userManager,
+        WaysRepository $waysRepository
+    ) {
+        parent::__construct(static::$defaultName);
         $this->managerRegistry = $managerRegistry;
         $this->userManager = $userManager;
-        parent::__construct(static::$defaultName);
+        $this->waysRepository = $waysRepository;
     }
 
 
@@ -87,7 +81,6 @@ class ImportLegacyCharactersCommand extends Command
     protected function configure()
     {
         $this
-            ->addOption('strategy-existing', 's', InputOption::VALUE_OPTIONAL, '')
             ->setDescription('Create characters from the old database and insert them here.')
         ;
     }
@@ -101,7 +94,7 @@ class ImportLegacyCharactersCommand extends Command
         $this->input       = $input;
         $this->io          = new SymfonyStyle($input, $output);
         $this->em          = $this->managerRegistry->getManager();
-        $this->legacyCnx   = $this->managerRegistry->getConnection('legacy');
+        $this->legacyConnection   = $this->managerRegistry->getConnection('legacy');
 
         $sql = <<<'SQL'
 
@@ -166,18 +159,18 @@ class ImportLegacyCharactersCommand extends Command
 
 SQL;
 
-        $characters = $this->legacyCnx->query($sql)->fetchAll();
+        $characters = $this->legacyConnection->query($sql)->fetchAll();
 
         foreach ($characters as $arrayCharacter) {
             $character     = new Characters();
             $jsonCharacter = json_decode($arrayCharacter['char_content'], true);
 
             $character
-                ->setName($arrayCharacter['char_name'])
                 ->setSex($arrayCharacter['sexe'] === 'Femme' ? Characters::FEMALE : Characters::MALE)
                 ->setDescription($arrayCharacter['details']['description'])
                 ->setOrientation($arrayCharacter['orientation']['name'])
                 ->setAge($arrayCharacter['age'])
+                ->setName($arrayCharacter['char_name'])
             ;
 
             $this
@@ -193,44 +186,51 @@ SQL;
                 ->processMentalData($character, $jsonCharacter)
             ;
 
-            // FIXME
-            throw new \RuntimeException('Fix me');
+            dump($character);
+
+            if (!$this->io->confirm('Continue?', false)) {
+                // FIXME
+                break;
+            }
         }
     }
 
-    /**
-     * @param string|null $email
-     * @param string|null $username
-     *
-     * @return User|null
-     */
-    private function getUser($email = null, $username = null)
+    private function getUser(?string $email, ?string $username): ?User
     {
         $user = null;
 
         $userByUsername = $username ? $this->userManager->findOneBy(['username' => $username]) : null;
         $userByEmail    = $email ? $this->userManager->findOneBy(['email' => $email]) : null;
 
-        if ($userByEmail && $userByUsername && $userByEmail->getId() !== $userByUsername->getId()) {
-            if ($this->input->isInteractive()) {
-                $whichUser = $this->io->choice(
-                    'There are two different users with username & email:'.PHP_EOL.
-                    $userByEmail->getId().' / '.$userByEmail->getUsername().' / '.$userByEmail->getEmail().PHP_EOL.
-                    $userByUsername->getId().' / '.$userByUsername->getUsername().' / '.$userByUsername->getEmail(),
-                    [$userByEmail->getId(), $userByUsername->getId()]
+        if (
+            $userByEmail && $userByUsername
+            && $userByEmail->getId() !== $userByUsername->getId()
+        ) {
+            // The case where a username exists in the database with two different accounts with the old credentials.
+            if (!$this->input->isInteractive()) {
+                throw new \RuntimeException(
+                    "Passed conflicting usernames:\n".
+                    $userByEmail->getId().' / '.$userByEmail->getUsername().' / '.$userByEmail->getEmail()."\n".
+                    $userByUsername->getId().' / '.$userByUsername->getUsername().' / '.$userByUsername->getEmail()
                 );
-
-                // FIXME
-                throw new \RuntimeException('Fix me');
             }
-            $this->io->warning([
-                'Passed conflicting usernames:',
-                $userByEmail->getId().' / '.$userByEmail->getUsername().' / '.$userByEmail->getEmail().PHP_EOL,
+
+            $whichUser = $this->io->choice(
+                'There are two different users with username & email:'.PHP_EOL.
+                $userByEmail->getId().' / '.$userByEmail->getUsername().' / '.$userByEmail->getEmail().PHP_EOL.
                 $userByUsername->getId().' / '.$userByUsername->getUsername().' / '.$userByUsername->getEmail(),
-            ]);
-        } elseif ($userByEmail || $userByUsername) {
+                [
+                    $userByEmail->getId(),
+                    $userByUsername->getId(),
+                ]
+            );
+
+            return $whichUser;
+        }
+
+        if ($userByEmail || $userByUsername) {
             $user = $userByEmail ?: $userByUsername;
-        } else {
+        } elseif ($username && $email) {
             $user = new User();
 
             $user
@@ -245,12 +245,7 @@ SQL;
         return $user;
     }
 
-    /**
-     * @param string $repoName
-     *
-     * @return EntityRepository
-     */
-    private function getRepository($repoName)
+    private function getRepository(string $repoName): ObjectRepository
     {
         if (array_key_exists($repoName, $this->repositories)) {
             return $this->repositories[$repoName];
@@ -259,13 +254,7 @@ SQL;
         return $this->repositories[$repoName] = $this->em->getRepository($repoName);
     }
 
-    /**
-     * @param Characters $character
-     * @param array[]    $arrayCharacter
-     *
-     * @return $this
-     */
-    private function processUser(Characters $character, array $arrayCharacter)
+    private function processUser(Characters $character, array $arrayCharacter): self
     {
         $user            = null;
         $legacyUserEmail = $arrayCharacter['user_email'];
@@ -292,7 +281,7 @@ SQL;
      *
      * @return $this
      */
-    private function processGame(Characters $character, array $arrayCharacter)
+    private function processGame(Characters $character, array $arrayCharacter): self
     {
         $game         = null;
         $legacyGameId = $arrayCharacter['game_id'];
@@ -302,7 +291,7 @@ SQL;
         }
 
         if (null === $game && $arrayCharacter['game_id']) {
-            $game = $this->getRepository(\CorahnRin\Entity\Games::class)->find($arrayCharacter['game_id']);
+            $game = $this->getRepository(Games::class)->find($arrayCharacter['game_id']);
 
             if (!$game) {
                 $game = new Games();
@@ -310,9 +299,7 @@ SQL;
                 $user = $this->getUser($arrayCharacter['gm_user_email'], $arrayCharacter['gm_user_name']);
 
                 if (!$user) {
-                    $this->io->warning('Passed insertion for game "'.$arrayCharacter['game_name'].'", because no user was found.');
-
-                    return $this;
+                    throw new \RuntimeException('Error when importing game "'.$arrayCharacter['game_name'].'", because no user was found.');
                 }
 
                 $game
@@ -333,15 +320,9 @@ SQL;
         return $this;
     }
 
-    /**
-     * @param Characters $character
-     * @param array      $jsonCharacter
-     *
-     * @return $this
-     */
-    private function processWays(Characters $character, array $jsonCharacter)
+    private function processWays(Characters $character, array $jsonCharacter): self
     {
-        $ways = $this->ways ?: ($this->ways = $this->getRepository(\CorahnRin\Entity\Ways::class)->findAll(true));
+        $ways = $this->ways ?: ($this->ways = $this->waysRepository->findAll('id'));
 
         foreach ($jsonCharacter['voies'] as $id => $voie) {
             if (array_key_exists($id, $ways)) {
@@ -351,24 +332,13 @@ SQL;
                 throw new \RuntimeException('Cannot find way id "'.$id.'".');
             }
 
-            $charWay = new CharWays();
-            $charWay
-                ->setWay($way)
-                ->setCharacter($character)
-                ->setScore($voie['val'])
-            ;
+            new CharWays($character, $way, $voie['val']);
         }
 
         return $this;
     }
 
-    /**
-     * @param Characters $character
-     * @param array      $jsonCharacter
-     *
-     * @return $this
-     */
-    private function processJob(Characters $character, $jsonCharacter)
+    private function processJob(Characters $character, array $jsonCharacter): self
     {
         // TODO
         $this->io->block('To do '.__METHOD__, null, 'info');
@@ -376,13 +346,7 @@ SQL;
         return $this;
     }
 
-    /**
-     * @param Characters $character
-     * @param array      $jsonCharacter
-     *
-     * @return $this
-     */
-    private function processDomains(Characters $character, $jsonCharacter)
+    private function processDomains(Characters $character, array $jsonCharacter): self
     {
         // TODO
         $this->io->block('To do '.__METHOD__, null, 'info');
@@ -390,13 +354,7 @@ SQL;
         return $this;
     }
 
-    /**
-     * @param Characters $character
-     * @param array      $jsonCharacter
-     *
-     * @return $this
-     */
-    private function processBirthplace(Characters $character, $jsonCharacter)
+    private function processBirthplace(Characters $character, array $jsonCharacter): self
     {
         // TODO
         $this->io->block('To do '.__METHOD__, null, 'info');
@@ -404,13 +362,7 @@ SQL;
         return $this;
     }
 
-    /**
-     * @param Characters $character
-     * @param array      $jsonCharacter
-     *
-     * @return $this
-     */
-    private function processTraits(Characters $character, $jsonCharacter)
+    private function processTraits(Characters $character, array $jsonCharacter): self
     {
         // TODO
         $this->io->block('To do '.__METHOD__, null, 'info');
@@ -418,13 +370,7 @@ SQL;
         return $this;
     }
 
-    /**
-     * @param Characters $character
-     * @param array      $jsonCharacter
-     *
-     * @return $this
-     */
-    private function processSetbacks(Characters $character, $jsonCharacter)
+    private function processSetbacks(Characters $character, array $jsonCharacter): self
     {
         // TODO
         $this->io->block('To do '.__METHOD__, null, 'info');
@@ -432,13 +378,7 @@ SQL;
         return $this;
     }
 
-    /**
-     * @param Characters $character
-     * @param array      $jsonCharacter
-     *
-     * @return $this
-     */
-    private function processAdvantages(Characters $character, $jsonCharacter)
+    private function processAdvantages(Characters $character, array $jsonCharacter): self
     {
         // TODO
         $this->io->block('To do '.__METHOD__, null, 'info');
@@ -446,13 +386,7 @@ SQL;
         return $this;
     }
 
-    /**
-     * @param Characters $character
-     * @param array      $jsonCharacter
-     *
-     * @return $this
-     */
-    private function processMentalData(Characters $character, $jsonCharacter)
+    private function processMentalData(Characters $character, array $jsonCharacter): self
     {
         // TODO
         $this->io->block('To do '.__METHOD__, null, 'info');
