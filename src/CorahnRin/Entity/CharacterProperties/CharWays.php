@@ -64,6 +64,10 @@ class CharWays
     {
         $this->character = $character;
 
+        if (!$character->hasWay($this)) {
+            $character->addWay($this);
+        }
+
         return $this;
     }
 
