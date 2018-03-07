@@ -15,7 +15,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use EsterenMaps\Cache\EntityToClearInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -23,13 +22,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Table(name="maps")
  * @ORM\Entity(repositoryClass="EsterenMaps\Repository\MapsRepository")
- * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  * @Gedmo\Uploadable(allowOverwrite=true, filenameGenerator="SHA1")
  */
 class Maps implements EntityToClearInterface
 {
     use TimestampableEntity;
-    use SoftDeleteableEntity;
 
     /**
      * @var int

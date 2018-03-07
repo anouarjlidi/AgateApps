@@ -12,21 +12,17 @@
 namespace EsterenMaps\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
  * Foes.
  *
  * @ORM\Table(name="maps_foes")
- * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  * @ORM\Entity()
  */
 class Foes
 {
     use TimestampableEntity;
-    use SoftDeleteableEntity;
 
     /**
      * @var int

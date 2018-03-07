@@ -14,8 +14,6 @@ namespace EsterenMaps\Entity;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 use EsterenMaps\Cache\EntityToClearInterface;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
@@ -24,12 +22,10 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
  * @ORM\Table(name="maps_routes")
  * @ORM\Entity(repositoryClass="EsterenMaps\Repository\RoutesRepository")
  * @ORM\HasLifecycleCallbacks()
- * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
 class Routes implements EntityToClearInterface
 {
     use TimestampableEntity;
-    use SoftDeleteableEntity;
 
     /**
      * @var int

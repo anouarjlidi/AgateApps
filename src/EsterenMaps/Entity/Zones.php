@@ -13,8 +13,6 @@ namespace EsterenMaps\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use EsterenMaps\Cache\EntityToClearInterface;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
@@ -22,12 +20,10 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
  *
  * @ORM\Table(name="maps_zones")
  * @ORM\Entity(repositoryClass="EsterenMaps\Repository\ZonesRepository")
- * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
 class Zones implements EntityToClearInterface
 {
     use TimestampableEntity;
-    use SoftDeleteableEntity;
 
     /**
      * @var int

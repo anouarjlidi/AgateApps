@@ -14,21 +14,17 @@ namespace EsterenMaps\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use EsterenMaps\Cache\EntityToClearInterface;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
  * RoutesTypes.
  *
  * @ORM\Table(name="maps_routes_types")
- * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  * @ORM\Entity(repositoryClass="EsterenMaps\Repository\RoutesTypesRepository")
  */
 class RoutesTypes implements EntityToClearInterface
 {
     use TimestampableEntity;
-    use SoftDeleteableEntity;
 
     /**
      * @var int
