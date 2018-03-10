@@ -1,4 +1,8 @@
 {% spaceless %}
     <h3>{{ 'Route' | trans }}</h3>
     {{ form(form) }}
+    <button class="btn btn-small" data-save type="button">
+        {{ 'action.save'|trans }}
+        <span class="progress"><span class="indeterminate"></span></span>
+    </button>
 {% endspaceless %}

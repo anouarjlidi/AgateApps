@@ -34,7 +34,6 @@
     };
 
     L.Polyline.prototype.disableEditMode = function() {
-        this._updateEM();
         this.editing.disable();
     };
 
@@ -51,6 +50,7 @@
     L.Polyline.prototype.updateDetails = function() {
         var latlngs, route_type,
             esterenRoute = this._esterenRoute,
+            id = esterenRoute.id,
             esterenMarkerStart = esterenRoute.marker_start,
             esterenMarkerEnd = esterenRoute.marker_end,
             markerStart = this._markerStart ? this._markerStart : (esterenMarkerStart ? this._esterenMap._markers[esterenMarkerStart.id] : null),
@@ -66,15 +66,16 @@
 
         // Met à jour l'attribut "data" pour les filtres
         $(this._path).attr('data-leaflet-object-type', 'routeType'+esterenRoute.route_type);
+        $(this._path).attr('id', 'polyline_'+id+'_name');
 
         latlngs = this.getLatLngs();
         if (markerStart) {
             latlngs[0] = L.latLng(markerStart.getLatLng());
-            markerStart._esterenRoutesStart[esterenRoute.id] = this;
+            markerStart._esterenRoutesStart[id] = this;
         }
         if (markerEnd) {
             latlngs[this._latlngs.length-1] = L.latLng(markerEnd.getLatLng());
-            markerEnd._esterenRoutesEnd[esterenRoute.id] = this;
+            markerEnd._esterenRoutesEnd[id] = this;
         }
 
         this.setLatLngs(latlngs);
@@ -120,6 +121,13 @@
             callbackMessageType = 'success',
             id = esterenRoute.id || null
         ;
+
+        if (this.launched) {
+            return;
+        }
+
+        d.querySelector('#esterenmap_sidebar button[data-save]').classList.add('disabled');
+        d.querySelector('#esterenmap_sidebar button[data-save] .progress').classList.add('active');
 
         if (esterenRoute && this._map && !this.launched && esterenRoute.marker_start && esterenRoute.marker_end) {
             this.launched = true;
@@ -175,12 +183,14 @@
                 },
                 callbackComplete: function(){
                     _this.launched = false;
+                    d.querySelector('#esterenmap_sidebar button[data-save]').classList.remove('disabled');
+                    d.querySelector('#esterenmap_sidebar button[data-save] .progress').classList.remove('active');
                     if (callbackMessage) {
                         _this._esterenMap.message(callbackMessage, callbackMessageType);
                     }
                 }
             });
-        } else if (!this.launched && esterenRoute.marker_start && esterenRoute.marker_end) {
+        } else if (esterenRoute.marker_start && esterenRoute.marker_end) {
             console.error('Tried to update an empty route.');
         }
     };
@@ -257,7 +267,12 @@
                 return;
             }
 
-            polyline.editing.enable();
+            try {
+                // FIXME
+                polyline.editing.enable();
+            } catch (e) {
+                console.error(e);
+            }
             polyline.showSidebar();
 
             map._editedPolyline = polyline;
@@ -282,8 +297,6 @@
                 .val(polyline._esterenRoute.name)
                 .off('keyup').on('keyup', function(){
                     map._polylines[id]._esterenRoute.name = this.value;
-                    if (this._timeout) { clearTimeout(this._timeout); }
-                    this._timeout = setTimeout(function(){ map._polylines[id]._updateEM(); }, 1000);
                     return false;
                 })
             ;
@@ -291,8 +304,6 @@
                 .val(polyline._esterenRoute.forced_distance)
                 .off('keyup').on('keyup', function(){
                     map._polylines[id]._esterenRoute.forced_distance = this.value;
-                    if (this._timeout) { clearTimeout(this._timeout); }
-                    this._timeout = setTimeout(function(){ map._polylines[id]._updateEM(); }, 1000);
                     return false;
                 })
             ;
@@ -301,17 +312,13 @@
                 .prop('checked', !!polyline._esterenRoute.guarded)
                 .off('change').on('change', function(){
                     map._polylines[id]._esterenRoute.guarded = $(this).is(':checked');
-                    if (this._timeout) { clearTimeout(this._timeout); }
-                    this._timeout = setTimeout(function(){ map._polylines[id]._updateEM(); }, 1000);
                     return false;
                 })
             ;
             $('#api_route_type')
                 .val(polyline._esterenRoute.route_type ? polyline._esterenRoute.route_type : '')
                 .off('change').on('change', function(){
-                    map._polylines[id]._esterenRoute.route_type = map.reference('routesTypes', this.value);
-                    if (this._timeout) { clearTimeout(this._timeout); }
-                    this._timeout = setTimeout(function(){ map._polylines[id]._updateEM(); }, 1000);
+                    map._polylines[id]._esterenRoute.route_type = map.reference('routes_types', this.value);
                     return false;
                 })
             ;
@@ -319,8 +326,6 @@
                 .val(polyline._esterenRoute.faction ? polyline._esterenRoute.faction.id : '')
                 .off('change').on('change', function(){
                     map._polylines[id]._esterenRoute.faction = map.reference('factions', this.value);
-                    if (this._timeout) { clearTimeout(this._timeout); }
-                    this._timeout = setTimeout(function(){ map._polylines[id]._updateEM(); }, 1000);
                     return false;
                 })
             ;
@@ -328,7 +333,6 @@
                 .val(polyline._esterenRoute.marker_start ? polyline._esterenRoute.marker_start.id : '')
                 .off('change').on('change', function(){
                     var marker, latlngs;
-                    if (this._timeout) { clearTimeout(this._timeout); }
                     marker = markers[this.value] || null;
                     latlngs = polyline._latlngs;
                     if (marker) {
@@ -337,7 +341,6 @@
                     polyline.setLatLngs(latlngs);
                     polyline._esterenRoute.coordinates = JSON.stringify(latlngs);
                     polyline._esterenRoute.marker_start = marker._esterenMarker;
-                    this._timeout = setTimeout(function(){ map._polylines[id]._updateEM(); }, 1000);
                     return false;
                 })
             ;
@@ -345,7 +348,6 @@
                 .val(polyline._esterenRoute.marker_end ? polyline._esterenRoute.marker_end.id : '')
                 .off('change').on('change', function(){
                     var marker, latlngs;
-                    if (this._timeout) { clearTimeout(this._timeout); }
                     marker = markers[this.value] || null;
                     latlngs = polyline._latlngs;
                     if (marker) {
@@ -354,13 +356,17 @@
                     polyline.setLatLngs(latlngs);
                     polyline._esterenRoute.coordinates = JSON.stringify(latlngs);
                     polyline._esterenRoute.marker_end = marker._esterenMarker;
-                    this._timeout = setTimeout(function(){ map._polylines[id]._updateEM(); }, 1000);
                     return false;
                 })
             ;
+            d.querySelector('#esterenmap_sidebar button[data-save]').addEventListener('click', function(){
+                map._polylines[id]._updateEM();
+            });
 
             (e.preventDefault ? e : e.originalEvent).preventDefault();
             (e.stopPropagation ? e : e.originalEvent).stopPropagation();
+
+            d.getElementById('api_route_name').focus();
         }
     };
 
@@ -468,7 +474,7 @@
         } else {
             // Ici on tente de créer une nouvelle zone
             polyline._esterenRoute = this.esterenRoutePrototype;
-            polyline._esterenRoute.route_type = this.reference('routesTypes', 1);
+            polyline._esterenRoute.route_type = 1;
         }
 
         // Création d'une popup
