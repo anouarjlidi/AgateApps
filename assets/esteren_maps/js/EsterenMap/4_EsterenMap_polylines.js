@@ -267,12 +267,7 @@
                 return;
             }
 
-            try {
-                // FIXME
-                polyline.editing.enable();
-            } catch (e) {
-                console.error(e);
-            }
+            polyline.editing.enable();
             polyline.showSidebar();
 
             map._editedPolyline = polyline;
@@ -466,7 +461,13 @@
 
         leafletOptions.className = 'drawn_polyline_'+id;
 
-        polyline = L.polyline(latLng, leafletOptions);
+        if (customUserOptions.polyline) {
+            // Don't recreate an existing polyline
+            polyline = customUserOptions.polyline;
+            polyline.initialize(latLng, leafletOptions);
+        } else {
+            polyline = L.polyline(latLng, leafletOptions);
+        }
 
         polyline._esterenMap = this;
         if (customUserOptions.esterenRoute) {

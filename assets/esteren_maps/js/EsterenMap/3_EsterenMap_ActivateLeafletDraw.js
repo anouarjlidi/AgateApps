@@ -55,6 +55,8 @@
                 editOptions
             ;
 
+            console.info('draw:created', event);
+
             if (type === 'marker') {
                 popupContent = mapOptions.LeafletPopupMarkerBaseContent;
                 options = mapOptions.CustomMarkerBaseOptionsEditMode;
@@ -76,6 +78,9 @@
                 options = mapOptions.CustomPolylineBaseOptionsEditMode;
                 editOptions = mapOptions.LeafletPolylineBaseOptionsEditMode;
 
+                options.polyline = event.layer;
+                editOptions.editing = {}; // Strange that we must do this, else editing doesn't work...
+
                 latlng = layer._latlngs;
 
                 _this.addPolyline(latlng,
@@ -93,8 +98,6 @@
                     options
                 );
             }
-
-            return true;
         });
 
         this._map.on('draw:edited', function(event) {
