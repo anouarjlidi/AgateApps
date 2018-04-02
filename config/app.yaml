@@ -63,7 +63,7 @@ services:
         resource: '../src/Admin/{Controller}'
 
     Agate\:
-        resource: '../src/Agate/{Controller,ConnectApi,EventListener,Form,Mailer,Provider,Repository,Security,Twig,Util}'
+        resource: '../src/Agate/{Controller,ConnectApi,EventListener,Form,Mailer,Repository,Security,Twig,Util}'
 
     CorahnRin\:
         resource: '../src/CorahnRin/{Controller,Repository,GeneratorTools,SheetsManagers}'
