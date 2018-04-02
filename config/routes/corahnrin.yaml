@@ -1,9 +1,0 @@
-corahnrin_characters:
-    resource: '../../src/CorahnRin/Controller/'
-    type:     annotation
-    host:     '%esteren_domains.corahnrin%'
-
-corahnrin_steps:
-    resource: '@PierstovalCharacterManagerBundle/Resources/config/routing.xml'
-    prefix:   /character
-    host:     '%esteren_domains.corahnrin%'

@@ -2,6 +2,7 @@
 
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\Config\Loader\LoaderInterface;
+use Symfony\Component\Config\Resource\FileResource;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 use Symfony\Component\Routing\RouteCollectionBuilder;
@@ -34,37 +35,28 @@ class Kernel extends BaseKernel
 
     protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader)
     {
+        $container->addResource(new FileResource($this->getProjectDir().'/config/bundles.php'));
+        // Feel free to remove the "container.autowiring.strict_mode" parameter
+        // if you are using symfony/dependency-injection 4.0+ as it's the default behavior
         $container->setParameter('container.autowiring.strict_mode', true);
         $container->setParameter('container.dumper.inline_class_loader', true);
 
         $confDir = $this->getProjectDir().'/config';
 
-        // Load packages files.
-        $loader->load($confDir.'/packages/*'.self::CONFIG_EXTS, 'glob');
-
-        // Load packages environment-specific files.
-        if (is_dir($confDir.'/packages/'.$this->environment)) {
-            $loader->load($confDir.'/packages/'.$this->environment.'/**/*'.self::CONFIG_EXTS, 'glob');
-        }
-
-        $loader->load($confDir.'/app'.self::CONFIG_EXTS, 'glob');
+        $loader->load($confDir.'/{packages}/*'.self::CONFIG_EXTS, 'glob');
+        $loader->load($confDir.'/{packages}/'.$this->environment.'/**/*'.self::CONFIG_EXTS, 'glob');
+        $loader->load($confDir.'/{services}'.self::CONFIG_EXTS, 'glob');
+        $loader->load($confDir.'/{services}_'.$this->environment.self::CONFIG_EXTS, 'glob');
     }
 
     protected function configureRoutes(RouteCollectionBuilder $routes)
     {
-        $routesDir = $this->getProjectDir().'/config/routes';
+        $confDir = $this->getProjectDir().'/config';
 
-        $env = $this->environment;
+        $routes->import($confDir.'/{routes}/*'.self::CONFIG_EXTS, '/', 'glob');
+        $routes->import($confDir.'/{routes}/'.$this->environment.'/**/*'.self::CONFIG_EXTS, '/', 'glob');
+        $routes->import($confDir.'/{routes}'.self::CONFIG_EXTS, '/', 'glob');
 
-        $routeFile = "$routesDir/_$env.yaml";
-
-        // Load environment-specific routes that match "_{env}.{ext}"
-        // The advantage is that we can easily define routes in the order we want.
-        // And we want order...
-        if (file_exists($routeFile)) {
-            $routes->import($routeFile, null, 'yaml');
-        } else {
-            throw new \RuntimeException(sprintf('Route file for environment %s does not exist.', $env));
-        }
+        $routes->setSchemes($this->environment === 'prod' ? 'https' : 'http');
     }
 }

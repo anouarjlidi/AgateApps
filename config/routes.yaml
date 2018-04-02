@@ -3,8 +3,8 @@
 #
 root:
     path: /{locale}
+    controller: FrameworkBundle:Redirect:urlRedirect
     defaults:
-        _controller: FrameworkBundle:Redirect:urlRedirect
         path: '/%locale%/'
         permanent: true
         locale: '%locale%'
@@ -15,8 +15,25 @@ root:
 #
 # User
 #
-user:
-    resource: 'user.yaml'
+crowdfunding:
+    resource: '../src/Agate/Controller/Crowdfunding/'
+    type: annotation
+
+user_login_check:
+    path: /{_locale}/login_check
+    methods: ['POST']
+    defaults: { locale: '%locale%' }
+    requirements: { _locale: '^(?:%locales_regex%)$' }
+
+user_logout:
+    path: /{_locale}/logout
+    methods: ['GET', 'POST']
+    defaults: { locale: '%locale%' }
+    requirements: { _locale: '^(?:%locales_regex%)$' }
+
+user_security:
+    resource: '../src/Agate/Controller/User/'
+    type: annotation
     prefix: '/{_locale}/'
     defaults: { locale: '%locale%' }
     requirements: { _locale: '^(?:%locales_regex%)$' }
@@ -24,9 +41,18 @@ user:
 #
 # CorahnRin
 #
-corahnrin:
-    resource: 'corahnrin.yaml'
+corahnrin_characters:
+    resource: '../src/CorahnRin/Controller/'
+    type:     annotation
+    host:     '%esteren_domains.corahnrin%'
     prefix: '/{_locale}/'
+    defaults: { locale: '%locale%' }
+    requirements: { _locale: '^(?:%locales_regex%)$' }
+
+corahnrin_steps:
+    resource: '@PierstovalCharacterManagerBundle/Resources/config/routing.xml'
+    prefix:   /{_locale}/character
+    host:     '%esteren_domains.corahnrin%'
     defaults: { locale: '%locale%' }
     requirements: { _locale: '^(?:%locales_regex%)$' }
 
@@ -35,7 +61,7 @@ corahnrin:
 # Some controllers use a different domain name, check the @Route annotation on them to be sure.
 #
 esterenmaps:
-    resource: '../../src/EsterenMaps/Controller/'
+    resource: '../src/EsterenMaps/Controller/'
     type:     annotation
     prefix: '/{_locale}/'
     defaults: { locale: '%locale%' }
@@ -45,7 +71,7 @@ esterenmaps:
 # Agate portal
 #
 agate:
-    resource: '../../src/Agate/Controller/'
+    resource: '../src/Agate/Controller/'
     type: annotation
     prefix: '/{_locale}/'
     defaults: { locale: '%locale%' }
@@ -55,7 +81,7 @@ agate:
 # Esteren portal
 #
 esteren_portal:
-    resource: '../../src/Esteren/Controller/'
+    resource: '../src/Esteren/Controller/'
     type: annotation
     host: '%esteren_domains.portal%'
     prefix: '/{_locale}/'
@@ -66,7 +92,7 @@ esteren_portal:
 # Admin
 #
 admin:
-    resource: 'easy_admin.yaml'
+    resource: 'routes/easy_admin.yaml'
     prefix: '/{_locale}/'
     defaults: { locale: '%locale%' }
     requirements: { _locale: '^(?:%locales_regex%)$' }

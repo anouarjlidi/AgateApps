@@ -58,6 +58,7 @@ services:
             $oneupFlysystem:  '@oneup_flysystem.assets_fs_filesystem'
             $awsRegion:       '%aws_region%'
             $awsBucket:       '%aws_bucket%'
+            $tileSize:        '%esterenmaps.tile_size%'
 
     Admin\:
         resource: '../src/Admin/{Controller}'
@@ -66,7 +67,7 @@ services:
         resource: '../src/Agate/{Controller,ConnectApi,EventListener,Form,Mailer,Repository,Security,Twig,Util}'
 
     CorahnRin\:
-        resource: '../src/CorahnRin/{Controller,Repository,GeneratorTools,SheetsManagers}'
+        resource: '../src/CorahnRin/{Controller,Repository,GeneratorTools,SheetsManagers,Step}'
 
     Esteren\:
         resource: '../src/Esteren/{Twig}'

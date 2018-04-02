@@ -120,13 +120,3 @@ pierstoval_character_manager:
 
                 20_finish:
                     action: CorahnRin\Step\Step20Finish
-
-services:
-    _defaults:
-        autowire: true
-        public: false
-        bind:
-            $tileSize: '%esterenmaps.tile_size%'
-
-    CorahnRin\Step\:
-        resource: ../../src/CorahnRin/Step
