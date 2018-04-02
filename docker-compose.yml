@@ -11,15 +11,17 @@ services:
         links:
             - db
         environment:
+            - APP_ENV=dev
             - AGATE_DOMAIN=studio-agate.piers
             - ESTEREN_DOMAIN=esteren.piers
             - VERMINE_DOMAIN=vermine2047.piers
+            - DATABASE_URL="mysql://esteren_portal:esteren_portal@esteren_portal/esteren_portal?serverVersion=10.1"
 
     node:
         image: node:8
         volumes_from:
             - php
-        command: 'yarn --cwd /var/www/html run gulp watch'
+        command: 'npm --cwd /var/www/html run gulp watch'
 
     nginx:
         build: ./docker/nginx/
