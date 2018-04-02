@@ -332,8 +332,7 @@ GulpfileHelpers.objectForEach(config.sass, checkCallback);
 GulpfileHelpers.objectForEach(config.less, checkCallback);
 
 if (erroredFiles.length) {
-    process.stderr.write("\nMissing input files: \n"+erroredFiles.join("\n")+"\n");
-    process.exit(1);
+    throw "Missing input files: \n"+erroredFiles.join("\n")+"\n";
 }
 
 /*************** Gulp tasks ***************/
@@ -723,15 +722,9 @@ gulp.task('clean', function(done) {
             invalid.forEach((file) => {
                 process.stdout.write(" > "+file+"\n");
             });
-
-            done();
-            process.exit(1);
-
-            return;
         }
 
         done();
-        process.exit(0);
     }
 });
 
@@ -802,19 +795,15 @@ gulp.task('test', gulp.series('clean', 'dump', function(done) {
 
     function finish() {
         if (invalid.length) {
-            process.stdout.write("These files seem not to have been dumped by Gulp flow:\n");
+            let msg = '';
+            msg += "These files seem not to have been dumped by Gulp flow:\n";
             invalid.forEach((file) => {
-                process.stdout.write(" > "+file+"\n");
+                msg += " > "+file+"\n";
             });
-
-            done();
-            process.exit(1);
-
-            return;
+            throw msg;
         }
 
         done();
-        process.exit(0);
     }
 }));
 
