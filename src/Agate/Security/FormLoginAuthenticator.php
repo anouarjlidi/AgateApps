@@ -124,6 +124,10 @@ final class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
             throw new AuthenticationException('Email not confirmed.');
         }
 
+        if (!$user) {
+            throw new BadCredentialsException('Bad credentials.');
+        }
+
         return $user;
     }
 
