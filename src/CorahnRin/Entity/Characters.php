@@ -31,7 +31,6 @@ use Agate\Entity\User;
 /**
  * Characters.
  *
- * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity(repositoryClass="CorahnRin\Repository\CharactersRepository")
  * @ORM\Table(name="characters", uniqueConstraints={@ORM\UniqueConstraint(name="idcUnique", columns={"name_slug", "user_id"})})
  */

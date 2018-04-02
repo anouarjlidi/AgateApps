@@ -100,7 +100,6 @@ final class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
      */
     public function getCredentials(Request $request)
     {
-
         $usernameOrEmail = $request->request->get(self::USERNAME_OR_EMAIL_FORM_FIELD);
         $request->getSession()->set(Security::LAST_USERNAME, $usernameOrEmail);
         $password = $request->request->get(self::PASSWORD_FORM_FIELD);
@@ -123,6 +122,10 @@ final class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
 
         if ($user && !$user->isEmailConfirmed()) {
             throw new AuthenticationException('Email not confirmed.');
+        }
+
+        if (!$user) {
+            throw new BadCredentialsException('Bad credentials.');
         }
 
         return $user;
@@ -152,16 +155,13 @@ final class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
 
         $targetPath = $defaultUrl;
 
-        // If the user hit a secure page and start() was called, this was
-        // the URL they were on, and probably where you want to redirect to
-        if ($request->hasSession()) {
-            $targetPath = $this->getTargetPath($request->getSession(), $providerKey) ?: $defaultUrl;
+        if ($request->hasSession() && $session = $request->getSession()) {
+            $targetPath = $this->getTargetPath($session, $providerKey) ?: $defaultUrl;
+
+            // Make sure username is not stored for next login
+            $session->remove(Security::LAST_USERNAME);
+            $session->set('connect_other_domains', true);
         }
-
-        // Make sure username is not stored for next login
-        $request->getSession()->remove(Security::LAST_USERNAME);
-
-        $request->getSession()->set('connect_other_domains', true);
 
         return new RedirectResponse($targetPath);
     }

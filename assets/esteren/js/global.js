@@ -1,38 +1,48 @@
-(function($, d){$(function(){
+window._enableJsComponents = null;
 
-    // Automatically activate button collapse "side" navigation
-    if (d.querySelector('.button-collapse')) {
-        $('.button-collapse').sideNav();
-    }
+(function($, d){
+    "use strict";
 
-    // Automatically add parallax when available
-    if (d.querySelector('.parallax')) {
-        $('.parallax').parallax();
-    }
+    function enableJsComponents(context) {
+        // Automatically activate button collapse "side" navigation
+        if (context.querySelector('.button-collapse')) {
+            $('.button-collapse').sideNav();
+        }
 
-    // Automatically activate tooltips
-    if (d.querySelector('.tooltipped')) {
-        $('.tooltipped').tooltip();
-    }
+        // Automatically add parallax when available
+        if (context.querySelector('.parallax')) {
+            $('.parallax').parallax();
+        }
 
-    // Automatically activate modals
-    if (d.querySelector('.modal')) {
-        $('.modal').modal();
-    }
+        // Automatically activate tooltips
+        if (context.querySelector('.tooltipped')) {
+            $('.tooltipped').tooltip();
+        }
 
-    // Automatically activate materialize select tags
-    if (d.querySelector('select')) {
-        $('select').material_select();
-    }
+        // Automatically activate modals
+        if (context.querySelector('.modal')) {
+            $('.modal').modal();
+        }
 
-    // Automatically activate dropdowns if there are some
-    if (d.querySelector('.dropdown-button')) {
-        $('.dropdown-button').dropdown();
+        // Automatically activate materialize select tags
+        if (context.querySelector('select')) {
+            $('select').material_select();
+        }
+
+        if (context.querySelector('.chips')) {
+            $('.chips').material_chip();
+        }
+
+        // Automatically activate dropdowns if there are some
+        if (context.querySelector('.dropdown-button')) {
+            $('.dropdown-button').dropdown();
+        }
     }
 
     // Manage the "disable tags" cookie CNIL requirement
-    if (d.querySelector('button.disable_tags')) {
-        d.addEventListener('click', function(e){
+    var button = d.querySelector('button.disable_tags');
+    if (button) {
+        button.addEventListener('click', function(e){
             if (e.target.tagName.toLowerCase() === 'button' && e.target.className.match('disable_tags')) {
                 d.cookie = "disable_tags=1";
                 e.target.innerHTML = 'OK';
@@ -40,4 +50,7 @@
         });
     }
 
-})})(jQuery, document);
+    enableJsComponents(d);
+
+    window._enableJsComponents = enableJsComponents;
+})(jQuery, document);

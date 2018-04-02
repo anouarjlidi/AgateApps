@@ -19,8 +19,9 @@ easy_admin:
         menu:
             - { label: 'admin.links.back_to_site', route: 'portal_home' }
 
-            - { label: 'admin.menu.esterenmaps' }
             - { entity: 'PortalElement', icon: 'file-text' }
+
+            - { label: 'admin.menu.esterenmaps' }
             - { entity: 'Maps', icon: 'map' }
             - { entity: 'Factions', icon: 'flag' }
 

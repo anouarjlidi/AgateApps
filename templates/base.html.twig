@@ -194,7 +194,7 @@
             esteren_domains_api,
             agate_domains_portal,
         ]}) }}
-        {{ app.session.remove('connect_other_domains') ? '' : '' }}
+        {% do app.session.remove('connect_other_domains') %}
     {% endif %}
     <script type="text/javascript" src="{{ asset('js/jquery.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/global.js') }}"></script>

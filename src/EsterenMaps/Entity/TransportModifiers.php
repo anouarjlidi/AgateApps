@@ -13,8 +13,6 @@ namespace EsterenMaps\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use EsterenMaps\Cache\EntityToClearInterface;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -22,13 +20,11 @@ use Symfony\Component\Validator\Constraints as Assert;
  * TransportModifiers.
  *
  * @ORM\Table(name="maps_routes_transports", uniqueConstraints={@ORM\UniqueConstraint(name="unique_route_transport", columns={"route_type_id", "transport_type_id"})})
- * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  * @ORM\Entity()
  */
 class TransportModifiers implements EntityToClearInterface
 {
     use TimestampableEntity;
-    use SoftDeleteableEntity;
 
     /**
      * @var int

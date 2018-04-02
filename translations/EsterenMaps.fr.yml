@@ -11,6 +11,7 @@ entities:
 
 admin:
     edit_map: Modifier la carte
+    back_to_admin: Retour à l'administration
 
 travel:
     duration_estimated: Durée de voyage estimée

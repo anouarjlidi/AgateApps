@@ -12,8 +12,6 @@
 namespace EsterenMaps\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -21,13 +19,11 @@ use Doctrine\Common\Collections\ArrayCollection;
  * Events.
  *
  * @ORM\Table(name="events")
- * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  * @ORM\Entity()
  */
 class Events
 {
     use TimestampableEntity;
-    use SoftDeleteableEntity;
 
     /**
      * @var int

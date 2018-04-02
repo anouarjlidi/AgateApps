@@ -19,7 +19,6 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * Games.
  *
- * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity()
  * @ORM\Table(name="games", uniqueConstraints={@ORM\UniqueConstraint(name="idgUnique", columns={"name", "game_master_id"})})
  */

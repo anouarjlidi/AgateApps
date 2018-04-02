@@ -3,7 +3,7 @@ twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
     form_themes:
-        - 'bootstrap_3_layout.html.twig'
+        - 'form/form_theme_materialize.html.twig'
     globals:
         version_code: '%version_code%'
         version_date: '%version_date%'

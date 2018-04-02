@@ -63,19 +63,24 @@ services:
         resource: '../src/Admin/{Controller}'
 
     Agate\:
-        resource: '../src/Agate/{Controller,ConnectApi,EventListener,Form,Mailer,Provider,Repository,Security,Twig,Util}'
+        resource: '../src/Agate/{Controller,ConnectApi,EventListener,Form,Mailer,Repository,Security,Twig,Util}'
 
     CorahnRin\:
         resource: '../src/CorahnRin/{Controller,Repository,GeneratorTools,SheetsManagers}'
 
     Esteren\:
-        resource: '../src/Esteren/{Controller,Twig}'
+        resource: '../src/Esteren/{Twig}'
 
     EsterenMaps\:
-        resource: '../src/EsterenMaps/{Api,Cache,Command,Controller,Repository,Services,Twig}'
+        resource: '../src/EsterenMaps/{Api,Cache,Command,Repository,Services,Twig}'
+
+    Esteren\Controller\:
+        resource: '../src/Esteren/Controller/*'
+        public: true
+
+    EsterenMaps\Controller\:
+        resource: '../src/EsterenMaps/Controller/*'
+        public: true
 
     EsterenMaps\DoctrineListeners\CacheClearSubscriber:
         tags: [{ name: doctrine.event_subscriber, connection: default }]
-
-    user.mailer:
-        alias: Agate\Mailer\UserMailer

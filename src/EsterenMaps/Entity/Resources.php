@@ -13,21 +13,17 @@ namespace EsterenMaps\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
  * Resources.
  *
  * @ORM\Table(name="maps_resources")
- * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  * @ORM\Entity()
  */
 class Resources
 {
     use TimestampableEntity;
-    use SoftDeleteableEntity;
 
     /**
      * @var int
@@ -47,7 +43,7 @@ class Resources
 
     /**
      * @var Routes[]
-     * @ORM\ManyToMany(targetEntity="Routes", inversedBy="resources")
+     * @ORM\ManyToMany(targetEntity="Routes")
      */
     protected $routes;
 

@@ -173,7 +173,7 @@
                     var msg = 'Could not make a request to '+(id?'update':'insert')+' a marker.';
                     console.error(msg);
                     callbackMessage = msg;
-                    callbackMessageType = 'danger';
+                    callbackMessageType = 'error';
                 },
                 callbackComplete: function(){
                     _this.launched = false;

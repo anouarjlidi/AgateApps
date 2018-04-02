@@ -40,7 +40,7 @@ class MapsTilesManager
 
     public function __construct(string $outputDirectory, int $tileSize, string $imageMagickPath, MapImageManager $mapImageManager, KernelInterface $kernel)
     {
-        $this->tileSize  = $tileSize;
+        $this->tileSize   = $tileSize;
         $outputDirectory  = rtrim($outputDirectory, '\\/');
         $this->magickPath = rtrim($imageMagickPath, '\\/').DIRECTORY_SEPARATOR;
         $this->outputDirectory = $outputDirectory;

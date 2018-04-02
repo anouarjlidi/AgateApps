@@ -102,7 +102,7 @@
                     var msg = 'Could not make a request to '+(id?'update':'insert')+' a zone.';
                     console.error(msg);
                     callbackMessage = msg;
-                    callbackMessageType = 'danger';
+                    callbackMessageType = 'error';
                 },
                 callbackComplete: function(){
                     _this.launched = false;
@@ -204,7 +204,7 @@
             var polygon = e.target,
                 msg = CONFIRM_DELETE || 'Supprimer ?',
                 id = polygon._esterenZone ? polygon._esterenZone.id : null;
-            if (polygon._esterenMap._mapOptions.editMode == true && id) {
+            if (polygon._esterenMap._mapOptions.editMode === true && id) {
                 if (confirm(msg)) {
                     polygon._map.removeLayer(polygon);
                     polygon.fire('remove');

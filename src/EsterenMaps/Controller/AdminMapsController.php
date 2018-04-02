@@ -23,15 +23,21 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class AdminMapsController extends AbstractController
 {
+    private $tileSize;
+
+    public function __construct(string $tileSize)
+    {
+        $this->tileSize = $tileSize;
+    }
+
     /**
      * @Route("/maps/edit-interactive/{id}", name="admin_esterenmaps_maps_maps_editInteractive", methods={"GET"})
      */
     public function editAction(Maps $map): Response
     {
         return $this->render('esteren_maps/AdminMaps/edit.html.twig', [
-            'config'    => $this->container->getParameter('easyadmin.config'),
             'map'       => $map,
-            'tile_size' => $this->container->getParameter('esterenmaps.tile_size'),
+            'tile_size' => $this->tileSize,
         ]);
     }
 }

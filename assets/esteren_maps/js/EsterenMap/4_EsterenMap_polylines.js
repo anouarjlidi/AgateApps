@@ -8,6 +8,7 @@
     L.Polyline.prototype._sidebar = null;
     L.Polyline.prototype._sidebarContent = '';
     L.Polyline.prototype._oldColor = '';
+    L.Polyline.prototype.options.editing = null;
 
     L.Polyline.prototype.showSidebar = function(content){
         if (!this._sidebar) {
@@ -33,7 +34,6 @@
     };
 
     L.Polyline.prototype.disableEditMode = function() {
-        this._updateEM();
         this.editing.disable();
     };
 
@@ -48,30 +48,34 @@
     //};
 
     L.Polyline.prototype.updateDetails = function() {
-        var latlngs,
+        var latlngs, route_type,
             esterenRoute = this._esterenRoute,
+            id = esterenRoute.id,
             esterenMarkerStart = esterenRoute.marker_start,
             esterenMarkerEnd = esterenRoute.marker_end,
             markerStart = this._markerStart ? this._markerStart : (esterenMarkerStart ? this._esterenMap._markers[esterenMarkerStart.id] : null),
             markerEnd = this._markerEnd ? this._markerEnd : (esterenMarkerEnd ? this._esterenMap._markers[esterenMarkerEnd.id] : null)
         ;
 
-        if (esterenRoute.route_type.color) {
+        route_type = this._esterenMap.reference('routes_types', esterenRoute.route_type);
+
+        if (route_type.color) {
             // Change l'image de l'icône
-            this._path.setAttribute('stroke', esterenRoute.route_type.color);
+            this._path.setAttribute('stroke', route_type.color);
         }
 
         // Met à jour l'attribut "data" pour les filtres
-        $(this._path).attr('data-leaflet-object-type', 'routeType'+esterenRoute.route_type.id);
+        $(this._path).attr('data-leaflet-object-type', 'routeType'+esterenRoute.route_type);
+        $(this._path).attr('id', 'polyline_'+id+'_name');
 
         latlngs = this.getLatLngs();
         if (markerStart) {
             latlngs[0] = L.latLng(markerStart.getLatLng());
-            markerStart._esterenRoutesStart[esterenRoute.id] = this;
+            markerStart._esterenRoutesStart[id] = this;
         }
         if (markerEnd) {
             latlngs[this._latlngs.length-1] = L.latLng(markerEnd.getLatLng());
-            markerEnd._esterenRoutesEnd[esterenRoute.id] = this;
+            markerEnd._esterenRoutesEnd[id] = this;
         }
 
         this.setLatLngs(latlngs);
@@ -109,91 +113,65 @@
         }
     };
 
-    L.Polyline.prototype.calcDistance = function() {
-        var distance = 0,
-            points = this._latlngs,
-            i = 0,
-            l = points.length,
-            current, next;
-
-        // Same behavior as in the PHP entity, we override the distance in case we're "forcing" the distance manually.
-        if (this._esterenRoute.forced_distance) {
-            this._esterenRoute.distance = this._esterenRoute.forced_distance;
-
-            return this._esterenRoute.forced_distance;
-        }
-
-        do {
-            current = points[i];
-            next = points[i+1];
-            if (next) {
-                distance += L.CRS.XY.distance(current.getLatLng(), next.getLatLng());
-            }
-            i++;
-        } while (i < l);
-        if (this._esterenRoute) {
-            this._esterenRoute.distance = distance;
-        }
-
-        return distance;
-    };
-
     L.Polyline.prototype._updateEM = function() {
         var baseRoute = this,
             esterenRoute = EsterenMap.prototype.cloneObject.call(null, this._esterenRoute || null),
             _this = this,
             callbackMessage = '',
             callbackMessageType = 'success',
-            id = esterenRoute.id || null;
+            id = esterenRoute.id || null
+        ;
+
+        if (this.launched) {
+            return;
+        }
+
+        d.querySelector('#esterenmap_sidebar button[data-save]').classList.add('disabled');
+        d.querySelector('#esterenmap_sidebar button[data-save] .progress').classList.add('active');
+
         if (esterenRoute && this._map && !this.launched && esterenRoute.marker_start && esterenRoute.marker_end) {
-            esterenRoute.map = esterenRoute.map || {id: this._esterenMap._mapOptions.id };
-            esterenRoute.coordinates = JSON.stringify(this._latlngs ? this._latlngs : {});
-            esterenRoute.route_type = { id: esterenRoute.route_type.id };
-            esterenRoute.marker_start = { id: esterenRoute.marker_start.id };
-            esterenRoute.marker_end = { id: esterenRoute.marker_end.id };
-            esterenRoute.faction = esterenRoute.faction || {};
-            esterenRoute.guarded = !!esterenRoute.guarded;
-            esterenRoute.forced_distance = esterenRoute.forced_distance || '';
-            this.calcDistance();
             this.launched = true;
             this._esterenMap._load({
-                url: "routes" + (id ? '/'+id : ''),
-                method: id ? "POST" : "PUT", // Si on n'a pas d'ID, c'est qu'on crée une nouvelle route
+                url: this._esterenMap._mapOptions.apiUrls.endpoint.replace(/\/$/, '')+"/routes" + (id ? '/'+id : ''),
+                method: "POST",
                 data: {
-                    json: esterenRoute,
-                    mapping: {
-                        name: true,
-                        coordinates: true,
-                        map: true,
-                        distance: true,
-                        forced_distance: { objectField: 'forcedDistance' },
-                        route_type: { objectField: 'routeType' },
-                        marker_start: { objectField: 'markerStart' },
-                        marker_end: { objectField: 'markerEnd' },
-                        faction: true,
-                        guarded: true
-                    }
+                    map: this._esterenMap._mapOptions.id,
+                    coordinates: JSON.stringify(this._latlngs ? this._latlngs : {}),
+                    routeType: esterenRoute.route_type,
+                    markerStart: esterenRoute.marker_start,
+                    markerEnd: esterenRoute.marker_end,
+                    faction: esterenRoute.faction ? esterenRoute.faction : null,
+                    guarded: !!esterenRoute.guarded,
+                    forcedDistance: esterenRoute.forced_distance || null
                 },
                 callback: function(response) {
                     var map = this,
                         msg,
-                        route = response.newObject;
-                    if (!response.error) {
-                        if (route && route.id) {
-                            map._polylines[route.id] = baseRoute;
-                            map._polylines[route.id]._esterenRoute = route;
-                            map._polylines[route.id].updateDetails();
-                            callbackMessage = 'Route: ' + route.id + ' - ' + route.name;
-                        } else {
-                            msg = 'Zone retrieved by API does not have ID.';
-                            console.warn(msg);
-                            callbackMessage = response.message ? response.message : msg;
-                            callbackMessageType = 'warning';
-                        }
+                        route = response
+                    ;
+                    if (route && route.id) {
+                        // New object is available
+                        map._polylines[route.id] = baseRoute;
+                        map._polylines[route.id]._esterenRoute = {
+                            id: route.id,
+                            name: route.name,
+                            description: route.description,
+                            coordinates: route.coordinates,
+                            distance: route.distance,
+                            forced_distance: route.forcedDistance,
+                            guarded: route.guarded,
+                            marker_start: route.markerStart,
+                            marker_end: route.markerEnd,
+                            map: route.map,
+                            route_type: route.routeType,
+                            faction: route.faction,
+                        };
+                        map._polylines[route.id].updateDetails();
+                        callbackMessage = 'Route: ' + route.id + ' - ' + route.name;
                     } else {
                         msg = 'Api returned an error while attempting to '+(id?'update':'insert')+' a route.';
                         console.error(msg);
-                        callbackMessage = msg + '<br>' + (response.message ? response.message : 'Unknown error...');
+                        callbackMessage = msg + '<br>' + (response ? response.toString() : 'Unknown error...');
                         callbackMessageType = 'danger';
                     }
                 },
@@ -201,16 +179,18 @@
                     var msg = 'Could not make a request to '+(id?'update':'insert')+' a route.';
                     console.error(msg);
                     callbackMessage = msg;
-                    callbackMessageType = 'danger';
+                    callbackMessageType = 'error';
                 },
                 callbackComplete: function(){
                     _this.launched = false;
+                    d.querySelector('#esterenmap_sidebar button[data-save]').classList.remove('disabled');
+                    d.querySelector('#esterenmap_sidebar button[data-save] .progress').classList.remove('active');
                     if (callbackMessage) {
                         _this._esterenMap.message(callbackMessage, callbackMessageType);
                     }
                 }
             });
-        } else if (!this.launched && esterenRoute.marker_start && esterenRoute.marker_end) {
+        } else if (esterenRoute.marker_start && esterenRoute.marker_end) {
             console.error('Tried to update an empty route.');
         }
     };
@@ -278,17 +258,26 @@
             var polyline = e.target,
                 map = polyline._esterenMap,
                 id = polyline.options.className.replace('drawn_polyline_',''),
-                collectionStart, collectionEnd, markers
+                collectionStart, collectionEnd, markers, $markersStart, $markersEnd
             ;
+
             map.disableEditedElements();
+
+            if (polyline.editing.enabled()) {
+                return;
+            }
+
             polyline.editing.enable();
             polyline.showSidebar();
 
             map._editedPolyline = polyline;
 
+            $markersStart = $('#api_route_markerStart');
+            $markersEnd = $('#api_route_markerEnd');
+
             markers = map._markers;
-            collectionStart = $('#polyline_popup_markerStart option[value!=""]');
-            collectionEnd = $('#polyline_popup_markerEnd option[value!=""]');
+            collectionStart = $markersStart.filter('option[value!=""]');
+            collectionEnd = $markersEnd.filter('option[value!=""]');
 
             $.each(markers, function(id,marker){
                 if (!collectionEnd.filter('[value="'+id+'"]').length) {
@@ -299,75 +288,80 @@
                 }
             });
 
-            d.getElementById('polyline_popup_name').value = polyline._esterenRoute.name;
-            d.getElementById('polyline_popup_forcedDistance').value = polyline._esterenRoute.forced_distance;
-            d.getElementById('polyline_popup_faction').value = polyline._esterenRoute.faction ? polyline._esterenRoute.faction.id : '';
-            d.getElementById('polyline_popup_type').value = polyline._esterenRoute.route_type ? polyline._esterenRoute.route_type.id : '';
-            d.getElementById('polyline_popup_markerStart').value = polyline._esterenRoute.marker_start ? polyline._esterenRoute.marker_start.id : '';
-            d.getElementById('polyline_popup_markerEnd').value = polyline._esterenRoute.marker_end ? polyline._esterenRoute.marker_end.id : '';
-            d.getElementById('polyline_popup_guarded').checked = !!polyline._esterenRoute.guarded;
+            $('#api_route_name')
+                .val(polyline._esterenRoute.name)
+                .off('keyup').on('keyup', function(){
+                    map._polylines[id]._esterenRoute.name = this.value;
+                    return false;
+                })
+            ;
+            $('#api_route_forcedDistance')
+                .val(polyline._esterenRoute.forced_distance)
+                .off('keyup').on('keyup', function(){
+                    map._polylines[id]._esterenRoute.forced_distance = this.value;
+                    return false;
+                })
+            ;
+            $('#api_route_guarded')
+                .val(!!polyline._esterenRoute.guarded)
+                .prop('checked', !!polyline._esterenRoute.guarded)
+                .off('change').on('change', function(){
+                    map._polylines[id]._esterenRoute.guarded = $(this).is(':checked');
+                    return false;
+                })
+            ;
+            $('#api_route_type')
+                .val(polyline._esterenRoute.route_type ? polyline._esterenRoute.route_type : '')
+                .off('change').on('change', function(){
+                    map._polylines[id]._esterenRoute.route_type = map.reference('routes_types', this.value);
+                    return false;
+                })
+            ;
+            $('#api_route_faction')
+                .val(polyline._esterenRoute.faction ? polyline._esterenRoute.faction.id : '')
+                .off('change').on('change', function(){
+                    map._polylines[id]._esterenRoute.faction = map.reference('factions', this.value);
+                    return false;
+                })
+            ;
+            $markersStart
+                .val(polyline._esterenRoute.marker_start ? polyline._esterenRoute.marker_start.id : '')
+                .off('change').on('change', function(){
+                    var marker, latlngs;
+                    marker = markers[this.value] || null;
+                    latlngs = polyline._latlngs;
+                    if (marker) {
+                        latlngs[0] = marker._latlng;
+                    }
+                    polyline.setLatLngs(latlngs);
+                    polyline._esterenRoute.coordinates = JSON.stringify(latlngs);
+                    polyline._esterenRoute.marker_start = marker._esterenMarker;
+                    return false;
+                })
+            ;
+            $markersEnd
+                .val(polyline._esterenRoute.marker_end ? polyline._esterenRoute.marker_end.id : '')
+                .off('change').on('change', function(){
+                    var marker, latlngs;
+                    marker = markers[this.value] || null;
+                    latlngs = polyline._latlngs;
+                    if (marker) {
+                        latlngs[latlngs.length - 1] = marker._latlng;
+                    }
+                    polyline.setLatLngs(latlngs);
+                    polyline._esterenRoute.coordinates = JSON.stringify(latlngs);
+                    polyline._esterenRoute.marker_end = marker._esterenMarker;
+                    return false;
+                })
+            ;
+            d.querySelector('#esterenmap_sidebar button[data-save]').addEventListener('click', function(){
+                map._polylines[id]._updateEM();
+            });
 
-            $('#polyline_popup_name').off('keyup').on('keyup', function(){
-                map._polylines[id]._esterenRoute.name = this.value;
-                if (this._timeout) { clearTimeout(this._timeout); }
-                this._timeout = setTimeout(function(){ map._polylines[id]._updateEM(); }, 1000);
-                return false;
-            });
-            $('#polyline_popup_forcedDistance').off('keyup').on('keyup', function(){
-                map._polylines[id]._esterenRoute.forced_distance = this.value;
-                if (this._timeout) { clearTimeout(this._timeout); }
-                this._timeout = setTimeout(function(){ map._polylines[id]._updateEM(); }, 1000);
-                return false;
-            });
-            $('#polyline_popup_guarded').off('change').on('change', function(){
-                map._polylines[id]._esterenRoute.guarded = $(this).is(':checked');
-                if (this._timeout) { clearTimeout(this._timeout); }
-                this._timeout = setTimeout(function(){ map._polylines[id]._updateEM(); }, 1000);
-                return false;
-            });
-            $('#polyline_popup_type').off('change').on('change', function(){
-                map._polylines[id]._esterenRoute.route_type = map.reference('routesTypes', this.value);
-                if (this._timeout) { clearTimeout(this._timeout); }
-                this._timeout = setTimeout(function(){ map._polylines[id]._updateEM(); }, 1000);
-                return false;
-            });
-            $('#polyline_popup_faction').off('change').on('change', function(){
-                map._polylines[id]._esterenRoute.faction = map.reference('factions', this.value);
-                if (this._timeout) { clearTimeout(this._timeout); }
-                this._timeout = setTimeout(function(){ map._polylines[id]._updateEM(); }, 1000);
-                return false;
-            });
-            $('#polyline_popup_markerStart').off('change').on('change', function(){
-                var marker, latlngs;
-                if (this._timeout) { clearTimeout(this._timeout); }
-                marker = markers[this.value] || null;
-                latlngs = polyline._latlngs;
-                if (marker) {
-                    latlngs[0] = marker._latlng;
-                }
-                polyline.setLatLngs(latlngs);
-                polyline._esterenRoute.coordinates = JSON.stringify(latlngs);
-                polyline._esterenRoute.marker_start = marker._esterenMarker;
-                this._timeout = setTimeout(function(){ map._polylines[id]._updateEM(); }, 1000);
-                return false;
-            });
-            $('#polyline_popup_markerEnd').off('change').on('change', function(){
-                var marker, latlngs;
-                if (this._timeout) { clearTimeout(this._timeout); }
-                marker = markers[this.value] || null;
-                latlngs = polyline._latlngs;
-                if (marker) {
-                    latlngs[latlngs.length - 1] = marker._latlng;
-                }
-                polyline.setLatLngs(latlngs);
-                polyline._esterenRoute.coordinates = JSON.stringify(latlngs);
-                polyline._esterenRoute.marker_end = marker._esterenMarker;
-                this._timeout = setTimeout(function(){ map._polylines[id]._updateEM(); }, 1000);
-                return false;
-            });
+            (e.preventDefault ? e : e.originalEvent).preventDefault();
+            (e.stopPropagation ? e : e.originalEvent).stopPropagation();
 
-            e.preventDefault();
-            e.stopPropagation();
+            d.getElementById('api_route_name').focus();
         }
     };
 
@@ -390,6 +384,11 @@
         if (mapOptions.editMode === true) {
             options = this.cloneObject(options, mapOptions.CustomPolylineBaseOptionsEditMode);
             leafletOptions = this.cloneObject(leafletOptions, mapOptions.LeafletPolylineBaseOptionsEditMode);
+            // Fix for Leaflet-draw searching for this property when using edit mode
+            if (!leafletOptions.editing) {
+                leafletOptions.editing = {};
+            }
+            leafletOptions.editing.className = leafletOptions.className;
         }
 
         if (routes = mapOptions.data.map.routes) {
@@ -408,7 +407,7 @@
                 finalOptions = this.cloneObject(options, {
                     esterenRoute: route,
                     polylineName: route.name,
-                    polylineType: route.route_type.id,
+                    polylineType: route.route_type,
                     polylineFaction: route.faction ? route.faction.id : '',
                     polylineMarkerStart: route.marker_start ? route.marker_start.id : '',
                     polylineMarkerEnd: route.marker_end ? route.marker_end.id : ''
@@ -462,7 +461,13 @@
 
         leafletOptions.className = 'drawn_polyline_'+id;
 
-        polyline = L.polyline(latLng, leafletOptions);
+        if (customUserOptions.polyline) {
+            // Don't recreate an existing polyline
+            polyline = customUserOptions.polyline;
+            polyline.initialize(latLng, leafletOptions);
+        } else {
+            polyline = L.polyline(latLng, leafletOptions);
+        }
 
         polyline._esterenMap = this;
         if (customUserOptions.esterenRoute) {
@@ -470,7 +475,7 @@
         } else {
             // Ici on tente de créer une nouvelle zone
             polyline._esterenRoute = this.esterenRoutePrototype;
-            polyline._esterenRoute.route_type = this.reference('routesTypes', 1);
+            polyline._esterenRoute.route_type = 1;
         }
 
         // Création d'une popup
@@ -494,7 +499,7 @@
 
         polyline.addTo(this._map);
 
-        option = 'routeType'+(typeof polyline._esterenRoute.route_type === 'object' ? polyline._esterenRoute.route_type.id : polyline._esterenRoute.route_type);
+        option = 'routeType'+polyline._esterenRoute.route_type;
         polyline._path.setAttribute('data-leaflet-object-type', option);
 
         this._polylines[id] = polyline;

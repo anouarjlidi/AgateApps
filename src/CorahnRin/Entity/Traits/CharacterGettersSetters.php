@@ -144,7 +144,7 @@ trait CharacterGettersSetters
      *
      * @return $this
      */
-    public function setSex($sex)
+    public function setSex($sex): self
     {
         $this->sex = $sex;
 
@@ -1276,6 +1276,18 @@ trait CharacterGettersSetters
         $this->ways[] = $way;
 
         return $this;
+    }
+
+    public function hasWay(CharWays $charWays): bool
+    {
+        $id = $charWays->getWay()->getId();
+        foreach ($this->ways as $way) {
+            if ($id === $way->getWay()->getId()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

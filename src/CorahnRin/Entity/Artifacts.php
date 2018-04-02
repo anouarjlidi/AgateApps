@@ -18,7 +18,6 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * Artifacts.
  *
  * @ORM\Table(name="artifacts")
- * @Gedmo\SoftDeleteable(fieldName="deleted")
  * @ORM\Entity()
  */
 class Artifacts

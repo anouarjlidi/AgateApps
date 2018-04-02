@@ -6,11 +6,12 @@
  *
  * We here overrode 2 lines because we use a different CRS to manage coordinates.
  * Actually this is just a question about "min" and "max" when calculating the latitude/longitude of the southWest/northEast points.
- * In the original system, latitude increases on the top of the image.
- * In our system, it's more like a bitmap and latitude increases on the bottom of the image.
+ * In the original system, latitude increases at the top of the image.
+ * In our system, it's more like a bitmap and latitude increases at the bottom of the image.
  * This is why min/max are reversed on 2 specific lines.
  *
  * Longitude management is the same so the code is unchanged.
+ *
  * @return L.LatLngBounds
  */
 L.LatLngBounds.prototype.extend = function (obj) { // (LatLng) or (LatLngBounds)

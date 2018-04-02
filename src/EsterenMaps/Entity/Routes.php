@@ -11,11 +11,9 @@
 
 namespace EsterenMaps\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 use EsterenMaps\Cache\EntityToClearInterface;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
@@ -24,12 +22,10 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
  * @ORM\Table(name="maps_routes")
  * @ORM\Entity(repositoryClass="EsterenMaps\Repository\RoutesRepository")
  * @ORM\HasLifecycleCallbacks()
- * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
 class Routes implements EntityToClearInterface
 {
     use TimestampableEntity;
-    use SoftDeleteableEntity;
 
     /**
      * @var int
@@ -44,6 +40,8 @@ class Routes implements EntityToClearInterface
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=true)
+     *
+     * @Assert\NotBlank()
     */
     protected $name;
 
@@ -51,6 +49,8 @@ class Routes implements EntityToClearInterface
      * @var string
      *
      * @ORM\Column(name="description", type="text", nullable=true)
+     *
+     * @Assert\Type("string")
     */
     protected $description;
 
@@ -58,6 +58,8 @@ class Routes implements EntityToClearInterface
      * @var string
      *
      * @ORM\Column(name="coordinates", type="text")
+     *
+     * @Assert\Type("string")
     */
     protected $coordinates = '';
 
@@ -72,6 +74,8 @@ class Routes implements EntityToClearInterface
      * @var int
      *
      * @ORM\Column(name="forced_distance", type="float", precision=12, scale=6, nullable=true)
+     *
+     * @Assert\Type("int")
     */
     protected $forcedDistance;
 
@@ -79,21 +83,19 @@ class Routes implements EntityToClearInterface
      * @var bool
      *
      * @ORM\Column(name="guarded", type="boolean")
+     *
+     * @Assert\Type("bool")
     */
     protected $guarded = false;
-
-    /**
-     * @var Resources[]|ArrayCollection
-     *
-     * @ORM\ManyToMany(targetEntity="Resources", mappedBy="routes")
-     */
-    protected $resources;
 
     /**
      * @var Markers
      *
      * @ORM\ManyToOne(targetEntity="Markers", inversedBy="routesStart")
      * @ORM\JoinColumn(name="marker_start_id", nullable=true)
+     *
+     * @Assert\Type("EsterenMaps\Entity\Markers")
+     * @Assert\NotBlank()
     */
     protected $markerStart;
 
@@ -102,6 +104,9 @@ class Routes implements EntityToClearInterface
      *
      * @ORM\ManyToOne(targetEntity="Markers", inversedBy="routesEnd")
      * @ORM\JoinColumn(name="marker_end_id", nullable=true)
+     *
+     * @Assert\Type("EsterenMaps\Entity\Markers")
+     * @Assert\NotBlank()
     */
     protected $markerEnd;
 
@@ -110,6 +115,9 @@ class Routes implements EntityToClearInterface
      *
      * @ORM\ManyToOne(targetEntity="Maps", inversedBy="routes")
      * @ORM\JoinColumn(name="map_id", nullable=false)
+     *
+     * @Assert\Type("EsterenMaps\Entity\Maps")
+     * @Assert\NotBlank()
      */
     protected $map;
 
@@ -118,6 +126,8 @@ class Routes implements EntityToClearInterface
      *
      * @ORM\ManyToOne(targetEntity="Factions", inversedBy="routes")
      * @ORM\JoinColumn(name="faction_id", nullable=true)
+     *
+     * @Assert\Type("EsterenMaps\Entity\Factions")
     */
     protected $faction;
 
@@ -126,6 +136,9 @@ class Routes implements EntityToClearInterface
      *
      * @ORM\ManyToOne(targetEntity="RoutesTypes", inversedBy="routes")
      * @ORM\JoinColumn(name="route_type_id", nullable=false)
+     *
+     * @Assert\Type("EsterenMaps\Entity\RoutesTypes")
+     * @Assert\NotBlank()
     */
     protected $routeType;
 
@@ -138,107 +151,98 @@ class Routes implements EntityToClearInterface
 
     public function __toString()
     {
-        return $this->id.' - '.$this->name;
+        return $this->name;
     }
 
-    /**
-     * Constructor.
-     */
-    public function __construct()
+    public function toArray()
     {
-        $this->resources = new ArrayCollection();
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'description' => $this->description,
+            'coordinates' => $this->coordinates ,
+            'distance' => $this->distance ,
+            'forcedDistance' => $this->forcedDistance,
+            'guarded' => $this->guarded,
+            'markerStart' => $this->markerStart ? $this->markerStart->getId() : null,
+            'markerEnd' => $this->markerEnd ? $this->markerEnd->getId() : null,
+            'map' => $this->map ? $this->map->getId() : null,
+            'routeType' => $this->routeType ? $this->routeType->getId() : null,
+            'faction' => $this->faction ? $this->faction->getId() : null,
+        ];
     }
 
-    /**
-     * Get id.
-     *
-     * @return int
-     *
-     * @codeCoverageIgnore
-     */
-    public function getId()
+    public static function fromApi(array $data): self
+    {
+        $route = new static();
+
+        $route->hydrateIncomingData($data);
+
+        return $route;
+    }
+
+    public function updateFromApi(array $data): void
+    {
+        $this->hydrateIncomingData($data);
+    }
+
+    private function hydrateIncomingData(array $data)
+    {
+        $data = array_merge($this->toArray(), $data);
+
+        $this->name = $data['name'];
+        $this->description = $data['description'];
+        $this->coordinates = $data['coordinates'];
+        $this->forcedDistance = $data['forcedDistance'];
+        $this->guarded = $data['guarded'];
+        $this->map = $data['map'];
+        $this->faction = $data['faction'];
+        $this->routeType = $data['routeType'];
+        $this->markerStart = $data['markerStart'];
+        $this->markerEnd = $data['markerEnd'];
+
+        if ($this->map && $this->coordinates) {
+            $this->calcDistance();
+        }
+    }
+
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * Set id.
-     *
-     * @param string $id
-     *
-     * @return Routes
-     *
-     * @codeCoverageIgnore
-     */
-    public function setId($id)
+    public function setId(int $id): self
     {
         $this->id = $id;
 
         return $this;
     }
 
-    /**
-     * Set name.
-     *
-     * @param string $name
-     *
-     * @return Routes
-     *
-     * @codeCoverageIgnore
-     */
-    public function setName($name)
+    public function getName(): string
+    {
+        return (string) $this->name;
+    }
+
+    public function setName(?string $name): self
     {
         $this->name = $name;
 
         return $this;
     }
 
-    /**
-     * Get name.
-     *
-     * @return string
-     *
-     * @codeCoverageIgnore
-     */
-    public function getName()
+    public function getDescription(): string
     {
-        return $this->name;
+        return (string) $this->description;
     }
 
-    /**
-     * @return string
-     *
-     * @codeCoverageIgnore
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
-     * @param string $description
-     *
-     * @return Routes
-     *
-     * @codeCoverageIgnore
-     */
-    public function setDescription($description)
+    public function setDescription(?string $description): self
     {
         $this->description = $description;
 
         return $this;
     }
 
-    /**
-     * Set coordinates.
-     *
-     * @param string $coordinates
-     *
-     * @return Routes
-     *
-     * @codeCoverageIgnore
-     */
-    public function setCoordinates($coordinates)
+    public function setCoordinates(?string $coordinates): self
     {
         $this->coordinates = $coordinates;
 
@@ -247,292 +251,125 @@ class Routes implements EntityToClearInterface
         return $this;
     }
 
-    /**
-     * Get coordinates.
-     *
-     * @return string
-     *
-     * @codeCoverageIgnore
-     */
-    public function getCoordinates()
+    public function getCoordinates(): string
     {
-        return $this->coordinates;
+        return (string) $this->coordinates;
     }
 
-    /**
-     * Add resources.
-     *
-     * @param Resources $resources
-     *
-     * @return Routes
-     */
-    public function addResource(Resources $resources)
-    {
-        $this->resources[] = $resources;
-
-        return $this;
-    }
-
-    /**
-     * Remove resources.
-     *
-     * @param Resources $resources
-     */
-    public function removeResource(Resources $resources)
-    {
-        $this->resources->removeElement($resources);
-    }
-
-    /**
-     * Get resources.
-     *
-     * @return Resources[]
-     *
-     * @codeCoverageIgnore
-     */
-    public function getResources()
-    {
-        return $this->resources;
-    }
-
-    /**
-     * Set map.
-     *
-     * @param Maps $map
-     *
-     * @return Routes
-     *
-     * @codeCoverageIgnore
-     */
-    public function setMap(Maps $map = null)
+    public function setMap(?Maps $map): self
     {
         $this->map = $map;
 
         return $this;
     }
 
-    /**
-     * Get map.
-     *
-     * @return Maps
-     *
-     * @codeCoverageIgnore
-     */
-    public function getMap()
+    public function getMap(): ?Maps
     {
         return $this->map;
     }
 
-    /**
-     * Set faction.
-     *
-     * @param Factions $faction
-     *
-     * @return Routes
-     *
-     * @codeCoverageIgnore
-     */
-    public function setFaction(Factions $faction = null)
+    public function setFaction(?Factions $faction): self
     {
         $this->faction = $faction;
 
         return $this;
     }
 
-    /**
-     * Get faction.
-     *
-     * @return Factions
-     *
-     * @codeCoverageIgnore
-     */
-    public function getFaction()
+    public function getFaction(): ?Factions
     {
         return $this->faction;
     }
 
-    /**
-     * Set routeType.
-     *
-     * @param RoutesTypes $routeType
-     *
-     * @return Routes
-     *
-     * @codeCoverageIgnore
-     */
-    public function setRouteType(RoutesTypes $routeType = null)
+    public function setRouteType(?RoutesTypes $routeType): self
     {
         $this->routeType = $routeType;
 
         return $this;
     }
 
-    /**
-     * Get routeType.
-     *
-     * @return RoutesTypes
-     *
-     * @codeCoverageIgnore
-     */
-    public function getRouteType()
+    public function getRouteType(): ?RoutesTypes
     {
         return $this->routeType;
     }
 
-    /**
-     * Set markerStart.
-     *
-     * @param Markers $markerStart
-     *
-     * @return Routes
-     *
-     * @codeCoverageIgnore
-     */
-    public function setMarkerStart(Markers $markerStart = null)
+    public function setMarkerStart(?Markers $markerStart): self
     {
         $this->markerStart = $markerStart;
 
         return $this;
     }
 
-    /**
-     * Get markerStart.
-     *
-     * @return Markers
-     *
-     * @codeCoverageIgnore
-     */
-    public function getMarkerStart()
+    public function getMarkerStart(): ?Markers
     {
         return $this->markerStart;
     }
 
-    /**
-     * Set markerEnd.
-     *
-     * @param Markers $markerEnd
-     *
-     * @return Routes
-     *
-     * @codeCoverageIgnore
-     */
-    public function setMarkerEnd(Markers $markerEnd = null)
+    public function setMarkerEnd(?Markers $markerEnd): self
     {
         $this->markerEnd = $markerEnd;
 
         return $this;
     }
 
-    /**
-     * Get markerEnd.
-     *
-     * @return Markers
-     *
-     * @codeCoverageIgnore
-     */
-    public function getMarkerEnd()
+    public function getMarkerEnd(): ?Markers
     {
         return $this->markerEnd;
     }
 
-    /**
-     * @return int
-     *
-     * @codeCoverageIgnore
-     */
-    public function getDistance()
+    public function getDistance(): int
     {
-        return $this->distance;
+        return (int) $this->distance;
     }
 
-    /**
-     * @param int $distance
-     *
-     * @return Routes
-     *
-     * @codeCoverageIgnore
-     */
-    public function setDistance($distance)
+    public function setDistance(int $distance): self
     {
         $this->distance = $distance;
 
         return $this;
     }
 
-    /**
-     * @return int
-     *
-     * @codeCoverageIgnore
-     */
-    public function getForcedDistance()
-    {
-        return $this->forcedDistance;
-    }
-
-    /**
-     * @param int $forcedDistance
-     *
-     * @return Routes
-     *
-     * @codeCoverageIgnore
-     */
-    public function setForcedDistance($forcedDistance)
+    public function setForcedDistance(?int $forcedDistance): self
     {
         $this->forcedDistance = $forcedDistance;
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function isGuarded()
+    public function getForcedDistance(): ?int
     {
-        return $this->guarded;
+        return $this->forcedDistance;
     }
 
-    /**
-     * @param bool $guarded
-     *
-     * @return Routes
-     *
-     * @codeCoverageIgnore
-     */
-    public function setGuarded($guarded)
+    public function setGuarded(?bool $guarded): self
     {
         $this->guarded = $guarded;
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function isLocalized()
+    public function isGuarded(): bool
+    {
+        return (bool) $this->guarded;
+    }
+
+    public function isLocalized(): bool
     {
         return $this->coordinates !== null && count($this->getDecodedCoordinates());
     }
 
-    /**
-     * @return array
-     */
-    public function getDecodedCoordinates()
+    public function getDecodedCoordinates(): array
     {
-        return json_decode($this->coordinates, true);
+        return (array) json_decode($this->coordinates, true);
     }
 
     /**
-     * Réinitialise correctement les informations de la route.
-     *
      * @ORM\PrePersist()
      * @ORM\PreUpdate()
-     *
-     * @return Routes
      */
-    public function refresh()
+    public function refresh(): void
     {
         if (!$this->refresh) {
-            return $this;
+            return;
         }
 
         if (!$this->coordinates) {
@@ -556,23 +393,23 @@ class Routes implements EntityToClearInterface
         $this->calcDistance();
 
         $this->setCoordinates(json_encode($coords));
-
-        return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function calcDistance()
+    public function calcDistance(): int
     {
+        if (!$this->map) {
+            return 0;
+        }
+
         // Override distance if we have set forcedDistance
         if ($this->forcedDistance) {
             $this->distance = $this->forcedDistance;
 
             return $this->forcedDistance;
         }
-            // Else, we force the null value
-            $this->forcedDistance = null;
+
+        // Else, we force the null value
+        $this->forcedDistance = null;
 
         $distance = 0;
         $points   = json_decode($this->coordinates, true);

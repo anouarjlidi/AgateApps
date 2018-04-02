@@ -7,8 +7,6 @@
      * @constructor
      */
     var EsterenMap = function (userMapOptions) {
-        var _this = this;
-
         if (!userMapOptions.id) {
             throw 'Map id must be defined';
         }
@@ -91,7 +89,7 @@
 
         // Add sidebar if configured.
         if (mapOptions.sidebarContainer && d.getElementById(mapOptions.sidebarContainer)) {
-            sidebar = L.control.sidebar(mapOptions.sidebarContainer, {
+            sidebar = new L.Control.Sidebar(mapOptions.sidebarContainer, {
                 position: 'right',
                 closeButton: true,
                 autoPan: false
@@ -100,10 +98,14 @@
             this._map.on('click', function(e){
                 // Hide the sidebar when user clicks on map.
                 if ((e.originalEvent || e).target.id === mapOptions.container) {
-                    sidebar.hide();
+                    sidebar.hide(e);
+                    _this.disableEditedElements();
                 }
             });
             this._sidebar = sidebar;
+            sidebar.on('show', function(){
+                _enableJsComponents(sidebar._contentContainer);
+            });
         }
 
         if (mapOptions.showFilters === true) {
@@ -141,7 +143,6 @@
         ////////////////////////////////
         if (true === mapOptions.editMode) {
             this.activateLeafletDraw();
-            this._map.on('click', _this.disableEditedElements);
         }
 
         if (mapOptions.loadCallback && typeof mapOptions.loadCallback === 'function') {
@@ -159,17 +160,23 @@
         disappearTimeout = disappearTimeout || 4000;
 
         if (!messageElement) {
-            if (this._mapOptions._messageElement) {
-                messageElement = this._mapOptions._messageElement;
+            if (this._messageElement) {
+                messageElement = this._messageElement;
             } else {
                 throw 'No correct element could be used to show a message.';
             }
         }
 
-        element = d.createElement('div');
-        element.className = 'card-panel ib h';
-        if (type) {
-            element.className += ' alert-'+type;
+        element = d.createElement('li');
+        element.className = 'collection-item';
+
+        switch (type) {
+            case 'success':
+                element.className += ' green-text text-lighten-3';
+                break;
+            case 'error':
+                element.className += ' red-text text-lighten-3';
+                break;
         }
 
         element.innerHTML = message;
@@ -191,20 +198,18 @@
     };
 
     EsterenMap.prototype.disableEditedElements = function(){
-
         if (this._editedPolygon) {
             this._editedPolygon.disableEditMode();
+            this._editedPolygon = null;
         }
         if (this._editedPolyline) {
             this._editedPolyline.disableEditMode();
+            this._editedPolyline = null;
         }
         if (this._editedMarker) {
             this._editedMarker.disableEditMode();
+            this._editedMarker = null;
         }
-
-        this._editedPolygon = null;
-        this._editedPolyline = null;
-        this._editedMarker = null;
     };
 
     EsterenMap.prototype.mapReference = function(name, id, defaultValue) {
@@ -249,10 +254,6 @@
 
     EsterenMap.prototype.loadMapData = function(){
         var _this = this, data = {};
-
-        if (true === this._mapOptions.editMode) {
-            data.editMode = 'true';
-        }
 
         return this._load({
             url: this._mapOptions.apiUrls.map,
