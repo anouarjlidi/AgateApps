@@ -57,7 +57,6 @@ class RoutesTypesFixtures extends AbstractFixture implements ORMFixtureInterface
                 'color'       => 'rgba(165,110,52,1)',
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 2,
@@ -66,7 +65,6 @@ class RoutesTypesFixtures extends AbstractFixture implements ORMFixtureInterface
                 'color'       => 'rgba(199,191,183,1)',
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 3,
@@ -75,7 +73,6 @@ class RoutesTypesFixtures extends AbstractFixture implements ORMFixtureInterface
                 'color'       => 'rgba(194,176,76,1)',
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 4,
@@ -84,7 +81,6 @@ class RoutesTypesFixtures extends AbstractFixture implements ORMFixtureInterface
                 'color'       => 'rgba(64,148,220,0.4)',
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-09-24 10:52:59'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 5,
@@ -93,7 +89,6 @@ class RoutesTypesFixtures extends AbstractFixture implements ORMFixtureInterface
                 'color'       => 'rgba(64,220,191,0.4)',
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-09-24 10:52:41'),
-                'deletedAt'   => null,
             ],
         ];
     }

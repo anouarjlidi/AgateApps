@@ -12,4 +12,3 @@ stof_doctrine_extensions:
             uploadable: true
             sluggable: true
             timestampable: true
-            softdeleteable: true

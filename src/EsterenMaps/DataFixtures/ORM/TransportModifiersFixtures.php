@@ -62,7 +62,6 @@ class TransportModifiersFixtures extends AbstractFixture implements ORMFixtureIn
                 'percentage'     => 100,
                 'createdAt'      => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:06'),
                 'updatedAt'      => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:06'),
-                'deletedAt'      => null,
             ],
             [
                 'id'             => 2,
@@ -71,7 +70,6 @@ class TransportModifiersFixtures extends AbstractFixture implements ORMFixtureIn
                 'percentage'     => 100,
                 'createdAt'      => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:06'),
                 'updatedAt'      => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:06'),
-                'deletedAt'      => null,
             ],
             [
                 'id'             => 3,
@@ -80,7 +78,6 @@ class TransportModifiersFixtures extends AbstractFixture implements ORMFixtureIn
                 'percentage'     => 100,
                 'createdAt'      => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:06'),
                 'updatedAt'      => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:06'),
-                'deletedAt'      => null,
             ],
             [
                 'id'             => 4,
@@ -89,7 +86,6 @@ class TransportModifiersFixtures extends AbstractFixture implements ORMFixtureIn
                 'percentage'     => 100,
                 'createdAt'      => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:06'),
                 'updatedAt'      => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-20 17:22:25'),
-                'deletedAt'      => null,
             ],
             [
                 'id'             => 5,
@@ -98,7 +94,6 @@ class TransportModifiersFixtures extends AbstractFixture implements ORMFixtureIn
                 'percentage'     => 100,
                 'createdAt'      => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:06'),
                 'updatedAt'      => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:06'),
-                'deletedAt'      => null,
             ],
             [
                 'id'             => 6,
@@ -107,7 +102,6 @@ class TransportModifiersFixtures extends AbstractFixture implements ORMFixtureIn
                 'percentage'     => 100,
                 'createdAt'      => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:06'),
                 'updatedAt'      => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:06'),
-                'deletedAt'      => null,
             ],
             [
                 'id'             => 7,
@@ -116,7 +110,6 @@ class TransportModifiersFixtures extends AbstractFixture implements ORMFixtureIn
                 'percentage'     => 100,
                 'createdAt'      => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:06'),
                 'updatedAt'      => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:06'),
-                'deletedAt'      => null,
             ],
             [
                 'id'             => 8,
@@ -125,7 +118,6 @@ class TransportModifiersFixtures extends AbstractFixture implements ORMFixtureIn
                 'percentage'     => 100,
                 'createdAt'      => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:06'),
                 'updatedAt'      => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-20 17:22:25'),
-                'deletedAt'      => null,
             ],
             [
                 'id'             => 9,
@@ -134,7 +126,6 @@ class TransportModifiersFixtures extends AbstractFixture implements ORMFixtureIn
                 'percentage'     => 100,
                 'createdAt'      => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:06'),
                 'updatedAt'      => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:06'),
-                'deletedAt'      => null,
             ],
             [
                 'id'             => 10,
@@ -143,7 +134,6 @@ class TransportModifiersFixtures extends AbstractFixture implements ORMFixtureIn
                 'percentage'     => 100,
                 'createdAt'      => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:06'),
                 'updatedAt'      => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:06'),
-                'deletedAt'      => null,
             ],
             [
                 'id'             => 11,
@@ -152,7 +142,6 @@ class TransportModifiersFixtures extends AbstractFixture implements ORMFixtureIn
                 'percentage'     => 100,
                 'createdAt'      => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:06'),
                 'updatedAt'      => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:06'),
-                'deletedAt'      => null,
             ],
             [
                 'id'             => 12,
@@ -161,7 +150,6 @@ class TransportModifiersFixtures extends AbstractFixture implements ORMFixtureIn
                 'percentage'     => 100,
                 'createdAt'      => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:06'),
                 'updatedAt'      => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-20 17:22:25'),
-                'deletedAt'      => null,
             ],
             [
                 'id'             => 13,
@@ -170,7 +158,6 @@ class TransportModifiersFixtures extends AbstractFixture implements ORMFixtureIn
                 'percentage'     => 100,
                 'createdAt'      => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-08 12:17:49'),
                 'updatedAt'      => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-20 17:22:25'),
-                'deletedAt'      => null,
             ],
             [
                 'id'             => 14,
@@ -179,7 +166,6 @@ class TransportModifiersFixtures extends AbstractFixture implements ORMFixtureIn
                 'percentage'     => 0,
                 'createdAt'      => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-08 13:30:21'),
                 'updatedAt'      => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-08 13:30:21'),
-                'deletedAt'      => null,
             ],
             [
                 'id'             => 15,
@@ -188,7 +174,6 @@ class TransportModifiersFixtures extends AbstractFixture implements ORMFixtureIn
                 'percentage'     => 0,
                 'createdAt'      => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-08 13:30:31'),
                 'updatedAt'      => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-08 13:30:31'),
-                'deletedAt'      => null,
             ],
             [
                 'id'             => 16,
@@ -197,7 +182,6 @@ class TransportModifiersFixtures extends AbstractFixture implements ORMFixtureIn
                 'percentage'     => 0,
                 'createdAt'      => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-08 13:30:38'),
                 'updatedAt'      => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-08 13:30:38'),
-                'deletedAt'      => null,
             ],
             [
                 'id'             => 17,
@@ -206,7 +190,6 @@ class TransportModifiersFixtures extends AbstractFixture implements ORMFixtureIn
                 'percentage'     => 100,
                 'createdAt'      => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-08 13:30:46'),
                 'updatedAt'      => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-20 17:22:15'),
-                'deletedAt'      => null,
             ],
             [
                 'id'             => 18,
@@ -215,7 +198,6 @@ class TransportModifiersFixtures extends AbstractFixture implements ORMFixtureIn
                 'percentage'     => 50,
                 'createdAt'      => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-08 13:30:52'),
                 'updatedAt'      => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-20 17:22:09'),
-                'deletedAt'      => null,
             ],
             [
                 'id'             => 19,
@@ -224,7 +206,6 @@ class TransportModifiersFixtures extends AbstractFixture implements ORMFixtureIn
                 'percentage'     => 0,
                 'createdAt'      => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-08 13:31:14'),
                 'updatedAt'      => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-20 17:22:15'),
-                'deletedAt'      => null,
             ],
             [
                 'id'             => 20,
@@ -233,7 +214,6 @@ class TransportModifiersFixtures extends AbstractFixture implements ORMFixtureIn
                 'percentage'     => 0,
                 'createdAt'      => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-08 13:31:20'),
                 'updatedAt'      => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-20 17:22:09'),
-                'deletedAt'      => null,
             ],
             [
                 'id'             => 21,
@@ -242,7 +222,6 @@ class TransportModifiersFixtures extends AbstractFixture implements ORMFixtureIn
                 'percentage'     => 0,
                 'createdAt'      => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-08 13:31:34'),
                 'updatedAt'      => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-20 17:22:15'),
-                'deletedAt'      => null,
             ],
             [
                 'id'             => 22,
@@ -251,7 +230,6 @@ class TransportModifiersFixtures extends AbstractFixture implements ORMFixtureIn
                 'percentage'     => 0,
                 'createdAt'      => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-08 13:31:41'),
                 'updatedAt'      => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-20 17:22:09'),
-                'deletedAt'      => null,
             ],
             [
                 'id'             => 23,
@@ -260,7 +238,6 @@ class TransportModifiersFixtures extends AbstractFixture implements ORMFixtureIn
                 'percentage'     => 0,
                 'createdAt'      => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-08 13:31:47'),
                 'updatedAt'      => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-20 17:22:15'),
-                'deletedAt'      => null,
             ],
             [
                 'id'             => 24,
@@ -269,7 +246,6 @@ class TransportModifiersFixtures extends AbstractFixture implements ORMFixtureIn
                 'percentage'     => 0,
                 'createdAt'      => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-08 13:31:59'),
                 'updatedAt'      => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-20 17:22:09'),
-                'deletedAt'      => null,
             ],
             [
                 'id'             => 25,
@@ -278,7 +254,6 @@ class TransportModifiersFixtures extends AbstractFixture implements ORMFixtureIn
                 'percentage'     => 100,
                 'createdAt'      => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-08 13:32:41'),
                 'updatedAt'      => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-20 17:22:25'),
-                'deletedAt'      => null,
             ],
             [
                 'id'             => 26,
@@ -287,7 +262,6 @@ class TransportModifiersFixtures extends AbstractFixture implements ORMFixtureIn
                 'percentage'     => 0,
                 'createdAt'      => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-08 13:32:46'),
                 'updatedAt'      => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-08 13:32:46'),
-                'deletedAt'      => null,
             ],
             [
                 'id'             => 27,
@@ -296,7 +270,6 @@ class TransportModifiersFixtures extends AbstractFixture implements ORMFixtureIn
                 'percentage'     => 0,
                 'createdAt'      => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-08 13:32:51'),
                 'updatedAt'      => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-08 13:32:51'),
-                'deletedAt'      => null,
             ],
             [
                 'id'             => 28,
@@ -305,7 +278,6 @@ class TransportModifiersFixtures extends AbstractFixture implements ORMFixtureIn
                 'percentage'     => 0,
                 'createdAt'      => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-08 13:32:57'),
                 'updatedAt'      => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-08 13:32:57'),
-                'deletedAt'      => null,
             ],
             [
                 'id'             => 29,
@@ -314,7 +286,6 @@ class TransportModifiersFixtures extends AbstractFixture implements ORMFixtureIn
                 'percentage'     => 50,
                 'createdAt'      => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-08 13:33:02'),
                 'updatedAt'      => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-20 17:22:15'),
-                'deletedAt'      => null,
             ],
             [
                 'id'             => 30,
@@ -323,7 +294,6 @@ class TransportModifiersFixtures extends AbstractFixture implements ORMFixtureIn
                 'percentage'     => 100,
                 'createdAt'      => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-08 13:33:09'),
                 'updatedAt'      => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-20 17:22:09'),
-                'deletedAt'      => null,
             ],
         ];
     }

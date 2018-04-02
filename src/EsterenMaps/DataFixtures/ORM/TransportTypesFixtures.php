@@ -58,7 +58,6 @@ class TransportTypesFixtures extends AbstractFixture implements ORMFixtureInterf
                 'speed'       => 4.5,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-20 17:22:25'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 2,
@@ -68,7 +67,6 @@ class TransportTypesFixtures extends AbstractFixture implements ORMFixtureInterf
                 'speed'       => 8,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 3,
@@ -78,7 +76,6 @@ class TransportTypesFixtures extends AbstractFixture implements ORMFixtureInterf
                 'speed'       => 12,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 4,
@@ -88,7 +85,6 @@ class TransportTypesFixtures extends AbstractFixture implements ORMFixtureInterf
                 'speed'       => 12,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 5,
@@ -98,7 +94,6 @@ class TransportTypesFixtures extends AbstractFixture implements ORMFixtureInterf
                 'speed'       => 4,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-08 12:24:05'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-20 17:22:15'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 6,
@@ -108,7 +103,6 @@ class TransportTypesFixtures extends AbstractFixture implements ORMFixtureInterf
                 'speed'       => 16,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-08 12:25:11'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-20 17:22:09'),
-                'deletedAt'   => null,
             ],
         ];
     }

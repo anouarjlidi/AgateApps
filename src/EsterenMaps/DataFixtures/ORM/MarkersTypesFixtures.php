@@ -61,7 +61,6 @@ class MarkersTypesFixtures extends AbstractFixture implements ORMFixtureInterfac
                 'iconCenterY' => null,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-17 22:51:49'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 2,
@@ -74,7 +73,6 @@ class MarkersTypesFixtures extends AbstractFixture implements ORMFixtureInterfac
                 'iconCenterY' => null,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-17 22:51:49'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 3,
@@ -87,7 +85,6 @@ class MarkersTypesFixtures extends AbstractFixture implements ORMFixtureInterfac
                 'iconCenterY' => null,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:22'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 4,
@@ -100,7 +97,6 @@ class MarkersTypesFixtures extends AbstractFixture implements ORMFixtureInterfac
                 'iconCenterY' => null,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 5,
@@ -113,7 +109,6 @@ class MarkersTypesFixtures extends AbstractFixture implements ORMFixtureInterfac
                 'iconCenterY' => null,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-17 22:51:49'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 6,
@@ -126,7 +121,6 @@ class MarkersTypesFixtures extends AbstractFixture implements ORMFixtureInterfac
                 'iconCenterY' => null,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-17 22:51:49'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 7,
@@ -139,7 +133,6 @@ class MarkersTypesFixtures extends AbstractFixture implements ORMFixtureInterfac
                 'iconCenterY' => null,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-17 22:51:49'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 8,
@@ -152,7 +145,6 @@ class MarkersTypesFixtures extends AbstractFixture implements ORMFixtureInterfac
                 'iconCenterY' => null,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-17 22:51:49'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 9,
@@ -165,7 +157,6 @@ class MarkersTypesFixtures extends AbstractFixture implements ORMFixtureInterfac
                 'iconCenterY' => null,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-17 22:51:49'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 10,
@@ -178,7 +169,6 @@ class MarkersTypesFixtures extends AbstractFixture implements ORMFixtureInterfac
                 'iconCenterY' => null,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
-                'deletedAt'   => null,
             ],
             [
                 'id'          => 11,
@@ -191,7 +181,6 @@ class MarkersTypesFixtures extends AbstractFixture implements ORMFixtureInterfac
                 'iconCenterY' => null,
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
-                'deletedAt'   => null,
             ],
         ];
     }

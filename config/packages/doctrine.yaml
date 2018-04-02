@@ -3,14 +3,6 @@ doctrine:
         auto_generate_proxy_classes: '%kernel.debug%'
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
-
-        # Override the default repository to get some more good tools
-        filters:
-            # Activate SoftDeleteable for some entities
-            # There are some other filters down there
-            softdeleteable:
-                class: Gedmo\SoftDeleteable\Filter\SoftDeleteableFilter
-                enabled: true
         mappings:
             Agate:
                 type: annotation

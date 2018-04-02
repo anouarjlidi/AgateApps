@@ -61,7 +61,6 @@ class MapsFixtures extends AbstractFixture implements ORMFixtureInterface
                 'bounds'           => '[[134,-1],[-1,169]]',
                 'createdAt'        => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
                 'updatedAt'        => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-23 14:46:09'),
-                'deletedAt'        => null,
             ],
         ];
     }

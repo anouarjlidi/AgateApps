@@ -203,12 +203,7 @@ abstract class AbstractEasyAdminTest extends WebTestCase
 
         $object = $em->find($this->getEntityClass(), $id);
 
-        if ($object && method_exists($object, 'getDeletedAt')) {
-            // Ensure Gedmo Softdeletable works.
-            static::assertNotNull($object->getDeletedAt());
-        } else {
-            static::assertFalse((bool) $object, $this->getEntityName());
-        }
+        static::assertFalse((bool) $object, $this->getEntityName());
     }
 
     protected function submitData(array $dataToSubmit, array $expectedData, string $view)
