@@ -13,4 +13,4 @@ php bin/console doctrine:schema:validate || exit 1
 
 npm install
 
-npm run deploy
+npm run-script deploy

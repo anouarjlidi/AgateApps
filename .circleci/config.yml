@@ -85,7 +85,7 @@ jobs:
             - run:
                name: 'Execute node tests'
                command: |
-                    npm gulp test --prod --verbose -LLLL
+                    npm run-script test --verbose -LLLL
 
             - save_cache:
                 key: npm-cache-{{ checksum "package-lock.json" }}
