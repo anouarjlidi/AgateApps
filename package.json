@@ -8,6 +8,7 @@
         "url": "https://github.com/Pierstoval/corahn_rin"
     },
     "scripts": {
+        "deploy": "node ./node_modules/gulp4/bin/gulp dump --prod",
         "gulp": "node ./node_modules/gulp4/bin/gulp"
     },
     "dependencies": {

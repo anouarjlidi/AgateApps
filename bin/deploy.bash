@@ -8,3 +8,7 @@ composer ins --no-dev --optimize-autoloader --classmap-authoritative --prefer-di
 
 php bin/console cache:clear --no-warmup
 php bin/console cache:warmup
+
+yarn install
+
+yarn run deploy
