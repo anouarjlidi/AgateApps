@@ -34,8 +34,8 @@ It contains multiple apps:
 
 ## Pre-requisites
 
-* PHP 7.1+
-* NodeJS 6.0+ and `yarn` accessible globally.
+* PHP 7.2+
+* NodeJS 8.0+ and `npm` accessible globally.
 * Imagemagick accessible globally or at least from the app, mostly `convert` and `identify` binaries.
 
 ## Install

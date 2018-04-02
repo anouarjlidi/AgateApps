@@ -105,12 +105,6 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
-        ],
-        "compile": [
-            "yarn run gulp test --prod --verbose -LLLL",
-            "php bin/console doctrine:schema:update --dump-sql --force",
-            "php bin/console doctrine:schema:validate || echo 'Doctrine schema not valid, please make sure it is correct.'",
-            "php bin/console esterenmaps:map:generate-tiles 1"
         ]
     },
     "conflict": {
