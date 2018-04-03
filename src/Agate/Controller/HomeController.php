@@ -38,18 +38,11 @@ class HomeController extends Controller
         }
 
         $response = new Response();
-        if (!$this->getParameter('kernel.debug')) {
-            $response->setCache([
-                'last_modified' => $portalElement->getUpdatedAt() ?: $portalElement->getCreatedAt(),
-                'max_age' => 600,
-                's_maxage' => 600,
-                'public' => $this->getUser() ? false : true,
-            ]);
-        }
-
-        if ($response->isNotModified($request)) {
-            return $response;
-        }
+        $response->setCache([
+            'max_age' => 600,
+            's_maxage' => 600,
+            'public' => $this->getUser() ? false : true,
+        ]);
 
         $template = 'agate/home/index-'.$_locale.'.html.twig';
 
