@@ -70,6 +70,7 @@
             "Admin\\": "src/Admin",
             "Agate\\": "src/Agate",
             "CorahnRin\\": "src/CorahnRin",
+            "Dragons\\": "src/Dragons",
             "Esteren\\": "src/Esteren",
             "EsterenMaps\\": "src/EsterenMaps"
         },
@@ -86,6 +87,7 @@
             "Tests\\Admin\\": "tests/Admin",
             "Tests\\Agate\\": "tests/Agate",
             "Tests\\CorahnRin\\": "tests/CorahnRin",
+            "Tests\\Dragons\\": "tests/Dragons",
             "Tests\\Esteren\\": "tests/Esteren",
             "Tests\\EsterenMaps\\": "tests/EsterenMaps"
         },

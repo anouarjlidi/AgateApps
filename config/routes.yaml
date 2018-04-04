@@ -78,6 +78,16 @@ agate:
     requirements: { _locale: '^(?:%locales_regex%)$' }
 
 #
+# Dragons
+#
+dragons:
+    resource: '../src/Dragons/Controller/'
+    type: annotation
+    prefix: '/{_locale}/'
+    defaults: { locale: '%locale%' }
+    requirements: { _locale: '^(?:%locales_regex%)$' }
+
+#
 # Esteren portal
 #
 esteren_portal:

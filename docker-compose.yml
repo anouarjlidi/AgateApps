@@ -13,6 +13,7 @@ services:
         environment:
             - APP_ENV=dev
             - AGATE_DOMAIN=studio-agate.piers
+            - DRAGONS_DOMAIN=dragons-rpg.piers
             - ESTEREN_DOMAIN=esteren.piers
             - VERMINE_DOMAIN=vermine2047.piers
             - DATABASE_URL="mysql://esteren_portal:esteren_portal@esteren_portal/esteren_portal?serverVersion=10.1"

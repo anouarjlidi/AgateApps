@@ -1,0 +1,108 @@
+{% extends 'dragons/dragons-layout.html.twig' %}
+
+{% block content_layout_class '' %}
+
+{% block content_for_layout %}
+
+    {% spaceless %}
+
+    <h1 class="sr-only">Bienvenue sur le nouveau portail du Studio Dragons</h1>
+
+    <div id="index-banner" class="parallax-container valign-wrapper">
+        <div class="section no-pad-bot">
+            <div class="container">
+                <h2 class="header center white-text text-shadow-black-10">{{ portal_element.title }}</h2>
+                <div class="row center">
+                    <h2 class="header col s12 light white-text text-shadow-black-10 text-xl">
+                        <strong>{{ portal_element.subtitle }}</strong>
+                    </h2>
+                </div>
+                <div class="row center">
+                    <a href="{{ portal_element.buttonLink }}" class="btn-large waves-effect waves-light bg-gold">
+                        {{ portal_element.buttonText }}
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="parallax">
+            <img src="{{ asset(uploaded_asset_url(portal_element.imageUrl)) }}">
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="section">
+
+            <div class="row">
+                <div class="col s12 m4 hoverable">
+                    <a href="http://www.esteren.org/" class="bl portal-link">
+                        <h2 class="text-xxl">
+                            <img src="{{ asset('img/dragons/Portal_Esteren_logo.png') }}" alt="Les Ombres d'Esteren">
+                        </h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam beatae, dolorem maxime minus</p>
+                    </a>
+                </div>
+                <div class="col s12 m4 hoverable">
+                    <a href="http://www.dragons-jdr.blogspot.fr/" class="bl portal-link">
+                        <h2 class="text-xxl">
+                            <img src="{{ asset('img/dragons/Portal_Dragons_logo.jpg') }}" alt="Dragons">
+                        </h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam beatae, dolorem maxime minus</p>
+                    </a>
+                </div>
+                <div class="col s12 m4 hoverable">
+                    <a href="{{ path('vermine_portal_home') }}" class="bl portal-link">
+                        <h2 class="text-xxl">
+                            <img src="{{ asset('img/dragons/Portal_Vermine_logo.jpg') }}" alt="Vermine 2047">
+                        </h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam beatae, dolorem maxime minus</p>
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12 m4 offset-m1 hoverable">
+                    <a href="https://www.facebook.com/7eMer/" class="bl portal-link">
+                        <h2 class="text-xxl">
+                            <img src="{{ asset('img/dragons/Portal_7e_Mer_Logo.png') }}" alt="7th Sea">
+                        </h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam beatae, dolorem maxime minus</p>
+                    </a>
+                </div>
+
+                <div class="col s12 m4 offset-m1 hoverable">
+                    <a href="http://www.facebook.com/vampirelerequiem/" class="bl portal-link">
+                        <h2 class="text-xxl">
+                            <img src="{{ asset('img/dragons/Portal_Vampire_Requiem_Logo.png') }}" alt="Vampire : Le Requiem">
+                        </h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam beatae, dolorem maxime minus</p>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="parallax-container valign-wrapper">
+        <div class="parallax"><img src="{{ asset('img/dragons/esteren_dearg_front.jpg') }}" alt="Les Ombres d'Esteren : Arven en train de marcher"></div>
+    </div>
+
+    <div class="container">
+        <div class="section">
+            <div class="row">
+                <div class="col s12 center text-m">
+                    <h2 id="decouvrir-esteren">Dragons</h2>
+                    <p class="left-align">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam facilis fuga itaque
+                        repudiandae. Aut beatae, cum dicta distinctio ducimus est ex explicabo ipsa itaque, laborum
+                        laudantium maiores possimus saepe temporibus.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="parallax-container valign-wrapper">
+        <div class="parallax"><img src="{{ asset('img/Esteren_Arven_marche.jpg') }}" alt="Les Ombres d'Esteren : Arven en train de marcher"></div>
+    </div>
+    {% endspaceless %}
+
+{% endblock %}

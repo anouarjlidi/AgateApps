@@ -81,6 +81,24 @@ final class PortalElementFixtures extends AbstractFixture implements ORMFixtureI
                 'buttonText' => 'button',
                 'buttonLink' => '/',
             ],
+            [
+                'portal' => 'dragons',
+                'locale' => 'fr',
+                'imageUrl' => 'maps/esteren_map.jpg',
+                'title' => 'Portail Dragons',
+                'subtitle' => 'sub',
+                'buttonText' => 'button',
+                'buttonLink' => '/',
+            ],
+            [
+                'portal' => 'dragons',
+                'locale' => 'en',
+                'imageUrl' => 'maps/esteren_map.jpg',
+                'title' => 'Dragons Portal',
+                'subtitle' => 'sub',
+                'buttonText' => 'button',
+                'buttonLink' => '/',
+            ],
         ];
     }
 }

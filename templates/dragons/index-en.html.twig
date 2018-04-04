@@ -1,0 +1,183 @@
+{% extends 'dragons/dragons-layout.html.twig' %}
+
+{% block stylesheets -%}
+    {{- parent() -}}
+    <style type="text/css">.sr-only {position: absolute;width: 1px;height: 1px;margin: -1px;padding: 0;overflow: hidden;clip: rect(0,0,0,0);border: 0;}iframe#sc{resize: both;overflow: auto; width: 100%; height: 450px;}</style>
+{%- endblock %}
+
+{% block content_layout_class '' %}
+
+{% block title 'Shadows of Esteren' %}
+
+{% block content_for_layout %}
+
+    {% spaceless %}
+
+    <h1 class="sr-only">Welcome to the new Shadows of Esteren's portal!</h1>
+
+    <div id="index-banner" class="parallax-container valign-wrapper">
+        <div class="section no-pad-bot">
+            <div class="container">
+                <h2 class="header center white-text text-shadow-black-10">{{ portal_element.title }}</h2>
+                <div class="row center">
+                    <h2 class="header col s12 light white-text text-shadow-black-10 text-xl">
+                        <strong>{{ portal_element.subtitle }}</strong>
+                    </h2>
+                </div>
+                <div class="row center">
+                    <a href="{{ portal_element.buttonLink }}" class="btn-large waves-effect waves-light bg-gold">
+                        {{ portal_element.buttonText }}
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="parallax">
+            <img src="{{ asset(uploaded_asset_url(portal_element.imageUrl)) }}">
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="section">
+
+            {# First line #}
+            <div class="row">
+                <div class="col s12 m3 hoverable">
+                    <a href="http://shadowsofesteren.blogspot.fr/2012/06/faq-esteren-in-20-questions.html" class="bl">
+                        <div class="portal_subtitle center" style="color: #E25822;"><img src="{{ asset('img/d10.svg') }}" alt="d10"></div>
+                        <h3 class="center text-xxl">Role-playing game</h3>
+                        <p>Discover the multi-award winning roleplaying-game series.</p>
+                    </a>
+                </div>
+                <div class="col s12 m3 hoverable">
+                    <a href="https://esteren.bandcamp.com/" class="bl">
+                        <div class="portal_subtitle center" style="color: #E27822;"><span class="fa fa-music">&nbsp;</span></div>
+                        <h3 class="center text-xxl">Music</h3>
+                        <p>Listen to samples of our OSTs on Bandcamp.</p>
+                    </a>
+                </div>
+                <div class="col s12 m3 hoverable">
+                    <a href="https://www.esteren.org/forum/viewforum.php?f=43" class="bl">
+                        <div class="portal_subtitle center" style="color: #E29822;"><span class="fa fa-users">&nbsp;</span></div>
+                        <h3 class="center text-xxl">Forum</h3>
+                        <p>Join a community of more than 1.000 Game Masters and share your thoughts and creations.</p>
+                    </a>
+                </div>
+                <div class="col s12 m3 hoverable">
+                    {#<a href="https://shop.esteren.org/" class="bl">#}
+                        <div class="portal_subtitle center" style="color: #E2B822;"><span class="fa fa-shopping-bag">&nbsp;</span></div>
+                        <h3 class="center text-xxl">Shop <small>(WIP...)</small></h3>
+                        <p>Order online, enjoy exclusive offers, and support us directly.</p>
+                    {#</a>#}
+                </div>
+            </div>
+
+            {# Second line #}
+            <div class="row">
+                <div class="col s12 m3 hoverable">
+                    <a href="http://shadowsofesteren.blogspot.fr/" class="bl">
+                        <div class="portal_subtitle center" style="color: #E2B822;"><span class="fa fa-rss">&nbsp;</span></div>
+                        <h3 class="center text-xxl">Blog</h3>
+                        <p>Get news about the project, exclusive glimpses at new illustrations, and read about the authors' thoughts.</p>
+                    </a>
+                </div>
+                <div class="col s12 m3 hoverable">
+                    <a href="http://shadowsofesteren.blogspot.fr/search?q=%22video+game%22" class="bl">
+                        <div class="portal_subtitle center" style="color: #E29822;"><span class="fa fa-gamepad">&nbsp;</span></div>
+                        <h3 class="center text-xxl">Video Games</h3>
+                        <p>Escape the Clutches of the Sorcerer Lord and follow the development of The Mac Lyrs' Legacy.</p>
+                    </a>
+                </div>
+                <div class="col s12 m3 hoverable">
+                    <a href="http://shadowsofesteren.blogspot.fr/2015/11/the-black-moon-handbook-is-on.html" class="bl">
+                        <div class="portal_subtitle center" style="color: #E27822;"><span class="fa fa-book">&nbsp;</span></div>
+                        <h3 class="center text-xxl">Literature</h3>
+                        <p>Go down dark legends of Tri-Kazel with our first collection of stories: Hauntings</p>
+                    </a>
+                </div>
+                <div class="col s12 m3 hoverable">
+                    {#<a href="http://ombresdesteren.blogspot.fr/2014/10/la-rose-noire-arrive-en-magasin-le-31.html" class="bl">#}
+                        <div class="portal_subtitle center" style="color: #E25822;"><span class="fa fa-hand-grab-o">&nbsp;</span></div>
+                        <h3 class="center text-xxl">Board games</h3>
+                        <p>Survive the curse of the Black Rose, a deductive board game for 4 to 5 players.</p>
+                    {#</a>#}
+                </div>
+            </div>
+
+            {# Third line #}
+            <div class="row">
+                <div class="col s12 m3 hoverable">
+                    <a href="https://www.google.com/maps/d/viewer?mid=1wdFjK4OsYcQpwiASe9AVhkGNPbQ" class="bl">
+                        <div class="portal_subtitle center" style="color: #E25822;"><span class="fa fa-map">&nbsp;</span></div>
+                        <h3 class="center text-xxl">Esteren Tour</h3>
+                        <p>Meet the team during one of the dates of this tour which began in 2010.</p>
+                    </a>
+                </div>
+                <div class="col s12 m3 hoverable">
+                    <a href="https://maps.esteren.org/fr/map-tri-kazel" class="bl">
+                        <div class="portal_subtitle center" style="color: #E27822;"><span class="fa fa-map-marker">&nbsp;</span></div>
+                        <h3 class="center text-xxl">Esteren Maps</h3>
+                        <p>Plan your next journey through the land of Tri-Kazel with this custom software.</p>
+                    </a>
+                </div>
+                <div class="col s12 m3 hoverable">
+                    <a href="http://eepurl.com/diCiqH" class="bl">
+                        <div class="portal_subtitle center" style="color: #E29822;"><span class="fa fa-envelope">&nbsp;</span></div>
+                        <h3 class="center text-xxl">Mailing list</h3>
+                        <p>Subscribe to the official mailing list and be notified about the next crowdfunding campaign.</p>
+                    </a>
+                </div>
+                <div class="col s12 m3 hoverable">
+                    <a href="https://www.drivethrurpg.com/browse.php?keywords=&manufacturers_id=5029&author=&artist=&pfrom=0&pto=0" class="bl">
+                        <div class="portal_subtitle center" style="color: #E2B822;"><span class="fa fa-dropbox">&nbsp;</span></div>
+                        <h3 class="center text-xxl">Resources</h3>
+                        <p>Many official game aids are available on the project's official DriveThruRPG page.</p>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="black">
+        <div class="container">
+            <div class="video-container portal-video">
+                <iframe src="//player.vimeo.com/video/113587824" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="section">
+            <div class="row">
+                <div class="col s12 center" style="color: #b8b8ff;">
+                    <h2 class="text-3xl">What is Shadows of Esteren?</h2>
+                    <p class="left-align">
+                        Shadows of Esteren is a medieval universe with horrific and gothic overtones, inspired by
+                        Celtic culture and legends. It exists through various media: a tabletop role-play gaming,
+                        music, board gaming, and even video gaming.
+                    </p>
+                    <p class="left-align">
+                        If you want to know more about the role-playing game and wish to get started immediately,
+                        you can freely download
+                        <a href="https://www.dropbox.com/s/jb17p091acj6rex/Shadows_of_Esteren_Book_0%20Prologue.pdf?dl=0" style="color: white;">Book 0 – Prologue</a>.
+                        This introduction to the series contains everything you need to play: an introduction to
+                        the universe and a summary of the system of 6 pages each, 6 pre-generated characters, and 3
+                        scenarios respectively suitable for beginner, confirmed, and experienced Game Masters.
+                    </p>
+                    <p class="left-align">
+                        Enjoy your stay in the Shadows...
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="parallax-container valign-wrapper">
+        <div class="parallax"><img src="{{ asset('img/Esteren_Arven_marche.jpg') }}" alt="Shadows of Esteren: Arven walking"></div>
+    </div>
+
+    <iframe style="resize: both;overflow: auto; width: 100%; height: 450px;" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/users/35988611&color=ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false"></iframe>
+
+    {% endspaceless %}
+
+{% endblock %}

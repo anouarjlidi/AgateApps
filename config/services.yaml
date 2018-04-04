@@ -32,6 +32,8 @@ parameters:
 
     agate_domains.portal:              'www.%env(AGATE_DOMAIN)%'
 
+    dragons_domains.portal:          'www.%env(DRAGONS_DOMAIN)%'
+
     vermine_domains.portal:          'www.%env(VERMINE_DOMAIN)%'
 
     magick_binaries_path: '%env(IMAGEMAGICK_BINARIES_PATH)%'

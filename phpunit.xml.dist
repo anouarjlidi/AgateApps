@@ -29,6 +29,7 @@
         <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak_vendors" />
         <env name="IMAGEMAGICK_BINARIES_PATH" value="/usr/bin" />
         <env name="AGATE_DOMAIN" value="studio-agate.dev" />
+        <env name="DRAGONS_DOMAIN" value="dragons-rpg.dev" />
         <env name="ESTEREN_DOMAIN" value="esteren.dev" />
         <env name="VERMINE_DOMAIN" value="vermine2047.dev" />
 

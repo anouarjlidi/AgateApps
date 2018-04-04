@@ -30,6 +30,7 @@ easy_admin:
                           choices:
                               Agate: agate
                               Esteren: esteren
+                              Dragons: dragons
 
                     - property: locale
                       label: 'admin.entities.portalElement.locale'
