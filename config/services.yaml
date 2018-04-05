@@ -60,7 +60,6 @@ services:
             $oneupFlysystem:  '@oneup_flysystem.assets_fs_filesystem'
             $awsRegion:       '%aws_region%'
             $awsBucket:       '%aws_bucket%'
-            $tileSize:        '%esterenmaps.tile_size%'
 
     Admin\:
         resource: '../src/Admin/{Controller}'
