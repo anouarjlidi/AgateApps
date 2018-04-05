@@ -1,12 +1,14 @@
 {% extends 'dragons/dragons-layout.html.twig' %}
 
+{% block title 'Dragons, le jeu de rôle' %}
+
 {% block content_layout_class '' %}
 
 {% block content_for_layout %}
 
     {% spaceless %}
 
-    <h1 class="sr-only">Bienvenue sur le nouveau portail du Studio Dragons</h1>
+    <h1 class="sr-only">Bienvenue sur le nouveau portail du jeu de rôle Dragons</h1>
 
     <div id="index-banner" class="parallax-container valign-wrapper">
         <div class="section no-pad-bot">
@@ -18,7 +20,7 @@
                     </h2>
                 </div>
                 <div class="row center">
-                    <a href="{{ portal_element.buttonLink }}" class="btn-large waves-effect waves-light bg-gold">
+                    <a href="{{ portal_element.buttonLink }}" class="btn-large waves-effect waves-light bg-dragons-red">
                         {{ portal_element.buttonText }}
                     </a>
                 </div>
@@ -34,46 +36,24 @@
 
             <div class="row">
                 <div class="col s12 m4 hoverable">
-                    <a href="http://www.esteren.org/" class="bl portal-link">
-                        <h2 class="text-xxl">
-                            <img src="{{ asset('img/dragons/Portal_Esteren_logo.png') }}" alt="Les Ombres d'Esteren">
-                        </h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam beatae, dolorem maxime minus</p>
+                    <a href="http://shadowsofesteren.blogspot.fr/2012/06/faq-esteren-in-20-questions.html" class="bl">
+                        <div class="portal_subtitle center" style="color: #f18f8d;"><span class="fa fa-feed">&nbsp;</span></div>
+                        <h3 class="center text-xxl">Le blog</h3>
+                        <p>Rejoignez-nous sur le blog pour découvrir la vie de la gamme !</p>
                     </a>
                 </div>
                 <div class="col s12 m4 hoverable">
-                    <a href="http://www.dragons-jdr.blogspot.fr/" class="bl portal-link">
-                        <h2 class="text-xxl">
-                            <img src="{{ asset('img/dragons/Portal_Dragons_logo.jpg') }}" alt="Dragons">
-                        </h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam beatae, dolorem maxime minus</p>
+                    <a href="https://forum.studio-agate.com" class="bl">
+                        <div class="portal_subtitle center" style="color: #cd1d19;"><span class="fa fa-users">&nbsp;</span></div>
+                        <h3 class="center text-xxl">Forum</h3>
+                        <p>Rejoignez une communauté de plusieurs centaines de joueurs et joueuses de Dragons.</p>
                     </a>
                 </div>
                 <div class="col s12 m4 hoverable">
-                    <a href="{{ path('vermine_portal_home') }}" class="bl portal-link">
-                        <h2 class="text-xxl">
-                            <img src="{{ asset('img/dragons/Portal_Vermine_logo.jpg') }}" alt="Vermine 2047">
-                        </h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam beatae, dolorem maxime minus</p>
-                    </a>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col s12 m4 offset-m1 hoverable">
-                    <a href="https://www.facebook.com/7eMer/" class="bl portal-link">
-                        <h2 class="text-xxl">
-                            <img src="{{ asset('img/dragons/Portal_7e_Mer_Logo.png') }}" alt="7th Sea">
-                        </h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam beatae, dolorem maxime minus</p>
-                    </a>
-                </div>
-
-                <div class="col s12 m4 offset-m1 hoverable">
-                    <a href="http://www.facebook.com/vampirelerequiem/" class="bl portal-link">
-                        <h2 class="text-xxl">
-                            <img src="{{ asset('img/dragons/Portal_Vampire_Requiem_Logo.png') }}" alt="Vampire : Le Requiem">
-                        </h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam beatae, dolorem maxime minus</p>
+                    <a href="https://www.dropbox.com/sh/bp2kfgn43ueu6ru/AAAZytOXUADMlVpQdEG-Ttl1a" class="bl">
+                        <div class="portal_subtitle center" style="color: #440a08;"><span class="fa fa-dropbox">&nbsp;</span></div>
+                        <h3 class="center text-xxl">Espace de téléchargement</h3>
+                        <p>Téléchargez les feuilles de personnages et diverses aides de jeu directement sur l'espace dédié au projet.</p>
                     </a>
                 </div>
             </div>
@@ -82,27 +62,9 @@
     </div>
 
     <div class="parallax-container valign-wrapper">
-        <div class="parallax"><img src="{{ asset('img/dragons/esteren_dearg_front.jpg') }}" alt="Les Ombres d'Esteren : Arven en train de marcher"></div>
+        <div class="parallax"><img src="{{ asset('img/agate/esteren_dearg_front.jpg') }}" alt="Les Ombres d'Esteren : Arven en train de marcher"></div>
     </div>
 
-    <div class="container">
-        <div class="section">
-            <div class="row">
-                <div class="col s12 center text-m">
-                    <h2 id="decouvrir-esteren">Dragons</h2>
-                    <p class="left-align">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam facilis fuga itaque
-                        repudiandae. Aut beatae, cum dicta distinctio ducimus est ex explicabo ipsa itaque, laborum
-                        laudantium maiores possimus saepe temporibus.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="parallax-container valign-wrapper">
-        <div class="parallax"><img src="{{ asset('img/Esteren_Arven_marche.jpg') }}" alt="Les Ombres d'Esteren : Arven en train de marcher"></div>
-    </div>
     {% endspaceless %}
 
 {% endblock %}

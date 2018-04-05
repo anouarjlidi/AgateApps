@@ -57,13 +57,14 @@ ul.list-bullet > li
 *.text-3xl { font-size: 2em !important; }
 *.text-4xl { font-size: 2.4em !important; }
 
-*.bg-gold      { background-color: goldenrod !important; }
-
 *.text-shadow-black-10 { text-shadow: 0 0 10px #000 !important; }
 *.text-shadow-black-10-stronger { text-shadow: 0 0 10px #000, 0 0 10px #000, 0 0 10px #000 !important; }
 
 /* Text format */
 .text-underline { text-decoration: underline !important; }
+
+*.bg-gold        { background-color: goldenrod !important; }
+*.bg-dragons-red { background-color: #e6332f !important; }
 
 .lhn { line-height: normal !important; }
 .lh1em { line-height: 1em !important; }

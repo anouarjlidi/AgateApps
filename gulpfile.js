@@ -67,6 +67,9 @@ const config = {
         "img/agate": [
             "assets/agate/images/**"
         ],
+        "img/dragons": [
+            "assets/dragons/images/**"
+        ],
         "img/": [
             "assets/esteren/images/**"
         ]
@@ -110,6 +113,9 @@ const config = {
         ],
         "css/agate.css": [
             "assets/agate/sass/agate-theme.scss"
+        ],
+        "css/dragons.css": [
+            "assets/dragons/sass/dragons-theme.scss"
         ],
         "css/generator.css": [
             "assets/corahn_rin/generator/css/main_steps.scss"
