@@ -1,0 +1,10 @@
+services:
+    _defaults:
+        public: true
+        autowire: true
+        autoconfigure: true
+
+    Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface:
+        alias: '@security.encoder_factory'
+
+    Agate\Security\Provider\UsernameOrEmailProvider: ~
