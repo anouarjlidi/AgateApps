@@ -16,6 +16,7 @@ use Agate\Repository\UserRepository;
 use Agate\Security\Provider\UsernameOrEmailProvider;
 use Symfony\Component\DomCrawler\Form;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Tests\WebTestCase as PiersTestCase;
 
 abstract class AbstractSecurityControllerTest extends WebTestCase
@@ -67,7 +68,7 @@ abstract class AbstractSecurityControllerTest extends WebTestCase
         ;
 
         $client = $this->getClient('portal.esteren.dev');
-        $container = static::$kernel->getContainer();
+        $container = $client->getContainer();
 
         $hashed = $container->get('security.password_encoder')->encodePassword($user, 'whatever');
         $user->setPassword($hashed);
@@ -239,7 +240,7 @@ abstract class AbstractSecurityControllerTest extends WebTestCase
 
         // Now check that new password is correctly saved in database
         $user    = $container->get(UsernameOrEmailProvider::class)->loadUserByUsername(static::USER_NAME.$locale);
-        $encoder = $container->get('security.encoder_factory')->getEncoder($user);
+        $encoder = $container->get(EncoderFactoryInterface::class)->getEncoder($user);
         static::assertTrue($encoder->isPasswordValid($user->getPassword(), 'newPassword', $user->getSalt()));
 
         $crawler->clear();

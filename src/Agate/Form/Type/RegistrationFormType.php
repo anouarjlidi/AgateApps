@@ -20,23 +20,18 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Agate\Entity\User;
-use Agate\Util\Canonicalizer;
+use Agate\Util\CanonicalizerTrait;
 
 class RegistrationFormType extends AbstractType
 {
-    private $canonicalizer;
-
-    public function __construct(Canonicalizer $canonicalizer)
-    {
-        $this->canonicalizer = $canonicalizer;
-    }
+    use CanonicalizerTrait;
 
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $canonicalizer = $this->canonicalizer;
+        $canonicalizer = \Closure::fromCallable([$this, 'canonicalize']);
 
         $builder
             ->add('email', EmailType::class, [
@@ -57,8 +52,8 @@ class RegistrationFormType extends AbstractType
             ->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) use ($canonicalizer) {
                 /** @var User $user */
                 $user = $event->getForm()->getData();
-                $user->setUsernameCanonical($canonicalizer->canonicalize($user->getUsername()));
-                $user->setEmailCanonical($canonicalizer->canonicalize($user->getEmail()));
+                $user->setUsernameCanonical($canonicalizer($user->getUsername()));
+                $user->setEmailCanonical($canonicalizer($user->getEmail()));
             })
         ;
     }

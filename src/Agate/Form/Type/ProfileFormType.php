@@ -20,23 +20,20 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
-use Agate\Util\Canonicalizer;
+use Agate\Util\CanonicalizerTrait;
 use Agate\Entity\User;
 
 class ProfileFormType extends AbstractType
 {
-    private $canonicalizer;
-
-    public function __construct(Canonicalizer $canonicalizer)
-    {
-        $this->canonicalizer = $canonicalizer;
-    }
+    use CanonicalizerTrait;
 
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $canonicalizer = \Closure::fromCallable([$this, 'canonicalize']);
+
         $builder
             ->add('username', TextType::class, [
                 'label'              => 'form.username',
@@ -58,12 +55,12 @@ class ProfileFormType extends AbstractType
          * Form events
          */
         $builder
-            ->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
+            ->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) use ($canonicalizer) {
                 // Canonicalize properties
                 /** @var User $user */
                 $user = $event->getForm()->getData();
-                $user->setUsernameCanonical($this->canonicalizer->canonicalize($user->getUsername()));
-                $user->setEmailCanonical($this->canonicalizer->canonicalize($user->getEmail()));
+                $user->setUsernameCanonical($canonicalizer($user->getUsername()));
+                $user->setEmailCanonical($canonicalizer($user->getEmail()));
             })
         ;
     }

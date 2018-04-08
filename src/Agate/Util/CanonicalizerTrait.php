@@ -11,9 +11,9 @@
 
 namespace Agate\Util;
 
-class Canonicalizer
+trait CanonicalizerTrait
 {
-    public function canonicalize($string)
+    public function canonicalize(string $string): string
     {
         if (null === $string) {
             return null;
