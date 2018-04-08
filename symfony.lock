@@ -59,6 +59,15 @@
     "doctrine/orm": {
         "version": "v2.5.12"
     },
+    "easycorp/easyadmin-bundle": {
+        "version": "1.17",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "1.17",
+            "ref": "66070ea553247b0cd5275e21d0fe5399a25f40be"
+        }
+    },
     "egulias/email-validator": {
         "version": "2.1.2"
     },
@@ -76,15 +85,6 @@
     },
     "incenteev/composer-parameter-handler": {
         "version": "v2.1.2"
-    },
-    "javiereguiluz/easyadmin-bundle": {
-        "version": "1.17",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "1.17",
-            "ref": "66070ea553247b0cd5275e21d0fe5399a25f40be"
-        }
     },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
@@ -258,7 +258,7 @@
         "version": "v6.0.2"
     },
     "symfony/asset": {
-        "version": "v3.3.11"
+        "version": "v3.4.8"
     },
     "symfony/browser-kit": {
         "version": "v3.3.11"
@@ -422,7 +422,7 @@
             "repo": "github.com/symfony/recipes",
             "branch": "master",
             "version": "3.3",
-            "ref": "85834af1496735f28d831489d12ab1921a875e0d"
+            "ref": "f8a63faa0d9521526499c0a8f403c9964ecb0527"
         }
     },
     "symfony/serializer": {
