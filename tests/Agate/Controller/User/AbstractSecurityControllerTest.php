@@ -68,7 +68,7 @@ abstract class AbstractSecurityControllerTest extends WebTestCase
         ;
 
         $client = $this->getClient('portal.esteren.dev');
-        $container = static::$kernel->getContainer();
+        $container = $client->getContainer();
 
         $hashed = $container->get('security.password_encoder')->encodePassword($user, 'whatever');
         $user->setPassword($hashed);

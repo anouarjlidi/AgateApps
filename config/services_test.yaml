@@ -1,4 +1,7 @@
 services:
+
+    ## TODO: Remove this file when upgrading to SF 4.1
+
     _defaults:
         public: true
         autowire: true
