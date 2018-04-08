@@ -4,7 +4,6 @@ services:
         autowire: true
         autoconfigure: true
 
-    Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface:
-        alias: '@security.encoder_factory'
+    Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface: '@security.encoder_factory'
 
     Agate\Security\Provider\UsernameOrEmailProvider: ~
