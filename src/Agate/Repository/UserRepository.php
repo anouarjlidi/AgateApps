@@ -15,17 +15,18 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Orbitale\Component\DoctrineTools\EntityRepositoryHelperTrait;
 use Agate\Entity\User;
-use Agate\Util\Canonicalizer;
+use Agate\Util\CanonicalizerTrait;
 
+/**
+ * @method User findOneBy(array $criteria, array $orderBy = null)
+ */
 class UserRepository extends ServiceEntityRepository
 {
     use EntityRepositoryHelperTrait;
+    use CanonicalizerTrait;
 
-    protected $canonicalizer;
-
-    public function __construct(ManagerRegistry $registry, Canonicalizer $canonicalizer)
+    public function __construct(ManagerRegistry $registry)
     {
-        $this->canonicalizer = $canonicalizer;
         parent::__construct($registry, User::class);
     }
 
@@ -34,7 +35,7 @@ class UserRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('user')
             ->where('user.usernameCanonical = :usernameOrEmail')
             ->orWhere('user.emailCanonical = :usernameOrEmail')
-            ->setParameter('usernameOrEmail', $this->canonicalizer->canonicalize($usernameOrEmail))
+            ->setParameter('usernameOrEmail', $this->canonicalize($usernameOrEmail))
             ->getQuery()
             ->getOneOrNullResult()
         ;
@@ -42,9 +43,7 @@ class UserRepository extends ServiceEntityRepository
 
     public function findOneByEmail($email): ?User
     {
-        $email = $this->canonicalizer->canonicalize($email);
-
-        return $this->findOneBy(['emailCanonical' => $email]);
+        return $this->findOneBy(['emailCanonical' => $this->canonicalize($email)]);
     }
 
     public function findOneByConfirmationToken($token): ?User

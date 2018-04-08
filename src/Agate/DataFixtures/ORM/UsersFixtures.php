@@ -22,10 +22,12 @@ use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 use Agate\Entity\User;
-use Agate\Util\Canonicalizer;
+use Agate\Util\CanonicalizerTrait;
 
 final class UsersFixtures extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface, ORMFixtureInterface
 {
+    use CanonicalizerTrait;
+
     /**
      * @var ObjectManager
      */
@@ -39,11 +41,6 @@ final class UsersFixtures extends AbstractFixture implements OrderedFixtureInter
      * @var PasswordEncoderInterface
      */
     protected $passwordEncoder;
-
-    /**
-     * @var Canonicalizer
-     */
-    protected $canonicalizer;
 
     /**
      * Get the order of this fixture.
@@ -73,7 +70,6 @@ final class UsersFixtures extends AbstractFixture implements OrderedFixtureInter
         /** @var EntityRepository $repo */
         $repo = $this->manager->getRepository(User::class);
 
-        $this->canonicalizer   = $this->container->get(Canonicalizer::class);
         $this->passwordEncoder = $this->container->get('security.password_encoder');
 
         $this->fixtureObject($repo, 1, 'Pierstoval', 'pierstoval@gmail.com', 'admin', true);
@@ -108,8 +104,8 @@ final class UsersFixtures extends AbstractFixture implements OrderedFixtureInter
             $user->setEmail($email);
             $user->setPlainPassword($password ?: $email);
             $user->setSuperAdmin($superAdmin);
-            $user->setEmailCanonical($this->canonicalizer->canonicalize($user->getEmail()));
-            $user->setUsernameCanonical($this->canonicalizer->canonicalize($user->getUsername()));
+            $user->setEmailCanonical($this->canonicalize($user->getEmail()));
+            $user->setUsernameCanonical($this->canonicalize($user->getUsername()));
             $user->setPassword($this->passwordEncoder->encodePassword($user, $user->getPlainPassword()));
             $user->setEmailConfirmed(true);
 
