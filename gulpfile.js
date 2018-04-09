@@ -616,14 +616,14 @@ gulp.task('watch', gulp.series('dump', gulp.parallel(function(done) {
                         return done();
                     }
 
-                    if (!fileData.match('HEROKU_RELEASE_VERSION')) {
-                        fileData += "\nHEROKU_RELEASE_VERSION=\"v0\"\n";
+                    if (!fileData.match('RELEASE_VERSION')) {
+                        fileData += "\nRELEASE_VERSION=\"v0\"\n";
                     }
 
-                    fileData = fileData.replace(/HEROKU_RELEASE_VERSION=("?v?)(\d+)("?)/g, function(match, p1, versionNumber, p2) {
+                    fileData = fileData.replace(/RELEASE_VERSION=("?v?)(\d+)("?)/g, function(match, p1, versionNumber, p2) {
                         console.log('Current version is ' + versionNumber + '. Upgrading to ' + (++versionNumber));
 
-                        return 'HEROKU_RELEASE_VERSION=' + p1 + versionNumber + p2;
+                        return 'RELEASE_VERSION=' + p1 + versionNumber + p2;
                     });
 
                     fs.writeFile(envFile, fileData, done);
