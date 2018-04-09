@@ -20,10 +20,20 @@ ENV_FILE="./.env"
 CLI_FILE="../env"
 NGINX_FILE="../env_nginx.conf"
 
+echo "[DEPLOY] > Update repository branch"
+CHANGELOG=$(git changelog HEAD...master | sed 1d)
+CHANGELOG_SIZE=$(echo "${CHANGELOG}" | wc -l)
+if [[ "${CHANGELOG_SIZE}" == "0" ]]; then
+    echo "[DEPLOY] > No new commit! Terminating..."
+    exit 1
+else
+    echo "[DEPLOY] > Retrieved $((CHANGELOG_SIZE-1)) commits(s) in changelog..."
+fi
+
 LAST_VERSION=$(grep -o -E "RELEASE_VERSION.*[0-9]+.*" ${CLI_FILE} | sed -r 's/[^0-9]+//g')
 NEW_VERSION=$(expr ${LAST_VERSION} + 1)
 LAST_DATE=$(grep -o -E "RELEASE_DATE=\"?[^\"]+\"?" ${CLI_FILE} | sed -r 's/^.*="?([^"]+)"?$/\1/g')
-NEW_DATE=$(date --iso-8601=seconds)
+NEW_DATE=$(date --rfc-3339=seconds)
 
 echo "[DEPLOY] > Current version: ${LAST_VERSION}"
 echo "[DEPLOY] > Last build date: ${LAST_DATE}"
@@ -62,3 +72,31 @@ sed -i -e "s/RELEASE_DATE=.*/RELEASE_DATE=\"${NEW_DATE}\"/g" ${CLI_FILE}
 sed -i -e "s/RELEASE_DATE .*/RELEASE_DATE \"${NEW_DATE}\";/g" ${NGINX_FILE}
 
 sudo service nginx reload
+
+read -d '' FULL_CHANGELOG << CHGLOG
+New version: v${NEW_VERSION}
+Released on: ${NEW_DATE}
+
+Reminder of all portals:
+
+* https://portal.esteren.org
+* https://www.studio-agate.com
+* https://maps.esteren.org
+* https://corahnrin.esteren.org
+* https://www.vermine2047.com
+
+List of all changes/commits:
+${CHANGELOG}
+CHGLOG
+
+echo "FULL CHANGELOG > ${FULL_CHANGELOG}"
+
+for TO in "pierstoval+esterenProd@gmail.com" "nelyhann+portal@gmail.com"
+do
+    php bin/console swiftmailer:email:send \
+        --from=pierstoval@gmail.com \
+        --to=${TO} \
+        --subject="Deploy successful!" \
+        --body="${FULL_CHANGELOG}" \
+        --content-type=text/plain
+done
