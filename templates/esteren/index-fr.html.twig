@@ -2,6 +2,11 @@
 
 {% block title "Les Ombres d'Esteren" %}
 
+{% block stylesheets -%}
+    {{- parent() -}}
+    <style type="text/css">iframe#sc{resize: both;overflow: auto; width: 100%; height: 450px;}</style>
+{%- endblock %}
+
 {% block content_layout_class '' %}
 
 {% block content_for_layout %}
@@ -138,7 +143,7 @@
     <div class="black">
         <div class="container">
             <div class="video-container portal-video">
-                <iframe src="//player.vimeo.com/video/113587824" allowfullscreen></iframe>
+                <iframe id="sc" src="//player.vimeo.com/video/113587824" allowfullscreen></iframe>
             </div>
         </div>
     </div>
