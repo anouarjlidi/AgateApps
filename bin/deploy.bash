@@ -27,12 +27,13 @@ echo "[DEPLOY] > Update repository branch"
 git fetch origin
 
 CHANGELOG=$(git changelog HEAD...master | sed 1d)
-CHANGELOG_SIZE=$(echo "${CHANGELOG}" | wc -m)
-if [[ "${CHANGELOG_SIZE}" <= "1" ]]; then
+CHANGELOG_SIZE=$(echo "${CHANGELOG}" | wc -l)
+CHANGELOG_SIZE_CHARS=$(echo "${CHANGELOG}" | wc -m)
+if [ "${CHANGELOG_SIZE_CHARS}" -lt "2" ]; then
     echo "[DEPLOY] > No new commit! Terminating..."
     exit 1
 else
-    echo "[DEPLOY] > Retrieved $((CHANGELOG_SIZE-1)) commits(s) in changelog..."
+    echo "[DEPLOY] > Retrieved $((CHANGELOG_SIZE)) commits(s) in changelog..."
 fi
 
 echo "[DEPLOY] > Applying these commits..."
