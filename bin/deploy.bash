@@ -21,6 +21,7 @@ CLI_FILE="../env"
 NGINX_FILE="../env_nginx.conf"
 
 echo "[DEPLOY] > Update repository branch"
+git fetch origin
 CHANGELOG=$(git changelog HEAD...master | sed 1d)
 CHANGELOG_SIZE=$(echo "${CHANGELOG}" | wc -l)
 if [[ "${CHANGELOG_SIZE}" == "0" ]]; then
@@ -29,6 +30,11 @@ if [[ "${CHANGELOG_SIZE}" == "0" ]]; then
 else
     echo "[DEPLOY] > Retrieved $((CHANGELOG_SIZE-1)) commits(s) in changelog..."
 fi
+
+echo "[DEPLOY] > Applying these commits..."
+git merge origin/master
+
+echo "[DEPLOY] > Done!"
 
 LAST_VERSION=$(grep -o -E "RELEASE_VERSION.*[0-9]+.*" ${CLI_FILE} | sed -r 's/[^0-9]+//g')
 NEW_VERSION=$(expr ${LAST_VERSION} + 1)
