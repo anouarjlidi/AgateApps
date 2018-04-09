@@ -81,7 +81,9 @@ sed -i -e "s/RELEASE_DATE=.*/RELEASE_DATE=\"${NEW_DATE}\"/g" ${ENV_FILE}
 sed -i -e "s/RELEASE_DATE=.*/RELEASE_DATE=\"${NEW_DATE}\"/g" ${CLI_FILE}
 sed -i -e "s/RELEASE_DATE .*/RELEASE_DATE \"${NEW_DATE}\";/g" ${NGINX_FILE}
 
+echo "[DEPLOY] > Restart web server..."
 sudo service nginx reload
+echo "[DEPLOY] > Done!"
 
 read -d '' FULL_CHANGELOG << CHGLOG
 New version: v${NEW_VERSION}
@@ -99,7 +101,7 @@ List of all changes/commits:
 ${CHANGELOG}
 CHGLOG
 
-echo "FULL CHANGELOG > ${FULL_CHANGELOG}"
+echo "[DEPLOY] > FULL CHANGELOG > ${FULL_CHANGELOG}"
 
 echo "[DEPLOY] > Sending email reminders..."
 
