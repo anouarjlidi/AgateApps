@@ -27,8 +27,8 @@ echo "[DEPLOY] > Update repository branch"
 git fetch origin
 
 CHANGELOG=$(git changelog HEAD...master | sed 1d)
-CHANGELOG_SIZE=$(echo "${CHANGELOG}" | wc -l)
-if [[ "${CHANGELOG_SIZE}" == "0" ]]; then
+CHANGELOG_SIZE=$(echo "${CHANGELOG}" | wc -m)
+if [[ "${CHANGELOG_SIZE}" <= "1" ]]; then
     echo "[DEPLOY] > No new commit! Terminating..."
     exit 1
 else
