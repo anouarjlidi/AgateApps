@@ -37,16 +37,16 @@ fi
 echo "[DEPLOY] > Executing scripts..."
 echo "[DEPLOY] > "
 
-#composer ins --no-dev --optimize-autoloader --classmap-authoritative --prefer-dist
-#
-#php bin/console cache:clear --no-warmup
-#php bin/console cache:warmup
-#
-#php bin/console doctrine:schema:validate || exit 1
-#
-#npm install
-#
-#npm run-script deploy
+composer ins --no-dev --optimize-autoloader --classmap-authoritative --prefer-dist
+
+php bin/console cache:clear --no-warmup
+php bin/console cache:warmup
+
+php bin/console doctrine:schema:validate || exit 1
+
+npm install
+
+npm run-script deploy
 
 echo "[DEPLOY] > Done!"
 echo "[DEPLOY] > Now updating environment vars..."
@@ -60,3 +60,5 @@ sed -i -e "s/RELEASE_VERSION .*/RELEASE_VERSION \"v${NEW_VERSION}\";/g" ${NGINX_
 sed -i -e "s/RELEASE_DATE=.*/RELEASE_DATE=\"${NEW_DATE}\"/g" ${ENV_FILE}
 sed -i -e "s/RELEASE_DATE=.*/RELEASE_DATE=\"${NEW_DATE}\"/g" ${CLI_FILE}
 sed -i -e "s/RELEASE_DATE .*/RELEASE_DATE \"${NEW_DATE}\";/g" ${NGINX_FILE}
+
+sudo service nginx reload
