@@ -6,9 +6,11 @@
 #  /_____\  Thanks ☺ ♥
 #
 # This is the deploy script used in production.
-# It runs scripts that are mandatory after a deploy.
-# It also updates RELEASE_VERSION and RELEASE_DATE environment vars,
-# and saves the values in env files for CLI and webserver.
+# It does plenty tasks:
+#  * Run scripts that are mandatory after a deploy.
+#  * Update RELEASE_VERSION and RELEASE_DATE environment vars,
+#  * Save the values in env files for CLI and webserver.
+#  * Send by email the analyzed changelog (which might not be 100% correct, but it's at least a changelog).
 
 # bin/ directory
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
@@ -21,7 +23,9 @@ CLI_FILE="../env"
 NGINX_FILE="../env_nginx.conf"
 
 echo "[DEPLOY] > Update repository branch"
+
 git fetch origin
+
 CHANGELOG=$(git changelog HEAD...master | sed 1d)
 CHANGELOG_SIZE=$(echo "${CHANGELOG}" | wc -l)
 if [[ "${CHANGELOG_SIZE}" == "0" ]]; then
