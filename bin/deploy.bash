@@ -101,6 +101,8 @@ CHGLOG
 
 echo "FULL CHANGELOG > ${FULL_CHANGELOG}"
 
+echo "[DEPLOY] > Sending email reminders..."
+
 for TO in "pierstoval+esterenProd@gmail.com" "nelyhann+portal@gmail.com"
 do
     php bin/console swiftmailer:email:send \
@@ -110,3 +112,6 @@ do
         --body="${FULL_CHANGELOG}" \
         --content-type=text/plain
 done
+
+echo "[DEPLOY] > Done!"
+echo "[DEPLOY] > Deploy finished!"
