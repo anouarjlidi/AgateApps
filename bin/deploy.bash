@@ -26,7 +26,7 @@ echo "[DEPLOY] > Update repository branch"
 
 git fetch origin
 
-CHANGELOG=$(git changelog HEAD...master | sed 1d)
+CHANGELOG=$(git changelog HEAD...origin/master | sed 1d)
 CHANGELOG_SIZE=$(echo "${CHANGELOG}" | wc -l)
 CHANGELOG_SIZE_CHARS=$(echo "${CHANGELOG}" | wc -m)
 if [ "${CHANGELOG_SIZE_CHARS}" -lt "2" ]; then
