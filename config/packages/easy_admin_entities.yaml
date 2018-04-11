@@ -41,9 +41,9 @@ easy_admin:
                           choice_translation_domain: Languages
 
                     - { property: title, label: 'admin.entities.portalElement.title' }
-                    - { property: subtitle, label: 'admin.entities.portalElement.subtitle' }
-                    - { property: buttonLink, label: 'admin.entities.portalElement.buttonLink' }
-                    - { property: buttonText, label: 'admin.entities.portalElement.buttonText' }
+                    - { property: subtitle, required: false, label: 'admin.entities.portalElement.subtitle' }
+                    - { property: buttonLink, required: false, label: 'admin.entities.portalElement.buttonLink' }
+                    - { property: buttonText, required: false, label: 'admin.entities.portalElement.buttonText' }
 
                     - property: image
                       type: file
@@ -72,9 +72,9 @@ easy_admin:
                               readonly: readonly
 
                     - { property: title, label: 'admin.entities.portalElement.title' }
-                    - { property: subtitle, label: 'admin.entities.portalElement.subtitle' }
-                    - { property: buttonLink, label: 'admin.entities.portalElement.buttonLink' }
-                    - { property: buttonText, label: 'admin.entities.portalElement.buttonText' }
+                    - { property: subtitle, required: false, label: 'admin.entities.portalElement.subtitle' }
+                    - { property: buttonLink, required: false, label: 'admin.entities.portalElement.buttonLink' }
+                    - { property: buttonText, required: false, label: 'admin.entities.portalElement.buttonText' }
 
                     - property: image
                       type: file
