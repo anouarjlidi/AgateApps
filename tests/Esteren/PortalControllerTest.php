@@ -49,7 +49,7 @@ class PortalControllerTest extends WebTestCase
         $crawler = $client->request('GET', '/fr/');
 
 
-        static::assertSame('portal_home', $client->getRequest()->attributes->get('_route'));
+        static::assertSame('esteren_portal_home', $client->getRequest()->attributes->get('_route'));
 
         static::assertSame(200, $client->getResponse()->getStatusCode());
 
@@ -65,7 +65,7 @@ class PortalControllerTest extends WebTestCase
         $crawler = $client->request('GET', '/en/');
 
 
-        static::assertSame('portal_home', $client->getRequest()->attributes->get('_route'));
+        static::assertSame('esteren_portal_home', $client->getRequest()->attributes->get('_route'));
 
         static::assertSame(200, $client->getResponse()->getStatusCode());
 
