@@ -34,7 +34,8 @@ if [ "${CHANGELOG_SIZE_CHARS}" -lt "1" ]; then
     echo "[DEPLOY] > No new commit! Terminating..."
     exit 1
 else
-    echo "[DEPLOY] > Retrieved $((CHANGELOG_SIZE)) commits(s) in changelog..."
+    echo "[DEPLOY] > Retrieved $((CHANGELOG_SIZE)) commits(s) in changelog:"
+    echo "[DEPLOY] > ${CHANGELOG}"
 fi
 
 echo "[DEPLOY] > Applying these commits..."
@@ -99,7 +100,8 @@ List of all changes/commits:
 ${CHANGELOG}
 CHGLOG
 
-echo "[DEPLOY] > FULL CHANGELOG > ${FULL_CHANGELOG}"
+echo "[DEPLOY] > FULL CHANGELOG"
+echo ${FULL_CHANGELOG}
 
 echo "[DEPLOY] > Sending email reminders..."
 
