@@ -77,28 +77,22 @@ class PortalElement
      * @var string
      *
      * @ORM\Column(name="subtitle", type="string")
-     *
-     * @Assert\NotBlank()
      */
-    private $subtitle;
+    private $subtitle = '';
 
     /**
      * @var string
      *
      * @ORM\Column(name="button_text", type="string")
-     *
-     * @Assert\NotBlank()
      */
-    private $buttonText;
+    private $buttonText = '';
 
     /**
      * @var string
      *
      * @ORM\Column(name="button_link", type="string")
-     *
-     * @Assert\NotBlank()
      */
-    private $buttonLink;
+    private $buttonLink = '';
 
     /**
      * @var UploadedFile|null

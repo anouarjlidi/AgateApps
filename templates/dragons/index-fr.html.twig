@@ -19,11 +19,13 @@
                         <strong>{{ portal_element.subtitle }}</strong>
                     </h2>
                 </div>
+                {% if portal_element.buttonLink and portal_element.buttonText %}
                 <div class="row center">
                     <a href="{{ portal_element.buttonLink }}" class="btn-large waves-effect waves-light bg-dragons-red">
                         {{ portal_element.buttonText }}
                     </a>
                 </div>
+                {% endif %}
             </div>
         </div>
         <div class="parallax">
