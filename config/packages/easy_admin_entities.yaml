@@ -41,9 +41,15 @@ easy_admin:
                           choice_translation_domain: Languages
 
                     - { property: title, label: 'admin.entities.portalElement.title' }
-                    - { property: subtitle, required: false, label: 'admin.entities.portalElement.subtitle' }
-                    - { property: buttonLink, required: false, label: 'admin.entities.portalElement.buttonLink' }
-                    - { property: buttonText, required: false, label: 'admin.entities.portalElement.buttonText' }
+                    - property: subtitle
+                      label: 'admin.entities.portalElement.subtitle'
+                      type_options: { required: false }
+                    - property: buttonLink
+                      label: 'admin.entities.portalElement.buttonLink'
+                      type_options: { required: false }
+                    - property: buttonText
+                      label: 'admin.entities.portalElement.buttonText'
+                      type_options: { required: false }
 
                     - property: image
                       type: file
@@ -72,9 +78,15 @@ easy_admin:
                               readonly: readonly
 
                     - { property: title, label: 'admin.entities.portalElement.title' }
-                    - { property: subtitle, required: false, label: 'admin.entities.portalElement.subtitle' }
-                    - { property: buttonLink, required: false, label: 'admin.entities.portalElement.buttonLink' }
-                    - { property: buttonText, required: false, label: 'admin.entities.portalElement.buttonText' }
+                    - property: subtitle
+                      label: 'admin.entities.portalElement.subtitle'
+                      type_options: { required: false }
+                    - property: buttonLink
+                      label: 'admin.entities.portalElement.buttonLink'
+                      type_options: { required: false }
+                    - property: buttonText
+                      label: 'admin.entities.portalElement.buttonText'
+                      type_options: { required: false }
 
                     - property: image
                       type: file
