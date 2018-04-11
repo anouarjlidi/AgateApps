@@ -59,16 +59,12 @@ fi
 echo "[DEPLOY] > Executing scripts..."
 echo "[DEPLOY] > "
 
-composer ins --no-dev --optimize-autoloader --classmap-authoritative --prefer-dist
-
-php bin/console cache:clear --no-warmup
-php bin/console cache:warmup
-
-php bin/console doctrine:schema:validate || exit 1
-
-npm install
-
-npm run-script deploy
+#
+# These scripts are "wrapped" because they might have been updated between deploys.
+# Only this "deploy.bash" script can't be updated, because it's executed on deploy.
+# But having the scripts executed like this is a nice opportunity to update the scripts between deploys.
+#
+bash ./bin/deploy_scripts.bash
 
 echo "[DEPLOY] > Done!"
 echo "[DEPLOY] > Now updating environment vars..."
