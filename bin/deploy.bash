@@ -29,7 +29,8 @@ git fetch origin
 CHANGELOG=$(git changelog HEAD...origin/master | sed 1d)
 CHANGELOG_SIZE=$(echo "${CHANGELOG}" | wc -l)
 CHANGELOG_SIZE_CHARS=$(echo "${CHANGELOG}" | wc -m)
-if [ "${CHANGELOG_SIZE_CHARS}" -lt "2" ]; then
+if [ "${CHANGELOG_SIZE_CHARS}" -lt "1" ]; then
+    echo "[DEPLOY] > ${CHANGELOG}"
     echo "[DEPLOY] > No new commit! Terminating..."
     exit 1
 else
