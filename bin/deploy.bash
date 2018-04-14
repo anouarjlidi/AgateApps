@@ -90,11 +90,12 @@ Released on: ${NEW_DATE}
 
 Reminder of all portals:
 
-* https://portal.esteren.org
 * https://www.studio-agate.com
+* https://www.vermine2047.com
+* https://www.dragons-rpg.com
+* https://portal.esteren.org
 * https://maps.esteren.org
 * https://corahnrin.esteren.org
-* https://www.vermine2047.com
 
 List of all changes/commits:
 ${CHANGELOG}
