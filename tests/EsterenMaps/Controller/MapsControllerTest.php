@@ -59,4 +59,16 @@ class MapsControllerTest extends WebTestCase
 
         static::assertCount(1, $crawler->filter('#map_wrapper'), 'Map link does not redirect to map view, or map view is broken');
     }
+
+    public function testView()
+    {
+        $client = $this->getClient('maps.esteren.dev');
+
+        static::setToken($client, 'map_allowed', ['ROLE_MAPS_VIEW']);
+
+        $crawler = $client->request('GET', '/fr/map-tri-kazel');
+
+        static::assertSame(200, $client->getResponse()->getStatusCode());
+        static::assertCount(1, $crawler->filter('#map_wrapper'), 'Map link does not redirect to map view, or map view is broken');
+    }
 }
