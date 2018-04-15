@@ -91,6 +91,6 @@ unset($rootDir, $file, $autoload, $kernel, $application, $runCommand, $fs);
 
 end:
 
-$seconds = (microtime(true) - $time);
+$seconds = number_format(microtime(true) - $time, 2);
 
-echo "Bootstraped test suite in $seconds.";
+echo "\nBootstraped test suite in $seconds seconds.\n";

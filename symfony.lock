@@ -83,6 +83,9 @@
     "egulias/email-validator": {
         "version": "2.1.2"
     },
+    "facebook/webdriver": {
+        "version": "1.6.0"
+    },
     "gedmo/doctrine-extensions": {
         "version": "v2.4.31"
     },
@@ -295,6 +298,9 @@
     },
     "symfony/options-resolver": {
         "version": "v3.3.11"
+    },
+    "symfony/panthere": {
+        "version": "1.0.x-dev"
     },
     "symfony/phpunit-bridge": {
         "version": "3.3",
