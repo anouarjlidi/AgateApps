@@ -1,9 +1,10 @@
 Name: 'Name'
 Email: 'E-mail address'
 Message: 'Your message'
+Subject: 'Subject of your message'
 
 form:
     send: 'Send'
     message_sent: 'Your email has been sent! Thanks!'
     error: 'An error occured when sending the email. Our team was warned and will work on it.'
-    message_subject: 'A private message has been sent by "%name%" via Esteren''s portal.'
+    message_subject: 'Message by "%name%" via the portal: %subject%'

@@ -38,6 +38,11 @@ class ContactType extends AbstractType
                     new Constraints\Email(),
                 ],
             ])
+            ->add('subject', TextType::class, [
+                'constraints' => [
+                    new Constraints\NotBlank(),
+                ],
+            ])
             ->add('message', TextareaType::class)
         ;
     }

@@ -44,7 +44,10 @@ class ContactController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $translator = $this->get('translator');
 
-            $subject = $translator->trans('form.message_subject', ['%name%' => $message->getName()], 'contact');
+            $subject = $translator->trans('form.message_subject', [
+                '%name%' => $message->getName(),
+                '%subject%' => strip_tags($message->getSubject())
+            ], 'contact');
 
             // If message succeeds, we redirect
             if ($this->mailer->sendContactMail($message, $subject, $request->getClientIp())) {

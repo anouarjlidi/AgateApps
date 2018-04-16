@@ -13,24 +13,19 @@ namespace Agate\Model;
 
 class ContactMessage
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $name = '';
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $email = '';
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $message = '';
 
-    /**
-     * @var string
-     */
+    /** @var string */
+    private $subject = '';
+
+    /** @var string */
     private $locale = 'fr';
 
     public function getName(): string
@@ -65,6 +60,18 @@ class ContactMessage
     public function setMessage(string $message): ContactMessage
     {
         $this->message = strip_tags((string) $message);
+
+        return $this;
+    }
+
+    public function getSubject(): string
+    {
+        return $this->subject;
+    }
+
+    public function setSubject(string $subject): ContactMessage
+    {
+        $this->subject = $subject;
 
         return $this;
     }
