@@ -16,7 +16,7 @@
 {% endif %}
 
 {% set messageSubject %}
-    {{ 'form.message_subject'|trans({'%name%': message.name}, 'contact') }}
+    {{ 'form.message_subject'|trans({'%name%': message.name, '%subject%': message.subject}, 'contact') }}
 {% endset %}
 
 {% block title (messageSubject|striptags) %}
