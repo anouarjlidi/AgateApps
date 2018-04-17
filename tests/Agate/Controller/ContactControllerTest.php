@@ -31,6 +31,7 @@ class ContactControllerTest extends WebTestCase
 
         $data = [
             'name'    => 'username',
+            'subject' => 'Hello world!',
             'email'   => 'test@local.host',
             'message' => 'a message for testing purpose',
         ];
@@ -65,6 +66,7 @@ class ContactControllerTest extends WebTestCase
         // Asserting email data
         static::assertInstanceOf(\Swift_Message::class, $message);
         static::assertSame($data['email'], key($message->getFrom()));
+        static::assertSame('Message de "username" via le portail : '.$data['subject'], $message->getSubject());
         static::assertContains($data['message'], $message->getBody());
 
         if ($collectedMessages > 1) {
