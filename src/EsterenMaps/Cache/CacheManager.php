@@ -21,7 +21,7 @@ use Symfony\Component\Cache\CacheItem;
  */
 class CacheManager
 {
-    public const CACHE_PREFIX = 'esterenmaps';
+    public const CACHE_PREFIX = 'esterenmaps_';
 
     private $cacheAdapter;
 

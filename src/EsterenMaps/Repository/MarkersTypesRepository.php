@@ -12,6 +12,7 @@
 namespace EsterenMaps\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use EsterenMaps\Cache\CacheManager;
 use EsterenMaps\Entity\MarkersTypes;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -39,7 +40,7 @@ class MarkersTypesRepository extends ServiceEntityRepository
             ->getQuery()
         ;
 
-        $query->useResultCache(true, 3600);
+        $query->useResultCache(true, 3600, CacheManager::CACHE_PREFIX.'api_markers_types');
 
         return $query->getArrayResult();
     }

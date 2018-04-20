@@ -12,6 +12,7 @@
 namespace EsterenMaps\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use EsterenMaps\Cache\CacheManager;
 use EsterenMaps\Entity\RoutesTypes;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -57,7 +58,7 @@ class RoutesTypesRepository extends ServiceEntityRepository
             ->getQuery()
         ;
 
-        $query->useResultCache(true, 3600);
+        $query->useResultCache(true, 3600, CacheManager::CACHE_PREFIX.'api_routes_types');
 
         return $query->getArrayResult();
     }

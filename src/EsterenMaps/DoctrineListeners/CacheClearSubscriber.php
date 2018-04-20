@@ -55,7 +55,22 @@ class CacheClearSubscriber implements EventSubscriber
 
         // Clear the map cache if the entity corresponds to a specific class.
         if ($entity instanceof EntityToClearInterface) {
+
+            // Clear application cache
             $this->cacheService->clear();
+
+            $doctrineCache = $args->getEntityManager()->getConfiguration()->getResultCacheImpl();
+
+            if (!$doctrineCache) {
+                return;
+            }
+
+            // Clear all Doctrine result cache keys that start with EsterenMap's prefix
+            foreach ($doctrineCache->getStats() as $key => $cache) {
+                if (strpos($key, CacheManager::CACHE_PREFIX) === 0) {
+                    $doctrineCache->delete($key);
+                }
+            }
         }
     }
 }

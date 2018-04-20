@@ -12,6 +12,7 @@
 namespace EsterenMaps\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use EsterenMaps\Cache\CacheManager;
 use EsterenMaps\Entity\Routes;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Orbitale\Component\DoctrineTools\EntityRepositoryHelperTrait;
@@ -52,7 +53,7 @@ class RoutesRepository extends ServiceEntityRepository
             ->getQuery()
         ;
 
-        $query->useResultCache(true, 3600);
+        $query->useResultCache(true, 3600, CacheManager::CACHE_PREFIX."api_map_$mapId\_routes");
 
         return $query->getArrayResult();
     }

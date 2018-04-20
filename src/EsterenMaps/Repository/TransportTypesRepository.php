@@ -12,6 +12,7 @@
 namespace EsterenMaps\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use EsterenMaps\Cache\CacheManager;
 use EsterenMaps\Entity\TransportTypes;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -36,7 +37,7 @@ class TransportTypesRepository extends ServiceEntityRepository
             ->getQuery()
         ;
 
-        $query->useResultCache(true, 3600);
+        $query->useResultCache(true, 3600, CacheManager::CACHE_PREFIX.'api_transports_types');
 
         return $query->getArrayResult();
     }

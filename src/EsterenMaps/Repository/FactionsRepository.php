@@ -13,6 +13,7 @@ namespace EsterenMaps\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use EsterenMaps\Cache\CacheManager;
 use EsterenMaps\Entity\Factions;
 
 class FactionsRepository extends ServiceEntityRepository
@@ -34,7 +35,7 @@ class FactionsRepository extends ServiceEntityRepository
             ->getQuery()
         ;
 
-        $query->useResultCache(true, 3600);
+        $query->useResultCache(true, 3600, CacheManager::CACHE_PREFIX.'api_factions');
 
         return $query->getArrayResult();
     }
