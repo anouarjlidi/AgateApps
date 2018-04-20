@@ -136,6 +136,8 @@
                 method: "POST",
                 data: {
                     map: this._esterenMap._mapOptions.id,
+                    name: esterenRoute.name,
+                    description: esterenRoute.description,
                     coordinates: JSON.stringify(this._latlngs ? this._latlngs : {}),
                     routeType: esterenRoute.route_type,
                     markerStart: esterenRoute.marker_start,
@@ -145,7 +147,7 @@
                     forcedDistance: esterenRoute.forced_distance || null
                 },
                 callback: function(response) {
-                    var map = this,
+                    var map = _this._esterenMap,
                         msg,
                         route = response
                     ;
@@ -313,14 +315,16 @@
             $('#api_route_type')
                 .val(polyline._esterenRoute.route_type ? polyline._esterenRoute.route_type : '')
                 .off('change').on('change', function(){
-                    map._polylines[id]._esterenRoute.route_type = map.reference('routes_types', this.value);
+                    var route_type = map.reference('routes_types', this.value);
+                    map._polylines[id]._esterenRoute.route_type = route_type ? route_type.id : null;
                     return false;
                 })
             ;
             $('#api_route_faction')
                 .val(polyline._esterenRoute.faction ? polyline._esterenRoute.faction.id : '')
                 .off('change').on('change', function(){
-                    map._polylines[id]._esterenRoute.faction = map.reference('factions', this.value);
+                    var faction = map.reference('factions', this.value);
+                    map._polylines[id]._esterenRoute.faction = faction ? faction.id : null;
                     return false;
                 })
             ;
@@ -335,7 +339,7 @@
                     }
                     polyline.setLatLngs(latlngs);
                     polyline._esterenRoute.coordinates = JSON.stringify(latlngs);
-                    polyline._esterenRoute.marker_start = marker._esterenMarker;
+                    polyline._esterenRoute.marker_start = marker._esterenMarker.id;
                     return false;
                 })
             ;
@@ -350,7 +354,7 @@
                     }
                     polyline.setLatLngs(latlngs);
                     polyline._esterenRoute.coordinates = JSON.stringify(latlngs);
-                    polyline._esterenRoute.marker_end = marker._esterenMarker;
+                    polyline._esterenRoute.marker_end = marker._esterenMarker.id;
                     return false;
                 })
             ;
@@ -418,7 +422,7 @@
                     finalOptions
                 );
             }//endfor
-        }// endif response
+        }// endif handleResponse
     };
 
     EsterenMap.prototype._mapOptions.loaderCallbacks.routesTypes = function(response){
