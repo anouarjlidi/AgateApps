@@ -1,6 +1,7 @@
 <?php
 
 use Symfony\Component\Debug\Debug;
+use Symfony\Component\Debug\ExceptionHandler;
 use Symfony\Component\Dotenv\Dotenv;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -21,6 +22,8 @@ if ($debug) {
     umask(0000);
 
     Debug::enable();
+} else {
+    ExceptionHandler::register(false);
 }
 
 if (($_ENV['HEROKU'] ?? '0') === '1') {
