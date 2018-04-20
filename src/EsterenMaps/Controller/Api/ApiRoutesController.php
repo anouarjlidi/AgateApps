@@ -22,6 +22,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 /**
  * @Route(host="%esteren_domains.api%")
@@ -56,9 +57,13 @@ class ApiRoutesController
      */
     public function create(Request $request): Response
     {
-        $route = Routes::fromApi($this->getDataFromRequest($request));
+        try {
+            $route = Routes::fromApi($this->getDataFromRequest($request));
 
-        return $this->response($this->validate($route), $route);
+            return $this->handleResponse($this->validate($route), $route);
+        } catch (\Throwable $e) {
+            return $this->handleException($e);
+        }
     }
 
     /**
@@ -66,12 +71,16 @@ class ApiRoutesController
      */
     public function update(Routes $route, Request $request): Response
     {
-        $route->updateFromApi($this->getDataFromRequest($request));
+        try {
+            $route->updateFromApi($this->getDataFromRequest($request));
 
-        return $this->response($this->validate($route), $route);
+            return $this->handleResponse($this->validate($route), $route);
+        } catch (\Throwable $e) {
+            return $this->handleException($e);
+        }
     }
 
-    private function response(array $messages, Routes $route)
+    private function handleResponse(array $messages, Routes $route)
     {
         if (count($messages) > 0) {
             $response = new JsonResponse($messages, 400);
@@ -81,6 +90,20 @@ class ApiRoutesController
 
             $response = new JsonResponse($route->toArray(), 200);
         }
+
+        return $response;
+    }
+
+    private function handleException(\Throwable $exception)
+    {
+        $response = new JsonResponse();
+        $response->setStatusCode(400);
+
+        if ($exception instanceof HttpException) {
+            $response->setStatusCode($exception->getStatusCode());
+        }
+
+        $response->setContent($exception->getMessage());
 
         return $response;
     }
