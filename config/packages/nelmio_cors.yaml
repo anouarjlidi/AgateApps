@@ -4,23 +4,12 @@ nelmio_cors:
             allow_credentials: true
             origin_regex: true
             allow_origin:
-                - '^(https?://)?%esteren_domains.portal%'
                 - '^(https?://)?%esteren_domains.esterenmaps%'
                 - '^(https?://)?%esteren_domains.corahnrin%'
-                - '^(https?://)?%esteren_domains.games%'
                 - '^(https?://)?%esteren_domains.api%'
                 - '^(https?://)?%esteren_domains.backoffice%'
-                - '^(https?://)?%agate_domains.portal%'
-                - '^(https?://)?%vermine_domains.portal%'
             allow_headers: ['Origin','Accept','Content-Type']
             allow_methods: ['POST','GET','DELETE','PUT','OPTIONS']
             max_age: 3600
             hosts:
-                - '%esteren_domains.portal%'
-                - '%esteren_domains.esterenmaps%'
-                - '%esteren_domains.corahnrin%'
-                - '%esteren_domains.games%'
                 - '%esteren_domains.api%'
-                - '%esteren_domains.backoffice%'
-                - '%agate_domains.portal%'
-                - '%vermine_domains.portal%'
