@@ -34,16 +34,14 @@ class MapApi
     private $em;
     private $cache;
     private $twig;
-    private $debug;
     private $asset;
     private $formFactory;
 
-    public function __construct(ObjectManager $em, Environment $twig, CacheManager $cache, Packages $asset, FormFactoryInterface $formFactory, bool $debug)
+    public function __construct(ObjectManager $em, Environment $twig, CacheManager $cache, Packages $asset, FormFactoryInterface $formFactory)
     {
         $this->em = $em;
         $this->cache = $cache;
         $this->twig = $twig;
-        $this->debug = $debug;
         $this->asset = $asset;
         $this->formFactory = $formFactory;
     }
@@ -61,7 +59,7 @@ class MapApi
 
         $cachedData = $this->cache->getItemValue($cacheItem, $id);
 
-        if (!$this->debug && $cachedData) {
+        if ($cachedData) {
             return json_decode($cachedData, true);
         }
 
