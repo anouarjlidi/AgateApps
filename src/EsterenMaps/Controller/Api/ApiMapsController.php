@@ -23,13 +23,11 @@ use Symfony\Component\HttpFoundation\{
  */
 class ApiMapsController extends AbstractController
 {
-    private $debug;
     private $api;
     private $versionCode;
 
-    public function __construct(bool $debug, string $versionCode, MapApi $api)
+    public function __construct(string $versionCode, MapApi $api)
     {
-        $this->debug = $debug;
         $this->api = $api;
         $this->versionCode = $versionCode;
     }
@@ -50,15 +48,13 @@ class ApiMapsController extends AbstractController
 
         $response->setData($data);
 
-        if (!$this->debug) {
-            $response->setCache([
-                'etag'          => sha1('map'.$id.$this->versionCode),
-                'last_modified' => new \DateTime($this->api->getLastUpdateTime($id)),
-                'max_age'       => 600,
-                's_maxage'      => 600,
-                'public'        => true,
-            ]);
-        }
+        $response->setCache([
+            'etag'          => sha1('map'.$id.$this->versionCode),
+            'last_modified' => new \DateTime($this->api->getLastUpdateTime($id)),
+            'max_age'       => 600,
+            's_maxage'      => 600,
+            'public'        => true,
+        ]);
 
         return $response;
     }
@@ -73,28 +69,6 @@ class ApiMapsController extends AbstractController
             throw $this->createNotFoundException();
         }
 
-        $response = new JsonResponse();
-
-        $response->setLastModified($this->api->getLastUpdateTime($id));
-
-        if ($response->isNotModified($request)) {
-            return $response;
-        }
-
-        $data = $this->api->getMap($id, true);
-
-        $response->setData($data);
-
-        if (!$this->debug) {
-            $response->setCache([
-                'etag'          => sha1('map'.$id.$this->versionCode),
-                'last_modified' => new \DateTime($this->api->getLastUpdateTime($id)),
-                'max_age'       => 600,
-                's_maxage'      => 600,
-                'public'        => true,
-            ]);
-        }
-
-        return $response;
+        return new JsonResponse($this->api->getMap($id, true));
     }
 }
