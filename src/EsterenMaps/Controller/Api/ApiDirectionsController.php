@@ -71,7 +71,7 @@ class ApiDirectionsController extends AbstractController
         $lastModified = new \DateTime($this->versionDate);
 
         $response = new JsonResponse();
-        if (!$this->debug || !$request->isNoCache()) {
+        if (!$request->isNoCache()) {
             $response->setCache([
                 'etag'          => $etag,
                 'last_modified' => $lastModified,

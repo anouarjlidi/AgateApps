@@ -25,21 +25,18 @@ use Twig\Environment;
  */
 class DirectionsManager
 {
-    private $debug;
     private $entityManager;
     private $twig;
     private $cache;
     private $mapApi;
 
     public function __construct(
-        bool $debug,
         MapApi $mapApi,
         ObjectManager $entityManager,
         Environment $twig,
         CacheManager $cache
     )
     {
-        $this->debug         = $debug;
         $this->entityManager = $entityManager;
         $this->twig          = $twig;
         $this->cache         = $cache;
@@ -50,16 +47,15 @@ class DirectionsManager
     {
         $cacheHash = $this->generateDirectionHash($map, $start, $end, $transportType);
 
-        $cacheItem = $this->cache->getItem('api.directions');
+        $cacheItem = $this->cache->getItem(CacheManager::CACHE_PREFIX.'.api.directions');
 
         // Get cache only in prod.
         if (
-            !$this->debug
-            && null !== $cacheItem
+            null !== $cacheItem
             && $cacheItem->isHit()
             && $jsonString = $this->cache->getItemValue($cacheItem, $cacheHash)
         ) {
-            $directions               = json_decode($jsonString, true);
+            $directions = json_decode($jsonString, true);
             $directions['from_cache'] = true;
         } else {
             $directions = $this->doGetDirections($map, $start, $end, $hoursPerDay, $transportType);
