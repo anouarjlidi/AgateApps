@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace EsterenMaps\Controller;
+namespace EsterenMaps\Controller\Admin;
 
 use EsterenMaps\Entity\Maps;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @Security("has_role('ROLE_MANAGER')")
  * @Route(host="%esteren_domains.backoffice%")
  */
-class AdminMapsController extends AbstractController
+class EditMapInteractiveController extends AbstractController
 {
     private $tileSize;
 
