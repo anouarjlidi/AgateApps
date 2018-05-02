@@ -55,6 +55,12 @@ class RoutesRepository extends ServiceEntityRepository
 
         $query->useResultCache(true, 3600, CacheManager::CACHE_PREFIX."api_map_$mapId\_routes");
 
-        return $query->getArrayResult();
+        $routes = $query->getArrayResult();
+
+        foreach ($routes as &$route) {
+            $route['distance'] = $route['forced_distance'] ?: $route['distance'];
+        }
+
+        return $routes;
     }
 }
