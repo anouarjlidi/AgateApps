@@ -80,5 +80,5 @@ services:
         resource: '../src/EsterenMaps/Controller/*'
         public: true
 
-    EsterenMaps\DoctrineListeners\CacheClearSubscriber:
+    EsterenMaps\Cache\CacheManager:
         tags: [{ name: doctrine.event_subscriber, connection: default }]
