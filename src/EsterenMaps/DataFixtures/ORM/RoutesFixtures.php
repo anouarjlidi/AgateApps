@@ -97,10 +97,10 @@ class RoutesFixtures extends AbstractFixture implements ORMFixtureInterface
             }
         }
 
-        return array_merge($this->getRealEsterenMapsFactions(), $this->getSimplerCanvasFactions());
+        return array_merge($this->getRealEsterenMapsRoutes(), $this->getSimplerCanvasRoutes());
     }
 
-    private function getRealEsterenMapsFactions()
+    private function getRealEsterenMapsRoutes()
     {
         return [
             [
@@ -3331,12 +3331,12 @@ class RoutesFixtures extends AbstractFixture implements ORMFixtureInterface
         ];
     }
 
-    private function getSimplerCanvasFactions()
+    private function getSimplerCanvasRoutes()
     {
         $id = 700;
         return [
             [
-                'id'          => $id++,
+                'id'          => ++$id,
                 'markerStart' => $this->getReference('esterenmaps-markers-700'),
                 'markerEnd'   => $this->getReference('esterenmaps-markers-701'),
                 'map'         => $this->maps[1],
@@ -3346,7 +3346,7 @@ class RoutesFixtures extends AbstractFixture implements ORMFixtureInterface
                 'distance'    => 10,
             ],
             [
-                'id'          => $id++,
+                'id'          => ++$id,
                 'markerStart' => $this->getReference('esterenmaps-markers-700'),
                 'markerEnd'   => $this->getReference('esterenmaps-markers-703'),
                 'map'         => $this->maps[1],
@@ -3356,7 +3356,7 @@ class RoutesFixtures extends AbstractFixture implements ORMFixtureInterface
                 'distance'    => 10,
             ],
             [
-                'id'          => $id++,
+                'id'          => ++$id,
                 'markerStart' => $this->getReference('esterenmaps-markers-700'),
                 'markerEnd'   => $this->getReference('esterenmaps-markers-702'),
                 'map'         => $this->maps[1],
@@ -3366,7 +3366,7 @@ class RoutesFixtures extends AbstractFixture implements ORMFixtureInterface
                 'distance'    => 50,
             ],
             [
-                'id'          => $id++,
+                'id'          => ++$id,
                 'markerStart' => $this->getReference('esterenmaps-markers-700'),
                 'markerEnd'   => $this->getReference('esterenmaps-markers-702'),
                 'map'         => $this->maps[1],
