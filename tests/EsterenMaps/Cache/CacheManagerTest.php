@@ -19,7 +19,6 @@ use Symfony\Component\HttpKernel\DataCollector\LoggerDataCollector;
 use Symfony\Component\VarDumper\Cloner\Data;
 use Tests\WebTestCase as PiersTestCase;
 
-
 class CacheManagerTest extends WebTestCase
 {
     use PiersTestCase;
@@ -28,37 +27,42 @@ class CacheManagerTest extends WebTestCase
     {
         static::resetDatabase();
 
+        /** @see RoutesFixtures::getSimplerCanvasRoutes for route 701 details */
+        $routeId = 700;
+        $coordinates = '[{"lat":"0","lng":"0"},{"lat":"10","lng":"10"},{"lat":"0","lng":"10"}]';
+
         /**
          * Here we only change coordinates for greater distance.
-         * @see RoutesFixtures::getSimplerCanvasRoutes for route 701 details
          */
-        $jsonPayload = json_encode([
-            'map' => 1,
-            'name' => 'From 0,0 to 0,10',
-            'coordinates' => '[{"lat":0,"lng":0},{"lat":10,"lng":10},{"lat":0,"lng":10}]',
-            'description' => 'Test route description',
-            'routeType' => 1,
-            'markerStart' => 700,
-            'markerEnd' => 701,
-            'faction' => null,
-            'guarded' => false,
-            'forcedDistance' => null,
-        ]);
+        $jsonPayload = json_encode(
+            [
+                'map'            => 1,
+                'name'           => 'From 0,0 to 0,10',
+                'coordinates'    => $coordinates,
+                'description'    => 'Test route description',
+                'routeType'      => 1,
+                'markerStart'    => 700,
+                'markerEnd'      => 701,
+                'faction'        => null,
+                'guarded'        => false,
+                'forcedDistance' => null,
+            ]
+        );
 
         $client = $this->getClient('api.esteren.dev', [], ['ROLE_ADMIN']);
         $client->enableProfiler();
 
-        $client->request('POST', '/fr/routes/701', [], [], [], $jsonPayload);
+        $client->request('POST', "/fr/routes/$routeId", [], [], [], $jsonPayload);
 
         /** @var Routes $route */
         $route = $client
             ->getContainer()
             ->get(EntityManagerInterface::class)
-            ->getRepository(Routes::class)
-            ->findOneBy(['name' => 'From 0,0 to 0,10'])
-        ;
+            ->find(Routes::class, $routeId);
         static::assertNotNull($route);
-        // FIXME => Check distance is different
+        static::assertSame(700, $route->getId());
+        static::assertSame($coordinates, $route->getCoordinates());
+        static::assertSame(120, $route->getDistance());
 
         $profile = $client->getProfile();
 
