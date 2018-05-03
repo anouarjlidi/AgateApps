@@ -11,13 +11,9 @@
 
 namespace EsterenMaps\Controller\Api;
 
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
+use EsterenMaps\Api\RouteApi;
 use EsterenMaps\Entity\Routes;
-use EsterenMaps\Repository\FactionsRepository;
-use EsterenMaps\Repository\MapsRepository;
-use EsterenMaps\Repository\MarkersRepository;
-use EsterenMaps\Repository\RoutesRepository;
-use EsterenMaps\Repository\RoutesTypesRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,24 +28,14 @@ class ApiRoutesController
     use ApiValidationTrait;
 
     private $em;
-    private $routesTypesRepository;
-    private $mapsRepository;
-    private $markersRepository;
-    private $factionsRepository;
+    private $routeApi;
 
     public function __construct(
-        ObjectManager $em,
-        RoutesRepository $routesRepository,
-        RoutesTypesRepository $routesTypesRepository,
-        MapsRepository $mapsRepository,
-        MarkersRepository $markersRepository,
-        FactionsRepository $factionsRepository
+        RouteApi $routeApi,
+        EntityManagerInterface $em
     ) {
-        $this->routesTypesRepository = $routesTypesRepository;
-        $this->mapsRepository = $mapsRepository;
-        $this->markersRepository = $markersRepository;
-        $this->factionsRepository = $factionsRepository;
         $this->em = $em;
+        $this->routeApi = $routeApi;
     }
 
     /**
@@ -58,7 +44,7 @@ class ApiRoutesController
     public function create(Request $request): Response
     {
         try {
-            $route = Routes::fromApi($this->getDataFromRequest($request));
+            $route = Routes::fromApi($this->routeApi->sanitizeRequestData(json_decode($request->getContent(), true)));
 
             return $this->handleResponse($this->validate($route), $route);
         } catch (\Throwable $e) {
@@ -72,7 +58,7 @@ class ApiRoutesController
     public function update(Routes $route, Request $request): Response
     {
         try {
-            $route->updateFromApi($this->getDataFromRequest($request));
+            $route->updateFromApi($this->routeApi->sanitizeRequestData(json_decode($request->getContent(), true)));
 
             return $this->handleResponse($this->validate($route), $route);
         } catch (\Throwable $e) {
@@ -80,7 +66,7 @@ class ApiRoutesController
         }
     }
 
-    private function handleResponse(array $messages, Routes $route)
+    private function handleResponse(array $messages, Routes $route): Response
     {
         if (count($messages) > 0) {
             $response = new JsonResponse($messages, 400);
@@ -94,7 +80,7 @@ class ApiRoutesController
         return $response;
     }
 
-    private function handleException(\Throwable $exception)
+    private function handleException(\Throwable $exception): Response
     {
         $response = new JsonResponse();
         $response->setStatusCode(400);
@@ -106,28 +92,5 @@ class ApiRoutesController
         $response->setContent($exception->getMessage());
 
         return $response;
-    }
-
-    private function getDataFromRequest(Request $request): array
-    {
-        $json = json_decode($request->getContent(), true);
-
-        if (isset($json['map'])) {
-            $json['map'] = $this->mapsRepository->find($json['map']);
-        }
-        if (isset($json['faction'])) {
-            $json['faction'] = $this->factionsRepository->find($json['faction']);
-        }
-        if (isset($json['routeType'])) {
-            $json['routeType'] = $this->routesTypesRepository->find($json['routeType']);
-        }
-        if (isset($json['markerStart'])) {
-            $json['markerStart'] = $this->markersRepository->find($json['markerStart']);
-        }
-        if (isset($json['markerEnd'])) {
-            $json['markerEnd'] = $this->markersRepository->find($json['markerEnd']);
-        }
-
-        return $json;
     }
 }
