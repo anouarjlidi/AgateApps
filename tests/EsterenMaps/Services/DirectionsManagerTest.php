@@ -24,6 +24,12 @@ class DirectionsManagerTest extends WebTestCase
 {
     use PiersTestCase;
 
+    public static function setUpBeforeClass()
+    {
+        parent::setUpBeforeClass();
+        static::resetDatabase();
+    }
+
     /**
      * @dataProvider provideWorkingDirections
      *
@@ -35,8 +41,6 @@ class DirectionsManagerTest extends WebTestCase
      */
     public function testWorkingDirections(array $expectedData, $map, $from, $to, $transport = null)
     {
-        static::resetDatabase();
-
         $kernel = static::bootKernel(['debug' => true]);
 
         $container = $kernel->getContainer();
