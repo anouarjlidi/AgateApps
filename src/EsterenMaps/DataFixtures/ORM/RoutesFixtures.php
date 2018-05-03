@@ -3336,7 +3336,7 @@ class RoutesFixtures extends AbstractFixture implements ORMFixtureInterface
         $id = 700;
         return [
             [
-                'id'          => ++$id,
+                'id'          => $id++,
                 'markerStart' => $this->getReference('esterenmaps-markers-700'),
                 'markerEnd'   => $this->getReference('esterenmaps-markers-701'),
                 'map'         => $this->maps[1],
@@ -3346,7 +3346,7 @@ class RoutesFixtures extends AbstractFixture implements ORMFixtureInterface
                 'distance'    => 10,
             ],
             [
-                'id'          => ++$id,
+                'id'          => $id++,
                 'markerStart' => $this->getReference('esterenmaps-markers-700'),
                 'markerEnd'   => $this->getReference('esterenmaps-markers-703'),
                 'map'         => $this->maps[1],
@@ -3356,7 +3356,7 @@ class RoutesFixtures extends AbstractFixture implements ORMFixtureInterface
                 'distance'    => 10,
             ],
             [
-                'id'          => ++$id,
+                'id'          => $id++,
                 'markerStart' => $this->getReference('esterenmaps-markers-700'),
                 'markerEnd'   => $this->getReference('esterenmaps-markers-702'),
                 'map'         => $this->maps[1],
@@ -3366,7 +3366,7 @@ class RoutesFixtures extends AbstractFixture implements ORMFixtureInterface
                 'distance'    => 50,
             ],
             [
-                'id'          => ++$id,
+                'id'          => $id++,
                 'markerStart' => $this->getReference('esterenmaps-markers-700'),
                 'markerEnd'   => $this->getReference('esterenmaps-markers-702'),
                 'map'         => $this->maps[1],
