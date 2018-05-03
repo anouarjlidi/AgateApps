@@ -5,6 +5,8 @@ use Symfony\Component\Console\Input\StringInput;
 use Symfony\Component\Debug\Debug;
 use Symfony\Component\Filesystem\Filesystem;
 
+$time = microtime(true);
+
 define('NO_RECREATE_DB', (bool) getenv('NO_RECREATE_DB') ?: false);
 define('CLEAR_CACHE', (bool) getenv('CLEAR_CACHE') ?: true);
 define('RECREATE_DB', (bool) getenv('RECREATE_DB') ?: false);
@@ -60,11 +62,11 @@ if (RECREATE_DB) {
 if ($fs->exists(DATABASE_REFERENCE_FILE)) {
     // Reset database everytime
     $fs->copy(DATABASE_REFERENCE_FILE, DATABASE_TEST_FILE, true);
-    return;
+    goto end;
 }
 
 if (NO_RECREATE_DB && file_exists($rootDir.'/build/database_reference.db')) {
-    return;
+    goto end;
 }
 
 // Remove build dir files
@@ -86,3 +88,9 @@ $kernel->shutdown();
 
 // Unset everything so PHPUnit can't dump these globals.
 unset($rootDir, $file, $autoload, $kernel, $application, $runCommand, $fs);
+
+end:
+
+$seconds = (microtime(true) - $time);
+
+echo "Bootstraped test suite in $seconds.";
