@@ -11,6 +11,7 @@
 
 namespace Tests\EsterenMaps\Services;
 
+use Doctrine\ORM\EntityManagerInterface;
 use EsterenMaps\Controller\Api\ApiDirectionsController;
 use EsterenMaps\Entity\Maps;
 use EsterenMaps\Entity\Markers;
@@ -34,11 +35,13 @@ class DirectionsManagerTest extends WebTestCase
      */
     public function testWorkingDirections(array $expectedData, $map, $from, $to, $transport = null)
     {
-        static::bootKernel(['debug' => true]);
+        static::resetDatabase();
 
-        $container = static::$kernel->getContainer();
+        $kernel = static::bootKernel(['debug' => true]);
 
-        $em = $container->get('doctrine.orm.default_entity_manager');
+        $container = $kernel->getContainer();
+
+        $em = $container->get(EntityManagerInterface::class);
 
         /** @var ApiDirectionsController $directions */
         $directions = $container->get(ApiDirectionsController::class);
