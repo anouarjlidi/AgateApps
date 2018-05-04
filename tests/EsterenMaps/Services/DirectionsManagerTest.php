@@ -32,6 +32,7 @@ class DirectionsManagerTest extends WebTestCase
 
     /**
      * @dataProvider provideWorkingDirections
+     * @runInSeparateProcess
      *
      * @param array  $expectedData
      * @param int    $map
@@ -41,6 +42,8 @@ class DirectionsManagerTest extends WebTestCase
      */
     public function testWorkingDirections(array $expectedData, $map, $from, $to, $transport = null)
     {
+        static::resetDatabase();
+
         $kernel = static::bootKernel(['debug' => true]);
 
         $container = $kernel->getContainer();
