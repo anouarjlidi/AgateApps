@@ -67,6 +67,8 @@ class Routes implements EntityToClearInterface
      * @var int
      *
      * @ORM\Column(name="distance", type="float", precision=12, scale=6, options={"default": 0})
+     *
+     * @Assert\GreaterThanOrEqual(0)
     */
     protected $distance = 0;
 
@@ -76,6 +78,7 @@ class Routes implements EntityToClearInterface
      * @ORM\Column(name="forced_distance", type="float", precision=12, scale=6, nullable=true)
      *
      * @Assert\Type("int")
+     * @Assert\GreaterThanOrEqual(0)
     */
     protected $forcedDistance;
 
