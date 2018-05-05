@@ -53,26 +53,30 @@ class MapApi
 
     public function getMap($id, bool $editMode = false): array
     {
-        $cacheItem = $this->cache->getItem(static::CACHE_PREFIX);
+        if (false === $editMode) {
+            $cacheItem = $this->cache->getItem(static::CACHE_PREFIX);
 
-        $cacheItemData = $cacheItem->get() ?: [];
+            $cacheItemData = $cacheItem->get() ?: [];
 
-        $cachedData = $this->cache->getItemValue($cacheItem, $id);
+            $cachedData = $this->cache->getItemValue($cacheItem, $id);
 
-        if ($cachedData) {
-            return json_decode($cachedData, true);
+            if ($cachedData) {
+                return json_decode($cachedData, true);
+            }
+
+            $data = $this->doGetMap($id, $editMode);
+
+            $expirationDate = new \DateTime('+10 minutes');
+
+            $cacheItemData[$id] = json_encode($data);
+            $cacheItemData[$id.'.date'] = $expirationDate;
+
+            $cacheItem->set($cacheItemData);
+            $cacheItem->expiresAt($expirationDate);
+            $this->cache->saveItem($cacheItem);
+        } else {
+            $data = $this->doGetMap($id, $editMode);
         }
-
-        $data = $this->doGetMap($id, $editMode);
-
-        $expirationDate = new \DateTime('+10 minutes');
-
-        $cacheItemData[$id] = json_encode($data);
-        $cacheItemData[$id.'.date'] = $expirationDate;
-
-        $cacheItem->set($cacheItemData);
-        $cacheItem->expiresAt($expirationDate);
-        $this->cache->saveItem($cacheItem);
 
         return $data;
     }
