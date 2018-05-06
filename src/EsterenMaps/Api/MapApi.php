@@ -29,7 +29,7 @@ use Twig\Environment;
 
 class MapApi
 {
-    private const CACHE_PREFIX = 'api.map';
+    private const CACHE_PREFIX = CacheManager::CACHE_PREFIX.'api.map';
 
     private $em;
     private $cache;
