@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 #     _
 #    / \    Disclaimer!
 #   / ! \   Please read this before continuing.
