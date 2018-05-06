@@ -1,5 +1,8 @@
-doctrine:
-    orm:
-        metadata_cache_driver: apcu
-        result_cache_driver: apcu
-        query_cache_driver: apcu
+doctrine_cache:
+    providers:
+        metadata_cache:
+            apcu: ~
+        result_cache:
+            apcu: ~
+        query_cache:
+            apcu: ~
