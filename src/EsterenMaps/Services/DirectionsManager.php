@@ -13,7 +13,6 @@ namespace EsterenMaps\Services;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use EsterenMaps\Api\MapApi;
-use EsterenMaps\Cache\CacheManager;
 use EsterenMaps\Entity\Maps;
 use EsterenMaps\Entity\Markers;
 use EsterenMaps\Entity\TransportModifiers;
@@ -27,47 +26,24 @@ class DirectionsManager
 {
     private $entityManager;
     private $twig;
-    private $cache;
     private $mapApi;
 
     public function __construct(
         MapApi $mapApi,
         ObjectManager $entityManager,
-        Environment $twig,
-        CacheManager $cache
+        Environment $twig
     )
     {
         $this->entityManager = $entityManager;
         $this->twig          = $twig;
-        $this->cache         = $cache;
         $this->mapApi        = $mapApi;
     }
 
     public function getDirections(Maps $map, Markers $start, Markers $end, int $hoursPerDay = 7, TransportTypes $transportType = null): array
     {
-        $cacheHash = $this->generateDirectionHash($map, $start, $end, $transportType);
+        $directions = $this->doGetDirections($map, $start, $end, $hoursPerDay, $transportType);
 
-        $cacheItem = $this->cache->getItem(CacheManager::CACHE_PREFIX.'.api.directions');
-
-        // Get cache only in prod.
-        if (
-            null !== $cacheItem
-            && $cacheItem->isHit()
-            && $jsonString = $this->cache->getItemValue($cacheItem, $cacheHash)
-        ) {
-            $directions = json_decode($jsonString, true);
-            $directions['from_cache'] = true;
-        } else {
-            $directions = $this->doGetDirections($map, $start, $end, $hoursPerDay, $transportType);
-
-            // Save in the cache file
-            $cacheData = $cacheItem->get() ?: [];
-            $cacheData[$cacheHash] = json_encode($directions);
-            $cacheItem->set($cacheData);
-            $this->cache->saveItem($cacheItem);
-
-            $directions['from_cache'] = false;
-        }
+        $directions['from_cache'] = false;
 
         return $directions;
     }
@@ -174,7 +150,7 @@ class DirectionsManager
      *
      * @see http://codereview.stackexchange.com/questions/75641/dijkstras-algorithm-in-php
      *
-     * Return an array where keys are the markers IDs and values the values are route IDs.
+     * Return an array where keys are the markers IDs and the values are route IDs.
      */
     private function dijkstra(array $nodes, array $edges, int $start, int $end): array
     {
@@ -194,8 +170,7 @@ class DirectionsManager
         $S = []; //the nearest path with its parent and weight
         $Q = []; //the left nodes without the nearest path
 
-        $distanceKeys = array_keys($distances);
-        foreach ($distanceKeys as $val) {
+        foreach (array_keys($distances) as $val) {
             $Q[$val] = INF;
         }
         $Q[$start] = 0;
@@ -388,6 +363,7 @@ class DirectionsManager
 
     /**
      * @return int[]|string|null
+     * @throws \Exception
      */
     private function getTravelDuration(array $routes, TransportTypes $transport, int $hoursPerDay = 7, bool $raw = true)
     {
@@ -454,20 +430,5 @@ class DirectionsManager
             'days'  => $days,
             'hours' => $hours,
         ];
-    }
-
-    /**
-     * Generates a unique hash based on all direction data.
-     *
-     * @param Maps                $map
-     * @param Markers             $start
-     * @param Markers             $end
-     * @param TransportTypes|null $transportType
-     *
-     * @return string
-     */
-    private function generateDirectionHash(Maps $map, Markers $start, Markers $end, TransportTypes $transportType = null)
-    {
-        return md5($map->getId().$start->getId().$end->getId().($transportType ?: ''));
     }
 }

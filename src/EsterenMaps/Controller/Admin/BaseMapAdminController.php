@@ -12,31 +12,9 @@
 namespace EsterenMaps\Controller\Admin;
 
 use Admin\Controller\AdminController;
-use EsterenMaps\Cache\CacheManager;
 
 class BaseMapAdminController extends AdminController
 {
-    private $cacheManager;
-
-    public function __construct(CacheManager $cacheManager)
-    {
-        $this->cacheManager = $cacheManager;
-    }
-
-    protected function updateEntity($entity)
-    {
-        parent::updateEntity($entity);
-        $this->cacheManager->clearDoctrineCache();
-        $this->cacheManager->clearAppCache();
-    }
-
-    protected function persistEntity($entity)
-    {
-        parent::persistEntity($entity);
-        $this->cacheManager->clearDoctrineCache();
-        $this->cacheManager->clearAppCache();
-    }
-
     protected function createMarkersListQueryBuilder($entityClass, $sortDirection, $sortField = null, $dqlFilter = null)
     {
         $qb = parent::createListQueryBuilder($entityClass, $sortDirection, $sortField, $dqlFilter);

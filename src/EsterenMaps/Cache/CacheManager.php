@@ -11,100 +11,49 @@
 
 namespace EsterenMaps\Cache;
 
+use Doctrine\Common\Cache\Cache;
+use Doctrine\Common\Cache\ClearableCache;
 use Doctrine\Common\EventSubscriber;
-use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Event\LifecycleEventArgs;
-use Psr\Cache\CacheItemInterface;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\Cache\Adapter\AdapterInterface;
-use Symfony\Component\Cache\CacheItem;
+use Symfony\Component\HttpKernel\CacheClearer\CacheClearerInterface;
 
 /**
  * Standalone service to manage cache for EsterenMaps.
- * At first it's for Directions, but can be extended to other systems.
+ * The only goal is to clear app cache &
  */
-class CacheManager implements EventSubscriber
+class CacheManager implements EventSubscriber, CacheClearerInterface
 {
     public const CACHE_PREFIX = 'esterenmaps_';
 
-    private $cacheAdapter;
+    private $doctrineResultCache;
     private $logger;
 
-    /** @var EntityManagerInterface */
-    private $em;
-
-    public function __construct(AdapterInterface $cacheAdapter, LoggerInterface $logger)
+    public function __construct(Cache $doctrineResultCache = null, LoggerInterface $logger)
     {
-        $this->cacheAdapter = $cacheAdapter;
+        $this->doctrineResultCache = $doctrineResultCache;
         $this->logger = $logger;
-    }
-
-    /**
-     * @required
-     */
-    public function setEntityManager(EntityManagerInterface $em): void
-    {
-        $this->em = $em;
-    }
-
-    public function clearAppCache(): void
-    {
-        $itemsToDelete = [
-            static::CACHE_PREFIX.'.api.directions',
-            static::CACHE_PREFIX.'.api.maps',
-        ];
-
-        $this->cacheAdapter->deleteItems($itemsToDelete);
     }
 
     public function clearDoctrineCache(): void
     {
-        if (!$this->em) {
+        if (!$this->doctrineResultCache) {
             return;
         }
 
-        $doctrineCache = $this->em->getConfiguration()->getResultCacheImpl();
+        if ($this->doctrineResultCache instanceof ClearableCache) {
+            $this->logger->info('Clearing doctrine cache');
 
-        if (!$doctrineCache) {
-            return;
-        }
-
-        $keys = $doctrineCache->getStats();
-
-        $this->logger->info('Clearing doctrine cache', ['cache_stats' => $keys]);
-
-        // Clear all Doctrine result cache keys that start with EsterenMap's prefix
-        foreach ($keys as $key => $cache) {
-            if (strpos($key, static::CACHE_PREFIX) === 0) {
-                $doctrineCache->delete($key);
-            }
+            $this->doctrineResultCache->deleteAll();
         }
     }
 
-    public function getItem(string $suffix = ''): CacheItem
+    /**
+     * {@inheritdoc}
+     */
+    public function clear($cacheDir)
     {
-        return $this->cacheAdapter->getItem(static::CACHE_PREFIX.'.'.ltrim($suffix, '.'));
-    }
-
-    public function getItemValue(CacheItem $cacheItem, string $key)
-    {
-        $cacheValue = $cacheItem->isHit() ? $cacheItem->get() : null;
-
-        return $cacheValue && is_array($cacheValue) && isset($cacheValue[$key])
-            ? $cacheValue[$key]
-            : null;
-    }
-
-    public function getValue($key)
-    {
-        $item = $this->getItem($key);
-
-        return $this->getItemValue($item, $key);
-    }
-
-    public function saveItem(CacheItemInterface $item): bool
-    {
-        return $this->cacheAdapter->save($item);
+        $this->clearDoctrineCache();
     }
 
     /**
@@ -134,7 +83,6 @@ class CacheManager implements EventSubscriber
 
         // Clear the map cache if the entity corresponds to a specific class.
         if ($entity instanceof EntityToClearInterface) {
-            $this->clearAppCache();
             $this->clearDoctrineCache();
         }
     }

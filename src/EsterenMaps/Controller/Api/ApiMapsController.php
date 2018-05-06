@@ -38,25 +38,22 @@ class ApiMapsController extends AbstractController
     public function getAction(int $id, Request $request): JsonResponse
     {
         $response = new JsonResponse();
-        $response->setLastModified($this->api->getLastUpdateTime($id));
+
+        $response->setEtag($etag = sha1('map'.$id.$this->versionCode));
 
         if ($response->isNotModified($request)) {
             return $response;
         }
 
-        $data = $this->api->getMap($id);
-
-        $response->setData($data);
-
-        $response->setCache([
-            'etag'          => sha1('map'.$id.$this->versionCode),
-            'last_modified' => new \DateTime($this->api->getLastUpdateTime($id)),
-            'max_age'       => 600,
-            's_maxage'      => 600,
-            'public'        => true,
-        ]);
-
-        return $response;
+        return $response
+            ->setData($this->api->getMap($id))
+            ->setCache([
+                'etag'          => $etag,
+                'max_age'       => 600,
+                's_maxage'      => 600,
+                'public'        => true,
+            ])
+        ;
     }
 
     /**

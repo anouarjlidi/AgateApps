@@ -23,9 +23,6 @@ class CacheManagerTest extends WebTestCase
 {
     use PiersTestCase;
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testdUpdatingRouteShouldClearMapsCache()
     {
         static::resetDatabase();

@@ -56,6 +56,7 @@ services:
             $oneupFlysystem:  '@oneup_flysystem.assets_fs_filesystem'
             $awsRegion:       '%aws_region%'
             $awsBucket:       '%aws_bucket%'
+            $doctrineResultCache: '@doctrine_cache.providers.result_cache'
 
     Admin\:
         resource: '../src/Admin/{Controller}'

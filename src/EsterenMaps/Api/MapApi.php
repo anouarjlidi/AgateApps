@@ -12,7 +12,6 @@
 namespace EsterenMaps\Api;
 
 use Doctrine\Common\Persistence\ObjectManager;
-use EsterenMaps\Cache\CacheManager;
 use EsterenMaps\Entity\Factions;
 use EsterenMaps\Entity\Maps;
 use EsterenMaps\Entity\Markers;
@@ -29,56 +28,22 @@ use Twig\Environment;
 
 class MapApi
 {
-    private const CACHE_PREFIX = CacheManager::CACHE_PREFIX.'api.map';
-
     private $em;
-    private $cache;
     private $twig;
     private $asset;
     private $formFactory;
 
-    public function __construct(ObjectManager $em, Environment $twig, CacheManager $cache, Packages $asset, FormFactoryInterface $formFactory)
+    public function __construct(ObjectManager $em, Environment $twig, Packages $asset, FormFactoryInterface $formFactory)
     {
         $this->em = $em;
-        $this->cache = $cache;
         $this->twig = $twig;
         $this->asset = $asset;
         $this->formFactory = $formFactory;
     }
 
-    public function getLastUpdateTime($id): ?\DateTime
-    {
-        return $this->cache->getValue(static::CACHE_PREFIX)[$id.'.date'] ?? null;
-    }
-
     public function getMap($id, bool $editMode = false): array
     {
-        if (false === $editMode) {
-            $cacheItem = $this->cache->getItem(static::CACHE_PREFIX);
-
-            $cacheItemData = $cacheItem->get() ?: [];
-
-            $cachedData = $this->cache->getItemValue($cacheItem, $id);
-
-            if ($cachedData) {
-                return json_decode($cachedData, true);
-            }
-
-            $data = $this->doGetMap($id, $editMode);
-
-            $expirationDate = new \DateTime('+10 minutes');
-
-            $cacheItemData[$id] = json_encode($data);
-            $cacheItemData[$id.'.date'] = $expirationDate;
-
-            $cacheItem->set($cacheItemData);
-            $cacheItem->expiresAt($expirationDate);
-            $this->cache->saveItem($cacheItem);
-        } else {
-            $data = $this->doGetMap($id, $editMode);
-        }
-
-        return $data;
+        return $this->doGetMap($id, $editMode);
     }
 
     private function doGetMap($id, bool $editMode = false): array
