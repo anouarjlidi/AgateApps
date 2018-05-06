@@ -55,7 +55,7 @@ echo "[DEPLOY] > Last build date: ${LAST_DATE}"
 
 if [[ -f ${CLI_FILE} ]]
 then
-    echo "[DEPLOY] > Loading env file"
+    echo "[DEPLOY] > Loading env file ${CLI_FILE}"
     source ${CLI_FILE}
 fi
 
