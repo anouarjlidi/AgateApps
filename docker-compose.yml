@@ -10,13 +10,21 @@ services:
             - ./:/var/www/html
         links:
             - db
+            - mailcatcher
         environment:
-            - APP_ENV=dev
-            - AGATE_DOMAIN=studio-agate.piers
-            - DRAGONS_DOMAIN=dragons-rpg.piers
-            - ESTEREN_DOMAIN=esteren.piers
-            - VERMINE_DOMAIN=vermine2047.piers
-            - DATABASE_URL="mysql://esteren_portal:esteren_portal@esteren_portal/esteren_portal?serverVersion=10.1"
+            - IMAGEMAGICK_BINARIES_PATH=/usr/bin/magick
+            - AGATE_DOMAIN=studio-agate.docker
+            - DRAGONS_DOMAIN=dragons-rpg.docker
+            - ESTEREN_DOMAIN=esteren.docker
+            - VERMINE_DOMAIN=vermine2047.docker
+            - DATABASE_URL=mysql://root:agate_portal@db/agate_portal?serverVersion=10.1
+            - DATABASE_URL_LEGACY=mysql://root:esteren_legacy@db_legacy/esteren_legacy?serverVersion=10.1
+            - MAILER_URL=smtp://mailcatcher
+
+    mailcatcher:
+        image: tophfr/mailcatcher:latest
+        ports:
+            - '1080:80'
 
     node:
         image: node:8
@@ -36,10 +44,12 @@ services:
 
     db:
         image: 'mariadb:10.1'
-        ports:
-            - '3307:3306'
         environment:
-            MYSQL_ROOT_PASSWORD: esteren_portal
-            MYSQL_DATABASE: esteren_portal
-            MYSQL_USER: esteren_portal
-            MYSQL_PASSWORD: esteren_portal
+            - MYSQL_ROOT_PASSWORD=agate_portal
+            - MYSQL_DATABASE=agate_portal
+
+    db_legacy:
+        image: 'mariadb:10.1'
+        environment:
+            - MYSQL_ROOT_PASSWORD=esteren_legacy
+            - MYSQL_DATABASE=esteren_legacy
