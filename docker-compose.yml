@@ -39,8 +39,8 @@ services:
             - '8080:80'
         links:
             - php
-        volumes_from:
-            - php
+        volumes:
+            - ./:/var/www/html
 
     db:
         image: 'mariadb:10.1'
