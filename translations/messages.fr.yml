@@ -67,6 +67,7 @@ admin:
 
     maps:
         markers: Marqueurs
+        marker: Marqueur
         routes: Routes
         zones: Zones
         factions: Factions

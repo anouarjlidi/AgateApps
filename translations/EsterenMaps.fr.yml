@@ -1,6 +1,7 @@
 entities:
     markers:
         title: Marqueurs
+        title_singular: Marqueur
     routes:
         title: Routes
     zones:

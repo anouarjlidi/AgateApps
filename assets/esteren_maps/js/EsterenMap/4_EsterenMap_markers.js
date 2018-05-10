@@ -51,53 +51,25 @@
         this._icon.classList.remove('selected');
     };
 
-    L.Marker.prototype.refreshRoutesStart = function() {
-        var routes = this._esterenMap._polylines,
-            i, route;
-        for (i in routes) {
-            if (routes.hasOwnProperty(i)) {
-                route = routes[i];
-                if (route._esterenRoute.marker_start && route._esterenRoute.marker_start.id === this._esterenMarker.id) {
-                    this._esterenRoutesStart[route._esterenRoute.id] = route;
-                    route._esterenMarkerStart = this;
-                }
-            }
-        }
-        return this._esterenRoutesStart;
-    };
-
-    L.Marker.prototype.refreshRoutesEnd = function() {
-        var routes = this._esterenMap._polylines,
-            i, route;
-        for (i in routes) {
-            if (routes.hasOwnProperty(i)) {
-                route = routes[i];
-                if (route._esterenRoute.marker_end && route._esterenRoute.marker_end.id === this._esterenMarker.id) {
-                    this._esterenRoutesEnd[route._esterenRoute.id] = route;
-                    route._esterenMarkerEnd = this;
-                }
-            }
-        }
-        return this._esterenRoutesEnd;
-    };
-
     L.Marker.prototype.refreshRoutes = function() {
-        var routesStart, routesEnd, i, route;
-        if (routesStart = this.refreshRoutesStart()) {
-            for (i in routesStart) {
-                if (routesStart.hasOwnProperty(i) && routesStart[i]) {
-                    route = routesStart[i];
-                    route.updateDetails();
-                }
+        var
+            id = this._esterenMarker.id,
+            latlng = this.getLatLng(),
+            polylines = this._esterenMap._polylines,
+            polyline, polylineLatLng, i
+        ;
+        for (i in polylines) {
+            if (!polylines.hasOwnProperty(i)) { continue; }
+            polyline = polylines[i];
+            polylineLatLng = polyline.getLatLngs();
+            if (polyline._esterenRoute.marker_start === id) {
+                polylineLatLng[0] = L.latLng(latlng.lat, latlng.lng);
+            } else if (polyline._esterenRoute.marker_end === id) {
+                polylineLatLng[polylineLatLng.length - 1] = L.latLng(latlng.lat, latlng.lng);
+            } else {
+                continue;
             }
-        }
-        if (routesEnd = this.refreshRoutesEnd()) {
-            for (i in routesEnd) {
-                if (routesEnd.hasOwnProperty(i) && routesEnd[i]) {
-                    route = routesEnd[i];
-                    route.updateDetails();
-                }
-            }
+            polyline.setLatLngs(polylineLatLng);
         }
     };
 
@@ -120,7 +92,16 @@
             _this = this,
             callbackMessage = '',
             callbackMessageType = 'success',
-            id = esterenMarker.id || null;
+            id = esterenMarker.id || null
+        ;
+
+        if (this.launched) {
+            return;
+        }
+
+        d.querySelector('#esterenmap_sidebar button[data-save][data-save-marker]').classList.add('disabled');
+        d.querySelector('#esterenmap_sidebar button[data-save][data-save-marker] .progress').classList.add('active');
+
         if (esterenMarker && this._map && !this.launched) {
             this.launched = true;
             esterenMarker.map = esterenMarker.map || {id: this._esterenMap._mapOptions.id };
@@ -177,6 +158,8 @@
                 },
                 callbackComplete: function(){
                     _this.launched = false;
+                    d.querySelector('#esterenmap_sidebar button[data-save][data-save-marker]').classList.remove('disabled');
+                    d.querySelector('#esterenmap_sidebar button[data-save][data-save-marker] .progress').classList.remove('active');
                     if (callbackMessage) {
                         _this._esterenMap.message(callbackMessage, callbackMessageType);
                     }
@@ -298,28 +281,26 @@
             map._editedMarker = marker;
 
             if (marker._sidebar.isVisible() && esterenMarker) {
-                d.getElementById('marker_popup_name').value = esterenMarker.name;
-                d.getElementById('marker_popup_type').value = esterenMarker.marker_type ? esterenMarker.marker_type.id : null;
-                d.getElementById('marker_popup_faction').value = esterenMarker.faction ? esterenMarker.faction.id : "";
+                d.getElementById('api_markers_name').value = esterenMarker.name;
+                d.getElementById('api_markers_markerType').value = esterenMarker.marker_type ? esterenMarker.marker_type.id : null;
+                d.getElementById('api_markers_faction').value = esterenMarker.faction ? esterenMarker.faction.id : "";
 
-                $('#marker_popup_name').off('keyup').on('keyup', function(){
+                $('#api_markers_name').off('keyup').on('keyup', function(){
                     map._markers[id]._esterenMarker.name = this.value;
-                    if (this._timeout) { clearTimeout(this._timeout); }
-                    this._timeout = setTimeout(function(){ map._markers[id]._updateEM(); }, 1000);
                     return false;
                 });
-                $('#marker_popup_type').off('change').on('change', function(){
+                $('#api_markers_markerType').off('change').on('change', function(){
                     map._markers[id]._esterenMarker.marker_type = map.reference('markers_types', this.value);
-                    map._markers[id]._updateEM();
                     return false;
                 });
-                $('#marker_popup_faction').off('change').on('change', function(){
+                $('#api_markers_faction').off('change').on('change', function(){
                     map._markers[id]._esterenMarker.faction = map.reference('factions', this.value);
-                    map._markers[id]._updateEM();
                     return false;
+                });
+                d.querySelector('#esterenmap_sidebar button[data-save][data-save-marker]').addEventListener('click', function(){
+                    map._markers[id]._updateEM();
                 });
             }
-
         },
         dblclickCallback: function(e){
         },
@@ -334,7 +315,6 @@
                 marker._esterenMarker.latitude = latlng.lat;
                 marker._esterenMarker.longitude = latlng.lng;
             }
-            marker._updateEM();
         },
         addCallback: function(e){
             var marker = e.target,

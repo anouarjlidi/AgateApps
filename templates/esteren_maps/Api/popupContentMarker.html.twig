@@ -1,10 +1,8 @@
-{% trans_default_domain 'EsterenMaps' -%}
-{%- spaceless %}
-    <h3 id="marker_popup_name" class="text-xxl"></h3>
-    <p id="marker_popup_type"></p>
-
-    <p>
-        {{ 'Faction' | trans }} :
-        <span id="marker_popup_faction"></span>
-    </p>
+{% spaceless %}
+    <h3>{{ 'entities.markers.title_singular' | trans({}, 'EsterenMaps') }}</h3>
+    {{ form(form) }}
+    <button class="btn btn-small" data-save type="button">
+        {{ 'action.save'|trans }}
+        <span class="progress"><span class="indeterminate"></span></span>
+    </button>
 {% endspaceless %}

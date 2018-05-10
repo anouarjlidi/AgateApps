@@ -126,8 +126,8 @@
             return;
         }
 
-        d.querySelector('#esterenmap_sidebar button[data-save]').classList.add('disabled');
-        d.querySelector('#esterenmap_sidebar button[data-save] .progress').classList.add('active');
+        d.querySelector('#esterenmap_sidebar button[data-save][data-save-route]').classList.add('disabled');
+        d.querySelector('#esterenmap_sidebar button[data-save][data-save-route] .progress').classList.add('active');
 
         if (esterenRoute && this._map && !this.launched && esterenRoute.marker_start && esterenRoute.marker_end) {
             this.launched = true;
@@ -185,8 +185,8 @@
                 },
                 callbackComplete: function(){
                     _this.launched = false;
-                    d.querySelector('#esterenmap_sidebar button[data-save]').classList.remove('disabled');
-                    d.querySelector('#esterenmap_sidebar button[data-save] .progress').classList.remove('active');
+                    d.querySelector('#esterenmap_sidebar button[data-save][data-save-route]').classList.remove('disabled');
+                    d.querySelector('#esterenmap_sidebar button[data-save][data-save-route] .progress').classList.remove('active');
                     if (callbackMessage) {
                         _this._esterenMap.message(callbackMessage, callbackMessageType);
                     }
@@ -358,7 +358,7 @@
                     return false;
                 })
             ;
-            d.querySelector('#esterenmap_sidebar button[data-save]').addEventListener('click', function(){
+            d.querySelector('#esterenmap_sidebar button[data-save][data-save-route]').addEventListener('click', function(){
                 map._polylines[id]._updateEM();
             });
 

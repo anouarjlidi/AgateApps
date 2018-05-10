@@ -13,18 +13,17 @@ namespace EsterenMaps\Form;
 
 use EsterenMaps\Entity\Factions;
 use EsterenMaps\Entity\Markers;
-use EsterenMaps\Entity\Routes;
-use EsterenMaps\Entity\RoutesTypes;
+use EsterenMaps\Entity\MarkersTypes;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\{
-    CheckboxType, TextType
+    TextType
 };
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 
-class ApiRouteType extends AbstractType
+class ApiMarkersType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -32,26 +31,13 @@ class ApiRouteType extends AbstractType
             ->add('name', TextType::class, [
                 'constraints' => [
                     new Constraints\NotBlank(),
-                ],
+                ]
             ])
-            ->add('forcedDistance', CheckboxType::class, [
+            ->add('markerType', EntityType::class, [
+                'class' => MarkersTypes::class,
                 'constraints' => [
-                    new Constraints\Type(['type' => 'bool']),
+                    new Constraints\NotBlank(),
                 ],
-            ])
-            ->add('guarded', CheckboxType::class, [
-                'constraints' => [
-                    new Constraints\Type(['type' => 'bool']),
-                ],
-            ])
-            ->add('routeType', EntityType::class, [
-                'class' => RoutesTypes::class,
-            ])
-            ->add('markerStart', EntityType::class, [
-                'class' => Markers::class,
-            ])
-            ->add('markerEnd', EntityType::class, [
-                'class' => Markers::class,
             ])
             ->add('faction', EntityType::class, [
                 'class' => Factions::class,
@@ -62,9 +48,7 @@ class ApiRouteType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
-            ->setDefault('display_coordinates', false)
-            ->setAllowedTypes('display_coordinates', 'bool')
-            ->setDefault('data_class', Routes::class)
+            ->setDefault('data_class', Markers::class)
         ;
     }
 }

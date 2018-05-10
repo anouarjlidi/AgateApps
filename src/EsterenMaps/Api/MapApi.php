@@ -21,6 +21,7 @@ use EsterenMaps\Entity\RoutesTypes;
 use EsterenMaps\Entity\TransportTypes;
 use EsterenMaps\Entity\Zones;
 use EsterenMaps\Entity\ZonesTypes;
+use EsterenMaps\Form\ApiMarkersType;
 use EsterenMaps\Form\ApiRouteType;
 use Symfony\Component\Asset\Packages;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -138,17 +139,10 @@ class MapApi
     {
         return [
             'LeafletPopupMarkerBaseContent' => $this->twig->render('esteren_maps/Api/popupContentMarkerEditMode.html.twig', [
-                'markersTypes' => $data['references']['markers_types'],
-                'factions'     => $data['references']['factions'],
-                'display'      => true,
+                'form' => $this->formFactory->create(ApiMarkersType::class)->createView(),
             ]),
             'LeafletPopupPolylineBaseContent' => $this->twig->render('esteren_maps/Api/popupContentPolylineEditMode.html.twig', [
-                'form' => $this->formFactory->create(ApiRouteType::class, null, [
-                    'markers'             => $data['map']['markers'],
-                    'routes_types'        => $data['references']['routes_types'],
-                    'factions'            => $data['references']['factions'],
-                    'display_coordinates' => false,
-                ])->createView(),
+                'form' => $this->formFactory->create(ApiRouteType::class)->createView(),
             ]),
             'LeafletPopupPolygonBaseContent' => $this->twig->render('esteren_maps/Api/popupContentPolygonEditMode.html.twig', [
                 'zonesTypes' => $data['references']['zones_types'],
