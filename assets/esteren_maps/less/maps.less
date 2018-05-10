@@ -164,8 +164,16 @@
     }
 }
 
-.leaflet-marker-icon.selected {
-    outline: solid 1px #a22;
+@keyframes animate-border-color-to-red {
+    0% {
+        border-color: white;
+    }
+    50% {
+        border-color: red;
+    }
+    100% {
+        border-color: white;
+    }
 }
 
 #corahnrin {
@@ -178,7 +186,20 @@
             display: none;
         }
         .leaflet-container {
-             font: inherit;
+            font: inherit;
+        }
+        .leaflet-marker-icon.selected {
+            border: dashed 3px white;
+            border-radius: 50%;
+            box-sizing: content-box;
+            position: relative;
+            top: -5px;
+            left: -5px;
+            padding: 2px;
+            animation-name: animate-border-color-to-red;
+            animation-duration: 1s;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
         }
     }
     .leaflet-popup-content {
