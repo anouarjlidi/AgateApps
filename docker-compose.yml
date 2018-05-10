@@ -27,10 +27,16 @@ services:
             - '1080:80'
 
     node:
-        image: node:8
+        image: node:9
+        working_dir: /var/www/html/
         volumes:
-            - ./:/var/www/html
-        command: 'npm --cwd /var/www/html run gulp watch'
+            - ./gulpfile.js:/var/www/html/gulpfile.js
+            - ./package.json:/var/www/html/package.json
+            - ./package-lock.json:/var/www/html/package-lock.json
+            - ./node_modules/:/var/www/html/node_modules/
+            - ./assets/:/var/www/html/assets/
+            - ./public/:/var/www/html/public/
+        command: 'npm run gulp dump'
 
     nginx:
         build: ./docker/nginx/
