@@ -84,7 +84,17 @@ class ApiTilesController extends AbstractController
     }
 
     /**
-     * @Route("/maps/tile/{id}/{zoom}/{x}/{y}.jpg", requirements={"id": "\d+"}, name="esterenmaps_api_tiles", methods={"GET"})
+     * @Route(
+     *     "/maps/tile/{id}/{zoom}/{x}/{y}.jpg",
+     *     requirements={
+     *         "id": "\d+",
+     *         "zoom": "\d+",
+     *         "x": "\d+",
+     *         "y": "\d+"
+     *     },
+     *     name="esterenmaps_api_tiles",
+     *     methods={"GET"}
+     * )
      */
     public function tileAction(Maps $map, int $zoom, int $x, int $y): Response
     {
