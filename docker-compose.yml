@@ -27,7 +27,7 @@ services:
             - '1080:80'
 
     node:
-        image: node:9
+        image: node:10
         working_dir: /var/www/html/
         volumes:
             - ./gulpfile.js:/var/www/html/gulpfile.js
