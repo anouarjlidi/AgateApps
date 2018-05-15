@@ -240,6 +240,15 @@ GulpfileHelpers.objectForEach = function(object, callback) {
 };
 
 /**
+ * @param {Array} arrayToFlatten
+ * @returns {Array}
+ */
+GulpfileHelpers.flattenArray = function(arrayToFlatten) {
+    "use strict";
+    return [].concat.apply([], arrayToFlatten).sort();
+};
+
+/**
  * Retrieve files from globs or specific file names.
  */
 GulpfileHelpers.pushFromDirectory = (outputDirName, elements, filesList) => {
@@ -304,6 +313,7 @@ const gulpif     = require('gulp-if');
 const concat     = require('gulp-concat');
 const uglify     = require('gulp-uglify');
 const cleancss   = require('gulp-clean-css');
+const gulpWatch  = require('gulp-watch');
 
 // Load other extensions only when having specific components. Saves memory & time execution.
 const less     = hasLess   ? require('gulp-less')     : function(){ return {}; };
@@ -583,7 +593,7 @@ gulp.task('dump', gulp.series('images', 'copy', 'less', 'sass', 'css', 'js', fun
 /**
  * Will watch for files and run "dump" for each modification
  */
-gulp.task('watch', gulp.series('dump', gulp.parallel(function(done) {
+gulp.task('watch', gulp.series(/*'dump', */gulp.parallel(function(done) {
     "use strict";
 
     let files_less = [],
@@ -649,25 +659,25 @@ gulp.task('watch', gulp.series('dump', gulp.parallel(function(done) {
     }
 
     if (other_files_to_watch.length) {
-        gulp.watch(other_files_to_watch, gulp.parallel('dump')).on('change', callback);
+        gulpWatch(other_files_to_watch, gulp.parallel('dump')).on('change', callback);
     }
     if (hasImages) {
-        gulp.watch(files_images, gulp.parallel('images')).on('change', callback);
+        gulpWatch(GulpfileHelpers.flattenArray(files_images), gulp.parallel('images')).on('change', callback);
     }
     if (hasCopy) {
-        gulp.watch(files_copy, gulp.parallel('copy')).on('change', callback);
+        gulpWatch(GulpfileHelpers.flattenArray(files_copy), gulp.parallel('copy')).on('change', callback);
     }
     if (hasLess) {
-        gulp.watch(files_less, gulp.parallel('less')).on('change', callback);
+        gulpWatch(GulpfileHelpers.flattenArray(files_less), gulp.parallel('less')).on('change', callback);
     }
     if (hasSass) {
-        gulp.watch(files_sass, gulp.parallel('sass')).on('change', callback);
+        gulpWatch(GulpfileHelpers.flattenArray(files_sass), gulp.parallel('sass')).on('change', callback);
     }
     if (hasCss) {
-        gulp.watch(files_css, gulp.parallel('css')).on('change', callback);
+        gulpWatch(GulpfileHelpers.flattenArray(files_css), gulp.parallel('css')).on('change', callback);
     }
     if (hasJs) {
-        gulp.watch(files_js, gulp.parallel('js')).on('change', callback);
+        gulpWatch(GulpfileHelpers.flattenArray(files_js), gulp.parallel('js')).on('change', callback);
     }
 
     done();
