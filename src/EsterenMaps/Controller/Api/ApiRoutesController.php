@@ -18,7 +18,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * @Route(host="%esteren_domains.api%")
@@ -27,13 +29,16 @@ class ApiRoutesController
 {
     use ApiValidationTrait;
 
+    private $security;
     private $em;
     private $routeApi;
 
     public function __construct(
+        AuthorizationCheckerInterface $security,
         RouteApi $routeApi,
         EntityManagerInterface $em
     ) {
+        $this->security = $security;
         $this->em = $em;
         $this->routeApi = $routeApi;
     }
@@ -43,6 +48,10 @@ class ApiRoutesController
      */
     public function create(Request $request): Response
     {
+        if (!$this->security->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedHttpException();
+        }
+
         try {
             $route = Routes::fromApi($this->routeApi->sanitizeRequestData(json_decode($request->getContent(), true)));
 
@@ -57,6 +66,10 @@ class ApiRoutesController
      */
     public function update(Routes $route, Request $request): Response
     {
+        if (!$this->security->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedHttpException('Access denied.');
+        }
+
         try {
             $route->updateFromApi($this->routeApi->sanitizeRequestData(json_decode($request->getContent(), true)));
 
