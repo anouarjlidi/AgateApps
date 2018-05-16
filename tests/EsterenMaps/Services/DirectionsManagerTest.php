@@ -32,7 +32,6 @@ class DirectionsManagerTest extends WebTestCase
 
     /**
      * @dataProvider provideWorkingDirections
-     * @runInSeparateProcess
      *
      * @param array  $expectedData
      * @param int    $map

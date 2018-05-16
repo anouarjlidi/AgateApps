@@ -66,7 +66,9 @@ class MapsController extends Controller
      */
     public function viewAction(Maps $map, Request $request): Response
     {
-        $this->denyAccessUnlessGranted(['ROLE_USER', 'ROLE_MAPS_VIEW']);
+        if (!$this->isGranted(['ROLE_USER', 'ROLE_MAPS_VIEW']) || !$this->getUser()) {
+            throw $this->createAccessDeniedException('Access denied.');
+        }
 
         $response = new Response();
         if (!$this->getParameter('kernel.debug')) {
