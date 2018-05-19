@@ -11,15 +11,6 @@ services:
         links:
             - db
             - mailcatcher
-        environment:
-            - IMAGEMAGICK_BINARIES_PATH=/usr/bin/magick
-            - AGATE_DOMAIN=studio-agate.docker
-            - DRAGONS_DOMAIN=dragons-rpg.docker
-            - ESTEREN_DOMAIN=esteren.docker
-            - VERMINE_DOMAIN=vermine2047.docker
-            - DATABASE_URL=mysql://root:agate_portal@db/agate_portal?serverVersion=10.1
-            - DATABASE_URL_LEGACY=mysql://root:esteren_legacy@db_legacy/esteren_legacy?serverVersion=10.1
-            - MAILER_URL=smtp://mailcatcher
 
     mailcatcher:
         image: tophfr/mailcatcher:latest
@@ -30,13 +21,8 @@ services:
         build: ./docker/node/
         working_dir: /var/www/html/
         volumes:
-            - ./gulpfile.js:/var/www/html/gulpfile.js
-            - ./package.json:/var/www/html/package.json
-            - ./package-lock.json:/var/www/html/package-lock.json
-            - ./node_modules/:/var/www/html/node_modules/
-            - ./assets/:/var/www/html/assets/
-            - ./public/:/var/www/html/public/
-        command: 'npm run gulp dump'
+            - ./:/var/www/html/
+        command: 'npm run gulp watch'
 
     nginx:
         build: ./docker/nginx/
