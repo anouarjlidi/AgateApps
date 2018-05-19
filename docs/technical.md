@@ -12,30 +12,24 @@
 
 # General technical informations
 
-## Views
-
-Contrary to [Symfony's recommendations and best practices](http://symfony.com/doc/current/best_practices/templates.html#template-locations),
-we need the bundles to be the most standalone possible, so the views are kept inside each bundle.
-Only the base template and the EasyAdmin ([view below](#backoffice)) views are stored in `app/Resources/views`,
- as of the layout & includes and form themes.
-
 ## Backoffice
 
 The backoffice is powered by [EasyAdminBundle](https://github.com/javiereguiluz/EasyAdminBundle).
-Its configuration resides in [app/config/_easy_admin.yml](../app/config/_easyadmin.yml) and
- [app/config/admin/](../app/config/admin/) directory.
-An `AdminBundle` exists only to store the `AdminController` which allows complete override of any of EasyAdmin's feature
-(it also registers the `admin` directory as resource files so container is recompiled when one changes).
+Its configuration resides in [config/packages/_easy_admin.yml](../config/packages/easy_admin.yaml).
+
+A few other `easy_admin_*.yaml` also exist to avoid having everything in the same file.
+ 
+An `Admin` namespace exists only to store the `AdminController` which allows complete override of any of EasyAdmin's.
 
 ## Tests
 
-Tests are located in the associated bundles, but global configuration is in the root directory.
+Tests use an `sqlite` database for max performances. There is a `WebTestCase` that provides a `resetDatabase()` method
+to make sure tests don't take too long to reset database.
 
-The bootstrap file and the default `WebTestCase` class are located in the `tests/` directory.
+Also, the [tests/bootstrap.php](../tests/bootstrap.php) file creates the database and make some checks for easier and
+faster testing.
 
 For now, there's only PHPUnit.
-
-There's a CI script located in `tests/ci/ci.bash` that should be runned on CI servers.
 
 ## Users
 

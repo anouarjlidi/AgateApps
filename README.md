@@ -14,11 +14,13 @@ Since, it has followed all Symfony updates, and has been refactored countless ti
 It contains multiple apps:
 
 * The Esteren portal.
-* The Games portal.
-* Agate portal, and other portals like Vermine, mostly as static pages.
-* Esteren Maps, an application that allows users to navigate in the different configured maps, calculate directions and
+* The Agate portal.
+* The Dragons portal.
+* The Vermine 2047 portal.
+* The Games portal, which is still WIP at that time.
+* **Esteren Maps**, an application that allows users to navigate in the different configured maps, calculate directions and
  imagine scenarios based on travels.
-* Corahn-Rin, this is the V2 of the first [Corahn-Rin project](https://github.com/Esteren/CorahnRinV1). The goal of this
+* **Corahn-Rin**, this is the V2 of the first [Corahn-Rin project](https://github.com/Esteren/CorahnRinV1). The goal of this
  application is to provide a character generator, a manager (to help the character grow up in skills!), and a virtual
  campaign board, where game leaders can invite players and reward characters in XP and treasures.
 
@@ -34,67 +36,68 @@ It contains multiple apps:
 
 ## Pre-requisites
 
-* PHP 7.2+
-* NodeJS 8.0+ and `npm` accessible globally.
-* Imagemagick accessible globally or at least from the app, mostly `convert` and `identify` binaries.
+Simply use **Docker**. If you want to use something else, you can reverse-engineer necessary dockerfiles or vhosts.
 
 ## Install
 
 ```bash
-$ cp .env.dist .env
-$ composer install
-$ bin/console doctrine:database:create
-$ bin/console doctrine:schema:create
-$ bin/console doctrine:fixtures:load --append
+$ make install
 ```
 
-Composer is configured to install node dependencies and dump assets. See
-[composer.json](composer.json) scripts configuration for more informations.
+Check the [Makefile](Makefile) if you want to know what this `install` target does.
 
-Next, you need to set up your environment to fit our stack.
-
-### (optional) Install Esteren Maps base tiles.
-
-If you need to install Esteren Maps, you also need to generate the fixture tiles.
-
-Check the [Esteren Maps](docs/maps.md#tiles-generation) documentation for this.
+TL;DR: it does build the Docker images, start them, install the vendors, set up database, insert fixtures, dump public
+assets and EsterenMap map tiles.
 
 ## Setup
 
-### Subdomains
-
-You need to be sure that your webserver listens to every domain name set up in the application.
-
-You can configure the main domain in `.env`, let's check the default at [.env.dist file](/.env.dist).
-
-There are a lot of subdomains that are linked to this application, so make sure each and anyone of them
-is well listened by your webserver: you can set up the app on both Nginx and Apache, thanks to the
-[vhosts](docs/03_vhosts.md) provided by the docs.
-
-To view the list of all subdomains, check the [_app.yml](app/config/_app.yml) file.
-
-#### Windows
-
-Be sure that your `C:\Windows\System32\drivers\etc\hosts` file contains redirections for all subdomains defined in the
- app's configuration.
- 
-#### Linux and OSX
-
-Install [dnsmasq](https://fr.wikipedia.org/wiki/Dnsmasq) if not already installed, and you can use
- `address=/dev/127.0.0.1` as basic configuration to tell your machine to resolve every `*.dev` host to your local
- machine.
- 
-This is easier for you then to just create a vhost with all `esteren.dev` or `studio-agate.dev` subdomains.
-
-Or you can just edit the `/etc/hosts` and add an entry to resolve `.dev` domains as local, one by one. 
-
-### Fixtures (if you don't have a proper database export to be imported)
-
-If you don't have a prod database export, load the fixtures in your database:
+First thing to manually do:
 
 ```bash
-$ bin/console doctrine:fixtures:load --append
+$ cp .env.dist .env
 ```
+
+You **must** configure this file yourself with n
+
+### Subdomains
+
+There are multiple subdomains to configure in the project to make it work: API, backend, portals, etc.
+
+You need to be sure that your environment is capable of using the hosts that are configured in the project.
+
+By convention, all domains might end with `.docker`, but it depends on your preferences.
+
+Check the default domains at [.env.dist file](/.env.dist), and update your `.env` file accordingly.
+
+#### With a DNS software
+
+On Linux and MacOS, you can use `dnsmasq` (if you know how to configure it properly) to redirect all `.docker` hosts
+to your local host, with a configuration like this:
+
+```ini
+address=/docker/127.0.0.1
+```
+
+On Windows you can use [Acrylic](http://mayakron.altervista.org/wikibase/show.php?id=AcrylicHome) (if you know how to
+configure it properly), or you can use hosts files.
+
+#### With hosts file
+
+On Windows (and on Linux and MacOS too) you can update your machine's hosts file to make your browser able to load your
+custom domain names for Agate project.
+
+Example of host files:
+
+```ini
+127.0.0.1 esteren.docker
+127.0.0.1 www.studio-agate.docker
+# ...
+```
+
+On Windows, the hosts file is located in `C:\Windows\System32\drivers\etc\hosts` and must be edited with administrator
+permissions.
+
+On Linux and MacOS, the host file is in `/etc/hosts` and must be edited with root permissions.
 
 ### Assets management
 
@@ -104,43 +107,19 @@ with Gulp.
 We use a specific gulpfile from [Orbitale/Gulpfile](https://github.com/Orbitale/Gulpfile) which allows good
 flexibility and is based only on one config variable (similar to Grunt).
 
-You can use `gulp watch` when you are working with assets so they're compiled on-change.
-
-Note that we're using Gulp 4, so you should either install it globally, or just run `./node_modules/.bin/gulp4` to use.
-
 ## Tests
 
 To run the tests, just run phpunit:
 
 ```bash
-$ ./vendor/bin/phpunit
+$ make phpunit
 ```
-
-### Use the database for tests
-
-If you **do not want to reset the database**, you can add the `NO_RECREATE_DB` env var.
-
-```bash
-$ NO_RECREATE_DB=1 phpunit
-```
-
-If you are using the database, there will be a first Sqlite file written after creating the schema and importing
-the fixtures, and this file will serve as a reference for all tests until deleted.
-If you want, you can force the tests to rewrite the whole database by using this environment variable:
-
-```bash
-$ RECREATE_DB=1 phpunit
-```
-
-Read the [bootstrap.php](tests/bootstrap.php) file to see these env vars in use. 
-
 
 ### CI
 
-We are using [CircleCI](https://circleci.com/gh/Pierstoval/AgateApps). 
+We are using [CircleCI](https://circleci.com/gh/Pierstoval/AgateApps).
 
-A [tests/ci/ci.bash](tests/ci/ci.bash) file has been created and it executes everything we need, based on some env vars.
- But it does not work for now. So we're using [.circleci/config.yml](.circleci/config.yml) file to configure CI properly.
+Linting tests and phpunit are executed there for both PHP and NodeJS.
 
 ## Issues tracking
 

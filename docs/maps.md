@@ -42,15 +42,16 @@ There are three main services in Esteren Maps that you can use:
 
 When you have a Map and its background saved in your app, you must generate map tiles for it to be viewable in front.
 
-For this, run this command:
+For this, run one of these commands:
 
 ```bash
-$ bin/console esterenmaps:map:generate-tiles
+$ make map-tiles # To generate the tiles for the built-in map in the Fixtures
+$ bin/console esterenmaps:map:generate-tiles #  To generate the tiles for another map you may have created before
 ```
 
 It will use [ImageMagick](http://www.imagemagick.org) and the [Orbitale ImageMagickPHP](https://github.com/Orbitale/ImageMagickPHP)
  command wrapper to generate tiles of 128x128px.<br>
-<small>(actually, it doesn't use the Orbitale package yet, but it will one day)</small>
+<small>(actually, it doesn't use the Orbitale package yet, but it will one day, hopefully)</small>
 
 ## Directions
 

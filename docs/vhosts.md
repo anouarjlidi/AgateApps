@@ -10,7 +10,10 @@
 * [Corahn Rin / Character manager](character_manager.md)
 * [Deploy](deploy.md)
 
+**⚠️ Use this ONLY when you cannot set up the project with Docker.**
+
 You can set up vhosts in different configuration.
+
 Mostly it can run on Apache without any issue, but can also work on Nginx.
 
 # Apache vhost
@@ -33,9 +36,9 @@ performances reasons.
     ServerAlias  www.studio-agate.dev
     ServerAlias   www.vermine2047.dev
 
-    DocumentRoot /var/www/corahn_rin/public
+    DocumentRoot /var/www/agate_apps/public
 
-    <Directory /var/www/corahn_rin/public>
+    <Directory /var/www/agate_apps/public>
 
         # Uncomment if using php with fastcgi or php-fpm.
         #<Files ~ "\.(php|phtml)$">
@@ -90,8 +93,8 @@ performances reasons.
     </Directory>
 
     # Logs are added automatically to Symfony's log dir.
-    ErrorLog /var/www/corahn_rin/var/log/apache_error.log
-    CustomLog /var/www/corahn_rin/var/log/apache_access.log combined
+    ErrorLog /var/www/agate_apps/var/log/apache_error.log
+    CustomLog /var/www/agate_apps/var/log/apache_access.log combined
 
 </VirtualHost>
 ```
@@ -124,7 +127,7 @@ server {
 
     # Change the directory to what you need.
     # Also change logs dir at the bottom of this file.
-    root /var/www/corahn_rin/public;
+    root /var/www/agate_apps/public;
     
     # Security headers.
     add_header X-Xss-Protection "1; mode=block";
@@ -180,7 +183,7 @@ server {
     }
 
     # Heroku needs to use stderr, but in dev you can switch to a log file.
-    error_log /var/www/corahn_rin/var/logs/nginx_error.log;
-    access_log /var/www/corahn_rin/var/logs/nginx_access.log;
+    error_log /var/www/agate_apps/var/logs/nginx_error.log;
+    access_log /var/www/agate_apps/var/logs/nginx_access.log;
 }
 ```
