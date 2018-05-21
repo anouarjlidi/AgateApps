@@ -661,7 +661,7 @@ gulp.task('watch', gulp.series(/*'dump', */gulp.parallel(function(done) {
     // On Windows, filesystem events are not supported.
     // This is why we use polling on windows to make the watch script work properly.
     let watchOptions = {
-        usePolling: /^win/i.test(process.platform)
+        usePolling: true
     };
 
     if (other_files_to_watch.length) {
