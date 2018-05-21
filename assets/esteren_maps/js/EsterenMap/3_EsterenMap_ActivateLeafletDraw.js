@@ -22,6 +22,7 @@
         drawControl = new L.Control.Draw({
             draw: {
                 circle: false,
+                circleMarker: false,
                 rectangle: false,
                 polygon: {
                     allowIntersection: false
