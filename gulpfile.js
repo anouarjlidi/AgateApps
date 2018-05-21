@@ -658,26 +658,32 @@ gulp.task('watch', gulp.series(/*'dump', */gulp.parallel(function(done) {
         console.info("       > "+files_to_watch.join("\n       > "));
     }
 
+    // On Windows, filesystem events are not supported.
+    // This is why we use polling on windows to make the watch script work properly.
+    let watchOptions = {
+        usePolling: /^win/i.test(process.platform)
+    };
+
     if (other_files_to_watch.length) {
-        gulpWatch(other_files_to_watch, gulp.parallel('dump')).on('change', callback);
+        gulpWatch(other_files_to_watch, watchOptions, gulp.parallel('dump')).on('change', callback);
     }
     if (hasImages) {
-        gulpWatch(GulpfileHelpers.flattenArray(files_images), gulp.parallel('images')).on('change', callback);
+        gulpWatch(GulpfileHelpers.flattenArray(files_images), watchOptions, gulp.parallel('images')).on('change', callback);
     }
     if (hasCopy) {
-        gulpWatch(GulpfileHelpers.flattenArray(files_copy), gulp.parallel('copy')).on('change', callback);
+        gulpWatch(GulpfileHelpers.flattenArray(files_copy), watchOptions, gulp.parallel('copy')).on('change', callback);
     }
     if (hasLess) {
-        gulpWatch(GulpfileHelpers.flattenArray(files_less), gulp.parallel('less')).on('change', callback);
+        gulpWatch(GulpfileHelpers.flattenArray(files_less), watchOptions, gulp.parallel('less')).on('change', callback);
     }
     if (hasSass) {
-        gulpWatch(GulpfileHelpers.flattenArray(files_sass), gulp.parallel('sass')).on('change', callback);
+        gulpWatch(GulpfileHelpers.flattenArray(files_sass), watchOptions, gulp.parallel('sass')).on('change', callback);
     }
     if (hasCss) {
-        gulpWatch(GulpfileHelpers.flattenArray(files_css), gulp.parallel('css')).on('change', callback);
+        gulpWatch(GulpfileHelpers.flattenArray(files_css), watchOptions, gulp.parallel('css')).on('change', callback);
     }
     if (hasJs) {
-        gulpWatch(GulpfileHelpers.flattenArray(files_js), gulp.parallel('js')).on('change', callback);
+        gulpWatch(GulpfileHelpers.flattenArray(files_js), watchOptions, gulp.parallel('js')).on('change', callback);
     }
 
     done();
