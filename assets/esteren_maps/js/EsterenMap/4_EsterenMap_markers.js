@@ -31,12 +31,9 @@
     };
 
     L.Marker.prototype.updateIcon = function(){
-        var markerType = this._esterenMarker.marker_type;
-        if (!isNaN(markerType)) {
-            markerType = this._mapOptions.data.references.markers_types[markerType];
-            if (!markerType) {
-                throw 'Undefined marker id '+this._esterenMarker.marker_type;
-            }
+        var markerType = this._esterenMap.reference('markers_types', this._esterenMarker.marker_type);
+        if (!markerType) {
+            throw 'Undefined marker id '+this._esterenMarker.marker_type;
         }
 
         // Change icon image
@@ -104,49 +101,44 @@
 
         if (esterenMarker && this._map && !this.launched) {
             this.launched = true;
-            esterenMarker.map = esterenMarker.map || {id: this._esterenMap._mapOptions.id };
-            esterenMarker.latitude = this._latlng.lat;
-            esterenMarker.longitude = this._latlng.lng;
-            esterenMarker.altitude = this._latlng.alt;
-            esterenMarker.faction = esterenMarker.faction || {};
-            esterenMarker.marker_type = { id: esterenMarker.marker_type.id };
             this._esterenMap._load({
-                url: "markers" + (id ? '/'+id : ''),
+                url: this._esterenMap._mapOptions.apiUrls.endpoint.replace(/\/$/, '')+"/markers" + (id ? '/'+id : ''),
                 method: id ? "POST" : "PUT", // Si on n'a pas d'ID, c'est qu'on crée un nouveau marqueur
                 data: {
-                    json: esterenMarker,
-                    mapping: {
-                        name: true,
-                        description: true,
-                        longitude: true,
-                        latitude: true,
-                        map: true,
-                        marker_type: {
-                            objectField: 'markerType'
-                        },
-                        faction: true
-                    }
+                    id: esterenMarker.id,
+                    name: esterenMarker.name,
+                    description: esterenMarker.description,
+                    altitude: esterenMarker.altitude,
+                    latitude: esterenMarker.latitude,
+                    longitude: esterenMarker.longitude,
+                    faction: esterenMarker.faction,
+                    map: this._esterenMap._mapOptions.id,
+                    markerType: esterenMarker.marker_type
                 },
                 callback: function(response) {
                     var map = this,
                         msg,
-                        marker = response.newObject;
-                    if (!response.error) {
-                        if (marker && marker.id) {
-                            map._markers[marker.id] = baseMarker;
-                            map._markers[marker.id]._esterenMarker = marker;
-                            map._markers[marker.id].updateIcon();
-                            callbackMessage = 'Marker: ' + marker.id + ' - ' + marker.name;
-                        } else {
-                            msg = 'Marker retrieved by API does not have ID.';
-                            console.warn(msg);
-                            callbackMessage = response.message ? response.message : msg;
-                            callbackMessageType = 'warning';
-                        }
+                        marker = response
+                    ;
+                    if (marker && marker.id) {
+                        map._markers[marker.id] = baseMarker;
+                        map._markers[marker.id]._esterenMarker = {
+                            id: marker.id,
+                            name: marker.name,
+                            description: marker.description,
+                            altitude: marker.altitude,
+                            latitude: marker.latitude,
+                            longitude: marker.longitude,
+                            faction: marker.faction,
+                            map: marker.map,
+                            marker_type: marker.markerType
+                        };
+                        map._markers[marker.id].updateIcon();
+                        callbackMessage = 'Marker: ' + marker.id + ' - ' + marker.name;
                     } else {
                         msg = 'Api returned an error while attempting to '+(id?'update':'insert')+' a marker.';
                         console.error(msg);
-                        callbackMessage = msg + '<br>' + (response.message ? response.message : 'Unknown error...');
+                        callbackMessage = msg + '<br>' + (response ? response.toString() : 'Unknown error...');
                         callbackMessageType = 'danger';
                     }
                 },
@@ -386,15 +378,13 @@
         } else if (mapOptions.editMode === true) {
             // Let's try to create a new marker object, but only for edit mode
             marker._esterenMarker = this.esterenMarkerPrototype;
-            marker._esterenMarker.marker_type = this.reference('markers_types', 1);
+            marker._esterenMarker.marker_type = this.reference('markers_types', 1).id;
         }
 
-        markerType = marker._esterenMarker.marker_type;
-        if (!isNaN(markerType)) {
-            markerType = this.reference('markers_types', markerType);
-            if (!markerType) {
-                throw 'Undefined marker id '+marker._esterenMarker.marker_type;
-            }
+        markerType = this.reference('markers_types', marker._esterenMarker.marker_type);
+
+        if (!markerType) {
+            throw 'Undefined marker id '+marker._esterenMarker.marker_type;
         }
 
         // Create a popup

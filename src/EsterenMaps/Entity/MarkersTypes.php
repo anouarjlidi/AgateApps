@@ -100,242 +100,123 @@ class MarkersTypes implements EntityToClearInterface
         $this->markers = new ArrayCollection();
     }
 
-    /**
-     * Get id.
-     *
-     * @return int
-     *
-     * @codeCoverageIgnore
-     */
-    public function getId()
+    public function getId(): int
     {
-        return $this->id;
+        return (int) $this->id;
     }
 
-    /**
-     * @param int $id
-     *
-     * @return $this
-     *
-     * @codeCoverageIgnore
-     */
-    public function setId($id)
+    public function setId(int $id): self
     {
-        $this->id = $id;
+        $this->id = (int) $id;
 
         return $this;
     }
 
-    /**
-     * Set name.
-     *
-     * @param string $name
-     *
-     * @return MarkersTypes
-     *
-     * @codeCoverageIgnore
-     */
-    public function setName($name)
+    public function setName(string $name): self
     {
         $this->name = $name;
 
         return $this;
     }
 
-    /**
-     * Get name.
-     *
-     * @return string
-     *
-     * @codeCoverageIgnore
-     */
-    public function getName()
+    public function getName(): string
     {
-        return $this->name;
+        return (string) $this->name;
     }
 
-    /**
-     * Add markers.
-     *
-     * @param Markers $markers
-     *
-     * @return MarkersTypes
-     */
-    public function addMarker(Markers $markers)
+    public function addMarker(Markers $markers): self
     {
         $this->markers[] = $markers;
 
         return $this;
     }
 
-    /**
-     * Remove markers.
-     *
-     * @param Markers $markers
-     */
-    public function removeMarker(Markers $markers)
+    public function removeMarker(Markers $markers): self
     {
         $this->markers->removeElement($markers);
+
+        return $this;
     }
 
     /**
-     * Get markers.
-     *
      * @return Markers[]
-     *
-     * @codeCoverageIgnore
      */
-    public function getMarkers()
+    public function getMarkers(): iterable
     {
         return $this->markers;
     }
 
-    /**
-     * @return string
-     *
-     * @codeCoverageIgnore
-     */
-    public function getDescription()
+    public function getDescription(): string
     {
-        return $this->description;
+        return (string) $this->description;
     }
 
-    /**
-     * @param string $description
-     *
-     * @return $this
-     *
-     * @codeCoverageIgnore
-     */
-    public function setDescription($description)
+    public function setDescription(?string $description): self
     {
         $this->description = $description;
 
         return $this;
     }
 
-    /**
-     * @return string
-     *
-     * @codeCoverageIgnore
-     */
-    public function getIcon()
+    public function getIcon(): string
     {
-        return $this->icon;
+        return (string) $this->icon;
     }
 
-    /**
-     * @param string $icon
-     *
-     * @return $this
-     *
-     * @codeCoverageIgnore
-     */
-    public function setIcon($icon = null)
+    public function setIcon(string $icon): self
     {
         $this->icon = $icon;
 
         return $this;
     }
 
-    /**
-     * @return string
-    */
-    public function getWebIcon()
+    public function getWebIcon(): string
     {
         return '/img/markerstypes/'.$this->icon;
     }
 
-    /**
-     * @return int
-     *
-     * @codeCoverageIgnore
-     */
-    public function getIconWidth()
+    public function getIconWidth(): int
     {
-        return $this->iconWidth;
+        return (int) $this->iconWidth;
     }
 
-    /**
-     * @param int $iconWidth
-     *
-     * @return MarkersTypes
-     *
-     * @codeCoverageIgnore
-     */
-    public function setIconWidth($iconWidth)
+    public function setIconWidth(int $iconWidth): self
     {
         $this->iconWidth = $iconWidth;
 
         return $this;
     }
 
-    /**
-     * @return int
-     *
-     * @codeCoverageIgnore
-     */
-    public function getIconHeight()
+    public function getIconHeight(): int
     {
-        return $this->iconHeight;
+        return (int) $this->iconHeight;
     }
 
-    /**
-     * @param int $iconHeight
-     *
-     * @return MarkersTypes
-     *
-     * @codeCoverageIgnore
-     */
-    public function setIconHeight($iconHeight)
+    public function setIconHeight(int $iconHeight): self
     {
         $this->iconHeight = $iconHeight;
 
         return $this;
     }
 
-    /**
-     * @return int
-     *
-     * @codeCoverageIgnore
-     */
-    public function getIconCenterX()
+    public function getIconCenterX(): int
     {
-        return $this->iconCenterX;
+        return (int) $this->iconCenterX;
     }
 
-    /**
-     * @param int $iconCenterX
-     *
-     * @return MarkersTypes
-     *
-     * @codeCoverageIgnore
-     */
-    public function setIconCenterX($iconCenterX)
+    public function setIconCenterX(int $iconCenterX): self
     {
         $this->iconCenterX = $iconCenterX;
 
         return $this;
     }
 
-    /**
-     * @return int
-     *
-     * @codeCoverageIgnore
-     */
-    public function getIconCenterY()
+    public function getIconCenterY(): int
     {
-        return $this->iconCenterY;
+        return (int) $this->iconCenterY;
     }
 
-    /**
-     * @param int $iconCenterY
-     *
-     * @return MarkersTypes
-     *
-     * @codeCoverageIgnore
-     */
-    public function setIconCenterY($iconCenterY)
+    public function setIconCenterY(int $iconCenterY): self
     {
         $this->iconCenterY = $iconCenterY;
 

@@ -12,6 +12,7 @@
 namespace EsterenMaps\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Mapping as ORM;
 use EsterenMaps\Cache\EntityToClearInterface;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
@@ -34,42 +35,52 @@ class Markers implements EntityToClearInterface, \JsonSerializable
      * @ORM\Id()
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\GeneratedValue(strategy="IDENTITY")
-    */
+     */
     protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=false, unique=true)
-    */
+     *
+     * @Assert\NotBlank()
+     */
     protected $name;
 
     /**
      * @var string
      *
      * @ORM\Column(name="description", type="text", nullable=true)
-    */
+     *
+     * @Assert\Type("string")
+     */
     protected $description;
 
     /**
      * @var string
      *
      * @ORM\Column(name="altitude", type="string", length=255, options={"default": 0})
-    */
+     *
+     * @Assert\Type("float")
+     */
     protected $altitude = 0;
 
     /**
      * @var string
      *
      * @ORM\Column(name="latitude", type="string", length=255, options={"default": 0})
-    */
+     *
+     * @Assert\Type("float")
+     */
     protected $latitude = 0;
 
     /**
      * @var string
      *
      * @ORM\Column(name="longitude", type="string", length=255, options={"default": 0})
-    */
+     *
+     * @Assert\Type("float")
+     */
     protected $longitude = 0;
 
     /**
@@ -77,7 +88,9 @@ class Markers implements EntityToClearInterface, \JsonSerializable
      *
      * @ORM\ManyToOne(targetEntity="Factions", inversedBy="markers")
      * @ORM\JoinColumn(name="faction_id", nullable=true)
-    */
+     *
+     * @Assert\Type("EsterenMaps\Entity\Factions")
+     */
     protected $faction;
 
     /**
@@ -85,6 +98,9 @@ class Markers implements EntityToClearInterface, \JsonSerializable
      *
      * @ORM\ManyToOne(targetEntity="Maps", inversedBy="markers")
      * @ORM\JoinColumn(name="map_id", nullable=false)
+     *
+     * @Assert\Type("EsterenMaps\Entity\Maps")
+     * @Assert\NotBlank()
      */
     protected $map;
 
@@ -93,8 +109,9 @@ class Markers implements EntityToClearInterface, \JsonSerializable
      *
      * @ORM\ManyToOne(targetEntity="MarkersTypes", inversedBy="markers")
      * @ORM\JoinColumn(name="marker_type_id", nullable=false)
-    * @Assert\NotBlank()
-     * @Assert\Valid()
+     *
+     * @Assert\Type("EsterenMaps\Entity\MarkersTypes")
+     * @Assert\NotBlank()
      */
     protected $markerType;
 
@@ -113,14 +130,9 @@ class Markers implements EntityToClearInterface, \JsonSerializable
     protected $routesEnd;
 
     /**
-     * @var Routes
+     * If true, the self::updateRoutesCoordinates() method will force the update of the associated routes.
      */
-    public $route;
-
-    /**
-     * @var Routes[]|ArrayCollection
-     */
-    public $routes;
+    protected $forceRoutesUpdate = false;
 
     public function __toString()
     {
@@ -132,413 +144,245 @@ class Markers implements EntityToClearInterface, \JsonSerializable
      */
     public function __construct()
     {
-        $this->routes      = new ArrayCollection();
         $this->routesStart = new ArrayCollection();
-        $this->routesEnd   = new ArrayCollection();
+        $this->routesEnd = new ArrayCollection();
     }
 
-    /**
-     * Get id.
-     *
-     * @param $id
-     *
-     * @return $this
-     *
-     * @codeCoverageIgnore
-     */
-    public function setId($id)
+    public function toArray()
+    {
+        return [
+            'id'          => $this->id,
+            'name'        => $this->name,
+            'description' => $this->description,
+            'altitude'    => (float) $this->altitude,
+            'latitude'    => (float) $this->latitude,
+            'longitude'   => (float) $this->longitude,
+            'faction'     => $this->faction ? $this->faction->getId() : null,
+            'map'         => $this->map ? $this->map->getId() : null,
+            'markerType'  => $this->markerType ? $this->markerType->getId() : null,
+        ];
+    }
+
+    public function jsonSerialize(): array
+    {
+        return $this->toArray();
+    }
+
+    public static function fromApi(array $data): self
+    {
+        $route = new static();
+
+        $route->hydrateIncomingData($data);
+
+        return $route;
+    }
+
+    public function updateFromApi(array $data): void
+    {
+        $this->hydrateIncomingData($data);
+    }
+
+    private function hydrateIncomingData(array $data)
+    {
+        $data = array_merge($this->toArray(), $data);
+
+        $this->id = $data['id'];
+        $this->name = $data['name'];
+        $this->description = $data['description'];
+        $this->altitude = $data['altitude'];
+        $this->latitude = $data['latitude'];
+        $this->longitude = $data['longitude'];
+        $this->faction = $data['faction'];
+        $this->map = $data['map'];
+        $this->markerType = $data['markerType'];
+
+        $this->forceRoutesUpdate = true;
+        $this->updateRoutesCoordinates();
+    }
+
+    public function setId(int $id): self
     {
         $this->id = $id;
 
         return $this;
     }
 
-    /**
-     * Get id.
-     *
-     * @return int
-     *
-     * @codeCoverageIgnore
-     */
-    public function getId()
+    public function getId(): int
     {
-        return $this->id;
+        return (int) $this->id;
     }
 
-    /**
-     * Set name.
-     *
-     * @param string $name
-     *
-     * @return $this
-     *
-     * @codeCoverageIgnore
-     */
-    public function setName($name)
+    public function setName(string $name): self
     {
         $this->name = $name;
 
         return $this;
     }
 
-    /**
-     * Get name.
-     *
-     * @return string
-     *
-     * @codeCoverageIgnore
-     */
-    public function getName()
+    public function getName(): string
     {
-        return $this->name;
+        return (string) $this->name;
     }
 
-    /**
-     * Add routes.
-     *
-     * @param Routes $routes
-     *
-     * @return Markers
-     */
-    public function addRoute(Routes $routes)
-    {
-        $this->routes[] = $routes;
-
-        return $this;
-    }
-
-    /**
-     * Remove routes.
-     *
-     * @param Routes $routes
-     */
-    public function removeRoute(Routes $routes)
-    {
-        $this->routes->removeElement($routes);
-    }
-
-    /**
-     * Get routes.
-     *
-     * @return Routes[]
-     *
-     * @codeCoverageIgnore
-     */
-    public function getRoutes()
-    {
-        return $this->routes;
-    }
-
-    /**
-     * Set faction.
-     *
-     * @param Factions $faction
-     *
-     * @return Markers
-     *
-     * @codeCoverageIgnore
-     */
-    public function setFaction(Factions $faction = null)
+    public function setFaction(Factions $faction = null): self
     {
         $this->faction = $faction;
 
         return $this;
     }
 
-    /**
-     * Get faction.
-     *
-     * @return Factions
-     *
-     * @codeCoverageIgnore
-     */
-    public function getFaction()
+    public function getFaction(): ?Factions
     {
         return $this->faction;
     }
 
-    /**
-     * Set map.
-     *
-     * @param Maps $map
-     *
-     * @return Markers
-     *
-     * @codeCoverageIgnore
-     */
-    public function setMap(Maps $map = null)
+    public function setMap(Maps $map = null): self
     {
         $this->map = $map;
 
         return $this;
     }
 
-    /**
-     * Get map.
-     *
-     * @return Maps
-     *
-     * @codeCoverageIgnore
-     */
-    public function getMap()
+    public function getMap(): ?Maps
     {
         return $this->map;
     }
 
-    /**
-     * Set markerType.
-     *
-     * @param MarkersTypes $markerType
-     *
-     * @return Markers
-     *
-     * @codeCoverageIgnore
-     */
-    public function setMarkerType(MarkersTypes $markerType = null)
+    public function setMarkerType(MarkersTypes $markerType): self
     {
         $this->markerType = $markerType;
 
         return $this;
     }
 
-    /**
-     * Get markerType.
-     *
-     * @return MarkersTypes
-     *
-     * @codeCoverageIgnore
-     */
-    public function getMarkerType()
+    public function getMarkerType(): ?MarkersTypes
     {
         return $this->markerType;
     }
 
-    /**
-     * Add routesStart.
-     *
-     * @param Routes $routesStart
-     *
-     * @return Markers
-     */
-    public function addRoutesStart(Routes $routesStart)
+    public function addRoutesStart(Routes $routesStart): self
     {
         $this->routesStart[] = $routesStart;
 
         return $this;
     }
 
-    /**
-     * Remove routesStart.
-     *
-     * @param Routes $routesStart
-     */
-    public function removeRoutesStart(Routes $routesStart)
+    public function removeRoutesStart(Routes $routesStart): self
     {
         $this->routesStart->removeElement($routesStart);
+
+        return $this;
     }
 
-    /**
-     * Get routesStart.
-     *
-     * @return Routes[]
-     *
-     * @codeCoverageIgnore
-     */
-    public function getRoutesStart()
+    public function getRoutesStart(): iterable
     {
         return $this->routesStart;
     }
 
     /**
-     * Get routesStart.
-     *
-     * @return array
+     * @return int[]
      */
-    public function getRoutesStartIds()
+    public function getRoutesStartIds(): array
     {
         $array = [];
         foreach ($this->routesStart as $routeStart) {
-            $array[$routeStart->getId()] = $routeStart->getId();
+            $id = $routeStart->getId();
+            $array[$id] = $id;
         }
 
         return $array;
     }
 
-    /**
-     * Add routesEnd.
-     *
-     * @param Routes $routesEnd
-     *
-     * @return Markers
-     */
-    public function addRoutesEnd(Routes $routesEnd)
+    public function addRoutesEnd(Routes $routesEnd): self
     {
         $this->routesEnd[] = $routesEnd;
 
         return $this;
     }
 
-    /**
-     * Remove routesEnd.
-     *
-     * @param Routes $routesEnd
-     */
-    public function removeRoutesEnd(Routes $routesEnd)
+    public function removeRoutesEnd(Routes $routesEnd): self
     {
         $this->routesEnd->removeElement($routesEnd);
+
+        return $this;
     }
 
     /**
-     * Get routesEnd.
-     *
      * @return Routes[]
-     *
-     * @codeCoverageIgnore
      */
-    public function getRoutesEnd()
+    public function getRoutesEnd(): iterable
     {
         return $this->routesEnd;
     }
 
     /**
-     * Get routesEnd.
-     *
-     * @return array
+     * @return int[]
      */
-    public function getRoutesEndIds()
+    public function getRoutesEndIds(): array
     {
         $array = [];
         foreach ($this->routesEnd as $routeEnd) {
-            $array[$routeEnd->getId()] = $routeEnd->getId();
+            $id = $routeEnd->getId();
+            $array[$id] = $id;
         }
 
         return $array;
     }
 
-    /**
-     * Set altitude.
-     *
-     * @param string $altitude
-     *
-     * @return Markers
-     *
-     * @codeCoverageIgnore
-     */
-    public function setAltitude($altitude)
+    public function setAltitude(float $altitude): self
     {
         $this->altitude = $altitude;
 
         return $this;
     }
 
-    /**
-     * Get altitude.
-     *
-     * @return string
-     *
-     * @codeCoverageIgnore
-     */
-    public function getAltitude()
+    public function getAltitude(): float
     {
-        return $this->altitude;
+        return (float) $this->altitude;
     }
 
-    /**
-     * Set latitude.
-     *
-     * @param string $latitude
-     *
-     * @return Markers
-     *
-     * @codeCoverageIgnore
-     */
-    public function setLatitude($latitude)
+    public function setLatitude(float $latitude): self
     {
         $this->latitude = $latitude;
 
         return $this;
     }
 
-    /**
-     * Get latitude.
-     *
-     * @return string
-     *
-     * @codeCoverageIgnore
-     */
-    public function getLatitude()
+    public function getLatitude(): float
     {
-        return $this->latitude;
+        return (float) $this->latitude;
     }
 
-    /**
-     * Set longitude.
-     *
-     * @param string $longitude
-     *
-     * @return Markers
-     *
-     * @codeCoverageIgnore
-     */
-    public function setLongitude($longitude)
+    public function setLongitude(float $longitude): self
     {
         $this->longitude = $longitude;
 
         return $this;
     }
 
-    /**
-     * Get longitude.
-     *
-     * @return string
-     *
-     * @codeCoverageIgnore
-     */
-    public function getLongitude()
+    public function getLongitude(): float
     {
-        return $this->longitude;
+        return (float) $this->longitude;
     }
 
-    /**
-     * Set description.
-     *
-     * @param string $description
-     *
-     * @return $this
-     *
-     * @codeCoverageIgnore
-     */
-    public function setDescription($description)
+    public function setDescription(string $description): self
     {
         $this->description = $description;
 
         return $this;
     }
 
-    /**
-     * Get description.
-     *
-     * @return string
-     *
-     * @codeCoverageIgnore
-     */
-    public function getDescription()
+    public function getDescription(): string
     {
-        return $this->description;
+        return (string) $this->description;
     }
 
-    /**
-     * @return bool
-     */
-    public function isLocalized()
+    public function isLocalized(): bool
     {
         return $this->latitude !== null && $this->longitude !== null;
     }
 
-    /**
-     * @return string
-     */
-    public function getWebIcon()
+    public function getWebIcon(): string
     {
         return $this->markerType->getWebIcon();
     }
@@ -547,25 +391,19 @@ class Markers implements EntityToClearInterface, \JsonSerializable
      * @ORM\PrePersist()
      * @ORM\PreUpdate()
      */
-    public function updateRoutesCoordinates()
+    public function updateRoutesCoordinates(): void
     {
         foreach ($this->routesStart as $route) {
+            if ($this->forceRoutesUpdate) {
+                $route->refresh = true;
+            }
             $route->refresh();
         }
         foreach ($this->routesEnd as $route) {
+            if ($this->forceRoutesUpdate) {
+                $route->refresh = true;
+            }
             $route->refresh();
         }
-    }
-
-    public function jsonSerialize(): array
-    {
-        return [
-            'id' => $this->id,
-            'name' => $this->name,
-            'description' => $this->description,
-            'altitude' => (float) $this->altitude,
-            'latitude' => (float) $this->latitude,
-            'longitude' => (float) $this->longitude,
-        ];
     }
 }
