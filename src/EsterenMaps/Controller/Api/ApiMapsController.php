@@ -13,23 +13,26 @@ namespace EsterenMaps\Controller\Api;
 
 use EsterenMaps\Api\MapApi;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\{
     JsonResponse, Request
 };
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * @Route(host="%esteren_domains.api%")
  */
-class ApiMapsController extends AbstractController
+class ApiMapsController
 {
     private $api;
     private $versionCode;
+    private $security;
 
-    public function __construct(string $versionCode, MapApi $api)
+    public function __construct(string $versionCode, MapApi $api, AuthorizationCheckerInterface $security)
     {
         $this->api = $api;
         $this->versionCode = $versionCode;
+        $this->security = $security;
     }
 
     /**
@@ -61,9 +64,9 @@ class ApiMapsController extends AbstractController
      */
     public function getEditModeAction(int $id, Request $request): JsonResponse
     {
-        if (!$this->isGranted('ROLE_ADMIN')) {
+        if (!$this->security->isGranted('ROLE_ADMIN')) {
             // We need 404 instead of 403 to avoid dirty hacks here.
-            throw $this->createNotFoundException();
+            throw new NotFoundHttpException();
         }
 
         return new JsonResponse($this->api->getMap($id, true));
