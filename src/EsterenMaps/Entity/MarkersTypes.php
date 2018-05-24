@@ -54,7 +54,7 @@ class MarkersTypes implements EntityToClearInterface
      *
      * @ORM\Column(name="icon", type="string", length=255, nullable=false)
      */
-    protected $icon = '';
+    protected $icon;
 
     /**
      * @var int
@@ -158,12 +158,12 @@ class MarkersTypes implements EntityToClearInterface
         return $this;
     }
 
-    public function getIcon(): string
+    public function getIcon(): ?string
     {
-        return (string) $this->icon;
+        return $this->icon;
     }
 
-    public function setIcon(string $icon): self
+    public function setIcon(?string $icon): self
     {
         $this->icon = $icon;
 
@@ -199,24 +199,24 @@ class MarkersTypes implements EntityToClearInterface
         return $this;
     }
 
-    public function getIconCenterX(): int
+    public function getIconCenterX(): ?int
     {
-        return (int) $this->iconCenterX;
+        return $this->iconCenterX;
     }
 
-    public function setIconCenterX(int $iconCenterX): self
+    public function setIconCenterX(?int $iconCenterX): self
     {
         $this->iconCenterX = $iconCenterX;
 
         return $this;
     }
 
-    public function getIconCenterY(): int
+    public function getIconCenterY(): ?int
     {
-        return (int) $this->iconCenterY;
+        return $this->iconCenterY;
     }
 
-    public function setIconCenterY(int $iconCenterY): self
+    public function setIconCenterY(?int $iconCenterY): self
     {
         $this->iconCenterY = $iconCenterY;
 
