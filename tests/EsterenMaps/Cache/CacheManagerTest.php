@@ -33,7 +33,7 @@ class CacheManagerTest extends WebTestCase
         /** @see RoutesFixtures::getSimplerCanvasRoutes for route 701 details */
         $routeId = 700;
 
-        $coordinates = '[{"lat":"0","lng":"0"},{"lat":"10","lng":"10"},{"lat":"5","lng":"5"},{"lat":"0","lng":"5"},{"lat":"0","lng":"10"}]';
+        $coordinates = '[{"lat":0,"lng":0},{"lat":10,"lng":10},{"lat":5,"lng":5},{"lat":0,"lng":5},{"lat":0,"lng":10}]';
 
         $client = $this->getClient('api.esteren.dev', [], ['ROLE_ADMIN']);
         $client->enableProfiler();
@@ -41,7 +41,7 @@ class CacheManagerTest extends WebTestCase
         /** @var Routes $route */
         $route = $em->find(Routes::class, $routeId);
         static::assertNotNull($route);
-        static::assertSame('[{"lat":"0","lng":"0"},{"lat":"0","lng":"10"}]', $route->getCoordinates());
+        static::assertSame('[{"lat":0,"lng":0},{"lat":0,"lng":10}]', $route->getCoordinates());
         static::assertSame(50, $route->getDistance());
 
         /**
