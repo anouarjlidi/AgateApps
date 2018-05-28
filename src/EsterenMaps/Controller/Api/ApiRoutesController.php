@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
@@ -56,7 +57,7 @@ class ApiRoutesController
             $route = Routes::fromApi($this->routeApi->sanitizeRequestData(json_decode($request->getContent(), true)));
 
             return $this->handleResponse($this->validate($route), $route);
-        } catch (\Throwable $e) {
+        } catch (HttpException $e) {
             return $this->handleException($e);
         }
     }
@@ -74,7 +75,7 @@ class ApiRoutesController
             $route->updateFromApi($this->routeApi->sanitizeRequestData(json_decode($request->getContent(), true)));
 
             return $this->handleResponse($this->validate($route), $route);
-        } catch (\Throwable $e) {
+        } catch (HttpException $e) {
             return $this->handleException($e);
         }
     }
@@ -82,18 +83,16 @@ class ApiRoutesController
     private function handleResponse(array $messages, Routes $route): Response
     {
         if (count($messages) > 0) {
-            $response = new JsonResponse($messages, 400);
-        } else {
-            $this->em->persist($route);
-            $this->em->flush();
-
-            $response = new JsonResponse($route->toArray(), 200);
+            throw new BadRequestHttpException(json_encode($messages, JSON_PRETTY_PRINT));
         }
 
-        return $response;
+        $this->em->persist($route);
+        $this->em->flush();
+
+        return new JsonResponse($route, 200);
     }
 
-    private function handleException(\Throwable $exception): Response
+    private function handleException(HttpException $exception): Response
     {
         $response = new JsonResponse();
         $response->setStatusCode(400);
