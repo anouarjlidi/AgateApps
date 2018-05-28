@@ -321,7 +321,7 @@
                 })
             ;
             $('#api_route_faction')
-                .val(polyline._esterenRoute.faction ? polyline._esterenRoute.faction.id : '')
+                .val(polyline._esterenRoute.faction ? polyline._esterenRoute.faction : '')
                 .off('change').on('change', function(){
                     var faction = map.reference('factions', this.value);
                     map._polylines[id]._esterenRoute.faction = faction ? faction.id : null;
@@ -329,7 +329,7 @@
                 })
             ;
             $markersStart
-                .val(polyline._esterenRoute.marker_start ? polyline._esterenRoute.marker_start.id : '')
+                .val(polyline._esterenRoute.marker_start ? polyline._esterenRoute.marker_start : '')
                 .off('change').on('change', function(){
                     var marker, latlngs;
                     marker = markers[this.value] || null;
@@ -339,12 +339,12 @@
                     }
                     polyline.setLatLngs(latlngs);
                     polyline._esterenRoute.coordinates = JSON.stringify(latlngs);
-                    polyline._esterenRoute.marker_start = marker._esterenMarker.id;
+                    polyline._esterenRoute.marker_start = marker._esterenMarker;
                     return false;
                 })
             ;
             $markersEnd
-                .val(polyline._esterenRoute.marker_end ? polyline._esterenRoute.marker_end.id : '')
+                .val(polyline._esterenRoute.marker_end ? polyline._esterenRoute.marker_end : '')
                 .off('change').on('change', function(){
                     var marker, latlngs;
                     marker = markers[this.value] || null;
@@ -354,7 +354,7 @@
                     }
                     polyline.setLatLngs(latlngs);
                     polyline._esterenRoute.coordinates = JSON.stringify(latlngs);
-                    polyline._esterenRoute.marker_end = marker._esterenMarker.id;
+                    polyline._esterenRoute.marker_end = marker._esterenMarker;
                     return false;
                 })
             ;

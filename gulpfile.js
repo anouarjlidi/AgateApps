@@ -170,6 +170,7 @@ const config = {
             "assets/esteren_maps/js/EsterenMap/2_EsterenMap_CRS_XY.js",
             "assets/esteren_maps/js/EsterenMap/2_EsterenMap_directions.js",
             "assets/esteren_maps/js/EsterenMap/2_EsterenMap_LatLngBounds.js",
+            "assets/esteren_maps/js/EsterenMap/2_EsterenMap_Sidebar.js",
             "assets/esteren_maps/js/EsterenMap/3_EsterenMap_ActivateLeafletDraw.js",
             "assets/esteren_maps/js/EsterenMap/3_EsterenMap_options.js",
             "assets/esteren_maps/js/EsterenMap/4_EsterenMap_markers.js",

@@ -103,8 +103,10 @@
                 }
             });
             this._sidebar = sidebar;
-            sidebar.on('show', function(){
-                _enableJsComponents(sidebar._contentContainer);
+            sidebar.on('shown', function () {
+                setTimeout(function () {
+                    _enableJsComponents(sidebar._contentContainer);
+                }, 100);
             });
         }
 
