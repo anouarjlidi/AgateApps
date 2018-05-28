@@ -108,7 +108,7 @@
                     id: esterenMarker.id,
                     name: esterenMarker.name,
                     description: esterenMarker.description,
-                    altitude: esterenMarker.altitude,
+                    altitude: esterenMarker.altitude || 0,
                     latitude: esterenMarker.latitude,
                     longitude: esterenMarker.longitude,
                     faction: esterenMarker.faction,
@@ -282,11 +282,11 @@
                     return false;
                 });
                 $('#api_markers_markerType').off('change').on('change', function(){
-                    map._markers[id]._esterenMarker.marker_type = map.reference('markers_types', this.value);
+                    map._markers[id]._esterenMarker.marker_type = map.reference('markers_types', this.value).id;
                     return false;
                 });
                 $('#api_markers_faction').off('change').on('change', function(){
-                    map._markers[id]._esterenMarker.faction = map.reference('factions', this.value);
+                    map._markers[id]._esterenMarker.faction = map.reference('factions', this.value).id;
                     return false;
                 });
                 d.querySelector('#esterenmap_sidebar button[data-save][data-save-marker]').addEventListener('click', function(){
