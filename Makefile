@@ -19,7 +19,7 @@ help:
 .PHONY: help
 
 install: ## Install and start the project
-install: .env build start vendor db fixtures assets map-tiles
+install: .env build node_modules start vendor db fixtures assets map-tiles
 .PHONY: install
 
 build: ## Build the Docker images
@@ -81,7 +81,8 @@ vendor: composer.lock
 
 node_modules: ## Install JS vendors
 node_modules: package-lock.json
-	$(NPM) install
+	$(DOCKER_COMPOSE) run node npm install
+	$(DOCKER_COMPOSE) up -d node
 
 .env: ## Create an `.env` file if it does not exist
 .env: .env.dist
