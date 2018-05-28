@@ -55,14 +55,14 @@ clean: kill
 ##
 
 db: ## Reset the database
-db: vendor
+db:
 	-$(SYMFONY) doctrine:database:drop --if-exists --force --quiet
 	-$(SYMFONY) doctrine:database:create --if-not-exists
 	-$(SYMFONY) doctrine:schema:create
-.PHONY: vendor
+.PHONY: db
 
 fixtures: ## Install all fixtures in the database
-fixtures: vendor
+fixtures:
 	-$(SYMFONY) doctrine:fixtures:load --append --no-interaction
 .PHONY: fixtures
 
