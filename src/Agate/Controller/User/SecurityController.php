@@ -11,6 +11,7 @@
 
 namespace Agate\Controller\User;
 
+use Agate\Entity\User;
 use Agate\Security\FormLoginAuthenticator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,6 +27,10 @@ class SecurityController extends AbstractController
      */
     public function loginAction(Request $request)
     {
+        if ($this->getUser() instanceof User) {
+            return $this->redirect('/'.$request->getLocale().'/');
+        }
+
         /** @var $session Session */
         $session = $request->getSession();
 
