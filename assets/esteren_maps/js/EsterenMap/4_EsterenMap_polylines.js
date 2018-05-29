@@ -37,16 +37,6 @@
         this.editing.disable();
     };
 
-    //L.Polyline.prototype._path = function() {
-    //    var esterenRoute = this._esterenRoute;
-    //
-    //    if (esterenRoute && esterenRoute.id) {
-    //        return d.getElementById(this._map._mapOptions.container).querySelector('.drawn_polyline_'+esterenRoute.id);
-    //    }
-    //
-    //    return null;
-    //};
-
     L.Polyline.prototype.updateDetails = function() {
         var latlngs, route_type,
             esterenRoute = this._esterenRoute,

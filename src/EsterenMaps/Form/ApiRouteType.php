@@ -62,8 +62,6 @@ class ApiRouteType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
-            ->setDefault('display_coordinates', false)
-            ->setAllowedTypes('display_coordinates', 'bool')
             ->setDefault('data_class', Routes::class)
         ;
     }
