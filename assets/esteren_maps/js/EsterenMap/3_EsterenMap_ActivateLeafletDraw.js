@@ -1,4 +1,4 @@
-(function($, L, d, w){
+(function($, L, d){
 
     /**
      * Initialise la surcharge des différents prototypes de LeafletDraw
@@ -153,4 +153,4 @@
         d.head.appendChild(styleTag);
     };
 
-})(jQuery, L, document, window);
+})(jQuery, L, document);

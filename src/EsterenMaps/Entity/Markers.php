@@ -12,7 +12,6 @@
 namespace EsterenMaps\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Mapping as ORM;
 use EsterenMaps\Cache\EntityToClearInterface;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
@@ -134,21 +133,18 @@ class Markers implements EntityToClearInterface, \JsonSerializable
      */
     protected $forceRoutesUpdate = false;
 
-    public function __toString()
+    public function __toString(): string
     {
-        return $this->name;
+        return (string) $this->name;
     }
 
-    /**
-     * Constructor.
-     */
     public function __construct()
     {
         $this->routesStart = new ArrayCollection();
         $this->routesEnd = new ArrayCollection();
     }
 
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'id'          => $this->id,
@@ -279,20 +275,6 @@ class Markers implements EntityToClearInterface, \JsonSerializable
         return $this->routesStart;
     }
 
-    /**
-     * @return int[]
-     */
-    public function getRoutesStartIds(): array
-    {
-        $array = [];
-        foreach ($this->routesStart as $routeStart) {
-            $id = $routeStart->getId();
-            $array[$id] = $id;
-        }
-
-        return $array;
-    }
-
     public function addRoutesEnd(Routes $routesEnd): self
     {
         $this->routesEnd[] = $routesEnd;
@@ -305,28 +287,6 @@ class Markers implements EntityToClearInterface, \JsonSerializable
         $this->routesEnd->removeElement($routesEnd);
 
         return $this;
-    }
-
-    /**
-     * @return Routes[]
-     */
-    public function getRoutesEnd(): iterable
-    {
-        return $this->routesEnd;
-    }
-
-    /**
-     * @return int[]
-     */
-    public function getRoutesEndIds(): array
-    {
-        $array = [];
-        foreach ($this->routesEnd as $routeEnd) {
-            $id = $routeEnd->getId();
-            $array[$id] = $id;
-        }
-
-        return $array;
     }
 
     public function setAltitude(float $altitude): self
@@ -394,15 +354,12 @@ class Markers implements EntityToClearInterface, \JsonSerializable
     public function updateRoutesCoordinates(): void
     {
         foreach ($this->routesStart as $route) {
-            if ($this->forceRoutesUpdate) {
-                $route->refresh = true;
-            }
+            $route->refresh = $this->forceRoutesUpdate;
             $route->refresh();
         }
+
         foreach ($this->routesEnd as $route) {
-            if ($this->forceRoutesUpdate) {
-                $route->refresh = true;
-            }
+            $route->refresh = $this->forceRoutesUpdate;
             $route->refresh();
         }
     }

@@ -23,6 +23,7 @@ use EsterenMaps\Entity\Zones;
 use EsterenMaps\Entity\ZonesTypes;
 use EsterenMaps\Form\ApiMarkersType;
 use EsterenMaps\Form\ApiRouteType;
+use EsterenMaps\Form\ApiZoneType;
 use Symfony\Component\Asset\Packages;
 use Symfony\Component\Form\FormFactoryInterface;
 use Twig\Environment;
@@ -70,9 +71,9 @@ class MapApi
 
         // Pre-compiled templates
         if ($editMode === true) {
-            $data['templates'] = $this->getEditModeTemplates($data);
+            $data['templates'] = $this->getEditModeTemplates();
         } else {
-            $data['templates'] = $this->getTemplates($data);
+            $data['templates'] = $this->getTemplates();
         }
 
         return $this->filterMapData($data);
@@ -88,7 +89,7 @@ class MapApi
         }
 
         foreach ($data['map']['zones'] as &$zone) {
-            $zone['coordinates'] = $this->filterCoordinates(json_decode($zone['coordinates'], true));
+            $zone['coordinates'] = $this->filterCoordinates(json_decode($zone['coordinates'], true), $zone);
         }
 
         foreach ($data['map']['routes'] as &$route) {
@@ -116,26 +117,16 @@ class MapApi
         return $coordinates;
     }
 
-    private function getTemplates(array $data)
+    private function getTemplates()
     {
         return [
-            'LeafletPopupMarkerBaseContent' => $this->twig->render('esteren_maps/Api/popupContentMarker.html.twig', [
-                'markersTypes' => $data['references']['markers_types'],
-                'factions'     => $data['references']['factions'],
-            ]),
-            'LeafletPopupPolylineBaseContent' => $this->twig->render('esteren_maps/Api/popupContentPolyline.html.twig', [
-                'markers'     => $data['map']['markers'],
-                'routesTypes' => $data['references']['routes_types'],
-                'factions'    => $data['references']['factions'],
-            ]),
-            'LeafletPopupPolygonBaseContent' => $this->twig->render('esteren_maps/Api/popupContentPolygon.html.twig', [
-                'zonesTypes' => $data['references']['zones_types'],
-                'factions'   => $data['references']['factions'],
-            ]),
+            'LeafletPopupMarkerBaseContent' => $this->twig->render('esteren_maps/Api/popupContentMarker.html.twig'),
+            'LeafletPopupPolylineBaseContent' => $this->twig->render('esteren_maps/Api/popupContentPolyline.html.twig'),
+            'LeafletPopupPolygonBaseContent' => $this->twig->render('esteren_maps/Api/popupContentPolygon.html.twig'),
         ];
     }
 
-    private function getEditModeTemplates(array $data)
+    private function getEditModeTemplates()
     {
         return [
             'LeafletPopupMarkerBaseContent' => $this->twig->render('esteren_maps/Api/popupContentMarkerEditMode.html.twig', [
@@ -145,9 +136,7 @@ class MapApi
                 'form' => $this->formFactory->create(ApiRouteType::class)->createView(),
             ]),
             'LeafletPopupPolygonBaseContent' => $this->twig->render('esteren_maps/Api/popupContentPolygonEditMode.html.twig', [
-                'zonesTypes' => $data['references']['zones_types'],
-                'factions'   => $data['references']['factions'],
-                'display'    => true,
+                'form' => $this->formFactory->create(ApiZoneType::class)->createView(),
             ]),
         ];
     }

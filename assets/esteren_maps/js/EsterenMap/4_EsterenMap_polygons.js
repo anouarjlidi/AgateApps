@@ -5,6 +5,7 @@
     L.Polygon.prototype._esterenZone = {};
     L.Polygon.prototype._sidebar = null;
     L.Polygon.prototype._sidebarContent = '';
+    L.Polygon.prototype.options.editing = null;
 
     L.Polygon.prototype.showSidebar = function(content){
         if (!this._sidebar) {
@@ -12,6 +13,7 @@
 
             return;
         }
+
         this._sidebar.setContent(content || this._sidebarContent);
         this._sidebar.show();
     };
@@ -27,24 +29,25 @@
     };
 
     L.Polygon.prototype.disableEditMode = function() {
-        this._updateEM();
         this.editing.disable();
     };
 
-    L.Polygon.prototype.updateStyle = function(){
-        var node = this._map.getRenderer(this).getPane();
+    L.Polygon.prototype.updateDetails = function() {
+        var zone_type,
+            esterenZone = this._esterenZone,
+            id = esterenZone.id
+        ;
 
-        if (!node) {
-            throw 'No node found on this polygon.';
+        zone_type = this._esterenMap.reference('zones_types', esterenZone.zone_type);
+
+        if (zone_type.color) {
+            // Change l'image de l'icône
+            this._path.setAttribute('stroke', zone_type.color);
         }
 
-        // Change l'image de l'icône
-        node.setAttribute('fill', this._esterenZone.zone_type.color);
-        node.setAttribute('stroke', this._esterenZone.zone_type.color);
-
         // Met à jour l'attribut "data" pour les filtres
-        $(node).attr('data-leaflet-object-type', 'zoneType'+this._esterenZone.zone_type.id);
-
+        $(this._path).attr('data-leaflet-object-type', 'zoneType'+esterenZone.zone_type);
+        $(this._path).attr('id', 'polygon_'+id+'_name');
     };
 
     L.Polygon.prototype._updateEM = function() {
@@ -53,48 +56,52 @@
             callbackMessage = '',
             callbackMessageType = 'success',
             esterenZone = this._esterenZone || null,
-            id = esterenZone.id || null;
+            id = esterenZone.id || null
+        ;
+
+        if (this.launched) {
+            return;
+        }
+
+        d.querySelector('#esterenmap_sidebar button[data-save][data-save-zone]').classList.add('disabled');
+        d.querySelector('#esterenmap_sidebar button[data-save][data-save-zone] .progress').classList.add('active');
+
         if (esterenZone && this._map && !this.launched) {
-            esterenZone.map = esterenZone.map || {id: this._esterenMap._mapOptions.id };
-            esterenZone.coordinates = JSON.stringify(this._latlngs ? this._latlngs : {});
-            esterenZone.faction = esterenZone.faction || {};
-            esterenZone.zone_type = { id: esterenZone.zone_type.id };
             this.launched = true;
             this._esterenMap._load({
-                url: "zones" + (id ? '/'+id : ''),
+                url: this._esterenMap._mapOptions.apiUrls.endpoint.replace(/\/$/, '')+"/zones" + (id ? '/'+id : ''),
                 method: id ? "POST" : "PUT", // Si on n'a pas d'ID, c'est qu'on crée une nouvelle zone
                 data: {
-                    json: esterenZone,
-                    mapping: {
-                        name: true,
-                        coordinates: true,
-                        map: true,
-                        zone_type: {
-                            objectField: 'zoneType'
-                        },
-                        faction: true
-                    }
+                    map: this._esterenMap._mapOptions.id,
+                    name: esterenZone.name,
+                    description: esterenZone.description,
+                    coordinates: JSON.stringify(this.getLatLngs() ? this._latlngs : {}),
+                    zoneType: esterenZone.zone_type,
+                    faction: esterenZone.faction ? esterenZone.faction : null
                 },
                 callback: function(response) {
                     var map = this,
                         msg,
-                        zone = response.newObject;
-                    if (!response.error) {
-                        if (zone && zone.id) {
-                            map._polygons[zone.id] = baseZone;
-                            map._polygons[zone.id]._esterenZone = zone;
-                            map._polygons[zone.id].updateStyle();
-                            callbackMessage = 'Zone: ' + zone.id + ' - ' + zone.name;
-                        } else {
-                            msg = 'Zone retrieved by API does not have ID.';
-                            console.warn(msg);
-                            callbackMessage = response.message ? response.message : msg;
-                            callbackMessageType = 'warning';
-                        }
+                        zone = response
+                    ;
+                    if (zone && zone.id) {
+                        // New object is available
+                        map._polygons[zone.id] = baseZone;
+                        map._polygons[zone.id]._esterenZone = {
+                            id: zone.id,
+                            name: zone.name,
+                            description: zone.description,
+                            coordinates: zone.coordinates,
+                            map: zone.map,
+                            zone_type: zone.zoneType,
+                            faction: zone.faction,
+                        };
+                        map._polygons[zone.id].updateDetails();
+                        callbackMessage = 'Zone: ' + zone.id + ' - ' + zone.name;
                     } else {
                         msg = 'Api returned an error while attempting to '+(id?'update':'insert')+' a zone.';
                         console.error(msg);
-                        callbackMessage = msg + '<br>' + (response.message ? response.message : 'Unknown error...');
+                        callbackMessage = msg + '<br>' + (response ? response.toString() : 'Unknown error...');
                         callbackMessageType = 'danger';
                     }
                 },
@@ -106,6 +113,8 @@
                 },
                 callbackComplete: function(){
                     _this.launched = false;
+                    d.querySelector('#esterenmap_sidebar button[data-save][data-save-zone]').classList.remove('disabled');
+                    d.querySelector('#esterenmap_sidebar button[data-save][data-save-zone] .progress').classList.remove('active');
                     if (callbackMessage) {
                         _this._esterenMap.message(callbackMessage, callbackMessageType);
                     }
@@ -172,33 +181,44 @@
             ;
 
             map.disableEditedElements();
+
+            if (polygon.editing.enabled()) {
+                return;
+            }
+
             polygon.editing.enable();
             polygon.showSidebar();
+
             map._editedPolygon = polygon;
 
-            d.getElementById('polygon_popup_name').value = polygon._esterenZone.name;
-            d.getElementById('polygon_popup_faction').value = polygon._esterenZone.faction ? polygon._esterenZone.faction.id : '';
-            d.getElementById('polygon_popup_type').value = polygon._esterenZone.zone_type ? polygon._esterenZone.zone_type.id : '';
+            $('#api_zone_name')
+                .val(polygon._esterenZone.name)
+                .off('keyup').on('keyup', function(){
+                    map._polygons[id]._esterenZone.name = this.value;
+                    return false;
+                })
+            ;
+            $('#api_zone_type')
+                .val(polygon._esterenZone.zone_type ? polygon._esterenZone.zone_type : '')
+                .off('change').on('change', function(){
+                    var zone_type = map.reference('zones_types', this.value);
+                    map._polygons[id]._esterenZone.zone_type = zone_type ? zone_type.id : null;
+                    return false;
+                })
+            ;
+            $('#api_zone_faction')
+                .val(polygon._esterenZone.faction ? polygon._esterenZone.faction : '')
+                .off('change').on('change', function(){
+                    var faction = map.reference('factions', this.value);
+                    map._polygons[id]._esterenZone.faction = faction ? faction.id : null;
+                    return false;
+                })
+            ;
+            d.querySelector('#esterenmap_sidebar button[data-save][data-save-zone]').addEventListener('click', function(){
+                map._polygons[id]._updateEM();
+            });
 
-            $('#polygon_popup_name').off('keyup').on('keyup', function(){
-                map._polygons[id]._esterenZone.name = this.value;
-                if (this._timeout) { clearTimeout(this._timeout); }
-                this._timeout = setTimeout(function(){ map._polygons[id]._updateEM(); }, 1000);
-                return false;
-            });
-            $('#polygon_popup_type').off('change').on('change', function(){
-                map._polygons[id]._esterenZone.zone_type = map.reference('zonesTypes', this.value);
-                this._timeout = setTimeout(function(){ map._polygons[id]._updateEM(); }, 1000);
-                return false;
-            });
-            $('#polygon_popup_faction').off('change').on('change', function(){
-                map._polygons[id]._esterenZone.faction = this.value ? map.reference('factions', this.value) : null;
-                this._timeout = setTimeout(function(){ map._polygons[id]._updateEM(); }, 1000);
-                return false;
-            });
-
-            e.preventDefault();
-            e.stopPropagation();
+            d.getElementById('api_zone_name').focus();
         },
         dblclickCallback: function(e){
             var polygon = e.target,
@@ -299,6 +319,16 @@
         className = 'drawn_polygon_'+id;
 
         leafletOptions.className = className;
+
+        // Fix for Leaflet-draw searching for this property when using edit mode
+        if (!leafletOptions.editing) {
+            leafletOptions.editing = {};
+        }
+        // Same here: Leaflet-draw needs this property, and it's not correctly set in base class...
+        if (!leafletOptions.original) {
+            leafletOptions.original = {};
+        }
+        leafletOptions.editing.className = leafletOptions.className;
 
         polygon = L.polygon(latLng, leafletOptions);
 
