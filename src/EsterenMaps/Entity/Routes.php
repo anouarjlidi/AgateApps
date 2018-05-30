@@ -23,7 +23,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
  * @ORM\Entity(repositoryClass="EsterenMaps\Repository\RoutesRepository")
  * @ORM\HasLifecycleCallbacks()
  */
-class Routes implements EntityToClearInterface
+class Routes implements EntityToClearInterface, \JsonSerializable
 {
     use TimestampableEntity;
 
@@ -173,6 +173,14 @@ class Routes implements EntityToClearInterface
             'routeType' => $this->routeType ? $this->routeType->getId() : null,
             'faction' => $this->faction ? $this->faction->getId() : null,
         ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function jsonSerialize(): array
+    {
+        return $this->toArray();
     }
 
     public static function fromApi(array $data): self
