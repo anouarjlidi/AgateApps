@@ -210,7 +210,7 @@ abstract class AbstractSecurityControllerTest extends WebTestCase
         $locale = $this->getLocale();
 
         $client    = $this->getClient('portal.esteren.dev');
-        $container = $client->getKernel()->getContainer();
+        $container = $client->getContainer();
         $user      = $container->get(UsernameOrEmailProvider::class)->loadUserByUsername(static::USER_NAME.$locale);
         static::setToken($client, $user, $user->getRoles());
 
@@ -232,7 +232,7 @@ abstract class AbstractSecurityControllerTest extends WebTestCase
         $crawler->clear();
         $crawler = $client->followRedirect();
 
-        $container = $client->getKernel()->getContainer();
+        $container = $client->getContainer();
 
         // Once redirected, we check the flash messages are correct
         $flashPasswordChanged = $container->get('translator')->trans('change_password.flash.success', [], 'user');
@@ -254,7 +254,7 @@ abstract class AbstractSecurityControllerTest extends WebTestCase
         $locale = $this->getLocale();
 
         $client    = $this->getClient('portal.esteren.dev');
-        $container = $client->getKernel()->getContainer();
+        $container = $client->getContainer();
         $user      = $container->get(UsernameOrEmailProvider::class)->loadUserByUsername(static::USER_NAME.$locale);
         static::setToken($client, $user, $user->getRoles());
 
@@ -290,7 +290,7 @@ abstract class AbstractSecurityControllerTest extends WebTestCase
         $locale = $this->getLocale();
 
         $client    = $this->getClient('portal.esteren.dev');
-        $container = $client->getKernel()->getContainer();
+        $container = $client->getContainer();
         $user      = $container->get(UsernameOrEmailProvider::class)->loadUserByUsername(static::USER_NAME_AFTER_UPDATE.$locale);
         static::setToken($client, $user, $user->getRoles());
 

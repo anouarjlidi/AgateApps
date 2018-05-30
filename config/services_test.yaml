@@ -1,15 +1,5 @@
 services:
-
-    ## TODO: Remove this file when upgrading to SF 4.1
-
-    _defaults:
+    # TODO: Remove this if PR https://github.com/symfony/symfony/pull/27437 is merged.
+    Symfony\Bundle\FrameworkBundle\Test\TestContainer:
+        alias: 'test.service_container'
         public: true
-        autowire: true
-        autoconfigure: true
-
-    Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface: '@security.encoder_factory'
-    Doctrine\ORM\EntityManagerInterface: '@doctrine.orm.default_entity_manager'
-
-    Agate\Repository\UserRepository: ~
-    Agate\Security\Provider\UsernameOrEmailProvider: ~
-    EsterenMaps\Services\DirectionsManager: ~
