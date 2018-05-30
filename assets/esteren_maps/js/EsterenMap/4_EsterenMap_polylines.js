@@ -71,38 +71,6 @@
         this.setLatLngs(latlngs);
     };
 
-    /**
-     * @todo check if this can be removed safely.
-     * @param marker
-     * @param isMarkerStart
-     */
-    L.Polyline.prototype.updateMarkerDetails = function(marker, isMarkerStart) {
-        var latlngs, value;
-
-        isMarkerStart = !!isMarkerStart;
-
-        if (marker) {
-            if (isMarkerStart) {
-                this._markerStart = marker;
-            } else {
-                this._markerEnd = marker;
-            }
-            latlngs = this.getLatLngs();
-
-            value = L.latLng(marker.getLatLng());
-
-            if (isMarkerStart) {
-                latlngs[0] = value;
-            } else {
-                latlngs[this._latlngs.length - 1] = value;
-            }
-
-            marker._esterenRoutesEnd[this._esterenRoute.id] = this;
-            this.setLatLngs(latlngs);
-            this.updateDetails();
-        }
-    };
-
     L.Polyline.prototype._updateEM = function() {
         var baseRoute = this,
             esterenRoute = EsterenMap.prototype.cloneObject.call(null, this._esterenRoute || null),

@@ -36,10 +36,9 @@ return PhpCsFixer\Config::create()
             'doctrine_annotation_braces'      => [
                 'syntax' => 'with_braces',
             ],
-            // TODO: Add when new php-cs-fixer releases
-//            'doctrine_annotation_array_assignment' => [
-//                'operator' => '=',
-//            ],
+            'doctrine_annotation_array_assignment' => [
+                'operator' => '=',
+            ],
             // Disabled rules
             'pre_increment' => false,
             'doctrine_annotation_spaces'                => false,

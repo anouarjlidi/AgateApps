@@ -113,7 +113,7 @@ easy_admin:
                 fields:
                     - id
                     - name
-                    - { property: webIcon, type: image, virtual: false } # FIXME
+                    - { property: webIcon, type: image, virtual: false }
                     - markers
             form:
                 fields: [ name, icon, markers ]

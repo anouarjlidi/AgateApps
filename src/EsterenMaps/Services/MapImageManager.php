@@ -60,6 +60,6 @@ class MapImageManager
     public function generateImage(Maps $map)
     {
         // TODO
-        throw new \RuntimeException($map);
+        throw new \RuntimeException('Not implemented yet');
     }
 }
