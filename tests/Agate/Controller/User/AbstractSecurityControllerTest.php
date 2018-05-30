@@ -302,7 +302,9 @@ abstract class AbstractSecurityControllerTest extends WebTestCase
         $client->submit($form);
         static::assertSame(302, $client->getResponse()->getStatusCode());
         $crawler->clear();
-        $crawler = $client->followRedirect();
+        do {
+            $crawler = $client->followRedirect();
+        } while ($client->getResponse()->getStatusCode() === 302);
 
         // This message contains informations about user resetting token TTL.
         // This information is set in the User ResettingController and must be copied here just for testing.
@@ -321,9 +323,15 @@ abstract class AbstractSecurityControllerTest extends WebTestCase
 
         static::assertTrue($client->getResponse()->isRedirect("/$locale/login"));
         $crawler->clear();
-        $crawler = $client->followRedirect();
-        static::assertSame(1, $crawler->filter('.card-panel.success')->count());
-        static::assertSame($user->getUsername(), $crawler->filter('#username')->attr('value'));
+        do {
+            $crawler = $client->followRedirect();
+        } while ($client->getResponse()->getStatusCode() === 302);
+        $flashNode = $crawler->filter('.card-panel.success');
+        static::assertSame(1, $flashNode->count());
+
+        $resettingSuccessMessage = $client->getKernel()->getContainer()->get('translator')->trans('resetting.flash.success', [], 'user');
+        $crawlerContent   = trim($flashNode->html());
+        static::assertContains($resettingSuccessMessage, $crawlerContent);
 
         $crawler->clear();
     }
