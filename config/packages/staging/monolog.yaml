@@ -1,3 +1,2 @@
 imports:
-    - { resource: ../prod/doctrine.yaml }
     - { resource: ../prod/monolog.yaml }
