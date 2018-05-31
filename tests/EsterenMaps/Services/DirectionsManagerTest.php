@@ -16,7 +16,6 @@ use EsterenMaps\Controller\Api\ApiDirectionsController;
 use EsterenMaps\Entity\Maps;
 use EsterenMaps\Entity\Markers;
 use EsterenMaps\Entity\TransportTypes;
-use Symfony\Bundle\FrameworkBundle\Test\TestContainer;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Tests\WebTestCase as PiersTestCase;
@@ -44,7 +43,8 @@ class DirectionsManagerTest extends WebTestCase
     {
         static::resetDatabase();
 
-        $container = static::bootKernel()->getContainer()->get(TestContainer::class);
+        static::bootKernel();
+        $container = static::$container;
 
         $em = $container->get(EntityManagerInterface::class);
 

@@ -14,7 +14,6 @@ namespace Tests\EsterenMaps\Cache;
 use Doctrine\ORM\EntityManagerInterface;
 use EsterenMaps\DataFixtures\ORM\RoutesFixtures;
 use EsterenMaps\Entity\Routes;
-use Symfony\Bundle\FrameworkBundle\Test\TestContainer;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpKernel\DataCollector\LoggerDataCollector;
 use Symfony\Component\VarDumper\Cloner\Data;
@@ -28,7 +27,8 @@ class CacheManagerTest extends WebTestCase
     {
         static::resetDatabase();
 
-        $em = static::bootKernel()->getContainer()->get(TestContainer::class)->get(EntityManagerInterface::class);
+        static::bootKernel();
+        $em = static::$container->get(EntityManagerInterface::class);
 
         /** @see RoutesFixtures::getSimplerCanvasRoutes for route 701 details */
         $routeId = 700;
