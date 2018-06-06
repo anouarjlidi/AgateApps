@@ -22,6 +22,6 @@ framework:
         save_path:       '%kernel.project_dir%/var/sessions/%kernel.environment%'
         enabled:         true
         cookie_httponly: true
-        name:            AgateApps
+        name:            AgateSessionCookie
         cookie_lifetime: 8640000
         gc_maxlifetime:  86400
