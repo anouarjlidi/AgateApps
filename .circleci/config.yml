@@ -46,7 +46,7 @@ jobs:
             - run:
                name: 'Execute PHPUnit tests'
                command: |
-                    vendor/bin/phpunit --log-junit=build/log/logfile.xml
+                    bin/phpunit --log-junit=build/log/logfile.xml
 
             - save_cache:
                 key: composer-cache-{{ checksum "composer.lock" }}
