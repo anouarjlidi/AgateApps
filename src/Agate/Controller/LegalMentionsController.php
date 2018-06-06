@@ -12,29 +12,35 @@
 namespace Agate\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @Route(host="%agate_domains.portal%", methods={"GET"})
  */
-class LegalMentionsController extends Controller
+class LegalMentionsController extends AbstractController
 {
+    private $versionDate;
+
+    public function __construct($versionDate)
+    {
+        $this->versionDate = $versionDate;
+    }
+
     /**
      * @Route("/legal", name="legal_mentions")
      */
     public function legalMentionsAction(string $_locale, Request $request): Response
     {
         $response = new Response();
-        if (!$this->getParameter('kernel.debug')) {
-            $response->setCache([
-                'last_modified' => new \DateTime($this->getParameter('version_date')),
-                'max_age' => 600,
-                's_maxage' => 600,
-                'public' => $this->getUser() ? false : true,
-            ]);
-        }
+
+        $response->setCache([
+            'last_modified' => new \DateTime($this->versionDate),
+            'max_age' => 600,
+            's_maxage' => 600,
+            'public' => $this->getUser() ? false : true,
+        ]);
 
         if ($response->isNotModified($request)) {
             return $response;

@@ -16,11 +16,12 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AdminController as BaseAdminContr
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
+use Util\PublicService;
 
 /**
  * @Security("has_role('ROLE_MANAGER')")
  */
-class AdminController extends BaseAdminController
+class AdminController extends BaseAdminController implements PublicService
 {
     /**
      * @Route("/", name="easyadmin", methods={"GET", "POST", "DELETE"})

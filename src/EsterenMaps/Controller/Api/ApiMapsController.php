@@ -18,11 +18,12 @@ use Symfony\Component\HttpFoundation\{
 };
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Util\PublicService;
 
 /**
  * @Route(host="%esteren_domains.api%")
  */
-class ApiMapsController
+class ApiMapsController implements PublicService
 {
     private $api;
     private $versionCode;

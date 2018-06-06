@@ -22,11 +22,12 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Util\PublicService;
 
 /**
  * @Route(host="%esteren_domains.api%")
  */
-class ApiZonesController
+class ApiZonesController implements PublicService
 {
     use ApiValidationTrait;
 

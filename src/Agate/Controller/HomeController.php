@@ -14,19 +14,27 @@ namespace Agate\Controller;
 use Agate\Entity\PortalElement;
 use Agate\Exception\PortalElementNotFound;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Util\PublicService;
 
 /**
  * @Route(host="%agate_domains.portal%")
  */
-class HomeController extends Controller
+class HomeController extends AbstractController implements PublicService
 {
+    private $versionDate;
+
+    public function __construct($versionDate)
+    {
+        $this->versionDate = $versionDate;
+    }
+
     /**
      * @Route("/", name="agate_portal_home", methods={"GET"})
      */
-    public function indexAction(string $_locale, Request $request): Response
+    public function indexAction(string $_locale): Response
     {
         $portalElement = $this->getDoctrine()->getRepository(PortalElement::class)->findOneBy([
             'locale' => $_locale,
@@ -57,14 +65,13 @@ class HomeController extends Controller
     public function teamAction(Request $request): Response
     {
         $response = new Response();
-        if (!$this->getParameter('kernel.debug')) {
-            $response->setCache([
-                'last_modified' => new \DateTime($this->getParameter('version_date')),
-                'max_age' => 600,
-                's_maxage' => 600,
-                'public' => $this->getUser() ? false : true,
-            ]);
-        }
+
+        $response->setCache([
+            'last_modified' => new \DateTime($this->versionDate),
+            'max_age' => 600,
+            's_maxage' => 600,
+            'public' => $this->getUser() ? false : true,
+        ]);
 
         if ($response->isNotModified($request)) {
             return $response;
