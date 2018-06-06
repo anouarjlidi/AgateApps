@@ -4,6 +4,11 @@
 
 {% form_theme form 'form/form_theme_materialize.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <script src="//www.google.com/recaptcha/api.js"></script>
+{% endblock %}
+
 {% block content_for_layout %}
     <div class="container">
 
@@ -13,26 +18,31 @@
                     {{ parent() }}
                 {% endblock %}
 
-                {% if mail_error %}
-                    <p class="alert">
-                        Erreur...
-                    </p>
-                {% endif %}
-
                 <h1 class="text-4xl center">{{ 'contact.send_message'|trans }}</h1>
 
-                {{ form_start(form) -}}
+                {{ form_start(form, {attr: {id: 'contact_form'}}) -}}
+
+                {{ form_errors(form) }}
 
                 {{- form_row(form.name) -}}
                 {{- form_row(form.email) -}}
                 {{- form_row(form.subject) -}}
                 {{- form_row(form.message) -}}
 
-                <button class="btn" type="submit">{{ 'form.send'|trans({}, 'contact') }}</button>
+                <button class="btn g-recaptcha" type="submit" data-sitekey="{{ google_recaptcha_site_key }}" data-callback="onRecaptchaSubmit">{{ 'form.send'|trans({}, 'contact') }}</button>
 
                 {{- form_end(form) }}
             </div>
         </div>
 
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        function onRecaptchaSubmit() {
+            document.getElementById('contact_form').submit();
+        }
+    </script>
 {% endblock %}

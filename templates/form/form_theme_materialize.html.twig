@@ -105,11 +105,12 @@
 {%- block form_errors -%}
     {#- Override here is about adding text coloring -#}
     {%- if errors|length > 0 -%}
-        <ul class="red-text darken-3">
+        <div class="card-panel {{ get_flash_class('error') }}">
             {%- for error in errors -%}
-                <li>{{ error.message }}</li>
+                {{ error.message }}
+                {{ not loop.last ? '<br>' }}
             {%- endfor -%}
-        </ul>
+        </div>
     {%- endif -%}
 {%- endblock form_errors -%}
 

@@ -34,6 +34,8 @@
         <env name="DRAGONS_DOMAIN" value="dragons-rpg.dev" />
         <env name="ESTEREN_DOMAIN" value="esteren.dev" />
         <env name="VERMINE_DOMAIN" value="vermine2047.dev" />
+        <env name="GOOGLE_RECAPTCHA_SITE_KEY" value="" />
+        <env name="GOOGLE_RECAPTCHA_SECRET" value="1" />
 
         <!-- Uncomment this if you do not need to refresh the whole cache between runs
         <env name="CLEAR_CACHE" value="1" />

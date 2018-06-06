@@ -14,35 +14,66 @@ namespace Agate\Controller;
 use Agate\Form\ContactType;
 use Agate\Model\ContactMessage;
 use Agate\Mailer\PortalMailer;
+use ReCaptcha\ReCaptcha;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\FormError;
+use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Translation\TranslatorInterface;
+use Twig\Environment;
+use Util\PublicService;
 
 /**
  * @Route(host="%agate_domains.portal%")
  */
-class ContactController extends Controller
+class ContactController implements PublicService
 {
     private $mailer;
+    private $reCaptcha;
+    private $translator;
+    private $twig;
+    private $formFactory;
+    private $router;
 
-    public function __construct(PortalMailer $mailer)
-    {
+    public function __construct(
+        PortalMailer $mailer,
+        ReCaptcha $reCaptcha,
+        TranslatorInterface $translator,
+        Environment $twig,
+        FormFactoryInterface $formFactory,
+        RouterInterface $router
+    ) {
         $this->mailer = $mailer;
+        $this->reCaptcha = $reCaptcha;
+        $this->translator = $translator;
+        $this->twig = $twig;
+        $this->formFactory = $formFactory;
+        $this->router = $router;
     }
 
     /**
      * @Route("/contact", name="contact", methods={"GET", "POST"})
      */
-    public function contactAction(Request $request, $_locale)
+    public function contactAction(Request $request, Session $session, $_locale)
     {
         $message = new ContactMessage();
         $message->setLocale($_locale);
 
-        $form = $this->createForm(ContactType::class, $message);
+        $form = $this->formFactory->create(ContactType::class, $message);
         $form->handleRequest($request);
 
+        $captcha = $request->request->get('g-recaptcha-response');
+
+        if ($captcha && false === $this->reCaptcha->verify($captcha, $request->getClientIp())->isSuccess()) {
+            $form->addError(new FormError('Invalid captcha'));
+        }
+
         if ($form->isSubmitted() && $form->isValid()) {
-            $translator = $this->get('translator');
+            $translator = $this->translator;
 
             $subject = $translator->trans('form.message_subject', [
                 '%name%' => $message->getName(),
@@ -51,19 +82,18 @@ class ContactController extends Controller
 
             // If message succeeds, we redirect
             if ($this->mailer->sendContactMail($message, $subject, $request->getClientIp())) {
-                $this->addFlash('success', $translator->trans('form.message_sent', [], 'contact'));
+                $session->getFlashBag()->add('success', $translator->trans('form.message_sent', [], 'contact'));
 
-                return $this->redirectToRoute('contact');
+                return new RedirectResponse($this->router->generate('contact'));
             }
 
             // Else, it means transport may had an error or something, so if no exception was thrown, we log this.
-            $this->addFlash('error', $translator->trans('form.error', [], 'contact'));
-            $this->get('logger')->error('Error when sending email', $this->get('serializer')->serialize($message, 'json'));
+            $form->addError(new FormError($translator->trans('form.error', [], 'contact')));
         }
 
-        return $this->render('agate/contact.html.twig', [
+        return new Response($this->twig->render('agate/contact.html.twig', [
             'form'       => $form->createView(),
-            'mail_error' => $form->getErrors(true, true)->count(),
-        ]);
+            'mail_error' => $form->getErrors(true, true),
+        ]));
     }
 }
