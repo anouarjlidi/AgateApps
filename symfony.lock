@@ -164,9 +164,6 @@
             "ref": "a5708058bd6f16863618096090e825c549a231e1"
         }
     },
-    "phpunit/phpunit-mock-objects": {
-        "version": "4.0.4"
-    },
     "pierstoval/character-manager": {
         "version": "v1.1.0"
     },
