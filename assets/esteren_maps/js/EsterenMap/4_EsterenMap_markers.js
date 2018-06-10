@@ -274,8 +274,8 @@
 
             if (marker._sidebar.isVisible() && esterenMarker) {
                 d.getElementById('api_markers_name').value = esterenMarker.name;
-                d.getElementById('api_markers_markerType').value = esterenMarker.marker_type ? esterenMarker.marker_type.id : null;
-                d.getElementById('api_markers_faction').value = esterenMarker.faction ? esterenMarker.faction.id : "";
+                d.getElementById('api_markers_markerType').value = esterenMarker.marker_type ? (esterenMarker.marker_type.id ? esterenMarker.marker_type.id : esterenMarker.marker_type) : '';
+                d.getElementById('api_markers_faction').value = esterenMarker.faction ? (esterenMarker.faction.id ? esterenMarker.faction.id : esterenMarker.faction) : '';
 
                 $('#api_markers_name').off('keyup').on('keyup', function(){
                     map._markers[id]._esterenMarker.name = this.value;
@@ -293,8 +293,6 @@
                     map._markers[id]._updateEM();
                 });
             }
-        },
-        dblclickCallback: function(e){
         },
         dragCallback: function(e) {
             var marker = e.target;

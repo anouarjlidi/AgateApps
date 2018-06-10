@@ -18,7 +18,7 @@ use EsterenMaps\Entity\RoutesTypes;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\{
-    CheckboxType, TextType
+    CheckboxType, NumberType, TextType
 };
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -34,9 +34,9 @@ class ApiRouteType extends AbstractType
                     new Constraints\NotBlank(),
                 ],
             ])
-            ->add('forcedDistance', CheckboxType::class, [
+            ->add('forcedDistance', NumberType::class, [
                 'constraints' => [
-                    new Constraints\Type(['type' => 'bool']),
+                    new Constraints\Range(['min' => 0]),
                 ],
             ])
             ->add('guarded', CheckboxType::class, [

@@ -198,7 +198,7 @@
                     return false;
                 })
             ;
-            $('#api_zone_type')
+            $('#api_zone_zoneType')
                 .val(polygon._esterenZone.zone_type ? polygon._esterenZone.zone_type : '')
                 .off('change').on('change', function(){
                     var zone_type = map.reference('zones_types', this.value);

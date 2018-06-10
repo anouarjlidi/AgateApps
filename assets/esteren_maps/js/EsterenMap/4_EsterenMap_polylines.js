@@ -102,7 +102,7 @@
                     markerEnd: esterenRoute.marker_end,
                     faction: esterenRoute.faction ? esterenRoute.faction : null,
                     guarded: !!esterenRoute.guarded,
-                    forcedDistance: esterenRoute.forced_distance || null
+                    forcedDistance: (isNaN(esterenRoute.forced_distance) ? null : parseInt(esterenRoute.forced_distance, 10)) || null
                 },
                 callback: function(response) {
                     var map = _this._esterenMap,
@@ -270,7 +270,7 @@
                     return false;
                 })
             ;
-            $('#api_route_type')
+            $('#api_route_routeType')
                 .val(polyline._esterenRoute.route_type ? polyline._esterenRoute.route_type : '')
                 .off('change').on('change', function(){
                     var route_type = map.reference('routes_types', this.value);

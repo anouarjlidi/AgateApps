@@ -235,9 +235,15 @@
                     overlay = d.getElementById('directions_wait_overlay'),
                     start = data.filter(function(e){return e.name==='start';})[0].value,
                     end = data.filter(function(e){return e.name==='end';})[0].value,
-                    transport = data.filter(function(e){return e.name==='directions_transport';})[0].value,
-                    url, markerStart, markerEnd, message
+                    transport = data.filter(function(e){return e && e.name==='directions_transport';})[0],
+                    markerStart, markerEnd, message
                 ;
+
+                if (transport) {
+                    transport = transport.value || 1;
+                } else {
+                    transport = 1;
+                }
 
                 // Prevents submitting this form right away
                 L.DomEvent.stop(e);
