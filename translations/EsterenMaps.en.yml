@@ -16,7 +16,9 @@ admin:
 
 travel:
     duration_estimated: Estimated travel duration
+    duration_step: Estimated duration for this step
     duration:  '%days% days and %hours% hours'
+    duration_minutes:  '%days% days, %hours% hours and %minutes% minutes'
     distance:  Distance
     itinerary: Itinerary
     path:
@@ -26,6 +28,8 @@ travel:
         arrival: Arrival
     error:
         no_itinerary: No itinerary found...
+    steps: 'Steps'
+    hours_per_day_details: '(At %hours% hours per day)'
 
 map:
     hide:

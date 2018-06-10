@@ -27,6 +27,7 @@ class DirectionsManager
     private $entityManager;
     private $twig;
     private $mapApi;
+    private $transportModifiers = [];
 
     public function __construct(
         MapApi $mapApi,
@@ -140,7 +141,19 @@ class DirectionsManager
             $steps[] = $marker;
         }
 
-        return $this->getDataArray($start, $end, $steps, $routesArray, $hoursPerDay, $transportType);
+        $data = $this->getDataArray($start, $end, $steps, $hoursPerDay, $transportType);
+
+        if (!$transportType) {
+            $data['path_view'] = $this->twig->render('esteren_maps/Api/path_view.html.twig', $data);
+
+            return $data;
+        }
+
+        $data = $this->updateTravelDuration($data, $routesArray, $hoursPerDay, $transportType);
+
+        $data['path_view'] = $this->twig->render('esteren_maps/Api/path_view.html.twig', $data);
+
+        return $data;
     }
 
     /**
@@ -238,7 +251,7 @@ class DirectionsManager
         return $realPath;
     }
 
-    private function getDataArray(Markers $from, Markers $to, array $directions, array $routes, int $hoursPerDay = 7, TransportTypes $transport = null): array
+    private function getDataArray(Markers $from, Markers $to, array $directions, int $hoursPerDay = 7, TransportTypes $transport = null): array
     {
         $distance = null;
         $NE       = [];
@@ -274,28 +287,112 @@ class DirectionsManager
         }
 
         $data = [
-            'found'           => count($directions) > 0,
-            'path_view'       => null,
-            'duration_raw'    => null,
-            'duration_real'   => null,
-            'transport'       => $transport ? $transport->jsonSerialize() : null,
             'bounds'          => ['northEast' => $NE, 'southWest' => $SW],
-            'total_distance'  => $distance,
-            'number_of_steps' => count($directions) ? (count($directions) - 2) : 0,
-            'start'           => $from->jsonSerialize(),
+            'duration_raw'    => null,
+            'duration_real'   => ['days' => null, 'hours' => null],
             'end'             => $to->jsonSerialize(),
+            'found'           => count($directions) > 0,
+            'hours_per_day'   => $hoursPerDay,
+            'number_of_steps' => count($directions) ? (count($directions) - 2) : 0,
             'path'            => $directions,
+            'path_view'       => null,
+            'start'           => $from->jsonSerialize(),
+            'total_distance'  => $distance,
+            'transport'       => $transport ? $transport->jsonSerialize() : null,
         ];
 
-        $data['duration_raw']  = null;
-        $data['duration_real'] = ['days' => null, 'hours' => null];
+        return $data;
+    }
 
-        if ($transport) {
-            $data['duration_raw']  = $this->getTravelDuration($routes, $transport, $hoursPerDay);
-            $data['duration_real'] = $this->getTravelDuration($routes, $transport, $hoursPerDay, false);
+    private function updateTravelDuration(array $data, array $routes, int $hoursPerDay = 7, TransportTypes $transport): array
+    {
+        $total = 0;
+
+        // Get (again) the necessary transport modifiers for the final route.
+        $routesTypes = [];
+        foreach ($routes as $route) {
+            $routesTypes[$route['route_type']] = $route['route_type'];
         }
 
-        $data['path_view'] = $this->twig->render('esteren_maps/Api/path_view.html.twig', $data);
+        $transportModifiersUnsorted = $this->entityManager->getRepository(TransportModifiers::class)->findBy([
+            'routeType' => $routesTypes,
+            'transportType' => $transport,
+        ]);
+
+        /** @var TransportModifiers[][] $transportModifiers */
+        $transportModifiers = [];
+        foreach ($transportModifiersUnsorted as $transportModifier) {
+            $transportModifiers[$transportModifier->getRouteType()->getId()][] = $transportModifier;
+        }
+
+        foreach ($data['path'] as &$path) {
+            $distance = $path['route']['distance'];
+            $transportModifier = null;
+
+            $routeTypeId = $path['route']['route_type']['id'] ?? null;
+
+            if (null === $routeTypeId) {
+                continue;
+            }
+
+            foreach ($transportModifiers[$routeTypeId] as $modifier) {
+                if ($modifier->getTransportType()->getId() === $transport->getId()) {
+                    $transportModifier = $modifier;
+                    break;
+                }
+            }
+
+            if ($transportModifier) {
+                $percentage = (float) $transportModifier->getPercentage();
+                $speed = $transport->getSpeed() * ($percentage / 100);
+                $pathHours = $distance / $speed;
+                $total += $pathHours;
+
+                $realisticDays = $pathHours / $hoursPerDay;
+
+                $days  = (int) floor($realisticDays);
+                $hours = ($realisticDays - $days) * $hoursPerDay;
+                $minutes = (int) ceil(($hours - floor($hours)) * 100 * 60 / 100);
+
+                if (60 === $minutes) {
+                    $hours++;
+                    $minutes = 0;
+                }
+
+                $interval = new \DateInterval('PT'.((int) $hours).'H'.$minutes.'M');
+
+                // Override $path by reference to add data to the final array
+                $path['duration_raw'] = $interval->format('P%yY%mM%dDT%hH%iM0S');
+                $path['duration_real'] = [
+                    'days'  => (int) $days,
+                    'hours' => (int) floor($hours),
+                    'minutes' => (int) $minutes,
+                ];
+            }
+        }
+
+        $hours   = (int) floor($total);
+        $minutes = (int) ceil(($total - $hours) * 100 * 60 / 100);
+
+        $interval = new \DateInterval('PT'.$hours.'H'.$minutes.'M');
+        $start    = new \DateTime();
+        $end      = new \DateTime();
+        $end->add($interval);
+
+        // Recreating the interval allows automatic calculation of days/months.
+        $interval = $start->diff($end);
+
+        // Here we'll try to convert hours into a more "realistic" travel time.
+        $realisticDays = $total / $hoursPerDay;
+
+        $days  = (int) floor($realisticDays);
+        $hours = (float) number_format(($realisticDays - $days) * $hoursPerDay, 2);
+
+        $data['duration_raw'] = $interval->format('P%yY%mM%dDT%hH%iM0S');
+        $data['duration_real'] = [
+            'days'  => $days,
+            'hours' => $hours,
+        ];
 
         return $data;
     }
@@ -359,76 +456,5 @@ class DirectionsManager
         }
 
         return $nodes;
-    }
-
-    /**
-     * @return int[]|string|null
-     * @throws \Exception
-     */
-    private function getTravelDuration(array $routes, TransportTypes $transport, int $hoursPerDay = 7, bool $raw = true)
-    {
-        $total = 0;
-
-        // Get (again) the necessary transport modifiers for the final route.
-        $routesTypes = [];
-        foreach ($routes as $route) {
-            $routesTypes[$route['route_type']] = $route['route_type'];
-        }
-        $transportModifiersUnsorted = $this->entityManager->getRepository(TransportModifiers::class)->findBy([
-            'routeType' => $routesTypes,
-            'transportType' => $transport,
-        ]);
-
-        /** @var TransportModifiers[][] $transportModifiers */
-        $transportModifiers = [];
-        foreach ($transportModifiersUnsorted as $transportModifier) {
-            $transportModifiers[$transportModifier->getRouteType()->getId()][] = $transportModifier;
-        }
-
-        foreach ($routes as $route) {
-            $distance          = $route['distance'];
-            $transportModifier = null;
-
-            foreach ($transportModifiers[$route['route_type']] as $modifier) {
-                if ($modifier->getTransportType()->getId() === $transport->getId()) {
-                    $transportModifier = $modifier;
-                    break;
-                }
-            }
-
-            if ($transportModifier) {
-                $percentage = (float) $transportModifier->getPercentage();
-                $speed = $transport->getSpeed() * ($percentage / 100);
-                $hours = $distance / $speed;
-                $total += $hours;
-            }
-        }
-
-        $hours   = (int) floor($total);
-        $minutes = (int) ceil(($total - $hours) * 100 * 60 / 100);
-
-        $interval = new \DateInterval('PT'.$hours.'H'.$minutes.'M');
-        $start    = new \DateTime();
-        $end      = new \DateTime();
-        $end->add($interval);
-
-        // Recreating the interval allows automatic calculation of days/months.
-        $interval = $start->diff($end);
-
-        // Get the raw DateInterval format
-        if ($raw) {
-            return $interval->format('P%yY%mM%dDT%hH%iM0S');
-        }
-
-        // Here we'll try to convert hours into a more "realistic" travel time.
-        $realisticDays = $total / $hoursPerDay;
-
-        $days  = (int) floor($realisticDays);
-        $hours = (float) number_format(($realisticDays - $days) * $hoursPerDay, 2);
-
-        return [
-            'days'  => $days,
-            'hours' => $hours,
-        ];
     }
 }
