@@ -21,7 +21,9 @@
                 {{ marker.name }}<br>
                 <strong>{{ 'travel.path.route' | trans }} :</strong> {{ marker.route.name }}<br>
                 <strong>{{ 'travel.distance' | trans }} :</strong> {{ marker.route.distance | localizednumber }}km<br>
-                <strong>{{ 'travel.duration_step' | trans }} :</strong> {{ 'travel.duration_minutes' | trans({'%days%': marker.duration_real.days, '%hours%': marker.duration_real.hours, '%minutes%': marker.duration_real.minutes}) }}
+                {% if marker.duration_real is defined %}
+                    <strong>{{ 'travel.duration_step' | trans }} :</strong> {{ 'travel.duration_minutes' | trans({'%days%': marker.duration_real.days, '%hours%': marker.duration_real.hours, '%minutes%': marker.duration_real.minutes}) }}
+                {% endif %}
             </li>
         {% endfor %}
 
