@@ -31,6 +31,20 @@ jobs:
                     env
 
             - run:
+                name: 'Setup custom CircleCI hosts'
+                command: |
+                    echo "127.0.0.1     portal.esteren.docker" >> /etc/hosts
+                    echo "127.0.0.1       maps.esteren.docker" >> /etc/hosts
+                    echo "127.0.0.1  corahnrin.esteren.docker" >> /etc/hosts
+                    echo "127.0.0.1      games.esteren.docker" >> /etc/hosts
+                    echo "127.0.0.1        api.esteren.docker" >> /etc/hosts
+                    echo "127.0.0.1       back.esteren.docker" >> /etc/hosts
+                    echo "127.0.0.1   www.studio-agate.docker" >> /etc/hosts
+                    echo "127.0.0.1 stats.studio-agate.docker" >> /etc/hosts
+                    echo "127.0.0.1    www.dragons-rpg.docker" >> /etc/hosts
+                    echo "127.0.0.1    www.vermine2047.docker" >> /etc/hosts
+
+            - run:
                name: 'Install Project Dependencies'
                command: |
                     composer install --no-interaction --no-suggest --ignore-platform-reqs --no-progress
