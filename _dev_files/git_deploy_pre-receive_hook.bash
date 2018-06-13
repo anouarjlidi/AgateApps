@@ -33,7 +33,7 @@ read -d '' success_tag_script << SCRIPT
     export SYMFONY_DEBUG=0 && \
     composer install --optimize-autoloader --no-dev --apcu-autoloader && \
     php bin/console cache:clear && \
-    php bin/console doctrine:schema:update --dump-sql --complete --force
+    php bin/console doctrine:migrations:migrate --no-interaction
 SCRIPT
 
 

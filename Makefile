@@ -58,7 +58,7 @@ db: ## Reset the database
 db:
 	-$(SYMFONY) doctrine:database:drop --if-exists --force --quiet
 	-$(SYMFONY) doctrine:database:create --if-not-exists
-	-$(SYMFONY) doctrine:schema:create
+	-$(SYMFONY) doctrine:migrations:migrate --no-interaction
 .PHONY: db
 
 fixtures: ## Install all fixtures in the database

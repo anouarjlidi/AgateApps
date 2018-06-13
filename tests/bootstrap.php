@@ -79,7 +79,7 @@ if ($fs->exists(DATABASE_TEST_FILE)) {
 }
 
 $runCommand('doctrine:database:create');
-$runCommand('doctrine:schema:create');
+$runCommand('doctrine:migrations:migrate --no-interaction');
 $runCommand('doctrine:fixtures:load --append');
 
 $fs->copy(DATABASE_TEST_FILE, DATABASE_REFERENCE_FILE);
