@@ -115,7 +115,7 @@ checks: composer.lock
 
 phpunit: ## Execute all PHPUnit tests
 phpunit: composer.lock
-	$(SYMFONY) bin/phpunit --log-junit=build/log/logfile.xml
+	$(EXEC_PHP) bin/phpunit --log-junit=build/log/logfile.xml
 .PHONY: phpunit
 
 ##
