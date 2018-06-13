@@ -65,7 +65,7 @@ class ZonesTypes implements EntityToClearInterface
     /**
      * @var ZonesTypes
      *
-     * @ORM\ManyToOne(targetEntity="ZonesTypes", fetch="EXTRA_LAZY")
+     * @ORM\ManyToOne(targetEntity="ZonesTypes")
      * @ORM\JoinColumn(nullable=true)
      */
     protected $parent;

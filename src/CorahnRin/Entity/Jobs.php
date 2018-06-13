@@ -58,7 +58,7 @@ class Jobs
     /**
      * @var Domains
      *
-     * @ORM\ManyToOne(targetEntity="Domains", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="Domains")
      */
     protected $domainPrimary;
 
