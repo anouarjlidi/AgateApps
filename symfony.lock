@@ -239,9 +239,6 @@
             "ref": "e921bdbfe20cdefa3b82f379d1cd36df1bc8d115"
         }
     },
-    "symfony/force-lowest": {
-        "version": "v4.0.0"
-    },
     "symfony/form": {
         "version": "v3.3.11"
     },
@@ -291,7 +288,7 @@
         }
     },
     "symfony/polyfill-apcu": {
-        "version": "v1.6.0"
+        "version": "v1.8.0"
     },
     "symfony/polyfill-ctype": {
         "version": "v1.8.0"

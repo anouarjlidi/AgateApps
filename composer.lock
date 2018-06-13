@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "574b25f8e93aeebebbcae334c3ec5898",
+    "content-hash": "e5ac894c989dda6a7dbadee17053ee81",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -3370,93 +3370,6 @@
                 }
             ],
             "time": "2018-05-02T19:08:56+00:00"
-        },
-        {
-            "name": "symfony/force-lowest",
-            "version": "v4.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/force-lowest.git",
-                "reference": "e5662c331ad9efe624dc74981d575eddd5a865e7"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/force-lowest/zipball/e5662c331ad9efe624dc74981d575eddd5a865e7",
-                "reference": "e5662c331ad9efe624dc74981d575eddd5a865e7",
-                "shasum": ""
-            },
-            "conflict": {
-                "symfony/asset": "<4.1",
-                "symfony/browser-kit": "<4.1",
-                "symfony/cache": "<4.1",
-                "symfony/config": "<4.1",
-                "symfony/console": "<4.1",
-                "symfony/css-selector": "<4.1",
-                "symfony/debug": "<4.1",
-                "symfony/debug-bundle": "<4.1",
-                "symfony/dependency-injection": "<4.1",
-                "symfony/doctrine-bridge": "<4.1",
-                "symfony/dom-crawler": "<4.1",
-                "symfony/dotenv": "<4.1",
-                "symfony/event-dispatcher": "<4.1",
-                "symfony/expression-language": "<4.1",
-                "symfony/filesystem": "<4.1",
-                "symfony/finder": "<4.1",
-                "symfony/form": "<4.1",
-                "symfony/framework-bundle": "<4.1",
-                "symfony/http-foundation": "<4.1",
-                "symfony/http-kernel": "<4.1",
-                "symfony/inflector": "<4.1",
-                "symfony/intl": "<4.1",
-                "symfony/ldap": "<4.1",
-                "symfony/lock": "<4.1",
-                "symfony/messenger": "<4.1",
-                "symfony/monolog-bridge": "<4.1",
-                "symfony/options-resolver": "<4.1",
-                "symfony/process": "<4.1",
-                "symfony/property-access": "<4.1",
-                "symfony/property-info": "<4.1",
-                "symfony/proxy-manager-bridge": "<4.1",
-                "symfony/routing": "<4.1",
-                "symfony/security": "<4.1",
-                "symfony/security-bundle": "<4.1",
-                "symfony/security-core": "<4.1",
-                "symfony/security-csrf": "<4.1",
-                "symfony/security-guard": "<4.1",
-                "symfony/security-http": "<4.1",
-                "symfony/serializer": "<4.1",
-                "symfony/stopwatch": "<4.1",
-                "symfony/symfony": "<4.1",
-                "symfony/templating": "<4.1",
-                "symfony/translation": "<4.1",
-                "symfony/twig-bridge": "<4.1",
-                "symfony/twig-bundle": "<4.1",
-                "symfony/validator": "<4.1",
-                "symfony/var-dumper": "<4.1",
-                "symfony/web-link": "<4.1",
-                "symfony/web-profiler-bundle": "<4.1",
-                "symfony/web-server-bundle": "<4.1",
-                "symfony/workflow": "<4.1",
-                "symfony/yaml": "<4.1"
-            },
-            "type": "metapackage",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "A metapackage to enforce a lowest version on installed Symfony components",
-            "homepage": "https://symfony.com",
-            "time": "2018-03-26T17:53:05+00:00"
         },
         {
             "name": "symfony/form",
