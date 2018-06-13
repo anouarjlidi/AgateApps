@@ -23,7 +23,7 @@ class CorahnRinHomeControllerTest extends WebTestCase
      */
     public function testVerminePortal(string $locale, string $expectedTitle)
     {
-        $client = $this->getClient('corahnrin.esteren.dev');
+        $client = $this->getClient('corahnrin.esteren.docker');
 
         $crawler = $client->request('GET', "/$locale/");
 

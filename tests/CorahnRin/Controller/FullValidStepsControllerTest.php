@@ -27,7 +27,7 @@ class FullValidStepsControllerTest extends WebTestCase
      */
     public function testIndex()
     {
-        $client = $this->getClient('corahnrin.esteren.dev', [], ['ROLE_MANAGER']);
+        $client = $this->getClient('corahnrin.esteren.docker', [], ['ROLE_MANAGER']);
 
         $client->request('GET', '/fr/character/generate');
 
@@ -62,7 +62,7 @@ class FullValidStepsControllerTest extends WebTestCase
         if (!$formValues && !$expectedSessionValue) {
             static::markTestIncomplete('Missing form values for step '.$stepName);
         }
-        $client = $this->getClient('corahnrin.esteren.dev', [], ['ROLE_MANAGER']);
+        $client = $this->getClient('corahnrin.esteren.docker', [], ['ROLE_MANAGER']);
 
         // We need a simple session to be sure it's updated when submitting form.
         $session = $client->getContainer()->get('session');

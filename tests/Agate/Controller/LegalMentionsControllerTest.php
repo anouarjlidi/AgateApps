@@ -25,7 +25,7 @@ class LegalMentionsControllerTest extends WebTestCase
      */
     public function testLegalMentionsForAllowedLocales($locale)
     {
-        $client = $this->getClient('www.studio-agate.dev');
+        $client = $this->getClient('www.studio-agate.docker');
 
         $crawler = $client->request('GET', '/'.$locale.'/legal');
 
@@ -50,7 +50,7 @@ class LegalMentionsControllerTest extends WebTestCase
      */
     public function testLegalMentionsWithNotAllowedLocales($locale)
     {
-        $client = $this->getClient('portal.esteren.dev');
+        $client = $this->getClient('portal.esteren.docker');
 
         $client->request('GET', '/'.$locale.'/legal');
 

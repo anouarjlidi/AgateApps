@@ -22,29 +22,29 @@ class MapsControllerTest extends WebTestCase
 
     public function testRootRedirectsToIndex()
     {
-        $client = $this->getClient('maps.esteren.dev');
+        $client = $this->getClient('maps.esteren.docker');
 
         $client->request('GET', '/');
         $res = $client->getResponse();
 
         static::assertSame(301, $res->getStatusCode());
-        static::assertSame('http://maps.esteren.dev/fr/', $res->headers->get('Location'));
+        static::assertSame('http://maps.esteren.docker/fr/', $res->headers->get('Location'));
     }
 
     public function testIndexWithoutSlashRedirectsWithASlash()
     {
-        $client = $this->getClient('maps.esteren.dev');
+        $client = $this->getClient('maps.esteren.docker');
 
         $client->request('GET', '/fr');
         $res = $client->getResponse();
 
         static::assertSame(301, $res->getStatusCode());
-        static::assertSame('http://maps.esteren.dev/fr/', $res->headers->get('Location'));
+        static::assertSame('http://maps.esteren.docker/fr/', $res->headers->get('Location'));
     }
 
     public function testIndex()
     {
-        $client = $this->getClient('maps.esteren.dev');
+        $client = $this->getClient('maps.esteren.docker');
 
         static::setToken($client, 'map_allowed', ['ROLE_MAPS_VIEW']);
 
@@ -59,12 +59,12 @@ class MapsControllerTest extends WebTestCase
 
         static::assertInstanceOf(Link::class, $link);
         static::assertSame('Voir la carte', trim($link->getNode()->textContent));
-        static::assertSame('http://maps.esteren.dev/fr/map-tri-kazel', trim($link->getUri()));
+        static::assertSame('http://maps.esteren.docker/fr/map-tri-kazel', trim($link->getUri()));
     }
 
     public function testViewWhileNotLoggedIn()
     {
-        $client = $this->getClient('maps.esteren.dev');
+        $client = $this->getClient('maps.esteren.docker');
 
         $client->request('GET', '/fr/map-tri-kazel');
         $res = $client->getResponse();
@@ -75,7 +75,7 @@ class MapsControllerTest extends WebTestCase
 
     public function testViewWhenAuthenticatedWithoutPermission()
     {
-        $client = $this->getClient('maps.esteren.dev');
+        $client = $this->getClient('maps.esteren.docker');
 
         static::setToken($client);
 
@@ -87,7 +87,7 @@ class MapsControllerTest extends WebTestCase
 
     public function testViewWhileConnected()
     {
-        $client = $this->getClient('maps.esteren.dev');
+        $client = $this->getClient('maps.esteren.docker');
 
         $user = $client->getContainer()->get(UserRepository::class)->findByUsernameOrEmail('pierstoval');
 

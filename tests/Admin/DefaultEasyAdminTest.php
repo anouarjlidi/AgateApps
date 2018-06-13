@@ -25,7 +25,7 @@ class DefaultEasyAdminTest extends WebTestCase
     {
         static::resetDatabase();
 
-        $client = $this->getClient('back.esteren.dev', [], 'ROLE_ADMIN');
+        $client = $this->getClient('back.esteren.docker', [], 'ROLE_ADMIN');
 
         $crawler = $client->request('GET', '/fr/');
 

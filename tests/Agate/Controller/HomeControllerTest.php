@@ -20,24 +20,24 @@ class HomeControllerTest extends WebTestCase
 
     public function testRootRedirectsToIndex()
     {
-        $client = $this->getClient('www.studio-agate.dev');
+        $client = $this->getClient('www.studio-agate.docker');
 
         $client->request('GET', '/');
         $res = $client->getResponse();
 
         static::assertSame(301, $res->getStatusCode());
-        static::assertSame('http://www.studio-agate.dev/fr/', $res->headers->get('Location'));
+        static::assertSame('http://www.studio-agate.docker/fr/', $res->headers->get('Location'));
     }
 
     public function testIndexWithoutSlashRedirectsWithASlash()
     {
-        $client = $this->getClient('www.studio-agate.dev');
+        $client = $this->getClient('www.studio-agate.docker');
 
         $client->request('GET', '/fr');
         $res = $client->getResponse();
 
         static::assertSame(301, $res->getStatusCode());
-        static::assertSame('http://www.studio-agate.dev/fr/', $res->headers->get('Location'));
+        static::assertSame('http://www.studio-agate.docker/fr/', $res->headers->get('Location'));
     }
 
     /**
@@ -47,7 +47,7 @@ class HomeControllerTest extends WebTestCase
     {
         static::resetDatabase();
 
-        $client = $this->getClient('www.studio-agate.dev');
+        $client = $this->getClient('www.studio-agate.docker');
 
         $crawler = $client->request('GET', "/$locale/");
 
@@ -64,7 +64,7 @@ class HomeControllerTest extends WebTestCase
 
     public function testFrenchTeamPage()
     {
-        $client = $this->getClient('www.studio-agate.dev');
+        $client = $this->getClient('www.studio-agate.docker');
 
         $crawler = $client->request('GET', '/fr/team');
 
@@ -77,7 +77,7 @@ class HomeControllerTest extends WebTestCase
 
     public function testEnglishTeamPage()
     {
-        $client = $this->getClient('www.studio-agate.dev');
+        $client = $this->getClient('www.studio-agate.docker');
 
         $crawler = $client->request('GET', '/en/team');
 

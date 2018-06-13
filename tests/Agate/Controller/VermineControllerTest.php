@@ -23,7 +23,7 @@ class VermineControllerTest extends WebTestCase
      */
     public function testVerminePortal($locale)
     {
-        $client = $this->getClient('www.vermine2047.dev');
+        $client = $this->getClient('www.vermine2047.docker');
 
         $crawler = $client->request('GET', "/$locale/");
 

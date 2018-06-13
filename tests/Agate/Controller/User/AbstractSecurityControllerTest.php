@@ -32,7 +32,7 @@ abstract class AbstractSecurityControllerTest extends WebTestCase
     {
         $locale = $this->getLocale();
 
-        $client = $this->getClient('back.esteren.dev', [], 'ROLE_USER');
+        $client = $this->getClient('back.esteren.docker', [], 'ROLE_USER');
 
         $client->request('GET', "/$locale/");
 
@@ -43,7 +43,7 @@ abstract class AbstractSecurityControllerTest extends WebTestCase
     {
         $locale = $this->getLocale();
 
-        $client = $this->getClient('back.esteren.dev', [], 'ROLE_ADMIN');
+        $client = $this->getClient('back.esteren.docker', [], 'ROLE_ADMIN');
 
         $client->request('GET', "/$locale/");
 
@@ -67,7 +67,7 @@ abstract class AbstractSecurityControllerTest extends WebTestCase
             ->setEmailCanonical("testconfirm$locale@local.to")
         ;
 
-        $client = $this->getClient('portal.esteren.dev');
+        $client = $this->getClient('portal.esteren.docker');
         $container = $client->getContainer();
 
         $hashed = $container->get('security.password_encoder')->encodePassword($user, 'whatever');
@@ -97,7 +97,7 @@ abstract class AbstractSecurityControllerTest extends WebTestCase
 
         static::resetDatabase();
 
-        $client = $this->getClient('portal.esteren.dev');
+        $client = $this->getClient('portal.esteren.docker');
 
         $crawler = $client->request('GET', "/$locale/register");
 
@@ -110,7 +110,7 @@ abstract class AbstractSecurityControllerTest extends WebTestCase
 
         // Fill registration form
         $form['registration_form[username]']      = static::USER_NAME.$locale;
-        $form['registration_form[email]']         = "test-$locale@local.dev";
+        $form['registration_form[email]']         = "test-$locale@local.docker";
         $form['registration_form[plainPassword]'] = 'fakePassword';
 
         // Submit form
@@ -137,7 +137,7 @@ abstract class AbstractSecurityControllerTest extends WebTestCase
     {
         $locale = $this->getLocale();
 
-        $client = $this->getClient('portal.esteren.dev');
+        $client = $this->getClient('portal.esteren.docker');
 
         $user = $client->getContainer()->get(UserRepository::class)->findOneBy(['username' => static::USER_NAME.$locale]);
 
@@ -161,7 +161,7 @@ abstract class AbstractSecurityControllerTest extends WebTestCase
     {
         $locale = $this->getLocale();
 
-        $client = $this->getClient('portal.esteren.dev');
+        $client = $this->getClient('portal.esteren.docker');
 
         $crawler = $client->request('GET', "/$locale/login");
 
@@ -209,7 +209,7 @@ abstract class AbstractSecurityControllerTest extends WebTestCase
     {
         $locale = $this->getLocale();
 
-        $client    = $this->getClient('portal.esteren.dev');
+        $client    = $this->getClient('portal.esteren.docker');
         $container = $client->getContainer();
         $user      = $container->get(UsernameOrEmailProvider::class)->loadUserByUsername(static::USER_NAME.$locale);
         static::setToken($client, $user, $user->getRoles());
@@ -253,7 +253,7 @@ abstract class AbstractSecurityControllerTest extends WebTestCase
     {
         $locale = $this->getLocale();
 
-        $client    = $this->getClient('portal.esteren.dev');
+        $client    = $this->getClient('portal.esteren.docker');
         $container = $client->getContainer();
         $user      = $container->get(UsernameOrEmailProvider::class)->loadUserByUsername(static::USER_NAME.$locale);
         static::setToken($client, $user, $user->getRoles());
@@ -289,7 +289,7 @@ abstract class AbstractSecurityControllerTest extends WebTestCase
     {
         $locale = $this->getLocale();
 
-        $client    = $this->getClient('portal.esteren.dev');
+        $client    = $this->getClient('portal.esteren.docker');
         $container = $client->getContainer();
         $user      = $container->get(UsernameOrEmailProvider::class)->loadUserByUsername(static::USER_NAME_AFTER_UPDATE.$locale);
         static::setToken($client, $user, $user->getRoles());

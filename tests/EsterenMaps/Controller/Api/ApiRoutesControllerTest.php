@@ -22,7 +22,7 @@ class ApiRoutesControllerTest extends WebTestCase
     {
         static::resetDatabase();
 
-        $client = $this->getClient('api.esteren.dev', [], 'ROLE_ADMIN');
+        $client = $this->getClient('api.esteren.docker', [], 'ROLE_ADMIN');
 
         $data = [
             'name' => 'Test name',
@@ -52,7 +52,7 @@ class ApiRoutesControllerTest extends WebTestCase
     {
         static::resetDatabase();
 
-        $client = $this->getClient('api.esteren.dev', [], 'ROLE_ADMIN');
+        $client = $this->getClient('api.esteren.docker', [], 'ROLE_ADMIN');
 
         $client->request('POST','/fr/routes', [], [], [], '[]');
 
@@ -76,7 +76,7 @@ class ApiRoutesControllerTest extends WebTestCase
     {
         static::resetDatabase();
 
-        $client = $this->getClient('api.esteren.dev', [], 'ROLE_ADMIN');
+        $client = $this->getClient('api.esteren.docker', [], 'ROLE_ADMIN');
 
         $dataToSend = [
             'name' => 'Test name',

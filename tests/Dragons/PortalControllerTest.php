@@ -20,31 +20,31 @@ class PortalControllerTest extends WebTestCase
 
     public function testRootRedirectsToIndex()
     {
-        $client = $this->getClient('www.dragons-rpg.dev');
+        $client = $this->getClient('www.dragons-rpg.docker');
 
         $client->request('GET', '/');
         $res = $client->getResponse();
 
         static::assertSame(301, $res->getStatusCode());
-        static::assertSame('http://www.dragons-rpg.dev/fr/', $res->headers->get('Location'));
+        static::assertSame('http://www.dragons-rpg.docker/fr/', $res->headers->get('Location'));
     }
 
     public function testIndexWithoutSlashRedirectsWithASlash()
     {
-        $client = $this->getClient('www.dragons-rpg.dev');
+        $client = $this->getClient('www.dragons-rpg.docker');
 
         $client->request('GET', '/fr');
         $res = $client->getResponse();
 
         static::assertSame(301, $res->getStatusCode());
-        static::assertSame('http://www.dragons-rpg.dev/fr/', $res->headers->get('Location'));
+        static::assertSame('http://www.dragons-rpg.docker/fr/', $res->headers->get('Location'));
     }
 
     public function testIndexWithFrenchHomepage()
     {
         static::resetDatabase();
 
-        $client = $this->getClient('www.dragons-rpg.dev');
+        $client = $this->getClient('www.dragons-rpg.docker');
 
         $crawler = $client->request('GET', '/fr/');
 
@@ -60,7 +60,7 @@ class PortalControllerTest extends WebTestCase
     {
         static::resetDatabase();
 
-        $client = $this->getClient('www.dragons-rpg.dev');
+        $client = $this->getClient('www.dragons-rpg.docker');
 
         $crawler = $client->request('GET', '/en/');
 

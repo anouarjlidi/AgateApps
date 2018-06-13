@@ -20,7 +20,7 @@ class FeondBeerControllerTest extends WebTestCase
 
     public function testFeondBeerLandingPage()
     {
-        $client = $this->getClient('portal.esteren.dev');
+        $client = $this->getClient('portal.esteren.docker');
 
         $crawler = $client->request('GET', '/fr/feond-beer');
 

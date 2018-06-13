@@ -30,10 +30,10 @@
         <env name="RELEASE_VERSION" value="v1" />
         <env name="RELEASE_DATE" value="2018-04-09T22:36:58+02:00" />
         <env name="IMAGEMAGICK_BINARIES_PATH" value="/usr/bin" />
-        <env name="AGATE_DOMAIN" value="studio-agate.dev" />
-        <env name="DRAGONS_DOMAIN" value="dragons-rpg.dev" />
-        <env name="ESTEREN_DOMAIN" value="esteren.dev" />
-        <env name="VERMINE_DOMAIN" value="vermine2047.dev" />
+        <env name="AGATE_DOMAIN" value="studio-agate.docker" />
+        <env name="DRAGONS_DOMAIN" value="dragons-rpg.docker" />
+        <env name="ESTEREN_DOMAIN" value="esteren.docker" />
+        <env name="VERMINE_DOMAIN" value="vermine2047.docker" />
         <env name="GOOGLE_RECAPTCHA_SITE_KEY" value="" />
         <env name="GOOGLE_RECAPTCHA_SECRET" value="1" />
 

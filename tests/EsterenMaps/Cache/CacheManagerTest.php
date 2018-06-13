@@ -35,7 +35,7 @@ class CacheManagerTest extends WebTestCase
 
         $coordinates = '[{"lat":0,"lng":0},{"lat":10,"lng":10},{"lat":5,"lng":5},{"lat":0,"lng":5},{"lat":0,"lng":10}]';
 
-        $client = $this->getClient('api.esteren.dev', [], ['ROLE_ADMIN']);
+        $client = $this->getClient('api.esteren.docker', [], ['ROLE_ADMIN']);
         $client->enableProfiler();
 
         /** @var Routes $route */

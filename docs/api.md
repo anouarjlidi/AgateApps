@@ -28,8 +28,8 @@ For now, we only need a few endpoints:
 First, check out [what is CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing).
 
 When using the backoffice to manage the map, we face a problem:
-the backend is under one subdomain, usually `back.esteren.dev` in dev, and the webservices are under another
-subdomain, usually `api.esteren.dev`.
+the backend is under one subdomain, usually `back.esteren.docker` in dev, and the webservices are under another
+subdomain, usually `api.esteren.docker`.
 
 To manage non-GET HTTP requests, a full setup must be configured in your app.
 

@@ -27,7 +27,7 @@ abstract class AbstractStepTest extends WebTestCase
     protected function getClient($host = null, array $kernelOptions = [], $tokenRoles = null, array $server = []): Client
     {
         if (null === $host) {
-            $host = 'corahnrin.esteren.dev';
+            $host = 'corahnrin.esteren.docker';
         }
 
         return $this->baseGetClient($host, $kernelOptions, $tokenRoles, $server);

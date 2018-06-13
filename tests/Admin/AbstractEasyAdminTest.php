@@ -316,7 +316,7 @@ abstract class AbstractEasyAdminTest extends WebTestCase
     protected function getClient($host = null, array $kernelOptions = [], $tokenRoles = [], array $server = [])
     {
         if (null === $host) {
-            $host = 'back.esteren.dev';
+            $host = 'back.esteren.docker';
         }
 
         if (is_string($tokenRoles)) {

@@ -25,16 +25,16 @@ performances reasons.
 <VirtualHost *:80>
 
     # Change domain names if needed
-    ServerName            esteren.dev
-    ServerAlias       www.esteren.dev
-    ServerAlias       api.esteren.dev
-    ServerAlias      maps.esteren.dev
-    ServerAlias      back.esteren.dev
-    ServerAlias     games.esteren.dev
-    ServerAlias    portal.esteren.dev
-    ServerAlias corahnrin.esteren.dev
-    ServerAlias  www.studio-agate.dev
-    ServerAlias   www.vermine2047.dev
+    ServerName            esteren.docker
+    ServerAlias       www.esteren.docker
+    ServerAlias       api.esteren.docker
+    ServerAlias      maps.esteren.docker
+    ServerAlias      back.esteren.docker
+    ServerAlias     games.esteren.docker
+    ServerAlias    portal.esteren.docker
+    ServerAlias corahnrin.esteren.docker
+    ServerAlias  www.studio-agate.docker
+    ServerAlias   www.vermine2047.docker
 
     DocumentRoot /var/www/agate_apps/public
 
@@ -113,16 +113,16 @@ server {
 
     # Change domain names if needed
     server_name
-        www.studio-agate.dev
-         www.vermine2047.dev
-                 esteren.dev
-             www.esteren.dev
-             api.esteren.dev
-            maps.esteren.dev
-            back.esteren.dev
-           games.esteren.dev
-          portal.esteren.dev
-       corahnrin.esteren.dev
+        www.studio-agate.docker
+         www.vermine2047.docker
+                 esteren.docker
+             www.esteren.docker
+             api.esteren.docker
+            maps.esteren.docker
+            back.esteren.docker
+           games.esteren.docker
+          portal.esteren.docker
+       corahnrin.esteren.docker
     ;
 
     # Change the directory to what you need.
