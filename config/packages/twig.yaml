@@ -17,4 +17,5 @@ twig:
         esteren_domains_api: '%esteren_domains.api%'
         esteren_domains_games: '%esteren_domains.games%'
         agate_domains_portal: '%agate_domains.portal%'
+        agate_domains_stats: '%agate_domains.stats%'
         vermine_domains_portal: '%vermine_domains.portal%'

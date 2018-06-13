@@ -27,6 +27,7 @@ parameters:
     esteren_domains.backoffice:     'back.%env(ESTEREN_DOMAIN)%'
 
     agate_domains.portal:              'www.%env(AGATE_DOMAIN)%'
+    agate_domains.stats:             'stats.%env(AGATE_DOMAIN)%'
 
     dragons_domains.portal:          'www.%env(DRAGONS_DOMAIN)%'
 
