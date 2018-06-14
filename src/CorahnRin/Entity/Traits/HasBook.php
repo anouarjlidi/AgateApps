@@ -23,29 +23,13 @@ trait HasBook
      */
     protected $book;
 
-    /**
-     * Set book.
-     *
-     * @param Books $book
-     *
-     * @return $this
-     *
-     * @codeCoverageIgnore
-     */
-    public function setBook(Books $book = null)
+    public function setBook(Books $book = null): self
     {
         $this->book = $book;
 
         return $this;
     }
 
-    /**
-     * Get book.
-     *
-     * @return Books
-     *
-     * @codeCoverageIgnore
-     */
     public function getBook(): ?Books
     {
         return $this->book;
