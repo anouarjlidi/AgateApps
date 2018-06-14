@@ -48,118 +48,36 @@ class GeoEnvironments
     protected $description;
 
     /**
-     * @var int
+     * @var Domains
      *
      * @ORM\ManyToOne(targetEntity="Domains")
      */
     protected $domain;
 
-    /**
-     * Get id.
-     *
-     * @return int
-     *
-     * @codeCoverageIgnore
-     */
-    public function getId()
+    public function __construct(int $id, string $name, string $description, Domains $domain)
+    {
+        $this->id = $id;
+        $this->name = $name;
+        $this->description = $description;
+        $this->domain = $domain;
+    }
+
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @param int $id
-     *
-     * @return $this
-     *
-     * @codeCoverageIgnore
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    /**
-     * Set name.
-     *
-     * @param string $name
-     *
-     * @return GeoEnvironments
-     *
-     * @codeCoverageIgnore
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get name.
-     *
-     * @return string
-     *
-     * @codeCoverageIgnore
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * Set description.
-     *
-     * @param string $description
-     *
-     * @return GeoEnvironments
-     *
-     * @codeCoverageIgnore
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * Get description.
-     *
-     * @return string
-     *
-     * @codeCoverageIgnore
-     */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }
 
-    /**
-     * Set domain.
-     *
-     * @param int $domain
-     *
-     * @return GeoEnvironments
-     *
-     * @codeCoverageIgnore
-     */
-    public function setDomain($domain)
-    {
-        $this->domain = $domain;
-
-        return $this;
-    }
-
-    /**
-     * Get domain.
-     *
-     * @return int
-     *
-     * @codeCoverageIgnore
-     */
-    public function getDomain()
+    public function getDomain(): Domains
     {
         return $this->domain;
     }

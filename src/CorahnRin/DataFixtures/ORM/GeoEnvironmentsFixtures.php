@@ -46,7 +46,7 @@ class GeoEnvironmentsFixtures extends AbstractFixture implements OrderedFixtureI
         $this->manager = $manager;
 
         /** @var EntityRepository $repo */
-        $repo = $this->manager->getRepository(\CorahnRin\Entity\GeoEnvironments::class);
+        $repo = $this->manager->getRepository(GeoEnvironments::class);
 
         $book     = $this->getReference('corahnrin-book-2');
         $domain5  = $this->getReference('corahnrin-domain-5');
@@ -74,16 +74,11 @@ class GeoEnvironmentsFixtures extends AbstractFixture implements OrderedFixtureI
             $newObject = true;
         }
         if ($newObject === true) {
-            $obj = new GeoEnvironments();
-            $obj->setId($id)
-                ->setName($name)
-                ->setDomain($domain)
-                ->setBook($book)
-                ->setDescription($description)
-            ;
+            $obj = new GeoEnvironments($id, $name, $description, $domain);
+            $obj->setBook($book);
             if ($id) {
                 /** @var ClassMetadata $metadata */
-                $metadata = $this->manager->getClassMetaData(get_class($obj));
+                $metadata = $this->manager->getClassMetadata(get_class($obj));
                 $metadata->setIdGeneratorType(ClassMetadata::GENERATOR_TYPE_NONE);
             }
             $this->manager->persist($obj);
