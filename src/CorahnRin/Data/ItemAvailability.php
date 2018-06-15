@@ -18,7 +18,7 @@ final class ItemAvailability
     public const RARE        = 'RA';
     public const EXCEPTIONAL = 'EX';
 
-    public static const ALL = [
+    public const ALL = [
         self::COMMON      => 'availability.common',
         self::FREQUENT    => 'availability.frequent',
         self::RARE        => 'availability.rare',
