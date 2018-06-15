@@ -499,6 +499,7 @@ class Characters extends BaseCharacter
      */
     public function __construct()
     {
+        $this->maxHealth      = new HealthCondition();
         $this->armors         = new ArrayCollection();
         $this->artifacts      = new ArrayCollection();
         $this->miracles       = new ArrayCollection();
@@ -787,9 +788,6 @@ class Characters extends BaseCharacter
         return $this;
     }
 
-    /**
-     * @param HealthCondition $health
-     */
     public function setHealth(HealthCondition $health): self
     {
         $this->health = $health;
@@ -797,17 +795,11 @@ class Characters extends BaseCharacter
         return $this;
     }
 
-    /**
-     * @return HealthCondition
-     */
     public function getHealth()
     {
         return $this->health;
     }
 
-    /**
-     * @param HealthCondition $maxHealth
-     */
     public function setMaxHealth(HealthCondition $maxHealth): self
     {
         $this->maxHealth = $maxHealth;
@@ -818,7 +810,7 @@ class Characters extends BaseCharacter
     /**
      * @return HealthCondition
      */
-    public function getMaxHealth()
+    public function getMaxHealth(): HealthCondition
     {
         return $this->maxHealth;
     }
