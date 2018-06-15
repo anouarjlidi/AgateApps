@@ -247,3 +247,27 @@ character:
 
 home:
     title: 'Corahn-Rin, le générateur de personnage pour Les Ombres d''Esteren'
+
+
+ways.combativeness: Combativité
+ways.combativeness.description: |
+    Cette Voie traduit la pugnacité, l'énergie qui pousse à agir, la rage de vivre.
+
+ways.creativity: Créativité
+ways.creativity.description: |
+    La capacité à imaginer, à donner à sa vie un sens original, l'inventivité, la débrouillardise.
+
+ways.empathy: Empathie
+ways.empathy.description: |
+    Le lien qui relie un être humain à son environnement.
+    Par exemple, les Demorthèn se servent de leur Empathie pour communiquer avec la nature.
+    Au niveau relationnel, l'Empathie désigne la faculté de ressentir les émotions d'une autre personne.
+
+ways.reason: Raison
+ways.reason.description: |
+    La rationnalisation, mais aussi la recherche et la réflexion. Elle traduit la capacité d'apprentissage d'un personnage, sa curiosité, etc.
+
+ways.conviction: Idéal
+ways.conviction.description: |
+    Généralement, un humain se raccroche à un idéal ou des convictions qui guident sa vie.
+    Certains se tournent vers la religion, d'autres vers des préceptes de chevalerie, d'autres encore suivent un code personnel.

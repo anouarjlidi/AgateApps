@@ -13,11 +13,11 @@ namespace CorahnRin\Data;
 
 final class Ways
 {
-    public const COMBATIVENESS = 'combativeness';
-    public const CREATIVITY = 'creativity';
-    public const EMPATHY = 'empathy';
-    public const REASON = 'reason';
-    public const CONVICTION = 'conviction';
+    public const COMBATIVENESS = 'ways.combativeness';
+    public const CREATIVITY = 'ways.creativity';
+    public const EMPATHY = 'ways.empathy';
+    public const REASON = 'ways.reason';
+    public const CONVICTION = 'ways.conviction';
 
     public const ALL = [
         self::COMBATIVENESS => self::COMBATIVENESS.'.description',
