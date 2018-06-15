@@ -11,6 +11,7 @@
 
 namespace CorahnRin\Entity;
 
+use CorahnRin\Data\Ways;
 use CorahnRin\Entity\Traits\HasBook;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -18,7 +19,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Traits.
  *
  * @ORM\Entity(repositoryClass="CorahnRin\Repository\TraitsRepository")
- * @ORM\Table(name="traits", uniqueConstraints={@ORM\UniqueConstraint(name="idxUnique", columns={"name", "way_id"})})
+ * @ORM\Table(name="traits", uniqueConstraints={@ORM\UniqueConstraint(name="idxUnique", columns={"name", "way"})})
  */
 class Traits
 {
@@ -62,173 +63,83 @@ class Traits
     protected $major;
 
     /**
-     * @var Ways
+     * @var string
      *
-     * @ORM\ManyToOne(targetEntity="Ways")
+     * @ORM\Column(name="way", type="string")
      */
     protected $way;
 
-    /**
-     * Get id.
-     *
-     * @return int
-     *
-     * @codeCoverageIgnore
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @param int $id
-     *
-     * @return $this
-     *
-     * @codeCoverageIgnore
-     */
-    public function setId($id)
+    public function setId(int $id): self
     {
         $this->id = $id;
 
         return $this;
     }
 
-    /**
-     * Set name.
-     *
-     * @param string $name
-     *
-     * @return Traits
-     *
-     * @codeCoverageIgnore
-     */
-    public function setName($name)
+    public function setName(string $name): self
     {
         $this->name = $name;
 
         return $this;
     }
 
-    /**
-     * Get name.
-     *
-     * @return string
-     *
-     * @codeCoverageIgnore
-     */
-    public function getName()
+    public function getName(): string
     {
-        return $this->name;
+        return (string) $this->name;
     }
 
-    /**
-     * Set nameFemale.
-     *
-     * @param string $nameFemale
-     *
-     * @return Traits
-     *
-     * @codeCoverageIgnore
-     */
-    public function setNameFemale($nameFemale)
+    public function setNameFemale(string $nameFemale): self
     {
         $this->nameFemale = $nameFemale;
 
         return $this;
     }
 
-    /**
-     * Get nameFemale.
-     *
-     * @return string
-     *
-     * @codeCoverageIgnore
-     */
-    public function getNameFemale()
+    public function getNameFemale(): string
     {
-        return $this->nameFemale;
+        return (string) $this->nameFemale;
     }
 
-    /**
-     * Set isQuality.
-     *
-     * @param bool $isQuality
-     *
-     * @return Traits
-     *
-     * @codeCoverageIgnore
-     */
-    public function setQuality($isQuality)
+    public function setQuality(bool $isQuality): self
     {
         $this->isQuality = $isQuality;
 
         return $this;
     }
 
-    /**
-     * Get isQuality.
-     *
-     * @return bool
-     *
-     * @codeCoverageIgnore
-     */
     public function isQuality()
     {
-        return $this->isQuality;
+        return (bool) $this->isQuality;
     }
 
-    /**
-     * Set isMajor.
-     *
-     * @param bool $major
-     *
-     * @return Traits
-     *
-     * @codeCoverageIgnore
-     */
-    public function setMajor($major)
+    public function setMajor(bool $major): self
     {
         $this->major = $major;
 
         return $this;
     }
 
-    /**
-     * Get isMajor.
-     *
-     * @return bool
-     */
     public function isMajor()
     {
-        return $this->major;
+        return (bool) $this->major;
     }
 
-    /**
-     * Set way.
-     *
-     * @param Ways $way
-     *
-     * @return Traits
-     *
-     * @codeCoverageIgnore
-     */
-    public function setWay(Ways $way = null)
+    public function setWay(string $way): self
     {
+        Ways::validateWay($way);
+
         $this->way = $way;
 
         return $this;
     }
 
-    /**
-     * Get way.
-     *
-     * @return Ways
-     *
-     * @codeCoverageIgnore
-     */
-    public function getWay()
+    public function getWay(): string
     {
-        return $this->way;
+        return (string) $this->way;
     }
 }

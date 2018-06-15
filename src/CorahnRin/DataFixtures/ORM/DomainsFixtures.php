@@ -11,6 +11,7 @@
 
 namespace CorahnRin\DataFixtures\ORM;
 
+use CorahnRin\Data\Ways;
 use CorahnRin\Entity\Domains;
 use Doctrine\Bundle\FixturesBundle\ORMFixtureInterface;
 use Doctrine\Common\DataFixtures\AbstractFixture;
@@ -47,11 +48,11 @@ class DomainsFixtures extends AbstractFixture implements OrderedFixtureInterface
 
         $repo = $this->manager->getRepository(\CorahnRin\Entity\Domains::class);
 
-        $way1 = $this->getReference('corahnrin-way-1');
-        $way2 = $this->getReference('corahnrin-way-2');
-        $way3 = $this->getReference('corahnrin-way-3');
-        $way4 = $this->getReference('corahnrin-way-4');
-        $way5 = $this->getReference('corahnrin-way-5');
+        $way1 = Ways::COMBATIVENESS;
+        $way2 = Ways::CREATIVITY;
+        $way3 = Ways::EMPATHY;
+        $way4 = Ways::REASON;
+        $way5 = Ways::CONVICTION;
 
         $this->fixtureObject($repo, 1, $way2, 'Artisanat', '');
         $this->fixtureObject($repo, 2, $way1, 'Combat au Contact', '');

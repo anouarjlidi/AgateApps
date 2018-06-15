@@ -11,7 +11,6 @@
 
 namespace CorahnRin\Entity;
 
-use CorahnRin\Entity\CharacterProperties\CharWays;
 use CorahnRin\Entity\Traits\HasBook;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -56,129 +55,66 @@ class Disorders
      */
     protected $ways;
 
-    /**
-     * Constructor.
-     */
     public function __construct()
     {
         $this->ways = new ArrayCollection();
     }
 
-    /**
-     * Get id.
-     *
-     * @return int
-     *
-     * @codeCoverageIgnore
-     */
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * @param int $id
-     *
-     * @return $this
-     *
-     * @codeCoverageIgnore
-     */
-    public function setId($id)
+    public function setId(int $id)
     {
         $this->id = $id;
 
         return $this;
     }
 
-    /**
-     * Set name.
-     *
-     * @param string $name
-     *
-     * @return Disorders
-     *
-     * @codeCoverageIgnore
-     */
-    public function setName($name)
+    public function setName(string $name)
     {
         $this->name = $name;
 
         return $this;
     }
 
-    /**
-     * Get name.
-     *
-     * @return string
-     *
-     * @codeCoverageIgnore
-     */
-    public function getName()
+    public function getName(): string
     {
-        return $this->name;
+        return (string) $this->name;
     }
 
-    /**
-     * Add ways.
-     *
-     * @param CharWays $ways
-     *
-     * @return Disorders
-     */
-    public function addWay(CharWays $ways)
+    public function addWay(DisordersWays $ways): self
     {
         $this->ways[] = $ways;
 
         return $this;
     }
 
-    /**
-     * Remove ways.
-     *
-     * @param CharWays $ways
-     */
-    public function removeWay(CharWays $ways)
+    public function removeWay(DisordersWays $ways): self
     {
         $this->ways->removeElement($ways);
-    }
-
-    /**
-     * Get ways.
-     *
-     * @return DisordersWays[]|ArrayCollection
-     *
-     * @codeCoverageIgnore
-     */
-    public function getWays()
-    {
-        return $this->ways;
-    }
-
-    /**
-     * Set description.
-     *
-     * @param string $description
-     *
-     * @return Disorders
-     *
-     * @codeCoverageIgnore
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
 
         return $this;
     }
 
     /**
-     * Get description.
-     *
-     * @return string
-     *
-     * @codeCoverageIgnore
+     * @return DisordersWays[]|ArrayCollection
      */
-    public function getDescription()
+    public function getWays(): iterable
     {
-        return $this->description;
+        return $this->ways;
+    }
+
+    public function setDescription(?string $description)
+    {
+        $this->description = (string) $description;
+
+        return $this;
+    }
+
+    public function getDescription(): string
+    {
+        return (string) $this->description;
     }
 }

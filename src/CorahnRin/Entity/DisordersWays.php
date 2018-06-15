@@ -83,13 +83,13 @@ class DisordersWays
         return $this;
     }
 
-    /**
-     * Get isMajor.
-     *
-     * @return bool
-     */
-    public function isMajor()
+    public function isMajor(): bool
     {
         return $this->major;
+    }
+
+    public function isMinor(): bool
+    {
+        return !$this->major;
     }
 }

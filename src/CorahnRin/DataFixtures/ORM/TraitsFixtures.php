@@ -11,6 +11,7 @@
 
 namespace CorahnRin\DataFixtures\ORM;
 
+use CorahnRin\Data\Ways;
 use CorahnRin\Entity\Traits;
 use CorahnRin\Entity\Books;
 use Doctrine\Bundle\FixturesBundle\ORMFixtureInterface;
@@ -46,16 +47,16 @@ class TraitsFixtures extends AbstractFixture implements OrderedFixtureInterface,
     {
         $this->manager = $manager;
 
-        $repo = $this->manager->getRepository(\CorahnRin\Entity\Traits::class);
+        $repo = $this->manager->getRepository(Traits::class);
 
         /** @var Books $book */
         $book = $this->getReference('corahnrin-book-2');
 
-        $way1 = $this->getReference('corahnrin-way-1');
-        $way2 = $this->getReference('corahnrin-way-2');
-        $way3 = $this->getReference('corahnrin-way-3');
-        $way4 = $this->getReference('corahnrin-way-4');
-        $way5 = $this->getReference('corahnrin-way-5');
+        $way1 = Ways::COMBATIVENESS;
+        $way2 = Ways::CREATIVITY;
+        $way3 = Ways::EMPATHY;
+        $way4 = Ways::REASON;
+        $way5 = Ways::CONVICTION;
 
         $this->fixtureObject($repo, 1, $way1, 'Combatif', 'Combative', 1, 1, $book);
         $this->fixtureObject($repo, 2, $way1, 'Optimiste', 'Optimiste', 1, 1, $book);
