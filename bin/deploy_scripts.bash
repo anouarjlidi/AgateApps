@@ -8,7 +8,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # Project directory
 cd ${DIR}/../
 
-composer ins --no-dev --optimize-autoloader --classmap-authoritative --prefer-dist
+composer install --no-dev --classmap-authoritative --prefer-dist --no-interaction
 
 php bin/console cache:clear --no-warmup
 php bin/console cache:warmup
