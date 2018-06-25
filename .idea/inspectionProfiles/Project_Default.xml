@@ -6,7 +6,6 @@
     <inspection_tool class="CaseSensitivityServiceInspection" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="ES6ConvertVarToLetConst" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="ExceptionsAnnotatingAndHandlingInspection" enabled="false" level="WARNING" enabled_by_default="false" />
-    <inspection_tool class="ForeachSourceInspection" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="ForgottenDebugOutputInspection" enabled="true" level="ERROR" enabled_by_default="true">
       <option name="configuration">
         <list>
@@ -31,8 +30,8 @@
     </inspection_tool>
     <inspection_tool class="JSNonStrictModeUsed" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="LongInheritanceChainInspection" enabled="false" level="WARNING" enabled_by_default="false" />
-    <inspection_tool class="MoreThanThreeArgumentsInspection" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="MultiAssignmentUsageInspection" enabled="false" level="WARNING" enabled_by_default="false" />
+    <inspection_tool class="NonAsciiCharacters" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="PhpDocSignatureInspection" enabled="false" level="WEAK WARNING" enabled_by_default="false" />
     <inspection_tool class="PhpUndefinedClassInspection" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="DONT_REPORT_MULTI_RESOLVE" value="true" />
@@ -46,6 +45,7 @@
           <option value="behat/behat" />
           <option value="brianium/paratest" />
           <option value="codeception/codeception" />
+          <option value="codedungeon/phpunit-result-printer" />
           <option value="composer/composer" />
           <option value="filp/whoops" />
           <option value="friendsofphp/php-cs-fixer" />
@@ -56,6 +56,7 @@
           <option value="mikey179/vfsStream" />
           <option value="mockery/mockery" />
           <option value="mybuilder/phpunit-accelerator" />
+          <option value="orchestra/testbench" />
           <option value="pdepend/pdepend" />
           <option value="phan/phan" />
           <option value="phing/phing" />
@@ -73,9 +74,11 @@
           <option value="satooshi/php-coveralls" />
           <option value="sebastian/phpcpd" />
           <option value="slevomat/coding-standard" />
+          <option value="spatie/phpunit-watcher" />
           <option value="squizlabs/php_codesniffer" />
           <option value="sstalle/php7cc" />
           <option value="symfony/debug" />
+          <option value="symfony/maker-bundle" />
           <option value="symfony/phpunit-bridge" />
           <option value="symfony/var-dumper" />
           <option value="vimeo/psalm" />
