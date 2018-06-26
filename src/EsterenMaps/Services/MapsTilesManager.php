@@ -42,7 +42,13 @@ class MapsTilesManager
     {
         $this->tileSize   = $tileSize;
         $outputDirectory  = rtrim($outputDirectory, '\\/');
-        $this->magickPath = rtrim($imageMagickPath, '\\/').DIRECTORY_SEPARATOR;
+        $imageMagickPath = rtrim($imageMagickPath, '\\/');
+        if (strpos($imageMagickPath, 'magick') === strlen($imageMagickPath) - 6) {
+            $imageMagickPath .= ' ';
+        } else {
+            $imageMagickPath .= DIRECTORY_SEPARATOR;
+        }
+        $this->magickPath = $imageMagickPath;
         $this->outputDirectory = $outputDirectory;
         if (strpos($outputDirectory, '@') === 0) {
             $this->outputDirectory = $kernel->locateResource($outputDirectory);
@@ -175,8 +181,7 @@ class MapsTilesManager
 
         if ($command_result) {
             $command_result = trim($command_result);
-            $msg            = 'Error while processing conversion. Command returned error:'."\n\t".str_replace("\n", "\n\t", $command_result);
-            $msg            = trim($msg);
+            $msg            = trim('Error while processing conversion. Command returned error:'."\n\t".str_replace("\n", "\n\t", $command_result));
             if ($debug) {
                 $msg .= "\n".'Executed command : '."\n\t".$cmd;
             }
@@ -196,7 +201,9 @@ class MapsTilesManager
             $filename = str_replace(['{x}', '{y}'], [$x, $y], $output_final);
 
             if (!is_dir(dirname($filename))) {
-                mkdir(dirname($filename), 0775, true);
+                if (!mkdir($concurrentDirectory = dirname($filename), 0775, true) && !is_dir($concurrentDirectory)) {
+                    throw new \RuntimeException(sprintf('Directory "%s" could not be created', $concurrentDirectory));
+                }
             }
 
             rename($file, $filename);
@@ -241,7 +248,7 @@ class MapsTilesManager
             mkdir(dirname($imgOutput), 0777, true);
         }
 
-        $command = new Command($this->magickPath);
+        $command = new Command(trim($this->magickPath));
 
         if ($withImages) {
             $imgSource = $this->mapImageManager->getImagePath($this->map);

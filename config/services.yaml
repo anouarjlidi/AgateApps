@@ -33,8 +33,6 @@ parameters:
 
     vermine_domains.portal:          'www.%env(VERMINE_DOMAIN)%'
 
-    magick_binaries_path: '%env(IMAGEMAGICK_BINARIES_PATH)%'
-
     esterenmaps.tile_size: 168
     esterenmaps.output_directory: '%kernel.project_dir%/public/maps_tiles/'
 
@@ -49,7 +47,7 @@ services:
             $debug:           '%kernel.debug%'
             $defaultLocale:   '%locale%'
             $googleTags:      '%google_tags%'
-            $imageMagickPath: '%magick_binaries_path%'
+            $imageMagickPath: '%env(IMAGEMAGICK_BINARIES_PATH)%'
             $outputDirectory: '%esterenmaps.output_directory%'
             $projectDir:      '%kernel.project_dir%'
             $sheetsFolder:    '%kernel.project_dir%/src/CorahnRin/Resources/pdf_sources'
