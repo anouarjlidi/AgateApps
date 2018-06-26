@@ -74,7 +74,7 @@ abstract class AbstractStepTest extends WebTestCase
                     ->setValues($formValues)
                 ;
             } catch (\Exception $e) {
-                $this->fail($e->getMessage()."\nWith values:\n".preg_replace('~  +~', ' ', str_replace(["\r", "\n"], ' ', json_encode($formValues))));
+                $this->fail($e->getMessage()."\nWith values:\n".preg_replace('~\s\s+~', ' ', str_replace(["\r", "\n"], ' ', json_encode($formValues))));
             }
         }
 
