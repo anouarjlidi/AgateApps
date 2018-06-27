@@ -129,7 +129,7 @@ class Step08WaysTest extends AbstractStepTest
             ],
         ]);
 
-        static::assertSame(200, $client->getResponse()->getStatusCode(), $client->getResponse()->getContent());
+        static::assertSame(200, $client->getResponse()->getStatusCode(), $crawler->filter('title')->count() > 0 ? $crawler->filter('title')->text() : '');
         static::assertSame(1, $crawler->filter('#flash-messages > .card-panel.error')->count());
         $nodeText = preg_replace('~(\\r)?\\n\s+~', '', trim($crawler->filter('#flash-messages > .card-panel.error')->text()));
         static::assertEquals('Erreur dans le formulaire. Merci de vérifier les valeurs soumises.Les voies doivent être comprises entre 1 et 5.', $nodeText);
