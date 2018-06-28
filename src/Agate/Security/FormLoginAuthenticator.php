@@ -68,7 +68,12 @@ final class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
      */
     public function supports(Request $request)
     {
-        return $request->getPathInfo() === $this->router->generate('user_login_check');
+        return
+            $request->isMethod('POST')
+            && $request->request->has(self::USERNAME_OR_EMAIL_FORM_FIELD)
+            && $request->request->has(self::PASSWORD_FORM_FIELD)
+            && $request->getPathInfo() === $this->router->generate('user_login_check')
+        ;
     }
 
     /**
