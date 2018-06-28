@@ -24,7 +24,7 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 use Agate\Entity\User;
-use Agate\Security\Provider\UsernameOrEmailProvider;
+use Agate\Repository\UserRepository as UsernameOrEmailProvider;
 
 final class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
 {

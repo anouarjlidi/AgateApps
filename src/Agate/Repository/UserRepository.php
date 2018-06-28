@@ -11,16 +11,20 @@
 
 namespace Agate\Repository;
 
+use Agate\Entity\User;
+use Agate\Util\CanonicalizerTrait;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Orbitale\Component\DoctrineTools\EntityRepositoryHelperTrait;
-use Agate\Entity\User;
-use Agate\Util\CanonicalizerTrait;
+use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
+use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 /**
  * @method User findOneBy(array $criteria, array $orderBy = null)
  */
-class UserRepository extends ServiceEntityRepository
+class UserRepository extends ServiceEntityRepository implements UserProviderInterface
 {
     use EntityRepositoryHelperTrait;
     use CanonicalizerTrait;
@@ -49,5 +53,36 @@ class UserRepository extends ServiceEntityRepository
     public function findOneByConfirmationToken($token): ?User
     {
         return $this->findOneBy(['confirmationToken' => $token]);
+    }
+    /**
+     * {@inheritdoc}
+     */
+    public function loadUserByUsername($username)
+    {
+        return $this->findByUsernameOrEmail($username);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function refreshUser(UserInterface $user)
+    {
+        if (!($user instanceof User)) {
+            throw new UnsupportedUserException(sprintf('Expected an instance of %s, but got "%s".', User::class, get_class($user)));
+        }
+
+        if (null === $reloadedUser = $this->find($user->getId())) {
+            throw new UsernameNotFoundException(sprintf('User with ID "%s" could not be reloaded.', $user->getId()));
+        }
+
+        return $reloadedUser;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function supportsClass($class)
+    {
+        return User::class === $class || is_subclass_of($class, User::class, true);
     }
 }
