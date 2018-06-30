@@ -25,8 +25,8 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Agate\Entity\User;
-use Agate\Repository\UserRepository;
+use User\Entity\User;
+use User\Repository\UserRepository;
 
 class ImportLegacyCharactersCommand extends Command
 {
@@ -47,7 +47,7 @@ class ImportLegacyCharactersCommand extends Command
     /** @var InputInterface */
     private $input;
 
-    /** @var User[] */
+    /** @var \User\Entity\User[] */
     private $users = [];
 
     /** @var EntityRepository[] */

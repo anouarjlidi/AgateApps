@@ -11,13 +11,13 @@
 
 namespace Tests\Agate\Controller\User;
 
-use Agate\Entity\User;
-use Agate\Repository\UserRepository;
-use Agate\Security\Provider\UsernameOrEmailProvider;
-use Symfony\Component\DomCrawler\Form;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\DomCrawler\Form;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Tests\WebTestCase as PiersTestCase;
+use User\Entity\User;
+use User\Repository\UserRepository;
+use User\Security\Provider\UsernameOrEmailProvider;
 
 abstract class AbstractSecurityControllerTest extends WebTestCase
 {

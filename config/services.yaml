@@ -66,7 +66,7 @@ services:
         resource: '../src/Admin/{Controller}'
 
     Agate\:
-        resource: '../src/Agate/{Controller,ConnectApi,EventListener,Form,Mailer,Repository,Security,Twig,Util}'
+        resource: '../src/Agate/{Controller,Form,Mailer}'
 
     CorahnRin\:
         resource: '../src/CorahnRin/{Controller,Repository,GeneratorTools,SheetsManagers,Step}'
@@ -76,6 +76,12 @@ services:
 
     EsterenMaps\:
         resource: '../src/EsterenMaps/{Api,Cache,Command,Controller,Repository,Services,Twig}'
+
+    User\:
+        resource: '../src/User/{Controller,ConnectApi,EventListener,Mailer,Form,Repository,Security,Twig,Util}'
+
+    Util\:
+        resource: '../src/Util/{Controller,Twig}'
 
     EsterenMaps\Cache\CacheManager:
         tags: [{ name: doctrine.event_subscriber, connection: default }]

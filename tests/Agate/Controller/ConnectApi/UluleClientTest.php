@@ -12,11 +12,11 @@
 namespace Tests\Agate\ConnectApi;
 
 use Psr\Log\NullLogger;
-use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Tests\WebTestCase as PiersTestCase;
-use Agate\ConnectApi\UluleClient;
-use Agate\Entity\User;
+use User\ConnectApi\UluleClient;
+use User\Entity\User;
 
 class UluleClientTest extends WebTestCase
 {

@@ -11,10 +11,10 @@
 
 namespace Tests\EsterenMaps\Controller;
 
-use Agate\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\DomCrawler\Link;
 use Tests\WebTestCase as PiersTestCase;
+use User\Repository\UserRepository;
 
 class MapsControllerTest extends WebTestCase
 {

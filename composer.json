@@ -95,10 +95,12 @@
             "Admin\\": "src/Admin",
             "Agate\\": "src/Agate",
             "CorahnRin\\": "src/CorahnRin",
+            "DataFixtures\\": "src/DataFixtures",
             "Dragons\\": "src/Dragons",
             "Esteren\\": "src/Esteren",
             "EsterenMaps\\": "src/EsterenMaps",
-            "Util\\": "src/Util"
+            "Util\\": "src/Util",
+            "User\\": "src/User"
         },
         "classmap": [
             "src/Kernel.php"

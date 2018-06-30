@@ -1,6 +1,11 @@
 /build/
 /composer.phar
 !/docker/
+dump*.sql
+phpunit.phar
+.env.*
+/src/DataFixtures/Internal/*
+!/src/DataFixtures/Internal/.gitkeep
 
 # Esteren Maps
 /public/maps_tiles/*

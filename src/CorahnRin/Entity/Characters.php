@@ -25,7 +25,6 @@ use Doctrine\ORM\Mapping as ORM;
 use EsterenMaps\Entity\Zones;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Pierstoval\Bundle\CharacterManagerBundle\Entity\Character as BaseCharacter;
-use Agate\Entity\User;
 
 /**
  * Characters.
@@ -462,7 +461,7 @@ class Characters extends BaseCharacter
     protected $setbacks;
 
     /**
-     * @var User
+     * @var \User\Entity\User
      * @ORM\ManyToOne(targetEntity="Agate\Entity\User")
      */
     protected $user;
@@ -1570,9 +1569,9 @@ class Characters extends BaseCharacter
     }
 
     /**
-     * @param User $user
+     * @param \User\Entity\User $user
      */
-    public function setUser(User $user = null): self
+    public function setUser(\User\Entity\User $user = null): self
     {
         $this->user = $user;
 
@@ -1580,7 +1579,7 @@ class Characters extends BaseCharacter
     }
 
     /**
-     * @return User
+     * @return \User\Entity\User
      */
     public function getUser()
     {

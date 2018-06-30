@@ -2,11 +2,6 @@ services:
     _defaults:
         autoconfigure: true
 
-    Agate\DataFixtures\:
-        resource: ../../../src/Agate/DataFixtures/
-
-    CorahnRin\DataFixtures\:
-        resource: ../../../src/CorahnRin/DataFixtures/
-
-    EsterenMaps\DataFixtures\:
-        resource: ../../../src/EsterenMaps/DataFixtures/
+    DataFixtures\:
+        resource: ../../../src/DataFixtures/
+        exclude: ../../../src/DataFixtures/Internal
