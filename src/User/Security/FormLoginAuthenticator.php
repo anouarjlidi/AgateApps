@@ -23,7 +23,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
-use User\Repository\UserRepository as UsernameOrEmailProvider;
+use User\Repository\UserRepository;
 
 final class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
 {
@@ -118,7 +118,7 @@ final class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
      * {@inheritdoc}
      *
      * @param UsernamePasswordCredentials $credentials
-     * @param UsernameOrEmailProvider     $userProvider
+     * @param UserRepository              $userProvider
      */
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
