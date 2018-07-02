@@ -64,7 +64,7 @@ class ZonesFixtures extends AbstractFixture implements ORMFixtureInterface
                 'zoneType'    => $zoneType2,
                 'name'        => 'Kingdom test',
                 'description' => '',
-                'coordinates' => '[{"lat":25,"lng":35},{"lat":35,"lng":35},{"lat":35,"lng":40,{"lat":25,"lng":40}]',
+                'coordinates' => '[{"lat":25,"lng":35},{"lat":35,"lng":35},{"lat":35,"lng":40},{"lat":25,"lng":40}]',
                 'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-03-14 15:26:35'),
                 'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-12-27 17:38:09'),
             ],
