@@ -26,11 +26,6 @@ final class PortalElementFixtures extends AbstractFixture implements ORMFixtureI
         return PortalElement::class;
     }
 
-    protected function searchForMatchingIds(): bool
-    {
-        return false;
-    }
-
     protected function setGeneratorBasedOnId(ClassMetadata $metadata, $id = null): void
     {
         $metadata->setIdGeneratorType(ClassMetadata::GENERATOR_TYPE_AUTO);
@@ -73,6 +68,7 @@ final class PortalElementFixtures extends AbstractFixture implements ORMFixtureI
                 'buttonLink' => '/',
             ],
             [
+                'id' => 4,
                 'portal' => 'agate',
                 'locale' => 'en',
                 'imageUrl' => 'maps/esteren_map.jpg',
@@ -82,6 +78,7 @@ final class PortalElementFixtures extends AbstractFixture implements ORMFixtureI
                 'buttonLink' => '/',
             ],
             [
+                'id' => 5,
                 'portal' => 'dragons',
                 'locale' => 'fr',
                 'imageUrl' => 'maps/esteren_map.jpg',
@@ -91,6 +88,7 @@ final class PortalElementFixtures extends AbstractFixture implements ORMFixtureI
                 'buttonLink' => '/',
             ],
             [
+                'id' => 6,
                 'portal' => 'dragons',
                 'locale' => 'en',
                 'imageUrl' => 'maps/esteren_map.jpg',
