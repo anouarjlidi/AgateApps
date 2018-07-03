@@ -141,16 +141,16 @@ class MapsTilesManager
 
         $ratio = 1 / (2 ** ($max - $zoom)) * 100;
 
-        $output_scheme = $this->outputDirectory.'/temp_tiles/'.$this->map->getId().'/'.$zoom.'.jpg';
-        $output_final  = $this->outputDirectory.'/'.$this->map->getId().'/'.$zoom.'/{x}/{y}.jpg';
+        $outputScheme = $this->outputDirectory.'/temp_tiles/'.$this->map->getId().'/'.$zoom.'.jpg';
+        $outputFinal  = $this->outputDirectory.'/'.$this->map->getId().'/'.$zoom.'/{x}/{y}.jpg';
 
-        if (!is_dir(dirname($output_scheme))) {
-            mkdir(dirname($output_scheme), 0775, true);
+        if (!is_dir(dirname($outputScheme))) {
+            mkdir(dirname($outputScheme), 0775, true);
         }
 
         // Supprime tout fichier existant
-        $existing_files = glob(dirname($output_scheme).'/*');
-        foreach ($existing_files as $file) {
+        $existingFiles = glob(dirname($outputScheme).'/*');
+        foreach ($existingFiles as $file) {
             unlink($file);
         }
 
@@ -165,53 +165,54 @@ class MapsTilesManager
             $w = $h;
         }
 
-        $cmd =
-            $this->magickPath.'convert "'.$this->map->getImage().'"'.
-            ' -background "#000000"'.
-            ' -extent '.$w.'x'.$h.
-            ' -resize "'.$ratio.'%" '.
-            ' -crop '.$this->tileSize.'x'.$this->tileSize.
-            ' -background "#000000"'.
-            ' -extent '.$this->tileSize.'x'.$this->tileSize.
-            ' -thumbnail '.$this->tileSize.'x'.$this->tileSize.
-            ' "'.$output_scheme.'"'.
-            ' 2>&1';
+        $cmd = (new Command($this->magickPath))
+            ->convert($this->map->getImage())
+            ->background('#000000')
+            ->extent($w.'x'.$h)
+            ->resize($ratio.'%')
+            ->crop($this->tileSize.'x'.$this->tileSize)
+            ->background('#000000')
+            ->extent($this->tileSize.'x'.$this->tileSize)
+            ->thumbnail($this->tileSize.'x'.$this->tileSize)
+            ->output($outputScheme)
+        ;
 
-        $command_result = shell_exec($cmd);
+        $commandResponse = $cmd->run($cmd::RUN_DEBUG);
 
-        if ($command_result) {
-            $command_result = trim($command_result);
-            $msg            = trim('Error while processing conversion. Command returned error:'."\n\t".str_replace("\n", "\n\t", $command_result));
+        if ($commandResponse->hasFailed()) {
+            $error = trim($commandResponse->getError());
+            $msg            = trim('Error while processing conversion. Command returned error:'."\n\t".str_replace("\n", "\n\t", $error));
             if ($debug) {
-                $msg .= "\n".'Executed command : '."\n\t".$cmd;
+                $msg .= "\n".'Executed command : '."\n\t".$cmd->getCommand();
             }
             throw new \RuntimeException($msg);
         }
 
-        $existing_files = glob(dirname($output_scheme).'/*');
+        $existingFiles = glob(dirname($outputScheme).'/*');
 
-        sort($existing_files, SORT_NATURAL | SORT_FLAG_CASE);
-        $existing_files = array_values($existing_files);
+        sort($existingFiles, SORT_NATURAL | SORT_FLAG_CASE);
+        $existingFiles = array_values($existingFiles);
 
-        $modulo = sqrt(count($existing_files));
+        $modulo = sqrt(count($existingFiles));
 
-        foreach ($existing_files as $i => $file) {
+        foreach ($existingFiles as $i => $file) {
             $x        = floor($i / $modulo);
             $y        = $i % $modulo;
-            $filename = str_replace(['{x}', '{y}'], [$x, $y], $output_final);
+            $filename = str_replace(['{x}', '{y}'], [$x, $y], $outputFinal);
 
-            if (!is_dir(dirname($filename))) {
-                if (!mkdir($concurrentDirectory = dirname($filename), 0775, true) && !is_dir($concurrentDirectory)) {
-                    throw new \RuntimeException(sprintf('Directory "%s" could not be created', $concurrentDirectory));
-                }
+            if (!is_dir(dirname($filename))
+                && !mkdir($concurrentDirectory = dirname($filename), 0775, true)
+                && !is_dir($concurrentDirectory)
+            ) {
+                throw new \RuntimeException(sprintf('Directory "%s" could not be created', $concurrentDirectory));
             }
 
             rename($file, $filename);
         }
 
         // Supprime tout fichier existant
-        $existing_files = glob(dirname($output_scheme).'/*');
-        foreach ($existing_files as $file) {
+        $existingFiles = glob(dirname($outputScheme).'/*');
+        foreach ($existingFiles as $file) {
             unlink($file);
         }
     }
