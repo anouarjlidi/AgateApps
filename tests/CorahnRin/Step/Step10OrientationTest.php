@@ -29,11 +29,11 @@ class Step10OrientationTest extends AbstractStepTest
     {
         $result = $this->submitAction([
             '08_ways' => [
-                1 => 5,
-                2 => 4,
-                3 => 3,
-                4 => 2,
-                5 => 1,
+                'ways.combativeness' => 5,
+                'ways.creativity' => 4,
+                'ways.empathy' => 3,
+                'ways.reason' => 2,
+                'ways.conviction' => 1,
             ],
         ]);
 
@@ -46,11 +46,11 @@ class Step10OrientationTest extends AbstractStepTest
     {
         $result = $this->submitAction([
             '08_ways' => [
-                1 => 1,
-                2 => 2,
-                3 => 3,
-                4 => 4,
-                5 => 5,
+                'ways.combativeness' => 1,
+                'ways.creativity' => 2,
+                'ways.empathy' => 3,
+                'ways.reason' => 4,
+                'ways.conviction' => 5,
             ],
         ]);
 
@@ -63,11 +63,11 @@ class Step10OrientationTest extends AbstractStepTest
     {
         $result = $this->submitAction([
             '08_ways' => [
-                1 => 3,
-                2 => 4,
-                3 => 1,
-                4 => 4,
-                5 => 3,
+                'ways.combativeness' => 3,
+                'ways.creativity' => 4,
+                'ways.empathy' => 1,
+                'ways.reason' => 4,
+                'ways.conviction' => 3,
             ],
         ], $values = [
             'gen-div-choice' => Orientation::INSTINCTIVE,
@@ -82,11 +82,11 @@ class Step10OrientationTest extends AbstractStepTest
     {
         $result = $this->submitAction([
             '08_ways' => [
-                1 => 3,
-                2 => 4,
-                3 => 1,
-                4 => 4,
-                5 => 3,
+                'ways.combativeness' => 3,
+                'ways.creativity' => 4,
+                'ways.empathy' => 1,
+                'ways.reason' => 4,
+                'ways.conviction' => 3,
             ],
         ], $values = [
             'gen-div-choice' => Orientation::RATIONAL,
@@ -101,11 +101,11 @@ class Step10OrientationTest extends AbstractStepTest
     {
         $result = $this->submitAction([
             '08_ways' => [
-                1 => 3,
-                2 => 4,
-                3 => 1,
-                4 => 4,
-                5 => 3,
+                'ways.combativeness' => 3,
+                'ways.creativity' => 4,
+                'ways.empathy' => 1,
+                'ways.reason' => 4,
+                'ways.conviction' => 3,
             ],
         ], $values = [
             'gen-div-choice' => 'INVALID',

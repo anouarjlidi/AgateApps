@@ -27,11 +27,11 @@ class Step12MentalDisorderTest extends AbstractStepTest
     {
         $result = $this->submitAction([
             '08_ways' => [
-                1 => 5,
-                2 => 4,
-                3 => 3,
-                4 => 2,
-                5 => 1,
+                'ways.combativeness' => 5,
+                'ways.creativity' => 4,
+                'ways.empathy' => 3,
+                'ways.reason' => 2,
+                'ways.conviction' => 1,
             ],
         ], [
             'gen-div-choice' => 1,
@@ -46,11 +46,11 @@ class Step12MentalDisorderTest extends AbstractStepTest
     {
         $result = $this->submitAction([
             '08_ways' => [
-                1 => 5,
-                2 => 4,
-                3 => 3,
-                4 => 2,
-                5 => 1,
+                'ways.combativeness' => 5,
+                'ways.creativity' => 4,
+                'ways.empathy' => 3,
+                'ways.reason' => 2,
+                'ways.conviction' => 1,
             ],
         ], [
             'gen-div-choice' => 0,
@@ -67,11 +67,11 @@ class Step12MentalDisorderTest extends AbstractStepTest
     {
         $result = $this->submitAction([
             '08_ways' => [
-                1 => 5,
-                2 => 4,
-                3 => 3,
-                4 => 2,
-                5 => 1,
+                'ways.combativeness' => 5,
+                'ways.creativity' => 4,
+                'ways.empathy' => 3,
+                'ways.reason' => 2,
+                'ways.conviction' => 1,
             ],
         ], [
             'gen-div-choice' => 999999,
