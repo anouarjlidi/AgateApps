@@ -43,9 +43,7 @@ class MapsTilesManager
         $this->tileSize   = $tileSize;
         $outputDirectory  = rtrim($outputDirectory, '\\/');
         $imageMagickPath = rtrim($imageMagickPath, '\\/');
-        if (strpos($imageMagickPath, 'magick') === strlen($imageMagickPath) - 6) {
-            $imageMagickPath .= ' ';
-        } else {
+        if (strpos($imageMagickPath, 'magick') !== strlen($imageMagickPath) - 6) {
             $imageMagickPath .= DIRECTORY_SEPARATOR;
         }
         $this->magickPath = $imageMagickPath;
