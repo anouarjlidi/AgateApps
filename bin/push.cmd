@@ -4,8 +4,9 @@ SET mypath=%~dp0
 
 cd "%mypath:~0,-1%/.."
 
-set ssh_remote=agate
-set prod_dir=/var/www/www.studio-agate.com/www
+REM These vars must be set in the dev environment for the project to be deployable.
+set ssh_remote=%AGATE_DEPLOY_REMOTE%
+set prod_dir=%AGATE_DEPLOY_DIR%
 
 @echo on
 
