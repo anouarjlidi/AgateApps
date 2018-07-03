@@ -1,9 +1,13 @@
 /build/
 /composer.phar
 !/docker/
+/node_modules/
+
 dump*.sql
 phpunit.phar
 .env.*
+!.env.dist
+docker-compose.override.yml
 /src/DataFixtures/Internal/*
 !/src/DataFixtures/Internal/.gitkeep
 
@@ -31,7 +35,6 @@ phpunit.phar
 /public/images
 
 # NodeJS components
-/node_modules/
 
 ###> symfony/framework-bundle ###
 /.env
