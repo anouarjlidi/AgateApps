@@ -11,8 +11,8 @@
 
 namespace CorahnRin\Step;
 
+use CorahnRin\Data\Ways;
 use Symfony\Component\HttpFoundation\Response;
-use CorahnRin\Entity\Ways;
 
 class Step08Ways extends AbstractStepAction
 {
@@ -21,7 +21,7 @@ class Step08Ways extends AbstractStepAction
      */
     public function execute(): Response
     {
-        $ways = $this->em->getRepository(\CorahnRin\Entity\Ways::class)->findAll(true);
+        $ways = Ways::ALL;
 
         $waysValues = $this->getCharacterProperty();
 
@@ -42,14 +42,14 @@ class Step08Ways extends AbstractStepAction
                 $value = (int) $value;
 
                 // Make sure every way clearly exists.
-                if (!array_key_exists($id, $ways) && false === $errorWayNotExists) {
+                if (false === $errorWayNotExists && !isset($ways[$id])) {
                     $error             = true;
                     $errorWayNotExists = true;
                     $this->flashMessage('Erreur dans le formulaire. Merci de vérifier les valeurs soumises.');
                 }
 
                 // Make sure values are in proper ranges.
-                if (($value <= 0 || $value > 5) && false === $errorValueNotInRange) {
+                if (false === $errorValueNotInRange && ($value <= 0 || $value > 5)) {
                     $error                = true;
                     $errorValueNotInRange = true;
                     $this->flashMessage('Les voies doivent être comprises entre 1 et 5.');
@@ -104,8 +104,8 @@ class Step08Ways extends AbstractStepAction
     {
         $values = [];
 
-        foreach ($ways as $way) {
-            $values[$way->getId()] = 1;
+        foreach ($ways as $way => $d) {
+            $values[$way] = 1;
         }
 
         return $values;

@@ -16,7 +16,7 @@ root:
 # User
 #
 crowdfunding:
-    resource: '../src/Agate/Controller/Crowdfunding/'
+    resource: '../src/User/Controller/Crowdfunding/'
     type: annotation
 
 user_login_check:
@@ -32,7 +32,7 @@ user_logout:
     requirements: { _locale: '^(?:%locales_regex%)$' }
 
 user_security:
-    resource: '../src/Agate/Controller/User/'
+    resource: '../src/User/Controller/'
     type: annotation
     prefix: '/{_locale}/'
     defaults: { locale: '%locale%' }
@@ -94,6 +94,16 @@ esteren_portal:
     resource: '../src/Esteren/Controller/'
     type: annotation
     host: '%esteren_domains.portal%'
+    prefix: '/{_locale}/'
+    defaults: { locale: '%locale%' }
+    requirements: { _locale: '^(?:%locales_regex%)$' }
+
+#
+# Utils
+#
+utils:
+    resource: '../src/Util/Controller/'
+    type: annotation
     prefix: '/{_locale}/'
     defaults: { locale: '%locale%' }
     requirements: { _locale: '^(?:%locales_regex%)$' }

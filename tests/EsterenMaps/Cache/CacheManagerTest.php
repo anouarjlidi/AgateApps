@@ -11,8 +11,8 @@
 
 namespace Tests\EsterenMaps\Cache;
 
+use DataFixtures\RoutesFixtures;
 use Doctrine\ORM\EntityManagerInterface;
-use EsterenMaps\DataFixtures\ORM\RoutesFixtures;
 use EsterenMaps\Entity\Routes;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpKernel\DataCollector\LoggerDataCollector;

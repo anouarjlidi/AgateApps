@@ -11,32 +11,13 @@
 
 namespace CorahnRin\Data;
 
-final class Orientation implements DataInterface
+final class Orientation
 {
     public const INSTINCTIVE = 'character.orientation.instinctive';
     public const RATIONAL = 'character.orientation.rational';
 
-    /**
-     * Don't allow construction of this class.
-     */
-    private function __construct()
-    {
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function getData()
-    {
-        return [
-            static::INSTINCTIVE => [
-                'name'        => 'Instinctive',
-                'description' => static::INSTINCTIVE,
-            ],
-            static::RATIONAL => [
-                'name'        => 'Rationnelle',
-                'description' => static::RATIONAL,
-            ],
-        ];
-    }
+    public const ALL = [
+        self::INSTINCTIVE => self::INSTINCTIVE.'.description',
+        self::RATIONAL => self::RATIONAL.'.description',
+    ];
 }

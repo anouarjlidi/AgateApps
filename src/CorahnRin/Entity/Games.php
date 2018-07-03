@@ -11,10 +11,10 @@
 
 namespace CorahnRin\Entity;
 
-use Agate\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use User\Entity\User;
 
 /**
  * Games.
@@ -71,7 +71,7 @@ class Games
     /**
      * @var User
      *
-     * @ORM\ManyToOne(targetEntity="Agate\Entity\User")
+     * @ORM\ManyToOne(targetEntity="User\Entity\User")
      * @ORM\JoinColumn(name="game_master_id", nullable=false)
      */
     protected $gameMaster;

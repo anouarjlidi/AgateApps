@@ -16,10 +16,10 @@
     <span id="sum_output" class="btn btn-small {{ total == 15 ? 'green' : 'red' }} lighten-2">{{ total }}</span>
 </div>
 
-{% for id,way in ways_list %}
+{% for way, description in ways_list %}
     <div class="row mb10">
         <div class="col m2">
-            <p>{{ way.name | trans({}, 'corahn_rin') }}</p>
+            <p>{{ way | trans({}, 'corahn_rin') }}</p>
         </div>
         <div class="col m4">
             <div class="input-field inline">
@@ -31,7 +31,7 @@
                     data-ti-increment-min="1"
                     data-ti-increment-max="5"
                     data-ti-increment="-1"
-                    data-ti-target-node="way_{{ id }}"
+                    data-ti-target-node="way_{{ way }}"
                     data-ti-sum-max="15"
                     data-ti-sum-output="sum_output"
                     data-ti-sum-output-html
@@ -40,7 +40,7 @@
                 >&minus;</button>
 
                 {# Input that stores the sum for each way#}
-                <input id="way_{{ id }}" name="ways[{{ id }}]" type="text" class="input_way w50 center" value="{{ ways_values[id] }}" title="{{ way.name | trans({}, 'corahn_rin') }}"/>
+                <input id="way_{{ way }}" name="ways[{{ way }}]" type="text" class="input_way w50 center" value="{{ ways_values[id] }}" title="{{ way | trans({}, 'corahn_rin') }}"/>
 
                 {# "plus" button #}
                 <button
@@ -49,7 +49,7 @@
                     data-ti-increment-min="1"
                     data-ti-increment-max="5"
                     data-ti-increment="1"
-                    data-ti-target-node="way_{{ id }}"
+                    data-ti-target-node="way_{{ way }}"
                     data-ti-sum-max="15"
                     data-ti-sum-output="sum_output"
                     data-ti-sum-output-html
@@ -59,7 +59,7 @@
             </div><!-- /input-group -->
         </div>
         <div class="col m6">
-            <p>{{ way.description | trans({}, 'corahn_rin') | raw }}</p>
+            <p>{{ description | trans({}, 'corahn_rin') | raw }}</p>
         </div>
     </div>
 {% endfor %}

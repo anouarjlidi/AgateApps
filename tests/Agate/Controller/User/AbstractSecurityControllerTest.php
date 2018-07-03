@@ -11,13 +11,12 @@
 
 namespace Tests\Agate\Controller\User;
 
-use Agate\Entity\User;
-use Agate\Repository\UserRepository;
-use Agate\Security\Provider\UsernameOrEmailProvider;
-use Symfony\Component\DomCrawler\Form;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\DomCrawler\Form;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Tests\WebTestCase as PiersTestCase;
+use User\Entity\User;
+use User\Repository\UserRepository;
 
 abstract class AbstractSecurityControllerTest extends WebTestCase
 {
@@ -211,7 +210,7 @@ abstract class AbstractSecurityControllerTest extends WebTestCase
 
         $client    = $this->getClient('portal.esteren.docker');
         $container = $client->getContainer();
-        $user      = $container->get(UsernameOrEmailProvider::class)->loadUserByUsername(static::USER_NAME.$locale);
+        $user      = $container->get(UserRepository::class)->loadUserByUsername(static::USER_NAME.$locale);
         static::setToken($client, $user, $user->getRoles());
 
         $crawler = $client->request('GET', "/$locale/profile/change-password");
@@ -239,7 +238,7 @@ abstract class AbstractSecurityControllerTest extends WebTestCase
         static::assertContains($flashPasswordChanged, $crawler->filter('#layout #flash-messages')->html());
 
         // Now check that new password is correctly saved in database
-        $user    = $container->get(UsernameOrEmailProvider::class)->loadUserByUsername(static::USER_NAME.$locale);
+        $user    = $container->get(UserRepository::class)->loadUserByUsername(static::USER_NAME.$locale);
         $encoder = $container->get(EncoderFactoryInterface::class)->getEncoder($user);
         static::assertTrue($encoder->isPasswordValid($user->getPassword(), 'newPassword', $user->getSalt()));
 
@@ -255,7 +254,7 @@ abstract class AbstractSecurityControllerTest extends WebTestCase
 
         $client    = $this->getClient('portal.esteren.docker');
         $container = $client->getContainer();
-        $user      = $container->get(UsernameOrEmailProvider::class)->loadUserByUsername(static::USER_NAME.$locale);
+        $user      = $container->get(UserRepository::class)->loadUserByUsername(static::USER_NAME.$locale);
         static::setToken($client, $user, $user->getRoles());
 
         $crawler = $client->request('GET', "/$locale/profile");
@@ -291,7 +290,7 @@ abstract class AbstractSecurityControllerTest extends WebTestCase
 
         $client    = $this->getClient('portal.esteren.docker');
         $container = $client->getContainer();
-        $user      = $container->get(UsernameOrEmailProvider::class)->loadUserByUsername(static::USER_NAME_AFTER_UPDATE.$locale);
+        $user      = $container->get(UserRepository::class)->loadUserByUsername(static::USER_NAME_AFTER_UPDATE.$locale);
         static::setToken($client, $user, $user->getRoles());
 
         $crawler = $client->request('GET', "/$locale/resetting/request");

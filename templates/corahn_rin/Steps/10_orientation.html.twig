@@ -7,15 +7,15 @@
 {% endif %}
 
 <div class="row">
-    {% for id, orientation in orientations %}
-        {% if can_be_changed or (not can_be_changed and orientation_value == id) %}
-            <div class="col l6 gen-div-choice{{ not can_be_changed ? '-disabled' }}{{ orientation_value == id ? ' selected' }}"
-                 data-divchoice-value="{{ id }}">
+    {% for orientation, orientation_description in orientations %}
+        {% if can_be_changed or (not can_be_changed and orientation_value == orientation) %}
+            <div class="col l6 gen-div-choice{{ not can_be_changed ? '-disabled' }}{{ orientation_value == orientation ? ' selected' }}"
+                 data-divchoice-value="{{ orientation }}">
                 <article class="{{ can_be_changed ? 'hoverable' }}">
                     <header>
-                        <h3 class="center">{{ orientation.name | trans({}, 'corahn_rin') }}</h3>
+                        <h3 class="center">{{ orientation | trans({}, 'corahn_rin') }}</h3>
                     </header>
-                    <p>{{ orientation.description | trans({}, 'corahn_rin') | raw }}</p>
+                    <p>{{ orientation_description | trans({}, 'corahn_rin') | raw }}</p>
                 </article>
             </div>
         {% endif %}

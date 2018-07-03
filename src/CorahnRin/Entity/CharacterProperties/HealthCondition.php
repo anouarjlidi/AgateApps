@@ -62,6 +62,24 @@ class HealthCondition
         $this->agony    = $agony;
     }
 
+    public function withdrawWounds(int $wounds): void
+    {
+        if ($wounds < 0) {
+            throw new \InvalidArgumentException('You cannot lose a negative amount of wounds.');
+        }
+
+        // TODO
+    }
+
+    public function healWounds(int $wounds): void
+    {
+        if ($wounds < 0) {
+            throw new \InvalidArgumentException('You cannot heal a negative amount of wounds.');
+        }
+
+        // TODO
+    }
+
     /**
      * @return int
      */
@@ -70,123 +88,28 @@ class HealthCondition
         return $this->good + $this->okay + $this->bad + $this->critical + ((int) $this->agony);
     }
 
-    /**
-     * @return int
-     *
-     * @codeCoverageIgnore
-     */
     public function getGood(): int
     {
         return $this->good;
     }
 
-    /**
-     * @param int $good
-     *
-     * @return HealthCondition
-     *
-     * @codeCoverageIgnore
-     */
-    public function setGood(int $good): HealthCondition
-    {
-        $this->good = $good;
-
-        return $this;
-    }
-
-    /**
-     * @return int
-     *
-     * @codeCoverageIgnore
-     */
     public function getOkay(): int
     {
         return $this->okay;
     }
 
-    /**
-     * @param int $okay
-     *
-     * @return HealthCondition
-     *
-     * @codeCoverageIgnore
-     */
-    public function setOkay(int $okay): HealthCondition
-    {
-        $this->okay = $okay;
-
-        return $this;
-    }
-
-    /**
-     * @return int
-     *
-     * @codeCoverageIgnore
-     */
     public function getBad(): int
     {
         return $this->bad;
     }
 
-    /**
-     * @param int $bad
-     *
-     * @return HealthCondition
-     *
-     * @codeCoverageIgnore
-     */
-    public function setBad(int $bad): HealthCondition
-    {
-        $this->bad = $bad;
-
-        return $this;
-    }
-
-    /**
-     * @return int
-     *
-     * @codeCoverageIgnore
-     */
     public function getCritical(): int
     {
         return $this->critical;
     }
 
-    /**
-     * @param int $critical
-     *
-     * @return HealthCondition
-     *
-     * @codeCoverageIgnore
-     */
-    public function setCritical(int $critical): HealthCondition
-    {
-        $this->critical = $critical;
-
-        return $this;
-    }
-
-    /**
-     * @return bool
-     *
-     * @codeCoverageIgnore
-     */
     public function isAgony(): bool
     {
         return $this->agony;
-    }
-
-    /**
-     * @param bool $agony
-     *
-     * @return HealthCondition
-     *
-     * @codeCoverageIgnore
-     */
-    public function setAgony(bool $agony): HealthCondition
-    {
-        $this->agony = $agony;
-
-        return $this;
     }
 }

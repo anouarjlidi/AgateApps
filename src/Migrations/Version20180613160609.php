@@ -15,6 +15,8 @@ final class Version20180613160609 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->skipIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on "mysql".');
 
+        $this->addSql('SET FOREIGN_KEY_CHECKS=0;');
+
         $this->addSql('
         CREATE TABLE `armors` (
           `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -28,7 +30,7 @@ final class Version20180613160609 extends AbstractMigration
           UNIQUE KEY `UNIQ_AFBA56C25E237E06` (`name`),
           KEY `IDX_AFBA56C216A2B381` (`book_id`),
           CONSTRAINT `FK_AFBA56C216A2B381` FOREIGN KEY (`book_id`) REFERENCES `books` (`id`)
-        ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
         ');
 
         $this->addSql('
@@ -72,7 +74,7 @@ final class Version20180613160609 extends AbstractMigration
           UNIQUE KEY `UNIQ_CBC7848D5E237E06` (`name`),
           KEY `IDX_CBC7848D16A2B381` (`book_id`),
           CONSTRAINT `FK_CBC7848D16A2B381` FOREIGN KEY (`book_id`) REFERENCES `books` (`id`)
-        ) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
         ");
 
         $this->addSql('
@@ -82,7 +84,7 @@ final class Version20180613160609 extends AbstractMigration
           `description` longtext COLLATE utf8_unicode_ci,
           PRIMARY KEY (`id`),
           UNIQUE KEY `UNIQ_4A1B2A925E237E06` (`name`)
-        ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
         ');
 
         $this->addSql("
@@ -348,7 +350,7 @@ final class Version20180613160609 extends AbstractMigration
           PRIMARY KEY (`id`),
           KEY `IDX_EC3E3FAD16A2B381` (`book_id`),
           CONSTRAINT `FK_EC3E3FAD16A2B381` FOREIGN KEY (`book_id`) REFERENCES `books` (`id`)
-        ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
         ');
 
         $this->addSql('
@@ -362,7 +364,7 @@ final class Version20180613160609 extends AbstractMigration
           UNIQUE KEY `UNIQ_AD1D5CD85E237E06` (`name`),
           KEY `IDX_AD1D5CD816A2B381` (`book_id`),
           CONSTRAINT `FK_AD1D5CD816A2B381` FOREIGN KEY (`book_id`) REFERENCES `books` (`id`)
-        ) ENGINE=InnoDB AUTO_INCREMENT=110 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
         ');
 
         $this->addSql('
@@ -387,7 +389,7 @@ final class Version20180613160609 extends AbstractMigration
           UNIQUE KEY `UNIQ_A14FE96D5E237E06` (`name`),
           KEY `IDX_A14FE96D16A2B381` (`book_id`),
           CONSTRAINT `FK_A14FE96D16A2B381` FOREIGN KEY (`book_id`) REFERENCES `books` (`id`)
-        ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
         ');
 
         $this->addSql("
@@ -413,7 +415,7 @@ final class Version20180613160609 extends AbstractMigration
           UNIQUE KEY `UNIQ_8C7BBF9D5E237E06` (`name`),
           KEY `IDX_8C7BBF9D8C803113` (`way_id`),
           CONSTRAINT `FK_8C7BBF9D8C803113` FOREIGN KEY (`way_id`) REFERENCES `ways` (`id`)
-        ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
         ');
 
         $this->addSql('
@@ -555,7 +557,7 @@ final class Version20180613160609 extends AbstractMigration
           `description` longtext COLLATE utf8_unicode_ci,
           PRIMARY KEY (`id`),
           UNIQUE KEY `UNIQ_7252313A5E237E06` (`name`)
-        ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
         ');
 
         $this->addSql("
@@ -578,7 +580,7 @@ final class Version20180613160609 extends AbstractMigration
           UNIQUE KEY `UNIQ_C560D76192FC23A8` (`username_canonical`),
           UNIQUE KEY `UNIQ_C560D761A0D96FBF` (`email_canonical`),
           UNIQUE KEY `UNIQ_C560D761C05FB297` (`confirmation_token`)
-        ) ENGINE=InnoDB AUTO_INCREMENT=437 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
         ");
 
         $this->addSql('
@@ -610,7 +612,7 @@ final class Version20180613160609 extends AbstractMigration
           KEY `IDX_18F4720A115F0EE5` (`domain_id`),
           CONSTRAINT `FK_18F4720A115F0EE5` FOREIGN KEY (`domain_id`) REFERENCES `domains` (`id`),
           CONSTRAINT `FK_18F4720A16A2B381` FOREIGN KEY (`book_id`) REFERENCES `books` (`id`)
-        ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
         ');
 
         $this->addSql("
@@ -627,7 +629,7 @@ final class Version20180613160609 extends AbstractMigration
           KEY `IDX_A8936DC5B05C1029` (`domain_primary_id`),
           CONSTRAINT `FK_A8936DC516A2B381` FOREIGN KEY (`book_id`) REFERENCES `books` (`id`),
           CONSTRAINT `FK_A8936DC5B05C1029` FOREIGN KEY (`domain_primary_id`) REFERENCES `domains` (`id`)
-        ) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
         ");
 
         $this->addSql('
@@ -691,7 +693,7 @@ final class Version20180613160609 extends AbstractMigration
           PRIMARY KEY (`id`),
           UNIQUE KEY `UNIQ_472E08A55E237E06` (`name`),
           UNIQUE KEY `UNIQ_472E08A5DF2B4115` (`name_slug`)
-        ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
         ");
 
         $this->addSql('
@@ -706,7 +708,7 @@ final class Version20180613160609 extends AbstractMigration
           UNIQUE KEY `UNIQ_354BB9A75E237E06` (`name`),
           KEY `IDX_354BB9A716A2B381` (`book_id`),
           CONSTRAINT `FK_354BB9A716A2B381` FOREIGN KEY (`book_id`) REFERENCES `books` (`id`)
-        ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
         ');
 
         $this->addSql('
@@ -741,7 +743,7 @@ final class Version20180613160609 extends AbstractMigration
           CONSTRAINT `FK_33F679DD4448F8DA` FOREIGN KEY (`faction_id`) REFERENCES `maps_factions` (`id`),
           CONSTRAINT `FK_33F679DD53C55F64` FOREIGN KEY (`map_id`) REFERENCES `maps` (`id`),
           CONSTRAINT `FK_33F679DDBFC01D99` FOREIGN KEY (`marker_type_id`) REFERENCES `maps_markers_types` (`id`)
-        ) ENGINE=InnoDB AUTO_INCREMENT=178 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
         ");
 
         $this->addSql('
@@ -758,7 +760,7 @@ final class Version20180613160609 extends AbstractMigration
           `updated_at` datetime NOT NULL,
           PRIMARY KEY (`id`),
           UNIQUE KEY `UNIQ_C4AFA515E237E06` (`name`)
-        ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
         ');
 
         $this->addSql('
@@ -810,7 +812,7 @@ final class Version20180613160609 extends AbstractMigration
           CONSTRAINT `FK_4A14AA75476289B` FOREIGN KEY (`marker_end_id`) REFERENCES `maps_markers` (`id`),
           CONSTRAINT `FK_4A14AA7553C55F64` FOREIGN KEY (`map_id`) REFERENCES `maps` (`id`),
           CONSTRAINT `FK_4A14AA7582929C14` FOREIGN KEY (`marker_start_id`) REFERENCES `maps_markers` (`id`)
-        ) ENGINE=InnoDB AUTO_INCREMENT=243 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
         ");
 
         $this->addSql("
@@ -827,7 +829,7 @@ final class Version20180613160609 extends AbstractMigration
           KEY `IDX_DC8B306C519B4C62` (`transport_type_id`),
           CONSTRAINT `FK_DC8B306C3D1FD10B` FOREIGN KEY (`route_type_id`) REFERENCES `maps_routes_types` (`id`),
           CONSTRAINT `FK_DC8B306C519B4C62` FOREIGN KEY (`transport_type_id`) REFERENCES `maps_transports_types` (`id`)
-        ) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
         ");
 
         $this->addSql('
@@ -840,7 +842,7 @@ final class Version20180613160609 extends AbstractMigration
           `updated_at` datetime NOT NULL,
           PRIMARY KEY (`id`),
           UNIQUE KEY `UNIQ_1006B6375E237E06` (`name`)
-        ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
         ');
 
         $this->addSql('
@@ -855,7 +857,7 @@ final class Version20180613160609 extends AbstractMigration
           PRIMARY KEY (`id`),
           UNIQUE KEY `UNIQ_937FC7725E237E06` (`name`),
           UNIQUE KEY `UNIQ_937FC772989D9B62` (`slug`)
-        ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
         ');
 
         $this->addSql('
@@ -888,7 +890,7 @@ final class Version20180613160609 extends AbstractMigration
           CONSTRAINT `FK_436BD5204448F8DA` FOREIGN KEY (`faction_id`) REFERENCES `maps_factions` (`id`),
           CONSTRAINT `FK_436BD52053C55F64` FOREIGN KEY (`map_id`) REFERENCES `maps` (`id`),
           CONSTRAINT `FK_436BD5207B788FAB` FOREIGN KEY (`zone_type_id`) REFERENCES `maps_zones_types` (`id`)
-        ) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
         ');
 
         $this->addSql('
@@ -904,13 +906,6 @@ final class Version20180613160609 extends AbstractMigration
           UNIQUE KEY `UNIQ_B4AD3285E237E06` (`name`),
           KEY `IDX_B4AD328727ACA70` (`parent_id`),
           CONSTRAINT `FK_B4AD328727ACA70` FOREIGN KEY (`parent_id`) REFERENCES `maps_zones_types` (`id`)
-        ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-        ');
-
-        $this->addSql('
-        CREATE TABLE `migration_versions` (
-          `version` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-          PRIMARY KEY (`version`)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
         ');
 
@@ -995,7 +990,7 @@ final class Version20180613160609 extends AbstractMigration
           KEY `IDX_C0E694ED727ACA70` (`parent_id`),
           CONSTRAINT `FK_C0E694ED12469DE2` FOREIGN KEY (`category_id`) REFERENCES `orbitale_cms_categories` (`id`),
           CONSTRAINT `FK_C0E694ED727ACA70` FOREIGN KEY (`parent_id`) REFERENCES `orbitale_cms_pages` (`id`)
-        ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
         ");
 
         $this->addSql('
@@ -1007,7 +1002,7 @@ final class Version20180613160609 extends AbstractMigration
           PRIMARY KEY (`id`),
           KEY `IDX_C92B5C9C16A2B381` (`book_id`),
           CONSTRAINT `FK_C92B5C9C16A2B381` FOREIGN KEY (`book_id`) REFERENCES `books` (`id`)
-        ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
         ');
 
         $this->addSql('
@@ -1024,7 +1019,7 @@ final class Version20180613160609 extends AbstractMigration
           `updated_at` datetime NOT NULL,
           PRIMARY KEY (`id`),
           UNIQUE KEY `portal_and_locale` (`portal`,`locale`)
-        ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
         ');
 
         $this->addSql('
@@ -1089,7 +1084,7 @@ final class Version20180613160609 extends AbstractMigration
           UNIQUE KEY `UNIQ_6B3C36575E237E06` (`name`),
           KEY `IDX_6B3C365716A2B381` (`book_id`),
           CONSTRAINT `FK_6B3C365716A2B381` FOREIGN KEY (`book_id`) REFERENCES `books` (`id`)
-        ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
         ');
 
         $this->addSql('
@@ -1099,7 +1094,7 @@ final class Version20180613160609 extends AbstractMigration
           `description` longtext COLLATE utf8_unicode_ci,
           PRIMARY KEY (`id`),
           UNIQUE KEY `UNIQ_A7DBAD0D5E237E06` (`name`)
-        ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
         ');
 
         $this->addSql('
@@ -1129,7 +1124,7 @@ final class Version20180613160609 extends AbstractMigration
           KEY `IDX_E4A0A16616A2B381` (`book_id`),
           CONSTRAINT `FK_E4A0A16616A2B381` FOREIGN KEY (`book_id`) REFERENCES `books` (`id`),
           CONSTRAINT `FK_E4A0A1668C803113` FOREIGN KEY (`way_id`) REFERENCES `ways` (`id`)
-        ) ENGINE=InnoDB AUTO_INCREMENT=95 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
         ');
 
         $this->addSql('
@@ -1143,7 +1138,7 @@ final class Version20180613160609 extends AbstractMigration
           UNIQUE KEY `UNIQ_A94804173EE4B093` (`short_name`),
           UNIQUE KEY `UNIQ_A94804175E237E06` (`name`),
           UNIQUE KEY `UNIQ_A94804179FD0DEA3` (`fault`)
-        ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
         ');
 
         $this->addSql('
@@ -1158,10 +1153,10 @@ final class Version20180613160609 extends AbstractMigration
           `weapon_range` smallint(6) NOT NULL,
           PRIMARY KEY (`id`),
           UNIQUE KEY `UNIQ_520EBBE15E237E06` (`name`)
-        ) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
         ');
 
-
+        $this->addSql('SET FOREIGN_KEY_CHECKS=1;');
     }
 
     public function down(Schema $schema) : void

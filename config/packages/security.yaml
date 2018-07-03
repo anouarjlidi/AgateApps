@@ -46,7 +46,7 @@ security:
     # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
         user_provider:
-            id: Agate\Security\Provider\UsernameOrEmailProvider
+            id: User\Repository\UserRepository
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -59,6 +59,7 @@ security:
         main:
             pattern: ^/
             anonymous: ~
+            provider: user_provider
             remember_me:
                 secret: '%env(APP_SECRET)%'
                 path: /
@@ -69,7 +70,7 @@ security:
                 target: root
             guard:
                 authenticators:
-                    - Agate\Security\FormLoginAuthenticator
+                    - User\Security\FormLoginAuthenticator
 
     # with these settings you can restrict or allow access for different parts
     # of your application based on roles, ip, host or methods

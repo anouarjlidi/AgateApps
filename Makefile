@@ -23,7 +23,7 @@ install: .env build node_modules start vendor db fixtures assets map-tiles
 .PHONY: install
 
 build: ## Build the Docker images
-	@$(DOCKER_COMPOSE) pull --parallel --quiet --ignore-pull-failures 2> /dev/null
+	@$(DOCKER_COMPOSE) pull --parallel --ignore-pull-failures 2> /dev/null
 	$(DOCKER_COMPOSE) build --pull --force-rm --no-cache --compress
 .PHONY: build
 
@@ -56,7 +56,7 @@ clean: kill
 
 db: ## Reset the database
 db:
-	-$(SYMFONY) doctrine:database:drop --if-exists --force --quiet
+	-$(SYMFONY) doctrine:database:drop --if-exists --force
 	-$(SYMFONY) doctrine:database:create --if-not-exists
 	-$(SYMFONY) doctrine:migrations:migrate --no-interaction
 .PHONY: db

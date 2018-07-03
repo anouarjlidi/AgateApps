@@ -11,6 +11,7 @@
 
 namespace CorahnRin\Entity;
 
+use CorahnRin\Data\Ways;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -30,10 +31,10 @@ class DisordersWays
     protected $disorder;
 
     /**
-     * @var Ways
+     * @var string
      *
      * @ORM\Id()
-     * @ORM\ManyToOne(targetEntity="Ways")
+     * @ORM\Column(name="way", type="string")
      */
     protected $way;
 
@@ -46,18 +47,9 @@ class DisordersWays
 
     public function __toString()
     {
-        return $this->disorder->getName().' - '.$this->way->getName();
+        return $this->disorder->getName().' - '.$this->way;
     }
 
-    /**
-     * Set disorder.
-     *
-     * @param Disorders $disorder
-     *
-     * @return DisordersWays
-     *
-     * @codeCoverageIgnore
-     */
     public function setDisorder(Disorders $disorder)
     {
         $this->disorder = $disorder;
@@ -65,69 +57,39 @@ class DisordersWays
         return $this;
     }
 
-    /**
-     * Get disorder.
-     *
-     * @return Disorders
-     *
-     * @codeCoverageIgnore
-     */
     public function getDisorder()
     {
         return $this->disorder;
     }
 
-    /**
-     * Set way.
-     *
-     * @param Ways $way
-     *
-     * @return DisordersWays
-     *
-     * @codeCoverageIgnore
-     */
-    public function setWay(Ways $way)
+    public function setWay(string $way)
     {
+        Ways::validateWay($way);
+
         $this->way = $way;
 
         return $this;
     }
 
-    /**
-     * Get way.
-     *
-     * @return Ways
-     *
-     * @codeCoverageIgnore
-     */
-    public function getWay()
+    public function getWay(): string
     {
         return $this->way;
     }
 
-    /**
-     * Set isMajor.
-     *
-     * @param bool $major
-     *
-     * @return DisordersWays
-     *
-     * @codeCoverageIgnore
-     */
-    public function setMajor($major)
+    public function setMajor(bool $major)
     {
         $this->major = $major;
 
         return $this;
     }
 
-    /**
-     * Get isMajor.
-     *
-     * @return bool
-     */
-    public function isMajor()
+    public function isMajor(): bool
     {
         return $this->major;
+    }
+
+    public function isMinor(): bool
+    {
+        return !$this->major;
     }
 }

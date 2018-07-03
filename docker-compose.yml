@@ -36,13 +36,13 @@ services:
             - ./:/srv/
 
     db:
-        image: 'mariadb:10.1'
+        image: 'mysql:5.7'
         environment:
             - MYSQL_ROOT_PASSWORD=agate_portal
             - MYSQL_DATABASE=agate_portal
 
     db_legacy:
-        image: 'mariadb:10.1'
+        image: 'mysql:5.7'
         environment:
             - MYSQL_ROOT_PASSWORD=esteren_legacy
             - MYSQL_DATABASE=esteren_legacy

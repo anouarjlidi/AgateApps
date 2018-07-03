@@ -89,7 +89,7 @@ class MapApi
         }
 
         foreach ($data['map']['zones'] as &$zone) {
-            $zone['coordinates'] = $this->filterCoordinates(json_decode($zone['coordinates'], true), $zone);
+            $zone['coordinates'] = $this->filterCoordinates(json_decode($zone['coordinates'], true));
         }
 
         foreach ($data['map']['routes'] as &$route) {
@@ -107,8 +107,12 @@ class MapApi
         return $data;
     }
 
-    private function filterCoordinates($coordinates): array
+    private function filterCoordinates(?array $coordinates): array
     {
+        if (null === $coordinates) {
+            return [];
+        }
+
         foreach ($coordinates as &$coordinate) {
             $coordinate['lat'] = (float) $coordinate['lat'];
             $coordinate['lng'] = (float) $coordinate['lng'];

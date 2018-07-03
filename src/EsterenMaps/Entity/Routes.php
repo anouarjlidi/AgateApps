@@ -11,10 +11,10 @@
 
 namespace EsterenMaps\Entity;
 
-use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 use EsterenMaps\Cache\EntityToClearInterface;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Routes.
@@ -253,8 +253,14 @@ class Routes implements EntityToClearInterface, \JsonSerializable
         return $this;
     }
 
-    public function setCoordinates(?string $coordinates): self
+    public function setCoordinates(string $coordinates): self
     {
+        @json_decode($coordinates, true);
+
+        if (JSON_ERROR_NONE !== $code = json_last_error()) {
+            throw new \InvalidArgumentException($code.':'.json_last_error_msg());
+        }
+
         $this->coordinates = $coordinates;
 
         $this->calcDistance();

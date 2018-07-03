@@ -90,12 +90,11 @@ class TraitsRepository extends ServiceEntityRepository
             ->createQueryBuilder()
             ->select('t')
             ->from($this->_entityName, 't')
-            ->leftJoin('t.way', 'w')
             ->addSelect('w')
         ;
         foreach ($ways as $id => $value) {
             if (!is_numeric($id) || !is_numeric($value)) {
-                throw new \Exception('Error in ways values. Must be equivalent to this : array( [WAY_ID] => [WAY_VALUE] )');
+                throw new \InvalidArgumentException('Error in ways values. Must be equivalent to this : array( [WAY_ID] => [WAY_VALUE] )');
             }
             if ($id >= 4 || $id <= 2) {
                 $qb->orWhere('w.id = :way'.$id.' AND t.major = :way'.$id.'major')

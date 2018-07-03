@@ -11,24 +11,17 @@
 
 namespace CorahnRin\Data;
 
-final class ItemAvailability implements DataInterface
+final class ItemAvailability
 {
     public const COMMON      = 'CO';
     public const FREQUENT    = 'FR';
     public const RARE        = 'RA';
     public const EXCEPTIONAL = 'EX';
 
-    private function __construct()
-    {
-    }
-
-    public static function getData()
-    {
-        return [
-            static::COMMON      => 'availability.common',
-            static::FREQUENT    => 'availability.frequent',
-            static::RARE        => 'availability.rare',
-            static::EXCEPTIONAL => 'availability.exceptional',
-        ];
-    }
+    public const ALL = [
+        self::COMMON      => 'availability.common',
+        self::FREQUENT    => 'availability.frequent',
+        self::RARE        => 'availability.rare',
+        self::EXCEPTIONAL => 'availability.exceptional',
+    ];
 }

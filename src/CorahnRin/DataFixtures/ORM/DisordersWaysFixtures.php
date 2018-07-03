@@ -11,6 +11,7 @@
 
 namespace CorahnRin\DataFixtures\ORM;
 
+use CorahnRin\Data\Ways;
 use CorahnRin\Entity\DisordersWays;
 use Doctrine\Bundle\FixturesBundle\ORMFixtureInterface;
 use Orbitale\Component\DoctrineTools\AbstractFixture;
@@ -47,110 +48,110 @@ class DisordersWaysFixtures extends AbstractFixture implements ORMFixtureInterfa
             // 1 - Frénésie
             [
                 'disorder' => $this->getReference('corahnrin-disorder-1'),
-                'way'      => $this->getReference('corahnrin-way-1'),
+                'way'      => Ways::COMBATIVENESS,
                 'major'    => true,
             ],
 
             // 2 - Exaltation
             [
                 'disorder' => $this->getReference('corahnrin-disorder-2'),
-                'way'      => $this->getReference('corahnrin-way-1'),
+                'way'      => Ways::COMBATIVENESS,
                 'major'    => true,
             ],
             [
                 'disorder' => $this->getReference('corahnrin-disorder-2'),
-                'way'      => $this->getReference('corahnrin-way-5'),
+                'way'      => Ways::CONVICTION,
                 'major'    => false,
             ],
 
             // 3 - Mélancolie
             [
                 'disorder' => $this->getReference('corahnrin-disorder-3'),
-                'way'      => $this->getReference('corahnrin-way-5'),
+                'way'      => Ways::CONVICTION,
                 'major'    => true,
             ],
             [
                 'disorder' => $this->getReference('corahnrin-disorder-3'),
-                'way'      => $this->getReference('corahnrin-way-1'),
+                'way'      => Ways::COMBATIVENESS,
                 'major'    => false,
             ],
             [
                 'disorder' => $this->getReference('corahnrin-disorder-3'),
-                'way'      => $this->getReference('corahnrin-way-4'),
+                'way'      => Ways::REASON,
                 'major'    => false,
             ],
 
             // 4 - Hallucination
             [
                 'disorder' => $this->getReference('corahnrin-disorder-4'),
-                'way'      => $this->getReference('corahnrin-way-2'),
+                'way'      => Ways::CREATIVITY,
                 'major'    => true,
             ],
             [
                 'disorder' => $this->getReference('corahnrin-disorder-4'),
-                'way'      => $this->getReference('corahnrin-way-3'),
+                'way'      => Ways::EMPATHY,
                 'major'    => true,
             ],
 
             // 5 - Confusion mentale
             [
                 'disorder' => $this->getReference('corahnrin-disorder-5'),
-                'way'      => $this->getReference('corahnrin-way-2'),
+                'way'      => Ways::CREATIVITY,
                 'major'    => true,
             ],
             [
                 'disorder' => $this->getReference('corahnrin-disorder-5'),
-                'way'      => $this->getReference('corahnrin-way-4'),
+                'way'      => Ways::REASON,
                 'major'    => false,
             ],
 
             // 6 - Mimétisme
             [
                 'disorder' => $this->getReference('corahnrin-disorder-6'),
-                'way'      => $this->getReference('corahnrin-way-2'),
+                'way'      => Ways::CREATIVITY,
                 'major'    => false,
             ],
 
             // 7 - Obsession
             [
                 'disorder' => $this->getReference('corahnrin-disorder-7'),
-                'way'      => $this->getReference('corahnrin-way-4'),
+                'way'      => Ways::REASON,
                 'major'    => true,
             ],
             [
                 'disorder' => $this->getReference('corahnrin-disorder-7'),
-                'way'      => $this->getReference('corahnrin-way-2'),
+                'way'      => Ways::CREATIVITY,
                 'major'    => false,
             ],
 
             // 8 - Hystérie
             [
                 'disorder' => $this->getReference('corahnrin-disorder-8'),
-                'way'      => $this->getReference('corahnrin-way-3'),
+                'way'      => Ways::EMPATHY,
                 'major'    => true,
             ],
 
             // 9 - Mysticisme
             [
                 'disorder' => $this->getReference('corahnrin-disorder-9'),
-                'way'      => $this->getReference('corahnrin-way-3'),
+                'way'      => Ways::EMPATHY,
                 'major'    => true,
             ],
             [
                 'disorder' => $this->getReference('corahnrin-disorder-9'),
-                'way'      => $this->getReference('corahnrin-way-5'),
+                'way'      => Ways::CONVICTION,
                 'major'    => true,
             ],
 
             // 10 - Paranoïa
             [
                 'disorder' => $this->getReference('corahnrin-disorder-10'),
-                'way'      => $this->getReference('corahnrin-way-4'),
+                'way'      => Ways::REASON,
                 'major'    => true,
             ],
             [
                 'disorder' => $this->getReference('corahnrin-disorder-10'),
-                'way'      => $this->getReference('corahnrin-way-3'),
+                'way'      => Ways::EMPATHY,
                 'major'    => false,
             ],
         ];

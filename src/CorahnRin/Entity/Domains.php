@@ -11,6 +11,7 @@
 
 namespace CorahnRin\Entity;
 
+use CorahnRin\Data\Ways;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -46,9 +47,9 @@ class Domains
     protected $description;
 
     /**
-     * @var Ways
+     * @var string
      *
-     * @ORM\ManyToOne(targetEntity="Ways")
+     * @ORM\Column(name="way", type="string")
      */
     protected $way;
 
@@ -64,33 +65,16 @@ class Domains
         return $this->name;
     }
 
-    /**
-     * Constructor.
-     */
     public function __construct()
     {
         $this->disciplines = new ArrayCollection();
     }
 
-    /**
-     * Get id.
-     *
-     * @return int
-     *
-     * @codeCoverageIgnore
-     */
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * @param int $id
-     *
-     * @return $this
-     *
-     * @codeCoverageIgnore
-     */
     public function setId($id)
     {
         $this->id = $id;
@@ -98,15 +82,6 @@ class Domains
         return $this;
     }
 
-    /**
-     * Set name.
-     *
-     * @param string $name
-     *
-     * @return Domains
-     *
-     * @codeCoverageIgnore
-     */
     public function setName($name)
     {
         $this->name = $name;
@@ -114,27 +89,11 @@ class Domains
         return $this;
     }
 
-    /**
-     * Get name.
-     *
-     * @return string
-     *
-     * @codeCoverageIgnore
-     */
     public function getName()
     {
         return $this->name;
     }
 
-    /**
-     * Set description.
-     *
-     * @param string $description
-     *
-     * @return Domains
-     *
-     * @codeCoverageIgnore
-     */
     public function setDescription($description)
     {
         $this->description = $description;
@@ -142,53 +101,25 @@ class Domains
         return $this;
     }
 
-    /**
-     * Get description.
-     *
-     * @return string
-     *
-     * @codeCoverageIgnore
-     */
     public function getDescription()
     {
         return $this->description;
     }
 
-    /**
-     * Set way.
-     *
-     * @param Ways $way
-     *
-     * @return Domains
-     *
-     * @codeCoverageIgnore
-     */
-    public function setWay(Ways $way = null)
+    public function setWay(string $way)
     {
+        Ways::validateWay($way);
+
         $this->way = $way;
 
         return $this;
     }
 
-    /**
-     * Get way.
-     *
-     * @return Ways
-     *
-     * @codeCoverageIgnore
-     */
     public function getWay()
     {
         return $this->way;
     }
 
-    /**
-     * Add disciplines.
-     *
-     * @param Disciplines $disciplines
-     *
-     * @return Domains
-     */
     public function addDiscipline(Disciplines $disciplines)
     {
         $this->disciplines[] = $disciplines;
@@ -196,34 +127,17 @@ class Domains
         return $this;
     }
 
-    /**
-     * Remove disciplines.
-     *
-     * @param Disciplines $disciplines
-     */
     public function removeDiscipline(Disciplines $disciplines)
     {
         $this->disciplines->removeElement($disciplines);
     }
 
-    /**
-     * Get disciplines.
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     *
-     * @codeCoverageIgnore
-     */
     public function getDisciplines()
     {
         return $this->disciplines;
     }
 
-    /**
-     * @param Disciplines $discipline
-     *
-     * @return bool
-     */
-    public function hasDiscipline(Disciplines $discipline)
+    public function hasDiscipline(Disciplines $discipline): bool
     {
         $id = $discipline->getId();
 
