@@ -12,12 +12,13 @@
 namespace DataFixtures\CorahnRin;
 
 use CorahnRin\Entity\Jobs;
+use DataFixtures\FixtureMetadataIdGeneratorTrait;
 use Doctrine\Bundle\FixturesBundle\ORMFixtureInterface;
 use Orbitale\Component\DoctrineTools\AbstractFixture;
 
 class JobsFixtures extends AbstractFixture implements ORMFixtureInterface
 {
-    use DataFixtures\FixtureMetadataIdGeneratorTrait;
+    use FixtureMetadataIdGeneratorTrait;
 
     /**
      * Returns the class of the entity you're managing.

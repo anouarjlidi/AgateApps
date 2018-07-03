@@ -32,7 +32,6 @@ use CorahnRin\Entity\Peoples;
 use CorahnRin\Entity\Setbacks;
 use CorahnRin\Entity\SocialClasses;
 use CorahnRin\Entity\Traits;
-use CorahnRin\Entity\Ways;
 use CorahnRin\Entity\Weapons;
 use CorahnRin\Exception\CharactersException;
 use Doctrine\Common\Persistence\ObjectManager;

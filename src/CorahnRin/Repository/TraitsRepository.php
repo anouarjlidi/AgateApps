@@ -11,8 +11,8 @@
 
 namespace CorahnRin\Repository;
 
+use CorahnRin\Data\Ways;
 use CorahnRin\Entity\Traits;
-use CorahnRin\Entity\Ways;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Orbitale\Component\DoctrineTools\EntityRepositoryHelperTrait;
 use Symfony\Bridge\Doctrine\RegistryInterface;
