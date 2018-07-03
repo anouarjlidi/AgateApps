@@ -11,6 +11,8 @@
 
 namespace CorahnRin\Data;
 
+use CorahnRin\Exception\InvalidWayException;
+
 final class Ways
 {
     public const COMBATIVENESS = 'ways.combativeness';
@@ -30,10 +32,7 @@ final class Ways
     public static function validateWay(string $way): void
     {
         if (!isset(static::ALL[$way])) {
-            throw new \InvalidArgumentException(sprintf(
-                'Provided way "%s" is not a valid way. Possible values: %s',
-                $way, implode(', ', array_keys(static::ALL))
-            ));
+            throw new InvalidWayException($way);
         }
     }
 }
