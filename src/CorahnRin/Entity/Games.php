@@ -71,7 +71,7 @@ class Games
     /**
      * @var User
      *
-     * @ORM\ManyToOne(targetEntity="Agate\Entity\User")
+     * @ORM\ManyToOne(targetEntity="User\Entity\User")
      * @ORM\JoinColumn(name="game_master_id", nullable=false)
      */
     protected $gameMaster;

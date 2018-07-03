@@ -462,7 +462,7 @@ class Characters extends BaseCharacter
 
     /**
      * @var \User\Entity\User
-     * @ORM\ManyToOne(targetEntity="Agate\Entity\User")
+     * @ORM\ManyToOne(targetEntity="User\Entity\User")
      */
     protected $user;
 
