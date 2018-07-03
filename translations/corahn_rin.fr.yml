@@ -151,10 +151,12 @@ menu:
 
 character:
     orientation:
-        instinctive: |
+        instinctive: Instinctive
+        rational: Rationnelle
+        instinctive.description: |
             L'Instinct concerne toute l'énergie pulsionnelle d'un être vivant. Cet Aspect regroupe notamment les
             instincts de survie et d'autoconservation ainsi que tout ce qui a trait à la sexualité.
-        rational: |
+        rational.description: |
             Cet Aspect rend compte de l'importance de la rationalité pour le PJ, de son ancrage dans la réalité,
             de sa capacité de logique et de réflexion, et de sa solidité.
         instinctive_title: Instinctive
