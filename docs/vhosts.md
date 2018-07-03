@@ -1,10 +1,10 @@
 
 #### Documentation index
 
-* [Documentation](../README.md)
+* **[README](../README.md)**
 * [Routing](routing.md)
 * [General technical informations](technical.md)
-* [Set up a vhost](vhosts.md)
+* Set up a vhost
 * [API / webservices](api.md)
 * [Esteren Maps library](maps.md)
 * [Corahn Rin / Character manager](character_manager.md)
@@ -14,7 +14,10 @@
 
 You can set up vhosts in different configuration.
 
-Mostly it can run on Apache without any issue, but can also work on Nginx.
+The project should work in both Apache and Nginx.
+
+* [Apache vhost](#apache-vhost)
+* [Nginx vhost](#nginx-vhost)
 
 # Apache vhost
 
@@ -25,8 +28,7 @@ performances reasons.
 <VirtualHost *:80>
 
     # Change domain names if needed
-    ServerName            esteren.docker
-    ServerAlias       www.esteren.docker
+    ServerName        www.esteren.docker
     ServerAlias       api.esteren.docker
     ServerAlias      maps.esteren.docker
     ServerAlias      back.esteren.docker
@@ -37,6 +39,9 @@ performances reasons.
     ServerAlias   www.vermine2047.docker
 
     DocumentRoot /var/www/agate_apps/public
+
+    ErrorLog /var/www/agate_apps/var/log/apache_error.log
+    CustomLog /var/www/agate_apps/var/log/apache_access.log combined
 
     <Directory /var/www/agate_apps/public>
 
@@ -53,37 +58,36 @@ performances reasons.
         ##### start symfony conf
 
         # Here starts Symfony's .htaccess config.
-        # Put it in the vhost for maximum performance.
-        # > https://github.com/symfony/symfony-standard/blob/2.8/web/.htaccess
+        # Comments were ripped off this file, so check the original one if you need to know how it works:
+        # > https://github.com/symfony/recipes-contrib/blob/master/symfony/apache-pack/1.0/public/.htaccess
         DirectoryIndex index.php
         <IfModule mod_negotiation.c>
             Options -MultiViews
         </IfModule>
         <IfModule mod_rewrite.c>
             RewriteEngine On
-
             RewriteCond %{REQUEST_URI}::$1 ^(/.+)/(.*)::\2$
             RewriteRule ^(.*) - [E=BASE:%1]
 
             RewriteCond %{HTTP:Authorization} .
-            RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+            RewriteRule ^ - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 
             RewriteCond %{ENV:REDIRECT_STATUS} ^$
-            RewriteRule ^index\.php(/(.*)|$) %{ENV:BASE}/$2 [R=302,L]
+            RewriteRule ^index\.php(?:/(.*)|$) %{ENV:BASE}/$1 [R=301,L]
 
             RewriteCond %{REQUEST_FILENAME} -f
-            RewriteRule .? - [L]
+            RewriteRule ^ - [L]
 
             # Avoids getting 404 errors for missing map tiles.
             RewriteCond %{REQUEST_URI} maps_tiles/ [NC]
             RewriteCond %{REQUEST_FILENAME} !-f
             RewriteRule .? %{ENV:BASE}/maps_tiles/empty.jpg [L,R=302]
 
-            RewriteRule .? %{ENV:BASE}/index.php [L]
+            RewriteRule ^ %{ENV:BASE}/index.php [L]
         </IfModule>
         <IfModule !mod_rewrite.c>
             <IfModule mod_alias.c>
-                RedirectMatch 302 ^/$ /index.php/
+                RedirectMatch 307 ^/$ /index.php/
             </IfModule>
         </IfModule>
 
@@ -92,10 +96,6 @@ performances reasons.
 
     </Directory>
 
-    # Logs are added automatically to Symfony's log dir.
-    ErrorLog /var/www/agate_apps/var/log/apache_error.log
-    CustomLog /var/www/agate_apps/var/log/apache_access.log combined
-
 </VirtualHost>
 ```
 
@@ -103,7 +103,7 @@ performances reasons.
 
 First you need to set up your php-fpm configuration and make it work.
 
-[Check the reference](http://symfony.com/doc/current/cookbook/configuration/web_server_configuration.html#nginx) on
+[Check the reference](http://symfony.com/doc/current/setup/web_server_configuration.html#nginx) on
 Symfony documentation if you need.
 
 **Note:** be sure that the `fastcgi_pass` points to the right socket/host.
@@ -128,6 +128,9 @@ server {
     # Change the directory to what you need.
     # Also change logs dir at the bottom of this file.
     root /var/www/agate_apps/public;
+
+    error_log /var/www/agate_apps/var/logs/nginx_error.log;
+    access_log /var/www/agate_apps/var/logs/nginx_access.log;
     
     # Security headers.
     add_header X-Xss-Protection "1; mode=block";
@@ -165,8 +168,7 @@ server {
         rewrite ^(.*)$ /index.php/$1 last;
     }
 
-    # Redirect everything to Heroku.
-    # In development, replace this with your php-fpm/php-cgi proxy.
+    # Redirect everything else to the php-fpm/php-cgi proxy
     location ~ ^/index\.php(/|$) {
         fastcgi_pass unix:/var/run/php7.1-fpm.sock;
         fastcgi_split_path_info ^(.+\.php)(/.*)$;
@@ -181,9 +183,5 @@ server {
     location ~ \.php$ {
         return 404;
     }
-
-    # Heroku needs to use stderr, but in dev you can switch to a log file.
-    error_log /var/www/agate_apps/var/logs/nginx_error.log;
-    access_log /var/www/agate_apps/var/logs/nginx_access.log;
 }
 ```

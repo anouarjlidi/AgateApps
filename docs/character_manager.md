@@ -1,13 +1,13 @@
 
 #### Documentation index
 
-* [Documentation](../README.md)
+* **[README](../README.md)**
 * [Routing](routing.md)
 * [General technical informations](technical.md)
 * [Set up a vhost](vhosts.md)
 * [API / webservices](api.md)
 * [Esteren Maps library](maps.md)
-* [Corahn Rin / Character manager](character_manager.md)
+* Corahn Rin / Character manager
 * [Deploy](deploy.md)
 
 # Corahn Rin / Character manager
@@ -34,3 +34,5 @@ They all have their associated views in the `templates/corahn_rin/Steps/` direct
 that is helpful to show the menu and some details in all steps.
 
 Their assets are stored in `assets/corahn_rin/generator/`, containing both CSS and JS files, and maybe some images.
+
+And the package configuration is in [pierstoval_character_manager.yaml](../config/packages/pierstoval_character_manager.yaml).

@@ -1,8 +1,8 @@
 
 #### Documentation index
 
-* [Documentation](../README.md)
-* [Routing](routing.md)
+* **[README](../README.md)**
+* Routing
 * [General technical informations](technical.md)
 * [Set up a vhost](vhosts.md)
 * [API / webservices](api.md)

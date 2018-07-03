@@ -29,6 +29,7 @@ It contains multiple apps:
 ### Readme:
 
 * [Pre-requisites](#pre-requisites)
+* [Contributing](#contributing)
 * [Install](#install)
   * [Subdomains](#subdomains)
     * [With a DNS software](#with-a-dns-software)
@@ -49,6 +50,15 @@ It contains multiple apps:
 * [Esteren Maps library](docs/maps.md)
 * [Corahn Rin / Character manager](docs/character_manager.md)
 * [Deploy](docs/deploy.md)
+
+## Contributing
+
+If you would like to contribute to this project, there are some rules:
+
+* Read all the documentation about the things you would like to work on.
+* Be kind, it's an old project managed by one single person, so there **is** legacy. Quite normal.
+* Share! If you have any idea, feel free to open an issue and we can chat about the choices, ideas, features and maybe
+your personal contributions 😉.
 
 ## Pre-requisites
 
