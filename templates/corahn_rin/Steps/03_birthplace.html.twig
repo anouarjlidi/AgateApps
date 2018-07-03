@@ -36,7 +36,7 @@
                 'from': '9999',
                 'to': '8888'
             })|replace({'9999': '{from}', '8888': '{to}'}) }}",
-            tiles:      "{{ app.request.scheme }}://{{ esteren_domains_api }}{{ asset('maps_tiles/'~map.id~'/{z}/{y}/{x}.jpg') }}"
+            tiles:      "{{ app.request.scheme }}://{{ esteren_domains_api }}{{ app.request.port != 80 ? (':'~app.request.port) }}{{ asset('maps_tiles/'~map.id~'/{z}/{y}/{x}.jpg') }}"
         },
         loadCallback: function () {
             {% if region_value %}
@@ -51,9 +51,6 @@
                 }
             }
             {% endif %}
-            {# Hide some useless zones by default #}
-            d.querySelector("label[for=zoneType2]").click(); {# Kingdoms #}
-            d.querySelector("label[for=zoneType13]").click(); {# Seas #}
         },
         LeafletMapBaseOptions:   {
             zoom: {{ map.startZoom }},
