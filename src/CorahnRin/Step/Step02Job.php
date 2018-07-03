@@ -11,16 +11,24 @@
 
 namespace CorahnRin\Step;
 
+use CorahnRin\Repository\JobsRepository;
 use Symfony\Component\HttpFoundation\Response;
 
 class Step02Job extends AbstractStepAction
 {
+    private $jobsRepository;
+
+    public function __construct(JobsRepository $jobsRepository)
+    {
+        $this->jobsRepository = $jobsRepository;
+    }
+
     /**
      * {@inheritdoc}
      */
     public function execute(): Response
     {
-        $jobs = $this->em->getRepository(\CorahnRin\Entity\Jobs::class)->findAllPerBook();
+        $jobs = $this->jobsRepository->findAllPerBook();
 
         if ($this->request->isMethod('POST')) {
             $jobValue  = (int) $this->request->request->get('job_value');

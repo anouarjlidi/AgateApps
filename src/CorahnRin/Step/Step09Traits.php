@@ -11,10 +11,19 @@
 
 namespace CorahnRin\Step;
 
+use CorahnRin\Exception\InvalidWayException;
+use CorahnRin\Repository\TraitsRepository;
 use Symfony\Component\HttpFoundation\Response;
 
 class Step09Traits extends AbstractStepAction
 {
+    private $traitsRepository;
+
+    public function __construct(TraitsRepository $traitsRepository)
+    {
+        $this->traitsRepository = $traitsRepository;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -22,7 +31,13 @@ class Step09Traits extends AbstractStepAction
     {
         $ways = $this->getCharacterProperty('08_ways');
 
-        $traitsList = $this->em->getRepository(\CorahnRin\Entity\Traits::class)->findAllDependingOnWays($ways);
+        try {
+            $traitsList = $this->traitsRepository->findAllDependingOnWays($ways);
+        } catch (InvalidWayException $exception) {
+            $this->flashMessage('Traits coming from Step 08 Ways are not correct, please check them back.');
+
+            return $this->goToStep(8);
+        }
 
         $traits = $this->getCharacterProperty();
 

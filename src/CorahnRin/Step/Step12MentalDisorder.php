@@ -11,10 +11,18 @@
 
 namespace CorahnRin\Step;
 
+use CorahnRin\Repository\DisordersRepository;
 use Symfony\Component\HttpFoundation\Response;
 
 class Step12MentalDisorder extends AbstractStepAction
 {
+    private $disordersRepository;
+
+    public function __construct(DisordersRepository $disordersRepository)
+    {
+        $this->disordersRepository = $disordersRepository;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -26,7 +34,7 @@ class Step12MentalDisorder extends AbstractStepAction
         $ways = $this->getCharacterProperty('08_ways');
 
         // They MUST be indexed by ids by the repository.
-        $disorders = $this->em->getRepository(\CorahnRin\Entity\Disorders::class)->findWithWays();
+        $disorders = $this->disordersRepository->findWithWays();
 
         $definedDisorders = [];
 
@@ -42,11 +50,10 @@ class Step12MentalDisorder extends AbstractStepAction
 
         // Test all disorders with current ways major and minor values.
         foreach ($disorders as $disorder) {
-            $disorderWays = $disorder->getWays();
-            foreach ($disorderWays as $disorderWay) {
+            foreach ($disorder->getWays() as $disorderWay) {
                 if (
-                    ($disorderWay->isMajor() && array_key_exists($disorderWay->getWay()->getId(), $majorWays))
-                    || (!$disorderWay->isMajor() && array_key_exists($disorderWay->getWay()->getId(), $minorWays))
+                    ($disorderWay->isMajor() && array_key_exists($disorderWay->getWay(), $majorWays))
+                    || (!$disorderWay->isMajor() && array_key_exists($disorderWay->getWay(), $minorWays))
                 ) {
                     $definedDisorders[$disorder->getId()] = $disorder;
                 }

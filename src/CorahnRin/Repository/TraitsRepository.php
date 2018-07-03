@@ -78,7 +78,7 @@ class TraitsRepository extends ServiceEntityRepository
      * Le tableau $ways DOIT être structuré de cette façon :
      * (key) wayid => (value) way score.
      *
-     * @param Ways[] $ways
+     * @param string[] $ways
      *
      * @throws \Exception
      *
@@ -88,23 +88,29 @@ class TraitsRepository extends ServiceEntityRepository
     {
         $qb = $this->_em
             ->createQueryBuilder()
-            ->select('t')
-            ->from($this->_entityName, 't')
-            ->addSelect('w')
+            ->select('trait')
+            ->from($this->_entityName, 'trait')
         ;
+
+        $searchableWays = [
+            Ways::COMBATIVENESS,
+            Ways::CREATIVITY,
+            Ways::REASON,
+            Ways::CONVICTION,
+        ];
+
         foreach ($ways as $id => $value) {
-            if (!is_numeric($id) || !is_numeric($value)) {
-                throw new \InvalidArgumentException('Error in ways values. Must be equivalent to this : array( [WAY_ID] => [WAY_VALUE] )');
-            }
-            if ($id >= 4 || $id <= 2) {
-                $qb->orWhere('w.id = :way'.$id.' AND t.major = :way'.$id.'major')
-                   ->setParameter(':way'.$id, $id)
-                   ->setParameter(':way'.$id.'major', $value >= 4)
+            Ways::validateWay($id);
+            if (\in_array($id, $searchableWays, true)) {
+                $placeholder = str_replace('ways.', '', $id);
+                $qb->orWhere('trait.way = :way'.$placeholder.' AND trait.major = :way'.$placeholder.'major')
+                   ->setParameter(':way'.$placeholder, $id)
+                   ->setParameter(':way'.$placeholder.'major', $value >= 4)
                 ;
             }
         }
 
-        $qb->orderBy('t.name', 'asc');
+        $qb->orderBy('trait.name', 'asc');
 
         $list = $qb->getQuery()->getResult();
 

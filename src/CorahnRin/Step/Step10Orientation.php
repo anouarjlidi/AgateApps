@@ -11,6 +11,7 @@
 
 namespace CorahnRin\Step;
 
+use CorahnRin\Data\Ways;
 use Symfony\Component\HttpFoundation\Response;
 use CorahnRin\Data\Orientation;
 
@@ -27,10 +28,10 @@ class Step10Orientation extends AbstractStepAction
         $ways = $this->getCharacterProperty('08_ways');
 
         // These data are static and are not related to anything else in the app.
-        $orientations = Orientation::getData();
+        $orientations = Orientation::ALL;
 
-        $instinct   = $ways[1] + $ways[2]; // Combativeness + Creativity
-        $conscience = $ways[4] + $ways[5]; // Reason + Conviction
+        $instinct   = $ways[Ways::COMBATIVENESS] + $ways[Ways::CREATIVITY]; // Combativeness + Creativity
+        $conscience = $ways[Ways::REASON] + $ways[Ways::CONVICTION]; // Reason + Conviction
 
         $canBeChanged = $conscience === $instinct;
 
