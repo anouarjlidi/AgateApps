@@ -16,11 +16,11 @@ class Step08WaysTest extends AbstractStepTest
     public function testValidWays()
     {
         $ways = [
-            '1' => 1,
-            '2' => 2,
-            '3' => 3,
-            '4' => 4,
-            '5' => 5,
+            'ways.combativeness' => 1,
+            'ways.creativity' => 2,
+            'ways.empathy' => 3,
+            'ways.reason' => 4,
+            'ways.conviction' => 5,
         ];
         $result = $this->submitAction([], [
             'ways' => $ways,
@@ -34,11 +34,11 @@ class Step08WaysTest extends AbstractStepTest
     public function testWaysSumIsFiveOnly()
     {
         $ways = [
-            '1' => 1,
-            '2' => 1,
-            '3' => 1,
-            '4' => 1,
-            '5' => 1,
+            'ways.combativeness' => 1,
+            'ways.creativity' => 1,
+            'ways.empathy' => 1,
+            'ways.reason' => 1,
+            'ways.conviction' => 1,
         ];
         $result = $this->submitAction([], [
             'ways' => $ways,
@@ -55,11 +55,11 @@ class Step08WaysTest extends AbstractStepTest
     public function testWaysSumIsSuperiorToFiveButInferiorToFifteen()
     {
         $ways = [
-            '1' => 1,
-            '2' => 1,
-            '3' => 1,
-            '4' => 1,
-            '5' => 2,
+            'ways.combativeness' => 1,
+            'ways.creativity' => 1,
+            'ways.empathy' => 1,
+            'ways.reason' => 1,
+            'ways.conviction' => 2,
         ];
         $result = $this->submitAction([], [
             'ways' => $ways,
@@ -76,11 +76,11 @@ class Step08WaysTest extends AbstractStepTest
     public function testNoWayHasScoreOfOneOrFive()
     {
         $ways = [
-            '1' => 3,
-            '2' => 3,
-            '3' => 3,
-            '4' => 3,
-            '5' => 3,
+            'ways.combativeness' => 3,
+            'ways.creativity' => 3,
+            'ways.empathy' => 3,
+            'ways.reason' => 3,
+            'ways.conviction' => 3,
         ];
         $result = $this->submitAction([], [
             'ways' => $ways,
@@ -97,11 +97,11 @@ class Step08WaysTest extends AbstractStepTest
     public function testWaysBeyondRange()
     {
         $ways = [
-            '1' => 1,
-            '2' => 1,
-            '3' => 2,
-            '4' => 2,
-            '5' => 6,
+            'ways.combativeness' => 1,
+            'ways.creativity' => 1,
+            'ways.empathy' => 2,
+            'ways.reason' => 2,
+            'ways.conviction' => 6,
         ];
         $result = $this->submitAction([], [
             'ways' => $ways,
@@ -121,11 +121,11 @@ class Step08WaysTest extends AbstractStepTest
 
         $crawler = $client->request('POST', '/fr/character/generate/'.$this->getStepName(), [
             'ways' => [
-                '10' => 1,
-                '20' => 1,
-                '30' => 2,
-                '40' => 2,
-                '50' => 6,
+                'wrong_way_for_combativeness' => 1,
+                'wrong_way_for_creativity' => 1,
+                'wrong_way_for_empathy' => 2,
+                'wrong_way_for_reason' => 2,
+                'wrong_way_for_conviction' => 6,
             ],
         ]);
 
