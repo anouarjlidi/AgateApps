@@ -7,7 +7,7 @@ Esteren full portal
 
 This project is a full-stack Symfony application.
 
-It was created in September 2013 with Symfony 2.3, but the different concepts and reflections started in March 2013.
+It was created in September 2013 with Symfony 2.3, but the different concepts and base code were started in March 2013.
 
 Since, it has followed all Symfony updates, and has been refactored countless times.
 
@@ -26,6 +26,22 @@ It contains multiple apps:
 
 ## Documentation index
 
+### Readme:
+
+* [Pre-requisites](#pre-requisites)
+* [Install](#install)
+  * [Subdomains](#subdomains)
+    * [With a DNS software](#with-a-dns-software)
+    * [With hosts file](#with-hosts-file)
+  * [Change the port to use another than `8080`](#change-the-port-to-use-another-than-8080)
+  * [Assets management](#assets-management)
+* [Tests](#tests)
+  * [CI](#ci)
+* [Issues tracking](#issues-tracking)
+* [License](#license)
+
+### Other documentation
+
 * [Routing](docs/routing.md)
 * [General technical informations](docs/technical.md)
 * [Set up a vhost](docs/vhosts.md)
@@ -41,23 +57,19 @@ Simply use **Docker**. If you want to use something else, you can reverse-engine
 ## Install
 
 ```bash
+$ cp .env.dist .env
 $ make install
 ```
 
-Check the [Makefile](Makefile) if you want to know what this `install` target does.
+Check the [Makefile](./Makefile#L22) if you want to know what this `install` target does.
 
-TL;DR: it does build the Docker images, start them, install the vendors, set up database, insert fixtures, dump public
-assets and EsterenMap map tiles.
+**TL;DR:** the command builds the Docker images, starts them, installs the vendors, sets up the database, inserts
+fixtures, dumps public assets and EsterenMap map tiles.
 
-## Setup
-
-First thing to manually do:
-
-```bash
-$ cp .env.dist .env
-```
-
-You **must** configure this file yourself with n
+ℹ️ **Note:** On Windows, most Make implementations are not working. To make it work with the common `cmd` or with tools
+like [Cmder](http://cmder.net), I am using the `make.exe` (and lots of other executables) from the Ruby and its Devkit
+that are available on the [Ruby Downloads page](https://rubyinstaller.org/downloads/). You can use only the devkit and
+remove Ruby from the path if you're not using it. 
 
 ### Subdomains
 
@@ -79,18 +91,25 @@ address=/docker/127.0.0.1
 ```
 
 On Windows you can use [Acrylic](http://mayakron.altervista.org/wikibase/show.php?id=AcrylicHome) (if you know how to
-configure it properly), or you can use hosts files.
+configure it properly), or you can use hosts files which is a much simpler way to do so (check next section).
 
 #### With hosts file
 
 On Windows (and on Linux and MacOS too) you can update your machine's hosts file to make your browser able to load your
 custom domain names for Agate project.
 
-Example of host files:
+Example of host files you can copy-paste if you like:
 
 ```ini
-127.0.0.1 esteren.docker
-127.0.0.1 www.studio-agate.docker
+127.0.0.1   www.studio-agate.docker
+127.0.0.1    www.vermine2047.docker
+127.0.0.1        www.esteren.docker
+127.0.0.1        api.esteren.docker
+127.0.0.1       maps.esteren.docker
+127.0.0.1      games.esteren.docker
+127.0.0.1     portal.esteren.docker
+127.0.0.1  corahnrin.esteren.docker
+127.0.0.1       back.esteren.docker
 # ...
 ```
 
@@ -98,6 +117,22 @@ On Windows, the hosts file is located in `C:\Windows\System32\drivers\etc\hosts`
 permissions.
 
 On Linux and MacOS, the host file is in `/etc/hosts` and must be edited with root permissions.
+
+### Change the port to use another than `8080`
+
+To change the port, you can create a `docker-compose.override.yml` file in the project's root directory and put this in
+it :
+
+```yaml
+version: '3'
+
+services:
+    nginx:
+        ports:
+            - '8080:80'
+```
+
+Here the example is written with `8080` but you can change it to any port if you need to.
 
 ### Assets management
 
@@ -121,19 +156,18 @@ We are using [CircleCI](https://circleci.com/gh/Pierstoval/AgateApps).
 
 Linting tests and phpunit are executed there for both PHP and NodeJS.
 
+You can check CircleCI's config file at [.circleci/config.yml](.circleci/config.yml).
+
 ## Issues tracking
 
-For any question or problem, please open a new issue on Redmine depending on the subject:
-
-| Subject                        | Redmine project
-| ------------------------------ | ---------------
-| Corahn-Rin (character manager) | [corahn-rin-dev](http://redmine.pierstoval.com/projects/corahn-rin-dev/issues)
-| Esteren Maps                   | [esteren-maps](http://redmine.pierstoval.com/projects/esteren-maps/issues)
-| Portal (normal or games)       | [portail-esteren](http://redmine.pierstoval.com/projects/portail-esteren/issues)
-| Other                          | [apps](http://redmine.pierstoval.com/projects/apps/issues)
-
-Any issue on Github will have to be transformed into a Redmine ticket. So please, no Github issue.
+Any issue on Github will have to be transformed into a Redmine ticket for internals, but you can just take care of your
+Github issues.
 
 ## License
 
 View the joined [license file](LICENSE) to know about uses rights.
+
+The important part of the license is: This is a proprietary project, all rights are reserved and its source is opened
+mostly for transparency reasons.
+
+Using or deploying this app for other uses than development is not allowed. 
