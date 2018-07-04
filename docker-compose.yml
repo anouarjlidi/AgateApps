@@ -5,7 +5,7 @@ services:
         # Docker build here:
         # https://hub.docker.com/r/pierstoval/studio-agate-portal/
         # https://github.com/StudioAgate/DockerPortalApp
-        image: 'pierstoval/studio-agate-portal:v0.2.2'
+        image: 'pierstoval/studio-agate-portal:latest'
         working_dir: /srv/
         volumes:
             - ./:/srv
