@@ -101,7 +101,8 @@ class DirectionsManagerTest extends WebTestCase
                 [
                     'found'           => true,
                     'from_cache'      => false,
-                    'number_of_steps' => 16,
+                    'number_of_steps' => 0,
+                    'total_distance'  => 50, // Should be route 702, "long way and no stop"
                     'duration_raw'    => null,
                     'duration_real'   => [
                         'days' => null,
@@ -109,10 +110,11 @@ class DirectionsManagerTest extends WebTestCase
                     ],
                 ],
                 'tri-kazel',
-                76, // Pointe de Hòb
-                40, // Col de Gaos-Bodhar
+                700, // {0, 0}
+                701, // {0, 10}
                 null,
             ],
+            /*
             // Test from bottom left to top right with "default" transport
             1 => [
                 [
@@ -308,6 +310,7 @@ class DirectionsManagerTest extends WebTestCase
                 76,  // Pointe de Hòb
                 null,
             ],
+            */
         ];
     }
 }

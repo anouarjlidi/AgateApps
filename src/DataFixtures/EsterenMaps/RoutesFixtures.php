@@ -95,7 +95,7 @@ class RoutesFixtures extends AbstractFixture implements ORMFixtureInterface
                 'routeType'   => $this->routesTypes[1],
                 'name'        => 'From 0,0 to 0,10',
                 'coordinates' => '[{"lat":0,"lng":0},{"lat":0,"lng":10}]',
-                'distance'    => 10,
+                'distance'    => 10.0,
             ],
             [
                 'id'          => ++$id,
@@ -105,7 +105,7 @@ class RoutesFixtures extends AbstractFixture implements ORMFixtureInterface
                 'routeType'   => $this->routesTypes[1],
                 'name'        => 'From 0,0 to 10,0',
                 'coordinates' => '[{"lat":0,"lng":0},{"lat":10,"lng":0}]',
-                'distance'    => 10,
+                'distance'    => 10.0,
             ],
             [
                 'id'          => ++$id,
@@ -115,7 +115,7 @@ class RoutesFixtures extends AbstractFixture implements ORMFixtureInterface
                 'routeType'   => $this->routesTypes[1],
                 'name'        => 'From 0,0 to 10,10 (long way, no stop)',
                 'coordinates' => '[{"lat":0,"lng":0},{"lat":0,"lng":-10},{"lat":20,"lng":-10},{"lat":20,"lng":10},{"lat":10,"lng":10}]',
-                'distance'    => 50,
+                'distance'    => 50.0,
             ],
             [
                 'id'          => ++$id,

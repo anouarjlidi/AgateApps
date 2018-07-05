@@ -43,6 +43,9 @@ class ApiMapsController implements PublicService
     {
         $response = new JsonResponse();
 
+        // Fixes issues with floats converted to string when array is encoded.
+        $response->setEncodingOptions($response::DEFAULT_ENCODING_OPTIONS | JSON_PRESERVE_ZERO_FRACTION);
+
         $response->setEtag($etag = sha1('map'.$id.$this->versionCode));
 
         if ($response->isNotModified($request)) {

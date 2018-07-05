@@ -53,8 +53,9 @@ class ApiMapsControllerTest extends WebTestCase
         $data = $this->getMapData();
 
         // Route
-        $route = $data['map']['routes'][4] ?? null;
-        static::assertSame('Route des capitales (de Tuaille à Merieren)', $route['name'] ?? null);
+        $route = $data['map']['routes'][700] ?? null;
+        static::assertNotNull($route);
+        static::assertSame('From 0,0 to 0,10', $route['name']);
         $routeKeys = [
             'id', 'name', 'description', 'coordinates', 'distance', 'guarded',
             'marker_start', 'marker_end', 'faction', 'route_type'
@@ -70,7 +71,7 @@ class ApiMapsControllerTest extends WebTestCase
         static::assertInternalType('int', $route['route_type'] ?? null);
         static::assertInternalType('int', $route['marker_start'] ?? null);
         static::assertInternalType('int', $route['marker_end'] ?? null);
-        static::assertInternalType('int', $route['faction'] ?? null);
+        static::assertNull($route['faction']);
     }
 
     public function testMapZones()
@@ -78,7 +79,8 @@ class ApiMapsControllerTest extends WebTestCase
         $data = $this->getMapData();
 
         $zone = $data['map']['zones'][1] ?? null;
-        static::assertSame('Calvaire', $zone['name'] ?? null);
+        static::assertNotNull($zone);
+        static::assertSame('Kingdom test', $zone['name']);
         $zoneKeys = ['id', 'name', 'description', 'coordinates', 'faction', 'zone_type'];
         $dataKeys = array_keys($zone ?: []);
         static::assertSame(sort($zoneKeys), sort($dataKeys));
@@ -105,7 +107,7 @@ class ApiMapsControllerTest extends WebTestCase
         $data = $this->getMapData();
 
         $type = $data['references']['markers_types'][1] ?? null;
-        static::assertSame('Cité', $type['name'] ?? null);
+        static::assertSame('City', $type['name'] ?? null);
         $typeKeys = ['id', 'name', 'description', 'icon', 'icon_width', 'icon_height', 'icon_center_x', 'icon_center_y'];
         $dataKeys = array_keys($type ?: []);
         static::assertSame(sort($typeKeys), sort($dataKeys));
@@ -118,7 +120,7 @@ class ApiMapsControllerTest extends WebTestCase
         $data = $this->getMapData();
 
         $type = $data['references']['routes_types'][1] ?? null;
-        static::assertSame('Chemin', $type['name'] ?? null);
+        static::assertSame('Track', $type['name'] ?? null);
         $typeKeys = ['id', 'name', 'description', 'color'];
         $dataKeys = array_keys($type ?: []);
         static::assertSame(sort($typeKeys), sort($dataKeys));
@@ -130,7 +132,7 @@ class ApiMapsControllerTest extends WebTestCase
         $data = $this->getMapData();
 
         $type = $data['references']['zones_types'][2] ?? null;
-        static::assertSame('Royaume', $type['name'] ?? null);
+        static::assertSame('Kingdom', $type['name'] ?? null);
         $typeKeys = ['id', 'name', 'description', 'color', 'parent_id'];
         $dataKeys = array_keys($type ?: []);
         static::assertSame(sort($typeKeys), sort($dataKeys));
@@ -143,7 +145,7 @@ class ApiMapsControllerTest extends WebTestCase
         $data = $this->getMapData();
 
         $type = $data['references']['factions'][1] ?? null;
-        static::assertSame('Temple', $type['name'] ?? null);
+        static::assertSame('Faction Test', $type['name'] ?? null);
         $typeKeys = ['id', 'name', 'description'];
         $dataKeys = array_keys($type ?: []);
         static::assertSame(sort($typeKeys), sort($dataKeys));
