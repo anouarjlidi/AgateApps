@@ -13,6 +13,7 @@ namespace Tests\EsterenMaps\Controller\PanthereTests;
 
 use Panthere\Client;
 use Panthere\PanthereTestCase;
+use PHPUnit\Framework\AssertionFailedError;
 use Tests\WebTestCase as PiersTestCase;
 
 class JSMapsControllerTest extends PanthereTestCase
@@ -28,7 +29,13 @@ class JSMapsControllerTest extends PanthereTestCase
 
         $crawler = $client->request('GET', 'http://maps.esteren.docker:9900/fr/map-tri-kazel');
 
-        static::assertSame(200, $client->getInternalResponse()->getStatus());
-        static::assertCount(1, $crawler->filter('#map_wrapper'), 'Map link does not redirect to map view, or map view is broken');
+        try {
+            static::assertSame(200, $client->getInternalResponse()->getStatus());
+            static::assertCount(1, $crawler->filter('#map_wrapper'), 'Map link does not redirect to map view, or map view is broken');
+        } catch (AssertionFailedError $exception) {
+            echo '>>>>';
+            var_dump($client->getInternalResponse());
+            throw $exception;
+        }
     }
 }
