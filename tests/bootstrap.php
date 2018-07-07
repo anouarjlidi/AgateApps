@@ -34,14 +34,11 @@ if ($debug = ((bool) getenv('APP_DEBUG') ?: true)) {
 }
 
 $kernel = new Kernel(getenv('APP_ENV') ?: 'test', $debug);
+$application = new Application($kernel);
+$application->setAutoExit(false);
 
-
-$runCommand = function (string $cmd) use ($kernel): void {
-    $application = new Application($kernel);
-    $application->setAutoExit(false);
+$runCommand = function (string $cmd) use ($application): void {
     $code = $application->run(new StringInput($cmd));
-    $kernel->shutdown();
-    unset($kernel); // Triggers kernel destruct
     if ($code) {
         throw new \RuntimeException(sprintf('Command %s failed with code "%d".', $cmd, $code));
     }
@@ -94,10 +91,10 @@ $fs->copy(DATABASE_TEST_FILE, DATABASE_REFERENCE_FILE);
 
 $kernel->shutdown();
 
+end:
+
 // Unset everything so PHPUnit can't dump these globals.
 unset($rootDir, $file, $autoload, $kernel, $application, $runCommand, $fs);
-
-end:
 
 $seconds = number_format(microtime(true) - $time, 2);
 
