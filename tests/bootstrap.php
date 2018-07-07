@@ -48,6 +48,7 @@ $runCommand = function (string $cmd) use ($kernel): void {
 };
 
 if (CLEAR_CACHE) {
+    echo "\nClearing cache";
     $runCommand('cache:clear --no-warmup');
     $runCommand('cache:warmup');
 }
@@ -55,17 +56,20 @@ if (CLEAR_CACHE) {
 $fs = new Filesystem();
 
 if (RECREATE_DB) {
+    echo "\nRemoving existing database files as explicitly set by config";
     $fs->remove(DATABASE_REFERENCE_FILE);
     $fs->remove(DATABASE_TEST_FILE);
 }
 
 if ($fs->exists(DATABASE_REFERENCE_FILE)) {
+    echo "\nCopying reference file to test file for first execution";
     // Reset database everytime
     $fs->copy(DATABASE_REFERENCE_FILE, DATABASE_TEST_FILE, true);
     goto end;
 }
 
 if (NO_RECREATE_DB && file_exists($rootDir.'/build/database_reference.db')) {
+    echo "\nDatabase exists";
     goto end;
 }
 
@@ -75,13 +79,17 @@ if (!is_dir($rootDir.'/build')) {
 }
 
 if ($fs->exists(DATABASE_TEST_FILE)) {
+    echo "\nRemoving test database";
     $fs->remove(DATABASE_TEST_FILE);
 }
+
+echo "\nCreating test database";
 
 $runCommand('doctrine:database:create');
 $runCommand('doctrine:schema:create --no-interaction');
 $runCommand('doctrine:fixtures:load --append');
 
+echo "\nCopying test database to reference file";
 $fs->copy(DATABASE_TEST_FILE, DATABASE_REFERENCE_FILE);
 
 $kernel->shutdown();
