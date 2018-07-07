@@ -11,6 +11,7 @@
 
 namespace Tests\EsterenMaps\Controller\PanthereTests;
 
+use Panthere\Client;
 use Panthere\PanthereTestCase;
 use Tests\WebTestCase as PiersTestCase;
 
@@ -21,9 +22,9 @@ class JSMapsControllerTest extends PanthereTestCase
     public function testMapIndex()
     {
         static::startWebServer(null, '127.0.0.1', 9900);
-        $client = static::createPanthereClient();
+        $client = self::$panthereClient = Client::createChromeClient('chromedriver', null, ['binary' => 'chromium'], self::$baseUri);
 
-        $crawler = $client->request('GET', 'http://maps.esteren.docker:9900/fr/login');
+        $client->request('GET', 'http://maps.esteren.docker:9900/fr/login');
 
         $crawler = $client->request('GET', 'http://maps.esteren.docker:9900/fr/map-tri-kazel');
 
