@@ -70,9 +70,12 @@ if (NO_RECREATE_DB && file_exists($rootDir.'/build/database_reference.db')) {
     goto end;
 }
 
-// Remove build dir files
 if (!is_dir($rootDir.'/build')) {
     $fs->mkdir($rootDir.'/build');
+}
+
+if (!is_dir($rootDir.'/build/screenshots/')) {
+    $fs->mkdir($rootDir.'/build/screenshots/');
 }
 
 if ($fs->exists(DATABASE_TEST_FILE)) {
