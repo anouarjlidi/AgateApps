@@ -59,7 +59,15 @@ class UserRepository extends ServiceEntityRepository implements UserProviderInte
      */
     public function loadUserByUsername($username)
     {
-        return $this->findByUsernameOrEmail($username);
+        $user = $this->findByUsernameOrEmail($username);
+
+        if (!$user) {
+            $exception = new UsernameNotFoundException();
+            $exception->setUsername($username);
+            throw $exception;
+        }
+
+        return $user;
     }
 
     /**
