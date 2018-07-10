@@ -27,7 +27,6 @@ class DirectionsManager
     private $entityManager;
     private $twig;
     private $mapApi;
-    private $transportModifiers = [];
 
     public function __construct(
         MapApi $mapApi,

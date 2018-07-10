@@ -6,9 +6,9 @@ jobs:
             # Docker build here:
             # https://hub.docker.com/r/pierstoval/studio-agate-portal/
             # https://github.com/StudioAgate/DockerPortalApp
-            - image: pierstoval/studio-agate-portal:v0.2.1
+            - image: pierstoval/studio-agate-portal:latest
 
-        working_directory: ~/app
+        working_directory: /srv
 
         environment:
             SYMFONY_ENV:   test
@@ -66,12 +66,13 @@ jobs:
                 key: composer-cache-{{ checksum "composer.lock" }}
                 paths:
                     - ~/.composer/cache
+                    - /srv/vendor
 
     node:
         docker:
             - image: node:10
 
-        working_directory: ~/app
+        working_directory: /srv
 
         environment:
             NODE_ENV: production

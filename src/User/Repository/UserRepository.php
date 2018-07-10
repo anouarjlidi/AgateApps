@@ -22,7 +22,8 @@ use User\Entity\User;
 use User\Util\CanonicalizerTrait;
 
 /**
- * @method User findOneBy(array $criteria, array $orderBy = null)
+ * @method User|null findOneBy(array $criteria, array $orderBy = null)
+ * @method User|null find($id, $lockMode = null, $lockVersion = null)
  */
 class UserRepository extends ServiceEntityRepository implements UserProviderInterface
 {
@@ -59,7 +60,15 @@ class UserRepository extends ServiceEntityRepository implements UserProviderInte
      */
     public function loadUserByUsername($username)
     {
-        return $this->findByUsernameOrEmail($username);
+        $user = $this->findByUsernameOrEmail($username);
+
+        if (!$user) {
+            $exception = new UsernameNotFoundException();
+            $exception->setUsername($username);
+            throw $exception;
+        }
+
+        return $user;
     }
 
     /**
@@ -83,6 +92,6 @@ class UserRepository extends ServiceEntityRepository implements UserProviderInte
      */
     public function supportsClass($class)
     {
-        return User::class === $class || is_subclass_of($class, User::class, true);
+        return User::class === $class || is_a($class, User::class, true);
     }
 }

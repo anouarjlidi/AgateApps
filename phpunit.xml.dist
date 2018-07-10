@@ -58,8 +58,8 @@
         <!-- ###- symfony/framework-bundle ### -->
 
         <!-- ###+ doctrine/doctrine-bundle ### -->
-        <env name="DATABASE_URL" value=""/>
-        <env name="DATABASE_URL_LEGACY" value="" />
+        <env name="DATABASE_URL" value="sqlite://%kernel.project_dir%/build/database_test.db"/>
+        <env name="DATABASE_URL_LEGACY" value="sqlite://%kernel.project_dir%/build/database_legacy.db"/>
         <!-- ###- doctrine/doctrine-bundle ### -->
 
         <!-- ###+ symfony/swiftmailer-bundle ### -->
@@ -74,7 +74,7 @@
     </testsuites>
 
     <listeners>
-        <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
+        <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener"/>
     </listeners>
 
     <filter>

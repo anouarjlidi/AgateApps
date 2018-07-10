@@ -83,6 +83,9 @@
     "egulias/email-validator": {
         "version": "2.1.2"
     },
+    "facebook/webdriver": {
+        "version": "1.6.0"
+    },
     "gedmo/doctrine-extensions": {
         "version": "v2.4.31"
     },
@@ -173,7 +176,7 @@
             "repo": "github.com/symfony/recipes",
             "branch": "master",
             "version": "4.0",
-            "ref": "e65a105bf4cd5b1b79012ba029954927f05922e8"
+            "ref": "421933bf8f0e75546ac8e00cb3eb12904fa2ac1a"
         }
     },
     "stof/doctrine-extensions-bundle": {
@@ -295,6 +298,9 @@
     },
     "symfony/options-resolver": {
         "version": "v3.3.11"
+    },
+    "symfony/panthere": {
+        "version": "1.0.x-dev"
     },
     "symfony/phpunit-bridge": {
         "version": "3.3",
