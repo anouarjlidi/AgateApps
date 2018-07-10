@@ -20,9 +20,12 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # Project directory
 cd ${DIR}/../
 
+DIR="$(pwd)"
+
 ENV_FILE="./.env"
 CLI_FILE="../env"
 NGINX_FILE="../env_nginx.conf"
+CHANGELOG_FILE=${DIR}/../_tmp_changelog.txt
 
 echo "[DEPLOY] > Update repository branch"
 
@@ -104,9 +107,17 @@ ${CHANGELOG}
 CHGLOG
 
 echo "[DEPLOY] > FULL CHANGELOG"
-echo ${FULL_CHANGELOG}
+echo "${FULL_CHANGELOG}"
+
+echo "${FULL_CHANGELOG}" > ${CHANGELOG_FILE}
 
 echo "[DEPLOY] > Sending email reminders..."
+
+if [[ -f "../post_deploy.bash" ]]
+then
+    echo "[DEPLOY] > Executing post-deploy scripts"
+    bash ../post_deploy.bash ${NEW_VERSION} ${CHANGELOG_FILE}
+fi
 
 for TO in "pierstoval+esterenProd@gmail.com" "nelyhann+portal@gmail.com"
 do
