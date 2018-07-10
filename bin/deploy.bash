@@ -22,6 +22,8 @@ cd ${DIR}/../
 
 DIR="$(pwd)"
 
+echo "Working directory: ${DIR}"
+
 ENV_FILE="./.env"
 CLI_FILE="../env"
 NGINX_FILE="../env_nginx.conf"
@@ -113,7 +115,7 @@ echo "${FULL_CHANGELOG}" > ${CHANGELOG_FILE}
 
 echo "[DEPLOY] > Sending email reminders..."
 
-if [[ -f "../post_deploy.bash" ]]
+if [[ -f "${DIR}/../post_deploy.bash" ]]
 then
     echo "[DEPLOY] > Executing post-deploy scripts"
     bash ../post_deploy.bash ${NEW_VERSION} ${CHANGELOG_FILE}
