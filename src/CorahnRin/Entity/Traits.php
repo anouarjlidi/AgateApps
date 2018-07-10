@@ -19,7 +19,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Traits.
  *
  * @ORM\Entity(repositoryClass="CorahnRin\Repository\TraitsRepository")
- * @ORM\Table(name="traits", uniqueConstraints={@ORM\UniqueConstraint(name="idxUnique", columns={"name", "way"})})
+ * @ORM\Table(name="traits")
  */
 class Traits
 {

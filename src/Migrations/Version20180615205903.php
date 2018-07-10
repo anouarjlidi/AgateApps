@@ -46,7 +46,6 @@ final class Version20180615205903 extends AbstractMigration
         $this->addSql('DROP INDEX IDX_E4A0A1668C803113 ON traits');
         $this->addSql('DROP INDEX idxUnique ON traits');
         $this->addSql('ALTER TABLE traits ADD way VARCHAR(255) NOT NULL');
-        $this->addSql('CREATE UNIQUE INDEX idxUnique ON traits (name, way)');
 
         $this->addSql('UPDATE disorders_ways SET way = :way WHERE way_id = :way_id', ['way' => Ways::COMBATIVENESS, 'way_id' => 1]);
         $this->addSql('UPDATE disorders_ways SET way = :way WHERE way_id = :way_id', ['way' => Ways::CREATIVITY, 'way_id' => 2]);
