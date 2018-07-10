@@ -74,9 +74,10 @@ if (!is_dir($rootDir.'/build')) {
     $fs->mkdir($rootDir.'/build');
 }
 
-if (!is_dir($rootDir.'/build/screenshots/')) {
-    $fs->mkdir($rootDir.'/build/screenshots/');
+if (is_dir($rootDir.'/build/screenshots/')) {
+    $fs->remove($rootDir.'/build/screenshots/');
 }
+$fs->mkdir($rootDir.'/build/screenshots/');
 
 if ($fs->exists(DATABASE_TEST_FILE)) {
     echo "\nRemoving test database";
