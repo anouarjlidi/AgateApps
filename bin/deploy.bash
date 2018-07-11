@@ -91,7 +91,7 @@ echo "[DEPLOY] > Restart web server..."
 sudo service nginx reload
 echo "[DEPLOY] > Done!"
 
-read -d '' FULL_CHANGELOG << CHGLOG
+read -r -d '' FULL_CHANGELOG << EOF
 New version: v${NEW_VERSION}
 Released on: ${NEW_DATE}
 
@@ -106,7 +106,7 @@ Reminder of all portals:
 
 List of all changes/commits:
 ${CHANGELOG}
-CHGLOG
+EOF
 
 echo "[DEPLOY] > FULL CHANGELOG"
 echo "${FULL_CHANGELOG}"
