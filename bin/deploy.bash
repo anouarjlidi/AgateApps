@@ -99,6 +99,9 @@ touch ${CHANGELOG_FILE}
 echo "New version: v${NEW_VERSION}"    >> ${CHANGELOG_FILE}
 echo "Released on: ${NEW_DATE}"        >> ${CHANGELOG_FILE}
 echo ""                                >> ${CHANGELOG_FILE}
+echo "List of all changes/commits:"    >> ${CHANGELOG_FILE}
+echo "${CHANGELOG}"                    >> ${CHANGELOG_FILE}
+echo ""                                >> ${CHANGELOG_FILE}
 echo "Reminder of all portals:"        >> ${CHANGELOG_FILE}
 echo ""                                >> ${CHANGELOG_FILE}
 echo "* https://www.studio-agate.com"  >> ${CHANGELOG_FILE}
@@ -107,9 +110,6 @@ echo "* https://www.dragons-rpg.com"   >> ${CHANGELOG_FILE}
 echo "* https://portal.esteren.org"    >> ${CHANGELOG_FILE}
 echo "* https://maps.esteren.org"      >> ${CHANGELOG_FILE}
 echo "* https://corahnrin.esteren.org" >> ${CHANGELOG_FILE}
-echo ""                                >> ${CHANGELOG_FILE}
-echo "List of all changes/commits:"    >> ${CHANGELOG_FILE}
-echo "${CHANGELOG}"                    >> ${CHANGELOG_FILE}
 
 
 echo "[DEPLOY] > FULL CHANGELOG"
