@@ -91,7 +91,9 @@ echo "[DEPLOY] > Restart web server..."
 sudo service nginx reload
 echo "[DEPLOY] > Done!"
 
-read -r -d '' FULL_CHANGELOG << EOF
+echo "[DEPLOY] > Now generating changelogs..."
+
+read -r -d '' FULLCHANGELOG << EOF
 New version: v${NEW_VERSION}
 Released on: ${NEW_DATE}
 
@@ -109,9 +111,9 @@ ${CHANGELOG}
 EOF
 
 echo "[DEPLOY] > FULL CHANGELOG"
-echo "${FULL_CHANGELOG}"
+echo "${FULLCHANGELOG}"
 
-echo "${FULL_CHANGELOG}" > ${CHANGELOG_FILE}
+echo "${FULLCHANGELOG}" > ${CHANGELOG_FILE}
 
 echo "[DEPLOY] > Sending email reminders..."
 
@@ -127,7 +129,7 @@ do
         --from=pierstoval@gmail.com \
         --to=${TO} \
         --subject="Deploy successful!" \
-        --body="${FULL_CHANGELOG}" \
+        --body="${FULLCHANGELOG}" \
         --content-type=text/plain
 done
 
