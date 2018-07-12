@@ -95,7 +95,6 @@ echo "[DEPLOY] > Now generating changelogs..."
 
 touch ${CHANGELOG_FILE}
 
-
 echo "New version: v${NEW_VERSION}"    >> ${CHANGELOG_FILE}
 echo "Released on: ${NEW_DATE}"        >> ${CHANGELOG_FILE}
 echo ""                                >> ${CHANGELOG_FILE}
@@ -111,17 +110,16 @@ echo "* https://portal.esteren.org"    >> ${CHANGELOG_FILE}
 echo "* https://maps.esteren.org"      >> ${CHANGELOG_FILE}
 echo "* https://corahnrin.esteren.org" >> ${CHANGELOG_FILE}
 
-
 echo "[DEPLOY] > FULL CHANGELOG"
 cat ${CHANGELOG_FILE}
-
-echo "[DEPLOY] > Sending email reminders..."
 
 if [[ -f "${DIR}/../post_deploy.bash" ]]
 then
     echo "[DEPLOY] > Executing post-deploy scripts"
     bash ../post_deploy.bash ${NEW_VERSION} ${CHANGELOG_FILE}
 fi
+
+echo "[DEPLOY] > Sending email reminders..."
 
 for TO in "pierstoval+esterenProd@gmail.com" "nelyhann+portal@gmail.com"
 do
