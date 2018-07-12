@@ -93,27 +93,27 @@ echo "[DEPLOY] > Done!"
 
 echo "[DEPLOY] > Now generating changelogs..."
 
-read -r -d '' FULLCHANGELOG << EOF
-New version: v${NEW_VERSION}
-Released on: ${NEW_DATE}
+touch ${CHANGELOG_FILE}
 
-Reminder of all portals:
 
-* https://www.studio-agate.com
-* https://www.vermine2047.com
-* https://www.dragons-rpg.com
-* https://portal.esteren.org
-* https://maps.esteren.org
-* https://corahnrin.esteren.org
+echo "New version: v${NEW_VERSION}"    >> ${CHANGELOG_FILE}
+echo "Released on: ${NEW_DATE}"        >> ${CHANGELOG_FILE}
+echo ""                                >> ${CHANGELOG_FILE}
+echo "Reminder of all portals:"        >> ${CHANGELOG_FILE}
+echo ""                                >> ${CHANGELOG_FILE}
+echo "* https://www.studio-agate.com"  >> ${CHANGELOG_FILE}
+echo "* https://www.vermine2047.com"   >> ${CHANGELOG_FILE}
+echo "* https://www.dragons-rpg.com"   >> ${CHANGELOG_FILE}
+echo "* https://portal.esteren.org"    >> ${CHANGELOG_FILE}
+echo "* https://maps.esteren.org"      >> ${CHANGELOG_FILE}
+echo "* https://corahnrin.esteren.org" >> ${CHANGELOG_FILE}
+echo ""                                >> ${CHANGELOG_FILE}
+echo "List of all changes/commits:"    >> ${CHANGELOG_FILE}
+echo "${CHANGELOG}"                    >> ${CHANGELOG_FILE}
 
-List of all changes/commits:
-${CHANGELOG}
-EOF
 
 echo "[DEPLOY] > FULL CHANGELOG"
-echo "${FULLCHANGELOG}"
-
-echo "${FULLCHANGELOG}" > ${CHANGELOG_FILE}
+cat ${CHANGELOG_FILE}
 
 echo "[DEPLOY] > Sending email reminders..."
 
@@ -129,7 +129,8 @@ do
         --from=pierstoval@gmail.com \
         --to=${TO} \
         --subject="Deploy successful!" \
-        --body="${FULLCHANGELOG}" \
+        --body-source=file \
+        --body=${CHANGELOG_FILE} \
         --content-type=text/plain
 done
 
