@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\{
 };
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-use Util\PublicService;
+use Main\PublicService;
 
 /**
  * @Route(host="%esteren_domains.api%")

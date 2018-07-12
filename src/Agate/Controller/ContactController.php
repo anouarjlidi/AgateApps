@@ -25,7 +25,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 use Twig\Environment;
-use Util\PublicService;
+use Main\PublicService;
 
 /**
  * @Route(host="%agate_domains.portal%")

@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Util\Controller;
+namespace Main\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

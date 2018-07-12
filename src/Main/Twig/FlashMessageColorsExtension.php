@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Util\Twig;
+namespace Main\Twig;
 
 class FlashMessageColorsExtension extends \Twig_Extension
 {
