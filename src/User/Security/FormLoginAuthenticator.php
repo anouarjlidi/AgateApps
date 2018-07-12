@@ -125,7 +125,7 @@ final class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
         $user = $userProvider->loadUserByUsername($credentials->getUsernameOrEmail());
 
         if ($user && !$user->isEmailConfirmed()) {
-            throw new AuthenticationException('Email not confirmed.');
+            throw new AuthenticationException('security.email_not_confirmed');
         }
 
         return $user;
@@ -140,7 +140,7 @@ final class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
     public function checkCredentials($credentials, UserInterface $user)
     {
         if (!$this->encoder->isPasswordValid($user, $credentials->getPassword())) {
-            throw new BadCredentialsException('Bad credentials.');
+            throw new BadCredentialsException('security.bad_credentials');
         }
 
         return true;

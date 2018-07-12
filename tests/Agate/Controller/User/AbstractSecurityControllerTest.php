@@ -86,7 +86,7 @@ abstract class AbstractSecurityControllerTest extends WebTestCase
         $crawler = $client->followRedirect();
 
         // Once redirected, we check the flash messages are correct
-        $flashPasswordChanged = $container->get('translator')->trans('Email not confirmed.');
+        $flashPasswordChanged = $container->get('translator')->trans('security.email_not_confirmed');
         static::assertContains($flashPasswordChanged, $crawler->filter('#layout #flash-messages')->html());
     }
 
