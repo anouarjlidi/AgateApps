@@ -65,13 +65,13 @@ class ResettingController extends AbstractController
 
         $user = $this->userRepository->findByUsernameOrEmail($username);
 
-        $userRoles = $this->roleHierarchy->getReachableRoles($user->getRoles());
-
-        if (\in_array('ROLE_VISITOR', $userRoles, true)) {
-            throw $this->createNotFoundException();
-        }
-
         if (null !== $user) {
+            $userRoles = $this->roleHierarchy->getReachableRoles($user->getRoles());
+
+            if (\in_array('ROLE_VISITOR', $userRoles, true)) {
+                throw $this->createNotFoundException();
+            }
+
             if (null === $user->getConfirmationToken()) {
                 $user->setConfirmationToken($this->generateToken());
             }
