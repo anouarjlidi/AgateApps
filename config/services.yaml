@@ -57,9 +57,10 @@ services:
             $oneupFlysystem:  '@oneup_flysystem.assets_fs_filesystem'
             $awsRegion:       '%aws_region%'
             $awsBucket:       '%aws_bucket%'
+            $kernelEnvironment: '%kernel.environment%'
             $doctrineResultCache: '@doctrine_cache.providers.result_cache'
     _instanceof:
-        Util\PublicService:
+        Main\PublicService:
             public: true
 
     Admin\:
@@ -80,8 +81,8 @@ services:
     User\:
         resource: '../src/User/{Controller,ConnectApi,EventListener,Mailer,Form,Repository,Security,Twig,Util}'
 
-    Util\:
-        resource: '../src/Util/{Controller,Twig}'
+    Main\:
+        resource: '../src/Main/{Controller,Twig}'
 
     EsterenMaps\Cache\CacheManager:
         tags: [{ name: doctrine.event_subscriber, connection: default }]

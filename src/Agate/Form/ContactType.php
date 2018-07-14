@@ -22,6 +22,13 @@ use Symfony\Component\Validator\Constraints;
 
 class ContactType extends AbstractType
 {
+    private $kernelEnvironment;
+
+    public function __construct(string $kernelEnvironment)
+    {
+        $this->kernelEnvironment = $kernelEnvironment;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -35,7 +42,10 @@ class ContactType extends AbstractType
             ])
             ->add('email', EmailType::class, [
                 'constraints' => [
-                    new Constraints\Email(),
+                    new Constraints\Email([
+                        'checkHost' => $this->kernelEnvironment === 'prod',
+                        'checkMX' => $this->kernelEnvironment === 'prod',
+                    ]),
                 ],
             ])
             ->add('subject', TextType::class, [
