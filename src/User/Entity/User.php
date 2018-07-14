@@ -14,6 +14,7 @@ namespace User\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\Role\Role;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -152,14 +153,22 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
-    public function getRoles(): array
+    public function getRoles($asObject = false): array
     {
         $roles = $this->roles;
 
         // we need to make sure to have at least one role
         $roles[] = static::ROLE_DEFAULT;
 
-        return array_unique($roles);
+        $roles = array_unique($roles);
+
+        if (true === $asObject) {
+            foreach ($roles as &$role) {
+                $role = new Role($role);
+            }
+        }
+
+        return $roles;
     }
 
     public function hasRole($role): bool

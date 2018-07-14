@@ -66,7 +66,8 @@ class ResettingController extends AbstractController
         $user = $this->userRepository->findByUsernameOrEmail($username);
 
         if (null !== $user) {
-            $userRoles = $this->roleHierarchy->getReachableRoles($user->getRoles());
+            dump($user);
+            $userRoles = $this->roleHierarchy->getReachableRoles($user->getRoles(true));
 
             if (\in_array('ROLE_VISITOR', $userRoles, true)) {
                 goto render;
