@@ -73,7 +73,7 @@ class ContactController implements PublicService
             ||
             ($captcha && false === $this->reCaptcha->verify($captcha, $request->getClientIp())->isSuccess())
         ) {
-            $form->addError(new FormError('Invalid captcha'));
+            $form->addError(new FormError('Invalid form values, please check'));
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
