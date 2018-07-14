@@ -100,7 +100,7 @@
             "Dragons\\": "src/Dragons",
             "Esteren\\": "src/Esteren",
             "EsterenMaps\\": "src/EsterenMaps",
-            "Main": "src/Main",
+            "Main\\": "src/Main",
             "User\\": "src/User"
         },
         "classmap": [
