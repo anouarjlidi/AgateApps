@@ -35,6 +35,10 @@ class ProfileController extends AbstractController
      */
     public function editAction(Request $request): Response
     {
+        if ($this->isGranted('ROLE_VISITOR')) {
+            throw $this->createNotFoundException();
+        }
+
         $user = $this->getUser();
 
         if (!is_object($user) || !$user instanceof User) {

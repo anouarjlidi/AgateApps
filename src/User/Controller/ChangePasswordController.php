@@ -37,6 +37,10 @@ class ChangePasswordController extends AbstractController
      */
     public function changePasswordAction(Request $request): Response
     {
+        if ($this->isGranted('ROLE_VISITOR')) {
+            throw $this->createNotFoundException();
+        }
+
         $user = $this->getUser();
         if (!is_object($user) || !$user instanceof User) {
             throw new AccessDeniedException('This user does not have access to this section.');

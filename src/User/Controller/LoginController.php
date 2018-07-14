@@ -20,7 +20,7 @@ use Symfony\Component\Security\Core\Security;
 use User\Entity\User;
 use User\Security\FormLoginAuthenticator;
 
-class SecurityController extends AbstractController
+class LoginController extends AbstractController
 {
     /**
      * @Route("/login", name="user_login", methods={"GET", "POST"})

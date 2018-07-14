@@ -16,6 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Translation\TranslatorInterface;
 use User\Form\Type\ResettingFormType;
@@ -33,15 +34,18 @@ class ResettingController extends AbstractController
     private $userRepository;
     private $mailer;
     private $translator;
+    private $roleHierarchy;
 
     public function __construct(
         UserRepository $userRepository,
         UserMailer $mailer,
-        TranslatorInterface $translator
+        TranslatorInterface $translator,
+        RoleHierarchyInterface $roleHierarchy
     ) {
         $this->userRepository = $userRepository;
         $this->mailer = $mailer;
         $this->translator = $translator;
+        $this->roleHierarchy = $roleHierarchy;
     }
 
     /**
@@ -60,6 +64,12 @@ class ResettingController extends AbstractController
         $username = $request->request->get('username');
 
         $user = $this->userRepository->findByUsernameOrEmail($username);
+
+        $userRoles = $this->roleHierarchy->getReachableRoles($user->getRoles());
+
+        if (\in_array('ROLE_VISITOR', $userRoles, true)) {
+            throw $this->createNotFoundException();
+        }
 
         if (null !== $user) {
             if (null === $user->getConfirmationToken()) {

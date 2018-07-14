@@ -23,6 +23,10 @@ class MyProjectsController extends AbstractController
      */
     public function myProjectsAction(): Response
     {
+        if ($this->isGranted('ROLE_VISITOR')) {
+            throw $this->createNotFoundException();
+        }
+
         $projects = $this->ululeClient->getUserProjects($this->getUser());
 
         return $this->render('user/Crowdfunding/my_projects.html.twig', [
