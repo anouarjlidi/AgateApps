@@ -68,7 +68,11 @@ class ContactController implements PublicService
 
         $captcha = $request->request->get('g-recaptcha-response');
 
-        if ($captcha && false === $this->reCaptcha->verify($captcha, $request->getClientIp())->isSuccess()) {
+        if (
+            !$captcha
+            ||
+            ($captcha && false === $this->reCaptcha->verify($captcha, $request->getClientIp())->isSuccess())
+        ) {
             $form->addError(new FormError('Invalid captcha'));
         }
 
