@@ -102,7 +102,7 @@ esteren_portal:
 # Utils
 #
 utils:
-    resource: '../src/Util/Controller/'
+    resource: '../src/Main/Controller/'
     type: annotation
     prefix: '/{_locale}/'
     defaults: { locale: '%locale%' }
