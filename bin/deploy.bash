@@ -93,7 +93,7 @@ echo "[DEPLOY] > Done!"
 
 echo "[DEPLOY] > Now generating changelogs..."
 
-touch ${CHANGELOG_FILE}
+echo "" > ${CHANGELOG_FILE}
 
 echo "New version: v${NEW_VERSION}"    >> ${CHANGELOG_FILE}
 echo "Released on: ${NEW_DATE}"        >> ${CHANGELOG_FILE}
@@ -131,6 +131,8 @@ do
         --body=${CHANGELOG_FILE} \
         --content-type=text/plain
 done
+
+rm ${CHANGELOG_FILE}
 
 echo "[DEPLOY] > Done!"
 echo "[DEPLOY] > Deploy finished!"
