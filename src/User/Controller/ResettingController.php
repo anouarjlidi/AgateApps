@@ -69,7 +69,7 @@ class ResettingController extends AbstractController
             $userRoles = $this->roleHierarchy->getReachableRoles($user->getRoles());
 
             if (\in_array('ROLE_VISITOR', $userRoles, true)) {
-                throw $this->createNotFoundException();
+                goto render;
             }
 
             if (null === $user->getConfirmationToken()) {
@@ -85,6 +85,8 @@ class ResettingController extends AbstractController
                 return new RedirectResponse($this->generateUrl('user_resetting_request'));
             }
         }
+
+        render:
 
         $this->addFlash('user_success', 'resetting.check_email');
 
