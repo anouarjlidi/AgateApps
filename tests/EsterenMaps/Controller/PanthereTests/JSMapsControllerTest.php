@@ -12,15 +12,12 @@
 namespace Tests\EsterenMaps\Controller\PanthereTests;
 
 use Symfony\Component\Panthere\Client;
-use Symfony\Component\Panthere\PanthereTestCaseTrait;
-use Symfony\Component\Panthere\ProcessManager\ChromeManager;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\Panthere\PanthereTestCase;
 use Tests\WebTestCase as PiersTestCase;
 
-class JSMapsControllerTest extends WebTestCase
+class JSMapsControllerTest extends PanthereTestCase
 {
     use PiersTestCase;
-    use PanthereTestCaseTrait;
 
     protected function screenshot(Client $client, string $suffix)
     {
@@ -41,10 +38,7 @@ class JSMapsControllerTest extends WebTestCase
     public function testMapIndex()
     {
         try {
-            static::startWebServer(null, '127.0.0.1', 9900);
-
-            $chromeManager = new ChromeManager('chromedriver', ['--no-sandbox']);
-            $client = self::$panthereClient = new Client($chromeManager, self::$baseUri);
+            $client = static::createPanthereClient('127.0.0.1', 9900);
 
             $crawler = $client->request('GET', 'http://maps.esteren.docker:9900/fr/login');
 
