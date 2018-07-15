@@ -11,6 +11,7 @@
 
 namespace Tests\Agate\Controller\User;
 
+use Symfony\Bundle\FrameworkBundle\Test\TestContainer;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\DomCrawler\Form;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
@@ -138,7 +139,7 @@ abstract class AbstractSecurityControllerTest extends WebTestCase
 
         $client = $this->getClient('portal.esteren.docker');
 
-        $user = $client->getContainer()->get(UserRepository::class)->findOneBy(['username' => static::USER_NAME.$locale]);
+        $user = $client->getContainer()->get(TestContainer::class)->get(UserRepository::class)->findOneBy(['username' => static::USER_NAME.$locale]);
 
         static::assertNotNull($user);
 
