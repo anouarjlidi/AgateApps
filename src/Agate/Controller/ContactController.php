@@ -32,6 +32,7 @@ use Main\PublicService;
  */
 class ContactController implements PublicService
 {
+    private $kernelEnvironment;
     private $mailer;
     private $reCaptcha;
     private $translator;
@@ -40,6 +41,7 @@ class ContactController implements PublicService
     private $router;
 
     public function __construct(
+        string $kernelEnvironment,
         PortalMailer $mailer,
         ReCaptcha $reCaptcha,
         TranslatorInterface $translator,
@@ -53,6 +55,7 @@ class ContactController implements PublicService
         $this->twig = $twig;
         $this->formFactory = $formFactory;
         $this->router = $router;
+        $this->kernelEnvironment = $kernelEnvironment;
     }
 
     /**
@@ -69,9 +72,12 @@ class ContactController implements PublicService
         $captcha = $request->request->get('g-recaptcha-response');
 
         if (
-            !$captcha
-            ||
-            ($captcha && false === $this->reCaptcha->verify($captcha, $request->getClientIp())->isSuccess())
+            'prod' === $this->kernelEnvironment
+            && (
+                !$captcha
+                ||
+                ($captcha && false === $this->reCaptcha->verify($captcha, $request->getClientIp())->isSuccess())
+            )
         ) {
             $form->addError(new FormError('Invalid form values, please check'));
         }
