@@ -30,12 +30,12 @@ team:
 
     members:
         # Permanent members
-        asami:
-            name: Asami
-            details: Maquettiste, graphiste et illustratrice.
+        ginl:
+            name: GinL
+            details: Illustratrice, graphiste, maquettiste du studio.
         clovis:
             name: Clovis
-            details: 'Traducteur et coordinateur de la version anglaise des Ombres d''Esteren, de Vampire : Le Requiem et 7e Mer.'
+            details:  'Traducteur et coordinateur de la version anglaise "Shadows of Esteren" et "Dragons: Chronicles of Eana".'
         gawain:
             name: Gawain
             details: Illustrateur senior du studio.
@@ -68,9 +68,6 @@ team:
         francois_rousselot:
             name: François Rousselot
             details: Chef d'orchestre, orchestrateur de l'album Dearg, compositeur de l'album Adeliane.
-        ginl:
-            name: GinL
-            details: Illustratrice, graphiste, maquettiste de la gamme Dragons.
         jenny:
             name: Jenny Bendel
             details: Attachée de presse.
@@ -98,3 +95,6 @@ team:
         david_camus:
             name: David Camus
             details: Auteur, traducteur, agent littéraire.
+        vincent:
+            name: Vincent Lelavechef
+            details: 'Coordinateur des gammes "Vampire : Le Requiem" et "7e Me".'

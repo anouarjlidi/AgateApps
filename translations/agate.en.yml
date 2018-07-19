@@ -29,14 +29,13 @@ team:
 
     members:
         # Permanent members
-        asami:
-            name: Asami
+        ginl:
+            name: GinL
             details: Layout artist, graphic designer, and illustrator.
         clovis:
             name: Clovis
             details: |
-                Translator and coordinator for the English version of the Shadows of Esteren series, Vampire: The Requiem
-                and french version of 7th Sea.
+                Translator and coordinator for the English version of the Shadows of Esteren series, Vampire: The Requiem.
         gawain:
             name: Gawain
             details: Head illustrator.
@@ -69,9 +68,6 @@ team:
         francois_rousselot:
             name: François Rousselot
             details: Conductor for the Dearg album and composer for the Adeliane album.
-        ginl:
-            name: GinL
-            details: Illustrator and layout artist for the Dragons series.
         jenny:
             name: Jenny Bendel
             details: Press officer.
@@ -99,3 +95,6 @@ team:
         david_camus:
             name: David Camus
             details: Author, translator, literary Agent.
+        vincent:
+            name: Vincent Lelavechef
+            details: 'Coordinator for the translations of the "Vampire: The Requiem" and "7th Sea" games.'
