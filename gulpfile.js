@@ -758,6 +758,9 @@ gulp.task('test', gulp.series('clean', 'dump', function(done) {
     let push = (key) => {
         filesList.push(config.output_directory+'/'+key);
     };
+    let pushFromDir = (outputDirName, elements) => {
+        GulpfileHelpers.pushFromDirectory(outputDirName, elements, filesList);
+    };
 
     /**
      * Retrieve files list.
@@ -766,8 +769,8 @@ gulp.task('test', gulp.series('clean', 'dump', function(done) {
     forEach(config.sass, push);
     forEach(config.css, push);
     forEach(config.js, push);
-    forEach(config.images, GulpfileHelpers.pushFromDirectory);
-    forEach(config.copy, GulpfileHelpers.pushFromDirectory);
+    forEach(config.images, pushFromDir);
+    forEach(config.copy, pushFromDir);
 
     console.info('Check files that are not dumped according to config.');
 
@@ -821,9 +824,11 @@ gulp.task('test', gulp.series('clean', 'dump', function(done) {
             let msg = '';
             msg += "These files seem not to have been dumped by Gulp flow:\n";
             invalid.forEach((file) => {
-                msg += " > "+file+"\n";
+                console.info(file);
+                msg += " > "+file.toString()+"\n";
             });
-            throw msg;
+
+            throw new Error(msg);
         }
 
         done();
