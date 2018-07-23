@@ -11,7 +11,8 @@
 
 namespace CorahnRin\Data;
 
-use CorahnRin\Exception\InvalidWayException;
+use CorahnRin\Exception\InvalidWay;
+use CorahnRin\Exception\InvalidWayValue;
 
 final class Ways
 {
@@ -32,7 +33,16 @@ final class Ways
     public static function validateWay(string $way): void
     {
         if (!isset(static::ALL[$way])) {
-            throw new InvalidWayException($way);
+            throw new InvalidWay($way);
+        }
+    }
+
+    public static function validateWayValue(string $way, int $value): void
+    {
+        self::validateWay($way);
+
+        if ($value < 1 || $value > 5) {
+            throw new InvalidWayValue($way);
         }
     }
 }

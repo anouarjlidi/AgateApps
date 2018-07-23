@@ -13,16 +13,15 @@ declare(strict_types=1);
 
 namespace CorahnRin\Exception;
 
-use CorahnRin\Data\Ways;
 use InvalidArgumentException;
 
-class InvalidWayException extends InvalidArgumentException
+class InvalidWayValue extends InvalidArgumentException
 {
     public function __construct(string $way)
     {
         parent::__construct(sprintf(
-            'Provided way "%s" is not a valid way. Possible values: %s',
-            $way, implode(', ', array_keys(Ways::ALL))
+            'Provided way "%s" does not have a right value. Expected a value from 1 to 5',
+            $way
         ));
     }
 }
