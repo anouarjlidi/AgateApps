@@ -53,6 +53,18 @@ final class Version20180615205903 extends AbstractMigration
         $this->addSql('UPDATE disorders_ways SET way = :way WHERE way_id = :way_id', ['way' => Ways::REASON, 'way_id' => 4]);
         $this->addSql('UPDATE disorders_ways SET way = :way WHERE way_id = :way_id', ['way' => Ways::CONVICTION, 'way_id' => 5]);
 
+        $this->addSql('UPDATE domains SET way = :way WHERE way_id = :way_id', ['way' => Ways::COMBATIVENESS, 'way_id' => 1]);
+        $this->addSql('UPDATE domains SET way = :way WHERE way_id = :way_id', ['way' => Ways::CREATIVITY, 'way_id' => 2]);
+        $this->addSql('UPDATE domains SET way = :way WHERE way_id = :way_id', ['way' => Ways::EMPATHY, 'way_id' => 3]);
+        $this->addSql('UPDATE domains SET way = :way WHERE way_id = :way_id', ['way' => Ways::REASON, 'way_id' => 4]);
+        $this->addSql('UPDATE domains SET way = :way WHERE way_id = :way_id', ['way' => Ways::CONVICTION, 'way_id' => 5]);
+
+        $this->addSql('UPDATE traits SET way = :way WHERE way_id = :way_id', ['way' => Ways::COMBATIVENESS, 'way_id' => 1]);
+        $this->addSql('UPDATE traits SET way = :way WHERE way_id = :way_id', ['way' => Ways::CREATIVITY, 'way_id' => 2]);
+        $this->addSql('UPDATE traits SET way = :way WHERE way_id = :way_id', ['way' => Ways::EMPATHY, 'way_id' => 3]);
+        $this->addSql('UPDATE traits SET way = :way WHERE way_id = :way_id', ['way' => Ways::REASON, 'way_id' => 4]);
+        $this->addSql('UPDATE traits SET way = :way WHERE way_id = :way_id', ['way' => Ways::CONVICTION, 'way_id' => 5]);
+
         $this->addSql('ALTER TABLE disorders_ways ADD PRIMARY KEY (disorder_id, way)');
 
         $this->addSql('ALTER TABLE disorders_ways DROP way_id');
