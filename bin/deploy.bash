@@ -132,6 +132,12 @@ do
         --content-type=text/plain
 done
 
+echo "[DEPLOY] > Tagging release..."
+echo "[DEPLOY] > Pushing it to Git..."
+
+git tag -s -F ${CHANGELOG_FILE} ${NEW_VERSION}
+git push origin ${NEW_VERSION}
+
 rm ${CHANGELOG_FILE}
 
 echo "[DEPLOY] > Done!"
