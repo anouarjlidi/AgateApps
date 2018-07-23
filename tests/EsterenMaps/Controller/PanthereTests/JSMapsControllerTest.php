@@ -9,13 +9,13 @@
  * file that was distributed with this source code.
  */
 
-namespace Tests\EsterenMaps\Controller\PanthereTests;
+namespace Tests\EsterenMaps\Controller\PantherTests;
 
-use Symfony\Component\Panthere\Client;
-use Symfony\Component\Panthere\PanthereTestCase;
+use Symfony\Component\Panther\Client;
+use Symfony\Component\Panther\PantherTestCase;
 use Tests\WebTestCase as PiersTestCase;
 
-class JSMapsControllerTest extends PanthereTestCase
+class JSMapsControllerTest extends PantherTestCase
 {
     use PiersTestCase;
 
@@ -38,7 +38,7 @@ class JSMapsControllerTest extends PanthereTestCase
     public function testMapIndex()
     {
         try {
-            $client = static::createPanthereClient('127.0.0.1', 9900);
+            $client = static::createPantherClient('127.0.0.1', 9900);
 
             $crawler = $client->request('GET', 'http://maps.esteren.docker:9900/fr/login');
 
