@@ -251,3 +251,31 @@ character:
 
 home:
     title: 'Corahn-Rin, the character manager for Shadows of Esteren'
+
+ways.combativeness: Combativeness
+ways.combativeness.fault: Passion
+ways.combativeness.description: |
+    This Way reflects pugnacity, the drive that leads to action, and the passion of living.
+
+ways.creativity: Creativity
+ways.creativity.fault: Subversion
+ways.creativity.description: |
+    The ability to imagine, to give an original meaning to one's life; inventiveness, resourcefulness.
+
+ways.empathy: Empathy
+ways.empathy.fault: Influence
+ways.empathy.description: |
+    The bond linking a human being to his environment. For example, Demorthèn use their Empathy to communicate
+    with nature. At the relational level, Empathy means the ability to feel the emotions of another person.
+
+ways.reason: Reason
+ways.reason.fault: Doubt
+ways.reason.description: |
+    Rationalization, intellect, but also research and reflection.
+    It shows the learning ability of a Character, his curiosity, etc.
+
+ways.conviction: Conviction
+ways.conviction.fault: Guilt
+ways.conviction.description: |
+    Generally, a human hangs on to an ideal or principles guiding his life.
+    Some turn toward religion, others abide by precepts of chivalry, while others follow a personal code.
