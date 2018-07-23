@@ -38,6 +38,8 @@ parameters:
 
     google_recaptcha_site_key: '%env(GOOGLE_RECAPTCHA_SITE_KEY)%'
 
+    corahnrin_manager_name: 'corahn_rin'
+
 services:
     _defaults:
         autowire: true
@@ -59,6 +61,7 @@ services:
             $awsBucket:       '%aws_bucket%'
             $kernelEnvironment: '%kernel.environment%'
             $doctrineResultCache: '@doctrine_cache.providers.result_cache'
+            $corahnRinManagerName: '%corahnrin_manager_name%'
     _instanceof:
         Main\PublicService:
             public: true

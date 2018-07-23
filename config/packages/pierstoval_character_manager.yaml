@@ -3,7 +3,7 @@
 # This bundle has to be standalone as much as possible, to only use config and/or override.
 pierstoval_character_manager:
     managers:
-        corahn_rin:
+        '%corahnrin_manager_name%':
             character_class: 'CorahnRin\Entity\Characters'
             steps:
 
@@ -28,7 +28,7 @@ pierstoval_character_manager:
                         - '14_use_domain_bonuses'
 
                 05_social_class:
-                    action: CorahnRin\Step\Step05SocialClass
+                action: CorahnRin\Step\Step05SocialClass
                     onchange_clear:
                         - '14_use_domain_bonuses'
 
