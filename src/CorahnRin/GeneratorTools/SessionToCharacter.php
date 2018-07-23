@@ -12,13 +12,13 @@
 namespace CorahnRin\GeneratorTools;
 
 use Behat\Transliterator\Transliterator;
+use CorahnRin\Data\Ways;
 use CorahnRin\Entity\Armors;
 use CorahnRin\Entity\Avantages;
 use CorahnRin\Entity\CharacterProperties\CharAdvantages;
 use CorahnRin\Entity\CharacterProperties\CharDisciplines;
 use CorahnRin\Entity\CharacterProperties\CharDomains;
 use CorahnRin\Entity\CharacterProperties\CharSetbacks;
-use CorahnRin\Entity\CharacterProperties\CharWays;
 use CorahnRin\Entity\CharacterProperties\HealthCondition;
 use CorahnRin\Entity\CharacterProperties\Money;
 use CorahnRin\Entity\Characters;
@@ -43,10 +43,10 @@ use Pierstoval\Bundle\CharacterManagerBundle\Resolver\StepResolverInterface;
 
 final class SessionToCharacter
 {
-    /**
-     * @var Ways[]
-     */
-    private $ways;
+    private $resolver;
+    private $em;
+    private $domainsCalculator;
+    private $corahnRinManagerName;
 
     /**
      * @var Domains[]
@@ -68,26 +68,16 @@ final class SessionToCharacter
      */
     private $repositories;
 
-    /**
-     * @var StepResolverInterface
-     */
-    private $resolver;
-
-    /**
-     * @var ObjectManager
-     */
-    private $em;
-
-    /**
-     * @var DomainsCalculator
-     */
-    private $domainsCalculator;
-
-    public function __construct(StepResolverInterface $resolver, DomainsCalculator $domainsCalculator, ObjectManager $em)
-    {
+    public function __construct(
+        StepResolverInterface $resolver,
+        DomainsCalculator $domainsCalculator,
+        ObjectManager $em,
+        string $corahnRinManagerName
+    ) {
         $this->resolver          = $resolver;
         $this->em                = $em;
         $this->domainsCalculator = $domainsCalculator;
+        $this->corahnRinManagerName = $corahnRinManagerName;
     }
 
     /**
@@ -99,7 +89,7 @@ final class SessionToCharacter
      */
     public function createCharacterFromGeneratorValues(array $values): Characters
     {
-        $steps = $this->resolver->getSteps();
+        $steps = $this->resolver->getManagerSteps($this->corahnRinManagerName);
 
         $this->prepareNecessaryVariables();
 
@@ -135,6 +125,7 @@ final class SessionToCharacter
         $this->setExp($character, $values);
         $this->setMoney($character);
         $this->setDomains($character, $values);
+        $this->setHealthCondition($character);
         $this->setPrecalculatedValues($character);
 
         return $character;
@@ -160,7 +151,6 @@ final class SessionToCharacter
      */
     private function prepareNecessaryVariables(): void
     {
-        $this->ways       = $this->getRepository(Ways::class)->findAll();
         $this->setbacks   = $this->getRepository(Setbacks::class)->findAll('_primary');
         $this->domains    = $this->getRepository(Domains::class)->findAll('_primary');
         $this->advantages = $this->getRepository(Avantages::class)->findAll('_primary');
@@ -214,9 +204,8 @@ final class SessionToCharacter
 
     private function setWays(Characters $character, array $values): void
     {
-        foreach ($this->ways as $way) {
-            $charWay = new CharWays($character, $way, $values['08_ways'][$way->getId()]);
-            $character->addWay($charWay);
+        foreach (Ways::ALL as $way => $translation) {
+            $character->setWay($way, $values['08_ways'][$way]);
         }
     }
 
@@ -367,15 +356,34 @@ final class SessionToCharacter
         $bonuses = array_fill_keys(array_keys($this->domains), 0);
         $maluses = array_fill_keys(array_keys($this->domains), 0);
 
+        foreach ($finalDomainsValues as $id => $value) {
+            $charDomain = new CharDomains();
+            $charDomain->setCharacter($character);
+            $charDomain->setDomain($this->domains[$id]);
+            $charDomain->setScore($value);
+            $charDomain->setBonus($bonuses[$id]);
+            $charDomain->setMalus($maluses[$id]);
+            $character->addDomain($charDomain);
+        }
+    }
+
+    private function setHealthCondition(Characters $character)
+    {
         $health = new HealthCondition();
+        $good = $health->getGood();
+        $okay = $health->getOkay();
+        $bad = $health->getBad();
+        $critical = $health->getCritical();
+
+        $bonuses = array_fill_keys(array_keys($this->domains), 0);
+        $maluses = array_fill_keys(array_keys($this->domains), 0);
 
         foreach ($character->getCharAdvantages() as $charAdvantage) {
             $adv = $charAdvantage->getAdvantage();
             if (!trim($adv->getBonusdisc())) {
                 continue;
             }
-            $bonusDiscs = preg_split('~,~', $adv->getBonusdisc(), -1, PREG_SPLIT_NO_EMPTY);
-            foreach ($bonusDiscs as $bonus) {
+            foreach (preg_split('~,~', $adv->getBonusdisc(), -1, PREG_SPLIT_NO_EMPTY) as $bonus) {
                 if (isset($this->domains[$bonus])) {
                     if ($adv->isDesv()) {
                         $maluses[$bonus] += $charAdvantage->getScore();
@@ -386,20 +394,20 @@ final class SessionToCharacter
                     $disadvantageRatio = $adv->isDesv() ? -1 : 1;
                     switch ($bonus) {
                         case Avantages::BONUS_RESM:
-                            $character->setMentalResistBonus($character->getMentalResistBonus() + ($charAdvantage->getScore() * $disadvantageRatio));
+                            $character->setMentalResistanceBonus($character->getMentalResistanceBonus() + ($charAdvantage->getScore() * $disadvantageRatio));
                             break;
                         case Avantages::BONUS_BLESS:
                             $score = $charAdvantage->getScore();
                             switch (true) {
                                 case $score >= 1:
-                                    $health->setBad($health->getBad() + 1);
+                                    $bad++;
                                 case $score >= 2:
-                                    $health->setCritical($health->getCritical() + 1);
+                                    $critical++;
                                     break;
                                 case $score <= -1:
-                                    $health->setOkay($health->getOkay() - 1);
+                                    $okay--;
                                 case $score <= -2:
-                                    $health->setCritical($health->getCritical() - 1);
+                                    $critical--;
                                     break;
                             }
                             break;
@@ -407,7 +415,7 @@ final class SessionToCharacter
                             $character->setStamina($character->getStamina() + ($charAdvantage->getScore() * $disadvantageRatio));
                             break;
                         case Avantages::BONUS_TRAU:
-                            $character->setTraumaPermanent($character->getTraumaPermanent() + $charAdvantage->getScore());
+                            $character->setPermanentTrauma($character->getPermanentTrauma() + $charAdvantage->getScore());
                             break;
                         case Avantages::BONUS_DEF:
                             $character->setDefenseBonus($character->getDefenseBonus() + ($charAdvantage->getScore() * $disadvantageRatio));
@@ -440,27 +448,18 @@ final class SessionToCharacter
             }
         }
 
+        $health = new HealthCondition($good, $okay, $bad, $critical);
         $character->setHealth($health);
         $character->setMaxHealth(clone $health);
-
-        foreach ($finalDomainsValues as $id => $value) {
-            $charDomain = new CharDomains();
-            $charDomain->setCharacter($character);
-            $charDomain->setDomain($this->domains[$id]);
-            $charDomain->setScore($value);
-            $charDomain->setBonus($bonuses[$id]);
-            $charDomain->setMalus($maluses[$id]);
-            $character->addDomain($charDomain);
-        }
     }
 
     private function setPrecalculatedValues(Characters $character): void
     {
         // Rindath
         $rindathMax =
-            $character->getWay(1)->getScore()
-            + $character->getWay(2)->getScore()
-            + $character->getWay(3)->getScore()
+            $character->getCombativeness()
+            + $character->getCreativity()
+            + $character->getEmpathy()
         ;
         if ($sigilRann = $character->getDiscipline('Sigil Rann')) {
             $rindathMax += (($sigilRann->getScore() - 5) * 5);
@@ -469,7 +468,7 @@ final class SessionToCharacter
         $character->setRindath($rindathMax);
 
         // Exaltation
-        $exaltationMax = $character->getWay(5)->getScore() * 3;
+        $exaltationMax = $character->getConviction() * 3;
         if ($miracles = $character->getDiscipline('Miracles')) {
             $exaltationMax += (($miracles->getScore() - 5) * 5);
         }

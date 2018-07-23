@@ -6,10 +6,10 @@
 
         <h3>
             {{- 'character.mental_resist'|trans }}&nbsp;:&nbsp;
-            {{- character.baseMentalResist -}}
-            {%- if character.mentalResistBonus -%}
-                &nbsp;&plus;&nbsp;{{ character.mentalResistBonus -}}
-                &nbsp;&equals;&nbsp;{{ character.totalMentalResist -}}
+            {{- character.baseMentalResistance -}}
+            {%- if character.mentalResistanceBonus -%}
+                &nbsp;&plus;&nbsp;{{ character.mentalResistanceBonus -}}
+                &nbsp;&equals;&nbsp;{{ character.totalMentalResistance -}}
             {%- endif -%}
         </h3>
 
@@ -26,8 +26,8 @@
             <tbody class="row">
                 <tr>
                     <td>{{ 'character.trauma.title'|trans }}</td>
-                    {% set trauma = character.trauma %}
-                    {% set perma = character.traumaPermanent %}
+                    {% set trauma = character.temporaryTrauma %}
+                    {% set perma = character.permanentTrauma %}
                     {% for i in 0..19 -%}
                         {%- if loop.index0 is divisible by(5) %}<td class="text-center">{% endif -%}
                         {%- if perma > 0 -%}

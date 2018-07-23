@@ -20,7 +20,7 @@
                     <p>{{ 'domain.add_to_two_others' | trans({}, 'corahn_rin') }}</p>
                     <div data-toggle="buttons" data-max-buttons="2">
                         {% for domain in socialClass.domains %}
-                        <label for="button_{{ socialClass.id }}_{{ domain.id }}" class="btn {{ socialClassDomains[domain.id] is defined ? ' active' : '' }}">
+                        <label for="button_{{ socialClass.id }}_{{ domain.id }}" class="mt5 btn {{ socialClassDomains[domain.id] is defined ? ' active' : '' }}">
                             <input type="checkbox" id="button_{{ socialClass.id }}_{{ domain.id }}" name="domains[]" value="{{ domain.id }}" {{ socialClassDomains[domain.id] is defined ? ' checked="checked"' : '' }} />
                             {{ domain.name | trans({}, 'corahn_rin') }}
                         </label>

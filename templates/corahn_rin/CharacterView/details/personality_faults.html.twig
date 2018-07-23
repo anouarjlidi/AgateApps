@@ -32,10 +32,10 @@
     <div class="col s4">
         <h2>{{ 'character.faults'|trans }}</h2>
 
-        {% for charWay in character.ways %}
+        {% for way, description in constant('CorahnRin\\Data\\Ways::ALL') %}
             <h3>
-                {{ charWay.way.fault }}
-                <span class="right">{{ charWay.score }}</span>
+                {{ (way~'.fault')|trans }}
+                <span class="right">{{ character.getWay(way) }}</span>
             </h3>
         {% endfor %}
     </div>

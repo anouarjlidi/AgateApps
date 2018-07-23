@@ -4,21 +4,22 @@
     <h2>{{ 'character.domains'|trans }}</h2>
     {% for domains in character.domains|batch(4) %}
         <div class="row">
-            {% for charDomain in domains %}
-                {% set wayScore = character.way(charDomain.domain.way.id).score %}
-                {% set waySmallText %}<small>({{ charDomain.domain.way.shortName|capitalize }})</small> {{ wayScore }}{% endset %}
+            {% for char_domain in domains %}
+                {% set way = char_domain.domain.way %}
+                {% set way_score = character.getWay(way) %}
+                {% set way_small_text %}<small>({{ way|trans }})</small> {{ way_score }}{% endset %}
                 <div class="col s3">
                     <h3>
-                        {{ charDomain.domain.name }}
+                        {{ char_domain.domain.name }}
                     </h3>
                     <p class="text-xl">
                         {%- for i in 1..5 -%}
-                        {%- if charDomain.score >= i %}●{% else %}<span class="grey-text text-darken-2">o</span>{% endif -%}
-                        {%- endfor %}&nbsp;&plus;&nbsp;{{ waySmallText }}
-                        &equals;&nbsp;<span class="right text-m">{{ charDomain.totalScore }}</span>
+                        {%- if char_domain.score >= i %}●{% else %}<span class="grey-text text-darken-2">o</span>{% endif -%}
+                        {%- endfor %}&nbsp;&plus;&nbsp;{{ way_small_text }}
+                        &equals;&nbsp;<span class="right text-m">{{ char_domain.totalScore }}</span>
                     </p>
 
-                    {% set disciplines = character.disciplineFromDomain(charDomain.domain) %}
+                    {% set disciplines = character.disciplineFromDomain(char_domain.domain) %}
                     {% if disciplines|length %}
                         <h4>{{ 'character.disciplines'|trans }}&nbsp;:</h4>
                     {% endif %}
@@ -26,8 +27,8 @@
                         <h5>
                             {{ charDiscipline.discipline.name }}
                             <span class="right">
-                                {{ charDiscipline.score }}&nbsp;&plus;&nbsp;{{ waySmallText }}&nbsp;&equals;
-                                <span class="text-l">{{ charDiscipline.score + wayScore }}</span>
+                                {{ charDiscipline.score }}&nbsp;&plus;&nbsp;{{ way_small_text }}&nbsp;&equals;
+                                <span class="text-l">{{ charDiscipline.score + way_score }}</span>
                             </span>
                         </h5>
                     {% endfor %}

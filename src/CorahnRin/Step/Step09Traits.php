@@ -11,7 +11,7 @@
 
 namespace CorahnRin\Step;
 
-use CorahnRin\Exception\InvalidWayException;
+use CorahnRin\Exception\InvalidWay;
 use CorahnRin\Repository\TraitsRepository;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -33,7 +33,7 @@ class Step09Traits extends AbstractStepAction
 
         try {
             $traitsList = $this->traitsRepository->findAllDependingOnWays($ways);
-        } catch (InvalidWayException $exception) {
+        } catch (InvalidWay $exception) {
             $this->flashMessage('Traits coming from Step 08 Ways are not correct, please check them back.');
 
             return $this->goToStep(8);

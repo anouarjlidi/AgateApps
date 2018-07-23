@@ -17,9 +17,6 @@ use CorahnRin\GeneratorTools\SessionToCharacter;
 
 class Step20Finish extends AbstractStepAction
 {
-    /**
-     * @var SessionToCharacter
-     */
     private $sessionToCharacter;
 
     public function __construct(SessionToCharacter $sessionToCharacter)
@@ -44,6 +41,7 @@ class Step20Finish extends AbstractStepAction
         }
 
         if (function_exists('dump')) {
+            // Only in dev for now
             dump($character);
         }
 

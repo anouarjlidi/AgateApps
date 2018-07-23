@@ -3,8 +3,8 @@
 <div class="main row">
     <div class="col l4">
         <h3>{{ 'character.ways'|trans }}</h3>
-        {% for charWay in character.ways %}
-            <h4>{{ charWay.way.name }} <span class="right">{{ charWay.score }}</span></h4>
+        {% for way, description in constant('CorahnRin\\Data\\Ways::ALL') %}
+            <h4>{{ way|trans }} <span class="right">{{ character.getWay(way) }}</span></h4>
         {% endfor %}
     </div>
     <div class="col l4">

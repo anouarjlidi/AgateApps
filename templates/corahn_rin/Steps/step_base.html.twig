@@ -25,11 +25,11 @@
 
         <form class="{% block form_class '' %}" name="generator_form" id="generator_form" method="post" action="{{ path('pierstoval_character_generator_step', {'requestStep': current_step.name}) }}">
             <div id="generator_{{ current_step.name }}">
-                <div>
+                <div class="mb15">
                     <button type="submit" id="submit_btn" class="btn btn-inverse left">{{ 'steps.next' | trans({}, 'corahn_rin') }}</button>
                     <a href="{{ path('pierstoval_character_generator_reset_step', {'requestStep': current_step.name}) }}" class="btn right red lighten-3">{{ 'steps.reset'|trans({}, 'corahn_rin') }}</a>
+                    <div class="clearfix"></div>
                 </div>
-                <div class="clearfix"></div>
                 {% block step_content %}{% endblock %}
                 <div class="clearfix"></div>
             </div>
