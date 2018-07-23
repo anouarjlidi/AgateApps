@@ -16,7 +16,7 @@ use EsterenMaps\Entity\Markers;
 use EsterenMaps\Repository\TransportTypesRepository;
 use EsterenMaps\Services\DirectionsManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

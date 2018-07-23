@@ -12,7 +12,7 @@
 namespace EsterenMaps\Controller\Api;
 
 use EsterenMaps\Api\MapApi;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\{
     JsonResponse, Request
 };

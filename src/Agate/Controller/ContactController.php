@@ -15,7 +15,7 @@ use Agate\Form\ContactType;
 use Agate\Model\ContactMessage;
 use Agate\Mailer\PortalMailer;
 use ReCaptcha\ReCaptcha;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;

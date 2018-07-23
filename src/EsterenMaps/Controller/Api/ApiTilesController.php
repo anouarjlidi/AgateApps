@@ -14,7 +14,7 @@ namespace EsterenMaps\Controller\Api;
 use EsterenMaps\Entity\Maps;
 use EsterenMaps\Form\MapImageType;
 use EsterenMaps\Services\MapsTilesManager;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;

@@ -13,7 +13,7 @@ namespace Agate\Controller;
 
 use Agate\Entity\PortalElement;
 use Agate\Exception\PortalElementNotFound;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
