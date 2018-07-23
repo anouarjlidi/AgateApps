@@ -299,7 +299,7 @@
     "symfony/options-resolver": {
         "version": "v3.3.11"
     },
-    "symfony/panthere": {
+    "symfony/panther": {
         "version": "1.0.x-dev"
     },
     "symfony/phpunit-bridge": {
