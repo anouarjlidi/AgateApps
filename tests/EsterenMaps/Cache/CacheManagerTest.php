@@ -61,7 +61,7 @@ class CacheManagerTest extends WebTestCase
                 'forcedDistance' => $route->getForcedDistance(),
             ]
         ));
-        $em = $client->getContainer()->get(EntityManagerInterface::class);
+        $em = self::$container->get(EntityManagerInterface::class);
 
         $profile = $client->getProfile();
 

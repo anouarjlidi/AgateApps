@@ -89,12 +89,12 @@ class MapsControllerTest extends WebTestCase
     {
         $client = $this->getClient('maps.esteren.docker');
 
-        $user = $client->getContainer()->get(UserRepository::class)->findByUsernameOrEmail('pierstoval');
+        $user = self::$container->get(UserRepository::class)->findByUsernameOrEmail('pierstoval');
 
         static::assertNotNull($user);
         static::setToken($client, $user);
 
-        $crawler = $client->request('GET', '/fr/map-tri-kazel');
+        $client->request('GET', '/fr/map-tri-kazel');
         $res = $client->getResponse();
 
         static::assertSame(403, $res->getStatusCode());
@@ -104,7 +104,7 @@ class MapsControllerTest extends WebTestCase
     {
         $client = $this->getClient('maps.esteren.docker');
 
-        $user = $client->getContainer()->get(UserRepository::class)->findByUsernameOrEmail('pierstoval');
+        $user = self::$container->get(UserRepository::class)->findByUsernameOrEmail('pierstoval');
 
         static::assertNotNull($user);
         $user->addRole('ROLE_MAPS_VIEW');

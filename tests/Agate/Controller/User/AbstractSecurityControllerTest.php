@@ -11,10 +11,13 @@
 
 namespace Tests\Agate\Controller\User;
 
-use Symfony\Bundle\FrameworkBundle\Test\TestContainer;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\DomCrawler\Form;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 use Tests\WebTestCase as PiersTestCase;
 use User\Entity\User;
 use User\Repository\UserRepository;
@@ -68,12 +71,11 @@ abstract class AbstractSecurityControllerTest extends WebTestCase
         ;
 
         $client = $this->getClient('portal.esteren.docker');
-        $container = $client->getContainer();
 
-        $hashed = $container->get('security.password_encoder')->encodePassword($user, 'whatever');
+        $hashed = self::$container->get(UserPasswordEncoderInterface::class)->encodePassword($user, 'whatever');
         $user->setPassword($hashed);
 
-        $em = $container->get('doctrine.orm.entity_manager');
+        $em = self::$container->get(EntityManagerInterface::class);
         $em->persist($user);
         $em->flush();
 
@@ -87,7 +89,7 @@ abstract class AbstractSecurityControllerTest extends WebTestCase
         $crawler = $client->followRedirect();
 
         // Once redirected, we check the flash messages are correct
-        $flashPasswordChanged = $container->get('translator')->trans('security.email_not_confirmed');
+        $flashPasswordChanged = self::$container->get(TranslatorInterface::class)->trans('security.email_not_confirmed');
         static::assertContains($flashPasswordChanged, $crawler->filter('#layout #flash-messages')->html());
     }
 
@@ -124,7 +126,7 @@ abstract class AbstractSecurityControllerTest extends WebTestCase
         $crawler = $client->followRedirect();
 
         // Check flash messages are correct
-        $flashUserCreated = $client->getKernel()->getContainer()->get('translator')->trans('registration.confirmed', ['%username%' => static::USER_NAME.$locale], 'user');
+        $flashUserCreated = self::$container->get(TranslatorInterface::class)->trans('registration.confirmed', ['%username%' => static::USER_NAME.$locale], 'user');
         static::assertContains($flashUserCreated, $crawler->filter('#layout #flash-messages')->html());
 
         $crawler->clear();
@@ -139,7 +141,7 @@ abstract class AbstractSecurityControllerTest extends WebTestCase
 
         $client = $this->getClient('portal.esteren.docker');
 
-        $user = $client->getContainer()->get(TestContainer::class)->get(UserRepository::class)->findOneBy(['username' => static::USER_NAME.$locale]);
+        $user = self::$container->get(UserRepository::class)->findOneBy(['username' => static::USER_NAME.$locale]);
 
         static::assertNotNull($user);
 
@@ -149,8 +151,8 @@ abstract class AbstractSecurityControllerTest extends WebTestCase
         static::assertTrue($client->getResponse()->isRedirect("/$locale"));
         static::assertNull($user->getConfirmationToken());
         static::assertSame(
-            [$client->getContainer()->get('translator')->trans('registration.confirmed', ['%username%' => $user->getUsername()], 'user')],
-            $client->getContainer()->get('session')->getFlashBag()->get('success')
+            [self::$container->get(TranslatorInterface::class)->trans('registration.confirmed', ['%username%' => $user->getUsername()], 'user')],
+            self::$container->get(SessionInterface::class)->getFlashBag()->get('success')
         );
     }
 
@@ -184,7 +186,7 @@ abstract class AbstractSecurityControllerTest extends WebTestCase
         // Check redirection was made correctly to the Profile page
         static::assertTrue($response->isRedirect(), 'Successful login does not redirect.');
 
-        if ($client->getRequest()->getLocale() === $client->getContainer()->getParameter('locale')) {
+        if ($client->getRequest()->getLocale() === self::$container->getParameter('locale')) {
             static::assertSame('/', $response->headers->get('Location'));
         } else {
             static::assertSame("/$locale/", $response->headers->get('Location'));
@@ -196,7 +198,7 @@ abstract class AbstractSecurityControllerTest extends WebTestCase
 
         // Check user is authenticated
         static::assertGreaterThanOrEqual(1, $crawler->filter('a.logout_link')->count());
-        $logoutText = $client->getKernel()->getContainer()->get('translator')->trans('layout.logout', [], 'user');
+        $logoutText = self::$container->get(TranslatorInterface::class)->trans('layout.logout', [], 'user');
         static::assertSame($logoutText, trim($crawler->filter('a.logout_link')->text()));
 
         $crawler->clear();
@@ -210,8 +212,7 @@ abstract class AbstractSecurityControllerTest extends WebTestCase
         $locale = $this->getLocale();
 
         $client    = $this->getClient('portal.esteren.docker');
-        $container = $client->getContainer();
-        $user      = $container->get(UserRepository::class)->loadUserByUsername(static::USER_NAME.$locale);
+        $user      = self::$container->get(UserRepository::class)->loadUserByUsername(static::USER_NAME.$locale);
         static::setToken($client, $user, $user->getRoles());
 
         $crawler = $client->request('GET', "/$locale/profile/change-password");
@@ -232,15 +233,13 @@ abstract class AbstractSecurityControllerTest extends WebTestCase
         $crawler->clear();
         $crawler = $client->followRedirect();
 
-        $container = $client->getContainer();
-
         // Once redirected, we check the flash messages are correct
-        $flashPasswordChanged = $container->get('translator')->trans('change_password.flash.success', [], 'user');
+        $flashPasswordChanged = self::$container->get(TranslatorInterface::class)->trans('change_password.flash.success', [], 'user');
         static::assertContains($flashPasswordChanged, $crawler->filter('#layout #flash-messages')->html());
 
         // Now check that new password is correctly saved in database
-        $user    = $container->get(UserRepository::class)->loadUserByUsername(static::USER_NAME.$locale);
-        $encoder = $container->get(EncoderFactoryInterface::class)->getEncoder($user);
+        $user    = self::$container->get(UserRepository::class)->loadUserByUsername(static::USER_NAME.$locale);
+        $encoder = self::$container->get(EncoderFactoryInterface::class)->getEncoder($user);
         static::assertTrue($encoder->isPasswordValid($user->getPassword(), 'newPassword', $user->getSalt()));
 
         $crawler->clear();
@@ -254,8 +253,7 @@ abstract class AbstractSecurityControllerTest extends WebTestCase
         $locale = $this->getLocale();
 
         $client    = $this->getClient('portal.esteren.docker');
-        $container = $client->getContainer();
-        $user      = $container->get(UserRepository::class)->loadUserByUsername(static::USER_NAME.$locale);
+        $user      = self::$container->get(UserRepository::class)->loadUserByUsername(static::USER_NAME.$locale);
         static::setToken($client, $user, $user->getRoles());
 
         $crawler = $client->request('GET', "/$locale/profile");
@@ -276,7 +274,7 @@ abstract class AbstractSecurityControllerTest extends WebTestCase
         $crawler = $client->followRedirect();
 
         // Once redirected, we check the flash messages are correct
-        $flashPasswordChanged = $container->get('translator')->trans('profile.flash.updated', [], 'user');
+        $flashPasswordChanged = self::$container->get(TranslatorInterface::class)->trans('profile.flash.updated', [], 'user');
         static::assertContains($flashPasswordChanged, $crawler->filter('#layout #flash-messages')->html());
 
         $crawler->clear();
@@ -290,8 +288,7 @@ abstract class AbstractSecurityControllerTest extends WebTestCase
         $locale = $this->getLocale();
 
         $client    = $this->getClient('portal.esteren.docker');
-        $container = $client->getContainer();
-        $user      = $container->get(UserRepository::class)->loadUserByUsername(static::USER_NAME_AFTER_UPDATE.$locale);
+        $user      = self::$container->get(UserRepository::class)->loadUserByUsername(static::USER_NAME_AFTER_UPDATE.$locale);
         static::setToken($client, $user, $user->getRoles());
 
         $crawler = $client->request('GET', "/$locale/resetting/request");
@@ -308,7 +305,7 @@ abstract class AbstractSecurityControllerTest extends WebTestCase
 
         // This message contains informations about user resetting token TTL.
         // This information is set in the User ResettingController and must be copied here just for testing.
-        $emailSentMessage = $client->getKernel()->getContainer()->get('translator')->trans('resetting.check_email', [], 'user');
+        $emailSentMessage = self::$container->get(TranslatorInterface::class)->trans('resetting.check_email', [], 'user');
         $crawlerContent   = trim($crawler->filter('#content')->html());
         static::assertContains($emailSentMessage, $crawlerContent);
 
@@ -329,7 +326,7 @@ abstract class AbstractSecurityControllerTest extends WebTestCase
         $flashNode = $crawler->filter('.card-panel.success');
         static::assertSame(1, $flashNode->count());
 
-        $resettingSuccessMessage = $client->getKernel()->getContainer()->get('translator')->trans('resetting.flash.success', [], 'user');
+        $resettingSuccessMessage = self::$container->get(TranslatorInterface::class)->trans('resetting.flash.success', [], 'user');
         $crawlerContent   = trim($flashNode->html());
         static::assertContains($resettingSuccessMessage, $crawlerContent);
 
