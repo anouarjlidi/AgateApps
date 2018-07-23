@@ -3,7 +3,9 @@
 {% set dropdown = dropdown|default(false) %}
 
 {% set links %}
-    <li><a href="{{ path('user_profile_edit') }}">{{ 'layout.profile' | trans({}, 'user')|trim }}</a></li>
+    {% if not is_granted('ROLE_VISITOR') %}
+        <li><a href="{{ path('user_profile_edit') }}">{{ 'layout.profile' | trans({}, 'user')|trim }}</a></li>
+    {% endif %}
     {% if is_granted('ROLE_MANAGER') %}
         <li><a href="{{ path('easyadmin') }}">{{ 'links.admin' | trans }}</a></li>
     {% endif %}
