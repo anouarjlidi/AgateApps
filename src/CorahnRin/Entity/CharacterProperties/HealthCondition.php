@@ -11,6 +11,7 @@
 
 namespace CorahnRin\Entity\CharacterProperties;
 
+use CorahnRin\Exception\InvalidWoundChangeValue;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -65,7 +66,7 @@ class HealthCondition
     public function withdrawWounds(int $wounds): void
     {
         if ($wounds < 0) {
-            throw new \InvalidArgumentException('You cannot lose a negative amount of wounds.');
+            throw new InvalidWoundChangeValue(false);
         }
 
         // TODO
@@ -74,16 +75,13 @@ class HealthCondition
     public function healWounds(int $wounds): void
     {
         if ($wounds < 0) {
-            throw new \InvalidArgumentException('You cannot heal a negative amount of wounds.');
+            throw new InvalidWoundChangeValue(true);
         }
 
         // TODO
     }
 
-    /**
-     * @return int
-     */
-    public function getSum()
+    public function getSum(): int
     {
         return $this->good + $this->okay + $this->bad + $this->critical + ((int) $this->agony);
     }

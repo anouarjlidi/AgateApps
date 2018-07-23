@@ -12,6 +12,7 @@
 namespace CorahnRin\Entity;
 
 use CorahnRin\Data\Orientation;
+use CorahnRin\Data\Ways;
 use CorahnRin\Entity\CharacterProperties\CharAdvantages;
 use CorahnRin\Entity\CharacterProperties\CharDisciplines;
 use CorahnRin\Entity\CharacterProperties\CharDomains;
@@ -785,6 +786,72 @@ class Characters extends BaseCharacter
         $this->mentalResistanceBonus = $mentalResistanceBonus;
 
         return $this;
+    }
+
+    public function getCombativeness(): int
+    {
+        return $this->combativeness;
+    }
+
+    public function getCreativity(): int
+    {
+        return $this->creativity;
+    }
+
+    public function getEmpathy(): int
+    {
+        return $this->empathy;
+    }
+
+    public function getReason(): int
+    {
+        return $this->reason;
+    }
+
+    public function getConviction(): int
+    {
+        return $this->conviction;
+    }
+
+    public function getWay(string $way): int
+    {
+        Ways::validateWay($way);
+
+        switch ($way) {
+            case Ways::COMBATIVENESS:
+                return $this->combativeness;
+            case Ways::CREATIVITY:
+                return $this->creativity;
+            case Ways::EMPATHY:
+                return $this->empathy;
+            case Ways::REASON:
+                return $this->reason;
+            case Ways::CONVICTION:
+                return $this->conviction;
+        }
+    }
+
+    public function setWay(string $way, int $value): void
+    {
+        Ways::validateWayValue($way, $value);
+
+        switch ($way) {
+            case Ways::COMBATIVENESS:
+                $this->combativeness = $value;
+                break;
+            case Ways::CREATIVITY:
+                $this->creativity = $value;
+                break;
+            case Ways::EMPATHY:
+                $this->empathy = $value;
+                break;
+            case Ways::REASON:
+                $this->reason = $value;
+                break;
+            case Ways::CONVICTION:
+                $this->conviction = $value;
+                break;
+        }
     }
 
     public function setHealth(HealthCondition $health): self
@@ -1703,7 +1770,7 @@ class Characters extends BaseCharacter
     /**
      * @param int|string $id
      */
-    public function getDiscipline($id): CharacterProperties\CharDisciplines
+    public function getDiscipline($id): ?CharDisciplines
     {
         foreach ($this->disciplines as $charDiscipline) {
             $discipline = $charDiscipline->getDiscipline();

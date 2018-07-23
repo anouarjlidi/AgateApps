@@ -189,11 +189,8 @@ class CharDomains
         return $this->domain;
     }
 
-    /**
-     * @return int
-     */
-    public function getTotalScore()
+    public function getTotalScore(): int
     {
-        return $this->score + $this->character->getWay($this->getDomain()->getWay()->getShortName())->getScore();
+        return $this->score + $this->character->getWay($this->getDomain()->getWay());
     }
 }
