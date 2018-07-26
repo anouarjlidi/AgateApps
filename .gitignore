@@ -6,6 +6,7 @@
 dump*.sql
 phpunit.phar
 .env.*
+!.env.ci
 !.env.dist
 docker-compose.override.yml
 /src/DataFixtures/Internal/*

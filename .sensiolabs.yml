@@ -2,16 +2,13 @@ php_version: 7.1
 
 pre_composer_script: |
     #!/bin/bash
-    cp tests/ci/.env .env
-    cp tests/ci/.env .env.dist
+    cp .env.ci .env
 
 post_composer_script: |
     #!/bin/bash
     source .env
     mkdir build/
-    ./bin/console --env=test doctrine:database:create --no-interaction
-    ./bin/console --env=test doctrine:migrations:migrate --no-interaction
-    ./bin/console --env=test doctrine:fixtures:load --append --no-interaction
+    php tests/bootstrap.php
 
 exclude_patterns:
     - src/CorahnRin/PDF/FPDF.php
