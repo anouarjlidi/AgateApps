@@ -8,6 +8,7 @@ phpunit.phar
 .env.*
 !.env.ci
 !.env.dist
+.php_cs.cache
 docker-compose.override.yml
 /src/DataFixtures/Internal/*
 !/src/DataFixtures/Internal/.gitkeep

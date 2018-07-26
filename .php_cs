@@ -14,17 +14,15 @@ return PhpCsFixer\Config::create()
     ->setRules(
         [
             // Enabled rules
+            '@DoctrineAnnotation'             => true,
             '@Symfony'                        => true,
             '@Symfony:risky'                  => true,
-            '@PHP70Migration'                 => true,
-            '@PHP71Migration'                 => true,
             '@PHP56Migration'                 => true,
+            '@PHP70Migration'                 => true,
+            '@PHP70Migration:risky'           => true,
+            '@PHP71Migration'                 => true,
             'array_syntax'                    => [
                 'syntax' => 'short',
-            ],
-            'binary_operator_spaces'          => [
-                'align_double_arrow' => true,
-                'align_equals'       => true,
             ],
             'strict_param'                    => true,
             'heredoc_to_nowdoc'               => true,
@@ -32,17 +30,16 @@ return PhpCsFixer\Config::create()
             'no_useless_else'                 => true,
             'no_useless_return'               => true,
             'no_php4_constructor'             => true,
-            'doctrine_annotation_indentation' => true,
-            'doctrine_annotation_braces'      => [
-                'syntax' => 'with_braces',
-            ],
+            // Overrides default doctrine rule using ":" as character
             'doctrine_annotation_array_assignment' => [
                 'operator' => '=',
             ],
+            'multiline_whitespace_before_semicolons' => [
+                'strategy' => 'new_line_for_chained_calls',
+            ],
             // Disabled rules
-            'pre_increment' => false,
-            'doctrine_annotation_spaces'                => false,
-            'no_multiline_whitespace_before_semicolons' => false,
+            'increment_style' => false,
+            'declare_strict_types' => false, // I guess you're not ready for that yet. But your kids're gonna love it!
         ]
     )
     ->setRiskyAllowed(true)
