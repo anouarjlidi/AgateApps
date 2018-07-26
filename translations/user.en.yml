@@ -1,10 +1,8 @@
-security:
-    login:
-        username: Username
-        password: Password
-        remember_me: 'Remember me'
-        submit: 'Log in'
-        password_forgotten: 'Forgot password?'
+security.login.username: Username
+security.login.password: Password
+security.login.remember_me: 'Remember me'
+security.login.submit: 'Log in'
+security.login.password_forgotten: 'Forgot password?'
 
 profile:
     go_back: 'Go back to my profile'

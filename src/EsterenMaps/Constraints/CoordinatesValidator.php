@@ -39,7 +39,7 @@ class CoordinatesValidator extends ConstraintValidator
         }
 
         foreach ($value as $item) {
-            if (($count = count($item)) !== 2) {
+            if (count($item) !== 2) {
                 $this->context->addViolation('Coordinates must be an array of 2 items: latitude and longitude, either with keys 0 and 1 or "lat" and "lng".');
                 break;
             }

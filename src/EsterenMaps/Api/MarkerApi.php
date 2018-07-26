@@ -13,7 +13,6 @@ namespace EsterenMaps\Api;
 
 use EsterenMaps\Repository\FactionsRepository;
 use EsterenMaps\Repository\MapsRepository;
-use EsterenMaps\Repository\MarkersRepository;
 use EsterenMaps\Repository\MarkersTypesRepository;
 
 class MarkerApi
@@ -25,7 +24,6 @@ class MarkerApi
     public function __construct(
         MarkersTypesRepository $markersTypesRepository,
         MapsRepository $mapsRepository,
-        MarkersRepository $markersRepository,
         FactionsRepository $factionsRepository
     ) {
         $this->markersTypesRepository = $markersTypesRepository;

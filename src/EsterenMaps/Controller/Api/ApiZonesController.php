@@ -14,15 +14,15 @@ namespace EsterenMaps\Controller\Api;
 use Doctrine\ORM\EntityManagerInterface;
 use EsterenMaps\Api\ZoneApi;
 use EsterenMaps\Entity\Zones;
-use Symfony\Component\Routing\Annotation\Route;
+use Main\PublicService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-use Main\PublicService;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * @Route(host="%esteren_domains.api%")
@@ -51,7 +51,7 @@ class ApiZonesController implements PublicService
     public function create(Request $request): Response
     {
         if (!$this->security->isGranted('ROLE_ADMIN')) {
-            throw new AccessDeniedHttpException();
+            throw new AccessDeniedException();
         }
 
         try {
@@ -69,7 +69,7 @@ class ApiZonesController implements PublicService
     public function update(Zones $zone, Request $request): Response
     {
         if (!$this->security->isGranted('ROLE_ADMIN')) {
-            throw new AccessDeniedHttpException('Access denied.');
+            throw new AccessDeniedException();
         }
 
         try {

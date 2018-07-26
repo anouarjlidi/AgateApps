@@ -52,6 +52,7 @@ services:
             $imageMagickPath: '%env(IMAGEMAGICK_BINARIES_PATH)%'
             $outputDirectory: '%esterenmaps.output_directory%'
             $projectDir:      '%kernel.project_dir%'
+            $publicDir:       '%kernel.project_dir%/public/'
             $sheetsFolder:    '%kernel.project_dir%/src/CorahnRin/Resources/pdf_sources'
             $tileSize:        '%esterenmaps.tile_size%'
             $versionCode:     '%version_code%'

@@ -186,7 +186,10 @@ class Zones implements EntityToClearInterface, \JsonSerializable
 
     public function setCoordinates(string $coordinates): self
     {
-        @json_decode($coordinates, true);
+        try {
+            json_decode($coordinates, true);
+        } catch (\Throwable $e) {
+        }
 
         if (JSON_ERROR_NONE !== $code = json_last_error()) {
             throw new \InvalidArgumentException($code.':'.json_last_error_msg());
