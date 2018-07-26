@@ -19,6 +19,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Translation\TranslatorInterface;
+use User\Entity\User;
 use User\Form\Type\ResettingFormType;
 use User\Mailer\UserMailer;
 use User\Repository\UserRepository;
@@ -65,29 +66,9 @@ class ResettingController extends AbstractController
 
         $user = $this->userRepository->findByUsernameOrEmail($username);
 
-        if (null !== $user) {
-            dump($user);
-            $userRoles = $this->roleHierarchy->getReachableRoles($user->getRoles(true));
-
-            if (\in_array('ROLE_VISITOR', $userRoles, true)) {
-                goto render;
-            }
-
-            if (null === $user->getConfirmationToken()) {
-                $user->setConfirmationToken($this->generateToken());
-            }
-
-            try {
-                $this->mailer->sendResettingEmailMessage($user);
-                $this->getDoctrine()->getManager()->flush();
-            } catch (\Exception $e) {
-                $this->addFlash('user_error', 'user_errors.resetting_email_failed');
-
-                return new RedirectResponse($this->generateUrl('user_resetting_request'));
-            }
+        if (null !== $user && $response = $this->sendEmailToUser($user)) {
+            return $response;
         }
-
-        render:
 
         $this->addFlash('user_success', 'resetting.check_email');
 
@@ -124,5 +105,29 @@ class ResettingController extends AbstractController
             'token' => $token,
             'form'  => $form->createView(),
         ]);
+    }
+
+    private function sendEmailToUser(User $user): ?RedirectResponse
+    {
+        $userRoles = $this->roleHierarchy->getReachableRoles($user->getRoles(true));
+
+        if (\in_array('ROLE_VISITOR', $userRoles, true)) {
+            return null;
+        }
+
+        if (null === $user->getConfirmationToken()) {
+            $user->setConfirmationToken($this->generateToken());
+        }
+
+        try {
+            $this->mailer->sendResettingEmailMessage($user);
+            $this->getDoctrine()->getManager()->flush();
+        } catch (\Exception $e) {
+            $this->addFlash('user_error', 'user_errors.resetting_email_failed');
+
+            return new RedirectResponse($this->generateUrl('user_resetting_request'));
+        }
+
+        return null;
     }
 }

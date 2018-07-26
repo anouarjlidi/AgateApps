@@ -13,7 +13,9 @@ namespace EsterenMaps\Controller\Api;
 
 use EsterenMaps\Entity\Maps;
 use EsterenMaps\Form\MapImageType;
+use EsterenMaps\Model\MapImageQuery;
 use EsterenMaps\Services\MapsTilesManager;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -39,48 +41,24 @@ class ApiTilesController extends AbstractController
      */
     public function generateMapImageAction(Request $request, Maps $map): Response
     {
-        $form = $this->createForm(new MapImageType());
+        $baseData = new MapImageQuery();
+        $form = $this->createForm(new MapImageType(), $baseData);
 
         $form->handleRequest($request);
-        $form->submit($request->query->all());
-        if ($form->isValid()) {
-            $data = $form->getData();
-            try {
-                $image = $this->tilesManager->setMap($map)->createImage($data['ratio'], $data['x'], $data['y'], $data['width'], $data['height'], $data['withImages']);
-
-                $response = (new BinaryFileResponse(
-                        $image,
-                        200,
-                        ['Content-Type' => 'image/jpeg']
-                    ))
-                    ->setPublic()
-                    ->setExpires(new \DateTime('+1 day'))
-                ;
-
-                return $response;
-            } catch (\Exception $e) {
-                $message = '';
-                do {
-                    $message .= ($message ? "\n" : '').$e->getMessage();
-                } while ($e = $e->getPrevious());
-
-                return new JsonResponse([
-                    'error'   => true,
-                    'message' => $message,
-                ], 400);
-            }
-        } else {
-            $messages = [];
-            foreach ($form->getErrors(true) as $error) {
-                $field      = $error->getOrigin()->getName();
-                $messages[] = $this->get('translator')->trans('field_error', ['%field%' => $field], 'validators').': '.$error->getMessage();
-            }
-
-            return new JsonResponse([
-                'error'   => true,
-                'message' => $messages,
-            ], 400);
+        if ($form->isSubmitted() && $form->isValid() && $response = $this->handleFormSuccess($baseData, $map)) {
+            return $response;
         }
+
+        $messages = [];
+        foreach ($form->getErrors(true) as $error) {
+            $field      = $error->getOrigin()->getName();
+            $messages[] = $this->get('translator')->trans('field_error', ['%field%' => $field], 'validators').': '.$error->getMessage();
+        }
+
+        return new JsonResponse([
+            'error'   => true,
+            'message' => $messages,
+        ], 400);
     }
 
     /**
@@ -98,7 +76,7 @@ class ApiTilesController extends AbstractController
      */
     public function tileAction(Maps $map, int $zoom, int $x, int $y): Response
     {
-        $file = $this->outputDirectory.$map->getId().'/'.(int) $zoom.'/'.(int) $x.'/'.(int) $y.'.jpg';
+        $file = $this->outputDirectory.$map->getId().'/'.$zoom.'/'.$x.'/'.$y.'.jpg';
 
         if (!file_exists($file)) {
             $file = $this->outputDirectory.'/empty.jpg';
@@ -110,5 +88,33 @@ class ApiTilesController extends AbstractController
         ;
 
         return $response;
+    }
+
+    private function handleFormSuccess(MapImageQuery $data, Maps $map): ?Response
+    {
+        try {
+            $image = $this->tilesManager->setMap($map)->createImage($data['ratio'], $data['x'], $data['y'], $data['width'], $data['height'], $data['withImages']);
+
+            $response = (new BinaryFileResponse(
+                $image,
+                200,
+                ['Content-Type' => 'image/jpeg']
+            ))
+                ->setPublic()
+                ->setExpires(new \DateTime('+1 day'))
+            ;
+
+            return $response;
+        } catch (\Exception $e) {
+            $message = '';
+            do {
+                $message .= ($message ? "\n" : '').$e->getMessage();
+            } while ($e = $e->getPrevious());
+
+            return new JsonResponse([
+                'error'   => true,
+                'message' => $message,
+            ], 400);
+        }
     }
 }

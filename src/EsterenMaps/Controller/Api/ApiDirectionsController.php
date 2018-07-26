@@ -58,13 +58,43 @@ class ApiDirectionsController extends AbstractController
      */
     public function getDirectionsAction(Maps $map, Markers $from, Markers $to, Request $request): JsonResponse
     {
-        $code = 200;
+        $transportId = $request->query->get('transport');
+        $transport = $this->transportTypesRepository->findOneBy(['id' => $transportId]);
 
+        $response = $this->checkResponseCache($map, $from, $to, $request);
+
+        if ($response->isNotModified($request)) {
+            return $response;
+        }
+
+        if (!$transport && $transportId) {
+            $output = $this->getError($from, $to, $transportId, 'Transport not found.');
+            $response->setStatusCode(404);
+        } else {
+            $output = $this->directionsManager->getDirections($map, $from, $to, $request->query->get('hours_per_day', 7), $transport);
+            if (0 === count($output)) {
+                $output = $this->getError($from, $to);
+                $response->setStatusCode(404);
+            }
+        }
+
+        return $response->setData($output);
+    }
+
+    private function checkResponseCache(Maps $map, Markers $from, Markers $to, Request $request): JsonResponse
+    {
         $transportId = $request->query->get('transport');
         $hoursPerDay = $request->query->get('hours_per_day', 7);
-        $transport   = $this->transportTypesRepository->findOneBy(['id' => $transportId]);
 
-        $etag = sha1('js'.$map->getId().$from->getId().$to->getId().$transportId.$this->versionCode);
+        $etag = sha1(implode('_', [
+            'js',
+            $map->getId(),
+            $from->getId(),
+            $to->getId(),
+            $hoursPerDay,
+            $transportId,
+            $this->versionCode
+        ]));
         $lastModified = new \DateTime($this->versionDate);
 
         $response = new JsonResponse();
@@ -77,24 +107,6 @@ class ApiDirectionsController extends AbstractController
                 'public'        => true,
             ]);
         }
-
-        if ($response->isNotModified($request)) {
-            return $response;
-        }
-
-        if (!$transport && $transportId) {
-            $output = $this->getError($from, $to, $transportId, 'Transport not found.');
-            $code   = 404;
-        } else {
-            $output = $this->directionsManager->getDirections($map, $from, $to, $hoursPerDay, $transport);
-            if (!count($output)) {
-                $output = $this->getError($from, $to);
-                $code   = 404;
-            }
-        }
-
-        $response->setData($output);
-        $response->setStatusCode($code);
 
         return $response;
     }

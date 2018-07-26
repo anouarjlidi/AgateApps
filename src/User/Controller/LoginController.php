@@ -34,6 +34,7 @@ class LoginController extends AbstractController
         /** @var $session Session */
         $session = $request->getSession();
 
+        $error = null;
         $authErrorKey    = Security::AUTHENTICATION_ERROR;
         $lastUsernameKey = Security::LAST_USERNAME;
 
@@ -43,26 +44,15 @@ class LoginController extends AbstractController
         } elseif (null !== $session && $session->has($authErrorKey)) {
             $error = $session->get($authErrorKey);
             $session->remove($authErrorKey);
-        } else {
-            $error = null;
         }
 
-        if (!$error instanceof AuthenticationException) {
-            $error = null; // The value does not come from the security component.
-        } elseif ($error) {
+        if ($error instanceof AuthenticationException) {
             $this->addFlash('error', $error->getMessage());
         }
 
-        // last username entered by the user
-        $lastUsername = (null === $session) ? '' : $session->get($lastUsernameKey);
-
-        $csrfToken = $this->has('security.csrf.token_manager')
-            ? $this->get('security.csrf.token_manager')->getToken('authenticate')->getValue()
-            : null;
-
         return $this->render('user/Security/login.html.twig', [
-            'last_username'       => $lastUsername,
-            'csrf_token'          => $csrfToken,
+            'last_username'       => (null === $session) ? '' : $session->get($lastUsernameKey),
+            'csrf_token'          => $this->get('security.csrf.token_manager')->getToken('authenticate')->getValue(),
             'username_form_field' => FormLoginAuthenticator::USERNAME_OR_EMAIL_FORM_FIELD,
             'password_form_field' => FormLoginAuthenticator::PASSWORD_FORM_FIELD,
         ]);
