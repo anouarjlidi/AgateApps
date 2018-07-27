@@ -11,26 +11,32 @@
 
 namespace Agate\Form;
 
+use Agate\EventListener\CaptchaFormSubscriber;
 use Agate\Model\ContactMessage;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 
 class ContactType extends AbstractType
 {
     private $kernelEnvironment;
+    private $captchaFormSubscriber;
 
-    public function __construct(string $kernelEnvironment)
+    public function __construct(string $kernelEnvironment, CaptchaFormSubscriber $captchaFormSubscriber)
     {
         $this->kernelEnvironment = $kernelEnvironment;
+        $this->captchaFormSubscriber = $captchaFormSubscriber;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->captchaFormSubscriber->setRequest($options['request']);
+
         $builder
             ->add('name', TextType::class, [
                 'attr'        => [
@@ -54,14 +60,19 @@ class ContactType extends AbstractType
                 ],
             ])
             ->add('message', TextareaType::class)
+            ->addEventSubscriber($this->captchaFormSubscriber)
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
-            'translation_domain' => 'contact',
-            'data_class'         => ContactMessage::class,
-        ]);
+        $resolver
+            ->setDefaults([
+                'translation_domain' => 'contact',
+                'data_class'         => ContactMessage::class,
+            ])
+            ->setRequired('request')
+            ->setAllowedTypes('request', Request::class);
+        ;
     }
 }

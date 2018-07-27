@@ -40,6 +40,8 @@ parameters:
 
     corahnrin_manager_name: 'corahn_rin'
 
+    enable_contact_captcha: true
+
 services:
     _defaults:
         autowire: true
@@ -63,9 +65,12 @@ services:
             $kernelEnvironment: '%kernel.environment%'
             $doctrineResultCache: '@doctrine_cache.providers.result_cache'
             $corahnRinManagerName: '%corahnrin_manager_name%'
+            $enableContactCaptcha: '%enable_contact_captcha%'
     _instanceof:
         Main\PublicService:
             public: true
+        Main\NotAutoconfigured:
+            autoconfigure: false
 
     Admin\:
         resource: '../src/Admin/{Controller}'

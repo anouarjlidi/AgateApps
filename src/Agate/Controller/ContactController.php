@@ -14,7 +14,6 @@ namespace Agate\Controller;
 use Agate\Form\ContactType;
 use Agate\Model\ContactMessage;
 use Agate\Mailer\PortalMailer;
-use ReCaptcha\ReCaptcha;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -43,14 +42,12 @@ class ContactController implements PublicService
     public function __construct(
         string $kernelEnvironment,
         PortalMailer $mailer,
-        ReCaptcha $reCaptcha,
         TranslatorInterface $translator,
         Environment $twig,
         FormFactoryInterface $formFactory,
         RouterInterface $router
     ) {
         $this->mailer = $mailer;
-        $this->reCaptcha = $reCaptcha;
         $this->translator = $translator;
         $this->twig = $twig;
         $this->formFactory = $formFactory;
@@ -66,21 +63,9 @@ class ContactController implements PublicService
         $message = new ContactMessage();
         $message->setLocale($_locale);
 
-        $form = $this->formFactory->create(ContactType::class, $message);
+        // Request is necessary here for the captcha validation not associated with the form.
+        $form = $this->formFactory->create(ContactType::class, $message, ['request' => $request]);
         $form->handleRequest($request);
-
-        $captcha = $request->request->get('g-recaptcha-response');
-
-        if (
-            'prod' === $this->kernelEnvironment
-            && (
-                !$captcha
-                ||
-                ($captcha && false === $this->reCaptcha->verify($captcha, $request->getClientIp())->isSuccess())
-            )
-        ) {
-            $form->addError(new FormError('Invalid form values, please check'));
-        }
 
         if ($form->isSubmitted() && $form->isValid()) {
             $translator = $this->translator;
