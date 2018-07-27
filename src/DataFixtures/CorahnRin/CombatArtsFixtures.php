@@ -46,7 +46,7 @@ class CombatArtsFixtures extends AbstractFixture implements OrderedFixtureInterf
     {
         $this->manager = $manager;
 
-        $repo = $this->manager->getRepository(\CorahnRin\Entity\CombatArts::class);
+        $repo = $this->manager->getRepository(CombatArts::class);
 
         /** @var Books $book */
         $book = $this->getReference('corahnrin-book-2');
@@ -62,9 +62,9 @@ class CombatArtsFixtures extends AbstractFixture implements OrderedFixtureInterf
 
     public function fixtureObject(EntityRepository $repo, $id, $melee, $ranged, $name, $description, $book)
     {
-        $obj       = null;
+        $obj = null;
         $newObject = false;
-        $addRef    = false;
+        $addRef = false;
         if ($id) {
             $obj = $repo->find($id);
             if ($obj) {
@@ -75,7 +75,7 @@ class CombatArtsFixtures extends AbstractFixture implements OrderedFixtureInterf
         } else {
             $newObject = true;
         }
-        if ($newObject === true) {
+        if (true === $newObject) {
             $obj = new CombatArts();
             $obj->setId($id)
                 ->setName($name)
@@ -86,13 +86,13 @@ class CombatArtsFixtures extends AbstractFixture implements OrderedFixtureInterf
             ;
             if ($id) {
                 /** @var ClassMetadata $metadata */
-                $metadata = $this->manager->getClassMetaData(get_class($obj));
+                $metadata = $this->manager->getClassMetadata(\get_class($obj));
                 $metadata->setIdGeneratorType(ClassMetadata::GENERATOR_TYPE_NONE);
             }
             $this->manager->persist($obj);
             $addRef = true;
         }
-        if ($addRef === true && $obj) {
+        if (true === $addRef && $obj) {
             $this->addReference('corahnrin-combat-art-'.$id, $obj);
         }
     }

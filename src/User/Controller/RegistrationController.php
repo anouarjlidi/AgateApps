@@ -99,7 +99,7 @@ class RegistrationController extends AbstractController
         $user = $this->userRepository->findOneByEmail($email);
 
         if (null === $user) {
-            throw new NotFoundHttpException(sprintf('The user with email "%s" does not exist', $email));
+            throw new NotFoundHttpException(\sprintf('The user with email "%s" does not exist', $email));
         }
 
         return $this->render('user/Registration/check_email.html.twig', [
@@ -108,7 +108,7 @@ class RegistrationController extends AbstractController
     }
 
     /**
-     * @Route("/register/confirm/{token}", name="user_registration_confirm", requirements={"token" : ".+"}, methods={"GET"})
+     * @Route("/register/confirm/{token}", name="user_registration_confirm", requirements={"token" = ".+"}, methods={"GET"})
      */
     public function confirmAction(string $token, string $_locale)
     {
@@ -116,7 +116,7 @@ class RegistrationController extends AbstractController
         $user = $this->userRepository->findOneBy(['confirmationToken' => $token]);
 
         if (null === $user) {
-            throw new NotFoundHttpException(sprintf('The user with confirmation token "%s" does not exist', $token));
+            throw new NotFoundHttpException(\sprintf('The user with confirmation token "%s" does not exist', $token));
         }
 
         $user->setConfirmationToken(null);

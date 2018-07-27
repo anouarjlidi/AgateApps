@@ -16,7 +16,7 @@ namespace CorahnRin\Exception;
 class InvalidWoundChangeValue extends \InvalidArgumentException
 {
     /**
-     * @param bool $healing True if attempting to heal, false if attempting to wound.
+     * @param bool $healing true if attempting to heal, false if attempting to wound
      */
     public function __construct(bool $healing)
     {

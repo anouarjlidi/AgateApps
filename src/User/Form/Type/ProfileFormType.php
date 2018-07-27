@@ -36,18 +36,18 @@ class ProfileFormType extends AbstractType
 
         $builder
             ->add('username', TextType::class, [
-                'label'              => 'form.username',
+                'label' => 'form.username',
                 'translation_domain' => 'user',
             ])
             ->add('email', EmailType::class, [
-                'label'              => 'form.email',
+                'label' => 'form.email',
                 'translation_domain' => 'user',
             ])
             ->add('currentPassword', PasswordType::class, [
-                'label'              => 'form.current_password',
+                'label' => 'form.current_password',
                 'translation_domain' => 'user',
-                'mapped'             => false,
-                'constraints'        => new UserPassword(['message' => 'user.current_password.invalid']),
+                'mapped' => false,
+                'constraints' => new UserPassword(['message' => 'user.current_password.invalid']),
             ])
         ;
 

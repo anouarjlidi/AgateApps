@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace User\Security;
 
-use Symfony\Component\Security\Core\Exception\AccountStatusException;
 use Symfony\Component\Security\Core\User\UserCheckerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use User\Entity\User;

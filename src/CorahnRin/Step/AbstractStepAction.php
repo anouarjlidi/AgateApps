@@ -31,8 +31,8 @@ abstract class AbstractStepAction extends BaseAbstractStepAction
     {
         // Default parameters always injected in template.
         // Not overridable, they're mandatory.
-        $parameters['current_step']      = $this->step;
-        $parameters['steps']             = $this->steps;
+        $parameters['current_step'] = $this->step;
+        $parameters['steps'] = $this->steps;
         $parameters['current_character'] = $this->getCurrentCharacter();
 
         // Get template name

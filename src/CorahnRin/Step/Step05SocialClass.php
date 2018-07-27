@@ -27,17 +27,17 @@ class Step05SocialClass extends AbstractStepAction
 
         $selectedDomains = $currentStepCharacterValue['domains'] ?? [];
 
-        $domainId1 = (int) array_shift($selectedDomains);
-        $domainId2 = (int) array_shift($selectedDomains);
+        $domainId1 = (int) \array_shift($selectedDomains);
+        $domainId2 = (int) \array_shift($selectedDomains);
 
         $socialClassId = $currentStepCharacterValue['id'] ?? null;
 
         if ($this->request->isMethod('POST')) {
-            $socialClassId   = (int) $this->request->request->get('gen-div-choice');
+            $socialClassId = (int) $this->request->request->get('gen-div-choice');
             $selectedDomains = $this->request->request->get('domains') ?: [];
 
-            $domainId1 = (int) array_shift($selectedDomains);
-            $domainId2 = (int) array_shift($selectedDomains);
+            $domainId1 = (int) \array_shift($selectedDomains);
+            $domainId2 = (int) \array_shift($selectedDomains);
 
             if (
                 $socialClassId && $domainId1 && $domainId2
@@ -52,7 +52,7 @@ class Step05SocialClass extends AbstractStepAction
                     $this->flashMessage('Les domaines choisis ne sont pas associés à la classe sociale sélectionnée.');
                 } else {
                     $this->updateCharacterStep([
-                        'id'      => $socialClassId,
+                        'id' => $socialClassId,
                         'domains' => [$domainId1 => $domainId1, $domainId2 => $domainId2],
                     ]);
 
@@ -60,7 +60,7 @@ class Step05SocialClass extends AbstractStepAction
                 }
             } else {
                 // Errors
-                if (!array_key_exists($socialClassId, $allSocialClasses)) {
+                if (!\array_key_exists($socialClassId, $allSocialClasses)) {
                     $this->flashMessage('Veuillez sélectionner une classe sociale valide.');
                 } elseif (!$domainId1 || !$domainId2) {
                     $this->flashMessage('Vous devez choisir 2 domaines pour lesquels vous obtiendrez un bonus de +1. Ces domaines doivent être choisi dans la classe sociale sélectionnée.', 'warning');
@@ -69,8 +69,8 @@ class Step05SocialClass extends AbstractStepAction
         }
 
         return $this->renderCurrentStep([
-            'socialClasses'      => $allSocialClasses,
-            'socialClass_value'  => $socialClassId,
+            'socialClasses' => $allSocialClasses,
+            'socialClass_value' => $socialClassId,
             'socialClassDomains' => [$domainId1 => $domainId1, $domainId2 => $domainId2],
         ]);
     }

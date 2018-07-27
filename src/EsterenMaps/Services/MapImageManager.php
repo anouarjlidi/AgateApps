@@ -31,15 +31,15 @@ class MapImageManager
      */
     public function getImagePath(Maps $map)
     {
-        $ext = pathinfo($map->getImage(), PATHINFO_EXTENSION);
+        $ext = \pathinfo($map->getImage(), PATHINFO_EXTENSION);
 
         if (!$ext) {
             throw new \RuntimeException('Could not get map image extension. Got "'.$map->getImage().'".');
         }
 
-        $path = preg_replace('~\.'.$ext.'$~i', '_IM.'.$ext, $map->getImage());
+        $path = \preg_replace('~\.'.$ext.'$~i', '_IM.'.$ext, $map->getImage());
 
-            return $this->webDir.'/'.$path;
+        return $this->webDir.'/'.$path;
     }
 
     /**

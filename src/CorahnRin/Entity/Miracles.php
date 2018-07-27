@@ -18,7 +18,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Miracles.
  *
  * @ORM\Table(name="miracles")
- * @ORM\Entity()
+ * @ORM\Entity
  */
 class Miracles
 {
@@ -28,7 +28,7 @@ class Miracles
      * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
-     * @ORM\Id()
+     * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;

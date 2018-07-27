@@ -42,7 +42,7 @@ class ChangePasswordController extends AbstractController
         }
 
         $user = $this->getUser();
-        if (!is_object($user) || !$user instanceof User) {
+        if (!\is_object($user) || !$user instanceof User) {
             throw new AccessDeniedException('This user does not have access to this section.');
         }
 

@@ -46,7 +46,7 @@ class LegalMentionsController extends AbstractController
             return $response;
         }
 
-        if ($_locale !== 'fr') {
+        if ('fr' !== $_locale) {
             throw $this->createNotFoundException();
         }
 

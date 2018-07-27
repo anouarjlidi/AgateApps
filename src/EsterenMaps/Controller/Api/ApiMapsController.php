@@ -13,9 +13,8 @@ namespace EsterenMaps\Controller\Api;
 
 use EsterenMaps\Api\MapApi;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\{
-    JsonResponse, Request
-};
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Main\PublicService;
@@ -37,7 +36,7 @@ class ApiMapsController implements PublicService
     }
 
     /**
-     * @Route("/maps/{id}", name="maps_api_maps_get", requirements={"id"="\d+"}, methods={"GET"})
+     * @Route("/maps/{id}", name="maps_api_maps_get", requirements={"id" = "\d+"}, methods={"GET"})
      */
     public function getAction(int $id, Request $request): JsonResponse
     {
@@ -46,7 +45,7 @@ class ApiMapsController implements PublicService
         // Fixes issues with floats converted to string when array is encoded.
         $response->setEncodingOptions($response::DEFAULT_ENCODING_OPTIONS | JSON_PRESERVE_ZERO_FRACTION);
 
-        $response->setEtag($etag = sha1('map'.$id.$this->versionCode));
+        $response->setEtag($etag = \sha1('map'.$id.$this->versionCode));
 
         if ($response->isNotModified($request)) {
             return $response;
@@ -55,16 +54,16 @@ class ApiMapsController implements PublicService
         return $response
             ->setData($this->api->getMap($id))
             ->setCache([
-                'etag'          => $etag,
-                'max_age'       => 600,
-                's_maxage'      => 600,
-                'public'        => true,
+                'etag' => $etag,
+                'max_age' => 600,
+                's_maxage' => 600,
+                'public' => true,
             ])
         ;
     }
 
     /**
-     * @Route("/maps/{id}/edit-mode", name="maps_api_maps_get_editmode", requirements={"id"="\d+"}, methods={"GET"})
+     * @Route("/maps/{id}/edit-mode", name="maps_api_maps_get_editmode", requirements={"id" = "\d+"}, methods={"GET"})
      */
     public function getEditModeAction(int $id, Request $request): JsonResponse
     {

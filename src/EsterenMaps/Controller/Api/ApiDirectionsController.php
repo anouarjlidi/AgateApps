@@ -50,11 +50,11 @@ class ApiDirectionsController extends AbstractController
     /**
      * @Route("/maps/directions/{id}/{from}/{to}",
      *     name="esterenmaps_directions",
-     *     requirements={"id": "\d+", "from": "\d+", "to": "\d+"},
+     *     requirements={"id" = "\d+", "from" = "\d+", "to" = "\d+"},
      *     methods={"GET"}
      * )
-     * @ParamConverter(name="from", class="EsterenMaps\Entity\Markers", options={"id": "from"})
-     * @ParamConverter(name="to", class="EsterenMaps\Entity\Markers", options={"id": "to"})
+     * @ParamConverter(name="from", class="EsterenMaps\Entity\Markers", options={"id" = "from"})
+     * @ParamConverter(name="to", class="EsterenMaps\Entity\Markers", options={"id" = "to"})
      */
     public function getDirectionsAction(Maps $map, Markers $from, Markers $to, Request $request): JsonResponse
     {
@@ -72,7 +72,7 @@ class ApiDirectionsController extends AbstractController
             $response->setStatusCode(404);
         } else {
             $output = $this->directionsManager->getDirections($map, $from, $to, $request->query->get('hours_per_day', 7), $transport);
-            if (0 === count($output)) {
+            if (0 === \count($output)) {
                 $output = $this->getError($from, $to);
                 $response->setStatusCode(404);
             }
@@ -86,25 +86,25 @@ class ApiDirectionsController extends AbstractController
         $transportId = $request->query->get('transport');
         $hoursPerDay = $request->query->get('hours_per_day', 7);
 
-        $etag = sha1(implode('_', [
+        $etag = \sha1(\implode('_', [
             'js',
             $map->getId(),
             $from->getId(),
             $to->getId(),
             $hoursPerDay,
             $transportId,
-            $this->versionCode
+            $this->versionCode,
         ]));
         $lastModified = new \DateTime($this->versionDate);
 
         $response = new JsonResponse();
         if (!$request->isNoCache()) {
             $response->setCache([
-                'etag'          => $etag,
+                'etag' => $etag,
                 'last_modified' => $lastModified,
-                'max_age'       => 600,
-                's_maxage'      => 600,
-                'public'        => true,
+                'max_age' => 600,
+                's_maxage' => 600,
+                'public' => true,
             ]);
         }
 
@@ -114,11 +114,11 @@ class ApiDirectionsController extends AbstractController
     private function getError(Markers $from, Markers $to, int $transportId = null, string $message = 'No path found for this query.'): array
     {
         return [
-            'error'   => true,
+            'error' => true,
             'message' => $this->translator->trans($message),
-            'query'   => [
-                'from'      => $from,
-                'to'        => $to,
+            'query' => [
+                'from' => $from,
+                'to' => $to,
                 'transport' => $transportId,
             ],
         ];

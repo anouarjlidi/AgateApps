@@ -42,19 +42,19 @@ class Step09Traits extends AbstractStepAction
         $traits = $this->getCharacterProperty();
 
         $quality = $traits['quality'] ?? null;
-        $flaw    = $traits['flaw'] ?? null;
+        $flaw = $traits['flaw'] ?? null;
 
         if ($this->request->isMethod('POST')) {
             $quality = (int) $this->request->request->get('quality');
-            $flaw    = (int) $this->request->request->get('flaw');
+            $flaw = (int) $this->request->request->get('flaw');
 
-            $quality_exists = array_key_exists($quality, $traitsList['qualities']);
-            $flaw_exists    = array_key_exists($flaw, $traitsList['flaws']);
+            $quality_exists = \array_key_exists($quality, $traitsList['qualities']);
+            $flaw_exists = \array_key_exists($flaw, $traitsList['flaws']);
 
             if ($quality_exists && $flaw_exists) {
                 $this->updateCharacterStep([
                     'quality' => $quality,
-                    'flaw'    => $flaw,
+                    'flaw' => $flaw,
                 ]);
 
                 return $this->nextStep();
@@ -63,8 +63,8 @@ class Step09Traits extends AbstractStepAction
         }
 
         return $this->renderCurrentStep([
-            'quality'     => $quality,
-            'flaw'        => $flaw,
+            'quality' => $quality,
+            'flaw' => $flaw,
             'traits_list' => $traitsList,
         ]);
     }

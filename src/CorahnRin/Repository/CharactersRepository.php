@@ -68,13 +68,13 @@ class CharactersRepository extends ServiceEntityRepository
         ;
 
         if (null !== $searchField && null !== $order) {
-            if ($searchField === 'job') {
+            if ('job' === $searchField) {
                 $qb
                     ->addOrderBy('job.name', $order)
                 ;
-            } elseif ($searchField === 'people') {
+            } elseif ('people' === $searchField) {
                 $qb->orderBy('people.name');
-            } elseif ($searchField === 'birthplace') {
+            } elseif ('birthplace' === $searchField) {
                 $qb->orderBy('birthplace.name');
             } else {
                 $qb->orderBy('characters.'.$searchField, $order);

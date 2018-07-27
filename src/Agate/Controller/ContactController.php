@@ -72,7 +72,7 @@ class ContactController implements PublicService
 
             $subject = $translator->trans('form.message_subject', [
                 '%name%' => $message->getName(),
-                '%subject%' => strip_tags($message->getSubject())
+                '%subject%' => \strip_tags($message->getSubject()),
             ], 'contact');
 
             // If message succeeds, we redirect
@@ -87,7 +87,7 @@ class ContactController implements PublicService
         }
 
         return new Response($this->twig->render('agate/contact.html.twig', [
-            'form'       => $form->createView(),
+            'form' => $form->createView(),
             'mail_error' => $form->getErrors(true, true),
         ]));
     }

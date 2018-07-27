@@ -19,7 +19,7 @@ use User\Entity\User;
 /**
  * Games.
  *
- * @ORM\Entity()
+ * @ORM\Entity
  * @ORM\Table(name="games", uniqueConstraints={@ORM\UniqueConstraint(name="idgUnique", columns={"name", "game_master_id"})})
  */
 class Games
@@ -28,7 +28,7 @@ class Games
      * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
-     * @ORM\Id()
+     * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;

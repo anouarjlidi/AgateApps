@@ -23,8 +23,8 @@ class CoordinatesValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, Coordinates::class);
         }
 
-        if (is_string($value)) {
-            $value = json_decode($value, true);
+        if (\is_string($value)) {
+            $value = \json_decode($value, true);
             if (false === $value) {
                 $this->context->addViolation('This value should be a valid JSON string.');
 
@@ -32,14 +32,14 @@ class CoordinatesValidator extends ConstraintValidator
             }
         }
 
-        if (!is_array($value)) {
+        if (!\is_array($value)) {
             $this->context->addViolation('JSON string must contain an array');
 
             return;
         }
 
         foreach ($value as $item) {
-            if (count($item) !== 2) {
+            if (2 !== \count($item)) {
                 $this->context->addViolation('Coordinates must be an array of 2 items: latitude and longitude, either with keys 0 and 1 or "lat" and "lng".');
                 break;
             }
@@ -56,12 +56,12 @@ class CoordinatesValidator extends ConstraintValidator
                 return;
             }
 
-            if (!is_numeric($item[$keyLat])) {
+            if (!\is_numeric($item[$keyLat])) {
                 $this->context->addViolation('Latitude must be a valid number');
                 break;
             }
 
-            if (!is_numeric($item[$keyLng])) {
+            if (!\is_numeric($item[$keyLng])) {
                 $this->context->addViolation('Longitude must be a valid number');
                 break;
             }

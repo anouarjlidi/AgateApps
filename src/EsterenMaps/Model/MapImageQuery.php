@@ -1,6 +1,5 @@
 <?php
 
-
 namespace EsterenMaps\Model;
 
 use Symfony\Component\Validator\Constraints as Assert;
@@ -19,7 +18,7 @@ class MapImageQuery
      * @var int
      *
      * @Assert\Type(type="integer")
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @Assert\Range(min=50)
      */
     public $width = 100;
@@ -28,7 +27,7 @@ class MapImageQuery
      * @var int
      *
      * @Assert\Type(type="integer")
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @Assert\Range(min=50)
      */
     public $height = 100;

@@ -46,7 +46,7 @@ class ApiRoutesController implements PublicService
     }
 
     /**
-     * @Route("/routes", name="maps_api_routes_create", methods={"POST"}, defaults={"_format": "json"})
+     * @Route("/routes", name="maps_api_routes_create", methods={"POST"}, defaults={"_format" = "json"})
      */
     public function create(Request $request): Response
     {
@@ -55,7 +55,7 @@ class ApiRoutesController implements PublicService
         }
 
         try {
-            $route = Routes::fromApi($this->routeApi->sanitizeRequestData(json_decode($request->getContent(), true)));
+            $route = Routes::fromApi($this->routeApi->sanitizeRequestData(\json_decode($request->getContent(), true)));
 
             return $this->handleResponse($this->validate($route), $route);
         } catch (HttpException $e) {
@@ -64,7 +64,7 @@ class ApiRoutesController implements PublicService
     }
 
     /**
-     * @Route("/routes/{id}", name="maps_api_routes_update", methods={"POST"}, defaults={"_format": "json"})
+     * @Route("/routes/{id}", name="maps_api_routes_update", methods={"POST"}, defaults={"_format" = "json"})
      */
     public function update(Routes $route, Request $request): Response
     {
@@ -73,7 +73,7 @@ class ApiRoutesController implements PublicService
         }
 
         try {
-            $route->updateFromApi($this->routeApi->sanitizeRequestData(json_decode($request->getContent(), true)));
+            $route->updateFromApi($this->routeApi->sanitizeRequestData(\json_decode($request->getContent(), true)));
 
             return $this->handleResponse($this->validate($route), $route);
         } catch (HttpException $e) {
@@ -83,8 +83,8 @@ class ApiRoutesController implements PublicService
 
     private function handleResponse(array $messages, Routes $route): Response
     {
-        if (count($messages) > 0) {
-            throw new BadRequestHttpException(json_encode($messages, JSON_PRETTY_PRINT));
+        if (\count($messages) > 0) {
+            throw new BadRequestHttpException(\json_encode($messages, JSON_PRETTY_PRINT));
         }
 
         $this->em->persist($route);

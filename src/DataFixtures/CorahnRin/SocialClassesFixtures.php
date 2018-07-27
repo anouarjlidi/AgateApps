@@ -48,11 +48,11 @@ class SocialClassesFixtures extends AbstractFixture implements OrderedFixtureInt
         /** @var EntityRepository $repo */
         $repo = $this->manager->getRepository(\CorahnRin\Entity\SocialClasses::class);
 
-        $domain1  = $this->getReference('corahnrin-domain-1');
-        $domain2  = $this->getReference('corahnrin-domain-2');
-        $domain5  = $this->getReference('corahnrin-domain-5');
-        $domain8  = $this->getReference('corahnrin-domain-8');
-        $domain9  = $this->getReference('corahnrin-domain-9');
+        $domain1 = $this->getReference('corahnrin-domain-1');
+        $domain2 = $this->getReference('corahnrin-domain-2');
+        $domain5 = $this->getReference('corahnrin-domain-5');
+        $domain8 = $this->getReference('corahnrin-domain-8');
+        $domain9 = $this->getReference('corahnrin-domain-9');
         $domain10 = $this->getReference('corahnrin-domain-10');
         $domain11 = $this->getReference('corahnrin-domain-11');
         $domain12 = $this->getReference('corahnrin-domain-12');
@@ -71,9 +71,9 @@ class SocialClassesFixtures extends AbstractFixture implements OrderedFixtureInt
 
     public function fixtureObject(EntityRepository $repo, $id, $domains, $name, $description)
     {
-        $obj       = null;
+        $obj = null;
         $newObject = false;
-        $addRef    = false;
+        $addRef = false;
         if ($id) {
             $obj = $repo->find($id);
             if ($obj) {
@@ -84,7 +84,7 @@ class SocialClassesFixtures extends AbstractFixture implements OrderedFixtureInt
         } else {
             $newObject = true;
         }
-        if ($newObject === true) {
+        if (true === $newObject) {
             $obj = new SocialClasses();
             $obj->setId($id)
                 ->setName($name)
@@ -95,13 +95,13 @@ class SocialClassesFixtures extends AbstractFixture implements OrderedFixtureInt
             }
             if ($id) {
                 /** @var ClassMetadata $metadata */
-                $metadata = $this->manager->getClassMetaData(get_class($obj));
+                $metadata = $this->manager->getClassMetadata(\get_class($obj));
                 $metadata->setIdGeneratorType(ClassMetadata::GENERATOR_TYPE_NONE);
             }
             $this->manager->persist($obj);
             $addRef = true;
         }
-        if ($addRef === true && $obj) {
+        if (true === $addRef && $obj) {
             $this->addReference('corahnrin-social-class-'.$id, $obj);
         }
     }

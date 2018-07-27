@@ -74,8 +74,8 @@ final class SessionToCharacter
         ObjectManager $em,
         string $corahnRinManagerName
     ) {
-        $this->resolver          = $resolver;
-        $this->em                = $em;
+        $this->resolver = $resolver;
+        $this->em = $em;
         $this->domainsCalculator = $domainsCalculator;
         $this->corahnRinManagerName = $corahnRinManagerName;
     }
@@ -93,11 +93,11 @@ final class SessionToCharacter
 
         $this->prepareNecessaryVariables();
 
-        $generatorKeys = array_keys($values);
-        $stepsKeys     = array_keys($steps);
+        $generatorKeys = \array_keys($values);
+        $stepsKeys = \array_keys($steps);
 
-        sort($generatorKeys);
-        sort($stepsKeys);
+        \sort($generatorKeys);
+        \sort($stepsKeys);
 
         if ($generatorKeys !== $stepsKeys) {
             throw new CharactersException('Generator seems not to be fully finished');
@@ -151,8 +151,8 @@ final class SessionToCharacter
      */
     private function prepareNecessaryVariables(): void
     {
-        $this->setbacks   = $this->getRepository(Setbacks::class)->findAll('_primary');
-        $this->domains    = $this->getRepository(Domains::class)->findAll('_primary');
+        $this->setbacks = $this->getRepository(Setbacks::class)->findAll('_primary');
+        $this->domains = $this->getRepository(Domains::class)->findAll('_primary');
         $this->advantages = $this->getRepository(Avantages::class)->findAll('_primary');
     }
 
@@ -181,9 +181,9 @@ final class SessionToCharacter
         $character->setSocialClass($this->getRepository(SocialClasses::class)->find($values['05_social_class']['id']));
 
         $domains = $values['05_social_class']['domains'];
-        reset($domains);
-        $character->setSocialClassDomain1($this->domains[current($domains)]);
-        $character->setSocialClassDomain2($this->domains[next($domains)]);
+        \reset($domains);
+        $character->setSocialClassDomain1($this->domains[\current($domains)]);
+        $character->setSocialClassDomain2($this->domains[\next($domains)]);
     }
 
     private function setAge(Characters $character, array $values): void
@@ -323,10 +323,10 @@ final class SessionToCharacter
             }
         } else {
             // If salary is not set in job, character has 2d10 azure daols
-            $azure = random_int(1, 10) + random_int(1, 10);
+            $azure = \random_int(1, 10) + \random_int(1, 10);
             if ($character->hasSetback(9)) {
                 // If character is poor, he has half money
-                $azure = (int) floor($azure / 2);
+                $azure = (int) \floor($azure / 2);
             }
             $money->addAzure($azure);
             $money->reallocate();
@@ -350,11 +350,11 @@ final class SessionToCharacter
         $finalDomainsValues = $this->domainsCalculator->calculateFinalValues(
             $this->domains,
             $domainsBaseValues,
-            array_map(function ($e) { return (int) $e; }, $values['15_domains_spend_exp']['domains'])
+            \array_map(function ($e) { return (int) $e; }, $values['15_domains_spend_exp']['domains'])
         );
 
-        $bonuses = array_fill_keys(array_keys($this->domains), 0);
-        $maluses = array_fill_keys(array_keys($this->domains), 0);
+        $bonuses = \array_fill_keys(\array_keys($this->domains), 0);
+        $maluses = \array_fill_keys(\array_keys($this->domains), 0);
 
         foreach ($finalDomainsValues as $id => $value) {
             $charDomain = new CharDomains();
@@ -375,15 +375,15 @@ final class SessionToCharacter
         $bad = $health->getBad();
         $critical = $health->getCritical();
 
-        $bonuses = array_fill_keys(array_keys($this->domains), 0);
-        $maluses = array_fill_keys(array_keys($this->domains), 0);
+        $bonuses = \array_fill_keys(\array_keys($this->domains), 0);
+        $maluses = \array_fill_keys(\array_keys($this->domains), 0);
 
         foreach ($character->getCharAdvantages() as $charAdvantage) {
             $adv = $charAdvantage->getAdvantage();
-            if (!trim($adv->getBonusdisc())) {
+            if (!\trim($adv->getBonusdisc())) {
                 continue;
             }
-            foreach (preg_split('~,~', $adv->getBonusdisc(), -1, PREG_SPLIT_NO_EMPTY) as $bonus) {
+            foreach (\preg_split('~,~', $adv->getBonusdisc(), -1, PREG_SPLIT_NO_EMPTY) as $bonus) {
                 if (isset($this->domains[$bonus])) {
                     if ($adv->isDesv()) {
                         $maluses[$bonus] += $charAdvantage->getScore();
@@ -401,11 +401,13 @@ final class SessionToCharacter
                             switch (true) {
                                 case $score >= 1:
                                     $bad++;
+                                    // no break
                                 case $score >= 2:
                                     $critical++;
                                     break;
                                 case $score <= -1:
                                     $okay--;
+                                    // no break
                                 case $score <= -2:
                                     $critical--;
                                     break;

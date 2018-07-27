@@ -32,7 +32,7 @@ class Maps implements EntityToClearInterface
      * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
-     * @ORM\Id()
+     * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     protected $id;
@@ -56,7 +56,7 @@ class Maps implements EntityToClearInterface
      * @var string
      *
      * @ORM\Column(name="image", type="string", length=255, nullable=false)
-     * @Gedmo\UploadableFilePath()
+     * @Gedmo\UploadableFilePath
      */
     protected $image;
 
@@ -70,7 +70,7 @@ class Maps implements EntityToClearInterface
     /**
      * @var int
      *
-     * @ORM\Column(name="max_zoom", type="smallint", options={"default": 1})
+     * @ORM\Column(name="max_zoom", type="smallint", options={"default" = 1})
      * @Assert\Range(
      *     min=1,
      *     max=50
@@ -81,7 +81,7 @@ class Maps implements EntityToClearInterface
     /**
      * @var int
      *
-     * @ORM\Column(name="start_zoom", type="smallint", options={"default": 1})
+     * @ORM\Column(name="start_zoom", type="smallint", options={"default" = 1})
      * @Assert\Range(
      *     min=1,
      *     max=10
@@ -92,27 +92,27 @@ class Maps implements EntityToClearInterface
     /**
      * @var int
      *
-     * @ORM\Column(name="start_x", type="smallint", options={"default": 1})
+     * @ORM\Column(name="start_x", type="smallint", options={"default" = 1})
      */
     protected $startX = 0;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="start_y", type="smallint", options={"default": 1})
+     * @ORM\Column(name="start_y", type="smallint", options={"default" = 1})
      */
     protected $startY = 0;
 
     /**
      * @var string
-     * @ORM\Column(name="bounds", type="string", options={"default": "[]"})
+     * @ORM\Column(name="bounds", type="string", options={"default" = "[]"})
      */
     protected $bounds = '[]';
 
     /**
      * @var int
      *
-     * @ORM\Column(name="coordinates_ratio", type="smallint", options={"default": 1})
+     * @ORM\Column(name="coordinates_ratio", type="smallint", options={"default" = 1})
      */
     protected $coordinatesRatio = 1;
 
@@ -150,9 +150,9 @@ class Maps implements EntityToClearInterface
      */
     public function __construct()
     {
-        $this->routes  = new ArrayCollection();
+        $this->routes = new ArrayCollection();
         $this->markers = new ArrayCollection();
-        $this->zones   = new ArrayCollection();
+        $this->zones = new ArrayCollection();
     }
 
     /**
@@ -685,7 +685,7 @@ class Maps implements EntityToClearInterface
      */
     public function getJsonBounds()
     {
-        return json_decode($this->bounds, true);
+        return \json_decode($this->bounds, true);
     }
 
     /**
@@ -695,7 +695,7 @@ class Maps implements EntityToClearInterface
      */
     public function setJsonBounds(array $bounds = [])
     {
-        $this->bounds = json_encode($bounds);
+        $this->bounds = \json_encode($bounds);
 
         return $this;
     }

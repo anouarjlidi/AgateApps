@@ -16,15 +16,7 @@ namespace EsterenMaps\ImageManagement;
  */
 class ImageIdentification implements \ArrayAccess
 {
-    /**
-     * @var array
-     */
-    private $properties = [];
-
-    /**
-     * @var array
-     */
-    private $validProperties = [
+    private const VALID_PROPERTIES = [
         'xmax',
         'ymax',
         'tiles_max',
@@ -35,11 +27,16 @@ class ImageIdentification implements \ArrayAccess
     ];
 
     /**
+     * @var array
+     */
+    private $properties = [];
+
+    /**
      * @param array $data
      */
     public function __construct(array $data = [])
     {
-        $this->properties = array_merge(array_fill_keys($this->validProperties, null), $data);
+        $this->properties = \array_merge(\array_fill_keys(self::VALID_PROPERTIES, null), $data);
     }
 
     /**
@@ -103,7 +100,7 @@ class ImageIdentification implements \ArrayAccess
      */
     public function offsetExists($offset)
     {
-        return array_key_exists($offset, $this->properties);
+        return \in_array($offset, self::VALID_PROPERTIES, true) && \array_key_exists($offset, $this->properties);
     }
 
     /**
@@ -122,7 +119,7 @@ class ImageIdentification implements \ArrayAccess
         if ($this->offsetExists($offset)) {
             $this->properties[$offset] = $value;
         } else {
-            throw new \RuntimeException(sprintf(
+            throw new \RuntimeException(\sprintf(
                 'Undefined attribute %s in ImageIdentification',
                 $offset
             ));

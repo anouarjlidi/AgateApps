@@ -31,7 +31,7 @@ class Step02Job extends AbstractStepAction
         $jobs = $this->jobsRepository->findAllPerBook();
 
         if ($this->request->isMethod('POST')) {
-            $jobValue  = (int) $this->request->request->get('job_value');
+            $jobValue = (int) $this->request->request->get('job_value');
             $jobExists = false;
 
             foreach ($jobs as $id => $jobs_list) {

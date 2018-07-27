@@ -32,11 +32,10 @@ class DirectionsManager
         MapApi $mapApi,
         ObjectManager $entityManager,
         Environment $twig
-    )
-    {
+    ) {
         $this->entityManager = $entityManager;
-        $this->twig          = $twig;
-        $this->mapApi        = $mapApi;
+        $this->twig = $twig;
+        $this->mapApi = $mapApi;
     }
 
     public function getDirections(Maps $map, Markers $start, Markers $end, int $hoursPerDay = 7, TransportTypes $transportType = null): array
@@ -63,46 +62,46 @@ class DirectionsManager
         // We need nodes (markers) and edges (routes).
         foreach ($data['map']['routes'] as $routeId => $route) {
             $markerStartId = $route['marker_start'];
-            $markerEndId   = $route['marker_end'];
+            $markerEndId = $route['marker_end'];
 
             // Create an edge based on a route.
             $edge = [
-                'id'       => $routeId,
+                'id' => $routeId,
                 'distance' => $route['distance'],
-                'type'     => $route['route_type'],
-                'start'    => $markerStartId,
-                'end'      => $markerEndId,
+                'type' => $route['route_type'],
+                'start' => $markerStartId,
+                'end' => $markerEndId,
             ];
 
             // Add nodes and edge.
             if ($markerStartId) {
                 // Set the start node if does not exist.
-                if (!array_key_exists($markerStartId, $nodes)) {
+                if (!\array_key_exists($markerStartId, $nodes)) {
                     $nodes[$markerStartId] = [
-                        'id'         => $markerStartId,
-                        'name'       => $data['map']['markers'][$markerStartId]['name'],
+                        'id' => $markerStartId,
+                        'name' => $data['map']['markers'][$markerStartId]['name'],
                         'neighbours' => [],
                     ];
                 }
 
                 $nodes[$markerStartId]['neighbours'][$routeId] = [
                     'distance' => $route['distance'],
-                    'end'      => $route['marker_end'],
+                    'end' => $route['marker_end'],
                 ];
             }
             if ($markerEndId) {
                 // Set the end node if does not exist.
-                if (!array_key_exists($markerEndId, $nodes)) {
+                if (!\array_key_exists($markerEndId, $nodes)) {
                     $nodes[$markerEndId] = [
-                        'id'         => $markerEndId,
-                        'name'       => $data['map']['markers'][$markerEndId]['name'],
+                        'id' => $markerEndId,
+                        'name' => $data['map']['markers'][$markerEndId]['name'],
                         'neighbours' => [],
                     ];
                 }
 
                 $nodes[$markerEndId]['neighbours'][$routeId] = [
                     'distance' => $route['distance'],
-                    'end'      => $markerStartId,
+                    'end' => $markerStartId,
                 ];
             }
             $edges[$routeId] = $edge;
@@ -113,24 +112,24 @@ class DirectionsManager
 
         $paths = $this->dijkstra($nodes, $edges, $start->getId(), $end->getId());
 
-        $routesIds    = array_values($paths);
-        $markersArray = array_filter($data['map']['markers'], function($marker) use ($paths) {
-            return array_key_exists($marker['id'], $paths);
+        $routesIds = \array_values($paths);
+        $markersArray = \array_filter($data['map']['markers'], function ($marker) use ($paths) {
+            return \array_key_exists($marker['id'], $paths);
         });
-        $routesArray = array_filter($data['map']['routes'], function($route) use ($routesIds) {
-            return in_array($route['id'], $routesIds, true);
+        $routesArray = \array_filter($data['map']['routes'], function ($route) use ($routesIds) {
+            return \in_array($route['id'], $routesIds, true);
         });
 
         $steps = [];
 
         // Remove unused fields
         foreach ($paths as $markerId => $routeId) {
-            $marker                        = $markersArray[$markerId];
-            $marker['route']               = $routeId ? $routesArray[$routeId] : null;
-            $marker['marker_type']         = $marker['marker_type'] ? $data['references']['markers_types'][$marker['marker_type']] : null;
-            $marker['faction']             = $marker['faction'] ? $data['references']['factions'][$marker['faction']] : null;
+            $marker = $markersArray[$markerId];
+            $marker['route'] = $routeId ? $routesArray[$routeId] : null;
+            $marker['marker_type'] = $marker['marker_type'] ? $data['references']['markers_types'][$marker['marker_type']] : null;
+            $marker['faction'] = $marker['faction'] ? $data['references']['factions'][$marker['faction']] : null;
             if (isset($marker['route'])) {
-                $marker['route']['faction']    = $marker['route']['faction'] ? $data['references']['factions'][$marker['route']['faction']] : null;
+                $marker['route']['faction'] = $marker['route']['faction'] ? $data['references']['factions'][$marker['route']['faction']] : null;
                 $marker['route']['route_type'] = $marker['route']['route_type'] ? $data['references']['routes_types'][$marker['route']['route_type']] : null;
             }
             unset(
@@ -172,7 +171,7 @@ class DirectionsManager
         foreach ($nodes as $id => $node) {
             foreach ($node['neighbours'] as $nid => $neighbour) {
                 $distances[$id][$neighbour['end']] = [
-                    'edge'     => $edges[$nid],
+                    'edge' => $edges[$nid],
                     'distance' => $neighbour['distance'],
                 ];
             }
@@ -182,18 +181,18 @@ class DirectionsManager
         $S = []; //the nearest path with its parent and weight
         $Q = []; //the left nodes without the nearest path
 
-        foreach (array_keys($distances) as $val) {
+        foreach (\array_keys($distances) as $val) {
             $Q[$val] = INF;
         }
         $Q[$start] = 0;
 
         //start calculating
-        while (0 !== count($Q)) {
-            $min = array_search(min($Q), $Q, true); //the most min weight
+        while (0 !== \count($Q)) {
+            $min = \array_search(\min($Q), $Q, true); //the most min weight
             if ($min === $end) {
                 break;
             }
-            if (!array_key_exists($min, $distances)) {
+            if (!\array_key_exists($min, $distances)) {
                 // In the case the route ID does not exist, we set it as empty.
                 // It can only happen if the transport selected "removes" some inaccessible routes,
                 //  specificly when the route type has a speed modifier of 0 with this transport.
@@ -210,18 +209,18 @@ class DirectionsManager
             unset($Q[$min]);
         }
 
-        if (!array_key_exists($end, $S)) {
+        if (!\array_key_exists($end, $S)) {
             return [];
         }
 
         $path = [];
-        $pos  = $end;
+        $pos = $end;
         while ($pos !== $start) {
             $path[] = $pos;
-            $pos    = $S[$pos][0];
+            $pos = $S[$pos][0];
         }
         $path[] = $start;
-        $path   = array_reverse($path);
+        $path = \array_reverse($path);
 
         $realPath = [];
 
@@ -231,13 +230,13 @@ class DirectionsManager
             $realPath[$nodeId] = null;
 
             if ($next) {
-                $dist     = INF;
+                $dist = INF;
                 $realEdge = null;
 
                 foreach ($nodes[$nodeId]['neighbours'] as $edgeId => $edge) {
                     if ($edge['distance'] < $dist && $edge['end'] === $next) {
                         $realEdge = $edges[$edgeId];
-                        $dist     = $edge['distance'];
+                        $dist = $edge['distance'];
                     }
                 }
 
@@ -253,8 +252,8 @@ class DirectionsManager
     private function getDataArray(Markers $from, Markers $to, array $directions, int $hoursPerDay = 7, TransportTypes $transport = null): array
     {
         $distance = null;
-        $NE       = [];
-        $SW       = [];
+        $NE = [];
+        $SW = [];
 
         foreach ($directions as $step) {
             if (!$step['route']) {
@@ -286,18 +285,18 @@ class DirectionsManager
         }
 
         $data = [
-            'bounds'          => ['northEast' => $NE, 'southWest' => $SW],
-            'duration_raw'    => null,
-            'duration_real'   => ['days' => null, 'hours' => null],
-            'end'             => $to->jsonSerialize(),
-            'found'           => count($directions) > 0,
-            'hours_per_day'   => $hoursPerDay,
-            'number_of_steps' => count($directions) ? (count($directions) - 2) : 0,
-            'path'            => $directions,
-            'path_view'       => null,
-            'start'           => $from->jsonSerialize(),
-            'total_distance'  => $distance,
-            'transport'       => $transport ? $transport->jsonSerialize() : null,
+            'bounds' => ['northEast' => $NE, 'southWest' => $SW],
+            'duration_raw' => null,
+            'duration_real' => ['days' => null, 'hours' => null],
+            'end' => $to->jsonSerialize(),
+            'found' => \count($directions) > 0,
+            'hours_per_day' => $hoursPerDay,
+            'number_of_steps' => \count($directions) ? (\count($directions) - 2) : 0,
+            'path' => $directions,
+            'path_view' => null,
+            'start' => $from->jsonSerialize(),
+            'total_distance' => $distance,
+            'transport' => $transport ? $transport->jsonSerialize() : null,
         ];
 
         return $data;
@@ -349,9 +348,9 @@ class DirectionsManager
 
                 $realisticDays = $pathHours / $hoursPerDay;
 
-                $days  = (int) floor($realisticDays);
+                $days = (int) \floor($realisticDays);
                 $hours = ($realisticDays - $days) * $hoursPerDay;
-                $minutes = (int) ceil(($hours - floor($hours)) * 100 * 60 / 100);
+                $minutes = (int) \ceil(($hours - \floor($hours)) * 100 * 60 / 100);
 
                 if (60 === $minutes) {
                     $hours++;
@@ -363,19 +362,19 @@ class DirectionsManager
                 // Override $path by reference to add data to the final array
                 $path['duration_raw'] = $interval->format('P%yY%mM%dDT%hH%iM0S');
                 $path['duration_real'] = [
-                    'days'  => (int) $days,
-                    'hours' => (int) floor($hours),
+                    'days' => (int) $days,
+                    'hours' => (int) \floor($hours),
                     'minutes' => (int) $minutes,
                 ];
             }
         }
 
-        $hours   = (int) floor($total);
-        $minutes = (int) ceil(($total - $hours) * 100 * 60 / 100);
+        $hours = (int) \floor($total);
+        $minutes = (int) \ceil(($total - $hours) * 100 * 60 / 100);
 
         $interval = new \DateInterval('PT'.$hours.'H'.$minutes.'M');
-        $start    = new \DateTime();
-        $end      = new \DateTime();
+        $start = new \DateTime();
+        $end = new \DateTime();
         $end->add($interval);
 
         // Recreating the interval allows automatic calculation of days/months.
@@ -384,12 +383,12 @@ class DirectionsManager
         // Here we'll try to convert hours into a more "realistic" travel time.
         $realisticDays = $total / $hoursPerDay;
 
-        $days  = (int) floor($realisticDays);
-        $hours = (float) number_format(($realisticDays - $days) * $hoursPerDay, 2);
+        $days = (int) \floor($realisticDays);
+        $hours = (float) \number_format(($realisticDays - $days) * $hoursPerDay, 2);
 
         $data['duration_raw'] = $interval->format('P%yY%mM%dDT%hH%iM0S');
         $data['duration_real'] = [
-            'days'  => $days,
+            'days' => $days,
             'hours' => $hours,
         ];
 
@@ -397,7 +396,7 @@ class DirectionsManager
     }
 
     /**
-     * Filter routes that are incompatible with this transport type
+     * Filter routes that are incompatible with this transport type.
      */
     private function filterEdges(array $edges, TransportTypes $transportType = null): array
     {
@@ -427,7 +426,7 @@ class DirectionsManager
         }
 
         foreach ($edges as $k => $edge) {
-            if (array_key_exists($edge['type'], $routesTypesToDelete)) {
+            if (\array_key_exists($edge['type'], $routesTypesToDelete)) {
                 unset($edges[$k]);
             }
         }
@@ -436,7 +435,7 @@ class DirectionsManager
     }
 
     /**
-     * Filter markers that are not reachable via filtered routes
+     * Filter markers that are not reachable via filtered routes.
      */
     private function filterNodes(array $nodes, array $edges): array
     {
@@ -444,12 +443,12 @@ class DirectionsManager
         foreach ($nodes as $k => $node) {
             // Remove potential neighbours that are not reachable because of incompatible routes.
             foreach ($node['neighbours'] as $edgeId => $n) {
-                if (!array_key_exists($edgeId, $edges)) {
+                if (!\array_key_exists($edgeId, $edges)) {
                     unset($nodes[$k]['neighbours'][$edgeId]);
                 }
             }
             // If a marker has no more neighbours, it can't be crossed, so remove it.
-            if (!count($node['neighbours'])) {
+            if (!\count($node['neighbours'])) {
                 unset($nodes[$k]);
             }
         }

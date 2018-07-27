@@ -19,7 +19,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
  * Resources.
  *
  * @ORM\Table(name="maps_resources")
- * @ORM\Entity()
+ * @ORM\Entity
  */
 class Resources
 {
@@ -29,7 +29,7 @@ class Resources
      * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
-     * @ORM\Id()
+     * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     protected $id;
@@ -64,9 +64,9 @@ class Resources
      */
     public function __construct()
     {
-        $this->routes      = new ArrayCollection();
+        $this->routes = new ArrayCollection();
         $this->routesTypes = new ArrayCollection();
-        $this->zonesTypes  = new ArrayCollection();
+        $this->zonesTypes = new ArrayCollection();
     }
 
     public function __toString()

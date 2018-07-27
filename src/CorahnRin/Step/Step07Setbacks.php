@@ -58,7 +58,7 @@ class Step07Setbacks extends AbstractStepAction
             // No setback if the character is less than 21 years old.
             $setbacksValue = [];
             $this->updateCharacterStep([]);
-        } elseif (!$chooseStepsManually && $this->setbacksNumber && !count($setbacksValue)) {
+        } elseif (!$chooseStepsManually && $this->setbacksNumber && !\count($setbacksValue)) {
             // Automatic calculation (roll dices, etc.)
             $setbacksValue = $this->determineSetbacksAutomatically();
             $this->updateCharacterStep($setbacksValue);
@@ -76,8 +76,8 @@ class Step07Setbacks extends AbstractStepAction
 
                 foreach ($setbacksValue as $id) {
                     if (
-                        !array_key_exists((int) $id, $this->setbacks) // Setback has to exist
-                        || in_array((int) $id, [1, 10], true)        // If manually set, setback cannot be good/bad luck
+                        !\array_key_exists((int) $id, $this->setbacks) // Setback has to exist
+                        || \in_array((int) $id, [1, 10], true)        // If manually set, setback cannot be good/bad luck
                     ) {
                         $anyWrongSetbackId = true;
                     }
@@ -100,10 +100,10 @@ class Step07Setbacks extends AbstractStepAction
         }
 
         return $this->renderCurrentStep([
-            'age'              => $age,
-            'setbacks_number'  => $this->setbacksNumber,
-            'setbacks_value'   => $setbacksValue,
-            'setbacks_list'    => $this->setbacks,
+            'age' => $age,
+            'setbacks_number' => $this->setbacksNumber,
+            'setbacks_value' => $setbacksValue,
+            'setbacks_list' => $this->setbacks,
             'choice_available' => $chooseStepsManually,
         ]);
     }
@@ -120,19 +120,19 @@ class Step07Setbacks extends AbstractStepAction
 
         // Get the whole list in a special var so it can be modified.
         /** @var Setbacks[] $setbacksDiceList */
-        $setbacksDiceList = array_values($this->setbacks);
+        $setbacksDiceList = \array_values($this->setbacks);
 
         // A loop is made through all steps until enough setbacks have been set.
         $loopIterator = $this->setbacksNumber;
         while ($loopIterator > 0) {
             // Roll the dice. (shuffle all setbacks and get the first found)
-            shuffle($setbacksDiceList);
+            \shuffle($setbacksDiceList);
 
             // Disable setback so we don't have it twice
             /** @var Setbacks $diceResult */
-            $diceResult = array_shift($setbacksDiceList);
+            $diceResult = \array_shift($setbacksDiceList);
 
-            if ($diceResult->getId() === 1) {
+            if (1 === $diceResult->getId()) {
                 // Unlucky!
 
                 // When character is unlucky, we add two setbacks instead of one
@@ -146,11 +146,11 @@ class Step07Setbacks extends AbstractStepAction
                 // We also need to remove the "lucky" setback from the list,
                 // you can't be both lucky and unlucky, unfortunately ;).
                 foreach ($setbacksDiceList as $k => $setback) {
-                    if ($setback->getId() === 10) {
+                    if (10 === $setback->getId()) {
                         unset($setbacksDiceList[$k]);
                     }
                 }
-            } elseif ($diceResult->getId() === 10) {
+            } elseif (10 === $diceResult->getId()) {
                 // Lucky!
 
                 // When character is lucky, we add another setback, but mark it as "avoided".
@@ -161,14 +161,14 @@ class Step07Setbacks extends AbstractStepAction
                 // We also need to remove the "unlucky" setback from the list,
                 // you can't be both lucky and unlucky, unfortunately ;).
                 foreach ($setbacksDiceList as $k => $setback) {
-                    if ($setback->getId() === 1) {
+                    if (1 === $setback->getId()) {
                         unset($setbacksDiceList[$k]);
                     }
                 }
 
                 // Now we determine which setback was avoided
-                shuffle($setbacksDiceList);
-                $diceResult = array_shift($setbacksDiceList);
+                \shuffle($setbacksDiceList);
+                $diceResult = \array_shift($setbacksDiceList);
 
                 // Then add it and mark it as avoided
                 $setbacksValue[$diceResult->getId()] = ['id' => $diceResult->getId(), 'avoided' => true];

@@ -45,53 +45,53 @@ class DisordersFixtures extends AbstractFixture implements ORMFixtureInterface
     {
         return [
             [
-                'id'          => 1,
-                'name'        => 'Frénésie',
+                'id' => 1,
+                'name' => 'Frénésie',
                 'description' => '',
             ],
             [
-                'id'          => 2,
-                'name'        => 'Exaltation',
+                'id' => 2,
+                'name' => 'Exaltation',
                 'description' => '',
             ],
             [
-                'id'          => 3,
-                'name'        => 'Mélancolie',
+                'id' => 3,
+                'name' => 'Mélancolie',
                 'description' => '',
             ],
             [
-                'id'          => 4,
-                'name'        => 'Hallucination',
+                'id' => 4,
+                'name' => 'Hallucination',
                 'description' => '',
             ],
             [
-                'id'          => 5,
-                'name'        => 'Confusion mentale',
+                'id' => 5,
+                'name' => 'Confusion mentale',
                 'description' => '',
             ],
             [
-                'id'          => 6,
-                'name'        => 'Mimétisme',
+                'id' => 6,
+                'name' => 'Mimétisme',
                 'description' => '',
             ],
             [
-                'id'          => 7,
-                'name'        => 'Obsession',
+                'id' => 7,
+                'name' => 'Obsession',
                 'description' => '',
             ],
             [
-                'id'          => 8,
-                'name'        => 'Hystérie',
+                'id' => 8,
+                'name' => 'Hystérie',
                 'description' => '',
             ],
             [
-                'id'          => 9,
-                'name'        => 'Mysticisme',
+                'id' => 9,
+                'name' => 'Mysticisme',
                 'description' => '',
             ],
             [
-                'id'          => 10,
-                'name'        => 'Paranoïa',
+                'id' => 10,
+                'name' => 'Paranoïa',
                 'description' => '',
             ],
         ];

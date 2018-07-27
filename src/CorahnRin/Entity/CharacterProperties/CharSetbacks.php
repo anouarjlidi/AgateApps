@@ -20,25 +20,25 @@ use Symfony\Component\Validator\Constraints as Assert;
  * CharSetbacks.
  *
  * @ORM\Table(name="characters_setbacks")
- * @ORM\Entity()
+ * @ORM\Entity
  */
 class CharSetbacks
 {
     /**
      * @var Characters
      *
-     * @ORM\Id()
+     * @ORM\Id
      * @ORM\ManyToOne(targetEntity="CorahnRin\Entity\Characters", inversedBy="setbacks")
-     * @Assert\NotNull()
+     * @Assert\NotNull
      */
     protected $character;
 
     /**
      * @var Setbacks
      *
-     * @ORM\Id()
+     * @ORM\Id
      * @ORM\ManyToOne(targetEntity="CorahnRin\Entity\Setbacks")
-     * @Assert\NotNull()
+     * @Assert\NotNull
      */
     protected $setback;
 

@@ -38,13 +38,13 @@ class EditMapInteractiveController extends AbstractController
      */
     public function editAction(Request $request, Maps $map): Response
     {
-        if (count($request->query->all())) {
+        if (\count($request->query->all())) {
             // To avoid polluting the URL with useless query string.
             return $this->redirectToRoute($request->attributes->get('_route'), $request->attributes->get('_route_params'));
         }
 
         return $this->render('esteren_maps/AdminMaps/edit.html.twig', [
-            'map'       => $map,
+            'map' => $map,
             'tile_size' => $this->tileSize,
         ]);
     }

@@ -26,8 +26,8 @@ class ResettingFormType extends AbstractType
     {
         $builder->add('plainPassword', PasswordType::class, [
             'translation_domain' => 'user',
-            'label'              => 'form.new_password',
-            'invalid_message'    => 'user.password.mismatch',
+            'label' => 'form.new_password',
+            'invalid_message' => 'user.password.mismatch',
         ]);
     }
 

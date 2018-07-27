@@ -37,11 +37,11 @@ class AssetsController extends AbstractController
         $response = new Response();
         if (!$this->debug) {
             $response->setCache([
-                'etag'          => sha1('js'.$_locale.$this->versionCode),
+                'etag' => \sha1('js'.$_locale.$this->versionCode),
                 'last_modified' => new \DateTime($this->versionDate),
-                'max_age'       => 600,
-                's_maxage'      => 600,
-                'public'        => true,
+                'max_age' => 600,
+                's_maxage' => 600,
+                'public' => true,
             ]);
         }
 

@@ -31,7 +31,7 @@ class PdfManager implements SheetGeneratorInterface
 
     public function __construct(string $sheetsFolder, TranslatorInterface $translator)
     {
-        $this->translator   = $translator;
+        $this->translator = $translator;
         $this->sheetsFolder = $sheetsFolder;
     }
 
@@ -46,9 +46,9 @@ class PdfManager implements SheetGeneratorInterface
     public function generateSheet(CharacterInterface $character, bool $printer_friendly = false): ?string
     {
         if (!($character instanceof Characters)) {
-            throw new \InvalidArgumentException(sprintf(
+            throw new \InvalidArgumentException(\sprintf(
                 'To generate sheet, character must be an instance of "%s". "%s" given.',
-                Characters::class, get_class($character)
+                Characters::class, \get_class($character)
             ));
         }
 
@@ -60,13 +60,14 @@ class PdfManager implements SheetGeneratorInterface
      * @param bool       $printer_friendly
      *
      * @return PDF
+     *
      * @throws \CorahnRin\Exception\CharactersException
      */
     private function originalSheet(Characters $character, $printer_friendly = false)
     {
-        $general_width  = 893;
+        $general_width = 893;
         $general_height = 1263;
-        $pdf            = new PDF('P', 'pt');
+        $pdf = new PDF('P', 'pt');
         $pdf->SetCompression(false);
         $translator = $this->translator;
         $pdf->setTranslator($translator);
@@ -76,29 +77,29 @@ class PdfManager implements SheetGeneratorInterface
                 'file' => 'LettrinEsteren-Regular.ttf',
                 'name' => 'lettrinesteren-regular',
             ],
-            'unz'      => [
+            'unz' => [
                 'file' => 'UnZialish.ttf',
                 'name' => 'unzialish',
             ],
-            'caro'     => [
+            'caro' => [
                 'file' => 'carolingia.ttf',
                 'name' => 'carolingia',
             ],
-            'carbold'  => [
+            'carbold' => [
                 'file' => 'carolingia_old.ttf',
                 'name' => 'carolingia_old',
             ],
-            'times'    => [
+            'times' => [
                 'file' => 'times.ttf',
                 'name' => 'times',
             ],
-            'arial'    => [
+            'arial' => [
                 'file' => 'arial.ttf',
                 'name' => 'arial',
             ],
         ];
         foreach ($p as $key => $v) {
-            $file            = __DIR__.'/../Resources/assets/fonts/'.$v['file'];
+            $file = __DIR__.'/../Resources/assets/fonts/'.$v['file'];
             $p[$key]['file'] = $file;
             $pdf->AddFont($v['name'], '', $file, true);
         }
@@ -113,7 +114,7 @@ class PdfManager implements SheetGeneratorInterface
             'original'.
             '_'.$translator->getLocale().
             '_1'.
-            '_'.($printer_friendly === true ? 'pf' : 'npf').
+            '_'.(true === $printer_friendly ? 'pf' : 'npf').
             '.jpg', 0, 0, $general_width, $general_height);
 
         $pdf->textbox($character->getName(), 213, 280, $p['lettrine'], 25, 370);
@@ -121,12 +122,12 @@ class PdfManager implements SheetGeneratorInterface
         $pdf->textbox($character->getPlayerName(), 880, 280, $p['lettrine'], 21, 230);
 
         $pdf->textline($translator->trans($character->getSex())[0], 215, 322, $p['times'], 18);
-        $pdf->textline(substr($character->getAge(), 0, 3), 343, 322, $p['caro'], 18);
+        $pdf->textline(\substr($character->getAge(), 0, 3), 343, 322, $p['caro'], 18);
 
         $pdf->multiple_lines($character->getDescription(), 295, 365, $p['carbold'], 17, 820, 1, 0, true);
 
-        $pdf->textline(substr($character->getPeople()->getName(), 0, 20), 530, 322, $p['lettrine'], 18, true);
-        $pdf->textline(substr($character->getJobCustom() ?: $character->getJob()->getName(), 0, 25), 895, 322, $p['lettrine'], 18, true);
+        $pdf->textline(\substr($character->getPeople()->getName(), 0, 20), 530, 322, $p['lettrine'], 18, true);
+        $pdf->textline(\substr($character->getJobCustom() ?: $character->getJob()->getName(), 0, 25), 895, 322, $p['lettrine'], 18, true);
 
         // voies
         $pdf->textline($character->getWay('com')->getScore(), 325, 545, $p['carbold'], 28);
@@ -164,16 +165,16 @@ class PdfManager implements SheetGeneratorInterface
             }
         }
         if (isset($av[0])) {
-            $pdf->textline(substr($av[0], 0, 25), 430, 500, $p['caro'], 18);
+            $pdf->textline(\substr($av[0], 0, 25), 430, 500, $p['caro'], 18);
         }
         if (isset($av[1])) {
-            $pdf->textline(substr($av[1], 0, 25), 430, 540, $p['caro'], 18);
+            $pdf->textline(\substr($av[1], 0, 25), 430, 540, $p['caro'], 18);
         }
         if (isset($av[2])) {
-            $pdf->textline(substr($av[2], 0, 25), 430, 580, $p['caro'], 18);
+            $pdf->textline(\substr($av[2], 0, 25), 430, 580, $p['caro'], 18);
         }
         if (isset($av[3])) {
-            $pdf->textline(substr($av[3], 0, 25), 430, 620, $p['caro'], 18);
+            $pdf->textline(\substr($av[3], 0, 25), 430, 620, $p['caro'], 18);
         }
         $dv = [];
         foreach ($character->getAdvantages() as $v) {
@@ -182,32 +183,32 @@ class PdfManager implements SheetGeneratorInterface
             }
         }
         if (isset($dv[0])) {
-            $pdf->textline(substr($dv[0], 0, 25), 430, 685, $p['caro'], 18);
+            $pdf->textline(\substr($dv[0], 0, 25), 430, 685, $p['caro'], 18);
         }
         if (isset($dv[1])) {
-            $pdf->textline(substr($dv[1], 0, 25), 430, 725, $p['caro'], 18);
+            $pdf->textline(\substr($dv[1], 0, 25), 430, 725, $p['caro'], 18);
         }
         if (isset($dv[2])) {
-            $pdf->textline(substr($dv[2], 0, 25), 430, 765, $p['caro'], 18);
+            $pdf->textline(\substr($dv[2], 0, 25), 430, 765, $p['caro'], 18);
         }
         if (isset($dv[3])) {
-            $pdf->textline(substr($dv[3], 0, 25), 430, 805, $p['caro'], 18);
+            $pdf->textline(\substr($dv[3], 0, 25), 430, 805, $p['caro'], 18);
         }
 
         // Santé
-//		$health_array = $this->get_health_array();
-//		$health = array();
-//		foreach ($health_array as $k => $v) {
-//			$health[$k] = '';
-//			for ($i = 1; $i <= $v; $i++) {
-//				$health[$k] .= 'O ';
-//			}
-//		}
-//		$pdf->textline($health['Bon'], 920, 527, $p['times'], 24);
-//		$pdf->textline($health['Moyen'], 920, 571, $p['times'], 24);
-//		$pdf->textline($health['Grave'], 920, 615, $p['times'], 24);
-//		$pdf->textline($health['Critique'], 920, 658, $p['times'], 24);
-//		$pdf->textline($health['Agonie'], 920, 700, $p['times'], 24);
+        //		$health_array = $this->get_health_array();
+        //		$health = array();
+        //		foreach ($health_array as $k => $v) {
+        //			$health[$k] = '';
+        //			for ($i = 1; $i <= $v; $i++) {
+        //				$health[$k] .= 'O ';
+        //			}
+        //		}
+        //		$pdf->textline($health['Bon'], 920, 527, $p['times'], 24);
+        //		$pdf->textline($health['Moyen'], 920, 571, $p['times'], 24);
+        //		$pdf->textline($health['Grave'], 920, 615, $p['times'], 24);
+        //		$pdf->textline($health['Critique'], 920, 658, $p['times'], 24);
+        //		$pdf->textline($health['Agonie'], 920, 700, $p['times'], 24);
 
         $pdf->textline($character->getStamina(), 1090, 755, $p['caro'], 22);
         $pdf->textline($character->getSurvival(), 1090, 798, $p['caro'], 22);
@@ -215,8 +216,8 @@ class PdfManager implements SheetGeneratorInterface
         // Domaines
         $x_arr = [0, 91, 91, 91, 350, 350, 350, 350, 614, 614, 614, 614, 874, 874, 874, 874, 91];
         $y_arr = [0, 988, 1165, 1331, 988, 1165, 1333, 1499, 988, 1165, 1331, 1499, 988, 1165, 1331, 1499, 1499];
-        $j     = 0;
-        if ($printer_friendly === true) {
+        $j = 0;
+        if (true === $printer_friendly) {
             $pdf->SetTextColor(0x14, 0x14, 0x14);
         } else {
             $pdf->SetTextColor(0x22, 0x11, 0x4);
@@ -229,12 +230,12 @@ class PdfManager implements SheetGeneratorInterface
                     $pdf->textline('●', $x_arr[$j] + ($i - 1) * 23.75 - 7, $y_arr[$j] + 4, $p['arial'], 29);
                 }
             }
-//			if ($val['bonus']) {
-//				$pdf->textline('+'.$val['bonus'], $x_arr[$j]+52, $y_arr[$j]+23, $p['unz'], 16);
-//			}
-//			if ($val['malus']) {
-//				$pdf->textline('-'.$val['malus'], $x_arr[$j]+143, $y_arr[$j]+23, $p['unz'], 16);
-//			}
+            //			if ($val['bonus']) {
+            //				$pdf->textline('+'.$val['bonus'], $x_arr[$j]+52, $y_arr[$j]+23, $p['unz'], 16);
+            //			}
+            //			if ($val['malus']) {
+            //				$pdf->textline('-'.$val['malus'], $x_arr[$j]+143, $y_arr[$j]+23, $p['unz'], 16);
+            //			}
             $l = 0;
             foreach ($character->getDisciplines() as $charDisciplines) {
                 if ($charDisciplines->getDomain()->getId() === $val->getDomain()->getId()) {
@@ -258,7 +259,7 @@ class PdfManager implements SheetGeneratorInterface
             'original'.
             '_'.$translator->getLocale().
             '_2'.
-            '_'.($printer_friendly === true ? 'pf' : 'npf').
+            '_'.(true === $printer_friendly ? 'pf' : 'npf').
             '.jpg', 0, 0, $general_width, $general_height);
 
         $i = 0;
@@ -274,11 +275,11 @@ class PdfManager implements SheetGeneratorInterface
         $pdf->textline($character->getPotential(), 335, 366, $p['caro'], 32);
 
         //Attitudes de combat
-        $tir       = $character->getAttackScore('ranged');
-        $cac       = $character->getAttackScore('melee');
-        $pot       = $character->getPotential();
-        $rap       = $character->getBaseSpeed() + $character->getSpeed();
-        $def       = $character->getBaseDefense() + $character->getDefense();
+        $tir = $character->getAttackScore('ranged');
+        $cac = $character->getAttackScore('melee');
+        $pot = $character->getPotential();
+        $rap = $character->getBaseSpeed() + $character->getSpeed();
+        $def = $character->getBaseDefense() + $character->getDefense();
         $attitudes = [
             ['tir' => $tir, 'cac' => $cac, 'def' => $def, 'rap' => $rap], //Attitudes standards
             ['tir' => $tir + $pot, 'cac' => $cac + $pot, 'def' => $def - $pot, 'rap' => $rap], //Attitudes offensives
@@ -294,7 +295,7 @@ class PdfManager implements SheetGeneratorInterface
         }
 
         //Défense améliorée
-        if ($printer_friendly === true) {
+        if (true === $printer_friendly) {
             $pdf->SetTextColor(0x14, 0x14, 0x14);
         } else {
             $pdf->SetTextColor(0x22, 0x11, 0x4);
@@ -316,13 +317,13 @@ class PdfManager implements SheetGeneratorInterface
 
         if ($character->getArmors()) {
             $arr = $character->getArmors();
-            $i   = 0;
+            $i = 0;
             foreach ($arr as $k => $v) {
                 if ($i > 3) {
                     break;
                 }
-//				$v = str_replace("\r", '', $v);
-//				$v = str_replace("\n", '', $v);
+                //				$v = str_replace("\r", '', $v);
+                //				$v = str_replace("\n", '', $v);
                 $str = $translator->trans($v->getName()).' ('.$v->getProtection().')';
                 $pdf->textline($str, 750, 277 + ($i * 31), $p['times'], 14);
                 ++$i;
@@ -343,23 +344,23 @@ class PdfManager implements SheetGeneratorInterface
         foreach ($character->getArtifacts() as $k => $v) {
             $arr[] = $translator->trans($v->getName());
         }
-        $str = implode(', ', $arr);
+        $str = \implode(', ', $arr);
         $pdf->multiple_lines($str, 92, 1028, $p['times'], 14, 300, 3, 43);
 
-//		$arr = array();
-//		foreach ($character->getPreciousItems() as $v) {
-//			if ($v) {
-//				$arr[] = $v;
-//			}
-//		}
-//		$str = implode(', ', $arr);
-//		$pdf->multiple_lines($str, 800, 790, $p['times'], 14, 300, 3, 43);
+        //		$arr = array();
+        //		foreach ($character->getPreciousItems() as $v) {
+        //			if ($v) {
+        //				$arr[] = $v;
+        //			}
+        //		}
+        //		$str = implode(', ', $arr);
+        //		$pdf->multiple_lines($str, 800, 790, $p['times'], 14, 300, 3, 43);
 //
 
         //Possessions et équipements
         if ($character->getInventory()) {
-            $arr1 = array_slice($character->getInventory(), 0, 10);
-            $arr2 = array_slice($character->getInventory(), 10, 10);
+            $arr1 = \array_slice($character->getInventory(), 0, 10);
+            $arr2 = \array_slice($character->getInventory(), 10, 10);
             foreach ($arr1 as $i => $v) {
                 $pdf->textbox($v, 85, 535 + $i * 42.8, $p['times'], 14, 280, true);
             }
@@ -370,7 +371,7 @@ class PdfManager implements SheetGeneratorInterface
 
         if ($character->getOgham()) {
             $arr = $character->getOgham();
-            $i   = 0;
+            $i = 0;
             foreach ($arr as $v) {
                 if ($i > 5) {
                     break;
@@ -391,8 +392,8 @@ class PdfManager implements SheetGeneratorInterface
                 }
             }
 
-            $min = implode(', ', $min);
-            $maj = implode(', ', $maj);
+            $min = \implode(', ', $min);
+            $maj = \implode(', ', $maj);
             $pdf->multiple_lines($min, 457, 1341, $p['carbold'], 18, 270, 3, 43);
             $pdf->multiple_lines($maj, 457, 1512, $p['carbold'], 18, 270, 3, 43);
         }
@@ -415,7 +416,7 @@ class PdfManager implements SheetGeneratorInterface
             'original'.
             '_'.$translator->getLocale().
             '_3'.
-            '_'.($printer_friendly === true ? 'pf' : 'npf').
+            '_'.(true === $printer_friendly ? 'pf' : 'npf').
             '.jpg', 0, 0, $general_width, $general_height);
 
         $resist_mentale = $character->getBaseMentalResist() + $character->getMentalResist();
@@ -438,20 +439,20 @@ class PdfManager implements SheetGeneratorInterface
             foreach ($character->getSetbacks() as $charSetbacks) {
                 $rev[] = $translator->trans($charSetbacks->getSetback()->getName());
             }
-            $rev = implode(' - ', $rev);
+            $rev = \implode(' - ', $rev);
             $pdf->textline($rev, 557, 142, $p['caro'], 14);
         }
 
         //Points de traumatisme
         $trauma = $character->getTraumaPermanent() + $character->getTrauma();
-        $off    = 0;
+        $off = 0;
         for ($i = 1; $i <= $trauma; ++$i) {
             if ($i <= $character->getTraumaPermanent()) {
                 $pdf->SetTextColor(0x22, 0x11, 0x4);
             } else {
                 $pdf->SetTextColor(0x88, 0x6F, 0x4B);
             }
-            if (($i - 1) % 5 === 0) {
+            if (0 === ($i - 1) % 5) {
                 $off += 12;
             }
             $pdf->textline('●', 219 + ($i - 1) * 27.75 + $off, 595, $p['arial'], 32);
@@ -462,14 +463,14 @@ class PdfManager implements SheetGeneratorInterface
         //Points d'endurcissement
         if ($character->getHardening()) {
             $endurcissement = (int) $character->getHardening();
-            $off            = 0;
-            if ($printer_friendly === true) {
+            $off = 0;
+            if (true === $printer_friendly) {
                 $pdf->SetTextColor(0x14, 0x14, 0x14);
             } else {
                 $pdf->SetTextColor(0x22, 0x11, 0x4);
             }
             for ($i = 1; $i <= $endurcissement; ++$i) {
-                if (($i - 1) % 5 === 0) {
+                if (0 === ($i - 1) % 5) {
                     $off += 12;
                 }
                 $pdf->textline('●', 219 + ($i - 1) * 27.75 + $off, 631, $p['arial'], 32);
@@ -492,24 +493,24 @@ class PdfManager implements SheetGeneratorInterface
         $pdf->textline($character->getExperienceActual().'     ( '.$translator->trans('Total').' '.$character->getExperienceSpent().' )', 679, 1325, $p['carbold'], 24);
 
         if ($character->getFacts()) {
-            $str             = preg_replace('~\n|\r~iU', '', $translator->trans($character->getFacts()));
+            $str = \preg_replace('~\n|\r~iU', '', $translator->trans($character->getFacts()));
             $taille_du_texte = 14;
             $police_du_texte = $p['times'];
-            $desc            = [0 => ''];
-            $arr             = explode(' ', $str, 200);
-            $line            = 0;
+            $desc = [0 => ''];
+            $arr = \explode(' ', $str, 200);
+            $line = 0;
             foreach ($arr as $word) {
                 $teststring = $desc[$line].' '.$word;
-                $testbox    = imagettfbbox($taille_du_texte, 0, $police_du_texte['file'], $teststring);
-                if ($line === 0) {
+                $testbox = \imagettfbbox($taille_du_texte, 0, $police_du_texte['file'], $teststring);
+                if (0 === $line) {
                     $larg = 729;
-                } elseif ($line === 1) {
+                } elseif (1 === $line) {
                     $larg = 929;
-                } elseif ($line === 2) {
+                } elseif (2 === $line) {
                     $larg = 908;
-                } elseif ($line === 3) {
+                } elseif (3 === $line) {
                     $larg = 898;
-                } elseif ($line === 4) {
+                } elseif (4 === $line) {
                     $larg = 878;
                 } elseif ($line > 4) {
                     $larg = 856;
@@ -530,20 +531,20 @@ class PdfManager implements SheetGeneratorInterface
 
             foreach ($desc as $i => $v) {
                 $offset = 0;
-                if ($i === 0) {
+                if (0 === $i) {
                     $offset = 197;
-                } elseif ($i === 2) {
+                } elseif (2 === $i) {
                     $offset = 18;
-                } elseif ($i === 3) {
+                } elseif (3 === $i) {
                     $offset = 32;
-                } elseif ($i === 4) {
+                } elseif (4 === $i) {
                     $offset = 52;
-                } elseif ($i === 5) {
+                } elseif (5 === $i) {
                     $offset = 74;
                 }
                 if ($i < 5) {
                     $pdf->textline($v, 176 + $offset, 1388 + $i * 43, $police_du_texte, $taille_du_texte);
-                } elseif ($i === 5) {
+                } elseif (5 === $i) {
                     $pdf->textline($v.'(...)', 176 + $offset, 1388 + $i * 43, $police_du_texte, $taille_du_texte);
                 } else {
                     break;

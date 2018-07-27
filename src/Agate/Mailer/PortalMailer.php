@@ -21,7 +21,7 @@ final class PortalMailer
 
     public function __construct(\Swift_Mailer $mailer, Environment $twig)
     {
-        $this->twig   = $twig;
+        $this->twig = $twig;
         $this->mailer = $mailer;
     }
 
@@ -38,7 +38,7 @@ final class PortalMailer
             ->addCc('cindy.studioagate+portal@gmail.com', 'Cindy Husson')
             ->addCc('nelyhann+portal@gmail.com', 'Les Ombres d\'Esteren')
             ->setBody($this->twig->render('agate/email/contact_email.html.twig', [
-                'ip'      => $ip,
+                'ip' => $ip,
                 'message' => $message,
             ]))
         ;

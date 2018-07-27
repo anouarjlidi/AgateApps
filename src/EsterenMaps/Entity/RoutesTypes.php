@@ -30,30 +30,30 @@ class RoutesTypes implements EntityToClearInterface
      * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
-     * @ORM\Id()
+     * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
-    */
+     */
     protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=false, unique=true)
-    */
+     */
     protected $name;
 
     /**
      * @var string
      *
      * @ORM\Column(name="description", type="text", nullable=true)
-    */
+     */
     protected $description;
 
     /**
      * @var string
      *
      * @ORM\Column(name="color", type="string", length=75, nullable=true)
-    */
+     */
     protected $color;
 
     /**
@@ -71,7 +71,7 @@ class RoutesTypes implements EntityToClearInterface
     /**
      * @var TransportModifiers[]
      * @ORM\OneToMany(targetEntity="EsterenMaps\Entity\TransportModifiers", mappedBy="routeType")
-    */
+     */
     protected $transports;
 
     public function __toString()
@@ -84,8 +84,8 @@ class RoutesTypes implements EntityToClearInterface
      */
     public function __construct()
     {
-        $this->resources  = new ArrayCollection();
-        $this->routes     = new ArrayCollection();
+        $this->resources = new ArrayCollection();
+        $this->routes = new ArrayCollection();
         $this->transports = new ArrayCollection();
     }
 

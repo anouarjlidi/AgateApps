@@ -13,7 +13,7 @@ namespace User\Model\Crowdfunding;
 
 class Project
 {
-    const ULULE = 'ulule';
+    public const ULULE = 'ulule';
 
     private $id;
     private $name;

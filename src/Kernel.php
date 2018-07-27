@@ -57,6 +57,6 @@ class Kernel extends BaseKernel
         $routes->import($confDir.'/{routes}/'.$this->environment.'/**/*'.self::CONFIG_EXTS, '/', 'glob');
         $routes->import($confDir.'/{routes}'.self::CONFIG_EXTS, '/', 'glob');
 
-        $routes->setSchemes($this->environment === 'prod' ? 'https' : 'http');
+        $routes->setSchemes('prod' === $this->environment ? 'https' : 'http');
     }
 }

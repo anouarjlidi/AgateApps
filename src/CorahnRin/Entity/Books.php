@@ -17,7 +17,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Books.
  *
  * @ORM\Table(name="books")
- * @ORM\Entity()
+ * @ORM\Entity
  */
 class Books
 {
@@ -25,7 +25,7 @@ class Books
      * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
-     * @ORM\Id()
+     * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;

@@ -29,24 +29,24 @@ class Factions
     /**
      * @var int
      *
-     * @ORM\Id()
+     * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\GeneratedValue(strategy="IDENTITY")
-    */
+     */
     protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=false, unique=true)
-    */
+     */
     protected $name;
 
     /**
      * @var string
      *
      * @ORM\Column(name="description", type="text", nullable=true)
-    */
+     */
     protected $description;
 
     /**
@@ -85,8 +85,8 @@ class Factions
      */
     public function __construct()
     {
-        $this->zones   = new ArrayCollection();
-        $this->routes  = new ArrayCollection();
+        $this->zones = new ArrayCollection();
+        $this->routes = new ArrayCollection();
         $this->markers = new ArrayCollection();
     }
 

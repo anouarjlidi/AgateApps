@@ -31,13 +31,13 @@ class Step11Advantages extends AbstractStepAction
      */
     public function execute(): Response
     {
-        $this->globalList = $this->em->getRepository(\CorahnRin\Entity\Avantages::class)->findAllDifferenciated();
+        $this->globalList = $this->em->getRepository(Avantages::class)->findAllDifferenciated();
 
         $currentStepValue = $this->getCharacterProperty();
-        $advantages       = $currentStepValue['advantages'] ?? [];
-        $disadvantages    = $currentStepValue['disadvantages'] ?? [];
-        $setbacks         = $this->getCharacterProperty('07_setbacks');
-        $isPoor           = isset($setbacks[9]) && !$setbacks[9]['avoided'];
+        $advantages = $currentStepValue['advantages'] ?? [];
+        $disadvantages = $currentStepValue['disadvantages'] ?? [];
+        $setbacks = $this->getCharacterProperty('07_setbacks');
+        $isPoor = isset($setbacks[9]) && !$setbacks[9]['avoided'];
 
         if ($isPoor) {
             // If character is poor, we don't allow him to have "Financial ease" advantages
@@ -54,23 +54,23 @@ class Step11Advantages extends AbstractStepAction
 
         if ($this->request->isMethod('POST')) {
             $intval = function ($e) { return (int) $e; };
-            $advantages    = array_map($intval, $this->request->request->get('advantages'));
-            $disadvantages = array_map($intval, $this->request->request->get('disadvantages'));
+            $advantages = \array_map($intval, $this->request->request->get('advantages'));
+            $disadvantages = \array_map($intval, $this->request->request->get('disadvantages'));
 
-            $numberOfAdvantages            = 0;
-            $numberOfUpgradedAdvantages    = 0;
+            $numberOfAdvantages = 0;
+            $numberOfUpgradedAdvantages = 0;
             $numberOfUpgradedDisadvantages = 0;
-            $numberOfDisadvantages         = 0;
+            $numberOfDisadvantages = 0;
 
             // First, validate all IDs
             foreach ($advantages as $id => $value) {
-                if ($isPoor && in_array($id, [4, 5, 6, 7, 8], true)) {
+                if ($isPoor && \in_array($id, [4, 5, 6, 7, 8], true)) {
                     $this->hasError = true;
                     $this->flashMessage('Vous ne pouvez pas choisir "Avantage financier" si votre personnage a le revers "Pauvre".');
                     break;
                 }
 
-                if (!array_key_exists($id, $this->globalList['advantages'])) {
+                if (!\array_key_exists($id, $this->globalList['advantages'])) {
                     $this->hasError = true;
                     $this->flashMessage('Les avantages soumis sont incorrects.');
                     break;
@@ -97,7 +97,7 @@ class Step11Advantages extends AbstractStepAction
             }
 
             foreach ($disadvantages as $id => $value) {
-                if (!array_key_exists($id, $this->globalList['disadvantages'])) {
+                if (!\array_key_exists($id, $this->globalList['disadvantages'])) {
                     $this->hasError = true;
                     $this->flashMessage('Les désavantages soumis sont incorrects.');
                     break;
@@ -161,9 +161,9 @@ class Step11Advantages extends AbstractStepAction
 
             if (false === $this->hasError && $experience >= 0) {
                 $this->updateCharacterStep([
-                    'advantages'    => $advantages,
+                    'advantages' => $advantages,
                     'disadvantages' => $disadvantages,
-                    'remainingExp'  => $experience,
+                    'remainingExp' => $experience,
                 ]);
 
                 return $this->nextStep();
@@ -171,10 +171,10 @@ class Step11Advantages extends AbstractStepAction
         }
 
         return $this->renderCurrentStep([
-            'experience'         => $experience,
-            'advantages'         => $advantages,
-            'disadvantages'      => $disadvantages,
-            'advantages_list'    => $this->globalList['advantages'],
+            'experience' => $experience,
+            'advantages' => $advantages,
+            'disadvantages' => $disadvantages,
+            'advantages_list' => $this->globalList['advantages'],
             'disadvantages_list' => $this->globalList['disadvantages'],
         ]);
     }
@@ -193,13 +193,13 @@ class Step11Advantages extends AbstractStepAction
         foreach ($disadvantages as $id => $value) {
             /** @var Avantages $disadvantage */
             $disadvantage = $this->globalList['disadvantages'][$id];
-            if ($id === 50) {
+            if (50 === $id) {
                 // Specific case of the "Trauma" disadvantage
                 $experience += $value * $disadvantage->getXp();
-            } elseif ($value === 1) {
+            } elseif (1 === $value) {
                 $experience += $disadvantage->getXp();
-            } elseif ($value === 2 && $disadvantage->getAugmentation()) {
-                $experience += floor($disadvantage->getXp() * 1.5);
+            } elseif (2 === $value && $disadvantage->getAugmentation()) {
+                $experience += \floor($disadvantage->getXp() * 1.5);
             } elseif ($value) {
                 $this->hasError = true;
                 $this->flashMessage('Une valeur incorrecte a été donnée à un désavantage.');
@@ -219,10 +219,10 @@ class Step11Advantages extends AbstractStepAction
         foreach ($advantages as $id => $value) {
             /** @var Avantages $advantage */
             $advantage = $this->globalList['advantages'][$id];
-            if ($value === 1) {
+            if (1 === $value) {
                 $experience -= $advantage->getXp();
-            } elseif ($value === 2 && $advantage->getAugmentation()) {
-                $experience -= floor($advantage->getXp() * 1.5);
+            } elseif (2 === $value && $advantage->getAugmentation()) {
+                $experience -= \floor($advantage->getXp() * 1.5);
             } elseif ($value) {
                 $this->hasError = true;
                 $this->flashMessage('Une valeur incorrecte a été donnée à un avantage.');

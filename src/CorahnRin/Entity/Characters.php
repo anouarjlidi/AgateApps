@@ -36,13 +36,13 @@ use Pierstoval\Bundle\CharacterManagerBundle\Entity\Character as BaseCharacter;
 class Characters extends BaseCharacter
 {
     public const FEMALE = 'character.sex.female';
-    public const MALE   = 'character.sex.male';
+    public const MALE = 'character.sex.male';
 
-    public const COMBAT_ATTITUDE_STANDARD  = 'character.combat_attitude.standard';
+    public const COMBAT_ATTITUDE_STANDARD = 'character.combat_attitude.standard';
     public const COMBAT_ATTITUDE_OFFENSIVE = 'character.combat_attitude.offensive';
     public const COMBAT_ATTITUDE_DEFENSIVE = 'character.combat_attitude.defensive';
-    public const COMBAT_ATTITUDE_QUICK     = 'character.combat_attitude.quick';
-    public const COMBAT_ATTITUDE_MOVEMENT  = 'character.combat_attitude.movement';
+    public const COMBAT_ATTITUDE_QUICK = 'character.combat_attitude.quick';
+    public const COMBAT_ATTITUDE_MOVEMENT = 'character.combat_attitude.movement';
 
     public const COMBAT_ATTITUDES = [
         self::COMBAT_ATTITUDE_STANDARD,
@@ -56,7 +56,7 @@ class Characters extends BaseCharacter
      * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
-     * @ORM\Id()
+     * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
@@ -149,21 +149,21 @@ class Characters extends BaseCharacter
     /**
      * @var int
      *
-     * @ORM\Column(name="temporary_trauma", type="smallint", options={"default":0})
+     * @ORM\Column(name="temporary_trauma", type="smallint", options={"default" = 0})
      */
     protected $temporaryTrauma = 0;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="permanent_trauma", type="smallint", options={"default": 0})
+     * @ORM\Column(name="permanent_trauma", type="smallint", options={"default" = 0})
      */
     protected $permanentTrauma = 0;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="hardening", type="smallint", options={"default":0})
+     * @ORM\Column(name="hardening", type="smallint", options={"default" = 0})
      */
     protected $hardening = 0;
 
@@ -499,18 +499,18 @@ class Characters extends BaseCharacter
      */
     public function __construct()
     {
-        $this->maxHealth      = new HealthCondition();
-        $this->armors         = new ArrayCollection();
-        $this->artifacts      = new ArrayCollection();
-        $this->miracles       = new ArrayCollection();
-        $this->ogham          = new ArrayCollection();
-        $this->weapons        = new ArrayCollection();
-        $this->combatArts     = new ArrayCollection();
+        $this->maxHealth = new HealthCondition();
+        $this->armors = new ArrayCollection();
+        $this->artifacts = new ArrayCollection();
+        $this->miracles = new ArrayCollection();
+        $this->ogham = new ArrayCollection();
+        $this->weapons = new ArrayCollection();
+        $this->combatArts = new ArrayCollection();
         $this->charAdvantages = new ArrayCollection();
-        $this->domains        = new ArrayCollection();
-        $this->disciplines    = new ArrayCollection();
-        $this->flux           = new ArrayCollection();
-        $this->setbacks       = new ArrayCollection();
+        $this->domains = new ArrayCollection();
+        $this->disciplines = new ArrayCollection();
+        $this->flux = new ArrayCollection();
+        $this->setbacks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -540,7 +540,7 @@ class Characters extends BaseCharacter
     public function setSex(string $sex): self
     {
         if ($sex !== static::MALE && $sex !== static::FEMALE) {
-            throw new \InvalidArgumentException(sprintf(
+            throw new \InvalidArgumentException(\sprintf(
                 'Sex must be either "%s" or "%s", "%s" given.',
                 static::MALE, static::FEMALE, $sex
             ));
@@ -595,13 +595,13 @@ class Characters extends BaseCharacter
     public function setInventory(array $inventory): self
     {
         foreach ($inventory as $k => $item) {
-            $item = trim($item);
+            $item = \trim($item);
             if (!$item) {
                 unset($inventory[$k]);
                 continue;
             }
 
-            if (!is_string($item) || is_numeric($item)) {
+            if (!\is_string($item) || \is_numeric($item)) {
                 throw new \InvalidArgumentException('Provided item must be a non-numeric string.');
             }
         }
@@ -622,13 +622,13 @@ class Characters extends BaseCharacter
     public function setTreasures(array $treasures): self
     {
         foreach ($treasures as $k => $treasure) {
-            $treasure = trim($treasure);
+            $treasure = \trim($treasure);
             if (!$treasure) {
                 unset($treasures[$k]);
                 continue;
             }
 
-            if (!is_string($treasure) || is_numeric($treasure)) {
+            if (!\is_string($treasure) || \is_numeric($treasure)) {
                 throw new \InvalidArgumentException('Provided treasure must be a non-numeric string.');
             }
         }
@@ -660,10 +660,10 @@ class Characters extends BaseCharacter
 
     public function setOrientation(string $orientation): self
     {
-        if (!array_key_exists($orientation, Orientation::ALL)) {
-            throw new \InvalidArgumentException(sprintf(
+        if (!\array_key_exists($orientation, Orientation::ALL)) {
+            throw new \InvalidArgumentException(\sprintf(
                 'Orientation must be one value in "%s", "%s" given.',
-                implode('", "', array_keys(Orientation::ALL)), $orientation
+                \implode('", "', \array_keys(Orientation::ALL)), $orientation
             ));
         }
 
@@ -758,13 +758,13 @@ class Characters extends BaseCharacter
         $value = $this->conviction + 5;
 
         foreach ($this->getAdvantages() as $disadvantage) {
-            if ($disadvantage->getAdvantage()->getBonusdisc() === 'resm') {
+            if ('resm' === $disadvantage->getAdvantage()->getBonusdisc()) {
                 $value += $disadvantage->getScore();
             }
         }
 
         foreach ($this->getDisadvantages() as $disadvantage) {
-            if ($disadvantage->getAdvantage()->getBonusdisc() === 'resm') {
+            if ('resm' === $disadvantage->getAdvantage()->getBonusdisc()) {
                 $value -= $disadvantage->getScore();
             }
         }
@@ -1927,9 +1927,9 @@ class Characters extends BaseCharacter
         $way = $this->combativeness;
 
         // Définition de l'id des domaines "Combat au contact" et "Tir & lancer"
-        if ($type === 'melee') {
+        if ('melee' === $type) {
             $domain_id = 2;
-        } elseif ($type === 'ranged') {
+        } elseif ('ranged' === $type) {
             $domain_id = 14;
         } else {
             throw new CharactersException('Attack can only be "melee" or "ranged".');
@@ -2014,7 +2014,7 @@ class Characters extends BaseCharacter
      */
     private function validateCombatAttitude(string $attitude): void
     {
-        if (!in_array($attitude, self::COMBAT_ATTITUDES, true)) {
+        if (!\in_array($attitude, self::COMBAT_ATTITUDES, true)) {
             throw new \InvalidArgumentException("Combat attitude is invalid, $attitude given.");
         }
     }

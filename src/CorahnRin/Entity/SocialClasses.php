@@ -26,7 +26,7 @@ class SocialClasses
      * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
-     * @ORM\Id()
+     * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
@@ -185,7 +185,7 @@ class SocialClasses
      */
     public function findDomainById($id)
     {
-        $id             = (int) $id;
+        $id = (int) $id;
         $domainToReturn = null;
 
         foreach ($this->domains as $domain) {

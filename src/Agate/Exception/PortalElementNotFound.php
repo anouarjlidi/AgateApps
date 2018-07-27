@@ -17,6 +17,6 @@ class PortalElementNotFound extends NotFoundHttpException
 {
     public function __construct(string $portal, string $locale)
     {
-        parent::__construct(sprintf('Portal element "%s" with locale "%s" not found.', $portal, $locale));
+        parent::__construct(\sprintf('Portal element "%s" with locale "%s" not found.', $portal, $locale));
     }
 }

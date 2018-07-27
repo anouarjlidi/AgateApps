@@ -29,7 +29,7 @@ class Jobs
      * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
-     * @ORM\Id()
+     * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
@@ -51,7 +51,7 @@ class Jobs
     /**
      * @var int
      *
-     * @ORM\Column(name="daily_salary", type="integer", options={"default": "0"})
+     * @ORM\Column(name="daily_salary", type="integer", options={"default" = "0"})
      */
     protected $dailySalary = 0;
 
@@ -244,7 +244,7 @@ class Jobs
      */
     public function setDomainsSecondary($domainsSecondary)
     {
-        if (!count($domainsSecondary)) {
+        if (!\count($domainsSecondary)) {
             foreach ($this->domainsSecondary as $domain) {
                 $this->removeDomainsSecondary($domain);
             }

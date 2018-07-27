@@ -18,7 +18,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
  * Weather.
  *
  * @ORM\Table(name="maps_weather")
- * @ORM\Entity()
+ * @ORM\Entity
  */
 class Weather
 {
@@ -27,7 +27,7 @@ class Weather
     /**
      * @var int
      *
-     * @ORM\Id()
+     * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */

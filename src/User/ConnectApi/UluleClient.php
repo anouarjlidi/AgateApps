@@ -94,9 +94,9 @@ class UluleClient extends AbstractApiClient
                 'users/'.$user->getUluleId().'/orders'.$queryString.''
             );
 
-            $data = (string)$response->getBody();
+            $data = (string) $response->getBody();
 
-            $json = json_decode($data, true);
+            $json = \json_decode($data, true);
 
             if (!$json || ($json && !isset($json['orders']))) {
                 throw new \RuntimeException('Ulule sent a wrong response when retrieving user projects');
@@ -123,7 +123,7 @@ class UluleClient extends AbstractApiClient
                 ],
             ]);
         } catch (ClientException $e) {
-            if (in_array($e->getCode(), [401, 404], true)) {
+            if (\in_array($e->getCode(), [401, 404], true)) {
                 return null;
             }
 
@@ -132,10 +132,10 @@ class UluleClient extends AbstractApiClient
 
         $data = (string) $response->getBody();
 
-        $json = json_decode($data, true);
+        $json = \json_decode($data, true);
 
         if (!$json || ($json && !isset($json['id']))) {
-            $this->logger->error(sprintf(
+            $this->logger->error(\sprintf(
                 'Ulule returned a wrong response with username %s and token %s',
                 $username, $token
             ), ['profile_edit', 'ulule_connect']);
@@ -162,14 +162,14 @@ class UluleClient extends AbstractApiClient
 
             $data = (string) $response->getBody();
 
-            $json = json_decode($data, true);
+            $json = \json_decode($data, true);
 
             if (!$json || ($json && !isset($json['projects']))) {
                 throw new \RuntimeException('Ulule sent a wrong response when retrieving user projects');
             }
 
             foreach ($json['projects'] as $project) {
-                if (!in_array($project['id'], static::ULULE_PROJECTS, true)) {
+                if (!\in_array($project['id'], static::ULULE_PROJECTS, true)) {
                     continue;
                 }
                 $ululeProjects[$project['id']] = new Project($project);
@@ -180,5 +180,4 @@ class UluleClient extends AbstractApiClient
 
         return $ululeProjects;
     }
-
 }

@@ -19,7 +19,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
  * Events.
  *
  * @ORM\Table(name="events")
- * @ORM\Entity()
+ * @ORM\Entity
  */
 class Events
 {
@@ -28,7 +28,7 @@ class Events
     /**
      * @var int
      *
-     * @ORM\Id()
+     * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -111,16 +111,16 @@ class Events
      */
     public function __construct()
     {
-        $this->foes         = new ArrayCollection();
-        $this->npcs         = new ArrayCollection();
-        $this->weather      = new ArrayCollection();
-        $this->markers      = new ArrayCollection();
+        $this->foes = new ArrayCollection();
+        $this->npcs = new ArrayCollection();
+        $this->weather = new ArrayCollection();
+        $this->markers = new ArrayCollection();
         $this->markersTypes = new ArrayCollection();
-        $this->resources    = new ArrayCollection();
-        $this->routes       = new ArrayCollection();
-        $this->routesTypes  = new ArrayCollection();
-        $this->zonesTypes   = new ArrayCollection();
-        $this->zones        = new ArrayCollection();
+        $this->resources = new ArrayCollection();
+        $this->routes = new ArrayCollection();
+        $this->routesTypes = new ArrayCollection();
+        $this->zonesTypes = new ArrayCollection();
+        $this->zones = new ArrayCollection();
     }
 
     /**

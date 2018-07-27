@@ -31,7 +31,7 @@ class CharacterExportPDFController extends Controller
      * @Route(
      *     "/characters/export/{id}-{nameSlug}.{_format}",
      *     name="corahnrin_character_export_pdf",
-     *     requirements={"_format": "pdf"},
+     *     requirements={"_format" = "pdf"},
      *     methods={"GET"}
      * )
      *
@@ -44,15 +44,15 @@ class CharacterExportPDFController extends Controller
     {
         $response = new Response();
 
-        $printer_friendly = $request->query->get('printer_friendly') === 'true';
-        $sheet_type       = $request->query->get('sheet_type') ?: 'original';
+        $printer_friendly = 'true' === $request->query->get('printer_friendly');
+        $sheet_type = $request->query->get('sheet_type') ?: 'original';
 
         $output_dir = $this->get('service_container')->getParameter('kernel.cache_dir').'/characters_output';
-        if (!is_dir($output_dir)) {
+        if (!\is_dir($output_dir)) {
             $this->get('filesystem')->mkdir($output_dir, 0777);
         }
 
-        $file_name = ucfirst($character->getNameSlug()).
+        $file_name = \ucfirst($character->getNameSlug()).
             ($printer_friendly ? '-pf' : '').
             '-'.$sheet_type.
             '-'.$this->get('translator')->getLocale().
@@ -62,14 +62,14 @@ class CharacterExportPDFController extends Controller
 
         // Generate the PDF if the file doesn't exist yet,
         // or if we're in debug mode.
-        if (!file_exists($output_dir.$file_name) || $this->getParameter('kernel.debug')) {
+        if (!\file_exists($output_dir.$file_name) || $this->getParameter('kernel.debug')) {
             $this->pdfManager
                 ->generateSheet($character, $printer_friendly)
                 ->Output($output_dir.$file_name, 'F')
             ;
         }
 
-        $response->setContent(file_get_contents($output_dir.$file_name));
+        $response->setContent(\file_get_contents($output_dir.$file_name));
         $response->headers->add(['Content-type' => 'application/pdf']);
 
         return $response;

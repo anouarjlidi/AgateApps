@@ -77,11 +77,11 @@ class MapTilesCommand extends Command
             // If no map is found, we'll ask the user to choose between any of the maps in the database
             if (!$map) {
                 $maps_list = [];
-                if ($list === null) {
+                if (null === $list) {
                     /* @var Maps[] $list */
                     $maps_list = $repo->findAllRoot('id');
 
-                    if (!count($maps_list)) {
+                    if (!\count($maps_list)) {
                         $io->comment('There is no map in the database.');
 
                         return 1;
@@ -89,7 +89,7 @@ class MapTilesCommand extends Command
 
                     unset($list);
                 }
-                if ($id !== null) {
+                if (null !== $id) {
                     $io->warning('No map with id: '.$id);
                 }
                 $id = $io->choice('Select a map to generate:', $maps_list);
@@ -99,13 +99,13 @@ class MapTilesCommand extends Command
         $io->comment('Generating map tiles for "'.$map->getName().'"');
 
         // This is a workaround to allow images to be stored with either global path or relative path
-        if (!file_exists($map->getImage())) {
+        if (!\file_exists($map->getImage())) {
             $img = $this->projectDir.'/public/'.$map->getImage();
             $map->setImage($img);
         }
 
-        if (!file_exists($map->getImage())) {
-            throw new \RuntimeException(sprintf('Map image file "%s" cannot be found.', $img ?? $map->getImage()));
+        if (!\file_exists($map->getImage())) {
+            throw new \RuntimeException(\sprintf('Map image file "%s" cannot be found.', $img ?? $map->getImage()));
         }
 
         try {

@@ -52,7 +52,7 @@ class DisciplinesDomainsFixtures extends AbstractFixture implements OrderedFixtu
         $this->manager = $manager;
 
         $discRepo = $this->manager->getRepository(\CorahnRin\Entity\Disciplines::class);
-        $domRepo  = $this->manager->getRepository(\CorahnRin\Entity\Domains::class);
+        $domRepo = $this->manager->getRepository(\CorahnRin\Entity\Domains::class);
 
         $this->fixtureObject($discRepo, $domRepo, 1, [10]);
         $this->fixtureObject($discRepo, $domRepo, 2, [5]);

@@ -20,25 +20,25 @@ use Symfony\Component\Validator\Constraints as Assert;
  * CharDomains.
  *
  * @ORM\Table(name="characters_domains")
- * @ORM\Entity()
+ * @ORM\Entity
  */
 class CharDomains
 {
     /**
      * @var Characters
      *
-     * @ORM\Id()
+     * @ORM\Id
      * @ORM\ManyToOne(targetEntity="CorahnRin\Entity\Characters", inversedBy="domains")
-     * @Assert\NotNull()
+     * @Assert\NotNull
      */
     protected $character;
 
     /**
      * @var Domains
      *
-     * @ORM\Id()
+     * @ORM\Id
      * @ORM\ManyToOne(targetEntity="CorahnRin\Entity\Domains")
-     * @Assert\NotNull()
+     * @Assert\NotNull
      */
     protected $domain;
 
@@ -46,7 +46,7 @@ class CharDomains
      * @var int
      *
      * @ORM\Column(name="score", type="smallint")
-     * @Assert\NotNull()
+     * @Assert\NotNull
      * @Assert\GreaterThanOrEqual(value=0)
      */
     protected $score;
@@ -54,14 +54,14 @@ class CharDomains
     /**
      * @var int
      *
-     * @ORM\Column(name="bonus", type="smallint", options={"default": 0})
+     * @ORM\Column(name="bonus", type="smallint", options={"default" = 0})
      */
     protected $bonus = 0;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="malus", type="smallint", options={"default": 0})
+     * @ORM\Column(name="malus", type="smallint", options={"default" = 0})
      */
     protected $malus = 0;
 

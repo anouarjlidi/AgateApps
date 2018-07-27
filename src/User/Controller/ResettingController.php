@@ -83,7 +83,7 @@ class ResettingController extends AbstractController
         $user = $this->userRepository->findOneByConfirmationToken($token);
 
         if (null === $user) {
-            throw new NotFoundHttpException(sprintf('The user with "confirmation token" does not exist for value "%s"', $token));
+            throw new NotFoundHttpException(\sprintf('The user with "confirmation token" does not exist for value "%s"', $token));
         }
 
         $form = $this->createForm(ResettingFormType::class, $user);
@@ -103,7 +103,7 @@ class ResettingController extends AbstractController
 
         return $this->render('user/Resetting/reset.html.twig', [
             'token' => $token,
-            'form'  => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 

@@ -43,19 +43,19 @@ class PortalElementController extends AdminController
     {
         $image = $portalElement->getImage();
 
-        if ($required === true && !($image instanceof UploadedFile)) {
+        if (true === $required && !($image instanceof UploadedFile)) {
             // Can happen only if user have hijacked the form. Exception is nice because it prevents flushing the db.
             throw new \RuntimeException('File is mandatory.');
         }
 
         if ($image instanceof UploadedFile) {
             $newname = 'portal_element_'
-                .Transliterator::urlize(pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME))
-                .uniqid('_pe_', true) // "pe" for "portal element"
+                .Transliterator::urlize(\pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME))
+                .\uniqid('_pe_', true) // "pe" for "portal element"
                 .'.'.$image->guessExtension()
             ;
 
-            $stream = fopen($image->getRealPath(), 'rb');
+            $stream = \fopen($image->getRealPath(), 'rb');
 
             $uploadResult = $this->filesystem->writeStream($newname, $stream, ['mimetype' => $image->getMimeType()]);
 

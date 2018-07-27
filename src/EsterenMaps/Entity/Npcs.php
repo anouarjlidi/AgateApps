@@ -18,7 +18,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
  * Npcs.
  *
  * @ORM\Table(name="maps_npcs")
- * @ORM\Entity()
+ * @ORM\Entity
  */
 class Npcs
 {
@@ -28,7 +28,7 @@ class Npcs
      * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
-     * @ORM\Id()
+     * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     protected $id;

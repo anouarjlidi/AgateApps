@@ -55,6 +55,7 @@ class UserRepository extends ServiceEntityRepository implements UserProviderInte
     {
         return $this->findOneBy(['confirmationToken' => $token]);
     }
+
     /**
      * {@inheritdoc}
      */
@@ -77,11 +78,11 @@ class UserRepository extends ServiceEntityRepository implements UserProviderInte
     public function refreshUser(UserInterface $user)
     {
         if (!($user instanceof User)) {
-            throw new UnsupportedUserException(sprintf('Expected an instance of %s, but got "%s".', User::class, get_class($user)));
+            throw new UnsupportedUserException(\sprintf('Expected an instance of %s, but got "%s".', User::class, \get_class($user)));
         }
 
         if (null === $reloadedUser = $this->find($user->getId())) {
-            throw new UsernameNotFoundException(sprintf('User with ID "%s" could not be reloaded.', $user->getId()));
+            throw new UsernameNotFoundException(\sprintf('User with ID "%s" could not be reloaded.', $user->getId()));
         }
 
         return $reloadedUser;
@@ -92,6 +93,6 @@ class UserRepository extends ServiceEntityRepository implements UserProviderInte
      */
     public function supportsClass($class)
     {
-        return User::class === $class || is_a($class, User::class, true);
+        return User::class === $class || \is_a($class, User::class, true);
     }
 }

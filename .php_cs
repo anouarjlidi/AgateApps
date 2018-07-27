@@ -30,6 +30,9 @@ return PhpCsFixer\Config::create()
             'no_useless_else'                 => true,
             'no_useless_return'               => true,
             'no_php4_constructor'             => true,
+            'native_function_invocation'      => true,
+            'fully_qualified_strict_types'    => true,
+            'simplified_null_return'          => true,
             // Overrides default doctrine rule using ":" as character
             'doctrine_annotation_array_assignment' => [
                 'operator' => '=',

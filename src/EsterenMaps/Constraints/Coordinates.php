@@ -15,5 +15,4 @@ use Symfony\Component\Validator\Constraint;
 
 class Coordinates extends Constraint
 {
-
 }

@@ -13,15 +13,15 @@ namespace CorahnRin\Data;
 
 final class ItemAvailability
 {
-    public const COMMON      = 'CO';
-    public const FREQUENT    = 'FR';
-    public const RARE        = 'RA';
+    public const COMMON = 'CO';
+    public const FREQUENT = 'FR';
+    public const RARE = 'RA';
     public const EXCEPTIONAL = 'EX';
 
     public const ALL = [
-        self::COMMON      => 'availability.common',
-        self::FREQUENT    => 'availability.frequent',
-        self::RARE        => 'availability.rare',
+        self::COMMON => 'availability.common',
+        self::FREQUENT => 'availability.frequent',
+        self::RARE => 'availability.rare',
         self::EXCEPTIONAL => 'availability.exceptional',
     ];
 }

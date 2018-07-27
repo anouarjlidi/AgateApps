@@ -32,16 +32,16 @@ class TransportTypes implements EntityToClearInterface, \JsonSerializable
      * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
-     * @ORM\Id()
+     * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
-    */
+     */
     protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=false, unique=true)
-    * @Assert\NotBlank()
+     * @Assert\NotBlank
      */
     protected $name;
 
@@ -50,23 +50,23 @@ class TransportTypes implements EntityToClearInterface, \JsonSerializable
      *
      * @Gedmo\Slug(fields={"name"})
      * @ORM\Column(name="slug", type="string", length=255, nullable=false, unique=true)
-    */
+     */
     protected $slug;
 
     /**
      * @var string
      *
      * @ORM\Column(name="description", type="text", nullable=true)
-    */
+     */
     protected $description;
 
     /**
      * @var string
      *
      * @ORM\Column(name="speed", type="decimal", scale=4, precision=8, nullable=false)
-     * @Assert\NotNull()
+     * @Assert\NotNull
      * @Assert\Range(max="10000", min="-10000")
-    */
+     */
     protected $speed;
 
     /**

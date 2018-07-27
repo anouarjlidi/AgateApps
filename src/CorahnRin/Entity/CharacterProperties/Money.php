@@ -14,14 +14,14 @@ namespace CorahnRin\Entity\CharacterProperties;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Embeddable()
+ * @ORM\Embeddable
  */
 class Money
 {
-    protected static $name          = 'Daol';
-    protected static $names         = ['Braise', 'Azur', 'Givre'];
+    protected static $name = 'Daol';
+    protected static $names = ['Braise', 'Azur', 'Givre'];
     protected static $names_literal = ['Daol%s% de Braise', 'Daol%s% d\'Azur', 'Daol%s% de Givre'];
-    protected static $values        = ['Braise' => 0, 'Azur' => 0, 'Givre' => 0];
+    protected static $values = ['Braise' => 0, 'Azur' => 0, 'Givre' => 0];
 
     /**
      * @var int

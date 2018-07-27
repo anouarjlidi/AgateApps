@@ -32,7 +32,7 @@ class RoutesTypesRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('rt');
 
-        if (count($ids)) {
+        if (\count($ids)) {
             $qb
                 ->where('rt.id NOT IN (:ids)')
                 ->setParameter(':ids', $ids)

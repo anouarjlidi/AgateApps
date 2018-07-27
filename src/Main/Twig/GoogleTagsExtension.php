@@ -26,7 +26,7 @@ class GoogleTagsExtension extends \Twig_Extension
     public function __construct(array $googleTags, $debug)
     {
         $this->googleTags = $googleTags;
-        $this->debug      = $debug;
+        $this->debug = $debug;
     }
 
     /**

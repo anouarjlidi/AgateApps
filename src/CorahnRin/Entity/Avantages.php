@@ -22,18 +22,18 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Avantages
 {
-    public const BONUS_100G  = '100g';
-    public const BONUS_50G   = '50g';
-    public const BONUS_20G   = '20g';
-    public const BONUS_50A   = '50a';
-    public const BONUS_20A   = '20a';
-    public const BONUS_RESM  = 'resm';
+    public const BONUS_100G = '100g';
+    public const BONUS_50G = '50g';
+    public const BONUS_20G = '20g';
+    public const BONUS_50A = '50a';
+    public const BONUS_20A = '20a';
+    public const BONUS_RESM = 'resm';
     public const BONUS_BLESS = 'bless';
-    public const BONUS_VIG   = 'vig';
-    public const BONUS_TRAU  = 'trau';
-    public const BONUS_DEF   = 'def';
-    public const BONUS_RAP   = 'rap';
-    public const BONUS_SUR   = 'sur';
+    public const BONUS_VIG = 'vig';
+    public const BONUS_TRAU = 'trau';
+    public const BONUS_DEF = 'def';
+    public const BONUS_RAP = 'rap';
+    public const BONUS_SUR = 'sur';
 
     /**
      * Scholar advantage domain bonuses.
@@ -50,7 +50,7 @@ class Avantages
      * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
-     * @ORM\Id()
+     * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
@@ -114,7 +114,7 @@ class Avantages
     /**
      * @var int
      *
-     * @ORM\Column(name="avtg_group", type="smallint", options={"default"="0"}, nullable=true)
+     * @ORM\Column(name="avtg_group", type="smallint", options={"default" = "0"}, nullable=true)
      */
     protected $group = 0;
 

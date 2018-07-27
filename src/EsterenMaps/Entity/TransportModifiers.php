@@ -20,7 +20,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * TransportModifiers.
  *
  * @ORM\Table(name="maps_routes_transports", uniqueConstraints={@ORM\UniqueConstraint(name="unique_route_transport", columns={"route_type_id", "transport_type_id"})})
- * @ORM\Entity()
+ * @ORM\Entity
  */
 class TransportModifiers implements EntityToClearInterface
 {
@@ -30,9 +30,9 @@ class TransportModifiers implements EntityToClearInterface
      * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
-     * @ORM\Id()
+     * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
-    */
+     */
     protected $id;
 
     /**
@@ -40,7 +40,7 @@ class TransportModifiers implements EntityToClearInterface
      *
      * @ORM\ManyToOne(targetEntity="EsterenMaps\Entity\RoutesTypes", inversedBy="transports")
      * @ORM\JoinColumn(name="route_type_id", nullable=false)
-     * @Assert\NotNull()
+     * @Assert\NotNull
      */
     protected $routeType;
 
@@ -49,17 +49,17 @@ class TransportModifiers implements EntityToClearInterface
      *
      * @ORM\ManyToOne(targetEntity="EsterenMaps\Entity\TransportTypes", inversedBy="transportsModifiers")
      * @ORM\JoinColumn(name="transport_type_id", nullable=false)
-     * @Assert\NotNull()
-    */
+     * @Assert\NotNull
+     */
     protected $transportType;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="percentage", type="decimal", scale=6, precision=9, nullable=false, options={"default": "100"})
-     * @Assert\NotNull()
+     * @ORM\Column(name="percentage", type="decimal", scale=6, precision=9, nullable=false, options={"default" = "100"})
+     * @Assert\NotNull
      * @Assert\Range(max="100", min="0")
-    */
+     */
     protected $percentage = 100;
 
     public function __toString()

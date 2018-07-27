@@ -20,25 +20,25 @@ use Symfony\Component\Validator\Constraints as Assert;
  * CharAdvantages.
  *
  * @ORM\Table(name="characters_avantages")
- * @ORM\Entity()
+ * @ORM\Entity
  */
 class CharAdvantages
 {
     /**
      * @var Characters
      *
-     * @ORM\Id()
+     * @ORM\Id
      * @ORM\ManyToOne(targetEntity="CorahnRin\Entity\Characters", inversedBy="charAdvantages")
-     * @Assert\NotNull()
+     * @Assert\NotNull
      */
     protected $character;
 
     /**
      * @var Avantages
      *
-     * @ORM\Id()
+     * @ORM\Id
      * @ORM\ManyToOne(targetEntity="CorahnRin\Entity\Avantages")
-     * @Assert\NotNull()
+     * @Assert\NotNull
      */
     protected $advantage;
 
@@ -46,7 +46,7 @@ class CharAdvantages
      * @var bool
      *
      * @ORM\Column(name="score", type="integer")
-     * @Assert\NotNull()
+     * @Assert\NotNull
      * @Assert\GreaterThanOrEqual(value=0)
      */
     protected $score;

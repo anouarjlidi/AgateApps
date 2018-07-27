@@ -48,8 +48,8 @@ class Step03Birthplace extends AbstractStepAction
         }
 
         return $this->renderCurrentStep([
-            'map'          => $map,
-            'tile_size'    => $this->tileSize,
+            'map' => $map,
+            'tile_size' => $this->tileSize,
             'regions_list' => $regions,
             'region_value' => $this->getCharacterProperty(),
         ]);

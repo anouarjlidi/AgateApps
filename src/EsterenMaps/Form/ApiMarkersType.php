@@ -31,7 +31,7 @@ class ApiMarkersType extends AbstractType
             ->add('name', TextType::class, [
                 'constraints' => [
                     new Constraints\NotBlank(),
-                ]
+                ],
             ])
             ->add('markerType', EntityType::class, [
                 'class' => MarkersTypes::class,

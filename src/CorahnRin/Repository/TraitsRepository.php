@@ -31,7 +31,7 @@ class TraitsRepository extends ServiceEntityRepository
      */
     public function findAllDifferenciated()
     {
-        $list      = $this->findBy([], ['name' => 'asc'], null, null, true);
+        $list = $this->findBy([], ['name' => 'asc'], null, null, true);
         $qualities = $flaws = [];
         foreach ($list as $id => $element) {
             if ($element instanceof Traits) {
@@ -45,7 +45,7 @@ class TraitsRepository extends ServiceEntityRepository
 
         return [
             'qualities' => $qualities,
-            'flaws'     => $flaws,
+            'flaws' => $flaws,
         ];
     }
 
@@ -58,7 +58,7 @@ class TraitsRepository extends ServiceEntityRepository
     {
         $list = [
             'qualities' => [],
-            'flaws'     => [],
+            'flaws' => [],
         ];
 
         foreach ($traits as $trait) {
@@ -102,7 +102,7 @@ class TraitsRepository extends ServiceEntityRepository
         foreach ($ways as $id => $value) {
             Ways::validateWay($id);
             if (\in_array($id, $searchableWays, true)) {
-                $placeholder = str_replace('ways.', '', $id);
+                $placeholder = \str_replace('ways.', '', $id);
                 $qb->orWhere('trait.way = :way'.$placeholder.' AND trait.major = :way'.$placeholder.'major')
                    ->setParameter(':way'.$placeholder, $id)
                    ->setParameter(':way'.$placeholder.'major', $value >= 4)

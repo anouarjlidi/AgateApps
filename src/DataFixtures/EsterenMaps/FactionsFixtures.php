@@ -55,12 +55,12 @@ class FactionsFixtures extends AbstractFixture implements ORMFixtureInterface
 
         return [
             [
-                'id'          => 1,
-                'book'        => $book2,
-                'name'        => 'Faction Test',
+                'id' => 1,
+                'book' => $book2,
+                'name' => 'Faction Test',
                 'description' => 'This is just a test faction.',
-                'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
-                'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'createdAt' => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'updatedAt' => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
             ],
         ];
     }

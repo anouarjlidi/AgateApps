@@ -70,7 +70,7 @@ class MapApi
         $data['references']['transports'] = $this->em->getRepository(TransportTypes::class)->findForApi();
 
         // Pre-compiled templates
-        if ($editMode === true) {
+        if (true === $editMode) {
             $data['templates'] = $this->getEditModeTemplates();
         } else {
             $data['templates'] = $this->getTemplates();
@@ -81,7 +81,7 @@ class MapApi
 
     private function filterMapData(array $data): array
     {
-        $data['map']['bounds'] = json_decode($data['map']['bounds'], true);
+        $data['map']['bounds'] = \json_decode($data['map']['bounds'], true);
 
         foreach ($data['map']['markers'] as &$marker) {
             $marker['latitude'] = (float) $marker['latitude'];
@@ -89,11 +89,11 @@ class MapApi
         }
 
         foreach ($data['map']['zones'] as &$zone) {
-            $zone['coordinates'] = $this->filterCoordinates(json_decode($zone['coordinates'], true));
+            $zone['coordinates'] = $this->filterCoordinates(\json_decode($zone['coordinates'], true));
         }
 
         foreach ($data['map']['routes'] as &$route) {
-            $route['coordinates'] = $this->filterCoordinates(json_decode($route['coordinates'], true));
+            $route['coordinates'] = $this->filterCoordinates(\json_decode($route['coordinates'], true));
             if ($route['forced_distance']) {
                 $route['distance'] = $route['forced_distance'];
             }

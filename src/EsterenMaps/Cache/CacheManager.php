@@ -20,7 +20,7 @@ use Symfony\Component\HttpKernel\CacheClearer\CacheClearerInterface;
 
 /**
  * Standalone service to manage cache for EsterenMaps.
- * The only goal is to clear app cache &
+ * The only goal is to clear app cache & Doctrine cache.
  */
 class CacheManager implements EventSubscriber, CacheClearerInterface
 {
