@@ -66,9 +66,13 @@
                 {% set label = name|humanize %}
             {%- endif -%}
         {%- endif -%}
-        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
-            {{ translation_domain is same as(false) ? label|raw : label|trans({}, translation_domain)|raw }}
-        </label>
+        <{{ element|default('label') }}{% if label_attr %}{% with { attr: label_attr } %}{{ block('attributes') }}{% endwith %}{% endif %}>
+            {%- if translation_domain is same as(false) -%}
+                {{- label|raw -}}
+            {%- else -%}
+                {{- label|trans({}, translation_domain)|raw -}}
+            {%- endif -%}
+        </{{ element|default('label') }}>
     {%- endif -%}
 {%- endblock -%}
 
