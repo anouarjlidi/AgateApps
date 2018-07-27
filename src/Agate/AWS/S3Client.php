@@ -48,7 +48,7 @@ class S3Client
 
         return $this->client = new AwsS3Client([
             'credentials' => [
-                'key'    => $this->key,
+                'key' => $this->key,
                 'secret' => $this->secret,
             ],
             'region' => $this->region,
