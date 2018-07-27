@@ -1,0 +1,4 @@
+# Config for the test environment
+security:
+    encoders:
+        Symfony\Component\Security\Core\User\UserInterface: plaintext
