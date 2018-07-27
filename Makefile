@@ -1,7 +1,7 @@
 DOCKER_COMPOSE  = docker-compose
 
-EXEC_PHP        = $(DOCKER_COMPOSE) exec php
-EXEC_JS         = $(DOCKER_COMPOSE) exec node
+EXEC_PHP        = $(DOCKER_COMPOSE) run php
+EXEC_JS         = $(DOCKER_COMPOSE) run node
 
 SYMFONY         = $(EXEC_PHP) bin/console
 COMPOSER        = $(EXEC_PHP) composer
