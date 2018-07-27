@@ -12,9 +12,9 @@
 namespace EsterenMaps\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Persistence\ManagerRegistry;
 use EsterenMaps\Cache\CacheManager;
 use EsterenMaps\Entity\TransportTypes;
-use Doctrine\Common\Persistence\ManagerRegistry;
 
 class TransportTypesRepository extends ServiceEntityRepository
 {

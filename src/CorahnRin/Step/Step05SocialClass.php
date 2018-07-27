@@ -11,8 +11,8 @@
 
 namespace CorahnRin\Step;
 
-use Symfony\Component\HttpFoundation\Response;
 use CorahnRin\Entity\SocialClasses;
+use Symfony\Component\HttpFoundation\Response;
 
 class Step05SocialClass extends AbstractStepAction
 {

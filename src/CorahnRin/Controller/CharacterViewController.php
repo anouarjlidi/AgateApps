@@ -13,12 +13,12 @@ namespace CorahnRin\Controller;
 
 use CorahnRin\Entity\Characters;
 use CorahnRin\Repository\CharactersRepository;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/characters")
@@ -28,8 +28,6 @@ class CharacterViewController extends Controller
     /**
      * @Route("/", name="corahnrin_characters_list", methods={"GET"})
      *
-     * @param Request $request
-     *
      * @return RedirectResponse|Response
      */
     public function listAction(Request $request)
@@ -37,7 +35,7 @@ class CharacterViewController extends Controller
         // GET variables used for searching
         $page = (int) $request->query->get('page') ?: 1;
         $searchField = $request->query->get('search_field') ?: 'name';
-        $order = \strtolower($request->query->get('order') ?: 'asc');
+        $order = \mb_strtolower($request->query->get('order') ?: 'asc');
 
         $limit = 25;
 
@@ -68,8 +66,6 @@ class CharacterViewController extends Controller
 
     /**
      * @Route("/{id}-{nameSlug}", requirements={"id" = "\d+"}, name="corahnrin_characters_view", methods={"GET"})
-     *
-     * @param Characters $character
      *
      * @return Response
      */

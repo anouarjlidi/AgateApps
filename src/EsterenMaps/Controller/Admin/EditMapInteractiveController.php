@@ -14,11 +14,11 @@ declare(strict_types=1);
 namespace EsterenMaps\Controller\Admin;
 
 use EsterenMaps\Entity\Maps;
-use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Security("has_role('ROLE_MANAGER')")

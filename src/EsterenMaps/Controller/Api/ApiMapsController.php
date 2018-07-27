@@ -12,12 +12,12 @@
 namespace EsterenMaps\Controller\Api;
 
 use EsterenMaps\Api\MapApi;
-use Symfony\Component\Routing\Annotation\Route;
+use Main\PublicService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-use Main\PublicService;
 
 /**
  * @Route(host="%esteren_domains.api%")

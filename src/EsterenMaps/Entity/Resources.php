@@ -117,7 +117,6 @@ class Resources
     /**
      * Add routes.
      *
-     * @param Routes $routes
      *
      * @return Resources
      */
@@ -130,8 +129,6 @@ class Resources
 
     /**
      * Remove routes.
-     *
-     * @param Routes $routes
      */
     public function removeRoute(Routes $routes)
     {
@@ -153,7 +150,6 @@ class Resources
     /**
      * Add routesTypes.
      *
-     * @param RoutesTypes $routesTypes
      *
      * @return Resources
      */
@@ -166,8 +162,6 @@ class Resources
 
     /**
      * Remove routesTypes.
-     *
-     * @param RoutesTypes $routesTypes
      */
     public function removeRouteType(RoutesTypes $routesTypes)
     {
@@ -189,7 +183,6 @@ class Resources
     /**
      * Add zonesTypes.
      *
-     * @param ZonesTypes $zonesTypes
      *
      * @return Resources
      */
@@ -202,8 +195,6 @@ class Resources
 
     /**
      * Remove zonesTypes.
-     *
-     * @param ZonesTypes $zonesTypes
      */
     public function removeZoneType(ZonesTypes $zonesTypes)
     {

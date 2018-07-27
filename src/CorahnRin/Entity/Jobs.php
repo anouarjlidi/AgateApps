@@ -214,7 +214,6 @@ class Jobs
     /**
      * Add domainsSecondary.
      *
-     * @param Domains $domainsSecondary
      *
      * @return Jobs
      */
@@ -227,8 +226,6 @@ class Jobs
 
     /**
      * Remove domainsSecondary.
-     *
-     * @param Domains $domainsSecondary
      */
     public function removeDomainsSecondary(Domains $domainsSecondary)
     {

@@ -138,7 +138,7 @@ class User implements UserInterface, \Serializable
 
     public function addRole($role): self
     {
-        $role = \strtoupper($role);
+        $role = \mb_strtoupper($role);
 
         if ($role === static::ROLE_DEFAULT) {
             return $this;
@@ -173,7 +173,7 @@ class User implements UserInterface, \Serializable
 
     public function hasRole($role): bool
     {
-        return \in_array(\strtoupper($role), $this->getRoles(), true);
+        return \in_array(\mb_strtoupper($role), $this->getRoles(), true);
     }
 
     public function isSuperAdmin(): bool
@@ -183,7 +183,7 @@ class User implements UserInterface, \Serializable
 
     public function removeRole($role): self
     {
-        if (false !== $key = \array_search(\strtoupper($role), $this->roles, true)) {
+        if (false !== $key = \array_search(\mb_strtoupper($role), $this->roles, true)) {
             unset($this->roles[$key]);
             $this->roles = \array_values($this->roles);
         }

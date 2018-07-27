@@ -92,7 +92,6 @@ class CharDisciplines
     /**
      * Set character.
      *
-     * @param Characters $character
      *
      * @return CharDisciplines
      *
@@ -120,7 +119,6 @@ class CharDisciplines
     /**
      * Set discipline.
      *
-     * @param Disciplines $discipline
      *
      * @return CharDisciplines
      *
@@ -148,7 +146,6 @@ class CharDisciplines
     /**
      * Set domain.
      *
-     * @param Domains $domain
      *
      * @return CharDisciplines
      *

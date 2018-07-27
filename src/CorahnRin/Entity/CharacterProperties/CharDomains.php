@@ -136,7 +136,6 @@ class CharDomains
     /**
      * Set character.
      *
-     * @param Characters $character
      *
      * @return CharDomains
      *
@@ -164,7 +163,6 @@ class CharDomains
     /**
      * Set domain.
      *
-     * @param Domains $domain
      *
      * @return CharDomains
      *

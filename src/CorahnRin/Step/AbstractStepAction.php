@@ -21,9 +21,7 @@ abstract class AbstractStepAction extends BaseAbstractStepAction
     /**
      * Renders current step view by its name.
      *
-     * @param array $parameters
      *
-     * @return Response
      *
      * @throws \Twig_Error
      */

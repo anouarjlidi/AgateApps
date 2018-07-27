@@ -81,11 +81,7 @@ final class SessionToCharacter
     }
 
     /**
-     * @param array $values
-     *
      * @throws CharactersException
-     *
-     * @return Characters
      */
     public function createCharacterFromGeneratorValues(array $values): Characters
     {

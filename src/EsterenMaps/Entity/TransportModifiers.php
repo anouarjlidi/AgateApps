@@ -128,8 +128,6 @@ class TransportModifiers implements EntityToClearInterface
     }
 
     /**
-     * @param TransportTypes $transportType
-     *
      * @return TransportModifiers
      *
      * @codeCoverageIgnore

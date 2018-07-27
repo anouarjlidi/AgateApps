@@ -81,7 +81,7 @@ class UserRoleCommand extends Command
 
         foreach ($roles as &$role) {
             $role = \mb_strtoupper(\trim($role));
-            if (0 !== \strpos($role, 'ROLE_')) {
+            if (0 !== \mb_strpos($role, 'ROLE_')) {
                 throw new \InvalidArgumentException('Only attributes starting with "ROLE_" are valid roles.');
             }
         }

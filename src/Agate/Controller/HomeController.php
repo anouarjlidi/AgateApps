@@ -13,11 +13,11 @@ namespace Agate\Controller;
 
 use Agate\Entity\PortalElement;
 use Agate\Exception\PortalElementNotFound;
-use Symfony\Component\Routing\Annotation\Route;
+use Main\PublicService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Main\PublicService;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route(host="%agate_domains.portal%")

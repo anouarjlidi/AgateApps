@@ -23,8 +23,6 @@ class MapImageManager
     }
 
     /**
-     * @param Maps $map
-     *
      * @return string
      *
      * @throws \RuntimeException
@@ -43,8 +41,6 @@ class MapImageManager
     }
 
     /**
-     * @param Maps $map
-     *
      * @throws \RuntimeException
      */
     public function generateImage(Maps $map)

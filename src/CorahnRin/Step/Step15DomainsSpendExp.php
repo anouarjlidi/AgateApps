@@ -11,9 +11,9 @@
 
 namespace CorahnRin\Step;
 
-use Symfony\Component\HttpFoundation\Response;
 use CorahnRin\Entity\Domains;
 use CorahnRin\GeneratorTools\DomainsCalculator;
+use Symfony\Component\HttpFoundation\Response;
 
 class Step15DomainsSpendExp extends AbstractStepAction
 {

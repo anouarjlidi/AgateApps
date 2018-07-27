@@ -157,7 +157,7 @@ class FPDF
         $this->DefPageSize = $size;
         $this->CurPageSize = $size;
         // Page orientation
-        $orientation = \strtolower($orientation);
+        $orientation = \mb_strtolower($orientation);
         if ('p' == $orientation || 'portrait' == $orientation) {
             $this->DefOrientation = 'P';
             $this->w = $size[0];
@@ -487,7 +487,7 @@ class FPDF
                 }
             }
         } else {
-            $l = \strlen($s);
+            $l = \mb_strlen($s);
             for ($i = 0; $i < $l; $i++) {
                 $w += $this->CurrentFont['cw'][$s[$i]];
             }
@@ -527,16 +527,16 @@ class FPDF
     public function AddFont($family, $style = '', $file = '', $uni = false)
     {
         // Add a TrueType, OpenType or Type1 font
-        $family = \strtolower($family);
-        $style = \strtoupper($style);
+        $family = \mb_strtolower($family);
+        $style = \mb_strtoupper($style);
         if ('IB' == $style) {
             $style = 'BI';
         }
         if ('' == $file) {
             if ($uni) {
-                $file = \str_replace(' ', '', $family).\strtolower($style).'.ttf';
+                $file = \str_replace(' ', '', $family).\mb_strtolower($style).'.ttf';
             } else {
-                $file = \str_replace(' ', '', $family).\strtolower($style).'.php';
+                $file = \str_replace(' ', '', $family).\mb_strtolower($style).'.php';
             }
         }
         $fontkey = $family.$style;
@@ -558,7 +558,7 @@ class FPDF
 //                exit('Error');
 //                trigger_error('TTF file not found : '.$file, E_USER_ERROR);
 //            }
-            $unifilename = $this->_getfontpath().'../unifont/'.\strtolower(\substr($file, 0, (\strpos($file, '.'))));
+            $unifilename = $this->_getfontpath().'../unifont/'.\mb_strtolower(\mb_substr($file, 0, (\mb_strpos($file, '.'))));
             $name = '';
             $originalsize = 0;
             $ttfstat = \stat($ttffilename);
@@ -600,10 +600,10 @@ class FPDF
                 $s .= '?>';
                 if (\is_writable(\dirname($this->_getfontpath().'unifont/'.'x'))) {
                     $fh = \fopen($unifilename.'.mtx.php', 'w');
-                    \fwrite($fh, $s, \strlen($s));
+                    \fwrite($fh, $s, \mb_strlen($s));
                     \fclose($fh);
                     $fh = \fopen($unifilename.'.cw.dat', 'wb');
-                    \fwrite($fh, $cw, \strlen($cw));
+                    \fwrite($fh, $cw, \mb_strlen($cw));
                     \fclose($fh);
                     @\unlink($unifilename.'.cw127.php');
                 }
@@ -664,10 +664,10 @@ class FPDF
         if ('' == $family) {
             $family = $this->FontFamily;
         } else {
-            $family = \strtolower($family);
+            $family = \mb_strtolower($family);
         }
-        $style = \strtoupper($style);
-        if (false !== \strpos($style, 'U')) {
+        $style = \mb_strtoupper($style);
+        if (false !== \mb_strpos($style, 'U')) {
             $this->underline = true;
             $style = \str_replace('U', '', $style);
         } else {
@@ -825,16 +825,16 @@ class FPDF
         if (\is_string($border)) {
             $x = $this->x;
             $y = $this->y;
-            if (false !== \strpos($border, 'L')) {
+            if (false !== \mb_strpos($border, 'L')) {
                 $s .= \sprintf('%.2F %.2F m %.2F %.2F l S ', $x * $k, ($this->h - $y) * $k, $x * $k, ($this->h - ($y + $h)) * $k);
             }
-            if (false !== \strpos($border, 'T')) {
+            if (false !== \mb_strpos($border, 'T')) {
                 $s .= \sprintf('%.2F %.2F m %.2F %.2F l S ', $x * $k, ($this->h - $y) * $k, ($x + $w) * $k, ($this->h - $y) * $k);
             }
-            if (false !== \strpos($border, 'R')) {
+            if (false !== \mb_strpos($border, 'R')) {
                 $s .= \sprintf('%.2F %.2F m %.2F %.2F l S ', ($x + $w) * $k, ($this->h - $y) * $k, ($x + $w) * $k, ($this->h - ($y + $h)) * $k);
             }
-            if (false !== \strpos($border, 'B')) {
+            if (false !== \mb_strpos($border, 'B')) {
                 $s .= \sprintf('%.2F %.2F m %.2F %.2F l S ', $x * $k, ($this->h - ($y + $h)) * $k, ($x + $w) * $k, ($this->h - ($y + $h)) * $k);
             }
         }
@@ -920,7 +920,7 @@ class FPDF
                 $nb--;
             }
         } else {
-            $nb = \strlen($s);
+            $nb = \mb_strlen($s);
             if ($nb > 0 && "\n" == $s[$nb - 1]) {
                 $nb--;
             }
@@ -933,13 +933,13 @@ class FPDF
                 $b2 = 'LR';
             } else {
                 $b2 = '';
-                if (false !== \strpos($border, 'L')) {
+                if (false !== \mb_strpos($border, 'L')) {
                     $b2 .= 'L';
                 }
-                if (false !== \strpos($border, 'R')) {
+                if (false !== \mb_strpos($border, 'R')) {
                     $b2 .= 'R';
                 }
-                $b = (false !== \strpos($border, 'T')) ? $b2.'T' : $b2;
+                $b = (false !== \mb_strpos($border, 'T')) ? $b2.'T' : $b2;
             }
         } else {
             $b2 = null;
@@ -966,7 +966,7 @@ class FPDF
                 if ($this->unifontSubset) {
                     $this->Cell($w, $h, \mb_substr($s, $j, $i - $j, 'UTF-8'), $b, 2, $align, $fill);
                 } else {
-                    $this->Cell($w, $h, \substr($s, $j, $i - $j), $b, 2, $align, $fill);
+                    $this->Cell($w, $h, \mb_substr($s, $j, $i - $j), $b, 2, $align, $fill);
                 }
                 $i++;
                 $sep = -1;
@@ -1006,7 +1006,7 @@ class FPDF
                     if ($this->unifontSubset) {
                         $this->Cell($w, $h, \mb_substr($s, $j, $i - $j, 'UTF-8'), $b, 2, $align, $fill);
                     } else {
-                        $this->Cell($w, $h, \substr($s, $j, $i - $j), $b, 2, $align, $fill);
+                        $this->Cell($w, $h, \mb_substr($s, $j, $i - $j), $b, 2, $align, $fill);
                     }
                 } else {
                     if ('J' == $align) {
@@ -1016,7 +1016,7 @@ class FPDF
                     if ($this->unifontSubset) {
                         $this->Cell($w, $h, \mb_substr($s, $j, $sep - $j, 'UTF-8'), $b, 2, $align, $fill);
                     } else {
-                        $this->Cell($w, $h, \substr($s, $j, $sep - $j), $b, 2, $align, $fill);
+                        $this->Cell($w, $h, \mb_substr($s, $j, $sep - $j), $b, 2, $align, $fill);
                     }
                     $i = $sep + 1;
                 }
@@ -1037,13 +1037,13 @@ class FPDF
             $this->ws = 0;
             $this->_out('0 Tw');
         }
-        if ($border && false !== \strpos($border, 'B')) {
+        if ($border && false !== \mb_strpos($border, 'B')) {
             $b .= 'B';
         }
         if ($this->unifontSubset) {
             $this->Cell($w, $h, \mb_substr($s, $j, $i - $j, 'UTF-8'), $b, 2, $align, $fill);
         } else {
-            $this->Cell($w, $h, \substr($s, $j, $i - $j), $b, 2, $align, $fill);
+            $this->Cell($w, $h, \mb_substr($s, $j, $i - $j), $b, 2, $align, $fill);
         }
         $this->x = $this->lMargin;
     }
@@ -1063,7 +1063,7 @@ class FPDF
                 return;
             }
         } else {
-            $nb = \strlen($s);
+            $nb = \mb_strlen($s);
         }
         $sep = -1;
         $i = 0;
@@ -1082,7 +1082,7 @@ class FPDF
                 if ($this->unifontSubset) {
                     $this->Cell($w, $h, \mb_substr($s, $j, $i - $j, 'UTF-8'), 0, 2, '', 0, $link);
                 } else {
-                    $this->Cell($w, $h, \substr($s, $j, $i - $j), 0, 2, '', 0, $link);
+                    $this->Cell($w, $h, \mb_substr($s, $j, $i - $j), 0, 2, '', 0, $link);
                 }
                 $i++;
                 $sep = -1;
@@ -1125,13 +1125,13 @@ class FPDF
                     if ($this->unifontSubset) {
                         $this->Cell($w, $h, \mb_substr($s, $j, $i - $j, 'UTF-8'), 0, 2, '', 0, $link);
                     } else {
-                        $this->Cell($w, $h, \substr($s, $j, $i - $j), 0, 2, '', 0, $link);
+                        $this->Cell($w, $h, \mb_substr($s, $j, $i - $j), 0, 2, '', 0, $link);
                     }
                 } else {
                     if ($this->unifontSubset) {
                         $this->Cell($w, $h, \mb_substr($s, $j, $sep - $j, 'UTF-8'), 0, 2, '', 0, $link);
                     } else {
-                        $this->Cell($w, $h, \substr($s, $j, $sep - $j), 0, 2, '', 0, $link);
+                        $this->Cell($w, $h, \mb_substr($s, $j, $sep - $j), 0, 2, '', 0, $link);
                     }
                     $i = $sep + 1;
                 }
@@ -1153,7 +1153,7 @@ class FPDF
             if ($this->unifontSubset) {
                 $this->Cell($l, $h, \mb_substr($s, $j, $i - $j, 'UTF-8'), 0, 0, '', 0, $link);
             } else {
-                $this->Cell($l, $h, \substr($s, $j), 0, 0, '', 0, $link);
+                $this->Cell($l, $h, \mb_substr($s, $j), 0, 0, '', 0, $link);
             }
         }
     }
@@ -1175,13 +1175,13 @@ class FPDF
         if (!isset($this->images[$file])) {
             // First use of this image, get info
             if ('' == $type) {
-                $pos = \strrpos($file, '.');
+                $pos = \mb_strrpos($file, '.');
                 if (!$pos) {
                     $this->Error('Image file has no extension and no type was specified: '.$file);
                 }
-                $type = \substr($file, $pos + 1);
+                $type = \mb_substr($file, $pos + 1);
             }
-            $type = \strtolower($type);
+            $type = \mb_strtolower($type);
             if ('jpeg' == $type) {
                 $type = 'jpg';
             }
@@ -1282,7 +1282,7 @@ class FPDF
         if ($this->state < 3) {
             $this->Close();
         }
-        $dest = \strtoupper($dest);
+        $dest = \mb_strtoupper($dest);
         if ('' == $dest) {
             if ('' == $name) {
                 $name = 'doc.pdf';
@@ -1319,7 +1319,7 @@ class FPDF
                 if (!$f) {
                     $this->Error('Unable to create output file: '.$name);
                 }
-                \fwrite($f, $this->buffer, \strlen($this->buffer));
+                \fwrite($f, $this->buffer, \mb_strlen($this->buffer));
                 \fclose($f);
                 break;
             case 'S':
@@ -1385,7 +1385,7 @@ class FPDF
     public function _getpagesize($size)
     {
         if (\is_string($size)) {
-            $size = \strtolower($size);
+            $size = \mb_strtolower($size);
             if (!isset($this->StdPageSizes[$size])) {
                 $this->Error('Unknown page size: '.$size);
             }
@@ -1412,7 +1412,7 @@ class FPDF
         if ('' == $orientation) {
             $orientation = $this->DefOrientation;
         } else {
-            $orientation = \strtoupper($orientation[0]);
+            $orientation = \mb_strtoupper($orientation[0]);
         }
         if ('' == $size) {
             $size = $this->DefPageSize;
@@ -1477,7 +1477,7 @@ class FPDF
     {
         // Convert UTF-8 to UTF-16BE with BOM
         $res = "\xFE\xFF";
-        $nb = \strlen($s);
+        $nb = \mb_strlen($s);
         $i = 0;
         while ($i < $nb) {
             $c1 = \ord($s[$i++]);
@@ -1506,7 +1506,7 @@ class FPDF
         // Underline text
         $up = $this->CurrentFont['up'];
         $ut = $this->CurrentFont['ut'];
-        $w = $this->GetStringWidth($txt) + $this->ws * \substr_count($txt, ' ');
+        $w = $this->GetStringWidth($txt) + $this->ws * \mb_substr_count($txt, ' ');
 
         return \sprintf('%.2F %.2F %.2F %.2F re f', $x * $this->k, ($this->h - ($y - $up / 1000 * $this->FontSize)) * $this->k, $w * $this->k, -$ut / 1000 * $this->FontSizePt);
     }
@@ -1603,11 +1603,11 @@ class FPDF
                 // Read transparency info
                 $t = $this->_readstream($f, $n);
                 if (0 == $ct) {
-                    $trns = [\ord(\substr($t, 1, 1))];
+                    $trns = [\ord(\mb_substr($t, 1, 1))];
                 } elseif (2 == $ct) {
-                    $trns = [\ord(\substr($t, 1, 1)), \ord(\substr($t, 3, 1)), \ord(\substr($t, 5, 1))];
+                    $trns = [\ord(\mb_substr($t, 1, 1)), \ord(\mb_substr($t, 3, 1)), \ord(\mb_substr($t, 5, 1))];
                 } else {
-                    $pos = \strpos($t, \chr(0));
+                    $pos = \mb_strpos($t, \chr(0));
                     if (false !== $pos) {
                         $trns = [$pos];
                     }
@@ -1652,7 +1652,7 @@ class FPDF
                     $pos = (1 + $len) * $i;
                     $color .= $data[$pos];
                     $alpha .= $data[$pos];
-                    $line = \substr($data, $pos + 1, $len);
+                    $line = \mb_substr($data, $pos + 1, $len);
                     $color .= \preg_replace('/(.)./s', '$1', $line);
                     $alpha .= \preg_replace('/.(.)/s', '$1', $line);
                 }
@@ -1663,7 +1663,7 @@ class FPDF
                     $pos = (1 + $len) * $i;
                     $color .= $data[$pos];
                     $alpha .= $data[$pos];
-                    $line = \substr($data, $pos + 1, $len);
+                    $line = \mb_substr($data, $pos + 1, $len);
                     $color .= \preg_replace('/(.{3})./s', '$1', $line);
                     $alpha .= \preg_replace('/.{3}(.)/s', '$1', $line);
                 }
@@ -1689,7 +1689,7 @@ class FPDF
             if (false === $s) {
                 $this->Error('Error while reading stream');
             }
-            $n -= \strlen($s);
+            $n -= \mb_strlen($s);
             $res .= $s;
         }
         if ($n > 0) {
@@ -1753,7 +1753,7 @@ class FPDF
     {
         // Begin a new object
         $this->n++;
-        $this->offsets[$this->n] = \strlen($this->buffer);
+        $this->offsets[$this->n] = \mb_strlen($this->buffer);
         $this->_out($this->n.' 0 obj');
     }
 
@@ -1830,12 +1830,12 @@ class FPDF
             // Page content
             $p = ($this->compress) ? \gzcompress($this->pages[$n]) : $this->pages[$n];
             $this->_newobj();
-            $this->_out('<<'.$filter.'/Length '.\strlen($p).'>>');
+            $this->_out('<<'.$filter.'/Length '.\mb_strlen($p).'>>');
             $this->_putstream($p);
             $this->_out('endobj');
         }
         // Pages root
-        $this->offsets[1] = \strlen($this->buffer);
+        $this->offsets[1] = \mb_strlen($this->buffer);
         $this->_out('1 0 obj');
         $this->_out('<</Type /Pages');
         $kids = '/Kids [';
@@ -1874,19 +1874,19 @@ class FPDF
                     $font .= \fread($f, 8192);
                 }
                 \fclose($f);
-                $compressed = ('.z' == \substr($file, -2));
+                $compressed = ('.z' == \mb_substr($file, -2));
                 if (!$compressed && isset($info['length2'])) {
                     $header = (128 == \ord($font[0]));
                     if ($header) {
                         // Strip first binary header
-                        $font = \substr($font, 6);
+                        $font = \mb_substr($font, 6);
                     }
                     if ($header && 128 == \ord($font[$info['length1']])) {
                         // Strip second binary header
-                        $font = \substr($font, 0, $info['length1']).\substr($font, $info['length1'] + 6);
+                        $font = \mb_substr($font, 0, $info['length1']).\mb_substr($font, $info['length1'] + 6);
                     }
                 }
-                $this->_out('<</Length '.\strlen($font));
+                $this->_out('<</Length '.\mb_strlen($font));
                 if ($compressed) {
                     $this->_out('/Filter /FlateDecode');
                 }
@@ -1965,7 +1965,7 @@ class FPDF
                     $subset = $font['subset'];
                     unset($subset[0]);
                     $ttfontstream = $ttf->makeSubset($font['ttffile'], $subset);
-                    $ttfontsize = \strlen($ttfontstream);
+                    $ttfontsize = \mb_strlen($ttfontstream);
                     $fontstream = \gzcompress($ttfontstream);
                     $codeToGlyph = $ttf->codeToGlyph;
                     unset($codeToGlyph[0]);
@@ -2022,7 +2022,7 @@ class FPDF
                     $toUni .= "CMapName currentdict /CMap defineresource pop\n";
                     $toUni .= "end\n";
                     $toUni .= 'end';
-                    $this->_out('<</Length '.(\strlen($toUni)).'>>');
+                    $this->_out('<</Length '.(\mb_strlen($toUni)).'>>');
                     $this->_putstream($toUni);
                     $this->_out('endobj');
 
@@ -2058,7 +2058,7 @@ class FPDF
                     }
                     $cidtogidmap = \gzcompress($cidtogidmap);
                     $this->_newobj();
-                    $this->_out('<</Length '.\strlen($cidtogidmap).'');
+                    $this->_out('<</Length '.\mb_strlen($cidtogidmap).'');
                     $this->_out('/Filter /FlateDecode');
                     $this->_out('>>');
                     $this->_putstream($cidtogidmap);
@@ -2066,7 +2066,7 @@ class FPDF
 
                     //Font file
                     $this->_newobj();
-                    $this->_out('<</Length '.\strlen($fontstream));
+                    $this->_out('<</Length '.\mb_strlen($fontstream));
                     $this->_out('/Filter /FlateDecode');
                     $this->_out('/Length1 '.$ttfontsize);
                     $this->_out('>>');
@@ -2076,7 +2076,7 @@ class FPDF
                 } else {
                     // Allow for additional types
                     $this->fonts[$k]['n'] = $this->n + 1;
-                    $mtd = '_put'.\strtolower($type);
+                    $mtd = '_put'.\mb_strtolower($type);
                     if (!\method_exists($this, $mtd)) {
                         $this->Error('Unsupported font type: '.$type);
                     }
@@ -2120,7 +2120,7 @@ class FPDF
                     }
                     $cw127 .= '$range='.\var_export($range, true).";\n";
                     $cw127 .= '?>';
-                    \fwrite($fh, $cw127, \strlen($cw127));
+                    \fwrite($fh, $cw127, \mb_strlen($cw127));
                     \fclose($fh);
                 }
             }
@@ -2226,7 +2226,7 @@ class FPDF
         $this->_out('/Width '.$info['w']);
         $this->_out('/Height '.$info['h']);
         if ('Indexed' == $info['cs']) {
-            $this->_out('/ColorSpace [/Indexed /DeviceRGB '.(\strlen($info['pal']) / 3 - 1).' '.($this->n + 1).' 0 R]');
+            $this->_out('/ColorSpace [/Indexed /DeviceRGB '.(\mb_strlen($info['pal']) / 3 - 1).' '.($this->n + 1).' 0 R]');
         } else {
             $this->_out('/ColorSpace /'.$info['cs']);
             if ('DeviceCMYK' == $info['cs']) {
@@ -2250,7 +2250,7 @@ class FPDF
         if (isset($info['smask'])) {
             $this->_out('/SMask '.($this->n + 1).' 0 R');
         }
-        $this->_out('/Length '.\strlen($info['data']).'>>');
+        $this->_out('/Length '.\mb_strlen($info['data']).'>>');
         $this->_putstream($info['data']);
         $this->_out('endobj');
         // Soft mask
@@ -2272,7 +2272,7 @@ class FPDF
             $filter = ($this->compress) ? '/Filter /FlateDecode ' : '';
             $pal = ($this->compress) ? \gzcompress($info['pal']) : $info['pal'];
             $this->_newobj();
-            $this->_out('<<'.$filter.'/Length '.\strlen($pal).'>>');
+            $this->_out('<<'.$filter.'/Length '.\mb_strlen($pal).'>>');
             $this->_putstream($pal);
             $this->_out('endobj');
         }
@@ -2303,7 +2303,7 @@ class FPDF
         $this->_putfonts();
         $this->_putimages();
         // Resource dictionary
-        $this->offsets[2] = \strlen($this->buffer);
+        $this->offsets[2] = \mb_strlen($this->buffer);
         $this->_out('2 0 obj');
         $this->_out('<<');
         $this->_putresourcedict();
@@ -2383,7 +2383,7 @@ class FPDF
         $this->_out('>>');
         $this->_out('endobj');
         // Cross-ref
-        $o = \strlen($this->buffer);
+        $o = \mb_strlen($this->buffer);
         $this->_out('xref');
         $this->_out('0 '.($this->n + 1));
         $this->_out('0000000000 65535 f ');
@@ -2418,7 +2418,7 @@ class FPDF
     public function UTF8StringToArray($str)
     {
         $out = [];
-        $len = \strlen($str);
+        $len = \mb_strlen($str);
         for ($i = 0; $i < $len; $i++) {
             $uni = -1;
             $h = \ord($str[$i]);

@@ -43,12 +43,12 @@ class MapsTilesManager
         $this->tileSize = $tileSize;
         $outputDirectory = \rtrim($outputDirectory, '\\/');
         $imageMagickPath = \rtrim($imageMagickPath, '\\/');
-        if (\strpos($imageMagickPath, 'magick') !== \strlen($imageMagickPath) - 6) {
+        if (\mb_strpos($imageMagickPath, 'magick') !== \mb_strlen($imageMagickPath) - 6) {
             $imageMagickPath .= \DIRECTORY_SEPARATOR;
         }
         $this->magickPath = $imageMagickPath;
         $this->outputDirectory = $outputDirectory;
-        if (0 === \strpos($outputDirectory, '@')) {
+        if (0 === \mb_strpos($outputDirectory, '@')) {
             $this->outputDirectory = $kernel->locateResource($outputDirectory);
         }
         $this->webDir = $kernel->getRootDir().'/../web';

@@ -11,9 +11,9 @@
 
 namespace CorahnRin\Step;
 
+use CorahnRin\Data\Orientation;
 use CorahnRin\Data\Ways;
 use Symfony\Component\HttpFoundation\Response;
-use CorahnRin\Data\Orientation;
 
 class Step10Orientation extends AbstractStepAction
 {

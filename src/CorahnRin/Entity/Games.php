@@ -292,7 +292,6 @@ class Games
     /**
      * Add characters.
      *
-     * @param Characters $characters
      *
      * @return Games
      */
@@ -305,8 +304,6 @@ class Games
 
     /**
      * Remove characters.
-     *
-     * @param Characters $characters
      */
     public function removeCharacter(Characters $characters)
     {

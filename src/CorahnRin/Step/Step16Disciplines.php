@@ -11,11 +11,11 @@
 
 namespace CorahnRin\Step;
 
-use CorahnRin\Entity\GeoEnvironments;
-use Symfony\Component\HttpFoundation\Response;
 use CorahnRin\Entity\Disciplines;
 use CorahnRin\Entity\Domains;
+use CorahnRin\Entity\GeoEnvironments;
 use CorahnRin\GeneratorTools\DomainsCalculator;
+use Symfony\Component\HttpFoundation\Response;
 
 class Step16Disciplines extends AbstractStepAction
 {

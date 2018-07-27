@@ -11,8 +11,8 @@
 
 namespace CorahnRin\Step;
 
-use Symfony\Component\HttpFoundation\Response;
 use CorahnRin\Entity\Avantages;
+use Symfony\Component\HttpFoundation\Response;
 
 class Step11Advantages extends AbstractStepAction
 {

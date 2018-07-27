@@ -28,8 +28,6 @@ class GeoEnvironmentsFixtures extends AbstractFixture implements OrderedFixtureI
 
     /**
      * Get the order of this fixture.
-     *
-     * @return int
      */
     public function getOrder(): int
     {
@@ -38,8 +36,6 @@ class GeoEnvironmentsFixtures extends AbstractFixture implements OrderedFixtureI
 
     /**
      * Load data fixtures with the passed EntityManager.
-     *
-     * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager)
     {

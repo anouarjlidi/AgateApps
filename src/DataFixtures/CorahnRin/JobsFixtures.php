@@ -22,8 +22,6 @@ class JobsFixtures extends AbstractFixture implements ORMFixtureInterface
 
     /**
      * Returns the class of the entity you're managing.
-     *
-     * @return string
      */
     protected function getEntityClass(): string
     {
@@ -32,8 +30,6 @@ class JobsFixtures extends AbstractFixture implements ORMFixtureInterface
 
     /**
      * Get the order of this fixture.
-     *
-     * @return int
      */
     public function getOrder(): int
     {

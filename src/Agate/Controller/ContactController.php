@@ -12,19 +12,19 @@
 namespace Agate\Controller;
 
 use Agate\Form\ContactType;
-use Agate\Model\ContactMessage;
 use Agate\Mailer\PortalMailer;
-use Symfony\Component\Routing\Annotation\Route;
+use Agate\Model\ContactMessage;
+use Main\PublicService;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 use Twig\Environment;
-use Main\PublicService;
 
 /**
  * @Route(host="%agate_domains.portal%")

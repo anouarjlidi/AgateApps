@@ -273,8 +273,7 @@ SQL;
     }
 
     /**
-     * @param Characters $character
-     * @param array[]    $arrayCharacter
+     * @param array[] $arrayCharacter
      *
      * @return $this
      */

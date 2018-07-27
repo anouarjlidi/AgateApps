@@ -146,7 +146,6 @@ class RoutesTypes implements EntityToClearInterface
     /**
      * Add resources.
      *
-     * @param Resources $resources
      *
      * @return RoutesTypes
      */
@@ -159,8 +158,6 @@ class RoutesTypes implements EntityToClearInterface
 
     /**
      * Remove resources.
-     *
-     * @param Resources $resources
      */
     public function removeResource(Resources $resources)
     {
@@ -182,7 +179,6 @@ class RoutesTypes implements EntityToClearInterface
     /**
      * Add routes.
      *
-     * @param Routes $routes
      *
      * @return RoutesTypes
      */
@@ -195,8 +191,6 @@ class RoutesTypes implements EntityToClearInterface
 
     /**
      * Remove routes.
-     *
-     * @param Routes $routes
      */
     public function removeRoute(Routes $routes)
     {
@@ -266,7 +260,6 @@ class RoutesTypes implements EntityToClearInterface
     /**
      * Add transports.
      *
-     * @param TransportModifiers $transports
      *
      * @return RoutesTypes
      */
@@ -280,7 +273,6 @@ class RoutesTypes implements EntityToClearInterface
     /**
      * Remove transports.
      *
-     * @param TransportModifiers $transports
      *
      * @return RoutesTypes
      */
@@ -304,8 +296,6 @@ class RoutesTypes implements EntityToClearInterface
     }
 
     /**
-     * @param TransportTypes $transportType
-     *
      * @return TransportModifiers
      */
     public function getTransport(TransportTypes $transportType)

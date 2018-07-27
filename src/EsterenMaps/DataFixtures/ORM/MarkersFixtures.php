@@ -11,10 +11,10 @@
 
 namespace EsterenMaps\DataFixtures\ORM;
 
+use DataFixtures\FixtureMetadataIdGeneratorTrait;
 use Doctrine\Bundle\FixturesBundle\ORMFixtureInterface;
-use Orbitale\Component\DoctrineTools\AbstractFixture;
-use Agate\Doctrine\FixtureMetadataIdGeneratorTrait;
 use EsterenMaps\Entity\Markers;
+use Orbitale\Component\DoctrineTools\AbstractFixture;
 
 class MarkersFixtures extends AbstractFixture implements ORMFixtureInterface
 {

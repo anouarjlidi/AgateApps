@@ -11,9 +11,9 @@
 
 namespace CorahnRin\Step;
 
-use Symfony\Component\HttpFoundation\Response;
 use CorahnRin\Exception\CharactersException;
 use CorahnRin\GeneratorTools\SessionToCharacter;
+use Symfony\Component\HttpFoundation\Response;
 
 class Step20Finish extends AbstractStepAction
 {

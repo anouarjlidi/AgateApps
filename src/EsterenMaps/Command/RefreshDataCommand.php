@@ -42,7 +42,7 @@ class RefreshDataCommand extends ContainerAwareCommand
         $nanAs = $input->getOption('nan-as');
 
         if (null !== $nanAs) {
-            if (false !== \strpos($nanAs, ',')) {
+            if (false !== \mb_strpos($nanAs, ',')) {
                 $nanAs = \str_replace(',', '.', $nanAs);
             }
             $nanAs = \preg_replace("~\s+~", '', $nanAs);
@@ -101,7 +101,7 @@ class RefreshDataCommand extends ContainerAwareCommand
                     // Change all "NaN" to the value of $nanAs if specified.
                     if (null !== $nanAs) {
                         $changesets['distance'] = \array_map(function ($e) use ($nanAs) {
-                            return 'nan' === \strtolower($e) ? $nanAs : $e;
+                            return 'nan' === \mb_strtolower($e) ? $nanAs : $e;
                         }, $changesets['distance']);
                     }
 

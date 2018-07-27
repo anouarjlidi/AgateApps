@@ -41,13 +41,10 @@ final class DomainsCalculator
      *
      * If $domainsBonuses IS provided, then it will add the correct bonuses if some domains exceed 5 points.
      *
-     * @param Domains[]       $allDomains
-     * @param array           $socialClasses
-     * @param int             $ost
-     * @param int             $scholar
-     * @param GeoEnvironments $geoEnv
-     * @param array           $primaryDomains
-     * @param array           $domainsBonuses
+     * @param Domains[] $allDomains
+     * @param int       $ost
+     * @param int       $scholar
+     * @param array     $domainsBonuses
      *
      * @return int[]
      */

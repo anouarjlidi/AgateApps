@@ -31,9 +31,6 @@ class ImageIdentification implements \ArrayAccess
      */
     private $properties = [];
 
-    /**
-     * @param array $data
-     */
     public function __construct(array $data = [])
     {
         $this->properties = \array_merge(\array_fill_keys(self::VALID_PROPERTIES, null), $data);

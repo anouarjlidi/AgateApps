@@ -11,10 +11,10 @@
 
 namespace CorahnRin\Step;
 
-use CorahnRin\Entity\Domains;
-use Symfony\Component\HttpFoundation\Response;
 use CorahnRin\Entity\CombatArts;
+use CorahnRin\Entity\Domains;
 use CorahnRin\GeneratorTools\DomainsCalculator;
+use Symfony\Component\HttpFoundation\Response;
 
 class Step17CombatArts extends AbstractStepAction
 {

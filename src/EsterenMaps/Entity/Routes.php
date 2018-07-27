@@ -467,9 +467,9 @@ class Routes implements EntityToClearInterface, \JsonSerializable
          */
         $floatPrecision = 12;
 
-        $distance = (float) \substr($distance, 0, $floatPrecision);
+        $distance = (float) \mb_substr($distance, 0, $floatPrecision);
 
-        if ($distance !== (float) \substr($this->distance, 0, $floatPrecision)) {
+        if ($distance !== (float) \mb_substr($this->distance, 0, $floatPrecision)) {
             $this->distance = $distance;
         }
 

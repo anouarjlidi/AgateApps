@@ -147,7 +147,6 @@ class Factions
     /**
      * Add zones.
      *
-     * @param Zones $zones
      *
      * @return Factions
      */
@@ -160,8 +159,6 @@ class Factions
 
     /**
      * Remove zones.
-     *
-     * @param Zones $zones
      */
     public function removeZone(Zones $zones)
     {
@@ -183,7 +180,6 @@ class Factions
     /**
      * Add routes.
      *
-     * @param Routes $routes
      *
      * @return Factions
      */
@@ -196,8 +192,6 @@ class Factions
 
     /**
      * Remove routes.
-     *
-     * @param Routes $routes
      */
     public function removeRoute(Routes $routes)
     {
@@ -219,7 +213,6 @@ class Factions
     /**
      * Add markers.
      *
-     * @param Markers $markers
      *
      * @return Factions
      */
@@ -232,8 +225,6 @@ class Factions
 
     /**
      * Remove markers.
-     *
-     * @param Markers $markers
      */
     public function removeMarker(Markers $markers)
     {

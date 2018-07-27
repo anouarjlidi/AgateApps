@@ -13,8 +13,8 @@ namespace DataFixtures\EsterenMaps;
 
 use DataFixtures\FixtureMetadataIdGeneratorTrait;
 use Doctrine\Bundle\FixturesBundle\ORMFixtureInterface;
-use Orbitale\Component\DoctrineTools\AbstractFixture;
 use EsterenMaps\Entity\Zones;
+use Orbitale\Component\DoctrineTools\AbstractFixture;
 
 class ZonesFixtures extends AbstractFixture implements ORMFixtureInterface
 {

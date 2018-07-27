@@ -187,7 +187,6 @@ class Disciplines
     /**
      * Add domains.
      *
-     * @param Domains $domains
      *
      * @return Disciplines
      */
@@ -200,8 +199,6 @@ class Disciplines
 
     /**
      * Remove domains.
-     *
-     * @param Domains $domains
      */
     public function removeDomain(Domains $domains)
     {

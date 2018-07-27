@@ -149,7 +149,6 @@ class ZonesTypes implements EntityToClearInterface
     /**
      * Add resources.
      *
-     * @param Resources $resources
      *
      * @return ZonesTypes
      */
@@ -162,8 +161,6 @@ class ZonesTypes implements EntityToClearInterface
 
     /**
      * Remove resources.
-     *
-     * @param Resources $resources
      */
     public function removeResource(Resources $resources)
     {
@@ -185,7 +182,6 @@ class ZonesTypes implements EntityToClearInterface
     /**
      * Add zones.
      *
-     * @param Zones $zones
      *
      * @return ZonesTypes
      */
@@ -198,8 +194,6 @@ class ZonesTypes implements EntityToClearInterface
 
     /**
      * Remove zones.
-     *
-     * @param Zones $zones
      */
     public function removeZone(Zones $zones)
     {

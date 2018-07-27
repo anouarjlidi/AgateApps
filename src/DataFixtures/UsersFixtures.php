@@ -44,8 +44,6 @@ final class UsersFixtures extends AbstractFixture implements OrderedFixtureInter
 
     /**
      * Get the order of this fixture.
-     *
-     * @return int
      */
     public function getOrder(): int
     {

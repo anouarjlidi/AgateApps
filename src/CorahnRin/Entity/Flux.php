@@ -114,8 +114,6 @@ class Flux
     }
 
     /**
-     * @param string $description
-     *
      * @return Flux
      *
      * @codeCoverageIgnore

@@ -13,9 +13,9 @@ namespace Dragons\Controller;
 
 use Agate\Entity\PortalElement;
 use Agate\Exception\PortalElementNotFound;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route(host="%dragons_domains.portal%")

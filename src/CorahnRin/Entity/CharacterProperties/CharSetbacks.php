@@ -50,8 +50,6 @@ class CharSetbacks
     protected $isAvoided = false;
 
     /**
-     * @param Characters $character
-     *
      * @return CharSetbacks
      *
      * @codeCoverageIgnore
@@ -74,8 +72,6 @@ class CharSetbacks
     }
 
     /**
-     * @param Setbacks $setback
-     *
      * @return CharSetbacks
      *
      * @codeCoverageIgnore

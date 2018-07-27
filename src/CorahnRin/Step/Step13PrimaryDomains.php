@@ -11,10 +11,10 @@
 
 namespace CorahnRin\Step;
 
-use Symfony\Component\HttpFoundation\Response;
 use CorahnRin\Entity\Avantages;
 use CorahnRin\Entity\Domains;
 use CorahnRin\Entity\Jobs;
+use Symfony\Component\HttpFoundation\Response;
 
 class Step13PrimaryDomains extends AbstractStepAction
 {

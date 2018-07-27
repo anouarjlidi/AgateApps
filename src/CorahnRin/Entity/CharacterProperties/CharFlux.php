@@ -111,7 +111,6 @@ class CharFlux
     /**
      * Set character.
      *
-     * @param Characters $character
      *
      * @return CharFlux
      *

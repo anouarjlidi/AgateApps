@@ -53,8 +53,6 @@ class CharactersRepository extends ServiceEntityRepository
      * @param string $order       L'ordre (asc ou desc)
      * @param int    $limit       Le nombre d'éléments à récupérer
      * @param int    $offset      L'offset de départ
-     *
-     * @return QueryBuilder
      */
     public function searchQueryBuilder(string $searchField = 'id', string $order = null, int $limit = null, int $offset = null): QueryBuilder
     {

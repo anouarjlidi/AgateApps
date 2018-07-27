@@ -209,7 +209,6 @@ class TransportTypes implements EntityToClearInterface, \JsonSerializable
     /**
      * Add transportsModifier.
      *
-     * @param TransportModifiers $transportsModifier
      *
      * @return TransportTypes
      */
@@ -223,7 +222,6 @@ class TransportTypes implements EntityToClearInterface, \JsonSerializable
     /**
      * Remove transportsModifier.
      *
-     * @param TransportModifiers $transportsModifier
      *
      * @return $this
      */

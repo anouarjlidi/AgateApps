@@ -82,7 +82,6 @@ class CharAdvantages
     /**
      * Set character.
      *
-     * @param Characters $character
      *
      * @return CharAdvantages
      *
@@ -110,7 +109,6 @@ class CharAdvantages
     /**
      * Set avantage.
      *
-     * @param Avantages $advantage
      *
      * @return CharAdvantages
      *

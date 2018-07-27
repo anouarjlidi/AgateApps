@@ -296,7 +296,6 @@ class Maps implements EntityToClearInterface
     /**
      * Add routes.
      *
-     * @param Routes $routes
      *
      * @return Maps
      */
@@ -309,8 +308,6 @@ class Maps implements EntityToClearInterface
 
     /**
      * Remove routes.
-     *
-     * @param Routes $routes
      */
     public function removeRoute(Routes $routes)
     {
@@ -332,7 +329,6 @@ class Maps implements EntityToClearInterface
     /**
      * Get zone.
      *
-     * @param Routes $route
      *
      * @return Routes|null
      */
@@ -345,14 +341,11 @@ class Maps implements EntityToClearInterface
                 return $mapRoute;
             }
         }
-
-        return null;
     }
 
     /**
      * Get zone.
      *
-     * @param Routes $route
      *
      * @return Maps
      */
@@ -372,7 +365,6 @@ class Maps implements EntityToClearInterface
     /**
      * Add markers.
      *
-     * @param Markers $markers
      *
      * @return Maps
      */
@@ -385,8 +377,6 @@ class Maps implements EntityToClearInterface
 
     /**
      * Remove markers.
-     *
-     * @param Markers $markers
      */
     public function removeMarker(Markers $markers)
     {
@@ -408,7 +398,6 @@ class Maps implements EntityToClearInterface
     /**
      * Get zone.
      *
-     * @param Markers $marker
      *
      * @return Zones|null
      */
@@ -421,15 +410,12 @@ class Maps implements EntityToClearInterface
                 return $mapMarker;
             }
         }
-
-        return null;
     }
 
     /**
      * Contrairement au nom de cette méthode, celle-ci AJOUTE un marqueur,
      *    et uniquement si celui-ci n'est pas déjà ajouté à la map.
      *
-     * @param Markers $marker
      *
      * @return $this
      */
@@ -449,7 +435,6 @@ class Maps implements EntityToClearInterface
     /**
      * Add zones.
      *
-     * @param Zones $zones
      *
      * @return Maps
      */
@@ -462,8 +447,6 @@ class Maps implements EntityToClearInterface
 
     /**
      * Remove zones.
-     *
-     * @param Zones $zones
      */
     public function removeZone(Zones $zones)
     {
@@ -473,7 +456,6 @@ class Maps implements EntityToClearInterface
     /**
      * Get zone.
      *
-     * @param Zones $zone
      *
      * @return Zones|null
      */
@@ -486,13 +468,9 @@ class Maps implements EntityToClearInterface
                 return $mapZone;
             }
         }
-
-        return null;
     }
 
     /**
-     * @param Zones $zone
-     *
      * @return $this
      */
     public function setZone(Zones $zone)
@@ -689,8 +667,6 @@ class Maps implements EntityToClearInterface
     }
 
     /**
-     * @param array $bounds
-     *
      * @return $this
      */
     public function setJsonBounds(array $bounds = [])

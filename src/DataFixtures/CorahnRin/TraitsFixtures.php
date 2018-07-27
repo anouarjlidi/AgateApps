@@ -30,8 +30,6 @@ class TraitsFixtures extends AbstractFixture implements OrderedFixtureInterface,
 
     /**
      * Get the order of this fixture.
-     *
-     * @return int
      */
     public function getOrder(): int
     {
@@ -40,8 +38,6 @@ class TraitsFixtures extends AbstractFixture implements OrderedFixtureInterface,
 
     /**
      * Load data fixtures with the passed EntityManager.
-     *
-     * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager)
     {

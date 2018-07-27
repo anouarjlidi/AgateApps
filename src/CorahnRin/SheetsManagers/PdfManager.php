@@ -56,8 +56,7 @@ class PdfManager implements SheetGeneratorInterface
     }
 
     /**
-     * @param Characters $character
-     * @param bool       $printer_friendly
+     * @param bool $printer_friendly
      *
      * @return PDF
      *
@@ -122,12 +121,12 @@ class PdfManager implements SheetGeneratorInterface
         $pdf->textbox($character->getPlayerName(), 880, 280, $p['lettrine'], 21, 230);
 
         $pdf->textline($translator->trans($character->getSex())[0], 215, 322, $p['times'], 18);
-        $pdf->textline(\substr($character->getAge(), 0, 3), 343, 322, $p['caro'], 18);
+        $pdf->textline(\mb_substr($character->getAge(), 0, 3), 343, 322, $p['caro'], 18);
 
         $pdf->multiple_lines($character->getDescription(), 295, 365, $p['carbold'], 17, 820, 1, 0, true);
 
-        $pdf->textline(\substr($character->getPeople()->getName(), 0, 20), 530, 322, $p['lettrine'], 18, true);
-        $pdf->textline(\substr($character->getJobCustom() ?: $character->getJob()->getName(), 0, 25), 895, 322, $p['lettrine'], 18, true);
+        $pdf->textline(\mb_substr($character->getPeople()->getName(), 0, 20), 530, 322, $p['lettrine'], 18, true);
+        $pdf->textline(\mb_substr($character->getJobCustom() ?: $character->getJob()->getName(), 0, 25), 895, 322, $p['lettrine'], 18, true);
 
         // voies
         $pdf->textline($character->getWay('com')->getScore(), 325, 545, $p['carbold'], 28);
@@ -165,16 +164,16 @@ class PdfManager implements SheetGeneratorInterface
             }
         }
         if (isset($av[0])) {
-            $pdf->textline(\substr($av[0], 0, 25), 430, 500, $p['caro'], 18);
+            $pdf->textline(\mb_substr($av[0], 0, 25), 430, 500, $p['caro'], 18);
         }
         if (isset($av[1])) {
-            $pdf->textline(\substr($av[1], 0, 25), 430, 540, $p['caro'], 18);
+            $pdf->textline(\mb_substr($av[1], 0, 25), 430, 540, $p['caro'], 18);
         }
         if (isset($av[2])) {
-            $pdf->textline(\substr($av[2], 0, 25), 430, 580, $p['caro'], 18);
+            $pdf->textline(\mb_substr($av[2], 0, 25), 430, 580, $p['caro'], 18);
         }
         if (isset($av[3])) {
-            $pdf->textline(\substr($av[3], 0, 25), 430, 620, $p['caro'], 18);
+            $pdf->textline(\mb_substr($av[3], 0, 25), 430, 620, $p['caro'], 18);
         }
         $dv = [];
         foreach ($character->getAdvantages() as $v) {
@@ -183,16 +182,16 @@ class PdfManager implements SheetGeneratorInterface
             }
         }
         if (isset($dv[0])) {
-            $pdf->textline(\substr($dv[0], 0, 25), 430, 685, $p['caro'], 18);
+            $pdf->textline(\mb_substr($dv[0], 0, 25), 430, 685, $p['caro'], 18);
         }
         if (isset($dv[1])) {
-            $pdf->textline(\substr($dv[1], 0, 25), 430, 725, $p['caro'], 18);
+            $pdf->textline(\mb_substr($dv[1], 0, 25), 430, 725, $p['caro'], 18);
         }
         if (isset($dv[2])) {
-            $pdf->textline(\substr($dv[2], 0, 25), 430, 765, $p['caro'], 18);
+            $pdf->textline(\mb_substr($dv[2], 0, 25), 430, 765, $p['caro'], 18);
         }
         if (isset($dv[3])) {
-            $pdf->textline(\substr($dv[3], 0, 25), 430, 805, $p['caro'], 18);
+            $pdf->textline(\mb_substr($dv[3], 0, 25), 430, 805, $p['caro'], 18);
         }
 
         // Santé

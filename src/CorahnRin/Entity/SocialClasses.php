@@ -117,7 +117,6 @@ class SocialClasses
     /**
      * Add domains.
      *
-     * @param Domains $domains
      *
      * @return SocialClasses
      */
@@ -130,8 +129,6 @@ class SocialClasses
 
     /**
      * Remove domains.
-     *
-     * @param Domains $domains
      */
     public function removeDomain(Domains $domains)
     {

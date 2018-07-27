@@ -29,8 +29,6 @@ class DisciplinesFixtures extends AbstractFixture implements OrderedFixtureInter
 
     /**
      * Get the order of this fixture.
-     *
-     * @return int
      */
     public function getOrder(): int
     {
@@ -39,8 +37,6 @@ class DisciplinesFixtures extends AbstractFixture implements OrderedFixtureInter
 
     /**
      * Load data fixtures with the passed EntityManager.
-     *
-     * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager)
     {

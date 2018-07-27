@@ -29,8 +29,6 @@ class CombatArtsFixtures extends AbstractFixture implements OrderedFixtureInterf
 
     /**
      * Get the order of this fixture.
-     *
-     * @return int
      */
     public function getOrder(): int
     {
@@ -39,8 +37,6 @@ class CombatArtsFixtures extends AbstractFixture implements OrderedFixtureInterf
 
     /**
      * Load data fixtures with the passed EntityManager.
-     *
-     * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager)
     {
