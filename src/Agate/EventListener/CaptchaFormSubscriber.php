@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Agate\EventListener;
 
-use Main\NotAutoconfigured;
 use ReCaptcha\ReCaptcha;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormError;
@@ -26,7 +25,7 @@ use Symfony\Component\HttpFoundation\Request;
  * because it is used only by Forms,
  * not the global EventDispatcher.
  */
-class CaptchaFormSubscriber implements EventSubscriberInterface, NotAutoconfigured
+class CaptchaFormSubscriber implements EventSubscriberInterface
 {
     private $reCaptcha;
     private $enabled;
