@@ -11,8 +11,10 @@
 
 namespace CorahnRin\Step;
 
+use CorahnRin\Entity\Avantages;
+use CorahnRin\Entity\Domains;
+use CorahnRin\Entity\Jobs;
 use Symfony\Component\HttpFoundation\Response;
-use CorahnRin\Entity\{Avantages, Domains, Jobs};
 
 class Step13PrimaryDomains extends AbstractStepAction
 {
@@ -42,7 +44,7 @@ class Step13PrimaryDomains extends AbstractStepAction
      * Keys are the following:
      * "domains":          domain_id=>domain_value
      * "military_service": domain_id|null
-     * "scholar":          domain_id|null
+     * "scholar":          domain_id|null.
      *
      * @var array[]
      */
@@ -54,18 +56,18 @@ class Step13PrimaryDomains extends AbstractStepAction
     public function execute(): Response
     {
         $this->allDomains = $this->em->getRepository(Domains::class)->findAllSortedByName();
-        $this->job        = $this->em->getRepository(Jobs::class)->findWithDomains($this->getCharacterProperty('02_job'));
-        $advantages       = $this->getCharacterProperty('11_advantages')['advantages'];
-        $this->scholar    = isset($advantages[23]) && 1 === $advantages[23]; // Scholar is advantage 23.
+        $this->job = $this->em->getRepository(Jobs::class)->findWithDomains($this->getCharacterProperty('02_job'));
+        $advantages = $this->getCharacterProperty('11_advantages')['advantages'];
+        $this->scholar = isset($advantages[23]) && 1 === $advantages[23]; // Scholar is advantage 23.
 
         // This makes sure that session is not polluted with wrong data.
         $this->resetStep();
 
-        if (!array_key_exists('domains', $this->domainsValues)) {
+        if (!\array_key_exists('domains', $this->domainsValues)) {
             $this->domainsValues['domains'] = [];
         }
 
-        if (!array_key_exists('ost', $this->domainsValues)) {
+        if (!\array_key_exists('ost', $this->domainsValues)) {
             // Default "ost" value is 2: close fight.
             $this->domainsValues['ost'] = 2;
         }
@@ -86,7 +88,7 @@ class Step13PrimaryDomains extends AbstractStepAction
 
         // Setup all values to 0 if unset.
         foreach ($this->allDomains as $id => $domain) {
-            if (!array_key_exists($id, $this->domainsValues['domains'])) {
+            if (!\array_key_exists($id, $this->domainsValues['domains'])) {
                 $this->domainsValues['domains'][$id] = 0;
             }
         }
@@ -102,12 +104,12 @@ class Step13PrimaryDomains extends AbstractStepAction
         }
 
         return $this->renderCurrentStep([
-            'job'                 => $this->job,
-            'all_domains'         => $this->allDomains,
-            'number_of'           => $numberOf,
-            'domains_values'      => $this->domainsValues,
-            'secondary_domains'   => $this->secondaryDomains,
-            'scholar'             => $this->scholar,
+            'job' => $this->job,
+            'all_domains' => $this->allDomains,
+            'number_of' => $numberOf,
+            'domains_values' => $this->domainsValues,
+            'secondary_domains' => $this->secondaryDomains,
+            'scholar' => $this->scholar,
             'scholar_domains_ids' => Avantages::BONUS_SCHOLAR_DOMAINS,
         ]);
     }
@@ -137,7 +139,7 @@ class Step13PrimaryDomains extends AbstractStepAction
         foreach ($this->allDomains as $id => $domain) {
             // Allow sending partial requests with only some of the few domains.
             // Strictness is nice, but sometimes, being a bit more flexible is cool to lighten our tests :D
-            if (!array_key_exists($id, $domainsValues)) {
+            if (!\array_key_exists($id, $domainsValues)) {
                 $domainsValues[$id] = 0;
             }
         }
@@ -150,19 +152,19 @@ class Step13PrimaryDomains extends AbstractStepAction
 
         $error = false;
 
-        $domainsValues = array_map(function ($v) {return (int) $v; }, $domainsValues);
+        $domainsValues = \array_map(function ($v) {return (int) $v; }, $domainsValues);
 
         foreach ($domainsValues as $id => $domainValue) {
-            if (!array_key_exists($id, $this->allDomains)) {
+            if (!\array_key_exists($id, $this->allDomains)) {
                 $this->flashMessage('Les domaines envoyés sont invalides.');
                 unset($domainsValues[$id]);
             }
 
-            if (!in_array($domainValue, [0, 1, 2, 3, 5], true)) {
+            if (!\in_array($domainValue, [0, 1, 2, 3, 5], true)) {
                 $this->flashMessage('Le score d\'un domaine ne peut être que de 0, 1, 2 ou 3. Le score 5 est choisi par défaut en fonction de votre métier.');
-                $error              = true;
+                $error = true;
                 $domainsValues[$id] = 0;
-                $domainValue        = 0;
+                $domainValue = 0;
             }
 
             if (5 === $domainValue && $id !== $primaryDomainId) {
@@ -178,15 +180,15 @@ class Step13PrimaryDomains extends AbstractStepAction
 
             // If value is 3, it must be for a secondary domain.
             if (3 === $domainValue) {
-                if (count($this->secondaryDomains) && !in_array($id, $this->secondaryDomains, true)) {
+                if (\count($this->secondaryDomains) && !\in_array($id, $this->secondaryDomains, true)) {
                     $this->flashMessage('La valeur 3 ne peut être donnée qu\'à l\'un des domaines de prédilection du métier choisi.');
-                    $error              = true;
+                    $error = true;
                     $domainsValues[$id] = 0;
                 }
                 $numberOf3++;
                 if ($numberOf3 > 1) {
                     $this->flashMessage('La valeur 3 ne peut être donnée qu\'une seule fois.');
-                    $error              = true;
+                    $error = true;
                     $domainsValues[$id] = 0;
                 }
             }
@@ -195,7 +197,7 @@ class Step13PrimaryDomains extends AbstractStepAction
                 $numberOf2++;
                 if ($numberOf2 > 2) {
                     $this->flashMessage('La valeur 2 ne peut être donnée que deux fois.');
-                    $error              = true;
+                    $error = true;
                     $domainsValues[$id] = 0;
                 }
             }
@@ -204,21 +206,21 @@ class Step13PrimaryDomains extends AbstractStepAction
                 $numberOf1++;
                 if ($numberOf1 > 2) {
                     $this->flashMessage('La valeur 1 ne peut être donnée que deux fois.');
-                    $error              = true;
+                    $error = true;
                     $domainsValues[$id] = 0;
                 }
             }
         }
 
-        if ($numberOf1 !== 2) {
+        if (2 !== $numberOf1) {
             $this->flashMessage('La valeur 1 doit être sélectionnée deux fois.');
             $error = true;
         }
-        if ($numberOf2 !== 2) {
+        if (2 !== $numberOf2) {
             $this->flashMessage('La valeur 2 doit être sélectionnée deux fois.');
             $error = true;
         }
-        if ($numberOf3 !== 1) {
+        if (1 !== $numberOf3) {
             $this->flashMessage('La valeur 3 doit être sélectionnée.');
             $error = true;
         }
@@ -261,7 +263,7 @@ class Step13PrimaryDomains extends AbstractStepAction
         $id = (int) $this->request->request->get('scholar');
 
         $keyExists = $id
-            ? array_key_exists($id, $this->allDomains) && in_array($id, Avantages::BONUS_SCHOLAR_DOMAINS, true)
+            ? \array_key_exists($id, $this->allDomains) && \in_array($id, Avantages::BONUS_SCHOLAR_DOMAINS, true)
             : null;
 
         if (null === $id || false === $keyExists) {
@@ -291,7 +293,7 @@ class Step13PrimaryDomains extends AbstractStepAction
     {
         $id = (int) $this->request->request->get('ost');
 
-        $keyExists = $id ? array_key_exists($id, $this->allDomains) : null;
+        $keyExists = $id ? \array_key_exists($id, $this->allDomains) : null;
 
         if (false === $keyExists) {
             if (0 === $id) {
@@ -312,13 +314,13 @@ class Step13PrimaryDomains extends AbstractStepAction
     {
         $sessionValue = $this->getCharacterProperty() ?: [
             'domains' => [],
-            'ost'     => 2,
+            'ost' => 2,
             'scholar' => null,
         ];
 
         $this->domainsValues = [
             'domains' => $sessionValue['domains'],
-            'ost'     => $sessionValue['ost'],
+            'ost' => $sessionValue['ost'],
             'scholar' => $sessionValue['scholar'],
         ];
 

@@ -11,9 +11,10 @@
 
 namespace CorahnRin\Step;
 
-use Symfony\Component\HttpFoundation\Response;
 use CorahnRin\Entity\CombatArts;
+use CorahnRin\Entity\Domains;
 use CorahnRin\GeneratorTools\DomainsCalculator;
+use Symfony\Component\HttpFoundation\Response;
 
 class Step17CombatArts extends AbstractStepAction
 {
@@ -42,13 +43,13 @@ class Step17CombatArts extends AbstractStepAction
      */
     public function execute(): Response
     {
-        $allDomains       = $this->em->getRepository(\CorahnRin\Entity\Domains::class)->findAllSortedByName();
-        $this->combatArts = $this->em->getRepository(\CorahnRin\Entity\CombatArts::class)->findAllSortedByName();
+        $allDomains = $this->em->getRepository(Domains::class)->findAllSortedByName();
+        $this->combatArts = $this->em->getRepository(CombatArts::class)->findAllSortedByName();
 
         $socialClassValues = $this->getCharacterProperty('05_social_class')['domains'];
-        $primaryDomains    = $this->getCharacterProperty('13_primary_domains');
-        $domainBonuses     = $this->getCharacterProperty('14_use_domain_bonuses');
-        $geoEnvironment    = $this->em->find(\CorahnRin\Entity\GeoEnvironments::class, $this->getCharacterProperty('04_geo'));
+        $primaryDomains = $this->getCharacterProperty('13_primary_domains');
+        $domainBonuses = $this->getCharacterProperty('14_use_domain_bonuses');
+        $geoEnvironment = $this->em->find(\CorahnRin\Entity\GeoEnvironments::class, $this->getCharacterProperty('04_geo'));
 
         // Calculate final values from previous steps
         $domainsBaseValues = $this->domainsCalculator->calculateFromGeneratorData(
@@ -64,12 +65,12 @@ class Step17CombatArts extends AbstractStepAction
         $finalDomainsValues = $this->domainsCalculator->calculateFinalValues(
             $allDomains,
             $domainsBaseValues,
-            array_map(function ($e) { return (int) $e; }, $this->getCharacterProperty('15_domains_spend_exp')['domains'])
+            \array_map(function ($e) { return (int) $e; }, $this->getCharacterProperty('15_domains_spend_exp')['domains'])
         );
 
         $this->remainingExp = $this->getCharacterProperty('16_disciplines')['remainingExp'];
 
-        $closeCombat         = $finalDomainsValues[2];
+        $closeCombat = $finalDomainsValues[2];
         $shootingAndThrowing = $finalDomainsValues[14];
 
         $canHaveCombatArts = $this->remainingExp >= 20 && (5 === $closeCombat || 5 === $shootingAndThrowing);
@@ -100,13 +101,13 @@ class Step17CombatArts extends AbstractStepAction
             /** @var int[] $combatArtsValues */
             $combatArtsValues = $this->request->get('combat_arts_spend_exp');
 
-            if (!is_array($combatArtsValues)) {
+            if (!\is_array($combatArtsValues)) {
                 $this->flashMessage('errors.incorrect_values');
             } else {
                 $remainingExp = $this->remainingExp;
 
                 foreach ($combatArtsValues as $id => $osef) {
-                    if (!array_key_exists($id, $availableCombatArts)) {
+                    if (!\array_key_exists($id, $availableCombatArts)) {
                         $errors = true;
                         $this->flashMessage('errors.incorrect_values');
                         break;
@@ -129,7 +130,7 @@ class Step17CombatArts extends AbstractStepAction
                     $characterCombatArts = $this->resetCombatArts();
                 } else {
                     $this->updateCharacterStep([
-                        'combatArts'   => $combatArtsValues,
+                        'combatArts' => $combatArtsValues,
                         'remainingExp' => $remainingExp,
                     ]);
 
@@ -139,13 +140,13 @@ class Step17CombatArts extends AbstractStepAction
         }
 
         return $this->renderCurrentStep([
-            'can_have_combat_arts'  => $canHaveCombatArts,
-            'combat_arts'           => $availableCombatArts,
-            'close_combat'          => $closeCombat,
+            'can_have_combat_arts' => $canHaveCombatArts,
+            'combat_arts' => $availableCombatArts,
+            'close_combat' => $closeCombat,
             'shooting_and_throwing' => $shootingAndThrowing,
             'character_combat_arts' => $characterCombatArts['combatArts'],
-            'exp_max'               => $this->remainingExp,
-            'exp_value'             => $characterCombatArts['remainingExp'],
+            'exp_max' => $this->remainingExp,
+            'exp_value' => $characterCombatArts['remainingExp'],
         ]);
     }
 
@@ -155,7 +156,7 @@ class Step17CombatArts extends AbstractStepAction
     private function resetCombatArts()
     {
         return [
-            'combatArts'   => [],
+            'combatArts' => [],
             'remainingExp' => $this->remainingExp,
         ];
     }

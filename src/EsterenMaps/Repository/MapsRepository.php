@@ -12,9 +12,9 @@
 namespace EsterenMaps\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Persistence\ManagerRegistry;
 use EsterenMaps\Cache\CacheManager;
 use EsterenMaps\Entity\Maps;
-use Doctrine\Common\Persistence\ManagerRegistry;
 use Orbitale\Component\DoctrineTools\EntityRepositoryHelperTrait;
 
 class MapsRepository extends ServiceEntityRepository

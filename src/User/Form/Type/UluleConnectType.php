@@ -34,17 +34,17 @@ class UluleConnectType extends AbstractType
 
         $builder
             ->add('ululeUsername', $user->getUluleId() ? HiddenType::class : TextType::class, [
-                'label'              => 'form.ulule_username',
+                'label' => 'form.ulule_username',
                 'translation_domain' => 'user',
             ])
             ->add('ululeApiToken', $user->getUluleId() ? HiddenType::class : PasswordType::class, [
-                'label'              => 'form.ulule_api_token',
+                'label' => 'form.ulule_api_token',
                 'translation_domain' => 'user',
             ])
             ->add('disconnectUlule', $user->getUluleId() ? CheckboxType::class : HiddenType::class, [
-                'label'              => 'form.ulule_disconnect',
+                'label' => 'form.ulule_disconnect',
                 'translation_domain' => 'user',
-                'mapped'             => false,
+                'mapped' => false,
             ])
             ->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
                 // Manage Ulule Connect

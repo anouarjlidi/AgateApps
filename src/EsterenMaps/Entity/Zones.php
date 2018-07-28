@@ -29,10 +29,10 @@ class Zones implements EntityToClearInterface, \JsonSerializable
     /**
      * @var int
      *
-     * @ORM\Id()
+     * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\GeneratedValue(strategy="IDENTITY")
-    */
+     */
     protected $id;
 
     /**
@@ -40,8 +40,8 @@ class Zones implements EntityToClearInterface, \JsonSerializable
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=false, unique=true)
      *
-     * @Assert\NotBlank()
-    */
+     * @Assert\NotBlank
+     */
     protected $name;
 
     /**
@@ -50,7 +50,7 @@ class Zones implements EntityToClearInterface, \JsonSerializable
      * @ORM\Column(name="description", type="text", nullable=true)
      *
      * @Assert\Type("string")
-    */
+     */
     protected $description;
 
     /**
@@ -59,7 +59,7 @@ class Zones implements EntityToClearInterface, \JsonSerializable
      * @ORM\Column(name="coordinates", type="text")
      *
      * @Assert\Type("string")
-    */
+     */
     protected $coordinates = '';
 
     /**
@@ -69,7 +69,7 @@ class Zones implements EntityToClearInterface, \JsonSerializable
      * @ORM\JoinColumn(name="map_id", nullable=false)
      *
      * @Assert\Type("EsterenMaps\Entity\Maps")
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      */
     protected $map;
 
@@ -80,7 +80,7 @@ class Zones implements EntityToClearInterface, \JsonSerializable
      * @ORM\JoinColumn(name="faction_id", nullable=true)
      *
      * @Assert\Type("EsterenMaps\Entity\Factions")
-    */
+     */
     protected $faction;
 
     /**
@@ -90,8 +90,8 @@ class Zones implements EntityToClearInterface, \JsonSerializable
      * @ORM\JoinColumn(name="zone_type_id", nullable=false)
      *
      * @Assert\Type("EsterenMaps\Entity\ZonesTypes")
-     * @Assert\NotBlank()
-    */
+     * @Assert\NotBlank
+     */
     protected $zoneType;
 
     public function __toString(): string
@@ -136,7 +136,7 @@ class Zones implements EntityToClearInterface, \JsonSerializable
 
     private function hydrateIncomingData(array $data)
     {
-        $data = array_merge($this->toArray(), $data);
+        $data = \array_merge($this->toArray(), $data);
 
         $this->name = $data['name'];
         $this->description = $data['description'];
@@ -187,12 +187,12 @@ class Zones implements EntityToClearInterface, \JsonSerializable
     public function setCoordinates(string $coordinates): self
     {
         try {
-            json_decode($coordinates, true);
+            \json_decode($coordinates, true);
         } catch (\Throwable $e) {
         }
 
-        if (JSON_ERROR_NONE !== $code = json_last_error()) {
-            throw new \InvalidArgumentException($code.':'.json_last_error_msg());
+        if (JSON_ERROR_NONE !== $code = \json_last_error()) {
+            throw new \InvalidArgumentException($code.':'.\json_last_error_msg());
         }
 
         $this->coordinates = $coordinates;
@@ -243,12 +243,12 @@ class Zones implements EntityToClearInterface, \JsonSerializable
 
     public function isLocalized(): bool
     {
-        return $this->coordinates !== null && count($this->getDecodedCoordinates());
+        return null !== $this->coordinates && \count($this->getDecodedCoordinates());
     }
 
     public function getDecodedCoordinates(): array
     {
-        return json_decode($this->coordinates, true) ?: [];
+        return \json_decode($this->coordinates, true) ?: [];
     }
 
     private function flattenCoordinates(): void
@@ -268,6 +268,6 @@ class Zones implements EntityToClearInterface, \JsonSerializable
             $coordinates = $flattened;
         }
 
-        $this->setCoordinates(json_encode($coordinates));
+        $this->setCoordinates(\json_encode($coordinates));
     }
 }

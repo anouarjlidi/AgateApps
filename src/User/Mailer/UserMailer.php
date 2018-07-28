@@ -28,10 +28,10 @@ final class UserMailer
 
     public function __construct(RequestStack $requestStack, \Swift_Mailer $mailer, Environment $twig, RouterInterface $router, TranslatorInterface $translator)
     {
-        $this->sender     = 'no-reply@'.($requestStack->getMasterRequest() ? $requestStack->getMasterRequest()->getHost() : 'studio-agate.com');
-        $this->twig       = $twig;
-        $this->mailer     = $mailer;
-        $this->router     = $router;
+        $this->sender = 'no-reply@'.($requestStack->getMasterRequest() ? $requestStack->getMasterRequest()->getHost() : 'studio-agate.com');
+        $this->twig = $twig;
+        $this->mailer = $mailer;
+        $this->router = $router;
         $this->translator = $translator;
     }
 
@@ -40,7 +40,7 @@ final class UserMailer
         $url = $this->router->generate('user_registration_confirm', ['token' => $user->getConfirmationToken()], UrlGeneratorInterface::ABSOLUTE_URL);
 
         $rendered = $this->twig->render('user/Registration/email.html.twig', [
-            'user'            => $user,
+            'user' => $user,
             'confirmationUrl' => $url,
         ]);
 
@@ -62,7 +62,7 @@ final class UserMailer
         $url = $this->router->generate('user_resetting_reset', ['token' => $user->getConfirmationToken()], UrlGeneratorInterface::ABSOLUTE_URL);
 
         $rendered = $this->twig->render('user/Resetting/email.txt.twig', [
-            'user'            => $user,
+            'user' => $user,
             'confirmationUrl' => $url,
         ]);
 
@@ -72,9 +72,9 @@ final class UserMailer
     private function sendEmailMessage(string $renderedTemplate, string $toEmail): void
     {
         // Render the email, use the first line as the subject, and the rest as the body
-        $renderedLines = explode("\n", trim($renderedTemplate));
-        $subject       = array_shift($renderedLines);
-        $body          = implode("\n", $renderedLines);
+        $renderedLines = \explode("\n", \trim($renderedTemplate));
+        $subject = \array_shift($renderedLines);
+        $body = \implode("\n", $renderedLines);
 
         $message = new \Swift_Message();
 

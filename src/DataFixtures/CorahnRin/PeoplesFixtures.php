@@ -29,8 +29,6 @@ class PeoplesFixtures extends AbstractFixture implements OrderedFixtureInterface
 
     /**
      * Get the order of this fixture.
-     *
-     * @return int
      */
     public function getOrder(): int
     {
@@ -39,8 +37,6 @@ class PeoplesFixtures extends AbstractFixture implements OrderedFixtureInterface
 
     /**
      * Load data fixtures with the passed EntityManager.
-     *
-     * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager)
     {
@@ -61,9 +57,9 @@ class PeoplesFixtures extends AbstractFixture implements OrderedFixtureInterface
 
     public function fixtureObject(EntityRepository $repo, $id, $name, $description, $book)
     {
-        $obj       = null;
+        $obj = null;
         $newObject = false;
-        $addRef    = false;
+        $addRef = false;
         if ($id) {
             $obj = $repo->find($id);
             if ($obj) {
@@ -74,7 +70,7 @@ class PeoplesFixtures extends AbstractFixture implements OrderedFixtureInterface
         } else {
             $newObject = true;
         }
-        if ($newObject === true) {
+        if (true === $newObject) {
             $obj = new Peoples();
             $obj->setId($id)
                 ->setName($name)
@@ -83,13 +79,13 @@ class PeoplesFixtures extends AbstractFixture implements OrderedFixtureInterface
             ;
             if ($id) {
                 /** @var ClassMetadata $metadata */
-                $metadata = $this->manager->getClassMetaData(get_class($obj));
+                $metadata = $this->manager->getClassMetadata(\get_class($obj));
                 $metadata->setIdGeneratorType(ClassMetadata::GENERATOR_TYPE_NONE);
             }
             $this->manager->persist($obj);
             $addRef = true;
         }
-        if ($addRef === true && $obj) {
+        if (true === $addRef && $obj) {
             $this->addReference('corahnrin-people-'.$id, $obj);
         }
     }

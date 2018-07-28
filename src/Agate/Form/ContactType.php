@@ -39,7 +39,7 @@ class ContactType extends AbstractType
 
         $builder
             ->add('name', TextType::class, [
-                'attr'        => [
+                'attr' => [
                     'pattern' => '.{2,}',
                 ],
                 'constraints' => [
@@ -49,8 +49,8 @@ class ContactType extends AbstractType
             ->add('email', EmailType::class, [
                 'constraints' => [
                     new Constraints\Email([
-                        'checkHost' => $this->kernelEnvironment === 'prod',
-                        'checkMX' => $this->kernelEnvironment === 'prod',
+                        'checkHost' => 'prod' === $this->kernelEnvironment,
+                        'checkMX' => 'prod' === $this->kernelEnvironment,
                     ]),
                 ],
             ])
@@ -69,10 +69,10 @@ class ContactType extends AbstractType
         $resolver
             ->setDefaults([
                 'translation_domain' => 'contact',
-                'data_class'         => ContactMessage::class,
+                'data_class' => ContactMessage::class,
             ])
             ->setRequired('request')
-            ->setAllowedTypes('request', Request::class);
+            ->setAllowedTypes('request', Request::class)
         ;
     }
 }

@@ -30,30 +30,30 @@ class ZonesTypes implements EntityToClearInterface
      * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
-     * @ORM\Id()
+     * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
-    */
+     */
     protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=false, unique=true)
-    */
+     */
     protected $name;
 
     /**
      * @var string
      *
      * @ORM\Column(name="description", type="text", nullable=true)
-    */
+     */
     protected $description;
 
     /**
      * @var string
      *
      * @ORM\Column(name="color", type="string", length=75, nullable=true)
-    */
+     */
     protected $color;
 
     /**
@@ -84,7 +84,7 @@ class ZonesTypes implements EntityToClearInterface
     public function __construct()
     {
         $this->resources = new ArrayCollection();
-        $this->zones     = new ArrayCollection();
+        $this->zones = new ArrayCollection();
     }
 
     public function __toString()
@@ -149,7 +149,6 @@ class ZonesTypes implements EntityToClearInterface
     /**
      * Add resources.
      *
-     * @param Resources $resources
      *
      * @return ZonesTypes
      */
@@ -162,8 +161,6 @@ class ZonesTypes implements EntityToClearInterface
 
     /**
      * Remove resources.
-     *
-     * @param Resources $resources
      */
     public function removeResource(Resources $resources)
     {
@@ -185,7 +182,6 @@ class ZonesTypes implements EntityToClearInterface
     /**
      * Add zones.
      *
-     * @param Zones $zones
      *
      * @return ZonesTypes
      */
@@ -198,8 +194,6 @@ class ZonesTypes implements EntityToClearInterface
 
     /**
      * Remove zones.
-     *
-     * @param Zones $zones
      */
     public function removeZone(Zones $zones)
     {
@@ -227,7 +221,7 @@ class ZonesTypes implements EntityToClearInterface
      *
      * @codeCoverageIgnore
      */
-    public function setParent(ZonesTypes $parent = null)
+    public function setParent(self $parent = null)
     {
         $this->parent = $parent;
 
@@ -289,9 +283,9 @@ class ZonesTypes implements EntityToClearInterface
      */
     public function removeChild($child)
     {
-        if (is_numeric($child)) {
+        if (\is_numeric($child)) {
             unset($this->children[$child]);
-        } elseif (is_object($child)) {
+        } elseif (\is_object($child)) {
             unset($this->children[$child->getId()]);
         }
 

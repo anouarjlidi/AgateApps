@@ -12,19 +12,19 @@
 namespace Agate\Controller;
 
 use Agate\Form\ContactType;
-use Agate\Model\ContactMessage;
 use Agate\Mailer\PortalMailer;
-use Symfony\Component\Routing\Annotation\Route;
+use Agate\Model\ContactMessage;
+use Main\DependencyInjection\PublicService;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 use Twig\Environment;
-use Main\PublicService;
 
 /**
  * @Route(host="%agate_domains.portal%")
@@ -72,7 +72,7 @@ class ContactController implements PublicService
 
             $subject = $translator->trans('form.message_subject', [
                 '%name%' => $message->getName(),
-                '%subject%' => strip_tags($message->getSubject())
+                '%subject%' => \strip_tags($message->getSubject()),
             ], 'contact');
 
             // If message succeeds, we redirect
@@ -87,7 +87,7 @@ class ContactController implements PublicService
         }
 
         return new Response($this->twig->render('agate/contact.html.twig', [
-            'form'       => $form->createView(),
+            'form' => $form->createView(),
             'mail_error' => $form->getErrors(true, true),
         ]));
     }

@@ -28,16 +28,16 @@ class ChangePasswordFormType extends AbstractType
     {
         $builder
             ->add('current_password', PasswordType::class, [
-                'label'              => 'form.current_password',
+                'label' => 'form.current_password',
                 'translation_domain' => 'user',
-                'mapped'             => false,
-                'constraints'        => new UserPassword(['message' => 'user.current_password.invalid']),
+                'mapped' => false,
+                'constraints' => new UserPassword(['message' => 'user.current_password.invalid']),
             ])
             ->add('plainPassword', RepeatedType::class, [
-                'type'            => PasswordType::class,
-                'options'         => ['translation_domain' => 'user'],
-                'first_options'   => ['label' => 'form.new_password'],
-                'second_options'  => ['label' => 'form.new_password_confirmation'],
+                'type' => PasswordType::class,
+                'options' => ['translation_domain' => 'user'],
+                'first_options' => ['label' => 'form.new_password'],
+                'second_options' => ['label' => 'form.new_password_confirmation'],
                 'invalid_message' => 'user.password.mismatch',
             ])
         ;
@@ -49,7 +49,7 @@ class ChangePasswordFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class'    => User::class,
+            'data_class' => User::class,
         ]);
     }
 }

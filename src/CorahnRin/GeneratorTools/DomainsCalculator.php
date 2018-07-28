@@ -41,19 +41,16 @@ final class DomainsCalculator
      *
      * If $domainsBonuses IS provided, then it will add the correct bonuses if some domains exceed 5 points.
      *
-     * @param Domains[]       $allDomains
-     * @param array           $socialClasses
-     * @param int             $ost
-     * @param int             $scholar
-     * @param GeoEnvironments $geoEnv
-     * @param array           $primaryDomains
-     * @param array           $domainsBonuses
+     * @param Domains[] $allDomains
+     * @param int       $ost
+     * @param int       $scholar
+     * @param array     $domainsBonuses
      *
      * @return int[]
      */
     public function calculateFromGeneratorData($allDomains, array $socialClasses, $ost, $scholar = null, GeoEnvironments $geoEnv, array $primaryDomains, array $domainsBonuses = null)
     {
-        $this->bonus                  = 0;
+        $this->bonus = 0;
         $this->finalCalculatedDomains = [];
 
         /*
@@ -62,14 +59,14 @@ final class DomainsCalculator
         foreach ($allDomains as $id => $domain) {
             // First, validate arguments.
             if (!($domain instanceof Domains) || $domain->getId() !== $id) {
-                throw new \InvalidArgumentException(sprintf(
+                throw new \InvalidArgumentException(\sprintf(
                     'Invalid %s argument sent. It must be an array of %s instances, and the array key must correspond to the "%s" property.',
                     '$allDomains', Domains::class, 'id'
                 ));
             }
 
             if (!isset($primaryDomains[$id])) {
-                throw new \InvalidArgumentException(sprintf(
+                throw new \InvalidArgumentException(\sprintf(
                     'Invalid %s argument sent. It must be an array of %s, and the array key must correspond to the "%s" property.',
                     '$primaryDomains', 'integers', 'domain id'
                 ));
@@ -84,8 +81,8 @@ final class DomainsCalculator
              * Step 14 domain bonuses (if set)
              */
             if (null !== $domainsBonuses) {
-                if (!array_key_exists($id, $domainsBonuses)) {
-                    throw new \InvalidArgumentException(sprintf(
+                if (!\array_key_exists($id, $domainsBonuses)) {
+                    throw new \InvalidArgumentException(\sprintf(
                         'Invalid %s argument sent. It must be an array of %s, and the array key must correspond to the "%s" property.',
                         '$domainsBonuses', 'integers', 'domain id'
                     ));
@@ -97,8 +94,8 @@ final class DomainsCalculator
         /*
          * Ost service
          */
-        if (!array_key_exists($ost, $allDomains)) {
-            throw new \InvalidArgumentException(sprintf(
+        if (!\array_key_exists($ost, $allDomains)) {
+            throw new \InvalidArgumentException(\sprintf(
                 'Invalid %s argument sent. It must be a valid %s.',
                 '$ost', 'domain id'
             ));
@@ -109,8 +106,8 @@ final class DomainsCalculator
          * "Scholar" advantage
          */
         if (null !== $scholar) {
-            if (!array_key_exists($scholar, $allDomains)) {
-                throw new \InvalidArgumentException(sprintf(
+            if (!\array_key_exists($scholar, $allDomains)) {
+                throw new \InvalidArgumentException(\sprintf(
                     'Invalid %s argument sent. It must be a valid %s.',
                     '$scholar', 'domain id'
                 ));
@@ -127,8 +124,8 @@ final class DomainsCalculator
          * Social classes
          */
         foreach ($socialClasses as $id) {
-            if (!array_key_exists($id, $allDomains)) {
-                throw new \InvalidArgumentException(sprintf(
+            if (!\array_key_exists($id, $allDomains)) {
+                throw new \InvalidArgumentException(\sprintf(
                     'Invalid %s argument sent. It must be an array of %s, and the array values must correspond to the "%s" property.',
                     '$socialClasses', 'integers', 'domain id'
                 ));
@@ -165,7 +162,7 @@ final class DomainsCalculator
         foreach ($allDomains as $id => $domain) {
             // First, validate arguments.
             if (!($domain instanceof Domains) || $domain->getId() !== $id) {
-                throw new \InvalidArgumentException(sprintf(
+                throw new \InvalidArgumentException(\sprintf(
                     'Invalid %s argument sent. It must be an array of %s instances, and the array key must correspond to the "%s" property.',
                     '$allDomains', Domains::class, 'id'
                 ));

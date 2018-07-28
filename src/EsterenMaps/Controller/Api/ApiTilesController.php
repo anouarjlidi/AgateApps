@@ -15,13 +15,12 @@ use EsterenMaps\Entity\Maps;
 use EsterenMaps\Form\MapImageType;
 use EsterenMaps\Model\MapImageQuery;
 use EsterenMaps\Services\MapsTilesManager;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 class ApiTilesController extends AbstractController
 {
@@ -37,7 +36,7 @@ class ApiTilesController extends AbstractController
     }
 
     /**
-     * @Route("/maps/image/{id}", requirements={"id": "\d+"}, name="esterenmaps_generate_map_image", methods={"GET"})
+     * @Route("/maps/image/{id}", requirements={"id" = "\d+"}, name="esterenmaps_generate_map_image", methods={"GET"})
      */
     public function generateMapImageAction(Request $request, Maps $map): Response
     {
@@ -51,12 +50,12 @@ class ApiTilesController extends AbstractController
 
         $messages = [];
         foreach ($form->getErrors(true) as $error) {
-            $field      = $error->getOrigin()->getName();
+            $field = $error->getOrigin()->getName();
             $messages[] = $this->get('translator')->trans('field_error', ['%field%' => $field], 'validators').': '.$error->getMessage();
         }
 
         return new JsonResponse([
-            'error'   => true,
+            'error' => true,
             'message' => $messages,
         ], 400);
     }
@@ -65,10 +64,10 @@ class ApiTilesController extends AbstractController
      * @Route(
      *     "/maps/tile/{id}/{zoom}/{x}/{y}.jpg",
      *     requirements={
-     *         "id": "\d+",
-     *         "zoom": "\d+",
-     *         "x": "\d+",
-     *         "y": "\d+"
+     *         "id" = "\d+",
+     *         "zoom" = "\d+",
+     *         "x" = "\d+",
+     *         "y" = "\d+"
      *     },
      *     name="esterenmaps_api_tiles",
      *     methods={"GET"}
@@ -78,7 +77,7 @@ class ApiTilesController extends AbstractController
     {
         $file = $this->outputDirectory.$map->getId().'/'.$zoom.'/'.$x.'/'.$y.'.jpg';
 
-        if (!file_exists($file)) {
+        if (!\file_exists($file)) {
             $file = $this->outputDirectory.'/empty.jpg';
         }
 
@@ -112,7 +111,7 @@ class ApiTilesController extends AbstractController
             } while ($e = $e->getPrevious());
 
             return new JsonResponse([
-                'error'   => true,
+                'error' => true,
                 'message' => $message,
             ], 400);
         }

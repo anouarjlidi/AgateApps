@@ -29,8 +29,6 @@ class AdvantagesFixtures extends AbstractFixture implements OrderedFixtureInterf
 
     /**
      * Get the order of this fixture.
-     *
-     * @return int
      */
     public function getOrder(): int
     {
@@ -39,8 +37,6 @@ class AdvantagesFixtures extends AbstractFixture implements OrderedFixtureInterf
 
     /**
      * Load data fixtures with the passed EntityManager.
-     *
-     * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager)
     {
@@ -104,9 +100,9 @@ class AdvantagesFixtures extends AbstractFixture implements OrderedFixtureInterf
 
     public function fixtureObject(EntityRepository $repo, $id, $group, $name, $nameFemale, $xp, $description, $augmentation, $bonusDisc, $isDesv, $isCombatArt, $book)
     {
-        $obj       = null;
+        $obj = null;
         $newObject = false;
-        $addRef    = false;
+        $addRef = false;
         if ($id) {
             $obj = $repo->find($id);
             if ($obj) {
@@ -117,7 +113,7 @@ class AdvantagesFixtures extends AbstractFixture implements OrderedFixtureInterf
         } else {
             $newObject = true;
         }
-        if ($newObject === true) {
+        if (true === $newObject) {
             $obj = new Avantages();
             $obj->setId($id)
                 ->setGroup($group)
@@ -133,13 +129,13 @@ class AdvantagesFixtures extends AbstractFixture implements OrderedFixtureInterf
             ;
             if ($id) {
                 /** @var ClassMetadata $metadata */
-                $metadata = $this->manager->getClassMetaData(get_class($obj));
+                $metadata = $this->manager->getClassMetadata(\get_class($obj));
                 $metadata->setIdGeneratorType(ClassMetadata::GENERATOR_TYPE_NONE);
             }
             $this->manager->persist($obj);
             $addRef = true;
         }
-        if ($addRef === true && $obj) {
+        if (true === $addRef && $obj) {
             $this->addReference('corahnrin-avantage-'.$id, $obj);
         }
     }

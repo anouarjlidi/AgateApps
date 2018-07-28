@@ -20,9 +20,9 @@ class InvalidWay extends InvalidArgumentException
 {
     public function __construct(string $way)
     {
-        parent::__construct(sprintf(
+        parent::__construct(\sprintf(
             'Provided way "%s" is not a valid way. Possible values: %s',
-            $way, implode(', ', array_keys(Ways::ALL))
+            $way, \implode(', ', \array_keys(Ways::ALL))
         ));
     }
 }

@@ -18,7 +18,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
  * Foes.
  *
  * @ORM\Table(name="maps_foes")
- * @ORM\Entity()
+ * @ORM\Entity
  */
 class Foes
 {
@@ -27,7 +27,7 @@ class Foes
     /**
      * @var int
      *
-     * @ORM\Id()
+     * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */

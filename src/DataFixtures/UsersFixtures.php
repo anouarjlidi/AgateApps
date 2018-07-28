@@ -44,8 +44,6 @@ final class UsersFixtures extends AbstractFixture implements OrderedFixtureInter
 
     /**
      * Get the order of this fixture.
-     *
-     * @return int
      */
     public function getOrder(): int
     {
@@ -81,9 +79,9 @@ final class UsersFixtures extends AbstractFixture implements OrderedFixtureInter
 
     public function fixtureObject(EntityRepository $repo, $id, $name, $email, $password, $superAdmin)
     {
-        $user      = null;
+        $user = null;
         $newObject = false;
-        $addRef    = false;
+        $addRef = false;
 
         if ($id) {
             $user = $repo->find($id);
@@ -96,7 +94,7 @@ final class UsersFixtures extends AbstractFixture implements OrderedFixtureInter
             $newObject = true;
         }
 
-        if ($newObject === true) {
+        if (true === $newObject) {
             $user = new User();
 
             $user->setId($id);
@@ -111,14 +109,14 @@ final class UsersFixtures extends AbstractFixture implements OrderedFixtureInter
 
             if ($id) {
                 /** @var ClassMetadataInfo $metadata */
-                $metadata = $this->manager->getClassMetadata(get_class($user));
+                $metadata = $this->manager->getClassMetadata(\get_class($user));
                 $metadata->setIdGeneratorType(ClassMetadata::GENERATOR_TYPE_NONE);
             }
 
             $this->manager->persist($user);
             $addRef = true;
         }
-        if ($addRef === true && $user) {
+        if (true === $addRef && $user) {
             $this->addReference('corahnrin-user-'.$id, $user);
         }
     }

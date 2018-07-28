@@ -36,13 +36,13 @@ use Pierstoval\Bundle\CharacterManagerBundle\Entity\Character as BaseCharacter;
 class Characters extends BaseCharacter
 {
     public const FEMALE = 'character.sex.female';
-    public const MALE   = 'character.sex.male';
+    public const MALE = 'character.sex.male';
 
-    public const COMBAT_ATTITUDE_STANDARD  = 'character.combat_attitude.standard';
+    public const COMBAT_ATTITUDE_STANDARD = 'character.combat_attitude.standard';
     public const COMBAT_ATTITUDE_OFFENSIVE = 'character.combat_attitude.offensive';
     public const COMBAT_ATTITUDE_DEFENSIVE = 'character.combat_attitude.defensive';
-    public const COMBAT_ATTITUDE_QUICK     = 'character.combat_attitude.quick';
-    public const COMBAT_ATTITUDE_MOVEMENT  = 'character.combat_attitude.movement';
+    public const COMBAT_ATTITUDE_QUICK = 'character.combat_attitude.quick';
+    public const COMBAT_ATTITUDE_MOVEMENT = 'character.combat_attitude.movement';
 
     public const COMBAT_ATTITUDES = [
         self::COMBAT_ATTITUDE_STANDARD,
@@ -56,7 +56,7 @@ class Characters extends BaseCharacter
      * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
-     * @ORM\Id()
+     * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
@@ -149,21 +149,21 @@ class Characters extends BaseCharacter
     /**
      * @var int
      *
-     * @ORM\Column(name="temporary_trauma", type="smallint", options={"default":0})
+     * @ORM\Column(name="temporary_trauma", type="smallint", options={"default" = 0})
      */
     protected $temporaryTrauma = 0;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="permanent_trauma", type="smallint", options={"default": 0})
+     * @ORM\Column(name="permanent_trauma", type="smallint", options={"default" = 0})
      */
     protected $permanentTrauma = 0;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="hardening", type="smallint", options={"default":0})
+     * @ORM\Column(name="hardening", type="smallint", options={"default" = 0})
      */
     protected $hardening = 0;
 
@@ -499,18 +499,18 @@ class Characters extends BaseCharacter
      */
     public function __construct()
     {
-        $this->maxHealth      = new HealthCondition();
-        $this->armors         = new ArrayCollection();
-        $this->artifacts      = new ArrayCollection();
-        $this->miracles       = new ArrayCollection();
-        $this->ogham          = new ArrayCollection();
-        $this->weapons        = new ArrayCollection();
-        $this->combatArts     = new ArrayCollection();
+        $this->maxHealth = new HealthCondition();
+        $this->armors = new ArrayCollection();
+        $this->artifacts = new ArrayCollection();
+        $this->miracles = new ArrayCollection();
+        $this->ogham = new ArrayCollection();
+        $this->weapons = new ArrayCollection();
+        $this->combatArts = new ArrayCollection();
         $this->charAdvantages = new ArrayCollection();
-        $this->domains        = new ArrayCollection();
-        $this->disciplines    = new ArrayCollection();
-        $this->flux           = new ArrayCollection();
-        $this->setbacks       = new ArrayCollection();
+        $this->domains = new ArrayCollection();
+        $this->disciplines = new ArrayCollection();
+        $this->flux = new ArrayCollection();
+        $this->setbacks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -540,7 +540,7 @@ class Characters extends BaseCharacter
     public function setSex(string $sex): self
     {
         if ($sex !== static::MALE && $sex !== static::FEMALE) {
-            throw new \InvalidArgumentException(sprintf(
+            throw new \InvalidArgumentException(\sprintf(
                 'Sex must be either "%s" or "%s", "%s" given.',
                 static::MALE, static::FEMALE, $sex
             ));
@@ -595,13 +595,13 @@ class Characters extends BaseCharacter
     public function setInventory(array $inventory): self
     {
         foreach ($inventory as $k => $item) {
-            $item = trim($item);
+            $item = \trim($item);
             if (!$item) {
                 unset($inventory[$k]);
                 continue;
             }
 
-            if (!is_string($item) || is_numeric($item)) {
+            if (!\is_string($item) || \is_numeric($item)) {
                 throw new \InvalidArgumentException('Provided item must be a non-numeric string.');
             }
         }
@@ -622,13 +622,13 @@ class Characters extends BaseCharacter
     public function setTreasures(array $treasures): self
     {
         foreach ($treasures as $k => $treasure) {
-            $treasure = trim($treasure);
+            $treasure = \trim($treasure);
             if (!$treasure) {
                 unset($treasures[$k]);
                 continue;
             }
 
-            if (!is_string($treasure) || is_numeric($treasure)) {
+            if (!\is_string($treasure) || \is_numeric($treasure)) {
                 throw new \InvalidArgumentException('Provided treasure must be a non-numeric string.');
             }
         }
@@ -660,10 +660,10 @@ class Characters extends BaseCharacter
 
     public function setOrientation(string $orientation): self
     {
-        if (!array_key_exists($orientation, Orientation::ALL)) {
-            throw new \InvalidArgumentException(sprintf(
+        if (!\array_key_exists($orientation, Orientation::ALL)) {
+            throw new \InvalidArgumentException(\sprintf(
                 'Orientation must be one value in "%s", "%s" given.',
-                implode('", "', array_keys(Orientation::ALL)), $orientation
+                \implode('", "', \array_keys(Orientation::ALL)), $orientation
             ));
         }
 
@@ -758,13 +758,13 @@ class Characters extends BaseCharacter
         $value = $this->conviction + 5;
 
         foreach ($this->getAdvantages() as $disadvantage) {
-            if ($disadvantage->getAdvantage()->getBonusdisc() === 'resm') {
+            if ('resm' === $disadvantage->getAdvantage()->getBonusdisc()) {
                 $value += $disadvantage->getScore();
             }
         }
 
         foreach ($this->getDisadvantages() as $disadvantage) {
-            if ($disadvantage->getAdvantage()->getBonusdisc() === 'resm') {
+            if ('resm' === $disadvantage->getAdvantage()->getBonusdisc()) {
                 $value -= $disadvantage->getScore();
             }
         }
@@ -873,9 +873,6 @@ class Characters extends BaseCharacter
         return $this;
     }
 
-    /**
-     * @return HealthCondition
-     */
     public function getMaxHealth(): HealthCondition
     {
         return $this->maxHealth;
@@ -1183,9 +1180,6 @@ class Characters extends BaseCharacter
         return $this->people;
     }
 
-    /**
-     * @param Armors $armor
-     */
     public function addArmor(Armors $armor): self
     {
         $this->armors[] = $armor;
@@ -1193,9 +1187,6 @@ class Characters extends BaseCharacter
         return $this;
     }
 
-    /**
-     * @param Armors $armor
-     */
     public function removeArmor(Armors $armor): self
     {
         $this->armors->removeElement($armor);
@@ -1211,9 +1202,6 @@ class Characters extends BaseCharacter
         return $this->armors;
     }
 
-    /**
-     * @param Artifacts $artifact
-     */
     public function addArtifact(Artifacts $artifact): self
     {
         $this->artifacts[] = $artifact;
@@ -1221,9 +1209,6 @@ class Characters extends BaseCharacter
         return $this;
     }
 
-    /**
-     * @param Artifacts $artifact
-     */
     public function removeArtifact(Artifacts $artifact): self
     {
         $this->artifacts->removeElement($artifact);
@@ -1239,9 +1224,6 @@ class Characters extends BaseCharacter
         return $this->artifacts;
     }
 
-    /**
-     * @param Miracles $miracle
-     */
     public function addMiracle(Miracles $miracle): self
     {
         $this->miracles[] = $miracle;
@@ -1249,9 +1231,6 @@ class Characters extends BaseCharacter
         return $this;
     }
 
-    /**
-     * @param Miracles $miracle
-     */
     public function removeMiracle(Miracles $miracle): self
     {
         $this->miracles->removeElement($miracle);
@@ -1267,9 +1246,6 @@ class Characters extends BaseCharacter
         return $this->miracles;
     }
 
-    /**
-     * @param Ogham $ogham
-     */
     public function addOgham(Ogham $ogham): self
     {
         $this->ogham[] = $ogham;
@@ -1277,9 +1253,6 @@ class Characters extends BaseCharacter
         return $this;
     }
 
-    /**
-     * @param Ogham $ogham
-     */
     public function removeOgham(Ogham $ogham): self
     {
         $this->ogham->removeElement($ogham);
@@ -1295,9 +1268,6 @@ class Characters extends BaseCharacter
         return $this->ogham;
     }
 
-    /**
-     * @param Weapons $weapon
-     */
     public function addWeapon(Weapons $weapon): self
     {
         $this->weapons[] = $weapon;
@@ -1305,9 +1275,6 @@ class Characters extends BaseCharacter
         return $this;
     }
 
-    /**
-     * @param Weapons $weapon
-     */
     public function removeWeapon(Weapons $weapon): self
     {
         $this->weapons->removeElement($weapon);
@@ -1323,9 +1290,6 @@ class Characters extends BaseCharacter
         return $this->weapons;
     }
 
-    /**
-     * @param CombatArts $combatArt
-     */
     public function addCombatArt(CombatArts $combatArt): self
     {
         $this->combatArts[] = $combatArt;
@@ -1333,9 +1297,6 @@ class Characters extends BaseCharacter
         return $this;
     }
 
-    /**
-     * @param CombatArts $combatArt
-     */
     public function removeCombatArt(CombatArts $combatArt): self
     {
         $this->combatArts->removeElement($combatArt);
@@ -1495,9 +1456,6 @@ class Characters extends BaseCharacter
         return $this->quality;
     }
 
-    /**
-     * @param CharAdvantages $advantage
-     */
     public function addCharAdvantage(CharAdvantages $advantage): self
     {
         $this->charAdvantages[] = $advantage;
@@ -1505,9 +1463,6 @@ class Characters extends BaseCharacter
         return $this;
     }
 
-    /**
-     * @param CharAdvantages $advantage
-     */
     public function removeCharAdvantage(CharAdvantages $advantage): self
     {
         $this->charAdvantages->removeElement($advantage);
@@ -1523,9 +1478,6 @@ class Characters extends BaseCharacter
         return $this->charAdvantages;
     }
 
-    /**
-     * @param CharDomains $domain
-     */
     public function addDomain(CharDomains $domain): self
     {
         $this->domains[] = $domain;
@@ -1533,9 +1485,6 @@ class Characters extends BaseCharacter
         return $this;
     }
 
-    /**
-     * @param CharDomains $domain
-     */
     public function removeDomain(CharDomains $domain): self
     {
         $this->domains->removeElement($domain);
@@ -1551,9 +1500,6 @@ class Characters extends BaseCharacter
         return $this->domains;
     }
 
-    /**
-     * @param CharDisciplines $discipline
-     */
     public function addDiscipline(CharDisciplines $discipline): self
     {
         $this->disciplines[] = $discipline;
@@ -1561,9 +1507,6 @@ class Characters extends BaseCharacter
         return $this;
     }
 
-    /**
-     * @param CharDisciplines $discipline
-     */
     public function removeDiscipline(CharDisciplines $discipline): self
     {
         $this->disciplines->removeElement($discipline);
@@ -1579,9 +1522,6 @@ class Characters extends BaseCharacter
         return $this->disciplines;
     }
 
-    /**
-     * @param CharFlux $flux
-     */
     public function addFlux(CharFlux $flux): self
     {
         $this->flux[] = $flux;
@@ -1589,9 +1529,6 @@ class Characters extends BaseCharacter
         return $this;
     }
 
-    /**
-     * @param CharFlux $flux
-     */
     public function removeFlux(CharFlux $flux): self
     {
         $this->flux->removeElement($flux);
@@ -1607,9 +1544,6 @@ class Characters extends BaseCharacter
         return $this->flux;
     }
 
-    /**
-     * @param CharSetbacks $setback
-     */
     public function addSetback(CharSetbacks $setback): self
     {
         $this->setbacks[] = $setback;
@@ -1617,9 +1551,6 @@ class Characters extends BaseCharacter
         return $this;
     }
 
-    /**
-     * @param CharSetbacks $setback
-     */
     public function removeSetback(CharSetbacks $setback): self
     {
         $this->setbacks->removeElement($setback);
@@ -1705,8 +1636,6 @@ class Characters extends BaseCharacter
 
     /**
      * Conscience is determined by "Reason" and "Conviction" ways.
-     *
-     * @return string
      */
     public function getConsciousness(): string
     {
@@ -1715,8 +1644,6 @@ class Characters extends BaseCharacter
 
     /**
      * Conscience is determined by "Creativity" and "Combativity" ways.
-     *
-     * @return string
      */
     public function getInstinct(): string
     {
@@ -1787,8 +1714,6 @@ class Characters extends BaseCharacter
 
     /**
      * Base defense is calculated from "Reason" and "Empathy".
-     *
-     * @return int
      */
     public function getBaseDefense(): int
     {
@@ -1819,8 +1744,6 @@ class Characters extends BaseCharacter
 
     /**
      * Base speed is calculated from "Combativity" and "Empathy".
-     *
-     * @return int
      */
     public function getBaseSpeed(): int
     {
@@ -1832,8 +1755,6 @@ class Characters extends BaseCharacter
 
     /**
      * @param string $attitude
-     *
-     * @return int|null
      */
     public function getTotalSpeed($attitude = self::COMBAT_ATTITUDE_STANDARD): ?int
     {
@@ -1850,8 +1771,6 @@ class Characters extends BaseCharacter
 
     /**
      * Base mental resistance is calculated from "Conviction".
-     *
-     * @return int
      */
     public function getBaseMentalResistance(): int
     {
@@ -1860,9 +1779,6 @@ class Characters extends BaseCharacter
         return $ide + 5;
     }
 
-    /**
-     * @return int
-     */
     public function getTotalMentalResistance(): int
     {
         return $this->getBaseMentalResistance() + $this->mentalResistance + $this->mentalResistanceBonus;
@@ -1899,8 +1815,6 @@ class Characters extends BaseCharacter
      *
      * @param int|string $discipline
      * @param string     $potentialOperator Can be "+" or "-"
-     *
-     * @return int
      */
     public function getMeleeAttackScore($discipline = null, $potentialOperator = ''): int
     {
@@ -1916,8 +1830,6 @@ class Characters extends BaseCharacter
      * @param string     $attitude
      *
      * @throws CharactersException
-     *
-     * @return int
      */
     public function getAttackScore($type = 'melee', $discipline = null, $attitude = self::COMBAT_ATTITUDE_STANDARD): int
     {
@@ -1927,9 +1839,9 @@ class Characters extends BaseCharacter
         $way = $this->combativeness;
 
         // Définition de l'id des domaines "Combat au contact" et "Tir & lancer"
-        if ($type === 'melee') {
+        if ('melee' === $type) {
             $domain_id = 2;
-        } elseif ($type === 'ranged') {
+        } elseif ('ranged' === $type) {
             $domain_id = 14;
         } else {
             throw new CharactersException('Attack can only be "melee" or "ranged".');
@@ -1970,8 +1882,6 @@ class Characters extends BaseCharacter
 
     /**
      * @param int $id
-     *
-     * @return bool
      */
     public function hasAdvantage($id): bool
     {
@@ -1989,8 +1899,6 @@ class Characters extends BaseCharacter
     /**
      * @param int  $id
      * @param bool $falseIfAvoided
-     *
-     * @return bool
      */
     public function hasSetback($id, $falseIfAvoided = true): bool
     {
@@ -2009,12 +1917,9 @@ class Characters extends BaseCharacter
         return false;
     }
 
-    /**
-     * @param string $attitude
-     */
     private function validateCombatAttitude(string $attitude): void
     {
-        if (!in_array($attitude, self::COMBAT_ATTITUDES, true)) {
+        if (!\in_array($attitude, self::COMBAT_ATTITUDES, true)) {
             throw new \InvalidArgumentException("Combat attitude is invalid, $attitude given.");
         }
     }

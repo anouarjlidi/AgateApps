@@ -6,7 +6,9 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    <script src="//www.google.com/recaptcha/api.js"></script>
+    {% if enable_contact_captcha %}
+        <script src="//www.google.com/recaptcha/api.js"></script>
+    {% endif %}
 {% endblock %}
 
 {% block content_for_layout %}
@@ -29,7 +31,9 @@
                 {{- form_row(form.subject) -}}
                 {{- form_row(form.message) -}}
 
-                <button class="btn g-recaptcha" type="submit" data-sitekey="{{ google_recaptcha_site_key }}" data-callback="onRecaptchaSubmit">{{ 'form.send'|trans({}, 'contact') }}</button>
+                {% if enable_contact_captcha %}
+                    <button class="btn g-recaptcha" type="submit" data-sitekey="{{ google_recaptcha_site_key }}" data-callback="onRecaptchaSubmit">{{ 'form.send'|trans({}, 'contact') }}</button>
+                {% endif %}
 
                 {{- form_end(form) }}
             </div>

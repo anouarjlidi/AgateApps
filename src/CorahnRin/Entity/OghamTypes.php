@@ -17,7 +17,7 @@ use Doctrine\ORM\Mapping as ORM;
  * OghamTypes.
  *
  * @ORM\Table(name="ogham_types")
- * @ORM\Entity()
+ * @ORM\Entity
  */
 class OghamTypes
 {
@@ -25,7 +25,7 @@ class OghamTypes
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
-     * @ORM\Id()
+     * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;

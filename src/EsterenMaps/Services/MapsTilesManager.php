@@ -40,19 +40,19 @@ class MapsTilesManager
 
     public function __construct(string $outputDirectory, int $tileSize, string $imageMagickPath, MapImageManager $mapImageManager, KernelInterface $kernel)
     {
-        $this->tileSize   = $tileSize;
-        $outputDirectory  = rtrim($outputDirectory, '\\/');
-        $imageMagickPath = rtrim($imageMagickPath, '\\/');
-        if (strpos($imageMagickPath, 'magick') !== strlen($imageMagickPath) - 6) {
-            $imageMagickPath .= DIRECTORY_SEPARATOR;
+        $this->tileSize = $tileSize;
+        $outputDirectory = \rtrim($outputDirectory, '\\/');
+        $imageMagickPath = \rtrim($imageMagickPath, '\\/');
+        if (\mb_strpos($imageMagickPath, 'magick') !== \mb_strlen($imageMagickPath) - 6) {
+            $imageMagickPath .= \DIRECTORY_SEPARATOR;
         }
         $this->magickPath = $imageMagickPath;
         $this->outputDirectory = $outputDirectory;
-        if (strpos($outputDirectory, '@') === 0) {
+        if (0 === \mb_strpos($outputDirectory, '@')) {
             $this->outputDirectory = $kernel->locateResource($outputDirectory);
         }
-        $this->webDir          = $kernel->getRootDir().'/../web';
-        $this->debug           = $kernel->isDebug();
+        $this->webDir = $kernel->getRootDir().'/../web';
+        $this->debug = $kernel->isDebug();
         $this->mapImageManager = $mapImageManager;
     }
 
@@ -61,13 +61,13 @@ class MapsTilesManager
         return $this->outputDirectory;
     }
 
-    public function setMap(Maps $map): MapsTilesManager
+    public function setMap(Maps $map): self
     {
         $this->map = $map;
-        $path      = null;
+        $path = null;
         if (
-            !file_exists($path = $this->map->getImage())
-            && !file_exists($path = $this->webDir.'/'.$this->map->getImage())
+            !\file_exists($path = $this->map->getImage())
+            && !\file_exists($path = $this->webDir.'/'.$this->map->getImage())
         ) {
             throw new \RuntimeException('Map image could not be found: '.$path);
         }
@@ -89,12 +89,12 @@ class MapsTilesManager
     {
         if (!$this->imgWidth || !$this->imgHeight) {
             // Détermine la taille de l'image initiale une fois et place les attributs dans l'objet
-            $size = getimagesize($this->map->getImage());
+            $size = \getimagesize($this->map->getImage());
             if (!$size || !isset($size[0], $size[1])) {
                 throw new \RunTimeException('Error while retrieving map dimensions');
             }
             [$w, $h] = $size;
-            $this->imgWidth  = $w;
+            $this->imgWidth = $w;
             $this->imgHeight = $h;
         }
 
@@ -106,21 +106,21 @@ class MapsTilesManager
             // Calcul des ratios et du nombre maximum de vignettes
             $crop_unit = 2 ** ($this->map->getMaxZoom() - $zoom) * $this->tileSize;
 
-            $max_tiles_x = ceil($this->imgWidth / $crop_unit) - 1;
-            $max_tiles_y = ceil($this->imgHeight / $crop_unit) - 1;
+            $max_tiles_x = \ceil($this->imgWidth / $crop_unit) - 1;
+            $max_tiles_y = \ceil($this->imgHeight / $crop_unit) - 1;
 
-            $max_width  = $max_tiles_x * $this->tileSize;
+            $max_width = $max_tiles_x * $this->tileSize;
             $max_height = $max_tiles_y * $this->tileSize;
 
-            $max_width_global  = $crop_unit * ($max_tiles_x + 1);
+            $max_width_global = $crop_unit * ($max_tiles_x + 1);
             $max_height_global = $crop_unit * ($max_tiles_y + 1);
 
             $this->identifications[$zoom] = new ImageIdentification([
-                'xmax'        => $max_tiles_x,
-                'ymax'        => $max_tiles_y,
-                'tiles_max'   => $max_tiles_x * $max_tiles_y,
-                'wmax'        => $max_width,
-                'hmax'        => $max_height,
+                'xmax' => $max_tiles_x,
+                'ymax' => $max_tiles_y,
+                'tiles_max' => $max_tiles_x * $max_tiles_y,
+                'wmax' => $max_width,
+                'hmax' => $max_height,
                 'wmax_global' => $max_width_global,
                 'hmax_global' => $max_height_global,
             ]);
@@ -140,16 +140,16 @@ class MapsTilesManager
         $ratio = 1 / (2 ** ($max - $zoom)) * 100;
 
         $outputScheme = $this->outputDirectory.'/temp_tiles/'.$this->map->getId().'/'.$zoom.'.jpg';
-        $outputFinal  = $this->outputDirectory.'/'.$this->map->getId().'/'.$zoom.'/{x}/{y}.jpg';
+        $outputFinal = $this->outputDirectory.'/'.$this->map->getId().'/'.$zoom.'/{x}/{y}.jpg';
 
-        if (!is_dir(dirname($outputScheme))) {
-            mkdir(dirname($outputScheme), 0775, true);
+        if (!\is_dir(\dirname($outputScheme))) {
+            \mkdir(\dirname($outputScheme), 0775, true);
         }
 
         // Supprime tout fichier existant
-        $existingFiles = glob(dirname($outputScheme).'/*');
+        $existingFiles = \glob(\dirname($outputScheme).'/*');
         foreach ($existingFiles as $file) {
-            unlink($file);
+            \unlink($file);
         }
 
         $this->identifyImage($zoom);
@@ -178,40 +178,40 @@ class MapsTilesManager
         $commandResponse = $cmd->run($cmd::RUN_DEBUG);
 
         if ($commandResponse->hasFailed()) {
-            $error = trim($commandResponse->getError());
-            $msg            = trim('Error while processing conversion. Command returned error:'."\n\t".str_replace("\n", "\n\t", $error));
+            $error = \trim($commandResponse->getError());
+            $msg = \trim('Error while processing conversion. Command returned error:'."\n\t".\str_replace("\n", "\n\t", $error));
             if ($debug) {
                 $msg .= "\n".'Executed command : '."\n\t".$cmd->getCommand();
             }
             throw new \RuntimeException($msg);
         }
 
-        $existingFiles = glob(dirname($outputScheme).'/*');
+        $existingFiles = \glob(\dirname($outputScheme).'/*');
 
-        sort($existingFiles, SORT_NATURAL | SORT_FLAG_CASE);
-        $existingFiles = array_values($existingFiles);
+        \sort($existingFiles, SORT_NATURAL | SORT_FLAG_CASE);
+        $existingFiles = \array_values($existingFiles);
 
-        $modulo = sqrt(count($existingFiles));
+        $modulo = \sqrt(\count($existingFiles));
 
         foreach ($existingFiles as $i => $file) {
-            $x        = floor($i / $modulo);
-            $y        = $i % $modulo;
-            $filename = str_replace(['{x}', '{y}'], [$x, $y], $outputFinal);
+            $x = \floor($i / $modulo);
+            $y = $i % $modulo;
+            $filename = \str_replace(['{x}', '{y}'], [$x, $y], $outputFinal);
 
-            if (!is_dir(dirname($filename))
-                && !mkdir($concurrentDirectory = dirname($filename), 0775, true)
-                && !is_dir($concurrentDirectory)
+            if (!\is_dir(\dirname($filename))
+                && !\mkdir($concurrentDirectory = \dirname($filename), 0775, true)
+                && !\is_dir($concurrentDirectory)
             ) {
-                throw new \RuntimeException(sprintf('Directory "%s" could not be created', $concurrentDirectory));
+                throw new \RuntimeException(\sprintf('Directory "%s" could not be created', $concurrentDirectory));
             }
 
-            rename($file, $filename);
+            \rename($file, $filename);
         }
 
         // Supprime tout fichier existant
-        $existingFiles = glob(dirname($outputScheme).'/*');
+        $existingFiles = \glob(\dirname($outputScheme).'/*');
         foreach ($existingFiles as $file) {
-            unlink($file);
+            \unlink($file);
         }
     }
 
@@ -226,32 +226,32 @@ class MapsTilesManager
         }
         $this->identifyImage();
 
-        $maxWidth  = $this->imgWidth;
+        $maxWidth = $this->imgWidth;
         $maxHeight = $this->imgHeight;
-        $errMsg    = '"%s" + "%s" values exceed image size which is %dx%d';
+        $errMsg = '"%s" + "%s" values exceed image size which is %dx%d';
 
         if (($ratio * $width / 100) + $x >= $maxWidth) {
-            throw new \InvalidArgumentException(sprintf($errMsg, 'width', 'x', $maxWidth, $maxHeight));
+            throw new \InvalidArgumentException(\sprintf($errMsg, 'width', 'x', $maxWidth, $maxHeight));
         }
         if (($ratio * $height / 100) + $y >= $maxHeight) {
-            throw new \InvalidArgumentException(sprintf($errMsg, 'height', 'y', $maxWidth, $maxHeight));
+            throw new \InvalidArgumentException(\sprintf($errMsg, 'height', 'y', $maxWidth, $maxHeight));
         }
 
         $imgOutput = $this->mapDestinationName($ratio, $x, $y, $width, $height, $withImages);
 
-        if (!$this->debug && file_exists($imgOutput)) {
+        if (!$this->debug && \file_exists($imgOutput)) {
             return $imgOutput;
         }
 
-        if (!is_dir(dirname($imgOutput))) {
-            mkdir(dirname($imgOutput), 0777, true);
+        if (!\is_dir(\dirname($imgOutput))) {
+            \mkdir(\dirname($imgOutput), 0777, true);
         }
 
-        $command = new Command(trim($this->magickPath));
+        $command = new Command(\trim($this->magickPath));
 
         if ($withImages) {
             $imgSource = $this->mapImageManager->getImagePath($this->map);
-            if (!file_exists($imgSource)) {
+            if (!\file_exists($imgSource)) {
                 $this->mapImageManager->generateImage($this->map);
             }
         } else {
@@ -273,9 +273,9 @@ class MapsTilesManager
             ->file($imgOutput, false)
         ;
 
-        if ($dry_run === false) {
+        if (false === $dry_run) {
             $response = $command->run($this->debug ? Command::RUN_DEBUG : Command::RUN_NORMAL);
-            if ($response->hasFailed() || !file_exists($imgOutput)) {
+            if ($response->hasFailed() || !\file_exists($imgOutput)) {
                 throw new \RuntimeException("ImageMagick error.\n".$response->getOutput());
             }
 

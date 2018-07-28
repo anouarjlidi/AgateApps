@@ -19,3 +19,5 @@ twig:
         agate_domains_portal: '%agate_domains.portal%'
         agate_domains_stats: '%agate_domains.stats%'
         vermine_domains_portal: '%vermine_domains.portal%'
+
+        enable_contact_captcha: '%enable_contact_captcha%'

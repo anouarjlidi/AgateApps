@@ -19,7 +19,7 @@ class InvalidWayValue extends InvalidArgumentException
 {
     public function __construct(string $way)
     {
-        parent::__construct(sprintf(
+        parent::__construct(\sprintf(
             'Provided way "%s" does not have a right value. Expected a value from 1 to 5',
             $way
         ));

@@ -52,8 +52,8 @@ class Step12MentalDisorder extends AbstractStepAction
         foreach ($disorders as $disorder) {
             foreach ($disorder->getWays() as $disorderWay) {
                 if (
-                    ($disorderWay->isMajor() && array_key_exists($disorderWay->getWay(), $majorWays))
-                    || (!$disorderWay->isMajor() && array_key_exists($disorderWay->getWay(), $minorWays))
+                    ($disorderWay->isMajor() && \array_key_exists($disorderWay->getWay(), $majorWays))
+                    || (!$disorderWay->isMajor() && \array_key_exists($disorderWay->getWay(), $minorWays))
                 ) {
                     $definedDisorders[$disorder->getId()] = $disorder;
                 }
@@ -65,7 +65,7 @@ class Step12MentalDisorder extends AbstractStepAction
             $disorderValue = (int) $this->request->request->get('gen-div-choice');
 
             // Success!
-            if (array_key_exists($disorderValue, $disorders)) {
+            if (\array_key_exists($disorderValue, $disorders)) {
                 $this->updateCharacterStep((int) $disorderValue);
 
                 return $this->nextStep();
@@ -80,7 +80,7 @@ class Step12MentalDisorder extends AbstractStepAction
 
         return $this->renderCurrentStep([
             'disorder_value' => $disorderValue,
-            'disorders'      => $definedDisorders,
+            'disorders' => $definedDisorders,
         ]);
     }
 }

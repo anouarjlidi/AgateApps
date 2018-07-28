@@ -30,8 +30,6 @@ class TraitsFixtures extends AbstractFixture implements OrderedFixtureInterface,
 
     /**
      * Get the order of this fixture.
-     *
-     * @return int
      */
     public function getOrder(): int
     {
@@ -40,8 +38,6 @@ class TraitsFixtures extends AbstractFixture implements OrderedFixtureInterface,
 
     /**
      * Load data fixtures with the passed EntityManager.
-     *
-     * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager)
     {
@@ -158,9 +154,9 @@ class TraitsFixtures extends AbstractFixture implements OrderedFixtureInterface,
 
     public function fixtureObject(EntityRepository $repo, $id, $way, $name, $nameFemale, $isQuality, $major, $book)
     {
-        $obj       = null;
+        $obj = null;
         $newObject = false;
-        $addRef    = false;
+        $addRef = false;
         if ($id) {
             $obj = $repo->find($id);
             if ($obj) {
@@ -171,7 +167,7 @@ class TraitsFixtures extends AbstractFixture implements OrderedFixtureInterface,
         } else {
             $newObject = true;
         }
-        if ($newObject === true) {
+        if (true === $newObject) {
             $obj = new Traits();
             $obj->setId($id)
                 ->setName($name)
@@ -183,13 +179,13 @@ class TraitsFixtures extends AbstractFixture implements OrderedFixtureInterface,
             ;
             if ($id) {
                 /** @var ClassMetadata $metadata */
-                $metadata = $this->manager->getClassMetaData(get_class($obj));
+                $metadata = $this->manager->getClassMetadata(\get_class($obj));
                 $metadata->setIdGeneratorType(ClassMetadata::GENERATOR_TYPE_NONE);
             }
             $this->manager->persist($obj);
             $addRef = true;
         }
-        if ($addRef === true && $obj) {
+        if (true === $addRef && $obj) {
             $this->addReference('corahnrin-trait-'.$id, $obj);
         }
     }

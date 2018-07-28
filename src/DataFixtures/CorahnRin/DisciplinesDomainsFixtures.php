@@ -34,8 +34,6 @@ class DisciplinesDomainsFixtures extends AbstractFixture implements OrderedFixtu
 
     /**
      * Get the order of this fixture.
-     *
-     * @return int
      */
     public function getOrder(): int
     {
@@ -44,15 +42,13 @@ class DisciplinesDomainsFixtures extends AbstractFixture implements OrderedFixtu
 
     /**
      * Load data fixtures with the passed EntityManager.
-     *
-     * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager)
     {
         $this->manager = $manager;
 
         $discRepo = $this->manager->getRepository(\CorahnRin\Entity\Disciplines::class);
-        $domRepo  = $this->manager->getRepository(\CorahnRin\Entity\Domains::class);
+        $domRepo = $this->manager->getRepository(\CorahnRin\Entity\Domains::class);
 
         $this->fixtureObject($discRepo, $domRepo, 1, [10]);
         $this->fixtureObject($discRepo, $domRepo, 2, [5]);

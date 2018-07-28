@@ -30,7 +30,7 @@ final class UsernamePasswordCredentials
     public function __construct($usernameOrEmail, $password)
     {
         $this->usernameOrEmail = $usernameOrEmail;
-        $this->password        = $password;
+        $this->password = $password;
     }
 
     /**

@@ -72,7 +72,6 @@ class ImportLegacyCharactersCommand extends Command
         $this->waysRepository = $waysRepository;
     }
 
-
     /**
      * {@inheritdoc}
      */
@@ -89,10 +88,10 @@ class ImportLegacyCharactersCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         // Defining specific properties for this class
-        $this->input       = $input;
-        $this->io          = new SymfonyStyle($input, $output);
-        $this->em          = $this->managerRegistry->getManager();
-        $this->legacyConnection   = $this->managerRegistry->getConnection('legacy');
+        $this->input = $input;
+        $this->io = new SymfonyStyle($input, $output);
+        $this->em = $this->managerRegistry->getManager();
+        $this->legacyConnection = $this->managerRegistry->getConnection('legacy');
 
         $sql = <<<'SQL'
 
@@ -160,11 +159,11 @@ SQL;
         $characters = $this->legacyConnection->query($sql)->fetchAll();
 
         foreach ($characters as $arrayCharacter) {
-            $character     = new Characters();
-            $jsonCharacter = json_decode($arrayCharacter['char_content'], true);
+            $character = new Characters();
+            $jsonCharacter = \json_decode($arrayCharacter['char_content'], true);
 
             $character
-                ->setSex($arrayCharacter['sexe'] === 'Femme' ? Characters::FEMALE : Characters::MALE)
+                ->setSex('Femme' === $arrayCharacter['sexe'] ? Characters::FEMALE : Characters::MALE)
                 ->setDescription($arrayCharacter['details']['description'])
                 ->setOrientation($arrayCharacter['orientation']['name'])
                 ->setAge($arrayCharacter['age'])
@@ -198,7 +197,7 @@ SQL;
         $user = null;
 
         $userByUsername = $username ? $this->userManager->findOneBy(['username' => $username]) : null;
-        $userByEmail    = $email ? $this->userManager->findOneBy(['email' => $email]) : null;
+        $userByEmail = $email ? $this->userManager->findOneBy(['email' => $email]) : null;
 
         if (
             $userByEmail && $userByUsername
@@ -234,7 +233,7 @@ SQL;
             $user
                 ->setUsername($username)
                 ->setEmail($email)
-                ->setPlainPassword(uniqid($username.$email, true))
+                ->setPlainPassword(\uniqid($username.$email, true))
             ;
 
             $this->em->persist($user);
@@ -245,7 +244,7 @@ SQL;
 
     private function getRepository(string $repoName): ObjectRepository
     {
-        if (array_key_exists($repoName, $this->repositories)) {
+        if (\array_key_exists($repoName, $this->repositories)) {
             return $this->repositories[$repoName];
         }
 
@@ -254,10 +253,10 @@ SQL;
 
     private function processUser(Characters $character, array $arrayCharacter): self
     {
-        $user            = null;
+        $user = null;
         $legacyUserEmail = $arrayCharacter['user_email'];
 
-        if (array_key_exists($legacyUserEmail, $this->users)) {
+        if (\array_key_exists($legacyUserEmail, $this->users)) {
             $user = $this->users[$legacyUserEmail];
         }
 
@@ -274,17 +273,16 @@ SQL;
     }
 
     /**
-     * @param Characters $character
-     * @param array[]    $arrayCharacter
+     * @param array[] $arrayCharacter
      *
      * @return $this
      */
     private function processGame(Characters $character, array $arrayCharacter): self
     {
-        $game         = null;
+        $game = null;
         $legacyGameId = $arrayCharacter['game_id'];
 
-        if (array_key_exists($legacyGameId, $this->games)) {
+        if (\array_key_exists($legacyGameId, $this->games)) {
             $game = $this->games[$legacyGameId];
         }
 
@@ -323,7 +321,7 @@ SQL;
         $ways = $this->ways ?: ($this->ways = $this->waysRepository->findAll('id'));
 
         foreach ($jsonCharacter['voies'] as $id => $voie) {
-            if (array_key_exists($id, $ways)) {
+            if (\array_key_exists($id, $ways)) {
                 /** @var Ways $way */
                 $way = $ways[$id];
             } else {

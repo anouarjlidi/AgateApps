@@ -21,7 +21,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="maps_routes")
  * @ORM\Entity(repositoryClass="EsterenMaps\Repository\RoutesRepository")
- * @ORM\HasLifecycleCallbacks()
+ * @ORM\HasLifecycleCallbacks
  */
 class Routes implements EntityToClearInterface, \JsonSerializable
 {
@@ -31,9 +31,9 @@ class Routes implements EntityToClearInterface, \JsonSerializable
      * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
-     * @ORM\Id()
+     * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
-    */
+     */
     protected $id;
 
     /**
@@ -41,8 +41,8 @@ class Routes implements EntityToClearInterface, \JsonSerializable
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=true)
      *
-     * @Assert\NotBlank()
-    */
+     * @Assert\NotBlank
+     */
     protected $name;
 
     /**
@@ -51,7 +51,7 @@ class Routes implements EntityToClearInterface, \JsonSerializable
      * @ORM\Column(name="description", type="text", nullable=true)
      *
      * @Assert\Type("string")
-    */
+     */
     protected $description;
 
     /**
@@ -60,16 +60,16 @@ class Routes implements EntityToClearInterface, \JsonSerializable
      * @ORM\Column(name="coordinates", type="text")
      *
      * @Assert\Type("string")
-    */
+     */
     protected $coordinates = '';
 
     /**
      * @var int
      *
-     * @ORM\Column(name="distance", type="float", precision=12, scale=6, options={"default": 0})
+     * @ORM\Column(name="distance", type="float", precision=12, scale=6, options={"default" = 0})
      *
      * @Assert\GreaterThanOrEqual(0)
-    */
+     */
     protected $distance = 0;
 
     /**
@@ -79,7 +79,7 @@ class Routes implements EntityToClearInterface, \JsonSerializable
      *
      * @Assert\Type("int")
      * @Assert\GreaterThanOrEqual(0)
-    */
+     */
     protected $forcedDistance;
 
     /**
@@ -88,7 +88,7 @@ class Routes implements EntityToClearInterface, \JsonSerializable
      * @ORM\Column(name="guarded", type="boolean")
      *
      * @Assert\Type("bool")
-    */
+     */
     protected $guarded = false;
 
     /**
@@ -98,8 +98,8 @@ class Routes implements EntityToClearInterface, \JsonSerializable
      * @ORM\JoinColumn(name="marker_start_id", nullable=true)
      *
      * @Assert\Type("EsterenMaps\Entity\Markers")
-     * @Assert\NotBlank()
-    */
+     * @Assert\NotBlank
+     */
     protected $markerStart;
 
     /**
@@ -109,8 +109,8 @@ class Routes implements EntityToClearInterface, \JsonSerializable
      * @ORM\JoinColumn(name="marker_end_id", nullable=true)
      *
      * @Assert\Type("EsterenMaps\Entity\Markers")
-     * @Assert\NotBlank()
-    */
+     * @Assert\NotBlank
+     */
     protected $markerEnd;
 
     /**
@@ -120,7 +120,7 @@ class Routes implements EntityToClearInterface, \JsonSerializable
      * @ORM\JoinColumn(name="map_id", nullable=false)
      *
      * @Assert\Type("EsterenMaps\Entity\Maps")
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      */
     protected $map;
 
@@ -131,7 +131,7 @@ class Routes implements EntityToClearInterface, \JsonSerializable
      * @ORM\JoinColumn(name="faction_id", nullable=true)
      *
      * @Assert\Type("EsterenMaps\Entity\Factions")
-    */
+     */
     protected $faction;
 
     /**
@@ -141,8 +141,8 @@ class Routes implements EntityToClearInterface, \JsonSerializable
      * @ORM\JoinColumn(name="route_type_id", nullable=false)
      *
      * @Assert\Type("EsterenMaps\Entity\RoutesTypes")
-     * @Assert\NotBlank()
-    */
+     * @Assert\NotBlank
+     */
     protected $routeType;
 
     /**
@@ -199,7 +199,7 @@ class Routes implements EntityToClearInterface, \JsonSerializable
 
     private function hydrateIncomingData(array $data)
     {
-        $data = array_merge($this->toArray(), $data);
+        $data = \array_merge($this->toArray(), $data);
 
         $this->name = $data['name'];
         $this->description = $data['description'];
@@ -256,12 +256,12 @@ class Routes implements EntityToClearInterface, \JsonSerializable
     public function setCoordinates(string $coordinates): self
     {
         try {
-            json_decode($coordinates, true);
+            \json_decode($coordinates, true);
         } catch (\Throwable $e) {
         }
 
-        if (JSON_ERROR_NONE !== $code = json_last_error()) {
-            throw new \InvalidArgumentException($code.':'.json_last_error_msg());
+        if (JSON_ERROR_NONE !== $code = \json_last_error()) {
+            throw new \InvalidArgumentException($code.':'.\json_last_error_msg());
         }
 
         $this->coordinates = $coordinates;
@@ -374,17 +374,17 @@ class Routes implements EntityToClearInterface, \JsonSerializable
 
     public function isLocalized(): bool
     {
-        return $this->coordinates !== null && count($this->getDecodedCoordinates());
+        return null !== $this->coordinates && \count($this->getDecodedCoordinates());
     }
 
     public function getDecodedCoordinates(): array
     {
-        return (array) json_decode($this->coordinates, true);
+        return (array) \json_decode($this->coordinates, true);
     }
 
     /**
-     * @ORM\PrePersist()
-     * @ORM\PreUpdate()
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
      */
     public function refresh(): void
     {
@@ -395,7 +395,7 @@ class Routes implements EntityToClearInterface, \JsonSerializable
         if (!$this->coordinates) {
             $this->coordinates = '[]';
         }
-        $coords = json_decode($this->coordinates, true);
+        $coords = \json_decode($this->coordinates, true);
 
         if ($this->markerStart && isset($coords[0])) {
             $coords[0] = [
@@ -404,7 +404,7 @@ class Routes implements EntityToClearInterface, \JsonSerializable
             ];
         }
         if ($this->markerEnd) {
-            $coords[count($coords) - ((int) (count($coords) > 1))] = [
+            $coords[\count($coords) - ((int) (\count($coords) > 1))] = [
                 'lat' => $this->markerEnd->getLatitude(),
                 'lng' => $this->markerEnd->getLongitude(),
             ];
@@ -412,7 +412,7 @@ class Routes implements EntityToClearInterface, \JsonSerializable
 
         $this->calcDistance();
 
-        $this->setCoordinates(json_encode($coords));
+        $this->setCoordinates(\json_encode($coords));
     }
 
     public function calcDistance(): int
@@ -432,20 +432,20 @@ class Routes implements EntityToClearInterface, \JsonSerializable
         $this->forcedDistance = null;
 
         $distance = 0;
-        $points   = json_decode($this->coordinates, true);
+        $points = \json_decode($this->coordinates, true);
 
-        reset($points);
+        \reset($points);
 
         // Use classic Pythagore's theorem to calculate distances.
-        while ($current = current($points)) {
-            $next = next($points);
+        while ($current = \current($points)) {
+            $next = \next($points);
             if (false !== $next) {
                 $currentX = $current['lng'];
                 $currentY = $current['lat'];
-                $nextX    = $next['lng'];
-                $nextY    = $next['lat'];
+                $nextX = $next['lng'];
+                $nextY = $next['lat'];
 
-                $distance += sqrt(
+                $distance += \sqrt(
                     ($nextX * $nextX)
                     - (2 * $currentX * $nextX)
                     + ($currentX * $currentX)
@@ -467,9 +467,9 @@ class Routes implements EntityToClearInterface, \JsonSerializable
          */
         $floatPrecision = 12;
 
-        $distance = (float) substr($distance, 0, $floatPrecision);
+        $distance = (float) \mb_substr($distance, 0, $floatPrecision);
 
-        if ($distance !== (float) substr($this->distance, 0, $floatPrecision)) {
+        if ($distance !== (float) \mb_substr($this->distance, 0, $floatPrecision)) {
             $this->distance = $distance;
         }
 

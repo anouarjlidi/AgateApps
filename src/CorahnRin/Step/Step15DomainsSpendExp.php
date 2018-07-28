@@ -11,9 +11,9 @@
 
 namespace CorahnRin\Step;
 
-use Symfony\Component\HttpFoundation\Response;
 use CorahnRin\Entity\Domains;
 use CorahnRin\GeneratorTools\DomainsCalculator;
+use Symfony\Component\HttpFoundation\Response;
 
 class Step15DomainsSpendExp extends AbstractStepAction
 {
@@ -51,10 +51,10 @@ class Step15DomainsSpendExp extends AbstractStepAction
     {
         $this->allDomains = $this->em->getRepository(\CorahnRin\Entity\Domains::class)->findAllSortedByName();
 
-        $primaryDomains    = $this->getCharacterProperty('13_primary_domains');
+        $primaryDomains = $this->getCharacterProperty('13_primary_domains');
         $socialClassValues = $this->getCharacterProperty('05_social_class')['domains'];
-        $domainBonuses     = $this->getCharacterProperty('14_use_domain_bonuses');
-        $geoEnvironment    = $this->em->find(\CorahnRin\Entity\GeoEnvironments::class, $this->getCharacterProperty('04_geo'));
+        $domainBonuses = $this->getCharacterProperty('14_use_domain_bonuses');
+        $geoEnvironment = $this->em->find(\CorahnRin\Entity\GeoEnvironments::class, $this->getCharacterProperty('04_geo'));
 
         $domainsBaseValues = $this->domainsCalculator->calculateFromGeneratorData(
             $this->allDomains,
@@ -80,7 +80,7 @@ class Step15DomainsSpendExp extends AbstractStepAction
             /** @var int[] $domainsValues */
             $domainsValues = $this->request->get('domains_spend_exp');
 
-            if (!is_array($domainsValues)) {
+            if (!\is_array($domainsValues)) {
                 $this->flashMessage('errors.incorrect_values');
             } else {
                 $remainingExp = $this->expRemainingFromAdvantages;
@@ -90,8 +90,8 @@ class Step15DomainsSpendExp extends AbstractStepAction
                 // First, check the ids
                 foreach ($domainsValues as $id => $value) {
                     if (
-                        !array_key_exists($id, $this->allDomains)
-                        || !is_numeric($value)
+                        !\array_key_exists($id, $this->allDomains)
+                        || !\is_numeric($value)
                         || $value < 0
                         || ($remainingExp - ($value * 10)) < 0
                         || $value + $domainsBaseValues[$id] > 5
@@ -108,7 +108,7 @@ class Step15DomainsSpendExp extends AbstractStepAction
 
                 if (false === $errors) {
                     $this->domainsSpentWithExp = [
-                        'domains'      => $domainsValues,
+                        'domains' => $domainsValues,
                         'remainingExp' => $remainingExp,
                     ];
 
@@ -120,18 +120,18 @@ class Step15DomainsSpendExp extends AbstractStepAction
         }
 
         return $this->renderCurrentStep([
-            'all_domains'            => $this->allDomains,
-            'domains_base_values'    => $domainsBaseValues,
+            'all_domains' => $this->allDomains,
+            'domains_base_values' => $domainsBaseValues,
             'domains_spent_with_exp' => $this->domainsSpentWithExp['domains'],
-            'exp_max'                => $this->expRemainingFromAdvantages,
-            'exp_value'              => $this->domainsSpentWithExp['remainingExp'],
+            'exp_max' => $this->expRemainingFromAdvantages,
+            'exp_value' => $this->domainsSpentWithExp['remainingExp'],
         ]);
     }
 
     private function resetDomains()
     {
         $this->domainsSpentWithExp = [
-            'domains'      => [],
+            'domains' => [],
             'remainingExp' => $this->expRemainingFromAdvantages,
         ];
 

@@ -14,7 +14,7 @@ namespace EsterenMaps\Controller\Api;
 use Doctrine\ORM\EntityManagerInterface;
 use EsterenMaps\Api\MarkerApi;
 use EsterenMaps\Entity\Markers;
-use Main\PublicService;
+use Main\DependencyInjection\PublicService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -46,7 +46,7 @@ class ApiMarkersController implements PublicService
     }
 
     /**
-     * @Route("/markers", name="maps_api_markers_create", methods={"POST"}, defaults={"_format": "json"})
+     * @Route("/markers", name="maps_api_markers_create", methods={"POST"}, defaults={"_format" = "json"})
      */
     public function create(Request $request): Response
     {
@@ -55,7 +55,7 @@ class ApiMarkersController implements PublicService
         }
 
         try {
-            $marker = Markers::fromApi($this->markerApi->sanitizeRequestData(json_decode($request->getContent(), true)));
+            $marker = Markers::fromApi($this->markerApi->sanitizeRequestData(\json_decode($request->getContent(), true)));
 
             return $this->handleResponse($this->validate($marker), $marker);
         } catch (HttpException $e) {
@@ -64,7 +64,7 @@ class ApiMarkersController implements PublicService
     }
 
     /**
-     * @Route("/markers/{id}", name="maps_api_markers_update", methods={"POST"}, defaults={"_format": "json"})
+     * @Route("/markers/{id}", name="maps_api_markers_update", methods={"POST"}, defaults={"_format" = "json"})
      */
     public function update(Markers $marker, Request $request): Response
     {
@@ -73,7 +73,7 @@ class ApiMarkersController implements PublicService
         }
 
         try {
-            $marker->updateFromApi($this->markerApi->sanitizeRequestData(json_decode($request->getContent(), true)));
+            $marker->updateFromApi($this->markerApi->sanitizeRequestData(\json_decode($request->getContent(), true)));
 
             return $this->handleResponse($this->validate($marker), $marker);
         } catch (HttpException $e) {
@@ -83,8 +83,8 @@ class ApiMarkersController implements PublicService
 
     private function handleResponse(array $messages, Markers $marker): Response
     {
-        if (count($messages) > 0) {
-            throw new BadRequestHttpException(json_encode($messages, JSON_PRETTY_PRINT));
+        if (\count($messages) > 0) {
+            throw new BadRequestHttpException(\json_encode($messages, JSON_PRETTY_PRINT));
         }
 
         $this->em->persist($marker);

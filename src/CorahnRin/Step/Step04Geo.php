@@ -33,7 +33,7 @@ class Step04Geo extends AbstractStepAction
         }
 
         return $this->renderCurrentStep([
-            'geoEnvironments'      => $geoEnvironments,
+            'geoEnvironments' => $geoEnvironments,
             'geoEnvironment_value' => $this->getCharacterProperty(),
         ]);
     }

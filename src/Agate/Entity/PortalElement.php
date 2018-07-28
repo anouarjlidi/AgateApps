@@ -18,11 +18,11 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity
  * @ORM\Table(name="portal_elements",
- *    uniqueConstraints={
- *        @ORM\UniqueConstraint(name="portal_and_locale", columns={"portal", "locale"})
- *    }
+ *     uniqueConstraints={
+ *         @ORM\UniqueConstraint(name="portal_and_locale", columns={"portal", "locale"})
+ *     }
  * )
  * @AssertUniqueEntity(fields={"portal", "locale"})
  */
@@ -33,7 +33,7 @@ class PortalElement
     /**
      * @var int
      *
-     * @ORM\Id()
+     * @ORM\Id
      * @ORM\Column(name="id", type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -44,7 +44,7 @@ class PortalElement
      *
      * @ORM\Column(name="portal", type="string")
      *
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      */
     private $portal;
 
@@ -53,7 +53,7 @@ class PortalElement
      *
      * @ORM\Column(name="locale", type="string")
      *
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      */
     private $locale;
 
@@ -69,7 +69,7 @@ class PortalElement
      *
      * @ORM\Column(name="title", type="string")
      *
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      */
     private $title;
 

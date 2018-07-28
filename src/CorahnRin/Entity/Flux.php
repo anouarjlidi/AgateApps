@@ -17,7 +17,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Flux.
  *
  * @ORM\Table(name="flux")
- * @ORM\Entity()
+ * @ORM\Entity
  */
 class Flux
 {
@@ -25,7 +25,7 @@ class Flux
      * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
-     * @ORM\Id()
+     * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
@@ -114,13 +114,11 @@ class Flux
     }
 
     /**
-     * @param string $description
-     *
      * @return Flux
      *
      * @codeCoverageIgnore
      */
-    public function setDescription(string $description): Flux
+    public function setDescription(string $description): self
     {
         $this->description = $description;
 

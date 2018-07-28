@@ -44,27 +44,27 @@ class ZonesTypesFixtures extends AbstractFixture implements ORMFixtureInterface
     {
         return [
             [
-                'id'          => 1,
-                'parent'      => null,
-                'name'        => 'Political',
+                'id' => 1,
+                'parent' => null,
+                'name' => 'Political',
                 'description' => '',
-                'color'       => '',
-                'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
-                'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'color' => '',
+                'createdAt' => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'updatedAt' => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
             ],
             [
-                'id'          => 2,
-                'parent'      => function (ZonesTypes $obj, AbstractFixture $f, ObjectManager $manager) {
+                'id' => 2,
+                'parent' => function (ZonesTypes $obj, AbstractFixture $f, ObjectManager $manager) {
                     $ref = $manager->merge($f->getReference('esterenmaps-zonestypes-1'));
                     $obj->setParent($ref);
 
                     return $ref;
                 },
-                'name'        => 'Kingdom',
+                'name' => 'Kingdom',
                 'description' => '',
-                'color'       => '#E05151',
-                'createdAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
-                'updatedAt'   => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'color' => '#E05151',
+                'createdAt' => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
+                'updatedAt' => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-07-10 20:49:05'),
             ],
         ];
     }

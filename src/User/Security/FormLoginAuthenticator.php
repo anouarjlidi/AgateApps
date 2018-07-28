@@ -30,7 +30,7 @@ final class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
     use TargetPathTrait;
 
     public const USERNAME_OR_EMAIL_FORM_FIELD = '_username_or_email';
-    public const PASSWORD_FORM_FIELD          = '_password';
+    public const PASSWORD_FORM_FIELD = '_password';
 
     private const PROVIDER_KEY = 'main'; // Firewall name
 
@@ -57,7 +57,7 @@ final class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
 
     public function __construct(RouterInterface $router, UserPasswordEncoderInterface $encoder, string $defaultLocale)
     {
-        $this->router  = $router;
+        $this->router = $router;
         $this->encoder = $encoder;
         $this->defaultLocale = $defaultLocale;
     }
@@ -151,7 +151,7 @@ final class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        $defaultUrl = rtrim($this->router->generate('root', ['locale' => $request->getLocale() ?: $this->defaultLocale]), '/').'/';
+        $defaultUrl = \rtrim($this->router->generate('root', ['locale' => $request->getLocale() ?: $this->defaultLocale]), '/').'/';
 
         $targetPath = $defaultUrl;
 

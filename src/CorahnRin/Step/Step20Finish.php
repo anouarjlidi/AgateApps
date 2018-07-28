@@ -11,9 +11,9 @@
 
 namespace CorahnRin\Step;
 
-use Symfony\Component\HttpFoundation\Response;
 use CorahnRin\Exception\CharactersException;
 use CorahnRin\GeneratorTools\SessionToCharacter;
+use Symfony\Component\HttpFoundation\Response;
 
 class Step20Finish extends AbstractStepAction
 {
@@ -40,7 +40,7 @@ class Step20Finish extends AbstractStepAction
             $this->goToStep(1);
         }
 
-        if (function_exists('dump')) {
+        if (\function_exists('dump')) {
             // Only in dev for now
             dump($character);
         }

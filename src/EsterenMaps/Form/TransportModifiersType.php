@@ -11,8 +11,8 @@
 
 namespace EsterenMaps\Form;
 
+use EsterenMaps\Entity\TransportModifiers;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -31,15 +31,15 @@ class TransportModifiersType extends AbstractType
     {
         $builder
             ->add('percentage', NumberType::class, [
-                'label'       => 'admin.entities.transports.percentage',
+                'label' => 'admin.entities.transports.percentage',
                 'constraints' => [
                     new Range(['min' => -200, 'max' => 200]),
                 ],
             ])
             ->add('routeType', TextType::class, [
                 'disabled' => true,
-                'label'    => 'RouteTypes',
-                'attr'     => ['read_only' => true],
+                'label' => 'RouteTypes',
+                'attr' => ['read_only' => true],
                 'required' => false,
             ])
         ;
@@ -51,8 +51,8 @@ class TransportModifiersType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'label'      => false,
-            'data_class' => 'EsterenMaps\Entity\TransportModifiers',
+            'label' => false,
+            'data_class' => TransportModifiers::class,
         ]);
     }
 

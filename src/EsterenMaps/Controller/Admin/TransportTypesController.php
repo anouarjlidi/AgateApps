@@ -21,15 +21,14 @@ class TransportTypesController extends BaseMapAdminController
     /**
      * Creates the form builder of the form used to create or edit the given entity.
      *
-     * @param TransportTypes $entity
-     * @param string         $view   The name of the view where this form is used ('new' or 'edit')
+     * @param string $view The name of the view where this form is used ('new' or 'edit')
      *
      * @return FormBuilder
      */
     protected function createTransportTypesEntityFormBuilder(TransportTypes $entity, $view)
     {
         // Get IDs in the entity and try to retrieve non-existing transport ids.
-        $routesTypesIds = array_reduce(
+        $routesTypesIds = \array_reduce(
             $entity->getTransportsModifiers()->toArray(),
             function (array $carry = [], TransportModifiers $routeTransport) {
                 $carry[] = $routeTransport->getRouteType()->getId();

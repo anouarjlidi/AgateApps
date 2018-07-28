@@ -21,34 +21,34 @@ use Symfony\Component\Validator\Constraints as Assert;
  * CharDisciplines.
  *
  * @ORM\Table(name="characters_disciplines")
- * @ORM\Entity()
+ * @ORM\Entity
  */
 class CharDisciplines
 {
     /**
      * @var Characters
      *
-     * @ORM\Id()
+     * @ORM\Id
      * @ORM\ManyToOne(targetEntity="CorahnRin\Entity\Characters", inversedBy="disciplines")
-     * @Assert\NotNull()
+     * @Assert\NotNull
      */
     protected $character;
 
     /**
      * @var Disciplines
      *
-     * @ORM\Id()
+     * @ORM\Id
      * @ORM\ManyToOne(targetEntity="CorahnRin\Entity\Disciplines")
-     * @Assert\NotNull()
+     * @Assert\NotNull
      */
     protected $discipline;
 
     /**
      * @var Domains
      *
-     * @ORM\Id()
+     * @ORM\Id
      * @ORM\ManyToOne(targetEntity="CorahnRin\Entity\Domains")
-     * @Assert\NotNull()
+     * @Assert\NotNull
      */
     protected $domain;
 
@@ -56,7 +56,7 @@ class CharDisciplines
      * @var int
      *
      * @ORM\Column(type="integer")
-     * @Assert\NotNull()
+     * @Assert\NotNull
      * @Assert\GreaterThanOrEqual(value=0)
      */
     protected $score;
@@ -92,7 +92,6 @@ class CharDisciplines
     /**
      * Set character.
      *
-     * @param Characters $character
      *
      * @return CharDisciplines
      *
@@ -120,7 +119,6 @@ class CharDisciplines
     /**
      * Set discipline.
      *
-     * @param Disciplines $discipline
      *
      * @return CharDisciplines
      *
@@ -148,7 +146,6 @@ class CharDisciplines
     /**
      * Set domain.
      *
-     * @param Domains $domain
      *
      * @return CharDisciplines
      *

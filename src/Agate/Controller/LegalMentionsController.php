@@ -11,10 +11,10 @@
 
 namespace Agate\Controller;
 
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route(host="%agate_domains.portal%", methods={"GET"})
@@ -46,7 +46,7 @@ class LegalMentionsController extends AbstractController
             return $response;
         }
 
-        if ($_locale !== 'fr') {
+        if ('fr' !== $_locale) {
             throw $this->createNotFoundException();
         }
 

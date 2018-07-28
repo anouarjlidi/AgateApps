@@ -19,6 +19,11 @@ class JSMapsControllerTest extends PantherTestCase
 {
     use PiersTestCase;
 
+    public function __toString()
+    {
+        return $this->toString();
+    }
+
     protected function screenshot(Client $client, string $suffix)
     {
         $normalizedMethod = preg_replace(

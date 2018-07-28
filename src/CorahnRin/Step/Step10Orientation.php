@@ -11,9 +11,9 @@
 
 namespace CorahnRin\Step;
 
+use CorahnRin\Data\Orientation;
 use CorahnRin\Data\Ways;
 use Symfony\Component\HttpFoundation\Response;
-use CorahnRin\Data\Orientation;
 
 class Step10Orientation extends AbstractStepAction
 {
@@ -30,7 +30,7 @@ class Step10Orientation extends AbstractStepAction
         // These data are static and are not related to anything else in the app.
         $orientations = Orientation::ALL;
 
-        $instinct   = $ways[Ways::COMBATIVENESS] + $ways[Ways::CREATIVITY]; // Combativeness + Creativity
+        $instinct = $ways[Ways::COMBATIVENESS] + $ways[Ways::CREATIVITY]; // Combativeness + Creativity
         $conscience = $ways[Ways::REASON] + $ways[Ways::CONVICTION]; // Reason + Conviction
 
         $canBeChanged = $conscience === $instinct;
@@ -46,7 +46,7 @@ class Step10Orientation extends AbstractStepAction
                 $orientation = $this->request->request->get('gen-div-choice');
             }
 
-            $orientation_exists = array_key_exists($orientation, $orientations);
+            $orientation_exists = \array_key_exists($orientation, $orientations);
 
             if ($orientation_exists) {
                 $this->updateCharacterStep($orientation);
@@ -58,9 +58,9 @@ class Step10Orientation extends AbstractStepAction
         }
 
         return $this->renderCurrentStep([
-            'can_be_changed'    => $canBeChanged,
+            'can_be_changed' => $canBeChanged,
             'orientation_value' => $orientation,
-            'orientations'      => $orientations,
+            'orientations' => $orientations,
         ]);
     }
 }

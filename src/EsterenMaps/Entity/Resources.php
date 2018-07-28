@@ -19,7 +19,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
  * Resources.
  *
  * @ORM\Table(name="maps_resources")
- * @ORM\Entity()
+ * @ORM\Entity
  */
 class Resources
 {
@@ -29,7 +29,7 @@ class Resources
      * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
-     * @ORM\Id()
+     * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     protected $id;
@@ -64,9 +64,9 @@ class Resources
      */
     public function __construct()
     {
-        $this->routes      = new ArrayCollection();
+        $this->routes = new ArrayCollection();
         $this->routesTypes = new ArrayCollection();
-        $this->zonesTypes  = new ArrayCollection();
+        $this->zonesTypes = new ArrayCollection();
     }
 
     public function __toString()
@@ -117,7 +117,6 @@ class Resources
     /**
      * Add routes.
      *
-     * @param Routes $routes
      *
      * @return Resources
      */
@@ -130,8 +129,6 @@ class Resources
 
     /**
      * Remove routes.
-     *
-     * @param Routes $routes
      */
     public function removeRoute(Routes $routes)
     {
@@ -153,7 +150,6 @@ class Resources
     /**
      * Add routesTypes.
      *
-     * @param RoutesTypes $routesTypes
      *
      * @return Resources
      */
@@ -166,8 +162,6 @@ class Resources
 
     /**
      * Remove routesTypes.
-     *
-     * @param RoutesTypes $routesTypes
      */
     public function removeRouteType(RoutesTypes $routesTypes)
     {
@@ -189,7 +183,6 @@ class Resources
     /**
      * Add zonesTypes.
      *
-     * @param ZonesTypes $zonesTypes
      *
      * @return Resources
      */
@@ -202,8 +195,6 @@ class Resources
 
     /**
      * Remove zonesTypes.
-     *
-     * @param ZonesTypes $zonesTypes
      */
     public function removeZoneType(ZonesTypes $zonesTypes)
     {

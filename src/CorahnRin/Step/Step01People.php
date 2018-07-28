@@ -34,7 +34,7 @@ class Step01People extends AbstractStepAction
         }
 
         return $this->renderCurrentStep([
-            'peoples'      => $peoples,
+            'peoples' => $peoples,
             'people_value' => $this->getCharacterProperty(),
         ]);
     }

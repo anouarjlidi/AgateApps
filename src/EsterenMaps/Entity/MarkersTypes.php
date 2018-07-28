@@ -30,23 +30,23 @@ class MarkersTypes implements EntityToClearInterface
      * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
-     * @ORM\Id()
+     * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
-    */
+     */
     protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=false, unique=true)
-    */
+     */
     protected $name;
 
     /**
      * @var string
      *
      * @ORM\Column(name="description", type="text", nullable=true)
-    */
+     */
     protected $description;
 
     /**
@@ -59,25 +59,25 @@ class MarkersTypes implements EntityToClearInterface
     /**
      * @var int
      * @ORM\Column(name="icon_width", type="integer")
-    */
+     */
     protected $iconWidth = 0;
 
     /**
      * @var int
      * @ORM\Column(name="icon_height", type="integer")
-    */
+     */
     protected $iconHeight = 0;
 
     /**
      * @var int
      * @ORM\Column(name="icon_center_x", type="integer", nullable=true)
-    */
+     */
     protected $iconCenterX;
 
     /**
      * @var int
      * @ORM\Column(name="icon_center_y", type="integer", nullable=true)
-    */
+     */
     protected $iconCenterY;
 
     /**

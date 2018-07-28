@@ -19,7 +19,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
  * Events.
  *
  * @ORM\Table(name="events")
- * @ORM\Entity()
+ * @ORM\Entity
  */
 class Events
 {
@@ -28,7 +28,7 @@ class Events
     /**
      * @var int
      *
-     * @ORM\Id()
+     * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -111,16 +111,16 @@ class Events
      */
     public function __construct()
     {
-        $this->foes         = new ArrayCollection();
-        $this->npcs         = new ArrayCollection();
-        $this->weather      = new ArrayCollection();
-        $this->markers      = new ArrayCollection();
+        $this->foes = new ArrayCollection();
+        $this->npcs = new ArrayCollection();
+        $this->weather = new ArrayCollection();
+        $this->markers = new ArrayCollection();
         $this->markersTypes = new ArrayCollection();
-        $this->resources    = new ArrayCollection();
-        $this->routes       = new ArrayCollection();
-        $this->routesTypes  = new ArrayCollection();
-        $this->zonesTypes   = new ArrayCollection();
-        $this->zones        = new ArrayCollection();
+        $this->resources = new ArrayCollection();
+        $this->routes = new ArrayCollection();
+        $this->routesTypes = new ArrayCollection();
+        $this->zonesTypes = new ArrayCollection();
+        $this->zones = new ArrayCollection();
     }
 
     /**
@@ -194,7 +194,6 @@ class Events
     /**
      * Add foes.
      *
-     * @param Foes $foes
      *
      * @return Events
      */
@@ -207,8 +206,6 @@ class Events
 
     /**
      * Remove foes.
-     *
-     * @param Foes $foes
      */
     public function removeFoe(Foes $foes)
     {
@@ -230,7 +227,6 @@ class Events
     /**
      * Add npcs.
      *
-     * @param Npcs $npcs
      *
      * @return Events
      */
@@ -243,8 +239,6 @@ class Events
 
     /**
      * Remove npcs.
-     *
-     * @param Npcs $npcs
      */
     public function removeNpc(Npcs $npcs)
     {
@@ -266,7 +260,6 @@ class Events
     /**
      * Add weather.
      *
-     * @param Weather $weather
      *
      * @return Events
      */
@@ -279,8 +272,6 @@ class Events
 
     /**
      * Remove weather.
-     *
-     * @param Weather $weather
      */
     public function removeWeather(Weather $weather)
     {
@@ -302,7 +293,6 @@ class Events
     /**
      * Add markers.
      *
-     * @param Markers $markers
      *
      * @return Events
      */
@@ -315,8 +305,6 @@ class Events
 
     /**
      * Remove markers.
-     *
-     * @param Markers $markers
      */
     public function removeMarker(Markers $markers)
     {
@@ -338,7 +326,6 @@ class Events
     /**
      * Add markersTypes.
      *
-     * @param MarkersTypes $markersTypes
      *
      * @return Events
      */
@@ -351,8 +338,6 @@ class Events
 
     /**
      * Remove markersTypes.
-     *
-     * @param MarkersTypes $markersTypes
      */
     public function removeMarkersType(MarkersTypes $markersTypes)
     {
@@ -374,7 +359,6 @@ class Events
     /**
      * Add resources.
      *
-     * @param Resources $resources
      *
      * @return Events
      */
@@ -387,8 +371,6 @@ class Events
 
     /**
      * Remove resources.
-     *
-     * @param Resources $resources
      */
     public function removeResource(Resources $resources)
     {
@@ -410,7 +392,6 @@ class Events
     /**
      * Add routes.
      *
-     * @param Routes $routes
      *
      * @return Events
      */
@@ -423,8 +404,6 @@ class Events
 
     /**
      * Remove routes.
-     *
-     * @param Routes $routes
      */
     public function removeRoute(Routes $routes)
     {
@@ -446,7 +425,6 @@ class Events
     /**
      * Add routesTypes.
      *
-     * @param RoutesTypes $routesTypes
      *
      * @return Events
      */
@@ -459,8 +437,6 @@ class Events
 
     /**
      * Remove routesTypes.
-     *
-     * @param RoutesTypes $routesTypes
      */
     public function removeRoutesType(RoutesTypes $routesTypes)
     {
@@ -482,7 +458,6 @@ class Events
     /**
      * Add zonesTypes.
      *
-     * @param ZonesTypes $zonesTypes
      *
      * @return Events
      */
@@ -495,8 +470,6 @@ class Events
 
     /**
      * Remove zonesTypes.
-     *
-     * @param ZonesTypes $zonesTypes
      */
     public function removeZonesType(ZonesTypes $zonesTypes)
     {
@@ -518,7 +491,6 @@ class Events
     /**
      * Add zones.
      *
-     * @param Zones $zones
      *
      * @return Events
      */
@@ -531,8 +503,6 @@ class Events
 
     /**
      * Remove zones.
-     *
-     * @param Zones $zones
      */
     public function removeZone(Zones $zones)
     {

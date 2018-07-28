@@ -32,7 +32,7 @@ class Maps implements EntityToClearInterface
      * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
-     * @ORM\Id()
+     * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     protected $id;
@@ -56,7 +56,7 @@ class Maps implements EntityToClearInterface
      * @var string
      *
      * @ORM\Column(name="image", type="string", length=255, nullable=false)
-     * @Gedmo\UploadableFilePath()
+     * @Gedmo\UploadableFilePath
      */
     protected $image;
 
@@ -70,7 +70,7 @@ class Maps implements EntityToClearInterface
     /**
      * @var int
      *
-     * @ORM\Column(name="max_zoom", type="smallint", options={"default": 1})
+     * @ORM\Column(name="max_zoom", type="smallint", options={"default" = 1})
      * @Assert\Range(
      *     min=1,
      *     max=50
@@ -81,7 +81,7 @@ class Maps implements EntityToClearInterface
     /**
      * @var int
      *
-     * @ORM\Column(name="start_zoom", type="smallint", options={"default": 1})
+     * @ORM\Column(name="start_zoom", type="smallint", options={"default" = 1})
      * @Assert\Range(
      *     min=1,
      *     max=10
@@ -92,27 +92,27 @@ class Maps implements EntityToClearInterface
     /**
      * @var int
      *
-     * @ORM\Column(name="start_x", type="smallint", options={"default": 1})
+     * @ORM\Column(name="start_x", type="smallint", options={"default" = 1})
      */
     protected $startX = 0;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="start_y", type="smallint", options={"default": 1})
+     * @ORM\Column(name="start_y", type="smallint", options={"default" = 1})
      */
     protected $startY = 0;
 
     /**
      * @var string
-     * @ORM\Column(name="bounds", type="string", options={"default": "[]"})
+     * @ORM\Column(name="bounds", type="string", options={"default" = "[]"})
      */
     protected $bounds = '[]';
 
     /**
      * @var int
      *
-     * @ORM\Column(name="coordinates_ratio", type="smallint", options={"default": 1})
+     * @ORM\Column(name="coordinates_ratio", type="smallint", options={"default" = 1})
      */
     protected $coordinatesRatio = 1;
 
@@ -150,9 +150,9 @@ class Maps implements EntityToClearInterface
      */
     public function __construct()
     {
-        $this->routes  = new ArrayCollection();
+        $this->routes = new ArrayCollection();
         $this->markers = new ArrayCollection();
-        $this->zones   = new ArrayCollection();
+        $this->zones = new ArrayCollection();
     }
 
     /**
@@ -296,7 +296,6 @@ class Maps implements EntityToClearInterface
     /**
      * Add routes.
      *
-     * @param Routes $routes
      *
      * @return Maps
      */
@@ -309,8 +308,6 @@ class Maps implements EntityToClearInterface
 
     /**
      * Remove routes.
-     *
-     * @param Routes $routes
      */
     public function removeRoute(Routes $routes)
     {
@@ -332,7 +329,6 @@ class Maps implements EntityToClearInterface
     /**
      * Get zone.
      *
-     * @param Routes $route
      *
      * @return Routes|null
      */
@@ -345,14 +341,11 @@ class Maps implements EntityToClearInterface
                 return $mapRoute;
             }
         }
-
-        return null;
     }
 
     /**
      * Get zone.
      *
-     * @param Routes $route
      *
      * @return Maps
      */
@@ -372,7 +365,6 @@ class Maps implements EntityToClearInterface
     /**
      * Add markers.
      *
-     * @param Markers $markers
      *
      * @return Maps
      */
@@ -385,8 +377,6 @@ class Maps implements EntityToClearInterface
 
     /**
      * Remove markers.
-     *
-     * @param Markers $markers
      */
     public function removeMarker(Markers $markers)
     {
@@ -408,7 +398,6 @@ class Maps implements EntityToClearInterface
     /**
      * Get zone.
      *
-     * @param Markers $marker
      *
      * @return Zones|null
      */
@@ -421,15 +410,12 @@ class Maps implements EntityToClearInterface
                 return $mapMarker;
             }
         }
-
-        return null;
     }
 
     /**
      * Contrairement au nom de cette méthode, celle-ci AJOUTE un marqueur,
      *    et uniquement si celui-ci n'est pas déjà ajouté à la map.
      *
-     * @param Markers $marker
      *
      * @return $this
      */
@@ -449,7 +435,6 @@ class Maps implements EntityToClearInterface
     /**
      * Add zones.
      *
-     * @param Zones $zones
      *
      * @return Maps
      */
@@ -462,8 +447,6 @@ class Maps implements EntityToClearInterface
 
     /**
      * Remove zones.
-     *
-     * @param Zones $zones
      */
     public function removeZone(Zones $zones)
     {
@@ -473,7 +456,6 @@ class Maps implements EntityToClearInterface
     /**
      * Get zone.
      *
-     * @param Zones $zone
      *
      * @return Zones|null
      */
@@ -486,13 +468,9 @@ class Maps implements EntityToClearInterface
                 return $mapZone;
             }
         }
-
-        return null;
     }
 
     /**
-     * @param Zones $zone
-     *
      * @return $this
      */
     public function setZone(Zones $zone)
@@ -685,17 +663,15 @@ class Maps implements EntityToClearInterface
      */
     public function getJsonBounds()
     {
-        return json_decode($this->bounds, true);
+        return \json_decode($this->bounds, true);
     }
 
     /**
-     * @param array $bounds
-     *
      * @return $this
      */
     public function setJsonBounds(array $bounds = [])
     {
-        $this->bounds = json_encode($bounds);
+        $this->bounds = \json_encode($bounds);
 
         return $this;
     }

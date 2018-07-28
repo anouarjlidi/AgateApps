@@ -29,7 +29,7 @@ class Disciplines
      * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
-     * @ORM\Id()
+     * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
@@ -187,7 +187,6 @@ class Disciplines
     /**
      * Add domains.
      *
-     * @param Domains $domains
      *
      * @return Disciplines
      */
@@ -200,8 +199,6 @@ class Disciplines
 
     /**
      * Remove domains.
-     *
-     * @param Domains $domains
      */
     public function removeDomain(Domains $domains)
     {

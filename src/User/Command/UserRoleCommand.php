@@ -74,14 +74,14 @@ class UserRoleCommand extends Command
         $user = $this->userRepository->findByUsernameOrEmail($usernameOrEmail);
 
         if (!$user) {
-            throw new \InvalidArgumentException(sprintf('User with username or email %s does not exist.', $usernameOrEmail));
+            throw new \InvalidArgumentException(\sprintf('User with username or email %s does not exist.', $usernameOrEmail));
         }
 
         $roles = $input->getArgument('roles');
 
         foreach ($roles as &$role) {
-            $role = \mb_strtoupper(trim($role));
-            if (0 !== \strpos($role, 'ROLE_')) {
+            $role = \mb_strtoupper(\trim($role));
+            if (0 !== \mb_strpos($role, 'ROLE_')) {
                 throw new \InvalidArgumentException('Only attributes starting with "ROLE_" are valid roles.');
             }
         }
@@ -112,7 +112,7 @@ class UserRoleCommand extends Command
 
         $io->block('Final roles:');
 
-        $io->table([], \array_map(function($item) { return [$item]; }, $user->getRoles()));
+        $io->table([], \array_map(function ($item) { return [$item]; }, $user->getRoles()));
 
         if ($io->confirm('Save these roles for this user?', true)) {
             $this->em->flush();

@@ -32,31 +32,31 @@ class Step08Ways extends AbstractStepAction
         if ($this->request->isMethod('POST')) {
             $waysValues = (array) $this->request->request->get('ways');
 
-            $error                = false;
-            $errorWayNotExists    = false;
+            $error = false;
+            $errorWayNotExists = false;
             $errorValueNotInRange = false;
-            $sum                  = 0;
-            $has1or5              = false;
+            $sum = 0;
+            $has1or5 = false;
 
             foreach ($waysValues as $id => $value) {
                 $value = (int) $value;
 
                 // Make sure every way clearly exists.
                 if (false === $errorWayNotExists && !isset($ways[$id])) {
-                    $error             = true;
+                    $error = true;
                     $errorWayNotExists = true;
                     $this->flashMessage('Erreur dans le formulaire. Merci de vérifier les valeurs soumises.');
                 }
 
                 // Make sure values are in proper ranges.
                 if (false === $errorValueNotInRange && ($value <= 0 || $value > 5)) {
-                    $error                = true;
+                    $error = true;
                     $errorValueNotInRange = true;
                     $this->flashMessage('Les voies doivent être comprises entre 1 et 5.');
                 }
 
                 // To be correct, we need the character to have at least 1 or 5 to at least one Way.
-                if ($value === 1 || $value === 5) {
+                if (1 === $value || 5 === $value) {
                     $has1or5 = true;
                 }
 
@@ -66,7 +66,7 @@ class Step08Ways extends AbstractStepAction
                 $sum += $value;
             }
 
-            if ($sum !== 15) {
+            if (15 !== $sum) {
                 $error = true;
                 if ($sum > 5) {
                     $this->flashMessage('La somme des voies doit être égale à 15. Merci de corriger les valeurs de certaines voies.', 'warning');
@@ -91,7 +91,7 @@ class Step08Ways extends AbstractStepAction
 
         return $this->renderCurrentStep([
             'ways_values' => $waysValues,
-            'ways_list'   => $ways,
+            'ways_list' => $ways,
         ]);
     }
 

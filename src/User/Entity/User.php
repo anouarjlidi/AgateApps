@@ -25,14 +25,14 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class User implements UserInterface, \Serializable
 {
-    public const ROLE_DEFAULT     = 'ROLE_USER';
+    public const ROLE_DEFAULT = 'ROLE_USER';
     public const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
 
     use TimestampableEntity;
 
     /**
      * @var int
-     * @ORM\Id()
+     * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -91,7 +91,7 @@ class User implements UserInterface, \Serializable
     /**
      * @var bool
      *
-     * @ORM\Column(name="email_confirmed", type="boolean", options={"default": "0"})
+     * @ORM\Column(name="email_confirmed", type="boolean", options={"default" = "0"})
      */
     private $emailConfirmed = false;
 
@@ -136,19 +136,19 @@ class User implements UserInterface, \Serializable
         return (string) $this->getUsername();
     }
 
-    public function addRole($role): User
+    public function addRole($role): self
     {
-        $role = strtoupper($role);
+        $role = \mb_strtoupper($role);
 
         if ($role === static::ROLE_DEFAULT) {
             return $this;
         }
 
-        if (!in_array($role, $this->roles, true)) {
+        if (!\in_array($role, $this->roles, true)) {
             $this->roles[] = $role;
         }
 
-        $this->roles = array_unique($this->roles);
+        $this->roles = \array_unique($this->roles);
 
         return $this;
     }
@@ -160,7 +160,7 @@ class User implements UserInterface, \Serializable
         // we need to make sure to have at least one role
         $roles[] = static::ROLE_DEFAULT;
 
-        $roles = array_unique($roles);
+        $roles = \array_unique($roles);
 
         if (true === $asObject) {
             foreach ($roles as &$role) {
@@ -173,7 +173,7 @@ class User implements UserInterface, \Serializable
 
     public function hasRole($role): bool
     {
-        return in_array(strtoupper($role), $this->getRoles(), true);
+        return \in_array(\mb_strtoupper($role), $this->getRoles(), true);
     }
 
     public function isSuperAdmin(): bool
@@ -181,17 +181,17 @@ class User implements UserInterface, \Serializable
         return $this->hasRole(static::ROLE_SUPER_ADMIN);
     }
 
-    public function removeRole($role): User
+    public function removeRole($role): self
     {
-        if (false !== $key = array_search(strtoupper($role), $this->roles, true)) {
+        if (false !== $key = \array_search(\mb_strtoupper($role), $this->roles, true)) {
             unset($this->roles[$key]);
-            $this->roles = array_values($this->roles);
+            $this->roles = \array_values($this->roles);
         }
 
         return $this;
     }
 
-    public function setSuperAdmin($boolean): User
+    public function setSuperAdmin($boolean): self
     {
         if (true === $boolean) {
             $this->addRole(static::ROLE_SUPER_ADMIN);
@@ -202,7 +202,7 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
-    public function setRoles(array $roles): User
+    public function setRoles(array $roles): self
     {
         $this->roles = [];
 
@@ -232,7 +232,7 @@ class User implements UserInterface, \Serializable
         $this->plainPassword = null;
     }
 
-    public function setId(int $id): User
+    public function setId(int $id): self
     {
         $this->id = $id;
 
@@ -244,14 +244,14 @@ class User implements UserInterface, \Serializable
         return $this->id;
     }
 
-    public function setUsername($username): User
+    public function setUsername($username): self
     {
         $this->username = $username;
 
         return $this;
     }
 
-    public function setUsernameCanonical($usernameCanonical): User
+    public function setUsernameCanonical($usernameCanonical): self
     {
         $this->usernameCanonical = $usernameCanonical;
 
@@ -263,7 +263,7 @@ class User implements UserInterface, \Serializable
         return $this->usernameCanonical;
     }
 
-    public function setEmail($email): User
+    public function setEmail($email): self
     {
         $this->email = $email;
 
@@ -275,7 +275,7 @@ class User implements UserInterface, \Serializable
         return $this->email;
     }
 
-    public function setEmailCanonical($emailCanonical): User
+    public function setEmailCanonical($emailCanonical): self
     {
         $this->emailCanonical = $emailCanonical;
 
@@ -287,7 +287,7 @@ class User implements UserInterface, \Serializable
         return $this->emailCanonical;
     }
 
-    public function setPassword($password): User
+    public function setPassword($password): self
     {
         $this->password = $password;
 
@@ -299,14 +299,14 @@ class User implements UserInterface, \Serializable
         return $this->plainPassword;
     }
 
-    public function setPlainPassword(string $plainPassword): User
+    public function setPlainPassword(string $plainPassword): self
     {
         $this->plainPassword = $plainPassword;
 
         return $this;
     }
 
-    public function setConfirmationToken(?string $confirmationToken): User
+    public function setConfirmationToken(?string $confirmationToken): self
     {
         $this->confirmationToken = $confirmationToken;
 
@@ -318,7 +318,7 @@ class User implements UserInterface, \Serializable
         return $this->emailConfirmed;
     }
 
-    public function setEmailConfirmed(bool $emailConfirmed): User
+    public function setEmailConfirmed(bool $emailConfirmed): self
     {
         $this->emailConfirmed = $emailConfirmed;
 
@@ -335,7 +335,7 @@ class User implements UserInterface, \Serializable
         return $this->ululeId;
     }
 
-    public function setUluleId(?string $ululeId): User
+    public function setUluleId(?string $ululeId): self
     {
         $this->ululeId = $ululeId;
 
@@ -347,7 +347,7 @@ class User implements UserInterface, \Serializable
         return $this->ululeUsername;
     }
 
-    public function setUluleUsername(?string $ululeUsername): User
+    public function setUluleUsername(?string $ululeUsername): self
     {
         $this->ululeUsername = $ululeUsername;
 
@@ -359,7 +359,7 @@ class User implements UserInterface, \Serializable
         return $this->ululeApiToken;
     }
 
-    public function setUluleApiToken(?string $ululeApiToken): User
+    public function setUluleApiToken(?string $ululeApiToken): self
     {
         $this->ululeApiToken = $ululeApiToken;
 
@@ -368,22 +368,22 @@ class User implements UserInterface, \Serializable
 
     public function serialize()
     {
-        return serialize([
+        return \serialize([
             $this->id,
             $this->username,
             $this->usernameCanonical,
             $this->email,
             $this->emailCanonical,
             $this->password,
-            implode(',', $this->getRoles()),
+            \implode(',', $this->getRoles()),
         ]);
     }
 
     public function unserialize($serialized)
     {
-        $data = unserialize($serialized);
+        $data = \unserialize($serialized);
 
-        $this->roles = explode(',', $data[6]);
+        $this->roles = \explode(',', $data[6]);
 
         [
             $this->id,

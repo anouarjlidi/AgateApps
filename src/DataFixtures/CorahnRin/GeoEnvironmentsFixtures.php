@@ -28,8 +28,6 @@ class GeoEnvironmentsFixtures extends AbstractFixture implements OrderedFixtureI
 
     /**
      * Get the order of this fixture.
-     *
-     * @return int
      */
     public function getOrder(): int
     {
@@ -38,8 +36,6 @@ class GeoEnvironmentsFixtures extends AbstractFixture implements OrderedFixtureI
 
     /**
      * Load data fixtures with the passed EntityManager.
-     *
-     * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager)
     {
@@ -48,8 +44,8 @@ class GeoEnvironmentsFixtures extends AbstractFixture implements OrderedFixtureI
         /** @var EntityRepository $repo */
         $repo = $this->manager->getRepository(GeoEnvironments::class);
 
-        $book     = $this->getReference('corahnrin-book-2');
-        $domain5  = $this->getReference('corahnrin-domain-5');
+        $book = $this->getReference('corahnrin-book-2');
+        $domain5 = $this->getReference('corahnrin-domain-5');
         $domain11 = $this->getReference('corahnrin-domain-11');
 
         $this->fixtureObject($repo, 1, $domain5, 'Rural', 'Votre personnage est issu d\'une campagne ou d\'un lieu relativement isolé.', $book);
@@ -60,9 +56,9 @@ class GeoEnvironmentsFixtures extends AbstractFixture implements OrderedFixtureI
 
     public function fixtureObject(EntityRepository $repo, $id, $domain, $name, $description, $book)
     {
-        $obj       = null;
+        $obj = null;
         $newObject = false;
-        $addRef    = false;
+        $addRef = false;
         if ($id) {
             $obj = $repo->find($id);
             if ($obj) {
@@ -73,18 +69,18 @@ class GeoEnvironmentsFixtures extends AbstractFixture implements OrderedFixtureI
         } else {
             $newObject = true;
         }
-        if ($newObject === true) {
+        if (true === $newObject) {
             $obj = new GeoEnvironments($id, $name, $description, $domain);
             $obj->setBook($book);
             if ($id) {
                 /** @var ClassMetadata $metadata */
-                $metadata = $this->manager->getClassMetadata(get_class($obj));
+                $metadata = $this->manager->getClassMetadata(\get_class($obj));
                 $metadata->setIdGeneratorType(ClassMetadata::GENERATOR_TYPE_NONE);
             }
             $this->manager->persist($obj);
             $addRef = true;
         }
-        if ($addRef === true && $obj) {
+        if (true === $addRef && $obj) {
             $this->addReference('corahnrin-geo-environment-'.$id, $obj);
         }
     }

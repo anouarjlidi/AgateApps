@@ -33,9 +33,9 @@ class ContactMessage
         return $this->name;
     }
 
-    public function setName(?string $name): ContactMessage
+    public function setName(?string $name): self
     {
-        $this->name = strip_tags((string) $name);
+        $this->name = \strip_tags((string) $name);
 
         return $this;
     }
@@ -45,9 +45,9 @@ class ContactMessage
         return $this->email;
     }
 
-    public function setEmail(?string $email): ContactMessage
+    public function setEmail(?string $email): self
     {
-        $this->email = strip_tags((string) $email);
+        $this->email = \strip_tags((string) $email);
 
         return $this;
     }
@@ -57,9 +57,9 @@ class ContactMessage
         return $this->message;
     }
 
-    public function setMessage(?string $message): ContactMessage
+    public function setMessage(?string $message): self
     {
-        $this->message = strip_tags((string) $message);
+        $this->message = \strip_tags((string) $message);
 
         return $this;
     }
@@ -69,7 +69,7 @@ class ContactMessage
         return $this->subject;
     }
 
-    public function setSubject(?string $subject): ContactMessage
+    public function setSubject(?string $subject): self
     {
         $this->subject = (string) $subject;
 
@@ -81,7 +81,7 @@ class ContactMessage
         return $this->locale;
     }
 
-    public function setLocale(?string $locale): ContactMessage
+    public function setLocale(?string $locale): self
     {
         $this->locale = (string) $locale;
 

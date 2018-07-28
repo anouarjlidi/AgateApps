@@ -12,9 +12,9 @@
 namespace EsterenMaps\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Persistence\ManagerRegistry;
 use EsterenMaps\Cache\CacheManager;
 use EsterenMaps\Entity\MarkersTypes;
-use Doctrine\Common\Persistence\ManagerRegistry;
 
 class MarkersTypesRepository extends ServiceEntityRepository
 {

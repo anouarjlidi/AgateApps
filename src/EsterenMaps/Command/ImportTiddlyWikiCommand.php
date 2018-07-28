@@ -129,7 +129,7 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $time = microtime(true);
+        $time = \microtime(true);
 
         $this->output = $output;
 
@@ -139,38 +139,38 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
 
         $file = $input->getArgument('file');
 
-        $data     = file_get_contents($file);
-        $encoding = mb_detect_encoding($data, mb_detect_order(), true);
-        if ($encoding !== 'UTF-8') {
+        $data = \file_get_contents($file);
+        $encoding = \mb_detect_encoding($data, \mb_detect_order(), true);
+        if ('UTF-8' !== $encoding) {
             // Force UTF8 conversion to avoid reinserting data
-            $data = mb_convert_encoding($data, 'UTF-8');
+            $data = \mb_convert_encoding($data, 'UTF-8');
         }
 
-        if (!$data || !is_string($data)) {
+        if (!$data || !\is_string($data)) {
             throw new \InvalidArgumentException('Tiddly wiki content could not be retrieved.');
         }
 
         /** @var array $data */
-        $data = json_decode($data, true);
+        $data = \json_decode($data, true);
 
         if (!$data) {
-            throw new \InvalidArgumentException('Json error while decoding: <error>'.json_last_error_msg().'</error>.');
+            throw new \InvalidArgumentException('Json error while decoding: <error>'.\json_last_error_msg().'</error>.');
         }
 
-        $this->em  = $this->getContainer()->get('doctrine')->getManager();
+        $this->em = $this->getContainer()->get('doctrine')->getManager();
         $this->uow = $this->em->getUnitOfWork();
 
         // Setting all data in the class for we can use it in the other methods
         $this->data = $data;
-        $total      = count($data);
+        $total = \count($data);
 
         $output->writeln('Found <info>'.$total.'</info> items to check for import.');
 
         $output->writeln('Processing...');
 
-        $tags = array_reduce($data, function ($carry, $object) {
+        $tags = \array_reduce($data, function ($carry, $object) {
             $carry[$object['tags']] = [
-                'tag'            => $object['tags'],
+                'tag' => $object['tags'],
                 'nb_occurrences' => isset($carry[$object['tags']]['nb_occurrences']) ? $carry[$object['tags']]['nb_occurrences'] + 1 : 1,
             ];
 
@@ -183,16 +183,16 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
 
         $this->maps = $this->getRepository(Maps::class)->findAllRoot(true);
 
-        $this->factions     = $this->getReferenceObjects('factions', Factions::class);
+        $this->factions = $this->getReferenceObjects('factions', Factions::class);
         $this->markersTypes = $this->getReferenceObjects('markertype', MarkersTypes::class);
-        $this->zonesTypes   = $this->getReferenceObjects('zonetype', ZonesTypes::class);
-        $this->routesTypes  = $this->getReferenceObjects('routetype', RoutesTypes::class);
+        $this->zonesTypes = $this->getReferenceObjects('zonetype', ZonesTypes::class);
+        $this->routesTypes = $this->getReferenceObjects('routetype', RoutesTypes::class);
 
         $this->markers = $this->processObjects('marqueurs', Markers::class);
-        $this->zones   = $this->processObjects('zones', Zones::class);
-        $this->routes  = $this->processObjects('routes', Routes::class);
+        $this->zones = $this->processObjects('zones', Zones::class);
+        $this->routes = $this->processObjects('routes', Routes::class);
 
-        $allData = array_merge(
+        $allData = \array_merge(
             $this->factions['new'],
             $this->factions['existing'],
             $this->markersTypes['new'],
@@ -212,20 +212,20 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
         $this->uow->computeChangeSets();
 
         foreach ($allData as $object) {
-            $changesets   = $this->uow->getEntityChangeSet($object);
+            $changesets = $this->uow->getEntityChangeSet($object);
             $changesetsNb = 0;
-            $class        = get_class($object);
+            $class = \get_class($object);
 
             $table = new Table($this->output);
             $table->setHeaders(['Class', 'Property', 'Before', 'After']);
 
             foreach ($changesets as $field => $changeset) {
-                if ($field === 'createdAt' || $field === 'updatedAt') {
+                if ('createdAt' === $field || 'updatedAt' === $field) {
                     continue;
                 }
                 ++$changesetsNb;
                 $before = $changeset[0];
-                $after  = $changeset[1];
+                $after = $changeset[1];
                 $table->addRow([$class, $field, $before, $after]);
             }
 
@@ -248,7 +248,7 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
                 foreach ($this->data as $k => $data) {
                     $id = $data['id'];
 
-                    if (is_numeric($id)) {
+                    if (\is_numeric($id)) {
                         continue;
                     }
 
@@ -275,8 +275,8 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
                     }
                 }
 
-                $json = json_encode($this->data, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_BIGINT_AS_STRING);
-                file_put_contents($file, $json);
+                $json = \json_encode($this->data, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_BIGINT_AS_STRING);
+                \file_put_contents($file, $json);
                 $output->writeln('Updated <info>'.$idsUpdated.'</info> identifiers in the JSON file.');
 
                 $code = 0;
@@ -285,7 +285,7 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
             }
         }
 
-        $output->writeln('Executed in '.number_format(microtime(true) - $time, 4).' seconds');
+        $output->writeln('Executed in '.\number_format(\microtime(true) - $time, 4).' seconds');
 
         return $code;
     }
@@ -299,13 +299,13 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
      */
     private function getReferenceObjects($tag, $entity, $nameProperty = 'name')
     {
-        $data = array_filter($this->data, function ($element) use ($tag) {
+        $data = \array_filter($this->data, function ($element) use ($tag) {
             return isset($element['tags']) && $element['tags'] === $tag;
         });
 
         $repo = $this->getRepository($entity);
 
-        $new      = [];
+        $new = [];
         $existing = [];
 
         /** @var Markers[]|Zones[]|Routes[] $objects */
@@ -327,7 +327,7 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
             if ($object) {
                 $existing[$object->getId()] = $object;
             } else {
-                $object   = new $entity();
+                $object = new $entity();
                 $new[$id] = $object;
             }
 
@@ -343,7 +343,7 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
         }
 
         return [
-            'new'      => $new,
+            'new' => $new,
             'existing' => $existing,
         ];
     }
@@ -356,13 +356,13 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
      */
     private function processObjects($tag, $entity)
     {
-        $data = array_filter($this->data, function ($element) use ($tag) {
+        $data = \array_filter($this->data, function ($element) use ($tag) {
             return isset($element['tags']) && $element['tags'] === $tag;
         });
 
         $repo = $this->getRepository($entity);
 
-        $new      = [];
+        $new = [];
         $existing = [];
 
         /** @var Markers[]|Zones[]|Routes[] $objects */
@@ -384,7 +384,7 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
             if ($object) {
                 $existing[$object->getId()] = $object;
             } else {
-                $object   = new $entity();
+                $object = new $entity();
                 $new[$id] = $object;
             }
 
@@ -402,7 +402,7 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
         }
 
         return [
-            'new'      => $new,
+            'new' => $new,
             'existing' => $existing,
         ];
     }
@@ -427,10 +427,10 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
      */
     private function updateOneObject($object, $data)
     {
-        $data['created'] = DateTime::createFromFormat('YmdHisu', $data['created'] ?? date('YmdHisu'));
+        $data['created'] = DateTime::createFromFormat('YmdHisu', $data['created'] ?? \date('YmdHisu'));
 
         $object
-            ->setId(is_numeric($data['id']) ? $data['id'] : null)
+            ->setId(\is_numeric($data['id']) ? $data['id'] : null)
             ->setName($data['title'])
             ->setDescription($data['text'])
             ->setMap($this->maps[$data['map_id']])
@@ -438,13 +438,14 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
             ->setCreatedAt($data['created'])
         ;
 
-        if (method_exists($object, 'setUpdatedAt')) {
+        if (\method_exists($object, 'setUpdatedAt')) {
             $object->setUpdatedAt(new DateTime());
         }
 
         if ($object instanceof Markers) {
             $object
-                ->setMarkerType($this->getOneReferencedObject('markersTypes', $data['markertype_id']));
+                ->setMarkerType($this->getOneReferencedObject('markersTypes', $data['markertype_id']))
+            ;
             if (!$object->isLocalized()) {
                 $object->setLatitude(0)->setLongitude(0);
             }
@@ -463,7 +464,8 @@ class ImportTiddlyWikiCommand extends ContainerAwareCommand
             $object->refresh();
         } elseif ($object instanceof Zones) {
             $object
-                ->setZoneType($this->getOneReferencedObject('zonesTypes', $data['zonetype_id']));
+                ->setZoneType($this->getOneReferencedObject('zonesTypes', $data['zonetype_id']))
+            ;
             if (!$object->isLocalized()) {
                 $object->setCoordinates([
                     ['lat' => 0, 'lng' => 0],

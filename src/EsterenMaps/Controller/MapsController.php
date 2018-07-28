@@ -12,11 +12,10 @@
 namespace EsterenMaps\Controller;
 
 use EsterenMaps\Entity\Maps;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route(host="%esteren_domains.esterenmaps%")
@@ -47,9 +46,9 @@ class MapsController extends Controller
         if (!$this->getParameter('kernel.debug')) {
             $response->setCache([
                 'last_modified' => $updatedAt,
-                'max_age'       => 600,
-                's_maxage'      => 600,
-                'public'        => $this->getUser() ? false : true,
+                'max_age' => 600,
+                's_maxage' => 600,
+                'public' => $this->getUser() ? false : true,
             ]);
         }
 
@@ -61,6 +60,7 @@ class MapsController extends Controller
             'list' => $allMaps,
         ], $response);
     }
+
     /**
      * @Route("/map-{nameSlug}", methods={"GET"}, name="esterenmaps_maps_maps_view")
      */
@@ -85,14 +85,13 @@ class MapsController extends Controller
         }
 
         $tilesUrl = $this->generateUrl('esterenmaps_api_tiles', ['id' => 0, 'x' => 0, 'y' => 0, 'zoom' => 0], true);
-        $tilesUrl = str_replace('0/0/0/0', '{id}/{z}/{x}/{y}', $tilesUrl);
-        $tilesUrl = preg_replace('~app_dev\.php/~iUu', '', $tilesUrl);
+        $tilesUrl = \str_replace('0/0/0/0', '{id}/{z}/{x}/{y}', $tilesUrl);
+        $tilesUrl = \preg_replace('~app_dev\.php/~iUu', '', $tilesUrl);
 
         return $this->render('esteren_maps/Maps/view.html.twig', [
-            'map'       => $map,
-            'tilesUrl'  => $tilesUrl,
+            'map' => $map,
+            'tilesUrl' => $tilesUrl,
             'tile_size' => $this->container->getParameter('esterenmaps.tile_size'),
         ], $response);
     }
-
 }

@@ -15,7 +15,7 @@ use CorahnRin\Exception\InvalidWoundChangeValue;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Embeddable()
+ * @ORM\Embeddable
  */
 class HealthCondition
 {
@@ -56,11 +56,11 @@ class HealthCondition
 
     public function __construct(int $good = 5, int $okay = 5, int $bad = 4, int $critical = 4, int $agony = 1)
     {
-        $this->good     = $good;
-        $this->okay     = $okay;
-        $this->bad      = $bad;
+        $this->good = $good;
+        $this->okay = $okay;
+        $this->bad = $bad;
         $this->critical = $critical;
-        $this->agony    = $agony;
+        $this->agony = $agony;
     }
 
     public function withdrawWounds(int $wounds): void

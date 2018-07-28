@@ -26,7 +26,7 @@ class SocialClasses
      * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
-     * @ORM\Id()
+     * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
@@ -117,7 +117,6 @@ class SocialClasses
     /**
      * Add domains.
      *
-     * @param Domains $domains
      *
      * @return SocialClasses
      */
@@ -130,8 +129,6 @@ class SocialClasses
 
     /**
      * Remove domains.
-     *
-     * @param Domains $domains
      */
     public function removeDomain(Domains $domains)
     {
@@ -185,7 +182,7 @@ class SocialClasses
      */
     public function findDomainById($id)
     {
-        $id             = (int) $id;
+        $id = (int) $id;
         $domainToReturn = null;
 
         foreach ($this->domains as $domain) {

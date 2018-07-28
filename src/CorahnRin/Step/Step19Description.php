@@ -11,8 +11,8 @@
 
 namespace CorahnRin\Step;
 
-use Symfony\Component\HttpFoundation\Response;
 use CorahnRin\Entity\Characters;
+use Symfony\Component\HttpFoundation\Response;
 
 class Step19Description extends AbstractStepAction
 {
@@ -21,13 +21,13 @@ class Step19Description extends AbstractStepAction
      */
     public function execute(): Response
     {
-        $details = array_merge([
-            'name'        => '',
+        $details = \array_merge([
+            'name' => '',
             'player_name' => '',
-            'sex'         => Characters::FEMALE,
+            'sex' => Characters::FEMALE,
             'description' => '',
-            'story'       => '',
-            'facts'       => '',
+            'story' => '',
+            'facts' => '',
         ], $this->getCharacterProperty() ?: []);
 
         if ($this->request->isMethod('POST')) {
@@ -35,15 +35,15 @@ class Step19Description extends AbstractStepAction
 
             $errors = false;
 
-            if (!array_key_exists('sex', $newDetails)) {
+            if (!\array_key_exists('sex', $newDetails)) {
                 $errors = true;
                 $this->flashMessage('description.errors.sex');
             }
 
-            $baseKeys   = array_keys($details);
-            $postedKeys = array_keys($newDetails);
-            sort($baseKeys);
-            sort($postedKeys);
+            $baseKeys = \array_keys($details);
+            $postedKeys = \array_keys($newDetails);
+            \sort($baseKeys);
+            \sort($postedKeys);
 
             if ($baseKeys !== $postedKeys) {
                 $errors = true;
@@ -51,7 +51,7 @@ class Step19Description extends AbstractStepAction
             }
 
             if (false === $errors) {
-                if (!in_array($newDetails['sex'], [
+                if (!\in_array($newDetails['sex'], [
                     Characters::MALE,
                     Characters::FEMALE,
                 ], true)) {
@@ -66,25 +66,25 @@ class Step19Description extends AbstractStepAction
                     $errors = true;
                     $this->flashMessage('description.errors.player_name');
                 }
-                if (mb_strlen($newDetails['name']) > 100) {
+                if (\mb_strlen($newDetails['name']) > 100) {
                     $errors = true;
                     $this->flashMessage('description.errors.name_too_long');
-                    $newDetails['name'] = mb_substr($newDetails['name'], 0, 100);
+                    $newDetails['name'] = \mb_substr($newDetails['name'], 0, 100);
                 }
-                if (mb_strlen($newDetails['description']) > 255) {
+                if (\mb_strlen($newDetails['description']) > 255) {
                     $errors = true;
                     $this->flashMessage('description.errors.description');
-                    $newDetails['description'] = mb_substr($newDetails['description'], 0, 255);
+                    $newDetails['description'] = \mb_substr($newDetails['description'], 0, 255);
                 }
-                if (mb_strlen($newDetails['story']) > 65535) {
+                if (\mb_strlen($newDetails['story']) > 65535) {
                     $errors = true;
                     $this->flashMessage('description.errors.story');
-                    $newDetails['story'] = mb_substr($newDetails['story'], 0, 65535);
+                    $newDetails['story'] = \mb_substr($newDetails['story'], 0, 65535);
                 }
-                if (mb_strlen($newDetails['facts']) > 65535) {
+                if (\mb_strlen($newDetails['facts']) > 65535) {
                     $errors = true;
                     $this->flashMessage('description.errors.story');
-                    $newDetails['facts'] = mb_substr($newDetails['facts'], 0, 65535);
+                    $newDetails['facts'] = \mb_substr($newDetails['facts'], 0, 65535);
                 }
             }
 

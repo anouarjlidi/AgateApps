@@ -13,10 +13,10 @@ namespace Admin\Controller;
 
 use Doctrine\ORM\QueryBuilder;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AdminController as BaseAdminController;
-use Symfony\Component\Routing\Annotation\Route;
+use Main\DependencyInjection\PublicService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
-use Main\PublicService;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Security("has_role('ROLE_MANAGER')")

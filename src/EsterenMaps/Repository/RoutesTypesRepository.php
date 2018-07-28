@@ -12,9 +12,9 @@
 namespace EsterenMaps\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Persistence\ManagerRegistry;
 use EsterenMaps\Cache\CacheManager;
 use EsterenMaps\Entity\RoutesTypes;
-use Doctrine\Common\Persistence\ManagerRegistry;
 
 class RoutesTypesRepository extends ServiceEntityRepository
 {
@@ -24,15 +24,13 @@ class RoutesTypesRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param array $ids
-     *
      * @return RoutesTypes[]
      */
     public function findNotInIds(array $ids)
     {
         $qb = $this->createQueryBuilder('rt');
 
-        if (count($ids)) {
+        if (\count($ids)) {
             $qb
                 ->where('rt.id NOT IN (:ids)')
                 ->setParameter(':ids', $ids)

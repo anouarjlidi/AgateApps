@@ -11,10 +11,10 @@
 
 namespace User\Controller;
 
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use User\Entity\User;
 use User\Form\Handler\ProfileHandler;
@@ -41,11 +41,11 @@ class ProfileController extends AbstractController
 
         $user = $this->getUser();
 
-        if (!is_object($user) || !$user instanceof User) {
+        if (!\is_object($user) || !$user instanceof User) {
             throw new AccessDeniedException('This user does not have access to this section.');
         }
 
-        $editProfileForm  = $this->createForm(ProfileFormType::class, $user);
+        $editProfileForm = $this->createForm(ProfileFormType::class, $user);
         $ululeConnectForm = $this->createForm(UluleConnectType::class, $user);
 
         if ($response = $this->profileHandler->handle($request, $editProfileForm, $ululeConnectForm)) {

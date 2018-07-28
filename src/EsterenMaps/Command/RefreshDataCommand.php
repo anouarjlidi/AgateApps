@@ -42,13 +42,13 @@ class RefreshDataCommand extends ContainerAwareCommand
         $nanAs = $input->getOption('nan-as');
 
         if (null !== $nanAs) {
-            if (strpos($nanAs, ',') !== false) {
-                $nanAs = str_replace(',', '.', $nanAs);
+            if (false !== \mb_strpos($nanAs, ',')) {
+                $nanAs = \str_replace(',', '.', $nanAs);
             }
-            $nanAs = preg_replace("~\s+~", '', $nanAs);
+            $nanAs = \preg_replace("~\s+~", '', $nanAs);
 
-            if (!is_numeric($nanAs)) {
-                $io->error(sprintf(
+            if (!\is_numeric($nanAs)) {
+                $io->error(\sprintf(
                     'The --nan-as option must be a valid number. "%s" given.',
                     $input->getOption('nan-as')
                 ));
@@ -56,15 +56,15 @@ class RefreshDataCommand extends ContainerAwareCommand
                 return 1;
             }
 
-            $nanAs = is_float($nanAs) ? (float) $nanAs : (int) $nanAs;
+            $nanAs = \is_float($nanAs) ? (float) $nanAs : (int) $nanAs;
         }
 
         /** @var EntityManager $em */
-        $em   = $this->getContainer()->get('doctrine')->getManager();
+        $em = $this->getContainer()->get('doctrine')->getManager();
         $maps = $em->getRepository(Maps::class)->findAllWithRoutes();
 
         // Calculate the number of objects.
-        $numberTotal = array_reduce($maps, function ($carry, Maps $map) {
+        $numberTotal = \array_reduce($maps, function ($carry, Maps $map) {
             return $carry + $map->getRoutes()->count();
         }, 0);
         $numberModified = 0;
@@ -97,32 +97,32 @@ class RefreshDataCommand extends ContainerAwareCommand
             foreach ($map->getRoutes() as $route) {
                 $changesets = $uow->getEntityChangeSet($route);
 
-                if (array_key_exists('distance', $changesets)) {
+                if (\array_key_exists('distance', $changesets)) {
                     // Change all "NaN" to the value of $nanAs if specified.
                     if (null !== $nanAs) {
-                        $changesets['distance'] = array_map(function ($e) use ($nanAs) {
-                            return 'nan' === strtolower($e) ? $nanAs : $e;
+                        $changesets['distance'] = \array_map(function ($e) use ($nanAs) {
+                            return 'nan' === \mb_strtolower($e) ? $nanAs : $e;
                         }, $changesets['distance']);
                     }
 
                     // If we have a "null" or "NaN", it's quite problematic...
                     // We skip it and log the error
-                    if (in_array(null, $changesets['distance'], true)
-                        || in_array('nan', array_map('strtolower', $changesets['distance']), true)
+                    if (\in_array(null, $changesets['distance'], true)
+                        || \in_array('nan', \array_map('strtolower', $changesets['distance']), true)
                     ) {
                         $errors[] = 'Error in the changesets for route "'.$route.'".'.PHP_EOL
-                            .'Incriminated changes: '.json_encode($changesets);
+                            .'Incriminated changes: '.\json_encode($changesets);
                         continue;
                     }
 
                     if ($changesets['distance'][0] === $changesets['distance'][1]) {
                         unset($changesets['distance']);
                     } else {
-                        $changesets['distance'] = array_map('floatval', $changesets['distance']);
+                        $changesets['distance'] = \array_map('floatval', $changesets['distance']);
                     }
                 }
 
-                if (!count($changesets)) {
+                if (!\count($changesets)) {
                     continue;
                 }
 
@@ -133,14 +133,14 @@ class RefreshDataCommand extends ContainerAwareCommand
 
         $io->progressFinish();
 
-        if ($numberModified === 0) {
+        if (0 === $numberModified) {
             $io->block('Nothing to update.', null, 'comment');
 
             return 2;
         }
 
         if ($errors) {
-            array_unshift($errors, '');
+            \array_unshift($errors, '');
             $io->warning($errors);
         }
 

@@ -11,10 +11,10 @@
 
 namespace User\Controller;
 
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Security;
 use User\Entity\User;
@@ -35,7 +35,7 @@ class LoginController extends AbstractController
         $session = $request->getSession();
 
         $error = null;
-        $authErrorKey    = Security::AUTHENTICATION_ERROR;
+        $authErrorKey = Security::AUTHENTICATION_ERROR;
         $lastUsernameKey = Security::LAST_USERNAME;
 
         // get the error if any (works with forward and redirect -- see below)
@@ -51,8 +51,8 @@ class LoginController extends AbstractController
         }
 
         return $this->render('user/Security/login.html.twig', [
-            'last_username'       => (null === $session) ? '' : $session->get($lastUsernameKey),
-            'csrf_token'          => $this->get('security.csrf.token_manager')->getToken('authenticate')->getValue(),
+            'last_username' => (null === $session) ? '' : $session->get($lastUsernameKey),
+            'csrf_token' => $this->get('security.csrf.token_manager')->getToken('authenticate')->getValue(),
             'username_form_field' => FormLoginAuthenticator::USERNAME_OR_EMAIL_FORM_FIELD,
             'password_form_field' => FormLoginAuthenticator::PASSWORD_FORM_FIELD,
         ]);

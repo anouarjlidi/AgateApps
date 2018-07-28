@@ -12,8 +12,8 @@
 namespace CorahnRin\Repository;
 
 use CorahnRin\Entity\GeoEnvironments;
-use Orbitale\Component\DoctrineTools\EntityRepositoryHelperTrait;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Orbitale\Component\DoctrineTools\EntityRepositoryHelperTrait;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 class GeoEnvironmentsRepository extends ServiceEntityRepository

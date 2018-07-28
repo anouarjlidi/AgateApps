@@ -21,9 +21,7 @@ abstract class AbstractStepAction extends BaseAbstractStepAction
     /**
      * Renders current step view by its name.
      *
-     * @param array $parameters
      *
-     * @return Response
      *
      * @throws \Twig_Error
      */
@@ -31,8 +29,8 @@ abstract class AbstractStepAction extends BaseAbstractStepAction
     {
         // Default parameters always injected in template.
         // Not overridable, they're mandatory.
-        $parameters['current_step']      = $this->step;
-        $parameters['steps']             = $this->steps;
+        $parameters['current_step'] = $this->step;
+        $parameters['steps'] = $this->steps;
         $parameters['current_character'] = $this->getCurrentCharacter();
 
         // Get template name

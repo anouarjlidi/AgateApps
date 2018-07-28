@@ -31,7 +31,7 @@ class AvantagesRepository extends ServiceEntityRepository
     public function findAllDifferenciated()
     {
         /** @var Avantages[] $list */
-        $list       = $this->findAll();
+        $list = $this->findAll();
         $advantages = $disadvantages = [];
 
         foreach ($list as $element) {
@@ -44,7 +44,7 @@ class AvantagesRepository extends ServiceEntityRepository
         }
 
         return [
-            'advantages'    => $advantages,
+            'advantages' => $advantages,
             'disadvantages' => $disadvantages,
         ];
     }

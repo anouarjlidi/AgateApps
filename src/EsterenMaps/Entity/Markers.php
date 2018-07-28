@@ -21,7 +21,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Markers.
  *
  * @ORM\Table(name="maps_markers")
- * @ORM\HasLifecycleCallbacks()
+ * @ORM\HasLifecycleCallbacks
  * @ORM\Entity(repositoryClass="EsterenMaps\Repository\MarkersRepository")
  */
 class Markers implements EntityToClearInterface, \JsonSerializable
@@ -31,7 +31,7 @@ class Markers implements EntityToClearInterface, \JsonSerializable
     /**
      * @var int
      *
-     * @ORM\Id()
+     * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -42,7 +42,7 @@ class Markers implements EntityToClearInterface, \JsonSerializable
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=false, unique=true)
      *
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      */
     protected $name;
 
@@ -58,7 +58,7 @@ class Markers implements EntityToClearInterface, \JsonSerializable
     /**
      * @var string
      *
-     * @ORM\Column(name="altitude", type="string", length=255, options={"default": 0})
+     * @ORM\Column(name="altitude", type="string", length=255, options={"default" = 0})
      *
      * @Assert\Type("float")
      */
@@ -67,7 +67,7 @@ class Markers implements EntityToClearInterface, \JsonSerializable
     /**
      * @var string
      *
-     * @ORM\Column(name="latitude", type="string", length=255, options={"default": 0})
+     * @ORM\Column(name="latitude", type="string", length=255, options={"default" = 0})
      *
      * @Assert\Type("float")
      */
@@ -76,7 +76,7 @@ class Markers implements EntityToClearInterface, \JsonSerializable
     /**
      * @var string
      *
-     * @ORM\Column(name="longitude", type="string", length=255, options={"default": 0})
+     * @ORM\Column(name="longitude", type="string", length=255, options={"default" = 0})
      *
      * @Assert\Type("float")
      */
@@ -99,7 +99,7 @@ class Markers implements EntityToClearInterface, \JsonSerializable
      * @ORM\JoinColumn(name="map_id", nullable=false)
      *
      * @Assert\Type("EsterenMaps\Entity\Maps")
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      */
     protected $map;
 
@@ -110,7 +110,7 @@ class Markers implements EntityToClearInterface, \JsonSerializable
      * @ORM\JoinColumn(name="marker_type_id", nullable=false)
      *
      * @Assert\Type("EsterenMaps\Entity\MarkersTypes")
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      */
     protected $markerType;
 
@@ -147,15 +147,15 @@ class Markers implements EntityToClearInterface, \JsonSerializable
     public function toArray(): array
     {
         return [
-            'id'          => $this->id,
-            'name'        => $this->name,
+            'id' => $this->id,
+            'name' => $this->name,
             'description' => $this->description,
-            'altitude'    => (float) $this->altitude,
-            'latitude'    => (float) $this->latitude,
-            'longitude'   => (float) $this->longitude,
-            'faction'     => $this->faction ? $this->faction->getId() : null,
-            'map'         => $this->map ? $this->map->getId() : null,
-            'markerType'  => $this->markerType ? $this->markerType->getId() : null,
+            'altitude' => (float) $this->altitude,
+            'latitude' => (float) $this->latitude,
+            'longitude' => (float) $this->longitude,
+            'faction' => $this->faction ? $this->faction->getId() : null,
+            'map' => $this->map ? $this->map->getId() : null,
+            'markerType' => $this->markerType ? $this->markerType->getId() : null,
         ];
     }
 
@@ -180,7 +180,7 @@ class Markers implements EntityToClearInterface, \JsonSerializable
 
     private function hydrateIncomingData(array $data)
     {
-        $data = array_merge($this->toArray(), $data);
+        $data = \array_merge($this->toArray(), $data);
 
         $this->id = $data['id'];
         $this->name = $data['name'];
@@ -339,7 +339,7 @@ class Markers implements EntityToClearInterface, \JsonSerializable
 
     public function isLocalized(): bool
     {
-        return $this->latitude !== null && $this->longitude !== null;
+        return null !== $this->latitude && null !== $this->longitude;
     }
 
     public function getWebIcon(): string
@@ -348,8 +348,8 @@ class Markers implements EntityToClearInterface, \JsonSerializable
     }
 
     /**
-     * @ORM\PrePersist()
-     * @ORM\PreUpdate()
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
      */
     public function updateRoutesCoordinates(): void
     {

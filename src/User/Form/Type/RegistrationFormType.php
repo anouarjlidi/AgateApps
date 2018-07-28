@@ -35,19 +35,19 @@ class RegistrationFormType extends AbstractType
 
         $builder
             ->add('email', EmailType::class, [
-                'label'              => 'form.email',
+                'label' => 'form.email',
                 'translation_domain' => 'user',
             ])
             ->add('emailCanonical', HiddenType::class)
             ->add('username', null, [
-                'label'              => 'form.username',
+                'label' => 'form.username',
                 'translation_domain' => 'user',
             ])
             ->add('usernameCanonical', HiddenType::class)
             ->add('plainPassword', PasswordType::class, [
                 'translation_domain' => 'user',
-                'label'              => 'form.password',
-                'invalid_message'    => 'user.password.mismatch',
+                'label' => 'form.password',
+                'invalid_message' => 'user.password.mismatch',
             ])
             ->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) use ($canonicalizer) {
                 /** @var User $user */

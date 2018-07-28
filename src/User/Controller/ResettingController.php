@@ -11,11 +11,11 @@
 
 namespace User\Controller;
 
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -83,7 +83,7 @@ class ResettingController extends AbstractController
         $user = $this->userRepository->findOneByConfirmationToken($token);
 
         if (null === $user) {
-            throw new NotFoundHttpException(sprintf('The user with "confirmation token" does not exist for value "%s"', $token));
+            throw new NotFoundHttpException(\sprintf('The user with "confirmation token" does not exist for value "%s"', $token));
         }
 
         $form = $this->createForm(ResettingFormType::class, $user);
@@ -103,7 +103,7 @@ class ResettingController extends AbstractController
 
         return $this->render('user/Resetting/reset.html.twig', [
             'token' => $token,
-            'form'  => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 

@@ -18,14 +18,14 @@ use Doctrine\ORM\Mapping as ORM;
  * DisordersWays.
  *
  * @ORM\Table(name="disorders_ways")
- * @ORM\Entity()
+ * @ORM\Entity
  */
 class DisordersWays
 {
     /**
      * @var Disorders
      *
-     * @ORM\Id()
+     * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Disorders", inversedBy="ways")
      */
     protected $disorder;
@@ -33,7 +33,7 @@ class DisordersWays
     /**
      * @var string
      *
-     * @ORM\Id()
+     * @ORM\Id
      * @ORM\Column(name="way", type="string")
      */
     protected $way;
@@ -41,7 +41,7 @@ class DisordersWays
     /**
      * @var bool
      *
-     * @ORM\Column(type="boolean", options={"default": 0})
+     * @ORM\Column(type="boolean", options={"default" = 0})
      */
     protected $major = false;
 

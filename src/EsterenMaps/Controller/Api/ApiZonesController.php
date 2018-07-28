@@ -14,7 +14,7 @@ namespace EsterenMaps\Controller\Api;
 use Doctrine\ORM\EntityManagerInterface;
 use EsterenMaps\Api\ZoneApi;
 use EsterenMaps\Entity\Zones;
-use Main\PublicService;
+use Main\DependencyInjection\PublicService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -46,7 +46,7 @@ class ApiZonesController implements PublicService
     }
 
     /**
-     * @Route("/zones", name="maps_api_zones_create", methods={"POST"}, defaults={"_format": "json"})
+     * @Route("/zones", name="maps_api_zones_create", methods={"POST"}, defaults={"_format" = "json"})
      */
     public function create(Request $request): Response
     {
@@ -55,7 +55,7 @@ class ApiZonesController implements PublicService
         }
 
         try {
-            $zone = Zones::fromApi($this->zoneApi->sanitizeRequestData(json_decode($request->getContent(), true)));
+            $zone = Zones::fromApi($this->zoneApi->sanitizeRequestData(\json_decode($request->getContent(), true)));
 
             return $this->handleResponse($this->validate($zone), $zone);
         } catch (HttpException $e) {
@@ -64,7 +64,7 @@ class ApiZonesController implements PublicService
     }
 
     /**
-     * @Route("/zones/{id}", name="maps_api_zones_update", methods={"POST"}, defaults={"_format": "json"})
+     * @Route("/zones/{id}", name="maps_api_zones_update", methods={"POST"}, defaults={"_format" = "json"})
      */
     public function update(Zones $zone, Request $request): Response
     {
@@ -73,7 +73,7 @@ class ApiZonesController implements PublicService
         }
 
         try {
-            $zone->updateFromApi($this->zoneApi->sanitizeRequestData(json_decode($request->getContent(), true)));
+            $zone->updateFromApi($this->zoneApi->sanitizeRequestData(\json_decode($request->getContent(), true)));
 
             return $this->handleResponse($this->validate($zone), $zone);
         } catch (HttpException $e) {
@@ -83,8 +83,8 @@ class ApiZonesController implements PublicService
 
     private function handleResponse(array $messages, Zones $zone): Response
     {
-        if (count($messages) > 0) {
-            throw new BadRequestHttpException(json_encode($messages, JSON_PRETTY_PRINT));
+        if (\count($messages) > 0) {
+            throw new BadRequestHttpException(\json_encode($messages, JSON_PRETTY_PRINT));
         }
 
         $this->em->persist($zone);
