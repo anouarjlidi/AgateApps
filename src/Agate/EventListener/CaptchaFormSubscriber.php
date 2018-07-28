@@ -29,6 +29,8 @@ class CaptchaFormSubscriber implements EventSubscriberInterface
 {
     private $reCaptcha;
     private $enabled;
+
+    /** @var Request */
     private $request;
 
     public function __construct(bool $enableContactCaptcha, ReCaptcha $reCaptcha)
@@ -54,6 +56,10 @@ class CaptchaFormSubscriber implements EventSubscriberInterface
 
     public function onFormSubmit(FormEvent $event): void
     {
+        if (false === $this->enabled) {
+            return;
+        }
+
         if (null === $this->request) {
             throw new \RuntimeException('Cannot validate the captcha without a request.');
         }
@@ -61,12 +67,9 @@ class CaptchaFormSubscriber implements EventSubscriberInterface
         $captcha = $this->request->request->get('g-recaptcha-response');
 
         if (
-            true === $this->enabled
-            && (
-                !$captcha
-                ||
-                ($captcha && false === $this->reCaptcha->verify($captcha, $this->request->getClientIp())->isSuccess())
-            )
+            !$captcha
+            ||
+            ($captcha && false === $this->reCaptcha->verify($captcha, $this->request->getClientIp())->isSuccess())
         ) {
             $event->getForm()->addError(new FormError('Invalid form values, please check'));
         }
