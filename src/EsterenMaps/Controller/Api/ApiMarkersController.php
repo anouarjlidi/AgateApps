@@ -14,7 +14,7 @@ namespace EsterenMaps\Controller\Api;
 use Doctrine\ORM\EntityManagerInterface;
 use EsterenMaps\Api\MarkerApi;
 use EsterenMaps\Entity\Markers;
-use Main\PublicService;
+use Main\DependencyInjection\PublicService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

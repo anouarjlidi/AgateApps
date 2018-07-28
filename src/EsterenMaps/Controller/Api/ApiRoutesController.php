@@ -14,7 +14,7 @@ namespace EsterenMaps\Controller\Api;
 use Doctrine\ORM\EntityManagerInterface;
 use EsterenMaps\Api\RouteApi;
 use EsterenMaps\Entity\Routes;
-use Main\PublicService;
+use Main\DependencyInjection\PublicService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

@@ -12,7 +12,7 @@
 namespace EsterenMaps\Controller\Api;
 
 use EsterenMaps\Api\MapApi;
-use Main\PublicService;
+use Main\DependencyInjection\PublicService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;

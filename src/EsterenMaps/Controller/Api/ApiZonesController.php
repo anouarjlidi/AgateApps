@@ -14,7 +14,7 @@ namespace EsterenMaps\Controller\Api;
 use Doctrine\ORM\EntityManagerInterface;
 use EsterenMaps\Api\ZoneApi;
 use EsterenMaps\Entity\Zones;
-use Main\PublicService;
+use Main\DependencyInjection\PublicService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

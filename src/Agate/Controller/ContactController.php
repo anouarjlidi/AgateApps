@@ -14,7 +14,7 @@ namespace Agate\Controller;
 use Agate\Form\ContactType;
 use Agate\Mailer\PortalMailer;
 use Agate\Model\ContactMessage;
-use Main\PublicService;
+use Main\DependencyInjection\PublicService;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;

@@ -13,7 +13,7 @@ namespace Agate\Controller;
 
 use Agate\Entity\PortalElement;
 use Agate\Exception\PortalElementNotFound;
-use Main\PublicService;
+use Main\DependencyInjection\PublicService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
