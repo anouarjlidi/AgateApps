@@ -109,7 +109,7 @@ jobs:
 
 workflows:
     version: 2
-    php_and_node:
+    ci_suite:
         jobs:
             - php
             - node
