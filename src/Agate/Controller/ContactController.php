@@ -31,16 +31,13 @@ use Twig\Environment;
  */
 class ContactController implements PublicService
 {
-    private $kernelEnvironment;
     private $mailer;
-    private $reCaptcha;
     private $translator;
     private $twig;
     private $formFactory;
     private $router;
 
     public function __construct(
-        string $kernelEnvironment,
         PortalMailer $mailer,
         TranslatorInterface $translator,
         Environment $twig,
@@ -52,7 +49,6 @@ class ContactController implements PublicService
         $this->twig = $twig;
         $this->formFactory = $formFactory;
         $this->router = $router;
-        $this->kernelEnvironment = $kernelEnvironment;
     }
 
     /**
