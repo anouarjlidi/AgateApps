@@ -394,19 +394,19 @@ final class SessionToCharacter
                             break;
                         case Avantages::BONUS_BLESS:
                             $score = $charAdvantage->getScore();
-                            switch (true) {
-                                case $score >= 1:
-                                    $bad++;
-                                    // no break
-                                case $score >= 2:
-                                    $critical++;
-                                    break;
-                                case $score <= -1:
-                                    $okay--;
-                                    // no break
-                                case $score <= -2:
-                                    $critical--;
-                                    break;
+                            if ($score >= 1) {
+                                $bad++;
+                                $critical++;
+                            }
+                            if ($score >= 2) {
+                                $critical++;
+                            }
+                            if ($score <= -1) {
+                                $okay--;
+                                $critical--;
+                            }
+                            if ($score <= -2) {
+                                $critical--;
                             }
                             break;
                         case Avantages::BONUS_VIG:
