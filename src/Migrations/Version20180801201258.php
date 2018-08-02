@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace DoctrineMigrations;
 
 use CorahnRin\Data\Domains;
+use CorahnRin\Entity\Avantages;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\Migrations\AbstractMigration;
@@ -17,7 +18,7 @@ final class Version20180801201258 extends AbstractMigration
     public function up(Schema $schema) : void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
+        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on "mysql".');
 
         $conn = $this->connection;
         $simpleArray = Type::getType(Type::SIMPLE_ARRAY);
@@ -40,12 +41,17 @@ final class Version20180801201258 extends AbstractMigration
         $this->addSql('ALTER TABLE characters_disciplines DROP PRIMARY KEY');
         $this->addSql('ALTER TABLE characters_disciplines ADD PRIMARY KEY (character_id, discipline_id)');
 
-        $this->addSql('ALTER TABLE avantages ADD bonuses_for LONGTEXT COMMENT \'(DC2Type:simple_array)\', ADD bonuses_for_all TINYINT(1) DEFAULT \'0\' NOT NULL');
-        $this->addSql('ALTER TABLE disciplines ADD domains LONGTEXT COMMENT \'(DC2Type:simple_array)\'');
+        $this->addSql('
+            ALTER TABLE avantages
+            ADD bonuses_for LONGTEXT DEFAULT NULL COMMENT "(DC2Type:simple_array)",
+            ADD requires_indication VARCHAR(255) DEFAULT NULL,
+            ADD indication_type VARCHAR(20) DEFAULT "'.Avantages::INDICATION_TYPE_SINGLE_VALUE.'"
+        ');
+        $this->addSql('ALTER TABLE disciplines ADD domains LONGTEXT COMMENT "(DC2Type:simple_array)"');
         $this->addSql('ALTER TABLE characters_disciplines ADD domain VARCHAR(100) NOT NULL');
         $this->addSql('ALTER TABLE geo_environments ADD domain VARCHAR(100) NOT NULL');
-        $this->addSql('ALTER TABLE jobs ADD primary_domain VARCHAR(100) NOT NULL, ADD secondary_domains LONGTEXT COMMENT \'(DC2Type:simple_array)\'');
-        $this->addSql('ALTER TABLE social_class ADD domains LONGTEXT NOT NULL COMMENT \'(DC2Type:simple_array)\'');
+        $this->addSql('ALTER TABLE jobs ADD primary_domain VARCHAR(100) NOT NULL, ADD secondary_domains LONGTEXT COMMENT "(DC2Type:simple_array)"');
+        $this->addSql('ALTER TABLE social_class ADD domains LONGTEXT NOT NULL COMMENT "(DC2Type:simple_array)"');
 
         $this->addSql('
             ALTER TABLE characters 
@@ -214,8 +220,7 @@ final class Version20180801201258 extends AbstractMigration
         }
 
         $newAdvantagesBonuses = [];
-        $advantages = $conn->query('select id, bonusdisc from avantages')->fetchAll();
-        foreach ($advantages as $line) {
+        foreach ($conn->query('select id, bonusdisc from avantages')->fetchAll() as $line) {
             if (!trim($line['bonusdisc'])) {
                 continue;
             }
@@ -235,9 +240,6 @@ final class Version20180801201258 extends AbstractMigration
             $this->addSql('UPDATE avantages SET bonuses_for = :bonuses WHERE id = :id', [':bonuses' => $convertedBonuses, ':id' => $id]);
         }
 
-        // Scholar, the only advantage for which bonuses are not for all domains
-        $this->addSql('UPDATE avantages SET bonuses_for_all = :value WHERE id = :id', [':value' => false, ':id' => 23]);
-
         $this->addSql('ALTER TABLE characters_disciplines DROP domain_id');
         $this->addSql('ALTER TABLE geo_environments DROP domain_id');
         $this->addSql('ALTER TABLE avantages DROP bonusdisc');
@@ -248,12 +250,42 @@ final class Version20180801201258 extends AbstractMigration
         $this->addSql('DROP TABLE domains');
         $this->addSql('DROP TABLE jobs_domains');
         $this->addSql('DROP TABLE social_classes_domains');
+
+        // Prod data updates
+
+        // Advantages that need indications from the end-user
+        $this->addSql('UPDATE avantages SET requires_indication = :value WHERE id = :id', [':value' => 'advantages.indication.ally_isolated', ':id' => 1]);
+        $this->addSql('UPDATE avantages SET requires_indication = :value WHERE id = :id', [':value' => 'advantages.indication.ally_mentor', ':id' => 2]);
+        $this->addSql('UPDATE avantages SET requires_indication = :value WHERE id = :id', [':value' => 'advantages.indication.ally_influent', ':id' => 3]);
+        $this->addSql('UPDATE avantages SET requires_indication = :value WHERE id = :id', [':value' => 'advantages.indication.dependence', ':id' => 32]);
+        $this->addSql('UPDATE avantages SET requires_indication = :value WHERE id = :id', [':value' => 'advantages.indication.enemy', ':id' => 34]);
+        $this->addSql('UPDATE avantages SET requires_indication = :value WHERE id = :id', [':value' => 'advantages.indication.phobia', ':id' => 48]);
+
+        // Scholar special case (which is the inspiration for the indication system, basically)
+        $this->addSql('
+            UPDATE avantages SET
+            requires_indication = :indication,
+            indication_type = :indication_type,
+            bonuses_for = :bonuses_for
+            WHERE id = :id',
+            [
+                ':indication' => 'advantages.indication.scholar',
+                ':indication_type' => Avantages::INDICATION_TYPE_SINGLE_CHOICE,
+                ':bonuses_for' => $simpleArray->convertToDatabaseValue([
+                    Domains::ERUDITION['title'],
+                    Domains::SCIENCE['title'],
+                    Domains::MAGIENCE['title'],
+                    Domains::OCCULTISM['title'],
+                ], $conn->getDatabasePlatform()),
+                ':id' => 23,
+            ]
+        );
     }
 
     public function down(Schema $schema) : void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
+        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on "mysql".');
 
         $this->addSql('CREATE TABLE characters_domains (character_id INT NOT NULL, domain_id INT NOT NULL, score SMALLINT NOT NULL, bonus SMALLINT DEFAULT 0 NOT NULL, malus SMALLINT DEFAULT 0 NOT NULL, INDEX IDX_C4F7C6C61136BE75 (character_id), INDEX IDX_C4F7C6C6115F0EE5 (domain_id), PRIMARY KEY(character_id, domain_id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE disciplines_domains (discipline_id INT NOT NULL, domain_id INT NOT NULL, INDEX IDX_FE41FAE8A5522701 (discipline_id), INDEX IDX_FE41FAE8115F0EE5 (domain_id), PRIMARY KEY(discipline_id, domain_id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
@@ -261,7 +293,7 @@ final class Version20180801201258 extends AbstractMigration
         $this->addSql('CREATE TABLE jobs_domains (jobs_id INT NOT NULL, domains_id INT NOT NULL, INDEX IDX_FBB18A2C48704627 (jobs_id), INDEX IDX_FBB18A2C3700F4DC (domains_id), PRIMARY KEY(jobs_id, domains_id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE social_classes_domains (social_classes_id INT NOT NULL, domains_id INT NOT NULL, INDEX IDX_B915B07A5071E9E6 (social_classes_id), INDEX IDX_B915B07A3700F4DC (domains_id), PRIMARY KEY(social_classes_id, domains_id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
 
-        $this->addSql('ALTER TABLE avantages ADD bonus_disc LONGTEXT DEFAULT NULL COLLATE utf8_unicode_ci COMMENT \'(DC2Type:simple_array)\', DROP bonuses_for, DROP bonuses_for_all');
+        $this->addSql('ALTER TABLE avantages ADD bonus_disc LONGTEXT DEFAULT NULL COLLATE utf8_unicode_ci COMMENT "(DC2Type:simple_array)", DROP bonuses_for, DROP requires_indication');
         $this->addSql('ALTER TABLE characters_domains ADD CONSTRAINT FK_C4F7C6C61136BE75 FOREIGN KEY (character_id) REFERENCES characters (id)');
         $this->addSql('ALTER TABLE characters_domains ADD CONSTRAINT FK_C4F7C6C6115F0EE5 FOREIGN KEY (domain_id) REFERENCES domains (id)');
         $this->addSql('ALTER TABLE disciplines_domains ADD CONSTRAINT FK_FE41FAE8115F0EE5 FOREIGN KEY (domain_id) REFERENCES domains (id)');

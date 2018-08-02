@@ -8,6 +8,9 @@ SYMFONY         = $(EXEC_PHP) bin/console
 COMPOSER        = $(EXEC_PHP) composer
 NPM             = $(EXEC_JS) npm
 
+PORTAL_DBNAME = agate_portal
+PORTAL_DBPWD = agate_portal
+
 ##
 ## Project
 ## -------
@@ -64,13 +67,12 @@ db:
 
 prod-db: ## Installs production database if it has been saved in "var/dump.sql". You have to download it manually.
 prod-db:
-	@if [ -f var/dump.sql ]; \
-	then\
-		$(EXEC_DB) mysql -uroot -pagate_portal agate_portal -e "source /srv/dump.16072018.sql"
-		$(SYMFONY) bin/console doctrine:migrations:migra --no-interaction
-	else\
-		echo "No production database to process. Please download it and save it to var/dump.sql
-	fi
+	@if [ -f var/dump.sql ]; then \
+		$(EXEC_DB) mysql -uroot -p$(PORTAL_DBPWD) $(PORTAL_DBNAME) -e "source /srv/dump.sql" ;\
+		$(SYMFONY) doctrine:migrations:migrate -n ;\
+	else \
+		echo "No prod database to process. Download it and save it to var/dump.sql." ;\
+	fi;
 .PHONY: prod-db
 
 fixtures: ## Install all fixtures in the database

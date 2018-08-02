@@ -23,6 +23,14 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Avantages
 {
+    public const INDICATION_TYPE_SINGLE_VALUE = 'single_value';
+    public const INDICATION_TYPE_SINGLE_CHOICE = 'single_choice';
+
+    public const INDICATION_TYPES = [
+        self::INDICATION_TYPE_SINGLE_VALUE,
+        self::INDICATION_TYPE_SINGLE_CHOICE,
+    ];
+
     public const BONUS_100G = '100g';
     public const BONUS_50G = '50g';
     public const BONUS_20G = '20g';
@@ -127,19 +135,25 @@ class Avantages
     /**
      * @var string[]
      *
-     * @ORM\Column(name="bonuses_for", type="simple_array", options={"default"=""})
+     * @ORM\Column(name="bonuses_for", type="simple_array", options={"default"=""}, nullable=true)
      */
     protected $bonusesFor;
 
     /**
-     * If true, $bonusesFor will be applied to ALL bonuses.
-     * Else, it will be for ONE of them, and the user has to choose
+     * @var string
      *
-     * @var bool
-     *
-     * @ORM\Column(name="bonuses_for_all", type="boolean", options={"default"="1"})
+     * @ORM\Column(name="requires_indication", type="string", nullable=true)
      */
-    private $bonusesForAll = true;
+    protected $requiresIndication = false;
+
+    /**
+     * If type is "choice", the list will be fetched from self::$bonusesFor.
+     *
+     * @var string
+     *
+     * @ORM\Column(name="indication_type", type="string", length=20, nullable=false, options={"default"="string"})
+     */
+    protected $indicationType = 'string';
 
     /**
      * @var bool
@@ -158,7 +172,7 @@ class Avantages
     /**
      * @var int
      *
-     * @ORM\Column(name="avtg_group", type="smallint", options={"default" = "0"}, nullable=true)
+     * @ORM\Column(name="avtg_group", type="smallint", options={"default"="0"}, nullable=true)
      */
     protected $group = 0;
 
@@ -280,16 +294,6 @@ class Avantages
         return $this->description;
     }
 
-    public function isBonusesForAll(): bool
-    {
-        return $this->bonusesForAll;
-    }
-
-    public function setBonusesForAll(bool $bonusesForAll): void
-    {
-        $this->bonusesForAll = $bonusesForAll;
-    }
-
     public function setBonusesFor(array $bonusesFor): void
     {
         foreach ($bonusesFor as $bonusFor) {
@@ -311,6 +315,30 @@ class Avantages
     public function getBonusesFor(): array
     {
         return $this->bonusesFor;
+    }
+
+    public function getRequiresIndication(): string
+    {
+        return $this->requiresIndication;
+    }
+
+    public function setRequiresIndication(?string $requiresIndication): void
+    {
+        $this->requiresIndication = $requiresIndication;
+    }
+
+    public function getIndicationType(): string
+    {
+        return $this->indicationType;
+    }
+
+    public function setIndicationType(string $indicationType): void
+    {
+        if (!in_array($indicationType, self::INDICATION_TYPES, true)) {
+            throw new \InvalidArgumentException(sprintf('Invalid indication type "%s". Possible values are: %s', $indicationType, implode(', ', self::INDICATION_TYPES)));
+        }
+
+        $this->indicationType = $indicationType;
     }
 
     /**

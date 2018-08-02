@@ -61,7 +61,7 @@ class Step13PrimaryDomains extends AbstractStepAction
 
         $advantagesIds = array_keys($advantages);
 
-        $advantages =
+        $advantages = $this->em->getRepository(Avantages::class)->findBy(['id' => $advantagesIds]);
 
         // This makes sure that session is not polluted with wrong data.
         $this->resetStep();
