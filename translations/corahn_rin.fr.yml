@@ -247,6 +247,39 @@ character:
     notable_facts: 'Faits marquants'
     ogham_list: 'Ogham à disposition'
 
+domains.craft: Artisanat
+domains.craft.description: __domains.craft.description
+domains.close_combat: Combat au Contact
+domains.close_combat.description: __domains.close_combat.description
+domains.stealth: Discrétion
+domains.stealth.description: __domains.stealth.description
+domains.magience: Magience
+domains.magience.description: __domains.magience.description
+domains.natural_environment: Milieu Naturel
+domains.natural_environment.description: __domains.natural_environment.description
+domains.demorthen_mysteries: Mystères Demorthèn
+domains.demorthen_mysteries.description: __domains.demorthen_mysteries.description
+domains.occultism: Occultisme
+domains.occultism.description: __domains.occultism.description
+domains.perception: Perception
+domains.perception.description: __domains.perception.description
+domains.prayer: Prière
+domains.prayer.description: __domains.prayer.description
+domains.feats: Prouesses
+domains.feats.description: __domains.feats.description
+domains.relation: Relation
+domains.relation.description: __domains.relation.description
+domains.performance: Représentation
+domains.performance.description: __domains.performance.description
+domains.science: Science
+domains.science.description: __domains.science.description
+domains.shooting_and_throwing: Tir et Lancer
+domains.shooting_and_throwing.description: __domains.shooting_and_throwing.description
+domains.travel: Voyage
+domains.travel.description: __domains.travel.description
+domains.erudition: Érudition
+domains.erudition.description: __domains.erudition.description
+
 home:
     title: 'Corahn-Rin, le générateur de personnage pour Les Ombres d''Esteren'
 

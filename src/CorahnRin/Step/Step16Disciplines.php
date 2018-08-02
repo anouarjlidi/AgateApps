@@ -11,8 +11,8 @@
 
 namespace CorahnRin\Step;
 
+use CorahnRin\Data\Domains;
 use CorahnRin\Entity\Disciplines;
-use CorahnRin\Entity\Domains;
 use CorahnRin\Entity\GeoEnvironments;
 use CorahnRin\GeneratorTools\DomainsCalculator;
 use Symfony\Component\HttpFoundation\Response;
@@ -40,7 +40,7 @@ class Step16Disciplines extends AbstractStepAction
     private $domainsCalculator;
 
     /**
-     * @var Domains[]
+     * @var \CorahnRin\Data\Domains[]
      */
     private $allDomains;
 
@@ -200,7 +200,7 @@ class Step16Disciplines extends AbstractStepAction
             'bonus_value' => $this->disciplinesSpentWithExp['remainingBonusPoints'],
             'exp_max' => $this->expRemainingFromDomains,
             'exp_value' => $this->disciplinesSpentWithExp['remainingExp'],
-        ]);
+        ], 'corahn_rin/Steps/16_disciplines.html.twig');
     }
 
     private function resetDisciplines()

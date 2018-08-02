@@ -17,7 +17,7 @@ final class Version20180625133319 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->skipIf('mysql' !== $this->connection->getDatabasePlatform()->getName(), 'Migration can only be executed safely on \'mysql\'.');
+        $this->abortIf('mysql' !== $this->connection->getDatabasePlatform()->getName(), 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('ALTER TABLE mails_sent DROP FOREIGN KEY FK_A34C3D90C8776F01');
         $this->addSql('ALTER TABLE orbitale_cms_categories DROP FOREIGN KEY FK_A8EF7232727ACA70');

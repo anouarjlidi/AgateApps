@@ -51,6 +51,6 @@ class Step02Job extends AbstractStepAction
         return $this->renderCurrentStep([
             'jobs_list' => $jobs,
             'job_value' => $this->getCharacterProperty(),
-        ]);
+        ], 'corahn_rin/Steps/02_job.html.twig');
     }
 }

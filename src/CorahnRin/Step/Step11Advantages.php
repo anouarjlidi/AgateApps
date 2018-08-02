@@ -176,7 +176,7 @@ class Step11Advantages extends AbstractStepAction
             'disadvantages' => $disadvantages,
             'advantages_list' => $this->globalList['advantages'],
             'disadvantages_list' => $this->globalList['disadvantages'],
-        ]);
+        ], 'corahn_rin/Steps/11_advantages.html.twig');
     }
 
     /**

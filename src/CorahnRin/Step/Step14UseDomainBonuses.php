@@ -11,7 +11,7 @@
 
 namespace CorahnRin\Step;
 
-use CorahnRin\Entity\Domains;
+use CorahnRin\Data\Domains;
 use CorahnRin\GeneratorTools\DomainsCalculator;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -55,7 +55,7 @@ class Step14UseDomainBonuses extends AbstractStepAction
      */
     public function execute(): Response
     {
-        $this->allDomains = $this->em->getRepository(\CorahnRin\Entity\Domains::class)->findAllSortedByName();
+        $this->allDomains = $this->em->getRepository(\CorahnRin\Data\Domains::class)->findAllSortedByName();
 
         $step13Domains = $this->getCharacterProperty('13_primary_domains');
         $socialClassValues = $this->getCharacterProperty('05_social_class')['domains'];
@@ -165,7 +165,7 @@ class Step14UseDomainBonuses extends AbstractStepAction
             'domains_bonuses' => $characterBonuses,
             'bonus_max' => $this->bonus,
             'bonus_value' => $bonusValue,
-        ]);
+        ], 'corahn_rin/Steps/14_use_domain_bonuses.html.twig');
     }
 
     /**

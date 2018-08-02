@@ -11,6 +11,7 @@
 
 namespace DataFixtures\CorahnRin;
 
+use CorahnRin\Data\Domains;
 use CorahnRin\Entity\GeoEnvironments;
 use Doctrine\Bundle\FixturesBundle\ORMFixtureInterface;
 use Doctrine\Common\DataFixtures\AbstractFixture;
@@ -45,11 +46,9 @@ class GeoEnvironmentsFixtures extends AbstractFixture implements OrderedFixtureI
         $repo = $this->manager->getRepository(GeoEnvironments::class);
 
         $book = $this->getReference('corahnrin-book-2');
-        $domain5 = $this->getReference('corahnrin-domain-5');
-        $domain11 = $this->getReference('corahnrin-domain-11');
 
-        $this->fixtureObject($repo, 1, $domain5, 'Rural', 'Votre personnage est issu d\'une campagne ou d\'un lieu relativement isolé.', $book);
-        $this->fixtureObject($repo, 2, $domain11, 'Urbain', 'Votre personnage a vécu longtemps dans une ville, suffisamment pour qu\'il ait adopté les codes de la ville dans son mode de vie.', $book);
+        $this->fixtureObject($repo, 1, Domains::NATURAL_ENVIRONMENT['title'], 'Rural', 'Votre personnage est issu d\'une campagne ou d\'un lieu relativement isolé.', $book);
+        $this->fixtureObject($repo, 2, Domains::RELATION['title'], 'Urbain', 'Votre personnage a vécu longtemps dans une ville, suffisamment pour qu\'il ait adopté les codes de la ville dans son mode de vie.', $book);
 
         $this->manager->flush();
     }

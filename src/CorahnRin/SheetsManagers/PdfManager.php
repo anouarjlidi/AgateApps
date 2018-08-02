@@ -222,7 +222,7 @@ class PdfManager implements SheetGeneratorInterface
             $pdf->SetTextColor(0x22, 0x11, 0x4);
         }
         foreach ($character->getDomains() as $key => $val) {
-            $score = $val->getScore();
+            $score = $val->getBaseScore();
             ++$j;
             if ($score >= 0) {
                 for ($i = 1; $i <= $score; ++$i) {

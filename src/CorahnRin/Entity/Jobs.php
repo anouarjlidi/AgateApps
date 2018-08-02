@@ -11,8 +11,8 @@
 
 namespace CorahnRin\Entity;
 
+use CorahnRin\Data\Domains;
 use CorahnRin\Entity\Traits\HasBook;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -56,215 +56,103 @@ class Jobs
     protected $dailySalary = 0;
 
     /**
-     * @var Domains
+     * @var string
      *
-     * @ORM\ManyToOne(targetEntity="Domains")
+     * @ORM\Column(name="primary_domain", type="string", length=100)
      */
-    protected $domainPrimary;
+    protected $primaryDomain;
 
     /**
-     * @var ArrayCollection|Domains[]
+     * @var string[]
      *
-     * @ORM\ManyToMany(targetEntity="Domains")
+     * @ORM\Column(name="secondary_domains", type="simple_array", nullable=true)
      */
-    protected $domainsSecondary;
+    protected $secondaryDomains = [];
 
-    /**
-     * Constructor.
-     */
-    public function __construct()
-    {
-        $this->domainsSecondary = new ArrayCollection();
-    }
-
-    /**
-     * Get id.
-     *
-     * @return int
-     *
-     * @codeCoverageIgnore
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @param int $id
-     *
-     * @return $this
-     *
-     * @codeCoverageIgnore
-     */
-    public function setId($id)
+    public function setId(int $id): void
     {
         $this->id = $id;
-
-        return $this;
     }
 
-    /**
-     * Set name.
-     *
-     * @param string $name
-     *
-     * @return Jobs
-     *
-     * @codeCoverageIgnore
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get name.
-     *
-     * @return string
-     *
-     * @codeCoverageIgnore
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * Set description.
-     *
-     * @param string $description
-     *
-     * @return Jobs
-     *
-     * @codeCoverageIgnore
-     */
-    public function setDescription($description)
+    public function setName(string $name): void
     {
-        $this->description = $description;
-
-        return $this;
+        $this->name = $name;
     }
 
-    /**
-     * Get description.
-     *
-     * @return string
-     *
-     * @codeCoverageIgnore
-     */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }
 
-    /**
-     * @return int
-     *
-     * @codeCoverageIgnore
-     */
-    public function getDailySalary()
+    public function setDescription(string $description): void
+    {
+        $this->description = $description;
+    }
+
+    public function getDailySalary(): int
     {
         return $this->dailySalary;
     }
 
-    /**
-     * @param int $dailySalary
-     *
-     * @return Jobs
-     *
-     * @codeCoverageIgnore
-     */
-    public function setDailySalary($dailySalary)
+    public function setDailySalary(int $dailySalary): void
     {
         $this->dailySalary = $dailySalary;
-
-        return $this;
     }
 
-    /**
-     * Set domainPrimary.
-     *
-     * @param Domains $domainPrimary
-     *
-     * @return Jobs
-     *
-     * @codeCoverageIgnore
-     */
-    public function setDomainPrimary(Domains $domainPrimary = null)
+    public function getPrimaryDomain(): string
     {
-        $this->domainPrimary = $domainPrimary;
-
-        return $this;
+        return $this->primaryDomain;
     }
 
-    /**
-     * Get domainPrimary.
-     *
-     * @return Domains
-     *
-     * @codeCoverageIgnore
-     */
-    public function getDomainPrimary()
+    public function setPrimaryDomain(string $primaryDomain): void
     {
-        return $this->domainPrimary;
+        $this->primaryDomain = $primaryDomain;
     }
 
-    /**
-     * Add domainsSecondary.
-     *
-     *
-     * @return Jobs
-     */
-    public function addDomainsSecondary(Domains $domainsSecondary)
+    public function getSecondaryDomains(): array
     {
-        $this->domainsSecondary[] = $domainsSecondary;
-
-        return $this;
+        return $this->secondaryDomains;
     }
 
-    /**
-     * Remove domainsSecondary.
-     */
-    public function removeDomainsSecondary(Domains $domainsSecondary)
+    public function setSecondaryDomains(array $secondaryDomains): void
     {
-        $this->domainsSecondary->removeElement($domainsSecondary);
+        $this->secondaryDomains = $secondaryDomains;
     }
 
-    /**
-     * Set domainPrimary.
-     *
-     * @param array|ArrayCollection|Domains[] $domainsSecondary
-     *
-     * @return Jobs
-     */
-    public function setDomainsSecondary($domainsSecondary)
+    public function addSecondaryDomain(string $domain): void
     {
-        if (!\count($domainsSecondary)) {
-            foreach ($this->domainsSecondary as $domain) {
-                $this->removeDomainsSecondary($domain);
-            }
+        Domains::validateDomain($domain);
+
+        $this->secondaryDomains[] = $domain;
+    }
+
+    public function removeSecondaryDomain(string $domain): void
+    {
+        Domains::validateDomain($domain);
+
+        if (!\in_array($domain, $this->secondaryDomains, true)) {
+            throw new \InvalidArgumentException(sprintf('Current social class does not have specified domain %s', $domain));
         }
 
-        foreach ($domainsSecondary as $domain) {
-            if (!$this->domainsSecondary->contains($domain)) {
-                $this->addDomainsSecondary($domain);
-            }
-        }
+        unset($this->secondaryDomains[array_search($domain, $this->secondaryDomains)]);
 
-        return $this;
+        $this->secondaryDomains = \array_values($this->secondaryDomains);
     }
 
-    /**
-     * Get domainsSecondary.
-     *
-     * @return Domains[]|ArrayCollection
-     *
-     * @codeCoverageIgnore
-     */
-    public function getDomainsSecondary()
+    public function hasSecondaryDomain(string $domain): bool
     {
-        return $this->domainsSecondary;
+        Domains::validateDomain($domain);
+
+        return !\in_array($domain, $this->secondaryDomains, true);
     }
 }

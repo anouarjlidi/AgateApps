@@ -12,12 +12,13 @@
 namespace CorahnRin\GeneratorTools;
 
 use Behat\Transliterator\Transliterator;
+use CorahnRin\Data\Domains as DomainsData;
 use CorahnRin\Data\Ways;
 use CorahnRin\Entity\Armors;
 use CorahnRin\Entity\Avantages;
 use CorahnRin\Entity\CharacterProperties\CharAdvantages;
 use CorahnRin\Entity\CharacterProperties\CharDisciplines;
-use CorahnRin\Entity\CharacterProperties\CharDomains;
+use CorahnRin\Entity\CharacterProperties\Domains;
 use CorahnRin\Entity\CharacterProperties\CharSetbacks;
 use CorahnRin\Entity\CharacterProperties\HealthCondition;
 use CorahnRin\Entity\CharacterProperties\Money;
@@ -25,12 +26,11 @@ use CorahnRin\Entity\Characters;
 use CorahnRin\Entity\CombatArts;
 use CorahnRin\Entity\Disciplines;
 use CorahnRin\Entity\Disorders;
-use CorahnRin\Entity\Domains;
 use CorahnRin\Entity\GeoEnvironments;
 use CorahnRin\Entity\Jobs;
 use CorahnRin\Entity\Peoples;
 use CorahnRin\Entity\Setbacks;
-use CorahnRin\Entity\SocialClasses;
+use CorahnRin\Entity\SocialClass;
 use CorahnRin\Entity\Traits;
 use CorahnRin\Entity\Weapons;
 use CorahnRin\Exception\CharactersException;
@@ -49,7 +49,7 @@ final class SessionToCharacter
     private $corahnRinManagerName;
 
     /**
-     * @var Domains[]
+     * @var \CorahnRin\Data\Domains[]
      */
     private $domains;
 
@@ -174,7 +174,7 @@ final class SessionToCharacter
 
     private function setSocialClass(Characters $character, array $values): void
     {
-        $character->setSocialClass($this->getRepository(SocialClasses::class)->find($values['05_social_class']['id']));
+        $character->setSocialClass($this->getRepository(SocialClass::class)->find($values['05_social_class']['id']));
 
         $domains = $values['05_social_class']['domains'];
         \reset($domains);
@@ -353,7 +353,7 @@ final class SessionToCharacter
         $maluses = \array_fill_keys(\array_keys($this->domains), 0);
 
         foreach ($finalDomainsValues as $id => $value) {
-            $charDomain = new CharDomains();
+            $charDomain = new Domains();
             $charDomain->setCharacter($character);
             $charDomain->setDomain($this->domains[$id]);
             $charDomain->setScore($value);
@@ -376,10 +376,10 @@ final class SessionToCharacter
 
         foreach ($character->getCharAdvantages() as $charAdvantage) {
             $adv = $charAdvantage->getAdvantage();
-            if (!\trim($adv->getBonusdisc())) {
+            if (!\trim($adv->getBonusesFor())) {
                 continue;
             }
-            foreach (\preg_split('~,~', $adv->getBonusdisc(), -1, PREG_SPLIT_NO_EMPTY) as $bonus) {
+            foreach (\preg_split('~,~', $adv->getBonusesFor(), -1, PREG_SPLIT_NO_EMPTY) as $bonus) {
                 if (isset($this->domains[$bonus])) {
                     if ($adv->isDesv()) {
                         $maluses[$bonus] += $charAdvantage->getScore();

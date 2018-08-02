@@ -11,8 +11,8 @@
 
 namespace CorahnRin\Step;
 
+use CorahnRin\Data\Domains;
 use CorahnRin\Entity\CombatArts;
-use CorahnRin\Entity\Domains;
 use CorahnRin\GeneratorTools\DomainsCalculator;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -147,7 +147,7 @@ class Step17CombatArts extends AbstractStepAction
             'character_combat_arts' => $characterCombatArts['combatArts'],
             'exp_max' => $this->remainingExp,
             'exp_value' => $characterCombatArts['remainingExp'],
-        ]);
+        ], 'corahn_rin/Steps/17_combat_arts.html.twig');
     }
 
     /**

@@ -12,27 +12,16 @@
 namespace CorahnRin\Entity;
 
 use CorahnRin\Data\Domains;
-use CorahnRin\Entity\Traits\HasBook;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Disciplines.
+ * SocialClass.
  *
- * @ORM\Table(name="disciplines")
- * @ORM\Entity(repositoryClass="CorahnRin\Repository\DisciplinesRepository")
+ * @ORM\Table(name="social_class")
+ * @ORM\Entity(repositoryClass="CorahnRin\Repository\SocialClassRepository")
  */
-class Disciplines
+class SocialClass
 {
-    public const RANK_PROFESSIONAL = 'discipline.rank.professional';
-    public const RANK_EXPERT = 'discipline.rank.expert';
-
-    public const RANKS = [
-        self::RANK_PROFESSIONAL,
-        self::RANK_EXPERT
-    ];
-
-    use HasBook;
-
     /**
      * @var int
      *
@@ -45,7 +34,7 @@ class Disciplines
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=50, nullable=false, unique=true)
+     * @ORM\Column(type="string", length=25, nullable=false, unique=true)
      */
     protected $name;
 
@@ -57,16 +46,9 @@ class Disciplines
     protected $description;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=40)
-     */
-    protected $rank;
-
-    /**
      * @var string[]
      *
-     * @ORM\Column(name="domains", type="simple_array", nullable=true)
+     * @ORM\Column(name="domains", type="simple_array")
      */
     protected $domains = [];
 
@@ -98,20 +80,6 @@ class Disciplines
     public function setDescription(string $description): void
     {
         $this->description = $description;
-    }
-
-    public function getRank(): string
-    {
-        return $this->rank;
-    }
-
-    public function setRank(string $rank): void
-    {
-        if (!\in_array($rank, self::RANKS, true)) {
-            throw new \InvalidArgumentException(sprintf('Invalid provided rank %s. Possible values: %s', $rank, \implode(', ', self::RANKS)));
-        }
-
-        $this->rank = $rank;
     }
 
     public function getDomains(): array
@@ -150,6 +118,6 @@ class Disciplines
     {
         Domains::validateDomain($domain);
 
-        return !\in_array($domain, $this->domains, true);
+        return \in_array($domain, $this->domains, true);
     }
 }

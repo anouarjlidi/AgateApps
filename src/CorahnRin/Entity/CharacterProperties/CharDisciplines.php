@@ -11,11 +11,10 @@
 
 namespace CorahnRin\Entity\CharacterProperties;
 
+use CorahnRin\Data\Domains;
 use CorahnRin\Entity\Characters;
 use CorahnRin\Entity\Disciplines;
-use CorahnRin\Entity\Domains;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * CharDisciplines.
@@ -30,7 +29,6 @@ class CharDisciplines
      *
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="CorahnRin\Entity\Characters", inversedBy="disciplines")
-     * @Assert\NotNull
      */
     protected $character;
 
@@ -39,16 +37,13 @@ class CharDisciplines
      *
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="CorahnRin\Entity\Disciplines")
-     * @Assert\NotNull
      */
     protected $discipline;
 
     /**
-     * @var Domains
+     * @var string
      *
-     * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="CorahnRin\Entity\Domains")
-     * @Assert\NotNull
+     * @ORM\Column(name="domain", type="string", length=100)
      */
     protected $domain;
 
@@ -56,117 +51,40 @@ class CharDisciplines
      * @var int
      *
      * @ORM\Column(type="integer")
-     * @Assert\NotNull
-     * @Assert\GreaterThanOrEqual(value=0)
      */
     protected $score;
 
-    /**
-     * Set score.
-     *
-     * @param int $score
-     *
-     * @return CharDisciplines
-     *
-     * @codeCoverageIgnore
-     */
-    public function setScore($score)
+    public function __construct(Characters $character, Disciplines $discipline, string $domain)
     {
-        $this->score = $score;
+        Domains::validateDomain($domain);
 
-        return $this;
-    }
-
-    /**
-     * Get score.
-     *
-     * @return int
-     *
-     * @codeCoverageIgnore
-     */
-    public function getScore()
-    {
-        return $this->score;
-    }
-
-    /**
-     * Set character.
-     *
-     *
-     * @return CharDisciplines
-     *
-     * @codeCoverageIgnore
-     */
-    public function setCharacter(Characters $character)
-    {
         $this->character = $character;
-
-        return $this;
+        $this->discipline = $discipline;
+        $this->domain = $domain;
     }
 
-    /**
-     * Get character.
-     *
-     * @return Characters
-     *
-     * @codeCoverageIgnore
-     */
-    public function getCharacter()
+    public function getCharacter(): Characters
     {
         return $this->character;
     }
 
-    /**
-     * Set discipline.
-     *
-     *
-     * @return CharDisciplines
-     *
-     * @codeCoverageIgnore
-     */
-    public function setDiscipline(Disciplines $discipline)
-    {
-        $this->discipline = $discipline;
-
-        return $this;
-    }
-
-    /**
-     * Get discipline.
-     *
-     * @return Disciplines
-     *
-     * @codeCoverageIgnore
-     */
-    public function getDiscipline()
+    public function getDiscipline(): Disciplines
     {
         return $this->discipline;
     }
 
-    /**
-     * Set domain.
-     *
-     *
-     * @return CharDisciplines
-     *
-     * @codeCoverageIgnore
-     */
-    public function setDomain(Domains $domain)
-    {
-        $this->domain = $domain;
-
-        return $this;
-    }
-
-    /**
-     * Get domain.
-     *
-     * @return Domains
-     *
-     * @codeCoverageIgnore
-     */
-    public function getDomain()
+    public function getDomain(): string
     {
         return $this->domain;
+    }
+
+    public function getScore(): int
+    {
+        return $this->score;
+    }
+
+    public function setScore(int $score)
+    {
+        $this->score = $score;
     }
 }

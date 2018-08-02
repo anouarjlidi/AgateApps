@@ -11,6 +11,7 @@
 
 namespace CorahnRin\Entity;
 
+use CorahnRin\Data\Domains;
 use CorahnRin\Entity\Traits\HasBook;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -25,6 +26,7 @@ class Avantages
     public const BONUS_100G = '100g';
     public const BONUS_50G = '50g';
     public const BONUS_20G = '20g';
+    public const BONUS_10G = '10g';
     public const BONUS_50A = '50a';
     public const BONUS_20A = '20a';
     public const BONUS_RESM = 'resm';
@@ -35,6 +37,38 @@ class Avantages
     public const BONUS_RAP = 'rap';
     public const BONUS_SUR = 'sur';
 
+    public const POSSIBLE_BONUSES = [
+        self::BONUS_100G,
+        self::BONUS_50G,
+        self::BONUS_20G,
+        self::BONUS_10G,
+        self::BONUS_50A,
+        self::BONUS_20A,
+        self::BONUS_RESM,
+        self::BONUS_BLESS,
+        self::BONUS_VIG,
+        self::BONUS_TRAU,
+        self::BONUS_DEF,
+        self::BONUS_RAP,
+        self::BONUS_SUR,
+        Domains::CRAFT['title'],
+        Domains::CLOSE_COMBAT['title'],
+        Domains::STEALTH['title'],
+        Domains::MAGIENCE['title'],
+        Domains::NATURAL_ENVIRONMENT['title'],
+        Domains::DEMORTHEN_MYSTERIES['title'],
+        Domains::OCCULTISM['title'],
+        Domains::PERCEPTION['title'],
+        Domains::PRAYER['title'],
+        Domains::FEATS['title'],
+        Domains::RELATION['title'],
+        Domains::PERFORMANCE['title'],
+        Domains::SCIENCE['title'],
+        Domains::SHOOTING_AND_THROWING['title'],
+        Domains::TRAVEL['title'],
+        Domains::ERUDITION['title'],
+    ];
+
     /**
      * Scholar advantage domain bonuses.
      * 4: Magience.
@@ -42,7 +76,7 @@ class Avantages
      * 13: Science.
      * 16: Erudition.
      */
-    public const BONUS_SCHOLAR_DOMAINS = [4, 7, 13, 16];
+    public const BONUS_SCHOLAR_DOMAINS = [Domains::MAGIENCE['title'], Domains::OCCULTISM['title'], Domains::SCIENCE['title'], Domains::ERUDITION['title']];
 
     use HasBook;
 
@@ -91,11 +125,21 @@ class Avantages
     protected $augmentation;
 
     /**
-     * @var string
+     * @var string[]
      *
-     * @ORM\Column(type="string", length=10)
+     * @ORM\Column(name="bonuses_for", type="simple_array", options={"default"=""})
      */
-    protected $bonusdisc;
+    protected $bonusesFor;
+
+    /**
+     * If true, $bonusesFor will be applied to ALL bonuses.
+     * Else, it will be for ONE of them, and the user has to choose
+     *
+     * @var bool
+     *
+     * @ORM\Column(name="bonuses_for_all", type="boolean", options={"default"="1"})
+     */
+    private $bonusesForAll = true;
 
     /**
      * @var bool
@@ -122,8 +166,6 @@ class Avantages
      * Get id.
      *
      * @return int
-     *
-     * @codeCoverageIgnore
      */
     public function getId()
     {
@@ -134,8 +176,6 @@ class Avantages
      * @param int $id
      *
      * @return $this
-     *
-     * @codeCoverageIgnore
      */
     public function setId($id)
     {
@@ -150,8 +190,6 @@ class Avantages
      * @param string $name
      *
      * @return Avantages
-     *
-     * @codeCoverageIgnore
      */
     public function setName($name)
     {
@@ -164,8 +202,6 @@ class Avantages
      * Get name.
      *
      * @return string
-     *
-     * @codeCoverageIgnore
      */
     public function getName()
     {
@@ -178,8 +214,6 @@ class Avantages
      * @param string $nameFemale
      *
      * @return Avantages
-     *
-     * @codeCoverageIgnore
      */
     public function setNameFemale($nameFemale)
     {
@@ -192,8 +226,6 @@ class Avantages
      * Get nameFemale.
      *
      * @return string
-     *
-     * @codeCoverageIgnore
      */
     public function getNameFemale()
     {
@@ -206,8 +238,6 @@ class Avantages
      * @param int $xp
      *
      * @return Avantages
-     *
-     * @codeCoverageIgnore
      */
     public function setXp($xp)
     {
@@ -220,8 +250,6 @@ class Avantages
      * Get xp.
      *
      * @return int
-     *
-     * @codeCoverageIgnore
      */
     public function getXp()
     {
@@ -234,8 +262,6 @@ class Avantages
      * @param string $description
      *
      * @return Avantages
-     *
-     * @codeCoverageIgnore
      */
     public function setDescription($description)
     {
@@ -248,40 +274,43 @@ class Avantages
      * Get description.
      *
      * @return string
-     *
-     * @codeCoverageIgnore
      */
     public function getDescription()
     {
         return $this->description;
     }
 
-    /**
-     * Set bonusdisc.
-     *
-     * @param string $bonusdisc
-     *
-     * @return Avantages
-     *
-     * @codeCoverageIgnore
-     */
-    public function setBonusdisc($bonusdisc)
+    public function isBonusesForAll(): bool
     {
-        $this->bonusdisc = $bonusdisc;
-
-        return $this;
+        return $this->bonusesForAll;
     }
 
-    /**
-     * Get bonusdisc.
-     *
-     * @return string
-     *
-     * @codeCoverageIgnore
-     */
-    public function getBonusdisc()
+    public function setBonusesForAll(bool $bonusesForAll): void
     {
-        return $this->bonusdisc;
+        $this->bonusesForAll = $bonusesForAll;
+    }
+
+    public function setBonusesFor(array $bonusesFor): void
+    {
+        foreach ($bonusesFor as $bonusFor) {
+            $this->addBonusFor($bonusFor);
+        }
+    }
+
+    public function addBonusFor(string $bonusFor): void
+    {
+        if (!\in_array($bonusFor, self::POSSIBLE_BONUSES, true)) {
+            throw new \InvalidArgumentException(sprintf('Invalid bonus name "%s". Possible values are: %s', $bonusFor, implode(', ', self::POSSIBLE_BONUSES)));
+        }
+
+        $this->bonusesFor[] = $bonusFor;
+
+        $this->bonusesFor = \array_unique($this->bonusesFor);
+    }
+
+    public function getBonusesFor(): array
+    {
+        return $this->bonusesFor;
     }
 
     /**
@@ -290,8 +319,6 @@ class Avantages
      * @param bool $isDesv
      *
      * @return Avantages
-     *
-     * @codeCoverageIgnore
      */
     public function setDesv($isDesv)
     {
@@ -304,8 +331,6 @@ class Avantages
      * Get isDesv.
      *
      * @return bool
-     *
-     * @codeCoverageIgnore
      */
     public function isDesv()
     {
@@ -318,8 +343,6 @@ class Avantages
      * @param bool $isCombatArt
      *
      * @return Avantages
-     *
-     * @codeCoverageIgnore
      */
     public function setCombatArt($isCombatArt)
     {
@@ -332,8 +355,6 @@ class Avantages
      * Get isCombatArt.
      *
      * @return bool
-     *
-     * @codeCoverageIgnore
      */
     public function isCombatArt()
     {
@@ -346,8 +367,6 @@ class Avantages
      * @param int $augmentation
      *
      * @return Avantages
-     *
-     * @codeCoverageIgnore
      */
     public function setAugmentation($augmentation)
     {
@@ -360,8 +379,6 @@ class Avantages
      * Get augmentation.
      *
      * @return int
-     *
-     * @codeCoverageIgnore
      */
     public function getAugmentation()
     {
@@ -374,8 +391,6 @@ class Avantages
      * @param int $group
      *
      * @return Avantages
-     *
-     * @codeCoverageIgnore
      */
     public function setGroup($group)
     {
@@ -388,8 +403,6 @@ class Avantages
      * Get group.
      *
      * @return int
-     *
-     * @codeCoverageIgnore
      */
     public function getGroup()
     {

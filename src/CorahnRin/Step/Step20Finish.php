@@ -47,6 +47,6 @@ class Step20Finish extends AbstractStepAction
 
         return $this->renderCurrentStep([
             'character' => $character,
-        ]);
+        ], 'corahn_rin/Steps/20_finish.html.twig');
     }
 }

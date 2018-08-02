@@ -11,6 +11,7 @@
 
 namespace CorahnRin\Entity;
 
+use CorahnRin\Data\Domains;
 use CorahnRin\Entity\Traits\HasBook;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -48,14 +49,16 @@ class GeoEnvironments
     protected $description;
 
     /**
-     * @var Domains
+     * @var string
      *
-     * @ORM\ManyToOne(targetEntity="Domains")
+     * @ORM\Column(name="domain", type="string", length=100)
      */
     protected $domain;
 
-    public function __construct(int $id, string $name, string $description, Domains $domain)
+    public function __construct(int $id, string $name, string $description, string $domain)
     {
+        Domains::validateDomain($domain);
+
         $this->id = $id;
         $this->name = $name;
         $this->description = $description;
@@ -77,7 +80,7 @@ class GeoEnvironments
         return $this->description;
     }
 
-    public function getDomain(): Domains
+    public function getDomain(): string
     {
         return $this->domain;
     }

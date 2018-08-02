@@ -32,6 +32,6 @@ class Step06Age extends AbstractStepAction
 
         return $this->renderCurrentStep([
             'age' => $this->getCharacterProperty() ?: 16,
-        ]);
+        ], 'corahn_rin/Steps/06_age.html.twig');
     }
 }

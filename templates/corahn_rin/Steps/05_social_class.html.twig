@@ -1,5 +1,7 @@
 {% extends 'corahn_rin/Steps/step_base.html.twig' %}
 
+{% trans_default_domain 'corahn_rin' %}
+
 {% block step_content %}
 
 <input type="hidden" name="gen-div-choice" id="gen-div-choice" value="{{ socialClass_value }}" />
@@ -13,16 +15,16 @@
              data-divchoice-max-selected="2">
             <article>
                 <header>
-                    <h3 class="text-center">{{ socialClass.name | trans({}, 'corahn_rin') }}</h3>
+                    <h3 class="text-center">{{ socialClass.name | trans }}</h3>
                 </header>
-                <p>{{ socialClass.description | trans({}, 'corahn_rin') | raw }}</p>
+                <p>{{ socialClass.description | trans | raw }}</p>
                 <div class="divchoice-inside"{{ socialClass_value == socialClass.id ? ' style="display:block;"' : '' }}>
-                    <p>{{ 'domain.add_to_two_others' | trans({}, 'corahn_rin') }}</p>
+                    <p>{{ 'domain.add_to_two_others' | trans }}</p>
                     <div data-toggle="buttons" data-max-buttons="2">
                         {% for domain in socialClass.domains %}
-                        <label for="button_{{ socialClass.id }}_{{ domain.id }}" class="mt5 btn {{ socialClassDomains[domain.id] is defined ? ' active' : '' }}">
-                            <input type="checkbox" id="button_{{ socialClass.id }}_{{ domain.id }}" name="domains[]" value="{{ domain.id }}" {{ socialClassDomains[domain.id] is defined ? ' checked="checked"' : '' }} />
-                            {{ domain.name | trans({}, 'corahn_rin') }}
+                        <label for="button_{{ socialClass.id }}_{{ domain }}" class="mt5 btn {{ socialClassDomains[domain] is defined ? ' active' : '' }}">
+                            <input type="checkbox" id="bautton_{{ socialClass.id }}_{{ domain }}" name="domains[]" value="{{ domain }}" {{ socialClassDomains[domain] is defined ? ' checked="checked"' : '' }} />
+                            {{ domain|trans }}
                         </label>
                         {% endfor %}
                     </div>

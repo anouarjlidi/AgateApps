@@ -66,6 +66,6 @@ class Step09Traits extends AbstractStepAction
             'quality' => $quality,
             'flaw' => $flaw,
             'traits_list' => $traitsList,
-        ]);
+        ], 'corahn_rin/Steps/09_traits.html.twig');
     }
 }

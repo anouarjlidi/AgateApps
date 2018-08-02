@@ -249,6 +249,39 @@ character:
     notable_facts: '___Faits marquants'
     ogham_list: '___Ogham à disposition'
 
+domains.craft: Craft
+domains.craft.description: __domains.craft.description
+domains.close_combat: Close Combat
+domains.close_combat.description: __domains.close_combat.description
+domains.stealth: Stealth
+domains.stealth.description: __domains.stealth.description
+domains.magience: Magience
+domains.magience.description: __domains.magience.description
+domains.natural_environment: Natural Environment
+domains.natural_environment.description: __domains.natural_environment.description
+domains.demorthen_mysteries: Demorthen Mysteries
+domains.demorthen_mysteries.description: __domains.demorthen_mysteries.description
+domains.occultism: Occultism
+domains.occultism.description: __domains.occultism.description
+domains.perception: Perception
+domains.perception.description: __domains.perception.description
+domains.prayer: Prayer
+domains.prayer.description: __domains.prayer.description
+domains.feats: Feats
+domains.feats.description: __domains.feats.description
+domains.relation: Relation
+domains.relation.description: __domains.relation.description
+domains.performance: Performance
+domains.performance.description: __domains.performance.description
+domains.science: Science
+domains.science.description: __domains.science.description
+domains.shooting_and_throwing: Shooting And Throwing
+domains.shooting_and_throwing.description: __domains.shooting_and_throwing.description
+domains.travel: Travel
+domains.travel.description: __domains.travel.description
+domains.erudition: Erudition
+domains.erudition.description: __domains.erudition.description
+
 home:
     title: 'Corahn-Rin, the character manager for Shadows of Esteren'
 

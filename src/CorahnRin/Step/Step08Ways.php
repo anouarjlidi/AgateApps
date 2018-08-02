@@ -92,7 +92,7 @@ class Step08Ways extends AbstractStepAction
         return $this->renderCurrentStep([
             'ways_values' => $waysValues,
             'ways_list' => $ways,
-        ]);
+        ], 'corahn_rin/Steps/08_ways.html.twig');
     }
 
     /**

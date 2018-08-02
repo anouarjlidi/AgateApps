@@ -1,7 +1,8 @@
 DOCKER_COMPOSE  = docker-compose
 
-EXEC_PHP        = $(DOCKER_COMPOSE) run php
-EXEC_JS         = $(DOCKER_COMPOSE) run node
+EXEC_PHP        = $(DOCKER_COMPOSE) exec php
+EXEC_JS         = $(DOCKER_COMPOSE) exec node
+EXEC_DB         = $(DOCKER_COMPOSE) exec db
 
 SYMFONY         = $(EXEC_PHP) bin/console
 COMPOSER        = $(EXEC_PHP) composer
@@ -60,6 +61,17 @@ db:
 	-$(SYMFONY) doctrine:database:create --if-not-exists
 	-$(SYMFONY) doctrine:migrations:migrate --no-interaction
 .PHONY: db
+
+prod-db: ## Installs production database if it has been saved in "var/dump.sql". You have to download it manually.
+prod-db:
+	@if [ -f var/dump.sql ]; \
+	then\
+		$(EXEC_DB) mysql -uroot -pagate_portal agate_portal -e "source /srv/dump.16072018.sql"
+		$(SYMFONY) bin/console doctrine:migrations:migra --no-interaction
+	else\
+		echo "No production database to process. Please download it and save it to var/dump.sql
+	fi
+.PHONY: prod-db
 
 fixtures: ## Install all fixtures in the database
 fixtures:

@@ -11,14 +11,14 @@
 
 namespace CorahnRin\Step;
 
-use CorahnRin\Entity\Domains;
+use CorahnRin\Data\Domains;
 use CorahnRin\GeneratorTools\DomainsCalculator;
 use Symfony\Component\HttpFoundation\Response;
 
 class Step15DomainsSpendExp extends AbstractStepAction
 {
     /**
-     * @var \Generator|Domains[]
+     * @var \Generator|\CorahnRin\Data\Domains[]
      */
     private $allDomains;
 
@@ -49,7 +49,7 @@ class Step15DomainsSpendExp extends AbstractStepAction
      */
     public function execute(): Response
     {
-        $this->allDomains = $this->em->getRepository(\CorahnRin\Entity\Domains::class)->findAllSortedByName();
+        $this->allDomains = $this->em->getRepository(\CorahnRin\Data\Domains::class)->findAllSortedByName();
 
         $primaryDomains = $this->getCharacterProperty('13_primary_domains');
         $socialClassValues = $this->getCharacterProperty('05_social_class')['domains'];
@@ -125,7 +125,7 @@ class Step15DomainsSpendExp extends AbstractStepAction
             'domains_spent_with_exp' => $this->domainsSpentWithExp['domains'],
             'exp_max' => $this->expRemainingFromAdvantages,
             'exp_value' => $this->domainsSpentWithExp['remainingExp'],
-        ]);
+        ], 'corahn_rin/Steps/15_domains_spend_exp.html.twig');
     }
 
     private function resetDomains()

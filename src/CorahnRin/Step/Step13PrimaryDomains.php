@@ -11,15 +11,15 @@
 
 namespace CorahnRin\Step;
 
+use CorahnRin\Data\Domains;
 use CorahnRin\Entity\Avantages;
-use CorahnRin\Entity\Domains;
 use CorahnRin\Entity\Jobs;
 use Symfony\Component\HttpFoundation\Response;
 
 class Step13PrimaryDomains extends AbstractStepAction
 {
     /**
-     * @var \Generator|Domains[]
+     * @var \Generator|\CorahnRin\Data\Domains[]
      */
     private $allDomains;
 
@@ -55,10 +55,13 @@ class Step13PrimaryDomains extends AbstractStepAction
      */
     public function execute(): Response
     {
-        $this->allDomains = $this->em->getRepository(Domains::class)->findAllSortedByName();
-        $this->job = $this->em->getRepository(Jobs::class)->findWithDomains($this->getCharacterProperty('02_job'));
+        $this->allDomains = Domains::ALL;
+        $this->job = $this->em->getRepository(Jobs::class)->find($this->getCharacterProperty('02_job'));
         $advantages = $this->getCharacterProperty('11_advantages')['advantages'];
-        $this->scholar = isset($advantages[23]) && 1 === $advantages[23]; // Scholar is advantage 23.
+
+        $advantagesIds = array_keys($advantages);
+
+        $advantages =
 
         // This makes sure that session is not polluted with wrong data.
         $this->resetStep();
@@ -111,7 +114,7 @@ class Step13PrimaryDomains extends AbstractStepAction
             'secondary_domains' => $this->secondaryDomains,
             'scholar' => $this->scholar,
             'scholar_domains_ids' => Avantages::BONUS_SCHOLAR_DOMAINS,
-        ]);
+        ], 'corahn_rin/Steps/13_primary_domains.html.twig');
     }
 
     /**

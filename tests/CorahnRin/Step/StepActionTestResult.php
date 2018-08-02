@@ -18,14 +18,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 final class StepActionTestResult
 {
-    /**
-     * @var Crawler
-     */
     private $crawler;
-
-    /**
-     * @var Client
-     */
     private $client;
 
     public function __construct(Crawler $crawler, Client $client)
@@ -34,34 +27,22 @@ final class StepActionTestResult
         $this->client  = $client;
     }
 
-    /**
-     * @return Crawler
-     */
-    public function getCrawler()
+    public function getCrawler(): Crawler
     {
         return $this->crawler;
     }
 
-    /**
-     * @return Client
-     */
-    public function getClient()
+    public function getClient(): Client
     {
         return $this->client;
     }
 
-    /**
-     * @return object|Response
-     */
-    public function getResponse()
+    public function getResponse(): Response
     {
         return $this->client->getResponse();
     }
 
-    /**
-     * @return Session
-     */
-    public function getSession()
+    public function getSession(): Session
     {
         return $this->client->getContainer()->get('session');
     }

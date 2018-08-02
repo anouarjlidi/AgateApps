@@ -36,6 +36,6 @@ class Step01People extends AbstractStepAction
         return $this->renderCurrentStep([
             'peoples' => $peoples,
             'people_value' => $this->getCharacterProperty(),
-        ]);
+        ], 'corahn_rin/Steps/01_people.html.twig');
     }
 }

@@ -12,14 +12,15 @@
 namespace CorahnRin\Entity;
 
 use CorahnRin\Data\Orientation;
-use CorahnRin\Data\Ways;
+use CorahnRin\Data\Domains as DomainsData;
 use CorahnRin\Entity\CharacterProperties\CharAdvantages;
 use CorahnRin\Entity\CharacterProperties\CharDisciplines;
-use CorahnRin\Entity\CharacterProperties\CharDomains;
+use CorahnRin\Entity\CharacterProperties\Domains;
 use CorahnRin\Entity\CharacterProperties\CharFlux;
 use CorahnRin\Entity\CharacterProperties\CharSetbacks;
 use CorahnRin\Entity\CharacterProperties\HealthCondition;
 use CorahnRin\Entity\CharacterProperties\Money;
+use CorahnRin\Entity\CharacterProperties\Ways;
 use CorahnRin\Exception\CharactersException;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -182,6 +183,13 @@ class Characters extends BaseCharacter
     protected $mentalResistanceBonus = 0;
 
     /**
+     * @var Ways
+     *
+     * @ORM\Embedded(class="CorahnRin\Entity\CharacterProperties\Ways", columnPrefix="way_")
+     */
+    protected $ways;
+
+    /**
      * @var HealthCondition
      *
      * @ORM\Embedded(class="CorahnRin\Entity\CharacterProperties\HealthCondition", columnPrefix="health_")
@@ -336,23 +344,23 @@ class Characters extends BaseCharacter
     protected $combatArts;
 
     /**
-     * @var SocialClasses
+     * @var SocialClass
      *
-     * @ORM\ManyToOne(targetEntity="CorahnRin\Entity\SocialClasses")
+     * @ORM\ManyToOne(targetEntity="SocialClass")
      */
     protected $socialClass;
 
     /**
-     * @var Domains
+     * @var string
      *
-     * @ORM\ManyToOne(targetEntity="CorahnRin\Entity\Domains")
+     * @ORM\Column(name="social_class_domain1", type="string", length=100)
      */
     protected $socialClassDomain1;
 
     /**
-     * @var Domains
+     * @var string
      *
-     * @ORM\ManyToOne(targetEntity="CorahnRin\Entity\Domains")
+     * @ORM\Column(name="social_class_domain2", type="string", length=100)
      */
     protected $socialClassDomain2;
 
@@ -399,9 +407,9 @@ class Characters extends BaseCharacter
     protected $charAdvantages;
 
     /**
-     * @var CharDomains[]
+     * @var Domains
      *
-     * @ORM\OneToMany(targetEntity="CorahnRin\Entity\CharacterProperties\CharDomains", mappedBy="character")
+     * @ORM\Embedded(class="CorahnRin\Entity\CharacterProperties\Domains", columnPrefix="domain_")
      */
     protected $domains;
 
@@ -411,41 +419,6 @@ class Characters extends BaseCharacter
      * @ORM\OneToMany(targetEntity="CorahnRin\Entity\CharacterProperties\CharDisciplines", mappedBy="character")
      */
     protected $disciplines;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="combativeness", type="integer")
-     */
-    protected $combativeness;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="creativity", type="integer")
-     */
-    protected $creativity;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="empathy", type="integer")
-     */
-    protected $empathy;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="reason", type="integer")
-     */
-    protected $reason;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="conviction", type="integer")
-     */
-    protected $conviction;
 
     /**
      * @var CharFlux[]
@@ -507,7 +480,6 @@ class Characters extends BaseCharacter
         $this->weapons = new ArrayCollection();
         $this->combatArts = new ArrayCollection();
         $this->charAdvantages = new ArrayCollection();
-        $this->domains = new ArrayCollection();
         $this->disciplines = new ArrayCollection();
         $this->flux = new ArrayCollection();
         $this->setbacks = new ArrayCollection();
@@ -758,13 +730,13 @@ class Characters extends BaseCharacter
         $value = $this->conviction + 5;
 
         foreach ($this->getAdvantages() as $disadvantage) {
-            if ('resm' === $disadvantage->getAdvantage()->getBonusdisc()) {
+            if ('resm' === $disadvantage->getAdvantage()->getBonusesFor()) {
                 $value += $disadvantage->getScore();
             }
         }
 
         foreach ($this->getDisadvantages() as $disadvantage) {
-            if ('resm' === $disadvantage->getAdvantage()->getBonusdisc()) {
+            if ('resm' === $disadvantage->getAdvantage()->getBonusesFor()) {
                 $value -= $disadvantage->getScore();
             }
         }
@@ -790,68 +762,37 @@ class Characters extends BaseCharacter
 
     public function getCombativeness(): int
     {
-        return $this->combativeness;
+        return $this->ways->getCombativeness();
     }
 
     public function getCreativity(): int
     {
-        return $this->creativity;
+        return $this->ways->getCreativity();
     }
 
     public function getEmpathy(): int
     {
-        return $this->empathy;
+        return $this->ways->getEmpathy();
     }
 
     public function getReason(): int
     {
-        return $this->reason;
+        return $this->ways->getReason();
     }
 
     public function getConviction(): int
     {
-        return $this->conviction;
+        return $this->ways->getConviction();
     }
 
     public function getWay(string $way): int
     {
-        Ways::validateWay($way);
-
-        switch ($way) {
-            case Ways::COMBATIVENESS:
-                return $this->combativeness;
-            case Ways::CREATIVITY:
-                return $this->creativity;
-            case Ways::EMPATHY:
-                return $this->empathy;
-            case Ways::REASON:
-                return $this->reason;
-            case Ways::CONVICTION:
-                return $this->conviction;
-        }
+        return $this->ways->getWay($way);
     }
 
-    public function setWay(string $way, int $value): void
+    public function setWay(Ways $ways): void
     {
-        Ways::validateWayValue($way, $value);
-
-        switch ($way) {
-            case Ways::COMBATIVENESS:
-                $this->combativeness = $value;
-                break;
-            case Ways::CREATIVITY:
-                $this->creativity = $value;
-                break;
-            case Ways::EMPATHY:
-                $this->empathy = $value;
-                break;
-            case Ways::REASON:
-                $this->reason = $value;
-                break;
-            case Ways::CONVICTION:
-                $this->conviction = $value;
-                break;
-        }
+        $this->ways = $ways;
     }
 
     public function setHealth(HealthCondition $health): self
@@ -1312,58 +1253,40 @@ class Characters extends BaseCharacter
         return $this->combatArts;
     }
 
-    /**
-     * @param SocialClasses $socialClass
-     */
-    public function setSocialClass(SocialClasses $socialClass = null): self
+    public function setSocialClass(SocialClass $socialClass = null): self
     {
         $this->socialClass = $socialClass;
 
         return $this;
     }
 
-    /**
-     * @return SocialClasses
-     */
-    public function getSocialClass()
+    public function getSocialClass(): SocialClass
     {
         return $this->socialClass;
     }
 
-    /**
-     * @param Domains $socialClassDomain1
-     */
-    public function setSocialClassDomain1(Domains $socialClassDomain1 = null): self
+    public function setSocialClassDomain1(string $socialClassDomain1 = null): void
     {
-        $this->socialClassDomain1 = $socialClassDomain1;
+        DomainsData::validateDomain($socialClassDomain1);
 
-        return $this;
+        $this->socialClassDomain1 = $socialClassDomain1;
     }
 
-    /**
-     * @return Domains
-     */
-    public function getSocialClassDomain1()
+    public function getSocialClassDomain1(): string
     {
         return $this->socialClassDomain1;
     }
 
-    /**
-     * @param Domains $socialClassDomain2
-     */
-    public function setSocialClassDomain2(Domains $socialClassDomain2 = null): self
+    public function setSocialClassDomain2(string $socialClassDomain2 = null): void
     {
-        $this->socialClassDomain2 = $socialClassDomain2;
+        DomainsData::validateDomain($socialClassDomain2);
 
-        return $this;
+        $this->socialClassDomain2 = $socialClassDomain2;
     }
 
-    /**
-     * @return Domains
-     */
-    public function getSocialClassDomain2()
+    public function getSocialClassDomain2(): string
     {
-        return $this->socialClassDomain2;
+        return $this->socialClassDomain1;
     }
 
     /**
@@ -1478,14 +1401,14 @@ class Characters extends BaseCharacter
         return $this->charAdvantages;
     }
 
-    public function addDomain(CharDomains $domain): self
+    public function addDomain(Domains $domain): self
     {
         $this->domains[] = $domain;
 
         return $this;
     }
 
-    public function removeDomain(CharDomains $domain): self
+    public function removeDomain(Domains $domain): self
     {
         $this->domains->removeElement($domain);
 
@@ -1493,7 +1416,7 @@ class Characters extends BaseCharacter
     }
 
     /**
-     * @return CharDomains[]
+     * @return Domains[]
      */
     public function getDomains()
     {
@@ -1655,14 +1578,14 @@ class Characters extends BaseCharacter
      *
      * @param int|string $id
      *
-     * @return CharDomains|null
+     * @return Domains|null
      */
-    public function getDomain($id): ?CharacterProperties\CharDomains
+    public function getDomain($id): ?CharacterProperties\Domains
     {
         foreach ($this->domains as $charDomain) {
             $domain = $charDomain->getDomain();
             if (
-                $charDomain instanceof CharDomains &&
+                $charDomain instanceof Domains &&
                 (($domain->getId() === (int) $id) || $domain->getName() === $id)
             ) {
                 return $charDomain;
@@ -1850,7 +1773,7 @@ class Characters extends BaseCharacter
         $domain_id = (int) $domain_id;
 
         // Récupération du score du domaine
-        $domain = $this->getDomain($domain_id)->getScore();
+        $domain = $this->getDomain($domain_id)->getBaseScore();
 
         // Si on indique une discipline, le score du domaine sera remplacé par le score de discipline
         if (null !== $discipline) {

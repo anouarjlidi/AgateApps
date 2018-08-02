@@ -11,7 +11,7 @@
 
 namespace CorahnRin\GeneratorTools;
 
-use CorahnRin\Entity\Domains;
+use CorahnRin\Data\Domains;
 use CorahnRin\Entity\GeoEnvironments;
 
 final class DomainsCalculator

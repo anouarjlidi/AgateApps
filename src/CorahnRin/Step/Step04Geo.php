@@ -11,6 +11,7 @@
 
 namespace CorahnRin\Step;
 
+use CorahnRin\Entity\GeoEnvironments;
 use Symfony\Component\HttpFoundation\Response;
 
 class Step04Geo extends AbstractStepAction
@@ -20,7 +21,7 @@ class Step04Geo extends AbstractStepAction
      */
     public function execute(): Response
     {
-        $geoEnvironments = $this->em->getRepository(\CorahnRin\Entity\GeoEnvironments::class)->findAll(true);
+        $geoEnvironments = $this->em->getRepository(GeoEnvironments::class)->findAll(true);
 
         if ($this->request->isMethod('POST')) {
             $geoEnvironmentId = (int) $this->request->request->get('gen-div-choice');
@@ -35,6 +36,6 @@ class Step04Geo extends AbstractStepAction
         return $this->renderCurrentStep([
             'geoEnvironments' => $geoEnvironments,
             'geoEnvironment_value' => $this->getCharacterProperty(),
-        ]);
+        ], 'corahn_rin/Steps/04_geo.html.twig');
     }
 }

@@ -40,22 +40,4 @@ class JobsRepository extends ServiceEntityRepository
 
         return $books;
     }
-
-    /**
-     * @param int $id
-     *
-     * @return Jobs|null
-     */
-    public function findWithDomains($id)
-    {
-        return $this->createQueryBuilder('job')
-            ->leftJoin('job.domainPrimary', 'domainPrimary')
-                ->addSelect('domainPrimary')
-            ->leftJoin('job.domainsSecondary', 'domainsSecondary')
-                ->addSelect('domainsSecondary')
-            ->where('job.id = :id')
-                ->setParameter('id', $id)
-            ->getQuery()->getOneOrNullResult()
-        ;
-    }
 }
