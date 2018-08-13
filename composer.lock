@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "50f2947e97e03595bfe2efd00de435c2",
+    "content-hash": "7933d530b25082ef8a66eb624635a314",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -3828,16 +3828,16 @@
         },
         {
             "name": "symfony/flex",
-            "version": "v1.0.84",
+            "version": "v1.0.89",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/flex.git",
-                "reference": "7ede6446afac01e6e381db8c8c6fddb7c05a2aa7"
+                "reference": "26be754f42c3c3f21139af2bdd74118ef8f82757"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/flex/zipball/7ede6446afac01e6e381db8c8c6fddb7c05a2aa7",
-                "reference": "7ede6446afac01e6e381db8c8c6fddb7c05a2aa7",
+                "url": "https://api.github.com/repos/symfony/flex/zipball/26be754f42c3c3f21139af2bdd74118ef8f82757",
+                "reference": "26be754f42c3c3f21139af2bdd74118ef8f82757",
                 "shasum": ""
             },
             "require": {
@@ -3871,7 +3871,7 @@
                 }
             ],
             "description": "Composer plugin for Symfony",
-            "time": "2018-07-19T06:01:11+00:00"
+            "time": "2018-07-29T16:20:30+00:00"
         },
         {
             "name": "symfony/form",
@@ -6132,6 +6132,61 @@
             ],
             "description": "A simple helper for Symfony WebTestCase",
             "time": "2018-06-06T09:37:32+00:00"
+        },
+        {
+            "name": "pyrech/composer-changelogs",
+            "version": "v1.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pyrech/composer-changelogs.git",
+                "reference": "0871e60c77a2ed6771e6191300809ded4f51e775"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pyrech/composer-changelogs/zipball/0871e60c77a2ed6771e6191300809ded4f51e775",
+                "reference": "0871e60c77a2ed6771e6191300809ded4f51e775",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^1.0|^1.1",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "composer/composer": "~1.0.0-alpha10@dev",
+                "composer/semver": "1.2.0",
+                "friendsofphp/php-cs-fixer": "~1.5",
+                "phpunit/phpunit": "^4.8"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "Pyrech\\ComposerChangelogs\\ChangelogsPlugin",
+                "branch-alias": {
+                    "dev-master": "1.5.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Pyrech\\ComposerChangelogs\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Loïck Piera",
+                    "email": "pyrech@gmail.com"
+                }
+            ],
+            "description": "Display changelogs after each composer update",
+            "keywords": [
+                "changelog",
+                "composer",
+                "plugin",
+                "update"
+            ],
+            "time": "2017-12-11T14:49:29+00:00"
         },
         {
             "name": "symfony/browser-kit",

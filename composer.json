@@ -71,6 +71,7 @@
         "ext-zip": "*",
         "doctrine/doctrine-fixtures-bundle": "^3.0",
         "pierstoval/web-test-case": "^0.2.0",
+        "pyrech/composer-changelogs": "^1.6",
         "symfony/browser-kit": "^4.1",
         "symfony/css-selector": "^4.1",
         "symfony/debug": "^4.0",
