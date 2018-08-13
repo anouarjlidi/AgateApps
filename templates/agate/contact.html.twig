@@ -7,7 +7,7 @@
 {% block stylesheets %}
     {{ parent() }}
     {% if enable_contact_captcha %}
-        <script src="//www.google.com/recaptcha/api.js"></script>
+        <script src="//www.google.com/recaptcha/api.js" async defer></script>
     {% endif %}
 {% endblock %}
 
@@ -32,21 +32,14 @@
                 {{- form_row(form.message) -}}
 
                 {% if enable_contact_captcha %}
-                    <button class="btn g-recaptcha" type="submit" data-sitekey="{{ google_recaptcha_site_key }}" data-callback="onRecaptchaSubmit">{{ 'form.send'|trans({}, 'contact') }}</button>
+                    <div class="g-recaptcha" data-sitekey="{{ google_recaptcha_site_key }}"></div>
                 {% endif %}
+
+                <button class="btn" type="submit">{{ 'form.send'|trans({}, 'contact') }}</button>
 
                 {{- form_end(form) }}
             </div>
         </div>
 
     </div>
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    <script>
-        function onRecaptchaSubmit() {
-            document.getElementById('contact_form').submit();
-        }
-    </script>
 {% endblock %}
