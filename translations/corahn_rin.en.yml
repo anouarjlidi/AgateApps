@@ -312,3 +312,26 @@ ways.conviction.fault: Guilt
 ways.conviction.description: |
     Generally, a human hangs on to an ideal or principles guiding his life.
     Some turn toward religion, others abide by precepts of chivalry, while others follow a personal code.
+
+title.generator: 'Character generator'
+
+steps.01_people: 'People'
+steps.02_job: 'Job'
+steps.03_birthplace: 'Birthplace'
+steps.04_geo: 'Geo'
+steps.05_social_class: 'Social Class'
+steps.06_age: 'Age'
+steps.07_setbacks: 'Setbacks'
+steps.08_ways: 'Ways'
+steps.09_traits: 'Traits'
+steps.10_orientation: 'Orientation'
+steps.11_advantages: 'Advantages'
+steps.12_mental_disorder: 'Mental Disorder'
+steps.13_primary_domains: 'Primary Domains'
+steps.14_use_domain_bonuses: 'Use Domain Bonuses'
+steps.15_domains_spend_exp: 'Domains Spend Exp'
+steps.16_disciplines: 'Disciplines'
+steps.17_combat_arts: 'Combat Arts'
+steps.18_equipment: 'Equipment'
+steps.19_description: 'Description'
+steps.20_finish: 'Finish'

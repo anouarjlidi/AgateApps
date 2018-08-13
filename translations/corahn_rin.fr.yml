@@ -310,3 +310,26 @@ ways.conviction.fault: Culpabilité
 ways.conviction.description: |
     Généralement, un humain se raccroche à un idéal ou des convictions qui guident sa vie.
     Certains se tournent vers la religion, d'autres vers des préceptes de chevalerie, d'autres encore suivent un code personnel.
+
+title.generator: 'Créateur de personnage'
+
+steps.01_people: 'Peuple'
+steps.02_job: 'Métier'
+steps.03_birthplace: 'Lieu de naissance'
+steps.04_geo: 'Environnement de vie'
+steps.05_social_class: 'Classe sociale'
+steps.06_age: 'Âge'
+steps.07_setbacks: 'Revers'
+steps.08_ways: 'Voies'
+steps.09_traits: 'Traits'
+steps.10_orientation: 'Personnalité'
+steps.11_advantages: 'Avantages'
+steps.12_mental_disorder: 'Psychologie'
+steps.13_primary_domains: 'Domaines primaires'
+steps.14_use_domain_bonuses: 'Bonus aux domaines'
+steps.15_domains_spend_exp: 'XP dépensées pour les domaines'
+steps.16_disciplines: 'Disciplines'
+steps.17_combat_arts: 'Arts de combat'
+steps.18_equipment: 'Équipment'
+steps.19_description: 'Description'
+steps.20_finish: 'Finalisation'
