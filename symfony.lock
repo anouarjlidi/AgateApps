@@ -161,6 +161,9 @@
     "psr/simple-cache": {
         "version": "1.0.0"
     },
+    "pyrech/composer-changelogs": {
+        "version": "v1.6.0"
+    },
     "sensio/framework-extra-bundle": {
         "version": "4.0",
         "recipe": {
