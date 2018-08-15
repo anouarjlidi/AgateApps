@@ -36,6 +36,16 @@ services:
             - ./:/srv/
 
     # Dump can be saved in var/ that's why it's the only directory we share
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        environment:
+            - PMA_HOSTS=db,db_legacy
+        restart: always
+        ports:
+            - 8081:80
+        links:
+            - db
+
     db:
         image: 'mysql:5.7'
         working_dir: /srv/
