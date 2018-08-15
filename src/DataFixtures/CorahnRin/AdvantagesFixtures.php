@@ -70,7 +70,7 @@ class AdvantagesFixtures extends AbstractFixture implements OrderedFixtureInterf
         $this->fixtureObject($repo, 20, null, 'Vif d\'esprit', 'Vive d\'esprit', 40, '+1 aux jets de Science, Magience et Occultisme', 1, [Domains::MAGIENCE['title'], Domains::OCCULTISM['title'], Domains::SCIENCE['title']], 0, 0, $book);
         $this->fixtureObject($repo, 21, null, 'Chanceux', 'Chanceuse', 30, '+1 aux jets de Chance', 1, [], 0, 0, $book);
         $this->fixtureObject($repo, 22, null, 'Instinct de survie', 'Instinct de survie', 30, '+1 point de Survie', 1, ['sur'], 0, 0, $book);
-        $this->fixtureObject($repo, 23, null, 'Lettré', 'Lettrée', 20, 'Le personnage sait lire et écrire, et choisit un bonus de +1 au choix : Erudition, Magience, Science ou Occultisme', 0, [], 0, 0, $book, 'advantages.indication.scholar', Avantages::INDICATION_TYPE_SINGLE_CHOICE);
+        $this->fixtureObject($repo, 23, null, 'Lettré', 'Lettrée', 20, 'Le personnage sait lire et écrire, et choisit un bonus de +1 au choix : Erudition, Magience, Science ou Occultisme', 0, [Domains::ERUDITION['title'], Domains::SCIENCE['title'], Domains::MAGIENCE['title'], Domains::OCCULTISM['title']], 0, 0, $book, 'advantages.indication.scholar', Avantages::INDICATION_TYPE_SINGLE_CHOICE);
         $this->fixtureObject($repo, 29, null, 'Nez fin', 'Nez fin', 10, '+1 aux jets de Perception concernant l\'odorat', 1, [Domains::PERCEPTION['title']], 0, 0, $book);
         $this->fixtureObject($repo, 30, null, 'Palais fin', 'Palais fin', 10, '+1 aux jets de Perception concernant le goût', 1, [Domains::PERCEPTION['title']], 0, 0, $book);
         $this->fixtureObject($repo, 31, null, 'Boiteux', 'Boiteuse', 30, '-1 en Rapidité et en Défense', 0, ['def', 'rap'], 1, 0, $book);
@@ -112,7 +112,7 @@ class AdvantagesFixtures extends AbstractFixture implements OrderedFixtureInterf
         $isDesv,
         $isCombatArt,
         $book,
-        bool $requiresIndication = false,
+        ?string $requiresIndication = null,
         string $indicationType = Avantages::INDICATION_TYPE_SINGLE_VALUE
     ) {
         $obj = null;

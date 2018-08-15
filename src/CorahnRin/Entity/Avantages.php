@@ -144,7 +144,7 @@ class Avantages
      *
      * @ORM\Column(name="requires_indication", type="string", nullable=true)
      */
-    protected $requiresIndication = false;
+    protected $requiresIndication;
 
     /**
      * If type is "choice", the list will be fetched from self::$bonusesFor.
