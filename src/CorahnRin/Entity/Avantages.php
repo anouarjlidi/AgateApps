@@ -83,6 +83,7 @@ class Avantages
      * 7: Occultism.
      * 13: Science.
      * 16: Erudition.
+     * @TODO Remove, since it's now in fixtures & better implemented (but will be when refactoring step 13)
      */
     public const BONUS_SCHOLAR_DOMAINS = [Domains::MAGIENCE['title'], Domains::OCCULTISM['title'], Domains::SCIENCE['title'], Domains::ERUDITION['title']];
 
@@ -317,7 +318,7 @@ class Avantages
         return $this->bonusesFor;
     }
 
-    public function getRequiresIndication(): string
+    public function getRequiresIndication(): ?string
     {
         return $this->requiresIndication;
     }

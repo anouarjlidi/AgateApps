@@ -172,6 +172,8 @@ class Step11Advantages extends AbstractStepAction
 
         return $this->renderCurrentStep([
             'experience' => $experience,
+            'indication_type_single_choice' => Avantages::INDICATION_TYPE_SINGLE_CHOICE,
+            'indication_type_single_value' => Avantages::INDICATION_TYPE_SINGLE_VALUE,
             'advantages' => $advantages,
             'disadvantages' => $disadvantages,
             'advantages_list' => $this->globalList['advantages'],

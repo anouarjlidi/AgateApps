@@ -53,4 +53,11 @@
             font-weight: bold;
         }
     }
+
+    .indication {
+        display: none;
+        &.active {
+            display: block;
+        }
+    }
 }

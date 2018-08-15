@@ -333,3 +333,8 @@ steps.17_combat_arts: 'Arts de combat'
 steps.18_equipment: 'Équipment'
 steps.19_description: 'Description'
 steps.20_finish: 'Finalisation'
+
+advantages.indication.ally_isolated.form: Indiquez un détail sur l'allié
+advantages.indication.ally_mentor.form: Indiquez un détail sur l'allié
+advantages.indication.ally_influent.form: Indiquez un détail sur l'allié
+advantages.indication.scholar.form: Choisissez un domaine
