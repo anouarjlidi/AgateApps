@@ -338,3 +338,7 @@ advantages.indication.ally_isolated.form: Indiquez un détail sur l'allié
 advantages.indication.ally_mentor.form: Indiquez un détail sur l'allié
 advantages.indication.ally_influent.form: Indiquez un détail sur l'allié
 advantages.indication.scholar.form: Choisissez un domaine
+
+advantages.indication.dependence.form: Déterminez l'addiction
+advantages.indication.enemy.form: Nommez ou définissez votre ennemi
+advantages.indication.phobia.form: Déterminez la phobie

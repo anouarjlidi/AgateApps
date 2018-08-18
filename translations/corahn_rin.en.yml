@@ -340,3 +340,7 @@ advantages.indication.ally_isolated.form: Specify details about the ally
 advantages.indication.ally_mentor.form: Specify details about the ally
 advantages.indication.ally_influent.form: Specify details about the ally
 advantages.indication.scholar.form: Choose a domain
+
+advantages.indication.dependence.form: Specify the addiction
+advantages.indication.enemy.form: Name or define the enemy
+advantages.indication.phobia.form: Define your phobia
