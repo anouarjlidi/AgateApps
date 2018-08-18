@@ -89,6 +89,7 @@
             }
 
             updateAdvantageValue(currentAdvantage);
+            updateIndicationsDisplay();
 
             experience += currentXp;
 

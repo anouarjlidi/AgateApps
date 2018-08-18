@@ -12,6 +12,7 @@
  * @property {boolean} isAdvantage
  * @property {Element} input
  * @property {Element} label
+ * @property {Element} indicationInput
  */
 var Advantage = function(object) {
     this.id           = !isNaN(parseInt(object.id)) ? parseInt(object.id, 10) : null;
@@ -22,5 +23,9 @@ var Advantage = function(object) {
     this.isAdvantage  = !!object.isAdvantage;
     this.input        = object.input || null;
     this.label        = object.label || null;
-    Object.freeze(this);
+    this.indicationInput = object.indicationInput || null;
+};
+
+Advantage.new = function(object) {
+    return Object.freeze(new Advantage(object));
 };
