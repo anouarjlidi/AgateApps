@@ -2,14 +2,15 @@
 
 {% trans_default_domain 'corahn_rin' %}
 
-{% macro avantage_display(avtg, listToCheck, indication_type_single_choice, indication_type_single_value) %}
+{% macro avantage_display(avtg, list_to_check, character_indications, indication_type_single_choice, indication_type_single_value) %}
 
     {% set prefix = avtg.isDesv() ? 'desv' : 'avtg' %}
 
     <div class="col m6">
         {% set class_more = '' %}
-        {% if advantages[avtg.id] is defined and listToCheck[avtg.id] > 0 %}
-            {% set class_more = ' btn-state-'~listToCheck[avtg.id] %}
+
+        {% if list_to_check[avtg.id] is defined and list_to_check[avtg.id] > 0 %}
+            {% set class_more = ' btn-state-'~list_to_check[avtg.id] %}
         {% endif %}
 
         {% set tooltip_text %}
@@ -33,7 +34,7 @@
             <input data-augmentation="{{ avtg.augmentation }}"
                    type="hidden"
                    name="{{ avtg.isDesv() ? 'dis' }}advantages[{{ avtg.id }}]"
-                   value="{{ listToCheck[avtg.id] is defined and listToCheck[avtg.id] ? listToCheck[avtg.id] : '0' }}"
+                   value="{{ list_to_check[avtg.id] is defined and list_to_check[avtg.id] ? list_to_check[avtg.id] : '0' }}"
                    id="{{ prefix }}-{{ avtg.id }}"
                    data-element-id="{{ avtg.id }}"
                    data-element-cost="{{ avtg.xp }}"
@@ -47,17 +48,18 @@
         </label>
 
         {% if avtg.requiresIndication is not empty %}
-            <div class="indication row" data-indication-for="{{ avtg.id }}">
+            {% set has_indication = character_indications[avtg.id] is defined and character_indications[avtg.id] is not empty %}
+            <div class="indication row{{ has_indication ? ' active' }}" data-indication-for="{{ avtg.id }}">
                 <div class="input-field col-s12">
                     {% if avtg.indicationType is same as(indication_type_single_choice) %}
                         <select name="advantages_indications[{{ avtg.id }}]" id="advantages_indications_{{ avtg.id }}">
                             <option value="">- {{ (avtg.requiresIndication~'.form')|trans }} -</option>
                             {% for bonus in avtg.bonusesFor %}
-                                <option value="{{ bonus }}">{{ bonus|trans }}</option>
+                                <option value="{{ bonus }}" {{ has_indication and character_indications[avtg.id] == bonus ? 'selected="selected"' }}>{{ bonus|trans }}</option>
                             {% endfor %}
                         </select>
                     {% elseif avtg.indicationType is same as(indication_type_single_value) %}
-                        <input type="text" name="advantages_indications[{{ avtg.id }}]" id="advantages_indications_{{ avtg.id }}">
+                        <input type="text" name="advantages_indications[{{ avtg.id }}]" id="advantages_indications_{{ avtg.id }}" {{ has_indication ? ('value="'~character_indications[avtg.id]~'"')|raw }}>
                         <label for="advantages_indications_{{ avtg.id }}">
                             {{ (avtg.requiresIndication~'.form')|trans }}
                         </label>
@@ -92,7 +94,7 @@
             {% for list in advantages_list|batch(2) %}
             <div class="row mb5">
                 {% for avtg in list %}
-                    {{ macros.avantage_display(avtg, advantages, indication_type_single_choice, indication_type_single_value) }}
+                    {{ macros.avantage_display(avtg, advantages, character_indications, indication_type_single_choice, indication_type_single_value) }}
                 {% endfor %}{# advantages #}
             </div>
         {% endfor %}
@@ -103,7 +105,7 @@
             {% for list in disadvantages_list|batch(2) %}
                 <div class="row mb5">
                     {% for desv in list %}
-                        {{ macros.avantage_display(desv, disadvantages, indication_type_single_choice, indication_type_single_value) }}
+                        {{ macros.avantage_display(desv, disadvantages, character_indications, indication_type_single_choice, indication_type_single_value) }}
 
                     {% endfor %}
                 </div><!-- /.row -->
