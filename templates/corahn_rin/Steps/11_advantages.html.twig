@@ -47,9 +47,9 @@
             </span>
         </label>
 
-        {% if avtg.requiresIndication is not empty %}
+        {% if avtg.requiresIndication %}
             {% set has_indication = character_indications[avtg.id] is defined and character_indications[avtg.id] is not empty %}
-            <div class="indication row{{ has_indication ? ' active' }}" data-indication-for="{{ avtg.id }}">
+            <div class="indication row{{ list_to_check[avtg.id] is defined ? ' active' }}" data-indication-for="{{ avtg.id }}">
                 <div class="input-field col-s12">
                     {% if avtg.indicationType is same as(indication_type_single_choice) %}
                         <select name="advantages_indications[{{ avtg.id }}]" id="advantages_indications_{{ avtg.id }}">

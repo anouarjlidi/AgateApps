@@ -198,8 +198,15 @@ class Step11Advantages extends AbstractStepAction
             }
 
             $advantage = $this->globalList['advantages'][$id];
+
+            if (null === $advantage) {
+                $this->hasError = true;
+                $this->flashMessage('Les avantages soumis sont incorrects.');
+                break;
+            }
+
             if (0 !== $value && $advantage->getRequiresIndication()) {
-                $indication = $this->indications[$id];
+                $indication = trim($this->indications[$id] ?? '');
                 if (!$indication) {
                     $this->hasError = true;
                     $this->flashMessage('L\'avantage "%advtg%" nécessite une indication supplémentaire.', 'error', ['%advtg%' => $advantage->getName()]);
@@ -240,6 +247,31 @@ class Step11Advantages extends AbstractStepAction
                     $this->flashMessage('Vous ne pouvez pas améliorer plus d\'un désavantage');
                 }
                 $numberOfUpgradedDisadvantages++;
+            }
+
+            $disadvantage = $this->globalList['disadvantages'][$id];
+
+            if (null === $disadvantage) {
+                $this->hasError = true;
+                $this->flashMessage('Les désavantages soumis sont incorrects.');
+                break;
+            }
+
+            if (0 !== $value && $disadvantage->getRequiresIndication()) {
+                $indication = trim($this->indications[$id] ?? '');
+                if (!$indication) {
+                    $this->hasError = true;
+                    $this->flashMessage('Le désavantage "%advtg%" nécessite une indication supplémentaire.', 'error', ['%advtg%' => $disadvantage->getName()]);
+                    break;
+                }
+                if ($disadvantage->getIndicationType() === Avantages::INDICATION_TYPE_SINGLE_CHOICE) {
+                    $choices = $disadvantage->getBonusesFor();
+                    if (!\in_array($indication, $choices, true)) {
+                        $this->hasError = true;
+                        $this->flashMessage('L\'indication pour le désavantage "%advtg%" n\'est pas correcte, veuillez vérifier.', 'error', ['%advtg%' => $disadvantage->getName()]);
+                        break;
+                    }
+                }
             }
 
             if ($numberOfDisadvantages + 1 > 4) {
@@ -286,15 +318,6 @@ class Step11Advantages extends AbstractStepAction
         }
 
         if (false === $this->hasError && $this->experience >= 0) {
-
-            dump([
-                'advantages' => $advantages,
-                'disadvantages' => $disadvantages,
-                'advantages_indications' => $this->indications,
-                'remainingExp' => $this->experience,
-            ]);
-            exit;
-
             $this->updateCharacterStep([
                 'advantages' => $advantages,
                 'disadvantages' => $disadvantages,
