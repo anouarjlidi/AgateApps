@@ -11,7 +11,9 @@
 
 namespace CorahnRin\Entity;
 
+use CorahnRin\Entity\CharacterProperties\Bonuses;
 use CorahnRin\Entity\Traits\HasBook;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -53,6 +55,25 @@ class Setbacks
      * @ORM\Column(type="string", length=50)
      */
     protected $malus;
+
+    /**
+     * It can disable either advantages or disadvantages, as they're in the same table.
+     *
+     * @var string[]
+     *
+     * @ORM\ManyToMany(targetEntity="CorahnRin\Entity\Avantages")
+     * @ORM\JoinTable(
+     *     name="setbacks_advantages",
+     *     joinColumns={@ORM\JoinColumn(name="setback_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="advantage_id", referencedColumnName="id")},
+     * )
+     */
+    private $disabledAdvantages;
+
+    public function __construct()
+    {
+        $this->disabledAdvantages = new ArrayCollection();
+    }
 
     /**
      * Get id.
@@ -147,6 +168,10 @@ class Setbacks
      */
     public function setMalus($malus)
     {
+        if ($malus) {
+            Bonuses::validateBonus($malus);
+        }
+
         $this->malus = $malus;
 
         return $this;
@@ -162,5 +187,32 @@ class Setbacks
     public function getMalus()
     {
         return $this->malus;
+    }
+
+    /**
+     * @return Avantages[]|ArrayCollection
+     */
+    public function getDisabledAdvantages()
+    {
+        return $this->disabledAdvantages;
+    }
+
+    public function setDisabledAdvantages(array $disabledAdvantages): void
+    {
+        foreach ($disabledAdvantages as $disabledAdvantage) {
+            $this->addDisabledAdvantage($disabledAdvantage);
+        }
+    }
+
+    public function addDisabledAdvantage(Avantages $disabledAdvantage): void
+    {
+        if (!$this->disabledAdvantages->contains($disabledAdvantage)) {
+            $this->disabledAdvantages[] = $disabledAdvantage;
+        }
+    }
+
+    public function removeDisabledAdvantage(Avantages $disabledAdvantage): void
+    {
+        $this->disabledAdvantages->removeElement($disabledAdvantage);
     }
 }
