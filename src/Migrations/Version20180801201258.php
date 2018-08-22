@@ -45,13 +45,17 @@ final class Version20180801201258 extends AbstractMigration
             ALTER TABLE avantages
             ADD bonuses_for LONGTEXT DEFAULT NULL COMMENT "(DC2Type:simple_array)",
             ADD requires_indication VARCHAR(255) DEFAULT NULL,
-            ADD indication_type VARCHAR(20) DEFAULT "'.Avantages::INDICATION_TYPE_SINGLE_VALUE.'"
+            ADD indication_type VARCHAR(20) NOT NULL DEFAULT "'.Avantages::INDICATION_TYPE_SINGLE_VALUE.'"
         ');
         $this->addSql('ALTER TABLE disciplines ADD domains LONGTEXT COMMENT "(DC2Type:simple_array)"');
         $this->addSql('ALTER TABLE characters_disciplines ADD domain VARCHAR(100) NOT NULL');
         $this->addSql('ALTER TABLE geo_environments ADD domain VARCHAR(100) NOT NULL');
         $this->addSql('ALTER TABLE jobs ADD primary_domain VARCHAR(100) NOT NULL, ADD secondary_domains LONGTEXT COMMENT "(DC2Type:simple_array)"');
         $this->addSql('ALTER TABLE social_class ADD domains LONGTEXT NOT NULL COMMENT "(DC2Type:simple_array)"');
+
+        $this->addSql('CREATE TABLE setbacks_advantages (setback_id INT NOT NULL, advantage_id INT NOT NULL, INDEX IDX_A85197DFB42EEDE2 (setback_id), INDEX IDX_A85197DF3864498A (advantage_id), PRIMARY KEY(setback_id, advantage_id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
+        $this->addSql('ALTER TABLE setbacks_advantages ADD CONSTRAINT FK_A85197DFB42EEDE2 FOREIGN KEY (setback_id) REFERENCES setbacks (id)');
+        $this->addSql('ALTER TABLE setbacks_advantages ADD CONSTRAINT FK_A85197DF3864498A FOREIGN KEY (advantage_id) REFERENCES avantages (id)');
 
         $this->addSql('
             ALTER TABLE characters 
@@ -119,7 +123,7 @@ final class Version20180801201258 extends AbstractMigration
             DROP conviction 
         ');
 
-        $domainsIdReplacers = [
+        $bonusesIdsReplacers = [
             1 => Domains::CRAFT['title'],
             2 => Domains::CLOSE_COMBAT['title'],
             3 => Domains::STEALTH['title'],
@@ -136,58 +140,80 @@ final class Version20180801201258 extends AbstractMigration
             14 => Domains::SHOOTING_AND_THROWING['title'],
             15 => Domains::TRAVEL['title'],
             16 => Domains::ERUDITION['title'],
+            'rap' => 'speed',
+            'resm' => 'mental_resistance',
+            'bless' => 'health',
+            'vig' => 'stamina',
+            'trau' => 'trauma',
+            'sur' => 'survival',
+            '100g' => 'money_frost_100',
+            '50g' => 'money_frost_50',
+            '20g' => 'money_frost_20',
+            '10g' => 'money_frost_10',
+            '50a' => 'money_azure_50',
+            '20a' => 'money_azure_20',
         ];
 
-        $this->addSql('UPDATE characters_disciplines SET domain = :domain WHERE domain_id = :id', [':domain' => $domainsIdReplacers[1], 'id' => 1]);
-        $this->addSql('UPDATE characters_disciplines SET domain = :domain WHERE domain_id = :id', [':domain' => $domainsIdReplacers[2], 'id' => 2]);
-        $this->addSql('UPDATE characters_disciplines SET domain = :domain WHERE domain_id = :id', [':domain' => $domainsIdReplacers[3], 'id' => 3]);
-        $this->addSql('UPDATE characters_disciplines SET domain = :domain WHERE domain_id = :id', [':domain' => $domainsIdReplacers[4], 'id' => 4]);
-        $this->addSql('UPDATE characters_disciplines SET domain = :domain WHERE domain_id = :id', [':domain' => $domainsIdReplacers[5], 'id' => 5]);
-        $this->addSql('UPDATE characters_disciplines SET domain = :domain WHERE domain_id = :id', [':domain' => $domainsIdReplacers[6], 'id' => 6]);
-        $this->addSql('UPDATE characters_disciplines SET domain = :domain WHERE domain_id = :id', [':domain' => $domainsIdReplacers[7], 'id' => 7]);
-        $this->addSql('UPDATE characters_disciplines SET domain = :domain WHERE domain_id = :id', [':domain' => $domainsIdReplacers[8], 'id' => 8]);
-        $this->addSql('UPDATE characters_disciplines SET domain = :domain WHERE domain_id = :id', [':domain' => $domainsIdReplacers[9], 'id' => 9]);
-        $this->addSql('UPDATE characters_disciplines SET domain = :domain WHERE domain_id = :id', [':domain' => $domainsIdReplacers[10], 'id' => 10]);
-        $this->addSql('UPDATE characters_disciplines SET domain = :domain WHERE domain_id = :id', [':domain' => $domainsIdReplacers[11], 'id' => 11]);
-        $this->addSql('UPDATE characters_disciplines SET domain = :domain WHERE domain_id = :id', [':domain' => $domainsIdReplacers[12], 'id' => 12]);
-        $this->addSql('UPDATE characters_disciplines SET domain = :domain WHERE domain_id = :id', [':domain' => $domainsIdReplacers[13], 'id' => 13]);
-        $this->addSql('UPDATE characters_disciplines SET domain = :domain WHERE domain_id = :id', [':domain' => $domainsIdReplacers[14], 'id' => 14]);
-        $this->addSql('UPDATE characters_disciplines SET domain = :domain WHERE domain_id = :id', [':domain' => $domainsIdReplacers[15], 'id' => 15]);
-        $this->addSql('UPDATE characters_disciplines SET domain = :domain WHERE domain_id = :id', [':domain' => $domainsIdReplacers[16], 'id' => 16]);
+        $this->addSql('UPDATE characters_disciplines SET domain = :domain WHERE domain_id = :id', [':domain' => $bonusesIdsReplacers[1], 'id' => 1]);
+        $this->addSql('UPDATE characters_disciplines SET domain = :domain WHERE domain_id = :id', [':domain' => $bonusesIdsReplacers[2], 'id' => 2]);
+        $this->addSql('UPDATE characters_disciplines SET domain = :domain WHERE domain_id = :id', [':domain' => $bonusesIdsReplacers[3], 'id' => 3]);
+        $this->addSql('UPDATE characters_disciplines SET domain = :domain WHERE domain_id = :id', [':domain' => $bonusesIdsReplacers[4], 'id' => 4]);
+        $this->addSql('UPDATE characters_disciplines SET domain = :domain WHERE domain_id = :id', [':domain' => $bonusesIdsReplacers[5], 'id' => 5]);
+        $this->addSql('UPDATE characters_disciplines SET domain = :domain WHERE domain_id = :id', [':domain' => $bonusesIdsReplacers[6], 'id' => 6]);
+        $this->addSql('UPDATE characters_disciplines SET domain = :domain WHERE domain_id = :id', [':domain' => $bonusesIdsReplacers[7], 'id' => 7]);
+        $this->addSql('UPDATE characters_disciplines SET domain = :domain WHERE domain_id = :id', [':domain' => $bonusesIdsReplacers[8], 'id' => 8]);
+        $this->addSql('UPDATE characters_disciplines SET domain = :domain WHERE domain_id = :id', [':domain' => $bonusesIdsReplacers[9], 'id' => 9]);
+        $this->addSql('UPDATE characters_disciplines SET domain = :domain WHERE domain_id = :id', [':domain' => $bonusesIdsReplacers[10], 'id' => 10]);
+        $this->addSql('UPDATE characters_disciplines SET domain = :domain WHERE domain_id = :id', [':domain' => $bonusesIdsReplacers[11], 'id' => 11]);
+        $this->addSql('UPDATE characters_disciplines SET domain = :domain WHERE domain_id = :id', [':domain' => $bonusesIdsReplacers[12], 'id' => 12]);
+        $this->addSql('UPDATE characters_disciplines SET domain = :domain WHERE domain_id = :id', [':domain' => $bonusesIdsReplacers[13], 'id' => 13]);
+        $this->addSql('UPDATE characters_disciplines SET domain = :domain WHERE domain_id = :id', [':domain' => $bonusesIdsReplacers[14], 'id' => 14]);
+        $this->addSql('UPDATE characters_disciplines SET domain = :domain WHERE domain_id = :id', [':domain' => $bonusesIdsReplacers[15], 'id' => 15]);
+        $this->addSql('UPDATE characters_disciplines SET domain = :domain WHERE domain_id = :id', [':domain' => $bonusesIdsReplacers[16], 'id' => 16]);
 
-        $this->addSql('UPDATE geo_environments SET domain = :domain WHERE domain_id = :id', [':domain' => $domainsIdReplacers[1], 'id' => 1]);
-        $this->addSql('UPDATE geo_environments SET domain = :domain WHERE domain_id = :id', [':domain' => $domainsIdReplacers[2], 'id' => 2]);
-        $this->addSql('UPDATE geo_environments SET domain = :domain WHERE domain_id = :id', [':domain' => $domainsIdReplacers[3], 'id' => 3]);
-        $this->addSql('UPDATE geo_environments SET domain = :domain WHERE domain_id = :id', [':domain' => $domainsIdReplacers[4], 'id' => 4]);
-        $this->addSql('UPDATE geo_environments SET domain = :domain WHERE domain_id = :id', [':domain' => $domainsIdReplacers[5], 'id' => 5]);
-        $this->addSql('UPDATE geo_environments SET domain = :domain WHERE domain_id = :id', [':domain' => $domainsIdReplacers[6], 'id' => 6]);
-        $this->addSql('UPDATE geo_environments SET domain = :domain WHERE domain_id = :id', [':domain' => $domainsIdReplacers[7], 'id' => 7]);
-        $this->addSql('UPDATE geo_environments SET domain = :domain WHERE domain_id = :id', [':domain' => $domainsIdReplacers[8], 'id' => 8]);
-        $this->addSql('UPDATE geo_environments SET domain = :domain WHERE domain_id = :id', [':domain' => $domainsIdReplacers[9], 'id' => 9]);
-        $this->addSql('UPDATE geo_environments SET domain = :domain WHERE domain_id = :id', [':domain' => $domainsIdReplacers[10], 'id' => 10]);
-        $this->addSql('UPDATE geo_environments SET domain = :domain WHERE domain_id = :id', [':domain' => $domainsIdReplacers[11], 'id' => 11]);
-        $this->addSql('UPDATE geo_environments SET domain = :domain WHERE domain_id = :id', [':domain' => $domainsIdReplacers[12], 'id' => 12]);
-        $this->addSql('UPDATE geo_environments SET domain = :domain WHERE domain_id = :id', [':domain' => $domainsIdReplacers[13], 'id' => 13]);
-        $this->addSql('UPDATE geo_environments SET domain = :domain WHERE domain_id = :id', [':domain' => $domainsIdReplacers[14], 'id' => 14]);
-        $this->addSql('UPDATE geo_environments SET domain = :domain WHERE domain_id = :id', [':domain' => $domainsIdReplacers[15], 'id' => 15]);
-        $this->addSql('UPDATE geo_environments SET domain = :domain WHERE domain_id = :id', [':domain' => $domainsIdReplacers[16], 'id' => 16]);
+        $this->addSql('UPDATE geo_environments SET domain = :domain WHERE domain_id = :id', [':domain' => $bonusesIdsReplacers[1], 'id' => 1]);
+        $this->addSql('UPDATE geo_environments SET domain = :domain WHERE domain_id = :id', [':domain' => $bonusesIdsReplacers[2], 'id' => 2]);
+        $this->addSql('UPDATE geo_environments SET domain = :domain WHERE domain_id = :id', [':domain' => $bonusesIdsReplacers[3], 'id' => 3]);
+        $this->addSql('UPDATE geo_environments SET domain = :domain WHERE domain_id = :id', [':domain' => $bonusesIdsReplacers[4], 'id' => 4]);
+        $this->addSql('UPDATE geo_environments SET domain = :domain WHERE domain_id = :id', [':domain' => $bonusesIdsReplacers[5], 'id' => 5]);
+        $this->addSql('UPDATE geo_environments SET domain = :domain WHERE domain_id = :id', [':domain' => $bonusesIdsReplacers[6], 'id' => 6]);
+        $this->addSql('UPDATE geo_environments SET domain = :domain WHERE domain_id = :id', [':domain' => $bonusesIdsReplacers[7], 'id' => 7]);
+        $this->addSql('UPDATE geo_environments SET domain = :domain WHERE domain_id = :id', [':domain' => $bonusesIdsReplacers[8], 'id' => 8]);
+        $this->addSql('UPDATE geo_environments SET domain = :domain WHERE domain_id = :id', [':domain' => $bonusesIdsReplacers[9], 'id' => 9]);
+        $this->addSql('UPDATE geo_environments SET domain = :domain WHERE domain_id = :id', [':domain' => $bonusesIdsReplacers[10], 'id' => 10]);
+        $this->addSql('UPDATE geo_environments SET domain = :domain WHERE domain_id = :id', [':domain' => $bonusesIdsReplacers[11], 'id' => 11]);
+        $this->addSql('UPDATE geo_environments SET domain = :domain WHERE domain_id = :id', [':domain' => $bonusesIdsReplacers[12], 'id' => 12]);
+        $this->addSql('UPDATE geo_environments SET domain = :domain WHERE domain_id = :id', [':domain' => $bonusesIdsReplacers[13], 'id' => 13]);
+        $this->addSql('UPDATE geo_environments SET domain = :domain WHERE domain_id = :id', [':domain' => $bonusesIdsReplacers[14], 'id' => 14]);
+        $this->addSql('UPDATE geo_environments SET domain = :domain WHERE domain_id = :id', [':domain' => $bonusesIdsReplacers[15], 'id' => 15]);
+        $this->addSql('UPDATE geo_environments SET domain = :domain WHERE domain_id = :id', [':domain' => $bonusesIdsReplacers[16], 'id' => 16]);
 
-        $this->addSql('UPDATE jobs SET primary_domain = :domain WHERE domain_primary_id = :id', [':domain' => $domainsIdReplacers[1], 'id' => 1]);
-        $this->addSql('UPDATE jobs SET primary_domain = :domain WHERE domain_primary_id = :id', [':domain' => $domainsIdReplacers[2], 'id' => 2]);
-        $this->addSql('UPDATE jobs SET primary_domain = :domain WHERE domain_primary_id = :id', [':domain' => $domainsIdReplacers[3], 'id' => 3]);
-        $this->addSql('UPDATE jobs SET primary_domain = :domain WHERE domain_primary_id = :id', [':domain' => $domainsIdReplacers[4], 'id' => 4]);
-        $this->addSql('UPDATE jobs SET primary_domain = :domain WHERE domain_primary_id = :id', [':domain' => $domainsIdReplacers[5], 'id' => 5]);
-        $this->addSql('UPDATE jobs SET primary_domain = :domain WHERE domain_primary_id = :id', [':domain' => $domainsIdReplacers[6], 'id' => 6]);
-        $this->addSql('UPDATE jobs SET primary_domain = :domain WHERE domain_primary_id = :id', [':domain' => $domainsIdReplacers[7], 'id' => 7]);
-        $this->addSql('UPDATE jobs SET primary_domain = :domain WHERE domain_primary_id = :id', [':domain' => $domainsIdReplacers[8], 'id' => 8]);
-        $this->addSql('UPDATE jobs SET primary_domain = :domain WHERE domain_primary_id = :id', [':domain' => $domainsIdReplacers[9], 'id' => 9]);
-        $this->addSql('UPDATE jobs SET primary_domain = :domain WHERE domain_primary_id = :id', [':domain' => $domainsIdReplacers[10], 'id' => 10]);
-        $this->addSql('UPDATE jobs SET primary_domain = :domain WHERE domain_primary_id = :id', [':domain' => $domainsIdReplacers[11], 'id' => 11]);
-        $this->addSql('UPDATE jobs SET primary_domain = :domain WHERE domain_primary_id = :id', [':domain' => $domainsIdReplacers[12], 'id' => 12]);
-        $this->addSql('UPDATE jobs SET primary_domain = :domain WHERE domain_primary_id = :id', [':domain' => $domainsIdReplacers[13], 'id' => 13]);
-        $this->addSql('UPDATE jobs SET primary_domain = :domain WHERE domain_primary_id = :id', [':domain' => $domainsIdReplacers[14], 'id' => 14]);
-        $this->addSql('UPDATE jobs SET primary_domain = :domain WHERE domain_primary_id = :id', [':domain' => $domainsIdReplacers[15], 'id' => 15]);
-        $this->addSql('UPDATE jobs SET primary_domain = :domain WHERE domain_primary_id = :id', [':domain' => $domainsIdReplacers[16], 'id' => 16]);
+        $this->addSql('UPDATE jobs SET primary_domain = :domain WHERE domain_primary_id = :id', [':domain' => $bonusesIdsReplacers[1], 'id' => 1]);
+        $this->addSql('UPDATE jobs SET primary_domain = :domain WHERE domain_primary_id = :id', [':domain' => $bonusesIdsReplacers[2], 'id' => 2]);
+        $this->addSql('UPDATE jobs SET primary_domain = :domain WHERE domain_primary_id = :id', [':domain' => $bonusesIdsReplacers[3], 'id' => 3]);
+        $this->addSql('UPDATE jobs SET primary_domain = :domain WHERE domain_primary_id = :id', [':domain' => $bonusesIdsReplacers[4], 'id' => 4]);
+        $this->addSql('UPDATE jobs SET primary_domain = :domain WHERE domain_primary_id = :id', [':domain' => $bonusesIdsReplacers[5], 'id' => 5]);
+        $this->addSql('UPDATE jobs SET primary_domain = :domain WHERE domain_primary_id = :id', [':domain' => $bonusesIdsReplacers[6], 'id' => 6]);
+        $this->addSql('UPDATE jobs SET primary_domain = :domain WHERE domain_primary_id = :id', [':domain' => $bonusesIdsReplacers[7], 'id' => 7]);
+        $this->addSql('UPDATE jobs SET primary_domain = :domain WHERE domain_primary_id = :id', [':domain' => $bonusesIdsReplacers[8], 'id' => 8]);
+        $this->addSql('UPDATE jobs SET primary_domain = :domain WHERE domain_primary_id = :id', [':domain' => $bonusesIdsReplacers[9], 'id' => 9]);
+        $this->addSql('UPDATE jobs SET primary_domain = :domain WHERE domain_primary_id = :id', [':domain' => $bonusesIdsReplacers[10], 'id' => 10]);
+        $this->addSql('UPDATE jobs SET primary_domain = :domain WHERE domain_primary_id = :id', [':domain' => $bonusesIdsReplacers[11], 'id' => 11]);
+        $this->addSql('UPDATE jobs SET primary_domain = :domain WHERE domain_primary_id = :id', [':domain' => $bonusesIdsReplacers[12], 'id' => 12]);
+        $this->addSql('UPDATE jobs SET primary_domain = :domain WHERE domain_primary_id = :id', [':domain' => $bonusesIdsReplacers[13], 'id' => 13]);
+        $this->addSql('UPDATE jobs SET primary_domain = :domain WHERE domain_primary_id = :id', [':domain' => $bonusesIdsReplacers[14], 'id' => 14]);
+        $this->addSql('UPDATE jobs SET primary_domain = :domain WHERE domain_primary_id = :id', [':domain' => $bonusesIdsReplacers[15], 'id' => 15]);
+        $this->addSql('UPDATE jobs SET primary_domain = :domain WHERE domain_primary_id = :id', [':domain' => $bonusesIdsReplacers[16], 'id' => 16]);
+
+        // "Poverty" setback disables "Financial ease" and "Poor" disadvantages.
+        if ($conn->query('select id from setbacks where id = 9')->rowCount() === 1) {
+            $this->addSql('INSERT INTO setbacks_advantages SET setback_id = 9, advantage_id = 4;');
+            $this->addSql('INSERT INTO setbacks_advantages SET setback_id = 9, advantage_id = 5;');
+            $this->addSql('INSERT INTO setbacks_advantages SET setback_id = 9, advantage_id = 6;');
+            $this->addSql('INSERT INTO setbacks_advantages SET setback_id = 9, advantage_id = 7;');
+            $this->addSql('INSERT INTO setbacks_advantages SET setback_id = 9, advantage_id = 8;');
+            $this->addSql('INSERT INTO setbacks_advantages SET setback_id = 9, advantage_id = 47;');
+        }
 
         $newDisciplinesDomains = [];
         $disciplinesDomains = $conn->query('select discipline_id, domain_id from disciplines_domains')->fetchAll();
@@ -226,10 +252,10 @@ final class Version20180801201258 extends AbstractMigration
             }
             $bonuses = explode(',', $line['bonusdisc']);
             foreach ($bonuses as $k => $bonus) {
-                if ($bonus && !is_numeric($bonus)) {
+                if (!isset($bonusesIdsReplacers[$bonus])) {
                     continue;
                 }
-                $bonuses[$k] = $domainsIdReplacers[(int) $bonus];
+                $bonuses[$k] = $bonusesIdsReplacers[$bonus];
             }
             if ($bonuses) {
                 $newAdvantagesBonuses[$line['id']] = $bonuses;
@@ -238,6 +264,10 @@ final class Version20180801201258 extends AbstractMigration
         foreach ($newAdvantagesBonuses as $id => $bonuses) {
             $convertedBonuses = $simpleArray->convertToDatabaseValue($bonuses, $conn->getDatabasePlatform());
             $this->addSql('UPDATE avantages SET bonuses_for = :bonuses WHERE id = :id', [':bonuses' => $convertedBonuses, ':id' => $id]);
+        }
+
+        foreach ($bonusesIdsReplacers as $id => $replacer) {
+            $this->addSql('UPDATE setbacks SET malus = :replacer WHERE malus = :value', [':value' => $id, ':replacer' => $replacer]);
         }
 
         $this->addSql('ALTER TABLE characters_disciplines DROP domain_id');
@@ -260,6 +290,9 @@ final class Version20180801201258 extends AbstractMigration
         $this->addSql('UPDATE avantages SET requires_indication = :value WHERE id = :id', [':value' => 'advantages.indication.dependence', ':id' => 32]);
         $this->addSql('UPDATE avantages SET requires_indication = :value WHERE id = :id', [':value' => 'advantages.indication.enemy', ':id' => 34]);
         $this->addSql('UPDATE avantages SET requires_indication = :value WHERE id = :id', [':value' => 'advantages.indication.phobia', ':id' => 48]);
+        $this->addSql('UPDATE avantages SET bonuses_for = :value WHERE id = :id', [':value' => 'luck', ':id' => 21]);
+        $this->addSql('UPDATE avantages SET bonuses_for = :value WHERE id = :id', [':value' => 'luck', ':id' => 43]);
+
 
         // Scholar special case (which is the inspiration for the indication system, basically)
         $this->addSql('
@@ -320,5 +353,6 @@ final class Version20180801201258 extends AbstractMigration
         $this->addSql('ALTER TABLE jobs ADD CONSTRAINT FK_A8936DC5B05C1029 FOREIGN KEY (domain_primary_id) REFERENCES domains (id)');
         $this->addSql('CREATE INDEX IDX_A8936DC5B05C1029 ON jobs (domain_primary_id)');
         $this->addSql('ALTER TABLE social_class DROP domains');
+        $this->addSql('DROP TABLE setbacks_advantages');
     }
 }
