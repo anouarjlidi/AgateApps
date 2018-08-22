@@ -39,15 +39,15 @@ return [
         'form_values' => [
             'gen-div-choice' => 1,
             'domains' => [
-                0 => 5,
-                1 => 8,
+                0 => 'domains.natural_environment',
+                1 => 'domains.perception',
             ],
         ],
         'session_value' => [
             'id' => 1,
             'domains' => [
-                5 => 5,
-                8 => 8,
+                0 => 'domains.natural_environment',
+                1 => 'domains.perception',
             ],
         ],
     ],
@@ -132,6 +132,10 @@ return [
                 47 => 1,
                 48 => 1,
             ],
+            'advantages_indications' => [
+                3 => 'Influent ally',
+                48 => 'Some phobia',
+            ],
         ],
         'session_value' => [
             'advantages' => [
@@ -143,7 +147,11 @@ return [
                 47 => 1,
                 48 => 1,
             ],
-            'remainingExp' => 80,
+            'advantages_indications' => [
+                3 => 'Influent ally',
+                48 => 'Some phobia',
+            ],
+            'remainingExp' => 100,
         ],
     ],
 
