@@ -1,6 +1,8 @@
 {% set steps_length = steps|length %}
 
-{% macro menu_items(current_step, steps, mobile) %}
+{% trans_default_domain 'corahn_rin' %}
+
+{% macro menu_items(current_step, steps, mobile, current_character) %}
     {% spaceless %}
     {% set previous = null %}
 
@@ -12,12 +14,12 @@
         {% if is_superior_to_current or is_defined_step or is_last_undefined_step %}
             <li class=" step_available{% if current_step and current_step.number == loop_step.number %} active{% endif %}">
                 <a href="{{ path('pierstoval_character_generator_step', {'requestStep': stepName}) }}" class="bl">
-                    {{- current_step.number == loop_step.number ? '&raquo;' }} {{ loop_step.number }}. {{ loop_step.label | trans -}}
+                    {{- current_step.number == loop_step.number ? '&raquo;' }} {{ loop_step.number }}. {{ ('steps.'~loop_step.name) | trans -}}
                 </a>
             </li>
         {% else %}
             <li>
-                <span>{{ loop_step.number }}. {{ loop_step.label | trans }}</span>
+                <span>{{ loop_step.number }}. {{ ('steps.'~loop_step.name) | trans -}}</span>
             </li>
         {% endif %}
 
@@ -25,7 +27,7 @@
     {% endfor %}
     {% if app.session.get('step') > 1 %}
         <li>
-            <a href="{{ path('pierstoval_character_generator_reset') }}">{{ 'steps.reset' | trans({}, 'corahn_rin') }}</a>
+            <a href="{{ path('pierstoval_character_generator_reset') }}">{{ 'steps.reset' | trans }}</a>
         </li>
     {% endif %}
     {% endspaceless %}
@@ -34,9 +36,9 @@
 {% import _self as macros %}
 
 <nav>
-    <a href="#" data-activates="steps-side" class="right button-collapse text-l"><i class="fa fa-bars"></i> {{ 'menu.steps'|trans({}, 'corahn_rin') }}</a>
+    <a href="#" data-activates="steps-side" class="right button-collapse text-l"><i class="fa fa-bars"></i> {{ 'menu.steps'|trans }}</a>
     <ul class="side-nav" id="steps-side">
-        {{ macros.menu_items(current_step, steps, true) }}
+        {{ macros.menu_items(current_step, steps, true, current_character) }}
     </ul>
     <div class="step_progress progress">
         <div class="determinate" style="width: {{ (100 * current_step.number / (steps|length)) }}%"></div>

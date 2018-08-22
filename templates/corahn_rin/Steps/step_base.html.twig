@@ -8,7 +8,6 @@
     {{- 'steps.step' | trans({}, 'corahn_rin') }} {{ current_step.number }} : {{ ('steps.'~current_step.name) | trans -}}
 {%- endblock %}
 
-
 {% block title %}{{ block('small_title') }} - {{ 'title.generator' | trans }} - {{ parent() }}{% endblock %}
 
 {% block stylesheets %}
