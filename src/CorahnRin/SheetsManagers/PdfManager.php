@@ -280,17 +280,17 @@ class PdfManager implements SheetGeneratorInterface
         $rap = $character->getBaseSpeed() + $character->getSpeed();
         $def = $character->getBaseDefense() + $character->getDefense();
         $attitudes = [
-            ['tir' => $tir, 'cac' => $cac, 'def' => $def, 'rap' => $rap], //Attitudes standards
-            ['tir' => $tir + $pot, 'cac' => $cac + $pot, 'def' => $def - $pot, 'rap' => $rap], //Attitudes offensives
-            ['tir' => $tir - $pot, 'cac' => $cac - $pot, 'def' => $def + $pot, 'rap' => $rap], //Attitudes défensives
-            ['tir' => $tir, 'cac' => $cac, 'def' => $def - $pot, 'rap' => $rap + $pot], //Attitudes rapide
-            ['tir' => 0, 'cac' => 0, 'def' => $def + $pot, 'rap' => $rap], //Attitudes de mouvement
+            ['tir' => $tir, 'cac' => $cac, 'defense' => $def, 'speed' => $rap], //Attitudes standards
+            ['tir' => $tir + $pot, 'cac' => $cac + $pot, 'defense' => $def - $pot, 'speed' => $rap], //Attitudes offensives
+            ['tir' => $tir - $pot, 'cac' => $cac - $pot, 'defense' => $def + $pot, 'speed' => $rap], //Attitudes défensives
+            ['tir' => $tir, 'cac' => $cac, 'defense' => $def - $pot, 'speed' => $rap + $pot], //Attitudes rapide
+            ['tir' => 0, 'cac' => 0, 'defense' => $def + $pot, 'speed' => $rap], //Attitudes de mouvement
         ];
         $pdf->textline('CàC/Tir', 475, 115, $p['times'], 13, true);
         foreach ($attitudes as $k => $v) {
             $pdf->textline($v['cac'].'/'.$v['tir'], 489, 161 + $k * 54, $p['carbold'], 15);
-            $pdf->textline($v['def'], 572, 161 + $k * 54, $p['carbold'], 20);
-            $pdf->textline($v['rap'], 650, 161 + $k * 54, $p['carbold'], 20);
+            $pdf->textline($v['defense'], 572, 161 + $k * 54, $p['carbold'], 20);
+            $pdf->textline($v['speed'], 650, 161 + $k * 54, $p['carbold'], 20);
         }
 
         //Défense améliorée

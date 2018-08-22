@@ -12,12 +12,11 @@
 namespace CorahnRin\Entity;
 
 use CorahnRin\Data\Domains;
+use CorahnRin\Entity\CharacterProperties\Bonuses;
 use CorahnRin\Entity\Traits\HasBook;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Avantages.
- *
  * @ORM\Table(name="avantages")
  * @ORM\Entity(repositoryClass="CorahnRin\Repository\AvantagesRepository")
  */
@@ -31,34 +30,21 @@ class Avantages
         self::INDICATION_TYPE_SINGLE_CHOICE,
     ];
 
-    public const BONUS_100G = '100g';
-    public const BONUS_50G = '50g';
-    public const BONUS_20G = '20g';
-    public const BONUS_10G = '10g';
-    public const BONUS_50A = '50a';
-    public const BONUS_20A = '20a';
-    public const BONUS_RESM = 'resm';
-    public const BONUS_BLESS = 'bless';
-    public const BONUS_VIG = 'vig';
-    public const BONUS_TRAU = 'trau';
-    public const BONUS_DEF = 'def';
-    public const BONUS_RAP = 'rap';
-    public const BONUS_SUR = 'sur';
-
     public const POSSIBLE_BONUSES = [
-        self::BONUS_100G,
-        self::BONUS_50G,
-        self::BONUS_20G,
-        self::BONUS_10G,
-        self::BONUS_50A,
-        self::BONUS_20A,
-        self::BONUS_RESM,
-        self::BONUS_BLESS,
-        self::BONUS_VIG,
-        self::BONUS_TRAU,
-        self::BONUS_DEF,
-        self::BONUS_RAP,
-        self::BONUS_SUR,
+        Bonuses::MONEY_100G,
+        Bonuses::MONEY_50G,
+        Bonuses::MONEY_20G,
+        Bonuses::MONEY_10G,
+        Bonuses::MONEY_50A,
+        Bonuses::MONEY_20A,
+        Bonuses::LUCK,
+        Bonuses::MENTAL_RESISTANCE,
+        Bonuses::HEALTH,
+        Bonuses::STAMINA,
+        Bonuses::TRAUMA,
+        Bonuses::DEFENSE,
+        Bonuses::SPEED,
+        Bonuses::SURVIVAL,
         Domains::CRAFT['title'],
         Domains::CLOSE_COMBAT['title'],
         Domains::STEALTH['title'],
@@ -76,16 +62,6 @@ class Avantages
         Domains::TRAVEL['title'],
         Domains::ERUDITION['title'],
     ];
-
-    /**
-     * Scholar advantage domain bonuses.
-     * 4: Magience.
-     * 7: Occultism.
-     * 13: Science.
-     * 16: Erudition.
-     * @TODO Remove, since it's now in fixtures & better implemented (but will be when refactoring step 13)
-     */
-    public const BONUS_SCHOLAR_DOMAINS = [Domains::MAGIENCE['title'], Domains::OCCULTISM['title'], Domains::SCIENCE['title'], Domains::ERUDITION['title']];
 
     use HasBook;
 
@@ -152,9 +128,9 @@ class Avantages
      *
      * @var string
      *
-     * @ORM\Column(name="indication_type", type="string", length=20, nullable=false, options={"default"="string"})
+     * @ORM\Column(name="indication_type", type="string", length=20, nullable=false, options={"default"="single_value"})
      */
-    protected $indicationType = 'string';
+    protected $indicationType = self::INDICATION_TYPE_SINGLE_VALUE;
 
     /**
      * @var bool

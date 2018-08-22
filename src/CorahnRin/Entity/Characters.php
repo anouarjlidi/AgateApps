@@ -13,6 +13,7 @@ namespace CorahnRin\Entity;
 
 use CorahnRin\Data\Orientation;
 use CorahnRin\Data\Domains as DomainsData;
+use CorahnRin\Entity\CharacterProperties\Bonuses;
 use CorahnRin\Entity\CharacterProperties\CharAdvantages;
 use CorahnRin\Entity\CharacterProperties\CharDisciplines;
 use CorahnRin\Entity\CharacterProperties\Domains;
@@ -730,13 +731,13 @@ class Characters extends BaseCharacter
         $value = $this->conviction + 5;
 
         foreach ($this->getAdvantages() as $disadvantage) {
-            if ('resm' === $disadvantage->getAdvantage()->getBonusesFor()) {
+            if (Bonuses::MENTAL_RESISTANCE === $disadvantage->getAdvantage()->getBonusesFor()) {
                 $value += $disadvantage->getScore();
             }
         }
 
         foreach ($this->getDisadvantages() as $disadvantage) {
-            if ('resm' === $disadvantage->getAdvantage()->getBonusesFor()) {
+            if (Bonuses::MENTAL_RESISTANCE === $disadvantage->getAdvantage()->getBonusesFor()) {
                 $value -= $disadvantage->getScore();
             }
         }

@@ -16,10 +16,11 @@ use CorahnRin\Data\Domains as DomainsData;
 use CorahnRin\Data\Ways;
 use CorahnRin\Entity\Armors;
 use CorahnRin\Entity\Avantages;
+use CorahnRin\Entity\CharacterProperties\Bonuses;
 use CorahnRin\Entity\CharacterProperties\CharAdvantages;
 use CorahnRin\Entity\CharacterProperties\CharDisciplines;
-use CorahnRin\Entity\CharacterProperties\Domains;
 use CorahnRin\Entity\CharacterProperties\CharSetbacks;
+use CorahnRin\Entity\CharacterProperties\Domains;
 use CorahnRin\Entity\CharacterProperties\HealthCondition;
 use CorahnRin\Entity\CharacterProperties\Money;
 use CorahnRin\Entity\Characters;
@@ -389,10 +390,10 @@ final class SessionToCharacter
                 } else {
                     $disadvantageRatio = $adv->isDesv() ? -1 : 1;
                     switch ($bonus) {
-                        case Avantages::BONUS_RESM:
+                        case Bonuses::BONUS_RESM:
                             $character->setMentalResistanceBonus($character->getMentalResistanceBonus() + ($charAdvantage->getScore() * $disadvantageRatio));
                             break;
-                        case Avantages::BONUS_BLESS:
+                        case Bonuses::BONUS_BLESS:
                             $score = $charAdvantage->getScore();
                             if ($score >= 1) {
                                 $bad++;
@@ -409,34 +410,34 @@ final class SessionToCharacter
                                 $critical--;
                             }
                             break;
-                        case Avantages::BONUS_VIG:
+                        case Bonuses::BONUS_VIG:
                             $character->setStamina($character->getStamina() + ($charAdvantage->getScore() * $disadvantageRatio));
                             break;
-                        case Avantages::BONUS_TRAU:
+                        case Bonuses::BONUS_TRAU:
                             $character->setPermanentTrauma($character->getPermanentTrauma() + $charAdvantage->getScore());
                             break;
-                        case Avantages::BONUS_DEF:
+                        case Bonuses::BONUS_DEF:
                             $character->setDefenseBonus($character->getDefenseBonus() + ($charAdvantage->getScore() * $disadvantageRatio));
                             break;
-                        case Avantages::BONUS_RAP:
+                        case Bonuses::BONUS_RAP:
                             $character->setSpeedBonus($character->getSpeedBonus() + ($charAdvantage->getScore() * $disadvantageRatio));
                             break;
-                        case Avantages::BONUS_SUR:
+                        case Bonuses::BONUS_SUR:
                             $character->setSurvival($character->getSurvival() + ($charAdvantage->getScore() * $disadvantageRatio));
                             break;
-                        case Avantages::BONUS_100G:
+                        case Bonuses::BONUS_100G:
                             $character->getMoney()->addFrost(100);
                             break;
-                        case Avantages::BONUS_20G:
+                        case Bonuses::BONUS_20G:
                             $character->getMoney()->addFrost(20);
                             break;
-                        case Avantages::BONUS_50G:
+                        case Bonuses::BONUS_50G:
                             $character->getMoney()->addFrost(50);
                             break;
-                        case Avantages::BONUS_50A:
+                        case Bonuses::BONUS_50A:
                             $character->getMoney()->addAzure(50);
                             break;
-                        case Avantages::BONUS_20A:
+                        case Bonuses::BONUS_20A:
                             $character->getMoney()->addAzure(20);
                             break;
                         default:

@@ -12,12 +12,12 @@
 namespace CorahnRin\Step;
 
 use CorahnRin\Entity\Avantages;
+use CorahnRin\Entity\Setbacks;
 use Symfony\Component\HttpFoundation\Response;
 
 class Step11Advantages extends AbstractStepAction
 {
     private $hasError = false;
-
     /**
      * @var Avantages[][]
      */
@@ -49,6 +49,11 @@ class Step11Advantages extends AbstractStepAction
     private $indications;
 
     /**
+     * @var Setbacks[]
+     */
+    private $setbacks;
+
+    /**
      * {@inheritdoc}
      */
     public function execute(): Response
@@ -58,21 +63,31 @@ class Step11Advantages extends AbstractStepAction
         $currentStepValue = $this->getCharacterProperty();
         $this->advantages = $currentStepValue['advantages'] ?? [];
         $this->disadvantages = $currentStepValue['disadvantages'] ?? [];
-        $setbacks = $this->getCharacterProperty('07_setbacks');
-        $this->indications = \array_filter($currentStepValue['advantages_indications'] ?? []);
-
-        $this->isPoor = isset($setbacks[9]) && !$setbacks[9]['avoided'];
-
-        if ($this->isPoor) {
-            // If character is poor, we don't allow him to have "Financial ease" advantages
-            unset(
-                $this->globalList['advantages'][4],
-                $this->globalList['advantages'][5],
-                $this->globalList['advantages'][6],
-                $this->globalList['advantages'][7],
-                $this->globalList['advantages'][8]
-            );
+        $characterSetbacks = $this->getCharacterProperty('07_setbacks');
+        $nonAvoidedSetbacks = [];
+        foreach  ($characterSetbacks as $id => $values) {
+            if ($values['avoided']) {
+                continue;
+            }
+            $nonAvoidedSetbacks[] = $id;
         }
+        $this->setbacks = $this->em->getRepository(Setbacks::class)->findWithDisabledAdvantages($nonAvoidedSetbacks);
+
+        dump($this->setbacks, $this->globalList);
+        // Disable advantages that must not be chosen based on setbacks
+        foreach ($this->setbacks as $setback) {
+            if (\count($disabledDisadvantages = $setback->getDisabledAdvantages()) > 0) {
+                dump('disabling ', $disabledDisadvantages);
+                foreach ($disabledDisadvantages as $advantage) {
+                    unset(
+                        $this->globalList['advantages'][$advantage->getId()],
+                        $this->globalList['disadvantages'][$advantage->getId()]
+                    );
+                }
+            }
+        }
+
+        $this->indications = \array_filter($currentStepValue['advantages_indications'] ?? []);
 
         $this->experience = $this->calculateExperience();
 
