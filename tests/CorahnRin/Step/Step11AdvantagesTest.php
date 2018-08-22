@@ -25,6 +25,10 @@ class Step11AdvantagesTest extends AbstractStepTest
                 47 => 1,
                 48 => 1,
             ],
+            'advantages_indications' => [
+                3 => 'Influent ally',
+                48 => 'Some phobia',
+            ],
         ]);
 
         static::assertSame(302, $result->getResponse()->getStatusCode());
@@ -39,7 +43,11 @@ class Step11AdvantagesTest extends AbstractStepTest
                 47 => 1,
                 48 => 1,
             ],
-            'remainingExp' => 80,
+            'advantages_indications' => [
+                3 => 'Influent ally',
+                48 => 'Some phobia',
+            ],
+            'remainingExp' => 100,
         ], $result->getSession()->get('character.corahn_rin')[$this->getStepName()]);
     }
 
@@ -53,6 +61,9 @@ class Step11AdvantagesTest extends AbstractStepTest
                 15 => 1,
             ],
             'disadvantages' => [],
+            'advantages_indications' => [
+                3 => 'Influent ally',
+            ],
         ]);
 
         static::assertSame(200, $result->getResponse()->getStatusCode());
@@ -70,6 +81,9 @@ class Step11AdvantagesTest extends AbstractStepTest
                 48 => 1,
                 50 => 3,
             ],
+            'advantages_indications' => [
+                48 => 'Some phobia',
+            ],
         ]);
 
         static::assertSame(200, $result->getResponse()->getStatusCode(), json_encode($result->getSession()->get('character.corahn_rin')));
@@ -80,7 +94,7 @@ class Step11AdvantagesTest extends AbstractStepTest
     /**
      * @dataProvider provideAllyTests
      */
-    public function testCannotChoseAllyMultipleTimes($values)
+    public function testCannotChoseAllyMultipleTimes($values, array $indications)
     {
         $result = $this->submitAction([], [
             'advantages'    => $values,
@@ -90,6 +104,7 @@ class Step11AdvantagesTest extends AbstractStepTest
                 44 => 1,
                 48 => 1,
             ],
+            'advantages_indications' => \array_merge($indications, [48 => 'Some phobia']),
         ]);
 
         $code = $result->getResponse()->getStatusCode();
@@ -107,10 +122,10 @@ class Step11AdvantagesTest extends AbstractStepTest
     {
         // Test all "Ally" advantage possibilities so we're sure every case is covered
         return [
-            [[1=>1, 2=>1, 3=>1]],
-            [[1=>1, 3=>1]],
-            [[1=>1, 2=>1]],
-            [[2=>1, 3=>1]],
+            [[1=>1, 2=>1, 3=>1], [3=>'Influent ally']],
+            [[1=>1, 3=>1], [3=>'Influent ally']],
+            [[1=>1, 2=>1], [3=>'Influent ally']],
+            [[2=>1, 3=>1], [3=>'Influent ally']],
         ];
     }
 
@@ -126,6 +141,9 @@ class Step11AdvantagesTest extends AbstractStepTest
                 43 => 1,
                 44 => 1,
                 48 => 1,
+            ],
+            'advantages_indications' => [
+                48 => 'Some phobia',
             ],
         ]);
 
