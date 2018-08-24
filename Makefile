@@ -27,8 +27,8 @@ install: .env build node_modules start vendor db fixtures assets map-tiles
 .PHONY: install
 
 build: ## Build the Docker images
-	@$(DOCKER_COMPOSE) pull --parallel --ignore-pull-failures 2> /dev/null
-	$(DOCKER_COMPOSE) build --pull --force-rm --no-cache --compress
+	$(DOCKER_COMPOSE) pull --parallel --ignore-pull-failures
+	$(DOCKER_COMPOSE) build --pull --force-rm --compress
 .PHONY: build
 
 start: ## Start the project
@@ -115,9 +115,22 @@ node_modules: package-lock.json
 ## -----
 ##
 
-tests: ## Execute checks & tests
-tests: checks phpunit
-.PHONY: tests
+install-php: ## Prepare environment to execute PHP tests
+install-php: build start vendor db fixtures
+.PHONY: install-php
+
+install-node: ## Prepare environment to execute NodeJS tests
+install-node: build node_modules start
+.PHONY: install-node
+
+php-tests: ## Execute checks & tests
+php-tests: checks phpunit
+.PHONY: php-tests
+
+node-tests: ## Execute checks & tests
+node-tests:
+	$(EXEC_JS) npm run-script test --verbose -LLLL
+.PHONY: node-tests
 
 checks: ## Execute linting and security checks
 checks: composer.lock
