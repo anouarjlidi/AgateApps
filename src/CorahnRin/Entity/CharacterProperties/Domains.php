@@ -11,16 +11,15 @@
 
 namespace CorahnRin\Entity\CharacterProperties;
 
+use CorahnRin\Data\Domains as DomainsData;
 use CorahnRin\Exception\InvalidDomain;
 use Doctrine\Common\Inflector\Inflector;
 use Doctrine\ORM\Mapping as ORM;
 
-use CorahnRin\Data\Domains as DomainsData;
-
 /**
  * Domains.
  *
- * @ORM\Embeddable()
+ * @ORM\Embeddable
  */
 class Domains
 {

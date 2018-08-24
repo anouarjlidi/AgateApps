@@ -28,7 +28,7 @@ class Disciplines
 
     public const RANKS = [
         self::RANK_PROFESSIONAL,
-        self::RANK_EXPERT
+        self::RANK_EXPERT,
     ];
 
     use HasBook;
@@ -108,7 +108,7 @@ class Disciplines
     public function setRank(string $rank): void
     {
         if (!\in_array($rank, self::RANKS, true)) {
-            throw new \InvalidArgumentException(sprintf('Invalid provided rank %s. Possible values: %s', $rank, \implode(', ', self::RANKS)));
+            throw new \InvalidArgumentException(\sprintf('Invalid provided rank %s. Possible values: %s', $rank, \implode(', ', self::RANKS)));
         }
 
         $this->rank = $rank;
@@ -138,10 +138,10 @@ class Disciplines
         Domains::validateDomain($domain);
 
         if (!\in_array($domain, $this->domains, true)) {
-            throw new \InvalidArgumentException(sprintf('Current social class does not have specified domain %s', $domain));
+            throw new \InvalidArgumentException(\sprintf('Current social class does not have specified domain %s', $domain));
         }
 
-        unset($this->domains[array_search($domain, $this->domains)]);
+        unset($this->domains[\array_search($domain, $this->domains, true)]);
 
         $this->domains = \array_values($this->domains);
     }

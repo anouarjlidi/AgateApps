@@ -141,10 +141,10 @@ class Jobs
         Domains::validateDomain($domain);
 
         if (!\in_array($domain, $this->secondaryDomains, true)) {
-            throw new \InvalidArgumentException(sprintf('Current social class does not have specified domain %s', $domain));
+            throw new \InvalidArgumentException(\sprintf('Current social class does not have specified domain %s', $domain));
         }
 
-        unset($this->secondaryDomains[array_search($domain, $this->secondaryDomains)]);
+        unset($this->secondaryDomains[\array_search($domain, $this->secondaryDomains, true)]);
 
         $this->secondaryDomains = \array_values($this->secondaryDomains);
     }

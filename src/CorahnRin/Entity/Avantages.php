@@ -112,7 +112,7 @@ class Avantages
     /**
      * @var string[]
      *
-     * @ORM\Column(name="bonuses_for", type="simple_array", options={"default"=""}, nullable=true)
+     * @ORM\Column(name="bonuses_for", type="simple_array", options={"default" = ""}, nullable=true)
      */
     protected $bonusesFor;
 
@@ -128,7 +128,7 @@ class Avantages
      *
      * @var string
      *
-     * @ORM\Column(name="indication_type", type="string", length=20, nullable=false, options={"default"="single_value"})
+     * @ORM\Column(name="indication_type", type="string", length=20, nullable=false, options={"default" = "single_value"})
      */
     protected $indicationType = self::INDICATION_TYPE_SINGLE_VALUE;
 
@@ -149,7 +149,7 @@ class Avantages
     /**
      * @var int
      *
-     * @ORM\Column(name="avtg_group", type="smallint", options={"default"="0"}, nullable=true)
+     * @ORM\Column(name="avtg_group", type="smallint", options={"default" = "0"}, nullable=true)
      */
     protected $group = 0;
 
@@ -281,7 +281,7 @@ class Avantages
     public function addBonusFor(string $bonusFor): void
     {
         if (!\in_array($bonusFor, self::POSSIBLE_BONUSES, true)) {
-            throw new \InvalidArgumentException(sprintf('Invalid bonus name "%s". Possible values are: %s', $bonusFor, implode(', ', self::POSSIBLE_BONUSES)));
+            throw new \InvalidArgumentException(\sprintf('Invalid bonus name "%s". Possible values are: %s', $bonusFor, \implode(', ', self::POSSIBLE_BONUSES)));
         }
 
         $this->bonusesFor[] = $bonusFor;
@@ -311,8 +311,8 @@ class Avantages
 
     public function setIndicationType(string $indicationType): void
     {
-        if (!in_array($indicationType, self::INDICATION_TYPES, true)) {
-            throw new \InvalidArgumentException(sprintf('Invalid indication type "%s". Possible values are: %s', $indicationType, implode(', ', self::INDICATION_TYPES)));
+        if (!\in_array($indicationType, self::INDICATION_TYPES, true)) {
+            throw new \InvalidArgumentException(\sprintf('Invalid indication type "%s". Possible values are: %s', $indicationType, \implode(', ', self::INDICATION_TYPES)));
         }
 
         $this->indicationType = $indicationType;

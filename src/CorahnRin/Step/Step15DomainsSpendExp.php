@@ -11,7 +11,6 @@
 
 namespace CorahnRin\Step;
 
-use CorahnRin\Data\Domains;
 use CorahnRin\GeneratorTools\DomainsCalculator;
 use Symfony\Component\HttpFoundation\Response;
 

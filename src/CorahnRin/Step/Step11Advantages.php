@@ -65,7 +65,7 @@ class Step11Advantages extends AbstractStepAction
         $this->disadvantages = $currentStepValue['disadvantages'] ?? [];
         $characterSetbacks = $this->getCharacterProperty('07_setbacks');
         $nonAvoidedSetbacks = [];
-        foreach  ($characterSetbacks as $id => $values) {
+        foreach ($characterSetbacks as $id => $values) {
             if ($values['avoided']) {
                 continue;
             }
@@ -108,9 +108,7 @@ class Step11Advantages extends AbstractStepAction
     }
 
     /**
-     * @param Avantages[] $advantages
-     * @param Avantages[] $disadvantages
-     * @param bool        $returnFalseOnError
+     * @param bool $returnFalseOnError
      *
      * @return float|int|mixed
      */
@@ -186,7 +184,6 @@ class Step11Advantages extends AbstractStepAction
 
         // First, validate all IDs
         foreach ($advantages as $id => $value) {
-
             if ($this->isPoor && \in_array($id, [4, 5, 6, 7, 8], true)) {
                 $this->hasError = true;
                 $this->flashMessage('Vous ne pouvez pas choisir "Avantage financier" si votre personnage a le revers "Pauvre".');
@@ -221,13 +218,13 @@ class Step11Advantages extends AbstractStepAction
             }
 
             if (0 !== $value && $advantage->getRequiresIndication()) {
-                $indication = trim($this->indications[$id] ?? '');
+                $indication = \trim($this->indications[$id] ?? '');
                 if (!$indication) {
                     $this->hasError = true;
                     $this->flashMessage('L\'avantage "%advtg%" nécessite une indication supplémentaire.', 'error', ['%advtg%' => $advantage->getName()]);
                     break;
                 }
-                if ($advantage->getIndicationType() === Avantages::INDICATION_TYPE_SINGLE_CHOICE) {
+                if (Avantages::INDICATION_TYPE_SINGLE_CHOICE === $advantage->getIndicationType()) {
                     $choices = $advantage->getBonusesFor();
                     if (!\in_array($indication, $choices, true)) {
                         $this->hasError = true;
@@ -273,13 +270,13 @@ class Step11Advantages extends AbstractStepAction
             }
 
             if (0 !== $value && $disadvantage->getRequiresIndication()) {
-                $indication = trim($this->indications[$id] ?? '');
+                $indication = \trim($this->indications[$id] ?? '');
                 if (!$indication) {
                     $this->hasError = true;
                     $this->flashMessage('Le désavantage "%advtg%" nécessite une indication supplémentaire.', 'error', ['%advtg%' => $disadvantage->getName()]);
                     break;
                 }
-                if ($disadvantage->getIndicationType() === Avantages::INDICATION_TYPE_SINGLE_CHOICE) {
+                if (Avantages::INDICATION_TYPE_SINGLE_CHOICE === $disadvantage->getIndicationType()) {
                     $choices = $disadvantage->getBonusesFor();
                     if (!\in_array($indication, $choices, true)) {
                         $this->hasError = true;

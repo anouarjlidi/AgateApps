@@ -11,14 +11,14 @@
 
 namespace CorahnRin\Entity;
 
-use CorahnRin\Data\Orientation;
 use CorahnRin\Data\Domains as DomainsData;
+use CorahnRin\Data\Orientation;
 use CorahnRin\Entity\CharacterProperties\Bonuses;
 use CorahnRin\Entity\CharacterProperties\CharAdvantages;
 use CorahnRin\Entity\CharacterProperties\CharDisciplines;
-use CorahnRin\Entity\CharacterProperties\Domains;
 use CorahnRin\Entity\CharacterProperties\CharFlux;
 use CorahnRin\Entity\CharacterProperties\CharSetbacks;
+use CorahnRin\Entity\CharacterProperties\Domains;
 use CorahnRin\Entity\CharacterProperties\HealthCondition;
 use CorahnRin\Entity\CharacterProperties\Money;
 use CorahnRin\Entity\CharacterProperties\Ways;

@@ -15,10 +15,10 @@ use Doctrine\Migrations\AbstractMigration;
  */
 final class Version20180801201258 extends AbstractMigration
 {
-    public function up(Schema $schema) : void
+    public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on "mysql".');
+        $this->abortIf('mysql' !== $this->connection->getDatabasePlatform()->getName(), 'Migration can only be executed safely on "mysql".');
 
         $conn = $this->connection;
         $simpleArray = Type::getType(Type::SIMPLE_ARRAY);
@@ -206,7 +206,7 @@ final class Version20180801201258 extends AbstractMigration
         $this->addSql('UPDATE jobs SET primary_domain = :domain WHERE domain_primary_id = :id', [':domain' => $bonusesIdsReplacers[16], 'id' => 16]);
 
         // "Poverty" setback disables "Financial ease" and "Poor" disadvantages.
-        if ($conn->query('select id from setbacks where id = 9')->rowCount() === 1) {
+        if (1 === $conn->query('select id from setbacks where id = 9')->rowCount()) {
             $this->addSql('INSERT INTO setbacks_advantages SET setback_id = 9, advantage_id = 4;');
             $this->addSql('INSERT INTO setbacks_advantages SET setback_id = 9, advantage_id = 5;');
             $this->addSql('INSERT INTO setbacks_advantages SET setback_id = 9, advantage_id = 6;');
@@ -220,7 +220,7 @@ final class Version20180801201258 extends AbstractMigration
         foreach ($disciplinesDomains as $line) {
             $newDisciplinesDomains[$line['discipline_id']][] = $line['domain_id'];
         }
-        foreach  ($newDisciplinesDomains as $id => $domains) {
+        foreach ($newDisciplinesDomains as $id => $domains) {
             $convertedDomains = $simpleArray->convertToDatabaseValue($domains, $conn->getDatabasePlatform());
             $this->addSql('UPDATE disciplines SET domains = :domains WHERE id = :id', [':domains' => $convertedDomains, ':id' => $id]);
         }
@@ -230,7 +230,7 @@ final class Version20180801201258 extends AbstractMigration
         foreach ($socialClassesSecondaryDomains as $line) {
             $newSocialClassesSecondaryDomains[$line['social_classes_id']][] = $line['domains_id'];
         }
-        foreach  ($newSocialClassesSecondaryDomains as $id => $domains) {
+        foreach ($newSocialClassesSecondaryDomains as $id => $domains) {
             $convertedDomains = $simpleArray->convertToDatabaseValue($domains, $conn->getDatabasePlatform());
             $this->addSql('UPDATE social_class SET domains = :domains WHERE id = :id', [':domains' => $convertedDomains, ':id' => $id]);
         }
@@ -240,17 +240,17 @@ final class Version20180801201258 extends AbstractMigration
         foreach ($jobsSecondaryDomains as $line) {
             $newJobsSecondaryDomains[$line['jobs_id']][] = $line['domains_id'];
         }
-        foreach  ($newJobsSecondaryDomains as $id => $domains) {
+        foreach ($newJobsSecondaryDomains as $id => $domains) {
             $convertedDomains = $simpleArray->convertToDatabaseValue($domains, $conn->getDatabasePlatform());
             $this->addSql('UPDATE jobs SET secondary_domains = :domains WHERE id = :id', [':domains' => $convertedDomains, ':id' => $id]);
         }
 
         $newAdvantagesBonuses = [];
         foreach ($conn->query('select id, bonusdisc from avantages')->fetchAll() as $line) {
-            if (!trim($line['bonusdisc'])) {
+            if (!\trim($line['bonusdisc'])) {
                 continue;
             }
-            $bonuses = explode(',', $line['bonusdisc']);
+            $bonuses = \explode(',', $line['bonusdisc']);
             foreach ($bonuses as $k => $bonus) {
                 if (!isset($bonusesIdsReplacers[$bonus])) {
                     continue;
@@ -293,7 +293,6 @@ final class Version20180801201258 extends AbstractMigration
         $this->addSql('UPDATE avantages SET bonuses_for = :value WHERE id = :id', [':value' => 'luck', ':id' => 21]);
         $this->addSql('UPDATE avantages SET bonuses_for = :value WHERE id = :id', [':value' => 'luck', ':id' => 43]);
 
-
         // Scholar special case (which is the inspiration for the indication system, basically)
         $this->addSql('
             UPDATE avantages SET
@@ -315,10 +314,10 @@ final class Version20180801201258 extends AbstractMigration
         );
     }
 
-    public function down(Schema $schema) : void
+    public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on "mysql".');
+        $this->abortIf('mysql' !== $this->connection->getDatabasePlatform()->getName(), 'Migration can only be executed safely on "mysql".');
 
         $this->addSql('CREATE TABLE characters_domains (character_id INT NOT NULL, domain_id INT NOT NULL, score SMALLINT NOT NULL, bonus SMALLINT DEFAULT 0 NOT NULL, malus SMALLINT DEFAULT 0 NOT NULL, INDEX IDX_C4F7C6C61136BE75 (character_id), INDEX IDX_C4F7C6C6115F0EE5 (domain_id), PRIMARY KEY(character_id, domain_id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE disciplines_domains (discipline_id INT NOT NULL, domain_id INT NOT NULL, INDEX IDX_FE41FAE8A5522701 (discipline_id), INDEX IDX_FE41FAE8115F0EE5 (domain_id), PRIMARY KEY(discipline_id, domain_id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');

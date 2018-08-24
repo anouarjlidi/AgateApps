@@ -59,7 +59,7 @@ class Step13PrimaryDomains extends AbstractStepAction
         $this->job = $this->em->getRepository(Jobs::class)->find($this->getCharacterProperty('02_job'));
         $advantages = $this->getCharacterProperty('11_advantages')['advantages'];
 
-        $advantagesIds = array_keys($advantages);
+        $advantagesIds = \array_keys($advantages);
 
         $advantages = $this->em->getRepository(Avantages::class)->findBy(['id' => $advantagesIds]);
 

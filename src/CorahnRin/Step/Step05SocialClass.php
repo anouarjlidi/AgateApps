@@ -55,7 +55,7 @@ class Step05SocialClass extends AbstractStepAction
                         'id' => $socialClassId,
                         'domains' => [
                             $domainId1,
-                            $domainId2
+                            $domainId2,
                         ],
                     ]);
 
@@ -73,7 +73,7 @@ class Step05SocialClass extends AbstractStepAction
             'socialClass_value' => $socialClassId,
             'socialClassDomains' => [
                 $domainId1,
-                $domainId2
+                $domainId2,
             ],
         ], 'corahn_rin/Steps/05_social_class.html.twig');
     }

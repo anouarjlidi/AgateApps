@@ -18,7 +18,7 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
  * @method Setbacks|null findOneBy(array $criteria, array $orderBy = null)
- * @method Setbacks[] findBy(array $criteria, array $orderBy = null)
+ * @method Setbacks[]    findBy(array $criteria, array $orderBy = null)
  * @method Setbacks|null find($id, $lockMode = null, $lockVersion = null)
  */
 class SetbacksRepository extends ServiceEntityRepository

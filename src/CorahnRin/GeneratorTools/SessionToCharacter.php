@@ -12,7 +12,6 @@
 namespace CorahnRin\GeneratorTools;
 
 use Behat\Transliterator\Transliterator;
-use CorahnRin\Data\Domains as DomainsData;
 use CorahnRin\Data\Ways;
 use CorahnRin\Entity\Armors;
 use CorahnRin\Entity\Avantages;
