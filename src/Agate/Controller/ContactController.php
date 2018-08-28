@@ -68,7 +68,7 @@ class ContactController implements PublicService
 
             $subject = $translator->trans('contact.form.message_subject', [
                 '%name%' => $message->getName(),
-                '%subject%' => \strip_tags($message->getSubject()),
+                '%subject%' => \strip_tags($translator->trans($message->getSubject(), [], 'agate')),
             ], 'agate');
 
             // If message succeeds, we redirect
