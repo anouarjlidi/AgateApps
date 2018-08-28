@@ -9,7 +9,8 @@ contact.form.product_range: 'Product range (if applicable)'
 contact.form.send: 'Send'
 contact.form.message_sent: 'Your email has been sent! Thanks!'
 contact.form.error: 'An error occured when sending the email. Our team was warned and will work on it.'
-contact.form.message_subject: 'Message by "%name%" via the portal: %subject%'
+contact.form.message_subject: '[%subject%] Message by "%name%"'
+contact.form.message_subject_with_title: '[%subject%] Message by "%name%" : %title%'
 contact.subject.specify: '- Specify a subject -'
 contact.subject.application: Application
 contact.subject.after_sales: After sales
