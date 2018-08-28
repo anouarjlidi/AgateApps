@@ -37,6 +37,7 @@ final class PortalMailer
             ->setTo('pierstoval+newportal@gmail.com')
             ->addCc('cindy.studioagate+portal@gmail.com', 'Cindy Husson')
             ->addCc('nelyhann+portal@gmail.com', 'Les Ombres d\'Esteren')
+            ->addCc('iris@esteren.org', 'Iris D\'Automne')
             ->setBody($this->twig->render('agate/email/contact_email.html.twig', [
                 'ip' => $ip,
                 'message' => $message,

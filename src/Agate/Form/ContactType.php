@@ -14,6 +14,7 @@ namespace Agate\Form;
 use Agate\EventListener\CaptchaFormSubscriber;
 use Agate\Model\ContactMessage;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -39,6 +40,7 @@ class ContactType extends AbstractType
 
         $builder
             ->add('name', TextType::class, [
+                'label' => 'contact.form.name',
                 'attr' => [
                     'pattern' => '.{2,}',
                 ],
@@ -47,6 +49,7 @@ class ContactType extends AbstractType
                 ],
             ])
             ->add('email', EmailType::class, [
+                'label' => 'contact.form.email',
                 'constraints' => [
                     new Constraints\Email([
                         'checkHost' => 'prod' === $this->kernelEnvironment,
@@ -54,12 +57,30 @@ class ContactType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('subject', TextType::class, [
+            ->add('subject', ChoiceType::class, [
+                'label' => 'contact.form.subject',
+                'choices' => ContactMessage::SUBJECTS,
+                'constraints' => [
+                    new Constraints\Choice(['choices' => ContactMessage::SUBJECTS]),
+                ],
+            ])
+            ->add('productRange', ChoiceType::class, [
+                'label' => 'contact.form.product_range',
+                'choices' => ContactMessage::PRODUCT_RANGES,
+                'required' => false,
+                'constraints' => [
+                    new Constraints\Choice(['choices' => ContactMessage::PRODUCT_RANGES]),
+                ],
+            ])
+            ->add('title', TextType::class, [
+                'label' => 'contact.form.title',
                 'constraints' => [
                     new Constraints\NotBlank(),
                 ],
             ])
-            ->add('message', TextareaType::class)
+            ->add('message', TextareaType::class, [
+                'label' => 'contact.form.message',
+            ])
             ->addEventSubscriber($this->captchaFormSubscriber)
         ;
     }
@@ -68,7 +89,7 @@ class ContactType extends AbstractType
     {
         $resolver
             ->setDefaults([
-                'translation_domain' => 'contact',
+                'translation_domain' => 'agate',
                 'data_class' => ContactMessage::class,
             ])
             ->setRequired('request')

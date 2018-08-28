@@ -22,20 +22,17 @@
 
                 <h1 class="text-4xl center">{{ 'contact.send_message'|trans }}</h1>
 
-                {{ form_start(form, {attr: {id: 'contact_form'}}) -}}
+                {{- form_start(form, {attr: {id: 'contact_form'}}) -}}
 
-                {{ form_errors(form) }}
+                {{- form_errors(form) -}}
 
-                {{- form_row(form.name) -}}
-                {{- form_row(form.email) -}}
-                {{- form_row(form.subject) -}}
-                {{- form_row(form.message) -}}
+                {{- form_widget(form) -}}
 
                 {% if enable_contact_captcha %}
                     <div class="g-recaptcha" data-sitekey="{{ google_recaptcha_site_key }}"></div>
                 {% endif %}
 
-                <button class="btn" type="submit">{{ 'form.send'|trans({}, 'contact') }}</button>
+                <button class="btn" type="submit">{{ 'contact.form.send'|trans }}</button>
 
                 {{- form_end(form) }}
             </div>

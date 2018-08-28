@@ -31,9 +31,11 @@ class ContactControllerTest extends WebTestCase
 
         $data = [
             'name'    => 'username',
-            'subject' => 'Hello world!',
+            'subject' => 'contact.subject.application',
+            'productRange' => 'contact.product_range.dragons',
             'email'   => 'test@local.host',
             'message' => 'a message for testing purpose',
+            'title' => 'Some message title',
         ];
 
         $client->submit($form, [
@@ -47,7 +49,7 @@ class ContactControllerTest extends WebTestCase
 
         $crawler = $client->followRedirect();
 
-        $message = $client->getContainer()->get('translator')->trans('form.message_sent', [], 'contact');
+        $message = $client->getContainer()->get('translator')->trans('contact.form.message_sent', [], 'agate');
 
         static::assertSame($message, trim($crawler->filter('#flash-messages div.card-panel.success')->text()));
 
@@ -57,8 +59,7 @@ class ContactControllerTest extends WebTestCase
         // Check that an email was sent
         $collectedMessages = $mailCollector->getMessages();
 
-        // FIXME
-        static::assertGreaterThanOrEqual(1, $collectedMessages);
+        static::assertCount(3, $collectedMessages);
 
         /** @var \Swift_Message $message */
         $message = $collectedMessages[0];
@@ -66,11 +67,7 @@ class ContactControllerTest extends WebTestCase
         // Asserting email data
         static::assertInstanceOf(\Swift_Message::class, $message);
         static::assertSame($data['email'], key($message->getFrom()));
-        static::assertSame('Message de "username" via le portail : '.$data['subject'], $message->getSubject());
+        static::assertSame('[contact.subject.application] Message de "username"', $message->getSubject());
         static::assertContains($data['message'], $message->getBody());
-
-        if ($collectedMessages > 1) {
-            static::markAsRisky();
-        }
     }
 }

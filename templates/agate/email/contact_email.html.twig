@@ -1,7 +1,6 @@
-{% spaceless %}
-
 {% extends 'agate/email/email_layout_internal.html.twig' %}
 
+{% trans_default_domain 'agate' %}
 {% import 'agate/email/_macros.html.twig' as macros %}
 
 {# For demonstration only #}
@@ -10,23 +9,37 @@
         'name': 'USER',
         'subject': 'SUBJECT',
         'email' : 'no-reply@esteren.org',
-        'message': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti eaque labore minima sit tempora voluptas! Aspernatur dolor, ducimus eligendi iste itaque laudantium, modi nam nemo nulla numquam, odio quo vero.'
+        'message': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti eaque labore minima sit tempora voluptas! Aspernatur dolor, ducimus eligendi iste itaque laudantium, modi nam nemo nulla numquam, odio quo vero.',
+        'title': 'Message title'
     } %}
     {% set ip = '127.0.0.1' %}
 {% endif %}
 
-{% set messageSubject %}
-    {{ 'form.message_subject'|trans({'%name%': message.name, '%subject%': message.subject}, 'contact') }}
-{% endset %}
+{% set messageSubject -%}
+    {{- 'contact.form.message_subject_with_title'|trans({
+        '%name%': message.name,
+        '%subject%': (message.subject|trans),
+        '%title%': message.title
+    }, 'agate') -}}
+{%- endset %}
 
-{% block title (messageSubject|striptags) %}
+{% block title (messageSubject|striptags|raw) %}
 
-{% block content %}
-    {{ macros.text(messageSubject) }}
+{% block content -%}
+    {%- spaceless %}
+    {{ macros.text('contact.form.message_subject'|trans({
+        '%name%': message.name,
+        '%subject%': (message.subject|trans)
+    }, 'agate')) }}
+    {% if message.productRange %}
+        {{ macros.text(('contact.mail.product_range'|trans)~' : '~(message.productRange|trans)) }}
+    {% endif %}
     <hr>
-    {{ macros.text(message.message, 14, 'monospace')|nl2br }}
+    {{ macros.text(message.title, 16) }}
+    {{ macros.text(message.message, 14)|nl2br }}
     <hr>
     {{ macros.link_btn_center('mailto:'~message.email, 'Répondre') }}
-{% endblock %}
 
-{% endspaceless %}
+    {% endspaceless -%}
+{%- endblock %}
+
