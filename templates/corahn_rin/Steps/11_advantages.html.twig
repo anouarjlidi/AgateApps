@@ -31,7 +31,7 @@
                 data-delay="50"
                 data-html="true"
                 class="change_avdesv change_{{ prefix }} btn btn-medium bl tooltipped {{ class_more }}">
-            <input data-augmentation="{{ avtg.augmentation }}"
+            <input data-augmentation="{{ avtg.augmentationCount }}"
                    type="hidden"
                    name="{{ avtg.isDesv() ? 'dis' }}advantages[{{ avtg.id }}]"
                    value="{{ list_to_check[avtg.id] is defined and list_to_check[avtg.id] ? list_to_check[avtg.id] : '0' }}"
@@ -40,7 +40,7 @@
                    data-element-cost="{{ avtg.xp }}"
                    class="_hidden input_{{ prefix }}" />
             <span>
-                {%- if avtg.augmentation > 0 -%}
+                {%- if avtg.augmentationCount > 0 -%}
                     <span class="text-red">*</span>&nbsp;
                 {%- endif -%}
                 {{- avtg.name }} <small>(XP&nbsp;:&nbsp;{{ avtg.xp }})</small>

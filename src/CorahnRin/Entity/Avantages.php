@@ -103,11 +103,11 @@ class Avantages
     protected $description;
 
     /**
-     * @var bool
+     * @var int
      *
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(name="augmentation_count", type="smallint", nullable=false)
      */
-    protected $augmentation;
+    protected $augmentationCount;
 
     /**
      * @var string[]
@@ -147,11 +147,11 @@ class Avantages
     protected $isCombatArt;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="avtg_group", type="smallint", options={"default" = "0"}, nullable=true)
+     * @ORM\Column(name="avtg_group", type="string", nullable=true)
      */
-    protected $group = 0;
+    protected $group = '';
 
     /**
      * Get id.
@@ -366,51 +366,27 @@ class Avantages
         return $this->isCombatArt;
     }
 
-    /**
-     * Set augmentation.
-     *
-     * @param int $augmentation
-     *
-     * @return Avantages
-     */
-    public function setAugmentation($augmentation)
+    public function setAugmentationCount(int $augmentationCount): self
     {
-        $this->augmentation = $augmentation;
+        $this->augmentationCount = $augmentationCount;
 
         return $this;
     }
 
-    /**
-     * Get augmentation.
-     *
-     * @return int
-     */
-    public function getAugmentation()
+    public function getAugmentationCount(): int
     {
-        return $this->augmentation;
+        return $this->augmentationCount;
     }
 
-    /**
-     * Set group.
-     *
-     * @param int $group
-     *
-     * @return Avantages
-     */
-    public function setGroup($group)
+    public function setGroup(?string $group): self
     {
-        $this->group = $group;
+        $this->group = (string) $group;
 
         return $this;
     }
 
-    /**
-     * Get group.
-     *
-     * @return int
-     */
-    public function getGroup()
+    public function getGroup(): string
     {
-        return $this->group;
+        return (string) $this->group;
     }
 }

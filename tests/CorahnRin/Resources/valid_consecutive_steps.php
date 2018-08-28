@@ -151,7 +151,7 @@ return [
                 3 => 'Influent ally',
                 48 => 'Some phobia',
             ],
-            'remainingExp' => 100,
+            'remainingExp' => 80,
         ],
     ],
 

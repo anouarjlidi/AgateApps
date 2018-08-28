@@ -45,7 +45,9 @@ final class Version20180801201258 extends AbstractMigration
             ALTER TABLE avantages
             ADD bonuses_for LONGTEXT DEFAULT NULL COMMENT "(DC2Type:simple_array)",
             ADD requires_indication VARCHAR(255) DEFAULT NULL,
-            ADD indication_type VARCHAR(20) NOT NULL DEFAULT "'.Avantages::INDICATION_TYPE_SINGLE_VALUE.'"
+            ADD indication_type VARCHAR(20) NOT NULL DEFAULT "'.Avantages::INDICATION_TYPE_SINGLE_VALUE.'",
+            CHANGE augmentation augmentation_count SMALLINT(6) NOT NULL DEFAULT \'0\',
+            CHANGE avtg_group avtg_group VARCHAR(255) DEFAULT NULL
         ');
         $this->addSql('ALTER TABLE disciplines ADD domains LONGTEXT COMMENT "(DC2Type:simple_array)"');
         $this->addSql('ALTER TABLE characters_disciplines ADD domain VARCHAR(100) NOT NULL');
@@ -292,6 +294,9 @@ final class Version20180801201258 extends AbstractMigration
         $this->addSql('UPDATE avantages SET requires_indication = :value WHERE id = :id', [':value' => 'advantages.indication.phobia', ':id' => 48]);
         $this->addSql('UPDATE avantages SET bonuses_for = :value WHERE id = :id', [':value' => 'luck', ':id' => 21]);
         $this->addSql('UPDATE avantages SET bonuses_for = :value WHERE id = :id', [':value' => 'luck', ':id' => 43]);
+        $this->addSql('UPDATE avantages SET augmentation_count = :value WHERE id = :id', [':value' => 2, ':id' => 50]);
+        $this->addSql('UPDATE avantages SET avtg_group = :value WHERE id IN (:ids)', [':value' => 'advantages.group.ally', ':ids' => [1, 2, 3]]);
+        $this->addSql('UPDATE avantages SET avtg_group = :value WHERE id IN (:ids)', [':value' => 'advantages.group.financial_ease', ':ids' => [4, 5, 6, 7, 8]]);
 
         // Scholar special case (which is the inspiration for the indication system, basically)
         $this->addSql('

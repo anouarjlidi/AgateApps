@@ -48,14 +48,14 @@ class AdvantagesFixtures extends AbstractFixture implements OrderedFixtureInterf
         /** @var Books $book */
         $book = $this->getReference('corahnrin-book-2');
 
-        $this->fixtureObject($repo, 1, 1, 'Allié isolé', 'Allié isolé', 20, 'Un allié dans un village, prévôt, marchand, artisan...', 0, [], 0, 0, $book, 'advantages.indication.ally_isolated');
-        $this->fixtureObject($repo, 2, 1, 'Allié mentor', 'Allié mentor', 40, 'Un mentor ou un professeur qui vous donne un bonus de +1 dans un Domaine', 0, [], 0, 0, $book, 'advantages.indication.ally_mentor');
-        $this->fixtureObject($repo, 3, 1, 'Allié influent', 'Allié influent', 50, 'Un important homme politique, chef de guilde ou de clan, qui a un pouvoir important dans tout le pays', 0, [], 0, 0, $book, 'advantages.indication.ally_influent');
-        $this->fixtureObject($repo, 4, 2, 'Aisance financière 1', 'Aisance financière 1', 10, '+20 daols d\'azur à la création du personnage', 0, ['money_azure_20'], 0, 0, $book);
-        $this->fixtureObject($repo, 5, 2, 'Aisance financière 2', 'Aisance financière 2', 20, '+50 daols d\'azur à la création du personnage', 0, ['money_azure_50'], 0, 0, $book);
-        $this->fixtureObject($repo, 6, 2, 'Aisance financière 3', 'Aisance financière 3', 30, '+10 daols de givre à la création du personnage', 0, ['money_frost_10'], 0, 0, $book);
-        $this->fixtureObject($repo, 7, 2, 'Aisance financière 4', 'Aisance financière 4', 40, '+50 daols de givre à la création du personnage', 0, ['money_frost_50'], 0, 0, $book);
-        $this->fixtureObject($repo, 8, 2, 'Aisance financière 5', 'Aisance financière 5', 50, '+100 daols de givre à la création du personnage', 0, ['money_frost_100'], 0, 0, $book);
+        $this->fixtureObject($repo, 1, 'advantages.group.ally', 'Allié isolé', 'Allié isolé', 20, 'Un allié dans un village, prévôt, marchand, artisan...', 0, [], 0, 0, $book, 'advantages.indication.ally_isolated');
+        $this->fixtureObject($repo, 2, 'advantages.group.ally', 'Allié mentor', 'Allié mentor', 40, 'Un mentor ou un professeur qui vous donne un bonus de +1 dans un Domaine', 0, [], 0, 0, $book, 'advantages.indication.ally_mentor');
+        $this->fixtureObject($repo, 3, 'advantages.group.ally', 'Allié influent', 'Allié influent', 50, 'Un important homme politique, chef de guilde ou de clan, qui a un pouvoir important dans tout le pays', 0, [], 0, 0, $book, 'advantages.indication.ally_influent');
+        $this->fixtureObject($repo, 4, 'advantages.group.financial_ease', 'Aisance financière 1', 'Aisance financière 1', 10, '+20 daols d\'azur à la création du personnage', 0, ['money_azure_20'], 0, 0, $book);
+        $this->fixtureObject($repo, 5, 'advantages.group.financial_ease', 'Aisance financière 2', 'Aisance financière 2', 20, '+50 daols d\'azur à la création du personnage', 0, ['money_azure_50'], 0, 0, $book);
+        $this->fixtureObject($repo, 6, 'advantages.group.financial_ease', 'Aisance financière 3', 'Aisance financière 3', 30, '+10 daols de givre à la création du personnage', 0, ['money_frost_10'], 0, 0, $book);
+        $this->fixtureObject($repo, 7, 'advantages.group.financial_ease', 'Aisance financière 4', 'Aisance financière 4', 40, '+50 daols de givre à la création du personnage', 0, ['money_frost_50'], 0, 0, $book);
+        $this->fixtureObject($repo, 8, 'advantages.group.financial_ease', 'Aisance financière 5', 'Aisance financière 5', 50, '+100 daols de givre à la création du personnage', 0, ['money_frost_100'], 0, 0, $book);
         $this->fixtureObject($repo, 9, null, 'Beau', 'Belle', 30, '+1 aux jets de Relation et Représentation', 1, [Domains::RELATION['title'], Domains::PERFORMANCE['title']], 0, 0, $book);
         $this->fixtureObject($repo, 10, null, 'Bonne santé', 'Bonne santé', 40, '+1 case d\'état de santé, +1 aux jets de Vigueur face à la maladie et aux poisons', 1, ['health'], 0, 0, $book);
         $this->fixtureObject($repo, 11, null, 'Bonne vue', 'Bonne vue', 30, '+1 aux jets de Perception concernant la vue et Tir et Lancer', 1, [Domains::PERCEPTION['title'], Domains::SHOOTING_AND_THROWING['title']], 0, 0, $book);
@@ -81,7 +81,7 @@ class AdvantagesFixtures extends AbstractFixture implements OrderedFixtureInterf
         $this->fixtureObject($repo, 36, null, 'Faible', 'Faible', 30, '-1 aux jets de Prouesses concernant la force, Combat au Contact, Tir & lancer', 1, [Domains::CLOSE_COMBAT['title'], Domains::FEATS['title'], Domains::SHOOTING_AND_THROWING['title']], 1, 0, $book);
         $this->fixtureObject($repo, 37, null, 'Lent d\'esprit', 'Lente d\'esprit', 30, '-1 aux jets de Science, Magience et Occultisme', 1, [Domains::SCIENCE['title'], Domains::OCCULTISM['title'], Domains::MAGIENCE['title']], 1, 0, $book);
         $this->fixtureObject($repo, 38, null, 'Fragile', 'Fragile', 20, '-1 point de Survie', 1, ['survival'], 1, 0, $book);
-        $this->fixtureObject($repo, 39, null, 'Obtus', 'Obtuse', 30, '-1 aux jets de Mystères Demorthèn, Voyage et Relation', [1], [Domains::DEMORTHEN_MYSTERIES['title'], Domains::TRAVEL['title'], Domains::RELATION['title']], 1, 0, $book);
+        $this->fixtureObject($repo, 39, null, 'Obtus', 'Obtuse', 30, '-1 aux jets de Mystères Demorthèn, Voyage et Relation', 1, [Domains::DEMORTHEN_MYSTERIES['title'], Domains::TRAVEL['title'], Domains::RELATION['title']], 1, 0, $book);
         $this->fixtureObject($repo, 40, null, 'Laid', 'Laide', 20, '-1 aux jets de Relation et Représentation', 1, [Domains::RELATION['title'], Domains::PERFORMANCE['title']], 1, 0, $book);
         $this->fixtureObject($repo, 41, null, 'Lent', 'Lente', 10, '-1 au score de Rapidité', 1, ['speed'], 1, 0, $book);
         $this->fixtureObject($repo, 42, null, 'Mal entendant', 'Mal entendante', 20, '-1 aux jets de Perception auditive', 1, [Domains::PERCEPTION['title']], 1, 0, $book);
@@ -92,7 +92,7 @@ class AdvantagesFixtures extends AbstractFixture implements OrderedFixtureInterf
         $this->fixtureObject($repo, 47, null, 'Pauvre', 'Pauvre', 10, 'Le PJ ne disposera que du quart de la somme en Daols fournie à la création', 0, [], 1, 0, $book);
         $this->fixtureObject($repo, 48, null, 'Phobie', 'Phobie', 40, '+1 point de trauma, et souffre du désordre Phobie en plus de son désordre actuel', 0, ['trauma'], 1, 0, $book, 'advantages.indication.phobia');
         $this->fixtureObject($repo, 49, null, 'Timide', 'Timide', 10, '-1 aux jets de Relation et Représentation', 0, [Domains::RELATION['title'], Domains::PERFORMANCE['title']], 1, 0, $book);
-        $this->fixtureObject($repo, 50, null, 'Traumatisme', 'Traumatisme', 10, '+1 point de trauma', 1, ['trauma'], 1, 0, $book);
+        $this->fixtureObject($repo, 50, null, 'Traumatisme', 'Traumatisme', 10, '+1 point de trauma', 2, ['trauma'], 1, 0, $book);
         $this->fixtureObject($repo, 51, null, 'Anosmie', 'Anosmie', 5, '-1 aux jets de Perception concernant l\'odorat', 1, [Domains::PERCEPTION['title']], 1, 0, $book);
         $this->fixtureObject($repo, 52, null, 'Agueusie', 'Agueusie', 5, '-1 aux jets de Perception concernant le goût', 1, [Domains::PERCEPTION['title']], 1, 0, $book);
 
@@ -136,7 +136,7 @@ class AdvantagesFixtures extends AbstractFixture implements OrderedFixtureInterf
             $obj->setXp($xp);
             $obj->setNameFemale($nameFemale);
             $obj->setDescription($description);
-            $obj->setAugmentation($augmentation);
+            $obj->setAugmentationCount($augmentation);
             $obj->setDesv($isDesv);
             $obj->setCombatArt($isCombatArt);
             $obj->setBook($book);

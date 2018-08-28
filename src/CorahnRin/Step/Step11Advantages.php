@@ -22,7 +22,6 @@ class Step11Advantages extends AbstractStepAction
      * @var Avantages[][]
      */
     private $globalList;
-
     /**
      * @var Avantages[]
      */
@@ -32,11 +31,6 @@ class Step11Advantages extends AbstractStepAction
      * @var Avantages[]
      */
     private $disadvantages;
-
-    /**
-     * @var bool
-     */
-    private $isPoor;
 
     /**
      * @var int
@@ -51,7 +45,12 @@ class Step11Advantages extends AbstractStepAction
     /**
      * @var Setbacks[]
      */
-    private $setbacks;
+    private $setbacks = [];
+
+    /**
+     * @var Avantages[]
+     */
+    private $advantagesDisabledBySetbacks = [];
 
     /**
      * {@inheritdoc}
@@ -71,14 +70,18 @@ class Step11Advantages extends AbstractStepAction
             }
             $nonAvoidedSetbacks[] = $id;
         }
-        $this->setbacks = $this->em->getRepository(Setbacks::class)->findWithDisabledAdvantages($nonAvoidedSetbacks);
+        if (0 !== \count($nonAvoidedSetbacks)) {
+            $this->setbacks = $this->em->getRepository(Setbacks::class)->findWithDisabledAdvantages($nonAvoidedSetbacks);
+        }
 
-        dump($this->setbacks, $this->globalList);
         // Disable advantages that must not be chosen based on setbacks
         foreach ($this->setbacks as $setback) {
             if (\count($disabledDisadvantages = $setback->getDisabledAdvantages()) > 0) {
-                dump('disabling ', $disabledDisadvantages);
                 foreach ($disabledDisadvantages as $advantage) {
+                    $this->advantagesDisabledBySetbacks[$advantage->getId()] = [
+                        'setback' => $setback,
+                        'advantage' => $advantage,
+                    ];
                     unset(
                         $this->globalList['advantages'][$advantage->getId()],
                         $this->globalList['disadvantages'][$advantage->getId()]
@@ -89,7 +92,7 @@ class Step11Advantages extends AbstractStepAction
 
         $this->indications = \array_filter($currentStepValue['advantages_indications'] ?? []);
 
-        $this->experience = $this->calculateExperience();
+        $this->calculateExperience();
 
         if ($response = $this->handlePost()) {
             return $response;
@@ -107,63 +110,59 @@ class Step11Advantages extends AbstractStepAction
         ], 'corahn_rin/Steps/11_advantages.html.twig');
     }
 
-    /**
-     * @param bool $returnFalseOnError
-     *
-     * @return float|int|mixed
-     */
-    private function calculateExperience($returnFalseOnError = false)
+    private function calculateExperience(): void
     {
-        $advantages = $this->advantages;
-        $disadvantages = $this->disadvantages;
-        $this->experience = 100;
+        $this->experience = $experience = 100;
 
-        foreach ($disadvantages as $id => $value) {
+        foreach ($this->disadvantages as $id => $value) {
             /** @var Avantages $disadvantage */
             $disadvantage = $this->globalList['disadvantages'][$id];
-            if (50 === $id) {
-                // Specific case of the "Trauma" disadvantage
-                $this->experience += $value * $disadvantage->getXp();
-            } elseif (1 === $value) {
-                $this->experience += $disadvantage->getXp();
-            } elseif (2 === $value && $disadvantage->getAugmentation()) {
-                $this->experience += \floor($disadvantage->getXp() * 1.5);
+            if (1 === $value) {
+                $experience += $disadvantage->getXp();
+            } elseif (2 === $value && 1 === $disadvantage->getAugmentationCount()) {
+                $experience += \floor($disadvantage->getXp() * 1.5);
+            } elseif (3 === $disadvantage->getAugmentationCount()) {
+                $experience += $value * $disadvantage->getXp();
             } elseif ($value) {
                 $this->hasError = true;
                 $this->flashMessage('Une valeur incorrecte a été donnée à un désavantage.');
 
-                return 0;
+                return;
             }
-            if ($this->experience > 180 && $returnFalseOnError) {
+            if ($experience > 180) {
                 $this->hasError = true;
                 $this->flashMessage('Vos désavantages vous donnent un gain d\'expérience supérieur à 80.');
 
-                return 0;
+                return;
             }
         }
 
-        unset($value);
-
-        foreach ($advantages as $id => $value) {
+        foreach ($this->advantages as $id => $value) {
             /** @var Avantages $advantage */
             $advantage = $this->globalList['advantages'][$id];
             if (1 === $value) {
-                $this->experience -= $advantage->getXp();
-            } elseif (2 === $value && $advantage->getAugmentation()) {
-                $this->experience -= \floor($advantage->getXp() * 1.5);
+                $experience -= $advantage->getXp();
+            } elseif (2 === $value && 1 === $advantage->getAugmentationCount()) {
+                $experience -= \floor($advantage->getXp() * 1.5);
+            } elseif (3 === $advantage->getAugmentationCount()) {
+                // It's not used, but maybe one day...
+                $experience -= $value * $advantage->getXp();
             } elseif ($value) {
                 $this->hasError = true;
                 $this->flashMessage('Une valeur incorrecte a été donnée à un avantage.');
 
-                return 0;
+                return;
             }
         }
 
-        if ($this->experience < 0) {
+        if ($experience < 0) {
+            $this->hasError = true;
             $this->flashMessage('Vous n\'avez pas assez d\'expérience.');
+
+            return;
         }
 
-        return $this->experience;
+        $this->experience = $experience;
     }
 
     private function handlePost(): ?Response
@@ -173,9 +172,9 @@ class Step11Advantages extends AbstractStepAction
         }
 
         $intval = function ($e) { return (int) $e; };
-        $this->indications = \array_filter($this->request->request->get('advantages_indications'));
-        $advantages = \array_map($intval, $this->request->request->get('advantages'));
-        $disadvantages = \array_map($intval, $this->request->request->get('disadvantages'));
+        $this->indications = \array_filter($this->request->request->get('advantages_indications') ?: []);
+        $advantages = \array_map($intval, $this->request->request->get('advantages') ?: []);
+        $disadvantages = \array_map($intval, $this->request->request->get('disadvantages') ?: []);
 
         $numberOfAdvantages = 0;
         $numberOfUpgradedAdvantages = 0;
@@ -184,15 +183,16 @@ class Step11Advantages extends AbstractStepAction
 
         // First, validate all IDs
         foreach ($advantages as $id => $value) {
-            if ($this->isPoor && \in_array($id, [4, 5, 6, 7, 8], true)) {
-                $this->hasError = true;
-                $this->flashMessage('Vous ne pouvez pas choisir "Avantage financier" si votre personnage a le revers "Pauvre".');
-                break;
-            }
-
             if (!\array_key_exists($id, $this->globalList['advantages'])) {
                 $this->hasError = true;
-                $this->flashMessage('Les avantages soumis sont incorrects.');
+                if (isset($this->advantagesDisabledBySetbacks[$id])) {
+                    $this->flashMessage('L\'avantage "%adv%" a été désactivé par le revers "%setback%".', 'error', [
+                        '%adv%' => $this->advantagesDisabledBySetbacks[$id]['advantage']->getName(),
+                        '%setback%' => $this->advantagesDisabledBySetbacks[$id]['setback']->getName(),
+                    ]);
+                } else {
+                    $this->flashMessage('Les avantages soumis sont incorrects.');
+                }
                 break;
             }
             if (0 === $value) {
@@ -217,7 +217,7 @@ class Step11Advantages extends AbstractStepAction
                 break;
             }
 
-            if (0 !== $value && $advantage->getRequiresIndication()) {
+            if ($value > 0 && $advantage->getRequiresIndication()) {
                 $indication = \trim($this->indications[$id] ?? '');
                 if (!$indication) {
                     $this->hasError = true;
@@ -244,7 +244,14 @@ class Step11Advantages extends AbstractStepAction
         foreach ($disadvantages as $id => $value) {
             if (!\array_key_exists($id, $this->globalList['disadvantages'])) {
                 $this->hasError = true;
-                $this->flashMessage('Les désavantages soumis sont incorrects.');
+                if (isset($this->advantagesDisabledBySetbacks[$id])) {
+                    $this->flashMessage('Le désavantage "%adv%" a été désactivé par le revers "%setback%".', 'error', [
+                        '%adv%' => $this->advantagesDisabledBySetbacks[$id]['advantage']->getName(),
+                        '%setback%' => $this->advantagesDisabledBySetbacks[$id]['setback']->getName(),
+                    ]);
+                } else {
+                    $this->flashMessage('Les désavantages soumis sont incorrects.');
+                }
                 break;
             }
             if (0 === $value) {
@@ -269,7 +276,7 @@ class Step11Advantages extends AbstractStepAction
                 break;
             }
 
-            if (0 !== $value && $disadvantage->getRequiresIndication()) {
+            if ($value > 0 && $disadvantage->getRequiresIndication()) {
                 $indication = \trim($this->indications[$id] ?? '');
                 if (!$indication) {
                     $this->hasError = true;
@@ -293,46 +300,50 @@ class Step11Advantages extends AbstractStepAction
             $numberOfDisadvantages++;
         }
 
-        // Validate "Ally" advantage, that cannot be combined (because it's split in multiple advantages)
-        $allyIds = [1, 2, 3];
-
-        $count = 0;
-
-        foreach ($allyIds as $key) {
-            if (!empty($advantages[$key])) {
-                $count++;
-                if ($count > 1) {
-                    $this->hasError = true;
-                    $this->flashMessage('Vous ne pouvez pas combiner plusieurs avantages "Allié".');
-                    break;
-                }
+        // Validate advantages groups
+        $advantagesByGroup = [];
+        foreach ($this->globalList['advantages'] as $advantage) {
+            if (!$advantage->getGroup()) {
+                continue;
             }
+            $advantagesByGroup[$advantage->getGroup()][] = $advantage;
+        }
+        foreach ($this->globalList['disadvantages'] as $advantage) {
+            if (!$advantage->getGroup()) {
+                continue;
+            }
+            $advantagesByGroup[$advantage->getGroup()][] = $advantage;
         }
 
-        // Validate "Financial ease" advantage, that cannot be combined (because it's split in multiple advantages)
-        $financialEaseIds = [4, 5, 6, 7, 8];
-
-        $count = 0;
-
-        foreach ($financialEaseIds as $key) {
-            if (!empty($advantages[$key])) {
-                $count++;
-                if ($count > 1) {
-                    $this->hasError = true;
-                    $this->flashMessage('Vous ne pouvez pas combiner plusieurs avantages "Aisance financière".');
-                    break;
+        foreach ($advantagesByGroup as $groupId => $groupedAdvantages) {
+            /** @var Avantages[] $groupedAdvantages */
+            $numberForGroup = 0;
+            foreach ($groupedAdvantages as $advantage) {
+                $id = $advantage->getId();
+                if (!empty($advantages[$id]) || !empty($disadvantages[$id])) {
+                    if ($numberForGroup > 0) {
+                        $this->hasError = true;
+                        $this->flashMessage('Vous ne pouvez pas combiner plusieurs avantages ou désavantages de type "%advantage_group%".', 'error', [
+                            '%advantage_group%' => $advantage->getGroup(),
+                        ]);
+                        break;
+                    }
+                    $numberForGroup++;
                 }
             }
         }
 
         if (false === $this->hasError) {
-            $this->experience = $this->calculateExperience(true);
+            $this->advantages = $advantages;
+            $this->disadvantages = $disadvantages;
+
+            $this->calculateExperience();
         }
 
         if (false === $this->hasError && $this->experience >= 0) {
             $this->updateCharacterStep([
-                'advantages' => $advantages,
-                'disadvantages' => $disadvantages,
+                'advantages' => $this->advantages,
+                'disadvantages' => $this->disadvantages,
                 'advantages_indications' => $this->indications,
                 'remainingExp' => $this->experience,
             ]);
