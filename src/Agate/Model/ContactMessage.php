@@ -13,6 +13,32 @@ namespace Agate\Model;
 
 class ContactMessage
 {
+    public const SUBJECT_APPLICATION = 'contact.subject.application';
+    public const SUBJECT_AFTER_SALES = 'contact.subject.after_sales';
+    public const SUBJECT_CONVENTIONS = 'contact.subject.conventions';
+    public const SUBJECT_OTHER = 'contact.subject.other';
+
+    public const PRODUCT_RANGE_DRAGONS = 'contact.product_range.dragons';
+    public const PRODUCT_RANGE_7TH_SEA = 'contact.product_range.7th_sea';
+    public const PRODUCT_RANGE_REQUIEM = 'contact.product_range.requiem';
+    public const PRODUCT_RANGE_ESTEREN = 'contact.product_range.esteren';
+
+    public const SUBJECTS = [
+        'contact.subject.specify' => '',
+        self::SUBJECT_APPLICATION => self::SUBJECT_APPLICATION,
+        self::SUBJECT_AFTER_SALES => self::SUBJECT_AFTER_SALES,
+        self::SUBJECT_CONVENTIONS => self::SUBJECT_CONVENTIONS,
+        self::SUBJECT_OTHER => self::SUBJECT_OTHER,
+    ];
+
+    public const PRODUCT_RANGES = [
+        'contact.product_range.specify' => '',
+        self::PRODUCT_RANGE_DRAGONS => self::PRODUCT_RANGE_DRAGONS,
+        self::PRODUCT_RANGE_7TH_SEA => self::PRODUCT_RANGE_7TH_SEA,
+        self::PRODUCT_RANGE_REQUIEM => self::PRODUCT_RANGE_REQUIEM,
+        self::PRODUCT_RANGE_ESTEREN => self::PRODUCT_RANGE_ESTEREN,
+    ];
+
     /** @var string */
     private $name = '';
 
@@ -24,6 +50,12 @@ class ContactMessage
 
     /** @var string */
     private $subject = '';
+
+    /** @var string */
+    private $productRange = '';
+
+    /** @var string */
+    private $title = '';
 
     /** @var string */
     private $locale = 'fr';
@@ -72,6 +104,30 @@ class ContactMessage
     public function setSubject(?string $subject): self
     {
         $this->subject = (string) $subject;
+
+        return $this;
+    }
+
+    public function getProductRange(): string
+    {
+        return $this->productRange;
+    }
+
+    public function setProductRange(?string $productRange): self
+    {
+        $this->productRange = (string) $productRange;
+
+        return $this;
+    }
+
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(?string $title): self
+    {
+        $this->title = (string) $title;
 
         return $this;
     }
