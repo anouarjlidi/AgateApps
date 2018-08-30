@@ -147,6 +147,17 @@ final class Domains
         self::ERUDITION['title'] => self::ERUDITION,
     ];
 
+    private $title;
+    private $description;
+    private $way;
+
+    private function __construct($title, $description, $way)
+    {
+        $this->title = $title;
+        $this->description = $description;
+        $this->way = $way;
+    }
+
     public static function validateDomain(string $domain): void
     {
         if (!isset(static::ALL[$domain])) {
@@ -161,5 +172,34 @@ final class Domains
         if ($value < 0 || $value > 5) {
             throw new InvalidDomainValue($domain);
         }
+    }
+
+    /**
+     * @return self[]
+     */
+    public static function allAsObjects(): array
+    {
+        $collection = [];
+
+        foreach (static::ALL as $item) {
+            $collection[$item['title']] = new self($item['title'], $item['description'], $item['way']);
+        }
+
+        return $collection;
+    }
+
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+
+    public function getDescription(): string
+    {
+        return $this->description;
+    }
+
+    public function getWay(): string
+    {
+        return $this->way;
     }
 }
