@@ -66,20 +66,20 @@ class ContactController implements PublicService
         if ($form->isSubmitted() && $form->isValid()) {
             $translator = $this->translator;
 
-            $subject = $translator->trans('form.message_subject', [
+            $subject = $translator->trans('contact.form.message_subject', [
                 '%name%' => $message->getName(),
-                '%subject%' => \strip_tags($message->getSubject()),
-            ], 'contact');
+                '%subject%' => \strip_tags($translator->trans($message->getSubject(), [], 'agate')),
+            ], 'agate');
 
             // If message succeeds, we redirect
             if ($this->mailer->sendContactMail($message, $subject, $request->getClientIp())) {
-                $session->getFlashBag()->add('success', $translator->trans('form.message_sent', [], 'contact'));
+                $session->getFlashBag()->add('success', $translator->trans('contact.form.message_sent', [], 'agate'));
 
                 return new RedirectResponse($this->router->generate('contact'));
             }
 
             // Else, it means transport may had an error or something, so if no exception was thrown, we log this.
-            $form->addError(new FormError($translator->trans('form.error', [], 'contact')));
+            $form->addError(new FormError($translator->trans('contact.form.error', [], 'agate')));
         }
 
         return new Response($this->twig->render('agate/contact.html.twig', [
