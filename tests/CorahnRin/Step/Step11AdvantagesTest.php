@@ -204,7 +204,9 @@ class Step11AdvantagesTest extends AbstractStepTest
         }
 
         $results = \array_filter($results, function ($item) {
-            return \count($item) > 1;
+            // Only need from 2 to 4 because 1 is valid, and more than 4 is invalid.
+            $c = \count($item);
+            return $c > 1 && $c < 5;
         });
 
         return \array_map(function ($item) {
