@@ -38,13 +38,6 @@ class Step13PrimaryDomains extends AbstractStepAction
     private $job;
 
     /**
-     * Determines whether the character can benefit from "Scholar" advantage.
-     *
-     * @var bool
-     */
-    private $scholar;
-
-    /**
      * @var int[]
      */
     private $secondaryDomains;
@@ -58,7 +51,6 @@ class Step13PrimaryDomains extends AbstractStepAction
      * Keys are the following:
      * "domains":          domain_id=>domain_value
      * "military_service": domain_id|null
-     * "scholar":          domain_id|null.
      *
      * @var array[]
      */
@@ -262,12 +254,12 @@ class Step13PrimaryDomains extends AbstractStepAction
      */
     private function checkOst()
     {
-        $id = (int) $this->request->request->get('ost');
+        $id = trim($this->request->request->get('ost'));
 
         $keyExists = $id ? \array_key_exists($id, $this->allDomains) : null;
 
         if (false === $keyExists) {
-            if (0 === $id) {
+            if (!$id) {
                 $this->submittedDomains['ost'] = Domains::CLOSE_COMBAT['title'];
             } else {
                 $this->flashMessage('Le domaine spécifié pour le service d\'Ost n\'est pas valide.');
@@ -286,13 +278,11 @@ class Step13PrimaryDomains extends AbstractStepAction
         $sessionValue = $this->getCharacterProperty() ?: [
             'domains' => [],
             'ost' => Domains::CLOSE_COMBAT['title'],
-            'scholar' => null,
         ];
 
         $this->submittedDomains = [
             'domains' => $sessionValue['domains'],
             'ost' => $sessionValue['ost'],
-            'scholar' => $sessionValue['scholar'],
         ];
 
         foreach ($this->allDomains as $id => $domain) {
