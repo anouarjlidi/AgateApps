@@ -31,8 +31,7 @@ class DisciplinesRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('discipline', 'discipline.id')
             ->from($this->_entityName, 'disciplines', 'disciplines.id')
-            ->leftJoin('discipline.domains', 'domain')
-            ->where('domain.id in (:ids)')
+            ->where('discipline.domains in (:ids)')// TODO: Fix this part
             ->setParameter('ids', $domainsIds)
             ->orderBy('disciplines.name', 'asc')
             ->getQuery()->getResult()

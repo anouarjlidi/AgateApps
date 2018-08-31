@@ -148,7 +148,7 @@ final class DomainsCalculator
 
         foreach ($allDomains as $id => $domain) {
             // First, validate arguments.
-            if (!($domain instanceof Domains) || $domain->getId() !== $id) {
+            if (!($domain instanceof Domains)) {
                 throw new \InvalidArgumentException(\sprintf(
                     'Invalid %s argument sent. It must be an array of %s instances, and the array key must correspond to the "%s" property.',
                     '$allDomains', Domains::class, 'id'

@@ -1,5 +1,7 @@
 {% extends 'corahn_rin/Steps/step_base.html.twig' %}
 
+{% trans_default_domain 'corahn_rin' %}
+
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript" src="{{ asset('js/step_15_domains_spend_exp.js') }}"></script>
@@ -10,18 +12,18 @@
     {% if exp_max < 10 %}
 
         <div class="card-panel teal darken-4">
-            {{ 'domains_spend_exp.no_exp'|trans({}, 'corahn_rin') }}
+            {{ 'domains_spend_exp.no_exp'|trans }}
         </div>
 
     {% else %}
 
         <div class="card-panel teal darken-4">
-            {{ 'domains_spend_exp.explanation'|trans({}, 'corahn_rin')|raw }}
+            {{ 'domains_spend_exp.explanation'|trans|raw }}
         </div>
 
         <div class="card-panel blue-grey darken-4">
 
-            {{ 'domains_spend_exp.remaining'|trans({}, 'corahn_rin') }}
+            {{ 'domains_spend_exp.remaining'|trans }}
 
             <div class="bonus_points_element chip bordered" id="exp_points">
                 <span id="remaining_exp_points" class="text-black">{{ exp_value }}</span>&nbsp;/<span id="max_exp_points" class="text-black">{{ exp_max }}</span>
@@ -39,7 +41,7 @@
                 <div class="col s3 domain hoverable" data-domain-id="{{ id }}">
                     <input type="hidden" name="domains_spend_exp[{{ id }}]" id="domains_{{ id }}" data-base-value="{{ base_value }}" value="{{ value|default(0) }}">
                     <h5>
-                        {{ domain.name }}
+                        {{ id|trans }}
                     </h5>
                     <div class="domain_button_group">
                         {% for i in 0..5 %}

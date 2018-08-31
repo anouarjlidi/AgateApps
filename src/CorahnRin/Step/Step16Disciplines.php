@@ -61,7 +61,7 @@ class Step16Disciplines extends AbstractStepAction
      */
     public function execute(): Response
     {
-        $this->allDomains = $this->em->getRepository(Domains::class)->findAllSortedByName();
+        $this->allDomains = Domains::allAsObjects();
 
         $primaryDomains = $this->getCharacterProperty('13_primary_domains');
         $useDomainBonuses = $this->getCharacterProperty('14_use_domain_bonuses');
@@ -83,7 +83,6 @@ class Step16Disciplines extends AbstractStepAction
                 $this->allDomains,
                 $socialClassValues,
                 $primaryDomains['ost'],
-                $primaryDomains['scholar'] ?: null,
                 $geoEnvironment,
                 $primaryDomains['domains'],
                 $domainBonuses['domains']

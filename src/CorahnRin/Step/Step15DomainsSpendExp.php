@@ -11,6 +11,8 @@
 
 namespace CorahnRin\Step;
 
+use CorahnRin\Data\Domains;
+use CorahnRin\Entity\GeoEnvironments;
 use CorahnRin\GeneratorTools\DomainsCalculator;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -48,18 +50,17 @@ class Step15DomainsSpendExp extends AbstractStepAction
      */
     public function execute(): Response
     {
-        $this->allDomains = $this->em->getRepository(\CorahnRin\Data\Domains::class)->findAllSortedByName();
+        $this->allDomains = Domains::allAsObjects();
 
         $primaryDomains = $this->getCharacterProperty('13_primary_domains');
         $socialClassValues = $this->getCharacterProperty('05_social_class')['domains'];
         $domainBonuses = $this->getCharacterProperty('14_use_domain_bonuses');
-        $geoEnvironment = $this->em->find(\CorahnRin\Entity\GeoEnvironments::class, $this->getCharacterProperty('04_geo'));
+        $geoEnvironment = $this->em->find(GeoEnvironments::class, $this->getCharacterProperty('04_geo'));
 
         $domainsBaseValues = $this->domainsCalculator->calculateFromGeneratorData(
             $this->allDomains,
             $socialClassValues,
             $primaryDomains['ost'],
-            $primaryDomains['scholar'] ?: null,
             $geoEnvironment,
             $primaryDomains['domains'],
             $domainBonuses['domains']
