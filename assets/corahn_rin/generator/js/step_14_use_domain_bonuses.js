@@ -54,7 +54,7 @@
             button._is_domain_base = true;
         }
 
-        domainsInputs[id] = d.querySelector('input[type="hidden"]#domains_'+id);
+        domainsInputs[id] = d.querySelector('input[type="hidden"][id="domains_'+id+'"]');
 
         button.addEventListener('click', function(){
             var isActive = this.classList.contains('active');
