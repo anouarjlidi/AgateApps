@@ -20,28 +20,6 @@ class MapsControllerTest extends WebTestCase
 {
     use PiersTestCase;
 
-    public function test root redirects to index()
-    {
-        $client = $this->getClient('maps.esteren.docker');
-
-        $client->request('GET', '/');
-        $res = $client->getResponse();
-
-        static::assertSame(301, $res->getStatusCode());
-        static::assertSame('http://maps.esteren.docker/fr/', $res->headers->get('Location'));
-    }
-
-    public function test index without slash redirects with a slash()
-    {
-        $client = $this->getClient('maps.esteren.docker');
-
-        $client->request('GET', '/fr');
-        $res = $client->getResponse();
-
-        static::assertSame(301, $res->getStatusCode());
-        static::assertSame('http://maps.esteren.docker/fr/', $res->headers->get('Location'));
-    }
-
     public function test index()
     {
         $client = $this->getClient('maps.esteren.docker');
