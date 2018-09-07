@@ -124,11 +124,11 @@ install-node: build node_modules start
 .PHONY: install-node
 
 php-tests: ## Execute checks & tests
-php-tests: checks phpunit
+php-tests: start checks phpunit
 .PHONY: php-tests
 
 node-tests: ## Execute checks & tests
-node-tests:
+node-tests: start
 	$(EXEC_JS) npm run-script test --verbose -LLLL
 .PHONY: node-tests
 
