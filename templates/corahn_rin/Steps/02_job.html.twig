@@ -6,7 +6,7 @@
 
 <input type="hidden" name="job_value" id="job_value" value="{{ job_value }}" />
 {% for jobs in jobs_list %}
-    <h3>{{ (jobs|first).book.name | trans }}</h3>
+    <h3>{{ (jobs|first).book.name }}</h3>
 
         {% for job in jobs %}
 
@@ -19,13 +19,13 @@
                     <a class="modal-trigger" href="#modal_job_{{ job.id }}" title="{{ 'jobs.modal.details'|trans }}">
                         <i class="fa fa-search modal-icon"></i>
                     </a>
-                    {{ job.name | trans }}
+                    {{ job.name }}
                 </div>
 
                 <div id="modal_job_{{ job.id }}" class="modal">
                     <div class="modal-content">
-                        <h4>{{ job.name | trans }}</small></h4>
-                        <p>{{ job.description | trans | raw }}</p>
+                        <h4>{{ job.name  }}</small></h4>
+                        <p>{{ job.description | raw }}</p>
                         <p>{{ 'domain.primary' | trans }} : {{ job.primaryDomain | trans }}</p>
                         <p>
                             {{ 'domain.secondary' | trans }} :
@@ -38,8 +38,8 @@
                         </p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn modal-action modal-close waves-effect btn-flat">{{ 'button.close' | trans }}</button>
-                        <button type="button" class="btn modal-action modal-close waves-effect" data-dist-click data-target-node="job_{{ job.id }}">{{ 'button.select' | trans }}</button>
+                        <button type="button" class="btn modal-action modal-close waves-effect btn-flat">{{ 'button.close' | trans({}, 'messages') }}</button>
+                        <button type="button" class="btn modal-action modal-close waves-effect" data-dist-click data-target-node="job_{{ job.id }}">{{ 'button.select' | trans({}, 'messages') }}</button>
                     </div>
                 </div>
 
