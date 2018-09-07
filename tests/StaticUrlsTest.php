@@ -11,7 +11,6 @@
 
 namespace Tests;
 
-use PHPUnit\Framework\Assert;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,10 +31,6 @@ class StaticUrlsTest extends WebTestCase
         string $expectedRedirectUrlOrTitleContent = '',
         string $cssSelectorToCheck = '#content h1'
     ) {
-        if (!$this instanceof Assert) {
-            throw new \RuntimeException('Can test an url only if inside a PHPUnit test case.');
-        }
-
         $client = $this->getClient($domainName);
 
         $crawler = $client->request('GET', $url);
