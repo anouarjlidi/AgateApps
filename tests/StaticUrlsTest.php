@@ -45,7 +45,8 @@ class StaticUrlsTest extends WebTestCase
         $this->assertSame($expectedStatusCode, $res->getStatusCode(), 'Unexpected status code.');
 
         if ($expectedRedirectUrlOrTitleContent) {
-            if ($res->isRedirect()) {
+            /** @see \Symfony\Component\HttpFoundation\Response::isRedirect() */
+            if (\in_array($expectedStatusCode, [201, 301, 302, 303, 307, 308], true)) {
                 $message = sprintf(
                     'Unexpected redirect url. Expected "%s", got "%s".',
                     $expectedRedirectUrlOrTitleContent, $res->headers->get('Location')
