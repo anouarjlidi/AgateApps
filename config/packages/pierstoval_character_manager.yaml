@@ -88,6 +88,7 @@ pierstoval_character_manager:
                 14_use_domain_bonuses:
                     action: CorahnRin\Step\Step14UseDomainBonuses
                     dependencies:
+                        - '02_job'
                         - '04_geo'
                         - '05_social_class'
                         - '13_primary_domains'

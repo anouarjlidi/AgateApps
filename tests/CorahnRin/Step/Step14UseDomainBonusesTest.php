@@ -73,7 +73,7 @@ class Step14UseDomainBonusesTest extends AbstractStepTest
 
         $form = $crawler->filter('#generator_form')->form();
 
-        $form['domains_bonuses[1]'] = 1;
+        $form['domains_bonuses[domains.craft]'] = 1;
 
         $crawler = $client->submit($form);
 

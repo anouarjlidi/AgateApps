@@ -25,12 +25,13 @@ trait StepsWithDomainsTrait
     protected function getValidRequirements(): array
     {
         return [
-            '04_geo' => 1,
+            '02_job' => 1, // Artisan
+            '04_geo' => 1, // Rural
             '05_social_class' => [
-                'id' => 1,
+                'id' => 1, // Paysan
                 'domains' => [
-                    5 => 5,
-                    8 => 8,
+                    'domains.craft',
+                    'domains.perception',
                 ],
             ],
             '06_age' => 16,
@@ -41,25 +42,24 @@ trait StepsWithDomainsTrait
             ],
             '13_primary_domains' => [
                 'domains' => [
-                    1 => 5,
-                    2 => 2,
-                    3 => 0,
-                    4 => 0,
-                    5 => 1,
-                    6 => 0,
-                    7 => 0,
-                    8 => 0,
-                    9 => 0,
-                    10 => 0,
-                    11 => 0,
-                    12 => 0,
-                    13 => 3,
-                    14 => 0,
-                    15 => 2,
-                    16 => 1,
+                    'domains.craft' => 5,
+                    'domains.close_combat' => 2,
+                    'domains.stealth' => 0,
+                    'domains.magience' => 0,
+                    'domains.natural_environment' => 1,
+                    'domains.demorthen_mysteries' => 0,
+                    'domains.occultism' => 0,
+                    'domains.perception' => 0,
+                    'domains.prayer' => 0,
+                    'domains.feats' => 0,
+                    'domains.relation' => 0,
+                    'domains.performance' => 0,
+                    'domains.science' => 3,
+                    'domains.shooting_and_throwing' => 0,
+                    'domains.travel' => 2,
+                    'domains.erudition' => 1,
                 ],
-                'ost' => 2,
-                'scholar' => null,
+                'ost' => 'domains.close_combat',
             ],
         ];
     }
@@ -77,30 +77,26 @@ trait StepsWithDomainsTrait
         return $client;
     }
 
-    protected function assertSessionEquals(array $domains, int $remaining = 1, Client $client)
+    protected function assertSessionEquals(array $domains, int $remaining, Client $client)
     {
-        $finalDomains = [
-            1 => 0,
-            2 => 0,
-            3 => 0,
-            4 => 0,
-            5 => 0,
-            6 => 0,
-            7 => 0,
-            8 => 0,
-            9 => 0,
-            10 => 0,
-            11 => 0,
-            12 => 0,
-            13 => 0,
-            14 => 0,
-            15 => 0,
-            16 => 0,
-        ];
-
-        foreach ($domains as $id => $value) {
-            $finalDomains[$id] = $value;
-        }
+        $finalDomains = array_merge([
+            'domains.craft' => 0,
+            'domains.close_combat' => 0,
+            'domains.stealth' => 0,
+            'domains.magience' => 0,
+            'domains.natural_environment' => 0,
+            'domains.demorthen_mysteries' => 0,
+            'domains.occultism' => 0,
+            'domains.perception' => 0,
+            'domains.prayer' => 0,
+            'domains.feats' => 0,
+            'domains.relation' => 0,
+            'domains.performance' => 0,
+            'domains.science' => 0,
+            'domains.shooting_and_throwing' => 0,
+            'domains.travel' => 0,
+            'domains.erudition' => 0,
+        ], $domains);
 
         $results = [
             'domains' => $finalDomains,
