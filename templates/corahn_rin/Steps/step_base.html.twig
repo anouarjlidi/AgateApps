@@ -2,8 +2,6 @@
 
 {% trans_default_domain 'corahn_rin' %}
 
-{% block flash_messages '' %}
-
 {% block small_title -%}
     {{- 'steps.step' | trans({}, 'corahn_rin') }} {{ current_step.number }} : {{ ('steps.'~current_step.name) | trans -}}
 {%- endblock %}
@@ -27,7 +25,7 @@
     <div class="step_module">
         <h1>{{ block('small_title') }}</h1>
 
-        {{ include('_flash_messages.html.twig') }}
+        {{ block('flash_messages') }}
 
         <form class="{% block form_class '' %}" name="generator_form" id="generator_form" method="post" action="{{ path('pierstoval_character_generator_step', {'requestStep': current_step.name}) }}">
             <div id="generator_{{ current_step.name }}">
