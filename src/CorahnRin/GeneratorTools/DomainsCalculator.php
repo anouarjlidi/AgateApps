@@ -42,7 +42,6 @@ final class DomainsCalculator
      * If $domainsBonuses IS provided, then it will add the correct bonuses if some domains exceed 5 points.
      *
      * @param Domains[] $allDomains
-     * @param string    $ost
      * @param array     $domainsBonuses
      *
      * @return int[]
@@ -94,7 +93,6 @@ final class DomainsCalculator
          * Ost service
          */
         if (!\array_key_exists($ost, $allDomains)) {
-            dump($ost, $allDomains);exit;
             throw new \InvalidArgumentException(\sprintf(
                 'Invalid %s argument sent. It must be a valid %s.',
                 '$ost', 'domain id'

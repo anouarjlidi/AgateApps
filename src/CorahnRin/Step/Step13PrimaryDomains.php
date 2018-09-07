@@ -50,7 +50,7 @@ class Step13PrimaryDomains extends AbstractStepAction
     /**
      * Keys are the following:
      * "domains":          domain_id=>domain_value
-     * "military_service": domain_id|null
+     * "military_service": domain_id|null.
      *
      * @var array[]
      */
@@ -254,7 +254,7 @@ class Step13PrimaryDomains extends AbstractStepAction
      */
     private function checkOst()
     {
-        $id = trim($this->request->request->get('ost'));
+        $id = \trim($this->request->request->get('ost'));
 
         $keyExists = $id ? \array_key_exists($id, $this->allDomains) : null;
 
