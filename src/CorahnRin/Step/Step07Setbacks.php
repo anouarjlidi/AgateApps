@@ -32,7 +32,7 @@ class Step07Setbacks extends AbstractStepAction
     public function execute(): Response
     {
         /* @var Setbacks[] $setbacks */
-        $this->setbacks = $this->em->getRepository(\CorahnRin\Entity\Setbacks::class)->findAll(true);
+        $this->setbacks = $this->em->getRepository(Setbacks::class)->findAll(true);
 
         $setbacksValue = $this->getCharacterProperty() ?: [];
 
