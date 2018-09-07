@@ -19,20 +19,20 @@ crowdfunding:
 user_login_check:
     path: /{_locale}/login_check
     methods: ['POST']
-    defaults: { locale: '%locale%' }
+    defaults: { _locale: '%locale%' }
     requirements: { _locale: '^(?:%locales_regex%)$' }
 
 user_logout:
     path: /{_locale}/logout
     methods: ['GET', 'POST']
-    defaults: { locale: '%locale%' }
+    defaults: { _locale: '%locale%' }
     requirements: { _locale: '^(?:%locales_regex%)$' }
 
 user_security:
     resource: '../src/User/Controller/'
     type: annotation
     prefix: '/{_locale}/'
-    defaults: { locale: '%locale%' }
+    defaults: { _locale: '%locale%' }
     requirements: { _locale: '^(?:%locales_regex%)$' }
 
 #
@@ -43,14 +43,14 @@ corahnrin_characters:
     type:     annotation
     host:     '%esteren_domains.corahnrin%'
     prefix: '/{_locale}/'
-    defaults: { locale: '%locale%' }
+    defaults: { _locale: '%locale%' }
     requirements: { _locale: '^(?:%locales_regex%)$' }
 
 corahnrin_steps:
     resource: '@PierstovalCharacterManagerBundle/Resources/config/routing.xml'
     prefix:   /{_locale}/character
     host:     '%esteren_domains.corahnrin%'
-    defaults: { locale: '%locale%' }
+    defaults: { _locale: '%locale%' }
     requirements: { _locale: '^(?:%locales_regex%)$' }
 
 #
@@ -61,7 +61,7 @@ esterenmaps:
     resource: '../src/EsterenMaps/Controller/'
     type:     annotation
     prefix: '/{_locale}/'
-    defaults: { locale: '%locale%' }
+    defaults: { _locale: '%locale%' }
     requirements: { _locale: '^(?:%locales_regex%)$' }
 
 #
@@ -71,7 +71,7 @@ agate:
     resource: '../src/Agate/Controller/'
     type: annotation
     prefix: '/{_locale}/'
-    defaults: { locale: '%locale%' }
+    defaults: { _locale: '%locale%' }
     requirements: { _locale: '^(?:%locales_regex%)$' }
 
 #
@@ -81,7 +81,7 @@ dragons:
     resource: '../src/Dragons/Controller/'
     type: annotation
     prefix: '/{_locale}/'
-    defaults: { locale: '%locale%' }
+    defaults: { _locale: '%locale%' }
     requirements: { _locale: '^(?:%locales_regex%)$' }
 
 #
@@ -92,7 +92,7 @@ esteren_portal:
     type: annotation
     host: '%esteren_domains.portal%'
     prefix: '/{_locale}/'
-    defaults: { locale: '%locale%' }
+    defaults: { _locale: '%locale%' }
     requirements: { _locale: '^(?:%locales_regex%)$' }
 
 #
@@ -102,7 +102,7 @@ utils:
     resource: '../src/Main/Controller/'
     type: annotation
     prefix: '/{_locale}/'
-    defaults: { locale: '%locale%' }
+    defaults: { _locale: '%locale%' }
     requirements: { _locale: '^(?:%locales_regex%)$' }
 
 #
@@ -111,5 +111,5 @@ utils:
 admin:
     resource: 'routes/easy_admin.yaml'
     prefix: '/{_locale}/'
-    defaults: { locale: '%locale%' }
+    defaults: { _locale: '%locale%' }
     requirements: { _locale: '^(?:%locales_regex%)$' }

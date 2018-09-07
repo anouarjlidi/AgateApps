@@ -151,7 +151,7 @@ final class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        $defaultUrl = \rtrim($this->router->generate('root', ['locale' => $request->getLocale() ?: $this->defaultLocale]), '/').'/';
+        $defaultUrl = \rtrim($this->router->generate('root', ['_locale' => $request->getLocale() ?: $this->defaultLocale]), '/').'/';
 
         $targetPath = $defaultUrl;
 
