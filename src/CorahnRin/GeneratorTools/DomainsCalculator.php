@@ -43,7 +43,7 @@ final class DomainsCalculator
      * If $domainsBonuses IS provided, then it will add the correct bonuses if some domains exceed 5 points.
      *
      * @param DomainsData[] $allDomains
-     * @param array     $domainsBonuses
+     * @param array         $domainsBonuses
      *
      * @return int[]
      */
@@ -142,8 +142,8 @@ final class DomainsCalculator
      * Mostly used in step 16 to calculate disciplines and in step 17 to check if combat arts are available.
      *
      * @param DomainsData[] $allDomains
-     * @param int[]     $domainsBaseValues
-     * @param int[]     $domainsSpendExp
+     * @param int[]         $domainsBaseValues
+     * @param int[]         $domainsSpendExp
      *
      * @return int[]
      */

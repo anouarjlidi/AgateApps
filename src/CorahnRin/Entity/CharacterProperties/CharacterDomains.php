@@ -279,7 +279,7 @@ class CharacterDomains
     {
         $this->setDomainPropertyValue($domain, 'Bonus', $value);
     }
-    
+
     public function setDomainMalusValue(string $domain, int $value): void
     {
         $this->setDomainPropertyValue($domain, 'Malus', $value);

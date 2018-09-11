@@ -191,7 +191,7 @@ final class DomainsData
      */
     public static function getCamelizedTitle(string $domainName, string $suffix = ''): string
     {
-        $camelizedTitle = preg_replace('~^domains\.~iUu', '', Inflector::camelize($domainName));
+        $camelizedTitle = \preg_replace('~^domains\.~iUu', '', Inflector::camelize($domainName));
 
         $camelizedTitle .= $suffix;
 

@@ -14,11 +14,11 @@ namespace CorahnRin\Entity;
 use CorahnRin\Data\DomainsData;
 use CorahnRin\Data\Orientation;
 use CorahnRin\Entity\CharacterProperties\Bonuses;
+use CorahnRin\Entity\CharacterProperties\CharacterDomains;
 use CorahnRin\Entity\CharacterProperties\CharAdvantages;
 use CorahnRin\Entity\CharacterProperties\CharDisciplines;
 use CorahnRin\Entity\CharacterProperties\CharFlux;
 use CorahnRin\Entity\CharacterProperties\CharSetbacks;
-use CorahnRin\Entity\CharacterProperties\CharacterDomains;
 use CorahnRin\Entity\CharacterProperties\HealthCondition;
 use CorahnRin\Entity\CharacterProperties\Money;
 use CorahnRin\Entity\CharacterProperties\Ways;
@@ -1543,8 +1543,8 @@ class Characters extends BaseCharacter
     public function getAttackScore(
         string $type = 'melee',
         int $discipline = null,
-        string $attitude = self::COMBAT_ATTITUDE_STANDARD)
-    : int {
+        string $attitude = self::COMBAT_ATTITUDE_STANDARD
+    ): int {
         $this->validateCombatAttitude($attitude);
 
         // Récupération du score de voie
