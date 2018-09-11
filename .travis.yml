@@ -9,8 +9,6 @@ cache:
     directories:
         - $HOME/.composer/
         - $HOME/.npm/
-        - vendor/
-        - node_modules/
 
 env:
     - DOCKER_COMPOSE_VERSION=1.22.0
