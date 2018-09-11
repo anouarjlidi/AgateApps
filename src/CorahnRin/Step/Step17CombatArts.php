@@ -11,7 +11,7 @@
 
 namespace CorahnRin\Step;
 
-use CorahnRin\Data\Domains;
+use CorahnRin\Data\DomainsData;
 use CorahnRin\Entity\CombatArts;
 use CorahnRin\GeneratorTools\DomainsCalculator;
 use Symfony\Component\HttpFoundation\Response;
@@ -43,7 +43,7 @@ class Step17CombatArts extends AbstractStepAction
      */
     public function execute(): Response
     {
-        $allDomains = $this->em->getRepository(Domains::class)->findAllSortedByName();
+        $allDomains = DomainsData::allAsObjects();
         $this->combatArts = $this->em->getRepository(CombatArts::class)->findAllSortedByName();
 
         $socialClassValues = $this->getCharacterProperty('05_social_class')['domains'];
@@ -56,7 +56,6 @@ class Step17CombatArts extends AbstractStepAction
             $allDomains,
             $socialClassValues,
             $primaryDomains['ost'],
-            $primaryDomains['scholar'] ?: null,
             $geoEnvironment,
             $primaryDomains['domains'],
             $domainBonuses['domains']
@@ -70,8 +69,8 @@ class Step17CombatArts extends AbstractStepAction
 
         $this->remainingExp = $this->getCharacterProperty('16_disciplines')['remainingExp'];
 
-        $closeCombat = $finalDomainsValues[2];
-        $shootingAndThrowing = $finalDomainsValues[14];
+        $closeCombat = $finalDomainsValues[DomainsData::CLOSE_COMBAT['title']];
+        $shootingAndThrowing = $finalDomainsValues[DomainsData::SHOOTING_AND_THROWING['title']];
 
         $canHaveCombatArts = $this->remainingExp >= 20 && (5 === $closeCombat || 5 === $shootingAndThrowing);
 

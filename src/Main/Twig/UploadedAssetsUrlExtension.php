@@ -12,6 +12,7 @@
 namespace Main\Twig;
 
 use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
 class UploadedAssetsUrlExtension extends AbstractExtension
 {
@@ -27,7 +28,7 @@ class UploadedAssetsUrlExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction('uploaded_asset_url', [$this, 'assetUrl']),
+            new TwigFunction('uploaded_asset_url', [$this, 'assetUrl']),
         ];
     }
 

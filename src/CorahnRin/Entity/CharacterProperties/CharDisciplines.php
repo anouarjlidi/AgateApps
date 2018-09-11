@@ -11,7 +11,7 @@
 
 namespace CorahnRin\Entity\CharacterProperties;
 
-use CorahnRin\Data\Domains;
+use CorahnRin\Data\DomainsData;
 use CorahnRin\Entity\Characters;
 use CorahnRin\Entity\Disciplines;
 use Doctrine\ORM\Mapping as ORM;
@@ -54,13 +54,14 @@ class CharDisciplines
      */
     protected $score;
 
-    public function __construct(Characters $character, Disciplines $discipline, string $domain)
+    public function __construct(Characters $character, Disciplines $discipline, string $domain, int $score)
     {
-        Domains::validateDomain($domain);
+        DomainsData::validateDomain($domain);
 
         $this->character = $character;
         $this->discipline = $discipline;
         $this->domain = $domain;
+        $this->updateScore($score);
     }
 
     public function getCharacter(): Characters
@@ -83,8 +84,16 @@ class CharDisciplines
         return $this->score;
     }
 
-    public function setScore(int $score)
+    public function updateScore(int $score): void
     {
+        if ($score < 6) {
+            throw new \RuntimeException('Discipline score must be at least 6.');
+        }
+
+        if ($score > 15) {
+            throw new \RuntimeException('Discipline score cannot exceed 15.');
+        }
+
         $this->score = $score;
     }
 }

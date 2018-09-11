@@ -11,7 +11,7 @@
 
 namespace DataFixtures\CorahnRin;
 
-use CorahnRin\Data\Domains;
+use CorahnRin\Data\DomainsData;
 use CorahnRin\Entity\Jobs;
 use DataFixtures\FixtureMetadataIdGeneratorTrait;
 use Doctrine\Bundle\FixturesBundle\ORMFixtureInterface;
@@ -52,12 +52,12 @@ class JobsFixtures extends AbstractFixture implements ORMFixtureInterface
                 'description' => 'Quel que soit son domaine, l\'artisan est un manuel qualifié.
 Forgeron, cuisinier, architecte, cordonnier, bûcheron, sculpteur, joailler ; les artisans couvrent un grand nombre de spécialités.
 Dans les cités où est implantée la magience, on trouve aussi des réparateurs d\'artefacts et des ouvriers spécialisés travaillant dans les usines.',
-                'primaryDomain' => Domains::CRAFT['title'],
+                'primaryDomain' => DomainsData::CRAFT['title'],
                 'dailySalary' => 8,
                 'book' => $book2,
                 'secondaryDomains' => [
-                    Domains::RELATION['title'],
-                    Domains::SCIENCE['title'],
+                    DomainsData::RELATION['title'],
+                    DomainsData::SCIENCE['title'],
                 ],
             ],
             [
@@ -66,12 +66,12 @@ Dans les cités où est implantée la magience, on trouve aussi des réparateurs
                 'description' => 'Le statut de barde est hautement honorifique et les plus puissants monarques s\'entourent de ces artistes qui ont de véritables rôles d\'éminence grise.
 Artiste, acrobate, musicien, bouffon, le barde peut revêtir différents rôles.
 Il peut également être connu sous d\'autres noms, comme les poètes aveugles filidh ou les étranges céilli de l\'archipel des Tri-Sweszörs.',
-                'primaryDomain' => Domains::PERFORMANCE['title'],
+                'primaryDomain' => DomainsData::PERFORMANCE['title'],
                 'dailySalary' => 10,
                 'book' => $book2,
                 'secondaryDomains' => [
-                    Domains::RELATION['title'],
-                    Domains::TRAVEL['title'],
+                    DomainsData::RELATION['title'],
+                    DomainsData::TRAVEL['title'],
                 ],
             ],
             [
@@ -80,12 +80,12 @@ Il peut également être connu sous d\'autres noms, comme les poètes aveugles f
                 'description' => 'Il nourrit la communauté du produit de ses longues expéditions, qui durent parfois plusieurs jours.
 L\'expansion des villes a vu l\'apparition de chasseurs d\'un genre nouveau comme les ratiers.
 D\'autres, comme les Enfants de Neven, dédient leur existence à la traque des feondas.',
-                'primaryDomain' => Domains::NATURAL_ENVIRONMENT['title'],
+                'primaryDomain' => DomainsData::NATURAL_ENVIRONMENT['title'],
                 'dailySalary' => 6,
                 'book' => $book2,
                 'secondaryDomains' => [
-                    Domains::CLOSE_COMBAT['title'],
-                    Domains::SHOOTING_AND_THROWING['title'],
+                    DomainsData::CLOSE_COMBAT['title'],
+                    DomainsData::SHOOTING_AND_THROWING['title'],
                 ],
             ],
             [
@@ -93,12 +93,12 @@ D\'autres, comme les Enfants de Neven, dédient leur existence à la traque des 
                 'name' => 'Chevalier',
                 'description' => 'Ces hommes et ces femmes font partie de la noblesse et appartiennent le plus souvent à un ordre de chevalerie comme les Hilderins ou les Ronces.
 Certains sont des chevaliers errants, derniers héritiers d\'une famille noble ; d\'autres, les vassaux d\'un puissant seigneur.',
-                'primaryDomain' => Domains::CLOSE_COMBAT['title'],
+                'primaryDomain' => DomainsData::CLOSE_COMBAT['title'],
                 'dailySalary' => 10,
                 'book' => $book2,
                 'secondaryDomains' => [
-                    Domains::RELATION['title'],
-                    Domains::TRAVEL['title'],
+                    DomainsData::RELATION['title'],
+                    DomainsData::TRAVEL['title'],
                 ],
             ],
             [
@@ -106,24 +106,24 @@ Certains sont des chevaliers errants, derniers héritiers d\'une famille noble ;
                 'name' => 'Combattant',
                 'description' => 'Il peut être soldat ou mercenaire, champion de justice, bagarreur de taverne ou détrousseur des rues sombres, etc.
 Il se spécialise dans les armes de contact.',
-                'primaryDomain' => Domains::CLOSE_COMBAT['title'],
+                'primaryDomain' => DomainsData::CLOSE_COMBAT['title'],
                 'dailySalary' => 7,
                 'book' => $book2,
                 'secondaryDomains' => [
-                    Domains::FEATS['title'],
-                    Domains::SHOOTING_AND_THROWING['title'],
+                    DomainsData::FEATS['title'],
+                    DomainsData::SHOOTING_AND_THROWING['title'],
                 ],
             ],
             [
                 'id' => 6,
                 'name' => 'Commerçant',
                 'description' => 'Marchand ambulant ou tenancier d\'une échoppe bien achalandée, le commerçant peut négocier bien des marchandises.',
-                'primaryDomain' => Domains::RELATION['title'],
+                'primaryDomain' => DomainsData::RELATION['title'],
                 'dailySalary' => 8,
                 'book' => $book2,
                 'secondaryDomains' => [
-                    Domains::CRAFT['title'],
-                    Domains::ERUDITION['title'],
+                    DomainsData::CRAFT['title'],
+                    DomainsData::ERUDITION['title'],
                 ],
             ],
             [
@@ -132,12 +132,12 @@ Il se spécialise dans les armes de contact.',
                 'description' => 'Représentant de la nature, il peut entrer en contact avec les esprits et leur demander d\'accomplir des tâches particulières.
 Il est le gardien des anciennes traditions péninsulaires et il est souvent considéré avec respect.
 Les apprentis Demorthèn sont appelés Ionnthèn.',
-                'primaryDomain' => Domains::DEMORTHEN_MYSTERIES['title'],
+                'primaryDomain' => DomainsData::DEMORTHEN_MYSTERIES['title'],
                 'dailySalary' => 6,
                 'book' => $book2,
                 'secondaryDomains' => [
-                    Domains::NATURAL_ENVIRONMENT['title'],
-                    Domains::ERUDITION['title'],
+                    DomainsData::NATURAL_ENVIRONMENT['title'],
+                    DomainsData::ERUDITION['title'],
                 ],
             ],
             [
@@ -145,12 +145,12 @@ Les apprentis Demorthèn sont appelés Ionnthèn.',
                 'name' => 'Érudit',
                 'description' => 'Passionnés par le savoir, les recherches, les érudits sont souvent employés comme scribes, professeurs ou bibliothécaires.
 Généralement, un érudit possède un domaine de connaissance de prédilection, comme la théologie, magience, science, etc.',
-                'primaryDomain' => Domains::ERUDITION['title'],
+                'primaryDomain' => DomainsData::ERUDITION['title'],
                 'dailySalary' => 8,
                 'book' => $book2,
                 'secondaryDomains' => [
-                    Domains::SCIENCE['title'],
-                    Domains::OCCULTISM['title'],
+                    DomainsData::SCIENCE['title'],
+                    DomainsData::OCCULTISM['title'],
                 ],
             ],
             [
@@ -158,7 +158,7 @@ Généralement, un érudit possède un domaine de connaissance de prédilection,
                 'name' => 'Espion',
                 'description' => 'N\'importe qui, qu\'il soit un conseiller haut placé ou un simple mendiant, peut jouer un double rôle, amassant des informations pour le compte d\'un commanditaire.
 Le domaine secondaire peut être choisi librement pour coller à la fausse identité de l\'espion.',
-                'primaryDomain' => Domains::PERCEPTION['title'],
+                'primaryDomain' => DomainsData::PERCEPTION['title'],
                 'dailySalary' => 9,
                 'book' => $book2,
                 'secondaryDomains' => [],
@@ -167,12 +167,12 @@ Le domaine secondaire peut être choisi librement pour coller à la fausse ident
                 'id' => 10,
                 'name' => 'Explorateur',
                 'description' => 'Aventurier et casse-cou, l\'explorateur est passionné par le voyage, fuyant souvent la pauvreté ou la monotonie de son lieu de naissance.',
-                'primaryDomain' => Domains::FEATS['title'],
+                'primaryDomain' => DomainsData::FEATS['title'],
                 'dailySalary' => 9,
                 'book' => $book2,
                 'secondaryDomains' => [
-                    Domains::NATURAL_ENVIRONMENT['title'],
-                    Domains::TRAVEL['title'],
+                    DomainsData::NATURAL_ENVIRONMENT['title'],
+                    DomainsData::TRAVEL['title'],
                 ],
             ],
             [
@@ -181,7 +181,7 @@ Le domaine secondaire peut être choisi librement pour coller à la fausse ident
                 'description' => 'Habitant généralement dans les grandes villes, les investigateurs proposent leurs services pour mener l\'enquête.
 Chaque investigateur a son style : certains sont versés dans l\'occultisme, d\'autres dans la science, la magience ou encore la médecine.
 De ce fait, le choix du domaine secondaire est libre.',
-                'primaryDomain' => Domains::PERCEPTION['title'],
+                'primaryDomain' => DomainsData::PERCEPTION['title'],
                 'dailySalary' => 9,
                 'book' => $book2,
                 'secondaryDomains' => [],
@@ -192,24 +192,24 @@ De ce fait, le choix du domaine secondaire est libre.',
                 'description' => 'En Tri-Kazel, on les nomme souvent par le terme dédaigneux de "Daedemorthys".
 Malgré cette mauvaise réputation, leur science a pour but général l\'amélioration des conditions de vie de l\'humanité.
 Un magientiste diplômé est un scientör, alors qu\'un élève en cours de formation est un inceptus.',
-                'primaryDomain' => Domains::MAGIENCE['title'],
+                'primaryDomain' => DomainsData::MAGIENCE['title'],
                 'dailySalary' => 10,
                 'book' => $book2,
                 'secondaryDomains' => [
-                    Domains::SCIENCE['title'],
-                    Domains::ERUDITION['title'],
+                    DomainsData::SCIENCE['title'],
+                    DomainsData::ERUDITION['title'],
                 ],
             ],
             [
                 'id' => 13,
                 'name' => 'Malandrin',
                 'description' => 'Voleur, cambrioleur, tire-laine ; les moyens illégaux pour gagner sa vie sont assez nombreux pour attirer du monde, et ce malgré les risques.',
-                'primaryDomain' => Domains::STEALTH['title'],
+                'primaryDomain' => DomainsData::STEALTH['title'],
                 'dailySalary' => 8,
                 'book' => $book2,
                 'secondaryDomains' => [
-                    Domains::FEATS['title'],
-                    Domains::PERFORMANCE['title'],
+                    DomainsData::FEATS['title'],
+                    DomainsData::PERFORMANCE['title'],
                 ],
             ],
             [
@@ -219,36 +219,36 @@ Un magientiste diplômé est un scientör, alors qu\'un élève en cours de form
 De nouvelles techniques tout-à-fait efficaces proviennent désormais des universités des grandes villes.
 Certains médecins, les aliénistes, s\'attachent à soigner les troubles psychiques en se référant aux travaux du professeur continental Ernst Zigger.
 D\'autres, comme les apothicaires, sont spécialisés dans l\'herboristerie.',
-                'primaryDomain' => Domains::SCIENCE['title'],
+                'primaryDomain' => DomainsData::SCIENCE['title'],
                 'dailySalary' => 10,
                 'book' => $book2,
                 'secondaryDomains' => [
-                    Domains::RELATION['title'],
-                    Domains::ERUDITION['title'],
+                    DomainsData::RELATION['title'],
+                    DomainsData::ERUDITION['title'],
                 ],
             ],
             [
                 'id' => 15,
                 'name' => 'Occultiste',
                 'description' => 'Passionnés d\'ésotérisme, les occultistes sont souvent des universitaires ayant un grand intérêt pour ce domaine dénigré par les autres branches de la science.',
-                'primaryDomain' => Domains::OCCULTISM['title'],
+                'primaryDomain' => DomainsData::OCCULTISM['title'],
                 'dailySalary' => 8,
                 'book' => $book2,
                 'secondaryDomains' => [
-                    Domains::SCIENCE['title'],
-                    Domains::ERUDITION['title'],
+                    DomainsData::SCIENCE['title'],
+                    DomainsData::ERUDITION['title'],
                 ],
             ],
             [
                 'id' => 16,
                 'name' => 'Paysan',
                 'description' => 'Qu\'il cultive la terre ou élève des animaux, il participe à la vie de la communauté en la nourrissant.',
-                'primaryDomain' => Domains::NATURAL_ENVIRONMENT['title'],
+                'primaryDomain' => DomainsData::NATURAL_ENVIRONMENT['title'],
                 'dailySalary' => 6,
                 'book' => $book2,
                 'secondaryDomains' => [
-                    Domains::CRAFT['title'],
-                    Domains::FEATS['title'],
+                    DomainsData::CRAFT['title'],
+                    DomainsData::FEATS['title'],
                 ],
             ],
             [
@@ -257,12 +257,12 @@ D\'autres, comme les apothicaires, sont spécialisés dans l\'herboristerie.',
                 'description' => 'Voyageur, messager, porteur de nouvelles mais aussi de colis, le varigal est un lien entre les communautés éparses de Tri-Kazel.
 Passant l\'essentiel de sa vie sur les chemins, il est généralement bien accueilli quand il arrive dans un village.
 Proches de la nature, les varigaux sont souvent les alliés des demorthèn.',
-                'primaryDomain' => Domains::TRAVEL['title'],
+                'primaryDomain' => DomainsData::TRAVEL['title'],
                 'dailySalary' => 10,
                 'book' => $book2,
                 'secondaryDomains' => [
-                    Domains::NATURAL_ENVIRONMENT['title'],
-                    Domains::FEATS['title'],
+                    DomainsData::NATURAL_ENVIRONMENT['title'],
+                    DomainsData::FEATS['title'],
                 ],
             ],
             [
@@ -275,80 +275,80 @@ Lui connaît les probabilités et les mathématiques, de sorte qu\'il sache pré
 nsi gagner des sommes considérables au jeu.
 Il ne s\'agit pas simplement de piécettes, mais bien d\'obtenir de plus puissants qu\'ils soient prêts à parier leur maison ou la main de leur fille, ou n\'importe quel "bien" de valeur d\'ailleurs.
 L\'astuce remplace la force du guerrier pour monter dans la société et se faire une place au soleil.',
-                'primaryDomain' => Domains::PERFORMANCE['title'],
+                'primaryDomain' => DomainsData::PERFORMANCE['title'],
                 'dailySalary' => 12,
                 'book' => $book2,
                 'secondaryDomains' => [
-                    Domains::RELATION['title'],
+                    DomainsData::RELATION['title'],
                 ],
             ],
             [
                 'id' => 20,
                 'name' => 'Moine du Temple',
                 'description' => '',
-                'primaryDomain' => Domains::PRAYER['title'],
+                'primaryDomain' => DomainsData::PRAYER['title'],
                 'dailySalary' => 6,
                 'book' => $book2,
                 'secondaryDomains' => [
-                    Domains::CRAFT['title'],
-                    Domains::ERUDITION['title'],
+                    DomainsData::CRAFT['title'],
+                    DomainsData::ERUDITION['title'],
                 ],
             ],
             [
                 'id' => 21,
                 'name' => 'Clerc du Temple',
                 'description' => '',
-                'primaryDomain' => Domains::PRAYER['title'],
+                'primaryDomain' => DomainsData::PRAYER['title'],
                 'dailySalary' => 6,
                 'book' => $book2,
                 'secondaryDomains' => [
-                    Domains::ERUDITION['title'],
+                    DomainsData::ERUDITION['title'],
                 ],
             ],
             [
                 'id' => 22,
                 'name' => 'Prêtre du Temple',
                 'description' => '',
-                'primaryDomain' => Domains::PRAYER['title'],
+                'primaryDomain' => DomainsData::PRAYER['title'],
                 'dailySalary' => 6,
                 'book' => $book2,
                 'secondaryDomains' => [
-                    Domains::RELATION['title'],
-                    Domains::ERUDITION['title'],
+                    DomainsData::RELATION['title'],
+                    DomainsData::ERUDITION['title'],
                 ],
             ],
             [
                 'id' => 23,
                 'name' => 'Vecteur du Temple',
                 'description' => '',
-                'primaryDomain' => Domains::PRAYER['title'],
+                'primaryDomain' => DomainsData::PRAYER['title'],
                 'dailySalary' => 6,
                 'book' => $book2,
                 'secondaryDomains' => [
-                    Domains::RELATION['title'],
-                    Domains::TRAVEL['title'],
+                    DomainsData::RELATION['title'],
+                    DomainsData::TRAVEL['title'],
                 ],
             ],
             [
                 'id' => 24,
                 'name' => 'Sigire du Temple',
                 'description' => '',
-                'primaryDomain' => Domains::PRAYER['title'],
+                'primaryDomain' => DomainsData::PRAYER['title'],
                 'dailySalary' => 6,
                 'book' => $book2,
                 'secondaryDomains' => [
-                    Domains::CLOSE_COMBAT['title'],
+                    DomainsData::CLOSE_COMBAT['title'],
                 ],
             ],
             [
                 'id' => 25,
                 'name' => 'Chevalier lame du Temple',
                 'description' => '',
-                'primaryDomain' => Domains::PRAYER['title'],
+                'primaryDomain' => DomainsData::PRAYER['title'],
                 'dailySalary' => 6,
                 'book' => $book2,
                 'secondaryDomains' => [
-                    Domains::CLOSE_COMBAT['title'],
+                    DomainsData::CLOSE_COMBAT['title'],
                 ],
             ],
             [
@@ -360,12 +360,12 @@ Le rôle de la Dàmàthair est de créer les liens de la communauté passée, ac
 ang afin de plus tard ne former qu\'un seul rempart contre ce qui peut se trouver à l\'extérieur.
 Si les habitants de Tri-Kazel ont une capacité d\'entraide si importante (surtout dans les montagnes) c\'est parce qu\'on leur enseigne qu\'ils ne sont qu\'une seule entité qui ne peut survivre qu\'en vivant ensemble.
 La damathair principale d\'une communauté est très attachée à celle-ci et ne la quittera que pour cas de force majeure. Mais il arrive qu\'elle ait une ou plusieurs jeunes assistantes qui n\'ont pas encore fixé leur vocation définitive et peuvent se tourner vers un autre métier. Inversement, il arrive qu\'une varigale, une vectrice (en Gwidre) ou même une militaire choisisse de s\'établir comme damathair. Ces changements de trajectoire sont à discuter entre le joueur et le MJ, du moment qu\'ils respectent la cohérence du personnage.',
-                'primaryDomain' => Domains::RELATION['title'],
+                'primaryDomain' => DomainsData::RELATION['title'],
                 'dailySalary' => 6,
                 'book' => $book13,
                 'secondaryDomains' => [
-                    Domains::CLOSE_COMBAT['title'],
-                    Domains::ERUDITION['title'],
+                    DomainsData::CLOSE_COMBAT['title'],
+                    DomainsData::ERUDITION['title'],
                 ],
             ],
             [
@@ -373,12 +373,12 @@ La damathair principale d\'une communauté est très attachée à celle-ci et ne
                 'name' => 'Combattant à distance',
                 'description' => 'Il peut être soldat ou mercenaire, champion de justice, bagarreur de taverne ou détrousseur des rues sombres, etc.
 Il se spécialise dans les armes à distance',
-                'primaryDomain' => Domains::SHOOTING_AND_THROWING['title'],
+                'primaryDomain' => DomainsData::SHOOTING_AND_THROWING['title'],
                 'dailySalary' => 7,
                 'book' => $book2,
                 'secondaryDomains' => [
-                    Domains::CLOSE_COMBAT['title'],
-                    Domains::FEATS['title'],
+                    DomainsData::CLOSE_COMBAT['title'],
+                    DomainsData::FEATS['title'],
                 ],
             ],
         ];

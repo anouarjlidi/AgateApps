@@ -11,7 +11,7 @@
 
 namespace CorahnRin\Step;
 
-use CorahnRin\Data\Domains;
+use CorahnRin\Data\DomainsData;
 use CorahnRin\Entity\Disciplines;
 use CorahnRin\Entity\GeoEnvironments;
 use CorahnRin\GeneratorTools\DomainsCalculator;
@@ -40,7 +40,7 @@ class Step16Disciplines extends AbstractStepAction
     private $domainsCalculator;
 
     /**
-     * @var \CorahnRin\Data\Domains[]
+     * @var \CorahnRin\Data\DomainsData[]
      */
     private $allDomains;
 
@@ -61,7 +61,7 @@ class Step16Disciplines extends AbstractStepAction
      */
     public function execute(): Response
     {
-        $this->allDomains = Domains::allAsObjects();
+        $this->allDomains = DomainsData::allAsObjects();
 
         $primaryDomains = $this->getCharacterProperty('13_primary_domains');
         $useDomainBonuses = $this->getCharacterProperty('14_use_domain_bonuses');
@@ -179,10 +179,10 @@ class Step16Disciplines extends AbstractStepAction
         $disciplinesSortedByDomains = [];
         foreach ($this->availableDisciplines as $discipline) {
             foreach ($discipline->getDomains() as $domain) {
-                if (!\in_array($domain->getId(), $availableDomainsForDisciplines, true)) {
+                if (!\in_array($domain, $availableDomainsForDisciplines, true)) {
                     continue;
                 }
-                $domainId = $domain->getId();
+                $domainId = $domain;
                 if (!\array_key_exists($domainId, $disciplinesSortedByDomains)) {
                     $disciplinesSortedByDomains[$domainId] = [];
                 }

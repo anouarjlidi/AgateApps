@@ -11,7 +11,7 @@
 
 namespace CorahnRin\Entity;
 
-use CorahnRin\Data\Domains;
+use CorahnRin\Data\DomainsData;
 use CorahnRin\Entity\Traits\HasBook;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -57,7 +57,7 @@ class GeoEnvironments
 
     public function __construct(int $id, string $name, string $description, string $domain)
     {
-        Domains::validateDomain($domain);
+        DomainsData::validateDomain($domain);
 
         $this->id = $id;
         $this->name = $name;

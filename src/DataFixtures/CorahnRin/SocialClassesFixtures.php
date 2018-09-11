@@ -11,7 +11,7 @@
 
 namespace DataFixtures\CorahnRin;
 
-use CorahnRin\Data\Domains;
+use CorahnRin\Data\DomainsData;
 use CorahnRin\Entity\SocialClass;
 use Doctrine\Bundle\FixturesBundle\ORMFixtureInterface;
 use Doctrine\Common\DataFixtures\AbstractFixture;
@@ -45,11 +45,11 @@ class SocialClassesFixtures extends AbstractFixture implements OrderedFixtureInt
         /** @var EntityRepository $repo */
         $repo = $this->manager->getRepository(SocialClass::class);
 
-        $this->fixtureObject($repo, 1, [Domains::NATURAL_ENVIRONMENT['title'], Domains::PERCEPTION['title'], Domains::FEATS['title'], Domains::TRAVEL['title']], 'Paysan', 'Les roturiers font partie de la majorité de la population. Vous avez vécu dans une famille paysanne, à l\'écart des villes et cités, sans pour autant les ignorer. Vous êtes plus proche de la nature.'."\n".'les Demorthèn font également partie de cette classe sociale.');
-        $this->fixtureObject($repo, 2, [Domains::CRAFT['title'], Domains::RELATION['title'], Domains::SCIENCE['title'], Domains::ERUDITION['title']], 'Artisan', 'Les roturiers font partie de la majorité de la population. Votre famille était composée d\'un ou plusieurs artisans ou ouvriers, participant à la vie communale et familiale usant de ses talents manuels.');
-        $this->fixtureObject($repo, 3, [Domains::CRAFT['title'], Domains::RELATION['title'], Domains::PERFORMANCE['title'], Domains::ERUDITION['title']], 'Bourgeois', 'Votre famille a su faire des affaires dans les villes, ou tient probablement un commerce célèbre dans votre région, ce qui vous permet de vivre confortablement au sein d\'une communauté familière.');
-        $this->fixtureObject($repo, 4, [Domains::PRAYER['title'], Domains::RELATION['title'], Domains::TRAVEL['title'], Domains::ERUDITION['title']], 'Clergé', 'Votre famille a toujours respecté l\'Unique et ses représentants, et vous êtes issu d\'un milieu très pieux.'."\n".'Vous avez probablement la foi, vous aussi.');
-        $this->fixtureObject($repo, 5, [Domains::CLOSE_COMBAT['title'], Domains::RELATION['title'], Domains::SCIENCE['title'], Domains::ERUDITION['title']], 'Noblesse', 'Vous portez peut-être un grand nom des affaires des grandes cités, ou avez grandi en ville. Néanmoins, votre famille est placée assez haut dans la noblesse pour vous permettre d\'avoir eu des enseignements particuliers.');
+        $this->fixtureObject($repo, 1, [DomainsData::NATURAL_ENVIRONMENT['title'], DomainsData::PERCEPTION['title'], DomainsData::FEATS['title'], DomainsData::TRAVEL['title']], 'Paysan', 'Les roturiers font partie de la majorité de la population. Vous avez vécu dans une famille paysanne, à l\'écart des villes et cités, sans pour autant les ignorer. Vous êtes plus proche de la nature.'."\n".'les Demorthèn font également partie de cette classe sociale.');
+        $this->fixtureObject($repo, 2, [DomainsData::CRAFT['title'], DomainsData::RELATION['title'], DomainsData::SCIENCE['title'], DomainsData::ERUDITION['title']], 'Artisan', 'Les roturiers font partie de la majorité de la population. Votre famille était composée d\'un ou plusieurs artisans ou ouvriers, participant à la vie communale et familiale usant de ses talents manuels.');
+        $this->fixtureObject($repo, 3, [DomainsData::CRAFT['title'], DomainsData::RELATION['title'], DomainsData::PERFORMANCE['title'], DomainsData::ERUDITION['title']], 'Bourgeois', 'Votre famille a su faire des affaires dans les villes, ou tient probablement un commerce célèbre dans votre région, ce qui vous permet de vivre confortablement au sein d\'une communauté familière.');
+        $this->fixtureObject($repo, 4, [DomainsData::PRAYER['title'], DomainsData::RELATION['title'], DomainsData::TRAVEL['title'], DomainsData::ERUDITION['title']], 'Clergé', 'Votre famille a toujours respecté l\'Unique et ses représentants, et vous êtes issu d\'un milieu très pieux.'."\n".'Vous avez probablement la foi, vous aussi.');
+        $this->fixtureObject($repo, 5, [DomainsData::CLOSE_COMBAT['title'], DomainsData::RELATION['title'], DomainsData::SCIENCE['title'], DomainsData::ERUDITION['title']], 'Noblesse', 'Vous portez peut-être un grand nom des affaires des grandes cités, ou avez grandi en ville. Néanmoins, votre famille est placée assez haut dans la noblesse pour vous permettre d\'avoir eu des enseignements particuliers.');
 
         $this->manager->flush();
     }

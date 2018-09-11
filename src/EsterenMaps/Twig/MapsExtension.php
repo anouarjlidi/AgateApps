@@ -12,8 +12,10 @@
 namespace EsterenMaps\Twig;
 
 use EsterenMaps\Repository\MapsRepository;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class MapsExtension extends \Twig_Extension
+class MapsExtension extends AbstractExtension
 {
     /**
      * @var MapsRepository
@@ -28,7 +30,7 @@ class MapsExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction('get_menu_maps', [$this, 'getMaps']),
+            new TwigFunction('get_menu_maps', [$this, 'getMaps']),
         ];
     }
 

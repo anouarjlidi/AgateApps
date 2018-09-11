@@ -11,7 +11,7 @@
 
 namespace CorahnRin\Entity;
 
-use CorahnRin\Data\Domains;
+use CorahnRin\Data\DomainsData;
 use CorahnRin\Entity\Traits\HasBook;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -131,14 +131,14 @@ class Jobs
 
     public function addSecondaryDomain(string $domain): void
     {
-        Domains::validateDomain($domain);
+        DomainsData::validateDomain($domain);
 
         $this->secondaryDomains[] = $domain;
     }
 
     public function removeSecondaryDomain(string $domain): void
     {
-        Domains::validateDomain($domain);
+        DomainsData::validateDomain($domain);
 
         if (!\in_array($domain, $this->secondaryDomains, true)) {
             throw new \InvalidArgumentException(\sprintf('Current social class does not have specified domain %s', $domain));
@@ -151,7 +151,7 @@ class Jobs
 
     public function hasSecondaryDomain(string $domain): bool
     {
-        Domains::validateDomain($domain);
+        DomainsData::validateDomain($domain);
 
         return !\in_array($domain, $this->secondaryDomains, true);
     }

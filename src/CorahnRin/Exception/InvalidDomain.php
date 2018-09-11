@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace CorahnRin\Exception;
 
-use CorahnRin\Data\Domains;
+use CorahnRin\Data\DomainsData;
 use InvalidArgumentException;
 
 class InvalidDomain extends InvalidArgumentException
@@ -22,7 +22,7 @@ class InvalidDomain extends InvalidArgumentException
     {
         parent::__construct(\sprintf(
             'Provided domain "%s" is not a valid domain. Possible values: %s',
-            $Domain, \implode(', ', \array_keys(Domains::ALL))
+            $Domain, \implode(', ', \array_keys(DomainsData::ALL))
         ));
     }
 }

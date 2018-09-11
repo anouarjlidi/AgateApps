@@ -11,7 +11,8 @@
 
 namespace CorahnRin\GeneratorTools;
 
-use CorahnRin\Data\Domains;
+use CorahnRin\Data\DomainItem;
+use CorahnRin\Data\DomainsData;
 use CorahnRin\Entity\GeoEnvironments;
 
 final class DomainsCalculator
@@ -41,13 +42,19 @@ final class DomainsCalculator
      *
      * If $domainsBonuses IS provided, then it will add the correct bonuses if some domains exceed 5 points.
      *
-     * @param Domains[] $allDomains
+     * @param DomainsData[] $allDomains
      * @param array     $domainsBonuses
      *
      * @return int[]
      */
-    public function calculateFromGeneratorData($allDomains, array $socialClasses, string $ost, GeoEnvironments $geoEnv, array $primaryDomains, array $domainsBonuses = null)
-    {
+    public function calculateFromGeneratorData(
+        $allDomains,
+        array $socialClasses,
+        string $ost,
+        GeoEnvironments $geoEnv,
+        array $primaryDomains,
+        array $domainsBonuses = null
+    ): array {
         $this->bonus = 0;
         $this->finalCalculatedDomains = [];
 
@@ -56,10 +63,10 @@ final class DomainsCalculator
          */
         foreach ($allDomains as $id => $domain) {
             // First, validate arguments.
-            if (!($domain instanceof Domains)) {
+            if (!($domain instanceof DomainItem)) {
                 throw new \InvalidArgumentException(\sprintf(
-                    'Invalid %s argument sent. It must be an array of %s instances, and the array key must correspond to the "%s" property.',
-                    '$allDomains', Domains::class, 'id'
+                    'Invalid %s argument sent. It must be an array of %s instances, %s given.',
+                    '$allDomains', DomainItem::class, \is_object($domain) ? \get_class($domain) : \gettype($domain)
                 ));
             }
 
@@ -134,7 +141,7 @@ final class DomainsCalculator
      * Based on all three specified steps, will calculate final domains values.
      * Mostly used in step 16 to calculate disciplines and in step 17 to check if combat arts are available.
      *
-     * @param Domains[] $allDomains
+     * @param DomainsData[] $allDomains
      * @param int[]     $domainsBaseValues
      * @param int[]     $domainsSpendExp
      *
@@ -146,10 +153,10 @@ final class DomainsCalculator
 
         foreach ($allDomains as $id => $domain) {
             // First, validate arguments.
-            if (!($domain instanceof Domains)) {
+            if (!($domain instanceof DomainItem)) {
                 throw new \InvalidArgumentException(\sprintf(
-                    'Invalid %s argument sent. It must be an array of %s instances, and the array key must correspond to the "%s" property.',
-                    '$allDomains', Domains::class, 'id'
+                    'Invalid %s argument sent. It must be an array of %s instances, %s given.',
+                    '$allDomains', DomainItem::class, \is_object($domain) ? \get_class($domain) : \gettype($domain)
                 ));
             }
 

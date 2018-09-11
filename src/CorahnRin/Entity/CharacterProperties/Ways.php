@@ -57,6 +57,20 @@ class Ways
      */
     protected $conviction;
 
+    public function __construct(
+        int $combativeness,
+        int $creativity,
+        int $empathy,
+        int $reason,
+        int $conviction
+    ) {
+        $this->combativeness = $combativeness;
+        $this->creativity = $creativity;
+        $this->empathy = $empathy;
+        $this->reason = $reason;
+        $this->conviction = $conviction;
+    }
+
     public function getWay(string $way): int
     {
         WaysData::validateWay($way);

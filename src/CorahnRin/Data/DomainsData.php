@@ -11,10 +11,12 @@
 
 namespace CorahnRin\Data;
 
+use CorahnRin\Entity\CharacterProperties\CharacterDomains;
 use CorahnRin\Exception\InvalidDomain;
 use CorahnRin\Exception\InvalidDomainValue;
+use Doctrine\Common\Inflector\Inflector;
 
-final class Domains
+final class DomainsData
 {
     // Old ID : 1
     public const CRAFT = [
@@ -147,17 +149,6 @@ final class Domains
         self::ERUDITION['title'] => self::ERUDITION,
     ];
 
-    private $title;
-    private $description;
-    private $way;
-
-    private function __construct($title, $description, $way)
-    {
-        $this->title = $title;
-        $this->description = $description;
-        $this->way = $way;
-    }
-
     public static function validateDomain(string $domain): void
     {
         if (!isset(static::ALL[$domain])) {
@@ -174,32 +165,40 @@ final class Domains
         }
     }
 
+    public static function getAsObject(string $name): DomainItem
+    {
+        $item = static::ALL[$name];
+
+        return new DomainItem($item['title'], $item['description'], $item['way']);
+    }
+
     /**
-     * @return self[]
+     * @return DomainItem[]
      */
     public static function allAsObjects(): array
     {
         $collection = [];
 
         foreach (static::ALL as $item) {
-            $collection[$item['title']] = new self($item['title'], $item['description'], $item['way']);
+            $collection[$item['title']] = static::getAsObject($item['title']);
         }
 
         return $collection;
     }
 
-    public function getTitle(): string
+    /**
+     * Also verifies that the camelized title does exist in the CharacterDomains class.
+     */
+    public static function getCamelizedTitle(string $domainName, string $suffix = ''): string
     {
-        return $this->title;
-    }
+        $camelizedTitle = preg_replace('~^domains\.~iUu', '', Inflector::camelize($domainName));
 
-    public function getDescription(): string
-    {
-        return $this->description;
-    }
+        $camelizedTitle .= $suffix;
 
-    public function getWay(): string
-    {
-        return $this->way;
+        if (!\property_exists(CharacterDomains::class, $camelizedTitle)) {
+            throw new InvalidDomain($camelizedTitle);
+        }
+
+        return $camelizedTitle;
     }
 }

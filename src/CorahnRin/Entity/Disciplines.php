@@ -11,7 +11,7 @@
 
 namespace CorahnRin\Entity;
 
-use CorahnRin\Data\Domains;
+use CorahnRin\Data\DomainsData;
 use CorahnRin\Entity\Traits\HasBook;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -128,14 +128,14 @@ class Disciplines
 
     public function addDomain(string $domain): void
     {
-        Domains::validateDomain($domain);
+        DomainsData::validateDomain($domain);
 
         $this->domains[] = $domain;
     }
 
     public function removeDomain(string $domain): void
     {
-        Domains::validateDomain($domain);
+        DomainsData::validateDomain($domain);
 
         if (!\in_array($domain, $this->domains, true)) {
             throw new \InvalidArgumentException(\sprintf('Current social class does not have specified domain %s', $domain));
@@ -148,7 +148,7 @@ class Disciplines
 
     public function hasDomain(string $domain): bool
     {
-        Domains::validateDomain($domain);
+        DomainsData::validateDomain($domain);
 
         return !\in_array($domain, $this->domains, true);
     }

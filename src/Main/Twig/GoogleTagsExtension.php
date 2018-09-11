@@ -11,7 +11,10 @@
 
 namespace Main\Twig;
 
-class GoogleTagsExtension extends \Twig_Extension
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
+
+class GoogleTagsExtension extends AbstractExtension
 {
     /**
      * @var array
@@ -35,8 +38,8 @@ class GoogleTagsExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction('get_gtm', [$this, 'getGoogleTagManager']),
-            new \Twig_SimpleFunction('get_ga', [$this, 'getGoogleAnalytics']),
+            new TwigFunction('get_gtm', [$this, 'getGoogleTagManager']),
+            new TwigFunction('get_ga', [$this, 'getGoogleAnalytics']),
         ];
     }
 

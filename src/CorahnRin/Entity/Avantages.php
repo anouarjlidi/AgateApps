@@ -11,7 +11,7 @@
 
 namespace CorahnRin\Entity;
 
-use CorahnRin\Data\Domains;
+use CorahnRin\Data\DomainsData;
 use CorahnRin\Entity\CharacterProperties\Bonuses;
 use CorahnRin\Entity\Traits\HasBook;
 use Doctrine\ORM\Mapping as ORM;
@@ -45,22 +45,22 @@ class Avantages
         Bonuses::DEFENSE,
         Bonuses::SPEED,
         Bonuses::SURVIVAL,
-        Domains::CRAFT['title'],
-        Domains::CLOSE_COMBAT['title'],
-        Domains::STEALTH['title'],
-        Domains::MAGIENCE['title'],
-        Domains::NATURAL_ENVIRONMENT['title'],
-        Domains::DEMORTHEN_MYSTERIES['title'],
-        Domains::OCCULTISM['title'],
-        Domains::PERCEPTION['title'],
-        Domains::PRAYER['title'],
-        Domains::FEATS['title'],
-        Domains::RELATION['title'],
-        Domains::PERFORMANCE['title'],
-        Domains::SCIENCE['title'],
-        Domains::SHOOTING_AND_THROWING['title'],
-        Domains::TRAVEL['title'],
-        Domains::ERUDITION['title'],
+        DomainsData::CRAFT['title'],
+        DomainsData::CLOSE_COMBAT['title'],
+        DomainsData::STEALTH['title'],
+        DomainsData::MAGIENCE['title'],
+        DomainsData::NATURAL_ENVIRONMENT['title'],
+        DomainsData::DEMORTHEN_MYSTERIES['title'],
+        DomainsData::OCCULTISM['title'],
+        DomainsData::PERCEPTION['title'],
+        DomainsData::PRAYER['title'],
+        DomainsData::FEATS['title'],
+        DomainsData::RELATION['title'],
+        DomainsData::PERFORMANCE['title'],
+        DomainsData::SCIENCE['title'],
+        DomainsData::SHOOTING_AND_THROWING['title'],
+        DomainsData::TRAVEL['title'],
+        DomainsData::ERUDITION['title'],
     ];
 
     use HasBook;

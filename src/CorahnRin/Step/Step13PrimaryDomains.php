@@ -11,7 +11,7 @@
 
 namespace CorahnRin\Step;
 
-use CorahnRin\Data\Domains;
+use CorahnRin\Data\DomainsData;
 use CorahnRin\Entity\Avantages;
 use CorahnRin\Entity\Jobs;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 class Step13PrimaryDomains extends AbstractStepAction
 {
     /**
-     * @var Domains[]
+     * @var DomainsData[]
      */
     private $allDomains;
     /**
@@ -61,7 +61,7 @@ class Step13PrimaryDomains extends AbstractStepAction
      */
     public function execute(): Response
     {
-        $this->allDomains = Domains::allAsObjects();
+        $this->allDomains = DomainsData::allAsObjects();
         $this->job = $this->em->getRepository(Jobs::class)->find($this->getCharacterProperty('02_job'));
         $this->step11AdvantagesData = $this->getCharacterProperty('11_advantages');
         $advantages = $this->step11AdvantagesData['advantages'];
@@ -78,7 +78,7 @@ class Step13PrimaryDomains extends AbstractStepAction
         }
 
         if (!\array_key_exists('ost', $this->submittedDomains)) {
-            $this->submittedDomains['ost'] = Domains::CLOSE_COMBAT['title'];
+            $this->submittedDomains['ost'] = DomainsData::CLOSE_COMBAT['title'];
         }
 
         // The number of domains set for each possible value.
@@ -260,7 +260,7 @@ class Step13PrimaryDomains extends AbstractStepAction
 
         if (false === $keyExists) {
             if (!$id) {
-                $this->submittedDomains['ost'] = Domains::CLOSE_COMBAT['title'];
+                $this->submittedDomains['ost'] = DomainsData::CLOSE_COMBAT['title'];
             } else {
                 $this->flashMessage('Le domaine spécifié pour le service d\'Ost n\'est pas valide.');
 
@@ -277,7 +277,7 @@ class Step13PrimaryDomains extends AbstractStepAction
     {
         $sessionValue = $this->getCharacterProperty() ?: [
             'domains' => [],
-            'ost' => Domains::CLOSE_COMBAT['title'],
+            'ost' => DomainsData::CLOSE_COMBAT['title'],
         ];
 
         $this->submittedDomains = [

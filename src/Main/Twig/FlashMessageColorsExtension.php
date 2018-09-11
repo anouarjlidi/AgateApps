@@ -11,12 +11,15 @@
 
 namespace Main\Twig;
 
-class FlashMessageColorsExtension extends \Twig_Extension
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
+
+class FlashMessageColorsExtension extends AbstractExtension
 {
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction('get_flash_class', [$this, 'getFlashClass']),
+            new TwigFunction('get_flash_class', [$this, 'getFlashClass']),
         ];
     }
 

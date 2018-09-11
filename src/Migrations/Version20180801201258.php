@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace DoctrineMigrations;
 
-use CorahnRin\Data\Domains;
+use CorahnRin\Data\DomainsData;
 use CorahnRin\Entity\Avantages;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Types\Type;
@@ -126,22 +126,22 @@ final class Version20180801201258 extends AbstractMigration
         ');
 
         $bonusesIdsReplacers = [
-            1 => Domains::CRAFT['title'],
-            2 => Domains::CLOSE_COMBAT['title'],
-            3 => Domains::STEALTH['title'],
-            4 => Domains::MAGIENCE['title'],
-            5 => Domains::NATURAL_ENVIRONMENT['title'],
-            6 => Domains::DEMORTHEN_MYSTERIES['title'],
-            7 => Domains::OCCULTISM['title'],
-            8 => Domains::PERCEPTION['title'],
-            9 => Domains::PRAYER['title'],
-            10 => Domains::FEATS['title'],
-            11 => Domains::RELATION['title'],
-            12 => Domains::PERFORMANCE['title'],
-            13 => Domains::SCIENCE['title'],
-            14 => Domains::SHOOTING_AND_THROWING['title'],
-            15 => Domains::TRAVEL['title'],
-            16 => Domains::ERUDITION['title'],
+            1 => DomainsData::CRAFT['title'],
+            2 => DomainsData::CLOSE_COMBAT['title'],
+            3 => DomainsData::STEALTH['title'],
+            4 => DomainsData::MAGIENCE['title'],
+            5 => DomainsData::NATURAL_ENVIRONMENT['title'],
+            6 => DomainsData::DEMORTHEN_MYSTERIES['title'],
+            7 => DomainsData::OCCULTISM['title'],
+            8 => DomainsData::PERCEPTION['title'],
+            9 => DomainsData::PRAYER['title'],
+            10 => DomainsData::FEATS['title'],
+            11 => DomainsData::RELATION['title'],
+            12 => DomainsData::PERFORMANCE['title'],
+            13 => DomainsData::SCIENCE['title'],
+            14 => DomainsData::SHOOTING_AND_THROWING['title'],
+            15 => DomainsData::TRAVEL['title'],
+            16 => DomainsData::ERUDITION['title'],
             'rap' => 'speed',
             'resm' => 'mental_resistance',
             'bless' => 'health',
@@ -295,8 +295,22 @@ final class Version20180801201258 extends AbstractMigration
         $this->addSql('UPDATE avantages SET bonuses_for = :value WHERE id = :id', [':value' => 'luck', ':id' => 21]);
         $this->addSql('UPDATE avantages SET bonuses_for = :value WHERE id = :id', [':value' => 'luck', ':id' => 43]);
         $this->addSql('UPDATE avantages SET augmentation_count = :value WHERE id = :id', [':value' => 2, ':id' => 50]);
-        $this->addSql('UPDATE avantages SET avtg_group = :value WHERE id IN (:ids)', [':value' => 'advantages.group.ally', ':ids' => [1, 2, 3]]);
-        $this->addSql('UPDATE avantages SET avtg_group = :value WHERE id IN (:ids)', [':value' => 'advantages.group.financial_ease', ':ids' => [4, 5, 6, 7, 8]]);
+
+        $ids = [1, 2, 3];
+        $placeholders = \implode(', ', \array_fill(0, \count($ids), '?'));
+        \array_unshift($ids, 'advantages.group.ally');
+        $this->addSql(
+            "UPDATE avantages SET avtg_group = ? WHERE id IN ($placeholders)",
+            $ids
+        );
+
+        $ids = [4, 5, 6, 7, 8];
+        $placeholders = \implode(', ', \array_fill(0, \count($ids), '?'));
+        \array_unshift($ids, 'advantages.group.financial_ease');
+        $this->addSql(
+            "UPDATE avantages SET avtg_group = ? WHERE id IN ($placeholders)",
+            $ids
+        );
 
         // Scholar special case (which is the inspiration for the indication system, basically)
         $this->addSql('
@@ -309,10 +323,10 @@ final class Version20180801201258 extends AbstractMigration
                 ':indication' => 'advantages.indication.scholar',
                 ':indication_type' => Avantages::INDICATION_TYPE_SINGLE_CHOICE,
                 ':bonuses_for' => $simpleArray->convertToDatabaseValue([
-                    Domains::ERUDITION['title'],
-                    Domains::SCIENCE['title'],
-                    Domains::MAGIENCE['title'],
-                    Domains::OCCULTISM['title'],
+                    DomainsData::ERUDITION['title'],
+                    DomainsData::SCIENCE['title'],
+                    DomainsData::MAGIENCE['title'],
+                    DomainsData::OCCULTISM['title'],
                 ], $conn->getDatabasePlatform()),
                 ':id' => 23,
             ]

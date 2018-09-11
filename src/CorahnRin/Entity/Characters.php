@@ -11,14 +11,14 @@
 
 namespace CorahnRin\Entity;
 
-use CorahnRin\Data\Domains as DomainsData;
+use CorahnRin\Data\DomainsData;
 use CorahnRin\Data\Orientation;
 use CorahnRin\Entity\CharacterProperties\Bonuses;
 use CorahnRin\Entity\CharacterProperties\CharAdvantages;
 use CorahnRin\Entity\CharacterProperties\CharDisciplines;
 use CorahnRin\Entity\CharacterProperties\CharFlux;
 use CorahnRin\Entity\CharacterProperties\CharSetbacks;
-use CorahnRin\Entity\CharacterProperties\Domains;
+use CorahnRin\Entity\CharacterProperties\CharacterDomains;
 use CorahnRin\Entity\CharacterProperties\HealthCondition;
 use CorahnRin\Entity\CharacterProperties\Money;
 use CorahnRin\Entity\CharacterProperties\Ways;
@@ -28,6 +28,7 @@ use Doctrine\ORM\Mapping as ORM;
 use EsterenMaps\Entity\Zones;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Pierstoval\Bundle\CharacterManagerBundle\Entity\Character as BaseCharacter;
+use User\Entity\User;
 
 /**
  * Characters.
@@ -118,14 +119,14 @@ class Characters extends BaseCharacter
      *
      * @ORM\Column(name="inventory", type="simple_array")
      */
-    protected $inventory;
+    protected $inventory = [];
 
     /**
      * @var array
      *
      * @ORM\Column(name="treasures", type="simple_array")
      */
-    protected $treasures;
+    protected $treasures = [];
 
     /**
      * @var Money
@@ -408,9 +409,9 @@ class Characters extends BaseCharacter
     protected $charAdvantages;
 
     /**
-     * @var Domains
+     * @var CharacterDomains
      *
-     * @ORM\Embedded(class="CorahnRin\Entity\CharacterProperties\Domains", columnPrefix="domain_")
+     * @ORM\Embedded(class="CorahnRin\Entity\CharacterProperties\CharacterDomains", columnPrefix="domain_")
      */
     protected $domains;
 
@@ -436,7 +437,7 @@ class Characters extends BaseCharacter
     protected $setbacks;
 
     /**
-     * @var \User\Entity\User
+     * @var User
      * @ORM\ManyToOne(targetEntity="User\Entity\User")
      */
     protected $user;
@@ -448,7 +449,7 @@ class Characters extends BaseCharacter
     protected $game;
 
     /**
-     * @var \Datetime
+     * @var \DateTimeInterface
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=false)
      */
@@ -585,9 +586,9 @@ class Characters extends BaseCharacter
     }
 
     /**
-     * @return string[]
+     * @return string[]|iterable
      */
-    public function getInventory(): array
+    public function getInventory(): iterable
     {
         return $this->inventory;
     }
@@ -612,9 +613,9 @@ class Characters extends BaseCharacter
     }
 
     /**
-     * @return string[]
+     * @return string[]|iterable
      */
-    public function getTreasures()
+    public function getTreasures(): iterable
     {
         return $this->treasures;
     }
@@ -726,25 +727,6 @@ class Characters extends BaseCharacter
         return $this->age;
     }
 
-    public function getMentalResistance(): int
-    {
-        $value = $this->conviction + 5;
-
-        foreach ($this->getAdvantages() as $disadvantage) {
-            if (Bonuses::MENTAL_RESISTANCE === $disadvantage->getAdvantage()->getBonusesFor()) {
-                $value += $disadvantage->getScore();
-            }
-        }
-
-        foreach ($this->getDisadvantages() as $disadvantage) {
-            if (Bonuses::MENTAL_RESISTANCE === $disadvantage->getAdvantage()->getBonusesFor()) {
-                $value -= $disadvantage->getScore();
-            }
-        }
-
-        return $value;
-    }
-
     public function getMentalResistanceBonus(): int
     {
         return $this->mentalResistanceBonus;
@@ -803,7 +785,7 @@ class Characters extends BaseCharacter
         return $this;
     }
 
-    public function getHealth()
+    public function getHealth(): HealthCondition
     {
         return $this->health;
     }
@@ -820,293 +802,194 @@ class Characters extends BaseCharacter
         return $this->maxHealth;
     }
 
-    /**
-     * @param int $stamina
-     */
-    public function setStamina($stamina): self
+    public function setStamina(int $stamina): self
     {
         $this->stamina = $stamina;
 
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getStamina()
+    public function getStamina(): int
     {
         return $this->stamina;
     }
 
-    /**
-     * @return int
-     */
-    public function getStaminaBonus()
+    public function getStaminaBonus(): int
     {
         return $this->staminaBonus;
     }
 
-    /**
-     * @param int $staminaBonus
-     */
-    public function setStaminaBonus($staminaBonus)
+    public function setStaminaBonus(int $staminaBonus): void
     {
         $this->staminaBonus = $staminaBonus;
     }
 
-    /**
-     * @param int $survival
-     */
-    public function setSurvival($survival): self
+    public function setSurvival(int $survival): self
     {
         $this->survival = $survival;
 
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getSurvival()
+    public function getSurvival(): int
     {
         return $this->survival;
     }
 
-    /**
-     * @param int $speed
-     */
-    public function setSpeed($speed): self
+    public function setSpeed(int $speed): self
     {
         $this->speed = $speed;
 
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getSpeed()
+    public function getSpeed(): int
     {
         return $this->speed;
     }
 
-    /**
-     * @return int
-     */
-    public function getSpeedBonus()
+    public function getSpeedBonus(): int
     {
         return $this->speedBonus;
     }
 
-    /**
-     * @param int $speedBonus
-     */
-    public function setSpeedBonus($speedBonus): self
+    public function setSpeedBonus(int $speedBonus): self
     {
         $this->speedBonus = $speedBonus;
 
         return $this;
     }
 
-    /**
-     * @param int $defense
-     */
-    public function setDefense($defense): self
+    public function setDefense(int $defense): self
     {
         $this->defense = $defense;
 
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getDefense()
+    public function getDefense(): int
     {
         return $this->defense;
     }
 
-    /**
-     * @return int
-     */
-    public function getDefenseBonus()
+    public function getDefenseBonus(): int
     {
         return $this->defenseBonus;
     }
 
-    /**
-     * @param int $defenseBonus
-     */
-    public function setDefenseBonus($defenseBonus)
+    public function setDefenseBonus(int $defenseBonus): void
     {
         $this->defenseBonus = $defenseBonus;
     }
 
-    /**
-     * @param int $rindath
-     */
-    public function setRindath($rindath): self
+    public function setRindath(int $rindath): self
     {
         $this->rindath = $rindath;
 
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getRindath()
+    public function getRindath(): int
     {
         return $this->rindath;
     }
 
-    /**
-     * @return int
-     */
-    public function getRindathMax()
+    public function getRindathMax(): int
     {
         return $this->rindathMax;
     }
 
-    /**
-     * @param int $rindathMax
-     */
-    public function setRindathMax($rindathMax): self
+    public function setRindathMax(int $rindathMax): self
     {
         $this->rindathMax = $rindathMax;
 
         return $this;
     }
 
-    /**
-     * @param int $exaltation
-     */
-    public function setExaltation($exaltation): self
+    public function setExaltation(int $exaltation): self
     {
         $this->exaltation = $exaltation;
 
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getExaltation()
+    public function getExaltation(): int
     {
         return $this->exaltation;
     }
 
-    /**
-     * @return int
-     */
-    public function getExaltationMax()
+    public function getExaltationMax(): int
     {
         return $this->exaltationMax;
     }
 
-    /**
-     * @param int $exaltationMax
-     */
-    public function setExaltationMax($exaltationMax): self
+    public function setExaltationMax(int $exaltationMax): self
     {
         $this->exaltationMax = $exaltationMax;
 
         return $this;
     }
 
-    /**
-     * @param int $experienceActual
-     */
-    public function setExperienceActual($experienceActual): self
+    public function setExperienceActual(int $experienceActual): self
     {
         $this->experienceActual = $experienceActual;
 
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getExperienceActual()
+    public function getExperienceActual(): int
     {
         return $this->experienceActual;
     }
 
-    /**
-     * @param int $experienceSpent
-     */
-    public function setExperienceSpent($experienceSpent): self
+    public function setExperienceSpent(int $experienceSpent): self
     {
         $this->experienceSpent = $experienceSpent;
 
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getExperienceSpent()
+    public function getExperienceSpent(): int
     {
         return $this->experienceSpent;
     }
 
-    /**
-     * @param \DateTime $created
-     */
-    public function setCreated($created): self
+    public function setCreated(\DateTimeInterface $created): self
     {
         $this->created = $created;
 
         return $this;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getCreated()
+    public function getCreated(): \DateTimeInterface
     {
         return $this->created;
     }
 
-    /**
-     * @param \DateTime $updated
-     */
-    public function setUpdated($updated): self
+    public function setUpdated(\DateTimeInterface $updated): self
     {
         $this->updated = $updated;
 
         return $this;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getUpdated()
+    public function getUpdated(): \DateTimeInterface
     {
         return $this->updated;
     }
 
-    /**
-     * @param \DateTime $deleted
-     */
-    public function setDeleted(\DateTime $deleted = null): self
+    public function setDeleted(\DateTimeInterface $deleted = null): self
     {
         $this->deleted = $deleted;
 
         return $this;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getDeleted()
+    public function getDeleted(): \DateTimeInterface
     {
         return $this->deleted;
     }
 
-    /**
-     * @param Peoples $people
-     */
     public function setPeople(Peoples $people = null): self
     {
         $this->people = $people;
@@ -1114,10 +997,7 @@ class Characters extends BaseCharacter
         return $this;
     }
 
-    /**
-     * @return Peoples
-     */
-    public function getPeople()
+    public function getPeople(): Peoples
     {
         return $this->people;
     }
@@ -1137,9 +1017,9 @@ class Characters extends BaseCharacter
     }
 
     /**
-     * @return Armors[]
+     * @return Armors[]|iterable
      */
-    public function getArmors()
+    public function getArmors(): iterable
     {
         return $this->armors;
     }
@@ -1159,9 +1039,9 @@ class Characters extends BaseCharacter
     }
 
     /**
-     * @return Artifacts[]
+     * @return Artifacts[]|iterable
      */
-    public function getArtifacts()
+    public function getArtifacts(): iterable
     {
         return $this->artifacts;
     }
@@ -1181,9 +1061,9 @@ class Characters extends BaseCharacter
     }
 
     /**
-     * @return Miracles[]
+     * @return Miracles[]|iterable
      */
-    public function getMiracles()
+    public function getMiracles(): iterable
     {
         return $this->miracles;
     }
@@ -1203,9 +1083,9 @@ class Characters extends BaseCharacter
     }
 
     /**
-     * @return Ogham[]
+     * @return Ogham[]|iterable
      */
-    public function getOgham()
+    public function getOgham(): iterable
     {
         return $this->ogham;
     }
@@ -1225,9 +1105,9 @@ class Characters extends BaseCharacter
     }
 
     /**
-     * @return Weapons[]
+     * @return Weapons[]|iterable
      */
-    public function getWeapons()
+    public function getWeapons(): iterable
     {
         return $this->weapons;
     }
@@ -1247,9 +1127,9 @@ class Characters extends BaseCharacter
     }
 
     /**
-     * @return CombatArts[]
+     * @return CombatArts[]|iterable
      */
-    public function getCombatArts()
+    public function getCombatArts(): iterable
     {
         return $this->combatArts;
     }
@@ -1290,9 +1170,6 @@ class Characters extends BaseCharacter
         return $this->socialClassDomain1;
     }
 
-    /**
-     * @param Disorders $mentalDisorder
-     */
     public function setMentalDisorder(Disorders $mentalDisorder = null): self
     {
         $this->mentalDisorder = $mentalDisorder;
@@ -1300,17 +1177,11 @@ class Characters extends BaseCharacter
         return $this;
     }
 
-    /**
-     * @return Disorders
-     */
-    public function getMentalDisorder()
+    public function getMentalDisorder(): Disorders
     {
         return $this->mentalDisorder;
     }
 
-    /**
-     * @param Jobs $job
-     */
     public function setJob(Jobs $job = null): self
     {
         $this->job = $job;
@@ -1318,17 +1189,11 @@ class Characters extends BaseCharacter
         return $this;
     }
 
-    /**
-     * @return Jobs
-     */
-    public function getJob()
+    public function getJob(): Jobs
     {
         return $this->job;
     }
 
-    /**
-     * @param Zones $birthPlace
-     */
     public function setBirthPlace(Zones $birthPlace = null): self
     {
         $this->birthPlace = $birthPlace;
@@ -1336,17 +1201,11 @@ class Characters extends BaseCharacter
         return $this;
     }
 
-    /**
-     * @return Zones
-     */
-    public function getBirthPlace()
+    public function getBirthPlace(): Zones
     {
         return $this->birthPlace;
     }
 
-    /**
-     * @param Traits $flaw
-     */
     public function setFlaw(Traits $flaw = null): self
     {
         $this->flaw = $flaw;
@@ -1354,17 +1213,11 @@ class Characters extends BaseCharacter
         return $this;
     }
 
-    /**
-     * @return Traits
-     */
-    public function getFlaw()
+    public function getFlaw(): Traits
     {
         return $this->flaw;
     }
 
-    /**
-     * @param Traits $quality
-     */
     public function setQuality(Traits $quality = null): self
     {
         $this->quality = $quality;
@@ -1372,10 +1225,7 @@ class Characters extends BaseCharacter
         return $this;
     }
 
-    /**
-     * @return Traits
-     */
-    public function getQuality()
+    public function getQuality(): Traits
     {
         return $this->quality;
     }
@@ -1395,31 +1245,19 @@ class Characters extends BaseCharacter
     }
 
     /**
-     * @return CharAdvantages[]
+     * @return CharAdvantages[]|iterable
      */
-    public function getCharAdvantages()
+    public function getCharAdvantages(): iterable
     {
         return $this->charAdvantages;
     }
 
-    public function addDomain(Domains $domain): self
+    public function setDomains(CharacterDomains $domain): void
     {
-        $this->domains[] = $domain;
-
-        return $this;
+        $this->domains = $domain;
     }
 
-    public function removeDomain(Domains $domain): self
-    {
-        $this->domains->removeElement($domain);
-
-        return $this;
-    }
-
-    /**
-     * @return Domains[]
-     */
-    public function getDomains()
+    public function getDomains(): CharacterDomains
     {
         return $this->domains;
     }
@@ -1439,9 +1277,9 @@ class Characters extends BaseCharacter
     }
 
     /**
-     * @return CharDisciplines[]
+     * @return CharDisciplines[]|iterable
      */
-    public function getDisciplines()
+    public function getDisciplines(): iterable
     {
         return $this->disciplines;
     }
@@ -1461,9 +1299,9 @@ class Characters extends BaseCharacter
     }
 
     /**
-     * @return CharFlux[]
+     * @return CharFlux[]|iterable
      */
-    public function getFlux()
+    public function getFlux(): iterable
     {
         return $this->flux;
     }
@@ -1490,20 +1328,14 @@ class Characters extends BaseCharacter
         return $this->setbacks;
     }
 
-    /**
-     * @param \User\Entity\User $user
-     */
-    public function setUser(\User\Entity\User $user = null): self
+    public function setUser(User $user = null): self
     {
         $this->user = $user;
 
         return $this;
     }
 
-    /**
-     * @return \User\Entity\User
-     */
-    public function getUser()
+    public function getUser(): User
     {
         return $this->user;
     }
@@ -1563,7 +1395,7 @@ class Characters extends BaseCharacter
      */
     public function getConsciousness(): string
     {
-        return $this->reason + $this->conviction;
+        return $this->getReason() + $this->getConviction();
     }
 
     /**
@@ -1571,46 +1403,23 @@ class Characters extends BaseCharacter
      */
     public function getInstinct(): string
     {
-        return $this->creativity + $this->combativeness;
+        return $this->getCreativity() + $this->getCombativeness();
     }
 
-    /**
-     * Get a domain based on its id or name.
-     *
-     * @param int|string $id
-     *
-     * @return Domains|null
-     */
-    public function getDomain($id): ?CharacterProperties\Domains
+    public function getDomain(string $name): int
     {
-        foreach ($this->domains as $charDomain) {
-            $domain = $charDomain->getDomain();
-            if (
-                $charDomain instanceof Domains &&
-                (($domain->getId() === (int) $id) || $domain->getName() === $id)
-            ) {
-                return $charDomain;
-            }
-        }
-
-        return null;
+        return $this->domains->getDomainValue($name);
     }
 
     /**
-     * @param int|Domains $domain
-     *
      * @return CharDisciplines[]
      */
-    public function getDisciplineFromDomain($domain): array
+    public function getDisciplineFromDomain(string $domain): array
     {
-        if ($domain instanceof Domains) {
-            $domain = $domain->getId();
-        }
-
         $disciplines = [];
 
         foreach ($this->disciplines as $discipline) {
-            if ($discipline->getDomain()->getId() === $domain) {
+            if ($discipline->getDomain() === $domain) {
                 $disciplines[] = $discipline;
             }
         }
@@ -1618,9 +1427,6 @@ class Characters extends BaseCharacter
         return $disciplines;
     }
 
-    /**
-     * @param int|string $id
-     */
     public function getDiscipline($id): ?CharDisciplines
     {
         foreach ($this->disciplines as $charDiscipline) {
@@ -1641,10 +1447,7 @@ class Characters extends BaseCharacter
      */
     public function getBaseDefense(): int
     {
-        $rai = $this->reason;
-        $emp = $this->empathy;
-
-        return $rai + $emp + 5;
+        return $this->getReason() + $this->getEmpathy() + 5;
     }
 
     public function getTotalDefense(string $attitude = self::COMBAT_ATTITUDE_STANDARD): int
@@ -1671,16 +1474,10 @@ class Characters extends BaseCharacter
      */
     public function getBaseSpeed(): int
     {
-        $com = $this->combativeness;
-        $emp = $this->empathy;
-
-        return $com + $emp;
+        return $this->getCombativeness() + $this->getEmpathy();
     }
 
-    /**
-     * @param string $attitude
-     */
-    public function getTotalSpeed($attitude = self::COMBAT_ATTITUDE_STANDARD): ?int
+    public function getTotalSpeed($attitude = self::COMBAT_ATTITUDE_STANDARD): int
     {
         $this->validateCombatAttitude($attitude);
 
@@ -1693,29 +1490,33 @@ class Characters extends BaseCharacter
         return $speed;
     }
 
-    /**
-     * Base mental resistance is calculated from "Conviction".
-     */
     public function getBaseMentalResistance(): int
     {
-        $ide = $this->conviction;
-
-        return $ide + 5;
+        return $this->getConviction() + 5;
     }
 
     public function getTotalMentalResistance(): int
     {
-        return $this->getBaseMentalResistance() + $this->mentalResistance + $this->mentalResistanceBonus;
+        $value = $this->getBaseMentalResistance() + $this->mentalResistanceBonus;
+
+        foreach ($this->getAdvantages() as $disadvantage) {
+            if (Bonuses::MENTAL_RESISTANCE === $disadvantage->getAdvantage()->getBonusesFor()) {
+                $value += $disadvantage->getScore();
+            }
+        }
+
+        foreach ($this->getDisadvantages() as $disadvantage) {
+            if (Bonuses::MENTAL_RESISTANCE === $disadvantage->getAdvantage()->getBonusesFor()) {
+                $value -= $disadvantage->getScore();
+            }
+        }
+
+        return $value;
     }
 
-    /**
-     * @return int
-     *
-     * @throws CharactersException
-     */
-    public function getPotential(): ?int
+    public function getPotential(): int
     {
-        $creativity = $this->creativity;
+        $creativity = $this->getCreativity();
 
         switch ($creativity) {
             case 1:
@@ -1734,47 +1535,31 @@ class Characters extends BaseCharacter
         }
     }
 
-    /**
-     * Calculate melee attack score.
-     *
-     * @param int|string $discipline
-     * @param string     $potentialOperator Can be "+" or "-"
-     */
-    public function getMeleeAttackScore($discipline = null, $potentialOperator = ''): int
+    public function getMeleeAttackScore(int $discipline = null, string $potentialOperator = ''): int
     {
         return $this->getAttackScore('melee', $discipline, $potentialOperator);
     }
 
-    /**
-     * Retourne le score de base du type de combat spécifié dans $type.
-     * Si $discipline est mentionné, il doit s'agir d'un identifiant valide de discipline,.
-     *
-     * @param string     $type
-     * @param int|string $discipline
-     * @param string     $attitude
-     *
-     * @throws CharactersException
-     */
-    public function getAttackScore($type = 'melee', $discipline = null, $attitude = self::COMBAT_ATTITUDE_STANDARD): int
-    {
+    public function getAttackScore(
+        string $type = 'melee',
+        int $discipline = null,
+        string $attitude = self::COMBAT_ATTITUDE_STANDARD)
+    : int {
         $this->validateCombatAttitude($attitude);
 
         // Récupération du score de voie
-        $way = $this->combativeness;
+        $way = $this->getCombativeness();
 
-        // Définition de l'id des domaines "Combat au contact" et "Tir & lancer"
         if ('melee' === $type) {
-            $domain_id = 2;
+            $domain_id = DomainsData::CLOSE_COMBAT['title'];
         } elseif ('ranged' === $type) {
-            $domain_id = 14;
+            $domain_id = DomainsData::SHOOTING_AND_THROWING['title'];
         } else {
             throw new CharactersException('Attack can only be "melee" or "ranged".');
         }
 
-        $domain_id = (int) $domain_id;
-
         // Récupération du score du domaine
-        $domain = $this->getDomain($domain_id)->getBaseScore();
+        $domain = $this->getDomain($domain_id);
 
         // Si on indique une discipline, le score du domaine sera remplacé par le score de discipline
         if (null !== $discipline) {

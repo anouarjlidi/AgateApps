@@ -68,6 +68,8 @@ db:
 prod-db: ## Installs production database if it has been saved in "var/dump.sql". You have to download it manually.
 prod-db:
 	@if [ -f var/dump.sql ]; then \
+        $(SYMFONY) doctrine:database:drop --if-exists --force ;\
+        $(SYMFONY) doctrine:database:create --if-not-exists ;\
 		$(EXEC_DB) mysql -uroot -p$(PORTAL_DBPWD) $(PORTAL_DBNAME) -e "source /srv/dump.sql" ;\
 		$(SYMFONY) doctrine:migrations:migrate -n ;\
 	else \

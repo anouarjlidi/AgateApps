@@ -139,7 +139,7 @@ description:
 
 combat_arts_spend_exp:
     domains_not_enough: |
-        Vos domaines "Combat au contact" et "Tir et lancer" ne sont pas suffisants pour obtenir des arts de combat
+        L'un de vos domaines parmi "Combat au contact" ou "Tir et lancer" doit avoir un score de 5 obtenir des arts de combat
     not_enough_exp: 'Vous n''avez pas assez d''expérience pour bénéficier d''arts de combat'
     explanation: 'Vous pouvez ici choisir des arts de combat, chacun coûte 20XP'
     remaining: 'Expérience :'
