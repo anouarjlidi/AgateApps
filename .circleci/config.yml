@@ -6,7 +6,7 @@ jobs:
             # Docker build here:
             # https://hub.docker.com/r/pierstoval/studio-agate-portal/
             # https://github.com/StudioAgate/DockerPortalApp
-            - image: pierstoval/studio-agate-portal:latest
+            - image: pierstoval/studio-agate-portal:v0.4.3
 
         working_directory: /srv
 
