@@ -14,14 +14,22 @@ namespace Agate\Controller;
 use Main\DependencyInjection\PublicService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class RootController extends AbstractController implements PublicService
 {
-    public function __invoke(string $_locale = null): Response
+    private $locales;
+
+    public function __construct(array $locales)
+    {
+        $this->locales = $locales;
+    }
+
+    public function __invoke(Request $request, string $_locale = null): Response
     {
         if (!$_locale) {
-            $_locale = 'fr';
+            $_locale = $request->getPreferredLanguage(array_values($this->locales));
         }
 
         return new RedirectResponse("/$_locale/", 301);

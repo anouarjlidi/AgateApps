@@ -49,6 +49,7 @@ services:
         public: false
         bind:
             $debug:           '%kernel.debug%'
+            $locales:         '%locales%'
             $defaultLocale:   '%locale%'
             $googleTags:      '%google_tags%'
             $imageMagickPath: '%env(IMAGEMAGICK_BINARIES_PATH)%'

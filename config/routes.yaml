@@ -6,7 +6,7 @@ root:
     controller: 'Agate\Controller\RootController'
     methods: ['GET']
     defaults:
-        _locale: '%locale%'
+        _locale: null
     requirements: { _locale: '^(?:%locales_regex%)$' }
 
 #
