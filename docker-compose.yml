@@ -9,6 +9,7 @@ services:
         working_dir: /srv/
         volumes:
             - ./:/srv
+            - ~/.composer/cache:~/.composer/cache
         links:
             - db
             - mailcatcher
@@ -23,6 +24,7 @@ services:
         working_dir: /srv/
         volumes:
             - ./:/srv/
+            - ~/.npm/:~/.npm
         command: 'npm run gulp watch'
 
     nginx:

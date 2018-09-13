@@ -6,7 +6,7 @@ jobs:
             # Docker build here:
             # https://hub.docker.com/r/pierstoval/studio-agate-portal/
             # https://github.com/StudioAgate/DockerPortalApp
-            - image: pierstoval/studio-agate-portal:v0.4.3
+            - image: php:7.2-cli
 
         working_directory: /srv
 
@@ -23,44 +23,23 @@ jobs:
                     - composer-cache-{{ checksum "composer.lock" }}
 
             - run:
-                name: 'Show config'
-                command: |
-                    pwd
-                    php --ini
-                    composer config -l
-                    env
+                  name: Install Docker Compose
+                  command: |
+                      curl -L https://github.com/docker/compose/releases/download/1.22.0/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
+                      chmod +x ~/docker-compose
+                      sudo mv ~/docker-compose /usr/local/bin/docker-compose
 
-            - run:
-                name: 'Setup custom CircleCI hosts'
-                command: |
-                    echo "127.0.0.1     portal.esteren.docker" >> /etc/hosts
-                    echo "127.0.0.1       maps.esteren.docker" >> /etc/hosts
-                    echo "127.0.0.1  corahnrin.esteren.docker" >> /etc/hosts
-                    echo "127.0.0.1      games.esteren.docker" >> /etc/hosts
-                    echo "127.0.0.1        api.esteren.docker" >> /etc/hosts
-                    echo "127.0.0.1       back.esteren.docker" >> /etc/hosts
-                    echo "127.0.0.1   www.studio-agate.docker" >> /etc/hosts
-                    echo "127.0.0.1 stats.studio-agate.docker" >> /etc/hosts
-                    echo "127.0.0.1    www.dragons-rpg.docker" >> /etc/hosts
-                    echo "127.0.0.1    www.vermine2047.docker" >> /etc/hosts
+            - setup_remote_docker
 
             - run:
                name: 'Install Project Dependencies'
                command: |
-                    composer install --no-interaction --no-suggest --ignore-platform-reqs --no-progress
+                   make install-php
 
             - run:
-               name: 'Execute Linting tests'
+               name: 'Execute nting tests'
                command: |
-                    ./vendor/bin/security-checker security:check
-                    php bin/console lint:twig templates src
-                    php bin/console lint:yaml config
-                    php bin/console lint:yaml src
-
-            - run:
-               name: 'Execute PHPUnit tests'
-               command: |
-                    bin/phpunit --log-junit=build/log/logfile.xml
+                   make php-tests
 
             - save_cache:
                 key: composer-cache-{{ checksum "composer.lock" }}
