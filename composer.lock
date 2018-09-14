@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.67.9",
+            "version": "3.67.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "bc580636c7e7c4ed4293776bfac250f726554a41"
+                "reference": "cdc7180ae87b23d8b34eb8eb8176002081b32c3d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/bc580636c7e7c4ed4293776bfac250f726554a41",
-                "reference": "bc580636c7e7c4ed4293776bfac250f726554a41",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/cdc7180ae87b23d8b34eb8eb8176002081b32c3d",
+                "reference": "cdc7180ae87b23d8b34eb8eb8176002081b32c3d",
                 "shasum": ""
             },
             "require": {
@@ -84,7 +84,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2018-09-10T21:52:39+00:00"
+            "time": "2018-09-13T18:34:42+00:00"
         },
         {
             "name": "behat/transliterator",
@@ -6487,12 +6487,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/panther.git",
-                "reference": "1390bf88ac9d72f53da4d5d258adeb5463d96f3f"
+                "reference": "08952ce47cb45753a50709dc425d292389d341ee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/panther/zipball/1390bf88ac9d72f53da4d5d258adeb5463d96f3f",
-                "reference": "1390bf88ac9d72f53da4d5d258adeb5463d96f3f",
+                "url": "https://api.github.com/repos/symfony/panther/zipball/08952ce47cb45753a50709dc425d292389d341ee",
+                "reference": "08952ce47cb45753a50709dc425d292389d341ee",
                 "shasum": ""
             },
             "require": {
@@ -6536,17 +6536,17 @@
                     "homepage": "https://dunglas.fr"
                 }
             ],
-            "description": "A browser testing and web scrapping library for PHP and Symfony.",
+            "description": "A browser testing and web scraping library for PHP and Symfony.",
             "homepage": "https://dunglas.fr",
             "keywords": [
                 "e2e",
-                "scrapping",
+                "scraping",
                 "selenium",
                 "symfony",
                 "testing",
                 "webdriver"
             ],
-            "time": "2018-09-10T15:16:36+00:00"
+            "time": "2018-09-13T12:34:17+00:00"
         },
         {
             "name": "symfony/phpunit-bridge",
