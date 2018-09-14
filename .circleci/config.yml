@@ -42,7 +42,7 @@ jobs:
                    make install-php
 
             - run:
-               name: 'Execute nting tests'
+               name: 'Execute PHP tests'
                command: |
                    make php-tests
 
