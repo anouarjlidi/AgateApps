@@ -8,8 +8,6 @@ jobs:
             # https://github.com/StudioAgate/DockerPortalApp
             - image: circleci/php:7.2-cli
 
-        working_directory: /srv
-
         environment:
             SYMFONY_ENV:   test
             SYMFONY_DEBUG: 1
@@ -50,9 +48,7 @@ jobs:
 
     node:
         docker:
-            - image: node:10
-
-        working_directory: /srv
+            - image: circleci/node:10
 
         environment:
             NODE_ENV: production
