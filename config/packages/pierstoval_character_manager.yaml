@@ -121,3 +121,24 @@ pierstoval_character_manager:
 
                 20_finish:
                     action: CorahnRin\Step\Step20Finish
+                    dependencies:
+                        - '01_people'
+                        - '02_job'
+                        - '03_birthplace'
+                        - '04_geo'
+                        - '05_social_class'
+                        - '06_age'
+                        - '07_setbacks'
+                        - '08_ways'
+                        - '09_traits'
+                        - '10_orientation'
+                        - '11_advantages'
+                        - '12_mental_disorder'
+                        - '13_primary_domains'
+                        - '14_use_domain_bonuses'
+                        - '15_domains_spend_exp'
+                        - '16_disciplines'
+                        - '17_combat_arts'
+                        - '18_equipment'
+                        - '19_description'
+                        - '20_finish'
