@@ -220,7 +220,7 @@ final class Version20180801201258 extends AbstractMigration
         $newDisciplinesDomains = [];
         $disciplinesDomains = $conn->query('select discipline_id, domain_id from disciplines_domains')->fetchAll();
         foreach ($disciplinesDomains as $line) {
-            $newDisciplinesDomains[$line['discipline_id']][] = $line['domain_id'];
+            $newDisciplinesDomains[$line['discipline_id']][] = $bonusesIdsReplacers[$line['domain_id']];
         }
         foreach ($newDisciplinesDomains as $id => $domains) {
             $convertedDomains = $simpleArray->convertToDatabaseValue($domains, $conn->getDatabasePlatform());
@@ -230,7 +230,7 @@ final class Version20180801201258 extends AbstractMigration
         $newSocialClassesSecondaryDomains = [];
         $socialClassesSecondaryDomains = $conn->query('select social_classes_id, domains_id from social_classes_domains')->fetchAll();
         foreach ($socialClassesSecondaryDomains as $line) {
-            $newSocialClassesSecondaryDomains[$line['social_classes_id']][] = $line['domains_id'];
+            $newSocialClassesSecondaryDomains[$line['social_classes_id']][] = $bonusesIdsReplacers[$line['domains_id']];
         }
         foreach ($newSocialClassesSecondaryDomains as $id => $domains) {
             $convertedDomains = $simpleArray->convertToDatabaseValue($domains, $conn->getDatabasePlatform());
@@ -240,7 +240,7 @@ final class Version20180801201258 extends AbstractMigration
         $newJobsSecondaryDomains = [];
         $jobsSecondaryDomains = $conn->query('select jobs_id, domains_id from jobs_domains')->fetchAll();
         foreach ($jobsSecondaryDomains as $line) {
-            $newJobsSecondaryDomains[$line['jobs_id']][] = $line['domains_id'];
+            $newJobsSecondaryDomains[$line['jobs_id']][] = $bonusesIdsReplacers[$line['domains_id']];
         }
         foreach ($newJobsSecondaryDomains as $id => $domains) {
             $convertedDomains = $simpleArray->convertToDatabaseValue($domains, $conn->getDatabasePlatform());
