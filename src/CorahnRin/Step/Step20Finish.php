@@ -29,7 +29,7 @@ class Step20Finish extends AbstractStepAction
      */
     public function execute(): Response
     {
-        $this->updateCharacterStep([]);
+        $this->updateCharacterStep(true);
 
         $character = null;
 

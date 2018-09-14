@@ -29,7 +29,7 @@ class RootController extends AbstractController implements PublicService
     public function __invoke(Request $request, string $_locale = null): Response
     {
         if (!$_locale) {
-            $_locale = $request->getPreferredLanguage(array_values($this->locales));
+            $_locale = $request->getPreferredLanguage(\array_values($this->locales));
         }
 
         return new RedirectResponse("/$_locale/", 301);

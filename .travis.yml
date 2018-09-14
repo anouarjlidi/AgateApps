@@ -16,7 +16,7 @@ env:
 jobs:
     include:
         - name: PHP
-          before_cache: test -d $HOME/.composer/ || mkdir $HOME/.composer
+          before_cache: 'test -d $HOME/.composer/ || mkdir $HOME/.composer'
           before_install:
               - sudo rm /usr/local/bin/docker-compose
               - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
@@ -26,7 +26,7 @@ jobs:
           script: make php-tests
 
         - name: NodeJS
-              before_cache: test -d $HOME/.npm/ || mkdir $HOME/.npm
+          before_cache: 'test -d $HOME/.npm/ || mkdir $HOME/.npm'
           before_install:
               - sudo rm /usr/local/bin/docker-compose
               - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose

@@ -179,6 +179,7 @@ final class SessionToCharacter
         $character->setSocialClass($this->getRepository(SocialClass::class)->find($values['05_social_class']['id']));
 
         $domains = $values['05_social_class']['domains'];
+        \sort($domains);
         $character->setSocialClassDomain1($domains[0]);
         $character->setSocialClassDomain2($domains[1]);
     }
