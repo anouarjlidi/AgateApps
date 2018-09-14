@@ -23,7 +23,7 @@
                     <div data-toggle="buttons" data-max-buttons="2">
                         {% for domain in socialClass.domains %}
                         <label for="button_{{ socialClass.id }}_{{ domain }}" class="mt5 btn {{ socialClassDomains[domain] is defined ? ' active' : '' }}">
-                            <input type="checkbox" id="bautton_{{ socialClass.id }}_{{ domain }}" name="domains[]" value="{{ domain }}" {{ socialClassDomains[domain] is defined ? ' checked="checked"' : '' }} />
+                            <input type="checkbox" id="button_{{ socialClass.id }}_{{ domain }}" name="domains[]" value="{{ domain }}" {{ socialClassDomains[domain] is defined ? ' checked="checked"' : '' }} />
                             {{ domain|trans }}
                         </label>
                         {% endfor %}
