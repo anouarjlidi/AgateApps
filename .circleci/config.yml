@@ -6,7 +6,7 @@ jobs:
             # Docker build here:
             # https://hub.docker.com/r/pierstoval/studio-agate-portal/
             # https://github.com/StudioAgate/DockerPortalApp
-            - image: php:7.2-cli
+            - image: circleci/php:7.2-cli
 
         working_directory: /srv
 
@@ -25,14 +25,6 @@ jobs:
             - restore_cache:
                 keys:
                     - npm-cache-{{ checksum "package-lock.json" }}
-
-            - run:
-                  name: Install Docker Compose
-                  command: |
-                      mkdir -p ~/bin
-                      curl -L https://github.com/docker/compose/releases/download/1.22.0/docker-compose-`uname -s`-`uname -m` > ~/bin/docker-compose
-                      chmod +x ~/bin/docker-compose
-                      echo 'export PATH=~/bin:$PATH' >> $BASH_ENV
 
             - setup_remote_docker
 
