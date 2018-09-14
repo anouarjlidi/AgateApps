@@ -121,7 +121,7 @@ class Step11Advantages extends AbstractStepAction
                 $experience += $disadvantage->getXp();
             } elseif (2 === $value && 1 === $disadvantage->getAugmentationCount()) {
                 $experience += \floor($disadvantage->getXp() * 1.5);
-            } elseif (3 === $disadvantage->getAugmentationCount()) {
+            } elseif (3 === $value && 2 === $disadvantage->getAugmentationCount()) {
                 $experience += $value * $disadvantage->getXp();
             } elseif ($value) {
                 $this->hasError = true;
