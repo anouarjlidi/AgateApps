@@ -1167,7 +1167,7 @@ class Characters extends BaseCharacter
 
     public function getSocialClassDomain2(): string
     {
-        return $this->socialClassDomain1;
+        return $this->socialClassDomain2;
     }
 
     public function setMentalDisorder(Disorders $mentalDisorder = null): self
