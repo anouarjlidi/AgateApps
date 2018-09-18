@@ -27,8 +27,7 @@ install: .env build node_modules start vendor db fixtures assets map-tiles
 .PHONY: install
 
 build: ## Build the Docker images
-	$(DOCKER_COMPOSE) pull --parallel --ignore-pull-failures
-	$(DOCKER_COMPOSE) build --pull --force-rm --compress
+	$(DOCKER_COMPOSE) build --force-rm --compress
 .PHONY: build
 
 start: ## Start the project
