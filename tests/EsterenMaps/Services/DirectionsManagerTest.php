@@ -32,13 +32,8 @@ class DirectionsManagerTest extends WebTestCase
 
     /**
      * @dataProvider provideWorkingDirections
-     *
-     * @param int    $map
-     * @param string $from
-     * @param string $to
-     * @param null   $transport
      */
-    public function testWorkingDirections(array $expectedData, $map, $from, $to, $transport = null)
+    public function testWorkingDirections(array $expectedData, string $map, int $from, int $to, string $transport = null)
     {
         static::resetDatabase();
 
