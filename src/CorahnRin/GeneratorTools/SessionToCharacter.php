@@ -12,25 +12,27 @@
 namespace CorahnRin\GeneratorTools;
 
 use Behat\Transliterator\Transliterator;
-use CorahnRin\Data\Ways;
+use CorahnRin\Data\DomainsData as DomainsData;
+use CorahnRin\Data\Ways as WaysData;
 use CorahnRin\Entity\Armors;
 use CorahnRin\Entity\Avantages;
+use CorahnRin\Entity\CharacterProperties\Bonuses;
+use CorahnRin\Entity\CharacterProperties\CharacterDomains;
 use CorahnRin\Entity\CharacterProperties\CharAdvantages;
 use CorahnRin\Entity\CharacterProperties\CharDisciplines;
-use CorahnRin\Entity\CharacterProperties\CharDomains;
 use CorahnRin\Entity\CharacterProperties\CharSetbacks;
 use CorahnRin\Entity\CharacterProperties\HealthCondition;
 use CorahnRin\Entity\CharacterProperties\Money;
+use CorahnRin\Entity\CharacterProperties\Ways;
 use CorahnRin\Entity\Characters;
 use CorahnRin\Entity\CombatArts;
 use CorahnRin\Entity\Disciplines;
 use CorahnRin\Entity\Disorders;
-use CorahnRin\Entity\Domains;
 use CorahnRin\Entity\GeoEnvironments;
 use CorahnRin\Entity\Jobs;
 use CorahnRin\Entity\Peoples;
 use CorahnRin\Entity\Setbacks;
-use CorahnRin\Entity\SocialClasses;
+use CorahnRin\Entity\SocialClass;
 use CorahnRin\Entity\Traits;
 use CorahnRin\Entity\Weapons;
 use CorahnRin\Exception\CharactersException;
@@ -49,7 +51,7 @@ final class SessionToCharacter
     private $corahnRinManagerName;
 
     /**
-     * @var Domains[]
+     * @var DomainsData[]
      */
     private $domains;
 
@@ -148,7 +150,7 @@ final class SessionToCharacter
     private function prepareNecessaryVariables(): void
     {
         $this->setbacks = $this->getRepository(Setbacks::class)->findAll('_primary');
-        $this->domains = $this->getRepository(Domains::class)->findAll('_primary');
+        $this->domains = DomainsData::allAsObjects();
         $this->advantages = $this->getRepository(Avantages::class)->findAll('_primary');
     }
 
@@ -174,12 +176,11 @@ final class SessionToCharacter
 
     private function setSocialClass(Characters $character, array $values): void
     {
-        $character->setSocialClass($this->getRepository(SocialClasses::class)->find($values['05_social_class']['id']));
+        $character->setSocialClass($this->getRepository(SocialClass::class)->find($values['05_social_class']['id']));
 
         $domains = $values['05_social_class']['domains'];
-        \reset($domains);
-        $character->setSocialClassDomain1($this->domains[\current($domains)]);
-        $character->setSocialClassDomain2($this->domains[\next($domains)]);
+        $character->setSocialClassDomain1($domains[0]);
+        $character->setSocialClassDomain2($domains[1]);
     }
 
     private function setAge(Characters $character, array $values): void
@@ -200,9 +201,13 @@ final class SessionToCharacter
 
     private function setWays(Characters $character, array $values): void
     {
-        foreach (Ways::ALL as $way => $translation) {
-            $character->setWay($way, $values['08_ways'][$way]);
-        }
+        $character->setWay(new Ways(
+            $values['08_ways'][WaysData::COMBATIVENESS],
+            $values['08_ways'][WaysData::CREATIVITY],
+            $values['08_ways'][WaysData::EMPATHY],
+            $values['08_ways'][WaysData::REASON],
+            $values['08_ways'][WaysData::CONVICTION]
+        ));
     }
 
     private function setTraits(Characters $character, array $values): void
@@ -250,12 +255,12 @@ final class SessionToCharacter
     {
         foreach ($values['16_disciplines']['disciplines'] as $domainId => $disciplines) {
             foreach ($disciplines as $id => $v) {
-                $charDiscipline = new CharDisciplines();
-                $charDiscipline->setCharacter($character);
-                $charDiscipline->setScore(6);
-                $charDiscipline->setDomain($this->domains[$domainId]);
-                $charDiscipline->setDiscipline($this->getRepository(Disciplines::class)->find($id));
-                $character->addDiscipline($charDiscipline);
+                $character->addDiscipline(new CharDisciplines(
+                    $character,
+                    $this->getRepository(Disciplines::class)->find($id),
+                    $domainId,
+                    6
+                ));
             }
         }
     }
@@ -337,7 +342,6 @@ final class SessionToCharacter
             $this->domains,
             $values['05_social_class']['domains'],
             $values['13_primary_domains']['ost'],
-            $values['13_primary_domains']['scholar'] ?: null,
             $character->getGeoLiving(),
             $values['13_primary_domains']['domains'],
             $values['14_use_domain_bonuses']['domains']
@@ -352,15 +356,15 @@ final class SessionToCharacter
         $bonuses = \array_fill_keys(\array_keys($this->domains), 0);
         $maluses = \array_fill_keys(\array_keys($this->domains), 0);
 
-        foreach ($finalDomainsValues as $id => $value) {
-            $charDomain = new CharDomains();
-            $charDomain->setCharacter($character);
-            $charDomain->setDomain($this->domains[$id]);
-            $charDomain->setScore($value);
-            $charDomain->setBonus($bonuses[$id]);
-            $charDomain->setMalus($maluses[$id]);
-            $character->addDomain($charDomain);
+        $charDomain = new CharacterDomains();
+        foreach ($this->domains as $domain) {
+            $domainName = $domain->getTitle();
+            $charDomain->setDomainValue($domainName, $finalDomainsValues[$domainName]);
+            $charDomain->setDomainBonusValue($domainName, $bonuses[$domainName]);
+            $charDomain->setDomainMalusValue($domainName, $maluses[$domainName]);
         }
+
+        $character->setDomains($charDomain);
     }
 
     private function setHealthCondition(Characters $character)
@@ -376,72 +380,66 @@ final class SessionToCharacter
 
         foreach ($character->getCharAdvantages() as $charAdvantage) {
             $adv = $charAdvantage->getAdvantage();
-            if (!\trim($adv->getBonusdisc())) {
-                continue;
-            }
-            foreach (\preg_split('~,~', $adv->getBonusdisc(), -1, PREG_SPLIT_NO_EMPTY) as $bonus) {
+
+            foreach ($adv->getBonusesFor() as $bonus) {
                 if (isset($this->domains[$bonus])) {
-                    if ($adv->isDesv()) {
-                        $maluses[$bonus] += $charAdvantage->getScore();
-                    } else {
-                        $bonuses[$bonus] += $charAdvantage->getScore();
-                    }
-                } else {
-                    $disadvantageRatio = $adv->isDesv() ? -1 : 1;
-                    switch ($bonus) {
-                        case Avantages::BONUS_RESM:
-                            $character->setMentalResistanceBonus($character->getMentalResistanceBonus() + ($charAdvantage->getScore() * $disadvantageRatio));
-                            break;
-                        case Avantages::BONUS_BLESS:
-                            $score = $charAdvantage->getScore();
-                            switch (true) {
-                                case $score >= 1:
-                                    $bad++;
-                                    // no break
-                                case $score >= 2:
-                                    $critical++;
-                                    break;
-                                case $score <= -1:
-                                    $okay--;
-                                    // no break
-                                case $score <= -2:
-                                    $critical--;
-                                    break;
-                            }
-                            break;
-                        case Avantages::BONUS_VIG:
-                            $character->setStamina($character->getStamina() + ($charAdvantage->getScore() * $disadvantageRatio));
-                            break;
-                        case Avantages::BONUS_TRAU:
-                            $character->setPermanentTrauma($character->getPermanentTrauma() + $charAdvantage->getScore());
-                            break;
-                        case Avantages::BONUS_DEF:
-                            $character->setDefenseBonus($character->getDefenseBonus() + ($charAdvantage->getScore() * $disadvantageRatio));
-                            break;
-                        case Avantages::BONUS_RAP:
-                            $character->setSpeedBonus($character->getSpeedBonus() + ($charAdvantage->getScore() * $disadvantageRatio));
-                            break;
-                        case Avantages::BONUS_SUR:
-                            $character->setSurvival($character->getSurvival() + ($charAdvantage->getScore() * $disadvantageRatio));
-                            break;
-                        case Avantages::BONUS_100G:
-                            $character->getMoney()->addFrost(100);
-                            break;
-                        case Avantages::BONUS_20G:
-                            $character->getMoney()->addFrost(20);
-                            break;
-                        case Avantages::BONUS_50G:
-                            $character->getMoney()->addFrost(50);
-                            break;
-                        case Avantages::BONUS_50A:
-                            $character->getMoney()->addAzure(50);
-                            break;
-                        case Avantages::BONUS_20A:
-                            $character->getMoney()->addAzure(20);
-                            break;
-                        default:
-                            throw new \RuntimeException("Invalid bonus $bonus");
-                    }
+                    continue;
+                }
+
+                $disadvantageRatio = $adv->isDesv() ? -1 : 1;
+                switch ($bonus) {
+                    case Bonuses::MENTAL_RESISTANCE:
+                        $character->setMentalResistanceBonus($character->getMentalResistanceBonus() + ($charAdvantage->getScore() * $disadvantageRatio));
+                        break;
+                    case Bonuses::HEALTH:
+                        $score = $charAdvantage->getScore();
+                        if ($score >= 1) {
+                            $bad++;
+                            $critical++;
+                        }
+                        if ($score >= 2) {
+                            $critical++;
+                        }
+                        if ($score <= -1) {
+                            $okay--;
+                            $critical--;
+                        }
+                        if ($score <= -2) {
+                            $critical--;
+                        }
+                        break;
+                    case Bonuses::STAMINA:
+                        $character->setStamina($character->getStamina() + ($charAdvantage->getScore() * $disadvantageRatio));
+                        break;
+                    case Bonuses::TRAUMA:
+                        $character->setPermanentTrauma($character->getPermanentTrauma() + $charAdvantage->getScore());
+                        break;
+                    case Bonuses::DEFENSE:
+                        $character->setDefenseBonus($character->getDefenseBonus() + ($charAdvantage->getScore() * $disadvantageRatio));
+                        break;
+                    case Bonuses::SPEED:
+                        $character->setSpeedBonus($character->getSpeedBonus() + ($charAdvantage->getScore() * $disadvantageRatio));
+                        break;
+                    case Bonuses::SURVIVAL:
+                        $character->setSurvival($character->getSurvival() + ($charAdvantage->getScore() * $disadvantageRatio));
+                        break;
+                    case Bonuses::MONEY_100G:
+                        $character->getMoney()->addFrost(100);
+                        break;
+                    case Bonuses::MONEY_20G:
+                        $character->getMoney()->addFrost(20);
+                        break;
+                    case Bonuses::MONEY_50G:
+                        $character->getMoney()->addFrost(50);
+                        break;
+                    case Bonuses::MONEY_50A:
+                        $character->getMoney()->addAzure(50);
+                        break;
+                    case Bonuses::MONEY_20A:
+                        $character->getMoney()->addAzure(20);
+                        break;
+                    default:
+                        throw new \RuntimeException("Invalid bonus $bonus");
                 }
             }
         }

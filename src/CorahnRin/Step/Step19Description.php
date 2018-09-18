@@ -99,6 +99,6 @@ class Step19Description extends AbstractStepAction
 
         return $this->renderCurrentStep([
             'details' => $details,
-        ]);
+        ], 'corahn_rin/Steps/19_description.html.twig');
     }
 }

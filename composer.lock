@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.67.0",
+            "version": "3.67.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "110008fb199a4a0ceac1798484368dda420fb613"
+                "reference": "10ad46f74bab23b8004bd337d131ec25072c8320"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/110008fb199a4a0ceac1798484368dda420fb613",
-                "reference": "110008fb199a4a0ceac1798484368dda420fb613",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/10ad46f74bab23b8004bd337d131ec25072c8320",
+                "reference": "10ad46f74bab23b8004bd337d131ec25072c8320",
                 "shasum": ""
             },
             "require": {
@@ -84,7 +84,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2018-08-27T22:48:01+00:00"
+            "time": "2018-09-17T20:34:45+00:00"
         },
         {
             "name": "behat/transliterator",
@@ -1902,26 +1902,26 @@
         },
         {
             "name": "league/flysystem",
-            "version": "1.0.46",
+            "version": "1.0.47",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "f3e0d925c18b92cf3ce84ea5cc58d62a1762a2b2"
+                "reference": "a11e4a75f256bdacf99d20780ce42d3b8272975c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/f3e0d925c18b92cf3ce84ea5cc58d62a1762a2b2",
-                "reference": "f3e0d925c18b92cf3ce84ea5cc58d62a1762a2b2",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/a11e4a75f256bdacf99d20780ce42d3b8272975c",
+                "reference": "a11e4a75f256bdacf99d20780ce42d3b8272975c",
                 "shasum": ""
             },
             "require": {
+                "ext-fileinfo": "*",
                 "php": ">=5.5.9"
             },
             "conflict": {
                 "league/flysystem-sftp": "<1.0.6"
             },
             "require-dev": {
-                "ext-fileinfo": "*",
                 "phpspec/phpspec": "^3.4",
                 "phpunit/phpunit": "^5.7.10"
             },
@@ -1982,7 +1982,7 @@
                 "sftp",
                 "storage"
             ],
-            "time": "2018-08-22T07:45:22+00:00"
+            "time": "2018-09-14T15:30:29+00:00"
         },
         {
             "name": "league/flysystem-aws-s3-v3",
@@ -3096,16 +3096,16 @@
         },
         {
             "name": "swiftmailer/swiftmailer",
-            "version": "v6.1.2",
+            "version": "v6.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/swiftmailer/swiftmailer.git",
-                "reference": "7d760881d266d63c5e7a1155cbcf2ac656a31ca8"
+                "reference": "8ddcb66ac10c392d3beb54829eef8ac1438595f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/7d760881d266d63c5e7a1155cbcf2ac656a31ca8",
-                "reference": "7d760881d266d63c5e7a1155cbcf2ac656a31ca8",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/8ddcb66ac10c392d3beb54829eef8ac1438595f4",
+                "reference": "8ddcb66ac10c392d3beb54829eef8ac1438595f4",
                 "shasum": ""
             },
             "require": {
@@ -3151,7 +3151,7 @@
                 "mail",
                 "mailer"
             ],
-            "time": "2018-07-13T07:04:35+00:00"
+            "time": "2018-09-11T07:12:52+00:00"
         },
         {
             "name": "symfony/asset",
@@ -3830,16 +3830,16 @@
         },
         {
             "name": "symfony/flex",
-            "version": "v1.1.0",
+            "version": "v1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/flex.git",
-                "reference": "d6f5fed47ddad2eb25d5cc19316692203a2898eb"
+                "reference": "9fb60f232af0764d58002e7872acb43a74506d25"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/flex/zipball/d6f5fed47ddad2eb25d5cc19316692203a2898eb",
-                "reference": "d6f5fed47ddad2eb25d5cc19316692203a2898eb",
+                "url": "https://api.github.com/repos/symfony/flex/zipball/9fb60f232af0764d58002e7872acb43a74506d25",
+                "reference": "9fb60f232af0764d58002e7872acb43a74506d25",
                 "shasum": ""
             },
             "require": {
@@ -3873,7 +3873,7 @@
                 }
             ],
             "description": "Composer plugin for Symfony",
-            "time": "2018-08-21T07:51:18+00:00"
+            "time": "2018-09-03T08:17:12+00:00"
         },
         {
             "name": "symfony/form",
@@ -5192,16 +5192,16 @@
         },
         {
             "name": "symfony/swiftmailer-bundle",
-            "version": "v3.2.2",
+            "version": "v3.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/swiftmailer-bundle.git",
-                "reference": "f1ba0552a9cd4df0191a58845fbd5541cf9eda2d"
+                "reference": "7bd5de67552ee3f7e04df89d662d41eba346dc83"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/swiftmailer-bundle/zipball/f1ba0552a9cd4df0191a58845fbd5541cf9eda2d",
-                "reference": "f1ba0552a9cd4df0191a58845fbd5541cf9eda2d",
+                "url": "https://api.github.com/repos/symfony/swiftmailer-bundle/zipball/7bd5de67552ee3f7e04df89d662d41eba346dc83",
+                "reference": "7bd5de67552ee3f7e04df89d662d41eba346dc83",
                 "shasum": ""
             },
             "require": {
@@ -5250,7 +5250,7 @@
             ],
             "description": "Symfony SwiftmailerBundle",
             "homepage": "http://symfony.com",
-            "time": "2018-04-03T16:29:41+00:00"
+            "time": "2018-08-29T08:49:17+00:00"
         },
         {
             "name": "symfony/templating",
@@ -6487,18 +6487,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/panther.git",
-                "reference": "25e05e60779d608cfa216f22f56235b8e1732a2d"
+                "reference": "08952ce47cb45753a50709dc425d292389d341ee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/panther/zipball/25e05e60779d608cfa216f22f56235b8e1732a2d",
-                "reference": "25e05e60779d608cfa216f22f56235b8e1732a2d",
+                "url": "https://api.github.com/repos/symfony/panther/zipball/08952ce47cb45753a50709dc425d292389d341ee",
+                "reference": "08952ce47cb45753a50709dc425d292389d341ee",
                 "shasum": ""
             },
             "require": {
                 "facebook/webdriver": "^1.5",
-                "php": ">=7.2",
+                "php": ">=7.1",
                 "symfony/browser-kit": "^4.0",
+                "symfony/polyfill-php72": "^1.9",
                 "symfony/process": "^4.0"
             },
             "conflict": {
@@ -6535,17 +6536,17 @@
                     "homepage": "https://dunglas.fr"
                 }
             ],
-            "description": "A browser testing and web scrapping library for PHP and Symfony.",
+            "description": "A browser testing and web scraping library for PHP and Symfony.",
             "homepage": "https://dunglas.fr",
             "keywords": [
                 "e2e",
-                "scrapping",
+                "scraping",
                 "selenium",
                 "symfony",
                 "testing",
                 "webdriver"
             ],
-            "time": "2018-08-21T12:22:50+00:00"
+            "time": "2018-09-13T12:34:17+00:00"
         },
         {
             "name": "symfony/phpunit-bridge",

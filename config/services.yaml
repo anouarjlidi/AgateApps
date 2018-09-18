@@ -49,6 +49,7 @@ services:
         public: false
         bind:
             $debug:           '%kernel.debug%'
+            $locales:         '%locales%'
             $defaultLocale:   '%locale%'
             $googleTags:      '%google_tags%'
             $imageMagickPath: '%env(IMAGEMAGICK_BINARIES_PATH)%'
@@ -77,7 +78,7 @@ services:
         resource: '../src/Agate/{Controller,Form,Mailer}'
 
     CorahnRin\:
-        resource: '../src/CorahnRin/{Controller,Repository,GeneratorTools,SheetsManagers,Step}'
+        resource: '../src/CorahnRin/{Controller,Repository,GeneratorTools,SheetsManagers,Step,Twig}'
 
     Esteren\:
         resource: '../src/Esteren/{Controller,Twig}'

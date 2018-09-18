@@ -11,8 +11,6 @@
 
 namespace Tests\CorahnRin\Step;
 
-use Symfony\Bundle\FrameworkBundle\Client;
-
 class Step13PrimaryDomainsTest extends AbstractStepTest
 {
     /**
@@ -101,7 +99,7 @@ class Step13PrimaryDomainsTest extends AbstractStepTest
 
         $crawler = $client->request('POST', '/fr/character/generate/'.$this->getStepName(), [
             'domains' => [
-                '99999999' => 1,
+                'inexistent_domain_name' => 1,
             ],
         ]);
 
@@ -124,7 +122,7 @@ class Step13PrimaryDomainsTest extends AbstractStepTest
 
         $form->setValues([
             'domains' => [
-                '3' => 3, // Close combat is not one of Artisan's secondary domains
+                'domains.close_combat' => 3, // Close combat is not one of Artisan's secondary domains
             ],
         ]);
 
@@ -147,8 +145,8 @@ class Step13PrimaryDomainsTest extends AbstractStepTest
 
         $form->setValues([
             'domains' => [
-                '11' => 3, // Both these domains are secondary domains for "Artisan"
-                '13' => 3,
+                'domains.relation' => 3, // Both these domains are secondary domains for "Artisan"
+                'domains.science' => 3,
             ],
         ]);
 
@@ -171,7 +169,7 @@ class Step13PrimaryDomainsTest extends AbstractStepTest
 
         $form->setValues([
             'domains' => [
-                '9' => 5, // Artisan's main job (crafting, id #1 in fixtures) should have a score of Five
+                'domains.prayer' => 5, // Artisan's main job (crafting, id #1 in fixtures) should have a score of Five
             ],
         ]);
 
@@ -194,9 +192,9 @@ class Step13PrimaryDomainsTest extends AbstractStepTest
 
         $form->setValues([
             'domains' => [
-                '9'  => 5, // Artisan's main job (crafting, id #1 in fixtures) should have a score of Five
-                '10' => 5,
-                '11' => 5,
+                'domains.prayer' => 5, // Artisan's main job (crafting, id #1 in fixtures) should have a score of Five
+                'domains.feats' => 5,
+                'domains.relation' => 5,
             ],
         ]);
 
@@ -219,7 +217,7 @@ class Step13PrimaryDomainsTest extends AbstractStepTest
 
         $form->setValues([
             'domains' => [
-                '1' => 1, // Artisan's main job (crafting, id #1 in fixtures) should have a score of Five
+                'domains.craft' => 1, // Artisan's main job (crafting, id #1 in fixtures) should have a score of Five
             ],
         ]);
 
@@ -242,7 +240,7 @@ class Step13PrimaryDomainsTest extends AbstractStepTest
 
         $form->setValues([
             'domains' => [
-                '2' => 9999,
+                'domains.close_combat' => 9999,
             ],
         ]);
 
@@ -265,9 +263,9 @@ class Step13PrimaryDomainsTest extends AbstractStepTest
 
         $form->setValues([
             'domains' => [
-                '2' => 1,
-                '3' => 1,
-                '4' => 1,
+                'domains.close_combat' => 1,
+                'domains.stealth' => 1,
+                'domains.magience' => 1,
             ],
         ]);
 
@@ -290,9 +288,9 @@ class Step13PrimaryDomainsTest extends AbstractStepTest
 
         $form->setValues([
             'domains' => [
-                '2' => 2,
-                '3' => 2,
-                '4' => 2,
+                'domains.close_combat' => 2,
+                'domains.stealth' => 2,
+                'domains.magience' => 2,
             ],
         ]);
 
@@ -310,7 +308,7 @@ class Step13PrimaryDomainsTest extends AbstractStepTest
         $client = $this->getStepClient(1); // Artisan id in fixtures
 
         $crawler = $client->request('POST', '/fr/character/generate/'.$this->getStepName(), [
-            'ost'     => 99999999,
+            'ost' => 99999999,
             'domains' => [],
         ]);
 
@@ -323,47 +321,12 @@ class Step13PrimaryDomainsTest extends AbstractStepTest
         static::assertContains('Le domaine spécifié pour le service d\'Ost n\'est pas valide.', $flashText);
     }
 
-    public function testWrongScholarId()
-    {
-        $client = $this->getStepClient(1, true); // Artisan id in fixtures, 23 is "Scholar" advantage
-
-        $crawler = $client->request('POST', '/fr/character/generate/'.$this->getStepName(), [
-            'scholar' => 9999,
-            'domains' => [],
-        ]);
-
-        $flashMessagesNode = $crawler->filter('#flash-messages');
-
-        static::assertCount(1, $flashMessagesNode);
-
-        $flashText = $flashMessagesNode->text();
-
-        static::assertContains('Le domaine spécifié pour l\'avantage "Lettré" n\'est pas valide.', $flashText);
-    }
-
-    public function testNoScholarId()
-    {
-        $client = $this->getStepClient(1, true); // Artisan id in fixtures, 23 is "Scholar" advantage
-
-        $crawler = $client->request('POST', '/fr/character/generate/'.$this->getStepName(), [
-            'domains' => [],
-        ]);
-
-        $flashMessagesNode = $crawler->filter('#flash-messages');
-
-        static::assertCount(1, $flashMessagesNode);
-
-        $flashText = $flashMessagesNode->text();
-
-        static::assertContains('Veuillez spécifier un domaine pour l\'avantage "Lettré".', $flashText);
-    }
-
     /**
      * @dataProvider provideValidDomainsData
      */
-    public function testValidDomains($jobId, array $submitted, $scholar = false)
+    public function testValidDomains($jobId, array $submitted)
     {
-        $client = $this->getStepClient($jobId, $scholar); // Artisan id in fixtures
+        $client = $this->getStepClient($jobId); // Artisan id in fixtures
 
         $crawler = $client->request('GET', '/fr/character/generate/'.$this->getStepName());
 
@@ -371,22 +334,17 @@ class Step13PrimaryDomainsTest extends AbstractStepTest
 
         $error = 'Unknown error when evaluating valid domains with dataset.';
         if ($crawler->filter('#flash-messages')->count()) {
-            $error .= "\n".trim($crawler->filter('#flash-messages')->text());
+            $error .= "\n".\trim($crawler->filter('#flash-messages')->text());
         }
 
         static::assertTrue($client->getResponse()->isRedirect('/fr/character/generate/14_use_domain_bonuses'), $error);
-
-        // Make sure not submitted scholar is still taken in account
-        if (!array_key_exists('scholar', $submitted)) {
-            $submitted['scholar'] = null;
-        }
 
         static::assertEquals($submitted, $client->getRequest()->getSession()->get('character.corahn_rin')[$this->getStepName()]);
     }
 
     public function provideValidDomainsData()
     {
-        /**
+        /*
          * 1  => Artisanat
          * 2  => Combat au Contact
          * 3  => Discrétion
@@ -403,389 +361,1181 @@ class Step13PrimaryDomainsTest extends AbstractStepTest
          * 14 => Tir et Lancer
          * 15 => Voyage
          * 16 => Érudition.
-         *
-         * If "true" is specified under domains, it means "scholar" advantage is present.
-         * Helper for domains:
-         * //            1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16
          */
-        $tests = [
-            0 => [
-                1, // Artisan
-                [
-                    'ost'     => 2,
-                    'domains' => [5, 2, 2, 1, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 1],
-                ],
-            ],
-            1 => [
-                1, // Artisan
-                [
-                    'ost'     => 2,
-                    'domains' => [5, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 1],
-                ],
-            ],
-
-            2 => [
-                2, // Barde
-                [
-                    'ost'     => 2,
-                    'domains' => [1, 1, 2, 2, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 3, 0],
-                ],
-            ],
-            3 => [
-                2, // Barde
-                [
-                    'ost'     => 2,
-                    'domains' => [1, 1, 2, 2, 0, 0, 0, 0, 0, 0, 3, 5, 0, 0, 0, 0],
-                ],
-            ],
-
-            4 => [
-                3, // Chasseur
-                [
-                    'ost'     => 2,
-                    'domains' => [0, 0, 0, 0, 5, 1, 1, 2, 2, 0, 0, 0, 0, 3, 0, 0],
-                ],
-            ],
-            5 => [
-                3, // Chasseur
-                [
-                    'ost'     => 2,
-                    'domains' => [0, 3, 0, 0, 5, 1, 1, 2, 2, 0, 0, 0, 0, 0, 0, 0],
-                ],
-            ],
-
-            6 => [
-                4, // Chevalier
-                [
-                    'ost'     => 2,
-                    'domains' => [0, 5, 1, 1, 2, 2, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0],
-                ],
-            ],
-            7 => [
-                4, // Chevalier
-                [
-                    'ost'     => 2,
-                    'domains' => [0, 5, 1, 1, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0],
-                ],
-            ],
-
-            8 => [
-                5, // Combattant
-                [
-                    'ost'     => 2,
-                    'domains' => [0, 5, 0, 1, 1, 2, 2, 0, 0, 3, 0, 0, 0, 0, 0, 0],
-                ],
-            ],
-            9 => [
-                5, // Combattant
-                [
-                    'ost'     => 2,
-                    'domains' => [0, 5, 0, 1, 1, 2, 2, 0, 0, 0, 0, 0, 0, 3, 0, 0],
-                ],
-            ],
-
-            10 => [
-                6, // Commerçant
-                [
-                    'ost'     => 2,
-                    'domains' => [3, 1, 1, 2, 2, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0],
-                ],
-            ],
-            11 => [
-                6, // Commerçant
-                [
-                    'ost'     => 2,
-                    'domains' => [0, 1, 1, 2, 2, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 3],
-                ],
-            ],
-
-            12 => [
-                7, // Demorthèn
-                [
-                    'ost'     => 2,
-                    'domains' => [0, 0, 0, 0, 3, 5, 1, 1, 2, 2, 0, 0, 0, 0, 0, 0],
-                ],
-            ],
-            13 => [
-                7, // Demorthèn
-                [
-                    'ost'     => 2,
-                    'domains' => [0, 0, 0, 0, 0, 5, 1, 1, 2, 2, 0, 0, 0, 0, 0, 3],
-                ],
-            ],
-
-            14 => [
-                8, // Érudit
-                [
-                    'ost'     => 2,
-                    'domains' => [1, 1, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 5],
-                ],
-            ],
-            15 => [
-                8, // Érudit
-                [
-                    'ost'     => 2,
-                    'domains' => [1, 1, 2, 2, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 5],
-                ],
-            ],
-
-            16 => [
-                9, // Espion
-                [
-                    'ost'     => 2,
-                    'domains' => [3, 1, 2, 2, 1, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0],
-                ],
-            ],
-            17 => [
-                9, // Espion
-                [
-                    'ost'     => 2,
-                    'domains' => [1, 3, 2, 2, 1, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0],
-                ],
-            ],
-            18 => [
-                9, // Espion
-                [
-                    'ost'     => 2,
-                    'domains' => [1, 1, 3, 2, 2, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0],
-                ],
-            ],
-            19 => [
-                9, // Espion
-                [
-                    'ost'     => 2,
-                    'domains' => [1, 1, 2, 3, 2, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0],
-                ],
-            ],
-            20 => [
-                9, // Espion
-                [
-                    'ost'     => 2,
-                    'domains' => [1, 1, 2, 2, 3, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0],
-                ],
-            ],
-            21 => [
-                9, // Espion
-                [
-                    'ost'     => 2,
-                    'domains' => [1, 1, 2, 2, 0, 3, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0],
-                ],
-            ],
-            22 => [
-                9, // Espion
-                [
-                    'ost'     => 2,
-                    'domains' => [1, 1, 2, 2, 0, 0, 3, 5, 0, 0, 0, 0, 0, 0, 0, 0],
-                ],
-            ],
-            23 => [
-                9, // Espion
-                [
-                    'ost'     => 2,
-                    'domains' => [1, 1, 2, 2, 0, 0, 0, 5, 3, 0, 0, 0, 0, 0, 0, 0],
-                ],
-            ],
-            24 => [
-                9, // Espion
-                [
-                    'ost'     => 2,
-                    'domains' => [1, 1, 2, 2, 0, 0, 0, 5, 0, 3, 0, 0, 0, 0, 0, 0],
-                ],
-            ],
-            25 => [
-                9, // Espion
-                [
-                    'ost'     => 2,
-                    'domains' => [1, 1, 2, 2, 0, 0, 0, 5, 0, 0, 3, 0, 0, 0, 0, 0],
-                ],
-            ],
-            26 => [
-                9, // Espion
-                [
-                    'ost'     => 2,
-                    'domains' => [1, 1, 2, 2, 0, 0, 0, 5, 0, 0, 0, 3, 0, 0, 0, 0],
-                ],
-            ],
-            27 => [
-                9, // Espion
-                [
-                    'ost'     => 2,
-                    'domains' => [1, 1, 2, 2, 0, 0, 0, 5, 0, 0, 0, 0, 3, 0, 0, 0],
-                ],
-            ],
-            28 => [
-                9, // Espion
-                [
-                    'ost'     => 2,
-                    'domains' => [1, 1, 2, 2, 0, 0, 0, 5, 0, 0, 0, 0, 0, 3, 0, 0],
-                ],
-            ],
-            29 => [
-                9, // Espion
-                [
-                    'ost'     => 2,
-                    'domains' => [1, 1, 2, 2, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 3, 0],
-                ],
-            ],
-            30 => [
-                9, // Espion
-                [
-                    'ost'     => 2,
-                    'domains' => [1, 1, 2, 2, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 3],
-                ],
-            ],
-            31 => [
-                10, // Explorateur
-                [
-                    'ost'     => 2,
-                    'domains' => [1, 1, 2, 2, 3, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0],
-                ],
-            ],
-            32 => [
-                10, // Explorateur
-                [
-                    'ost'     => 2,
-                    'domains' => [1, 1, 2, 2, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 3, 0],
-                ],
-            ],
-            33 => [
-                11, // Investigateur
-                [
-                    'ost'     => 2,
-                    'domains' => [3, 1, 1, 2, 2, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0],
-                ],
-            ],
-            34 => [
-                11, // Investigateur
-                [
-                    'ost'     => 2,
-                    'domains' => [1, 3, 1, 2, 2, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0],
-                ],
-            ],
-            35 => [
-                11, // Investigateur
-                [
-                    'ost'     => 2,
-                    'domains' => [1, 1, 3, 2, 2, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0],
-                ],
-            ],
-            36 => [
-                11, // Investigateur
-                [
-                    'ost'     => 2,
-                    'domains' => [1, 1, 2, 3, 2, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0],
-                ],
-            ],
-            37 => [
-                11, // Investigateur
-                [
-                    'ost'     => 2,
-                    'domains' => [1, 1, 2, 2, 3, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0],
-                ],
-            ],
-            38 => [
-                11, // Investigateur
-                [
-                    'ost'     => 2,
-                    'domains' => [1, 1, 2, 2, 0, 3, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0],
-                ],
-            ],
-            39 => [
-                11, // Investigateur
-                [
-                    'ost'     => 2,
-                    'domains' => [1, 1, 2, 2, 0, 0, 3, 5, 0, 0, 0, 0, 0, 0, 0, 0],
-                ],
-            ],
-            40 => [
-                11, // Investigateur
-                [
-                    'ost'     => 2,
-                    'domains' => [1, 1, 2, 2, 0, 0, 0, 5, 3, 0, 0, 0, 0, 0, 0, 0],
-                ],
-            ],
-            41 => [
-                11, // Investigateur
-                [
-                    'ost'     => 2,
-                    'domains' => [1, 1, 2, 2, 0, 0, 0, 5, 0, 3, 0, 0, 0, 0, 0, 0],
-                ],
-            ],
-            42 => [
-                11, // Investigateur
-                [
-                    'ost'     => 2,
-                    'domains' => [1, 1, 2, 2, 0, 0, 0, 5, 0, 0, 3, 0, 0, 0, 0, 0],
-                ],
-            ],
-            43 => [
-                11, // Investigateur
-                [
-                    'ost'     => 2,
-                    'domains' => [1, 1, 2, 2, 0, 0, 0, 5, 0, 0, 0, 3, 0, 0, 0, 0],
-                ],
-            ],
-            44 => [
-                11, // Investigateur
-                [
-                    'ost'     => 2,
-                    'domains' => [1, 1, 2, 2, 0, 0, 0, 5, 0, 0, 0, 0, 3, 0, 0, 0],
-                ],
-            ],
-            45 => [
-                11, // Investigateur
-                [
-                    'ost'     => 2,
-                    'domains' => [1, 1, 2, 2, 0, 0, 0, 5, 0, 0, 0, 0, 0, 3, 0, 0],
-                ],
-            ],
-            46 => [
-                11, // Investigateur
-                [
-                    'ost'     => 2,
-                    'domains' => [1, 1, 2, 2, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 3, 0],
-                ],
-            ],
-            47 => [
-                11, // Investigateur
-                [
-                    'ost'     => 2,
-                    'domains' => [1, 1, 2, 2, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 3],
+        yield 0 => [
+            1, // Artisan
+            [
+                'ost' => 'domains.close_combat',
+                'domains' => [
+                    'domains.craft' => 5,
+                    'domains.close_combat' => 2,
+                    'domains.stealth' => 2,
+                    'domains.magience' => 1,
+                    'domains.natural_environment' => 0,
+                    'domains.demorthen_mysteries' => 0,
+                    'domains.occultism' => 0,
+                    'domains.perception' => 0,
+                    'domains.prayer' => 0,
+                    'domains.feats' => 0,
+                    'domains.relation' => 3,
+                    'domains.performance' => 0,
+                    'domains.science' => 0,
+                    'domains.shooting_and_throwing' => 0,
+                    'domains.travel' => 0,
+                    'domains.erudition' => 1,
                 ],
             ],
         ];
-
-        // Shifts all keys with +1 so we have real ids.
-        // They're in the correct order now. Just remember them, and add comments in case of
-        foreach ($tests as $k => $test) {
-            for ($i = 16; $i > 0; $i--) {
-                $tests[$k][1]['domains'][(string) $i] = (int) $test[1]['domains'][$i - 1];
-            }
-            unset($tests[$k][1]['domains'][0]);
-        }
-
-        return $tests;
+        yield 1 => [
+            1, // Artisan
+            [
+                'ost' => 'domains.close_combat',
+                'domains' => [
+                    'domains.craft' => 5,
+                    'domains.close_combat' => 2,
+                    'domains.stealth' => 2,
+                    'domains.magience' => 1,
+                    'domains.natural_environment' => 0,
+                    'domains.demorthen_mysteries' => 0,
+                    'domains.occultism' => 0,
+                    'domains.perception' => 0,
+                    'domains.prayer' => 0,
+                    'domains.feats' => 0,
+                    'domains.relation' => 0,
+                    'domains.performance' => 0,
+                    'domains.science' => 3,
+                    'domains.shooting_and_throwing' => 0,
+                    'domains.travel' => 0,
+                    'domains.erudition' => 1,
+                ],
+            ],
+        ];
+        yield 2 => [
+            2, // Barde
+            [
+                'ost' => 'domains.close_combat',
+                'domains' => [
+                    'domains.craft' => 1,
+                    'domains.close_combat' => 1,
+                    'domains.stealth' => 2,
+                    'domains.magience' => 2,
+                    'domains.natural_environment' => 0,
+                    'domains.demorthen_mysteries' => 0,
+                    'domains.occultism' => 0,
+                    'domains.perception' => 0,
+                    'domains.prayer' => 0,
+                    'domains.feats' => 0,
+                    'domains.relation' => 0,
+                    'domains.performance' => 5,
+                    'domains.science' => 0,
+                    'domains.shooting_and_throwing' => 0,
+                    'domains.travel' => 3,
+                    'domains.erudition' => 0,
+                ],
+            ],
+        ];
+        yield 3 => [
+            2, // Barde
+            [
+                'ost' => 'domains.close_combat',
+                'domains' => [
+                    'domains.craft' => 1,
+                    'domains.close_combat' => 1,
+                    'domains.stealth' => 2,
+                    'domains.magience' => 2,
+                    'domains.natural_environment' => 0,
+                    'domains.demorthen_mysteries' => 0,
+                    'domains.occultism' => 0,
+                    'domains.perception' => 0,
+                    'domains.prayer' => 0,
+                    'domains.feats' => 0,
+                    'domains.relation' => 3,
+                    'domains.performance' => 5,
+                    'domains.science' => 0,
+                    'domains.shooting_and_throwing' => 0,
+                    'domains.travel' => 0,
+                    'domains.erudition' => 0,
+                ],
+            ],
+        ];
+        yield 4 => [
+            3, // Chasseur
+            [
+                'ost' => 'domains.close_combat',
+                'domains' => [
+                    'domains.craft' => 0,
+                    'domains.close_combat' => 0,
+                    'domains.stealth' => 0,
+                    'domains.magience' => 0,
+                    'domains.natural_environment' => 5,
+                    'domains.demorthen_mysteries' => 1,
+                    'domains.occultism' => 1,
+                    'domains.perception' => 2,
+                    'domains.prayer' => 2,
+                    'domains.feats' => 0,
+                    'domains.relation' => 0,
+                    'domains.performance' => 0,
+                    'domains.science' => 0,
+                    'domains.shooting_and_throwing' => 3,
+                    'domains.travel' => 0,
+                    'domains.erudition' => 0,
+                ],
+            ],
+        ];
+        yield 5 => [
+            3, // Chasseur
+            [
+                'ost' => 'domains.close_combat',
+                'domains' => [
+                    'domains.craft' => 0,
+                    'domains.close_combat' => 3,
+                    'domains.stealth' => 0,
+                    'domains.magience' => 0,
+                    'domains.natural_environment' => 5,
+                    'domains.demorthen_mysteries' => 1,
+                    'domains.occultism' => 1,
+                    'domains.perception' => 2,
+                    'domains.prayer' => 2,
+                    'domains.feats' => 0,
+                    'domains.relation' => 0,
+                    'domains.performance' => 0,
+                    'domains.science' => 0,
+                    'domains.shooting_and_throwing' => 0,
+                    'domains.travel' => 0,
+                    'domains.erudition' => 0,
+                ],
+            ],
+        ];
+        yield 6 => [
+            4, // Chevalier
+            [
+                'ost' => 'domains.close_combat',
+                'domains' => [
+                    'domains.craft' => 0,
+                    'domains.close_combat' => 5,
+                    'domains.stealth' => 1,
+                    'domains.magience' => 1,
+                    'domains.natural_environment' => 2,
+                    'domains.demorthen_mysteries' => 2,
+                    'domains.occultism' => 0,
+                    'domains.perception' => 0,
+                    'domains.prayer' => 0,
+                    'domains.feats' => 0,
+                    'domains.relation' => 3,
+                    'domains.performance' => 0,
+                    'domains.science' => 0,
+                    'domains.shooting_and_throwing' => 0,
+                    'domains.travel' => 0,
+                    'domains.erudition' => 0,
+                ],
+            ],
+        ];
+        yield 7 => [
+            4, // Chevalier
+            [
+                'ost' => 'domains.close_combat',
+                'domains' => [
+                    'domains.craft' => 0,
+                    'domains.close_combat' => 5,
+                    'domains.stealth' => 1,
+                    'domains.magience' => 1,
+                    'domains.natural_environment' => 2,
+                    'domains.demorthen_mysteries' => 2,
+                    'domains.occultism' => 0,
+                    'domains.perception' => 0,
+                    'domains.prayer' => 0,
+                    'domains.feats' => 0,
+                    'domains.relation' => 0,
+                    'domains.performance' => 0,
+                    'domains.science' => 0,
+                    'domains.shooting_and_throwing' => 0,
+                    'domains.travel' => 3,
+                    'domains.erudition' => 0,
+                ],
+            ],
+        ];
+        yield 8 => [
+            5, // Combattant
+            [
+                'ost' => 'domains.close_combat',
+                'domains' => [
+                    'domains.craft' => 0,
+                    'domains.close_combat' => 5,
+                    'domains.stealth' => 0,
+                    'domains.magience' => 1,
+                    'domains.natural_environment' => 1,
+                    'domains.demorthen_mysteries' => 2,
+                    'domains.occultism' => 2,
+                    'domains.perception' => 0,
+                    'domains.prayer' => 0,
+                    'domains.feats' => 3,
+                    'domains.relation' => 0,
+                    'domains.performance' => 0,
+                    'domains.science' => 0,
+                    'domains.shooting_and_throwing' => 0,
+                    'domains.travel' => 0,
+                    'domains.erudition' => 0,
+                ],
+            ],
+        ];
+        yield 9 => [
+            5, // Combattant
+            [
+                'ost' => 'domains.close_combat',
+                'domains' => [
+                    'domains.craft' => 0,
+                    'domains.close_combat' => 5,
+                    'domains.stealth' => 0,
+                    'domains.magience' => 1,
+                    'domains.natural_environment' => 1,
+                    'domains.demorthen_mysteries' => 2,
+                    'domains.occultism' => 2,
+                    'domains.perception' => 0,
+                    'domains.prayer' => 0,
+                    'domains.feats' => 0,
+                    'domains.relation' => 0,
+                    'domains.performance' => 0,
+                    'domains.science' => 0,
+                    'domains.shooting_and_throwing' => 3,
+                    'domains.travel' => 0,
+                    'domains.erudition' => 0,
+                ],
+            ],
+        ];
+        yield 10 => [
+            6, // Commerçant
+            [
+                'ost' => 'domains.close_combat',
+                'domains' => [
+                    'domains.craft' => 3,
+                    'domains.close_combat' => 1,
+                    'domains.stealth' => 1,
+                    'domains.magience' => 2,
+                    'domains.natural_environment' => 2,
+                    'domains.demorthen_mysteries' => 0,
+                    'domains.occultism' => 0,
+                    'domains.perception' => 0,
+                    'domains.prayer' => 0,
+                    'domains.feats' => 0,
+                    'domains.relation' => 5,
+                    'domains.performance' => 0,
+                    'domains.science' => 0,
+                    'domains.shooting_and_throwing' => 0,
+                    'domains.travel' => 0,
+                    'domains.erudition' => 0,
+                ],
+            ],
+        ];
+        yield 11 => [
+            6, // Commerçant
+            [
+                'ost' => 'domains.close_combat',
+                'domains' => [
+                    'domains.craft' => 0,
+                    'domains.close_combat' => 1,
+                    'domains.stealth' => 1,
+                    'domains.magience' => 2,
+                    'domains.natural_environment' => 2,
+                    'domains.demorthen_mysteries' => 0,
+                    'domains.occultism' => 0,
+                    'domains.perception' => 0,
+                    'domains.prayer' => 0,
+                    'domains.feats' => 0,
+                    'domains.relation' => 5,
+                    'domains.performance' => 0,
+                    'domains.science' => 0,
+                    'domains.shooting_and_throwing' => 0,
+                    'domains.travel' => 0,
+                    'domains.erudition' => 3,
+                ],
+            ],
+        ];
+        yield 12 => [
+            7, // Demorthèn
+            [
+                'ost' => 'domains.close_combat',
+                'domains' => [
+                    'domains.craft' => 0,
+                    'domains.close_combat' => 0,
+                    'domains.stealth' => 0,
+                    'domains.magience' => 0,
+                    'domains.natural_environment' => 3,
+                    'domains.demorthen_mysteries' => 5,
+                    'domains.occultism' => 1,
+                    'domains.perception' => 1,
+                    'domains.prayer' => 2,
+                    'domains.feats' => 2,
+                    'domains.relation' => 0,
+                    'domains.performance' => 0,
+                    'domains.science' => 0,
+                    'domains.shooting_and_throwing' => 0,
+                    'domains.travel' => 0,
+                    'domains.erudition' => 0,
+                ],
+            ],
+        ];
+        yield 13 => [
+            7, // Demorthèn
+            [
+                'ost' => 'domains.close_combat',
+                'domains' => [
+                    'domains.craft' => 0,
+                    'domains.close_combat' => 0,
+                    'domains.stealth' => 0,
+                    'domains.magience' => 0,
+                    'domains.natural_environment' => 0,
+                    'domains.demorthen_mysteries' => 5,
+                    'domains.occultism' => 1,
+                    'domains.perception' => 1,
+                    'domains.prayer' => 2,
+                    'domains.feats' => 2,
+                    'domains.relation' => 0,
+                    'domains.performance' => 0,
+                    'domains.science' => 0,
+                    'domains.shooting_and_throwing' => 0,
+                    'domains.travel' => 0,
+                    'domains.erudition' => 3,
+                ],
+            ],
+        ];
+        yield 14 => [
+            8, // Érudit
+            [
+                'ost' => 'domains.close_combat',
+                'domains' => [
+                    'domains.craft' => 1,
+                    'domains.close_combat' => 1,
+                    'domains.stealth' => 2,
+                    'domains.magience' => 2,
+                    'domains.natural_environment' => 0,
+                    'domains.demorthen_mysteries' => 0,
+                    'domains.occultism' => 0,
+                    'domains.perception' => 0,
+                    'domains.prayer' => 0,
+                    'domains.feats' => 0,
+                    'domains.relation' => 0,
+                    'domains.performance' => 0,
+                    'domains.science' => 3,
+                    'domains.shooting_and_throwing' => 0,
+                    'domains.travel' => 0,
+                    'domains.erudition' => 5,
+                ],
+            ],
+        ];
+        yield 15 => [
+            8, // Érudit
+            [
+                'ost' => 'domains.close_combat',
+                'domains' => [
+                    'domains.craft' => 1,
+                    'domains.close_combat' => 1,
+                    'domains.stealth' => 2,
+                    'domains.magience' => 2,
+                    'domains.natural_environment' => 0,
+                    'domains.demorthen_mysteries' => 0,
+                    'domains.occultism' => 3,
+                    'domains.perception' => 0,
+                    'domains.prayer' => 0,
+                    'domains.feats' => 0,
+                    'domains.relation' => 0,
+                    'domains.performance' => 0,
+                    'domains.science' => 0,
+                    'domains.shooting_and_throwing' => 0,
+                    'domains.travel' => 0,
+                    'domains.erudition' => 5,
+                ],
+            ],
+        ];
+        yield 16 => [
+            9, // Espion
+            [
+                'ost' => 'domains.close_combat',
+                'domains' => [
+                    'domains.craft' => 3,
+                    'domains.close_combat' => 1,
+                    'domains.stealth' => 2,
+                    'domains.magience' => 2,
+                    'domains.natural_environment' => 1,
+                    'domains.demorthen_mysteries' => 0,
+                    'domains.occultism' => 0,
+                    'domains.perception' => 5,
+                    'domains.prayer' => 0,
+                    'domains.feats' => 0,
+                    'domains.relation' => 0,
+                    'domains.performance' => 0,
+                    'domains.science' => 0,
+                    'domains.shooting_and_throwing' => 0,
+                    'domains.travel' => 0,
+                    'domains.erudition' => 0,
+                ],
+            ],
+        ];
+        yield 17 => [
+            9, // Espion
+            [
+                'ost' => 'domains.close_combat',
+                'domains' => [
+                    'domains.craft' => 1,
+                    'domains.close_combat' => 3,
+                    'domains.stealth' => 2,
+                    'domains.magience' => 2,
+                    'domains.natural_environment' => 1,
+                    'domains.demorthen_mysteries' => 0,
+                    'domains.occultism' => 0,
+                    'domains.perception' => 5,
+                    'domains.prayer' => 0,
+                    'domains.feats' => 0,
+                    'domains.relation' => 0,
+                    'domains.performance' => 0,
+                    'domains.science' => 0,
+                    'domains.shooting_and_throwing' => 0,
+                    'domains.travel' => 0,
+                    'domains.erudition' => 0,
+                ],
+            ],
+        ];
+        yield 18 => [
+            9, // Espion
+            [
+                'ost' => 'domains.close_combat',
+                'domains' => [
+                    'domains.craft' => 1,
+                    'domains.close_combat' => 1,
+                    'domains.stealth' => 3,
+                    'domains.magience' => 2,
+                    'domains.natural_environment' => 2,
+                    'domains.demorthen_mysteries' => 0,
+                    'domains.occultism' => 0,
+                    'domains.perception' => 5,
+                    'domains.prayer' => 0,
+                    'domains.feats' => 0,
+                    'domains.relation' => 0,
+                    'domains.performance' => 0,
+                    'domains.science' => 0,
+                    'domains.shooting_and_throwing' => 0,
+                    'domains.travel' => 0,
+                    'domains.erudition' => 0,
+                ],
+            ],
+        ];
+        yield 19 => [
+            9, // Espion
+            [
+                'ost' => 'domains.close_combat',
+                'domains' => [
+                    'domains.craft' => 1,
+                    'domains.close_combat' => 1,
+                    'domains.stealth' => 2,
+                    'domains.magience' => 3,
+                    'domains.natural_environment' => 2,
+                    'domains.demorthen_mysteries' => 0,
+                    'domains.occultism' => 0,
+                    'domains.perception' => 5,
+                    'domains.prayer' => 0,
+                    'domains.feats' => 0,
+                    'domains.relation' => 0,
+                    'domains.performance' => 0,
+                    'domains.science' => 0,
+                    'domains.shooting_and_throwing' => 0,
+                    'domains.travel' => 0,
+                    'domains.erudition' => 0,
+                ],
+            ],
+        ];
+        yield 20 => [
+            9, // Espion
+            [
+                'ost' => 'domains.close_combat',
+                'domains' => [
+                    'domains.craft' => 1,
+                    'domains.close_combat' => 1,
+                    'domains.stealth' => 2,
+                    'domains.magience' => 2,
+                    'domains.natural_environment' => 3,
+                    'domains.demorthen_mysteries' => 0,
+                    'domains.occultism' => 0,
+                    'domains.perception' => 5,
+                    'domains.prayer' => 0,
+                    'domains.feats' => 0,
+                    'domains.relation' => 0,
+                    'domains.performance' => 0,
+                    'domains.science' => 0,
+                    'domains.shooting_and_throwing' => 0,
+                    'domains.travel' => 0,
+                    'domains.erudition' => 0,
+                ],
+            ],
+        ];
+        yield 21 => [
+            9, // Espion
+            [
+                'ost' => 'domains.close_combat',
+                'domains' => [
+                    'domains.craft' => 1,
+                    'domains.close_combat' => 1,
+                    'domains.stealth' => 2,
+                    'domains.magience' => 2,
+                    'domains.natural_environment' => 0,
+                    'domains.demorthen_mysteries' => 3,
+                    'domains.occultism' => 0,
+                    'domains.perception' => 5,
+                    'domains.prayer' => 0,
+                    'domains.feats' => 0,
+                    'domains.relation' => 0,
+                    'domains.performance' => 0,
+                    'domains.science' => 0,
+                    'domains.shooting_and_throwing' => 0,
+                    'domains.travel' => 0,
+                    'domains.erudition' => 0,
+                ],
+            ],
+        ];
+        yield 22 => [
+            9, // Espion
+            [
+                'ost' => 'domains.close_combat',
+                'domains' => [
+                    'domains.craft' => 1,
+                    'domains.close_combat' => 1,
+                    'domains.stealth' => 2,
+                    'domains.magience' => 2,
+                    'domains.natural_environment' => 0,
+                    'domains.demorthen_mysteries' => 0,
+                    'domains.occultism' => 3,
+                    'domains.perception' => 5,
+                    'domains.prayer' => 0,
+                    'domains.feats' => 0,
+                    'domains.relation' => 0,
+                    'domains.performance' => 0,
+                    'domains.science' => 0,
+                    'domains.shooting_and_throwing' => 0,
+                    'domains.travel' => 0,
+                    'domains.erudition' => 0,
+                ],
+            ],
+        ];
+        yield 23 => [
+            9, // Espion
+            [
+                'ost' => 'domains.close_combat',
+                'domains' => [
+                    'domains.craft' => 1,
+                    'domains.close_combat' => 1,
+                    'domains.stealth' => 2,
+                    'domains.magience' => 2,
+                    'domains.natural_environment' => 0,
+                    'domains.demorthen_mysteries' => 0,
+                    'domains.occultism' => 0,
+                    'domains.perception' => 5,
+                    'domains.prayer' => 3,
+                    'domains.feats' => 0,
+                    'domains.relation' => 0,
+                    'domains.performance' => 0,
+                    'domains.science' => 0,
+                    'domains.shooting_and_throwing' => 0,
+                    'domains.travel' => 0,
+                    'domains.erudition' => 0,
+                ],
+            ],
+        ];
+        yield 24 => [
+            9, // Espion
+            [
+                'ost' => 'domains.close_combat',
+                'domains' => [
+                    'domains.craft' => 1,
+                    'domains.close_combat' => 1,
+                    'domains.stealth' => 2,
+                    'domains.magience' => 2,
+                    'domains.natural_environment' => 0,
+                    'domains.demorthen_mysteries' => 0,
+                    'domains.occultism' => 0,
+                    'domains.perception' => 5,
+                    'domains.prayer' => 0,
+                    'domains.feats' => 3,
+                    'domains.relation' => 0,
+                    'domains.performance' => 0,
+                    'domains.science' => 0,
+                    'domains.shooting_and_throwing' => 0,
+                    'domains.travel' => 0,
+                    'domains.erudition' => 0,
+                ],
+            ],
+        ];
+        yield 25 => [
+            9, // Espion
+            [
+                'ost' => 'domains.close_combat',
+                'domains' => [
+                    'domains.craft' => 1,
+                    'domains.close_combat' => 1,
+                    'domains.stealth' => 2,
+                    'domains.magience' => 2,
+                    'domains.natural_environment' => 0,
+                    'domains.demorthen_mysteries' => 0,
+                    'domains.occultism' => 0,
+                    'domains.perception' => 5,
+                    'domains.prayer' => 0,
+                    'domains.feats' => 0,
+                    'domains.relation' => 3,
+                    'domains.performance' => 0,
+                    'domains.science' => 0,
+                    'domains.shooting_and_throwing' => 0,
+                    'domains.travel' => 0,
+                    'domains.erudition' => 0,
+                ],
+            ],
+        ];
+        yield 26 => [
+            9, // Espion
+            [
+                'ost' => 'domains.close_combat',
+                'domains' => [
+                    'domains.craft' => 1,
+                    'domains.close_combat' => 1,
+                    'domains.stealth' => 2,
+                    'domains.magience' => 2,
+                    'domains.natural_environment' => 0,
+                    'domains.demorthen_mysteries' => 0,
+                    'domains.occultism' => 0,
+                    'domains.perception' => 5,
+                    'domains.prayer' => 0,
+                    'domains.feats' => 0,
+                    'domains.relation' => 0,
+                    'domains.performance' => 3,
+                    'domains.science' => 0,
+                    'domains.shooting_and_throwing' => 0,
+                    'domains.travel' => 0,
+                    'domains.erudition' => 0,
+                ],
+            ],
+        ];
+        yield 27 => [
+            9, // Espion
+            [
+                'ost' => 'domains.close_combat',
+                'domains' => [
+                    'domains.craft' => 1,
+                    'domains.close_combat' => 1,
+                    'domains.stealth' => 2,
+                    'domains.magience' => 2,
+                    'domains.natural_environment' => 0,
+                    'domains.demorthen_mysteries' => 0,
+                    'domains.occultism' => 0,
+                    'domains.perception' => 5,
+                    'domains.prayer' => 0,
+                    'domains.feats' => 0,
+                    'domains.relation' => 0,
+                    'domains.performance' => 0,
+                    'domains.science' => 3,
+                    'domains.shooting_and_throwing' => 0,
+                    'domains.travel' => 0,
+                    'domains.erudition' => 0,
+                ],
+            ],
+        ];
+        yield 28 => [
+            9, // Espion
+            [
+                'ost' => 'domains.close_combat',
+                'domains' => [
+                    'domains.craft' => 1,
+                    'domains.close_combat' => 1,
+                    'domains.stealth' => 2,
+                    'domains.magience' => 2,
+                    'domains.natural_environment' => 0,
+                    'domains.demorthen_mysteries' => 0,
+                    'domains.occultism' => 0,
+                    'domains.perception' => 5,
+                    'domains.prayer' => 0,
+                    'domains.feats' => 0,
+                    'domains.relation' => 0,
+                    'domains.performance' => 0,
+                    'domains.science' => 0,
+                    'domains.shooting_and_throwing' => 3,
+                    'domains.travel' => 0,
+                    'domains.erudition' => 0,
+                ],
+            ],
+        ];
+        yield 29 => [
+            9, // Espion
+            [
+                'ost' => 'domains.close_combat',
+                'domains' => [
+                    'domains.craft' => 1,
+                    'domains.close_combat' => 1,
+                    'domains.stealth' => 2,
+                    'domains.magience' => 2,
+                    'domains.natural_environment' => 0,
+                    'domains.demorthen_mysteries' => 0,
+                    'domains.occultism' => 0,
+                    'domains.perception' => 5,
+                    'domains.prayer' => 0,
+                    'domains.feats' => 0,
+                    'domains.relation' => 0,
+                    'domains.performance' => 0,
+                    'domains.science' => 0,
+                    'domains.shooting_and_throwing' => 0,
+                    'domains.travel' => 3,
+                    'domains.erudition' => 0,
+                ],
+            ],
+        ];
+        yield 30 => [
+            9, // Espion
+            [
+                'ost' => 'domains.close_combat',
+                'domains' => [
+                    'domains.craft' => 1,
+                    'domains.close_combat' => 1,
+                    'domains.stealth' => 2,
+                    'domains.magience' => 2,
+                    'domains.natural_environment' => 0,
+                    'domains.demorthen_mysteries' => 0,
+                    'domains.occultism' => 0,
+                    'domains.perception' => 5,
+                    'domains.prayer' => 0,
+                    'domains.feats' => 0,
+                    'domains.relation' => 0,
+                    'domains.performance' => 0,
+                    'domains.science' => 0,
+                    'domains.shooting_and_throwing' => 0,
+                    'domains.travel' => 0,
+                    'domains.erudition' => 3,
+                ],
+            ],
+        ];
+        yield 31 => [
+            10, // Explorateur
+            [
+                'ost' => 'domains.close_combat',
+                'domains' => [
+                    'domains.craft' => 1,
+                    'domains.close_combat' => 1,
+                    'domains.stealth' => 2,
+                    'domains.magience' => 2,
+                    'domains.natural_environment' => 3,
+                    'domains.demorthen_mysteries' => 0,
+                    'domains.occultism' => 0,
+                    'domains.perception' => 0,
+                    'domains.prayer' => 0,
+                    'domains.feats' => 5,
+                    'domains.relation' => 0,
+                    'domains.performance' => 0,
+                    'domains.science' => 0,
+                    'domains.shooting_and_throwing' => 0,
+                    'domains.travel' => 0,
+                    'domains.erudition' => 0,
+                ],
+            ],
+        ];
+        yield 32 => [
+            10, // Explorateur
+            [
+                'ost' => 'domains.close_combat',
+                'domains' => [
+                    'domains.craft' => 1,
+                    'domains.close_combat' => 1,
+                    'domains.stealth' => 2,
+                    'domains.magience' => 2,
+                    'domains.natural_environment' => 0,
+                    'domains.demorthen_mysteries' => 0,
+                    'domains.occultism' => 0,
+                    'domains.perception' => 0,
+                    'domains.prayer' => 0,
+                    'domains.feats' => 5,
+                    'domains.relation' => 0,
+                    'domains.performance' => 0,
+                    'domains.science' => 0,
+                    'domains.shooting_and_throwing' => 0,
+                    'domains.travel' => 3,
+                    'domains.erudition' => 0,
+                ],
+            ],
+        ];
+        yield 33 => [
+            11, // Investigateur
+            [
+                'ost' => 'domains.close_combat',
+                'domains' => [
+                    'domains.craft' => 3,
+                    'domains.close_combat' => 1,
+                    'domains.stealth' => 1,
+                    'domains.magience' => 2,
+                    'domains.natural_environment' => 2,
+                    'domains.demorthen_mysteries' => 0,
+                    'domains.occultism' => 0,
+                    'domains.perception' => 5,
+                    'domains.prayer' => 0,
+                    'domains.feats' => 0,
+                    'domains.relation' => 0,
+                    'domains.performance' => 0,
+                    'domains.science' => 0,
+                    'domains.shooting_and_throwing' => 0,
+                    'domains.travel' => 0,
+                    'domains.erudition' => 0,
+                ],
+            ],
+        ];
+        yield 34 => [
+            11, // Investigateur
+            [
+                'ost' => 'domains.close_combat',
+                'domains' => [
+                    'domains.craft' => 1,
+                    'domains.close_combat' => 3,
+                    'domains.stealth' => 1,
+                    'domains.magience' => 2,
+                    'domains.natural_environment' => 2,
+                    'domains.demorthen_mysteries' => 0,
+                    'domains.occultism' => 0,
+                    'domains.perception' => 5,
+                    'domains.prayer' => 0,
+                    'domains.feats' => 0,
+                    'domains.relation' => 0,
+                    'domains.performance' => 0,
+                    'domains.science' => 0,
+                    'domains.shooting_and_throwing' => 0,
+                    'domains.travel' => 0,
+                    'domains.erudition' => 0,
+                ],
+            ],
+        ];
+        yield 35 => [
+            11, // Investigateur
+            [
+                'ost' => 'domains.close_combat',
+                'domains' => [
+                    'domains.craft' => 1,
+                    'domains.close_combat' => 1,
+                    'domains.stealth' => 3,
+                    'domains.magience' => 2,
+                    'domains.natural_environment' => 2,
+                    'domains.demorthen_mysteries' => 0,
+                    'domains.occultism' => 0,
+                    'domains.perception' => 5,
+                    'domains.prayer' => 0,
+                    'domains.feats' => 0,
+                    'domains.relation' => 0,
+                    'domains.performance' => 0,
+                    'domains.science' => 0,
+                    'domains.shooting_and_throwing' => 0,
+                    'domains.travel' => 0,
+                    'domains.erudition' => 0,
+                ],
+            ],
+        ];
+        yield 36 => [
+            11, // Investigateur
+            [
+                'ost' => 'domains.close_combat',
+                'domains' => [
+                    'domains.craft' => 1,
+                    'domains.close_combat' => 1,
+                    'domains.stealth' => 2,
+                    'domains.magience' => 3,
+                    'domains.natural_environment' => 2,
+                    'domains.demorthen_mysteries' => 0,
+                    'domains.occultism' => 0,
+                    'domains.perception' => 5,
+                    'domains.prayer' => 0,
+                    'domains.feats' => 0,
+                    'domains.relation' => 0,
+                    'domains.performance' => 0,
+                    'domains.science' => 0,
+                    'domains.shooting_and_throwing' => 0,
+                    'domains.travel' => 0,
+                    'domains.erudition' => 0,
+                ],
+            ],
+        ];
+        yield 37 => [
+            11, // Investigateur
+            [
+                'ost' => 'domains.close_combat',
+                'domains' => [
+                    'domains.craft' => 1,
+                    'domains.close_combat' => 1,
+                    'domains.stealth' => 2,
+                    'domains.magience' => 2,
+                    'domains.natural_environment' => 3,
+                    'domains.demorthen_mysteries' => 0,
+                    'domains.occultism' => 0,
+                    'domains.perception' => 5,
+                    'domains.prayer' => 0,
+                    'domains.feats' => 0,
+                    'domains.relation' => 0,
+                    'domains.performance' => 0,
+                    'domains.science' => 0,
+                    'domains.shooting_and_throwing' => 0,
+                    'domains.travel' => 0,
+                    'domains.erudition' => 0,
+                ],
+            ],
+        ];
+        yield 38 => [
+            11, // Investigateur
+            [
+                'ost' => 'domains.close_combat',
+                'domains' => [
+                    'domains.craft' => 1,
+                    'domains.close_combat' => 1,
+                    'domains.stealth' => 2,
+                    'domains.magience' => 2,
+                    'domains.natural_environment' => 0,
+                    'domains.demorthen_mysteries' => 3,
+                    'domains.occultism' => 0,
+                    'domains.perception' => 5,
+                    'domains.prayer' => 0,
+                    'domains.feats' => 0,
+                    'domains.relation' => 0,
+                    'domains.performance' => 0,
+                    'domains.science' => 0,
+                    'domains.shooting_and_throwing' => 0,
+                    'domains.travel' => 0,
+                    'domains.erudition' => 0,
+                ],
+            ],
+        ];
+        yield 39 => [
+            11, // Investigateur
+            [
+                'ost' => 'domains.close_combat',
+                'domains' => [
+                    'domains.craft' => 1,
+                    'domains.close_combat' => 1,
+                    'domains.stealth' => 2,
+                    'domains.magience' => 2,
+                    'domains.natural_environment' => 0,
+                    'domains.demorthen_mysteries' => 0,
+                    'domains.occultism' => 3,
+                    'domains.perception' => 5,
+                    'domains.prayer' => 0,
+                    'domains.feats' => 0,
+                    'domains.relation' => 0,
+                    'domains.performance' => 0,
+                    'domains.science' => 0,
+                    'domains.shooting_and_throwing' => 0,
+                    'domains.travel' => 0,
+                    'domains.erudition' => 0,
+                ],
+            ],
+        ];
+        yield 40 => [
+            11, // Investigateur
+            [
+                'ost' => 'domains.close_combat',
+                'domains' => [
+                    'domains.craft' => 1,
+                    'domains.close_combat' => 1,
+                    'domains.stealth' => 2,
+                    'domains.magience' => 2,
+                    'domains.natural_environment' => 0,
+                    'domains.demorthen_mysteries' => 0,
+                    'domains.occultism' => 0,
+                    'domains.perception' => 5,
+                    'domains.prayer' => 3,
+                    'domains.feats' => 0,
+                    'domains.relation' => 0,
+                    'domains.performance' => 0,
+                    'domains.science' => 0,
+                    'domains.shooting_and_throwing' => 0,
+                    'domains.travel' => 0,
+                    'domains.erudition' => 0,
+                ],
+            ],
+        ];
+        yield 41 => [
+            11, // Investigateur
+            [
+                'ost' => 'domains.close_combat',
+                'domains' => [
+                    'domains.craft' => 1,
+                    'domains.close_combat' => 1,
+                    'domains.stealth' => 2,
+                    'domains.magience' => 2,
+                    'domains.natural_environment' => 0,
+                    'domains.demorthen_mysteries' => 0,
+                    'domains.occultism' => 0,
+                    'domains.perception' => 5,
+                    'domains.prayer' => 0,
+                    'domains.feats' => 3,
+                    'domains.relation' => 0,
+                    'domains.performance' => 0,
+                    'domains.science' => 0,
+                    'domains.shooting_and_throwing' => 0,
+                    'domains.travel' => 0,
+                    'domains.erudition' => 0,
+                ],
+            ],
+        ];
+        yield 42 => [
+            11, // Investigateur
+            [
+                'ost' => 'domains.close_combat',
+                'domains' => [
+                    'domains.craft' => 1,
+                    'domains.close_combat' => 1,
+                    'domains.stealth' => 2,
+                    'domains.magience' => 2,
+                    'domains.natural_environment' => 0,
+                    'domains.demorthen_mysteries' => 0,
+                    'domains.occultism' => 0,
+                    'domains.perception' => 5,
+                    'domains.prayer' => 0,
+                    'domains.feats' => 0,
+                    'domains.relation' => 3,
+                    'domains.performance' => 0,
+                    'domains.science' => 0,
+                    'domains.shooting_and_throwing' => 0,
+                    'domains.travel' => 0,
+                    'domains.erudition' => 0,
+                ],
+            ],
+        ];
+        yield 43 => [
+            11, // Investigateur
+            [
+                'ost' => 'domains.close_combat',
+                'domains' => [
+                    'domains.craft' => 1,
+                    'domains.close_combat' => 1,
+                    'domains.stealth' => 2,
+                    'domains.magience' => 2,
+                    'domains.natural_environment' => 0,
+                    'domains.demorthen_mysteries' => 0,
+                    'domains.occultism' => 0,
+                    'domains.perception' => 5,
+                    'domains.prayer' => 0,
+                    'domains.feats' => 0,
+                    'domains.relation' => 0,
+                    'domains.performance' => 3,
+                    'domains.science' => 0,
+                    'domains.shooting_and_throwing' => 0,
+                    'domains.travel' => 0,
+                    'domains.erudition' => 0,
+                ],
+            ],
+        ];
+        yield 44 => [
+            11, // Investigateur
+            [
+                'ost' => 'domains.close_combat',
+                'domains' => [
+                    'domains.craft' => 1,
+                    'domains.close_combat' => 1,
+                    'domains.stealth' => 2,
+                    'domains.magience' => 2,
+                    'domains.natural_environment' => 0,
+                    'domains.demorthen_mysteries' => 0,
+                    'domains.occultism' => 0,
+                    'domains.perception' => 5,
+                    'domains.prayer' => 0,
+                    'domains.feats' => 0,
+                    'domains.relation' => 0,
+                    'domains.performance' => 0,
+                    'domains.science' => 3,
+                    'domains.shooting_and_throwing' => 0,
+                    'domains.travel' => 0,
+                    'domains.erudition' => 0,
+                ],
+            ],
+        ];
+        yield 45 => [
+            11, // Investigateur
+            [
+                'ost' => 'domains.close_combat',
+                'domains' => [
+                    'domains.craft' => 1,
+                    'domains.close_combat' => 1,
+                    'domains.stealth' => 2,
+                    'domains.magience' => 2,
+                    'domains.natural_environment' => 0,
+                    'domains.demorthen_mysteries' => 0,
+                    'domains.occultism' => 0,
+                    'domains.perception' => 5,
+                    'domains.prayer' => 0,
+                    'domains.feats' => 0,
+                    'domains.relation' => 0,
+                    'domains.performance' => 0,
+                    'domains.science' => 0,
+                    'domains.shooting_and_throwing' => 3,
+                    'domains.travel' => 0,
+                    'domains.erudition' => 0,
+                ],
+            ],
+        ];
+        yield 46 => [
+            11, // Investigateur
+            [
+                'ost' => 'domains.close_combat',
+                'domains' => [
+                    'domains.craft' => 1,
+                    'domains.close_combat' => 1,
+                    'domains.stealth' => 2,
+                    'domains.magience' => 2,
+                    'domains.natural_environment' => 0,
+                    'domains.demorthen_mysteries' => 0,
+                    'domains.occultism' => 0,
+                    'domains.perception' => 5,
+                    'domains.prayer' => 0,
+                    'domains.feats' => 0,
+                    'domains.relation' => 0,
+                    'domains.performance' => 0,
+                    'domains.science' => 0,
+                    'domains.shooting_and_throwing' => 0,
+                    'domains.travel' => 3,
+                    'domains.erudition' => 0,
+                ],
+            ],
+        ];
+        yield 47 => [
+            11, // Investigateur
+            [
+                'ost' => 'domains.close_combat',
+                'domains' => [
+                    'domains.craft' => 1,
+                    'domains.close_combat' => 1,
+                    'domains.stealth' => 2,
+                    'domains.magience' => 2,
+                    'domains.natural_environment' => 0,
+                    'domains.demorthen_mysteries' => 0,
+                    'domains.occultism' => 0,
+                    'domains.perception' => 5,
+                    'domains.prayer' => 0,
+                    'domains.feats' => 0,
+                    'domains.relation' => 0,
+                    'domains.performance' => 0,
+                    'domains.science' => 0,
+                    'domains.shooting_and_throwing' => 0,
+                    'domains.travel' => 0,
+                    'domains.erudition' => 3,
+                ],
+            ],
+        ];
     }
 
-    /**
-     * @param int  $jobId
-     * @param bool $scholar
-     *
-     * @return Client
-     */
-    private function getStepClient(int $jobId, bool $scholar = false)
+    private function getStepClient(int $jobId, array $step11data = [])
     {
+        if (!isset($step11data['advantages'])) {
+            $step11data['advantages'] = [];
+        }
+        if (!isset($step11data['disadvantages'])) {
+            $step11data['disadvantages'] = [];
+        }
+        if (!isset($step11data['advantages_indications'])) {
+            $step11data['advantages_indications'] = [];
+        }
+
         $client = $this->getClient();
         $client->restart();
 
         $session = $client->getContainer()->get('session');
         $session->set('character.corahn_rin', [
-            '02_job'        => $jobId,
-            '08_ways'       => [1, 2, 3, 4, 5],
-            '11_advantages' => [
-                'advantages'    => $scholar ? [23 => 1] : [],
-                'disadvantages' => [],
-            ],
+            '02_job' => $jobId,
+            '08_ways' => [1, 2, 3, 4, 5],
+            '11_advantages' => $step11data,
         ]);
         $session->save();
 

@@ -46,7 +46,7 @@ const config = {
         "assets/esteren/css/*.css",
         "assets/esteren/sass/*.scss",
         "assets/esteren/sass/theme_components/*.scss",
-        "assets/corahn_rin/generator/css/*.less"
+        "assets/corahn_rin/generator/css/*.scss"
     ],
 
     /**

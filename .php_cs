@@ -4,10 +4,14 @@ $finder = PhpCsFixer\Finder::create()
     ->exclude([
         'vendor',
     ])
-    ->notPath('src/CorahnRin/PDF/FPDF.php')
-    ->notPath('src/CorahnRin/PDF/PDF.php')
-    ->notPath('src/CorahnRin/SheetsManagers/PdfManager.php')
-    ->in(__DIR__.'/src/')
+    ->notName('FPDF.php')
+    ->notName('PDF.php')
+    ->notName('PdfManager.php')
+    ->notName('bootstrap.php')
+    ->in([
+        __DIR__.'/src/',
+        __DIR__.'/tests/'
+    ])
 ;
 
 return PhpCsFixer\Config::create()

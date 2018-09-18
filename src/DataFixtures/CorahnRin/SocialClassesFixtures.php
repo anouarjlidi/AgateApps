@@ -11,7 +11,8 @@
 
 namespace DataFixtures\CorahnRin;
 
-use CorahnRin\Entity\SocialClasses;
+use CorahnRin\Data\DomainsData;
+use CorahnRin\Entity\SocialClass;
 use Doctrine\Bundle\FixturesBundle\ORMFixtureInterface;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
@@ -42,25 +43,13 @@ class SocialClassesFixtures extends AbstractFixture implements OrderedFixtureInt
         $this->manager = $manager;
 
         /** @var EntityRepository $repo */
-        $repo = $this->manager->getRepository(\CorahnRin\Entity\SocialClasses::class);
+        $repo = $this->manager->getRepository(SocialClass::class);
 
-        $domain1 = $this->getReference('corahnrin-domain-1');
-        $domain2 = $this->getReference('corahnrin-domain-2');
-        $domain5 = $this->getReference('corahnrin-domain-5');
-        $domain8 = $this->getReference('corahnrin-domain-8');
-        $domain9 = $this->getReference('corahnrin-domain-9');
-        $domain10 = $this->getReference('corahnrin-domain-10');
-        $domain11 = $this->getReference('corahnrin-domain-11');
-        $domain12 = $this->getReference('corahnrin-domain-12');
-        $domain13 = $this->getReference('corahnrin-domain-13');
-        $domain15 = $this->getReference('corahnrin-domain-15');
-        $domain16 = $this->getReference('corahnrin-domain-16');
-
-        $this->fixtureObject($repo, 1, [$domain5, $domain8, $domain10, $domain15], 'Paysan', 'Les roturiers font partie de la majorité de la population. Vous avez vécu dans une famille paysanne, à l\'écart des villes et cités, sans pour autant les ignorer. Vous êtes plus proche de la nature.'."\n".'les Demorthèn font également partie de cette classe sociale.');
-        $this->fixtureObject($repo, 2, [$domain1, $domain11, $domain13, $domain16], 'Artisan', 'Les roturiers font partie de la majorité de la population. Votre famille était composée d\'un ou plusieurs artisans ou ouvriers, participant à la vie communale et familiale usant de ses talents manuels.');
-        $this->fixtureObject($repo, 3, [$domain1, $domain11, $domain12, $domain16], 'Bourgeois', 'Votre famille a su faire des affaires dans les villes, ou tient probablement un commerce célèbre dans votre région, ce qui vous permet de vivre confortablement au sein d\'une communauté familière.');
-        $this->fixtureObject($repo, 4, [$domain9, $domain11, $domain15, $domain16], 'Clergé', 'Votre famille a toujours respecté l\'Unique et ses représentants, et vous êtes issu d\'un milieu très pieux.'."\n".'Vous avez probablement la foi, vous aussi.');
-        $this->fixtureObject($repo, 5, [$domain2, $domain11, $domain13, $domain16], 'Noblesse', 'Vous portez peut-être un grand nom des affaires des grandes cités, ou avez grandi en ville. Néanmoins, votre famille est placée assez haut dans la noblesse pour vous permettre d\'avoir eu des enseignements particuliers.');
+        $this->fixtureObject($repo, 1, [DomainsData::NATURAL_ENVIRONMENT['title'], DomainsData::PERCEPTION['title'], DomainsData::FEATS['title'], DomainsData::TRAVEL['title']], 'Paysan', 'Les roturiers font partie de la majorité de la population. Vous avez vécu dans une famille paysanne, à l\'écart des villes et cités, sans pour autant les ignorer. Vous êtes plus proche de la nature.'."\n".'les Demorthèn font également partie de cette classe sociale.');
+        $this->fixtureObject($repo, 2, [DomainsData::CRAFT['title'], DomainsData::RELATION['title'], DomainsData::SCIENCE['title'], DomainsData::ERUDITION['title']], 'Artisan', 'Les roturiers font partie de la majorité de la population. Votre famille était composée d\'un ou plusieurs artisans ou ouvriers, participant à la vie communale et familiale usant de ses talents manuels.');
+        $this->fixtureObject($repo, 3, [DomainsData::CRAFT['title'], DomainsData::RELATION['title'], DomainsData::PERFORMANCE['title'], DomainsData::ERUDITION['title']], 'Bourgeois', 'Votre famille a su faire des affaires dans les villes, ou tient probablement un commerce célèbre dans votre région, ce qui vous permet de vivre confortablement au sein d\'une communauté familière.');
+        $this->fixtureObject($repo, 4, [DomainsData::PRAYER['title'], DomainsData::RELATION['title'], DomainsData::TRAVEL['title'], DomainsData::ERUDITION['title']], 'Clergé', 'Votre famille a toujours respecté l\'Unique et ses représentants, et vous êtes issu d\'un milieu très pieux.'."\n".'Vous avez probablement la foi, vous aussi.');
+        $this->fixtureObject($repo, 5, [DomainsData::CLOSE_COMBAT['title'], DomainsData::RELATION['title'], DomainsData::SCIENCE['title'], DomainsData::ERUDITION['title']], 'Noblesse', 'Vous portez peut-être un grand nom des affaires des grandes cités, ou avez grandi en ville. Néanmoins, votre famille est placée assez haut dans la noblesse pour vous permettre d\'avoir eu des enseignements particuliers.');
 
         $this->manager->flush();
     }
@@ -81,14 +70,12 @@ class SocialClassesFixtures extends AbstractFixture implements OrderedFixtureInt
             $newObject = true;
         }
         if (true === $newObject) {
-            $obj = new SocialClasses();
-            $obj->setId($id)
-                ->setName($name)
-                ->setDescription($description)
-            ;
-            foreach ($domains as $domain) {
-                $obj->addDomain($domain);
-            }
+            $obj = new SocialClass();
+            $obj->setId($id);
+            $obj->setName($name);
+            $obj->setDescription($description);
+            $obj->setDomains($domains);
+
             if ($id) {
                 /** @var ClassMetadata $metadata */
                 $metadata = $this->manager->getClassMetadata(\get_class($obj));

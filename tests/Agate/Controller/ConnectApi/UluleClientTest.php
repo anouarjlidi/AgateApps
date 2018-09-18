@@ -45,8 +45,8 @@ class UluleClientTest extends WebTestCase
         }
 
         static::$clientResults = [
-            'projects' => json_decode(file_get_contents(__DIR__.'/ulule_responses/projects.json'), true),
-            'orders' => json_decode(file_get_contents(__DIR__.'/ulule_responses/orders.json'), true),
+            'projects' => \json_decode(\file_get_contents(__DIR__.'/ulule_responses/projects.json'), true),
+            'orders' => \json_decode(\file_get_contents(__DIR__.'/ulule_responses/orders.json'), true),
         ];
     }
 

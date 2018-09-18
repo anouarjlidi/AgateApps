@@ -11,7 +11,7 @@
 
 namespace CorahnRin\Repository;
 
-use CorahnRin\Entity\Domains;
+use CorahnRin\Data\DomainsData;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Orbitale\Component\DoctrineTools\EntityRepositoryHelperTrait;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -22,11 +22,11 @@ class DomainsRepository extends ServiceEntityRepository
 
     public function __construct(RegistryInterface $registry)
     {
-        parent::__construct($registry, Domains::class);
+        parent::__construct($registry, DomainsData::class);
     }
 
     /**
-     * @return Domains[]
+     * @return DomainsData[]
      */
     public function findAllSortedByName()
     {

@@ -23,7 +23,7 @@
 }
 
 /* Setup advantage states */
-#generator_form {
+#generator_form #generator_11_advantages {
     .btn {
         &[class*="btn-state"] {
             background-color: #e1f5fe;
@@ -48,9 +48,16 @@
     #xp_chip {
         width: 260px;
         background-color: #4fc3f7;
-        font-weight: normal;
+        font-size: 1.5em;
         #xp {
             font-weight: bold;
+        }
+    }
+
+    .indication {
+        display: none;
+        &.active {
+            display: block;
         }
     }
 }

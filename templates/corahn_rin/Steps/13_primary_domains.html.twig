@@ -1,5 +1,7 @@
 {% extends 'corahn_rin/Steps/step_base.html.twig' %}
 
+{% trans_default_domain 'corahn_rin' %}
+
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript" src="{{ asset('js/step_13_primary_domains.js') }}"></script>
@@ -11,33 +13,24 @@
 
     <div class="card-panel teal darken-4">
 
-        <strong>{{ 'primary_domains.additionnal_options'|trans({}, 'corahn_rin') }}&nbsp;:</strong>
+        <strong>{{ 'primary_domains.additionnal_options'|trans }}&nbsp;:</strong>
         <br>
         <br>
 
         <input type="hidden" name="ost" id="ost" value="{{ domains_values['ost'] }}">
         <button type="button" class="btn btn-small btn-inverse"><span class="fa fa-asterisk"></span></button>&nbsp;&equals;
-        {{ 'primary_domains.ost_service_button'|trans({}, 'corahn_rin')|raw }}
-
-        {% if scholar %}
-            <br>
-            <br>
-            <input type="hidden" name="scholar" id="scholar" value="{{ domains_values['scholar'] }}">
-            <button type="button" class="btn btn-small btn-inverse"><span class="fa fa-book"></span></button>&nbsp;&equals;
-            {{ 'primary_domains.scholar_button'|trans({}, 'corahn_rin') }}
-        {% endif %}
-
+        {{ 'primary_domains.ost_service_button'|trans|raw }}
     </div>
 
     <div class="card-panel blue-grey darken-3">
-        {{ 'primary_domains.explanation'|trans({}, 'corahn_rin')|raw }}
+        {{ 'primary_domains.explanation'|trans|raw }}
     </div>
     <div class="card-panel blue-grey darken-3">
         <table id="information_table">
             <tbody>
                 <tr>
                     <td class="domainValue1">
-                        <strong>{{ 'primary_domains.info_table.number_of_1'|trans({}, 'corahn_rin') }}</strong>&nbsp;:
+                        <strong>{{ 'primary_domains.info_table.number_of_1'|trans }}</strong>&nbsp;:
                     </td>
                     <td>
                         <span id="numberOf1">{{ number_of[1] }}</span>&nbsp;/&nbsp;2
@@ -45,7 +38,7 @@
                 </tr>
                 <tr>
                     <td class="domainValue2">
-                        <strong>{{ 'primary_domains.info_table.number_of_2'|trans({}, 'corahn_rin') }}</strong>&nbsp;:
+                        <strong>{{ 'primary_domains.info_table.number_of_2'|trans }}</strong>&nbsp;:
                     </td>
                     <td>
                         <span id="numberOf2">{{ number_of[2] }}</span>&nbsp;/&nbsp;2
@@ -53,22 +46,12 @@
                 </tr>
                 <tr>
                     <td class="domainValue3">
-                        <strong>{{ 'primary_domains.info_table.number_of_3'|trans({}, 'corahn_rin') }}</strong>&nbsp;:
+                        <strong>{{ 'primary_domains.info_table.number_of_3'|trans }}</strong>&nbsp;:
                     </td>
                     <td>
                         <span id="numberOf3">{{ number_of[3] }}</span>&nbsp;/&nbsp;1
                     </td>
                 </tr>
-                {% if scholar %}
-                    <tr>
-                        <td>
-                            <strong>{{ 'primary_domains.number_of_scholar'|trans({}, 'corahn_rin') }}</strong>&nbsp;:
-                        </td>
-                        <td>
-                            <span id="scholarDisplay">{{ domains_values['scholar'] ? '1' : '0' }}</span>&nbsp;/&nbsp;1
-                        </td>
-                    </tr>
-                {% endif %}
             </tbody>
         </table>
         <div id="numberOfCompleted" style="display: none;">
@@ -91,17 +74,12 @@
             <div class="col s3 domain hoverable" data-domain-id="{{ id }}">
                 <input type="hidden" name="domains[{{ id }}]" value="{{ value }}">
                 <h5>
-                    {{ domain.name }}
+                    {{ id|trans }}
                 </h5>
                 <div class="suppl">
-                    <button type="button" data-type="ost" data-domain-id="{{ id }}" class="btn btn-inverse btn-small{{ domains_values['ost'] == id ? ' active' }}" data-toggle="tooltip" title="{{ 'primary_domains.ost_button_title' | trans({}, 'corahn_rin') }}">
+                    <button type="button" data-type="ost" data-domain-id="{{ id }}" class="btn btn-inverse btn-small{{ domains_values['ost'] == id ? ' active' }}" data-toggle="tooltip" title="{{ 'primary_domains.ost_button_title' | trans }}">
                         <span class="fa fa-asterisk"></span>
                     </button>
-                    {% if scholar and id in scholar_domains_ids %}
-                        <button type="button" data-type="scholar" data-domain-id="{{ id }}" class="btn btn-inverse btn-small{{ id == domains_values['scholar'] ? ' active' }}" data-toggle="tooltip" title="{{ 'primary_domains.scholar_button_use' | trans({}, 'corahn_rin') }}">
-                            <span class="fa fa-book"></span>
-                        </button>
-                    {% endif %}
                 </div>
                 <hr>
                 <div class="domain_button_group">

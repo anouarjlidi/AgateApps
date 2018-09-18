@@ -11,17 +11,17 @@
 
 namespace CorahnRin\Repository;
 
-use CorahnRin\Entity\SocialClasses;
+use CorahnRin\Entity\SocialClass;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Orbitale\Component\DoctrineTools\EntityRepositoryHelperTrait;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
-class SocialClassesRepository extends ServiceEntityRepository
+class SocialClassRepository extends ServiceEntityRepository
 {
     use EntityRepositoryHelperTrait;
 
     public function __construct(RegistryInterface $registry)
     {
-        parent::__construct($registry, SocialClasses::class);
+        parent::__construct($registry, SocialClass::class);
     }
 }

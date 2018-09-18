@@ -18,14 +18,7 @@ abstract class AbstractStepAction extends BaseAbstractStepAction
 {
     protected static $translationDomain = 'corahn_rin';
 
-    /**
-     * Renders current step view by its name.
-     *
-     *
-     *
-     * @throws \Twig_Error
-     */
-    protected function renderCurrentStep(array $parameters = []): Response
+    protected function renderCurrentStep(array $parameters = [], string $template = null): Response
     {
         // Default parameters always injected in template.
         // Not overridable, they're mandatory.
@@ -34,7 +27,9 @@ abstract class AbstractStepAction extends BaseAbstractStepAction
         $parameters['current_character'] = $this->getCurrentCharacter();
 
         // Get template name
-        $template = 'corahn_rin/Steps/'.$this->step->getName().'.html.twig';
+        if (null === $template) {
+            $template = 'corahn_rin/Steps/'.$this->step->getName().'.html.twig';
+        }
 
         return new Response($this->twig->render($template, $parameters));
     }

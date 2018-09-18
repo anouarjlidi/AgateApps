@@ -1,5 +1,7 @@
 {% extends 'corahn_rin/Steps/step_base.html.twig' %}
 
+{% trans_default_domain 'corahn_rin' %}
+
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript" src="{{ asset('js/step_14_use_domain_bonuses.js') }}"></script>
@@ -10,22 +12,22 @@
     {% if not bonus_max %}
 
         <div class="card-panel teal darken-4">
-            {{ 'domains_bonuses.no_bonus_point'|trans({}, 'corahn_rin') }}
+            {{ 'domains_bonuses.no_bonus_point'|trans }}
         </div>
 
     {% else %}
 
         <div class="card-panel teal darken-4">
-            {{ 'domains_bonuses.explanation'|trans({}, 'corahn_rin')|raw }}
+            {{ 'domains_bonuses.explanation'|trans|raw }}
             <br>
             <i class="fa fa-hand-o-right teal-text text-darken-3"></i>&nbsp;
-            {{ 'domains_bonuses.explanation_disciplines'|trans({}, 'corahn_rin')|raw }}
+            {{ 'domains_bonuses.explanation_disciplines'|trans|raw }}
 
         </div>
 
         <div class="card-panel blue-grey darken-3">
 
-            {{ 'domains_bonuses.remaining'|trans({}, 'corahn_rin') }}
+            {{ 'domains_bonuses.remaining'|trans }}
 
             <div class="bonus_points_element chip bordered" id="bonus_points">
                 <span id="remaining_bonus_points" class="text-black">{{ bonus_value }}</span>&nbsp;/<span id="max_bonus_points" class="text-black">{{ bonus_max }}</span>
@@ -42,7 +44,7 @@
                 <div class="col s3 domain hoverable" data-domain-id="{{ id }}">
                     <input type="hidden" name="domains_bonuses[{{ id }}]" id="domains_{{ id }}" value="{{ domains_bonuses['domains'][id] }}">
                     <h5>
-                        {{ domain.name }}
+                        {{ id|trans }}
                     </h5>
                     <div class="domain_button_group">
                         {% for i, buttonValue in 0..5 %}

@@ -32,7 +32,6 @@
         var numberOf;
         var numberOfCompleted;
         var numberToComplete;
-        var scholarElement = d.getElementById('scholar');
         var ostElement = d.getElementById('ost');
 
         $buttons.removeClass('not_selectable');
@@ -50,9 +49,8 @@
 
         numberOfCompleted = 0;
 
-        // By default, user needs to select the 3 domain categories and the Ost service.
-        // This number to complete comes to 5 if the user has to define the Scholar advantage value.
-        numberToComplete = scholarElement ? 5 : 4;
+        // By default, user needs to select the 3 domain categories and the Ost service, which makes 4 inputs to fill
+        numberToComplete = 4;
 
         if (numberOf[1] >= 2) {
             $buttons.filter('[data-change=1]:not(.active)').addClass('not_selectable');
@@ -69,13 +67,6 @@
 
         if (ostElement.value) {
             numberOfCompleted++;
-        }
-
-        if (scholarElement && scholarElement.value) {
-            numberOfCompleted++;
-            d.getElementById('scholarDisplay').innerHTML = '1';
-        } else if (scholarElement && !scholarElement.value) {
-            d.getElementById('scholarDisplay').innerHTML = '0';
         }
 
         if (numberOfCompleted === numberToComplete) {
@@ -182,29 +173,6 @@
             refreshButtonsAndMessages();
         });
     } // End for loop on each button
-
-
-    var scholarButtons = d.querySelectorAll('.domain button[data-type="scholar"]');
-    var scholarInput = d.getElementById('scholar');
-
-    // Also activate scholar buttons if we have them.
-    for (i = 0, l = scholarButtons.length; i < l; i++) {
-        btn = scholarButtons[i];
-
-        // Add the listener to each button.
-        btn.addEventListener('click', function () {
-
-            // Disable all buttons
-            for (var j = 0, l = scholarButtons.length; j < l; j++) {
-                scholarButtons[j].classList.remove('active');
-            }
-
-            this.classList.add('active');
-            scholarInput.value = this.getAttribute('data-domain-id');
-
-            refreshButtonsAndMessages();
-        });
-    }
 
     var ostButtons = d.querySelectorAll('.domain button[data-type="ost"]');
     var ostInput = d.getElementById('ost');

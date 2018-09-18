@@ -34,6 +34,6 @@ class Step04GeoTest extends AbstractStepTest
 
         static::assertSame(200, $result->getResponse()->getStatusCode());
         static::assertSame(1, $crawler->filter('#flash-messages > .card-panel.error')->count());
-        static::assertEquals('Veuillez indiquer un lieu de vie géographique correct.', trim($crawler->filter('#flash-messages > .card-panel.error')->text()));
+        static::assertEquals('Veuillez indiquer un lieu de vie géographique correct.', \trim($crawler->filter('#flash-messages > .card-panel.error')->text()));
     }
 }

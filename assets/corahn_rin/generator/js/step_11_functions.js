@@ -13,6 +13,7 @@ function getAdvantageFromInput(input, label){
     var currentValue = parseInt(input.value);
     var augmentation = parseInt(input.getAttribute('data-augmentation'));
     var isAdvantage = null;
+    var indicationInput = document.getElementById('advantages_indications_'+id);
 
     // If these elements are not numbers,
     // it means someone attempted to override DOM values.
@@ -29,7 +30,7 @@ function getAdvantageFromInput(input, label){
         throw 'Wrong element class, missing change_avtg or change_desv.';
     }
 
-    return new Advantage({
+    return Advantage.new({
         'id': id,
         'xp': xp,
         'baseValue': currentValue,
@@ -37,7 +38,8 @@ function getAdvantageFromInput(input, label){
         'augmentation': augmentation,
         'isAdvantage': isAdvantage,
         'input': input,
-        'label': label
+        'label': label,
+        'indicationInput': indicationInput
     });
 }
 
@@ -199,4 +201,37 @@ function gainOrSpendExperience(currentAdvantageId, experience, advantagesList, d
     }
 
     return experience;
+}
+
+function updateIndicationsDisplay() {
+    var indicationList = document.getElementsByClassName('indication');
+
+    Array.from(indicationList).forEach(function(indicationDiv) {
+        var advantageId = parseInt(indicationDiv.getAttribute('data-indication-for'), 10);
+        var indicationInput, advantageInput;
+
+        if (isNaN(advantageId)) {
+            throw 'Invalid HTML attribute for indication.';
+        }
+
+        indicationInput = document.getElementById('advantages_indications_'+advantageId);
+        advantageInput = document.querySelector('input[data-element-id="'+advantageId+'"]');
+
+        if (!indicationInput) {
+            throw 'No indication input found for advantage '+advantageId;
+        }
+        if (!advantageInput) {
+            throw 'No value input found for advantage '+advantageId;
+        }
+
+        // Enable/disable potentially necessary instructions
+        if (parseInt(advantageInput.value, 10) === 0) {
+            indicationDiv.classList.remove('active');
+            indicationInput.removeAttribute('required');
+            indicationInput.value = '';
+        } else {
+            indicationDiv.classList.add('active');
+            indicationInput.setAttribute('required', 'required');
+        }
+    });
 }

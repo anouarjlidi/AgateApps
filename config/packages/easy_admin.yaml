@@ -121,8 +121,8 @@ parameters:
                 fields: [ id, name, malus, book ]
             form:
                 fields: [ name, malus, book ]
-        SocialClasses:
-            class: CorahnRin\Entity\SocialClasses
+        SocialClass:
+            class: CorahnRin\Entity\SocialClass
             list:
                 fields: [ id, name, description, domains ]
             form:

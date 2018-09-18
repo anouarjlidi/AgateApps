@@ -11,7 +11,8 @@
 
 namespace CorahnRin\GeneratorTools;
 
-use CorahnRin\Entity\Domains;
+use CorahnRin\Data\DomainItem;
+use CorahnRin\Data\DomainsData;
 use CorahnRin\Entity\GeoEnvironments;
 
 final class DomainsCalculator
@@ -41,15 +42,19 @@ final class DomainsCalculator
      *
      * If $domainsBonuses IS provided, then it will add the correct bonuses if some domains exceed 5 points.
      *
-     * @param Domains[] $allDomains
-     * @param int       $ost
-     * @param int       $scholar
-     * @param array     $domainsBonuses
+     * @param DomainsData[] $allDomains
+     * @param array         $domainsBonuses
      *
      * @return int[]
      */
-    public function calculateFromGeneratorData($allDomains, array $socialClasses, $ost, $scholar = null, GeoEnvironments $geoEnv, array $primaryDomains, array $domainsBonuses = null)
-    {
+    public function calculateFromGeneratorData(
+        $allDomains,
+        array $socialClasses,
+        string $ost,
+        GeoEnvironments $geoEnv,
+        array $primaryDomains,
+        array $domainsBonuses = null
+    ): array {
         $this->bonus = 0;
         $this->finalCalculatedDomains = [];
 
@@ -58,10 +63,10 @@ final class DomainsCalculator
          */
         foreach ($allDomains as $id => $domain) {
             // First, validate arguments.
-            if (!($domain instanceof Domains) || $domain->getId() !== $id) {
+            if (!($domain instanceof DomainItem)) {
                 throw new \InvalidArgumentException(\sprintf(
-                    'Invalid %s argument sent. It must be an array of %s instances, and the array key must correspond to the "%s" property.',
-                    '$allDomains', Domains::class, 'id'
+                    'Invalid %s argument sent. It must be an array of %s instances, %s given.',
+                    '$allDomains', DomainItem::class, \is_object($domain) ? \get_class($domain) : \gettype($domain)
                 ));
             }
 
@@ -103,22 +108,9 @@ final class DomainsCalculator
         $this->addValueToDomain($ost);
 
         /*
-         * "Scholar" advantage
-         */
-        if (null !== $scholar) {
-            if (!\array_key_exists($scholar, $allDomains)) {
-                throw new \InvalidArgumentException(\sprintf(
-                    'Invalid %s argument sent. It must be a valid %s.',
-                    '$scholar', 'domain id'
-                ));
-            }
-            $this->addValueToDomain($scholar);
-        }
-
-        /*
          * Geo environment
          */
-        $this->addValueToDomain($geoEnv->getId());
+        $this->addValueToDomain($geoEnv->getDomain());
 
         /*
          * Social classes
@@ -149,9 +141,9 @@ final class DomainsCalculator
      * Based on all three specified steps, will calculate final domains values.
      * Mostly used in step 16 to calculate disciplines and in step 17 to check if combat arts are available.
      *
-     * @param Domains[] $allDomains
-     * @param int[]     $domainsBaseValues
-     * @param int[]     $domainsSpendExp
+     * @param DomainsData[] $allDomains
+     * @param int[]         $domainsBaseValues
+     * @param int[]         $domainsSpendExp
      *
      * @return int[]
      */
@@ -161,10 +153,10 @@ final class DomainsCalculator
 
         foreach ($allDomains as $id => $domain) {
             // First, validate arguments.
-            if (!($domain instanceof Domains) || $domain->getId() !== $id) {
+            if (!($domain instanceof DomainItem)) {
                 throw new \InvalidArgumentException(\sprintf(
-                    'Invalid %s argument sent. It must be an array of %s instances, and the array key must correspond to the "%s" property.',
-                    '$allDomains', Domains::class, 'id'
+                    'Invalid %s argument sent. It must be an array of %s instances, %s given.',
+                    '$allDomains', DomainItem::class, \is_object($domain) ? \get_class($domain) : \gettype($domain)
                 ));
             }
 
@@ -178,11 +170,7 @@ final class DomainsCalculator
         return $finalValues;
     }
 
-    /**
-     * @param int $domainId
-     * @param int $value
-     */
-    private function addValueToDomain($domainId, $value = 1)
+    private function addValueToDomain(string $domainId, int $value = 1): void
     {
         if (1 === $value) {
             if ($this->finalCalculatedDomains[$domainId] < 5) {

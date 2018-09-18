@@ -41,7 +41,6 @@ class Step09TraitsTest extends AbstractStepTest
         static::assertSame(['Traits coming from Step 08 Ways are not correct, please check them back.'], $result->getSession()->getFlashBag()->get('error'));
     }
 
-
     public function test valid setbacks()
     {
         $result = $this->submitAction([
@@ -54,7 +53,7 @@ class Step09TraitsTest extends AbstractStepTest
             ],
         ], $values = [
             'quality' => 6,
-            'flaw'    => 64,
+            'flaw' => 64,
         ]);
 
         static::assertSame(302, $result->getResponse()->getStatusCode());
@@ -74,11 +73,11 @@ class Step09TraitsTest extends AbstractStepTest
             ],
         ], $values = [
             'quality' => 0,
-            'flaw'    => 0,
+            'flaw' => 0,
         ]);
 
         static::assertSame(200, $result->getResponse()->getStatusCode());
         static::assertSame(1, $result->getCrawler()->filter('#flash-messages > .card-panel.error')->count());
-        static::assertEquals('Les traits de caractère choisis sont incorrects.', trim($result->getCrawler()->filter('#flash-messages > .card-panel.error')->text()));
+        static::assertEquals('Les traits de caractère choisis sont incorrects.', \trim($result->getCrawler()->filter('#flash-messages > .card-panel.error')->text()));
     }
 }

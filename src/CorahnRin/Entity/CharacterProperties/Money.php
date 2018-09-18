@@ -19,9 +19,8 @@ use Doctrine\ORM\Mapping as ORM;
 class Money
 {
     protected static $name = 'Daol';
-    protected static $names = ['Braise', 'Azur', 'Givre'];
-    protected static $names_literal = ['Daol%s% de Braise', 'Daol%s% d\'Azur', 'Daol%s% de Givre'];
-    protected static $values = ['Braise' => 0, 'Azur' => 0, 'Givre' => 0];
+    protected static $names = ['ember', 'azure', 'frost'];
+    protected static $values = ['ember' => 0, 'azure' => 0, 'frost' => 0];
 
     /**
      * @var int

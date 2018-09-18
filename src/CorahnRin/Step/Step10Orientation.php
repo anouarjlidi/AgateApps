@@ -61,6 +61,6 @@ class Step10Orientation extends AbstractStepAction
             'can_be_changed' => $canBeChanged,
             'orientation_value' => $orientation,
             'orientations' => $orientations,
-        ]);
+        ], 'corahn_rin/Steps/10_orientation.html.twig');
     }
 }

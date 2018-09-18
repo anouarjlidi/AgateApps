@@ -11,8 +11,8 @@
 
 namespace CorahnRin\Step;
 
+use CorahnRin\Data\DomainsData;
 use CorahnRin\Entity\Disciplines;
-use CorahnRin\Entity\Domains;
 use CorahnRin\Entity\GeoEnvironments;
 use CorahnRin\GeneratorTools\DomainsCalculator;
 use Symfony\Component\HttpFoundation\Response;
@@ -40,7 +40,7 @@ class Step16Disciplines extends AbstractStepAction
     private $domainsCalculator;
 
     /**
-     * @var Domains[]
+     * @var \CorahnRin\Data\DomainsData[]
      */
     private $allDomains;
 
@@ -61,7 +61,7 @@ class Step16Disciplines extends AbstractStepAction
      */
     public function execute(): Response
     {
-        $this->allDomains = $this->em->getRepository(Domains::class)->findAllSortedByName();
+        $this->allDomains = DomainsData::allAsObjects();
 
         $primaryDomains = $this->getCharacterProperty('13_primary_domains');
         $useDomainBonuses = $this->getCharacterProperty('14_use_domain_bonuses');
@@ -83,7 +83,6 @@ class Step16Disciplines extends AbstractStepAction
                 $this->allDomains,
                 $socialClassValues,
                 $primaryDomains['ost'],
-                $primaryDomains['scholar'] ?: null,
                 $geoEnvironment,
                 $primaryDomains['domains'],
                 $domainBonuses['domains']
@@ -180,10 +179,10 @@ class Step16Disciplines extends AbstractStepAction
         $disciplinesSortedByDomains = [];
         foreach ($this->availableDisciplines as $discipline) {
             foreach ($discipline->getDomains() as $domain) {
-                if (!\in_array($domain->getId(), $availableDomainsForDisciplines, true)) {
+                if (!\in_array($domain, $availableDomainsForDisciplines, true)) {
                     continue;
                 }
-                $domainId = $domain->getId();
+                $domainId = $domain;
                 if (!\array_key_exists($domainId, $disciplinesSortedByDomains)) {
                     $disciplinesSortedByDomains[$domainId] = [];
                 }
@@ -200,7 +199,7 @@ class Step16Disciplines extends AbstractStepAction
             'bonus_value' => $this->disciplinesSpentWithExp['remainingBonusPoints'],
             'exp_max' => $this->expRemainingFromDomains,
             'exp_value' => $this->disciplinesSpentWithExp['remainingExp'],
-        ]);
+        ], 'corahn_rin/Steps/16_disciplines.html.twig');
     }
 
     private function resetDisciplines()

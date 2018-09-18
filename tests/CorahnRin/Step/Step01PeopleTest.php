@@ -34,6 +34,6 @@ class Step01PeopleTest extends AbstractStepTest
 
         static::assertSame(200, $result->getResponse()->getStatusCode(), $crawler->filter('title')->text());
         static::assertSame(1, $crawler->filter('#flash-messages > .card-panel.error')->count());
-        static::assertEquals('Veuillez indiquer un peuple correct.', trim($crawler->filter('#flash-messages > .card-panel.error')->text()));
+        static::assertEquals('Veuillez indiquer un peuple correct.', \trim($crawler->filter('#flash-messages > .card-panel.error')->text()));
     }
 }

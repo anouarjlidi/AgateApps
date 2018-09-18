@@ -80,7 +80,7 @@ class Step18Equipment extends AbstractStepAction
             'selected_armors' => $currentStep['armors'],
             'selected_weapons' => $currentStep['weapons'],
             'equipment' => $currentStep['equipment'],
-        ]);
+        ], 'corahn_rin/Steps/18_equipment.html.twig');
     }
 
     /**

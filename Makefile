@@ -1,11 +1,15 @@
 DOCKER_COMPOSE  = docker-compose
 
-EXEC_PHP        = $(DOCKER_COMPOSE) run php
-EXEC_JS         = $(DOCKER_COMPOSE) run node
+EXEC_PHP        = $(DOCKER_COMPOSE) exec php
+EXEC_JS         = $(DOCKER_COMPOSE) exec node
+EXEC_DB         = $(DOCKER_COMPOSE) exec db
 
 SYMFONY         = $(EXEC_PHP) bin/console
 COMPOSER        = $(EXEC_PHP) composer
 NPM             = $(EXEC_JS) npm
+
+PORTAL_DBNAME = agate_portal
+PORTAL_DBPWD = agate_portal
 
 ##
 ## Project
@@ -23,8 +27,7 @@ install: .env build node_modules start vendor db fixtures assets map-tiles
 .PHONY: install
 
 build: ## Build the Docker images
-	@$(DOCKER_COMPOSE) pull --parallel --ignore-pull-failures 2> /dev/null
-	$(DOCKER_COMPOSE) build --pull --force-rm --no-cache --compress
+	$(DOCKER_COMPOSE) build --force-rm --compress
 .PHONY: build
 
 start: ## Start the project
@@ -60,6 +63,18 @@ db:
 	-$(SYMFONY) doctrine:database:create --if-not-exists
 	-$(SYMFONY) doctrine:migrations:migrate --no-interaction
 .PHONY: db
+
+prod-db: ## Installs production database if it has been saved in "var/dump.sql". You have to download it manually.
+prod-db:
+	@if [ -f var/dump.sql ]; then \
+        $(SYMFONY) doctrine:database:drop --if-exists --force ;\
+        $(SYMFONY) doctrine:database:create --if-not-exists ;\
+		$(EXEC_DB) mysql -uroot -p$(PORTAL_DBPWD) $(PORTAL_DBNAME) -e "source /srv/dump.sql" ;\
+		$(SYMFONY) doctrine:migrations:migrate -n ;\
+	else \
+		echo "No prod database to process. Download it and save it to var/dump.sql." ;\
+	fi;
+.PHONY: prod-db
 
 fixtures: ## Install all fixtures in the database
 fixtures:
@@ -101,9 +116,22 @@ node_modules: package-lock.json
 ## -----
 ##
 
-tests: ## Execute checks & tests
-tests: checks phpunit
-.PHONY: tests
+install-php: ## Prepare environment to execute PHP tests
+install-php: build start vendor db fixtures
+.PHONY: install-php
+
+install-node: ## Prepare environment to execute NodeJS tests
+install-node: build node_modules start
+.PHONY: install-node
+
+php-tests: ## Execute checks & tests
+php-tests: start checks phpunit
+.PHONY: php-tests
+
+node-tests: ## Execute checks & tests
+node-tests: start
+	$(EXEC_JS) npm run-script test --verbose -LLLL
+.PHONY: node-tests
 
 checks: ## Execute linting and security checks
 checks: composer.lock

@@ -21,10 +21,7 @@
      */
     for (i = 0, l = inputs.length; i < l; i++) {
         input = inputs[i];
-        id = parseInt(input.id.replace('domains_', ''), 10);
-        if (isNaN(id)) {
-            throw 'Inputs are not valid';
-        }
+        id = input.id.replace('domains_', '');
         value = parseInt(input.value, 10);
         if (isNaN(value)) {
             throw 'Input value for id '+id+' is not valid';
@@ -59,7 +56,7 @@
      * Calculates number of spent points, update UI to show the value, and return it.
      */
     function recalculateTotalExpPoints() {
-        var id, domainData, value, key;
+        var id, domainData, value;
         var currentExp = maxExpPoints;
 
         for (id in domainsInputs) {

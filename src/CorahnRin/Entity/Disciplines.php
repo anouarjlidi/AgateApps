@@ -11,8 +11,8 @@
 
 namespace CorahnRin\Entity;
 
+use CorahnRin\Data\DomainsData;
 use CorahnRin\Entity\Traits\HasBook;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -23,6 +23,14 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Disciplines
 {
+    public const RANK_PROFESSIONAL = 'discipline.rank.professional';
+    public const RANK_EXPERT = 'discipline.rank.expert';
+
+    public const RANKS = [
+        self::RANK_PROFESSIONAL,
+        self::RANK_EXPERT,
+    ];
+
     use HasBook;
 
     /**
@@ -56,164 +64,92 @@ class Disciplines
     protected $rank;
 
     /**
-     * @var Domains[]
+     * @var string[]
      *
-     * @ORM\ManyToMany(targetEntity="Domains", inversedBy="disciplines")
-     * @ORM\JoinTable(name="disciplines_domains",
-     *     joinColumns={@ORM\JoinColumn(name="discipline_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="domain_id", referencedColumnName="id")}
-     * )
+     * @ORM\Column(name="domains", type="simple_array", nullable=true)
      */
-    protected $domains;
+    protected $domains = [];
 
-    /**
-     * Constructor.
-     */
-    public function __construct()
-    {
-        $this->domains = new ArrayCollection();
-    }
-
-    /**
-     * Get id.
-     *
-     * @return int
-     *
-     * @codeCoverageIgnore
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @param int $id
-     *
-     * @return $this
-     *
-     * @codeCoverageIgnore
-     */
-    public function setId($id)
+    public function setId(int $id): void
     {
         $this->id = $id;
-
-        return $this;
     }
 
-    /**
-     * Set name.
-     *
-     * @param string $name
-     *
-     * @return Disciplines
-     *
-     * @codeCoverageIgnore
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get name.
-     *
-     * @return string
-     *
-     * @codeCoverageIgnore
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * Set description.
-     *
-     * @param string $description
-     *
-     * @return Disciplines
-     *
-     * @codeCoverageIgnore
-     */
-    public function setDescription($description)
+    public function setName(string $name): void
     {
-        $this->description = $description;
-
-        return $this;
+        $this->name = $name;
     }
 
-    /**
-     * Get description.
-     *
-     * @return string
-     *
-     * @codeCoverageIgnore
-     */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }
 
-    /**
-     * Set rank.
-     *
-     * @param string $rank
-     *
-     * @return Disciplines
-     *
-     * @codeCoverageIgnore
-     */
-    public function setRank($rank)
+    public function setDescription(string $description): void
     {
-        $this->rank = $rank;
-
-        return $this;
+        $this->description = $description;
     }
 
-    /**
-     * Get rank.
-     *
-     * @return string
-     *
-     * @codeCoverageIgnore
-     */
-    public function getRank()
+    public function getRank(): string
     {
         return $this->rank;
     }
 
-    /**
-     * Add domains.
-     *
-     *
-     * @return Disciplines
-     */
-    public function addDomain(Domains $domains)
+    public function setRank(string $rank): void
     {
-        $this->domains[] = $domains;
+        if (!\in_array($rank, self::RANKS, true)) {
+            throw new \InvalidArgumentException(\sprintf('Invalid provided rank %s. Possible values: %s', $rank, \implode(', ', self::RANKS)));
+        }
 
-        return $this;
+        $this->rank = $rank;
     }
 
-    /**
-     * Remove domains.
-     */
-    public function removeDomain(Domains $domains)
-    {
-        $this->domains->removeElement($domains);
-    }
-
-    /**
-     * Get domains.
-     *
-     * @return Domains[]
-     *
-     * @codeCoverageIgnore
-     */
-    public function getDomains()
+    public function getDomains(): array
     {
         return $this->domains;
+    }
+
+    public function setDomains(array $domains): void
+    {
+        foreach ($domains as $domain) {
+            $this->addDomain($domain);
+        }
+    }
+
+    public function addDomain(string $domain): void
+    {
+        DomainsData::validateDomain($domain);
+
+        $this->domains[] = $domain;
+    }
+
+    public function removeDomain(string $domain): void
+    {
+        DomainsData::validateDomain($domain);
+
+        if (!\in_array($domain, $this->domains, true)) {
+            throw new \InvalidArgumentException(\sprintf('Current social class does not have specified domain %s', $domain));
+        }
+
+        unset($this->domains[\array_search($domain, $this->domains, true)]);
+
+        $this->domains = \array_values($this->domains);
+    }
+
+    public function hasDomain(string $domain): bool
+    {
+        DomainsData::validateDomain($domain);
+
+        return !\in_array($domain, $this->domains, true);
     }
 }

@@ -81,6 +81,6 @@ class Step12MentalDisorder extends AbstractStepAction
         return $this->renderCurrentStep([
             'disorder_value' => $disorderValue,
             'disorders' => $definedDisorders,
-        ]);
+        ], 'corahn_rin/Steps/12_mental_disorder.html.twig');
     }
 }

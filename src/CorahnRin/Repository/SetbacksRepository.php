@@ -16,6 +16,11 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Orbitale\Component\DoctrineTools\EntityRepositoryHelperTrait;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
+/**
+ * @method Setbacks|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Setbacks[]    findBy(array $criteria, array $orderBy = null)
+ * @method Setbacks|null find($id, $lockMode = null, $lockVersion = null)
+ */
 class SetbacksRepository extends ServiceEntityRepository
 {
     use EntityRepositoryHelperTrait;
@@ -23,5 +28,22 @@ class SetbacksRepository extends ServiceEntityRepository
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Setbacks::class);
+    }
+
+    /**
+     * @param int[]|Setbacks[] $setbacks
+     *
+     * @return Setbacks[]
+     */
+    public function findWithDisabledAdvantages(array $setbacks): array
+    {
+        return $this->createQueryBuilder('setback')
+            ->leftJoin('setback.disabledAdvantages', 'disabledAdvantages')
+            ->addSelect('disabledAdvantages')
+            ->where('setback.id IN (:setbacks)')
+            ->setParameter('setbacks', $setbacks)
+            ->getQuery()
+            ->getResult()
+        ;
     }
 }

@@ -141,7 +141,7 @@ description:
 
 combat_arts_spend_exp:
     domains_not_enough: |
-        ___Vos domaines "Combat au contact" et "Tir et lancer" ne sont pas suffisants pour obtenir des arts de combat
+        One of "Close combat" or "Shooting and throwing" domains must have a score of 5 to have access to combat arts.
     not_enough_exp: '___Vous n''avez pas assez d''expérience pour bénéficier d''arts de combat'
     explanation: '___Vous pouvez ici choisir des arts de combat, chacun coûte 20XP'
     remaining: 'Experience:'
@@ -249,6 +249,39 @@ character:
     notable_facts: '___Faits marquants'
     ogham_list: '___Ogham à disposition'
 
+domains.craft: Craft
+domains.craft.description: __domains.craft.description
+domains.close_combat: Close Combat
+domains.close_combat.description: __domains.close_combat.description
+domains.stealth: Stealth
+domains.stealth.description: __domains.stealth.description
+domains.magience: Magience
+domains.magience.description: __domains.magience.description
+domains.natural_environment: Natural Environment
+domains.natural_environment.description: __domains.natural_environment.description
+domains.demorthen_mysteries: Demorthen Mysteries
+domains.demorthen_mysteries.description: __domains.demorthen_mysteries.description
+domains.occultism: Occultism
+domains.occultism.description: __domains.occultism.description
+domains.perception: Perception
+domains.perception.description: __domains.perception.description
+domains.prayer: Prayer
+domains.prayer.description: __domains.prayer.description
+domains.feats: Feats
+domains.feats.description: __domains.feats.description
+domains.relation: Relation
+domains.relation.description: __domains.relation.description
+domains.performance: Performance
+domains.performance.description: __domains.performance.description
+domains.science: Science
+domains.science.description: __domains.science.description
+domains.shooting_and_throwing: Shooting And Throwing
+domains.shooting_and_throwing.description: __domains.shooting_and_throwing.description
+domains.travel: Travel
+domains.travel.description: __domains.travel.description
+domains.erudition: Erudition
+domains.erudition.description: __domains.erudition.description
+
 home:
     title: 'Corahn-Rin, the character manager for Shadows of Esteren'
 
@@ -279,3 +312,35 @@ ways.conviction.fault: Guilt
 ways.conviction.description: |
     Generally, a human hangs on to an ideal or principles guiding his life.
     Some turn toward religion, others abide by precepts of chivalry, while others follow a personal code.
+
+title.generator: 'Character generator'
+
+steps.01_people: 'People'
+steps.02_job: 'Job'
+steps.03_birthplace: 'Birthplace'
+steps.04_geo: 'Geo'
+steps.05_social_class: 'Social Class'
+steps.06_age: 'Age'
+steps.07_setbacks: 'Setbacks'
+steps.08_ways: 'Ways'
+steps.09_traits: 'Traits'
+steps.10_orientation: 'Orientation'
+steps.11_advantages: 'Advantages'
+steps.12_mental_disorder: 'Mental Disorder'
+steps.13_primary_domains: 'Primary Domains'
+steps.14_use_domain_bonuses: 'Use Domain Bonuses'
+steps.15_domains_spend_exp: 'Domains Spend Exp'
+steps.16_disciplines: 'Disciplines'
+steps.17_combat_arts: 'Combat Arts'
+steps.18_equipment: 'Equipment'
+steps.19_description: 'Description'
+steps.20_finish: 'Finish'
+
+advantages.indication.ally_isolated.form: Specify details about the ally
+advantages.indication.ally_mentor.form: Specify details about the ally
+advantages.indication.ally_influent.form: Specify details about the ally
+advantages.indication.scholar.form: Choose a domain
+
+advantages.indication.dependence.form: Specify the addiction
+advantages.indication.enemy.form: Name or define the enemy
+advantages.indication.phobia.form: Define your phobia

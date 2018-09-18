@@ -11,14 +11,15 @@
 
 namespace CorahnRin\Step;
 
-use CorahnRin\Entity\Domains;
+use CorahnRin\Data\DomainsData;
+use CorahnRin\Entity\GeoEnvironments;
 use CorahnRin\GeneratorTools\DomainsCalculator;
 use Symfony\Component\HttpFoundation\Response;
 
 class Step15DomainsSpendExp extends AbstractStepAction
 {
     /**
-     * @var \Generator|Domains[]
+     * @var \Generator|\CorahnRin\Data\DomainsData[]
      */
     private $allDomains;
 
@@ -49,18 +50,17 @@ class Step15DomainsSpendExp extends AbstractStepAction
      */
     public function execute(): Response
     {
-        $this->allDomains = $this->em->getRepository(\CorahnRin\Entity\Domains::class)->findAllSortedByName();
+        $this->allDomains = DomainsData::allAsObjects();
 
         $primaryDomains = $this->getCharacterProperty('13_primary_domains');
         $socialClassValues = $this->getCharacterProperty('05_social_class')['domains'];
         $domainBonuses = $this->getCharacterProperty('14_use_domain_bonuses');
-        $geoEnvironment = $this->em->find(\CorahnRin\Entity\GeoEnvironments::class, $this->getCharacterProperty('04_geo'));
+        $geoEnvironment = $this->em->find(GeoEnvironments::class, $this->getCharacterProperty('04_geo'));
 
         $domainsBaseValues = $this->domainsCalculator->calculateFromGeneratorData(
             $this->allDomains,
             $socialClassValues,
             $primaryDomains['ost'],
-            $primaryDomains['scholar'] ?: null,
             $geoEnvironment,
             $primaryDomains['domains'],
             $domainBonuses['domains']
@@ -125,7 +125,7 @@ class Step15DomainsSpendExp extends AbstractStepAction
             'domains_spent_with_exp' => $this->domainsSpentWithExp['domains'],
             'exp_max' => $this->expRemainingFromAdvantages,
             'exp_value' => $this->domainsSpentWithExp['remainingExp'],
-        ]);
+        ], 'corahn_rin/Steps/15_domains_spend_exp.html.twig');
     }
 
     private function resetDomains()

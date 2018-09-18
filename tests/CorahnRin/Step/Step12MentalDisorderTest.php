@@ -60,7 +60,7 @@ class Step12MentalDisorderTest extends AbstractStepTest
 
         static::assertSame(200, $result->getResponse()->getStatusCode());
         static::assertSame(1, $crawler->filter('#flash-messages > .card-panel.error')->count());
-        static::assertEquals('Veuillez choisir un désordre mental.', trim($crawler->filter('#flash-messages > .card-panel.error')->text()));
+        static::assertEquals('Veuillez choisir un désordre mental.', \trim($crawler->filter('#flash-messages > .card-panel.error')->text()));
     }
 
     public function testInvalidMentalDisorder()
@@ -81,6 +81,6 @@ class Step12MentalDisorderTest extends AbstractStepTest
 
         static::assertSame(200, $result->getResponse()->getStatusCode());
         static::assertSame(1, $crawler->filter('#flash-messages > .card-panel.error')->count());
-        static::assertEquals('Le désordre mental choisi n\'existe pas.', trim($crawler->filter('#flash-messages > .card-panel.error')->text()));
+        static::assertEquals('Le désordre mental choisi n\'existe pas.', \trim($crawler->filter('#flash-messages > .card-panel.error')->text()));
     }
 }

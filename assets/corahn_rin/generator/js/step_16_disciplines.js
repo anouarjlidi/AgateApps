@@ -24,9 +24,6 @@
         input = inputs[i];
         id = parseInt(input.getAttribute('data-discipline-id'), 10);
         domainId = parseInt(input.getAttribute('data-domain-id'), 10);
-        if (isNaN(id) || isNaN(domainId)) {
-            throw 'Inputs are not valid';
-        }
 
         if (input.checked) {
             if (currentBonus > 0) {
@@ -39,6 +36,7 @@
         if (!disciplinesInputs[domainId]) {
             disciplinesInputs[domainId] = {};
         }
+
         disciplinesInputs[domainId][id] = input;
 
         input.addEventListener('change', function() {

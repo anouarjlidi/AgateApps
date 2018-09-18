@@ -139,7 +139,7 @@ description:
 
 combat_arts_spend_exp:
     domains_not_enough: |
-        Vos domaines "Combat au contact" et "Tir et lancer" ne sont pas suffisants pour obtenir des arts de combat
+        L'un de vos domaines parmi "Combat au contact" ou "Tir et lancer" doit avoir un score de 5 obtenir des arts de combat
     not_enough_exp: 'Vous n''avez pas assez d''expérience pour bénéficier d''arts de combat'
     explanation: 'Vous pouvez ici choisir des arts de combat, chacun coûte 20XP'
     remaining: 'Expérience :'
@@ -247,6 +247,39 @@ character:
     notable_facts: 'Faits marquants'
     ogham_list: 'Ogham à disposition'
 
+domains.craft: Artisanat
+domains.craft.description: __domains.craft.description
+domains.close_combat: Combat au Contact
+domains.close_combat.description: __domains.close_combat.description
+domains.stealth: Discrétion
+domains.stealth.description: __domains.stealth.description
+domains.magience: Magience
+domains.magience.description: __domains.magience.description
+domains.natural_environment: Milieu Naturel
+domains.natural_environment.description: __domains.natural_environment.description
+domains.demorthen_mysteries: Mystères Demorthèn
+domains.demorthen_mysteries.description: __domains.demorthen_mysteries.description
+domains.occultism: Occultisme
+domains.occultism.description: __domains.occultism.description
+domains.perception: Perception
+domains.perception.description: __domains.perception.description
+domains.prayer: Prière
+domains.prayer.description: __domains.prayer.description
+domains.feats: Prouesses
+domains.feats.description: __domains.feats.description
+domains.relation: Relation
+domains.relation.description: __domains.relation.description
+domains.performance: Représentation
+domains.performance.description: __domains.performance.description
+domains.science: Science
+domains.science.description: __domains.science.description
+domains.shooting_and_throwing: Tir et Lancer
+domains.shooting_and_throwing.description: __domains.shooting_and_throwing.description
+domains.travel: Voyage
+domains.travel.description: __domains.travel.description
+domains.erudition: Érudition
+domains.erudition.description: __domains.erudition.description
+
 home:
     title: 'Corahn-Rin, le générateur de personnage pour Les Ombres d''Esteren'
 
@@ -277,3 +310,35 @@ ways.conviction.fault: Culpabilité
 ways.conviction.description: |
     Généralement, un humain se raccroche à un idéal ou des convictions qui guident sa vie.
     Certains se tournent vers la religion, d'autres vers des préceptes de chevalerie, d'autres encore suivent un code personnel.
+
+title.generator: 'Créateur de personnage'
+
+steps.01_people: 'Peuple'
+steps.02_job: 'Métier'
+steps.03_birthplace: 'Lieu de naissance'
+steps.04_geo: 'Environnement de vie'
+steps.05_social_class: 'Classe sociale'
+steps.06_age: 'Âge'
+steps.07_setbacks: 'Revers'
+steps.08_ways: 'Voies'
+steps.09_traits: 'Traits'
+steps.10_orientation: 'Personnalité'
+steps.11_advantages: 'Avantages'
+steps.12_mental_disorder: 'Psychologie'
+steps.13_primary_domains: 'Domaines primaires'
+steps.14_use_domain_bonuses: 'Bonus aux domaines'
+steps.15_domains_spend_exp: 'XP dépensées pour les domaines'
+steps.16_disciplines: 'Disciplines'
+steps.17_combat_arts: 'Arts de combat'
+steps.18_equipment: 'Équipment'
+steps.19_description: 'Description'
+steps.20_finish: 'Finalisation'
+
+advantages.indication.ally_isolated.form: Indiquez un détail sur l'allié
+advantages.indication.ally_mentor.form: Indiquez un détail sur l'allié
+advantages.indication.ally_influent.form: Indiquez un détail sur l'allié
+advantages.indication.scholar.form: Choisissez un domaine
+
+advantages.indication.dependence.form: Déterminez l'addiction
+advantages.indication.enemy.form: Nommez ou définissez votre ennemi
+advantages.indication.phobia.form: Déterminez la phobie

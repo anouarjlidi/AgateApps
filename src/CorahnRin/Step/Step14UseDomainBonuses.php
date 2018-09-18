@@ -11,14 +11,15 @@
 
 namespace CorahnRin\Step;
 
-use CorahnRin\Entity\Domains;
+use CorahnRin\Data\DomainsData;
+use CorahnRin\Entity\GeoEnvironments;
 use CorahnRin\GeneratorTools\DomainsCalculator;
 use Symfony\Component\HttpFoundation\Response;
 
 class Step14UseDomainBonuses extends AbstractStepAction
 {
     /**
-     * @var \Generator|Domains[]
+     * @var DomainsData[]
      */
     private $allDomains;
 
@@ -55,17 +56,16 @@ class Step14UseDomainBonuses extends AbstractStepAction
      */
     public function execute(): Response
     {
-        $this->allDomains = $this->em->getRepository(\CorahnRin\Entity\Domains::class)->findAllSortedByName();
+        $this->allDomains = DomainsData::allAsObjects();
 
         $step13Domains = $this->getCharacterProperty('13_primary_domains');
         $socialClassValues = $this->getCharacterProperty('05_social_class')['domains'];
-        $geoEnvironment = $this->em->find(\CorahnRin\Entity\GeoEnvironments::class, $this->getCharacterProperty('04_geo'));
+        $geoEnvironment = $this->em->find(GeoEnvironments::class, $this->getCharacterProperty('04_geo'));
 
         $this->domainsCalculatedValues = $this->domainsCalculator->calculateFromGeneratorData(
             $this->allDomains,
             $socialClassValues,
             $step13Domains['ost'],
-            $step13Domains['scholar'] ?: null,
             $geoEnvironment,
             $step13Domains['domains']
         );
@@ -109,7 +109,6 @@ class Step14UseDomainBonuses extends AbstractStepAction
                 return $this->nextStep();
             }
 
-            /** @var int[] $postedValues */
             $postedValues = $this->request->request->get('domains_bonuses');
 
             $remainingPoints = $bonusValue;
@@ -118,11 +117,11 @@ class Step14UseDomainBonuses extends AbstractStepAction
             $error = false;
 
             foreach (\array_keys($characterBonuses['domains']) as $id) {
-                $value = $postedValues[$id] ?? null;
+                $value = (int) ($postedValues[$id] ?? 0);
                 if (
                     !\array_key_exists($id, $postedValues)
                     || ($value && 5 === $this->domainsCalculatedValues[$id])
-                    || !\in_array($postedValues[$id], ['0', '1'], true)
+                    || !\in_array($value, [0, 1], true)
                 ) {
                     // If there is any error, we do nothing.
                     $this->flashMessage('errors.incorrect_values');
@@ -130,12 +129,12 @@ class Step14UseDomainBonuses extends AbstractStepAction
                     break;
                 }
 
-                if ('1' === $value) {
+                if (1 === $value) {
                     $remainingPoints--;
                     $spent++;
                 }
 
-                $characterBonuses['domains'][$id] = (int) $value;
+                $characterBonuses['domains'][$id] = $value;
             }
 
             if ($remainingPoints < 0) {
@@ -165,7 +164,7 @@ class Step14UseDomainBonuses extends AbstractStepAction
             'domains_bonuses' => $characterBonuses,
             'bonus_max' => $this->bonus,
             'bonus_value' => $bonusValue,
-        ]);
+        ], 'corahn_rin/Steps/14_use_domain_bonuses.html.twig');
     }
 
     /**
@@ -178,8 +177,8 @@ class Step14UseDomainBonuses extends AbstractStepAction
             'remaining' => 0,
         ];
 
-        foreach ($this->allDomains as $domain) {
-            $domainsBonuses['domains'][$domain->getId()] = 0;
+        foreach ($this->allDomains as $id => $domain) {
+            $domainsBonuses['domains'][$id] = 0;
         }
 
         return $domainsBonuses;

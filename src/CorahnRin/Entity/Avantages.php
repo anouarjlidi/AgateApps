@@ -11,38 +11,57 @@
 
 namespace CorahnRin\Entity;
 
+use CorahnRin\Data\DomainsData;
+use CorahnRin\Entity\CharacterProperties\Bonuses;
 use CorahnRin\Entity\Traits\HasBook;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Avantages.
- *
  * @ORM\Table(name="avantages")
  * @ORM\Entity(repositoryClass="CorahnRin\Repository\AvantagesRepository")
  */
 class Avantages
 {
-    public const BONUS_100G = '100g';
-    public const BONUS_50G = '50g';
-    public const BONUS_20G = '20g';
-    public const BONUS_50A = '50a';
-    public const BONUS_20A = '20a';
-    public const BONUS_RESM = 'resm';
-    public const BONUS_BLESS = 'bless';
-    public const BONUS_VIG = 'vig';
-    public const BONUS_TRAU = 'trau';
-    public const BONUS_DEF = 'def';
-    public const BONUS_RAP = 'rap';
-    public const BONUS_SUR = 'sur';
+    public const INDICATION_TYPE_SINGLE_VALUE = 'single_value';
+    public const INDICATION_TYPE_SINGLE_CHOICE = 'single_choice';
 
-    /**
-     * Scholar advantage domain bonuses.
-     * 4: Magience.
-     * 7: Occultism.
-     * 13: Science.
-     * 16: Erudition.
-     */
-    public const BONUS_SCHOLAR_DOMAINS = [4, 7, 13, 16];
+    public const INDICATION_TYPES = [
+        self::INDICATION_TYPE_SINGLE_VALUE,
+        self::INDICATION_TYPE_SINGLE_CHOICE,
+    ];
+
+    public const POSSIBLE_BONUSES = [
+        Bonuses::MONEY_100G,
+        Bonuses::MONEY_50G,
+        Bonuses::MONEY_20G,
+        Bonuses::MONEY_10G,
+        Bonuses::MONEY_50A,
+        Bonuses::MONEY_20A,
+        Bonuses::LUCK,
+        Bonuses::MENTAL_RESISTANCE,
+        Bonuses::HEALTH,
+        Bonuses::STAMINA,
+        Bonuses::TRAUMA,
+        Bonuses::DEFENSE,
+        Bonuses::SPEED,
+        Bonuses::SURVIVAL,
+        DomainsData::CRAFT['title'],
+        DomainsData::CLOSE_COMBAT['title'],
+        DomainsData::STEALTH['title'],
+        DomainsData::MAGIENCE['title'],
+        DomainsData::NATURAL_ENVIRONMENT['title'],
+        DomainsData::DEMORTHEN_MYSTERIES['title'],
+        DomainsData::OCCULTISM['title'],
+        DomainsData::PERCEPTION['title'],
+        DomainsData::PRAYER['title'],
+        DomainsData::FEATS['title'],
+        DomainsData::RELATION['title'],
+        DomainsData::PERFORMANCE['title'],
+        DomainsData::SCIENCE['title'],
+        DomainsData::SHOOTING_AND_THROWING['title'],
+        DomainsData::TRAVEL['title'],
+        DomainsData::ERUDITION['title'],
+    ];
 
     use HasBook;
 
@@ -84,18 +103,34 @@ class Avantages
     protected $description;
 
     /**
-     * @var bool
+     * @var int
      *
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(name="augmentation_count", type="smallint", nullable=false)
      */
-    protected $augmentation;
+    protected $augmentationCount;
+
+    /**
+     * @var string[]
+     *
+     * @ORM\Column(name="bonuses_for", type="simple_array", options={"default" = ""}, nullable=true)
+     */
+    protected $bonusesFor;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=10)
+     * @ORM\Column(name="requires_indication", type="string", nullable=true)
      */
-    protected $bonusdisc;
+    protected $requiresIndication;
+
+    /**
+     * If type is "choice", the list will be fetched from self::$bonusesFor.
+     *
+     * @var string
+     *
+     * @ORM\Column(name="indication_type", type="string", length=20, nullable=false, options={"default" = "single_value"})
+     */
+    protected $indicationType = self::INDICATION_TYPE_SINGLE_VALUE;
 
     /**
      * @var bool
@@ -112,18 +147,16 @@ class Avantages
     protected $isCombatArt;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="avtg_group", type="smallint", options={"default" = "0"}, nullable=true)
+     * @ORM\Column(name="avtg_group", type="string", nullable=true)
      */
-    protected $group = 0;
+    protected $group = '';
 
     /**
      * Get id.
      *
      * @return int
-     *
-     * @codeCoverageIgnore
      */
     public function getId()
     {
@@ -134,8 +167,6 @@ class Avantages
      * @param int $id
      *
      * @return $this
-     *
-     * @codeCoverageIgnore
      */
     public function setId($id)
     {
@@ -150,8 +181,6 @@ class Avantages
      * @param string $name
      *
      * @return Avantages
-     *
-     * @codeCoverageIgnore
      */
     public function setName($name)
     {
@@ -164,8 +193,6 @@ class Avantages
      * Get name.
      *
      * @return string
-     *
-     * @codeCoverageIgnore
      */
     public function getName()
     {
@@ -178,8 +205,6 @@ class Avantages
      * @param string $nameFemale
      *
      * @return Avantages
-     *
-     * @codeCoverageIgnore
      */
     public function setNameFemale($nameFemale)
     {
@@ -192,8 +217,6 @@ class Avantages
      * Get nameFemale.
      *
      * @return string
-     *
-     * @codeCoverageIgnore
      */
     public function getNameFemale()
     {
@@ -206,8 +229,6 @@ class Avantages
      * @param int $xp
      *
      * @return Avantages
-     *
-     * @codeCoverageIgnore
      */
     public function setXp($xp)
     {
@@ -220,8 +241,6 @@ class Avantages
      * Get xp.
      *
      * @return int
-     *
-     * @codeCoverageIgnore
      */
     public function getXp()
     {
@@ -234,8 +253,6 @@ class Avantages
      * @param string $description
      *
      * @return Avantages
-     *
-     * @codeCoverageIgnore
      */
     public function setDescription($description)
     {
@@ -248,40 +265,57 @@ class Avantages
      * Get description.
      *
      * @return string
-     *
-     * @codeCoverageIgnore
      */
     public function getDescription()
     {
         return $this->description;
     }
 
-    /**
-     * Set bonusdisc.
-     *
-     * @param string $bonusdisc
-     *
-     * @return Avantages
-     *
-     * @codeCoverageIgnore
-     */
-    public function setBonusdisc($bonusdisc)
+    public function setBonusesFor(array $bonusesFor): void
     {
-        $this->bonusdisc = $bonusdisc;
-
-        return $this;
+        foreach ($bonusesFor as $bonusFor) {
+            $this->addBonusFor($bonusFor);
+        }
     }
 
-    /**
-     * Get bonusdisc.
-     *
-     * @return string
-     *
-     * @codeCoverageIgnore
-     */
-    public function getBonusdisc()
+    public function addBonusFor(string $bonusFor): void
     {
-        return $this->bonusdisc;
+        if (!\in_array($bonusFor, self::POSSIBLE_BONUSES, true)) {
+            throw new \InvalidArgumentException(\sprintf('Invalid bonus name "%s". Possible values are: %s', $bonusFor, \implode(', ', self::POSSIBLE_BONUSES)));
+        }
+
+        $this->bonusesFor[] = $bonusFor;
+
+        $this->bonusesFor = \array_unique($this->bonusesFor);
+    }
+
+    public function getBonusesFor(): array
+    {
+        return $this->bonusesFor;
+    }
+
+    public function getRequiresIndication(): ?string
+    {
+        return $this->requiresIndication;
+    }
+
+    public function setRequiresIndication(?string $requiresIndication): void
+    {
+        $this->requiresIndication = $requiresIndication;
+    }
+
+    public function getIndicationType(): string
+    {
+        return $this->indicationType;
+    }
+
+    public function setIndicationType(string $indicationType): void
+    {
+        if (!\in_array($indicationType, self::INDICATION_TYPES, true)) {
+            throw new \InvalidArgumentException(\sprintf('Invalid indication type "%s". Possible values are: %s', $indicationType, \implode(', ', self::INDICATION_TYPES)));
+        }
+
+        $this->indicationType = $indicationType;
     }
 
     /**
@@ -290,8 +324,6 @@ class Avantages
      * @param bool $isDesv
      *
      * @return Avantages
-     *
-     * @codeCoverageIgnore
      */
     public function setDesv($isDesv)
     {
@@ -304,8 +336,6 @@ class Avantages
      * Get isDesv.
      *
      * @return bool
-     *
-     * @codeCoverageIgnore
      */
     public function isDesv()
     {
@@ -318,8 +348,6 @@ class Avantages
      * @param bool $isCombatArt
      *
      * @return Avantages
-     *
-     * @codeCoverageIgnore
      */
     public function setCombatArt($isCombatArt)
     {
@@ -332,67 +360,33 @@ class Avantages
      * Get isCombatArt.
      *
      * @return bool
-     *
-     * @codeCoverageIgnore
      */
     public function isCombatArt()
     {
         return $this->isCombatArt;
     }
 
-    /**
-     * Set augmentation.
-     *
-     * @param int $augmentation
-     *
-     * @return Avantages
-     *
-     * @codeCoverageIgnore
-     */
-    public function setAugmentation($augmentation)
+    public function setAugmentationCount(int $augmentationCount): self
     {
-        $this->augmentation = $augmentation;
+        $this->augmentationCount = $augmentationCount;
 
         return $this;
     }
 
-    /**
-     * Get augmentation.
-     *
-     * @return int
-     *
-     * @codeCoverageIgnore
-     */
-    public function getAugmentation()
+    public function getAugmentationCount(): int
     {
-        return $this->augmentation;
+        return $this->augmentationCount;
     }
 
-    /**
-     * Set group.
-     *
-     * @param int $group
-     *
-     * @return Avantages
-     *
-     * @codeCoverageIgnore
-     */
-    public function setGroup($group)
+    public function setGroup(?string $group): self
     {
-        $this->group = $group;
+        $this->group = (string) $group;
 
         return $this;
     }
 
-    /**
-     * Get group.
-     *
-     * @return int
-     *
-     * @codeCoverageIgnore
-     */
-    public function getGroup()
+    public function getGroup(): string
     {
-        return $this->group;
+        return (string) $this->group;
     }
 }

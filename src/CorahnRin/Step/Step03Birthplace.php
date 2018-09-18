@@ -52,6 +52,6 @@ class Step03Birthplace extends AbstractStepAction
             'tile_size' => $this->tileSize,
             'regions_list' => $regions,
             'region_value' => $this->getCharacterProperty(),
-        ]);
+        ], 'corahn_rin/Steps/03_birthplace.html.twig');
     }
 }

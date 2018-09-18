@@ -43,7 +43,7 @@ class Step14UseDomainBonusesTest extends AbstractStepTest
             [['11_advantages' => []]],
             [['02_job' => 1, '08_ways' => [1, 2, 3, 4, 5]]],
             [['11_advantages' => [], '08_ways' => [1, 2, 3, 4, 5]]],
-            [['13_primary_domains' => ['domains' => [],'ost' => 2,'scholar' => null]]],
+            [['13_primary_domains' => ['domains' => [], 'ost' => 2, 'scholar' => null]]],
         ];
     }
 
@@ -73,14 +73,14 @@ class Step14UseDomainBonusesTest extends AbstractStepTest
 
         $form = $crawler->filter('#generator_form')->form();
 
-        $form['domains_bonuses[1]'] = 1;
+        $form['domains_bonuses[domains.craft]'] = 1;
 
         $crawler = $client->submit($form);
 
         // Redirection means error
         static::assertSame(200, $client->getResponse()->getStatusCode());
         $flashMessages = $crawler->filter('#flash-messages') ?: '';
-        static::assertContains('Certaines valeurs envoyées sont incorrectes, veuillez recommencer (et sans tricher).', $flashMessages ? trim($flashMessages->text()) : '');
+        static::assertContains('Certaines valeurs envoyées sont incorrectes, veuillez recommencer (et sans tricher).', $flashMessages ? \trim($flashMessages->text()) : '');
     }
 
     public function testStep()
