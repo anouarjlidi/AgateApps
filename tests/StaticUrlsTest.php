@@ -21,7 +21,7 @@ class StaticUrlsTest extends WebTestCase
     use PiersTestCase;
 
     /**
-     * @dataProvider provide root data
+     * @dataProvider provideRootData
      */
     public function test root redirects with locale(string $browserLocale, string $host): void
     {
@@ -36,7 +36,7 @@ class StaticUrlsTest extends WebTestCase
     }
 
     /**
-     * @dataProvider provide root data
+     * @dataProvider provideRootData
      */
     public function test root with slash redirects with locale(string $locale, string $host): void
     {
@@ -50,7 +50,7 @@ class StaticUrlsTest extends WebTestCase
         static::assertTrue($client->getResponse()->isRedirect("/$locale/"));
     }
 
-    public function provide root data()
+    public function provideRootData()
     {
         yield 0 => ['fr', 'portal.esteren.docker'];
         yield 1 => ['fr', 'maps.esteren.docker'];
@@ -75,7 +75,7 @@ class StaticUrlsTest extends WebTestCase
     }
 
     /**
-     * @dataProvider provide test urls
+     * @dataProvider provideTestUrls
      */
     public function test urls(
         string $domainName,
@@ -116,7 +116,7 @@ class StaticUrlsTest extends WebTestCase
         }
     }
 
-    public function provide test urls(): ?\Generator
+    public function provideTestUrls(): ?\Generator
     {
         // Studio Agate
         yield 0 => ['www.studio-agate.docker', '/fr/', 'agate_portal_home', 200, 'Bienvenue sur le nouveau portail du Studio Agate'];
