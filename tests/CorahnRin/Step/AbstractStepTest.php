@@ -11,9 +11,9 @@
 
 namespace Tests\CorahnRin\Step;
 
+use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Tests\WebTestCase as PiersTestCase;
-use Symfony\Bundle\FrameworkBundle\Client;
 
 abstract class AbstractStepTest extends WebTestCase
 {
@@ -35,9 +35,9 @@ abstract class AbstractStepTest extends WebTestCase
 
     protected function getStepName(): string
     {
-        return preg_replace_callback('~^Tests\\\\CorahnRin\\\\Step\\\\Step(.+)Test$~isUu', function ($matches) {
-            return preg_replace_callback('~[A-Z]~', function ($matches) {
-                return '_'.strtolower($matches[0]);
+        return \preg_replace_callback('~^Tests\\\\CorahnRin\\\\Step\\\\Step(.+)Test$~isUu', function ($matches) {
+            return \preg_replace_callback('~[A-Z]~', function ($matches) {
+                return '_'.\mb_strtolower($matches[0]);
             }, $matches[1]);
         }, static::class);
     }
@@ -74,7 +74,7 @@ abstract class AbstractStepTest extends WebTestCase
                     ->setValues($formValues)
                 ;
             } catch (\Exception $e) {
-                $this->fail($e->getMessage()."\nWith values:\n".preg_replace('~\s\s+~', ' ', str_replace(["\r", "\n"], ' ', json_encode($formValues))));
+                $this->fail($e->getMessage()."\nWith values:\n".\preg_replace('~\s\s+~', ' ', \str_replace(["\r", "\n"], ' ', \json_encode($formValues))));
             }
         }
 

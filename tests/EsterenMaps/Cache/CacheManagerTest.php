@@ -44,20 +44,20 @@ class CacheManagerTest extends WebTestCase
         static::assertSame('[{"lat":0,"lng":0},{"lat":0,"lng":10}]', $route->getCoordinates());
         static::assertSame(50, $route->getDistance());
 
-        /**
+        /*
          * Here we only change coordinates for greater distance.
          */
-        $client->request('POST', "/fr/routes/$routeId", [], [], [], json_encode(
+        $client->request('POST', "/fr/routes/$routeId", [], [], [], \json_encode(
             [
-                'map'            => $route->getMap()->getId(),
-                'name'           => $route->getName(),
-                'coordinates'    => $coordinates,
-                'description'    => $route->getDescription(),
-                'routeType'      => $route->getRouteType()->getId(),
-                'markerStart'    => $route->getMarkerStart()->getId(),
-                'markerEnd'      => $route->getMarkerEnd()->getId(),
-                'faction'        => $route->getFaction() ? $route->getFaction()->getId() : null,
-                'guarded'        => $route->isGuarded(),
+                'map' => $route->getMap()->getId(),
+                'name' => $route->getName(),
+                'coordinates' => $coordinates,
+                'description' => $route->getDescription(),
+                'routeType' => $route->getRouteType()->getId(),
+                'markerStart' => $route->getMarkerStart()->getId(),
+                'markerEnd' => $route->getMarkerEnd()->getId(),
+                'faction' => $route->getFaction() ? $route->getFaction()->getId() : null,
+                'guarded' => $route->isGuarded(),
                 'forcedDistance' => $route->getForcedDistance(),
             ]
         ));

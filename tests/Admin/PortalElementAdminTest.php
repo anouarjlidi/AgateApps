@@ -40,8 +40,8 @@ class PortalElementAdminTest extends AbstractEasyAdminTest
     {
         parent::tearDown();
 
-        if ($this->file !== null && file_exists($this->file)) {
-            unlink($this->file);
+        if (null !== $this->file && \file_exists($this->file)) {
+            \unlink($this->file);
         }
     }
 
@@ -86,7 +86,7 @@ class PortalElementAdminTest extends AbstractEasyAdminTest
 
         static::assertFileExists($filePath);
 
-        unlink($filePath);
+        \unlink($filePath);
     }
 
     public function testEditValidFileUpload()
@@ -122,7 +122,7 @@ class PortalElementAdminTest extends AbstractEasyAdminTest
 
         static::assertFileExists($filePath);
 
-        unlink($filePath);
+        \unlink($filePath);
     }
 
     /**
@@ -159,9 +159,9 @@ class PortalElementAdminTest extends AbstractEasyAdminTest
 
     private function createImage(int $width = 1900, $height = 900)
     {
-        $this->file = tempnam(sys_get_temp_dir(), 'portal_test').'.jpg';
+        $this->file = \tempnam(\sys_get_temp_dir(), 'portal_test').'.jpg';
 
-        imagejpeg(imagecreate($width, $height), $this->file);
+        \imagejpeg(\imagecreate($width, $height), $this->file);
     }
 
     protected static function resetDatabase()

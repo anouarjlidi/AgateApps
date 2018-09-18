@@ -21,7 +21,7 @@ class StaticUrlsTest extends WebTestCase
     use PiersTestCase;
 
     /**
-     * @dataProvider provide root data
+     * @dataProvider provide root data
      */
     public function test root redirects with locale(string $browserLocale, string $host): void
     {
@@ -36,7 +36,7 @@ class StaticUrlsTest extends WebTestCase
     }
 
     /**
-     * @dataProvider provide root data
+     * @dataProvider provide root data
      */
     public function test root with slash redirects with locale(string $locale, string $host): void
     {
@@ -75,7 +75,7 @@ class StaticUrlsTest extends WebTestCase
     }
 
     /**
-     * @dataProvider provide test urls
+     * @dataProvider provide test urls
      */
     public function test urls(
         string $domainName,
@@ -101,9 +101,9 @@ class StaticUrlsTest extends WebTestCase
         $this->assertSame($expectedStatusCode, $res->getStatusCode(), 'Unexpected status code.');
 
         if ($expectedRedirectUrlOrTitleContent) {
-            /** @see \Symfony\Component\HttpFoundation\Response::isRedirect() */
+            /* @see \Symfony\Component\HttpFoundation\Response::isRedirect() */
             if (\in_array($expectedStatusCode, [201, 301, 302, 303, 307, 308], true)) {
-                $message = sprintf(
+                $message = \sprintf(
                     'Unexpected redirect url. Expected "%s", got "%s".',
                     $expectedRedirectUrlOrTitleContent, $res->headers->get('Location')
                 );
@@ -111,7 +111,7 @@ class StaticUrlsTest extends WebTestCase
             } else {
                 $title = $crawler->filter($cssSelectorToCheck);
                 $this->assertNotNull($title, 'No node found for the CSS selector.');
-                $this->assertSame($expectedRedirectUrlOrTitleContent, trim($title->text()));
+                $this->assertSame($expectedRedirectUrlOrTitleContent, \trim($title->text()));
             }
         }
     }

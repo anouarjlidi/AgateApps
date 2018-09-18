@@ -46,13 +46,10 @@ class FullValidStepsControllerTest extends WebTestCase
      * @param string $stepName
      * @param string $routeUri
      * @param string $nextStep
-     * @param array  $formValues
-     * @param mixed  $expectedSessionValue
-     * @param array  $previousSteps
      */
     public function testAllSteps($stepName, $routeUri, $nextStep, array $formValues, $expectedSessionValue, array $previousSteps)
     {
-        if ($stepName === '20_finish') {
+        if ('20_finish' === $stepName) {
             // Finished generation. Session to Character will be tested somewhere else
             static::assertTrue(true);
 
@@ -95,7 +92,7 @@ class FullValidStepsControllerTest extends WebTestCase
             try {
                 $form->setValues($formValues);
             } catch (\Exception $e) {
-                $this->fail($e->getMessage()."\nWith values:\n".str_replace("\n", '', var_export($formValues, true)));
+                $this->fail($e->getMessage()."\nWith values:\n".\str_replace("\n", '', \var_export($formValues, true)));
             }
         }
 
@@ -105,7 +102,7 @@ class FullValidStepsControllerTest extends WebTestCase
         // Parse better message to show in phpunit's output if there is an error in the submitted form.
         $msg = 'Request does not redirect to next step "'.$nextStep.'".';
         if ($crawler->filter('#flash-messages')->count()) {
-            $msg .= trim($crawler->filter('#flash-messages')->text());
+            $msg .= \trim($crawler->filter('#flash-messages')->text());
         }
 
         static::assertTrue($client->getResponse()->isRedirect('/fr/character/generate/'.$nextStep), $msg);
@@ -125,7 +122,7 @@ class FullValidStepsControllerTest extends WebTestCase
         // Force data format to fit testAllSteps' signature.
         // Also, set all previous steps to update session and not automatically follow redirects (allow steps reordering, in case of).
         foreach ($steps as $stepName => $step) {
-            if (!array_key_exists('route_uri', $step)) {
+            if (!\array_key_exists('route_uri', $step)) {
                 $step['route_uri'] = $stepName;
             }
             $step['step'] = $stepName;

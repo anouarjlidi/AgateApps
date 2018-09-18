@@ -27,7 +27,7 @@ class Step07SetbacksTest extends AbstractStepTest
         static::assertSame(302, $result->getResponse()->getStatusCode());
         static::assertTrue($result->getResponse()->isRedirect('/fr/character/generate/08_ways'));
         static::assertSame([
-            '06_age'             => 20,
+            '06_age' => 20,
             $this->getStepName() => [],
         ], $result->getSession()->get('character.corahn_rin'));
     }
@@ -36,7 +36,7 @@ class Step07SetbacksTest extends AbstractStepTest
     {
         $tests = [];
 
-        $count = ((int) getenv('STEP7_RANDOMNESS_COUNT')) ?: static::RANDOMNESS_COUNT;
+        $count = ((int) \getenv('STEP7_RANDOMNESS_COUNT')) ?: static::RANDOMNESS_COUNT;
 
         for ($i = 1; $i <= $count; $i++) {
             $tests['Random test #'.$i] = [$i];
@@ -58,17 +58,17 @@ class Step07SetbacksTest extends AbstractStepTest
         static::assertTrue($result->getResponse()->isRedirect('/fr/character/generate/08_ways'));
         $setbacks = $result->getSession()->get('character.corahn_rin')[$this->getStepName()];
 
-        $nb = count($setbacks);
+        $nb = \count($setbacks);
 
         switch ($nb) {
             case 1:
-                static::assertFalse(current($setbacks)['avoided']);
+                static::assertFalse(\current($setbacks)['avoided']);
                 break;
             case 2:
                 static::assertArrayHasKey(10, $setbacks); // Good luck
                 unset($setbacks[10]);
-                reset($setbacks);
-                static::assertTrue(current($setbacks)['avoided']);
+                \reset($setbacks);
+                static::assertTrue(\current($setbacks)['avoided']);
                 break;
             case 3:
                 static::assertArrayHasKey(1, $setbacks); // Bad luck
@@ -91,19 +91,19 @@ class Step07SetbacksTest extends AbstractStepTest
         static::assertTrue($result->getResponse()->isRedirect('/fr/character/generate/08_ways'));
         $setbacks = $result->getSession()->get('character.corahn_rin')[$this->getStepName()];
 
-        $nb = count($setbacks);
+        $nb = \count($setbacks);
 
         switch ($nb) {
             case 2:
-                static::assertFalse(current($setbacks)['avoided']);
-                static::assertFalse(next($setbacks)['avoided']);
+                static::assertFalse(\current($setbacks)['avoided']);
+                static::assertFalse(\next($setbacks)['avoided']);
                 break;
             case 3:
                 static::assertArrayHasKey(10, $setbacks); // Good luck
                 unset($setbacks[10]);
                 $hasAvoided = false;
                 foreach ($setbacks as $value) {
-                    if ($value['avoided'] === true) {
+                    if (true === $value['avoided']) {
                         if (true === $hasAvoided) {
                             static::fail('Cannot have two avoided setbacks');
                         }
@@ -131,36 +131,36 @@ class Step07SetbacksTest extends AbstractStepTest
 
         static::assertSame(302, $result->getResponse()->getStatusCode());
         static::assertTrue($result->getResponse()->isRedirect('/fr/character/generate/08_ways'));
-        $setbacks     = $result->getSession()->get('character.corahn_rin')[$this->getStepName()];
+        $setbacks = $result->getSession()->get('character.corahn_rin')[$this->getStepName()];
         $baseSetbacks = $setbacks;
 
-        $nb = count($setbacks);
+        $nb = \count($setbacks);
 
         switch ($nb) {
             case 3:
-                static::assertFalse(current($setbacks)['avoided']);
-                static::assertFalse(next($setbacks)['avoided']);
-                static::assertFalse(next($setbacks)['avoided']);
+                static::assertFalse(\current($setbacks)['avoided']);
+                static::assertFalse(\next($setbacks)['avoided']);
+                static::assertFalse(\next($setbacks)['avoided']);
                 break;
             case 4:
-                static::assertArrayHasKey(10, $setbacks, json_encode($baseSetbacks)); // Good luck
+                static::assertArrayHasKey(10, $setbacks, \json_encode($baseSetbacks)); // Good luck
                 unset($setbacks[10]);
                 $hasAvoided = false;
                 foreach ($setbacks as $value) {
-                    if ($value['avoided'] === true) {
+                    if (true === $value['avoided']) {
                         if (true === $hasAvoided) {
-                            static::fail('Cannot have two setbacks that are avoided. '.json_encode($baseSetbacks));
+                            static::fail('Cannot have two setbacks that are avoided. '.\json_encode($baseSetbacks));
                         }
                         $hasAvoided = true;
                     }
                 }
-                static::assertTrue($hasAvoided, 'When age>31 and get 4 setbacks, at least one must be avoided. '.json_encode($baseSetbacks));
+                static::assertTrue($hasAvoided, 'When age>31 and get 4 setbacks, at least one must be avoided. '.\json_encode($baseSetbacks));
                 break;
             case 5:
-                static::assertArrayHasKey(1, $setbacks, json_encode($baseSetbacks)); // Bad luck
+                static::assertArrayHasKey(1, $setbacks, \json_encode($baseSetbacks)); // Bad luck
                 break;
             default:
-                static::fail('The amount of setbacks "'.$nb.'" is invalid'.json_encode($baseSetbacks));
+                static::fail('The amount of setbacks "'.$nb.'" is invalid'.\json_encode($baseSetbacks));
         }
     }
 
@@ -176,7 +176,7 @@ class Step07SetbacksTest extends AbstractStepTest
         $crawler = $client->followRedirect();
         static::assertEquals(
             'L\'étape "07 Setbacks" dépend de "06 Age", mais celle-ci n\'est pas présente dans le personnage en cours de création...',
-            trim($crawler->filter('#flash-messages > .card-panel.error')->text())
+            \trim($crawler->filter('#flash-messages > .card-panel.error')->text())
         );
     }
 
@@ -230,7 +230,7 @@ class Step07SetbacksTest extends AbstractStepTest
         static::assertSame(200, $client->getResponse()->getStatusCode());
         static::assertEquals(
             'Veuillez entrer des revers correct(s).',
-            trim($crawler->filter('#flash-messages > .card-panel.error')->text())
+            \trim($crawler->filter('#flash-messages > .card-panel.error')->text())
         );
     }
 }

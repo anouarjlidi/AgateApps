@@ -33,7 +33,6 @@ class DirectionsManagerTest extends WebTestCase
     /**
      * @dataProvider provideWorkingDirections
      *
-     * @param array  $expectedData
      * @param int    $map
      * @param string $from
      * @param string $to
@@ -73,11 +72,11 @@ class DirectionsManagerTest extends WebTestCase
 
         $response = $directions->getDirectionsAction($map, $from, $to, $request);
 
-        $dirs = json_decode($response->getContent(), true);
+        $dirs = \json_decode($response->getContent(), true);
 
         foreach ($expectedData as $key => $expectedValue) {
             static::assertArrayHasKey($key, $dirs);
-            if (array_key_exists($key, $dirs)) {
+            if (\array_key_exists($key, $dirs)) {
                 static::assertSame($expectedValue, $dirs[$key], 'Json response key "'.$key.'" has invalid value.');
             }
         }
@@ -89,7 +88,7 @@ class DirectionsManagerTest extends WebTestCase
      * > Map slug
      * > FROM Marker name
      * > TO marker name
-     * > WITH Transport slug (can be null)
+     * > WITH Transport slug (can be null).
      *
      * @return array[]
      */
@@ -99,12 +98,12 @@ class DirectionsManagerTest extends WebTestCase
             // Test from bottom left to top right with no transport (similar to "default")
             0 => [
                 [
-                    'found'           => true,
-                    'from_cache'      => false,
+                    'found' => true,
+                    'from_cache' => false,
                     'number_of_steps' => 0,
-                    'total_distance'  => 50, // Should be route 702, "long way and no stop"
-                    'duration_raw'    => null,
-                    'duration_real'   => [
+                    'total_distance' => 50, // Should be route 702, "long way and no stop"
+                    'duration_raw' => null,
+                    'duration_real' => [
                         'days' => null,
                         'hours' => null,
                     ],

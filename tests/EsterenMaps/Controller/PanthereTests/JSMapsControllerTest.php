@@ -24,9 +24,9 @@ class JSMapsControllerTest extends PantherTestCase
 
     public static function setUpBeforeClass()
     {
-        static::$oldEnv = $_ENV['APP_ENV'] ?? $_SERVER['APP_ENV'] ?? getenv('APP_ENV') ?: 'dev';
+        static::$oldEnv = $_ENV['APP_ENV'] ?? $_SERVER['APP_ENV'] ?? \getenv('APP_ENV') ?: 'dev';
 
-        putenv('APP_ENV=panther');
+        \putenv('APP_ENV=panther');
         $_ENV['APP_ENV'] = 'panther';
         $_SERVER['APP_ENV'] = 'panther';
     }
@@ -35,7 +35,7 @@ class JSMapsControllerTest extends PantherTestCase
     {
         parent::tearDownAfterClass();
 
-        putenv('APP_ENV='.static::$oldEnv);
+        \putenv('APP_ENV='.static::$oldEnv);
         $_ENV['APP_ENV'] = static::$oldEnv;
         $_SERVER['APP_ENV'] = static::$oldEnv;
 
@@ -60,10 +60,10 @@ class JSMapsControllerTest extends PantherTestCase
 
     protected function screenshot(Client $client, string $suffix)
     {
-        $normalizedMethod = preg_replace(
+        $normalizedMethod = \preg_replace(
             '~^tests_~i',
             '_',
-            str_replace(['\\', '::', ':'], '_', (string) $this)
+            \str_replace(['\\', '::', ':'], '_', (string) $this)
         );
 
         $fileName = __DIR__.'/../../../../build/screenshots/'.$normalizedMethod.$suffix.'.png';
@@ -103,7 +103,7 @@ class JSMapsControllerTest extends PantherTestCase
             } while ($e = $e->getPrevious());
 
             $this->markAsRisky();
-            static::markTestSkipped(sprintf('Panthère test returned error:%s', $msg));
+            static::markTestSkipped(\sprintf('Panthère test returned error:%s', $msg));
         }
     }
 }

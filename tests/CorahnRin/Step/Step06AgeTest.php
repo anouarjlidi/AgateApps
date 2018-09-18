@@ -34,6 +34,6 @@ class Step06AgeTest extends AbstractStepTest
 
         static::assertSame(200, $result->getResponse()->getStatusCode());
         static::assertSame(1, $crawler->filter('#flash-messages > .card-panel.error')->count());
-        static::assertEquals('L\'âge doit être compris entre 16 et 35 ans.', trim($crawler->filter('#flash-messages > .card-panel.error')->text()));
+        static::assertEquals('L\'âge doit être compris entre 16 et 35 ans.', \trim($crawler->filter('#flash-messages > .card-panel.error')->text()));
     }
 }

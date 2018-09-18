@@ -13,8 +13,8 @@ namespace Tests\Admin;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Client;
-use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\DomCrawler\Crawler;
 use Tests\WebTestCase as PiersTestCase;
 
 abstract class AbstractEasyAdminTest extends WebTestCase
@@ -102,7 +102,7 @@ abstract class AbstractEasyAdminTest extends WebTestCase
         /** @var Crawler|\DOMElement[] $nodeHeaders */
         $nodeHeaders = $crawler->filter('#main table thead tr th[data-property-name]');
 
-        static::assertCount(count($wishedColumns), $nodeHeaders, $this->getEntityName());
+        static::assertCount(\count($wishedColumns), $nodeHeaders, $this->getEntityName());
 
         foreach ($nodeHeaders as $k => $node) {
             static::assertArrayHasKey($k, $wishedColumns, $this->getEntityName());
@@ -224,7 +224,7 @@ abstract class AbstractEasyAdminTest extends WebTestCase
 
         static::assertSame(200, $client->getResponse()->getStatusCode(), $this->getEntityName());
 
-        $formEntityFieldName = strtolower($this->getEntityName());
+        $formEntityFieldName = \mb_strtolower($this->getEntityName());
 
         /** @var Crawler $formNode */
         $formNode = $crawler->filter("#$view-$formEntityFieldName-form");
@@ -234,7 +234,7 @@ abstract class AbstractEasyAdminTest extends WebTestCase
         $form = $formNode->form();
 
         foreach ($dataToSubmit as $field => $expectedValue) {
-            if ($field === 'id') {
+            if ('id' === $field) {
                 continue;
             }
             $form->get($formEntityFieldName.'['.$field.']')->setValue($expectedValue);
@@ -249,7 +249,7 @@ abstract class AbstractEasyAdminTest extends WebTestCase
         if (200 === $response->getStatusCode()) {
             $errors = $crawler->filter('.error-block');
             foreach ($errors as $error) {
-                $message .= "\n".trim($error->textContent);
+                $message .= "\n".\trim($error->textContent);
             }
         }
         static::assertSame(302, $response->getStatusCode(), "Not redirecting after submitting $view action ".$this->getEntityName().$message);
@@ -260,7 +260,7 @@ abstract class AbstractEasyAdminTest extends WebTestCase
 
         static::assertSame(200, $client->getResponse()->getStatusCode(), $this->getEntityName());
 
-        if ($id !== null) {
+        if (null !== $id) {
             // Test the new entity corresponds.
             $lastEntity = $em->find($this->getEntityClass(), $id);
         } else {
@@ -279,17 +279,17 @@ abstract class AbstractEasyAdminTest extends WebTestCase
 
         foreach ($expectedData as $field => $expectedValue) {
             $methodExists = false;
-            $methodName   = null;
+            $methodName = null;
 
-            if (method_exists($lastEntity, 'get'.ucfirst($field))) {
+            if (\method_exists($lastEntity, 'get'.\ucfirst($field))) {
                 $methodExists = true;
-                $methodName   = 'get'.ucfirst($field);
-            } elseif (method_exists($lastEntity, 'is'.ucfirst($field))) {
+                $methodName = 'get'.\ucfirst($field);
+            } elseif (\method_exists($lastEntity, 'is'.\ucfirst($field))) {
                 $methodExists = true;
-                $methodName   = 'is'.ucfirst($field);
-            } elseif (method_exists($lastEntity, 'has'.ucfirst($field))) {
+                $methodName = 'is'.\ucfirst($field);
+            } elseif (\method_exists($lastEntity, 'has'.\ucfirst($field))) {
                 $methodExists = true;
-                $methodName   = 'has'.ucfirst($field);
+                $methodName = 'has'.\ucfirst($field);
             }
 
             if ($methodExists) {
@@ -307,9 +307,7 @@ abstract class AbstractEasyAdminTest extends WebTestCase
      * Overrides classic client behavior to be sure we have a client that points to the backend.
      *
      * @param string       $host
-     * @param array        $kernelOptions
      * @param array|string $tokenRoles
-     * @param array        $server
      *
      * @return Client
      */
@@ -319,11 +317,11 @@ abstract class AbstractEasyAdminTest extends WebTestCase
             $host = 'back.esteren.docker';
         }
 
-        if (is_string($tokenRoles)) {
+        if (\is_string($tokenRoles)) {
             $tokenRoles = [$tokenRoles];
         }
 
-        if (0 === count($tokenRoles)) {
+        if (0 === \count($tokenRoles)) {
             $tokenRoles[] = 'ROLE_ADMIN';
         }
 

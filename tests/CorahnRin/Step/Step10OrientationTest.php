@@ -113,6 +113,6 @@ class Step10OrientationTest extends AbstractStepTest
 
         static::assertSame(200, $result->getResponse()->getStatusCode());
         static::assertSame(1, $result->getCrawler()->filter('#flash-messages > .card-panel.error')->count());
-        static::assertEquals('L\'orientation de la personnalité est incorrecte, veuillez vérifier.', trim($result->getCrawler()->filter('#flash-messages > .card-panel.error')->text()));
+        static::assertEquals('L\'orientation de la personnalité est incorrecte, veuillez vérifier.', \trim($result->getCrawler()->filter('#flash-messages > .card-panel.error')->text()));
     }
 }

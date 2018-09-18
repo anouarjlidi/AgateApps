@@ -34,6 +34,6 @@ class Step03BirthplaceTest extends AbstractStepTest
 
         static::assertSame(200, $result->getResponse()->getStatusCode(), $crawler->filter('title')->text());
         static::assertSame(1, $crawler->filter('#flash-messages > .card-panel.error')->count());
-        static::assertEquals('Veuillez choisir une région de naissance correcte.', trim($crawler->filter('#flash-messages > .card-panel.error')->text()));
+        static::assertEquals('Veuillez choisir une région de naissance correcte.', \trim($crawler->filter('#flash-messages > .card-panel.error')->text()));
     }
 }

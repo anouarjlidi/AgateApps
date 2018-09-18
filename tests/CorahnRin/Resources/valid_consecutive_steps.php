@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     '01_people' => [
         'next_step' => '02_job',
         'form_values' => [

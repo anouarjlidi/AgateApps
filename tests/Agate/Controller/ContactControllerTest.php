@@ -11,8 +11,8 @@
 
 namespace Tests\Agate\Controller;
 
-use Symfony\Bundle\SwiftmailerBundle\DataCollector\MessageDataCollector;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Bundle\SwiftmailerBundle\DataCollector\MessageDataCollector;
 use Tests\WebTestCase as PiersTestCase;
 
 class ContactControllerTest extends WebTestCase
@@ -30,10 +30,10 @@ class ContactControllerTest extends WebTestCase
         $form = $crawler->filter('#content .container form')->form();
 
         $data = [
-            'name'    => 'username',
+            'name' => 'username',
             'subject' => 'contact.subject.application',
             'productRange' => 'contact.product_range.dragons',
-            'email'   => 'test@local.host',
+            'email' => 'test@local.host',
             'message' => 'a message for testing purpose',
             'title' => 'Some message title',
         ];
@@ -51,7 +51,7 @@ class ContactControllerTest extends WebTestCase
 
         $message = $client->getContainer()->get('translator')->trans('contact.form.message_sent', [], 'agate');
 
-        static::assertSame($message, trim($crawler->filter('#flash-messages div.card-panel.success')->text()));
+        static::assertSame($message, \trim($crawler->filter('#flash-messages div.card-panel.success')->text()));
 
         /** @var MessageDataCollector $mailCollector */
         $mailCollector = $client->getProfile()->getCollector('swiftmailer');
@@ -67,7 +67,7 @@ class ContactControllerTest extends WebTestCase
 
         // Asserting email data
         static::assertInstanceOf(\Swift_Message::class, $message);
-        static::assertSame($data['email'], key($message->getFrom()));
+        static::assertSame($data['email'], \key($message->getFrom()));
         static::assertSame('[Candidature] Message de "username"', $message->getSubject());
         static::assertContains($data['message'], $message->getBody());
 

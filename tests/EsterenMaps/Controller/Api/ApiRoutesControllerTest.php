@@ -37,15 +37,15 @@ class ApiRoutesControllerTest extends WebTestCase
             'faction' => null,
         ];
 
-        $client->request('POST','/fr/routes', [], [], [], json_encode($data));
+        $client->request('POST', '/fr/routes', [], [], [], \json_encode($data));
 
         static::assertSame(200, $client->getResponse()->getStatusCode());
         static::assertSame('application/json', $client->getResponse()->headers->get('Content-Type'));
 
         // Add ID For assertion
         $data['id'] = 704;
-        $responseData = json_decode($client->getResponse()->getContent(), true);
-        static::assertSame(ksort($data), ksort($responseData));
+        $responseData = \json_decode($client->getResponse()->getContent(), true);
+        static::assertSame(\ksort($data), \ksort($responseData));
     }
 
     public function testCreateWithEmptyData()
@@ -54,7 +54,7 @@ class ApiRoutesControllerTest extends WebTestCase
 
         $client = $this->getClient('api.esteren.docker', [], 'ROLE_ADMIN');
 
-        $client->request('POST','/fr/routes', [], [], [], '[]');
+        $client->request('POST', '/fr/routes', [], [], [], '[]');
 
         static::assertSame(400, $client->getResponse()->getStatusCode());
         static::assertSame('application/json', $client->getResponse()->headers->get('Content-Type'));
@@ -67,7 +67,7 @@ class ApiRoutesControllerTest extends WebTestCase
             'routeType' => 'Cette valeur ne doit pas être vide.',
         ];
 
-        $responseData = json_decode($client->getResponse()->getContent(), true);
+        $responseData = \json_decode($client->getResponse()->getContent(), true);
 
         static::assertSame($expectedResponse, $responseData);
     }
@@ -91,12 +91,12 @@ class ApiRoutesControllerTest extends WebTestCase
             'faction' => 9999999999,
         ];
 
-        $client->request('POST','/fr/routes', [], [], [], json_encode($dataToSend));
+        $client->request('POST', '/fr/routes', [], [], [], \json_encode($dataToSend));
 
         static::assertSame(400, $client->getResponse()->getStatusCode());
         static::assertSame('application/json', $client->getResponse()->headers->get('Content-Type'));
 
-        $responseData = json_decode($client->getResponse()->getContent(), true);
+        $responseData = \json_decode($client->getResponse()->getContent(), true);
 
         $expectedResponse = [
             'forcedDistance' => 'Cette valeur doit être supérieure ou égale à 0.',

@@ -19,8 +19,6 @@ trait StepsWithDomainsTrait
     /**
      * These should be freely changed when inside a test, because bigger logics are needed sometimes.
      * This method only guarantees a working base requirement.
-     *
-     * @return array
      */
     protected function getValidRequirements(): array
     {
@@ -79,7 +77,7 @@ trait StepsWithDomainsTrait
 
     protected function assertSessionEquals(array $domains, int $remaining, Client $client)
     {
-        $finalDomains = array_merge([
+        $finalDomains = \array_merge([
             'domains.craft' => 0,
             'domains.close_combat' => 0,
             'domains.stealth' => 0,

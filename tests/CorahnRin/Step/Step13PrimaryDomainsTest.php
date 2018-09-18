@@ -192,7 +192,7 @@ class Step13PrimaryDomainsTest extends AbstractStepTest
 
         $form->setValues([
             'domains' => [
-                'domains.prayer'  => 5, // Artisan's main job (crafting, id #1 in fixtures) should have a score of Five
+                'domains.prayer' => 5, // Artisan's main job (crafting, id #1 in fixtures) should have a score of Five
                 'domains.feats' => 5,
                 'domains.relation' => 5,
             ],
@@ -308,7 +308,7 @@ class Step13PrimaryDomainsTest extends AbstractStepTest
         $client = $this->getStepClient(1); // Artisan id in fixtures
 
         $crawler = $client->request('POST', '/fr/character/generate/'.$this->getStepName(), [
-            'ost'     => 99999999,
+            'ost' => 99999999,
             'domains' => [],
         ]);
 
@@ -334,7 +334,7 @@ class Step13PrimaryDomainsTest extends AbstractStepTest
 
         $error = 'Unknown error when evaluating valid domains with dataset.';
         if ($crawler->filter('#flash-messages')->count()) {
-            $error .= "\n".trim($crawler->filter('#flash-messages')->text());
+            $error .= "\n".\trim($crawler->filter('#flash-messages')->text());
         }
 
         static::assertTrue($client->getResponse()->isRedirect('/fr/character/generate/14_use_domain_bonuses'), $error);
@@ -344,7 +344,7 @@ class Step13PrimaryDomainsTest extends AbstractStepTest
 
     public function provideValidDomainsData()
     {
-        /**
+        /*
          * 1  => Artisanat
          * 2  => Combat au Contact
          * 3  => Discrétion
@@ -1516,7 +1516,6 @@ class Step13PrimaryDomainsTest extends AbstractStepTest
         ];
     }
 
-
     private function getStepClient(int $jobId, array $step11data = [])
     {
         if (!isset($step11data['advantages'])) {
@@ -1534,8 +1533,8 @@ class Step13PrimaryDomainsTest extends AbstractStepTest
 
         $session = $client->getContainer()->get('session');
         $session->set('character.corahn_rin', [
-            '02_job'        => $jobId,
-            '08_ways'       => [1, 2, 3, 4, 5],
+            '02_job' => $jobId,
+            '08_ways' => [1, 2, 3, 4, 5],
             '11_advantages' => $step11data,
         ]);
         $session->save();

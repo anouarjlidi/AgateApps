@@ -34,6 +34,6 @@ class Step02JobTest extends AbstractStepTest
 
         static::assertSame(200, $result->getResponse()->getStatusCode());
         static::assertSame(1, $crawler->filter('#flash-messages > .card-panel.error')->count());
-        static::assertEquals('Veuillez entrer un métier correct.', trim($crawler->filter('#flash-messages > .card-panel.error')->text()));
+        static::assertEquals('Veuillez entrer un métier correct.', \trim($crawler->filter('#flash-messages > .card-panel.error')->text()));
     }
 }

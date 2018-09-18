@@ -24,7 +24,7 @@ class MapsControllerTest extends WebTestCase
     {
         $client = $this->getClient('maps.esteren.docker');
 
-        static::setToken($client, 'map allowed', ['ROLE MAPS VIEW']);
+        static::setToken($client, "map\u{a0}allowed", ["ROLE\u{a0}MAPS\u{a0}VIEW"]);
 
         $crawler = $client->request('GET', '/fr/');
 
@@ -36,8 +36,8 @@ class MapsControllerTest extends WebTestCase
         $link = $article->filter('a')->link();
 
         static::assertInstanceOf(Link::class, $link);
-        static::assertSame('Voir la carte', trim($link->getNode()->textContent));
-        static::assertSame('http://maps.esteren.docker/fr/map-tri-kazel', trim($link->getUri()));
+        static::assertSame('Voir la carte', \trim($link->getNode()->textContent));
+        static::assertSame('http://maps.esteren.docker/fr/map-tri-kazel', \trim($link->getUri()));
     }
 
     public function test view while not logged in()
